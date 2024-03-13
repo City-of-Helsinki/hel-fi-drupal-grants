@@ -7,7 +7,7 @@ import {
 } from '../../utils/data/test_data';
 import {
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-  hideSlidePopup, uploadFile
+  hideSlidePopup, uploadFile, fillFormField
 } from '../../utils/form_helpers';
 
 import {
@@ -42,8 +42,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-compensation-purpose'].value ?? '');
     }
 
-    // muut samaan tarkoitukseen myönnetyt
-    // muut samaan tarkoitukseen haetut
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
 
     if (items['edit-benefits-loans']) {
       await page.locator('#edit-benefits-loans')

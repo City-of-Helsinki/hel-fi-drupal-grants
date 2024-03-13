@@ -90,9 +90,9 @@ const baseForm_69: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää',
+              value: 'edit-jarjestimme-leireja-seuraavilla-alueilla-add-submit',
               resultValue: 'edit-jarjestimme-leireja-seuraavilla-alueilla-items-[INDEX]',
             },
             //@ts-ignore

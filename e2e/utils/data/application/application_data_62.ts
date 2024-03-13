@@ -83,8 +83,271 @@ const baseFormRegisteredCommunity_62: FormData = {
           viewPageSelector: '.form-item-subventions',
           viewPageFormatter: viewPageFormatCurrency
         },
-        // muut samaan tarkoitukseen myönnetyt
-        // muut samaan tarkoitukseen haetut
+        "edit-myonnetty-avustus": {
+          role: 'dynamicmultivalue',
+          label: '',
+          dynamic_multi: {
+            radioSelector: {
+              type: 'dom-id-label',
+              name: 'data-drupal-selector',
+              value: 'edit-olemme-saaneet-muita-avustuksia-1',
+            },
+            revealedElementSelector: {
+              type: 'dom-id',
+              name: '',
+              value: '#edit-myonnetty-avustus',
+            },
+            multi: {
+              buttonSelector: {
+                type: 'data-drupal-selector',
+                name: 'data-drupal-selector',
+                value: 'edit-myonnetty-avustus-add-submit',
+                resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
+              },
+              //@ts-ignore
+              items: {
+                0: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
+                    },
+                    value: 'Valtio',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+                1: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
+                    },
+                    value: 'EU',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+              },
+              expectedErrors: {}
+            }
+          },
+        },
+
+        "edit-haettu-avustus-tieto": {
+          role: 'dynamicmultivalue',
+          label: '',
+          dynamic_multi: {
+            radioSelector: {
+              type: 'dom-id-label',
+              name: 'data-drupal-selector',
+              value: 'edit-olemme-hakeneet-avustuksia-muualta-kuin-helsingin-kaupungilta-1',
+            },
+            revealedElementSelector: {
+              type: 'dom-id',
+              name: '',
+              value: '#edit-haettu-avustus-tieto',
+            },
+            multi: {
+              buttonSelector: {
+                type: 'data-drupal-selector',
+                name: 'data-drupal-selector',
+                value: 'edit-haettu-avustus-tieto-add-submit',
+                resultValue: 'edit-haettu-avustus-tieto-items-[INDEX]',
+              },
+              //@ts-ignore
+              items: {
+                0: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer',
+                    },
+                    value: 'Muu',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+                1: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer',
+                    },
+                    value: 'Säätiö',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+              },
+              expectedErrors: {}
+            }
+          },
+        },
         "nextbutton": {
           role: 'button',
           selector: {
@@ -167,23 +430,127 @@ const baseFormRegisteredCommunity_62: FormData = {
           value: faker.number.int({min: 12, max: 5000}).toString(),
           viewPageFormatter: viewPageFormatCurrency
         },
-        "edit-budget-other-income-items-0-item-label": {
-          value: faker.lorem.words(3),
-          viewPageSelector: '.form-item-budget-other-income',
+        'edit-budget-other-income': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-budget-other-income-add-submit',
+              resultValue: 'edit-budget-other-income-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-income-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-income',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-income-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-income',
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-income-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-income',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-income-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-income',
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
-        "edit-budget-other-income-items-0-item-value": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-other-income',
-          viewPageFormatter: viewPageFormatCurrency
-        },
-        "edit-budget-other-cost-items-0-item-label": {
-          value: faker.lorem.words(3),
-          viewPageSelector: '.form-item-budget-other-cost',
-        },
-        "edit-budget-other-cost-items-0-item-value": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-other-cost',
-          viewPageFormatter: viewPageFormatCurrency
+        'edit-budget-other-cost': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-budget-other-cost-add-submit',
+              resultValue: 'edit-budget-other-cost-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "nextbutton": {
           role: 'button',
