@@ -786,19 +786,23 @@ class ApplicationHandler {
   }
 
   /**
-   * Get Webform object by UUID
+   * Get Webform object by UUID.
+   *
    * @param string $uuid
-   *   Uuid of the webform
+   *   Uuid of the webform.
+   * @param string $application_number
+   *   The application number.
+   *
    * @return \Drupal\webform\Entity\Webform
    *   Webform object.
    */
   public static function getWebformByUuid(string $uuid, string $application_number) {
 
     $wids = \Drupal::entityQuery('webform')
-    ->condition('uuid', $uuid)
-    ->execute();
+      ->condition('uuid', $uuid)
+      ->execute();
 
-    // Fallback to different method, if for webform for some reason is not found.
+    // Fallback to original method, if webform for some reason is not found.
     if (empty($wids)) {
       return self::getWebformFromApplicationNumber($application_number);
     }
