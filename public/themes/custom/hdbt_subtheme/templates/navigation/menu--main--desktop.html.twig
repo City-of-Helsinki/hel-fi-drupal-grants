@@ -46,9 +46,9 @@ We call a macro which calls itself to render the full tree.
       {% for item in items %}
         <!--
       {% for key, value in item %}
-        {{ key }} - {{ value }}
-
+        {{ key }}
       {% endfor %}
+      url : {{ item.url }}
       -->
         {% set has_children = false %}
         {% set expanded_or_active = false %}
