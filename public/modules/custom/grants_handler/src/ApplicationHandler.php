@@ -634,7 +634,6 @@ class ApplicationHandler {
     $appParam = self::getAppEnv();
     $serial = $submission->serial();
     $webform_id = $submission->getWebform()->id();
-
     $applicationTypeId = $submission->getWebform()
       ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
 
@@ -663,9 +662,9 @@ class ApplicationHandler {
         // Check that there is no local submission with given serial.
         $query = \Drupal::entityQuery('webform_submission')
           ->condition('webform_id', $webform_id)
-          ->condition('serial', $serial);
+          ->condition('serial', $serial)
+          ->accessCheck(FALSE);
         $results = $query->execute();
-
         if (empty($results)) {
           $check = FALSE;
         }
