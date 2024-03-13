@@ -14,8 +14,8 @@ use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
-use Laminas\Diactoros\Response\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -141,7 +141,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
   /**
    * Callback for YPA service in DVV valtuutuspalvelu.
    *
-   * @return \Laminas\Diactoros\Response\RedirectResponse
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse;
    *   Redirect to profile page in case of success. Return
    *   to mandate login page in case of error.
    *
