@@ -1459,6 +1459,8 @@ class GrantsHandler extends WebformHandlerBase {
 
       // If application uploaded succesfully.
       if ($applicationUploadStatus) {
+        // Erase other messages.
+        $this->messenger()->deleteAll();
         // Show message.
         $this->messenger()
           ->addStatus(

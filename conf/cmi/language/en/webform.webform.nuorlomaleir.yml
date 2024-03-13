@@ -68,6 +68,7 @@ elements: |
   tulo:
     '#title': 'Income item'
     '#help': 'Indicate here the type of income in question. An example of income from camping activities is participation fees.'
+    '#multiple__add_more_button_label': 'Add new income'
   menot:
     '#title': Expenses
   markup_05:
@@ -75,6 +76,7 @@ elements: |
   meno:
     '#title': 'Expense item'
     '#help': 'Indicate here the type of expense in question. Expenses from camp activities may include accommodation and meal expenses and instructors&rsquo; salary expenses.'
+    '#multiple__add_more_button_label': 'Add new expense'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
