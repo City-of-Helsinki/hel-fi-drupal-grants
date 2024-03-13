@@ -118,9 +118,9 @@ const baseForm_48: FormData = {
             },
             multi: {
               buttonSelector: {
-                type: 'add-more-button',
+                type: 'data-drupal-selector',
                 name: 'data-drupal-selector',
-                value: 'Lisää uusi myönnetty avustus',
+                value: 'edit-myonnetty-avustus-add-submit',
                 resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
               },
               //@ts-ignore
@@ -366,9 +366,9 @@ const baseForm_48: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää uusi tila',
+              value: 'edit-tila-add-submit',
               resultValue: 'edit-tila-items-[INDEX]',
             },
             //@ts-ignore
@@ -616,16 +616,66 @@ const baseForm_48: FormData = {
           viewPageSelector: '.form-item-budget-static-cost',
           viewPageFormatter: viewPageFormatCurrency,
         },
-        "edit-budget-other-cost-items-0-item-label": {
-          role: 'input',
-          value: faker.lorem.sentence(15),
-          viewPageSelector: '.form-item-budget-other-cost',
-        },
-        "edit-budget-other-cost-items-0-item-value": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-other-cost',
-          viewPageFormatter: viewPageFormatCurrency,
+        'edit-budget-other-cost': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-budget-other-cost-add-submit',
+              resultValue: 'edit-budget-other-cost-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "edit-muu-huomioitava-panostus": {
           role: 'input',
