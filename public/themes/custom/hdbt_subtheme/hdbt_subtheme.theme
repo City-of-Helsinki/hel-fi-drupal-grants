@@ -505,11 +505,10 @@ function hdbt_subtheme_theme_suggestions_block_alter(&$suggestions): void {
 }
 
 /**
- * Implements hook_preprocess_hook().
+ * Implements hook_preprocess_block().
  */
-function hdbt_subtheme_preprocess_mainnavigation(&$variables) {
-  $route = \Drupal::routeMatch()->getRouteObject();
-
+function hdbt_subtheme_preprocess_block__mainnavigation(&$variables) {
+  $route = \Drupal::routeMatch()->getRouteName();
   $variables['#cache']['tags'][] = 'route: ' . $route;
 }
 /**
