@@ -6,10 +6,6 @@ import {
 } from './profile_data'
 import {Page} from "@playwright/test";
 
-const TEST_IBAN = "FI31 4737 2044 0000 48"
-const TEST_SSN = "090797-999P"
-const TEST_USER_UUID = "13cb60ae-269a-46da-9a43-da94b980c067"
-
 interface SelectorDetails {
   role?: string;
   label?: string;
@@ -21,7 +17,6 @@ interface SelectorDetails {
 }
 
 type PartialFormFieldWithRemove = Partial<FormFieldWithRemove>;
-
 
 interface Selector {
   type: string;
@@ -53,7 +48,6 @@ interface DynamicSingleValueField {
   }>;
   expectedErrors?: Object;
 }
-
 
 interface FormField {
   label?: string;
@@ -152,9 +146,6 @@ const applicationData = {}
 
 export {
   PROFILE_FILE_PATH,
-  TEST_IBAN,
-  TEST_SSN,
-  TEST_USER_UUID,
   profileDataPrivatePerson,
   profileDataUnregisteredCommunity,
   profileDataRegisteredCommunity,

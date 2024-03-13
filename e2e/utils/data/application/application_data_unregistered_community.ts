@@ -1,4 +1,3 @@
-
 import {unRegisteredCommunityApplications_48} from "./application_data_48";
 import {unRegisteredCommunityApplications_62} from "./application_data_62";
 import {unRegisteredCommunityApplications_64} from "./application_data_64";
