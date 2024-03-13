@@ -1,9 +1,7 @@
 import {fakerFI as faker} from '@faker-js/faker';
-import {bankAccountConfirmationPath} from "../helpers";
-import {
-  FormData, FormDataWithRemoveOptionalProps,
-} from "./test_data";
+import {FormData, FormDataWithRemoveOptionalProps,} from "./test_data";
 import {PROFILE_INPUT_DATA} from "./profile_input_data";
+import {ATTACHMENTS} from "./attachment_data";
 import {createFormData} from "../form_helpers";
 
 const profileDataBase: FormData = {
@@ -295,7 +293,7 @@ const profileDataBase: FormData = {
                       value: '[name="files[bankAccountWrapper_[INDEX]_bank_confirmationFile]"]',
                       resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
                     },
-                    value: bankAccountConfirmationPath,
+                    value: ATTACHMENTS.BANK_ACCOUNT_CONFIRMATION,
                   },
                 ],
               1:
@@ -307,7 +305,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-bankaccountwrapper-[INDEX]-bank-bankaccount',
                     },
-                    value: 'FI5777266988169614',
+                    value: PROFILE_INPUT_DATA.iban2,
                   },
                   {
                     role: 'fileupload',
@@ -317,7 +315,7 @@ const profileDataBase: FormData = {
                       value: '[name="files[bankAccountWrapper_[INDEX]_bank_confirmationFile]"]',
                       resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
                     },
-                    value: bankAccountConfirmationPath,
+                    value: ATTACHMENTS.BANK_ACCOUNT_CONFIRMATION,
                   },
                 ]
             }
@@ -415,7 +413,7 @@ const ibanTestData: FormDataWithRemoveOptionalProps = {
                       value: '[name="files[bankAccountWrapper_[INDEX]_bank_confirmationFile]"]',
                       resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
                     },
-                    value: bankAccountConfirmationPath,
+                    value: ATTACHMENTS.BANK_ACCOUNT_CONFIRMATION,
                   },
                 ],
               1:
@@ -437,7 +435,7 @@ const ibanTestData: FormDataWithRemoveOptionalProps = {
                       value: '[name="files[bankAccountWrapper_[INDEX]_bank_confirmationFile]"]',
                       resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
                     },
-                    value: bankAccountConfirmationPath,
+                    value: ATTACHMENTS.BANK_ACCOUNT_CONFIRMATION,
                   },
                 ]
             },

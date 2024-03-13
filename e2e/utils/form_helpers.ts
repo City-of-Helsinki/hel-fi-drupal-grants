@@ -3,16 +3,13 @@ import {Page, expect, Locator} from "@playwright/test";
 import {
   FormData,
   Selector,
+  PageHandlers,
+  FormFieldWithRemove,
   isMultiValueField,
-  isDynamicMultiValueField, PageHandlers,
-  FormFieldWithRemove
+  isDynamicMultiValueField
 } from "./data/test_data"
 
-import {
-  PATH_TO_TEST_PDF,
-  saveObjectToEnv,
-  extractUrl
-} from "./helpers";
+import {saveObjectToEnv, extractUrl} from "./helpers";
 
 
 /**

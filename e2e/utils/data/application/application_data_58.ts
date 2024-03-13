@@ -1,6 +1,7 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_MUU_LIITE} from "../../helpers";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
+import {ATTACHMENTS} from "../attachment_data";
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatAddress,
@@ -8,13 +9,12 @@ import {
   viewPageFormatLowerCase,
   viewPageFormatNumber,
 } from "../../view_page_formatters";
-import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
  */
 const baseFormRegisteredCommunity_58: FormData = {
-  title: 'Form submit',
+  title: 'Save as draft.',
   formSelector: 'webform-submission-liikunta-suunnistuskartta-avustu-form',
   formPath: '/fi/form/liikunta-suunnistuskartta-avustu',
   formPages: {
@@ -116,7 +116,7 @@ const baseFormRegisteredCommunity_58: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_MUU_LIITE,
+          value: ATTACHMENTS.MUU_LIITE,
           viewPageSelector: '.form-item-muu-liite',
           viewPageFormatter: viewPageFormatFilePath
         },
