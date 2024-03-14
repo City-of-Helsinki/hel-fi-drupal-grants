@@ -9,7 +9,7 @@ elements: |
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
   hakijan_tiedot:
-    '#title': 'Sökande'
+    '#title': Sökande
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -71,6 +71,7 @@ elements: |
   tulo:
     '#title': Intäkt
     '#help': 'Ange h&auml;r vilken int&auml;kt det &auml;r fr&aring;ga om. Int&auml;kter fr&aring;n l&auml;gerverksamheten &auml;r till exempel deltagaravgifter.'
+    '#multiple__add_more_button_label': 'Lägg till en intäkt'
   menot:
     '#title': Utgifter
   markup_05:
@@ -78,6 +79,7 @@ elements: |
   meno:
     '#title': Utgift
     '#help': 'Ange h&auml;r vilken utgift det &auml;r fr&aring;ga om. Utgifter f&ouml;r l&auml;gerverksamheten &auml;r till exempel logikostnader, matkostnader och handledarnas l&ouml;nekostnader.'
+    '#multiple__add_more_button_label': 'Lägg till en utgift'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:

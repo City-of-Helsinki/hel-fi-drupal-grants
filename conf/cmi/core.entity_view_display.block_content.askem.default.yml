@@ -1,0 +1,24 @@
+uuid: 1c227b7d-01f3-43ba-9855-b760f554bfe6
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.askem
+    - field.field.block_content.askem.body
+  module:
+    - text
+id: block_content.askem.default
+targetEntityType: block_content
+bundle: askem
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  langcode: true
+  search_api_excerpt: true

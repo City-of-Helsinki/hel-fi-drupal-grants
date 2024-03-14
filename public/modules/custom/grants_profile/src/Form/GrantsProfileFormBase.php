@@ -419,6 +419,13 @@ abstract class GrantsProfileFormBase extends FormBase {
         $myIban = new IBAN($accountData['bankAccount']);
         $ibanValid = FALSE;
 
+        if (!preg_match('/^[A-Za-z0-9]*$/', $accountData['bankAccount'])) {
+          $formState->setErrorByName($elementName,
+            $this->t('Not valid Finnish IBAN: @iban', ['@iban' => $accountData["bankAccount"]], $this->tOpts)
+          );
+          continue;
+        }
+
         if ($myIban->Verify() && $myIban->Country() == 'FI') {
           // If so, return true.
           $ibanValid = TRUE;

@@ -76,9 +76,9 @@ export default defineConfig({
       dependencies: ['profile-registered_community']
     },
     {
-        name: 'forms-unregistered',
-        testMatch: '/forms/unregistered_community_*',
-        dependencies: ['profile-unregistered_community']
+      name: 'forms-unregistered',
+      testMatch: '/forms/unregistered_community_*',
+      dependencies: ['profile-unregistered_community']
     },
     {
       name: 'forms-48',

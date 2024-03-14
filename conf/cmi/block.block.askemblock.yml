@@ -1,0 +1,38 @@
+uuid: e8df0021-8a22-40b7-87e8-7c718087b48b
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:askem:3d0751ae-a35c-429c-903a-8e6953543052'
+  module:
+    - block_content
+    - node
+  theme:
+    - hdbt_subtheme
+id: askemblock
+theme: hdbt_subtheme
+region: after_content
+weight: -15
+provider: null
+plugin: 'block_content:3d0751ae-a35c-429c-903a-8e6953543052'
+settings:
+  id: 'block_content:3d0751ae-a35c-429c-903a-8e6953543052'
+  label: 'Askem block'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      announcement: announcement
+      article: article
+      faq: faq
+      news_item: news_item
+      page: page
+      service: service
