@@ -1096,10 +1096,24 @@ const hideSlidePopup = async (page: Page) => {
 /**
  * The createFormData function.
  *
+ * This function takes in a base form (baseFormData)
+ * and merges it with a partial overrides form (overrides).
+ * Any fields under itemsToRemove or itemsToBeHidden will
+ * also be removed from the newly created form.
+ *
+ * The function uses the lodash cloneDeep utility function
+ * for cloning the "items" part of the form, in order
+ * to perform a deep copy.
+ *
+ * @docs https://developer.mozilla.org/en-US/docs/Glossary/Deep_copy
+ *
  * @param baseFormData
+ *   The base form.
  * @param overrides
+ *   The parts we want to override.
  */
 function createFormData(baseFormData: FormData, overrides: Partial<FormData>): FormData {
+
   const formPages = Object.keys(baseFormData.formPages).reduce((result, pageKey) => {
 
     result[pageKey] = {
@@ -1111,39 +1125,41 @@ function createFormData(baseFormData: FormData, overrides: Partial<FormData>): F
       },
     };
 
-    if (overrides.formPages && overrides.formPages[pageKey]) {
-
-      // Remove any fields under itemsToRemove.
-      if (overrides.formPages[pageKey].itemsToRemove) {
-
-        overrides.formPages[pageKey].itemsToRemove?.forEach((itemToRemove: string) => {
-          // Remove multi-value fields.
-          const multiValueKeyInfo = parseMultiValueKey(itemToRemove);
-          if (multiValueKeyInfo) {
-            const { baseName, index, subItemKey } = multiValueKeyInfo;
-            const dynamicMultiValueItems = result[pageKey]?.items[baseName]?.dynamic_multi?.multi?.items;
-            const multiValueItems = result[pageKey]?.items[baseName]?.multi?.items;
-            const multiItems = dynamicMultiValueItems || multiValueItems;
-
-            if (multiItems && multiItems[index]) {
-              multiItems[index] = multiItems[index].filter((item: any) => {
-                return item.selector?.value !== `${baseName}-items-[INDEX]-item-${subItemKey}`;
-              });
-            }
-          } else {
-            // Remove normal fields.
-            delete result[pageKey].items[itemToRemove];
-          }
-        });
-      }
-
-      // Remove any fields under itemsToBeHidden.
-      if (overrides.formPages[pageKey].itemsToBeHidden) {
-        overrides.formPages[pageKey].itemsToBeHidden?.forEach((itemToBeHidden: string) => {
-          delete result[pageKey].items[itemToBeHidden];
-        });
-      }
+    if (!overrides.formPages || !overrides.formPages[pageKey]) {
+      return result;
     }
+
+    // Remove any fields under itemsToRemove.
+    overrides.formPages[pageKey].itemsToRemove?.forEach((itemToRemove: string) => {
+      const multiValueKeyInfo = parseMultiValueKey(itemToRemove);
+
+      // If the field is not a multi-value field, then just delete it normally.
+      if (!multiValueKeyInfo) {
+        return delete result[pageKey].items[itemToRemove];
+      }
+
+      /**
+       * Now we know the field is either a dynamic multi-value or a normal multi-value field.
+       * We can't know which one it is, so we have to check for both. Then we
+       * filter out the item inside the multi-value field with a matching selector,
+       * thereby removing it.
+       */
+      const { baseName, index, subItemKey } = multiValueKeyInfo;
+      const dynamicMultiValueItems = result[pageKey]?.items[baseName]?.dynamic_multi?.multi?.items;
+      const multiValueItems = result[pageKey]?.items[baseName]?.multi?.items;
+      const multiItems = dynamicMultiValueItems || multiValueItems;
+
+      if (multiItems && multiItems[index]) {
+        multiItems[index] = multiItems[index].filter((item: any) => {
+          return item.selector?.value !== `${baseName}-items-[INDEX]-item-${subItemKey}`;
+        });
+      }
+    });
+
+    // Remove any fields under itemsToBeHidden.
+    overrides.formPages[pageKey].itemsToBeHidden?.forEach((itemToBeHidden: string) => {
+      delete result[pageKey].items[itemToBeHidden];
+    });
 
     return result;
 
@@ -1157,10 +1173,23 @@ function createFormData(baseFormData: FormData, overrides: Partial<FormData>): F
 }
 
 /**
- *  The parseMultiValueKey function.
+ * The parseMultiValueKey function.
+ *
+ * This function attempts to parse out a
+ * baseName, index and subItemKey form a form field key.
+ * If all three variables are found, then we know
+ * the key represents a multi-value field.
+ *
+ * Ex1: edit-hanke-alkaa
+ * This would return null.
+ *
+ * Ex2: edit-myonnetty-avustus-items-0-item-issuer
+ * This would return {edit-myonnetty-avustus, 0, issuer}.
  *
  * @param key
  *   The key we are parsing.
+ *
+ * @return { {baseName: string, index: number, subItemKey: string} | null }
  */
 const parseMultiValueKey = (key: string): { baseName: string, index: number, subItemKey: string } | null => {
   const match = key.match(/^(.+)-items-(\d+)-item-(.+)$/);
@@ -1173,17 +1202,6 @@ const parseMultiValueKey = (key: string): { baseName: string, index: number, sub
   }
   return null;
 };
-
-
-/**
- *  The deepCopy function.
- *
- * @param obj
- *   The object we are making a deep copy of.
- */
-function deepCopy (obj: any) {
-  return JSON.parse(JSON.stringify(obj));
-}
 
 /**
  * Fill Hakijan Tiedot page for registered community.
