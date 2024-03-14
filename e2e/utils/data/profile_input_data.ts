@@ -10,6 +10,7 @@
  */
 interface ProfileInputData  {
   iban: string;
+  iban2: string;
   address: string;
   zipCode: string;
   city: string;
@@ -23,7 +24,8 @@ interface ProfileInputData  {
  * data exists on an applications "View" page.
  */
 const PROFILE_INPUT_DATA: ProfileInputData = {
-  iban: 'FI1165467882414711',
+  iban: 'FI3147372044000048',
+  iban2: 'FI5777266988169614',
   address: 'Ahonenväylä 95',
   zipCode: '91435',
   city: 'Kuopio',

@@ -1,4 +1,3 @@
-
 import {registeredCommunityApplications_48} from "./application_data_48";
 import {registeredCommunityApplications_29} from "./application_data_29";
 import {registeredCommunityApplications_51} from "./application_data_51";
@@ -19,26 +18,26 @@ import {registeredCommunityApplications_68} from "./application_data_68";
 import {registeredCommunityApplications_69} from "./application_data_69";
 
 const registeredCommunityApplications = {
-    48: registeredCommunityApplications_48,
-    29: registeredCommunityApplications_29,
-    51: registeredCommunityApplications_51,
-    52: registeredCommunityApplications_52,
-    53: registeredCommunityApplications_53,
-    54: registeredCommunityApplications_54,
-    56: registeredCommunityApplications_56,
-    57: registeredCommunityApplications_57,
-    58: registeredCommunityApplications_58,
-    60: registeredCommunityApplications_60,
-    61: registeredCommunityApplications_61,
-    62: registeredCommunityApplications_62,
-    63: registeredCommunityApplications_63,
-    64: registeredCommunityApplications_64,
-    65: registeredCommunityApplications_65,
-    66: registeredCommunityApplications_66,
-    68: registeredCommunityApplications_68,
-    69: registeredCommunityApplications_69,
+  48: registeredCommunityApplications_48,
+  29: registeredCommunityApplications_29,
+  51: registeredCommunityApplications_51,
+  52: registeredCommunityApplications_52,
+  53: registeredCommunityApplications_53,
+  54: registeredCommunityApplications_54,
+  56: registeredCommunityApplications_56,
+  57: registeredCommunityApplications_57,
+  58: registeredCommunityApplications_58,
+  60: registeredCommunityApplications_60,
+  61: registeredCommunityApplications_61,
+  62: registeredCommunityApplications_62,
+  63: registeredCommunityApplications_63,
+  64: registeredCommunityApplications_64,
+  65: registeredCommunityApplications_65,
+  66: registeredCommunityApplications_66,
+  68: registeredCommunityApplications_68,
+  69: registeredCommunityApplications_69,
 }
 
 export {
-    registeredCommunityApplications
+  registeredCommunityApplications
 }

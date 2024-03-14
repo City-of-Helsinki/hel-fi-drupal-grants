@@ -28,6 +28,7 @@ dependencies:
     - content_translation
     - entity_usage
     - external_entities
+    - grants_admin_applications
     - helfi_tpr
     - locale
     - media
@@ -66,6 +67,9 @@ permissions:
   - 'access webform overview'
   - 'access webform submission log'
   - 'access webform submission user'
+  - 'administer grants_admin_applications configuration'
+  - 'administer grants_admin_resend_applications configuration'
+  - 'administer grants_admin_submitted_applications configuration'
   - 'administer menu'
   - 'administer nodes'
   - 'administer taxonomy'

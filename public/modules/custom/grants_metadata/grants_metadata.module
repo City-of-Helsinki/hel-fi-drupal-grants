@@ -635,30 +635,27 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
       break;
 
     case 'webform_edit_form':
-      if ($archived) {
+      if ($archived || $editingRestricted) {
         \Drupal::messenger()
           ->addWarning($restrictionMsg);
         $form['#disabled'] = TRUE;
-        $form['webform_ui_elements']['#access'] = FALSE;
-      }
-      if ($editingRestricted) {
-        \Drupal::messenger()
-          ->addWarning($restrictionMsg);
         $form['webform_ui_elements']['#header']['#access'] = FALSE;
         foreach ($form['webform_ui_elements'] as $key => $element) {
           if (!is_array($element)) {
             continue;
           }
           unset($form['webform_ui_elements'][$key]['add']);
-          unset($form['webform_ui_elements'][$key]['operations']['#links']['delete']);
-          unset($form['webform_ui_elements'][$key]['operations']['#links']['duplicate']);
+          unset($form['webform_ui_elements'][$key]['operations']);
         }
       }
       break;
 
     case 'webform_ui_element_form':
-      unset($form['delete']);
-      unset($form['actions']['delete']);
+      if ($archived ||$editingRestricted) {
+        $form['#disabled'] = TRUE;
+        unset($form['delete']);
+        unset($form['actions']['delete']);
+      }
       break;
   }
 }
@@ -696,9 +693,9 @@ function _grants_metadata_duplicate_form_submit($form, FormStateInterface &$form
   $newFormId = $form_state->getValue('id');
   $newFormObject = Webform::load($newFormId);
 
-  // // @DEV: We might need do this an another way?
-  // _grants_metadata_update_webform_references($parentForm, $newFormObject);
-  // grants_metadata_webform_presave($newFormObject);
+  // @DEV: We might need do this an another way?
+  _grants_metadata_update_webform_references($parentForm, $newFormObject);
+  grants_metadata_webform_presave($newFormObject);
 }
 
 /**

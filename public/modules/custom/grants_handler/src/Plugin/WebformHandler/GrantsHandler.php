@@ -760,12 +760,12 @@ class GrantsHandler extends WebformHandlerBase {
 
       switch ($status) {
         case 'archived':
-          $errorMsg = t('The application form has changed, make a new application.');
+          $errorMsg = $this->t('The application form has changed, make a new application.');
           $form['#disabled'] = TRUE;
           break;
 
         default:
-          $errorMsg = t('Application period is closed. You can edit the draft, but not submit it.');
+          $errorMsg = $this->t('Application period is closed. You can edit the draft, but not submit it.');
           $form['actions']['submit']['#disabled'] = TRUE;
           break;
       }
@@ -1477,6 +1477,8 @@ class GrantsHandler extends WebformHandlerBase {
 
       // If application uploaded succesfully.
       if ($applicationUploadStatus) {
+        // Erase other messages.
+        $this->messenger()->deleteAll();
         // Show message.
         $this->messenger()
           ->addStatus(

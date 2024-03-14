@@ -5415,16 +5415,16 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "0.9.19",
+            "version": "0.9.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "6fe715c610be7db8d25b9ab5d9b695ba2f1e1d5c"
+                "reference": "8ce7f636bd0c03a9ea4f6ad8c761ddcd00e5fff2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/6fe715c610be7db8d25b9ab5d9b695ba2f1e1d5c",
-                "reference": "6fe715c610be7db8d25b9ab5d9b695ba2f1e1d5c",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/8ce7f636bd0c03a9ea4f6ad8c761ddcd00e5fff2",
+                "reference": "8ce7f636bd0c03a9ea4f6ad8c761ddcd00e5fff2",
                 "shasum": ""
             },
             "require": {
@@ -5442,10 +5442,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.19",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.20",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2024-03-04T13:12:34+00:00"
+            "time": "2024-03-12T11:48:20+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
