@@ -76,6 +76,7 @@ function hdbt_subtheme_preprocess(&$variables): void {
  */
 function hdbt_subtheme_preprocess_menu(&$variables): void
 {
+  $variables['#cache']['contexts'] = ['url.path'];
   foreach ($variables['items'] as &$item) {
     if (isset($item['url'])) {
       /** @var \Drupal\Core\Url $url */
@@ -489,6 +490,7 @@ function _hdbt_subtheme_preprocess_help(array &$variables, $title_parents = ['la
  * Implements hook_preprocess_HOOK().
  */
 function hdbt_subtheme_preprocess_block(&$variables): void {
+
   if (isset($variables['elements']['#id'])) {
     $variables['content']['#attributes']['block_id'] = $variables['elements']['#id'];
   }
@@ -504,13 +506,6 @@ function hdbt_subtheme_theme_suggestions_block_alter(&$suggestions): void {
   }
 }
 
-/**
- * Implements hook_preprocess_block().
- */
-function hdbt_subtheme_preprocess_block__mainnavigation(&$variables) {
-  $route = \Drupal::routeMatch()->getRouteName();
-  $variables['#cache']['tags'][] = 'route: ' . $route;
-}
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
