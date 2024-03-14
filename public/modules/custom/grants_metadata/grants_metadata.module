@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_metadata\Validator\EndDateValidator;
 use Drupal\grants_metadata\Validator\YearValidator;
@@ -523,15 +524,15 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
     }
 
-    $webforms = \Drupal::entityTypeManager()
-      ->getStorage('webform')
-      ->loadMultiple();
-
     $parentOptions = [];
+    if (!empty($formParent)) {
+      $parentWebform = reset(\Drupal::entityTypeManager()
+        ->getStorage('webform')
+        ->loadByProperties([
+          'uuid' => $formParent,
+        ]));
 
-    /** @var \Drupal\webform\Entity\Webform[] $webforms */
-    foreach ($webforms as $webform) {
-      $parentOptions[$webform->uuid()] = $webform->get('title');
+      $parentOptions = [$formParent => $parentWebform->get('title')];
     }
 
     $form['third_party_settings']['grants_metadata']['status'] = [
@@ -544,7 +545,11 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       ],
       '#required' => TRUE,
       '#default_value' => $formStatus ?? 'development',
-      '#description' => t('If form is in production, then no editing is allowed and form results are submitted to ATV. Work in development form opens up for testing & developing but not for general public.'),
+      '#description' => t('
+        If the form is in production, then no editing is allowed.
+        In development: Form can be filled up in non-production environments.
+        Archived forms usually have new version available.
+      '),
     ];
 
     $form['third_party_settings']['grants_metadata']['parent'] = [
@@ -553,10 +558,29 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       '#description' => t('Parent form, if this webform was duplicated or replaces existing form.'),
       '#options' => $parentOptions,
       '#default_value' => $formParent,
-      '#disabled' => $isDuplicateForm,
+      '#disabled' => TRUE,
       '#required' => $isDuplicateForm,
       '#empty_option' => t('- None -'),
       '#empty_value' => '',
+    ];
+  }
+
+  if ($form_id == 'webform_settings_form') {
+    $route_parameters = ['webform' => $webform->id()];
+
+    $form['third_party_settings']['grants_metadata']['new_version'] = [
+      '#type' => 'link',
+      '#title' => t('Create a webform new version'),
+      '#url' => Url::fromRoute('entity.webform.duplicate_form', $route_parameters),
+      '#attributes' => ['class' => ['button', 'button--primary', 'form-submit']],
+    ];
+    $form['third_party_settings']['grants_metadata']['new_version_description'] = [
+      '#prefix' => '<div>',
+      '#suffix' => '</div>',
+      '#markup' => t(
+        'Allows you to duplicate the webform and automatically link the parent webform to this new form.
+        This will also archive the current version.'
+      ),
     ];
   }
 }
