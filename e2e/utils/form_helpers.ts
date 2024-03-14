@@ -1,3 +1,4 @@
+import cloneDeep from "lodash.clonedeep"
 import {logger} from "./logger";
 import {Page, expect, Locator} from "@playwright/test";
 import {
@@ -1104,10 +1105,10 @@ function createFormData(baseFormData: FormData, overrides: Partial<FormData>): F
     result[pageKey] = {
       ...baseFormData.formPages[pageKey],
       ...(overrides.formPages && overrides.formPages[pageKey]),
-      items: deepCopy({
-        ...baseFormData.formPages[pageKey].items,
+      items: {
+        ...cloneDeep(baseFormData.formPages[pageKey].items),
         ...(overrides.formPages && overrides.formPages[pageKey] && overrides.formPages[pageKey].items),
-      }),
+      },
     };
 
     if (overrides.formPages && overrides.formPages[pageKey]) {
@@ -1116,28 +1117,18 @@ function createFormData(baseFormData: FormData, overrides: Partial<FormData>): F
       if (overrides.formPages[pageKey].itemsToRemove) {
 
         overrides.formPages[pageKey].itemsToRemove?.forEach((itemToRemove: string) => {
-
           // Remove multi-value fields.
           const multiValueKeyInfo = parseMultiValueKey(itemToRemove);
           if (multiValueKeyInfo) {
-
             const { baseName, index, subItemKey } = multiValueKeyInfo;
-            const dynamicMulti = result[pageKey]?.items[baseName]?.dynamic_multi?.multi?.items;
-            const multi = result[pageKey]?.items[baseName]?.multi?.items;
-            const multiItems = dynamicMulti || multi;
+            const dynamicMultiValueItems = result[pageKey]?.items[baseName]?.dynamic_multi?.multi?.items;
+            const multiValueItems = result[pageKey]?.items[baseName]?.multi?.items;
+            const multiItems = dynamicMultiValueItems || multiValueItems;
 
             if (multiItems && multiItems[index]) {
-              const filteredItems = multiItems[index].filter((item: any) => {
+              multiItems[index] = multiItems[index].filter((item: any) => {
                 return item.selector?.value !== `${baseName}-items-[INDEX]-item-${subItemKey}`;
               });
-
-              if (dynamicMulti) {
-                // @ts-ignore
-                result[pageKey].items[baseName].dynamic_multi.multi.items[index] = filteredItems;
-              } else {
-                // @ts-ignore
-                result[pageKey].items[baseName].multi.items[index] = filteredItems;
-              }
             }
           } else {
             // Remove normal fields.
