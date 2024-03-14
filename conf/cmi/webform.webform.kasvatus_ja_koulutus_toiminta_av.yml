@@ -16,8 +16,8 @@ third_party_settings:
     applicationTypeTerms:
       45: '45'
     applicationTargetGroup: '21'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2029-07-30T11:19:00'
+    applicationOpen: '2024-01-02T00:00:00'
+    applicationClose: '2024-01-31T16:00:00'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '0'
@@ -329,8 +329,8 @@ elements: |-
               class:
                 - webform--small
             '#maxlength': 4
-            '#pattern': '^[0-9]*$'
-            '#pattern_error': 'Vain numeroita'
+            '#pattern': ^(19\d\d|20\d\d|2100)$
+            '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
           amount:
             '#type': textfield
             '#required': true
@@ -411,7 +411,7 @@ elements: |-
           visible:
             ':input[name="compensation_boolean"]':
               value: '1'
-        '#markup': '<p>Anna käyttöselvitys Helsingin kaupungilta saadusta avustuksesta. Avustuksen käyttöselvitys tehdään avustuksesta, joka koskee viimeisintä päättynyttä tilikautta. Käyttöselvitystä ei tehdä käynnissä olevalta tilikaudelta. Käyttöselvityksen antaminen on seuraavan avustuksen saamisen ehtona. Mikäli käyttöselvitystä ei tehdä, avustusta ei myönnetä eikä makseta. Myönnetty avustus voidaan periä takaisin, jos edellisen avustuksen käyttöä ei ole hyväksyttävästi selvitetty.</p>'
+        '#markup': 'Anna k&auml;ytt&ouml;selvitys Helsingin kaupungilta saadusta avustuksesta. Avustuksen k&auml;ytt&ouml;selvitys tehd&auml;&auml;n avustuksesta, joka koskee viimeisint&auml; p&auml;&auml;ttynytt&auml; tilikautta. K&auml;ytt&ouml;selvityst&auml; ei tehd&auml; k&auml;ynniss&auml; olevalta tilikaudelta. K&auml;ytt&ouml;selvityksen antaminen on seuraavan avustuksen saamisen ehtona. Mik&auml;li k&auml;ytt&ouml;selvityst&auml; ei tehd&auml;, avustusta ei my&ouml;nnet&auml; eik&auml; makseta. My&ouml;nnetty avustus voidaan peri&auml; takaisin, jos edellisen avustuksen k&auml;ytt&ouml;&auml; ei ole hyv&auml;ksytt&auml;v&auml;sti selvitetty.'
       compensation_explanation:
         '#type': textarea
         '#title': 'Selvitys avustuksen käytöstä'
