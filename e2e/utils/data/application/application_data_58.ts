@@ -5,6 +5,7 @@ import {ATTACHMENTS} from "../attachment_data";
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatAddress,
+  viewPageFormatCurrency,
   viewPageFormatFilePath,
   viewPageFormatLowerCase,
   viewPageFormatNumber,
@@ -67,29 +68,122 @@ const baseFormRegisteredCommunity_58: FormData = {
           },
           value: '2024',
         },
-        "edit-orienteering-maps-items-0-item-mapname": {
-          value: faker.lorem.sentences(4),
-          viewPageSelector: '.form-item-orienteering-maps',
-        },
-        "edit-orienteering-maps-items-0-item-size": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-orienteering-maps-items-0-item-voluntaryhours": {
-          value: faker.number.int({min: 30, max: 50}).toString(),
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-orienteering-maps-items-0-item-cost": {
-          value: faker.number.int({min: 100, max: 200}).toString(),
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-orienteering-maps-items-0-item-othercompensations": {
-          value: faker.number.int({min: 10, max: 50}).toString(),
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
+        'edit-orienteering-maps': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-orienteering-maps-add-submit',
+              resultValue: 'edit-orienteering-maps-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-mapname',
+                  },
+                  value: faker.lorem.sentences(4),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-size',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-voluntaryhours',
+                  },
+                  value: faker.number.int({min: 30, max: 50}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-cost',
+                  },
+                  value: faker.number.int({min: 100, max: 200}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-othercompensations',
+                  },
+                  value: faker.number.int({min: 10, max: 50}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-mapname',
+                  },
+                  value: faker.lorem.sentences(4),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-size',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-voluntaryhours',
+                  },
+                  value: faker.number.int({min: 30, max: 50}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-cost',
+                  },
+                  value: faker.number.int({min: 100, max: 200}).toString(),
+                  viewPageFormatter: viewPageFormatCurrency,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-othercompensations',
+                  },
+                  value: faker.number.int({min: 10, max: 50}).toString(),
+                  viewPageFormatter: viewPageFormatCurrency,
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "nextbutton": {
           role: 'button',

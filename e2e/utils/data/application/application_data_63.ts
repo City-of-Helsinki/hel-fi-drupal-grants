@@ -83,8 +83,271 @@ const baseFormRegisteredCommunity_63: FormData = {
           },
           value: "Kyllä",
         },
-        // muut samaan tarkoitukseen myönnetyt
-        // muut samaan tarkoitukseen haetut
+        "edit-myonnetty-avustus": {
+          role: 'dynamicmultivalue',
+          label: '',
+          dynamic_multi: {
+            radioSelector: {
+              type: 'dom-id-label',
+              name: 'data-drupal-selector',
+              value: 'edit-olemme-saaneet-muita-avustuksia-1',
+            },
+            revealedElementSelector: {
+              type: 'dom-id',
+              name: '',
+              value: '#edit-myonnetty-avustus',
+            },
+            multi: {
+              buttonSelector: {
+                type: 'data-drupal-selector',
+                name: 'data-drupal-selector',
+                value: 'edit-myonnetty-avustus-add-submit',
+                resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
+              },
+              //@ts-ignore
+              items: {
+                0: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
+                    },
+                    value: 'Valtio',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+                1: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
+                    },
+                    value: 'EU',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+              },
+              expectedErrors: {}
+            }
+          },
+        },
+
+        "edit-haettu-avustus-tieto": {
+          role: 'dynamicmultivalue',
+          label: '',
+          dynamic_multi: {
+            radioSelector: {
+              type: 'dom-id-label',
+              name: 'data-drupal-selector',
+              value: 'edit-olemme-hakeneet-avustuksia-muualta-kuin-helsingin-kaupungilta-1',
+            },
+            revealedElementSelector: {
+              type: 'dom-id',
+              name: '',
+              value: '#edit-haettu-avustus-tieto',
+            },
+            multi: {
+              buttonSelector: {
+                type: 'data-drupal-selector',
+                name: 'data-drupal-selector',
+                value: 'edit-haettu-avustus-tieto-add-submit',
+                resultValue: 'edit-haettu-avustus-tieto-items-[INDEX]',
+              },
+              //@ts-ignore
+              items: {
+                0: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer',
+                    },
+                    value: 'Muu',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+                1: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer',
+                    },
+                    value: 'Säätiö',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+              },
+              expectedErrors: {}
+            }
+          },
+        },
         "nextbutton": {
           role: 'button',
           selector: {
@@ -146,22 +409,117 @@ const baseFormRegisteredCommunity_63: FormData = {
           value: "Ei",
           viewPageFormatter: viewPageFormatBoolean,
         },
-        "edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location": {
-          value: faker.lorem.words(2),
-          viewPageSelector: '.form-item-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa',
+        'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-add-submit',
+              resultValue: 'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-[INDEX]-item-location',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-[INDEX]-item-postcode',
+                  },
+                  value: faker.location.zipCode(),
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-[INDEX]-item-location',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-[INDEX]-item-postcode',
+                  },
+                  value: faker.location.zipCode(),
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
-        "edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode": {
-          value: '20100',
-          viewPageSelector: '.form-item-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa',
-        },
-        "edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-organizationname": {
-          value: faker.lorem.words(2),
-          viewPageSelector: '.form-item-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa',
-        },
-        "edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa',
-          viewPageFormatter: viewPageFormatCurrency
+        'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-add-submit',
+              resultValue: 'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-[INDEX]-item-organizationname',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-[INDEX]-item-fee',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatCurrency
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-[INDEX]-item-organizationname',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-[INDEX]-item-fee',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatCurrency
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "edit-miten-nuoret-osallistuvat-yhdistyksen-toiminnan-suunnitteluun-ja": {
           role: 'input',
@@ -209,47 +567,188 @@ const baseFormRegisteredCommunity_63: FormData = {
     },
     "vuokra_avustushakemuksen_tiedot": {
       items: {
-        "edit-vuokratun-tilan-tiedot-items-0-item-premiseaddress": {
-          value: faker.location.streetAddress(),
-          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
-        },
-        "edit-vuokratun-tilan-tiedot-items-0-item-premisepostalcode": {
-          value: faker.location.zipCode(),
-          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
-        },
-        "edit-vuokratun-tilan-tiedot-items-0-item-premisepostoffice": {
-          value: faker.location.city(),
-          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
-        },
-        "edit-vuokratun-tilan-tiedot-items-0-item-rentsum": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
-          viewPageFormatter: viewPageFormatCurrency,
-          selector: {
-            type: 'data-drupal-selector-sequential',
-            name: 'data-drupal-selector',
-            value: 'edit-vuokratun-tilan-tiedot-items-0-item-rentsum',
-          }
-        },
-        "edit-vuokratun-tilan-tiedot-items-0-item-lessorname": {
-          value: faker.person.fullName(),
-          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
-        },
-        "edit-vuokratun-tilan-tiedot-items-0-item-lessorphoneoremail": {
-          value: faker.phone.number(),
-          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
-        },
-        "edit-vuokratun-tilan-tiedot-items-0-item-usage": {
-          value: faker.lorem.words(10),
-          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
-        },
-        "edit-vuokratun-tilan-tiedot-items-0-item-daysperweek": {
-          value: faker.number.int({min: 1, max: 7}).toString(),
-          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
-        },
-        "edit-vuokratun-tilan-tiedot-items-0-item-hoursperday": {
-          value: faker.number.int({min: 1, max: 24}).toString(),
-          viewPageSelector: '.form-item-vuokratun-tilan-tiedot',
+        'edit-vuokratun-tilan-tiedot': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-vuokratun-tilan-tiedot-add-submit',
+              resultValue: 'edit-vuokratun-tilan-tiedot-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-premiseaddress',
+                  },
+                  value: faker.location.streetAddress(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-premisepostalcode',
+                  },
+                  value: faker.location.zipCode(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-premisepostoffice',
+                  },
+                  value: faker.location.city(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-rentsum',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatCurrency,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-lessorname',
+                  },
+                  value: faker.person.fullName(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-lessorphoneoremail',
+                  },
+                  value: faker.phone.number(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-usage',
+                  },
+                  value: faker.lorem.words(10),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-daysperweek',
+                  },
+                  value: faker.number.int({min: 1, max: 7}).toString(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-hoursperday',
+                  },
+                  value: faker.number.int({min: 1, max: 24}).toString(),
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-premiseaddress',
+                  },
+                  value: faker.location.streetAddress(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-premisepostalcode',
+                  },
+                  value: faker.location.zipCode(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-premisepostoffice',
+                  },
+                  value: faker.location.city(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-rentsum',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatCurrency,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-lessorname',
+                  },
+                  value: faker.person.fullName(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-lessorphoneoremail',
+                  },
+                  value: faker.phone.number(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-usage',
+                  },
+                  value: faker.lorem.words(10),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-daysperweek',
+                  },
+                  value: faker.number.int({min: 1, max: 7}).toString(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-vuokratun-tilan-tiedot-items-[INDEX]-item-hoursperday',
+                  },
+                  value: faker.number.int({min: 1, max: 24}).toString(),
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "edit-lisatiedot": {
           role: 'input',
