@@ -98,64 +98,12 @@ const formPages: PageHandlers = {
         .fill(items['edit-seuraavalle-vuodelle-suunniteltu-muutos-tilojen-kaytossa-tunnit-'].value ?? '');
     }
 
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-premisename']) {
-      await page.locator('#edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-premisename')
-        .fill(items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-premisename'].value ?? '');
-    }
-
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-datebegin']) {
-      await page.locator('#edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-datebegin')
-        .fill(items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-datebegin'].value ?? '');
-    }
-
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-dateend']) {
-      await page.locator('#edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-dateend')
-        .fill(items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-dateend'].value ?? '');
-    }
-
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-tenantname']) {
-      await page.locator('#edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-tenantname')
-        .fill(items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-tenantname'].value ?? '');
-    }
-
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-hours']) {
-      await fillInputField(
-        items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-hours'].value ?? '',
-        items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-hours'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-hours',
-        },
-        page,
-        'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-hours'
-      );
-    }
-
-    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-sum']) {
-      await fillInputField(
-        items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-sum'].value ?? '',
-        items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-sum'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-sum',
-        },
-        page,
-        'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-sum'
-      );
+    if (items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal']) {
+      await fillFormField(page, items['edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal'], 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal')
     }
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
-
-    if (items['edit-club-section-items-0-item-sectionname']) {
-      await page.locator('#edit-club-section-items-0-item-sectionname')
-        .selectOption(items['edit-club-section-items-0-item-sectionname'].value ?? '');
-    }
-
-    if (items['edit-club-section-items-0-item-sectionother']) {
-      await page.locator('#edit-club-section-items-0-item-sectionother')
-        .fill(items['edit-club-section-items-0-item-sectionother'].value ?? '');
-    }
 
     // Loop trough number input fields.
     for (const [itemKey, item] of Object.entries(items)) {
@@ -171,6 +119,10 @@ const formPages: PageHandlers = {
           itemKey
         );
       }
+    }
+
+    if (items['edit-club-section']) {
+      await fillFormField(page, items['edit-club-section'], 'edit-club-section')
     }
 
   },
