@@ -72,6 +72,27 @@ function hdbt_subtheme_preprocess(&$variables): void {
 }
 
 /**
+ * Implements hook_preprocess_HOOK().
+ */
+function hdbt_subtheme_preprocess_menu(&$variables): void {
+  $variables['#cache']['contexts'] = ['url.path'];
+
+  foreach ($variables['items'] as &$item) {
+    if (isset($item['url'])) {
+      /** @var \Drupal\Core\Url $url */
+      $url = $item['url'];
+
+      // Check if url is current page where we are now. Ignore query strings.
+      $current_path = explode('?', Drupal::request()->getRequestUri())[0];
+      $item['currentPath'] = $current_path;
+      if ($item['url']->toString() == $current_path) {
+        $item['is_currentPage'] = TRUE;
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_aggregator_fetcher_info_alter().
  */
 function hdbt_subtheme_preprocess_views_view(&$variables): void {
