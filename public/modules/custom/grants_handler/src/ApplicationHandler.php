@@ -738,7 +738,7 @@ class ApplicationHandler {
    * @return \Drupal\webform\Entity\Webform
    *   Webform object.
    */
-  public static function getWebformFromApplicationNumber(string $applicationNumber): ?Webform {
+  public static function getWebformFromApplicationNumber(string $applicationNumber, $all = FALSE): bool|Webform|array {
 
     $isOldFormat = FALSE;
     if (strpos($applicationNumber, 'GRANTS') !== FALSE) {
@@ -782,6 +782,11 @@ class ApplicationHandler {
     if (!$webform) {
       return NULL;
     }
+
+    if ($all) {
+      return $webform;
+    }
+
     return reset($webform);
   }
 
@@ -845,17 +850,21 @@ class ApplicationHandler {
   ): ?WebformSubmission {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
-    $webform = self::getWebformFromApplicationNumber($applicationNumber);
+    $webform = self::getWebformFromApplicationNumber($applicationNumber, TRUE);
 
     if (!$webform) {
       return NULL;
     }
 
+    $webformIds = array_map(function ($element) {
+      return $element->id();
+    }, $webform);
+
     $result = \Drupal::entityTypeManager()
       ->getStorage('webform_submission')
       ->loadByProperties([
         'serial' => $submissionSerial,
-        'webform_id' => $webform->id(),
+        'webform_id' => $webformIds,
       ]);
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
