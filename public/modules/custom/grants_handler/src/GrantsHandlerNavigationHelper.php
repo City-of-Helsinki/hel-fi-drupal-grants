@@ -116,7 +116,7 @@ class GrantsHandlerNavigationHelper {
   /**
    * Has visited page.
    *
-   * Saves errors & page visits to db
+   * Saves errors & page visits to db.
    *
    * @param \Drupal\webform\WebformSubmissionInterface $webformSubmission
    *   A webform submission entity.
@@ -186,7 +186,7 @@ class GrantsHandlerNavigationHelper {
       }
       $this->cache[$webformId]['errors'] = $data;
     }
-    
+
     return $data[$page] ?? $data;
   }
 
@@ -231,7 +231,6 @@ class GrantsHandlerNavigationHelper {
     if (!$webformSubmission->id()) {
       return [];
     }
-    $data = $webformSubmission->getData();
     $query = $this->database->select(self::TABLE, 'l');
     $query->condition('sid', $webformSubmission->id());
     $cacheKey = $webformSubmission->id();
