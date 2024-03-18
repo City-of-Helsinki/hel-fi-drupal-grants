@@ -1,4 +1,4 @@
-import {expect, Page} from "@playwright/test";
+import {expect, Page, test} from "@playwright/test";
 import {FormData} from "./data/test_data";
 import {logger} from "./logger";
 
@@ -36,6 +36,11 @@ enum DeletionMethod {
  *   The env form data.
  */
 const deleteDraftApplication = async (formKey: string, page: Page, formDetails: FormData, storedata: any) => {
+  if (storedata === undefined || storedata[formKey] === undefined) {
+    logger(`Skipping deletion test: No env data stored after the "${formDetails.title}" test.`);
+    test.skip(true, 'Skip deletion test');
+  }
+
   const thisStoreData = storedata[formKey];
   if (thisStoreData.status !== 'DRAFT') {
     return;

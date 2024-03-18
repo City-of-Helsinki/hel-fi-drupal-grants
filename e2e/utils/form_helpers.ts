@@ -99,25 +99,12 @@ const fillGrantsFormPage = async (
   const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
   expect(initialPathname).toMatch(expectedPattern);
 
+  // Store submissionUrl.
   const applicationId = await getApplicationNumberFromBreadCrumb(page);
   const submissionUrl = await extractUrl(page);
 
   // Hide the sliding popup once.
   await hideSlidePopup(page);
-
-  /**
-   * Save info about this application to env. This way they can be deleted
-   * via normal DRAFT deleting tests.
-   */
-  const storeName = `${profileType}_${formID}`;
-  const newData = {
-    [formKey]: {
-      submissionUrl: submissionUrl,
-      applicationId,
-      status: 'DRAFT'
-    }
-  }
-  saveObjectToEnv(storeName, newData);
 
   // Loop form pages
   for (const [formPageKey, formPageObject]
