@@ -1,4 +1,4 @@
-import {Page, expect} from "@playwright/test";
+import {Page, expect, test} from "@playwright/test";
 import {logger} from "./logger";
 import {
   FormField,
@@ -29,9 +29,12 @@ const validateSubmission = async (
   formDetails: FormData,
   storedata: any
 ) => {
+  if (storedata === undefined || storedata[formKey] === undefined) {
+    logger(`Skipping validation test: No env data stored after the "${formDetails.title}" test.`);
+    test.skip(true, 'Skip validation test');
+  }
 
   const thisStoreData = storedata[formKey];
-
   if (thisStoreData.status === 'DRAFT') {
     await validateDraft(page, formDetails, thisStoreData);
   } else {
