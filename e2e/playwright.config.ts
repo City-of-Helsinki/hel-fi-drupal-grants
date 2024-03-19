@@ -75,11 +75,11 @@ export default defineConfig({
       testMatch: '/forms/registered_community_*',
       dependencies: ['profile-registered_community']
     },
-    // {
-    //     name: 'forms-unregistered',
-    //     testMatch: '/forms/unregistered_community_*',
-    //     dependencies: ['profile-unregistered_community']
-    // },
+    {
+      name: 'forms-unregistered',
+      testMatch: '/forms/unregistered_community_*',
+      dependencies: ['profile-unregistered_community']
+    },
     {
       name: 'forms-48',
       testMatch: /forms\/.*_48\.ts$/,

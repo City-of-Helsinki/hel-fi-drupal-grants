@@ -72,6 +72,27 @@ function hdbt_subtheme_preprocess(&$variables): void {
 }
 
 /**
+ * Implements hook_preprocess_HOOK().
+ */
+function hdbt_subtheme_preprocess_menu(&$variables): void {
+  $variables['#cache']['contexts'] = ['url.path'];
+
+  foreach ($variables['items'] as &$item) {
+    if (isset($item['url'])) {
+      /** @var \Drupal\Core\Url $url */
+      $url = $item['url'];
+
+      // Check if url is current page where we are now. Ignore query strings.
+      $current_path = explode('?', Drupal::request()->getRequestUri())[0];
+      $item['currentPath'] = $current_path;
+      if ($item['url']->toString() == $current_path) {
+        $item['is_currentPage'] = TRUE;
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_aggregator_fetcher_info_alter().
  */
 function hdbt_subtheme_preprocess_views_view(&$variables): void {
@@ -593,48 +614,62 @@ function hdbt_subtheme_preprocess_tpr_service_channel(array &$variables): void {
   $node = \Drupal::routeMatch()->getParameter('node');
   $typeName = $node ? $node->bundle() : NULL;
 
-  if ($typeName === 'service') {
-    $variables['#cache']['max-age'] = 0;
-    $webform = $node->get('field_webform')->target_id;
+  if ($typeName !== 'service') {
+    return;
+  }
 
-    if (!isset($variables['content']['links']) || !$webform) {
+  $variables['#cache']['max-age'] = 0;
+  $webform = $node->get('field_webform')->target_id;
+
+  if (!isset($variables['content']['links'])) {
+    return;
+  }
+
+  $items = $variables['content']['links']['#items'] ?? NULL;
+
+  if (!$items) {
+    return;
+  }
+
+  $current_url = Url::fromRoute('<current>');
+  $path = $current_url->toString();
+
+  // Remove link if the path is similar to TPR link or if the webform matches.
+  foreach ($variables['content']['links']['#items']->getIterator() as $key => $item) {
+    $values = $item->getValue();
+    $item->setValue($values);
+    if (
+      ($webform && strpos($values['uri'], $webform) !== FALSE) ||
+      strpos($values['uri'], $path) !== FALSE
+    ) {
+      $items->removeItem($key);
+    }
+  }
+
+  // New application button for logged in user.
+  $servicePageAuthBlock = \Drupal::service('plugin.manager.block')
+    ->createInstance('grants_handler_service_page_auth_block', []);
+  $blockLink = $servicePageAuthBlock->buildAsTprLink();
+  if ($blockLink) {
+    $items->appendItem($blockLink);
+  }
+
+  // Login link for unauthenticated users.
+  if (!\Drupal::currentUser()->isAuthenticated()) {
+    static $rendered = FALSE;
+
+    if ($rendered) {
       return;
     }
 
-    $items = $variables['content']['links']['#items'] ?? NULL;
+    $link = Url::fromRoute('user.login', [], ['absolute' => TRUE]);
+    $items->appendItem([
+      'title' => t('Log into the service', [], ['context' => 'grants_front_banner']),
+      'uri' => $link->toString(),
+      'options' => [],
+      '_attributes' => [],
+    ]);
 
-    if (!$items) {
-      return;
-    }
-
-    $current_url = Url::fromRoute('<current>');
-    $path = $current_url->toString();
-
-    foreach ($variables['content']['links']['#items']->getIterator() as $key => $item) {
-      $values = $item->getValue();
-      $item->setValue($values);
-      if (
-        strpos($values['uri'], $webform) !== FALSE ||
-        strpos($values['uri'], $path) !== FALSE
-      ) {
-        $items->removeItem($key);
-      }
-    }
-
-    $servicePageAuthBlock = \Drupal::service('plugin.manager.block')->createInstance('grants_handler_service_page_auth_block', []);
-    $blockLink = $servicePageAuthBlock->buildAsTprLink();
-    if ($blockLink) {
-      $items->appendItem($blockLink);
-    }
-
-    if (!\Drupal::currentUser()->isAuthenticated()) {
-      $link = Url::fromRoute('user.login', [], ['absolute' => TRUE]);
-      $items->appendItem([
-        'title' => t('Log into the service', [], ['context' => 'grants_front_banner']),
-        'uri' => $link->toString(),
-        'options' => [],
-        '_attributes' => [],
-      ]);
-    }
+    $rendered = TRUE;
   }
 }

@@ -47,7 +47,9 @@ class NuorisoLomaDefinition extends ComplexDataDefinitionBase {
         ->setPropertyDefinition(
           'meno',
           GrantsBudgetInfoDefinition::getOtherCostDefinition()
-        );
+        )
+        ->setPropertyDefinition('budget_other_income')
+        ->setPropertyDefinition('budget_other_cost');
 
       $info['lisakysymys_1'] = DataDefinition::create('string')
         ->setSetting('jsonPath', [

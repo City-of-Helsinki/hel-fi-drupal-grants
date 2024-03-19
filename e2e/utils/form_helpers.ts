@@ -3,16 +3,13 @@ import {Page, expect, Locator} from "@playwright/test";
 import {
   FormData,
   Selector,
+  PageHandlers,
+  FormFieldWithRemove,
   isMultiValueField,
-  isDynamicMultiValueField, PageHandlers,
-  FormFieldWithRemove
+  isDynamicMultiValueField
 } from "./data/test_data"
 
-import {
-  PATH_TO_TEST_PDF,
-  saveObjectToEnv,
-  extractUrl
-} from "./helpers";
+import {saveObjectToEnv, extractUrl} from "./helpers";
 
 
 /**
@@ -107,25 +104,12 @@ const fillGrantsFormPage = async (
     throw new Error(`Onko hakemus auki`);
   }
 
+  // Store submissionUrl.
   const applicationId = await getApplicationNumberFromBreadCrumb(page);
   const submissionUrl = await extractUrl(page);
 
   // Hide the sliding popup once.
   await hideSlidePopup(page);
-
-  /**
-   * Save info about this application to env. This way they can be deleted
-   * via normal DRAFT deleting tests.
-   */
-  const storeName = `${profileType}_${formID}`;
-  const newData = {
-    [formKey]: {
-      submissionUrl: submissionUrl,
-      applicationId,
-      status: 'DRAFT'
-    }
-  }
-  saveObjectToEnv(storeName, newData);
 
   // Loop form pages
   for (const [formPageKey, formPageObject]
@@ -162,6 +146,11 @@ const fillGrantsFormPage = async (
       await pageHandlers[formPageKey](page, formPageObject);
     } else {
       continue;
+    }
+
+    // Make sure hidden fields are not visible.
+    if (formPageObject.itemsToBeHidden) {
+      await validateHiddenFields(page, formPageObject.itemsToBeHidden, formPageKey);
     }
 
     /**
@@ -380,6 +369,29 @@ const verifySubmit = async (page: Page,
   }
   saveObjectToEnv(storeName, newData);
 
+}
+
+/**
+ * The validateHiddenFields function.
+ *
+ * This function checks that the passed in items
+ * in itemsToBeHidden are not visible on a given page.
+ * The functionality is used in tests where the value of
+ * field X alters the visibility of field Y.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param itemsToBeHidden
+ *   An array of items that should be hidden.
+ * @param formPageKey
+ *   The form page we are on.
+ */
+const validateHiddenFields = async (page: Page, itemsToBeHidden: string[], formPageKey: string) => {
+  for (const hiddenItem of itemsToBeHidden) {
+    const hiddenSelector = `[data-drupal-selector="${hiddenItem}"]`;
+    await expect(page.locator(hiddenSelector), `Field ${hiddenItem} is not hidden on ${formPageKey}.`).not.toBeVisible();
+    logger(`Field ${hiddenItem} is hidden on ${formPageKey}.`)
+  }
 }
 
 /**
@@ -1112,13 +1124,25 @@ function createFormData(baseFormData: FormData, overrides: Partial<FormData>): F
       },
     };
 
-    if (overrides.formPages && overrides.formPages[pageKey] && overrides.formPages[pageKey].itemsToRemove) {
-      // Remove items specified in overrides based on the itemsToRemove list
-      // @ts-ignore
-      overrides.formPages[pageKey].itemsToRemove.forEach((itemToRemove: string | number) => {
+    if (overrides.formPages && overrides.formPages[pageKey]) {
+
+      // Remove any fields under itemsToRemove.
+      if (overrides.formPages[pageKey].itemsToRemove) {
         // @ts-ignore
-        delete result[pageKey]?.items[itemToRemove as string];
-      });
+        overrides.formPages[pageKey].itemsToRemove.forEach((itemToRemove: string | number) => {
+          // @ts-ignore
+          delete result[pageKey]?.items[itemToRemove as string];
+        });
+      }
+
+      // Remove any fields under itemsToBeHidden.
+      if (overrides.formPages[pageKey].itemsToBeHidden) {
+        // @ts-ignore
+        overrides.formPages[pageKey].itemsToBeHidden.forEach((itemToBeHidden: string | number) => {
+          // @ts-ignore
+          delete result[pageKey]?.items[itemToBeHidden as string];
+        });
+      }
     }
 
     return result;
