@@ -1,5 +1,5 @@
 import {logger} from "./logger";
-import {Page, expect, Locator} from "@playwright/test";
+import {Page, expect, Locator, test} from "@playwright/test";
 import {
   FormData,
   Selector,
@@ -98,6 +98,13 @@ const fillGrantsFormPage = async (
   const initialPathname = new URL(page.url()).pathname;
   const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
   expect(initialPathname).toMatch(expectedPattern);
+
+  // Make sure the needed profile exists.
+  if (process.env[`profile_created_${profileType}`] === undefined ||
+      process.env[`profile_created_${profileType}`] !== 'TRUE') {
+    logger(`Missing profile ${profileType} for form ID ${formID}. Skipping test.`);
+    test.skip(true, 'Missing profile for form.');
+  }
 
   // Store submissionUrl.
   const applicationId = await getApplicationNumberFromBreadCrumb(page);

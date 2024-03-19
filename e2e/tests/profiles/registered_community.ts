@@ -9,7 +9,6 @@ import {
   FormData
 } from '../../utils/data/test_data'
 
-const profileVariableName = 'profileCreatedRegistered';
 const profileType = 'registered_community';
 let passedProfileCreationTest: boolean = false;
 
@@ -19,20 +18,19 @@ test.describe('Registered Community - Grants Profile', () => {
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
     await selectRole(page, 'REGISTERED_COMMUNITY');
-  });
 
-  test.beforeEach(async () => {
-    const skip = await isProfileCreated(profileVariableName, profileType);
+    // Check if the profile is already created.
+    const skip = await isProfileCreated(profileType);
     test.skip(skip);
   });
 
   test.afterAll(() => {
     if (passedProfileCreationTest) {
-      logger('Profile created for: Registered community.');
-      process.env.profileExistsRegistered = 'TRUE';
+      logger(`Profile created for: ${profileType}`);
+      process.env[`profile_created_${profileType}`] = 'TRUE';
     } else {
-      logger('There were failed tests for: Registered community.');
-      process.env.profileExistsRegistered = 'FALSE';
+      logger(`There were failed tests for: ${profileType}`);
+      process.env[`profile_created_${profileType}`] = 'FALSE';
     }
   });
 

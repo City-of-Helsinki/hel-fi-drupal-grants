@@ -19,37 +19,29 @@ function isTimestampLessThanAnHourAgo(timestamp: string) {
  * Try to check if profile is just created so we can skip these, when running
  * multiple test runs.
  *
- * @param profileVariable
- *  Name that is used to save details of this profile run.
  * @param profileType
  *  Profile type, registered_community, private_person etc..
  */
-const isProfileCreated = async (profileVariable: string, profileType: string) => {
-  const isCreatedThisTime = process.env[profileVariable] === 'TRUE';
-  const varname = 'fetchedProfile_' + profileType;
-  const profileDoesNotExists = process.env[varname] === undefined;
+const isProfileCreated = async (profileType: string) => {
+  const profileExists = process.env[`profile_created_${profileType}`] === 'TRUE';
 
   logger('Profile...');
 
-  if (process.env.CREATE_PROFILE === 'TRUE') {
-    logger('... creation is forced through variable');
-    // No need to wait for the asynchronous operation if not necessary
+  /*if (process.env.CREATE_PROFILE === 'TRUE') {
+    logger('... creation is forced through variable.');
+    return false;
+  }*/
+
+  if (!profileExists) {
+    logger('... does not exist and will be created.');
     return false;
   }
 
-  if (isCreatedThisTime && !profileDoesNotExists) {
-    logger('... is created this run?');
-    return true;
-  }
-
-  // Return the promise
   return fetchLatestProfileByType(process.env.TEST_USER_UUID ?? '', profileType)
     .then((profile) => {
       if (profile && profile.updated_at) {
 
-        // process.env[varname] = JSON.stringify(profile);
-        process.env[varname] = 'FOUND';
-
+        process.env[`profile_created_${profileType}`] = 'TRUE';
         const {updated_at} = profile;
         const isLessThanHourAgo = isTimestampLessThanAnHourAgo(updated_at);
 
@@ -58,16 +50,13 @@ const isProfileCreated = async (profileVariable: string, profileType: string) =>
         } else {
           logger('...created more than hour ago and should be re-tested.');
         }
-
         return isLessThanHourAgo;
-        // return false;
       }
       return false;
     })
     .catch((error) => {
       console.error('Error fetching profile:', error);
-      // Handle the error or log it
-      return false; // Assuming profile fetch failure means not created
+      return false;
     });
 };
 
