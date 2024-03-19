@@ -1,0 +1,108 @@
+.askem {
+  background: #f2f2f2;
+  margin-top: 64px;
+  margin-bottom: -112px;
+  .askem-plugin.askem-plugin {
+    @media only screen and (max-width: 640px) {
+      width: 100%;
+    }
+    margin: auto;
+    max-width: 1132px;
+    padding-left: 32px;
+    padding-right: 32px;
+    font-family: HelsinkiGrotesk, Arial, sans-serif;
+    padding-bottom: 112px;
+    padding-top: 80px;
+  }
+  .askem-header-text {
+    --line-height: 1.1666666667;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  .askem-reaction:last-child .askem-reaction-button.askem-reaction-button .askem-label::after {
+    @include pseudo-icon('face-sad', $spacing-and-half, $color-black, flex);
+  }
+  .askem-reaction:last-child:hover .askem-reaction-button.askem-reaction-button .askem-label::after {
+    @include pseudo-icon('face-sad', $spacing-and-half, $color-white, flex);
+  }
+  .askem-reaction:first-child .askem-reaction-button.askem-reaction-button .askem-label::after {
+    @include pseudo-icon('face-smile', $spacing-and-half, $color-black, flex);
+  }
+  .askem-reaction:first-child:hover .askem-reaction-button.askem-reaction-button .askem-label::after {
+    @include pseudo-icon('face-smile', $spacing-and-half, $color-white, flex);
+  }
+  .askem-reactions-group .askem-reaction-button.askem-reaction-button {
+    position: relative;
+    border: 2px black solid;
+    line-height: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    cursor: pointer;
+    padding: 14px 32px;
+
+    &::before {
+      --size: 100%;
+      border: 2px solid transparent;
+      content: '';
+      height: var(--size);
+      left: 0;
+      position: absolute;
+      width: var(--size);
+    }
+
+    .askem-label {
+      @include font('button');
+      align-items: center;
+      color: $color-black;
+      display: flex;
+      justify-content: center;
+      min-width: max-content;
+      width: 100%;
+
+      &::after {
+        @include pseudo-icon('face-neutral', $spacing-and-half, $color-black, flex);
+        margin-left: 16px;
+      }
+
+    }
+
+    .askem-reaction-count {
+      display: none;
+    }
+
+    &:focus {
+      background-color: $color-white;
+      box-shadow: none;
+      color: $color-black;
+
+      .askem-label {
+        color: $color-black;
+      }
+
+      &::before {
+        --size: calc(100% + calc(#{$spacing-and-half} / 2));
+        border-color: $color-black;
+        left: calc(-#{$spacing-and-half} / 4);
+        top: calc(-#{$spacing-and-half} / 4);
+      }
+    }
+
+    &:hover {
+      background-color: $color-black;
+
+      .askem-label {
+        color: $color-white;
+
+        &::after {
+          background-color: $color-white;
+        }
+      }
+    }
+
+    &:focus:hover .askem-label {
+      color: $color-white;
+    }
+  }
+
+}
