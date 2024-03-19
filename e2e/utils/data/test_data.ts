@@ -113,7 +113,7 @@ interface FormData {
   formPages: {
     [pageKey: string]: FormPage;
   };
-  expectedDestination: string;
+  expectedDestination?: string;
   expectedErrors: {},
   viewPageSkipValidation?: boolean,
 }

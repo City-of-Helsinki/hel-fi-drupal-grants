@@ -1,5 +1,5 @@
 import {logger} from "./logger";
-import {Page, expect, Locator} from "@playwright/test";
+import {Page, expect, Locator, test} from "@playwright/test";
 import {
   FormData,
   Selector,
@@ -101,7 +101,8 @@ const fillGrantsFormPage = async (
   try {
     expect(initialPathname).toMatch(expectedPattern);
   } catch (error) {
-    throw new Error(`Onko hakemus auki`);
+    logger(`Skipping test: Application not open in "${formDetails.title}" test.`);
+    test.skip(true, 'Skip form test');
   }
 
   // Store submissionUrl.

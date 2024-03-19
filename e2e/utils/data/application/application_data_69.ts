@@ -469,7 +469,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       ],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
@@ -511,7 +510,6 @@ const missingValuesUnregistered: FormDataWithRemoveOptionalProps = {
       ],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename': 'Virhe sivulla 2. Leiripaikat: Tilan nimi kenttä on pakollinen.',
@@ -617,7 +615,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
     'edit-tulo-items-0-item-label': 'Virhe sivulla 3. Talous: Kuvaus tulosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
@@ -710,7 +707,6 @@ const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-tulo-items-0-item-label': 'Virhe sivulla 3. Talous: Kuvaus tulosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
     'edit-meno-items-0-item-value': 'Virhe sivulla 3. Talous: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon'
@@ -736,7 +732,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 

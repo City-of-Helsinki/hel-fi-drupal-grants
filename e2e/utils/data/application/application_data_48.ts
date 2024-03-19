@@ -863,7 +863,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: ['edit-bank-account-account-number-select'],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
   },
@@ -888,7 +887,6 @@ const wrongEmail: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
   },
@@ -913,7 +911,6 @@ const wrongEmail2: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä ei ole oikeassa muodossa.',
   },
@@ -938,7 +935,6 @@ const wrongEmail3: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite vaaraemaili ei kelpaa.',
   },
@@ -970,7 +966,6 @@ const under5000: FormDataWithRemoveOptionalProps = {
       ],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 
@@ -993,7 +988,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 
