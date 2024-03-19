@@ -6,6 +6,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -42,8 +43,13 @@ const formPages: PageHandlers = {
         .getByText(items['edit-haen-vuokra-avustusta-1'].value ?? '').click();
     }
 
-    // muut samaan tarkoitukseen myönnetyt
-    // muut samaan tarkoitukseen haetut
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
+
+    if (items['edit-haettu-avustus-tieto']) {
+      await fillFormField(page, items['edit-haettu-avustus-tieto'], 'edit-haettu-avustus-tieto')
+    }
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
@@ -157,32 +163,12 @@ const formPages: PageHandlers = {
         .getByText(items['edit-jarjestimme-toimintaa-vain-digitaalisessa-ymparistossa-0'].value ?? '').click();
     }
 
-    if (items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location']) {
-      await page.locator('#edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location')
-        .fill(items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-location'].value ?? '');
+    if (items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa']) {
+      await fillFormField(page, items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa'], 'edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa')
     }
 
-    if (items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode']) {
-      await page.locator('#edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode')
-        .fill(items['edit-jarjestimme-toimintaa-nuorille-seuraavissa-paikoissa-items-0-item-postcode'].value ?? '');
-    }
-
-    if (items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-organizationname']) {
-      await page.locator('#edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-organizationname')
-        .fill(items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-organizationname'].value ?? '');
-    }
-
-    if (items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee']) {
-      await fillInputField(
-        items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee'].value ?? '',
-        items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee',
-        },
-        page,
-        'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa-items-0-item-fee'
-      );
+    if (items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa']) {
+      await fillFormField(page, items['edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa'], 'edit-jasenyydet-jarjestoissa-ja-muissa-yhteisoissa')
     }
 
     if (items['edit-miten-nuoret-osallistuvat-yhdistyksen-toiminnan-suunnitteluun-ja']) {
@@ -211,18 +197,20 @@ const formPages: PageHandlers = {
   },
   'vuokra_avustushakemuksen_tiedot': async (page: Page, {items}: FormPage) => {
 
-    // Loop items, all have selectors defined so we can use looping.
-    for (const [itemKey, item]
-      of Object.entries(items)) {
+    if (items['edit-vuokratun-tilan-tiedot']) {
+      await fillFormField(page, items['edit-vuokratun-tilan-tiedot'], 'edit-vuokratun-tilan-tiedot')
+    }
+
+    if (items['edit-lisatiedot']) {
       await fillInputField(
-        item.value ?? '',
-        item.selector ?? {
+        items['edit-lisatiedot'].value ?? '',
+        items['edit-lisatiedot'].selector ?? {
           type: 'data-drupal-selector',
           name: 'data-drupal-selector',
-          value: itemKey,
+          value: 'edit-lisatiedot',
         },
         page,
-        itemKey
+        'edit-lisatiedot'
       );
     }
 
@@ -352,7 +340,7 @@ test.describe('NUORTOIMPALKKA(63)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

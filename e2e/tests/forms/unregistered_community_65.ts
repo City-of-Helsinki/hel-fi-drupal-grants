@@ -5,6 +5,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotUnregisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -39,61 +40,13 @@ const formPages: PageHandlers = {
   },
   '3_talousarvio': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-tulo-items-0-item-label']) {
-      await fillInputField(
-        items['edit-tulo-items-0-item-label'].value ?? '',
-        items['edit-tulo-items-0-item-label'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-tulo-items-0-item-label',
-        },
-        page,
-        'edit-tulo-items-0-item-label'
-      );
+    if (items['edit-tulo']) {
+      await fillFormField(page, items['edit-tulo'], 'edit-tulo')
     }
 
-    if (items['edit-tulo-items-0-item-value']) {
-      await fillInputField(
-        items['edit-tulo-items-0-item-value'].value ?? '',
-        items['edit-tulo-items-0-item-value'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-tulo-items-0-item-value',
-        },
-        page,
-        'edit-tulo-items-0-item-value'
-      );
+    if (items['edit-meno']) {
+      await fillFormField(page, items['edit-meno'], 'edit-meno')
     }
-
-    if (items['edit-meno-items-0-item-label']) {
-      await fillInputField(
-        items['edit-meno-items-0-item-label'].value ?? '',
-        items['edit-meno-items-0-item-label'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-meno-items-0-item-label',
-        },
-        page,
-        'edit-meno-items-0-item-label'
-      );
-    }
-
-    await page.pause();
-
-    if (items['edit-meno-items-0-item-value']) {
-      await fillInputField(
-        items['edit-meno-items-0-item-value'].value ?? '',
-        items['edit-meno-items-0-item-value'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-meno-items-0-item-value',
-        },
-        page,
-        'edit-meno-items-0-item-value'
-      );
-    }
-
-    await page.pause();
 
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
@@ -190,7 +143,7 @@ test.describe('NUORLOMALEIR(65)', () => {
     for (const [key, obj] of testDataArray) {
         test(`Form: ${obj.title}`, async () => {
 
-            await hideSlidePopup(page);
+
 
             await fillGrantsFormPage(
                 key,

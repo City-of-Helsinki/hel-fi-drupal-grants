@@ -1,30 +1,22 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {
-  PATH_YHTEISON_SAANNOT,
-  PATH_VAHVISTETTU_TILINPAATOS,
-  PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
-  PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
-  PATH_TOIMINTASUUNNITELMA,
-  PATH_TALOUSARVIO,
-  PATH_MUU_LIITE,
-  PATH_TO_TEST_PDF,
-  PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
-} from "../../helpers";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
+import {ATTACHMENTS} from "../attachment_data";
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatAddress,
   viewPageFormatCurrency,
   viewPageFormatLowerCase,
-  viewPageFormatDate, viewPageFormatNumber, viewPageFormatFilePath
+  viewPageFormatDate,
+  viewPageFormatNumber,
+  viewPageFormatFilePath
 } from "../../view_page_formatters";
-import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
  */
 const baseFormRegisteredCommunity_60: FormData = {
-  title: 'Save to draft and verify data',
+  title: 'Save as draft.',
   formSelector: 'webform-submission-liikunta-toiminta-ja-tilankaytto-form',
   formPath: '/fi/form/liikunta-toiminta-ja-tilankaytto',
   formPages: {
@@ -130,9 +122,9 @@ const baseFormRegisteredCommunity_60: FormData = {
             },
             multi: {
               buttonSelector: {
-                type: 'add-more-button',
+                type: 'data-drupal-selector',
                 name: 'data-drupal-selector',
-                value: 'Lisää uusi myönnetty avustus',
+                value: 'edit-myonnetty-avustus-add-submit',
                 resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
               },
               //@ts-ignore
@@ -261,35 +253,140 @@ const baseFormRegisteredCommunity_60: FormData = {
           value: faker.lorem.words(4),
           viewPageSelector: '.form-item-seuraavalle-vuodelle-suunniteltu-muutos-tilojen-kaytossa-tunnit-',
         },
-        "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-premisename": {
-          value: faker.lorem.words(2),
-          viewPageSelector: '.form-item-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal',
-        },
-        "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-datebegin": {
-          value: "2023-11-01",
-          viewPageSelector: '.form-item-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal',
-         viewPageFormatter: viewPageFormatDate,
-        },
-        "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-dateend": {
-          value: "2023-12-01",
-          viewPageSelector: '.form-item-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal',
-          viewPageFormatter: viewPageFormatDate,
-        },
-        "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-tenantname": {
-          value: faker.person.fullName(),
-          viewPageSelector: '.form-item-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal',
-        },
-        "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-hours": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-0-item-sum": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal',
-          viewPageFormatter: viewPageFormatCurrency,
+        'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-add-submit',
+              resultValue: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-premisename',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-datebegin',
+                  },
+                  value: "2023-11-01",
+                  viewPageFormatter: viewPageFormatDate,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-dateend',
+                  },
+                  value: "2023-12-01",
+                  viewPageFormatter: viewPageFormatDate,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-tenantname',
+                  },
+                  value: faker.person.fullName(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-hours',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-sum',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatCurrency,
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-premisename',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-datebegin',
+                  },
+                  value: "2023-11-01",
+                  viewPageFormatter: viewPageFormatDate,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-dateend',
+                  },
+                  value: "2023-12-01",
+                  viewPageFormatter: viewPageFormatDate,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-tenantname',
+                  },
+                  value: faker.person.fullName(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-hours',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-seuran-yhdistyksen-saamat-vuokrat-edellisen-kalenterivuoden-ajal-items-[INDEX]-item-sum',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatCurrency,
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "nextbutton": {
           role: 'button',
@@ -404,91 +501,291 @@ const baseFormRegisteredCommunity_60: FormData = {
           value: faker.number.int({min: 12, max: 5000}).toString(),
           viewPageFormatter: viewPageFormatNumber,
         },
-        "edit-club-section-items-0-item-sectionname": {
-          role: 'select',
-          selector: {
-            type: 'dom-id-first',
-            name: 'club-section-selector',
-            value: '#edit-club-section-items-0-item-sectionname',
+        'edit-club-section': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-club-section-add-submit',
+              resultValue: 'edit-club-section-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'select',
+                  selector: {
+                    type: 'by-label',
+                    name: '',
+                    value: 'edit-club-section-items-[INDEX]-item-sectionname',
+                  },
+                  value: 'Agility',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-men',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-women',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-adultothers',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-adulthours',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-seniormen',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-seniorwomen',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-seniorothers',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-seniorhours',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-boys',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-girls',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-juniorothers',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-juniorhours',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+              1: [
+                {
+                  role: 'select',
+                  selector: {
+                    type: 'by-label',
+                    name: '',
+                    value: 'edit-club-section-items-[INDEX]-item-sectionname',
+                  },
+                  value: 'Muu laji',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-sectionother',
+                  },
+                  value: faker.lorem.words(2),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-men',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-women',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-adultothers',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-adulthours',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-seniormen',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-seniorwomen',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-seniorothers',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-seniorhours',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-boys',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-girls',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-juniorothers',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-club-section-items-[INDEX]-item-juniorhours',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+            },
+            expectedErrors: {}
           },
-          value: 'Muu laji',
-          viewPageSelector: '.form-item-club-section',
-        },
-        "edit-club-section-items-0-item-sectionother": {
-          value: faker.lorem.words(2),
-          viewPageSelector: '.form-item-club-section',
-        },
-        "edit-club-section-items-0-item-men": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-women": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-adultothers": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-adulthours": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-seniormen": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-seniorwomen": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-seniorothers": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-seniorhours": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-boys": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-girls": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-juniorothers": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-club-section-items-0-item-juniorhours": {
-          role: 'number-input',
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-club-section',
-          viewPageFormatter: viewPageFormatNumber,
         },
         "nextbutton": {
           role: 'button',
@@ -514,7 +811,7 @@ const baseFormRegisteredCommunity_60: FormData = {
             value: '[name="files[yhteison_saannot_attachment]"]',
             resultValue: '.form-item-yhteison-saannot-attachment a',
           },
-          value: PATH_YHTEISON_SAANNOT,
+          value: ATTACHMENTS.YHTEISON_SAANNOT,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-tilinpaatos-attachment-upload': {
@@ -525,7 +822,7 @@ const baseFormRegisteredCommunity_60: FormData = {
             value: '[name="files[vahvistettu_tilinpaatos_attachment]"]',
             resultValue: '.form-item-vahvistettu-tilinpaatos-attachment a',
           },
-          value: PATH_VAHVISTETTU_TILINPAATOS,
+          value: ATTACHMENTS.VAHVISTETTU_TILINPAATOS,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-toimintakertomus-attachment-upload': {
@@ -536,7 +833,7 @@ const baseFormRegisteredCommunity_60: FormData = {
             value: '[name="files[vahvistettu_toimintakertomus_attachment]"]',
             resultValue: '.form-item-vahvistettu-toimintakertomus-attachment a',
           },
-          value: PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
+          value: ATTACHMENTS.VAHVISTETTU_TOIMINTAKERTOMUS,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload': {
@@ -547,7 +844,7 @@ const baseFormRegisteredCommunity_60: FormData = {
             value: '[name="files[vahvistettu_tilin_tai_toiminnantarkastuskertomus_attachment]"]',
             resultValue: '.form-item-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment a',
           },
-          value: PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
+          value: ATTACHMENTS.VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-toimintasuunnitelma-attachment-upload': {
@@ -558,7 +855,7 @@ const baseFormRegisteredCommunity_60: FormData = {
             value: '[name="files[toimintasuunnitelma_attachment]"]',
             resultValue: '.form-item-toimintasuunnitelma-attachment a',
           },
-          value: PATH_TOIMINTASUUNNITELMA,
+          value: ATTACHMENTS.TOIMINTASUUNNITELMA,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-talousarvio-attachment-upload': {
@@ -569,7 +866,7 @@ const baseFormRegisteredCommunity_60: FormData = {
             value: '[name="files[talousarvio_attachment]"]',
             resultValue: '.form-item-talousarvio-attachment a',
           },
-          value: PATH_TALOUSARVIO,
+          value: ATTACHMENTS.TALOUSARVIO,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-tilankayttoliite-attachment-upload': {
@@ -580,7 +877,7 @@ const baseFormRegisteredCommunity_60: FormData = {
             value: '[name="files[tilankayttoliite_attachment]"]',
             resultValue: '.form-item-tilankayttoliite-attachment a',
           },
-          value: PATH_TO_TEST_PDF,
+          value: ATTACHMENTS.TEST_PDF,
           viewPageFormatter: viewPageFormatFilePath
         },
         'edit-muu-liite-items-0-item-attachment-upload': {
@@ -591,7 +888,7 @@ const baseFormRegisteredCommunity_60: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_MUU_LIITE,
+          value: ATTACHMENTS.MUU_LIITE,
           viewPageSelector: '.form-item-muu-liite',
           viewPageFormatter: viewPageFormatFilePath
         },
@@ -837,7 +1134,7 @@ const registeredCommunityApplications_60 = {
   draft: baseFormRegisteredCommunity_60,
   missing_values: createFormData(baseFormRegisteredCommunity_60, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_60, wrongValues),
-  // success: createFormData(baseFormRegisteredCommunity_60, sendApplication),
+  success: createFormData(baseFormRegisteredCommunity_60, sendApplication),
 }
 
 export {

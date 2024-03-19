@@ -7,7 +7,7 @@ import {
 } from '../../utils/data/test_data';
 import {
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-  hideSlidePopup, uploadFile
+  hideSlidePopup, uploadFile,fillFormField
 } from '../../utils/form_helpers';
 
 import {
@@ -42,8 +42,13 @@ const formPages: PageHandlers = {
         .fill(items['edit-subventions-items-0-amount'].value ?? '');
     }
 
-    // muut samaan tarkoitukseen myönnetyt
-    // muut samaan tarkoitukseen haetut
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
+
+    if (items['edit-haettu-avustus-tieto']) {
+      await fillFormField(page, items['edit-haettu-avustus-tieto'], 'edit-haettu-avustus-tieto')
+    }
 
   },
   '3_jasenet_tai_aktiiviset_osallistujat': async (page: Page, {items}: FormPage) => {
@@ -124,18 +129,38 @@ const formPages: PageHandlers = {
   },
   '6_talous': async (page: Page, {items}: FormPage) => {
 
-    for (const [itemKey, item]
-      of Object.entries(items)) {
+    if (items['edit-omarahoitusosuuden-kuvaus']) {
       await fillInputField(
-        item.value ?? '',
-        item.selector ?? {
-          type: 'data-drupal-selector-sequential',
+        items['edit-omarahoitusosuuden-kuvaus'].value ?? '',
+        items['edit-omarahoitusosuuden-kuvaus'].selector ?? {
+          type: 'data-drupal-selector',
           name: 'data-drupal-selector',
-          value: itemKey,
+          value: 'edit-omarahoitusosuuden-kuvaus',
         },
         page,
-        itemKey
+        'edit-omarahoitusosuuden-kuvaus'
       );
+    }
+
+    if (items['edit-omarahoitusosuus']) {
+      await fillInputField(
+        items['edit-omarahoitusosuus'].value ?? '',
+        items['edit-omarahoitusosuus'].selector ?? {
+          type: 'data-drupal-selector-sequential',
+          name: 'data-drupal-selector',
+          value: 'edit-omarahoitusosuus',
+        },
+        page,
+        'edit-omarahoitusosuus'
+      );
+    }
+
+    if (items['edit-budget-other-income']) {
+      await fillFormField(page, items['edit-budget-other-income'], 'edit-budget-other-income')
+    }
+
+    if (items['edit-budget-other-cost']) {
+      await fillFormField(page, items['edit-budget-other-cost'], 'edit-budget-other-cost')
     }
 
   },
@@ -225,7 +250,7 @@ test.describe('NUORPROJ(62)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

@@ -1,20 +1,22 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_MUU_LIITE} from "../../helpers";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
+import {ATTACHMENTS} from "../attachment_data";
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatAddress,
   viewPageFormatBoolean,
-  viewPageFormatCurrency, viewPageFormatFilePath,
-  viewPageFormatLowerCase, viewPageFormatNumber
+  viewPageFormatCurrency,
+  viewPageFormatFilePath,
+  viewPageFormatLowerCase,
+  viewPageFormatNumber
 } from "../../view_page_formatters";
 
 /**
  * Basic form data for successful submit to Avus2
  */
 const baseFormRegisteredCommunity_64: FormData = {
-  title: 'Success',
+  title: 'Save as draft.',
   formSelector: 'webform-submission-asukasosallisuus-pienavustushake-form',
   formPath: '/fi/form/asukasosallisuus-pienavustushake',
   formPages: {
@@ -141,7 +143,7 @@ const baseFormRegisteredCommunity_64: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_MUU_LIITE,
+          value: ATTACHMENTS.MUU_LIITE,
           viewPageSelector: '.form-item-muu-liite',
           viewPageFormatter: viewPageFormatFilePath,
         },
@@ -415,7 +417,7 @@ const registeredCommunityApplications_64 = {
   draft: baseFormRegisteredCommunity_64,
   missing_values: createFormData(baseFormRegisteredCommunity_64, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_64, wrongValues),
-  // success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
+  success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
 }
 
 /**
@@ -426,7 +428,7 @@ const registeredCommunityApplications_64 = {
 const privatePersonApplications_64 = {
   draft: baseFormPrivatePerson_64,
   missing_values: createFormData(baseFormPrivatePerson_64, missingValuesPrivateUnregistered),
-  // success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
+  success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
 }
 
 /**
@@ -437,7 +439,7 @@ const privatePersonApplications_64 = {
 const unRegisteredCommunityApplications_64 = {
   draft: baseFormUnRegisteredCommunity_64,
   missing_values: createFormData(baseFormUnRegisteredCommunity_64, missingValuesPrivateUnregistered),
-  // success: createFormData(baseFormUnRegisteredCommunity_64, sendApplication),
+  success: createFormData(baseFormUnRegisteredCommunity_64, sendApplication),
 }
 
 export {

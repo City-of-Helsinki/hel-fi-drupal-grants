@@ -3,22 +3,9 @@ import {expect, Locator, Page} from "@playwright/test";
 import {logger} from "./logger";
 import fs from 'fs';
 import path from 'path';
-import {TEST_IBAN} from "./data/test_data";
 
-
-const PATH_TO_TEST_PDF = path.join(__dirname, './data/test.pdf');
-const PATH_TO_TEST_EXCEL = path.join(__dirname, './data/test.xlsx');
-const bankAccountConfirmationPath = path.join(__dirname, './data/test.pdf');
-
-const PATH_YHTEISON_SAANNOT = path.join(__dirname, './data/testiliitteet/00_yhteison_saannot.pdf');
-const PATH_VAHVISTETTU_TILINPAATOS = path.join(__dirname, './data/testiliitteet/01_vahvistettu_tilinpaatos.pdf');
-const PATH_VAHVISTETTU_TOIMINTAKERTOMUS = path.join(__dirname, './data/testiliitteet/02_vahvistettu_toimintakertomus.pdf');
-const PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS = path.join(__dirname, './data/testiliitteet/03_vahvistettu_tilin_tai_toiminnantarkastuskertomus.pdf');
-const PATH_VUOSIKOKOUKSEN_POYTAKIRJA = path.join(__dirname, './data/testiliitteet/04_vuosikokouksen_poytakirja.pdf');
-const PATH_TOIMINTASUUNNITELMA = path.join(__dirname, './data/testiliitteet/05_toimintasuunnitelma.pdf');
-const PATH_TALOUSARVIO = path.join(__dirname, './data/testiliitteet/06_talousarvio.pdf');
-const PATH_MUU_LIITE = path.join(__dirname, './data/testiliitteet/07_muu_liite.pdf');
-const PATH_LEIRIEXCEL = path.join(__dirname, './data/testiliitteet/la_leiriavustushakemus.xls');
+const PATH_TO_TEST_PDF = path.join(__dirname, './data/attachments/test.pdf');
+const PATH_TO_TEST_EXCEL = path.join(__dirname, './data/attachments/test.xlsx');
 
 /**
  * Return a "slow" page locator that waits before 'click' and 'fill' requests.
@@ -148,7 +135,7 @@ const setupUnregisteredCommunity = async (page: Page) => {
     await page.locator('#edit-unregistered-community-selection').selectOption('new');
     await page.getByRole('button', {name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä'}).click();
     await page.getByRole('textbox', {name: 'Yhteisön tai ryhmän nimi'}).fill(communityName);
-    await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(TEST_IBAN);
+    await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(process.env.TEST_USER_IBAN ?? '');
     await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
 
     await page.getByLabel('Nimi', {exact: true}).fill(personName);
@@ -223,7 +210,7 @@ function saveObjectToEnv(variableName: string, data: Object) {
             existingEncoded[variableName] = merged;
         }
 
-        logger('SAVETO', existingEncoded)
+        //logger('SAVETO', existingEncoded)
 
         process.env.storedData = JSON.stringify(existingEncoded);
     } else {
@@ -273,31 +260,21 @@ const extractUrl = async (page: Page) => {
 }
 
 export {
-    PATH_TO_TEST_PDF,
-    PATH_TO_TEST_EXCEL,
-    PATH_YHTEISON_SAANNOT,
-    PATH_VAHVISTETTU_TILINPAATOS,
-    PATH_VAHVISTETTU_TOIMINTAKERTOMUS,
-    PATH_VAHVISTETTU_TILIN_TAI_TOIMINNANTARKASTUSKERTOMUS,
-    PATH_VUOSIKOKOUKSEN_POYTAKIRJA,
-    PATH_TOIMINTASUUNNITELMA,
-    PATH_TALOUSARVIO,
-    PATH_MUU_LIITE,
-    PATH_LEIRIEXCEL,
-    acceptCookies,
-    checkErrorNofification,
-    clickContinueButton,
-    clickGoToPreviewButton,
-    getKeyValue,
-    saveAsDraft,
-    setupUnregisteredCommunity,
-    startNewApplication,
-    uploadBankConfirmationFile,
-    uploadFile,
-    slowLocator,
-    saveObjectToEnv,
-    extractUrl,
-    getObjectFromEnv,
-    bankAccountConfirmationPath
+  PATH_TO_TEST_PDF,
+  PATH_TO_TEST_EXCEL,
+  acceptCookies,
+  checkErrorNofification,
+  clickContinueButton,
+  clickGoToPreviewButton,
+  getKeyValue,
+  saveAsDraft,
+  setupUnregisteredCommunity,
+  startNewApplication,
+  uploadBankConfirmationFile,
+  uploadFile,
+  slowLocator,
+  saveObjectToEnv,
+  extractUrl,
+  getObjectFromEnv,
 };
 

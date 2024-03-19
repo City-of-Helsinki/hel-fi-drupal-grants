@@ -524,32 +524,8 @@ const formPages: PageHandlers = {
       );
     }
 
-    if (items['edit-budget-other-cost-items-0-item-label']) {
-      thisItem = items['edit-budget-other-cost-items-0-item-label'];
-      await fillInputField(
-        thisItem.value ?? '',
-        thisItem.selector ?? {
-          type: 'data-drupal-selector',
-          name: 'data-drupal-selector',
-          value: 'edit-budget-other-cost-items-0-item-label',
-        },
-        page,
-        'edit-budget-other-cost-items-0-item-label'
-      );
-    }
-
-    if (items['edit-budget-other-cost-items-0-item-value']) {
-      thisItem = items['edit-budget-other-cost-items-0-item-value'];
-      await fillInputField(
-        thisItem.value ?? '',
-        thisItem.selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-budget-other-cost-items-0-item-value',
-        },
-        page,
-        'edit-budget-other-cost-items-0-item-value'
-      );
+    if (items['edit-budget-other-cost']) {
+      await fillFormField(page, items['edit-budget-other-cost'], 'edit-budget-other-cost')
     }
 
     if (items['edit-muu-huomioitava-panostus']) {
@@ -622,7 +598,7 @@ test.describe('KUVAPROJ(48)', () => {
   for (const [key, obj] of testDataArray) {
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

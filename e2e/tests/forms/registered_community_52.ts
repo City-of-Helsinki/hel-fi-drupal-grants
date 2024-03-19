@@ -80,112 +80,8 @@ const formPages: PageHandlers = {
         .getByText(items['edit-community-practices-business-0'].value ?? '').click();
     }
 
-    if (items['edit-toimintapaikka-items-0-item-location']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-location')
-        .fill(items['edit-toimintapaikka-items-0-item-location'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-streetaddress']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-streetaddress')
-        .fill(items['edit-toimintapaikka-items-0-item-streetaddress'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-postcode']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-postcode')
-        .fill(items['edit-toimintapaikka-items-0-item-postcode'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-studentcount']) {
-      await fillInputField(
-        items['edit-toimintapaikka-items-0-item-studentcount'].value ?? '',
-        items['edit-toimintapaikka-items-0-item-studentcount'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-toimintapaikka-items-0-item-studentcount',
-        },
-        page,
-        'edit-toimintapaikka-items-0-item-studentcount'
-      );
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-specialstudents']) {
-      await fillInputField(
-        items['edit-toimintapaikka-items-0-item-specialstudents'].value ?? '',
-        items['edit-toimintapaikka-items-0-item-specialstudents'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-toimintapaikka-items-0-item-specialstudents',
-        },
-        page,
-        'edit-toimintapaikka-items-0-item-specialstudents'
-      );
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-groupcount']) {
-      await fillInputField(
-        items['edit-toimintapaikka-items-0-item-groupcount'].value ?? '',
-        items['edit-toimintapaikka-items-0-item-groupcount'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-toimintapaikka-items-0-item-groupcount',
-        },
-        page,
-        'edit-toimintapaikka-items-0-item-groupcount'
-      );
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-specialgroups']) {
-      await fillInputField(
-        items['edit-toimintapaikka-items-0-item-specialgroups'].value ?? '',
-        items['edit-toimintapaikka-items-0-item-specialgroups'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-toimintapaikka-items-0-item-specialgroups',
-        },
-        page,
-        'edit-toimintapaikka-items-0-item-specialgroups'
-      );
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-personnelcount']) {
-      await fillInputField(
-        items['edit-toimintapaikka-items-0-item-personnelcount'].value ?? '',
-        items['edit-toimintapaikka-items-0-item-personnelcount'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-toimintapaikka-items-0-item-personnelcount',
-        },
-        page,
-        'edit-toimintapaikka-items-0-item-personnelcount'
-      );
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-free-0']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-free')
-        .getByText(items['edit-toimintapaikka-items-0-item-free-0'].value ?? '').click();
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-totalrent']) {
-      await fillInputField(
-        items['edit-toimintapaikka-items-0-item-totalrent'].value ?? '',
-        items['edit-toimintapaikka-items-0-item-totalrent'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-toimintapaikka-items-0-item-totalrent',
-        },
-        page,
-        'edit-toimintapaikka-items-0-item-totalrent'
-      );
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-renttimebegin']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-renttimebegin')
-        .fill(items['edit-toimintapaikka-items-0-item-renttimebegin'].value ?? '');
-    }
-
-    if (items['edit-toimintapaikka-items-0-item-renttimeend']) {
-      await page.locator('#edit-toimintapaikka-items-0-item-renttimeend')
-        .fill(items['edit-toimintapaikka-items-0-item-renttimeend'].value ?? '');
+    if (items['edit-toimintapaikka']) {
+      await fillFormField(page, items['edit-toimintapaikka'], 'edit-toimintapaikka')
     }
 
   },
@@ -217,22 +113,8 @@ const formPages: PageHandlers = {
       );
     }
 
-    if (items['edit-muut-avustukset-field-items-0-item-label']) {
-      await page.locator('#edit-muut-avustukset-field-items-0-item-label')
-        .fill(items['edit-muut-avustukset-field-items-0-item-label'].value ?? '');
-    }
-
-    if (items['edit-muut-avustukset-field-items-0-item-value']) {
-      await fillInputField(
-        items['edit-muut-avustukset-field-items-0-item-value'].value ?? '',
-        items['edit-muut-avustukset-field-items-0-item-value'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-muut-avustukset-field-items-0-item-value',
-        },
-        page,
-        'edit-muut-avustukset-field-items-0-item-value'
-      );
+    if (items['edit-muut-avustukset']) {
+      await fillFormField(page, items['edit-muut-avustukset'], 'edit-muut-avustukset')
     }
 
     if (items['edit-henkilostomenot-ja-vuokrat-salaries']) {
@@ -274,22 +156,8 @@ const formPages: PageHandlers = {
       );
     }
 
-    if (items['edit-muut-menot-4-items-0-item-label']) {
-      await page.locator('#edit-muut-menot-4-items-0-item-label')
-        .fill(items['edit-muut-menot-4-items-0-item-label'].value ?? '');
-    }
-
-    if (items['edit-muut-menot-4-items-0-item-value']) {
-      await fillInputField(
-        items['edit-muut-menot-4-items-0-item-value'].value ?? '',
-        items['edit-muut-menot-4-items-0-item-value'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-muut-menot-4-items-0-item-value',
-        },
-        page,
-        'edit-muut-menot-4-items-0-item-value'
-      );
+    if (items['edit-muut-menot']) {
+      await fillFormField(page, items['edit-muut-menot'], 'edit-muut-menot')
     }
 
     if (items['edit-avustuksen-kaytto-palveluiden-ostot-eriteltyina-2-snacks']) {
@@ -344,22 +212,8 @@ const formPages: PageHandlers = {
       );
     }
 
-    if (items['edit-muut-palveluiden-ostot-2-items-0-item-label']) {
-      await page.locator('#edit-muut-palveluiden-ostot-2-items-0-item-label')
-        .fill(items['edit-muut-palveluiden-ostot-2-items-0-item-label'].value ?? '');
-    }
-
-    if (items['edit-muut-palveluiden-ostot-2-items-0-item-value']) {
-      await fillInputField(
-        items['edit-muut-palveluiden-ostot-2-items-0-item-value'].value ?? '',
-        items['edit-muut-palveluiden-ostot-2-items-0-item-value'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-muut-palveluiden-ostot-2-items-0-item-value',
-        },
-        page,
-        'edit-muut-palveluiden-ostot-2-items-0-item-value'
-      );
+    if (items['edit-muut-palveluiden-ostot-2']) {
+      await fillFormField(page, items['edit-muut-palveluiden-ostot-2'], 'edit-muut-palveluiden-ostot-2')
     }
 
     if (items['edit-muut-aineet-tarvikkeet-ja-tavarat-2-snacks']) {
@@ -427,23 +281,10 @@ const formPages: PageHandlers = {
       );
     }
 
-    if (items['edit-muut-menot-tarvikkeet-items-0-item-label']) {
-      await page.locator('#edit-muut-menot-tarvikkeet-items-0-item-label')
-        .fill(items['edit-muut-menot-tarvikkeet-items-0-item-label'].value ?? '');
+    if (items['edit-muut-menot-tarvikkeet']) {
+      await fillFormField(page, items['edit-muut-menot-tarvikkeet'], 'edit-muut-menot-tarvikkeet')
     }
 
-    if (items['edit-muut-menot-tarvikkeet-items-0-item-value']) {
-      await fillInputField(
-        items['edit-muut-menot-tarvikkeet-items-0-item-value'].value ?? '',
-        items['edit-muut-menot-tarvikkeet-items-0-item-value'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-muut-menot-tarvikkeet-items-0-item-value',
-        },
-        page,
-        'edit-muut-menot-tarvikkeet-items-0-item-value'
-      );
-    }
 
     if (items['edit-avustuksen-kaytto-muut-kulut-eriteltyina-2-admin']) {
       await fillInputField(
@@ -484,23 +325,10 @@ const formPages: PageHandlers = {
       );
     }
 
-    if (items['edit-muut-menot-2-items-0-item-label']) {
-      await page.locator('#edit-muut-menot-2-items-0-item-label')
-        .fill(items['edit-muut-menot-2-items-0-item-label'].value ?? '');
+    if (items['edit-muut-menot-2']) {
+      await fillFormField(page, items['edit-muut-menot-2'], 'edit-muut-menot-2')
     }
 
-    if (items['edit-muut-menot-2-items-0-item-value']) {
-      await fillInputField(
-        items['edit-muut-menot-2-items-0-item-value'].value ?? '',
-        items['edit-muut-menot-2-items-0-item-value'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-muut-menot-2-items-0-item-value',
-        },
-        page,
-        'edit-muut-menot-2-items-0-item-value'
-      );
-    }
 
     if (items['edit-asiakasmaksutulojen-kaytto-ja-mahdolliset-lahjoitukset-2-salaries']) {
       await fillInputField(
@@ -567,23 +395,10 @@ const formPages: PageHandlers = {
       );
     }
 
-    if (items['edit-muut-menot-3-items-0-item-label']) {
-      await page.locator('#edit-muut-menot-3-items-0-item-label')
-        .fill(items['edit-muut-menot-3-items-0-item-label'].value ?? '');
+    if (items['edit-muut-kulut-2']) {
+      await fillFormField(page, items['edit-muut-kulut-2'], 'edit-muut-kulut-2')
     }
 
-    if (items['edit-muut-menot-3-items-0-item-value']) {
-      await fillInputField(
-        items['edit-muut-menot-3-items-0-item-value'].value ?? '',
-        items['edit-muut-menot-3-items-0-item-value'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-muut-menot-3-items-0-item-value',
-        },
-        page,
-        'edit-muut-menot-3-items-0-item-value'
-      );
-    }
 
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
@@ -708,7 +523,7 @@ test.describe('KASKOIPTOIM(52)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,

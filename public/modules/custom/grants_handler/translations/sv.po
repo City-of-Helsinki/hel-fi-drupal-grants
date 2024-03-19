@@ -14,8 +14,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "grants_handler"
+msgid "Print table"
+msgstr "Tabell som styr utgången"
+
+msgctxt "grants_handler"
 msgid "My message"
-msgstr "Oma viesti"
+msgstr "Mitt meddelande"
 
 msgctxt "grants_handler"
 msgid "If checked, every handler method invoked will be displayed onscreen to all users."
@@ -364,8 +368,8 @@ msgid "Make sure that the status of the application changes from “Submitted”
 msgstr "Se till att statusen för ansökan ändras från 'Lämnats' till 'Mottagits'. Ansökan är helt mottagen först när statusen lyder 'Mottagits'."
 
 msgctxt "grants_handler"
-msgid "The status change can take from seconds to few minutes."
-msgstr "Statusändringen kan ta från sekunder till några minuter."
+msgid "There may be a delay in changing the status. For example, due to maintenance breaks, the delay can be longer than normal."
+msgstr "Det kan finnas en fördröjning vid ändring av läge. Till exempel, på grund av underhållsuppehåll, kan förseningen vara längre än normalt."
 
 msgctxt "grants_handler"
 msgid "Application period is closed, no further editing is allowed."
@@ -439,8 +443,8 @@ msgid "Print application"
 msgstr "Skriv ut ansökan"
 
 msgctxt "grants_handler"
-msgid "You do not have the necessary authorizations to make an application."
-msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan."
+msgid "Change your role and return to make the application with role which the application is instructed to be made."
+msgstr "Byt roll och gå tillbaka för att göra ansökan med roll som ansökan är instruerad att göra."
 
 msgctxt "grants_handler"
 msgid "You do not have the necessary authorizations to make an application. Log in to grants service."
@@ -464,8 +468,16 @@ msgid "Create new application"
 msgstr "Skapa ny applikation"
 
 msgctxt "grants_handler"
-msgid "Missing authorization"
-msgstr "Saknade behörighet"
+msgid "Change role"
+msgstr "Byt roll"
+
+msgctxt "grants_handler"
+msgid "Identification"
+msgstr "Identifiera dig"
+
+msgctxt "grants_handler"
+msgid "Log in to the service and do the identification."
+msgstr "Logga in på tjänsten och gör identifieringen."
 
 msgctxt "grants_handler"
 msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."

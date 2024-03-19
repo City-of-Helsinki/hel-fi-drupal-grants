@@ -8,6 +8,8 @@ elements: |
     '#title': 'Samfund för vilket understödet ansöks'
   prh_markup:
     '#markup': '<div class="grants-profile-prh-info">De markerade uppgifterna har h&auml;mtats fr&aring;n Patent- och registerstyrelsens register (PRH) och det &auml;r endast m&ouml;jligt att &auml;ndra uppgifterna i n&auml;ttj&auml;nsten i fr&aring;ga.</div>'
+  hakijan_tiedot:
+    '#title': Sökande
   contact_person_email_section:
     '#title': E-post
   contact_markup:
@@ -133,6 +135,7 @@ elements: |
   seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal:
     '#title': 'Föreningens hyresinkomster under föregående kalenderår 1.1. –31.12.'
     '#description': 'Om f&ouml;reningen f&aring;r hyresinkomster f&ouml;r sina lokaler, anges de h&auml;r.'
+    '#multiple__add_more_button_label': 'Lägg till en lokal'
   3_yhteison_tiedot:
     '#title': '3. Samfundets verksamhet'
     '#prev_button_label': '< Tidigare'

@@ -244,6 +244,7 @@ elements: |
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Gällande det år, för vilket stöd ansöks med denna ansökan.</div>\r\n</div>\r\n</div>\r\n"
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
+    '#help': 'Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
     '#options':
       1: Ja
       0: Nej
@@ -257,6 +258,7 @@ elements: |
     '#plannedOtherCompensations__title': 'Övriga understöd  (€)'
     '#sponsorships__title': 'Privat finansiering (t.ex. sponsorering, företagssamarbete, donationer) (€)'
     '#entryFees__title': 'Inträdes- eller deltagaravgifter (€)'
+    '#entryFees__help': 'Till exempel biljettförsäljningsintäkter'
     '#sales__title': 'Övriga egna inkomster (€)'
     '#financialFundingAndInterests__title': 'Ränteinkomster och finansiella inkomster (€)'
   suunnitellut_menot_osio:
@@ -270,6 +272,7 @@ elements: |
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Föregående avslutade räkenskapsår. Enligt bokslutet.</div>\r\n</div>\r\n</div>\r\n"
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen fick statsandelar (VOS)'
+    '#help': 'Välj ja, bara om du med säkerhet vet att din organisation fick finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
     '#options':
       1: Ja
       0: Nej

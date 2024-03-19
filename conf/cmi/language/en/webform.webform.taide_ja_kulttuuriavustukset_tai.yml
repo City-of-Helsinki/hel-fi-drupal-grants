@@ -247,6 +247,7 @@ elements: |
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Regarding the year that the grant is applied for with this application.</div>\r\n</div>\r\n</div>\r\n"
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belongs to the central government subsidies system (VOS)'
+    '#help': 'Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'
     '#options':
       1: 'Yes'
       0: 'No'
@@ -259,6 +260,7 @@ elements: |
     '#plannedStateOperativeSubvention__title': 'Operational grant from the government (€)'
     '#sponsorships__title': 'Private funding (sponsors, corporate collaboration, donations, etc.) (€)'
     '#entryFees__title': 'Entry and participation fees (€)'
+    '#entryFees__help': 'Ticket sales etc.'
     '#sales__title': 'Other incomes (€)'
     '#financialFundingAndInterests__title': 'Financial income and interest received on loans (€)'
   suunnitellut_menot_osio:
@@ -271,6 +273,7 @@ elements: |
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Regarding the previous completed financial year. As stated in the financial statements.</div>\r\n</div>\r\n</div>\r\n"
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belonged to the central government subsidies system (VOS)'
+    '#help': 'Select yes, only if you know for sure that your organization received funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'
     '#options':
       1: 'Yes'
       0: 'No'

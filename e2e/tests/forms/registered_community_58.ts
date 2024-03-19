@@ -6,6 +6,7 @@ import {
   PageHandlers,
 } from '../../utils/data/test_data';
 import {
+  fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
   hideSlidePopup, uploadFile
 } from '../../utils/form_helpers';
@@ -32,53 +33,8 @@ const formPages: PageHandlers = {
         .selectOption(items['edit-acting-year'].value ?? '');
     }
 
-    if (items['edit-orienteering-maps-items-0-item-mapname']) {
-      await page.locator('#edit-orienteering-maps-items-0-item-mapname')
-        .fill(items['edit-orienteering-maps-items-0-item-mapname'].value ?? '');
-    }
-
-    if (items['edit-orienteering-maps-items-0-item-size']) {
-      await page.locator('#edit-orienteering-maps-items-0-item-size')
-        .fill(items['edit-orienteering-maps-items-0-item-size'].value ?? '');
-    }
-
-    if (items['edit-orienteering-maps-items-0-item-voluntaryhours']) {
-      await fillInputField(
-        items['edit-orienteering-maps-items-0-item-voluntaryhours'].value ?? '',
-        items['edit-orienteering-maps-items-0-item-voluntaryhours'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-orienteering-maps-items-0-item-voluntaryhours',
-        },
-        page,
-        'edit-orienteering-maps-items-0-item-voluntaryhours'
-      );
-    }
-
-    if (items['edit-orienteering-maps-items-0-item-cost']) {
-      await fillInputField(
-        items['edit-orienteering-maps-items-0-item-cost'].value ?? '',
-        items['edit-orienteering-maps-items-0-item-cost'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-orienteering-maps-items-0-item-cost',
-        },
-        page,
-        'edit-orienteering-maps-items-0-item-cost'
-      );
-    }
-
-    if (items['edit-orienteering-maps-items-0-item-othercompensations']) {
-      await fillInputField(
-        items['edit-orienteering-maps-items-0-item-othercompensations'].value ?? '',
-        items['edit-orienteering-maps-items-0-item-othercompensations'].selector ?? {
-          type: 'data-drupal-selector-sequential',
-          name: 'data-drupal-selector',
-          value: 'edit-orienteering-maps-items-0-item-othercompensations',
-        },
-        page,
-        'edit-orienteering-maps-items-0-item-othercompensations'
-      );
+    if (items['edit-orienteering-maps']) {
+      await fillFormField(page, items['edit-orienteering-maps'], 'edit-orienteering-maps')
     }
 
   },
@@ -144,7 +100,7 @@ test.describe('LIIKUNTASUUNNISTUS(58)', () => {
 
     test(`Form: ${obj.title}`, async () => {
 
-      await hideSlidePopup(page);
+
 
       await fillGrantsFormPage(
         key,
