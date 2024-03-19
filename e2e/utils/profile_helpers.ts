@@ -27,10 +27,10 @@ const isProfileCreated = async (profileType: string) => {
 
   logger('Profile...');
 
-  /*if (process.env.CREATE_PROFILE === 'TRUE') {
+  if (process.env.CREATE_PROFILE === 'TRUE') {
     logger('... creation is forced through variable.');
     return false;
-  }*/
+  }
 
   if (!profileExists) {
     logger('... does not exist and will be created.');
