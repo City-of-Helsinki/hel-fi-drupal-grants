@@ -1,6 +1,5 @@
 name: 'HELfi Grant premade content'
 type: module
-core: 8.x
 core_version_requirement: ^9 || ^10
 package: HELfi
 dependencies:

@@ -2,7 +2,6 @@ name: Grants Test Base
 type: module
 description: Base module for Drupal tests in Grants project
 package: Hel.fi
-core: 8.x
 core_version_requirement: ^9 || ^10
 requirements:
  - grants_profile
