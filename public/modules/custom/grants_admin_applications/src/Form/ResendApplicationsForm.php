@@ -19,6 +19,15 @@ use Symfony\Component\HttpFoundation\Request;
 class ResendApplicationsForm extends AtvFormBase {
 
   /**
+   * Translation options.
+   *
+   * @var array
+   */
+  protected static $tOpts = [
+    'context' => 'grants_admin_applications',
+  ];
+
+  /**
    * Access to ATV.
    *
    * @var \Drupal\helfi_atv\AtvService
@@ -139,10 +148,10 @@ class ResendApplicationsForm extends AtvFormBase {
           $this->t('Timestamp'),
           $this->t('Content'),
           $this->t('Attachments'),
-          $this->t('Sent by'),
-          $this->t('Avus2 has received the message*'),
-          $this->t('Has been resent'),
-          $this->t('Resend this message'),
+          $this->t('Sent by', [], self::$tOpts),
+          $this->t('Avus2 has received the message*', [], self::$tOpts),
+          $this->t('Has been resent', [], self::$tOpts),
+          $this->t('Resend this message', [], self::$tOpts),
         ],
       ];
 
@@ -177,10 +186,14 @@ class ResendApplicationsForm extends AtvFormBase {
               '#markup' => $message['sentBy'],
             ],
             'avus2received' => [
-              '#markup' => $avus2Received ? $this->t('Yes') : $this->t('No'),
+              '#markup' => $avus2Received
+                ? $this->t('Yes', [], self::$tOpts)
+                : $this->t('No', [], self::$tOpts),
             ],
             'hasBeenResent' => [
-              '#markup' => $resent ? $this->t('Yes') : $this->t('No'),
+              '#markup' => $resent
+                ? $this->t('Yes', [], self::$tOpts)
+                : $this->t('No', [], self::$tOpts),
             ],
             'resendMessage' => [
               '#type' => 'checkbox',
@@ -197,13 +210,13 @@ class ResendApplicationsForm extends AtvFormBase {
         '#prefix' => '<p>',
         '#suffix' => '<p>',
         '#markup' => $this->t(
-          '* Please note that older applications might not have avus2 message received status available.'
-        ),
+          '* Please note that older applications might not have avus2 message received status available.',
+         [], self::$tOpts),
       ];
 
       $form['resendMessages'] = [
         '#type' => 'submit',
-        '#value' => $this->t('Resend messages'),
+        '#value' => $this->t('Resend messages', [], self::$tOpts),
         '#name' => 'resendMessages',
         '#submit' => ['::resendMessages'],
         '#ajax' => [
@@ -213,7 +226,7 @@ class ResendApplicationsForm extends AtvFormBase {
           // This element is updated with this AJAX callback.
           'progress' => [
             'type' => 'throbber',
-            'message' => $this->t('Resend messages...'),
+            'message' => $this->t('Resending messages...', [], self::$tOpts),
           ],
         ],
       ];
@@ -280,7 +293,8 @@ class ResendApplicationsForm extends AtvFormBase {
         );
 
         $message['messageId'] = Uuid::uuid4()->toString();
-        // Need to set.
+        // Need to add one second, otherwise messages parsing
+        // will override the message due timestamp index.
         $dt->add(\DateInterval::createFromDateString('1 second'));
         $message['sendDateTime'] = $dt->format('Y-m-d\TH:i:s');
         self::resendMessage($message, $values['applicationId']);
@@ -289,7 +303,7 @@ class ResendApplicationsForm extends AtvFormBase {
 
     $messenger->addStatus(t(
       'Selected messages has been resent, processing the messages might take a few moments'
-    ));
+    ), [], self::$tOpts);
     $formState->setRebuild();
   }
 

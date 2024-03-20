@@ -31,15 +31,14 @@ abstract class AtvFormBase extends FormBase {
   }
 
   /**
-   * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
+   * Update resent application save id to database.
+   *
    * @param mixed $applicationNumber
+   *   The application number.
    * @param mixed $saveId
-   * @return void
-   * @throws \Drupal\Core\DependencyInjection\ContainerNotInitializedException
-   * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
-   * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
+   *   The new save id.
    */
-  public static function updateSaveIdRecord($applicationNumber, $saveId) {
+  public static function updateSaveIdRecord(string $applicationNumber, string $saveId) {
 
     $database = \Drupal::service('database');
     $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber(
