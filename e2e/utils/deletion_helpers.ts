@@ -77,7 +77,7 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
   page.once('dialog', async dialog => {
     await dialog.accept();
   });
-  await page.waitForURL('/fi/oma-asiointi', {timeout: 10000});
+  await page.waitForURL('/fi/oma-asiointi');
   await validateDeletionNotification(page, 'Submission URL.');
 }
 
@@ -99,7 +99,7 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
 const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
   await page.goto('/fi/oma-asiointi');
   await page.locator(`.application-delete-link-${applicationId}`).click();
-  await page.waitForLoadState('load', {timeout: 10000});
+  await page.waitForLoadState('load');
   await validateDeletionNotification(page, 'Application ID on Oma asiointi page.');
 }
 

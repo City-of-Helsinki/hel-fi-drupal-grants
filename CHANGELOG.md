@@ -1,5 +1,44 @@
 # CHANGELOG
 
+## 2024.5
+- 3c538aff fix: AU-2215: add multivalue fields to tests (#1221)
+- 2da14900 fix: AU-2259: fix patterns in Year-field (#1244)
+- 6e66fc2f config: Update configuration (#1246)
+- f9200600 feat: AU-2233: E2E, Moved various variables to the .env file (#1233)
+- 23091378 feat: AU-2257: Allow grants_admins to access resend page and submitted applications page
+- b935655e fix: AU-2198: remove unwanted messages from thank you page (#1209)
+- 2e9bff92 fix: AU-2228: Make javascript load after content has loaded (#1240)
+- 9e4c690e config: Update configuration (#1243)
+- 90607241 feat AU-2234: skip deployment script (#1242)
+- 21ea0ced fix: AU-2213: Allow budget explantion to be saved without a value
+- fd572eb9 fix: AU-2254 profile tooltip text (#1238)
+- a1dd38e2 Comment out deploy scripts
+- 72264c63 fix: AU-2237: IBAN validation
+- d2a7f1aa feat: AU-1949: E2E, Implemented hidden field validation (#1220)
+- 4eb824be config: Update configuration (#1227)
+- fe317b64 fix: AU-2224: Recognize short ISO dates in print view (#1230)
+- c6e40ae1 feat: AU-1075: Enable helfi_paragraphs_news_list
+- 495b363d fix: AU-2209: Add user cache context. Remove unnecessary helfi_profiili dependency (#1215)
+- 0c7f6b63 fix: AU-2223: re-style status tags (#1236)
+- 2c05ce68 fix: AU-2090: change confirmation page text (#1234)
+- fe342e98 fix: AU-2203: update service page block text (#1235)
+- fc3c9ff0 fix: AU-2208: TPR link manipulation fixes
+- 8bccc3ed fix: AU-2214: ATV module updato to fix gdpr endpoints
+- c6ec37b6 feat: AU-2124: Askem (#1232)
+- eaa51770 fix: AU-2221: translate Hakija in SV applications (#1229)
+- 5e51a15f fix: AU-2032: Fix tests, this will cause conflicts. (#1231)
+- 5198904c fix: AU-2250: change word on KUVA toiminta
+- c6ccba4e fix: AU-2229: change KEHA avustuslaji term (#1226)
+- 5d8afae4 fix: AU-2234: Update helfi tools and update-platform configs (#1224)
+- 6256e81f fix: AU-2230: default language back to fi
+- 7a3727b4 (tag: AU-2225-module-versions, origin/main, main) Hotfix AU-2225-module-versions
+- 17cd2452 AU-2225: Add icon path to site settings conf.
+- dac3fe98 AU-2225: Patch crop module with urldecoded paths
+- 2fc8a797 feat: AU-2205, AU-2206: E2E, Fixed problems with number inputs and file uploads. (#1216)
+- b5af1bb6 AU-2225: Restore deployment scripts.
+- c4dafa09 AU-2225: New versio for azure modules.
+
+
 ## 2024.4
 - e8f617d5 Production config import
 - c8672739 fix: AU-2202-status-fix (#1212)
