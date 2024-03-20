@@ -315,20 +315,71 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
     },
     "2_avustustiedot": {
       items: {
-        "edit-orienteering-maps-items-0-item-voluntaryhours": {
-          value: '15',
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-orienteering-maps-items-0-item-cost": {
-          value: '100',
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-orienteering-maps-items-0-item-othercompensations": {
-          value: '2000',
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
+        'edit-orienteering-maps': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-orienteering-maps-add-submit',
+              resultValue: 'edit-orienteering-maps-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-mapname',
+                  },
+                  value: faker.lorem.sentences(4),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-size',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-voluntaryhours',
+                  },
+                  value: '15',
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-cost',
+                  },
+                  value: '100',
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-othercompensations',
+                  },
+                  value: '2000',
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
       },
     },
