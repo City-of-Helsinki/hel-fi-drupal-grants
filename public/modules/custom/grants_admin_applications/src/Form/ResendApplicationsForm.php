@@ -2,11 +2,14 @@
 
 namespace Drupal\grants_admin_applications\Form;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\EventException;
 use Drupal\helfi_atv\AtvService;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -104,6 +107,7 @@ class ResendApplicationsForm extends AtvFormBase {
 
     $status = $form_state->getValue('status');
     $document = $form_state->getValue('atvdocument');
+    $messages = $form_state->getValue('messages');
 
     if ($status) {
       $form['status']['state'] = [
@@ -126,6 +130,93 @@ class ResendApplicationsForm extends AtvFormBase {
         '#disabled' => TRUE,
 
       ];
+
+      $form['status']['messageList'] = [
+        '#type' => 'table',
+        '#caption' => $this->t('Messages'),
+        '#header' => [
+          $this->t('ID'),
+          $this->t('Timestamp'),
+          $this->t('Content'),
+          $this->t('Attachments'),
+          $this->t('Sent by'),
+          $this->t('Avus2 has received the message*'),
+          $this->t('Has been resent'),
+          $this->t('Resend this message'),
+        ],
+      ];
+
+      if ($messages) {
+        foreach ($messages as $message) {
+
+          $resent = isset($message['resent']) && $message['resent'];
+          $avus2Received = isset($message['avus2received']) && $message['avus2received'];
+
+          $rowElement = [
+            'id' => [
+              '#markup' => $message['messageId'],
+            ],
+            'timestamp' => [
+              '#markup' => $message['sendDateTime'],
+            ],
+            'body' => [
+              '#markup' => $message['body'],
+            ],
+            'attachments' => (function () use ($message) {
+              if (isset($message['attachments'])) {
+                $attachment = reset($message['attachments']);
+                return [
+                  '#markup' => $attachment['fileName'] . ' - ' . $attachment['description'],
+                ];
+              }
+              return [
+                '#markup' => '-',
+              ];
+            })(),
+            'sentBy' => [
+              '#markup' => $message['sentBy'],
+            ],
+            'avus2received' => [
+              '#markup' => $avus2Received ? $this->t('Yes') : $this->t('No'),
+            ],
+            'hasBeenResent' => [
+              '#markup' => $resent ? $this->t('Yes') : $this->t('No'),
+            ],
+            'resendMessage' => [
+              '#type' => 'checkbox',
+              '#return_value' => $message['messageId'],
+            ],
+          ];
+
+          $form['status']['messageList'][] = $rowElement;
+
+        }
+      }
+
+      $form['disclaimer'] = [
+        '#prefix' => '<p>',
+        '#suffix' => '<p>',
+        '#markup' => $this->t(
+          '* Please note that older applications might not have avus2 message received status available.'
+        ),
+      ];
+
+      $form['resendMessages'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Resend messages'),
+        '#name' => 'resendMessages',
+        '#submit' => ['::resendMessages'],
+        '#ajax' => [
+          'callback' => '::ajaxCallback',
+          'disable-refocus' => FALSE,
+          'wrapper' => 'profile-data',
+          // This element is updated with this AJAX callback.
+          'progress' => [
+            'type' => 'throbber',
+            'message' => $this->t('Resend messages...'),
+          ],
+        ],
+      ];
     }
     return $form;
   }
@@ -141,6 +232,117 @@ class ResendApplicationsForm extends AtvFormBase {
 
     $res = \Drupal::service('helfi_atv.atv_service')->searchDocuments($sParams);
     return reset($res);
+  }
+
+  /**
+   * Resend messages submit handler.
+   */
+  public static function resendMessages(array $form, FormStateInterface $formState) {
+    $values = $formState->getValues();
+    $eventService = \Drupal::service('grants_handler.events_service');
+    $messenger = \Drupal::service('messenger');
+
+    if (isset($values['messageList']) && is_array($values['messageList'])) {
+      $messagesToBeResent = array_filter($values['messageList'], function ($message) {
+        return $message['resendMessage'];
+      });
+
+      $messagesToBeResent = array_map(function ($message) {
+        return $message['resendMessage'];
+      }, $messagesToBeResent);
+
+      if (empty($messagesToBeResent)) {
+        return;
+      }
+
+      $atvDoc = self::getDocument($values['applicationId']);
+      $documentContent = $atvDoc->getContent();
+      $atvMessages = $documentContent['messages'];
+      $filteredAtvMessages = array_filter($atvMessages, function ($message) use ($messagesToBeResent) {
+        return in_array($message['messageId'], $messagesToBeResent);
+      });
+
+      $dt = new \DateTime();
+      $dt->setTimezone(new \DateTimeZone('Europe/Helsinki'));
+
+      foreach ($filteredAtvMessages as $message) {
+        // Resend events - old ids.
+        $eventService->logEvent(
+          $values['applicationId'],
+          'MESSAGE_RESEND',
+          t('Message resent: @messageId.',
+            [
+              '@messageId' => $message['messageId'],
+            ],
+            ['context' => 'grants_handler']
+          ),
+          $message['messageId']
+        );
+
+        $message['messageId'] = Uuid::uuid4()->toString();
+        // Need to set.
+        $dt->add(\DateInterval::createFromDateString('1 second'));
+        $message['sendDateTime'] = $dt->format('Y-m-d\TH:i:s');
+        self::resendMessage($message, $values['applicationId']);
+      }
+    }
+
+    $messenger->addStatus(t(
+      'Selected messages has been resent, processing the messages might take a few moments'
+    ));
+    $formState->setRebuild();
+  }
+
+  /**
+   * Resend messages submit handler.
+   *
+   * @param array $messageData
+   *   The message data.
+   * @param string $applicationNumber
+   *   The application number.
+   */
+  private static function resendMessage(array $messageData, string $applicationNumber) {
+
+    $httpClient = \Drupal::service('http_client');
+    $eventService = \Drupal::service('grants_handler.events_service');
+    $logger = self::getLoggerChannel();
+
+    $endpoint = getenv('AVUSTUS2_MESSAGE_ENDPOINT');
+    $username = getenv('AVUSTUS2_USERNAME');
+    $password = getenv('AVUSTUS2_PASSWORD');
+    $messageDataJson = Json::encode($messageData);
+
+    $res = $httpClient->post($endpoint, [
+      'auth' => [$username, $password, "Basic"],
+      'body' => $messageDataJson,
+    ]);
+
+    if ($res->getStatusCode() == 200) {
+      try {
+        $event = $eventService->logEvent(
+          $applicationNumber,
+          'MESSAGE_APP',
+          t('New message for @applicationNumber.',
+            ['@applicationNumber' => $applicationNumber],
+            ['context' => 'grants_handler']
+          ),
+          $messageData['messageId']
+        );
+
+        $logger->info(
+          'MSG id: %nextId, message sent. Event logged: %eventId',
+          [
+            '%nextId' => $messageData['messageId'],
+            '%eventId' => $event['eventID'],
+          ]);
+
+      }
+      catch (EventException $e) {
+        // Log event error.
+        $logger->error('%error', ['%error' => $e->getMessage()]);
+      }
+    }
+
   }
 
   /**
@@ -164,12 +366,15 @@ class ResendApplicationsForm extends AtvFormBase {
         return;
       }
 
+      $messages = ApplicationHandler::parseMessages($atvDoc->getContent(), FALSE, TRUE);
+
       $messenger->addStatus(t('Application found: @applicationId', $placeholders));
       $statusArray = $atvDoc->getStatusArray();
 
       if (!empty($statusArray)) {
         $formState->setValue('status', $statusArray);
         $formState->setValue('atvdocument', $atvDoc->toJson());
+        $formState->setValue('messages', $messages);
         $formState->setRebuild();
       }
     }
