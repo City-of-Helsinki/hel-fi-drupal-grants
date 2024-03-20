@@ -19,54 +19,45 @@ const profileDataBase: FormData = {
             value: 'edit-foundingyearwrapper-foundingyear',
           },
           value: '2016',
+          viewPageSelector: '.grants-profile',
         },
         'companynameshort': {
           role: 'input',
-          selector:
-            {
-              type: 'data-drupal-selector',
-              name:
-                'data-drupal-selector',
-              value:
-                'edit-companynameshortwrapper-companynameshort',
-            }
-          ,
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-companynameshortwrapper-companynameshort',
+          },
           value: faker.company.buzzAdjective(),
+          viewPageSelector: '.grants-profile',
         },
         'companyhomepage': {
           role: 'input',
-          selector:
-            {
-              type: 'data-drupal-selector',
-              name:
-                'data-drupal-selector',
-              value:
-                'edit-companyhomepagewrapper-companyhomepage',
-            }
-          ,
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-companyhomepagewrapper-companyhomepage',
+          },
           value: faker.internet.domainName(),
+          viewPageSelector: '.grants-profile',
         },
         'businesspurpose': {
           role: 'input',
-          selector:
-            {
-              type: 'data-drupal-selector',
-              name:
-                'data-drupal-selector',
-              value:
-                'edit-businesspurposewrapper-businesspurpose',
-            }
-          ,
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-businesspurposewrapper-businesspurpose',
+          },
           value: faker.word.words(20),
+          viewPageSelector: '.grants-profile',
         },
         'addresswrapper': {
           role: 'multivalue',
-          selector:
-            {
-              type: 'data-drupal-selector',
-              name: 'data-drupal-selector',
-              value: 'edit-addresswrapper',
-            },
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-addresswrapper',
+          },
           multi: {
             buttonSelector: {
               type: 'add-more-button',
@@ -86,6 +77,7 @@ const profileDataBase: FormData = {
                       value: 'edit-addresswrapper-[INDEX]-address-street',
                     },
                     value: PROFILE_INPUT_DATA.address,
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'input',
@@ -95,6 +87,7 @@ const profileDataBase: FormData = {
                       value: 'edit-addresswrapper-[INDEX]-address-postcode',
                     },
                     value: PROFILE_INPUT_DATA.zipCode,
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'input',
@@ -104,6 +97,7 @@ const profileDataBase: FormData = {
                       value: 'edit-addresswrapper-[INDEX]-address-city',
                     },
                     value: PROFILE_INPUT_DATA.city,
+                    viewPageSelector: '.grants-profile',
                   },
                 ],
               1:
@@ -116,6 +110,7 @@ const profileDataBase: FormData = {
                       value: 'edit-addresswrapper-[INDEX]-address-street',
                     },
                     value: faker.location.streetAddress(),
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'input',
@@ -125,6 +120,7 @@ const profileDataBase: FormData = {
                       value: 'edit-addresswrapper-[INDEX]-address-postcode',
                     },
                     value: faker.location.zipCode(),
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'input',
@@ -134,35 +130,25 @@ const profileDataBase: FormData = {
                       value: 'edit-addresswrapper-[INDEX]-address-city',
                     },
                     value: faker.location.city(),
+                    viewPageSelector: '.grants-profile',
                   },
                 ]
             }
-            ,
-            expectedErrors: {
-              // "edit-addresswrapper-0-address-postcode": `${postCode} ei ole suomalainen postinumero`
-            }
-          }
-          ,
+          },
         },
         'officialwrapper': {
           role: 'multivalue',
-          selector:
-            {
-              type: 'data-drupal-selector',
-              name:
-                'data-drupal-selector',
-              value:
-                'edit-officialwrapper',
-            },
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-officialwrapper',
+          },
           multi: {
             buttonSelector: {
               type: 'add-more-button',
-              name:
-                'data-drupal-selector',
-              value:
-                'Lisää vastuuhenkilö',
-              resultValue:
-                'edit-officialwrapper-[INDEX]-official',
+              name: 'data-drupal-selector',
+              value: 'Lisää vastuuhenkilö',
+              resultValue: 'edit-officialwrapper-[INDEX]-official',
             },
             //@ts-ignore
             items: {
@@ -176,15 +162,17 @@ const profileDataBase: FormData = {
                       value: 'edit-officialwrapper-[INDEX]-official-name',
                     },
                     value: PROFILE_INPUT_DATA.communityOfficial,
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'select',
                     selector: {
-                      type: 'data-drupal-selector',
-                      name: 'name',
+                      type: 'by-label',
+                      name: '',
                       value: 'edit-officialwrapper-[INDEX]-official-role',
                     },
-                    value: '11',
+                    value: 'Vastuuhenkilö',
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'input',
@@ -193,7 +181,8 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-officialwrapper-[INDEX]-official-email',
                     },
-                    value: faker.internet.email(),
+                    value: faker.internet.email().toLowerCase(),
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'input',
@@ -203,6 +192,7 @@ const profileDataBase: FormData = {
                       value: 'edit-officialwrapper-[INDEX]-official-phone',
                     },
                     value: faker.phone.number(),
+                    viewPageSelector: '.grants-profile',
                   },
                 ],
               1:
@@ -215,15 +205,17 @@ const profileDataBase: FormData = {
                       value: 'edit-officialwrapper-[INDEX]-official-name',
                     },
                     value: faker.person.fullName(),
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'select',
                     selector: {
-                      type: 'data-drupal-selector',
-                      name: 'data-drupal-selector',
+                      type: 'by-label',
+                      name: '',
                       value: 'edit-officialwrapper-[INDEX]-official-role',
                     },
-                    value: '11',
+                    value: 'Vastuuhenkilö',
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'input',
@@ -232,7 +224,8 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-officialwrapper-[INDEX]-official-email',
                     },
-                    value: faker.internet.email(),
+                    value: faker.internet.email().toLowerCase(),
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'input',
@@ -242,35 +235,25 @@ const profileDataBase: FormData = {
                       value: 'edit-officialwrapper-[INDEX]-official-phone',
                     },
                     value: faker.phone.number(),
+                    viewPageSelector: '.grants-profile',
                   },
                 ],
             }
-            ,
-            expectedErrors: {
-              // "edit-addresswrapper-0-address-postcode": `${postCode} ei ole suomalainen postinumero`
-            }
-          }
-          ,
+          },
         },
         'bankaccountwrapper': {
           role: 'multivalue',
-          selector:
-            {
-              type: 'data-drupal-selector',
-              name:
-                'data-drupal-selector',
-              value:
-                'edit-bankaccountwrapper',
-            },
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-bankaccountwrapper',
+          },
           multi: {
             buttonSelector: {
               type: 'add-more-button',
-              name:
-                'data-drupal-selector',
-              value:
-                'Lisää pankkitili',
-              resultValue:
-                'edit-bankaccountwrapper-[INDEX]-bank',
+              name: 'data-drupal-selector',
+              value: 'Lisää pankkitili',
+              resultValue: 'edit-bankaccountwrapper-[INDEX]-bank',
             },
             //@ts-ignore
             items: {
@@ -284,6 +267,7 @@ const profileDataBase: FormData = {
                       value: 'edit-bankaccountwrapper-[INDEX]-bank-bankaccount',
                     },
                     value: PROFILE_INPUT_DATA.iban,
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'fileupload',
@@ -294,6 +278,7 @@ const profileDataBase: FormData = {
                       resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
                     },
                     value: ATTACHMENTS.BANK_ACCOUNT_CONFIRMATION,
+                    viewPageSkipValidation: true,
                   },
                 ],
               1:
@@ -306,6 +291,7 @@ const profileDataBase: FormData = {
                       value: 'edit-bankaccountwrapper-[INDEX]-bank-bankaccount',
                     },
                     value: PROFILE_INPUT_DATA.iban2,
+                    viewPageSelector: '.grants-profile',
                   },
                   {
                     role: 'fileupload',
@@ -316,45 +302,33 @@ const profileDataBase: FormData = {
                       resultValue: '.form-item-bankaccountwrapper-[INDEX]-bank-confirmationfile a',
                     },
                     value: ATTACHMENTS.BANK_ACCOUNT_CONFIRMATION,
+                    viewPageSkipValidation: true,
                   },
-                ]
-            }
-            ,
-            expectedErrors: {
-              // "edit-addresswrapper-0-address-postcode": `${postCode} ei ole suomalainen postinumero`
-            }
-          }
-          ,
+                ],
+            },
+          },
         },
         'submit': {
           role: 'button',
-          selector:
-            {
-              type: 'data-drupal-selector',
-              name:
-                'data-drupal-selector',
-              value:
-                'edit-actions-submit',
-            }
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-actions-submit',
+          },
+          viewPageSkipValidation: true,
         },
       },
-      expectedDestination:
-        "/fi/oma-asiointi/hakuprofiili",
-      expectedErrors: {
-        // "edit-addresswrapper-0-address-postcode": `${postCode} ei ole suomalainen postinumero`
-      }
-
+      expectedDestination: "/fi/oma-asiointi/hakuprofiili",
+      expectedErrors: {}
     }
   },
-  expectedDestination:
-    "/fi/oma-asiointi/hakuprofiili",
-  expectedErrors: {
-    // "edit-addresswrapper-0-address-postcode": `${postCode} ei ole suomalainen postinumero`
-  }
+  expectedDestination: "/fi/oma-asiointi/hakuprofiili",
+  expectedErrors: {}
 };
 
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values',
+  viewPageSkipValidation: true,
   formPages: {
     'onlypage': {
       items: {},
@@ -369,28 +343,23 @@ const missingValues: FormDataWithRemoveOptionalProps = {
 
 const ibanTestData: FormDataWithRemoveOptionalProps = {
   title: 'Invalid IBAN test',
+  viewPageSkipValidation: true,
   formPages: {
     'onlyone': {
       items: {
         'bankaccountwrapper': {
           role: 'multivalue',
-          selector:
-            {
-              type: 'data-drupal-selector',
-              name:
-                'data-drupal-selector',
-              value:
-                'edit-bankaccountwrapper',
-            },
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-bankaccountwrapper',
+          },
           multi: {
             buttonSelector: {
               type: 'add-more-button',
-              name:
-                'data-drupal-selector',
-              value:
-                'Lisää pankkitili',
-              resultValue:
-                'edit-bankaccountwrapper-[INDEX]-bank',
+              name: 'data-drupal-selector',
+              value: 'Lisää pankkitili',
+              resultValue: 'edit-bankaccountwrapper-[INDEX]-bank',
             },
             //@ts-ignore
             items: {
