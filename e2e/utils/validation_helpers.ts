@@ -3,9 +3,10 @@ import {logger} from "./logger";
 import {
   FormField,
   FormData,
-  FormFieldWithRemove
+  FormFieldWithRemove, FormDataWithRemoveOptionalProps
 } from "./data/test_data"
 import {viewPageBuildSelectorForItem} from "./view_page_helpers";
+import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
 
 /**
  * The validateSubmission function.
@@ -67,22 +68,86 @@ const validateSent = async (
  * This function validates profile data on the
  * "/oma-asiointi/hakuprofiili" page.
  *
- * @param formKey
- *   The form variant key.
  * @param page
  *   Page object from Playwright.
  * @param formDetails
  *   The form data.
+ * @param formKey
+ *   The form variant key.
  */
 const validateProfileData = async (
   page: Page,
   formDetails: FormData,
-  formKey: string,
+  formKey: string
 ) => {
   if (formKey !== 'success') return;
-
   await navigateAndValidateProfilePage(page);
   await validateFormData(page, formDetails);
+}
+
+
+/**
+ * The validateHardCodedProfileData function.
+ *
+ * This function validates only the hard-coded profile data
+ * on the "/oma-asiointi/hakuprofiili" page.
+ *
+ * The hard-coded profile data originates from
+ * PROFILE_INPUT_DATA inside profile_input_data.ts.
+ *
+ * This data is tested in the situation where a new profile is NOT
+ * created when the tests are executed, but we still want to make
+ * sure that the profile has the correct information from a previous
+ * test.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param profileType
+ *   The profile type we are validating.
+ */
+const validateHardCodedProfileData = async (
+  page: Page,
+  profileType: string,
+) => {
+
+  // Grab the hard-coded input data and filter the
+  // data depending on the profile type.
+  let profileInputData: ProfileInputData = PROFILE_INPUT_DATA;
+
+  if (profileType === 'private_person') {
+    const privatePersonFields = [
+      'iban',
+      'iban2',
+      'address',
+      'zipCode',
+      'city',
+    ];
+
+    profileInputData = Object.keys(PROFILE_INPUT_DATA)
+      .filter((key): key is keyof ProfileInputData => privatePersonFields.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = PROFILE_INPUT_DATA[key];
+        return obj;
+      }, {} as Partial<ProfileInputData>);
+  }
+
+  // Navigate to the profile page.
+  await navigateAndValidateProfilePage(page);
+
+  // Validate the hard-coded profile data.
+  const profileDataWrapper = await page.locator('.grants-profile');
+  const profileData = await profileDataWrapper.textContent();
+  const validationErrors: string[] = [];
+
+  if (profileData) {
+    for (const [key, value] of Object.entries(profileInputData)) {
+      if (!profileData.includes(value)) {
+        validationErrors.push( `Hard-coded "${key}" with value "${value}" not found on profile page.\n`)
+      }
+    }
+  }
+  expect(validationErrors).toEqual([]);
+  logger('Hard-coded profile data validated.')
 }
 
 /**
@@ -140,7 +205,7 @@ const validateFormData = async (
   // Assert no validation errors.
   expect(validationErrors).toEqual([]);
   // Log results.
-  logDraftValidationResults(skipMessages, noValueMessages, validationSuccesses);
+  logValidationResults(skipMessages, noValueMessages, validationSuccesses);
 }
 
 /**
@@ -378,10 +443,10 @@ const constructMessage = (
 }
 
 /**
- * The logDraftValidationResults function.
+ * The logValidationResults function.
  *
- * This function log messages related to
- * the draft validation process.
+ * This function logs messages related to
+ * the validation process.
  *
  * @param skipMessages
  *   Array of messages for skipped items.
@@ -390,7 +455,7 @@ const constructMessage = (
  * @param validationSuccesses
  *   Array of detailed messages for successful validations.
  */
-const logDraftValidationResults = (
+const logValidationResults = (
   skipMessages: string[],
   noValueMessages: string[],
   validationSuccesses: string[]
@@ -411,5 +476,6 @@ const logDraftValidationResults = (
 
 export {
   validateSubmission,
-  validateProfileData
+  validateProfileData,
+  validateHardCodedProfileData
 }
