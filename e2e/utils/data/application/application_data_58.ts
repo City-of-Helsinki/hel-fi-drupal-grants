@@ -282,7 +282,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
@@ -388,7 +387,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
     'edit-orienteering-maps-items-0-item-othercompensations': 'Virhe sivulla 2. Avustustiedot: Arvo ei voi olla suurempi kuin "Talkootyö tuntia" ja "Kustannukset euroa" kenttien summa.',
@@ -413,7 +411,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 
