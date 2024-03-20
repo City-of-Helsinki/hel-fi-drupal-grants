@@ -5491,16 +5491,16 @@
         },
         {
             "name": "drupal/helfi_gdpr_api",
-            "version": "0.9.5",
+            "version": "0.9.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api.git",
-                "reference": "fb16a76d5334c960f43b64eb22ab3931bfa23abc"
+                "reference": "1829a705b747da7cb00767d16ede03a0565dd1b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-gdpr-api/zipball/fb16a76d5334c960f43b64eb22ab3931bfa23abc",
-                "reference": "fb16a76d5334c960f43b64eb22ab3931bfa23abc",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-gdpr-api/zipball/1829a705b747da7cb00767d16ede03a0565dd1b3",
+                "reference": "1829a705b747da7cb00767d16ede03a0565dd1b3",
                 "shasum": ""
             },
             "type": "drupal-module",
@@ -5513,10 +5513,10 @@
                 "GPL-2.0-or-later"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/tree/LOM-470-gdpr-delete",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/tree/0.9.6",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/issues"
             },
-            "time": "2023-05-24T11:28:31+00:00"
+            "time": "2024-03-20T06:59:35+00:00"
         },
         {
             "name": "drupal/helfi_helsinki_profiili",
