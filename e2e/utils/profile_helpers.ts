@@ -1,30 +1,28 @@
-import {
-  expect,
-  Page,
-} from '@playwright/test';
+import {expect, Page,} from '@playwright/test';
 import {logger} from "./logger";
-
 import {FormData} from "./data/test_data"
-
 import {fetchLatestProfileByType} from "./document_helpers";
 
+/**
+ * The function isTimestampLessThanAnHourAgo.
+ *
+ * @param timestamp
+ */
 function isTimestampLessThanAnHourAgo(timestamp: string) {
-  const oneHourInMilliseconds = 60 * 60 * 1000; // 1 hour in milliseconds
+  const oneHourInMilliseconds = 60 * 60 * 1000; // 1 hour in milliseconds.
   const currentTimestamp = new Date().getTime();
   const targetTimestamp = new Date(timestamp).getTime();
   return currentTimestamp - targetTimestamp < oneHourInMilliseconds;
 }
 
 /**
- * Try to check if profile is just created so we can skip these, when running
- * multiple test runs.
+ * Try to check if profile is just created so that
+ * we can skip these, when running multiple test runs.
  *
  * @param profileType
  *  Profile type, registered_community, private_person etc..
  */
 const isProfileCreated = async (profileType: string) => {
-  const profileExists = process.env[`profile_created_${profileType}`] === 'TRUE';
-
   logger('Profile...');
 
   if (process.env.CREATE_PROFILE === 'TRUE') {
@@ -32,16 +30,9 @@ const isProfileCreated = async (profileType: string) => {
     return false;
   }
 
-  if (!profileExists) {
-    logger('... does not exist and will be created.');
-    return false;
-  }
-
   return fetchLatestProfileByType(process.env.TEST_USER_UUID ?? '', profileType)
     .then((profile) => {
       if (profile && profile.updated_at) {
-
-        process.env[`profile_created_${profileType}`] = 'TRUE';
         const {updated_at} = profile;
         const isLessThanHourAgo = isTimestampLessThanAnHourAgo(updated_at);
 
@@ -55,7 +46,7 @@ const isProfileCreated = async (profileType: string) => {
       return false;
     })
     .catch((error) => {
-      console.error('Error fetching profile:', error);
+      logger('Error fetching profile:', error);
       return false;
     });
 };
@@ -78,12 +69,8 @@ const checkContactInfoPrivatePerson = async (page: Page, profileData: FormData) 
   await expect(page.locator("#officials-3").getByText('Tilinumerot')).toBeVisible()
   await expect(page.getByRole('link', {name: 'Muokkaa omia tietoja'})).toBeVisible()
 
-
   // tässä me voitas verrata profiilisivun sisältöä tallennettuun dataan.
-
-
 }
-
 
 export {
   checkContactInfoPrivatePerson,
