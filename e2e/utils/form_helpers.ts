@@ -107,8 +107,8 @@ const fillGrantsFormPage = async (
   }
 
   // Make sure the needed profile exists.
-  if (process.env[`profile_created_${profileType}`] === undefined ||
-      process.env[`profile_created_${profileType}`] !== 'TRUE') {
+  if (process.env[`profile_exists_${profileType}`] === undefined ||
+      process.env[`profile_exists_${profileType}`] !== 'TRUE') {
     logger(`Missing profile ${profileType} for form ID ${formID}. Skipping test.`);
     test.skip(true, 'Missing profile for form.');
   }
@@ -229,7 +229,7 @@ const fillProfileForm = async (
   // Navigate to form url.
   await page.goto(formPath);
 
-  logger('FORM', formPath, formClass);
+  logger('FORM:', formDetails.title);
 
   // Hide the sliding popup once.
   await hideSlidePopup(page);
@@ -240,7 +240,6 @@ const fillProfileForm = async (
 
   // Loop form pages
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
-    logger('Form page:', formPageKey);
     const buttons = [];
     for (const [itemKey, itemField] of Object.entries(formPageObject.items)) {
       if (itemField.role === 'button') {
