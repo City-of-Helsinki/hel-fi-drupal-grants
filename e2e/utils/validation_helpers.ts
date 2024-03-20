@@ -36,7 +36,8 @@ const validateSubmission = async (
 
   const thisStoreData = storedata[formKey];
   if (thisStoreData.status === 'DRAFT') {
-    await validateDraft(page, formDetails, thisStoreData);
+    await navigateAndValidateViewPage(page, thisStoreData);
+    await validateFormData(page, formDetails);
   } else {
     await validateSent(page, formDetails, thisStoreData);
   }
@@ -61,6 +62,30 @@ const validateSent = async (
 }
 
 /**
+ * The validateProfileData function.
+ *
+ * This function validates profile data on the
+ * "/oma-asiointi/hakuprofiili" page.
+ *
+ * @param formKey
+ *   The form variant key.
+ * @param page
+ *   Page object from Playwright.
+ * @param formDetails
+ *   The form data.
+ */
+const validateProfileData = async (
+  page: Page,
+  formDetails: FormData,
+  formKey: string,
+) => {
+  if (formKey !== 'success') return;
+
+  await navigateAndValidateProfilePage(page);
+  await validateFormData(page, formDetails);
+}
+
+/**
  * The validateDraft function.
  *
  * This function validates the "/katso" view of an application page.
@@ -72,17 +97,11 @@ const validateSent = async (
  *   Page object from Playwright.
  * @param formDetails
  *   The form data.
- * @param thisStoreData
- *   The env form data.
  */
-const validateDraft = async (
+const validateFormData = async (
   page: Page,
   formDetails: FormData,
-  thisStoreData: any
 ) => {
-
-  // Navigate to the applications "View" page and make sure we get to it.
-  await navigateAndValidateViewPage(page, thisStoreData);
 
   // Initialize message containers.
   const skipMessages: string[] = [];
@@ -121,7 +140,7 @@ const validateDraft = async (
   // Assert no validation errors.
   expect(validationErrors).toEqual([]);
   // Log results.
-  logDraftValidationResults(skipMessages, noValueMessages, validationSuccesses)
+  logDraftValidationResults(skipMessages, noValueMessages, validationSuccesses);
 }
 
 /**
@@ -281,6 +300,25 @@ const navigateAndValidateViewPage = async (
 }
 
 /**
+ * The navigateAndValidateProfilePage function.
+ *
+ * This function navigates to the "Profile"
+ * page and makes sure that we get to it. This is done
+ * so that we can validate the input profile data
+ * against the resulting data on the "Profile" page.
+ *
+ * @param page
+ *   Page object from Playwright.
+ */
+const navigateAndValidateProfilePage = async (
+  page: Page,
+) => {
+  const profilePageURL = '/fi/oma-asiointi/hakuprofiili';
+  await page.goto(profilePageURL, {timeout: 10000});
+  logger('Profile data validation on page:', profilePageURL);
+}
+
+/**
  * The MessageType enum.
  *
  * This enum defines the types of messages that
@@ -372,5 +410,6 @@ const logDraftValidationResults = (
 };
 
 export {
-  validateSubmission
+  validateSubmission,
+  validateProfileData
 }
