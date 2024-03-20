@@ -20,5 +20,9 @@
 ]
 %}
 <div{{ attributes.addClass(classes) }}>
+  {% if history.items is not empty%}
     {{ history }}
+  {% else %}
+    <em>{{ "No status history"|t }}</em>
+  {% endif %}
 </div>

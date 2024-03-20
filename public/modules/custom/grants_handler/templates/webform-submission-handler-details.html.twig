@@ -21,9 +21,13 @@
 %}
 
 <div{{ attributes.addClass(classes) }}>
+  {% if handler_strings is not empty %}
     {% for string in handler_strings%}
         <div>
         {{ string }}
         </div>
     {% endfor %}
+  {% else %}
+    <em>{{ "No handler information set"|t }}</em>
+  {% endif %}
 </div>
