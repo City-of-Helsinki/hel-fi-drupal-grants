@@ -134,17 +134,26 @@ elements: |
   business_info:
     '#title': Verksamhets&shy;beskrivning
   business_purpose:
-    '#title': 'Beskrivning av verksamheten'
-    '#help': 'Informationen h&auml;mtas fr&aring;n avsnittet med personuppgifter'
+    '#title': Verksamhetsbeskrivning
+    '#help': 'Om du vill lägga till, ta bort eller ändra verksamhetsbeskrivningen, spara ansökan som ett utkast och gå till dina uppgifter för att redigera verksamhetsbeskrivningen.'
   community_practices_business:
     '#title': 'Bedriver samfundet affärsverksamhet'
     '#options':
       1: Ja
       0: Nej
   toimintapaikkojen_perustiedot:
-    '#title': 'Verksamhetsställets uppgifter'
+    '#title': 'Verksamhets&shy;ställets uppgifter'
   toimintapaikka:
     '#title': Verksamhetsställen
+    '#description': '<p>Fyll i kontaktinformation, gruppstrukturer och uppgifter om eventuell hyra för respektive verksamhetsställe. Blanketten räknar ihop uppgifterna automatiskt.</p>'
+    '#location__title': Verksamhetsställen
+    '#specialStudents__title': 'av vilka specialelever'
+    '#specialGroups__title': 'av vilka smågrupper för specialelever'
+    '#personnelCount__title': 'Antal anställda'
+    '#free__title': 'Verksamheten ordnas i lokaler som hyresfritt ställs till förfogande av stadens utbildnings-, social- eller ungdomsväsende'
+    '#totalRent__title': 'Euro sammanlagt under läsåret (€)'
+    '#rentTimeBegin__title': 'Hyrestid i under läsåret, fr.o.m.'
+    '#rentTimeEnd__title': 'Hyrestid i under läsåret, ft.o.m.'
   4_talous:
     '#title': '4. Budget'
   talousarvio_osio:
@@ -155,6 +164,7 @@ elements: |
     '#title': Inkomster
   tulot:
     '#title': Inkomster
+    '#compensation__title': 'Önskat understöd (€)'
   muut_avustukset:
     '#title': 'Andra understöd'
   muut_avustukset_field:
@@ -163,6 +173,8 @@ elements: |
     '#title': Utgifter
   henkilostomenot_ja_vuokrat:
     '#title': 'Användning av understödet/Specifikation av personalkostnader och hyror'
+    '#description': '<p>Användning av understödet/Specifikation av personalkostnader och hyror</p>'
+    '#personnelSideCosts__title': 'Lönebikostnader (€)'
   muut_menot:
     '#title': 'Andra kostnader'
   muut_menot_4:
@@ -171,8 +183,11 @@ elements: |
     '#title': 'Användning av understödet/Specifikation av köpta tjänster'
   avustuksen_kaytto_palveluiden_ostot_eriteltyina_2:
     '#title': 'Användning av understödet/Specifikation av köpta tjänster'
+    '#travelCosts__title': 'Resor (€)'
   muut_palveluiden_ostot:
     '#title': 'Köp av övriga tjänster'
+  muut_palveluiden_ostot_2:
+    '#title': 'Andra kostnader'
   muut_aineet_tarvikkeet_ja_tavarat:
     '#title': 'Användning av understödet/Specifikation av material, förnödenheter och varor'
   muut_aineet_tarvikkeet_ja_tavarat_2:
@@ -193,6 +208,8 @@ elements: |
     '#title': 'Användning av klientavgiftsinkomster (och eventuella donationer)'
   asiakasmaksutulojen_kaytto_ja_mahdolliset_lahjoitukset_2:
     '#title': 'Användning av klientavgiftsinkomster (och eventuella donationer)'
+    '#description': '<p>Beräknad användning av inkomsterna från avgifter uttagna för eftermiddagsverksamhet (specifikation enligt ändamål)</p>'
+    '#personnelSideCosts__title': 'Lönebikostnader (€)'
   muut_kulut_2:
     '#title': 'Övriga utgifter'
   muut_menot_3:
@@ -212,7 +229,7 @@ elements: |
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
-    '#title': 'Gemenskapens regler'
+    '#title': 'Samfundets stadgar'
     '#help': 'Ny s&ouml;kande eller stadgar som &auml;ndrats'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -222,6 +239,7 @@ elements: |
   vahvistettu_tilinpaatos:
     '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
     '#help': "Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nSamfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r."
+    '#multiple__no_items_message': '<p>Ei syötettyjä arvoja. Lisää uusi sisältö alta.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -252,6 +270,8 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vuokrasopimus_haettaessa_vuokra_avustusta_:
+    '#title': 'Hyresavtalet (om du söker hyresunderstöd)'
+    '#help': '<p>Bifoga hyresavtalet, om du söker hyresunderstöd</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
