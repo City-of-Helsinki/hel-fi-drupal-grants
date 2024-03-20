@@ -5,7 +5,7 @@ import {ATTACHMENTS} from "./attachment_data";
 import {createFormData} from "../form_helpers";
 
 const profileDataBase: FormData = {
-  title: 'Profiledata: Successful',
+  title: 'Save profile data',
   formSelector: 'grants-profile-registered-community',
   formPath: '/fi/oma-asiointi/hakuprofiili/muokkaa',
   formPages: {
@@ -171,7 +171,7 @@ const profileDataBase: FormData = {
                       name: '',
                       value: 'edit-officialwrapper-[INDEX]-official-role',
                     },
-                    value: 'Vastuuhenkilö',
+                    value: PROFILE_INPUT_DATA.role,
                     viewPageSelector: '.grants-profile',
                   },
                   {
@@ -181,7 +181,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-officialwrapper-[INDEX]-official-email',
                     },
-                    value: faker.internet.email().toLowerCase(),
+                    value: PROFILE_INPUT_DATA.email,
                     viewPageSelector: '.grants-profile',
                   },
                   {
@@ -191,7 +191,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-officialwrapper-[INDEX]-official-phone',
                     },
-                    value: faker.phone.number(),
+                    value: PROFILE_INPUT_DATA.phone,
                     viewPageSelector: '.grants-profile',
                   },
                 ],
