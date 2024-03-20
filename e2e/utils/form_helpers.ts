@@ -229,6 +229,8 @@ const fillProfileForm = async (
   // Navigate to form url.
   await page.goto(formPath);
 
+  logger('FORM', formPath, formClass);
+
   // Hide the sliding popup once.
   await hideSlidePopup(page);
 
@@ -237,19 +239,18 @@ const fillProfileForm = async (
   // expect(initialPathname).toMatch(new RegExp(`^${formDetails.expectedDestination}/?$`));
 
   // Loop form pages
-  for (const [formPageKey, formPageObject]
-    of Object.entries(formDetails.formPages)) {
+  for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
+    logger('Form page:', formPageKey);
     const buttons = [];
-    for (const [itemKey, itemField]
-      of Object.entries(formPageObject.items)) {
+    for (const [itemKey, itemField] of Object.entries(formPageObject.items)) {
       if (itemField.role === 'button') {
-        // Collect buttons to be clicked later
+        // Collect buttons to be clicked later.
         buttons.push(itemField);
       } else if (itemField.role === 'multivalue') {
-        // Process multivalue fields separately
+        // Process multi-value fields separately.
         await fillMultiValueField(page, itemField, itemKey);
       } else {
-        // Or fill simple form field
+        // Or fill simple form field.
         await fillFormField(page, itemField, itemKey);
       }
     }
