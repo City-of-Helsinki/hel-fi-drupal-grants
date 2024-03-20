@@ -110,7 +110,7 @@ const deleteGrantsProfiles = async (testUserUUID: string, profileType: string) =
     const deletionResults = await Promise.all(deletionPromises);
     deletedDocumentsCount += deletionResults.filter(result => result).length;
   }
-  logger(`Deleted ${deletedDocumentsCount} grant profiles from ATV)`);
+  logger(`Deleted ${deletedDocumentsCount} grant profiles from ATV.`);
 }
 
 /**
