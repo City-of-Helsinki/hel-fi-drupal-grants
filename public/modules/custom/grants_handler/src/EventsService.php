@@ -56,10 +56,12 @@ class EventsService {
    * @var array|string[]
    */
   public static array $eventTypes = [
+    'AVUSTUS2_MSG_OK' => 'AVUSTUS2_MSG_OK',
     'STATUS_UPDATE' => 'STATUS_UPDATE',
     'MESSAGE_AVUS2' => 'MESSAGE_AVUS2',
     'MESSAGE_APP' => 'MESSAGE_APP',
     'MESSAGE_READ' => 'MESSAGE_READ',
+    'MESSAGE_RESEND' => 'MESSAGE_RESEND',
     'HANDLER_ATT_OK' => 'HANDLER_ATT_OK',
     'HANDLER_ATT_DELETE' => 'HANDLER_ATT_DELETE',
     'INTEGRATION_INFO_ATT_OK' => 'INTEGRATION_INFO_ATT_OK',
