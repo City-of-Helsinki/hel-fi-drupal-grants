@@ -1,26 +1,22 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {
-  PATH_YHTEISON_SAANNOT,
-  PATH_TOIMINTASUUNNITELMA,
-  PATH_TALOUSARVIO,
-  PATH_MUU_LIITE,
-} from "../../helpers";
+import {PROFILE_INPUT_DATA} from "../profile_input_data";
+import {ATTACHMENTS} from "../attachment_data";
 import {createFormData} from "../../form_helpers";
 import {
   viewPageFormatAddress,
-  viewPageFormatBoolean, viewPageFormatFilePath,
+  viewPageFormatFilePath,
   viewPageFormatLowerCase,
   viewPageFormatCurrency,
-  viewPageFormatNumber, viewPageFormatDate
+  viewPageFormatNumber,
+  viewPageFormatDate
 } from "../../view_page_formatters";
-import {PROFILE_INPUT_DATA} from "../profile_input_data";
 
 /**
  * Basic form data for successful submit to Avus2
  */
 const baseFormRegisteredCommunity_62: FormData = {
-  title: 'Form submit',
+  title: 'Save as draft.',
   formSelector: 'webform-submission-nuorisotoiminta-projektiavustush-form',
   formPath: '/fi/form/nuorisotoiminta-projektiavustush',
   formPages: {
@@ -87,8 +83,271 @@ const baseFormRegisteredCommunity_62: FormData = {
           viewPageSelector: '.form-item-subventions',
           viewPageFormatter: viewPageFormatCurrency
         },
-        // muut samaan tarkoitukseen myönnetyt
-        // muut samaan tarkoitukseen haetut
+        "edit-myonnetty-avustus": {
+          role: 'dynamicmultivalue',
+          label: '',
+          dynamic_multi: {
+            radioSelector: {
+              type: 'dom-id-label',
+              name: 'data-drupal-selector',
+              value: 'edit-olemme-saaneet-muita-avustuksia-1',
+            },
+            revealedElementSelector: {
+              type: 'dom-id',
+              name: '',
+              value: '#edit-myonnetty-avustus',
+            },
+            multi: {
+              buttonSelector: {
+                type: 'data-drupal-selector',
+                name: 'data-drupal-selector',
+                value: 'edit-myonnetty-avustus-add-submit',
+                resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
+              },
+              //@ts-ignore
+              items: {
+                0: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
+                    },
+                    value: 'Valtio',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+                1: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer',
+                    },
+                    value: 'EU',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-myonnetty-avustus-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+              },
+              expectedErrors: {}
+            }
+          },
+        },
+
+        "edit-haettu-avustus-tieto": {
+          role: 'dynamicmultivalue',
+          label: '',
+          dynamic_multi: {
+            radioSelector: {
+              type: 'dom-id-label',
+              name: 'data-drupal-selector',
+              value: 'edit-olemme-hakeneet-avustuksia-muualta-kuin-helsingin-kaupungilta-1',
+            },
+            revealedElementSelector: {
+              type: 'dom-id',
+              name: '',
+              value: '#edit-haettu-avustus-tieto',
+            },
+            multi: {
+              buttonSelector: {
+                type: 'data-drupal-selector',
+                name: 'data-drupal-selector',
+                value: 'edit-haettu-avustus-tieto-add-submit',
+                resultValue: 'edit-haettu-avustus-tieto-items-[INDEX]',
+              },
+              //@ts-ignore
+              items: {
+                0: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer',
+                    },
+                    value: 'Muu',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+                1: [
+                  {
+                    role: 'select',
+                    selector: {
+                      type: 'by-label',
+                      name: '',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer',
+                    },
+                    value: 'Säätiö',
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-issuer-name',
+                    },
+                    value: faker.lorem.words(2).toUpperCase(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-year',
+                    },
+                    value: faker.date.past().getFullYear().toString(),
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector-sequential',
+                      name: 'data-drupal-selector-sequential',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-amount',
+                    },
+                    value: faker.number.float({
+                      min: 1000,
+                      max: 10000,
+                      precision: 2
+                    }).toString(),
+                    viewPageFormatter: viewPageFormatCurrency,
+                  },
+                  {
+                    role: 'input',
+                    selector: {
+                      type: 'data-drupal-selector',
+                      name: 'data-drupal-selector',
+                      value: 'edit-haettu-avustus-tieto-items-[INDEX]-item-purpose',
+                    },
+                    value: faker.lorem.words(30),
+                  },
+                ],
+              },
+              expectedErrors: {}
+            }
+          },
+        },
         "nextbutton": {
           role: 'button',
           selector: {
@@ -171,23 +430,127 @@ const baseFormRegisteredCommunity_62: FormData = {
           value: faker.number.int({min: 12, max: 5000}).toString(),
           viewPageFormatter: viewPageFormatCurrency
         },
-        "edit-budget-other-income-items-0-item-label": {
-          value: faker.lorem.words(3),
-          viewPageSelector: '.form-item-budget-other-income',
+        'edit-budget-other-income': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-budget-other-income-add-submit',
+              resultValue: 'edit-budget-other-income-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-income-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-income',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-income-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-income',
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-income-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-income',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-income-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-income',
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
-        "edit-budget-other-income-items-0-item-value": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-other-income',
-          viewPageFormatter: viewPageFormatCurrency
-        },
-        "edit-budget-other-cost-items-0-item-label": {
-          value: faker.lorem.words(3),
-          viewPageSelector: '.form-item-budget-other-cost',
-        },
-        "edit-budget-other-cost-items-0-item-value": {
-          value: faker.number.int({min: 12, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-other-cost',
-          viewPageFormatter: viewPageFormatCurrency
+        'edit-budget-other-cost': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-budget-other-cost-add-submit',
+              resultValue: 'edit-budget-other-cost-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "nextbutton": {
           role: 'button',
@@ -212,7 +575,7 @@ const baseFormRegisteredCommunity_62: FormData = {
             value: '[name="files[yhteison_saannot_attachment]"]',
             resultValue: '.form-item-yhteison-saannot-attachment a',
           },
-          value: PATH_YHTEISON_SAANNOT,
+          value: ATTACHMENTS.YHTEISON_SAANNOT,
           viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-projektisuunnitelma-liite-attachment-upload': {
@@ -223,7 +586,7 @@ const baseFormRegisteredCommunity_62: FormData = {
             value: '[name="files[projektisuunnitelma_liite_attachment]"]',
             resultValue: '.form-item-projektisuunnitelma-liite-attachment a',
           },
-          value: PATH_TOIMINTASUUNNITELMA,
+          value: ATTACHMENTS.TOIMINTASUUNNITELMA,
           viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-projektin-talousarvio-attachment-upload': {
@@ -234,7 +597,7 @@ const baseFormRegisteredCommunity_62: FormData = {
             value: '[name="files[projektin_talousarvio_attachment]"]',
             resultValue: '.form-item-projektin-talousarvio-attachment a',
           },
-          value: PATH_TALOUSARVIO,
+          value: ATTACHMENTS.TALOUSARVIO,
           viewPageFormatter: viewPageFormatFilePath,
         },
         'edit-muu-liite-items-0-item-attachment-upload': {
@@ -245,7 +608,7 @@ const baseFormRegisteredCommunity_62: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_MUU_LIITE,
+          value: ATTACHMENTS.MUU_LIITE,
           viewPageSelector: '.form-item-muu-liite',
           viewPageFormatter: viewPageFormatFilePath
         },
@@ -383,7 +746,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
@@ -444,7 +806,6 @@ const missingValuesUnregistered: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-kenelle-haen-avustusta': 'Virhe sivulla 2. Avustustiedot: Kenelle haen avustusta kenttä on pakollinen.',
@@ -503,7 +864,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
     'edit-budget-other-income-items-0-item-value': 'Virhe sivulla 5. Talousarvio: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
@@ -542,7 +902,6 @@ const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-budget-other-income-items-0-item-value': 'Virhe sivulla 5. Talousarvio: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
     'edit-budget-other-cost-items-0-item-label': 'Virhe sivulla 5. Talousarvio: Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
@@ -567,7 +926,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 

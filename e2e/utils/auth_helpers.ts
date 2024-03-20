@@ -2,8 +2,6 @@ import {Page, expect} from '@playwright/test';
 import {logger} from "./logger";
 import {existsSync, readFileSync} from 'fs';
 
-import {TEST_SSN} from "./data/test_data";
-
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
 
 const AUTH_FILE_PATH = '.auth/user.json';
@@ -87,7 +85,7 @@ const login = async (page: Page, SSN?: string) => {
   await page.goto('/fi/user/login');
   await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
   await page.locator("#fakevetuma2").click()
-  await page.locator("#hetu_input").fill(SSN ?? TEST_SSN);
+  await page.locator("#hetu_input").fill(SSN ?? process.env.TEST_USER_SSN ?? '');
   await page.locator('.box').click()
   await page.locator('#tunnistaudu').click();
   await page.locator('#continue-button').click();
