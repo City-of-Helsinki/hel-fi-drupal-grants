@@ -112,6 +112,7 @@ const fillGrantsFormPage = async (
     logger(`Missing profile ${profileType} for form ID ${formID}. Skipping test.`);
     test.skip(true, 'Missing profile for form.');
   }
+  expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
 
   // Store submissionUrl.
   const applicationId = await getApplicationNumberFromBreadCrumb(page);

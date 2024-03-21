@@ -1,22 +1,16 @@
-import {Page, test} from '@playwright/test';
+import {expect, Page, test} from '@playwright/test';
 import {logger} from "../../utils/logger";
-import {fillProfileForm} from '../../utils/form_helpers'
-import {isProfileCreated} from '../../utils/profile_helpers';
-import {deleteGrantsProfiles} from "../../utils/document_helpers";
+import {runProfileFormTest, isProfileCreated} from '../../utils/profile_helpers';
 import {selectRole} from "../../utils/auth_helpers";
 import {validateHardCodedProfileData, validateProfileData} from "../../utils/validation_helpers";
-import {
-  profileDataRegisteredCommunity as profileData,
-  FormData
-} from '../../utils/data/test_data'
-
-const profileType = 'registered_community';
+import {profileDataRegisteredCommunity as profileData, FormData} from '../../utils/data/test_data'
 
 test.describe('Registered Community - Grants Profile', () => {
   let page: Page;
   let profileExists: boolean;
   let skipHardCodedDataTest: boolean = false;
   const testDataArray: [string, FormData][] = Object.entries(profileData);
+  const profileType = 'registered_community';
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
@@ -25,61 +19,50 @@ test.describe('Registered Community - Grants Profile', () => {
   });
 
   test.afterAll(() => {
-    if (process.env[`profile_exists_${profileType}`] !== undefined &&
-        process.env[`profile_exists_${profileType}`] === 'TRUE') {
-      logger(`Profile exists for: ${profileType}`);
-    } else {
-      logger(`Profile does not exist for: ${profileType}`);
-    }
+    expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
+    logger(`Profile exist for: ${profileType}`);
   });
 
-  test('Profile creation', async () => {
+  test('Profile form tests', async () => {
     if (profileExists) {
-      logger('Skipping profile creation test because profile already exists.');
+      logger('Profile already exists, skipping test.');
       test.skip(profileExists);
     }
 
-    logger('Profile creation test.')
-    let successTest: FormData | null = null;
+    logger('Running profile form tests.')
+    for (const [key, formData] of testDataArray) {
+      if (key === 'success') continue;
+      await runProfileFormTest(page, formData, profileType);
+    }
 
-    for (const [key, obj] of testDataArray) {
-      if (key === 'success') {
-        successTest = obj;
-        continue;
-      }
-      await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
-      await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
-    }
-    // Finally, fill the success test form.
-    if (successTest) {
-      await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
-      await fillProfileForm(page, successTest, successTest.formPath, successTest.formSelector);
-    }
+    const successTestFormData = testDataArray.find(([key]) => key === 'success')?.[1];
+    if (successTestFormData) await runProfileFormTest(page, successTestFormData, profileType);
   });
 
-  test('Test Grants profile data', async () => {
+  test('Validate profile data', async () => {
     if (profileExists) {
-      logger('Skipping profile data validation test because profile already exists.');
+      logger('Profile already exists, skipping test.');
       test.skip(profileExists);
     }
+
+    logger('Validating profile form data.')
     for (const [key, obj] of testDataArray) {
       if (obj.viewPageSkipValidation) continue;
-      await validateProfileData(
-        page,
-        obj,
-        key,
-        profileType
-      );
+      await validateProfileData(page, obj, key, profileType);
     }
+
+    // Since profile data was just validated, no need to validate hard-coded data.
     skipHardCodedDataTest = true;
     process.env[`profile_exists_${profileType}`] = 'TRUE';
   });
 
-  test('Test hard-coded Grants profile data', async () => {
+  test('Validate hard-coded profile data', async () => {
     if (skipHardCodedDataTest) {
-      logger('Skipping hard-coded profile data validation test because the data has already been validated.');
+      logger('Data already validated, skipping test.');
       test.skip(skipHardCodedDataTest);
     }
+
+    logger('Validating hard-coded profile form data.')
     await validateHardCodedProfileData(page, profileType);
     process.env[`profile_exists_${profileType}`] = 'TRUE';
   });

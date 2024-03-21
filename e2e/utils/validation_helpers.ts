@@ -1,10 +1,6 @@
 import {Page, expect, test} from "@playwright/test";
 import {logger} from "./logger";
-import {
-  FormField,
-  FormData,
-  FormFieldWithRemove, FormDataWithRemoveOptionalProps
-} from "./data/test_data"
+import {FormField, FormData, FormFieldWithRemove} from "./data/test_data"
 import {viewPageBuildSelectorForItem} from "./view_page_helpers";
 import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
 
@@ -84,7 +80,6 @@ const validateProfileData = async (
   formKey: string,
   profileType: string,
 ) => {
-  if (formKey !== 'success') return;
   await navigateAndValidateProfilePage(page, profileType);
   await validateFormData(page, formDetails);
 }
@@ -125,6 +120,7 @@ const validateHardCodedProfileData = async (
       'address',
       'zipCode',
       'city',
+      'phone'
     ];
 
     profileInputData = Object.keys(PROFILE_INPUT_DATA)
@@ -149,7 +145,10 @@ const validateHardCodedProfileData = async (
         validationErrors.push( `Hard-coded "${key}" with value "${value}" not found on profile page.\n`)
       }
     }
+  } else {
+    validationErrors.push( `Profile data not found on profile page.\n`)
   }
+
   expect(validationErrors).toEqual([]);
   logger('Hard-coded profile data validated.')
 }

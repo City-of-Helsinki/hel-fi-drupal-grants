@@ -1,7 +1,8 @@
 import {expect, Page,} from '@playwright/test';
 import {logger} from "./logger";
 import {FormData} from "./data/test_data"
-import {fetchLatestProfileByType} from "./document_helpers";
+import {deleteGrantsProfiles, fetchLatestProfileByType} from "./document_helpers";
+import {fillProfileForm} from "./form_helpers";
 
 /**
  * The function isTimestampLessThanAnHourAgo.
@@ -51,28 +52,26 @@ const isProfileCreated = async (profileType: string) => {
     });
 };
 
-
-const checkContactInfoPrivatePerson = async (page: Page, profileData: FormData) => {
-  await expect(page.getByRole('heading', {name: 'Omat tiedot'})).toBeVisible()
-
-  // Perustiedot
-  await expect(page.getByRole('heading', {name: 'Perustiedot'})).toBeVisible()
-  await expect(page.getByText('Etunimi')).toBeVisible()
-  await expect(page.getByText('Sukunimi')).toBeVisible()
-  await expect(page.getByText('Henkilötunnus')).toBeVisible()
-  await expect(page.getByRole('link', {name: 'Siirry Helsinki-profiiliin päivittääksesi sähköpostiosoitetta'})).toBeVisible()
-
-  // Omat yhteystiedot
-  await expect(page.getByRole('heading', {name: 'Omat yhteystiedot'})).toBeVisible()
-  await expect(page.locator("#addresses").getByText('Osoite')).toBeVisible()
-  await expect(page.locator("#phone-number").getByText('Puhelinnumero')).toBeVisible()
-  await expect(page.locator("#officials-3").getByText('Tilinumerot')).toBeVisible()
-  await expect(page.getByRole('link', {name: 'Muokkaa omia tietoja'})).toBeVisible()
-
-  // tässä me voitas verrata profiilisivun sisältöä tallennettuun dataan.
-}
+/**
+ * The runProfileFormTest function.
+ *
+ * This function runs profile form tests by:
+ * 1. Deleting any existing profiles before a new test is executed.
+ * 2. Filling a profile form with the given test data.
+ *
+ * @param page
+ *   Playwright page object.
+ * @param formData
+ *   The form data we are testing.
+ * @param profileType
+ *   The profile type.
+ */
+const runProfileFormTest = async (page: Page, formData: FormData, profileType: string) => {
+  await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
+  await fillProfileForm(page, formData, formData.formPath, formData.formSelector);
+};
 
 export {
-  checkContactInfoPrivatePerson,
-  isProfileCreated
+  isProfileCreated,
+  runProfileFormTest
 }

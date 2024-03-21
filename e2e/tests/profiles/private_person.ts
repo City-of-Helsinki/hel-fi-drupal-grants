@@ -1,61 +1,70 @@
-import {Page, test} from '@playwright/test';
+import {expect, Page, test} from '@playwright/test';
 import {logger} from "../../utils/logger";
-import {fillProfileForm} from '../../utils/form_helpers'
-import {isProfileCreated} from '../../utils/profile_helpers';
-import {deleteGrantsProfiles} from "../../utils/document_helpers";
+import {runProfileFormTest, isProfileCreated} from '../../utils/profile_helpers';
 import {selectRole} from "../../utils/auth_helpers";
-import {
-  profileDataPrivatePerson as profileData,
-  FormData
-} from '../../utils/data/test_data'
+import {validateHardCodedProfileData, validateProfileData} from "../../utils/validation_helpers";
+import {profileDataPrivatePerson as profileData, FormData} from '../../utils/data/test_data'
 
-const profileType = 'private_person';
-let passedProfileCreationTest: boolean = false;
-
-test.describe('Private Person - Grants Profile', async () => {
+test.describe('Private person - Grants Profile', () => {
   let page: Page;
+  let profileExists: boolean;
+  let skipHardCodedDataTest: boolean = false;
+  const testDataArray: [string, FormData][] = Object.entries(profileData);
+  const profileType = 'private_person';
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
-    await selectRole(page, 'REGISTERED_COMMUNITY');
-
-    // Check if the profile is already created.
-    const skip = await isProfileCreated(profileType);
-    test.skip(skip);
+    await selectRole(page, 'PRIVATE_PERSON');
+    profileExists = await isProfileCreated(profileType);
   });
 
   test.afterAll(() => {
-    if (passedProfileCreationTest) {
-      logger(`Profile created for: ${profileType}`);
-      process.env[`profile_created_${profileType}`] = 'TRUE';
-    } else {
-      logger(`There were failed tests for: ${profileType}`);
-      process.env[`profile_created_${profileType}`] = 'FALSE';
-    }
+    expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
+    logger(`Profile exist for: ${profileType}`);
   });
 
-  test('Profile creation', async () => {
-    const testDataArray: [string, FormData][] = Object.entries(profileData);
-    let successTest: FormData | null = null;
+  test('Profile form tests', async () => {
+    if (profileExists) {
+      logger('Profile already exists, skipping test.');
+      test.skip(profileExists);
+    }
 
+    logger('Running profile form tests.')
+    for (const [key, formData] of testDataArray) {
+      if (key === 'success') continue;
+      await runProfileFormTest(page, formData, profileType);
+    }
+
+    const successTestFormData = testDataArray.find(([key]) => key === 'success')?.[1];
+    if (successTestFormData) await runProfileFormTest(page, successTestFormData, profileType);
+  });
+
+  test('Validate profile data', async () => {
+    if (profileExists) {
+      logger('Profile already exists, skipping test.');
+      test.skip(profileExists);
+    }
+
+    logger('Validating profile form data.')
     for (const [key, obj] of testDataArray) {
-      if (key === 'success') {
-        successTest = obj;
-        continue;
-      }
-      await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
-      await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
+      if (obj.viewPageSkipValidation) continue;
+      await validateProfileData(page, obj, key, profileType);
     }
-    // Run the success test as the last test.
-    if (successTest) {
-      await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
-      await fillProfileForm(page, successTest, successTest.formPath, successTest.formSelector);
-    }
-    passedProfileCreationTest = true;
+
+    // Since profile data was just validated, no need to validate hard-coded data.
+    skipHardCodedDataTest = true;
+    process.env[`profile_exists_${profileType}`] = 'TRUE';
   });
 
-  test('Test Grants profile data', async () => {
-    test.fixme(true,'Feature not implemented.');
+  test('Validate hard-coded profile data', async () => {
+    if (skipHardCodedDataTest) {
+      logger('Data already validated, skipping test.');
+      test.skip(skipHardCodedDataTest);
+    }
+
+    logger('Validating hard-coded profile form data.')
+    await validateHardCodedProfileData(page, profileType);
+    process.env[`profile_exists_${profileType}`] = 'TRUE';
   });
 
 });
