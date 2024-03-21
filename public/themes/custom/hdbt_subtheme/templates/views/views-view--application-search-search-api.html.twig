@@ -116,7 +116,7 @@
               {{ header }}
             </div>
             <div class="search-result-amount--wrapper">
-              <label for="search-result-amount" class="is-hidden">{{ 'Items per page'|t }}</label>
+              <label for="search-result-amount" class="visually-hidden">{{ 'Items per page'|t }}</label>
               <select id="search-result-amount" class="search-result-amount" name="search-result-amount" onchange="location = this.value;">
                 <option label="9" value="{{ applicationSearchLink }}?target_group={{filterArray.target_group}}&activity={{filterArray.activity}}&applicant={{filterArray.applicant}}&search={{filterArray.search}}&items_per_page=9">9</option>
                 <option label="15" value="{{ applicationSearchLink }}?target_group={{filterArray.target_group}}&activity={{filterArray.activity}}&applicant={{filterArray.applicant}}&search={{filterArray.search}}&items_per_page=15">15</option>
