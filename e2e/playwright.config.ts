@@ -105,7 +105,7 @@ export default defineConfig({
     },
     {
       name: 'forms-29-reg',
-      testMatch: '/forms/registered_community_29',
+      testMatch: '/forms/registered_community_29.ts',
       dependencies: ['profile-registered_community']
     },
     {
