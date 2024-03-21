@@ -1042,13 +1042,13 @@ const uploadFile = async (
   await expect(fileInput).toBeAttached();
   await fileInput.setInputFiles(filePath);
 
-  // Wait for the file to be uploaded.
-  const uploadedFile = await page.locator(fileLinkSelector);
-  await expect(uploadedFile).toBeVisible();
+  // Wait for the uploaded file to be visible.
+  await page.locator(fileLinkSelector).waitFor({state: 'visible'}).then(async () => {
 
-  // Check that the upload did not fail, and wait for our promise.
-  await expect(fileInput, "File upload failed").toBeHidden();
-  await responsePromise;
+    // Check that the upload worked and wait for the promise.
+    await expect(fileInput, "File upload failed").toBeHidden();
+    await responsePromise;
+  });
 }
 
 /**
