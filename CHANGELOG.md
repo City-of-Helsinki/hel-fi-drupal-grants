@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2024.6
+- 1b9fe503 AU-2289: Add possibility to resend application messages
+- 9c6a71d1 config: Update configuration (#1250)
+- 4c87ee54 fix: AU-2236: add error if application is not open (#1225)
+- 52925649 feat: AU-2226, E2E, Implemented the possibilit to remove multi-value items with the itemsToRemove property (#1251)
+- 1d67206f fix: AU-2293: Fix ASKEM styles (#1256)
+
 ## 2024.5
 - 3c538aff fix: AU-2215: add multivalue fields to tests (#1221)
 - 2da14900 fix: AU-2259: fix patterns in Year-field (#1244)
