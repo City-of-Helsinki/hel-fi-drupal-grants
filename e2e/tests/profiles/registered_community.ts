@@ -68,6 +68,7 @@ test.describe('Registered Community - Grants Profile', () => {
         page,
         obj,
         key,
+        profileType
       );
     }
     skipHardCodedDataTest = true;

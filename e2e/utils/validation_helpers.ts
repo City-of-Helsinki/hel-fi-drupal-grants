@@ -11,7 +11,8 @@ import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
 /**
  * The validateSubmission function.
  *
- * This function calls either validateDraft or
+ * This function is used to validate application submissions.
+ * The function calls either validateDraft or
  * validateSent, depending on the validation we are
  * performing.
  *
@@ -74,14 +75,17 @@ const validateSent = async (
  *   The form data.
  * @param formKey
  *   The form variant key.
+ * @param profileType
+ *   The profile type we are validating.
  */
 const validateProfileData = async (
   page: Page,
   formDetails: FormData,
-  formKey: string
+  formKey: string,
+  profileType: string,
 ) => {
   if (formKey !== 'success') return;
-  await navigateAndValidateProfilePage(page);
+  await navigateAndValidateProfilePage(page, profileType);
   await validateFormData(page, formDetails);
 }
 
@@ -132,7 +136,7 @@ const validateHardCodedProfileData = async (
   }
 
   // Navigate to the profile page.
-  await navigateAndValidateProfilePage(page);
+  await navigateAndValidateProfilePage(page, profileType);
 
   // Validate the hard-coded profile data.
   const profileDataWrapper = await page.locator('.grants-profile');
@@ -374,12 +378,27 @@ const navigateAndValidateViewPage = async (
  *
  * @param page
  *   Page object from Playwright.
+ * @param profileType
+ *   The profile type we are validating.
  */
 const navigateAndValidateProfilePage = async (
   page: Page,
+  profileType: string
 ) => {
+
   const profilePageURL = '/fi/oma-asiointi/hakuprofiili';
   await page.goto(profilePageURL, {timeout: 10000});
+
+  const headingMap: Record<string, string> = {
+    registered_community: 'Yhteisön tiedot avustusasioinnissa',
+    unregistered_community: 'Yhteisön tai ryhmän tiedot avustusasioinnissa',
+    private_person: 'Omat yhteystiedot',
+  };
+
+  let expectedHeading = headingMap[profileType];
+  let headingContainer = await page.locator('.info-grants');
+
+  await expect(headingContainer, `Failed to locate "${expectedHeading}" on "${profilePageURL}".`).toContainText(expectedHeading);
   logger('Profile data validation on page:', profilePageURL);
 }
 
