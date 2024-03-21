@@ -45,6 +45,7 @@
         "drupal/helfi_tunnistamo": "^2.0",
         "drupal/helfi_yjdh": "dev-develop",
         "drupal/http_client_log": "^1.0",
+        "drupal/jquery_ui_draggable": "^2.0",
         "drupal/jsonapi_extras": "^3.23",
         "drupal/listjs": "^1.4",
         "drupal/menu_admin_per_menu": "^1.5",
