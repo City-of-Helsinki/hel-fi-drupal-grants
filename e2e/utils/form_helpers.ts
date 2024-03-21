@@ -11,6 +11,7 @@ import {
 } from "./data/test_data"
 
 import {saveObjectToEnv, extractUrl} from "./helpers";
+import {fi} from "@faker-js/faker";
 
 
 /**
@@ -1033,11 +1034,19 @@ const uploadFile = async (
     logger('No file defined in', uploadSelector);
     return;
   }
-
+  // Set up a promise to wait for.
   const responsePromise = page.waitForResponse(r => r.request().method() === "POST");
-  const fileInput = page.locator(uploadSelector);
+
+  // Get the file input and upload the file.
+  const fileInput = await page.locator(uploadSelector);
   await expect(fileInput).toBeAttached();
   await fileInput.setInputFiles(filePath);
+
+  // Wait for the file to be uploaded.
+  const uploadedFile = await page.locator(fileLinkSelector);
+  await expect(uploadedFile).toBeVisible();
+
+  // Check that the upload did not fail, and wait for our promise.
   await expect(fileInput, "File upload failed").toBeHidden();
   await responsePromise;
 }
