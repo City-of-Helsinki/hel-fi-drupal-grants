@@ -598,6 +598,7 @@ function hdbt_subtheme_preprocess_block__user_login_block(&$variables, $hook): v
 function hdbt_subtheme_preprocess_block__askemblock(&$variables, $hook): void {
   $variables['current_language'] = \Drupal::languageManager()->getCurrentLanguage()->getId();
 }
+
 /**
  * Implements template_preprocess_paragraph().
  */
