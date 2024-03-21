@@ -86,12 +86,12 @@ const validateProfileData = async (
 
 
 /**
- * The validateHardCodedProfileData function.
+ * The validateExistingProfileData function.
  *
- * This function validates only the hard-coded profile data
+ * This function validates only an existing profiles data
  * on the "/oma-asiointi/hakuprofiili" page.
  *
- * The hard-coded profile data originates from
+ * The existing profile data originates from
  * PROFILE_INPUT_DATA inside profile_input_data.ts.
  *
  * This data is tested in the situation where a new profile is NOT
@@ -104,7 +104,7 @@ const validateProfileData = async (
  * @param profileType
  *   The profile type we are validating.
  */
-const validateHardCodedProfileData = async (
+const validateExistingProfileData = async (
   page: Page,
   profileType: string,
 ) => {
@@ -134,7 +134,7 @@ const validateHardCodedProfileData = async (
   // Navigate to the profile page.
   await navigateAndValidateProfilePage(page, profileType);
 
-  // Validate the hard-coded profile data.
+  // Validate the existing profiles data.
   const profileDataWrapper = await page.locator('.grants-profile');
   const profileData = await profileDataWrapper.textContent();
   const validationErrors: string[] = [];
@@ -142,15 +142,15 @@ const validateHardCodedProfileData = async (
   if (profileData) {
     for (const [key, value] of Object.entries(profileInputData)) {
       if (!profileData.includes(value)) {
-        validationErrors.push( `Hard-coded "${key}" with value "${value}" not found on profile page.\n`)
+        validationErrors.push( `Profile data "${key}" with value "${value}" not found on profile page.`)
       }
     }
   } else {
-    validationErrors.push( `Profile data not found on profile page.\n`)
+    validationErrors.push(`Profile data not found on profile page.`)
   }
 
   expect(validationErrors).toEqual([]);
-  logger('Hard-coded profile data validated.')
+  logger('Existing profile data validated.')
 }
 
 /**
@@ -360,7 +360,7 @@ const navigateAndValidateViewPage = async (
 
   const applicationId = thisStoreData.applicationId;
   const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
-  await page.goto(viewPageURL, {timeout: 10000});
+  await page.goto(viewPageURL);
   const applicationIdContainer = await page.locator('.webform-submission__application_id');
   const applicationIdContainerText = await applicationIdContainer.textContent();
   expect(applicationIdContainerText).toContain(applicationId);
@@ -386,7 +386,7 @@ const navigateAndValidateProfilePage = async (
 ) => {
 
   const profilePageURL = '/fi/oma-asiointi/hakuprofiili';
-  await page.goto(profilePageURL, {timeout: 10000});
+  await page.goto(profilePageURL);
 
   const headingMap: Record<string, string> = {
     registered_community: 'Yhteisön tiedot avustusasioinnissa',
@@ -495,5 +495,5 @@ const logValidationResults = (
 export {
   validateSubmission,
   validateProfileData,
-  validateHardCodedProfileData
+  validateExistingProfileData
 }

@@ -2,13 +2,13 @@ import {expect, Page, test} from '@playwright/test';
 import {logger} from "../../utils/logger";
 import {runProfileFormTest, isProfileCreated} from '../../utils/profile_helpers';
 import {selectRole} from "../../utils/auth_helpers";
-import {validateHardCodedProfileData, validateProfileData} from "../../utils/validation_helpers";
+import {validateExistingProfileData, validateProfileData} from "../../utils/validation_helpers";
 import {profileDataPrivatePerson as profileData, FormData} from '../../utils/data/test_data'
 
 test.describe('Private person - Grants Profile', () => {
   let page: Page;
   let profileExists: boolean;
-  let skipHardCodedDataTest: boolean = false;
+  let validateExistingProfile: boolean = false;
   const testDataArray: [string, FormData][] = Object.entries(profileData);
   const profileType = 'private_person';
 
@@ -51,19 +51,19 @@ test.describe('Private person - Grants Profile', () => {
       await validateProfileData(page, obj, key, profileType);
     }
 
-    // Since profile data was just validated, no need to validate hard-coded data.
-    skipHardCodedDataTest = true;
+    // Since profile data was just validated, there is no need to validate an exciting profile.
+    validateExistingProfile = true;
     process.env[`profile_exists_${profileType}`] = 'TRUE';
   });
 
-  test('Validate hard-coded profile data', async () => {
-    if (skipHardCodedDataTest) {
+  test('Validate existing profile', async () => {
+    if (validateExistingProfile) {
       logger('Data already validated, skipping test.');
-      test.skip(skipHardCodedDataTest);
+      test.skip(validateExistingProfile);
     }
 
-    logger('Validating hard-coded profile form data.')
-    await validateHardCodedProfileData(page, profileType);
+    logger('Validating existing profile data.')
+    await validateExistingProfileData(page, profileType);
     process.env[`profile_exists_${profileType}`] = 'TRUE';
   });
 
