@@ -283,13 +283,13 @@ elements: |-
           year:
             '#type': textfield
             '#required': true
-            '#title': Vuosi
             '#attributes':
               class:
                 - webform--small
+            '#title': Vuosi
             '#maxlength': 4
-            '#pattern': '^[0-9]*$'
-            '#pattern_error': 'Vain numeroita'
+            '#pattern': ^(19\d\d|20\d\d|2100)$
+            '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
           amount:
             '#type': textfield
             '#required': true
@@ -372,13 +372,13 @@ elements: |-
           year:
             '#type': textfield
             '#required': true
-            '#title': Vuosi
             '#attributes':
               class:
                 - webform--small
+            '#title': Vuosi
             '#maxlength': 4
-            '#pattern': '^[0-9]*$'
-            '#pattern_error': 'Vain numeroita'
+            '#pattern': ^(19\d\d|20\d\d|2100)$
+            '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
           amount:
             '#type': textfield
             '#required': true

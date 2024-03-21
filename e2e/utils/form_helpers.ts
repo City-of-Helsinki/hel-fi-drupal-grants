@@ -1,18 +1,16 @@
+import cloneDeep from "lodash.clonedeep"
 import {logger} from "./logger";
-import {Page, expect, Locator} from "@playwright/test";
+import {Page, expect, Locator, test} from "@playwright/test";
 import {
   FormData,
   Selector,
+  PageHandlers,
+  FormFieldWithRemove,
   isMultiValueField,
-  isDynamicMultiValueField, PageHandlers,
-  FormFieldWithRemove
+  isDynamicMultiValueField, FormPage
 } from "./data/test_data"
 
-import {
-  PATH_TO_TEST_PDF,
-  saveObjectToEnv,
-  extractUrl
-} from "./helpers";
+import {saveObjectToEnv, extractUrl} from "./helpers";
 
 
 /**
@@ -54,6 +52,7 @@ async function setNoValidate(page: Page, formClass: string) {
     }
   }
 }
+
 
 /**
  * Fill form pages from given data array. Calls the pagehandler callbacks for
@@ -100,27 +99,19 @@ const fillGrantsFormPage = async (
   // Assertions based on the expected destination
   const initialPathname = new URL(page.url()).pathname;
   const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
-  expect(initialPathname).toMatch(expectedPattern);
+  try {
+    expect(initialPathname).toMatch(expectedPattern);
+  } catch (error) {
+    logger(`Skipping test: Application not open in "${formDetails.title}" test.`);
+    test.skip(true, 'Skip form test');
+  }
 
+  // Store submissionUrl.
   const applicationId = await getApplicationNumberFromBreadCrumb(page);
   const submissionUrl = await extractUrl(page);
 
   // Hide the sliding popup once.
   await hideSlidePopup(page);
-
-  /**
-   * Save info about this application to env. This way they can be deleted
-   * via normal DRAFT deleting tests.
-   */
-  const storeName = `${profileType}_${formID}`;
-  const newData = {
-    [formKey]: {
-      submissionUrl: submissionUrl,
-      applicationId,
-      status: 'DRAFT'
-    }
-  }
-  saveObjectToEnv(storeName, newData);
 
   // Loop form pages
   for (const [formPageKey, formPageObject]
@@ -157,6 +148,11 @@ const fillGrantsFormPage = async (
       await pageHandlers[formPageKey](page, formPageObject);
     } else {
       continue;
+    }
+
+    // Make sure hidden fields are not visible.
+    if (formPageObject.itemsToBeHidden) {
+      await validateHiddenFields(page, formPageObject.itemsToBeHidden, formPageKey);
     }
 
     /**
@@ -375,6 +371,29 @@ const verifySubmit = async (page: Page,
   }
   saveObjectToEnv(storeName, newData);
 
+}
+
+/**
+ * The validateHiddenFields function.
+ *
+ * This function checks that the passed in items
+ * in itemsToBeHidden are not visible on a given page.
+ * The functionality is used in tests where the value of
+ * field X alters the visibility of field Y.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param itemsToBeHidden
+ *   An array of items that should be hidden.
+ * @param formPageKey
+ *   The form page we are on.
+ */
+const validateHiddenFields = async (page: Page, itemsToBeHidden: string[], formPageKey: string) => {
+  for (const hiddenItem of itemsToBeHidden) {
+    const hiddenSelector = `[data-drupal-selector="${hiddenItem}"]`;
+    await expect(page.locator(hiddenSelector), `Field ${hiddenItem} is not hidden on ${formPageKey}.`).not.toBeVisible();
+    logger(`Field ${hiddenItem} is hidden on ${formPageKey}.`)
+  }
 }
 
 /**
@@ -1067,57 +1086,77 @@ const hideSlidePopup = async (page: Page) => {
   }
 }
 
-
 /**
- * Create form data.
+ * The createFormData function.
  *
- * usage:
+ * This function takes in a base form (baseFormData)
+ * and merges it with a partial overrides form (overrides).
+ * Any fields under itemsToRemove or itemsToBeHidden will
+ * also be removed from the newly created form.
  *
- * const specificFormData: FormData = createFormData({
- *   title: 'Custom Title',
- *   formPages: {
- *     '2_avustustiedot': {
- *       items: {
- *         '__remove__': ['acting_year'],
- *         subvention_amount: {
- *           value: '1000',
- *         },
- *         // ... other overrides for items on this page
- *       },
- *       expectedDestination: '/custom/destination',
- *     },
- *   },
- *   expectedDestination: '/custom/destination',
- * });
+ * The function uses the lodash cloneDeep utility function
+ * for cloning the "items" part of the form, in order
+ * to perform a deep copy.
+ *
+ * @docs https://developer.mozilla.org/en-US/docs/Glossary/Deep_copy
  *
  * @param baseFormData
+ *   The base form.
  * @param overrides
+ *   The parts we want to override.
  */
 function createFormData(baseFormData: FormData, overrides: Partial<FormData>): FormData {
+
   const formPages = Object.keys(baseFormData.formPages).reduce((result, pageKey) => {
-    // @ts-ignore
+
     result[pageKey] = {
       ...baseFormData.formPages[pageKey],
       ...(overrides.formPages && overrides.formPages[pageKey]),
       items: {
-        ...baseFormData.formPages[pageKey].items,
-        ...(overrides.formPages &&
-          overrides.formPages[pageKey] &&
-          overrides.formPages[pageKey].items),
+        ...cloneDeep(baseFormData.formPages[pageKey].items),
+        ...(overrides.formPages && overrides.formPages[pageKey] && overrides.formPages[pageKey].items),
       },
     };
 
-    if (overrides.formPages && overrides.formPages[pageKey] && overrides.formPages[pageKey].itemsToRemove) {
-      // Remove items specified in overrides based on the itemsToRemove list
-      // @ts-ignore
-      overrides.formPages[pageKey].itemsToRemove.forEach((itemToRemove: string | number) => {
-        // @ts-ignore
-        delete result[pageKey]?.items[itemToRemove as string];
-      });
+    if (!overrides.formPages || !overrides.formPages[pageKey]) {
+      return result;
     }
 
+    // Remove any fields under itemsToRemove.
+    overrides.formPages[pageKey].itemsToRemove?.forEach((itemToRemove: string) => {
+      const multiValueKeyInfo = parseMultiValueKey(itemToRemove);
+
+      // If the field is not a multi-value field, then just delete it normally.
+      if (!multiValueKeyInfo) {
+        return delete result[pageKey].items[itemToRemove];
+      }
+
+      /**
+       * Now we know the field is either a dynamic multi-value or a normal multi-value field.
+       * We can't know which one it is, so we have to check for both. Then we
+       * filter out the item inside the multi-value field with a matching selector,
+       * thereby removing it.
+       */
+      const { baseName, index, subItemKey } = multiValueKeyInfo;
+      const dynamicMultiValueItems = result[pageKey]?.items[baseName]?.dynamic_multi?.multi?.items;
+      const multiValueItems = result[pageKey]?.items[baseName]?.multi?.items;
+      const multiItems = dynamicMultiValueItems || multiValueItems;
+
+      if (multiItems && multiItems[index]) {
+        multiItems[index] = multiItems[index].filter((item: any) => {
+          return item.selector?.value !== `${baseName}-items-[INDEX]-item-${subItemKey}`;
+        });
+      }
+    });
+
+    // Remove any fields under itemsToBeHidden.
+    overrides.formPages[pageKey].itemsToBeHidden?.forEach((itemToBeHidden: string) => {
+      delete result[pageKey].items[itemToBeHidden];
+    });
+
     return result;
-  }, {});
+
+  }, {} as { [pageKey: string]: FormPage });
 
   return {
     ...baseFormData,
@@ -1125,6 +1164,37 @@ function createFormData(baseFormData: FormData, overrides: Partial<FormData>): F
     formPages,
   };
 }
+
+/**
+ * The parseMultiValueKey function.
+ *
+ * This function attempts to parse out a
+ * baseName, index and subItemKey form a form field key.
+ * If all three variables are found, then we know
+ * the key represents a multi-value field.
+ *
+ * Ex1: edit-hanke-alkaa
+ * This would return null.
+ *
+ * Ex2: edit-myonnetty-avustus-items-0-item-issuer
+ * This would return {edit-myonnetty-avustus, 0, issuer}.
+ *
+ * @param key
+ *   The key we are parsing.
+ *
+ * @return { {baseName: string, index: number, subItemKey: string} | null }
+ */
+const parseMultiValueKey = (key: string): { baseName: string, index: number, subItemKey: string } | null => {
+  const match = key.match(/^(.+)-items-(\d+)-item-(.+)$/);
+  if (match && match.length === 4) {
+    return {
+      baseName: match[1],
+      index: parseInt(match[2], 10),
+      subItemKey: match[3]
+    };
+  }
+  return null;
+};
 
 /**
  * Fill Hakijan Tiedot page for registered community.

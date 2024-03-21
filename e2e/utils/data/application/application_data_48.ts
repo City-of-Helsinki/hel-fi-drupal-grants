@@ -1,6 +1,6 @@
 import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
-import {fakerFI as faker} from "@faker-js/faker"
-import {PATH_MUU_LIITE} from "../../helpers";
+import {fakerFI as faker} from "@faker-js/faker";
+import {ATTACHMENTS} from "../attachment_data";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 import {createFormData} from "../../form_helpers";
 import {
@@ -9,7 +9,8 @@ import {
   viewPageFormatDate,
   viewPageFormatFilePath,
   viewPageFormatAddress,
-  viewPageFormatLowerCase, viewPageFormatNumber
+  viewPageFormatLowerCase,
+  viewPageFormatNumber
 } from "../../view_page_formatters";
 
 /**
@@ -22,7 +23,7 @@ import {
  *
  */
 const baseForm_48: FormData = {
-  title: 'Save as draft',
+  title: 'Save as draft.',
   formSelector: 'webform-submission-kuva-projekti-form',
   formPath: '/fi/form/kuva-projekti',
   formPages: {
@@ -117,9 +118,9 @@ const baseForm_48: FormData = {
             },
             multi: {
               buttonSelector: {
-                type: 'add-more-button',
+                type: 'data-drupal-selector',
                 name: 'data-drupal-selector',
-                value: 'Lisää uusi myönnetty avustus',
+                value: 'edit-myonnetty-avustus-add-submit',
                 resultValue: 'edit-myonnetty-avustus-items-[INDEX]',
               },
               //@ts-ignore
@@ -365,9 +366,9 @@ const baseForm_48: FormData = {
           role: 'multivalue',
           multi: {
             buttonSelector: {
-              type: 'add-more-button',
+              type: 'data-drupal-selector',
               name: 'data-drupal-selector',
-              value: 'Lisää uusi tila',
+              value: 'edit-tila-add-submit',
               resultValue: 'edit-tila-items-[INDEX]',
             },
             //@ts-ignore
@@ -615,16 +616,66 @@ const baseForm_48: FormData = {
           viewPageSelector: '.form-item-budget-static-cost',
           viewPageFormatter: viewPageFormatCurrency,
         },
-        "edit-budget-other-cost-items-0-item-label": {
-          role: 'input',
-          value: faker.lorem.sentence(15),
-          viewPageSelector: '.form-item-budget-other-cost',
-        },
-        "edit-budget-other-cost-items-0-item-value": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-other-cost',
-          viewPageFormatter: viewPageFormatCurrency,
+        'edit-budget-other-cost': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-budget-other-cost-add-submit',
+              resultValue: 'edit-budget-other-cost-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-label',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector-sequential',
+                    value: 'edit-budget-other-cost-items-[INDEX]-item-value',
+                  },
+                  value: faker.number.int({min: 1, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                  viewPageSelector: '.form-item-budget-other-cost',
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
         "edit-muu-huomioitava-panostus": {
           role: 'input',
@@ -655,7 +706,7 @@ const baseForm_48: FormData = {
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
             resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
-          value: PATH_MUU_LIITE,
+          value: ATTACHMENTS.MUU_LIITE,
           viewPageSelector: '.form-item-muu-liite',
           viewPageFormatter: viewPageFormatFilePath
         },
@@ -811,10 +862,25 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       items: {},
       itemsToRemove: ['edit-bank-account-account-number-select'],
     },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-myonnetty-avustus-items-0-item-issuer',
+        'edit-myonnetty-avustus-items-0-item-year',
+      ],
+    },
+    '4_suunniteltu_toiminta': {
+      items: {},
+      itemsToRemove: [
+        'edit-tila-items-1-item-premisename',
+      ],
+    }
   },
-  expectedDestination: '',
   expectedErrors: {
-    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-myonnetty-avustus-items-0-item-issuer': 'Virhe sivulla 2. Avustustiedot: Avustuksen myöntäjä kenttä on pakollinen.',
+    'edit-myonnetty-avustus-items-0-item-year': 'Virhe sivulla 2. Avustustiedot: Vuosi kenttä on pakollinen.',
+    'edit-tila-items-1-item-premisename': 'Virhe sivulla 4. Suunniteltu toiminta: Tilan nimi kenttä on pakollinen.'
   },
 };
 
@@ -837,7 +903,6 @@ const wrongEmail: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
   },
@@ -862,7 +927,6 @@ const wrongEmail2: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä ei ole oikeassa muodossa.',
   },
@@ -887,7 +951,6 @@ const wrongEmail3: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite vaaraemaili ei kelpaa.',
   },
@@ -909,7 +972,7 @@ const under5000: FormDataWithRemoveOptionalProps = {
     },
     '5_toiminnan_lahtokohdat': {
       items: {},
-      itemsToRemove: [
+      itemsToBeHidden: [
         'edit-toiminta-taiteelliset-lahtokohdat',
         'edit-toiminta-tasa-arvo',
         'edit-toiminta-saavutettavuus',
@@ -919,7 +982,6 @@ const under5000: FormDataWithRemoveOptionalProps = {
       ],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 
@@ -942,7 +1004,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 

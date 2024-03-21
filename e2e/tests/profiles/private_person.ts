@@ -19,7 +19,6 @@ import {
   FormData,
 } from '../../utils/data/test_data'
 
-import {TEST_USER_UUID} from '../../utils/data/test_data';
 import {
   deleteGrantsProfiles
 } from "../../utils/document_helpers";
@@ -67,7 +66,7 @@ test.describe('Private Person - Grants Profile', async () => {
         successTest = obj;
       } else {
         // We must delete here manually profiles, since we don't want to do this always.
-        const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
+        const deletedDocumentsCount = await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
 
         const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
         logger(infoText);
@@ -80,7 +79,7 @@ test.describe('Private Person - Grants Profile', async () => {
     // @ts-ignore
     if (successTest) {
       // We must delete here manually profiles, since we don't want to do this always.
-      const deletedDocumentsCount = await deleteGrantsProfiles(TEST_USER_UUID, profileType);
+      const deletedDocumentsCount = await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
       const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
       logger(infoText, successTest.formSelector);
 
