@@ -282,7 +282,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
@@ -315,20 +314,71 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
     },
     "2_avustustiedot": {
       items: {
-        "edit-orienteering-maps-items-0-item-voluntaryhours": {
-          value: '15',
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-orienteering-maps-items-0-item-cost": {
-          value: '100',
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-orienteering-maps-items-0-item-othercompensations": {
-          value: '2000',
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
+        'edit-orienteering-maps': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-orienteering-maps-add-submit',
+              resultValue: 'edit-orienteering-maps-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-mapname',
+                  },
+                  value: faker.lorem.sentences(4),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-size',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-voluntaryhours',
+                  },
+                  value: '15',
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-cost',
+                  },
+                  value: '100',
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-othercompensations',
+                  },
+                  value: '2000',
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
       },
     },
@@ -337,7 +387,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
     'edit-orienteering-maps-items-0-item-othercompensations': 'Virhe sivulla 2. Avustustiedot: Arvo ei voi olla suurempi kuin "Talkootyö tuntia" ja "Kustannukset euroa" kenttien summa.',
@@ -362,7 +411,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 
