@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - file
     - webform
 id: json_api_user
 label: 'JSON API User'
@@ -10,3 +11,4 @@ weight: -8
 is_admin: null
 permissions:
   - 'access any webform configuration'
+  - 'delete own files'

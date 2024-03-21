@@ -27,7 +27,7 @@ _core:
   default_config_hash: 2wtLJzGRPIAAdAGbl6hOGq0wG3zumh1dayzTQvnwU94
 name: 'Basic form_page'
 type: form_page
-description: 'Content type for pages that include information that doesn''t age as quickly as for example article or news content.'
+description: "Content type for pages that include information that doesn't age as quickly as for example article or news content."
 help: ''
 new_revision: true
 preview_mode: 1

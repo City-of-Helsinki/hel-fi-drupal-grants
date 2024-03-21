@@ -10,7 +10,7 @@ use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -64,14 +64,14 @@ class ForceCompanyAuthorisationSubscriber implements EventSubscriberInterface {
    *
    * We do not want to redirect to mandate page if so.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   Event from request.
    *   str_replace('/' . $lang, '', $requestUri)
    *
    * @return bool
    *   If needs redirect or not.
    */
-  public function needsRedirectToLogin(GetResponseEvent $event): bool {
+  public function needsRedirectToLogin(RequestEvent $event): bool {
     // Login can be required only for anonymous users.
     if ($this->currentUser->isAuthenticated()) {
       return FALSE;
@@ -87,13 +87,13 @@ class ForceCompanyAuthorisationSubscriber implements EventSubscriberInterface {
   /**
    * If user needs to be redirected to mandate page.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   Event from request.
    *
    * @return bool
    *   If needs redirect or not.
    */
-  public function needsRedirectToMandate(GetResponseEvent $event): bool {
+  public function needsRedirectToMandate(RequestEvent $event): bool {
 
     $currentUserRoles = $this->currentUser->getRoles();
 
@@ -128,10 +128,10 @@ class ForceCompanyAuthorisationSubscriber implements EventSubscriberInterface {
   /**
    * Kernel request event handler.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   Response event.
    */
-  public function onKernelRequest(GetResponseEvent $event) {
+  public function onKernelRequest(RequestEvent $event) {
 
     // admin, no checks.
     if ($this->currentUser->id() == 1) {

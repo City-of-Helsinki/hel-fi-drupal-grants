@@ -16,6 +16,8 @@ dependencies:
   module:
     - text
     - user
+_core:
+  default_config_hash: OwH532HYBVjDOUW0iJnoDWc2yFGZwwGJnAZEmZPjLCA
 id: node.announcement.teaser
 targetEntityType: node
 bundle: announcement

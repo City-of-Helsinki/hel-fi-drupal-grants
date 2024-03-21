@@ -2,7 +2,12 @@ uuid: 3e6a10f1-bc71-4995-b205-cf3e087126fa
 langcode: fi
 status: true
 dependencies:
+  config:
+    - node.type.announcement
+    - node.type.landing_page
+    - node.type.page
   module:
+    - file
     - helfi_tpr
     - node
     - paragraphs
@@ -12,6 +17,7 @@ label: 'Vain luku'
 weight: -7
 is_admin: null
 permissions:
+  - 'delete own files'
   - 'view any unpublished announcement content'
   - 'view any unpublished landing_page content'
   - 'view any unpublished page content'

@@ -13,6 +13,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandler;
@@ -27,7 +28,6 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionStorageInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 /**
  * Implements hook_theme().
@@ -875,6 +875,7 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     ->condition('field_form', $variables['webform']->id())
     ->condition('field_show_on_all_forms', TRUE);
   $query->condition($orGroup);
+  $query->accessCheck(FALSE);
   $results = $query->execute();
 
   // Load blocks.
@@ -903,7 +904,7 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
       '#body' => t('Accept the terms and send the application.', [], $tOpts),
       '#class' => 'notification-margin-bottom',
     ];
-    $terms_info_rendered = Markup::create(render($terms_info));
+    $terms_info_rendered = Markup::create(\Drupal::service('renderer')->render($terms_info));
     // Add html for checkbox.
     $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div>
       ' . $terms_info_rendered . '

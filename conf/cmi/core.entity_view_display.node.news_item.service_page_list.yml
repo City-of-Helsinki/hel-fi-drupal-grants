@@ -17,7 +17,7 @@ dependencies:
     - field.field.node.news_item.field_short_title
     - node.type.news_item
   module:
-    - hdbt_admin_tools
+    - helfi_platform_config
     - user
 _core:
   default_config_hash: tqlFC6ku-KOPGVDzzfRA0SSzFD_5iAMqKfpTMcUyqBg
@@ -48,6 +48,15 @@ content:
       date_format: publication_date_format
       custom_date_format: ''
       timezone: ''
+      tooltip:
+        date_format: ''
+        custom_date_format: ''
+      time_diff:
+        enabled: false
+        future_format: '@interval hence'
+        past_format: '@interval ago'
+        granularity: 2
+        refresh: 60
     third_party_settings: {  }
     weight: 2
     region: content

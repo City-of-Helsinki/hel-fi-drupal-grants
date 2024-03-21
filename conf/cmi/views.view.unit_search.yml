@@ -8,6 +8,8 @@ dependencies:
     - address
     - helfi_tpr
     - user
+_core:
+  default_config_hash: aMXI78okDdG1WmRzpZBIIpkiRxm_tQnWnoAreyeTY5Y
 id: unit_search
 label: 'Unit search'
 module: views
@@ -383,7 +385,6 @@ display:
           title: ''
           default_argument_type: node
           default_argument_options: {  }
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true

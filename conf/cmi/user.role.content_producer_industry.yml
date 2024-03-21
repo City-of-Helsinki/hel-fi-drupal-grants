@@ -3,6 +3,8 @@ langcode: en
 status: true
 dependencies:
   config:
+    - node.type.landing_page
+    - node.type.page
     - node.type.service
     - taxonomy.vocabulary.avustuslaji
     - taxonomy.vocabulary.target_group
@@ -39,6 +41,7 @@ permissions:
   - 'create terms in target_group'
   - 'create url aliases'
   - 'delete media'
+  - 'delete own files'
   - 'delete own service content'
   - 'delete service revisions'
   - 'edit own service content'

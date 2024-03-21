@@ -42,7 +42,7 @@ class MessageController extends ControllerBase {
   /**
    * The request service.
    *
-   * @var \Drupal\Core\Http\RequestStack
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected RequestStack $request;
 
@@ -74,7 +74,7 @@ class MessageController extends ControllerBase {
    *   The grants_handler.events_service service.
    * @param \Drupal\grants_handler\MessageService $grants_handler_message_service
    *   The grants_handler.message_service service.
-   * @param \Drupal\Core\Http\RequestStack $requestStack
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Request stuff.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access to ATV backend.

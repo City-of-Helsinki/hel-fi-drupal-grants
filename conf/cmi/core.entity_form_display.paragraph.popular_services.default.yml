@@ -9,7 +9,7 @@ dependencies:
   module:
     - paragraphs
 _core:
-  default_config_hash: 3Dv8NTTXXKNNivYGG3OHtE-A0ovcXAHN9JitZMDZHX4
+  default_config_hash: p92mQfVABLdoDyLyijLsf5Eoop2UcHixAVk_QYF6PJc
 id: paragraph.popular_services.default
 targetEntityType: paragraph
 bundle: popular_services

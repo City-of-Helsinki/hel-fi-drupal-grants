@@ -4,7 +4,10 @@ status: true
 dependencies:
   module:
     - helfi_tpr
+_core:
+  default_config_hash: e-6Lzi05F7EOEjvoo3YbLY-ig8Ha3dPyz8_FV5rl5fU
 id: tpr_unit.token
 label: Token
+description: ''
 targetEntityType: tpr_unit
 cache: true

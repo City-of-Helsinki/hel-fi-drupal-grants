@@ -2,8 +2,7 @@ name: grants_attachments
 type: module
 description: Module to handle attachments webform components
 package: Hel.fi
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 dependencies:
   - webform
   - grants_metadata

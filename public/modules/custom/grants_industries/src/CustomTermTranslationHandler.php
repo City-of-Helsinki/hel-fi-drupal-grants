@@ -7,6 +7,7 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_industries\Services\NodeAccessCheckService;
 use Drupal\taxonomy\TermTranslationHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -59,7 +60,7 @@ class CustomTermTranslationHandler extends TermTranslationHandler {
       }
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException $exception) {
-      watchdog_exception('grants_industries', $exception, $exception->getMessage());
+      Error::logException(\Drupal::logger('grants_industries'), $exception);
     }
 
     return $access;

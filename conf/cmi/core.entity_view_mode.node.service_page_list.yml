@@ -6,5 +6,6 @@ dependencies:
     - node
 id: node.service_page_list
 label: 'Service page list'
+description: ''
 targetEntityType: node
 cache: true

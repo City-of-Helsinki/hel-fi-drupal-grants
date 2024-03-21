@@ -6,8 +6,9 @@ dependencies:
     - field.storage.node.field_announcement_content_pages
     - node.type.announcement
     - node.type.landing_page
-    - node.type.news_item
     - node.type.page
+_core:
+  default_config_hash: aLsAogLp6kU_alQPMVOkRw2Q6TdLwmqkpfZnfZgUf5k
 id: node.announcement.field_announcement_content_pages
 field_name: field_announcement_content_pages
 entity_type: node
@@ -23,8 +24,6 @@ settings:
   handler_settings:
     target_bundles:
       page: page
-      news_item: news_item
-      service: service
       landing_page: landing_page
     sort:
       field: title

@@ -22,9 +22,9 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\language\ConfigurableLanguageManagerInterface;
 use Drush\Commands\DrushCommands;
 use GuzzleHttp\ClientInterface;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Webmozart\PathUtil\Path;
 
 /**
  * Class to import webform files into config.
