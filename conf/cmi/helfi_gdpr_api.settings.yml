@@ -1,4 +1,4 @@
 audience_config:
   audience_host: 'https://api.hel.fi/auth'
   service_name: avustusasiointigdprapidev
-langcode: fi
+langcode: en

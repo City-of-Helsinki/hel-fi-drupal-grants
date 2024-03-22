@@ -1,5 +1,5 @@
 uuid: b399926d-c10b-455b-bec4-e818b84efcaf
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -16,5 +16,5 @@ _core:
 id: taxonomy_term.news_tags
 target_entity_type_id: taxonomy_term
 target_bundle: news_tags
-default_langcode: fi
+default_langcode: en
 language_alterable: true

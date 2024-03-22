@@ -1,5 +1,5 @@
 uuid: 7f984bb2-b0d9-4c14-b55e-7a91eac4bfa7
-langcode: fi
+langcode: en
 status: true
 dependencies: {  }
 id: login_page_info

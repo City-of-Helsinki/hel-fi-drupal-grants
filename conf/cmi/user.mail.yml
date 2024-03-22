@@ -1,6 +1,6 @@
 _core:
   default_config_hash: IWzNdUVX2YSiflxrGSTLIiqTrhgIzbV2C-hRL5DniJM
-langcode: fi
+langcode: en
 cancel_confirm:
   subject: 'Tilin peruutuspyyntö käyttäjälle [user:display-name], [site:name] sivustolla'
   body: |-
