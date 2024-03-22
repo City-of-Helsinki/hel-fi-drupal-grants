@@ -95,7 +95,7 @@ msgid "My Services"
 msgstr "Oma asiointi"
 
 msgid "Go to My Services"
-msgstr "Siirry omaan asiointikansioon"
+msgstr "Siirry omaan asiontiin"
 
 msgid "Grants profile"
 msgstr "Omat tiedot"
