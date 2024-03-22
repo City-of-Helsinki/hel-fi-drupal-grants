@@ -108,11 +108,6 @@ const fillGrantsFormPage = async (
   }
 
   // Make sure the needed profile exists.
-  if (process.env[`profile_exists_${profileType}`] === undefined ||
-      process.env[`profile_exists_${profileType}`] !== 'TRUE') {
-    logger(`Missing profile ${profileType} for form ID ${formID}. Skipping test.`);
-    test.skip(true, 'Missing profile for form.');
-  }
   expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
 
   // Store submissionUrl.
@@ -1043,7 +1038,7 @@ const uploadFile = async (
   await fileInput.setInputFiles(filePath);
 
   // Wait for the uploaded file to be visible.
-  await page.locator(fileLinkSelector).waitFor({state: 'visible'}).then(async () => {
+  await page.locator(fileLinkSelector).waitFor({state: 'attached', timeout: 10000}).then(async () => {
 
     // Check that the upload worked and wait for the promise.
     await expect(fileInput, "File upload failed").toBeHidden();
