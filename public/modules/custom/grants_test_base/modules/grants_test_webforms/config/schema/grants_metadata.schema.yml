@@ -30,3 +30,12 @@ webform.settings.third_party.grants_metadata:
       type: string
     applicationIndustry:
       type: string
+    applicationActingYears:
+      type: sequence
+      orderby: key
+      sequence:
+        type: string
+    applicationActingYearsType:
+      type: string
+    applicationActingYearsNextCount:
+      type: string      

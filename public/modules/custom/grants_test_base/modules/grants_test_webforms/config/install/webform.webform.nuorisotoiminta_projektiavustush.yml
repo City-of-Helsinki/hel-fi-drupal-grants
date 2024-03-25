@@ -5,25 +5,25 @@ dependencies:
   module:
     - grants_handler
     - grants_metadata
-# third_party_settings:
-#   grants_metadata:
-#     applicationTypeSelect: '62'
-#     applicationType: NUORPROJ
-#     applicationTypeID: '62'
-#     applicationIndustry: KUVA
-#     applicantTypes:
-#       registered_community: registered_community
-#       unregistered_community: unregistered_community
-#     applicationTypeTerms:
-#       47: '47'
-#     applicationTargetGroup: '27'
-#     applicationOpen: '2022-10-02T11:08:26'
-#     applicationClose: '2023-12-22T11:19:00'
-#     applicationActingYearsType: current_and_next_x_years
-#     applicationActingYears: {  }
-#     applicationActingYearsNextCount: '1'
-#     applicationContinuous: 1
-#     disableCopying: 0
+third_party_settings:
+  grants_metadata:
+    applicationTypeSelect: '62'
+    applicationType: NUORPROJ
+    applicationTypeID: '62'
+    applicationIndustry: KUVA
+    applicantTypes:
+      registered_community: registered_community
+      unregistered_community: unregistered_community
+    applicationTypeTerms:
+      47: '47'
+    applicationTargetGroup: '27'
+    applicationOpen: '2022-10-02T11:08:26'
+    applicationClose: '2023-12-22T11:19:00'
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '1'
+    applicationContinuous: 1
+    disableCopying: 0
 weight: 0
 open: null
 close: null
