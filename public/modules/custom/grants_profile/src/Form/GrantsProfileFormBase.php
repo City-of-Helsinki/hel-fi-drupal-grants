@@ -484,6 +484,7 @@ abstract class GrantsProfileFormBase extends FormBase {
     $form['bankAccountWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Bank account numbers', [], $this->tOpts),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="bankaccount-wrapper">',
       '#suffix' => '</div>',
     ];
