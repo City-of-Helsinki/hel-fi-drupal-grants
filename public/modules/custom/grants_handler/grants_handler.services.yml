@@ -41,8 +41,7 @@ services:
         '@messenger',
         '@entity_type.manager',
         '@form_builder',
-        '@helfi_helsinki_profiili.userdata',
-        '@tempstore.private'
+        '@helfi_helsinki_profiili.userdata'
     ]
 
   grants_handler.events_service:

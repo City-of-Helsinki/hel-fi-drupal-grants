@@ -469,7 +469,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       ],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
@@ -511,7 +510,6 @@ const missingValuesUnregistered: FormDataWithRemoveOptionalProps = {
       ],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-jarjestimme-leireja-seuraavilla-alueilla-items-0-item-premisename': 'Virhe sivulla 2. Leiripaikat: Tilan nimi kenttä on pakollinen.',
@@ -541,83 +539,13 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
     '3_talousarvio': {
-      items: {
-        'edit-tulo': {
-          role: 'multivalue',
-          multi: {
-            buttonSelector: {
-              type: 'data-drupal-selector',
-              name: 'data-drupal-selector',
-              value: 'edit-tulo-add-submit',
-              resultValue: 'edit-tulo-items-[INDEX]',
-            },
-            //@ts-ignore
-            items: {
-              0: [
-                {
-                  role: 'input',
-                  selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
-                    value: 'edit-tulo-items-[INDEX]-item-label',
-                  },
-                  value: '',
-                },
-                {
-                  role: 'input',
-                  selector: {
-                    type: 'data-drupal-selector-sequential',
-                    name: 'data-drupal-selector-sequential',
-                    value: 'edit-tulo-items-[INDEX]-item-value',
-                  },
-                  value: faker.number.int({min: 1, max: 5000}).toString(),
-                  viewPageFormatter: viewPageFormatNumber,
-                },
-              ],
-            },
-            expectedErrors: {}
-          },
-        },
-        'edit-meno': {
-          role: 'multivalue',
-          multi: {
-            buttonSelector: {
-              type: 'data-drupal-selector',
-              name: 'data-drupal-selector',
-              value: 'edit-meno-add-submit',
-              resultValue: 'edit-meno-items-[INDEX]',
-            },
-            //@ts-ignore
-            items: {
-              0: [
-                {
-                  role: 'input',
-                  selector: {
-                    type: 'data-drupal-selector',
-                    name: 'data-drupal-selector',
-                    value: 'edit-meno-items-[INDEX]-item-label',
-                  },
-                  value: faker.lorem.words(2),
-                },
-                {
-                  role: 'input',
-                  selector: {
-                    type: 'data-drupal-selector-sequential',
-                    name: 'data-drupal-selector-sequential',
-                    value: 'edit-meno-items-[INDEX]-item-value',
-                  },
-                  value: '',
-                },
-              ],
-            },
-            expectedErrors: {}
-          },
-        },
-      },
-      itemsToRemove: [],
+      items: {},
+      itemsToRemove: [
+        'edit-tulo-items-0-item-label',
+        'edit-meno-items-0-item-value'
+      ],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
     'edit-tulo-items-0-item-label': 'Virhe sivulla 3. Talous: Kuvaus tulosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
@@ -710,7 +638,6 @@ const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-tulo-items-0-item-label': 'Virhe sivulla 3. Talous: Kuvaus tulosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
     'edit-meno-items-0-item-value': 'Virhe sivulla 3. Talous: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon'
@@ -736,7 +663,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 

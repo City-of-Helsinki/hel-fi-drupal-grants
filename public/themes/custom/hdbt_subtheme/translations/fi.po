@@ -40,11 +40,20 @@ msgstr "Yhteenveto hakemuksesi perustiedoista ja käsittelytilasta"
 msgid "Sent date"
 msgstr "Lähetyspäivänmäärä"
 
+msgid "No handler information set"
+msgstr "Ei käsittelijän tietoja"
+
 msgid "Handler information"
 msgstr "Käsittelijän tiedot"
 
+msgid "No status history"
+msgstr "Ei tilahistoriaa"
+
 msgid "Application statuses"
 msgstr "Hakemuksen tila"
+
+msgid "No attachments"
+msgstr "Ei liitteitä"
 
 msgid "Application attachments"
 msgstr "Hakemuksen liitteet"

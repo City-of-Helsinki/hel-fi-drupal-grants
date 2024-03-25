@@ -485,7 +485,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
@@ -531,7 +530,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
   },
@@ -555,7 +553,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 
