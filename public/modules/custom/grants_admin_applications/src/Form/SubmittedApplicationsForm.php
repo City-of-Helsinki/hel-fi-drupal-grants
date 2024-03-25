@@ -136,6 +136,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
       ];
 
       foreach ($documents as $document) {
+
         $url = Url::fromRoute(
           'grants_admin_applications.resend_applications',
           ['transaction_id' => $document['transaction_id']],
@@ -289,15 +290,22 @@ class SubmittedApplicationsForm extends AtvFormBase {
       /** @var Drupal\helfi_atv\AtvDocument[] $docs */
       $docs = self::getDocuments($options);
 
-      $documents = array_map(function (AtvDocument $doc) {
-        return [
-          'status' => $doc->getStatus(),
-          'status_history' => $doc->getStatusHistory(),
-          'transaction_id' => $doc->getTransactionId(),
-          'updated_at' => $doc->getUpdatedAt(),
-          'created_at' => $doc->getCreatedAt(),
-        ];
-      }, $docs);
+      // Filter out grants profiles from documents
+      $documents = array_filter(
+        array_map(function (AtvDocument $doc) {
+          return [
+            'type' => $doc->getType(),
+            'status' => $doc->getStatus(),
+            'status_history' => $doc->getStatusHistory(),
+            'transaction_id' => $doc->getTransactionId(),
+            'updated_at' => $doc->getUpdatedAt(),
+            'created_at' => $doc->getCreatedAt(),
+          ];
+        }, $docs),
+        function(array $doc) {
+          return $doc['type'] !== 'grants_profile';
+        }
+      );
 
       if (empty($documents)) {
         $messenger->addWarning(t('No documents found.'));
