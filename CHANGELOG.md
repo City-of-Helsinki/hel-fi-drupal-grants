@@ -1,6 +1,10 @@
 # CHANGELOG
 
 ## 2024.6
+- 2f96ca8e feat: AU-2290: Document status and date search parameters (#1266)
+- 2ea3d83c Update icon location in config file.
+- 31370bda Restore jquery ui draggable
+- eefc430e docs: CHANGELOG
 - 1b9fe503 AU-2289: Add possibility to resend application messages
 - 9c6a71d1 config: Update configuration (#1250)
 - 4c87ee54 fix: AU-2236: add error if application is not open (#1225)
