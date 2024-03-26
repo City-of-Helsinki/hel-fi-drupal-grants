@@ -6,7 +6,6 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\PrependCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -16,6 +15,7 @@ use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Returns responses for Grants Handler routes.
