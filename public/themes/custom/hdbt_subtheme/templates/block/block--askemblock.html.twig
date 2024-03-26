@@ -3,9 +3,9 @@
   (function() {
     window.askem = {
       settings: {
-        {% if language.getId() == 'en' %}
+        {% if current_language == 'en' %}
         apiKey: '7zfblho0j7sm0url',
-        {% elseif language.getId() == 'sv' %}
+        {% elseif current_language == 'sv' %}
         apiKey: 'mwft0afec1l7d6g1',
         {% else %}
         apiKey: 'gjhfvh3m4xcvnred',

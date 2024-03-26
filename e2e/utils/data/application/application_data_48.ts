@@ -862,10 +862,25 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       items: {},
       itemsToRemove: ['edit-bank-account-account-number-select'],
     },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-myonnetty-avustus-items-0-item-issuer',
+        'edit-myonnetty-avustus-items-0-item-year',
+      ],
+    },
+    '4_suunniteltu_toiminta': {
+      items: {},
+      itemsToRemove: [
+        'edit-tila-items-1-item-premisename',
+      ],
+    }
   },
-  expectedDestination: '',
   expectedErrors: {
-    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.'
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-myonnetty-avustus-items-0-item-issuer': 'Virhe sivulla 2. Avustustiedot: Avustuksen myöntäjä kenttä on pakollinen.',
+    'edit-myonnetty-avustus-items-0-item-year': 'Virhe sivulla 2. Avustustiedot: Vuosi kenttä on pakollinen.',
+    'edit-tila-items-1-item-premisename': 'Virhe sivulla 4. Suunniteltu toiminta: Tilan nimi kenttä on pakollinen.'
   },
 };
 
@@ -888,7 +903,6 @@ const wrongEmail: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
   },
@@ -913,7 +927,6 @@ const wrongEmail2: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä ei ole oikeassa muodossa.',
   },
@@ -938,7 +951,6 @@ const wrongEmail3: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite vaaraemaili ei kelpaa.',
   },
@@ -970,7 +982,6 @@ const under5000: FormDataWithRemoveOptionalProps = {
       ],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 
@@ -993,7 +1004,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 

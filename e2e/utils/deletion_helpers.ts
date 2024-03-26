@@ -1,4 +1,4 @@
-import {expect, Page} from "@playwright/test";
+import {expect, Page, test} from "@playwright/test";
 import {FormData} from "./data/test_data";
 import {logger} from "./logger";
 
@@ -36,6 +36,11 @@ enum DeletionMethod {
  *   The env form data.
  */
 const deleteDraftApplication = async (formKey: string, page: Page, formDetails: FormData, storedata: any) => {
+  if (storedata === undefined || storedata[formKey] === undefined) {
+    logger(`Skipping deletion test: No env data stored after the "${formDetails.title}" test.`);
+    test.skip(true, 'Skip deletion test');
+  }
+
   const thisStoreData = storedata[formKey];
   if (thisStoreData.status !== 'DRAFT') {
     return;
@@ -72,7 +77,7 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
   page.once('dialog', async dialog => {
     await dialog.accept();
   });
-  await page.waitForURL('/fi/oma-asiointi', {timeout: 10000});
+  await page.waitForURL('/fi/oma-asiointi');
   await validateDeletionNotification(page, 'Submission URL.');
 }
 
@@ -94,7 +99,7 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
 const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
   await page.goto('/fi/oma-asiointi');
   await page.locator(`.application-delete-link-${applicationId}`).click();
-  await page.waitForLoadState('load', {timeout: 10000});
+  await page.waitForLoadState('load');
   await validateDeletionNotification(page, 'Application ID on Oma asiointi page.');
 }
 
