@@ -143,6 +143,8 @@ class ApplicantMandateForm extends FormBase {
 
     $form['actions']['unregistered_community']['unregistered_community_selection'] = [
       '#type' => 'select',
+      '#title' => $this->t('Select Unregistered community or group role', [], $tOpts),
+      '#title_display' => 'invisible',
       '#options' => $profileOptions,
       '#empty_option' => $this->t('Choose', [], $tOpts),
       '#empty_value' => '0',

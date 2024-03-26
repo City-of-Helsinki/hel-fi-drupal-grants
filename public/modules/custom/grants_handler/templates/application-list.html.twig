@@ -1,7 +1,9 @@
 <div class="application-list" id="{{ id }}">
   <div class="container">
     <h2>{{ header }}</h2>
-    <div>{{ description }}</div>
+    {% if description %}
+      <div>{{ description }}</div>
+    {% endif %}
     {% if type != 'drafts' %}
       <div class="application-list__search-row">
         <div class="application-list-filter hds-text-input">
@@ -28,7 +30,7 @@
           {% if items %}
             <span class="application-list__count-value">&nbsp;</span> {{ 'Applications'|t({}, {'context': 'grants_handler'})}}
           {% else %}
-            {{ 'No sent applications.'|t({}, {'context': 'grants_handler'})}}
+            <p>{{ 'No sent applications.'|t({}, {'context': 'grants_handler'})}}</p>
           {% endif %}
         </div>
         <div class="application-list--select">
@@ -52,15 +54,17 @@
         </div>
       </div>
     {% endif %}
-    <ul class="list application-list">
-      {% if not items and type == 'drafts' %}
-        {{ "No applications in progress."|t({}, {'context': 'grants_handler'})}}
-      {% endif %}
-      {% for item in items %}
-        {{ item }}
-      {% endfor %}
-    </ul>
-    {% if type != 'drafts' %}
+    {% if not items and type == 'drafts' %}
+      <p>{{ "No applications in progress."|t({}, {'context': 'grants_handler'})}}</p>
+    {% endif %}
+    {% if items %}
+      <ul class="list application-list">
+        {% for item in items %}
+          {{ item }}
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if type != 'drafts' and items %}
       <div class="hds-pagination-container">
         <ul class="pagination application-list__pagination"></ul>
       </div>

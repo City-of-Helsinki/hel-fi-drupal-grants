@@ -51,6 +51,11 @@
     margin-bottom: var(--spacing-s);
   }
 
+  h3 {
+    font-size: var(--fontsize-heading-m);
+    font-weight: 500;
+  }
+
   .header {
     display: flex;
     justify-content: space-between;

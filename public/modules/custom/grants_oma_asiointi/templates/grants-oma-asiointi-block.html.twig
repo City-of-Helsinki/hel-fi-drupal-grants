@@ -9,7 +9,7 @@
 </div>
 <div class="content">
   <div class="messages">
-    <h4>{{ "New on your applications"|t({}, {'context': 'grants_oma_asiointi'}) }} <span class="new-messages-length {% if messages %}has-new-messages {% endif %}">{{ messages|length }}</span> </h4>
+    <h3>{{ "New on your applications"|t({}, {'context': 'grants_oma_asiointi'}) }} <span class="new-messages-length {% if messages %}has-new-messages {% endif %}">{{ messages|length }}</span> </h3>
     {% if messages %}
       {% for message in messages %}
         <a href="{{ path('grants_handler.view_application', {'submission_id': message['caseId']}) }}" class="oma-asiointi-block--link">
@@ -31,7 +31,7 @@
     {% endif %}
   </div>
   <div class="submissions">
-    <h4>{{ "Latest applications"|t({}, {'context': 'grants_oma_asiointi'}) }}</h4>
+    <h3>{{ "Latest applications"|t({}, {'context': 'grants_oma_asiointi'}) }}</h3>
     {% if submissions %}
       {% for submission in submissions %}
         <a href="{{ path('grants_handler.view_application', {'submission_id': submission['application_number']}) }}" class="oma-asiointi-block--link">

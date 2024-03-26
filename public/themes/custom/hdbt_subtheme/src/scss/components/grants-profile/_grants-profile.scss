@@ -86,9 +86,13 @@ $breakpoint-xl: 1248px;
       }
     }
   }
-    &--infotext {
-    font-size: var(--fontsize-body-l);
-    margin-bottom: var(--spacing-s);
+  &--update-link {
+    margin-top: var(--spacing-layout-xs);
+    margin-bottom: var(--spacing-layout-2-xs);
+  }
+  &--infotext {
+  font-size: var(--fontsize-body-l);
+  margin-bottom: var(--spacing-s);
   }
   &--wrapper {
     display: flex;

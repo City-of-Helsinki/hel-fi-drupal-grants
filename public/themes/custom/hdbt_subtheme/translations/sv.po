@@ -6,6 +6,9 @@ msgstr ""
 msgid "Here you can see details of your application"
 msgstr "Här kan du se detaljer om din ansökan"
 
+msgid "No attachments"
+msgstr "Inga bilagor"
+
 msgid "Application attachments"
 msgstr "Bilagor"
 
@@ -15,8 +18,14 @@ msgstr "Sänd"
 msgid "Handler information"
 msgstr "Händelser"
 
+msgid "No handler information set"
+msgstr "Ingen händelserinformation"
+
 msgid "Information message"
 msgstr "OBS"
+
+msgid "No status history"
+msgstr "Ingen statushistorik"
 
 msgid "Application statuses"
 msgstr "Status"
