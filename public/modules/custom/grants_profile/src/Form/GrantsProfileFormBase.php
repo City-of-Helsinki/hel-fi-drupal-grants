@@ -852,6 +852,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#class' => '',
       '#label' => $this->t('Fields marked with an asterisk * are required information.', [], $this->tOpts),
       '#body' => $this->t('Fill all fields first and save in the end.', [], $this->tOpts),
+      '#aria_level' => '4',
     ];
 
     $form['newItem'] = [
