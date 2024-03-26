@@ -130,7 +130,7 @@ you cannot do any modifications while the form is locked for them.',
     ];
     $form['foundingYearWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Perustiedot', [], $this->tOpts),
+      '#title' => $this->t('Basic details', [], $this->tOpts),
       '#title_tag' => 'h4',
       'foundingYear' => [
         '#type' => 'textfield',
