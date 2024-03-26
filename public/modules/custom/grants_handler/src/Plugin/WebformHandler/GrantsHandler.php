@@ -888,7 +888,8 @@ class GrantsHandler extends WebformHandlerBase {
     if ($webform->hasWizardPages()) {
       $validations = [
         '::validateForm',
-        '::draft',
+        '::noValidate',
+       // '::draft',
       ];
       // Allow forward access to all but the confirmation page.
       foreach ($form_state->get('pages') as $page_key => $page) {
