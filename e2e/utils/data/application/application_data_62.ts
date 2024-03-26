@@ -746,7 +746,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
@@ -807,7 +806,6 @@ const missingValuesUnregistered: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-kenelle-haen-avustusta': 'Virhe sivulla 2. Avustustiedot: Kenelle haen avustusta kenttä on pakollinen.',
@@ -866,7 +864,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
     'edit-budget-other-income-items-0-item-value': 'Virhe sivulla 5. Talousarvio: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
@@ -905,7 +902,6 @@ const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-budget-other-income-items-0-item-value': 'Virhe sivulla 5. Talousarvio: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
     'edit-budget-other-cost-items-0-item-label': 'Virhe sivulla 5. Talousarvio: Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
@@ -930,7 +926,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 

@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\helfi_atv\AtvDocument;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Base form class with some ATV methods.
@@ -30,6 +31,41 @@ abstract class AtvFormBase extends FormBase {
   }
 
   /**
+   * Update resent application save id to database.
+   *
+   * @param mixed $applicationNumber
+   *   The application number.
+   * @param mixed $saveId
+   *   The new save id.
+   */
+  public static function updateSaveIdRecord(string $applicationNumber, string $saveId) {
+
+    $database = \Drupal::service('database');
+    $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber(
+      $applicationNumber,
+      NULL,
+      FALSE,
+      TRUE,
+    );
+
+    $fields = [
+      'webform_id' => ($webform_submission) ? $webform_submission->getWebform()
+        ->id() : '',
+      'sid' => ($webform_submission) ? $webform_submission->id() : 0,
+      'handler_id' => ApplicationHandler::HANDLER_ID,
+      'application_number' => $applicationNumber,
+      'saveid' => $saveId,
+      'uid' => \Drupal::currentUser()->id(),
+      'user_uuid' => '',
+      'timestamp' => (string) \Drupal::time()->getRequestTime(),
+    ];
+
+    $query = $database->insert(ApplicationHandler::TABLE, $fields);
+    $query->fields($fields)->execute();
+
+  }
+
+  /**
    * Attempts to resend ATV document through integrations.
    *
    * @param Drupal\helfi_atv\AtvDocument $atvDoc
@@ -43,9 +79,11 @@ abstract class AtvFormBase extends FormBase {
     $logger = self::getLoggerChannel();
 
     $headers = [];
+    $saveId = Uuid::uuid4()->toString();
     // Current environment as a header to be added to meta -fields.
     $headers['X-hki-appEnv'] = ApplicationHandler::getAppEnv();
     $headers['X-hki-applicationNumber'] = $applicationId;
+
     $content = $atvDoc->getContent();
     $myJSON = Json::encode($content);
 
@@ -56,6 +94,10 @@ abstract class AtvFormBase extends FormBase {
     $password = getenv('AVUSTUS2_PASSWORD');
 
     try {
+
+      $headers['X-hki-saveId'] = $saveId;
+      self::updateSaveIdRecord($applicationId, $saveId);
+
       $res = $httpClient->post($endpoint, [
         'auth' => [
           $username,
@@ -72,6 +114,7 @@ abstract class AtvFormBase extends FormBase {
 
       $body = $res->getBody()->getContents();
       $messenger->addStatus('Integration response: ' . $body);
+      $messenger->addStatus('Updated saveId to: ' . $saveId);
 
       $logger->info(
         'Application resend - Integration status: @status - Response: @response',
