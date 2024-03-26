@@ -80,3 +80,11 @@ msgctxt "grants_metadata"
 msgid 'Subvention type'
 msgstr 'Avustuslajin koodi'
 
+msgid "Form is published for production use, only limited editing is allowed."
+msgstr "Lomake on julkaistu tuotantokäyttöön, muokkaus toimintoja rajoitettu."
+
+msgid "Form is archived and editing is not allowed."
+msgstr "Lomake on arkistoitu ja muokkaaminen on estetty."
+
+msgid "Enter a year between 1900 - 2100."
+msgstr "Syötä vuosiluku väliltä 1900 - 2100."

@@ -5,10 +5,14 @@
  * Module hooks.
  */
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
+use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_metadata\Validator\EndDateValidator;
 use Drupal\grants_metadata\Validator\YearValidator;
 use Drupal\helfi_platform_config\DTO\ParagraphTypeCollection;
@@ -242,6 +246,8 @@ function grants_metadata_field_industry_options(): array {
  */
 function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
+  _grants_metadata_handle_admin_webform_alter($form, $form_state, $form_id);
+
   // Do not alter the Performance test webform.
   $current_route_match = \Drupal::service('current_route_match');
   $current_route_name = $current_route_match->getRouteName();
@@ -256,6 +262,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
   if ($form_id == 'webform_settings_form' || $form_id == 'webform_add_form' || $form_id == 'webform_duplicate_form') {
 
+    $isDuplicateForm = $form_id === 'webform_duplicate_form';
     $bundle = $form_state->getFormObject()->getEntity();
 
     $config = \Drupal::config('grants_metadata.settings');
@@ -478,7 +485,274 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       '#title' => t('Disable copying for this application', [], ['context' => 'grants_metadata']),
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'disableCopying'),
     ];
+
+    $formStatus = $bundle->getThirdPartySetting('grants_metadata', 'status');
+    $formParent = $bundle->getThirdPartySetting('grants_metadata', 'parent');
+
+    if ($isDuplicateForm) {
+      $storage = $form_state->getStorage();
+      $formParent = $storage['parent_form'];
+      $formStatus = 'development';
+
+      /** @var \Drupal\webform\Entity\Webform[] $webforms */
+      $formParentData = reset(\Drupal::entityTypeManager()
+        ->getStorage('webform')
+        ->loadByProperties([
+          'uuid' => $formParent,
+        ]));
+
+      if ($formParentData) {
+        $parentIndustry = $formParentData->getThirdPartySetting('grants_metadata', 'applicationIndustry');
+        $parentType = $formParentData->getThirdPartySetting('grants_metadata', 'applicationType');
+        $parentFormId = $formParentData->id();
+
+        if (preg_match('/\d+$/', $parentFormId, $matches)) {
+          $versionNumber = (int) $matches[0] + 1;
+        }
+        else {
+          $versionNumber = 1;
+        }
+
+        $suggestedFormId = str_replace(
+          ['@industry', '@type', '@number'],
+          [strtolower($parentIndustry), strtolower($parentType), $versionNumber],
+          '@industry_@type_@number'
+        );
+
+        $form['id']['#default_value'] = $suggestedFormId;
+      }
+
+    }
+
+    $parentOptions = [];
+    if (!empty($formParent)) {
+      $parentWebform = reset(\Drupal::entityTypeManager()
+        ->getStorage('webform')
+        ->loadByProperties([
+          'uuid' => $formParent,
+        ]));
+
+      $parentOptions = [$formParent => $parentWebform->get('title')];
+    }
+
+    $form['third_party_settings']['grants_metadata']['status'] = [
+      '#type' => 'radios',
+      '#title' => t('Status'),
+      '#options' => [
+        'released' => t('In production'),
+        'archived' => t('Archived'),
+        'development' => t('In development'),
+      ],
+      '#required' => TRUE,
+      '#default_value' => $formStatus ?? 'development',
+      '#description' => t('
+        If the form is in production, then no editing is allowed.
+        In development: Form can be filled up in non-production environments.
+        Archived forms usually have new version available.
+      '),
+    ];
+
+    $form['third_party_settings']['grants_metadata']['parent'] = [
+      '#type' => 'select',
+      '#title' => t('Parent'),
+      '#description' => t('Parent form, if this webform was duplicated or replaces existing form.'),
+      '#options' => $parentOptions,
+      '#default_value' => $formParent,
+      '#disabled' => TRUE,
+      '#required' => $isDuplicateForm,
+      '#empty_option' => t('- None -'),
+      '#empty_value' => '',
+    ];
   }
+
+  if ($form_id == 'webform_settings_form') {
+    $route_parameters = ['webform' => $webform->id()];
+
+    $form['third_party_settings']['grants_metadata']['new_version'] = [
+      '#type' => 'link',
+      '#title' => t('Create a webform new version'),
+      '#url' => Url::fromRoute('entity.webform.duplicate_form', $route_parameters),
+      '#attributes' => ['class' => ['button', 'button--primary', 'form-submit']],
+    ];
+    $form['third_party_settings']['grants_metadata']['new_version_description'] = [
+      '#prefix' => '<div>',
+      '#suffix' => '</div>',
+      '#markup' => t(
+        'Allows you to duplicate the webform and automatically link the parent webform to this new form.
+        This will also archive the current version.'
+      ),
+    ];
+  }
+}
+
+/**
+ * Admin webform permission checks and alters.
+ */
+function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  $form_ids = [
+    'webform_settings_access_form',
+    'webform_handlers_form',
+    'webform_settings_confirmation_form',
+    'webform_settings_submissions_form',
+    'webform_settings_form_form',
+    'webform_settings_form',
+    'webform_duplicate_form',
+    'webform_edit_form',
+    'webform_ui_element_form',
+  ];
+
+  if (!in_array($form_id, $form_ids)) {
+    return;
+  }
+
+  $routeParam = \Drupal::routeMatch()->getParameter('webform');
+  $formStatus = $routeParam->getThirdPartySetting('grants_metadata', 'status');
+
+  $currentUser = Drupal::currentUser();
+  $isAdmin = ApplicationHandler::isGrantAdmin($currentUser);
+
+  $released = $formStatus === 'released';
+  $archived = $formStatus === 'archived';
+  $editingRestricted = ($released || $archived) && !$isAdmin;
+  $restrictionMsg = $released ?
+  t('Form is published for production use, only limited editing is allowed.') :
+  t('Form is archived and editing is not allowed.');
+
+  switch ($form_id) {
+
+    case 'webform_settings_access_form':
+    case 'webform_handlers_form':
+    case 'webform_settings_confirmation_form':
+    case 'webform_settings_submissions_form':
+    case 'webform_settings_form_form':
+    case 'webform_settings_form':
+      if ($editingRestricted && !$isAdmin) {
+        $form['#disabled'] = TRUE;
+
+        \Drupal::messenger()
+          ->addWarning($restrictionMsg);
+
+        if ($form_id == 'webform_handlers_form') {
+          $form['handlers']['#access'] = FALSE;
+          \Drupal::messenger()
+            ->addWarning(t('Handlers form has been removed due to no access.'));
+        }
+        if ($form_id == 'webform_edit_form') {
+          $form['webform_ui_elements']['#access'] = FALSE;
+          \Drupal::messenger()
+            ->addWarning(t('Elements form has been removed due to no access.'));
+        }
+      }
+
+      break;
+
+    case 'webform_duplicate_form':
+      // Storage original UUID.
+      // On succesful creation. Update original to archived/closed etc.
+      $routeParam = \Drupal::routeMatch()->getParameter('webform');
+      $storage = $form_state->getStorage();
+      $storage['parent_form'] = $routeParam->uuid() ?? NULL;
+      $form_state->setStorage($storage);
+
+      $form['actions']['submit']['#submit'][] = '_grants_metadata_duplicate_form_submit';
+      break;
+
+    case 'webform_edit_form':
+      if ($archived || $editingRestricted) {
+        \Drupal::messenger()
+          ->addWarning($restrictionMsg);
+        $form['#disabled'] = TRUE;
+        $form['webform_ui_elements']['#header']['#access'] = FALSE;
+        foreach ($form['webform_ui_elements'] as $key => $element) {
+          if (!is_array($element)) {
+            continue;
+          }
+          unset($form['webform_ui_elements'][$key]['add']);
+          unset($form['webform_ui_elements'][$key]['operations']);
+        }
+      }
+      break;
+
+    case 'webform_ui_element_form':
+      if ($archived ||$editingRestricted) {
+        $form['#disabled'] = TRUE;
+        unset($form['delete']);
+        unset($form['actions']['delete']);
+      }
+      break;
+  }
+}
+
+/**
+ * Custom submit handler for form duplicate form.
+ */
+function _grants_metadata_duplicate_form_submit($form, FormStateInterface &$form_state) {
+
+  $storage = $form_state->getStorage();
+
+  $parentFormUuid = $storage['parent_form'] ?? NULL;
+  if (!$parentFormUuid) {
+    return;
+
+  }
+
+  /** @var \Drupal\webform\Entity\Webform[] */
+  $query = \Drupal::entityTypeManager()
+    ->getStorage('webform')
+    ->loadByProperties([
+      'uuid' => $parentFormUuid,
+    ]);
+
+  $parentForm = reset($query);
+
+  if (!$parentForm) {
+    return;
+  }
+
+  $parentForm->setThirdPartySetting('grants_metadata', 'status', 'archived');
+  $parentForm->set('archive', TRUE);
+  $parentForm->save();
+
+  $newFormId = $form_state->getValue('id');
+  $newFormObject = Webform::load($newFormId);
+
+  // @DEV: We might need do this an another way?
+  _grants_metadata_update_webform_references($parentForm, $newFormObject);
+  grants_metadata_webform_presave($newFormObject);
+}
+
+/**
+ * Updates service page webform references to duplicated form.
+ *
+ * @param \Drupal\webform\Entity\Webform $originalForm
+ *   Original webform object.
+ * @param \Drupal\webform\Entity\Webform $newForm
+ *   Duplicated webform object.
+ */
+function _grants_metadata_update_webform_references(Webform $originalForm, Webform $newForm) {
+  // Get nodes that have attached the previous version.
+  try {
+    $entityQuery = \Drupal::entityQuery('node')
+        // Access checks on content are required.
+      ->accessCheck(FALSE)
+      ->condition('type', 'service')
+      ->condition('field_webform', $originalForm->id());
+
+    $results = $entityQuery->execute();
+    $servicePages = Node::loadMultiple($results);
+
+    // Update reference to new form.
+    foreach ($servicePages as $servicePage) {
+      $servicePage->set('field_webform', $newForm->id());
+      $servicePage->save();
+    }
+  }
+  catch (\Exception $e) {
+    // Ignore errors during tests.
+    return;
+  }
+
 }
 
 /**
@@ -505,6 +779,7 @@ function grants_metadata_form_node_service_edit_form_alter(&$form, FormStateInte
       'enabled' => $stateCondition,
     ];
   }
+
   // Hide webform specific settings.
   $form['field_webform']['widget'][0]['settings']['#access'] = FALSE;
 }
@@ -522,6 +797,20 @@ function grants_metadata_preprocess_block(&$variables) {
     $variables["content"]["#cache"]["max-age"] = 0;
     $variables["elements"]["#cache"]["max-age"] = 0;
   }
+}
+
+/**
+ * Implements hook_webform_access().
+ */
+function grants_metadata_webform_access(Webform $entity, string $operation, AccountInterface $account) {
+  $isAdmin = ApplicationHandler::isGrantAdmin($account);
+  $restrictedOps = ['duplicate', 'delete', 'test'];
+
+  if (in_array($operation, $restrictedOps) && !$isAdmin) {
+    return AccessResult::forbidden();
+  }
+
+  return AccessResult::neutral();
 }
 
 /**

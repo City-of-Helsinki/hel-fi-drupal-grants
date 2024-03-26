@@ -738,7 +738,7 @@ class ApplicationHandler {
    * @return \Drupal\webform\Entity\Webform
    *   Webform object.
    */
-  public static function getWebformFromApplicationNumber(string $applicationNumber): ?Webform {
+  public static function getWebformFromApplicationNumber(string $applicationNumber, $all = FALSE): bool|Webform|array {
 
     $isOldFormat = FALSE;
     if (strpos($applicationNumber, 'GRANTS') !== FALSE) {
@@ -782,7 +782,37 @@ class ApplicationHandler {
     if (!$webform) {
       return NULL;
     }
+
+    if ($all) {
+      return $webform;
+    }
+
     return reset($webform);
+  }
+
+  /**
+   * Get Webform object by UUID.
+   *
+   * @param string $uuid
+   *   Uuid of the webform.
+   * @param string $application_number
+   *   The application number.
+   *
+   * @return \Drupal\webform\Entity\Webform
+   *   Webform object.
+   */
+  public static function getWebformByUuid(string $uuid, string $application_number) {
+
+    $wids = \Drupal::entityQuery('webform')
+      ->condition('uuid', $uuid)
+      ->execute();
+
+    // Fallback to original method, if webform for some reason is not found.
+    if (empty($wids)) {
+      return self::getWebformFromApplicationNumber($application_number);
+    }
+
+    return Webform::load(reset($wids));
   }
 
   /**
@@ -820,17 +850,21 @@ class ApplicationHandler {
   ): ?WebformSubmission {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
-    $webform = self::getWebformFromApplicationNumber($applicationNumber);
+    $webform = self::getWebformFromApplicationNumber($applicationNumber, TRUE);
 
     if (!$webform) {
       return NULL;
     }
 
+    $webformIds = array_map(function ($element) {
+      return $element->id();
+    }, $webform);
+
     $result = \Drupal::entityTypeManager()
       ->getStorage('webform_submission')
       ->loadByProperties([
         'serial' => $submissionSerial,
-        'webform_id' => $webform->id(),
+        'webform_id' => $webformIds,
       ]);
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
@@ -985,6 +1019,17 @@ class ApplicationHandler {
       \Drupal::logger('application_handler')
         ->error('isApplicationOpen date error: @error', ['@error' => $e->getMessage()]);
       return $applicationContinuous;
+    }
+
+    $status = self::getWebformStatus($webform);
+    $appEnv = self::getAppEnv();
+    $isProd = self::isProduction($appEnv);
+
+    if (
+      ($isProd && $status !== 'production') ||
+      $status === 'archived'
+    ) {
+      return FALSE;
     }
 
     // If today is between open & close dates return true.
@@ -1374,6 +1419,7 @@ class ApplicationHandler {
       'language' => $this->languageManager->getCurrentLanguage()->getId(),
       'applicant_type' => $selectedCompany['type'],
       'applicant_id' => $selectedCompany['identifier'],
+      'form_uuid' => $webform->uuid(),
     ]);
 
     // Do data conversion.
@@ -1855,10 +1901,16 @@ class ApplicationHandler {
             $document->getMetadata()
           );
 
+          $metaData = $document->getMetadata();
+
           // Load the webform submission ID.
           $applicationNumber = $submissionData['application_number'];
           $serial = self::getSerialFromApplicationNumber($applicationNumber);
-          $webform = self::getWebformFromApplicationNumber($applicationNumber);
+
+          $webformUuidExists = isset($metaData['form_uuid']) && !empty($metaData['form_uuid']);
+          $webform = $webformUuidExists
+            ? self::getWebformByUuid($metaData['form_uuid'], $applicationNumber)
+            : self::getWebformFromApplicationNumber($applicationNumber);
 
           if (!$webform || !$serial) {
             continue;
@@ -1970,7 +2022,7 @@ class ApplicationHandler {
     }
 
     // If we can't find a submission, then create one.
-    $webformSubmission = self::createWebformSubmissionWithSerialAndWebformId($serial, $webformId, $document);
+    $webformSubmission = self::createWebformSubmissionWithSerialAndWebformId($serial, $document);
     return $webformSubmission->id();
   }
 
@@ -1982,8 +2034,6 @@ class ApplicationHandler {
    *
    * @param string $serial
    *   A webform submission serial.
-   * @param string $webformId
-   *   A webform ID.
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   An ATV document.
    *
@@ -1995,8 +2045,17 @@ class ApplicationHandler {
    */
   protected static function createWebformSubmissionWithSerialAndWebformId(
     string $serial,
-    string $webformId,
     AtvDocument $document): WebformSubmission {
+
+    $metaData = $document->getMetadata();
+    $webformUuidExists = isset($metaData['form_uuid']) && !empty($metaData['form_uuid']);
+
+    $webform = $webformUuidExists
+    ? self::getWebformByUuid($metaData['form_uuid'], $document->getTransactionId())
+    : self::getWebformFromApplicationNumber($document->getTransactionId());
+
+    $webformId = $webform->id();
+
     $submissionObject = WebformSubmission::create(['webform_id' => $webformId]);
     $submissionObject->set('serial', $serial);
 
@@ -2215,6 +2274,22 @@ class ApplicationHandler {
   }
 
   /**
+   * Get webform status string from third party settings.
+   *
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform object to check.
+   *
+   * @return string
+   *   Status string
+   */
+  public static function getWebformStatus(Webform $webform): string {
+    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
+    $status = $thirdPartySettings['status'] ?? 'development';
+
+    return $status;
+  }
+
+  /**
    * Clear application data for noncopyable elements.
    *
    * @param array $data
@@ -2335,6 +2410,46 @@ class ApplicationHandler {
       'PROD',
     ];
     return in_array($appEnv, $proenvs);
+  }
+
+  /**
+   * Tries to find latest webform for given application ID.
+   *
+   * @param mixed $id
+   *   Application id (eg. KASKOIPLISA)
+   *
+   * @return \Drupal\webform\Entity\Webform|null
+   *   Return webform object if found, else null.
+   */
+  public static function getLatestApplicationForm($id): Webform|NULL {
+    $webforms = \Drupal::entityTypeManager()
+      ->getStorage('webform')
+      ->loadByProperties([
+        'third_party_settings.grants_metadata.applicationType' => $id,
+        'archive' => FALSE,
+      ]);
+
+    $webform = reset($webforms);
+    if ($webform) {
+      return $webform;
+    }
+
+    return NULL;
+  }
+
+  /**
+   * Helper function to checks, if user has grants_admin role rights.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   User account.
+   *
+   * @return bool
+   *   Does user have grant_admin rights.
+   */
+  public static function isGrantAdmin(AccountInterface $account) {
+    $currentRoles = $account->getRoles();
+    $isAdmin = in_array('grants_admin', $currentRoles) || $account->id() === '1';
+    return $isAdmin;
   }
 
   /**

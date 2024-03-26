@@ -18,6 +18,7 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
+use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -322,6 +323,16 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $access = FALSE;
     }
     elseif (!in_array($selectedCompany["type"], $formApplicationTypes)) {
+      $access = FALSE;
+    }
+
+    $appEnv = ApplicationHandler::getAppEnv();
+    $formStatus = ApplicationHandler::getWebformStatus($webform);
+
+    if ($appEnv === 'PROD' && !in_array($formStatus, ['production', ''])) {
+      $access = FALSE;
+    }
+    elseif ($formStatus === 'archived') {
       $access = FALSE;
     }
 
