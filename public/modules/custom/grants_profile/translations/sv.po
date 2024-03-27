@@ -160,7 +160,7 @@ msgstr "Syftet med verksamheten"
 
 msgctxt "grants_profile"
 msgid "Description of the purpose of the activity of the registered association (max. 500 characters)"
-msgstr "Beskrivning av syftet med den registrerade gemenskapens verksamhet (500 merkkiä)"
+msgstr "Beskrivning av syftet med den registrerade gemenskapens verksamhet (max. 500 tecken)"
 
 msgctxt "grants_profile"
 msgid "Addresses"
