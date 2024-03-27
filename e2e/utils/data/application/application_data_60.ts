@@ -1010,6 +1010,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload',
         'edit-toimintasuunnitelma-attachment-upload',
         'edit-talousarvio-attachment-upload',
+        'edit-tilankayttoliite-attachment-upload'
       ],
     },
     'webform_preview': {

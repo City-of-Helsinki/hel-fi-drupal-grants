@@ -439,6 +439,7 @@ const baseFormRegisteredCommunity_61: FormData = {
 
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
@@ -506,6 +507,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
 
 const wrongValues: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {
