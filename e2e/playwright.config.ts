@@ -126,6 +126,11 @@ export default defineConfig({
       dependencies: ['profile-registered_community']
     },
     {
+      name: 'forms-61',
+      testMatch: /forms\/.*_61\.ts$/,
+      dependencies: ['profile-registered_community']
+    },
+    {
       name: 'forms-62',
       testMatch: /forms\/.*_62\.ts$/,
       dependencies: ['profile-unregistered_community', 'profile-registered_community']
