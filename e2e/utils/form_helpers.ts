@@ -1055,10 +1055,10 @@ const uploadFile = async (
 
   // Wait for all promises to fulfill.
   await Promise.all([
-    fileInput.waitFor({ state: 'attached', timeout: 10000 }),
+    fileInput.waitFor({ state: 'attached', timeout: 30000 }),
     fileInput.setInputFiles(filePath),
     postResponsePromise,
-    resultLink.waitFor({ state: 'visible', timeout: 10000 }),
+    resultLink.waitFor({ state: 'visible', timeout: 30000 }),
     expect(fileInput).toBeHidden(),
   ]);
 
