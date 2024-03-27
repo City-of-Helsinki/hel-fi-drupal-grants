@@ -260,37 +260,52 @@ const fillProfileForm = async (
     await page.waitForLoadState("load");
 
 
-    // Capture all error messages on the page
+    // Capture all error messages on the page.
     const allErrorElements = await page.$$('.form-item--error-message'); // Adjust selector based on your actual HTML structure
     const actualErrorMessages = await Promise.all(
       allErrorElements.map(async (element) => await element.innerText())
     );
 
-    // Get configured expected errors
+    // Get the expected errors.
     const expectedErrors = Object.entries(formDetails.expectedErrors);
-    // If we are not testing error messages
+    const expectedErrorsArray = expectedErrors.map(([selector, expectedErrorMessage]) => expectedErrorMessage);
+
+    // Check if we get errors even if we're not waiting for any.
     if (expectedErrors.length === 0) {
-      // print errors to stdout
       if (actualErrorMessages.length !== 0) {
-        logger('ERRORS', actualErrorMessages);
+        console.debug('ERRORS, expected / actual', expectedErrors, actualErrorMessages);
       }
-      // Expect actual error messages size to be 0
       expect(actualErrorMessages.length).toBe(0);
     }
 
     // Check for expected error messages
+    const foundErrors: string[] = [];
+    const notFoundErrors: string[] = [];
     for (const [selector, expectedErrorMessage] of expectedErrors) {
-      if (expectedErrorMessage) {
-        logger('ERROR', expectedErrorMessage);
-        logger('ERRORS', actualErrorMessages);
-        // If an error is expected, check if it's present in the captured error messages
-        if (typeof expectedErrorMessage === "string") {
-          expect(actualErrorMessages.some((msg) => msg.includes(expectedErrorMessage))).toBe(true);
+      if (expectedErrorMessage && typeof expectedErrorMessage === "string") {
+        if (actualErrorMessages.some((msg) => msg.includes(expectedErrorMessage))) {
+          foundErrors.push(expectedErrorMessage)
         }
-      } else {
-        // If no error is expected, check if there are no error messages
-        expect(allErrorElements.length).toBe(0);
+        else {
+          notFoundErrors.push(expectedErrorMessage)
+        }
       }
+    }
+
+    // Make sure that no expected errors are missing.
+    if (expectedErrors.length > 0 && notFoundErrors.length !== 0) {
+      logger('MISMATCH IN FORM ERRORS!')
+      logger('The following errors were expected:', expectedErrors);
+      logger('The following errors were found:', foundErrors);
+      logger('The following errors are missing:', notFoundErrors);
+      expect(notFoundErrors).toEqual([]);
+    }
+
+    // Check for unexpected error messages.
+    const unexpectedErrors = actualErrorMessages.filter(msg => !expectedErrorsArray.includes(msg));
+    if (unexpectedErrors.length !== 0) {
+      logger('Unexpected errors:', unexpectedErrors);
+      expect(unexpectedErrors.length).toBe(0);
     }
 
     // Assertions based on the expected destination
