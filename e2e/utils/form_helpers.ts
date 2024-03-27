@@ -259,7 +259,6 @@ const fillProfileForm = async (
 
     await page.waitForLoadState("load");
 
-
     // Capture all error messages on the page.
     const allErrorElements = await page.$$('.form-item--error-message'); // Adjust selector based on your actual HTML structure
     const actualErrorMessages = await Promise.all(
@@ -1063,7 +1062,6 @@ const uploadFile = async (
   // Check that the input is not visible and wait for the response.
   await expect(fileInput).toBeHidden();
   await response;
-  // logger('Response', response);
 }
 
 /**
