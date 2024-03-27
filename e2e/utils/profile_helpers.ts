@@ -33,18 +33,24 @@ const isProfileCreated = async (profileType: string) => {
 
   return fetchLatestProfileByType(process.env.TEST_USER_UUID ?? '', profileType)
     .then((profile) => {
-      if (profile && profile.updated_at) {
-        const {updated_at} = profile;
-        const isLessThanHourAgo = isTimestampLessThanAnHourAgo(updated_at);
+      if (!profile || !profile.updated_at) return false;
 
-        if (isLessThanHourAgo) {
-          logger('...created less than an hour ago.');
-        } else {
-          logger('...created more than hour ago and should be re-tested.');
-        }
-        return isLessThanHourAgo;
+      const {updated_at, content} = profile;
+      const isLessThanHourAgo = isTimestampLessThanAnHourAgo(updated_at);
+
+      if (!content.bankAccounts.length || content.bankAccounts.length < 1) {
+        logger('...has missing content. Re-creating.');
+        return false;
       }
+
+      if (isLessThanHourAgo) {
+        logger('...created less than an hour ago.');
+        return true;
+      }
+
+      logger('...created more than hour ago and should be re-tested.');
       return false;
+
     })
     .catch((error) => {
       logger('Error fetching profile:', error);

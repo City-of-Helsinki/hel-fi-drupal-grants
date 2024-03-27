@@ -9,6 +9,7 @@ interface ATVMetadata {
 }
 
 interface ATVDocument {
+  content: any;
   id: string;
   type: string;
   service: string;
