@@ -87,6 +87,10 @@ msgid "Basic details"
 msgstr "Grundläggande information"
 
 msgctxt "grants_profile"
+msgid "Community official information"
+msgstr "Gemenskapens officiella information"
+
+msgctxt "grants_profile"
 msgid "Name of association"
 msgstr "Sammanslutningens namn"
 
@@ -354,6 +358,10 @@ msgid "Personal address"
 msgstr "Personlig adress"
 
 msgctxt "grants_profile"
+msgid "Personal telephone"
+msgstr "Personlig telefon"
+
+msgctxt "grants_profile"
 msgid "Community or group address"
 msgstr "Gemenskaps- eller gruppadress"
 
@@ -418,6 +426,10 @@ msgstr "Du måste lägga till en tjänsteman"
 msgctxt "Yksityishenkilön asiointi"
 msgid "Personal information"
 msgstr "Personlig information"
+
+msgctxt "Yksityishenkilön asiointi"
+msgid "Official information"
+msgstr "Officiell information"
 
 msgctxt "Yksityishenkilön asiointi"
 msgid "Basic details"

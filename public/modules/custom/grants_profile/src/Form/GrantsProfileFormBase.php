@@ -484,6 +484,7 @@ abstract class GrantsProfileFormBase extends FormBase {
     $form['bankAccountWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Bank account numbers', [], $this->tOpts),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="bankaccount-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -851,6 +852,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#class' => '',
       '#label' => $this->t('Fields marked with an asterisk * are required information.', [], $this->tOpts),
       '#body' => $this->t('Fill all fields first and save in the end.', [], $this->tOpts),
+      '#aria_level' => '4',
     ];
 
     $form['newItem'] = [
