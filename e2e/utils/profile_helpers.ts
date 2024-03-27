@@ -38,7 +38,7 @@ const isProfileCreated = async (profileType: string) => {
       const {updated_at, content} = profile;
       const isLessThanHourAgo = isTimestampLessThanAnHourAgo(updated_at);
 
-      if (!content.bankAccounts.length || content.bankAccounts.length < 1) {
+      if (!content.bankAccounts.length || content.bankAccounts.length < 2) {
         logger('...has missing content. Re-creating.');
         return false;
       }
