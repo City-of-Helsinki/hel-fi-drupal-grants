@@ -1,9 +1,0 @@
-display:
-  default:
-    display_options:
-      title: 'Ajankohtaista avustuksista'
-  page_1:
-    display_options:
-      menu:
-        title: 'Ajankohtaista avustuksista'
-label: 'Ajankohtaista avustuksista'
