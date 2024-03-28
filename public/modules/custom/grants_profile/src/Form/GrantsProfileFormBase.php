@@ -841,12 +841,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#type' => 'status_messages',
     ];
 
-    $form['profileform_info_wrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => '&nbsp;',
-    ];
-
-    $form['profileform_info_wrapper']['profileform_info'] = [
+    $form['profileform_info'] = [
       '#theme' => 'hds_notification',
       '#type' => 'notification',
       '#class' => '',
