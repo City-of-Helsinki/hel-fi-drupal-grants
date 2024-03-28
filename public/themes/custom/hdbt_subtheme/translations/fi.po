@@ -103,10 +103,6 @@ msgstr "Omat tiedot"
 msgid "Community applications"
 msgstr "Yhteisön hakemukset"
 
-msgctxt "Front page latest news paragraph title"
-msgid "Latest news"
-msgstr "Ajankohtaista avustuksista"
-
 msgid "Missing or incomplete information"
 msgstr "Puuttuvat tai vajaat tiedot"
 
