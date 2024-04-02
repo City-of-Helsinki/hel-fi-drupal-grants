@@ -534,7 +534,7 @@ class AttachmentHandler {
     if (!$accountHasChanged && !$copyingProcess && !empty($attachmentsInAtv)) {
       $applicationHasConfirmationFile = $this->hasExistingBankAccountConfirmation(
         $submittedFormData,
-        $selectedAccountConfirmation,
+        $accountConfirmation,
         $attachmentsInAtv
       );
     }
@@ -546,7 +546,7 @@ class AttachmentHandler {
       $fileArray = $this->uploadNewBankAccountConfirmationToAtv(
         $applicationDocument,
         $selectedAccount,
-        $selectedAccountConfirmation,
+        $accountConfirmation,
         $submittedFormData,
         $accountNumber,
         $applicationNumber
