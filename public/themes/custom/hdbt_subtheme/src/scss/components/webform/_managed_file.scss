@@ -21,6 +21,15 @@ fieldset.grants-attachments--wrapper {
   label {
     position: relative;
     left: 0;
+    &:has(input:disabled) {
+      background-color: transparent;
+      background-color: var(--background-color-disabled, transparent);
+      border-color: transparent;
+      border-color: var(--border-color-disabled, transparent);
+      color: #999898;
+      color: var(--color-disabled);
+      cursor: not-allowed;
+    }
   }
   input[type=file] {
     visibility: hidden;
