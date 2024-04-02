@@ -1,102 +1,83 @@
-import {
-  expect,
-  Page,
-} from '@playwright/test';
+import {expect, Page,} from '@playwright/test';
 import {logger} from "./logger";
-
 import {FormData} from "./data/test_data"
+import {deleteGrantsProfiles, fetchLatestProfileByType} from "./document_helpers";
+import {fillProfileForm} from "./form_helpers";
 
-import {fetchLatestProfileByType} from "./document_helpers";
-
+/**
+ * The function isTimestampLessThanAnHourAgo.
+ *
+ * @param timestamp
+ */
 function isTimestampLessThanAnHourAgo(timestamp: string) {
-  const oneHourInMilliseconds = 60 * 60 * 1000; // 1 hour in milliseconds
+  const oneHourInMilliseconds = 60 * 60 * 1000; // 1 hour in milliseconds.
   const currentTimestamp = new Date().getTime();
   const targetTimestamp = new Date(timestamp).getTime();
   return currentTimestamp - targetTimestamp < oneHourInMilliseconds;
 }
 
 /**
- * Try to check if profile is just created so we can skip these, when running
- * multiple test runs.
+ * Try to check if profile is just created so that
+ * we can skip these, when running multiple test runs.
  *
- * @param profileVariable
- *  Name that is used to save details of this profile run.
  * @param profileType
  *  Profile type, registered_community, private_person etc..
  */
-const isProfileCreated = async (profileVariable: string, profileType: string) => {
-  const isCreatedThisTime = process.env[profileVariable] === 'TRUE';
-  const varname = 'fetchedProfile_' + profileType;
-  const profileDoesNotExists = process.env[varname] === undefined;
-
+const isProfileCreated = async (profileType: string) => {
   logger('Profile...');
 
   if (process.env.CREATE_PROFILE === 'TRUE') {
-    logger('... creation is forced through variable');
-    // No need to wait for the asynchronous operation if not necessary
+    logger('... creation is forced through variable.');
     return false;
   }
 
-  if (isCreatedThisTime && !profileDoesNotExists) {
-    logger('... is created this run?');
-    return true;
-  }
-
-  // Return the promise
   return fetchLatestProfileByType(process.env.TEST_USER_UUID ?? '', profileType)
     .then((profile) => {
-      if (profile && profile.updated_at) {
+      if (!profile || !profile.updated_at) return false;
 
-        // process.env[varname] = JSON.stringify(profile);
-        process.env[varname] = 'FOUND';
+      const {updated_at, content} = profile;
+      const isLessThanHourAgo = isTimestampLessThanAnHourAgo(updated_at);
 
-        const {updated_at} = profile;
-        const isLessThanHourAgo = isTimestampLessThanAnHourAgo(updated_at);
-
-        if (isLessThanHourAgo) {
-          logger('...created less than an hour ago.');
-        } else {
-          logger('...created more than hour ago and should be re-tested.');
-        }
-
-        return isLessThanHourAgo;
-        // return false;
+      if (!content.bankAccounts.length || content.bankAccounts.length < 2) {
+        logger('...has missing content. Re-creating.');
+        return false;
       }
+
+      if (isLessThanHourAgo) {
+        logger('...created less than an hour ago.');
+        return true;
+      }
+
+      logger('...created more than hour ago and should be re-tested.');
       return false;
+
     })
     .catch((error) => {
-      console.error('Error fetching profile:', error);
-      // Handle the error or log it
-      return false; // Assuming profile fetch failure means not created
+      logger('Error fetching profile:', error);
+      return false;
     });
 };
 
-
-const checkContactInfoPrivatePerson = async (page: Page, profileData: FormData) => {
-  await expect(page.getByRole('heading', {name: 'Omat tiedot'})).toBeVisible()
-
-  // Perustiedot
-  await expect(page.getByRole('heading', {name: 'Perustiedot'})).toBeVisible()
-  await expect(page.getByText('Etunimi')).toBeVisible()
-  await expect(page.getByText('Sukunimi')).toBeVisible()
-  await expect(page.getByText('Henkilötunnus')).toBeVisible()
-  await expect(page.getByRole('link', {name: 'Siirry Helsinki-profiiliin päivittääksesi sähköpostiosoitetta'})).toBeVisible()
-
-  // Omat yhteystiedot
-  await expect(page.getByRole('heading', {name: 'Omat yhteystiedot'})).toBeVisible()
-  await expect(page.locator("#addresses").getByText('Osoite')).toBeVisible()
-  await expect(page.locator("#phone-number").getByText('Puhelinnumero')).toBeVisible()
-  await expect(page.locator("#officials-3").getByText('Tilinumerot')).toBeVisible()
-  await expect(page.getByRole('link', {name: 'Muokkaa omia tietoja'})).toBeVisible()
-
-
-  // tässä me voitas verrata profiilisivun sisältöä tallennettuun dataan.
-
-
-}
-
+/**
+ * The runProfileFormTest function.
+ *
+ * This function runs profile form tests by:
+ * 1. Deleting any existing profiles before a new test is executed.
+ * 2. Filling a profile form with the given test data.
+ *
+ * @param page
+ *   Playwright page object.
+ * @param formData
+ *   The form data we are testing.
+ * @param profileType
+ *   The profile type.
+ */
+const runProfileFormTest = async (page: Page, formData: FormData, profileType: string) => {
+  await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
+  await fillProfileForm(page, formData, formData.formPath, formData.formSelector);
+};
 
 export {
-  checkContactInfoPrivatePerson,
-  isProfileCreated
+  isProfileCreated,
+  runProfileFormTest
 }
