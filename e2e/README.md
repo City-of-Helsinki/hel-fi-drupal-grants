@@ -95,7 +95,7 @@ Example 1: make test-pw-p PROJECT=forms-48
 
 Example 2: make test-pw-p PROJECT=forms-48-registered
 
-Example 3: make test-pw-p PROJECT=form-all
+Example 3: make test-pw-p PROJECT=forms-all
 ```
 
 To run a specific set of tests in headed mode:
