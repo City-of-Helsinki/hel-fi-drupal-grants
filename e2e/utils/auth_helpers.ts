@@ -1,81 +1,78 @@
-import {Page, expect} from '@playwright/test';
+import {Page} from '@playwright/test';
 import {logger} from "./logger";
 import {existsSync, readFileSync} from 'fs';
 
-type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
+type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON";
+type Mode = "new" | "existing";
 
 const AUTH_FILE_PATH = '.auth/user.json';
 
 /**
- * Select role for user session to apply grants with.
+ * Select selectRole function.
  *
  * @param page
  * @param role
  * @param mode
  */
-const selectRole = async (page: Page, role: Role, mode: string = 'existing') => {
-
+const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
   await checkLoginStateAndLogin(page);
-
   await page.goto("/fi/asiointirooli-valtuutus");
 
-  const loggedInAsRegisteredCommunity = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-registered_community"));
-
-  const loggedAsPrivatePerson = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-private_person"));
-
-  const loggedInAsUnregisteredCommunity = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-unregistered_community"));
-
-  if (role === 'REGISTERED_COMMUNITY' && !loggedInAsRegisteredCommunity) {
-    logger('Get mandate for REGISTERED_COMMUNITY')
-    await selectRegisteredCommunityRole(page);
-  } else if(role === 'REGISTERED_COMMUNITY') {
-    logger('REGISTERED_COMMUNITY, mandate exists');
-
+  const roleIsLoggedIn = await page.locator(`body.grants-role-${role.toLowerCase()}`).count() > 0;
+  if (roleIsLoggedIn) {
+    logger(`${role}, mandate exists`);
+    return;
   }
 
-  if (role === 'UNREGISTERED_COMMUNITY' && !loggedInAsUnregisteredCommunity) {
-    logger('Get mandate for UNREGISTERED_COMMUNITY')
-    if (mode === 'existing') {
-      await selectUnregisteredCommunityRole(page);
-    } else if (mode === 'new') {
-      await page.goto('/fi/asiointirooli-valtuutus');
-      await page.locator('#edit-unregistered-community-selection').selectOption('new');
-      await page.locator('#edit-submit--2').click();
-      // await page.getByRole('button', {name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä'}).click();
-    }
-  } else if(role === 'UNREGISTERED_COMMUNITY') {
-    logger('UNREGISTERED_COMMUNITY, mandate exists');
+  logger(`Get mandate for ${role}`);
+  switch (role) {
+    case "REGISTERED_COMMUNITY":
+      await selectRegisteredCommunityRole(page);
+      break;
+    case "UNREGISTERED_COMMUNITY":
+      await selectUnregisteredCommunityRole(page, mode);
+      break;
+    case "PRIVATE_PERSON":
+      await selectPrivatePersonRole(page);
+      break;
   }
-
-
-  if (role === 'PRIVATE_PERSON' && !loggedAsPrivatePerson) {
-    logger('Get mandate for PRIVATE_PERSON');
-    await selectPrivatePersonRole(page);
-  } else if(role === 'PRIVATE_PERSON') {
-    logger('PRIVATE_PERSON, mandate exists');
-  }
-
 }
 
+/**
+ * The selectRegisteredCommunityRole function.
+ *
+ * @param page
+ */
 const selectRegisteredCommunityRole = async (page: Page) => {
-  const registeredCommunityButton = page.locator('[name="registered_community"]')
-  await expect(registeredCommunityButton).toBeVisible()
-  await registeredCommunityButton.click()
-  const firstCompanyRow = page.locator('input[type="radio"]').first()
-  await firstCompanyRow.check({force: true})
-  await page.locator('[data-test="perform-confirm"]').click()
+  await page.locator('[name="registered_community"]').click();
+  await page.locator('input[type="radio"]').first().check({ force: true });
+  await page.locator('[data-test="perform-confirm"]').click();
 }
 
-const selectUnregisteredCommunityRole = async (page: Page) => {
-  await page.locator('#edit-unregistered-community-selection').selectOption({index: 2});
-  await page.locator('[name="unregistered_community"]').click()
+/**
+ * The selectUnregisteredCommunityRole function.
+ *
+ * @param page
+ * @param mode
+ */
+const selectUnregisteredCommunityRole = async (page: Page, mode: Mode) => {
+  if (mode === 'new') {
+    await page.locator('#edit-unregistered-community-selection').selectOption('new');
+    await page.locator('#edit-submit--2').click();
+  }
+  if (mode === 'existing') {
+    await page.locator('#edit-unregistered-community-selection').selectOption({ index: 2 });
+  }
+  await page.locator('[name="unregistered_community"]').click();
 }
 
+/**
+ * The selectPrivatePersonRole function.
+ *
+ * @param page
+ */
 const selectPrivatePersonRole = async (page: Page) => {
-  await page.locator('[name="private_person"]').click()
+  await page.locator('[name="private_person"]').click();
 }
 
 const login = async (page: Page, SSN?: string) => {
@@ -150,12 +147,5 @@ const checkLoginStateAndLogin = async (page: Page) => {
 
 
 export {
-  checkLoginStateAndLogin,
-  login,
-  loginAndSaveStorageState,
   selectRole,
-  selectUnregisteredCommunityRole,
-  selectRegisteredCommunityRole,
-  selectPrivatePersonRole,
-  AUTH_FILE_PATH
 }
