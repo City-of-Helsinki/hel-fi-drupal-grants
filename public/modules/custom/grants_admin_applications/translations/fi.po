@@ -1,0 +1,49 @@
+# Finnish translation of City of Helsinki Grants admin applications module
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2023-09-06 11:00+0300\n"
+"PO-Revision-Date: 2023-09-06 11:00+0300\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "grants_admin_applications"
+msgid "Selected messages has been resent, processing the messages might take a few moments"
+msgstr "Valitut viestit on lähetetty uudestaan, näiden prosessoinnissa saattaa kulua muutama hetki."
+
+msgctxt "grants_admin_applications"
+msgid "Sent by"
+msgstr "Lähettäjä"
+
+msgctxt "grants_admin_applications"
+msgid "Avus2 has received the message*"
+msgstr "Avus2 on vastaanottanut viestin*"
+
+msgctxt "grants_admin_applications"
+msgid "Has been resent"
+msgstr "Låhetetty uudelleen"
+
+msgctxt "grants_admin_applications"
+msgid "Resend this message"
+msgstr "Lähetä viesti uudelleen"
+
+msgctxt "grants_admin_applications"
+msgid "Resend messages"
+msgstr "Lähetä valitut viestit uudelleen"
+
+msgctxt "grants_admin_applications"
+msgid "Yes"
+msgstr "Kyllä"
+
+msgctxt "grants_admin_applications"
+msgid "No"
+msgstr "Ei"
+
+msgctxt "grants_admin_applications"
+msgid "* Please note that older applications might not have avus2 message received status available."
+msgstr "* Huomaa että vanhoissa hakemuksissa ei vältämättä ole saatavilla tietoa Avus2 viestin vastaanoton statuksesta."

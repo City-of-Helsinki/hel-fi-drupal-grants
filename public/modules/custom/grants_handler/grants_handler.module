@@ -8,6 +8,7 @@
 use Drupal\block_content\Entity\BlockContent;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Asset\AttachedAssetsInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -1978,4 +1979,15 @@ function grants_handler_user_login_form_submit(&$form, FormStateInterface $form_
     // Redirect the user after login.
     $form_state->setRedirect('system.admin_content');
   }
+}
+
+/**
+ * Implements hook_js_settings_build().
+ */
+function grants_handler_js_settings_build(&$settings, AttachedAssetsInterface $assets) {
+  // We set a dummy setting here for possibly fixing a problem with webform
+  // ajaxSettings being empty and breaking multivalue components
+  // and other components which are using ajax functions.
+  // See: AU-2081 https://helsinkisolutionoffice.atlassian.net/browse/AU-2081
+  $settings['grants_handler_dummy_setting'] = TRUE;
 }
