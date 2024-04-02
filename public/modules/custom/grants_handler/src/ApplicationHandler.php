@@ -795,6 +795,8 @@ class ApplicationHandler {
    *   Document to extract values from.
    * @param bool $refetch
    *   Force refetch from ATV.
+   * @param bool $skipAccessCheck
+   *   Should the access checks be skipped (For example, when using Admin UI).
    *
    * @return \Drupal\webform\Entity\WebformSubmission|null
    *   Webform submission.
@@ -812,7 +814,8 @@ class ApplicationHandler {
   public static function submissionObjectFromApplicationNumber(
     string $applicationNumber,
     AtvDocument $document = NULL,
-    bool $refetch = FALSE
+    bool $refetch = FALSE,
+    bool $skipAccessCheck = FALSE,
   ): ?WebformSubmission {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
@@ -840,7 +843,7 @@ class ApplicationHandler {
     $selectedCompany = $grantsProfileService->getSelectedRoleData();
 
     // If no company selected, no mandates no access.
-    if ($selectedCompany == NULL) {
+    if ($selectedCompany == NULL && !$skipAccessCheck) {
       throw new CompanySelectException('User not authorised');
     }
 
@@ -1603,11 +1606,13 @@ class ApplicationHandler {
    *   Submission data.
    * @param bool $onlyUnread
    *   Return only unread messages.
+   * @param bool $showHiddenMessages
+   *   Should we return the hidden messages. (For exmaple: resent messages).
    *
    * @return array
    *   Parsed messages with read information
    */
-  public static function parseMessages(array $data, $onlyUnread = FALSE) {
+  public static function parseMessages(array $data, $onlyUnread = FALSE, $showHiddenMessages = FALSE) {
     if (!isset($data['events'])) {
       return [];
     }
@@ -1618,6 +1623,19 @@ class ApplicationHandler {
       return FALSE;
     });
 
+    $resentMessages = array_filter($data['events'], function ($event) {
+      return $event['eventType'] == EventsService::$eventTypes['MESSAGE_RESEND'];
+    });
+
+    $resentMessages = array_unique(array_map(function ($message) {
+      return $message['eventTarget'];
+    }, $resentMessages));
+
+    $avus2ReceivedMessages = array_filter($data['events'], function ($event) {
+      return $event['eventType'] == EventsService::$eventTypes['AVUSTUS2_MSG_OK'];
+    });
+
+    $avus2ReceivedIds = array_unique(array_column($avus2ReceivedMessages, 'eventTarget'));
     $eventIds = array_column($messageEvents, 'eventTarget');
 
     $messages = [];
@@ -1626,6 +1644,17 @@ class ApplicationHandler {
     foreach ($data['messages'] as $message) {
       $msgUnread = NULL;
       $ts = strtotime($message["sendDateTime"]);
+
+      if (in_array($message['messageId'], $resentMessages) && !$showHiddenMessages) {
+        continue;
+      }
+      elseif (in_array($message['messageId'], $resentMessages) && $showHiddenMessages) {
+        $message['resent'] = TRUE;
+      }
+
+      if (in_array($message['messageId'], $avus2ReceivedIds)) {
+        $message['avus2received'] = TRUE;
+      }
 
       if (in_array($message['messageId'], $eventIds)) {
         $message['messageStatus'] = 'READ';

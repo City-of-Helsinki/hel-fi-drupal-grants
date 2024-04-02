@@ -55,6 +55,53 @@ class SubmittedApplicationsForm extends AtvFormBase {
       '#type' => 'status_messages',
     ];
 
+    $config = \Drupal::config('grants_metadata.settings');
+    $thirdPartyOpts = $config->get('third_party_options');
+
+    $form['filters']['status'] = [
+      '#title' => $this->t('Application status'),
+      '#type' => 'select',
+      '#options' => $thirdPartyOpts['application_statuses'],
+      '#default_value' => 'SUBMITTED',
+    ];
+
+    $form['filters']['created_at'] = [
+      '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => [
+          'container-inline',
+        ],
+      ],
+    ];
+
+    $form['filters']['created_at']['created_after'] = [
+      '#title' => $this->t('Created after'),
+      '#type' => 'datetime',
+      '#date_date_element' => 'date',
+      '#date_time_element' => 'none',
+    ];
+
+    $form['filters']['created_at']['created_before'] = [
+      '#title' => $this->t('Created before'),
+      '#type' => 'datetime',
+      '#date_date_element' => 'date',
+      '#date_time_element' => 'none',
+    ];
+
+    $form['filters']['created_at']['updated_after'] = [
+      '#title' => $this->t('Updated after'),
+      '#type' => 'datetime',
+      '#date_date_element' => 'date',
+      '#date_time_element' => 'none',
+    ];
+
+    $form['filters']['created_at']['updated_before'] = [
+      '#title' => $this->t('Updated before'),
+      '#type' => 'datetime',
+      '#date_date_element' => 'date',
+      '#date_time_element' => 'none',
+    ];
+
     $form['getStatus'] = [
       '#type' => 'submit',
       '#value' => $this->t('Get status'),
@@ -82,12 +129,14 @@ class SubmittedApplicationsForm extends AtvFormBase {
           $this->t('Application number'),
           $this->t('Status'),
           $this->t('Status history'),
+          $this->t('Timestamps'),
           $this->t('Resend'),
           $this->t('Status page'),
         ],
       ];
 
       foreach ($documents as $document) {
+
         $url = Url::fromRoute(
           'grants_admin_applications.resend_applications',
           ['transaction_id' => $document['transaction_id']],
@@ -107,6 +156,10 @@ class SubmittedApplicationsForm extends AtvFormBase {
           'status_history' => [
             '#type' => 'textarea',
             '#value' => $this->printStatusHistory($document['status_history']),
+          ],
+          'timestamps' => [
+            '#markup' => "<strong>Created at</strong> {$document['created_at']} <br/>" .
+            "<strong>Updated at</strong> {$document['updated_at']}",
           ],
           'resend' => [
             '#type' => 'submit',
@@ -208,17 +261,55 @@ class SubmittedApplicationsForm extends AtvFormBase {
     $messenger = \Drupal::service('messenger');
     $logger = self::getLoggerChannel();
 
+    $options = [];
+
+    $values = $formState->getValues();
+
+    if (!empty($values['status'])) {
+      $options['status'] = $values['status'];
+    }
+
+    $dateTimeValues = [
+      'created_after',
+      'created_before',
+      'updated_after',
+      'updated_before',
+    ];
+
+    foreach ($dateTimeValues as $dateTimeValue) {
+      if (!isset($values[$dateTimeValue])) {
+        continue;
+      }
+
+      $timestamp = $values[$dateTimeValue]->format('Y-m-d');
+      $options[$dateTimeValue] = $timestamp;
+
+    }
+
     try {
       /** @var Drupal\helfi_atv\AtvDocument[] $docs */
-      $docs = self::getDocuments();
+      $docs = self::getDocuments($options);
 
-      $documents = array_map(function (AtvDocument $doc) {
-        return [
-          'status' => $doc->getStatus(),
-          'status_history' => $doc->getStatusHistory(),
-          'transaction_id' => $doc->getTransactionId(),
-        ];
-      }, $docs);
+      // Filter out grants profiles from documents
+      $documents = array_filter(
+        array_map(function (AtvDocument $doc) {
+          return [
+            'type' => $doc->getType(),
+            'status' => $doc->getStatus(),
+            'status_history' => $doc->getStatusHistory(),
+            'transaction_id' => $doc->getTransactionId(),
+            'updated_at' => $doc->getUpdatedAt(),
+            'created_at' => $doc->getCreatedAt(),
+          ];
+        }, $docs),
+        function(array $doc) {
+          return $doc['type'] !== 'grants_profile';
+        }
+      );
+
+      if (empty($documents)) {
+        $messenger->addWarning(t('No documents found.'));
+      }
 
       $formState->set('documents', $documents);
       $formState->setRebuild();
@@ -262,11 +353,11 @@ class SubmittedApplicationsForm extends AtvFormBase {
       'status' => 'SUBMITTED',
     ];
 
-    $activeOptions = array_merge($options, $defaultOptions);
+    $activeOptions = array_merge($defaultOptions, $options);
 
     $sParams = [
-      'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
-      'status' => $activeOptions['status'],
+      ...['lookfor' => 'appenv:' . ApplicationHandler::getAppEnv()],
+      ...$activeOptions,
     ];
 
     return \Drupal::service('helfi_atv.atv_service')->searchDocuments($sParams);
