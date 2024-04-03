@@ -1,4 +1,4 @@
-(function ($, Drupal, drupalSettings) {
+(function ($, Drupal, drupalSettings, once) {
   Drupal.behaviors.GrantsHandlerBehavior = {
     attach: function (context, settings) {
 
@@ -29,8 +29,8 @@
         const selectedNumber = $(this).val();
         // Get bank account info on this selected account.
         const selectedAccountArray = drupalSettings.grants_handler
-            .grantsProfile.bankAccounts
-            .filter(item => item.bankAccount === selectedNumber);
+          .grantsProfile.bankAccounts
+          .filter(item => item.bankAccount === selectedNumber);
         const selectedAccount = selectedAccountArray[0];
 
         // Always set the number
@@ -39,11 +39,11 @@
         // Only set name & ssn if they're present in the profile.
         if (selectedAccount.ownerName !== null) {
           $("[data-drupal-selector='edit-bank-account-account-number-owner-name']")
-              .val(selectedAccount.ownerName);
+            .val(selectedAccount.ownerName);
         }
         if (selectedAccount.ownerSsn !== null) {
           $("[data-drupal-selector='edit-bank-account-account-number-ssn']")
-              .val(selectedAccount.ownerSsn);
+            .val(selectedAccount.ownerSsn);
         }
 
 
@@ -114,17 +114,31 @@
       // composite element
       const checkBoxStateFn = function () {
         if (this.checked) {
-          $(this).prop('disabled', false);
+          setTimeout(function(){
+            $(this).prop('disabled', false);
+          },1000);
         }
       }
 
-      // $('[data-webform-composite-attachment-inOtherFile]').once('disable-state-handling').on('change', checkBoxStateFn);
-      // $('[data-webform-composite-attachment-isDeliveredLater]').once('disable-state-handling').on('change', checkBoxStateFn);
-      $('.js-form-type-managed-file ').once('filefield-state-handling').each(function () {
+      $(once('disable-state-handling', '[data-webform-composite-attachment-inOtherFile]')).on('change', function() {
+        const parent = $(this).parents('.fieldset-wrapper').first();
+        let box1 = $(parent).find('[data-webform-composite-attachment-inOtherFile]');
+        setTimeout(function(){
+          $(box1).prop('disabled', false);
+        },100);
+      });
+      $(once('disable-state-handling', '[data-webform-composite-attachment-isDeliveredLater]')).on('change', function() {
+        const parent = $(this).parents('.fieldset-wrapper').first();
+        let box2 = $(parent).find('[data-webform-composite-attachment-isDeliveredLater]');
+        setTimeout(function(){
+          $(box2).prop('disabled', false);
+        },100);
+      });
+      $(once('filefield-state-handling', '.js-form-type-managed-file ')).each(function () {
 
         const parent = $(this).parents('.fieldset-wrapper').first();
-        const box1 = $(parent).find('[data-webform-composite-attachment-inOtherFile]');
-        const box2 = $(parent).find('[data-webform-composite-attachment-isDeliveredLater]');
+        let box1 = $(parent).find('[data-webform-composite-attachment-inOtherFile]');
+        let box2 = $(parent).find('[data-webform-composite-attachment-isDeliveredLater]');
         const attachment = $(this).find('input');
         const attachmentValue = $(attachment).val();
         const checkBoxesAreEqual = box1.prop('checked') === box2.prop('checked');
@@ -132,18 +146,27 @@
         // Notice that we might have attachmentName field instead of managedFile
         // (If you need to change logic here).
         if (attachmentValue && attachmentValue !== '') {
-          box1.prop('disabled', true)
-          box2.prop('disabled', true)
+          setTimeout(function(){
+            box1.prop('disabled', true)
+            box2.prop('disabled', true)
+          },100);
+
         }
         else if (attachment && checkBoxesAreEqual) {
-          box1.prop('disabled', false)
-          box2.prop('disabled', false)
+          setTimeout(function(){
+            box1.prop('disabled', false)
+            box2.prop('disabled', false)
+          },100);
+
         }
         else if (!checkBoxesAreEqual) {
           // If we are returning to edit a draft, make sure
           // we disable the other box.
-          box1.prop('disabled', box2.prop('checked') === true)
-          box2.prop('disabled', box1.prop('checked') === true)
+          setTimeout(function(){
+            box1.prop('disabled', box2.prop('checked') === true)
+            box2.prop('disabled', box1.prop('checked') === true)
+          },100);
+
         }
       });
 

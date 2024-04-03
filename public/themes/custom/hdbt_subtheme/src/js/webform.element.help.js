@@ -4,12 +4,14 @@
  */
 
 (function ($, Drupal, once) {
+
+  'use strict';
+
   // @see https://atomiks.github.io/tippyjs/v5/all-props/
   // @see https://atomiks.github.io/tippyjs/v6/all-props/
   Drupal.webform = Drupal.webform || {};
   Drupal.webform.elementHelpIcon = Drupal.webform.elementHelpIcon || {};
-  Drupal.webform.elementHelpIcon.options =
-    Drupal.webform.elementHelpIcon.options || {};
+  Drupal.webform.elementHelpIcon.options = Drupal.webform.elementHelpIcon.options || {};
 
   /**
    * Element help icon.
@@ -50,10 +52,8 @@
         },
       };
 
-      $(context)
-        .find('.js-webform-element-help')
-        .once('webform-element-help')
-        .each(function () {
+      $(once('webform-element-help', '.js-webform-element-help', context)).each(
+        function () {
           const $link = $(this);
 
           $link.on('click', function (event) {
@@ -76,4 +76,5 @@
         });
     },
   };
+
 })(jQuery, Drupal, once);
