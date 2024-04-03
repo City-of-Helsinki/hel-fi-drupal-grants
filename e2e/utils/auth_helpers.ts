@@ -26,11 +26,11 @@ const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
 
   const roleIsLoggedIn = await page.locator(`body.grants-role-${role.toLowerCase()}`).count() > 0;
   if (roleIsLoggedIn) {
-    logger(`${role}, mandate exists`);
+    logger(`${role}, mandate exists.`);
     return;
   }
 
-  logger(`Get mandate for ${role}`);
+  logger(`Get mandate for ${role}...`);
   switch (role) {
     case "REGISTERED_COMMUNITY":
       await selectRegisteredCommunityRole(page);
@@ -56,6 +56,7 @@ const selectRegisteredCommunityRole = async (page: Page) => {
   await page.locator('[name="registered_community"]').click();
   await page.locator('input[type="radio"]').first().check({ force: true });
   await page.locator('[data-test="perform-confirm"]').click();
+  logger('Selected registered community role.');
 }
 
 /**
@@ -77,6 +78,7 @@ const selectUnregisteredCommunityRole = async (page: Page, mode: Mode) => {
     await page.locator('#edit-unregistered-community-selection').selectOption({index: 2});
   }
   await page.locator('[name="unregistered_community"]').click();
+  logger('Selected unregistered community role.');
 }
 
 /**
@@ -89,6 +91,7 @@ const selectUnregisteredCommunityRole = async (page: Page, mode: Mode) => {
  */
 const selectPrivatePersonRole = async (page: Page) => {
   await page.locator('[name="private_person"]').click();
+  logger('Selected private person role.');
 }
 
 /**
