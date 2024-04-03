@@ -1140,15 +1140,15 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
           break;
 
         case 'businessPurpose':
-          $propertyPath = 'businessPurposeWrapper][businessPurpose';
+          $propertyPath = 'basicDetailsWrapper][businessPurpose';
           break;
 
         case 'companyNameShort':
-          $propertyPath = 'companyNameShortWrapper][companyNameShort';
+          $propertyPath = 'basicDetailsWrapper][companyNameShort';
           break;
 
         case 'companyHomePage':
-          $propertyPath = 'companyHomePageWrapper][companyHomePage';
+          $propertyPath = 'basicDetailsWrapper][companyHomePage';
           break;
 
         case 'email':
@@ -1156,7 +1156,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
           break;
 
         case 'foundingYear':
-          $propertyPath = 'foundingYearWrapper][foundingYear';
+          $propertyPath = 'basicDetailsWrapper][foundingYear';
           break;
 
         case 'officials':
