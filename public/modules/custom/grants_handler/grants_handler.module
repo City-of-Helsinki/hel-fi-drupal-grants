@@ -16,7 +16,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
-use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Event\UserLogoutEvent;
 use Drupal\grants_handler\EventsService;
@@ -1299,7 +1299,8 @@ function grants_handler_preprocess_webform_submission_attachment_list(&$variable
   foreach ($attachmentsData as $att) {
     if (isset($att['fileName'])) {
       try {
-        $fileUploadTime = AttachmentHandler::getAttachmentUploadTime($attachmentEventsHandler['events'], $att['fileName']);
+        $events = $attachmentEventsHandler['events'];
+        $fileUploadTime = AttachmentHandlerHelper::getAttachmentUploadTime($events, $att['fileName']);
       }
       catch (Exception $e) {
         $fileUploadTime = '';
