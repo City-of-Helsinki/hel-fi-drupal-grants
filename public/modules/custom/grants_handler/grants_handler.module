@@ -8,6 +8,7 @@
 use Drupal\block_content\Entity\BlockContent;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Asset\AttachedAssetsInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -197,6 +198,7 @@ function grants_handler_theme(): array {
         'label' => NULL,
         'body' => NULL,
         'class' => NULL,
+        'aria_level' => NULL,
       ],
     ],
 
@@ -617,6 +619,7 @@ function _grants_handler_missing_data(
     '#label' => $str1,
     '#body' => Link::createFromRoute($str2, 'grants_profile.show')
       ->toString() . ' ' . $str3,
+    '#aria_level' => '2',
   ];
 }
 
@@ -765,6 +768,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
             '#class' => '',
             '#label' => t('Some information fetched from personal information', [], $tOpts),
             '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.', [], $tOpts),
+            '#aria_level' => '2',
           ],
         ];
         $required_fields_info_element = [
@@ -775,6 +779,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
               '#label' => t('Fill in the fields to all the questions that you can answer.', [], $tOpts),
               '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.', [], $tOpts),
               '#class' => 'notification-margin-bottom',
+              '#aria_level' => '2',
             ],
         ];
         $page_title_element = [];
@@ -902,6 +907,7 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
       '#label' => t('Note!', [], $tOpts),
       '#body' => t('Accept the terms and send the application.', [], $tOpts),
       '#class' => 'notification-margin-bottom',
+      '#aria_level' => '3',
     ];
     $terms_info_rendered = Markup::create(render($terms_info));
     // Add html for checkbox.
@@ -1977,4 +1983,15 @@ function grants_handler_user_login_form_submit(&$form, FormStateInterface $form_
     // Redirect the user after login.
     $form_state->setRedirect('system.admin_content');
   }
+}
+
+/**
+ * Implements hook_js_settings_build().
+ */
+function grants_handler_js_settings_build(&$settings, AttachedAssetsInterface $assets) {
+  // We set a dummy setting here for possibly fixing a problem with webform
+  // ajaxSettings being empty and breaking multivalue components
+  // and other components which are using ajax functions.
+  // See: AU-2081 https://helsinkisolutionoffice.atlassian.net/browse/AU-2081
+  $settings['grants_handler_dummy_setting'] = TRUE;
 }
