@@ -9,9 +9,16 @@ const AUTH_FILE_PATH = '.auth/user.json';
 /**
  * Select selectRole function.
  *
+ * This function logs in a user by calling checkLoginStateAndLogin().
+ * After this, the passed in roll is selected by visiting
+ *
  * @param page
+ *   Playwright page object.
  * @param role
+ *   A string indicating which role needs to be selected.
  * @param mode
+ *   A string indicating if we're creating a new unregistered community
+ *   or selecting an existing one.
  */
 const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
   await checkLoginStateAndLogin(page);
@@ -40,7 +47,10 @@ const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
 /**
  * The selectRegisteredCommunityRole function.
  *
+ * This function selects the unregistered community role.
+ *
  * @param page
+ *   Playwright page object.
  */
 const selectRegisteredCommunityRole = async (page: Page) => {
   await page.locator('[name="registered_community"]').click();
@@ -51,8 +61,13 @@ const selectRegisteredCommunityRole = async (page: Page) => {
 /**
  * The selectUnregisteredCommunityRole function.
  *
- * @param page
+ * This function selects the unregistered community role.
+ *
  * @param mode
+ *   A string indicating if we're creating a new unregistered community
+ *   or selecting an existing one.
+ * @param page
+ *   Playwright page object.
  */
 const selectUnregisteredCommunityRole = async (page: Page, mode: Mode) => {
   if (mode === 'new') {
@@ -67,7 +82,10 @@ const selectUnregisteredCommunityRole = async (page: Page, mode: Mode) => {
 /**
  * The selectPrivatePersonRole function.
  *
+ * This function selects the private person role.
+ *
  * @param page
+ *   Playwright page object.
  */
 const selectPrivatePersonRole = async (page: Page) => {
   await page.locator('[name="private_person"]').click();
@@ -76,8 +94,12 @@ const selectPrivatePersonRole = async (page: Page) => {
 /**
  * The login function.
  *
+ * This function logs in a user with the provided SSN.
+ *
  * @param page
+ *   Playwright page object.
  * @param SSN
+ *   A users SSN (social security number).
  */
 const login = async (page: Page, SSN?: string) => {
   logger('Logging in...');
@@ -94,7 +116,12 @@ const login = async (page: Page, SSN?: string) => {
 /**
  * The loginAndSaveStorageState function.
  *
+ * This function calls login() and stores the session
+ * data in the auth file. This data can be used to
+ * validate a session by extracting a session cookie.
+ *
  * @param page
+ *   Playwright page object.
  */
 const loginAndSaveStorageState = async (page: Page) => {
   await login(page);
@@ -103,6 +130,11 @@ const loginAndSaveStorageState = async (page: Page) => {
 
 /**
  * The authFileExists function.
+ *
+ * This function attempts to locate an auth file.
+ *
+ * @return bool
+ *   False if the auth file does not exist, true otherwise.
  */
 const authFileExists = (): boolean => {
   logger('Locating auth file...')
@@ -119,9 +151,16 @@ const authFileExists = (): boolean => {
 
 /**
  * The getSessionCookie function.
+ *
+ * This function attempts to locate a session cookie
+ * inside the auth file. If the cookie is found, it is
+ * returned.
+ *
+ * @return bool|any
+ *   False if a session cookie is not found, or the session cookie.
  */
 const getSessionCookie = (): boolean | any => {
-  logger('Getting session cookie...')
+  logger('Getting session cookie...');
   const storageState = JSON.parse(readFileSync(AUTH_FILE_PATH, 'utf8'));
   const sessionCookie = storageState.cookies.find((c: { name: string; }) => c.name.startsWith('SSESS'));
 
@@ -137,7 +176,18 @@ const getSessionCookie = (): boolean | any => {
 /**
  * The sessionIsValid function.
  *
+ * This function makes sure a session is valid
+ * by visiting "/fi/user" and making sure that the user
+ * is redirected to either:
+ *
+ * A) /asiointirooli-valtuutus
+ * B) /oma-asiointi/hakuprofiili
+ *
  * @param page
+ *   Playwright page object.
+ *
+ * @return boolean
+ *   A boolean indicating if the session is valid or not.
  */
 const sessionIsValid = async (page: Page): Promise<boolean> => {
   logger('Visit user page to check session validity...');
@@ -157,7 +207,16 @@ const sessionIsValid = async (page: Page): Promise<boolean> => {
 /**
  * The checkLoginStateAndLogin function.
  *
+ * This function performs the authentication flow by:
+ * 1. Making sure we have an auth file.
+ * 2. Making sure the auth file contains a valid session cookie.
+ * 3. Making sure the session cookie is valid.
+ *
+ * If any of the steps fail, the user is logged in again,
+ * and the state is saved.
+ *
  * @param page
+ *   Playwright page object.
  */
 const checkLoginStateAndLogin = async (page: Page) => {
   logger('Authenticate...')
@@ -179,7 +238,7 @@ const checkLoginStateAndLogin = async (page: Page) => {
   logger('Adding session cookie to context.');
   await page.context().addCookies([sessionCookie]);
 
-  // Make sure the session is valid.
+  // If the session isn't valid, login and save state.
   const hasValidSession = await sessionIsValid(page);
   if (!hasValidSession) {
     await loginAndSaveStorageState(page);
