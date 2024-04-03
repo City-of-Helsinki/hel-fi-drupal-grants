@@ -2,6 +2,8 @@
 
 namespace Drupal\grants_attachments;
 
+use Drupal\grants_handler\ApplicationHandler;
+
 /**
  * Helper class for static helper functions.
  */
@@ -120,7 +122,7 @@ class AttachmentHandlerHelper {
   /**
    * Remove attachment from formdata.
    */
-  public static function removeAttachmentFromData($deletedAttachmentInfo, &$submittedFormData) {
+  public static function removeAttachmentFromData($deletedAttachmentInfo, &$submittedFormData): void {
 
     // Remove attachment from submitted data.
     $attachmentFieldKeys = ['muu_liite', 'attachments'];
