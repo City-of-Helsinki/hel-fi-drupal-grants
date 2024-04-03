@@ -4,7 +4,6 @@ import {existsSync, readFileSync} from 'fs';
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON";
 type Mode = "new" | "existing";
-
 const AUTH_FILE_PATH = '.auth/user.json';
 
 /**
@@ -58,10 +57,9 @@ const selectRegisteredCommunityRole = async (page: Page) => {
 const selectUnregisteredCommunityRole = async (page: Page, mode: Mode) => {
   if (mode === 'new') {
     await page.locator('#edit-unregistered-community-selection').selectOption('new');
-    await page.locator('#edit-submit--2').click();
   }
   if (mode === 'existing') {
-    await page.locator('#edit-unregistered-community-selection').selectOption({ index: 2 });
+    await page.locator('#edit-unregistered-community-selection').selectOption({index: 2});
   }
   await page.locator('[name="unregistered_community"]').click();
 }
@@ -75,10 +73,14 @@ const selectPrivatePersonRole = async (page: Page) => {
   await page.locator('[name="private_person"]').click();
 }
 
+/**
+ * The login function.
+ *
+ * @param page
+ * @param SSN
+ */
 const login = async (page: Page, SSN?: string) => {
-
-  logger('LOGIN');
-
+  logger('Logging in...');
   await page.goto('/fi/user/login');
   await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
   await page.locator("#fakevetuma2").click()
@@ -89,63 +91,103 @@ const login = async (page: Page, SSN?: string) => {
   await page.waitForSelector('text="Helsingin kaupunki"');
 }
 
-
+/**
+ * The loginAndSaveStorageState function.
+ *
+ * @param page
+ */
 const loginAndSaveStorageState = async (page: Page) => {
   await login(page);
   await page.context().storageState({path: AUTH_FILE_PATH});
 }
 
 /**
- * Checks the existence and validity of stored session cookie.
+ * The authFileExists function.
+ */
+const authFileExists = (): boolean => {
+  logger('Locating auth file...')
+  const authFileExists = existsSync(AUTH_FILE_PATH);
+
+  if (!authFileExists) {
+    logger('Auth file does not exists.');
+    return false;
+  }
+
+  logger('Auth file exists.');
+  return true;
+}
+
+/**
+ * The getSessionCookie function.
+ */
+const getSessionCookie = (): boolean | any => {
+  logger('Getting session cookie...')
+  const storageState = JSON.parse(readFileSync(AUTH_FILE_PATH, 'utf8'));
+  const sessionCookie = storageState.cookies.find((c: { name: string; }) => c.name.startsWith('SSESS'));
+
+  if (!sessionCookie) {
+    logger('Session cookie not found.');
+    return false;
+  }
+
+  logger('Session cookie found.');
+  return sessionCookie;
+}
+
+/**
+ * The sessionIsValid function.
  *
+ * @param page
+ */
+const sessionIsValid = async (page: Page): Promise<boolean> => {
+  logger('Visit user page to check session validity...');
+  await page.goto('/fi/user');
+  const actualUrl = page.url();
+
+  if (!actualUrl.includes('/asiointirooli-valtuutus') &&
+      !actualUrl.includes('/oma-asiointi/hakuprofiili')) {
+    logger('Session is not valid.');
+    return false;
+  }
+
+  logger('Session is valid.');
+  return true;
+}
+
+/**
+ * The checkLoginStateAndLogin function.
  *
  * @param page
  */
 const checkLoginStateAndLogin = async (page: Page) => {
   logger('Authenticate...')
-  const authFileExists = existsSync(AUTH_FILE_PATH);
 
-  // If no auth file saved, login and sate state.
-  if (!authFileExists) {
-    logger('No session data saved, go login');
+  // If no auth file exists, login and save state.
+  if (!authFileExists()) {
     await loginAndSaveStorageState(page);
     return;
   }
 
-  // Try to read storage from auth file
-  const storageState = JSON.parse(readFileSync(AUTH_FILE_PATH, 'utf8'));
-  const sessionCookie = storageState.cookies.find((c: {
-    name: string;
-  }) => c.name.startsWith('SSESS'));
-
-  // If session cookie exists, add it to context.
-  if (sessionCookie) {
-    logger('Cookie found, add to context');
-    await page.context().addCookies([sessionCookie]);
-  } else {
-    logger('Session cookie not found, do login');
+  // If no session cookie exists, login and save state.
+  const sessionCookie = getSessionCookie();
+  if (!sessionCookie) {
     await loginAndSaveStorageState(page);
     return;
   }
 
-  // Check session by visiting user page
-  logger('Visit user page to check session validity');
-  await page.goto('/fi/user');
-  const actualUrl = page.url();
+  // Add the found cookie to page context.
+  logger('Adding session cookie to context.');
+  await page.context().addCookies([sessionCookie]);
 
-  // If user is redirected to either of following urls
-  if (actualUrl.includes('/asiointirooli-valtuutus') || actualUrl.includes('/oma-asiointi/hakuprofiili')) {
-    // We know we have valid session, no need to anything else.
-    logger('User session valid!');
-  } else {
-    // If we get any other page, probably login page, do login.
-    logger('Session cookie invalid, do login');
+  // Make sure the session is valid.
+  const hasValidSession = await sessionIsValid(page);
+  if (!hasValidSession) {
     await loginAndSaveStorageState(page);
+    return;
   }
-
 }
-
 
 export {
   selectRole,
+  checkLoginStateAndLogin
 }
