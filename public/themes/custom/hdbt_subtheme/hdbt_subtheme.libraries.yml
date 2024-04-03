@@ -12,6 +12,8 @@ global-scripting:
     dist/js/common.min.js: {}
   dependencies:
     - core/drupal
+    - core/jquery
+    - core/jquery.once
 
 matomo:
   version: 1.x

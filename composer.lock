@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3fe44cccb8297e44bfe566dc7704a224",
+    "content-hash": "783df2fe1bb56534750c634537f71312",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -9445,17 +9445,11 @@
         },
         {
             "name": "drupal/webform",
-            "version": "6.2.2",
+            "version": "dev-6.2.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/webform.git",
-                "reference": "6.2.2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/webform-6.2.2.zip",
-                "reference": "6.2.2",
-                "shasum": "cfd766802232dfdf39edd5a1acf7c738d14dc6eb"
+                "reference": "1d7345eab77f2b16760df9aaf710bdd5b06fe0a6"
             },
             "require": {
                 "drupal/core": "^9.4 || ^10",
@@ -9503,12 +9497,15 @@
             },
             "type": "drupal-module",
             "extra": {
+                "branch-alias": {
+                    "dev-6.2.x": "6.2.x-dev"
+                },
                 "drupal": {
-                    "version": "6.2.2",
-                    "datestamp": "1701948363",
+                    "version": "6.2.2+6-dev",
+                    "datestamp": "1707749285",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
                     }
                 },
                 "drush": {
@@ -22800,6 +22797,7 @@
         "drupal/multivalue_form_element": 10,
         "drupal/potx": 15,
         "drupal/session_limit": 10,
+        "drupal/webform": 20,
         "drupal/webform_views": 10
     },
     "prefer-stable": true,

@@ -2,6 +2,8 @@
   Drupal.behaviors.GrantsHandlerBehavior = {
     attach: function (context, settings) {
 
+
+
       const formData = drupalSettings.grants_handler.formData
       const submissionId = drupalSettings.grants_handler.submissionId
       const lockedStatus = drupalSettings.grants_handler.formLocked;
@@ -51,10 +53,12 @@
 
         const selectedAddress = drupalSettings.grants_handler.grantsProfile.addresses.filter(address => address.address_id === selectedDelta)[0];
 
-        $("[data-drupal-selector='edit-community-address-community-street']").val(selectedAddress.street)
-        $("[data-drupal-selector='edit-community-address-community-post-code']").val(selectedAddress.postCode)
-        $("[data-drupal-selector='edit-community-address-community-city']").val(selectedAddress.city)
-        $("[data-drupal-selector='edit-community-address-community-country']").val(selectedAddress.country)
+        if (selectedAddress) {
+          $("[data-drupal-selector='edit-community-address-community-street']").val(selectedAddress.street);
+          $("[data-drupal-selector='edit-community-address-community-post-code']").val(selectedAddress.postCode)
+          $("[data-drupal-selector='edit-community-address-community-city']").val(selectedAddress.city)
+          $("[data-drupal-selector='edit-community-address-community-country']").val(selectedAddress.country)
+        }
       });
 
       $(".community-officials-select").change(function () {
@@ -114,8 +118,8 @@
         }
       }
 
-      $('[data-webform-composite-attachment-inOtherFile]').once('disable-state-handling').on('change', checkBoxStateFn);
-      $('[data-webform-composite-attachment-isDeliveredLater]').once('disable-state-handling').on('change', checkBoxStateFn);
+      // $('[data-webform-composite-attachment-inOtherFile]').once('disable-state-handling').on('change', checkBoxStateFn);
+      // $('[data-webform-composite-attachment-isDeliveredLater]').once('disable-state-handling').on('change', checkBoxStateFn);
       $('.js-form-type-managed-file ').once('filefield-state-handling').each(function () {
 
         const parent = $(this).parents('.fieldset-wrapper').first();
@@ -160,4 +164,4 @@
       });
     }
   };
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal, drupalSettings, once);

@@ -3,7 +3,7 @@
  * JavaScript behaviors for element help text (tooltip).
  */
 
-(function ($, Drupal) {
+(function ($, Drupal, once) {
   // @see https://atomiks.github.io/tippyjs/v5/all-props/
   // @see https://atomiks.github.io/tippyjs/v6/all-props/
   Drupal.webform = Drupal.webform || {};
@@ -28,7 +28,7 @@
       // Converted from ES6 to ES5.
       // @see https://babeljs.io/repl/
       const hideOnEsc = {
-        name: "hideOnEsc",
+        name: 'hideOnEsc',
         defaultValue: true,
         fn: function fn(_ref) {
           const { hide } = _ref;
@@ -51,19 +51,19 @@
       };
 
       $(context)
-        .find(".js-webform-element-help")
-        .once("webform-element-help")
+        .find('.js-webform-element-help')
+        .once('webform-element-help')
         .each(function () {
           const $link = $(this);
 
-          $link.on("click", function (event) {
+          $link.on('click', function (event) {
             // Prevent click from toggling <label>s wrapped around help.
             event.preventDefault();
           });
 
           const options = $.extend(
             {
-              content: $link.attr("data-webform-help"),
+              content: $link.attr('data-webform-help'),
               delay: 100,
               allowHTML: true,
               interactive: false,
@@ -76,4 +76,4 @@
         });
     },
   };
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);
