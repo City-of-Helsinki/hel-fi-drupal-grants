@@ -111,6 +111,7 @@ const login = async (page: Page, SSN?: string) => {
   await page.locator('#tunnistaudu').click();
   await page.locator('#continue-button').click();
   await page.waitForSelector('text="Helsingin kaupunki"');
+  logger('User logged in.')
 }
 
 /**
@@ -124,8 +125,11 @@ const login = async (page: Page, SSN?: string) => {
  *   Playwright page object.
  */
 const loginAndSaveStorageState = async (page: Page) => {
+  logger('Logging in and creating auth file...');
   await login(page);
+  logger('Creating auth file...');
   await page.context().storageState({path: AUTH_FILE_PATH});
+  logger('Auth file created.')
 }
 
 /**
