@@ -16,7 +16,7 @@ const profileDataBase: FormData = {
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-foundingyearwrapper-foundingyear',
+            value: 'edit-basicdetailswrapper-foundingyear',
           },
           value: '2016',
           viewPageSelector: '.grants-profile',
@@ -26,7 +26,7 @@ const profileDataBase: FormData = {
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-companynameshortwrapper-companynameshort',
+            value: 'edit-basicdetailswrapper-companynameshort',
           },
           value: faker.company.buzzAdjective(),
           viewPageSelector: '.grants-profile',
@@ -36,7 +36,7 @@ const profileDataBase: FormData = {
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-companyhomepagewrapper-companyhomepage',
+            value: 'edit-basicdetailswrapper-companyhomepage',
           },
           value: faker.internet.domainName(),
           viewPageSelector: '.grants-profile',
@@ -46,7 +46,7 @@ const profileDataBase: FormData = {
           selector: {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
-            value: 'edit-businesspurposewrapper-businesspurpose',
+            value: 'edit-basicdetailswrapper-businesspurpose',
           },
           value: faker.word.words(20),
           viewPageSelector: '.grants-profile',

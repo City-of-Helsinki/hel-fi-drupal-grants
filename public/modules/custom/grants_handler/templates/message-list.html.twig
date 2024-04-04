@@ -1,7 +1,9 @@
-<ul class="webform-submission-messages__messages-list">
- {% for item in items %}
-        <li data-message-id="{{item["#message"].messageId}}" class="webform-submission-messages__message">
-          {{ item }}
-        </li>
-  {% endfor %}
-</ul>
+{% if items %}
+  <ul class="webform-submission-messages__messages-list">
+    {% for item in items %}
+      <li data-message-id="{{item["#message"].messageId}}" class="webform-submission-messages__message">
+        {{ item }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

@@ -192,15 +192,19 @@ elements: |
   members_applicant_person_global:
     '#title': 'Personmedlemmar sammanlagt'
     '#help': 'Hur m&aring;nga personmedlemmar som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande?'
+    '#pattern_error': 'Ange ett årtal'
   members_applicant_person_local:
     '#title': 'Personmedlemmar från Helsingfors sammanlagt'
     '#help': 'Hur m&aring;nga personmedlemmar fr&aring;n Helsingfors som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande?'
+    '#pattern_error': 'Ange ett årtal'
   members_applicant_community_global:
     '#title': Samfundsmedlemmar
     '#help': 'Hur m&aring;nga samfundsmedlemmar som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande? Samfundsmedlemmar &auml;r andra &auml;n personmedlemmar, s&aring;som f&ouml;reningar, stiftelser, f&ouml;retag eller kommuner.'
+    '#pattern_error': 'Ange ett årtal'
   members_applicant_community_local:
     '#title': 'Samfundsmedlemmar från Helsingfors sammanlagt'
     '#help': 'Hur m&aring;nga samfundsmedlemmar fr&aring;n Helsingfors som har betalat medlemsavgiften har samfundet f&ouml;r n&auml;rvarande? Samfundsmedlemmar &auml;r andra &auml;n personmedlemmar, s&aring;som f&ouml;reningar, stiftelser, f&ouml;retag eller kommuner.'
+    '#pattern_error': 'Ange ett årtal'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
