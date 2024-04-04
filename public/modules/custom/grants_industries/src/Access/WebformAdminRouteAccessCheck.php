@@ -7,6 +7,7 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Routing\Access\AccessInterface;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_industries\Services\WebformAccessCheckService;
 
 /**
@@ -51,7 +52,7 @@ class WebformAdminRouteAccessCheck implements AccessInterface {
       return ($this->webformAccessCheckService->checkAdminRouteAccess()) ? AccessResult::allowed() : AccessResult::forbidden();
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException $exception) {
-      watchdog_exception('grants_industries', $exception, $exception->getMessage());
+      Error::logException(\Drupal::logger('grants_industries'), $exception);
       return AccessResult::forbidden();
     }
   }

@@ -13,7 +13,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\TypedData\TypedDataManager;
-use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_attachments\AttachmentRemover;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\MessageService;
@@ -447,8 +447,8 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
       $response = $attachment['response'];
       $file = $attachment['file'];
 
-      $integrationId = AttachmentHandler::getIntegrationIdFromFileHref($response['href']);
-      $integrationId = AttachmentHandler::addEnvToIntegrationId($integrationId);
+      $integrationId = AttachmentHandlerHelper::getIntegrationIdFromFileHref($response['href']);
+      $integrationId = AttachmentHandlerHelper::addEnvToIntegrationId($integrationId);
 
       $data['attachments'] = [
         (object) [

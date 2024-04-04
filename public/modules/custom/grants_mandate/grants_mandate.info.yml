@@ -2,10 +2,10 @@ name: Grants mandates
 type: module
 description: Get authorisation mandates from valtuutukset.suomi.fi
 package: Helfi
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 dependencies:
   - helfi_tunnistamo
+  - grants_audit_log
 
 'interface translation project': grants_mandate
 'interface translation server pattern': modules/custom/grants_mandate/translations/%language.po

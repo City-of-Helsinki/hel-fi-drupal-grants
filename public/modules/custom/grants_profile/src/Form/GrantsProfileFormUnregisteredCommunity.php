@@ -117,7 +117,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     ];
     $form['companyNameWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Name of the community or group', [], $this->tOpts),
+      '#title' => $this->t('Basic details', [], $this->tOpts),
+      '#title_tag' => 'h4',
     ];
     $form['companyNameWrapper']['companyName'] = [
       '#type' => 'textfield',

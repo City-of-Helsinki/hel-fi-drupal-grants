@@ -9,6 +9,7 @@ dependencies:
     - node.type.address
   module:
     - eu_cookie_compliance
+    - file
     - external_entities
     - filter
     - helfi_api_base
@@ -25,11 +26,9 @@ is_admin: false
 permissions:
   - 'access content'
   - 'delete own address content'
+  - 'delete own files'
   - 'display eu cookie compliance popup'
   - 'edit own address content'
-  - 'entity print access bundle webform'
-  - 'entity print access bundle yleisavustushakemus'
-  - 'entity print access type webform_submission'
   - 'use text format full_html'
   - 'use text format minimal'
   - 'use text format webform_default'

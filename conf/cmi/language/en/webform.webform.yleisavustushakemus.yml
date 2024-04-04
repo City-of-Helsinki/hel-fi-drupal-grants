@@ -187,15 +187,19 @@ elements: |
   members_applicant_person_global:
     '#title': 'Total number of individual members'
     '#help': 'How many individual members does the community currently have who have paid the membership fee?'
+    '#pattern_error': 'Only numbers'
   members_applicant_person_local:
     '#title': 'Total number of individual members in Helsinki'
     '#help': 'How many individual members does the community currently have in Helsinki who have paid the membership fee?'
+    '#pattern_error': 'Only numbers'
   members_applicant_community_global:
     '#title': 'Community members'
     '#help': 'How many community members does the community currently have who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.'
+    '#pattern_error': 'Only numbers'
   members_applicant_community_local:
     '#title': 'Total number of community members in Helsinki'
     '#help': 'How many community members does the community currently have in Helsinki who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.'
+    '#pattern_error': 'Only numbers'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:

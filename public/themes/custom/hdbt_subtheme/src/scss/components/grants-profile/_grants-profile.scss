@@ -72,6 +72,10 @@ $breakpoint-xl: 1248px;
     padding-top: var(--spacing-l);
     padding-bottom: var(--spacing-l);
 
+    .hds-notification {
+      margin-bottom: var(--spacing-xl);
+    }
+
     fieldset.form-wrapper {
       border: 0;
       background-color: var(--color-silver-light);
