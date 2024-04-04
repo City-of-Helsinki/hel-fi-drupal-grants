@@ -1,5 +1,0 @@
-name: grants_healtz
-type: module
-description: Offer health &amp; readiness check endpoints.
-package: Helfi
-core_version_requirement: ^9 || ^10
