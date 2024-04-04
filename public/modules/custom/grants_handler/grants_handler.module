@@ -14,9 +14,10 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
-use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Event\UserLogoutEvent;
 use Drupal\grants_handler\EventsService;
@@ -28,7 +29,6 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionStorageInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 /**
  * Implements hook_theme().
@@ -880,6 +880,7 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     ->condition('field_form', $variables['webform']->id())
     ->condition('field_show_on_all_forms', TRUE);
   $query->condition($orGroup);
+  $query->accessCheck(FALSE);
   $results = $query->execute();
 
   // Load blocks.
@@ -909,7 +910,7 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
       '#class' => 'notification-margin-bottom',
       '#aria_level' => '3',
     ];
-    $terms_info_rendered = Markup::create(render($terms_info));
+    $terms_info_rendered = Markup::create(\Drupal::service('renderer')->render($terms_info));
     // Add html for checkbox.
     $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div>
       ' . $terms_info_rendered . '
@@ -1299,7 +1300,8 @@ function grants_handler_preprocess_webform_submission_attachment_list(&$variable
   foreach ($attachmentsData as $att) {
     if (isset($att['fileName'])) {
       try {
-        $fileUploadTime = AttachmentHandler::getAttachmentUploadTime($attachmentEventsHandler['events'], $att['fileName']);
+        $events = $attachmentEventsHandler['events'];
+        $fileUploadTime = AttachmentHandlerHelper::getAttachmentUploadTime($events, $att['fileName']);
       }
       catch (Exception $e) {
         $fileUploadTime = '';

@@ -128,7 +128,7 @@ you cannot do any modifications while the form is locked for them.',
       '#title' => 'isNewProfile',
       '#value' => $isNewGrantsProfile,
     ];
-    $form['foundingYearWrapper'] = [
+    $form['basicDetailsWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Basic details', [], $this->tOpts),
       '#title_tag' => 'h4',
@@ -251,10 +251,10 @@ later when completing the grant application.',
 
     parent::profileContentFromWrappers($values, $grantsProfileContent);
 
-    $grantsProfileContent["foundingYear"] = $values["foundingYearWrapper"]["foundingYear"];
-    $grantsProfileContent["companyNameShort"] = $values["companyNameShortWrapper"]["companyNameShort"];
-    $grantsProfileContent["companyHomePage"] = $values["companyHomePageWrapper"]["companyHomePage"];
-    $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
+    $grantsProfileContent["foundingYear"] = $values["basicDetailsWrapper"]["foundingYear"];
+    $grantsProfileContent["companyNameShort"] = $values["basicDetailsWrapper"]["companyNameShort"];
+    $grantsProfileContent["companyHomePage"] = $values["basicDetailsWrapper"]["companyHomePage"];
+    $grantsProfileContent["businessPurpose"] = $values["basicDetailsWrapper"]["businessPurpose"];
   }
 
   /**

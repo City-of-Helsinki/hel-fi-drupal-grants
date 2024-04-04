@@ -3,7 +3,6 @@
 namespace Drupal\grants_mandate;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelInterface;
@@ -14,6 +13,7 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * GrantsMandateAuthorize service.
@@ -65,7 +65,7 @@ class GrantsMandateService {
   /**
    * Request stack for session access.
    *
-   * @var \Drupal\Core\Http\RequestStack
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected RequestStack $requestStack;
 
@@ -92,7 +92,7 @@ class GrantsMandateService {
    *   Http client.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   Logger.
-   * @param \Drupal\Core\Http\RequestStack $requestStack
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Request.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Access to grants profile data.

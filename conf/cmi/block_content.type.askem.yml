@@ -1,8 +1,0 @@
-uuid: fa0079d5-637c-45ac-b4a9-ce8e8b4aeacb
-langcode: en
-status: true
-dependencies: {  }
-id: askem
-label: Askem
-revision: 0
-description: 'Askem block'
