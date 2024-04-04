@@ -1,87 +1,114 @@
-import {Page, expect} from '@playwright/test';
+import {Page} from '@playwright/test';
 import {logger} from "./logger";
 import {existsSync, readFileSync} from 'fs';
 
-type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON"
-
+type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON";
+type Mode = "new" | "existing";
 const AUTH_FILE_PATH = '.auth/user.json';
 
 /**
- * Select role for user session to apply grants with.
+ * Select selectRole function.
+ *
+ * This function logs in a user by calling checkLoginStateAndLogin().
+ * After this, the passed in roll is selected by visiting "/asiointirooli-valtuutus".
+ * Role selection is skipped if the role is already selected (class found in body).
  *
  * @param page
+ *   Playwright page object.
  * @param role
+ *   A string indicating which role needs to be selected.
  * @param mode
+ *   A string indicating if we're creating a new unregistered community
+ *   or selecting an existing one.
  */
-const selectRole = async (page: Page, role: Role, mode: string = 'existing') => {
-
+const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
   await checkLoginStateAndLogin(page);
-
   await page.goto("/fi/asiointirooli-valtuutus");
 
-  const loggedInAsRegisteredCommunity = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-registered_community"));
+  const roleIsLoggedIn = await page.locator("body")
+    .evaluate((el, role) => el.classList.contains(`grants-role-${role.toLowerCase()}`), role);
 
-  const loggedAsPrivatePerson = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-private_person"));
-
-  const loggedInAsUnregisteredCommunity = await page.locator("body")
-    .evaluate(el => el.classList.contains("grants-role-unregistered_community"));
-
-  if (role === 'REGISTERED_COMMUNITY' && !loggedInAsRegisteredCommunity) {
-    logger('Get mandate for REGISTERED_COMMUNITY')
-    await selectRegisteredCommunityRole(page);
-  } else if(role === 'REGISTERED_COMMUNITY') {
-    logger('REGISTERED_COMMUNITY, mandate exists');
-
+  if (roleIsLoggedIn) {
+    logger(`${role}, mandate exists.`);
+    return;
   }
 
-  if (role === 'UNREGISTERED_COMMUNITY' && !loggedInAsUnregisteredCommunity) {
-    logger('Get mandate for UNREGISTERED_COMMUNITY')
-    if (mode === 'existing') {
-      await selectUnregisteredCommunityRole(page);
-    } else if (mode === 'new') {
-      await page.goto('/fi/asiointirooli-valtuutus');
-      await page.locator('#edit-unregistered-community-selection').selectOption('new');
-      await page.locator('#edit-submit--2').click();
-      // await page.getByRole('button', {name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä'}).click();
-    }
-  } else if(role === 'UNREGISTERED_COMMUNITY') {
-    logger('UNREGISTERED_COMMUNITY, mandate exists');
+  logger(`Get mandate for ${role}...`);
+  switch (role) {
+    case "REGISTERED_COMMUNITY":
+      await selectRegisteredCommunityRole(page);
+      break;
+    case "UNREGISTERED_COMMUNITY":
+      await selectUnregisteredCommunityRole(page, mode);
+      break;
+    case "PRIVATE_PERSON":
+      await selectPrivatePersonRole(page);
+      break;
   }
-
-
-  if (role === 'PRIVATE_PERSON' && !loggedAsPrivatePerson) {
-    logger('Get mandate for PRIVATE_PERSON');
-    await selectPrivatePersonRole(page);
-  } else if(role === 'PRIVATE_PERSON') {
-    logger('PRIVATE_PERSON, mandate exists');
-  }
-
 }
 
+/**
+ * The selectRegisteredCommunityRole function.
+ *
+ * This function selects the unregistered community role.
+ *
+ * @param page
+ *   Playwright page object.
+ */
 const selectRegisteredCommunityRole = async (page: Page) => {
-  const registeredCommunityButton = page.locator('[name="registered_community"]')
-  await expect(registeredCommunityButton).toBeVisible()
-  await registeredCommunityButton.click()
-  const firstCompanyRow = page.locator('input[type="radio"]').first()
-  await firstCompanyRow.check({force: true})
-  await page.locator('[data-test="perform-confirm"]').click()
+  await page.locator('[name="registered_community"]').click();
+  await page.locator('input[type="radio"]').first().check({ force: true });
+  await page.locator('[data-test="perform-confirm"]').click();
+  logger('Selected registered community role.');
 }
 
-const selectUnregisteredCommunityRole = async (page: Page) => {
-  await page.locator('#edit-unregistered-community-selection').selectOption({index: 2});
-  await page.locator('[name="unregistered_community"]').click()
+/**
+ * The selectUnregisteredCommunityRole function.
+ *
+ * This function selects the unregistered community role.
+ *
+ * @param mode
+ *   A string indicating if we're creating a new unregistered community
+ *   or selecting an existing one.
+ * @param page
+ *   Playwright page object.
+ */
+const selectUnregisteredCommunityRole = async (page: Page, mode: Mode) => {
+  if (mode === 'new') {
+    await page.locator('#edit-unregistered-community-selection').selectOption('new');
+  }
+  if (mode === 'existing') {
+    await page.locator('#edit-unregistered-community-selection').selectOption({index: 2});
+  }
+  await page.locator('[name="unregistered_community"]').click();
+  logger('Selected unregistered community role.');
 }
 
+/**
+ * The selectPrivatePersonRole function.
+ *
+ * This function selects the private person role.
+ *
+ * @param page
+ *   Playwright page object.
+ */
 const selectPrivatePersonRole = async (page: Page) => {
-  await page.locator('[name="private_person"]').click()
+  await page.locator('[name="private_person"]').click();
+  logger('Selected private person role.');
 }
 
+/**
+ * The login function.
+ *
+ * This function logs in a user with the provided SSN.
+ *
+ * @param page
+ *   Playwright page object.
+ * @param SSN
+ *   A users SSN (social security number).
+ */
 const login = async (page: Page, SSN?: string) => {
-
-  logger('LOGIN');
-
+  logger('Logging in...');
   await page.goto('/fi/user/login');
   await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
   await page.locator("#fakevetuma2").click()
@@ -90,72 +117,146 @@ const login = async (page: Page, SSN?: string) => {
   await page.locator('#tunnistaudu').click();
   await page.locator('#continue-button').click();
   await page.waitForSelector('text="Helsingin kaupunki"');
-}
-
-
-const loginAndSaveStorageState = async (page: Page) => {
-  await login(page);
-  await page.context().storageState({path: AUTH_FILE_PATH});
+  logger('User logged in.')
 }
 
 /**
- * Checks the existence and validity of stored session cookie.
+ * The loginAndSaveStorageState function.
  *
+ * This function calls login() and stores the session
+ * data in the auth file. This data can be used to
+ * validate a session by extracting a session cookie.
  *
  * @param page
+ *   Playwright page object.
  */
-const checkLoginStateAndLogin = async (page: Page) => {
-  logger('Authenticate...')
+const loginAndSaveStorageState = async (page: Page) => {
+  logger('Logging in and creating auth file...');
+  await login(page);
+  logger('Creating auth file...');
+  await page.context().storageState({path: AUTH_FILE_PATH});
+  logger('Auth file created.')
+}
+
+/**
+ * The authFileExists function.
+ *
+ * This function attempts to locate an auth file.
+ *
+ * @return bool
+ *   False if the auth file does not exist, true otherwise.
+ */
+const authFileExists = (): boolean => {
+  logger('Locating auth file...')
   const authFileExists = existsSync(AUTH_FILE_PATH);
 
-  // If no auth file saved, login and sate state.
   if (!authFileExists) {
-    logger('No session data saved, go login');
-    await loginAndSaveStorageState(page);
-    return;
+    logger('Auth file does not exists.');
+    return false;
   }
 
-  // Try to read storage from auth file
+  logger('Auth file exists.');
+  return true;
+}
+
+/**
+ * The getSessionCookie function.
+ *
+ * This function attempts to locate a session cookie
+ * inside the auth file. If the cookie is found, it is
+ * returned.
+ *
+ * @return bool|any
+ *   False if a session cookie is not found, or the session cookie.
+ */
+const getSessionCookie = (): boolean | any => {
+  logger('Getting session cookie...');
   const storageState = JSON.parse(readFileSync(AUTH_FILE_PATH, 'utf8'));
-  const sessionCookie = storageState.cookies.find((c: {
-    name: string;
-  }) => c.name.startsWith('SSESS'));
+  const sessionCookie = storageState.cookies.find((c: { name: string; }) => c.name.startsWith('SSESS'));
 
-  // If session cookie exists, add it to context.
-  if (sessionCookie) {
-    logger('Cookie found, add to context');
-    await page.context().addCookies([sessionCookie]);
-  } else {
-    logger('Session cookie not found, do login');
-    await loginAndSaveStorageState(page);
-    return;
+  if (!sessionCookie) {
+    logger('Session cookie not found.');
+    return false;
   }
 
-  // Check session by visiting user page
-  logger('Visit user page to check session validity');
+  logger('Session cookie found.');
+  return sessionCookie;
+}
+
+/**
+ * The sessionIsValid function.
+ *
+ * This function makes sure a session is valid
+ * by visiting "/fi/user" and making sure that the user
+ * is redirected to either:
+ *
+ * A) /asiointirooli-valtuutus
+ * B) /oma-asiointi/hakuprofiili
+ *
+ * @param page
+ *   Playwright page object.
+ *
+ * @return boolean
+ *   A boolean indicating if the session is valid or not.
+ */
+const sessionIsValid = async (page: Page): Promise<boolean> => {
+  logger('Visit user page to check session validity...');
   await page.goto('/fi/user');
   const actualUrl = page.url();
 
-  // If user is redirected to either of following urls
-  if (actualUrl.includes('/asiointirooli-valtuutus') || actualUrl.includes('/oma-asiointi/hakuprofiili')) {
-    // We know we have valid session, no need to anything else.
-    logger('User session valid!');
-  } else {
-    // If we get any other page, probably login page, do login.
-    logger('Session cookie invalid, do login');
-    await loginAndSaveStorageState(page);
+  if (!actualUrl.includes('/asiointirooli-valtuutus') &&
+      !actualUrl.includes('/oma-asiointi/hakuprofiili')) {
+    logger('Session is not valid.');
+    return false;
   }
 
+  logger('Session is valid.');
+  return true;
 }
 
+/**
+ * The checkLoginStateAndLogin function.
+ *
+ * This function performs the authentication flow by:
+ * 1. Making sure we have an auth file.
+ * 2. Making sure the auth file contains a valid session cookie.
+ * 3. Making sure the session cookie is valid.
+ *
+ * If any of the steps fail, the user is logged in again,
+ * and the state is saved.
+ *
+ * @param page
+ *   Playwright page object.
+ */
+const checkLoginStateAndLogin = async (page: Page) => {
+  logger('Authenticate...')
+
+  // If no auth file exists, login and save state.
+  if (!authFileExists()) {
+    await loginAndSaveStorageState(page);
+    return;
+  }
+
+  // If no session cookie exists, login and save state.
+  const sessionCookie = getSessionCookie();
+  if (!sessionCookie) {
+    await loginAndSaveStorageState(page);
+    return;
+  }
+
+  // Add the found cookie to page context.
+  logger('Adding session cookie to context.');
+  await page.context().addCookies([sessionCookie]);
+
+  // If the session isn't valid, login and save state.
+  const hasValidSession = await sessionIsValid(page);
+  if (!hasValidSession) {
+    await loginAndSaveStorageState(page);
+    return;
+  }
+}
 
 export {
-  checkLoginStateAndLogin,
-  login,
-  loginAndSaveStorageState,
   selectRole,
-  selectUnregisteredCommunityRole,
-  selectRegisteredCommunityRole,
-  selectPrivatePersonRole,
-  AUTH_FILE_PATH
+  checkLoginStateAndLogin
 }

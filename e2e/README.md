@@ -77,7 +77,7 @@ TEST_USER_UUID="{TEST USER UUID}"
 
 ### Running E2E tests in Docker (the recommended way)
 
-To run all tests (this run all tests defined under the `projects` key in `playwright.config.ts`):
+To run all tests (this runs all tests defined under the `projects` key in `playwright.config.ts`):
 ```
 make test-pw
 ```
@@ -115,7 +115,7 @@ make test-pw-profiles
 
 ### Running tests on your local machine (in the /e2e directory)
 
-To run all tests (this run all tests defined under the `projects` key in `playwright.config.ts`):
+To run all tests (this runs all tests defined under the `projects` key in `playwright.config.ts`):
 ```
 npx playwright test
 ```
