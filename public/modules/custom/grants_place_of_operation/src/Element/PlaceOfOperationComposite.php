@@ -216,10 +216,10 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
     $elementValue = $element['#value'];
 
-    if (isset($element["free"]) && $elementValue["free"] === "false") {
+    if (isset($element["free"]) && ($elementValue["free"] === "false" || $elementValue["free"] === false)) {
       $element["free"]["#default_value"] = 0;
     }
-    if (isset($element["free"]) && $elementValue["free"] === "true") {
+    if (isset($element["free"]) && ($elementValue["free"] === "true" || $elementValue["free"] === true)) {
       $element["free"]["#default_value"] = 1;
     }
 
