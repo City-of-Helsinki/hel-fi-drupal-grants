@@ -53,7 +53,7 @@ class GrantsLogger extends DbLog {
   /**
    * {@inheritdoc}
    */
-  public function log($level, $message, array $context = []) {
+  public function log($level, $message, array $context = []): void {
 
     if ($this->helfiHelsinkiProfiiliUserdata->isAuthenticatedExternally()) {
       $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();

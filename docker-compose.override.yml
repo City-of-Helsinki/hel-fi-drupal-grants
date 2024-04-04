@@ -9,7 +9,7 @@ services:
     environment:
       - DISPLAY=${DISPLAY}
     extra_hosts:
-      - "$(DRUPAL_HOSTNAME):127.0.0.1"
+      - "$$(DRUPAL_HOSTNAME):127.0.0.1"
     working_dir: /app/e2e
     volumes:
       - .:/app
