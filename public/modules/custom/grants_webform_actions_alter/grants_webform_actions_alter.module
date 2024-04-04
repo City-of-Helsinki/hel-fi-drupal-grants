@@ -39,6 +39,7 @@ function grants_webform_actions_alter_preprocess_webform_actions(array &$variabl
     '#type' => 'link',
     '#title' => $deleteDraftLinkText,
     '#url' => $deleteDraftUrl,
+    '#id' => 'webform-button--delete-draft',
     '#attributes' => ['class' => ['webform-button--delete-draft', 'hds-button', 'hds-button--supplementary']],
   ];
   $lockService = \Drupal::service('grants_handler.form_lock_service');
