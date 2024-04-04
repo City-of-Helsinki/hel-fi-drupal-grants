@@ -864,6 +864,7 @@ class GrantsHandler extends WebformHandlerBase {
    */
   public function alterFormNavigation(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
     // Log the current page.
+    // This is null on initial form load but navigationhelper handles that.
     $current_page = $webform_submission->getCurrentPage();
     $webform = $webform_submission->getWebform();
     // Actions to perform if there are pages.

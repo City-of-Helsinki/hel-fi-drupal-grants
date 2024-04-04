@@ -128,8 +128,12 @@ class GrantsHandlerNavigationHelper {
    */
   public function hasVisitedPage(WebformSubmissionInterface $webformSubmission, ?string $page): bool {
     // Get outta here if the submission hasn't been saved yet.
-    if (empty($webformSubmission->id()) || empty($page)) {
+    if (empty($webformSubmission->id())) {
       return FALSE;
+    }
+    // Set the page to the current page if it is empty.
+    if (empty($page)) {
+      $page = $this->getCurrentPage($webformSubmission);
     }
     $submissionLog = $this->getPageVisits($webformSubmission);
     $hasVisited = FALSE;
@@ -260,12 +264,12 @@ class GrantsHandlerNavigationHelper {
    *
    * @param \Drupal\webform\WebformSubmissionInterface $webformSubmission
    *   A webform submission entity.
-   * @param string $page
+   * @param ?string $page
    *   The page to log.
    *
    * @throws \Exception
    */
-  public function logPageVisit(WebformSubmissionInterface $webformSubmission, $page) {
+  public function logPageVisit(WebformSubmissionInterface $webformSubmission, ?string $page) {
 
     // Set the page to the current page if it is empty.
     if (empty($page)) {
@@ -458,7 +462,6 @@ class GrantsHandlerNavigationHelper {
         $paged_errors[$current_page][$element] = $error;
       }
     }
-
     return $paged_errors;
   }
 
