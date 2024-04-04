@@ -10,7 +10,8 @@ const AUTH_FILE_PATH = '.auth/user.json';
  * Select selectRole function.
  *
  * This function logs in a user by calling checkLoginStateAndLogin().
- * After this, the passed in roll is selected by visiting
+ * After this, the passed in roll is selected by visiting "/asiointirooli-valtuutus".
+ * Role selection is skipped if the role is already selected (class found in body).
  *
  * @param page
  *   Playwright page object.
@@ -24,7 +25,9 @@ const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
   await checkLoginStateAndLogin(page);
   await page.goto("/fi/asiointirooli-valtuutus");
 
-  const roleIsLoggedIn = await page.locator(`body.grants-role-${role.toLowerCase()}`).count() > 0;
+  const roleIsLoggedIn = await page.locator("body")
+    .evaluate((el, role) => el.classList.contains(`grants-role-${role.toLowerCase()}`), role);
+
   if (roleIsLoggedIn) {
     logger(`${role}, mandate exists.`);
     return;
