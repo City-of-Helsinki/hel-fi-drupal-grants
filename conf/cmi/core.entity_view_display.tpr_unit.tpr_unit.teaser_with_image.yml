@@ -14,6 +14,8 @@ dependencies:
     - helfi_tpr
     - imagecache_external
     - telephone
+_core:
+  default_config_hash: 7gCaVLldtjbDLtOqHqBK6K1NqvNzluQEbJG5bn945k4
 id: tpr_unit.tpr_unit.teaser_with_image
 targetEntityType: tpr_unit
 bundle: tpr_unit
@@ -71,6 +73,7 @@ hidden:
   created: true
   description: true
   email: true
+  enrich_description: true
   field_content: true
   field_lower_content: true
   field_metatags: true
