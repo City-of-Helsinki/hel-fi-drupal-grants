@@ -1,7 +1,7 @@
 (function ($, Drupal, drupalSettings, once) {
   Drupal.behaviors.GrantsHandlerBehavior = {
     attach: function (context, settings) {
-      
+
       $("#edit-bank-account-account-number-select").change(function () {
         // Get selected account from dropdown
         const selectedNumber = $(this).val();
@@ -87,16 +87,6 @@
       });
 
       $(".community-officials-select").trigger('change');
-      // Managed file #states handling is a bit wonky,
-      // so we need to manually handle checkbox disables in the
-      // composite element
-      const checkBoxStateFn = function () {
-        if (this.checked) {
-          setTimeout(function(){
-            $(this).prop('disabled', false);
-          },1000);
-        }
-      }
 
       $(once('disable-state-handling', '[data-webform-composite-attachment-inOtherFile]')).on('change', function() {
         const parent = $(this).parents('.fieldset-wrapper').first();
