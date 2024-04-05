@@ -178,7 +178,6 @@ elements: |
     '#title': Verksamhets&shy;beskrivning
   business_purpose:
     '#title': Verksamhets&shy;beskrivning
-    '#description': 'Verksamhetsbeskrivningen redigeras i dina uppgifter.'
     '#help': 'Informationen h&auml;mtas fr&aring;n avsnittet med personuppgifter'
     '#counter_maximum_message': '%d/500 tecken kvar'
   community_practices_business:
