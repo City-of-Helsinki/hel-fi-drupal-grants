@@ -59,7 +59,7 @@ const copyApplication = async (
   const originalApplicationId = thisStoreData.applicationId;
 
   // Copy the original form.
-  await makeFormCopy(originalApplicationId, COPIED_FORM_KEY, profileType, formId, page);
+  await makeApplicationCopy(originalApplicationId, COPIED_FORM_KEY, profileType, formId, page);
 
   // Get the new stored data containing the copied form.
   const newStoreData = getObjectFromEnv(profileType, formId);
