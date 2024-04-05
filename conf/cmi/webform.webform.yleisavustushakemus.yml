@@ -530,7 +530,7 @@ elements: |-
       business_purpose:
         '#type': textarea
         '#title': 'Toiminnan kuvaus'
-        '#help': 'Tieto haetaan omat tiedot -osiosta'
+        '#help': 'Jos haluat lis&auml;t&auml;, poistaa tai muuttaa toiminnan kuvausta tallenna hakemus luonnokseksi ja siirry yll&auml;pit&auml;m&auml;&auml;n toiminnan kuvausta omiin tietoihin.'
         '#maxlength': 500
         '#counter_type': character
         '#counter_maximum': 500

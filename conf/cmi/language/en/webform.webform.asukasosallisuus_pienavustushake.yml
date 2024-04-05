@@ -148,6 +148,7 @@ elements: |
     '#title': 'Description of activities'
     '#description': 'The description of activities is maintained in your data.'
     '#help': 'The information is retrieved from the personal information section'
+    '#counter_maximum_message': '%d/500 characters remaining'
   community_practices_business:
     '#title': 'Is the entity is engaged in business?'
     '#options':
