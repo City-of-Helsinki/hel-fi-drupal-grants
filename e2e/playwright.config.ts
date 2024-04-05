@@ -49,6 +49,15 @@ export default defineConfig({
     },
     /* Profile tests. */
     {
+      name: 'profiles',
+      testMatch: [
+        '/profiles/private_person.ts',
+        '/profiles/unregistered_community.ts',
+        '/profiles/registered_community.ts',
+      ],
+      dependencies: ['auth-setup']
+    },
+    {
       name: 'profile-private_person',
       testMatch: '/profiles/private_person.ts',
       dependencies: ['auth-setup']

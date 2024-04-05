@@ -4,7 +4,6 @@ namespace Drupal\grants_handler\Controller;
 
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Http\RequestStack;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
@@ -14,6 +13,7 @@ use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Returns responses for Grants Handler routes.
@@ -32,7 +32,7 @@ class WebformNavigationController extends ControllerBase {
   /**
    * The request service.
    *
-   * @var \Drupal\Core\Http\RequestStack
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected RequestStack $request;
 

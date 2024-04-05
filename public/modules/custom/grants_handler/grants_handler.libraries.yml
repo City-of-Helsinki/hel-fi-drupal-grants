@@ -4,6 +4,7 @@ webform-additions:
     js/webform-additions.js: { }
   dependencies:
     - core/jquery
+    - core/jquery.once
     - core/drupalSettings
 # Navigation.
 

@@ -91,11 +91,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form = parent::buildForm($form, $form_state);
     $grantsProfile = $this->getGrantsProfileDocument();
 
-    $isNewGrantsProfile = $grantsProfile->getTransactionId();
-
     if ($grantsProfile == NULL) {
       return [];
     }
+
+    $isNewGrantsProfile = $grantsProfile->getTransactionId();
 
     // Handle multiple editors.
     $lockService = \DrupaL::service('grants_handler.form_lock_service');

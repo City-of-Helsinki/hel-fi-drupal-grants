@@ -423,19 +423,9 @@ const validateHiddenFields = async (page: Page, itemsToBeHidden: string[], formP
 const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
 
   // Capture all error messages on the page
-  const allErrorElements =
-    await page.$$('.hds-notification--error .hds-notification__body ul li');
-
-  // Extract text content from the error elements
-  const actualErrorMessages = await Promise.all(
-    allErrorElements.map(async (element) => {
-      try {
-        return await element.innerText();
-      } catch (error) {
-        logger('Error while fetching text content:', error);
-        return '';
-      }
-    })
+  const errorClass = '.hds-notification--error .hds-notification__body ul li';
+  const actualErrorMessages = await page.locator(errorClass).evaluateAll(elements =>
+    elements.map(element => element.textContent?.trim() || '').filter(text => text.trim().length > 0)
   );
 
   // Get configured expected errors from form PAGE

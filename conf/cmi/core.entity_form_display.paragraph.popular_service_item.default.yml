@@ -9,7 +9,7 @@ dependencies:
   module:
     - link
 _core:
-  default_config_hash: VI67pV-RAy6WVHMgprmjTXEGwF3L15_XfVZRcha3H2o
+  default_config_hash: fFtA0-eIpn5RaBU0qMbUGXQf8jzmtHNX_lvFatj9iMc
 id: paragraph.popular_service_item.default
 targetEntityType: paragraph
 bundle: popular_service_item

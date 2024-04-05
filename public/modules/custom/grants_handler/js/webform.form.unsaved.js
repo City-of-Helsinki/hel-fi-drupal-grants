@@ -3,7 +3,7 @@
  * JavaScript behaviors for unsaved webforms.
  */
 
-(function ($, Drupal) {
+(function ($, Drupal, once) {
 
   'use strict';
 
@@ -37,12 +37,11 @@
       // Look for the 'data-webform-unsaved' attribute which indicates that
       // a multi-step webform has unsaved data.
       // @see \Drupal\webform\WebformSubmissionForm::buildForm
-
-      if ($('.js-webform-unsaved[data-webform-unsaved]').once('data-webform-unsaved').length) {
+      if ($(once('data-webform-unsaved', '.js-webform-unsaved[data-webform-unsaved]')).length) {
         unsaved = true;
       }
       else {
-        $('.js-webform-unsaved :input:not(:button, :submit, :reset, [type="hidden"])').once('webform-unsaved').on('change keypress', function (event, param1) {
+        $(once('webform-unsaved', $('.js-webform-unsaved :input:not(:button, :submit, :reset, [type="hidden"])'))).on('change keypress', function (event, param1) {
           // Ignore events triggered when #states API is changed,
           // which passes 'webform.states' as param1.
           // @see webform.states.js ::triggerEventHandlers().
@@ -52,9 +51,7 @@
         });
       }
 
-      $('.js-webform-unsaved button, .js-webform-unsaved input[type="submit"]', context)
-        .once('webform-unsaved')
-        .not('[data-webform-unsaved-ignore]')
+      $(once('webform-unsaved', $('.js-webform-unsaved button, .js-webform-unsaved input[type="submit"]', context))).not('[data-webform-unsaved-ignore]')
         .on('click', function (event) {
           // For reset button we must confirm unsaved changes before the
           // before unload event handler.
@@ -179,4 +176,4 @@
     });
   });
 
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);
