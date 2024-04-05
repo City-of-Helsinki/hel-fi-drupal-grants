@@ -18,6 +18,7 @@ import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
+import {copyForm} from "../../utils/copying_helpers";
 
 const profileType = 'registered_community';
 const formId = '63';
@@ -321,27 +322,18 @@ const formPages: PageHandlers = {
   },
 };
 
-
 test.describe('NUORTOIMPALKKA(63)', () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
-
-    // page.locator = slowLocator(page, 10000);
-
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
 
-  // @ts-ignore
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
 
   for (const [key, obj] of testDataArray) {
-
     test(`Form: ${obj.title}`, async () => {
-
-
-
       await fillGrantsFormPage(
         key,
         page,
@@ -350,16 +342,30 @@ test.describe('NUORTOIMPALKKA(63)', () => {
         obj.formSelector,
         formId,
         profileType,
-        formPages);
+        formPages
+      );
     });
   }
 
+  for (const [key, obj] of testDataArray) {
+    if (!obj.isCopyForm) continue;
+    test(`Copy form: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await copyForm(
+        key,
+        profileType,
+        formId,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
 
   for (const [key, obj] of testDataArray) {
-    if (obj.viewPageSkipValidation) continue;
+    if (obj.viewPageSkipValidation || obj.isCopyForm) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-      // expect(storedata).toBeDefined();
       await validateSubmission(
         key,
         page,
@@ -370,7 +376,7 @@ test.describe('NUORTOIMPALKKA(63)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-    test(`Delete DRAFTS: ${obj.title}`, async () => {
+    test(`Delete drafts: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       await deleteDraftApplication(
         key,
@@ -380,6 +386,5 @@ test.describe('NUORTOIMPALKKA(63)', () => {
       );
     });
   }
-
 
 });

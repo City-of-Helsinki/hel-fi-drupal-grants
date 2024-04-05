@@ -558,11 +558,11 @@ const formPages: PageHandlers = {
 
   'webform_preview': async (page: Page, {items}: FormPage) => {
     if (items['accept_terms_1']) {
+      // Check data on confirmation page
       await page.getByLabel('Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot').check();
     }
   },
 };
-
 
 test.describe('KUVAPROJ(48)', () => {
   let page: Page;
