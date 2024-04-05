@@ -719,7 +719,6 @@ const baseForm_48: FormData = {
                     resultValue: '.form-item-muu-liite-items-[INDEX]--item--attachment a',
                   },
                   value: ATTACHMENTS.MUU_LIITE,
-                  viewPageSelector: '.form-item-muu-liite',
                   viewPageFormatter: viewPageFormatFilePath
                 },
                 {
@@ -729,7 +728,7 @@ const baseForm_48: FormData = {
                     name: 'data-drupal-selector',
                     value: 'edit-muu-liite-items-[INDEX]-item-description',
                   },
-                  value: faker.location.zipCode(),
+                  value: faker.lorem.sentences(1),
                 },
               ],
             },

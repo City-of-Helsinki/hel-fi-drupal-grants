@@ -156,7 +156,6 @@ const baseFormRegisteredCommunity_64: FormData = {
                     resultValue: '.form-item-muu-liite-items-[INDEX]--item--attachment a',
                   },
                   value: ATTACHMENTS.MUU_LIITE,
-                  viewPageSelector: '.form-item-muu-liite',
                   viewPageFormatter: viewPageFormatFilePath
                 },
                 {
