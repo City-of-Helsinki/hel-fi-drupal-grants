@@ -21,7 +21,7 @@ import {
 } from "../../utils/helpers";
 import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
-import {copyForm} from "../../utils/copying_helpers";
+import {copyApplication} from "../../utils/copying_helpers";
 
 const profileType = 'private_person';
 const formId = '64';
@@ -211,7 +211,7 @@ test.describe('ASUKASPIEN(64)', () => {
     if (!obj.isCopyForm) continue;
     test(`Copy form: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-      await copyForm(
+      await copyApplication(
         key,
         profileType,
         formId,

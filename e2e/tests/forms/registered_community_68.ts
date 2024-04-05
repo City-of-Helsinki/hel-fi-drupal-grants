@@ -18,7 +18,7 @@ import {selectRole} from '../../utils/auth_helpers';
 import {getObjectFromEnv} from '../../utils/helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
-import {copyForm} from "../../utils/copying_helpers";
+import {copyApplication} from "../../utils/copying_helpers";
 
 const profileType = 'registered_community';
 const formId = '68';
@@ -286,7 +286,7 @@ test.describe('HYVINYLEIS(68)', () => {
     if (!obj.isCopyForm) continue;
     test(`Copy form: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-      await copyForm(
+      await copyApplication(
         key,
         profileType,
         formId,

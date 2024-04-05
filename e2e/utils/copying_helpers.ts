@@ -7,20 +7,20 @@ import {validateSubmission} from "./validation_helpers";
 import {deleteDraftApplication} from "./deletion_helpers";
 
 /**
- * The copyForm function.
+ * The copyApplication function.
  *
- * This function tests form copying. This id done by:
+ * This function tests application copying. This id done by:
  *
- * 1. Calling makeFormCopy() and passing in the form
+ * 1. Calling makeApplicationCopy() and passing in the form
  * that is going to be copied. This is indicated by a
  * isCopyForm key in the form data.
  *
  * 2. Calling validateSubmission() and validating
- * the original forms data against the copied forms
+ * the original applications data against the copied applications
  * data on the "Katso" page.
  *
  * 3. Calling deleteDraftApplication() and deleting
- * the copied form.
+ * the copied application.
  *
  * @param originalFormKey
  *   The form variant we are copying.
@@ -35,7 +35,7 @@ import {deleteDraftApplication} from "./deletion_helpers";
  * @param storedata
  *   The env form data.
  */
-const copyForm = async (
+const copyApplication = async (
   originalFormKey: string,
   profileType: string,
   formId: string,
@@ -74,21 +74,21 @@ const copyForm = async (
 }
 
 /**
- * The makeFormCopy function.
+ * The makeApplicationCopy function.
  *
- * This function copies a form. This is done by:
+ * This function copies an application. This is done by:
  *
- * 1. Navigating to the "Katso" page of the form
+ * 1. Navigating to the "Katso" page of the application
  * we want to copy (the original form).
  *
  * 2.Clicking the "Kopioi hakemus" button on the
- * "Katso" page of the original form.
+ * "Katso" page of the original application.
  *
- * 3. Getting redirected to the new form and storing
+ * 3. Getting redirected to the new application and storing
  * its application ID and submission URL in the
  * .env data.
  *
- * 4. Saving the new form as a draft.
+ * 4. Saving the new application as a draft.
  *
  * @param originalApplicationId
  *   The original forms application ID.
@@ -101,7 +101,7 @@ const copyForm = async (
  * @param page
  *   Page object from Playwright.
  */
-const makeFormCopy = async (
+const makeApplicationCopy = async (
   originalApplicationId: string,
   copiedFormKey: string,
   profileType: string,
@@ -109,7 +109,7 @@ const makeFormCopy = async (
   page: Page,
 ) => {
 
-  // Go to the "Katso" page of the original form we are copying.
+  // Go to the "Katso" page of the original application we are copying.
   const viewPageURL = `/fi/hakemus/${originalApplicationId}/katso`;
   await page.goto(viewPageURL);
   logger(`Navigated to: ${viewPageURL}.`);
@@ -124,16 +124,16 @@ const makeFormCopy = async (
   await page.locator('span', { hasText: 'Kopioi hakemus' }).click();
   await page.locator('span', { hasText: 'Käytä hakemusta pohjana' }).click();
 
-  // Wait for a redirect to the new form and store the new application ID and submission URL.
+  // Wait for a redirect to the new application and store the new application ID and submission URL.
   await page.waitForURL('**/muokkaa');
   const newApplicationId = await getApplicationNumberFromBreadCrumb(page);
   const submissionUrl = await extractPath(page);
 
-  // Save the new form as a draft.
+  // Save the new application as a draft.
   await page.locator('[data-drupal-selector="edit-actions-draft"]').click();
   await page.waitForURL('**/katso');
 
-  // Store the copied forms data to the env.
+  // Store the copied applications data to the env.
   const storeName = `${profileType}_${formId}`;
   const newData = {
     [copiedFormKey]: {
@@ -147,5 +147,5 @@ const makeFormCopy = async (
 }
 
 export {
-  copyForm,
+  copyApplication,
 }
