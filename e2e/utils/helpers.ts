@@ -247,16 +247,18 @@ function getObjectFromEnv(profileType: string, formId: string, full: boolean = f
     }
 }
 
-const extractUrl = async (page: Page) => {
-// Get the entire URL
-    const fullUrl = page.url();
-    logger('Full URL:', fullUrl);
-
-    // Get the path (e.g., /path/to/page)
-    const path = new URL(fullUrl).pathname;
-    logger('Path:', path);
-
-    return path;
+/**
+ * The extractPath function.
+ *
+ * This function extracts the path (e.g. /path/to/page)
+ * from the current page URL.
+ *
+ * @param page
+ *   Page object from Playwright.
+ */
+const extractPath = async (page: Page) => {
+  const fullUrl = page.url();
+  return new URL(fullUrl).pathname;
 }
 
 export {
@@ -274,7 +276,7 @@ export {
   uploadFile,
   slowLocator,
   saveObjectToEnv,
-  extractUrl,
+  extractPath,
   getObjectFromEnv,
 };
 

@@ -10,7 +10,7 @@ import {
   isDynamicMultiValueField, FormPage
 } from "./data/test_data"
 
-import {saveObjectToEnv, extractUrl} from "./helpers";
+import {saveObjectToEnv, extractPath} from "./helpers";
 import {fi} from "@faker-js/faker";
 
 
@@ -112,7 +112,7 @@ const fillGrantsFormPage = async (
 
   // Store submissionUrl.
   const applicationId = await getApplicationNumberFromBreadCrumb(page);
-  const submissionUrl = await extractUrl(page);
+  const submissionUrl = await extractPath(page);
 
   // Hide the sliding popup once.
   await hideSlidePopup(page);
@@ -1365,6 +1365,7 @@ export {
   fillHakijanTiedotRegisteredCommunity,
   fillSelectIfElementExists,
   fillHakijanTiedotPrivatePerson,
-  fillHakijanTiedotUnregisteredCommunity
+  fillHakijanTiedotUnregisteredCommunity,
+  getApplicationNumberFromBreadCrumb,
 };
 

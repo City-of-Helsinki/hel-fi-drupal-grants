@@ -362,7 +362,7 @@ const baseForm_48: FormData = {
           value: "0",
           viewPageFormatter: viewPageFormatBoolean
         },
-        'edit-tila': {
+        "edit-tila": {
           role: 'multivalue',
           multi: {
             buttonSelector: {
@@ -698,22 +698,42 @@ const baseForm_48: FormData = {
           role: 'input',
           value: faker.lorem.sentences(3),
         },
-        'edit-muu-liite-items-0-item-attachment-upload': {
-          role: 'fileupload',
-          selector: {
-            type: 'locator',
-            name: 'data-drupal-selector',
-            value: '[name="files[muu_liite_items_0__item__attachment]"]',
-            resultValue: '.form-item-muu-liite-items-0--item--attachment a',
+        "edit-muu-liite": {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-muu-liite-add-submit',
+              resultValue: 'edit-muu-liite-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'fileupload',
+                  selector: {
+                    type: 'locator',
+                    name: 'data-drupal-selector',
+                    value: '[name="files[muu_liite_items_[INDEX]__item__attachment]"]',
+                    resultValue: '.form-item-muu-liite-items-[INDEX]--item--attachment a',
+                  },
+                  value: ATTACHMENTS.MUU_LIITE,
+                  viewPageSelector: '.form-item-muu-liite',
+                  viewPageFormatter: viewPageFormatFilePath
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-muu-liite-items-[INDEX]-item-description',
+                  },
+                  value: faker.location.zipCode(),
+                },
+              ],
+            },
           },
-          value: ATTACHMENTS.MUU_LIITE,
-          viewPageSelector: '.form-item-muu-liite',
-          viewPageFormatter: viewPageFormatFilePath
-        },
-        'edit-muu-liite-items-0-item-description': {
-          role: 'input',
-          value: faker.lorem.sentences(1),
-          viewPageSelector: '.form-item-muu-liite'
         },
         "edit-extra-info": {
           role: 'input',
@@ -985,6 +1005,20 @@ const under5000: FormDataWithRemoveOptionalProps = {
   expectedErrors: {},
 };
 
+const copyForm: FormDataWithRemoveOptionalProps = {
+  title: 'Original copy form',
+  isCopyForm: true,
+  formPages: {
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-muu-liite',
+      ],
+    },
+  },
+  expectedErrors: {},
+};
+
 const sendApplication: FormDataWithRemoveOptionalProps = {
   title: 'Send to AVUS2',
   formPages: {
@@ -1015,6 +1049,7 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
  */
 const registeredCommunityApplications_48 = {
   draft: baseForm_48,
+  copy: createFormData(baseForm_48, copyForm),
   missing_values: createFormData(baseForm_48, missingValues),
   wrong_email: createFormData(baseForm_48, wrongEmail),
   wrong_email_2: createFormData(baseForm_48, wrongEmail2),
