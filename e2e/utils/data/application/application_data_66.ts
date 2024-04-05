@@ -310,7 +310,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
     'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 3. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-projektisuunnitelma-liite-attachment-upload': 'Virhe sivulla 3. Lisätiedot ja liitteet: Toimintasuunnitelma (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
-    'edit-projektin-talousarvio-attachment-upload': 'Virhe sivulla 3. Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-projektin-talousarvio-attachment-upload': 'Virhe sivulla 3. Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta)  ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
   },
 };
 
@@ -350,7 +350,7 @@ const missingValuesUnregistered: FormDataWithRemoveOptionalProps = {
     'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
     'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 3. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-projektisuunnitelma-liite-attachment-upload': 'Virhe sivulla 3. Lisätiedot ja liitteet: Toimintasuunnitelma (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
-    'edit-projektin-talousarvio-attachment-upload': 'Virhe sivulla 3. Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-projektin-talousarvio-attachment-upload': 'Virhe sivulla 3. Lisätiedot ja liitteet: Talousarvio (sille vuodelle jolle haet avustusta)  ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
   },
 };
 
