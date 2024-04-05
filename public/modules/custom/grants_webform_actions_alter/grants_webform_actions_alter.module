@@ -5,12 +5,60 @@
  * Primary module hooks for Webform Summation Field module.
  */
 
+use Drupal\Core\Url;
+use Drupal\webform\Entity\WebformSubmission;
+
 /**
  * Implements hook_preprocess_webform_actions().
  *
  * @see template_preprocess_webform_actions()
  */
 function grants_webform_actions_alter_preprocess_webform_actions(array &$variables) {
+  $sid = $variables["element"]["#webform_submission"] ?? NULL;
+
+  /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
+  $webform_submission = WebformSubmission::load($sid);
+
+  if (!$webform_submission) {
+    return;
+  }
+
+  $data = $webform_submission->getData();
+
+  if (isset($data["application_number"])) {
+    $variables['applicationNumber'] = $data["application_number"];
+  }
+
+  $deleteDraftLinkText = [
+    '#theme' => 'edit-label-with-icon',
+    '#icon' => 'trash',
+    '#text_label' => t('Delete draft', [], ['context' => "grants_handler"]),
+  ];
+  $deleteDraftUrl = Url::fromRoute('grants_handler.clear-navigations', ['submission_id' => $variables['applicationNumber']]);
+  $deleteDraftLink = [
+    '#type' => 'link',
+    '#title' => $deleteDraftLinkText,
+    '#url' => $deleteDraftUrl,
+    '#id' => 'webform-button--delete-draft',
+    '#attributes' => ['class' => ['webform-button--delete-draft', 'hds-button', 'hds-button--supplementary']],
+  ];
+  $lockService = \Drupal::service('grants_handler.form_lock_service');
+  $lockedStatus = FALSE;
+  if (!empty($data["application_number"])) {
+    $lockedStatus = $lockService->isApplicationFormLocked($data["application_number"]);
+  }
+  $draft_variables = [];
+  if ($data['status'] == 'DRAFT' && !$lockedStatus) {
+    $variables['delete_draft'] = $deleteDraftLink;
+    $draft_variables['delete_draft'] = $deleteDraftLink;
+  }
+
+  $temp_element = $variables['element'];
+
+  unset($variables['element']);
+
+  $variables['element'] = array_merge($draft_variables, $temp_element);
+
   $variables['draft']['#attributes']['class'][] = 'hds-button--supplementary';
   $variables['element']['draft']['#attributes']['class'][] = 'hds-button--supplementary';
 }

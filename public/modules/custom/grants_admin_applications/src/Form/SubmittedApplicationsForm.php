@@ -290,7 +290,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
       /** @var Drupal\helfi_atv\AtvDocument[] $docs */
       $docs = self::getDocuments($options);
 
-      // Filter out grants profiles from documents
+      // Filter out grants profiles from documents.
       $documents = array_filter(
         array_map(function (AtvDocument $doc) {
           return [
@@ -302,7 +302,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
             'created_at' => $doc->getCreatedAt(),
           ];
         }, $docs),
-        function(array $doc) {
+        function (array $doc) {
           return $doc['type'] !== 'grants_profile';
         }
       );

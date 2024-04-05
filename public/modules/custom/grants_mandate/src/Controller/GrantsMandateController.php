@@ -141,7 +141,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
   /**
    * Callback for YPA service in DVV valtuutuspalvelu.
    *
-   * @return \Symfony\Component\HttpFoundation\RedirectResponse;
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect to profile page in case of success. Return
    *   to mandate login page in case of error.
    *
