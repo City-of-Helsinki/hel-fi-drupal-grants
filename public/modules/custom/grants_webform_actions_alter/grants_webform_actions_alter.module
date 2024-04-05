@@ -47,29 +47,17 @@ function grants_webform_actions_alter_preprocess_webform_actions(array &$variabl
   if (!empty($data["application_number"])) {
     $lockedStatus = $lockService->isApplicationFormLocked($data["application_number"]);
   }
-
+  $draft_variables = [];
   if ($data['status'] == 'DRAFT' && !$lockedStatus) {
     $variables['delete_draft'] = $deleteDraftLink;
-    $variables['element']['delete_draft'] = $deleteDraftLink;
+    $draft_variables['delete_draft'] = $deleteDraftLink;
   }
 
-  if (isset($variables['element']['draft'])) {
-    $temp = $variables['element']['draft'];
-    unset($variables['element']['draft']);
-    $variables['element']['draft'] = $temp;
-  }
+  $temp_element = $variables['element'];
 
-  if (isset($variables['element']['wizard_prev'])) {
-    $temp = $variables['element']['wizard_prev'];
-    unset($variables['element']['wizard_prev']);
-    $variables['element']['wizard_prev'] = $temp;
-  }
+  unset($variables['element']);
 
-  if (isset($variables['element']['wizard_next'])) {
-    $temp = $variables['element']['wizard_next'];
-    unset($variables['element']['wizard_next']);
-    $variables['element']['wizard_next'] = $temp;
-  }
+  $variables['element'] = array_merge($draft_variables, $temp_element);
 
   $variables['draft']['#attributes']['class'][] = 'hds-button--supplementary';
   $variables['element']['draft']['#attributes']['class'][] = 'hds-button--supplementary';
