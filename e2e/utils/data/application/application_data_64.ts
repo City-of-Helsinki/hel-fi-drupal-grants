@@ -135,22 +135,42 @@ const baseFormRegisteredCommunity_64: FormData = {
           role: 'input',
           value: faker.lorem.sentences(3),
         },
-        'edit-muu-liite-items-0-item-attachment-upload': {
-          role: 'fileupload',
-          selector: {
-            type: 'locator',
-            name: 'data-drupal-selector',
-            value: '[name="files[muu_liite_items_0__item__attachment]"]',
-            resultValue: '.form-item-muu-liite-items-0--item--attachment a',
+        "edit-muu-liite": {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-muu-liite-add-submit',
+              resultValue: 'edit-muu-liite-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'fileupload',
+                  selector: {
+                    type: 'locator',
+                    name: 'data-drupal-selector',
+                    value: '[name="files[muu_liite_items_[INDEX]__item__attachment]"]',
+                    resultValue: '.form-item-muu-liite-items-[INDEX]--item--attachment a',
+                  },
+                  value: ATTACHMENTS.MUU_LIITE,
+                  viewPageSelector: '.form-item-muu-liite',
+                  viewPageFormatter: viewPageFormatFilePath
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-muu-liite-items-[INDEX]-item-description',
+                  },
+                  value: faker.location.zipCode(),
+                },
+              ],
+            },
           },
-          value: ATTACHMENTS.MUU_LIITE,
-          viewPageSelector: '.form-item-muu-liite',
-          viewPageFormatter: viewPageFormatFilePath,
-        },
-        'edit-muu-liite-items-0-item-description': {
-          role: 'input',
-          value: faker.lorem.sentences(1),
-          viewPageSelector: '.form-item-muu-liite',
         },
         "edit-extra-info": {
           role: 'input',
@@ -387,6 +407,20 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
+const copyForm: FormDataWithRemoveOptionalProps = {
+  title: 'Original copy form',
+  isCopyForm: true,
+  formPages: {
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-muu-liite',
+      ],
+    },
+  },
+  expectedErrors: {},
+};
+
 const sendApplication: FormDataWithRemoveOptionalProps = {
   title: 'Send to AVUS2',
   formPages: {
@@ -411,6 +445,7 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
 
 const registeredCommunityApplications_64 = {
   draft: baseFormRegisteredCommunity_64,
+  copy: createFormData(baseFormRegisteredCommunity_64, copyForm),
   missing_values: createFormData(baseFormRegisteredCommunity_64, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_64, wrongValues),
   success: createFormData(baseFormRegisteredCommunity_64, sendApplication),

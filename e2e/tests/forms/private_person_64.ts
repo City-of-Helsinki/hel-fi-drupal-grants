@@ -9,7 +9,7 @@ import {
   fillInputField,
   fillHakijanTiedotPrivatePerson,
   uploadFile,
-  hideSlidePopup
+  hideSlidePopup, fillFormField
 } from "../../utils/form_helpers";
 
 import {
@@ -170,26 +170,8 @@ const formPages: PageHandlers = {
         .fill(items['edit-extra-info'].value ?? '');
     }
 
-    if (items['edit-muu-liite-items-0-item-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.value ?? '',
-        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-muu-liite-items-0-item-attachment-upload'].value
-      )
-    }
-
-    if (items['edit-muu-liite-items-0-item-description']) {
-      await fillInputField(
-        items['edit-muu-liite-items-0-item-description'].value ?? '',
-        items['edit-muu-liite-items-0-item-description'].selector ?? {
-          type: 'data-drupal-selector',
-          name: 'data-drupal-selector',
-          value: 'edit-muu-liite-items-0-item-description',
-        },
-        page,
-        'edit-muu-liite-items-0-item-description'
-      );
+    if (items['edit-muu-liite']) {
+      await fillFormField(page, items['edit-muu-liite'], 'edit-muu-liite')
     }
 
   },
