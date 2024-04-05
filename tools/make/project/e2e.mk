@@ -1,6 +1,6 @@
 
 test-pw-profiles: ## make test-pw-profiles
-	@docker compose exec e2e sh -c "npm install -y --silent && CREATE_PROFILE=false npx playwright test --project profiles $(filter-out $@,$(MAKECMDGOALS))"
+	@docker compose exec e2e sh -c "npm install -y --silent && npx playwright test --project profiles $(filter-out $@,$(MAKECMDGOALS))"
 %:
 	@:
 

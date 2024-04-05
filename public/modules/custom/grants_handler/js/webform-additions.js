@@ -2,28 +2,6 @@
   Drupal.behaviors.GrantsHandlerBehavior = {
     attach: function (context, settings) {
 
-
-
-      const formData = drupalSettings.grants_handler.formData
-      const submissionId = drupalSettings.grants_handler.submissionId
-      const lockedStatus = drupalSettings.grants_handler.formLocked;
-
-      if (formData['status'] === 'DRAFT' && !lockedStatus && !$("#webform-button--delete-draft").length) {
-
-        // Construct the deletion url based on the language.
-        let langPrefix = $('html').attr('lang');
-        let deleteDraftUrl = '/hakemus/' + submissionId + '/clear';
-
-        if (langPrefix && langPrefix !== '') {
-          deleteDraftUrl = '/' + langPrefix + '/hakemus/' + submissionId + '/clear';
-        }
-
-        // Append delete draft button with the language-aware URL.
-        $('#edit-actions').append($('<a id="webform-button--delete-draft" class="webform-button--delete-draft hds-button hds-button--supplementary" href="' + deleteDraftUrl + '">' +
-          '<span class="hds-button__label">' + Drupal.t('Delete draft', {}, {context: "grants_handler"}) + '</span>' +
-          '</a>'));
-      }
-
       $("#edit-bank-account-account-number-select").change(function () {
         // Get selected account from dropdown
         const selectedNumber = $(this).val();
@@ -109,16 +87,6 @@
       });
 
       $(".community-officials-select").trigger('change');
-      // Managed file #states handling is a bit wonky,
-      // so we need to manually handle checkbox disables in the
-      // composite element
-      const checkBoxStateFn = function () {
-        if (this.checked) {
-          setTimeout(function(){
-            $(this).prop('disabled', false);
-          },1000);
-        }
-      }
 
       $(once('disable-state-handling', '[data-webform-composite-attachment-inOtherFile]')).on('change', function() {
         const parent = $(this).parents('.fieldset-wrapper').first();
