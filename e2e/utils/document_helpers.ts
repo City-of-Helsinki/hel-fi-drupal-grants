@@ -28,9 +28,16 @@ interface PaginatedDocumentlist {
 const APP_ENV = getKeyValue('APP_ENV');
 const ATV_API_KEY = getKeyValue('ATV_API_KEY');
 const ATV_BASE_URL = getKeyValue('TEST_ATV_URL');
+const BASE_HEADERS = {'X-API-KEY': ATV_API_KEY};
+const APP_ENV_FOR_ATV = getAppEnvForATV();
 
-// Similarly as in ApplicationHandler.php
-const getAppEnvForATV = () => {
+/**
+ * The getAppEnvForATV function.
+ *
+ * This function returns the current "App env".
+ * The functionality mimics that of ApplicationHandler.php.
+ */
+function getAppEnvForATV() {
   switch (APP_ENV) {
     case "development":
       return "DEV"
@@ -43,10 +50,19 @@ const getAppEnvForATV = () => {
   }
 }
 
-const BASE_HEADERS = {'X-API-KEY': ATV_API_KEY};
-const APP_ENV_FOR_ATV = getAppEnvForATV();
-
-
+/**
+ * The fetchLatestProfileByType function.
+ *
+ * This function fetches the latest profile from ATV
+ * when given a users UUID and a profile type.
+ * The helper function fetchDocumentList() is used
+ * to do the actual fetching.
+ *
+ * @param userUUID
+ *   The users UUID.
+ * @param profileType
+ *   The profile type.
+ */
 const fetchLatestProfileByType = (userUUID: string, profileType: string) => {
   const currentUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV_FOR_ATV},profile_type:${profileType}&user_id=${userUUID}&type=grants_profile&sort=updated_at`;
   // Use then to handle the asynchronous result.
@@ -60,6 +76,16 @@ const fetchLatestProfileByType = (userUUID: string, profileType: string) => {
   });
 }
 
+/**
+ * The function fetchDocumentList.
+ *
+ * This function uses fetch() to get a document list
+ * from ATV. The variable BASE_HEADERS is set as
+ * the headers for the call.
+ *
+ * @param url
+ *   The URL we are making a request to.
+ */
 const fetchDocumentList = async (url: string): Promise<PaginatedDocumentlist | null> => {
   try {
     const res = await fetch(url, {headers: BASE_HEADERS});
@@ -73,6 +99,15 @@ const fetchDocumentList = async (url: string): Promise<PaginatedDocumentlist | n
   }
 };
 
+/**
+ * The deleteDocumentById function.
+ *
+ * This function deletes a documents that
+ * matches the passed in ID from ATV.
+ *
+ * @param id
+ *   The ID of the document we want to delete.
+ */
 const deleteDocumentById = async (id: string) => {
   try {
     const url = `${ATV_BASE_URL}/v1/documents/${id}`;
@@ -88,10 +123,15 @@ const deleteDocumentById = async (id: string) => {
 };
 
 /**
- * Delete all grants profiles from atv for given user UUID.
+ * The deleteGrantsProfiles function.
+ *
+ * This function deletes grants profiles from ATV
+ * with the passed in user UUID and profile type.
  *
  * @param testUserUUID
+ *   The user UUID for the profile we want to delete.
  * @param profileType
+ *   The profile type we are deleting.
  */
 const deleteGrantsProfiles = async (testUserUUID: string, profileType: string) => {
   let currentUrl: string | null = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV_FOR_ATV},profile_type:${profileType}&user_id=${testUserUUID}&type=grants_profile&service_name=AvustushakemusIntegraatio&sort=updated_at`;
@@ -114,23 +154,7 @@ const deleteGrantsProfiles = async (testUserUUID: string, profileType: string) =
   logger(`Deleted ${deletedDocumentsCount} grant profiles from ATV.`);
 }
 
-/**
- * Delete application documents from ATV
- */
-const deleteGrantApplications = async (status: string, testUserUUID: string) => {
-
-}
-
 export {
-  ATVDocument,
-  PaginatedDocumentlist,
-  APP_ENV,
-  ATV_API_KEY,
-  ATV_BASE_URL,
-  getAppEnvForATV,
-  fetchDocumentList,
-  deleteDocumentById,
-  BASE_HEADERS,
   deleteGrantsProfiles,
   fetchLatestProfileByType
 }
