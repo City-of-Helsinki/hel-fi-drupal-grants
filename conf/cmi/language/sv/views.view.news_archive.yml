@@ -1,9 +1,0 @@
-display:
-  page_1:
-    display_options:
-      menu:
-        title: Aktuell
-  default:
-    display_options:
-      title: Nyheter
-label: Nyheter
