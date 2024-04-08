@@ -61,7 +61,7 @@ function saveObjectToEnv(variableName: string, data: Object) {
     }
   }
 
-  if (typeof data !== 'object' || existingEncoded !== 'object') {
+  if (typeof data !== 'object' || typeof existingEncoded !== 'object') {
     logger('Data must be an object.');
     return;
   }
