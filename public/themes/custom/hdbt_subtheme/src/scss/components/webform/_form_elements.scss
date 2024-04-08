@@ -129,7 +129,7 @@ $breakpoint-xl: 1248px;
       }
       > h4 {
         line-height: initial;
-        margin-top: 0;
+        margin-top: var(--spacing-m);
       }
     }
   }
