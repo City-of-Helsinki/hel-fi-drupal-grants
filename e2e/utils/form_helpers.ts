@@ -10,9 +10,8 @@ import {
   isDynamicMultiValueField, FormPage
 } from "./data/test_data"
 
-import {saveObjectToEnv, extractUrl} from "./helpers";
-import {fi} from "@faker-js/faker";
-
+import {extractUrl} from "./helpers";
+import {saveObjectToEnv} from "./env_helpers";
 
 /**
  * Set novalidate for given form. This bypasses the browser validations so that

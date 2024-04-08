@@ -1,5 +1,5 @@
 import {logger} from "./logger";
-import {getKeyValue,} from '../utils/helpers';
+import {getKeyValue} from './env_helpers';
 
 interface ATVMetadata {
   appenv: string;
