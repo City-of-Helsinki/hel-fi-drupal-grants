@@ -72,6 +72,10 @@ $breakpoint-xl: 1248px;
     padding-top: var(--spacing-l);
     padding-bottom: var(--spacing-l);
 
+    .hds-notification {
+      margin-bottom: var(--spacing-xl);
+    }
+
     fieldset.form-wrapper {
       border: 0;
       background-color: var(--color-silver-light);
@@ -86,9 +90,13 @@ $breakpoint-xl: 1248px;
       }
     }
   }
-    &--infotext {
-    font-size: var(--fontsize-body-l);
-    margin-bottom: var(--spacing-s);
+  &--update-link {
+    margin-top: var(--spacing-layout-xs);
+    margin-bottom: var(--spacing-layout-2-xs);
+  }
+  &--infotext {
+  font-size: var(--fontsize-body-l);
+  margin-bottom: var(--spacing-s);
   }
   &--wrapper {
     display: flex;

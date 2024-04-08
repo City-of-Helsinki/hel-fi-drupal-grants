@@ -2,7 +2,6 @@ name: 'Grants Webform Import'
 type: module
 description: 'Module to create drush command to import webforms'
 package: 'Hel.fi'
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 dependencies:
   - 'webform:webform'

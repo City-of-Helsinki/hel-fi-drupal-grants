@@ -137,7 +137,7 @@ const baseFormRegisteredCommunity_66: FormData = {
             type: 'locator',
             name: 'data-drupal-selector',
             value: '[name="files[projektin_talousarvio_attachment]"]',
-            resultValue: '.form-item-talousarvio-attachment a',
+            resultValue: '.form-item-projektin-talousarvio-attachment a',
           },
           value: ATTACHMENTS.TALOUSARVIO,
           viewPageFormatter: viewPageFormatFilePath,
@@ -148,7 +148,7 @@ const baseFormRegisteredCommunity_66: FormData = {
             type: 'locator',
             name: 'data-drupal-selector',
             value: '[name="files[muu_liite_items_0__item__attachment]"]',
-            resultValue: '.form-item-projektin-talousarvio-attachment a',
+            resultValue: '.form-item-muu-liite-items-0--item--attachment a',
           },
           value: ATTACHMENTS.MUU_LIITE,
           viewPageSelector: '.form-item-muu-liite',
@@ -285,7 +285,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
@@ -331,7 +330,6 @@ const missingValuesUnregistered: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
@@ -365,7 +363,6 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
   },
@@ -390,7 +387,6 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 
