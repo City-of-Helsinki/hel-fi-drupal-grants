@@ -63,7 +63,7 @@ APP_ENV="{ENTER A APP ENV}"
 APP_DEBUG="TRUE"
 
 # Set the disabled form variants.
-DISABLED_FORM_VARIANTS="success,draft"
+DISABLED_FORM_VARIANTS="success,missing_values"
 
 # Force profile creation.
 CREATE_PROFILE="FALSE"
@@ -75,9 +75,21 @@ TEST_USER_UUID="{TEST USER UUID}"
 
 ## Running E2E tests
 
+### TL;DR
+
+RUN ALL FORM TESTS:
+```
+make test-pw
+```
+
+RUN A SPECIFIC SET OF TESTS (more options under the `projects` key in `playwright.config.ts`):
+```
+make test-pw-p PROJECT=forms-48-registered
+```
+
 ### Running E2E tests in Docker (the recommended way)
 
-To run all tests (this runs all tests defined under the `projects` key in `playwright.config.ts`):
+To run all form and user tests (this runs the `forms-all` defined under the `projects` key in `playwright.config.ts`):
 ```
 make test-pw
 ```
@@ -95,7 +107,6 @@ Example 1: make test-pw-p PROJECT=forms-48
 
 Example 2: make test-pw-p PROJECT=forms-48-registered
 
-Example 3: make test-pw-p PROJECT=forms-all
 ```
 
 To run a specific set of tests in headed mode:
@@ -104,7 +115,6 @@ make test-pw-ph PROJECT={NAME_OF_PROJECT}
 
 Example 1: make test-pw-ph PROJECT=forms-48
 
-Example 2: make test-pw-ph PROJECT=forms-48-registered
 ```
 
 To run all profile tests:
@@ -114,6 +124,10 @@ make test-pw-profiles
 
 
 ### Running tests on your local machine (in the /e2e directory)
+Running tests on your local machine is discouraged and should only be done if
+running them in a docker container is not an option. Might be needed in a situation
+where a certain feature (such as headed mode) doesn't work on all operating systems when
+executed via a container.
 
 To run all tests (this runs all tests defined under the `projects` key in `playwright.config.ts`):
 ```
@@ -133,7 +147,7 @@ Example 1: npx playwright test --project forms-48
 
 Example 2: npx playwright test --project forms-48-registered
 
-Example 2: npx playwright test --project forms-all
+Example 3: npx playwright test --project forms-all
 ```
 
 To run a specific set of tests in headed mode:
@@ -143,6 +157,10 @@ npx playwright test --project {NAME_OF_PROJECT} --headed
 Example 1: npx playwright test --project forms-48 --headed
 
 Example 2: npx playwright test --project forms-48-registered --headed
+
+
+Example 3: npx playwright test --project forms-all --headed
 ```
 
 Other command line options that can be utilized when running the test on your local machine can be found [here](https://playwright.dev/docs/test-cli).
+
