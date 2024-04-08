@@ -1006,7 +1006,7 @@ const under5000: FormDataWithRemoveOptionalProps = {
 
 const copyForm: FormDataWithRemoveOptionalProps = {
   title: 'Original copy form',
-  isCopyForm: true,
+  testFormCopying: true,
   formPages: {
     'lisatiedot_ja_liitteet': {
       items: {},

@@ -13,7 +13,7 @@ import {deleteDraftApplication} from "./deletion_helpers";
  *
  * 1. Calling makeApplicationCopy() and passing in the form
  * that is going to be copied. This is indicated by a
- * isCopyForm key in the form data.
+ * testFormCopying key in the form data.
  *
  * 2. Calling validateSubmission() and validating
  * the original applications data against the copied applications

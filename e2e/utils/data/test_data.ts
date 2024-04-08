@@ -116,7 +116,7 @@ interface FormData {
   expectedDestination?: string;
   expectedErrors: {},
   viewPageSkipValidation?: boolean,
-  isCopyForm?: boolean,
+  testFormCopying?: boolean,
 }
 
 interface ProfileData {

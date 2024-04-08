@@ -361,6 +361,7 @@ const navigateAndValidateViewPage = async (
   const applicationId = thisStoreData.applicationId;
   const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
   await page.goto(viewPageURL);
+  await page.waitForURL('**/katso');
   const applicationIdContainer = await page.locator('.webform-submission__application_id');
   const applicationIdContainerText = await applicationIdContainer.textContent();
   expect(applicationIdContainerText).toContain(applicationId);

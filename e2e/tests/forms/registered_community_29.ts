@@ -283,7 +283,7 @@ test.describe('ECONOMICGRANTAPPLICATION(29)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-    if (!obj.isCopyForm) continue;
+    if (!obj.testFormCopying) continue;
     test(`Copy form: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       await copyApplication(
@@ -298,7 +298,7 @@ test.describe('ECONOMICGRANTAPPLICATION(29)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-    if (obj.viewPageSkipValidation || obj.isCopyForm) continue;
+    if (obj.viewPageSkipValidation || obj.testFormCopying) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       await validateSubmission(
