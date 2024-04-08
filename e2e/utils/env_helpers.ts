@@ -49,46 +49,47 @@ function saveObjectToEnv(variableName: string, data: Object) {
   if (existingBaseData) {
     try {
       existingEncoded = JSON.parse(existingBaseData);
-
-      if (typeof existingEncoded === 'object' && existingEncoded !== null) {
-        // @ts-ignore
-        existingObject = existingEncoded[variableName] || {};
-      } else {
+      if (typeof existingEncoded !== 'object' || existingEncoded === null) {
         logger('Existing data is not an object.');
         return;
       }
+      // @ts-ignore
+      existingObject = existingEncoded[variableName] || {};
     } catch (error) {
       logger('Error parsing existing data:', error);
       return;
     }
   }
 
-  if (typeof data === 'object') {
-    const merged = {
-      ...existingObject,
-      ...data,
-    };
-
-    if (typeof existingEncoded === 'object') {
-      // @ts-ignore
-      existingEncoded[variableName] = merged;
-    }
-    process.env.storedData = JSON.stringify(existingEncoded);
-  } else {
+  if (typeof data !== 'object' || existingEncoded !== 'object') {
     logger('Data must be an object.');
+    return;
   }
+
+  // @ts-ignore
+  existingEncoded[variableName] = {
+    ...existingObject,
+    ...data,
+  };
+  process.env.storedData = JSON.stringify(existingEncoded);
 }
 
 /**
- * Get stored data
+ * The getObjectFromEnv from env.
+ *
+ * This function returns an object from the environment.
+ * The returned data is looked for under a key that is constructed
+ * from the passed in profileType and formId.
  *
  * @param profileType
+ *   A profile type (partial key).
  * @param formId
+ *   A form ID (partial key).
  * @param full
+ *   A boolean indicating if we want everything from the environment.
  */
 function getObjectFromEnv(profileType: string, formId: string, full: boolean = false) {
   const storeName = `${profileType}_${formId}`;
-
   const existingBaseData = process.env.storedData;
 
   if (existingBaseData) {
@@ -100,7 +101,6 @@ function getObjectFromEnv(profileType: string, formId: string, full: boolean = f
         }
         return existingEncoded[storeName];
       }
-
     } catch (error) {
       logger('Error parsing existing data:', error);
       return;
@@ -108,6 +108,17 @@ function getObjectFromEnv(profileType: string, formId: string, full: boolean = f
   }
 }
 
+/**
+ * The getKeyValue function.
+ *
+ * This function attempts to locate a value from the
+ * environment under the given key. If the key is not set,
+ * then the functions also looks for said key's value
+ * in the local.settings.php file.
+ *
+ * @param key
+ *   The key whose value we are searching for.
+ */
 const getKeyValue = (key: string) => {
   const envValue = process.env[key];
   if (envValue) {
@@ -117,9 +128,9 @@ const getKeyValue = (key: string) => {
   const pathToLocalSettings = path.join(__dirname, '../../public/sites/default/local.settings.php');
   try {
     const localSettingsContents = fs.readFileSync(pathToLocalSettings, 'utf8');
-
     const regex = new RegExp(`putenv\\('${key}=(.*?)'\\)`);
     const matches = localSettingsContents.match(regex);
+
     if (matches && matches.length > 1) {
       return matches[1];
     } else {
