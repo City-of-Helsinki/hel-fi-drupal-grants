@@ -25,7 +25,6 @@ interface PaginatedDocumentlist {
   results: ATVDocument[]
 }
 
-const APP_ENV = getKeyValue('APP_ENV');
 const ATV_API_KEY = getKeyValue('ATV_API_KEY');
 const ATV_BASE_URL = getKeyValue('TEST_ATV_URL');
 const BASE_HEADERS = {'X-API-KEY': ATV_API_KEY};
@@ -38,6 +37,8 @@ const APP_ENV_FOR_ATV = getAppEnvForATV();
  * The functionality mimics that of ApplicationHandler.php.
  */
 function getAppEnvForATV() {
+  const APP_ENV = getKeyValue('APP_ENV');
+
   switch (APP_ENV) {
     case "development":
       return "DEV"
@@ -155,6 +156,9 @@ const deleteGrantsProfiles = async (testUserUUID: string, profileType: string) =
 }
 
 export {
+  ATV_BASE_URL,
+  ATV_API_KEY,
+  getAppEnvForATV,
   deleteGrantsProfiles,
   fetchLatestProfileByType
 }
