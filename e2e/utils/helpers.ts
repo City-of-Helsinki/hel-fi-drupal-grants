@@ -5,7 +5,6 @@ import fs from 'fs';
 import path from 'path';
 
 const PATH_TO_TEST_PDF = path.join(__dirname, './data/attachments/test.pdf');
-const PATH_TO_TEST_EXCEL = path.join(__dirname, './data/attachments/test.xlsx');
 
 /**
  * Return a "slow" page locator that waits before 'click' and 'fill' requests.
@@ -36,75 +35,6 @@ function slowLocator(
 
         return locator;
     };
-}
-
-
-const startNewApplication = async (page: Page, applicationName: string) => {
-    await page.goto('fi/etsi-avustusta')
-
-    const searchInput = page.locator("#edit-search");
-    const searchButton = page.locator("#edit-submit-application-search-search-api");
-
-    await searchInput.fill(applicationName);
-    await searchButton.click();
-
-    const linkToApplication = page.getByRole('link', {name: applicationName});
-    await expect(linkToApplication).toBeVisible()
-    await linkToApplication.click();
-
-    await page.locator('a[href*="uusi-hakemus"]').first().click();
-}
-
-const checkErrorNofification = async (page: Page) => {
-    const errorNotificationVisible = await page.locator("form .hds-notification--error").isVisible();
-    let errorText = "";
-
-    if (errorNotificationVisible) {
-        errorText = await page.locator("form .hds-notification--error").textContent() ?? "Application preview page contains errors";
-    }
-
-    expect(errorNotificationVisible, errorText).toBeFalsy();
-}
-
-const acceptCookies = async (page: Page) => {
-    // const acceptCookiesButton = page.getByRole('button', {name: 'Hyväksy vain välttämättömät evästeet'});
-    const acceptCookiesButton = page.locator('.eu-cookie-compliance-save-preferences-button')
-
-    acceptCookiesButton.waitFor(
-        {state: "visible", timeout: 500})
-        .then(async () => await acceptCookiesButton.click())
-
-}
-
-const clickContinueButton = async (page: Page) => {
-    const continueButton = page.getByRole('button', {name: 'Seuraava'});
-    await continueButton.click();
-}
-
-const clickGoToPreviewButton = async (page: Page) => {
-    const goToPreviewButton = page.getByRole('button', {name: 'Esikatseluun'});
-    await goToPreviewButton.click();
-}
-
-const saveAsDraft = async (page: Page) => {
-    const saveAsDraftButton = page.getByRole('button', {name: 'Tallenna keskeneräisenä'});
-    await saveAsDraftButton.click();
-}
-
-const uploadFile = async (page: Page, selector: string, filePath: string = PATH_TO_TEST_PDF) => {
-    const fileInput = page.locator(selector);
-    const responsePromise = page.waitForResponse(r => r.request().method() === "POST", {timeout: 30 * 1000});
-
-    // FIXME: Use locator actions and web assertions that wait automatically
-    await page.waitForTimeout(2000);
-
-    await expect(fileInput).toBeAttached();
-    await fileInput.setInputFiles(filePath);
-
-    await page.waitForTimeout(2000);
-
-    await expect(fileInput, "File upload failed").toBeHidden();
-    await responsePromise;
 }
 
 const uploadBankConfirmationFile = async (page: Page, selector: string) => {
@@ -261,17 +191,9 @@ const extractUrl = async (page: Page) => {
 
 export {
   PATH_TO_TEST_PDF,
-  PATH_TO_TEST_EXCEL,
-  acceptCookies,
-  checkErrorNofification,
-  clickContinueButton,
-  clickGoToPreviewButton,
   getKeyValue,
-  saveAsDraft,
   setupUnregisteredCommunity,
-  startNewApplication,
   uploadBankConfirmationFile,
-  uploadFile,
   slowLocator,
   saveObjectToEnv,
   extractUrl,
