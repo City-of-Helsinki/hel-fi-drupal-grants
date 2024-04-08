@@ -41,15 +41,18 @@ It's designed to test applications across all modern web browsers by running tes
 The following environment variables need to be set in a `.env` files for the tests to work.
 The file should be located in the `/e2e` directory.
 
+#### Mandatory:
 - **ATV_BASE_URL**: The base url for ATV.
 - **TEST_ATV_URL**: The ATV test url (same as above).
 - **ATV_API_KEY**: The ATV API key.
 - **APP_ENV**: The local APP env.
-- **APP_DEBUG**: Boolean indicating if messages should be printed to the terminal.
-- **DISABLED_FORM_VARIANTS**: Can be used to disable form variants (types of form tests).
-- **CREATE_PROFILE**: Boolean indicating if new profiles should be created on each test run.
 - **TEST_USER_SSN**: A test users social security number.
 - **TEST_USER_UUID** A test users UUID.
+
+#### Optional:
+- **APP_DEBUG**: Boolean indicating if messages should be printed to the terminal when running tests.
+- **DISABLED_FORM_VARIANTS**: Can be used to disable form variants (types of form tests).
+- **CREATE_PROFILE**: Boolean indicating if new profiles should be created on each test run.
 
 Example `.env` file:
 ```
@@ -164,3 +167,19 @@ Example 3: npx playwright test --project forms-all --headed
 
 Other command line options that can be utilized when running the test on your local machine can be found [here](https://playwright.dev/docs/test-cli).
 
+### Deleting applications from your local env
+After you've been running tests for a while, you might end up in a situation where
+you're left with a lot of applications in your local environment, which makes it slow.
+To fix this issue, you can set the keys `USER_IDS` and `BUSINESS_IDS` in the .env file,
+and run the script `clean-env.sh`.
+
+```
+Set in the .env file (example values):
+USER_IDS="d2694883-9ef0-4c59-9720-1c2c05ad1rt9"
+BUSINESS_IDS="7009192-5"
+```
+
+```
+Execute the script
+make shell > e2e/clean-env.sh
+```
