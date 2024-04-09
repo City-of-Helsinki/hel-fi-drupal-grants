@@ -47,6 +47,7 @@ The file should be located in the `/e2e` directory.
 - **APP_ENV**: The local APP env.
 - **APP_DEBUG**: Boolean indicating if messages should be printed to the terminal.
 - **DISABLED_FORM_VARIANTS**: Can be used to disable form variants (types of form tests).
+- **ENABLED_FORM_VARIANTS**: Can be used to explicitly run specific form variants. Others are skipped.
 - **CREATE_PROFILE**: Boolean indicating if new profiles should be created on each test run.
 - **TEST_USER_SSN**: A test users social security number.
 - **TEST_USER_UUID** A test users UUID.
@@ -64,6 +65,9 @@ APP_DEBUG="TRUE"
 
 # Set the disabled form variants.
 DISABLED_FORM_VARIANTS="success,draft"
+
+# Set the enabled form variants. If this is set, only variants specified here will be run.
+ENABLED_FORM_VARIANTS="copy"
 
 # Force profile creation.
 CREATE_PROFILE="FALSE"
