@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Locator, Page, expect, test } from '@playwright/test';
-import {selectRole} from "../utils/auth_helpers";
+import {selectRole} from "../../utils/auth_helpers";
 import path from 'path';
 
 const PATH_TO_TEST_PDF = path.join(__dirname, './data/attachments/test.pdf');
