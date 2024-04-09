@@ -56,24 +56,45 @@ The file should be located in the `/e2e` directory.
 
 Example `.env` file:
 ```
-# ATV SETUP.
+# =======================
+# ENVIRONEMNT VARIABLES
+#
+# Copy this file to create a .env file and make necessary changes.
+# NOTE! Copy the relevant values from local.settings.php to these environment variables.
+# NOTE! The following keys have to be set for the tests to work:
+# ATV_BASE_URL, TEST_ATV_URL, ATV_API_KEY, APP_ENV, TEST_USER_SSN, TEST_USER_UUID.
+# =======================
+
 ATV_BASE_URL="https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi"
 TEST_ATV_URL="https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi"
 ATV_API_KEY="{ENTER A ATV API KEY}"
 APP_ENV="{ENTER A APP ENV}"
 
-# Enable debug mode. Primarily used for logging messages.
-APP_DEBUG="TRUE"
-
 # Set the disabled form variants.
-DISABLED_FORM_VARIANTS="success,missing_values"
+# A "form variant" is a type of form test. If you want to disable
+# everything except the "draft" test (saves a form as a draft), you can use this:
+# DISABLED_FORM_VARIANTS="success,copy,missing_values,wrong_values,wrong_email,wrong_email_2,wrong_email_3,under5000"
+DISABLED_FORM_VARIANTS="success"
 
-# Force profile creation.
+# A flag indicating if profile creation should be forced during test runs.
+# If you set this to "FALSE", a new profile will only be created once every hour,
+# leading to faster tests.
 CREATE_PROFILE="FALSE"
 
-# Testa user data (SSN (SOTU) and UUID).
-TEST_USER_SSN="{TEST USER SOCAIL SECURITY NUMBER}"
-TEST_USER_UUID="{TEST USER UUID}"
+# A flag indicating if the "debugging mode" should be turned on.
+# Messages will be printed during test runs if set to "TRUE".
+APP_DEBUG="TRUE"
+
+# Test user SSN (sotu) and UUID.
+# Both of these can be fetched from a submitted ATV document using Postman.
+# These can and should be changed for your own testing credentials.
+TEST_USER_SSN="090797-999P"
+TEST_USER_UUID="13cb60ae-269a-46da-9a43-da94b980c067"
+
+# Environemnt cleanup: clean-env.sh searches for these
+# IDs from ATV and removes any found documents.
+USER_IDS=("uuid1" "uuid2" "uuid3")
+BUSINESS_IDS=("business1" "business2" "business3")
 ```
 
 ## Running E2E tests
@@ -128,9 +149,9 @@ make test-pw-profiles
 
 ### Running tests on your local machine (in the /e2e directory)
 Running tests on your local machine is discouraged and should only be done if
-running them in a docker container is not an option. Might be needed in a situation
-where a certain feature (such as headed mode) doesn't work on all operating systems when
-executed via a container.
+running them in a docker container is not an option. This might be needed in a situation
+where a certain feature (such as headed mode) doesn't work on your operating systems when
+executing tests via a container.
 
 To run all tests (this runs all tests defined under the `projects` key in `playwright.config.ts`):
 ```
