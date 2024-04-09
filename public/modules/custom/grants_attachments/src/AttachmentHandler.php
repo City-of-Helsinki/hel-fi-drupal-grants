@@ -883,7 +883,7 @@ class AttachmentHandler {
 
     if ($bankAccountAttachment) {
       try {
-        $integrationId = self::cleanIntegrationId($bankAccountAttachment['integrationID']);
+        $integrationId = AttachmentHandlerHelper::cleanIntegrationId($bankAccountAttachment['integrationID']);
         $this->atvService->deleteAttachmentViaIntegrationId($integrationId);
 
         $this->eventService->logEvent(
