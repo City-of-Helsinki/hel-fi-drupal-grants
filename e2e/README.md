@@ -45,9 +45,9 @@ The file should be located in the `/e2e` directory.
 - **ATV_BASE_URL**: The base url for ATV.
 - **TEST_ATV_URL**: The ATV test url (same as above).
 - **ATV_API_KEY**: The ATV API key.
-- **APP_ENV**: The local APP env.
-- **TEST_USER_SSN**: A test users social security number.
-- **TEST_USER_UUID** A test users UUID.
+- **APP_ENV**: The local APP env (usually LOCAL{X}, where {X} is exchanged for the first letter in your last name, like LOCALT).
+- **TEST_USER_SSN**: A test users social security number (can be found from a ATV document in Postman).
+- **TEST_USER_UUID** A test users UUID (can be found from a ATV document in Postman).
 
 #### Optional:
 - **APP_DEBUG**: Boolean indicating if messages should be printed to the terminal when running tests.
@@ -105,7 +105,7 @@ BUSINESS_IDS=("business1" "business2" "business3")
 
 ### TL;DR
 
-RUN ALL FORM TESTS:
+RUN ALL FORM TESTS (not that this will run every single E2E test, and it is going to take around 2 hours):
 ```
 make test-pw
 ```
