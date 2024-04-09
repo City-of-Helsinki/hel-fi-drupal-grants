@@ -6,11 +6,17 @@ import {logger} from "./logger";
  * This function sets the disabled from variants to the env
  * variable DISABLED_FORM_VARIANTS. Disabled form variants are
  * read from the .env file, and should be located under the key
- * DISABLED_FORM_VARIANTS.
+ * DISABLED_FORM_VARIANTS. The DISABLED_FORM_VARIANTS is set to
+ * 'FALSE' if ENABLED_FORM_VARIANTS is set, since they take priority.
  *
  * Ex: DISABLED_FORM_VARIANTS="success,draft,missing_values"
  */
 const setDisabledFormVariants = (): void => {
+  if (process.env.ENABLED_FORM_VARIANTS) {
+    process.env.DISABLED_FORM_VARIANTS = 'FALSE';
+    logger('ENABLED_FORM_VARIANTS has been set in .env. Skipping filtering based on disabled variants.');
+    return;
+  }
   if (!process.env.DISABLED_FORM_VARIANTS) {
     process.env.DISABLED_FORM_VARIANTS = 'FALSE';
     logger('DISABLED_FORM_VARIANTS has not been set in .env. Running all form variant tests.');
@@ -30,8 +36,6 @@ const setDisabledFormVariants = (): void => {
  * ENABLED_FORM_VARIANTS.
  *
  * Ex: ENABLED_FORM_VARIANTS="success,draft,missing_values"
- *
- * Only these tests are run.
  */
 const setEnabledFormVariants = (): void => {
   if (!process.env.ENABLED_FORM_VARIANTS) {
@@ -41,7 +45,7 @@ const setEnabledFormVariants = (): void => {
   }
   const variants = process.env.ENABLED_FORM_VARIANTS.split(',').map(variant => variant.trim());
   process.env.ENABLED_FORM_VARIANTS = JSON.stringify(variants);
-  logger(`Running tests for variants: ${variants}`);
+  logger(`Enabled form variants: ${variants}`);
 };
 
 /**
@@ -107,7 +111,7 @@ const getFormVariantsForTests = (applications: any): any => {
   const disabledFormVariants = getDisabledFormVariants();
   const enabledFormVariants = getEnabledFormVariants();
 
-  // Check if we have explicitly enableb variants, and if so run only those tests
+  // Check if we have explicitly enabled variants, and if so run only those tests
   if (enabledFormVariants.length > 0) {
     Object.keys(applications).forEach(applicationId => {
       Object.keys(applications[applicationId]).forEach(formVariant => {
