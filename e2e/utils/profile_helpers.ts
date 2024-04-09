@@ -1,11 +1,14 @@
-import {expect, Page,} from '@playwright/test';
-import {logger} from "./logger";
+import {Page,} from '@playwright/test';
 import {FormData} from "./data/test_data"
+import {logger} from "./logger";
 import {deleteGrantsProfiles, fetchLatestProfileByType} from "./document_helpers";
 import {fillProfileForm} from "./form_helpers";
 
 /**
  * The function isTimestampLessThanAnHourAgo.
+ *
+ * This functions checks whether the passed in timestamp
+ * is more than one (1) hour old.
  *
  * @param timestamp
  */
