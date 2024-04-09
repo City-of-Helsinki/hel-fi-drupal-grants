@@ -1,5 +1,5 @@
 import {logger} from "./logger";
-import {getKeyValue} from './env_helpers';
+import {getKeyValue, getAppEnvForATV} from './env_helpers';
 
 interface ATVMetadata {
   appenv: string;
@@ -18,38 +18,18 @@ interface ATVDocument {
   metadata: ATVMetadata
 }
 
-interface PaginatedDocumentlist {
+interface PaginatedDocumentList {
   count: number;
   next: string | null;
   previous: string | null;
   results: ATVDocument[]
 }
 
+// Setup ATV keys.
 const ATV_API_KEY = getKeyValue('ATV_API_KEY');
 const ATV_BASE_URL = getKeyValue('TEST_ATV_URL');
-const BASE_HEADERS = {'X-API-KEY': ATV_API_KEY};
 const APP_ENV_FOR_ATV = getAppEnvForATV();
-
-/**
- * The getAppEnvForATV function.
- *
- * This function returns the current "App env".
- * The functionality mimics that of ApplicationHandler.php.
- */
-function getAppEnvForATV() {
-  const APP_ENV = getKeyValue('APP_ENV');
-
-  switch (APP_ENV) {
-    case "development":
-      return "DEV"
-    case "testing":
-      return "TEST"
-    case "staging":
-      return "STAGE"
-    default:
-      return APP_ENV.toUpperCase()
-  }
-}
+const BASE_HEADERS = {'X-API-KEY': ATV_API_KEY};
 
 /**
  * The fetchLatestProfileByType function.
@@ -87,7 +67,7 @@ const fetchLatestProfileByType = (userUUID: string, profileType: string) => {
  * @param url
  *   The URL we are making a request to.
  */
-const fetchDocumentList = async (url: string): Promise<PaginatedDocumentlist | null> => {
+const fetchDocumentList = async (url: string): Promise<PaginatedDocumentList | null> => {
   try {
     const res = await fetch(url, {headers: BASE_HEADERS});
     if (!res.ok) {
@@ -139,7 +119,7 @@ const deleteGrantsProfiles = async (testUserUUID: string, profileType: string) =
   let deletedDocumentsCount = 0;
 
   while (currentUrl != null) {
-    const documentList: PaginatedDocumentlist|null = await fetchDocumentList(currentUrl);
+    const documentList: PaginatedDocumentList|null = await fetchDocumentList(currentUrl);
 
     if (!documentList) return;
 

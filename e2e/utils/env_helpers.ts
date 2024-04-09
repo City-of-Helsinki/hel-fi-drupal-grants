@@ -143,9 +143,31 @@ const getKeyValue = (key: string) => {
   return '';
 };
 
+/**
+ * The getAppEnvForATV function.
+ *
+ * This function returns the current "App env" from the .env file.
+ * The functionality mimics that of ApplicationHandler.php.
+ */
+const getAppEnvForATV = () => {
+  const APP_ENV = getKeyValue('APP_ENV');
+
+  switch (APP_ENV) {
+    case "development":
+      return "DEV"
+    case "testing":
+      return "TEST"
+    case "staging":
+      return "STAGE"
+    default:
+      return APP_ENV.toUpperCase()
+  }
+}
+
 export {
   checkEnvVariables,
   saveObjectToEnv,
   getObjectFromEnv,
   getKeyValue,
+  getAppEnvForATV,
 }
