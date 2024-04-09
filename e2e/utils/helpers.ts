@@ -1,5 +1,4 @@
 import {Locator, Page} from "@playwright/test";
-import {logger} from "./logger";
 
 /**
  * The slowLocator function.
