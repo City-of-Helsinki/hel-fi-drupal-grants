@@ -10,7 +10,7 @@ import {
   isDynamicMultiValueField, FormPage
 } from "./data/test_data"
 
-import {extractUrl} from "./helpers";
+import {extractPath} from "./helpers";
 import {saveObjectToEnv} from "./env_helpers";
 
 /**
@@ -70,7 +70,7 @@ const fillGrantsFormPage = async (
 
   // Store submissionUrl.
   // const applicationId = await getApplicationNumberFromBreadCrumb(page);
-  const submissionUrl = await extractUrl(page);
+  const submissionUrl = await extractPath(page);
 
   // Hide the sliding popup once.
   await hideSlidePopup(page);
@@ -1200,6 +1200,7 @@ export {
   fillSelectField,
   fillInputField,
   fillCheckboxField,
+  getApplicationNumberFromBreadCrumb,
   fillHakijanTiedotRegisteredCommunity,
   fillHakijanTiedotPrivatePerson,
   fillHakijanTiedotUnregisteredCommunity
