@@ -1,6 +1,6 @@
-import { chromium, type FullConfig } from '@playwright/test';
+import { type FullConfig } from '@playwright/test';
 import {setDebugMode} from "../utils/debugging_helpers";
-import {setDisabledFormVariants} from "../utils/form_variant_helpers";
+import {setDisabledFormVariants, setEnabledFormVariants} from "../utils/form_variant_helpers";
 import {checkEnvVariables} from "../utils/env_helpers";
 
 /**
@@ -21,4 +21,5 @@ module.exports = async (config: FullConfig) => {
   checkEnvVariables();
   setDebugMode();
   setDisabledFormVariants();
+  setEnabledFormVariants();
 };

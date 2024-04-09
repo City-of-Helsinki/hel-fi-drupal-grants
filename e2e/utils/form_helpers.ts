@@ -10,7 +10,7 @@ import {
   isDynamicMultiValueField, FormPage
 } from "./data/test_data"
 
-import {saveObjectToEnv, extractUrl} from "./helpers";
+import {saveObjectToEnv, extractPath} from "./helpers";
 import {fi} from "@faker-js/faker";
 
 
@@ -112,7 +112,7 @@ const fillGrantsFormPage = async (
 
   // Store submissionUrl.
   const applicationId = await getApplicationNumberFromBreadCrumb(page);
-  const submissionUrl = await extractUrl(page);
+  const submissionUrl = await extractPath(page);
 
   // Hide the sliding popup once.
   await hideSlidePopup(page);
@@ -459,6 +459,7 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
   // Make sure that no expected errors are missing.
   if (expectedErrors.length > 0 && notFoundErrors.length !== 0) {
     logger('MISMATCH IN FORM ERRORS!')
+    logger('All error messages on the page:', actualErrorMessages);
     logger('The following errors were expected:', expectedErrors);
     logger('The following errors were found:', foundErrors);
     logger('The following errors are missing:', notFoundErrors);
@@ -1355,6 +1356,7 @@ export {
   fillHakijanTiedotRegisteredCommunity,
   fillSelectIfElementExists,
   fillHakijanTiedotPrivatePerson,
-  fillHakijanTiedotUnregisteredCommunity
+  fillHakijanTiedotUnregisteredCommunity,
+  getApplicationNumberFromBreadCrumb,
 };
 

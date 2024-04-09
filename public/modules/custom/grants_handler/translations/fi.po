@@ -626,3 +626,6 @@ msgstr "Palvelusivua ei löytynyt!"
 msgctxt "grants_handler"
 msgid "Email"
 msgstr "Sähköposti"
+
+msgid "The email address %mail is not valid. Use the format user@example.com."
+msgstr "%mail ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com."
