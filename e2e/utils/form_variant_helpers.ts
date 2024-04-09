@@ -24,12 +24,14 @@ const setDisabledFormVariants = (): void => {
 /**
  * The setEnabledFormVariants function.
  *
- * This function sets the disabled from variants to the env
- * variable DISABLED_FORM_VARIANTS. Disabled form variants are
+ * This function sets the enabled from variants to the env
+ * variable ENABLED_FORM_VARIANTS. Enabled form variants are
  * read from the .env file, and should be located under the key
- * DISABLED_FORM_VARIANTS.
+ * ENABLED_FORM_VARIANTS.
  *
- * Ex: DISABLED_FORM_VARIANTS="success,draft,missing_values"
+ * Ex: ENABLED_FORM_VARIANTS="success,draft,missing_values"
+ *
+ * Only these tests are run.
  */
 const setEnabledFormVariants = (): void => {
   if (!process.env.ENABLED_FORM_VARIANTS) {
