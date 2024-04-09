@@ -79,3 +79,7 @@ msgstr "Bilaga"
 msgctxt "grants_handler"
 msgid "Subvention type"
 msgstr "Typ av bidrag"
+
+msgctxt "grants_metadata"
+msgid "File name"
+msgstr "Filnamn"

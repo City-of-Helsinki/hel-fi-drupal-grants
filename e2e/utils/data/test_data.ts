@@ -113,6 +113,7 @@ interface FormData {
   expectedDestination?: string;
   expectedErrors: {},
   viewPageSkipValidation?: boolean,
+  testFormCopying?: boolean,
 }
 
 interface PageHandlers {

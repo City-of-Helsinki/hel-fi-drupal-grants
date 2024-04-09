@@ -51,6 +51,7 @@ The file should be located in the `/e2e` directory.
 
 #### Optional:
 - **APP_DEBUG**: Boolean indicating if messages should be printed to the terminal when running tests.
+- **ENABLED_FORM_VARIANTS**: Can be used to explicitly run specific form variants. Others are skipped.
 - **DISABLED_FORM_VARIANTS**: Can be used to disable form variants (types of form tests).
 - **CREATE_PROFILE**: Boolean indicating if new profiles should be created on each test run.
 
@@ -75,6 +76,9 @@ APP_ENV="{ENTER A APP ENV}"
 # everything except the "draft" test (saves a form as a draft), you can use this:
 # DISABLED_FORM_VARIANTS="success,copy,missing_values,wrong_values,wrong_email,wrong_email_2,wrong_email_3,under5000"
 DISABLED_FORM_VARIANTS="success"
+
+# Set the enabled form variants. If this is set, only variants specified here will be run.
+ENABLED_FORM_VARIANTS="copy"
 
 # A flag indicating if profile creation should be forced during test runs.
 # If you set this to "FALSE", a new profile will only be created once every hour,

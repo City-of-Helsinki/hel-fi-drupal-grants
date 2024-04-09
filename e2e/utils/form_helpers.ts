@@ -411,6 +411,7 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
   // Make sure that no expected errors are missing.
   if (expectedErrors.length > 0 && notFoundErrors.length !== 0) {
     logger('MISMATCH IN FORM ERRORS!')
+    logger('All error messages on the page:', actualErrorMessages);
     logger('The following errors were expected:', expectedErrors);
     logger('The following errors were found:', foundErrors);
     logger('The following errors are missing:', notFoundErrors);
