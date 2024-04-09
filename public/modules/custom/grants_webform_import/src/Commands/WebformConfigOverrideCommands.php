@@ -9,8 +9,8 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\grants_handler\ApplicationHandler;
 use Drush\Commands\DrushCommands;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Yaml\Parser;
-use Webmozart\PathUtil\Path;
 
 /**
  * Class to import overridden Webform configurations.

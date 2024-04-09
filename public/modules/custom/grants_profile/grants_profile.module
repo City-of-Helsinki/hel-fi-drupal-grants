@@ -386,6 +386,7 @@ function grants_profile_preprocess_page(&$vars) {
   if ($route_name === 'user.login' || $route_name === 'system.403' || $route_name === 'system.401') {
     $block_ids = \Drupal::entityQuery('block_content')
       ->condition('field_login_type', 0)
+      ->accessCheck(FALSE)
       ->execute();
 
     $blocks = \Drupal::entityTypeManager()->getStorage('block_content')->loadMultiple($block_ids);

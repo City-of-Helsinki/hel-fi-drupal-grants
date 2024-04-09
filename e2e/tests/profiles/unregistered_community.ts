@@ -1,101 +1,76 @@
-import {Page, test} from '@playwright/test';
+import {expect, Page, test} from '@playwright/test';
 import {logger} from "../../utils/logger";
+import {runProfileFormTest, isProfileCreated} from '../../utils/profile_helpers';
+import {selectRole} from "../../utils/auth_helpers";
+import {validateExistingProfileData, validateProfileData} from "../../utils/validation_helpers";
+import {profileDataUnregisteredCommunity as profileData, FormData} from '../../utils/data/test_data'
 
-import {
-    isProfileCreated
-} from '../../utils/profile_helpers';
-import {
-  fillProfileForm,
-} from '../../utils/form_helpers'
-
-import {
-    profileDataUnregisteredCommunity,
-     FormData,
-} from '../../utils/data/test_data'
-
-import {
-  deleteGrantsProfiles
-} from "../../utils/document_helpers";
-
-import { selectRole } from "../../utils/auth_helpers";
-
-const profileVariableName = 'profileCreatedUnregistered';
-const profileType = 'unregistered_community';
-
-test.describe('Unregistered Community - Grants Profile', async () => {
+test.describe('Unregistered Community - Grants Profile', () => {
   let page: Page;
+  let profileExists: boolean;
+  let validateExistingProfile: boolean = false;
+  const testDataArray: [string, FormData][] = Object.entries(profileData);
+  const profileType = 'unregistered_community';
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
+    profileExists = await isProfileCreated(profileType);
 
-    // page.locator = slowLocator(page, 500);
-
-    await selectRole(page, 'UNREGISTERED_COMMUNITY', 'new');
-  });
-
-  test.beforeEach(async () => {
-    /*
-    1. If you want to skip tests during test declaration, you should use test.skip() inside the test.describe() callback.
-    2. If you want to skip tests during test execution, you should use test.skip() inside the beforeEach() hook.
-    */
-    const skip = await isProfileCreated(profileVariableName, profileType);
-    test.skip(skip);
-  });
-  // @ts-ignore
-  test('Profile creation', async () => {
-    const testDataArray: [string, FormData][] = Object.entries(profileDataUnregisteredCommunity);
-    let successTest: FormData;
-    for (const [key, obj] of testDataArray) {
-
-      if (key === 'success') {
-        successTest = obj;
-      } else {
-        // We must delete here manually profiles, since we don't want to do this always.
-        const deletedDocumentsCount = await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
-        const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-        logger(infoText);
-
-        await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
-        // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
-      }
-    }
-
-    // @ts-ignore
-    if (successTest) {
-
-      // We must delete here manually profiles, since we don't want to do this always.
-      const deletedDocumentsCount = await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
-      const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-      logger(infoText, successTest.formSelector);
-
-      await fillProfileForm(page, successTest, successTest.formPath ?? '', successTest.formSelector);
-    }
-  });
-
-
-  test('Test Grants profile data', async () => {
-    logger('Hakuprofiili');
-    await page.goto("/fi/oma-asiointi/hakuprofiili");
-
-    // joko tässä tai sit tossa ylläolevassa funkkarissa vois tarkistaa myös,
-    // että kaikki tallennetut kentät löytyy myös profiilista.
-
-  });
-})
-
-test.afterAll(() => {
-    // @ts-ignore
-    const hasFailedTests = globalThis.testResults?.numFailedTests > 0;
-
-    // tässä vois ehkä vielä ihan tarkistaa jostain, että profiili löytyy oikeesti atvsta..
-
-    if (hasFailedTests) {
-        logger('There were failed tests in this test file.');
-        process.env.profileExistsPrivate = 'FALSE';
+    if (profileExists) {
+      await selectRole(page, 'UNREGISTERED_COMMUNITY', 'existing');
     } else {
-        logger('All tests in this file passed.');
-        process.env.profileExistsPrivate = 'TRUE';
+      await selectRole(page, 'UNREGISTERED_COMMUNITY', 'new');
     }
-});
+  });
 
+  test.afterAll(() => {
+    expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
+    logger(`Profile exist for: ${profileType}`);
+  });
+
+  test('Profile form tests', async () => {
+    if (profileExists) {
+      logger('Profile already exists, skipping test.');
+      test.skip(profileExists);
+    }
+
+    logger('Running profile form tests.')
+    for (const [key, formData] of testDataArray) {
+      if (key === 'success') continue;
+      await runProfileFormTest(page, formData, profileType);
+    }
+
+    const successTestFormData = testDataArray.find(([key]) => key === 'success')?.[1];
+    if (successTestFormData) await runProfileFormTest(page, successTestFormData, profileType);
+  });
+
+  test('Validate profile data', async () => {
+    if (profileExists) {
+      logger('Profile already exists, skipping test.');
+      test.skip(profileExists);
+    }
+
+    logger('Validating profile form data.')
+    for (const [key, obj] of testDataArray) {
+      if (obj.viewPageSkipValidation) continue;
+      await validateProfileData(page, obj, key, profileType);
+    }
+
+    // Since profile data was just validated, there is no need to validate an exciting profile.
+    validateExistingProfile = true;
+    process.env[`profile_exists_${profileType}`] = 'TRUE';
+  });
+
+  test('Validate existing profile', async () => {
+    if (validateExistingProfile) {
+      logger('Data already validated, skipping test.');
+      test.skip(validateExistingProfile);
+    }
+
+    logger('Validating existing profile data.')
+    await validateExistingProfileData(page, profileType);
+    process.env[`profile_exists_${profileType}`] = 'TRUE';
+  });
+
+});
 

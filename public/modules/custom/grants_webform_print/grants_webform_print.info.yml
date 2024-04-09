@@ -3,7 +3,7 @@ type: module
 description: 'Create a printable view of an unfilled webform.'
 package: 'helfi'
 version: 0.1
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^9 || ^10
 dependencies:
   - 'webform:webform'
   - grants_premises

@@ -626,3 +626,6 @@ msgstr "Servicesidan hittades inte!"
 msgctxt "grants_handler"
 msgid "Email"
 msgstr "E-post"
+
+msgid "The email address %mail is not valid. Use the format user@example.com."
+msgstr "%mail är inte en giltig e-postadress. Använd formen user@example.com."
