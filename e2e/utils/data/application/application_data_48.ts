@@ -923,7 +923,7 @@ const wrongEmail: FormDataWithRemoveOptionalProps = {
     },
   },
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: ääkkösiävaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
   },
 };
 
@@ -971,7 +971,7 @@ const wrongEmail3: FormDataWithRemoveOptionalProps = {
     },
   },
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite vaaraemaili ei kelpaa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: vaaraemaili ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
   },
 };
 
