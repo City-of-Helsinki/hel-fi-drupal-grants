@@ -5,18 +5,13 @@ import {validateHiddenFields} from "./validation_helpers";
 import {saveObjectToEnv, extractPath} from "./helpers";
 import {fillFormField, clickButton} from './input_helpers'
 import {Page, expect, test} from "@playwright/test";
-import {FormData, PageHandlers, FormPage} from "./data/test_data"
+import {FormData, PageHandlers} from "./data/test_data"
 
 /**
- * Fill form pages from given data array. Calls the pagehandler callbacks for
- * every page set up in formDetails object.
+ * The fillGrantsFormPage function.
  *
- * If one wants to slow down operations, for example to see what happens with
- * headed test run:
- *
- * <code>
- * ´page.locator = slowLocator(page, 10000);´
- *  </code>
+ * This function fills form pages from given data array. Calls the page handler
+ * callbacks for every page set up in the formDetails object.
  *
  * @param formKey
  *  Form data key for saving to process.env the application info.
@@ -29,6 +24,7 @@ import {FormData, PageHandlers, FormPage} from "./data/test_data"
  * @param formClass
  *  Form CSS class, to identify form we're on.
  * @param formID
+ *   The form ID.
  * @param profileType
  *  Profile type used for this form. Private, registered..
  * @param pageHandlers
@@ -44,14 +40,13 @@ const fillGrantsFormPage = async (
   profileType: string,
   pageHandlers: PageHandlers
 ) => {
-
-  // Navigate to form url.
-  await page.goto(formPath);
   logger('FORM', formPath, formClass);
 
-  // Assertions based on the expected destination
+  // Navigate to form url and make sure we get there. Skip the test otherwise.
+  await page.goto(formPath);
   const initialPathname = new URL(page.url()).pathname;
   const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
+
   try {
     expect(initialPathname).toMatch(expectedPattern);
   } catch (error) {
@@ -62,48 +57,25 @@ const fillGrantsFormPage = async (
   // Make sure the needed profile exists.
   expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
 
-  // Store submissionUrl.
+  // Store the submission URL.
   const submissionUrl = await extractPath(page);
 
-  // Hide the sliding popup once.
+  // Hide the sliding popup.
   await hideSlidePopup(page);
 
-  // Loop form pages
-  for (const [formPageKey, formPageObject]
-    of Object.entries(formDetails.formPages)) {
-
-    // Print out form page we're on.
+  // Loop form pages.
+  for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
     logger('Form page:', formPageKey);
 
-    // If we're on the preview page
+    // Wait for the page to load.
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('load');
+    await page.waitForLoadState('networkidle');
+
+    // Validate form errors on the preview page.
     if (formPageKey === 'webform_preview') {
-      // Compare expected errors with actual error messages on the page.
       const errorClass = '.hds-notification--error .hds-notification__body ul li';
       await validateFormErrors(page, formDetails.expectedErrors, errorClass);
-    }
-
-    const buttons = [];
-    // Loop through items on the current page
-    for (const [itemKey, itemField]
-      of Object.entries(formPageObject.items)) {
-      if (itemField.role === 'button') {
-        // Collect buttons to be clicked later
-        buttons.push(itemField);
-      }
-    } // end itemField for
-
-
-    /**
-     * If page handler for this form page exists, call that to do the heavy
-     * lifting for this page.
-     */
-    if (pageHandlers[formPageKey]) {
-      await page.waitForLoadState('domcontentloaded');
-      await page.waitForLoadState('load');
-      await page.waitForLoadState('networkidle');
-      await pageHandlers[formPageKey](page, formPageObject);
-    } else {
-      continue;
     }
 
     // Make sure hidden fields are not visible.
@@ -111,45 +83,54 @@ const fillGrantsFormPage = async (
       await validateHiddenFields(page, formPageObject.itemsToBeHidden, formPageKey);
     }
 
-    /**
-     * If we've gathered buttons above, we take the first one and just click it.
-     */
-    if (buttons.length > 0) {
-      const firstButton = buttons[0];
-      if (firstButton.selector) {
-        await clickButton(page, firstButton.selector);
+    // Call a page handler to fill in the form page.
+    if (pageHandlers[formPageKey]) {
+      await pageHandlers[formPageKey](page, formPageObject);
+    } else {
+      continue;
+    }
 
-        // Here we already are on the new page that is loaded via clickButton
-
-        /**
-         * If button is to save draft, then we verify that we got to page we
-         * wanted.
-         */
-        if (firstButton.value === 'save-draft') {
-          await verifyDraftSave(
-            page,
-            formPageKey,
-            formPageObject,
-            formID,
-            profileType,
-            submissionUrl,
-            formKey
-          );
-        }
-        /**
-         * If submit button is clicked, verify that.
-         */
-        if (firstButton.value === 'submit-form') {
-          await verifySubmit(
-            page,
-            formPageKey,
-            formPageObject,
-            formID,
-            profileType,
-            submissionUrl,
-            formKey);
-        }
+    // Collect any buttons on the page.
+    const buttons = [];
+    for (const itemField of Object.values(formPageObject.items)) {
+      if (itemField.role === 'button') {
+        buttons.push(itemField);
       }
+    }
+
+    // Continue if we don't have any buttons.
+    if (!buttons.length) continue;
+
+    // Continue if the buttons hasn't defined a selector and value.
+    const firstButton = buttons[0];
+    if (!firstButton.selector || !firstButton.value) continue;
+
+    // Click the first button.
+    await clickButton(page, firstButton.selector);
+
+    // Verify application draft save if we had that button.
+    if (firstButton.value === 'save-draft') {
+      await verifyDraftSave(
+        page,
+        formPageKey,
+        formPageObject,
+        formID,
+        profileType,
+        submissionUrl,
+        formKey
+      );
+    }
+
+    // Verify application submit if we had that button.
+    if (firstButton.value === 'submit-form') {
+      await verifySubmit(
+        page,
+        formPageKey,
+        formPageObject,
+        formID,
+        profileType,
+        submissionUrl,
+        formKey);
     }
   }
 }
