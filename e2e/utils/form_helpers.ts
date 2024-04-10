@@ -1,6 +1,7 @@
 import cloneDeep from "lodash.clonedeep"
 import {logger} from "./logger";
 import {hideSlidePopup} from "./helpers";
+import {validateFormErrors} from "./error_validation_helpers";
 import {Page, expect, Locator, test} from "@playwright/test";
 import {
   FormData,
@@ -84,8 +85,9 @@ const fillGrantsFormPage = async (
 
     // If we're on the preview page
     if (formPageKey === 'webform_preview') {
-      // compare expected errors with actual error messages on the page.
-      await validateFormErrors(page, formDetails.expectedErrors);
+      // Compare expected errors with actual error messages on the page.
+      const errorClass = '.hds-notification--error .hds-notification__body ul li';
+      await validateFormErrors(page, formDetails.expectedErrors, errorClass);
     }
 
     const buttons = [];
@@ -189,10 +191,6 @@ const fillProfileForm = async (
   // Hide the sliding popup once.
   await hideSlidePopup(page);
 
-  // Assertions based on the expected destination
-  // const initialPathname = new URL(page.url()).pathname;
-  // expect(initialPathname).toMatch(new RegExp(`^${formDetails.expectedDestination}/?$`));
-
   // Loop form pages
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
     const buttons = [];
@@ -217,53 +215,9 @@ const fillProfileForm = async (
 
     await page.waitForLoadState("load");
 
-    // Capture all error messages on the page.
-    const allErrorElements = await page.$$('.form-item--error-message'); // Adjust selector based on your actual HTML structure
-    const actualErrorMessages = await Promise.all(
-      allErrorElements.map(async (element) => await element.innerText())
-    );
-
-    // Get the expected errors.
-    const expectedErrors = Object.entries(formDetails.expectedErrors);
-    const expectedErrorsArray = expectedErrors.map(([selector, expectedErrorMessage]) => expectedErrorMessage);
-
-    // Check if we get errors even if we're not waiting for any.
-    if (expectedErrors.length === 0) {
-      if (actualErrorMessages.length !== 0) {
-        console.debug('ERRORS, expected / actual', expectedErrors, actualErrorMessages);
-      }
-      expect(actualErrorMessages.length).toBe(0);
-    }
-
-    // Check for expected error messages
-    const foundErrors: string[] = [];
-    const notFoundErrors: string[] = [];
-    for (const [selector, expectedErrorMessage] of expectedErrors) {
-      if (expectedErrorMessage && typeof expectedErrorMessage === "string") {
-        if (actualErrorMessages.some((msg) => msg.includes(expectedErrorMessage))) {
-          foundErrors.push(expectedErrorMessage)
-        }
-        else {
-          notFoundErrors.push(expectedErrorMessage)
-        }
-      }
-    }
-
-    // Make sure that no expected errors are missing.
-    if (expectedErrors.length > 0 && notFoundErrors.length !== 0) {
-      logger('MISMATCH IN FORM ERRORS!')
-      logger('The following errors were expected:', expectedErrors);
-      logger('The following errors were found:', foundErrors);
-      logger('The following errors are missing:', notFoundErrors);
-      expect(notFoundErrors).toEqual([]);
-    }
-
-    // Check for unexpected error messages.
-    const unexpectedErrors = actualErrorMessages.filter(msg => !expectedErrorsArray.includes(msg));
-    if (unexpectedErrors.length !== 0) {
-      logger('Unexpected errors:', unexpectedErrors);
-      expect(unexpectedErrors.length).toBe(0);
-    }
+    // Compare expected errors with actual error messages on the page.
+    const errorClass = '.form-item--error-message';
+    await validateFormErrors(page, formDetails.expectedErrors, errorClass);
 
     // Assertions based on the expected destination
     const actualPathname = new URL(page.url()).pathname;
@@ -370,67 +324,6 @@ const validateHiddenFields = async (page: Page, itemsToBeHidden: string[], formP
     await expect(page.locator(hiddenSelector), `Field ${hiddenItem} is not hidden on ${formPageKey}.`).not.toBeVisible();
     logger(`Field ${hiddenItem} is hidden on ${formPageKey}.`)
   }
-}
-
-/**
- * Checks form page for errors.
- *
- * @param page
- * @param expectedErrorsArg
- */
-const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
-
-  // Capture all error messages on the page
-  const errorClass = '.hds-notification--error .hds-notification__body ul li';
-  const actualErrorMessages = await page.locator(errorClass).evaluateAll(elements =>
-    elements.map(element => element.textContent?.trim() || '').filter(text => text.trim().length > 0)
-  );
-
-  // Get configured expected errors from form PAGE
-  const expectedErrors = Object.entries(expectedErrorsArg);
-  const expectedErrorsArray = expectedErrors.map(([selector, expectedErrorMessage]) => expectedErrorMessage);
-
-  // If we're not expecting errors...
-  if (expectedErrors.length === 0) {
-    // Print errors to debug output
-    if (actualErrorMessages.length !== 0) {
-      console.debug('ERRORS, expected / actual', expectedErrors, actualErrorMessages);
-    }
-    // Expect actual error messages size to be 0
-    expect(actualErrorMessages.length).toBe(0);
-  }
-
-  // Check for expected error messages
-  const foundErrors: string[] = [];
-  const notFoundErrors: string[] = [];
-  for (const [selector, expectedErrorMessage] of expectedErrors) {
-    if (expectedErrorMessage) {
-      // If an error is expected, check if it's present in the captured error messages
-      if (actualErrorMessages.some((msg) => msg.includes(<string>expectedErrorMessage))) {
-        foundErrors.push(expectedErrorMessage)
-      } else {
-        notFoundErrors.push(expectedErrorMessage)
-      }
-    }
-  }
-
-  // Make sure that no expected errors are missing.
-  if (expectedErrors.length > 0 && notFoundErrors.length !== 0) {
-    logger('MISMATCH IN FORM ERRORS!')
-    logger('All error messages on the page:', actualErrorMessages);
-    logger('The following errors were expected:', expectedErrors);
-    logger('The following errors were found:', foundErrors);
-    logger('The following errors are missing:', notFoundErrors);
-    expect(notFoundErrors).toEqual([]);
-  }
-
-  // Check for unexpected error messages
-  const unexpectedErrors = actualErrorMessages.filter(msg => !expectedErrorsArray.includes(msg));
-  if (unexpectedErrors.length !== 0) {
-    logger('Unexpected errors:', unexpectedErrors);
-  }
-  // If any unexpected errors are found, the test fails
-  expect(unexpectedErrors.length === 0).toBe(true);
 }
 
 /**
