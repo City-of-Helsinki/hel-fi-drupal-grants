@@ -288,6 +288,21 @@ const hideSlidePopup = async (page: Page) => {
   }
 }
 
+/**
+ * The getApplicationNumberFromBreadCrumb function.
+ *
+ * This functions fetches an applications ID from
+ * the active breadcrumbs and returns the ID.
+ *
+ * @param page
+ *  Playwright page object.
+ */
+const getApplicationNumberFromBreadCrumb = async (page: Page) => {
+  const breadcrumbSelector = '.breadcrumb__link';
+  const breadcrumbLinks = await page.$$(breadcrumbSelector);
+  return await breadcrumbLinks[breadcrumbLinks.length - 1].textContent();
+}
+
 export {
   PATH_TO_TEST_PDF,
   PATH_TO_TEST_EXCEL,
@@ -306,5 +321,6 @@ export {
   extractPath,
   getObjectFromEnv,
   hideSlidePopup,
+  getApplicationNumberFromBreadCrumb,
 };
 

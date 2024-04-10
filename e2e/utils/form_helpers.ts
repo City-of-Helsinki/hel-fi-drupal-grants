@@ -63,7 +63,6 @@ const fillGrantsFormPage = async (
   expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
 
   // Store submissionUrl.
-  const applicationId = await getApplicationNumberFromBreadCrumb(page);
   const submissionUrl = await extractPath(page);
 
   // Hide the sliding popup once.
@@ -292,23 +291,6 @@ const verifySubmit = async (
 }
 
 /**
- * Get application number from breadcrumb path on the page.
- *
- * @param page
- */
-const getApplicationNumberFromBreadCrumb = async (page: Page) => {
-  // Specify the selector for the breadcrumb links
-  const breadcrumbSelector = '.breadcrumb__link';
-
-  // Use page.$$ to get an array of all matching elements
-  const breadcrumbLinks = await page.$$(breadcrumbSelector);
-
-  // Get the text content of the last link
-  return await breadcrumbLinks[breadcrumbLinks.length - 1].textContent();
-
-}
-
-/**
  * Fill Hakijan Tiedot page for registered community.
  *
  * This form page is always the same within applicant type, so we can use
@@ -381,6 +363,5 @@ export {
   fillHakijanTiedotRegisteredCommunity,
   fillHakijanTiedotPrivatePerson,
   fillHakijanTiedotUnregisteredCommunity,
-  getApplicationNumberFromBreadCrumb,
 };
 
