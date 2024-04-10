@@ -1,23 +1,13 @@
 import {Page, test} from '@playwright/test';
-import {
-  FormData,
-  FormPage,
-  PageHandlers,
-} from '../../utils/data/test_data';
-import {
-  fillFormField,
-  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-   uploadFile
-} from '../../utils/form_helpers';
-
-import {
-  registeredCommunityApplications as applicationData
-} from '../../utils/data/application_data';
-import {selectRole} from '../../utils/auth_helpers';
-import {getObjectFromEnv} from '../../utils/helpers';
-import {validateSubmission} from '../../utils/validation_helpers';
+import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
+import {fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity,} from "../../utils/form_helpers";
+import {selectRole} from "../../utils/auth_helpers";
+import {getObjectFromEnv} from "../../utils/helpers";
+import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
+import {fillFormField, uploadFile} from "../../utils/input_helpers";
+import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
 
 const profileType = 'registered_community';
 const formId = '65';
