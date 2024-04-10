@@ -101,9 +101,9 @@ const fillGrantsFormPage = async (
     // Continue if we don't have any buttons.
     if (!buttons.length) continue;
 
-    // Continue if the buttons hasn't defined a selector and value.
+    // Continue if the buttons hasn't defined a selector.
     const firstButton = buttons[0];
-    if (!firstButton.selector || !firstButton.value) continue;
+    if (!firstButton.selector) continue;
 
     // Click the first button.
     await clickButton(page, firstButton.selector);
