@@ -7,7 +7,7 @@ import {
 } from '../../utils/data/test_data';
 import {
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-  hideSlidePopup, uploadFile,fillFormField
+   uploadFile,fillFormField
 } from '../../utils/form_helpers';
 
 import {

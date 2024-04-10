@@ -1,5 +1,6 @@
 import cloneDeep from "lodash.clonedeep"
 import {logger} from "./logger";
+import {hideSlidePopup} from "./helpers";
 import {Page, expect, Locator, test} from "@playwright/test";
 import {
   FormData,
@@ -1011,29 +1012,6 @@ const getApplicationNumberFromBreadCrumb = async (page: Page) => {
   // Get the text content of the last link
   return await breadcrumbLinks[breadcrumbLinks.length - 1].textContent();
 
-}
-
-/**
- * Hide cookie consent popup.
- *
- * @param page
- */
-const hideSlidePopup = async (page: Page) => {
-  try {
-    const slidingPopup = await page.locator('#sliding-popup');
-    const agreeButton = await page.locator('.agree-button.eu-cookie-compliance-default-button');
-
-    await Promise.all([
-      slidingPopup.waitFor({state: 'visible', timeout: 1000}),
-      agreeButton.waitFor({state: 'visible', timeout: 1000}),
-      agreeButton.click(),
-    ]).then(async () => {
-      logger('Closed sliding popup.')
-    });
-  }
-  catch (error) {
-    logger('Sliding popup already closed for this session.')
-  }
 }
 
 /**

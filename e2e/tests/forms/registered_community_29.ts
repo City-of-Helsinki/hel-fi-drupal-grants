@@ -9,7 +9,7 @@ import {
   fillHakijanTiedotRegisteredCommunity,
   fillInputField,
   fillFormField,
-  hideSlidePopup,
+
   uploadFile
 } from '../../utils/form_helpers';
 

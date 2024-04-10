@@ -8,7 +8,7 @@ import {
 import {
   fillFormField,
   fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-  hideSlidePopup, uploadFile
+   uploadFile
 } from '../../utils/form_helpers';
 
 import {

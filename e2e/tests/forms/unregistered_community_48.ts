@@ -4,7 +4,7 @@ import {FormData, PageHandlers, FormPage} from '../../utils/data/test_data';
 import {
   fillGrantsFormPage, fillInputField,
   uploadFile,
-  hideSlidePopup,
+
   fillHakijanTiedotUnregisteredCommunity, fillFormField
 } from '../../utils/form_helpers';
 

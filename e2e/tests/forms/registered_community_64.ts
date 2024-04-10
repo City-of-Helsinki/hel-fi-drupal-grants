@@ -6,7 +6,7 @@ import {
 import {fakerFI as faker} from '@faker-js/faker'
 import {
   fillGrantsFormPage, fillSelectField,
-  hideSlidePopup,
+
   fillHakijanTiedotRegisteredCommunity, fillInputField, uploadFile, fillFormField
 } from '../../utils/form_helpers';
 

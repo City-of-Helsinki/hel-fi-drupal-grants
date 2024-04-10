@@ -9,7 +9,7 @@ import {
   fillInputField,
   fillHakijanTiedotPrivatePerson,
   uploadFile,
-  hideSlidePopup, fillFormField
+   fillFormField
 } from "../../utils/form_helpers";
 
 import {

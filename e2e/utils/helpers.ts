@@ -261,6 +261,33 @@ const extractPath = async (page: Page) => {
   return new URL(fullUrl).pathname;
 }
 
+/**
+ * The hideSlidePopup function.
+ *
+ * This function hides the sliding popup (cookie consent)
+ * banner by clicking the "Agree" button on it.
+ *
+ * @param page
+ *  Playwright page object
+ */
+const hideSlidePopup = async (page: Page) => {
+  try {
+    const slidingPopup = await page.locator('#sliding-popup');
+    const agreeButton = await page.locator('.agree-button.eu-cookie-compliance-default-button');
+
+    await Promise.all([
+      slidingPopup.waitFor({state: 'visible', timeout: 1000}),
+      agreeButton.waitFor({state: 'visible', timeout: 1000}),
+      agreeButton.click(),
+    ]).then(async () => {
+      logger('Closed sliding popup.')
+    });
+  }
+  catch (error) {
+    logger('Sliding popup already closed for this session.')
+  }
+}
+
 export {
   PATH_TO_TEST_PDF,
   PATH_TO_TEST_EXCEL,
@@ -278,5 +305,6 @@ export {
   saveObjectToEnv,
   extractPath,
   getObjectFromEnv,
+  hideSlidePopup,
 };
 
