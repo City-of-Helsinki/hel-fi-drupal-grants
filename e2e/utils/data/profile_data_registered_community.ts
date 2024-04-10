@@ -415,8 +415,8 @@ const ibanTestData: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    'edit-bankaccountwrapper-0-bank-bankaccount': ' Ei hyväksyttävä suomalainen IBAN: IBAN:FI1387667867985882',
-    'edit-bankaccountwrapper-1-bank-bankaccount': ' Ei hyväksyttävä suomalainen IBAN: @FI5777266988169614'
+    'edit-bankaccountwrapper-0-bank-bankaccount': 'Ei hyväksyttävä suomalainen IBAN: IBAN:FI1387667867985882',
+    'edit-bankaccountwrapper-1-bank-bankaccount': 'Ei hyväksyttävä suomalainen IBAN: @FI5777266988169614'
   }
 }
 
