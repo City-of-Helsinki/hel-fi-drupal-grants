@@ -1,8 +1,7 @@
-import {fakerFI as faker} from '@faker-js/faker';
 import {FormData, FormDataWithRemoveOptionalProps,} from "./test_data";
 import {PROFILE_INPUT_DATA} from "./profile_input_data";
 import {ATTACHMENTS} from "./attachment_data";
-import {createFormData} from "../form_helpers";
+import {createFormData} from "../form_data_helpers";
 
 const profileDataBase: FormData = {
   title: 'Save profile data',
