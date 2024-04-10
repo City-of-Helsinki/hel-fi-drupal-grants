@@ -1,7 +1,13 @@
+grants_admin_application.admin_delete:
+  title: ATV data
+  route_name: grants_admin_applications.admin_applications_uuid
+  parent: system.admin_reports
+  description: 'Delete user documents.'
+  weight: -1
 grants_admin_application.admin_reports:
   title: ATV data
-  route_name: grants_admin_applications.admin_applications
-  parent: system.admin_reports
+  route_name: grants_admin_applications.admin_applications_buid
+  parent: grants_admin_application.admin_delete
   description: 'See & delete user documents in ATV.'
   weight: -1
 grants_admin_applications.resend_applications:

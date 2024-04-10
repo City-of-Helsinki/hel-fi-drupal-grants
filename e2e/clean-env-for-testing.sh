@@ -6,7 +6,7 @@
 script_dir="$(dirname "$0")"
 
 # Source the environment variables file
-source "$script_dir/.test_env"
+source "$script_dir/.env"
 
 # Initialize an array to keep track of successfully deleted documents
 declare -a deleted_documents=()
@@ -20,6 +20,9 @@ fetch_and_process_results() {
   local identifier=$2
 
   while [ "$url" != "null" ]; do
+
+    echo $url
+
     local response=$(curl -s --location "$url" \
       --header 'Accept-Encoding: utf8' \
       --header "X-Api-Key: $ATV_API_KEY")
@@ -82,10 +85,10 @@ process_ids() {
 # Main script starts here
 
 # Check and process USER_IDS
-[ -z "${USER_IDS[*]}" ] && echo "USER_IDS is empty, skipping.." || process_ids USER_IDS[@] "UUID" "user_id"
+#[ -z "${USER_IDS[*]}" ] && echo "USER_IDS is empty, skipping.." || process_ids USER_IDS[@] "UUID" "user_id"
 
 # Check and process BUSINESS_IDS
-[ -z "${BUSINESS_IDS[*]}" ] && echo "BUSINESS_IDS is empty, skipping.." || process_ids BUSINESS_IDS[@] "BUSINESS_ID" "business_id"
+#[ -z "${BUSINESS_IDS[*]}" ] && echo "BUSINESS_IDS is empty, skipping.." || process_ids BUSINESS_IDS[@] "BUSINESS_ID" "business_id"
 
 if [ ${#deleted_documents[@]} -eq 0 ]; then
   echo "No documents deleted."

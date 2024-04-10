@@ -44,7 +44,7 @@ class ResendApplicationsForm extends AtvFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): AdminApplicationsForm|static {
+  public static function create(ContainerInterface $container): ResendApplicationsForm|static {
     return new static(
       $container->get('helfi_atv.atv_service')
     );

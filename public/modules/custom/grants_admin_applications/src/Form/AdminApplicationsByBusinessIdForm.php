@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Provides a grants_admin_applications form.
  */
-class AdminApplicationsForm extends FormBase {
+class AdminApplicationsByBusinessIdForm extends FormBase {
 
   /**
    * Access to ATV.
@@ -37,7 +37,7 @@ class AdminApplicationsForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): AdminApplicationsForm|static {
+  public static function create(ContainerInterface $container): AdminApplicationsByBusinessIdForm|static {
     return new static(
       $container->get('helfi_atv.atv_service')
     );
