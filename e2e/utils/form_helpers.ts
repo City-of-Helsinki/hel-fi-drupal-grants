@@ -2,6 +2,7 @@ import cloneDeep from "lodash.clonedeep"
 import {logger} from "./logger";
 import {hideSlidePopup} from "./helpers";
 import {validateFormErrors} from "./error_validation_helpers";
+import {validateHiddenFields} from "./validation_helpers";
 import {saveObjectToEnv, extractPath} from "./helpers";
 import {fillFormField, clickButton} from './input_helpers'
 import {Page, expect, test} from "@playwright/test";
@@ -289,29 +290,6 @@ const verifySubmit = async (page: Page,
   }
   saveObjectToEnv(storeName, newData);
 
-}
-
-/**
- * The validateHiddenFields function.
- *
- * This function checks that the passed in items
- * in itemsToBeHidden are not visible on a given page.
- * The functionality is used in tests where the value of
- * field X alters the visibility of field Y.
- *
- * @param page
- *   Page object from Playwright.
- * @param itemsToBeHidden
- *   An array of items that should be hidden.
- * @param formPageKey
- *   The form page we are on.
- */
-const validateHiddenFields = async (page: Page, itemsToBeHidden: string[], formPageKey: string) => {
-  for (const hiddenItem of itemsToBeHidden) {
-    const hiddenSelector = `[data-drupal-selector="${hiddenItem}"]`;
-    await expect(page.locator(hiddenSelector), `Field ${hiddenItem} is not hidden on ${formPageKey}.`).not.toBeVisible();
-    logger(`Field ${hiddenItem} is hidden on ${formPageKey}.`)
-  }
 }
 
 /**
