@@ -471,25 +471,15 @@ const uploadFile = async (
     logger('No file defined in', uploadSelector);
     return;
   }
-
-  // Setup locators for file input and result link.
-  const fileInput = page.locator(uploadSelector);
-  const resultLink = page.locator(fileLinkSelector);
-
-  // Create a promise for the file upload.
-  const postResponsePromise = page.waitForResponse(response =>
-    response.request().method() === "POST" && response.status() === 200
-  );
-
-  // Wait for all promises to fulfill.
-  await Promise.all([
-    fileInput.waitFor({ state: 'attached', timeout: 30000 }),
-    fileInput.setInputFiles(filePath),
-    postResponsePromise,
-    resultLink.waitFor({ state: 'visible', timeout: 30000 }),
-    expect(fileInput).toBeHidden(),
-  ]);
-
+  const fileChooserPromise = page.waitForEvent('filechooser');
+  const fileInput = await page.locator(uploadSelector);
+  await fileInput.click();
+  const fileChooser = await fileChooserPromise;
+  await fileChooser.setFiles(filePath);
+  await fileInput.waitFor({state: 'hidden'});
+  const resultLink = await page.locator(fileLinkSelector);
+  await expect(fileInput).toBeHidden();
+  await expect(resultLink).toBeVisible();
 }
 
 /**
