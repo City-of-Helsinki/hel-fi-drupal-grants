@@ -15,7 +15,7 @@ import {
   unRegisteredCommunityApplications as applicationData
 } from '../../utils/data/application_data';
 import {selectRole} from '../../utils/auth_helpers';
-import {getObjectFromEnv} from '../../utils/helpers';
+import {getObjectFromEnv} from '../../utils/env_helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";

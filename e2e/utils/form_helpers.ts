@@ -10,50 +10,8 @@ import {
   isDynamicMultiValueField, FormPage
 } from "./data/test_data"
 
-import {saveObjectToEnv, extractPath} from "./helpers";
-import {fi} from "@faker-js/faker";
-
-
-/**
- * Set novalidate for given form. This bypasses the browser validations so that
- * our testing methods actually work.
- *
- * Does not work very well on webform forms.
- *
- * @param page
- * @param formClass
- */
-async function setNoValidate(page: Page, formClass: string) {
-  await page.waitForSelector(`.${formClass}`);
-  logger('Set NOVALIDATE called');
-
-  const formHandle = await page.$(`.${formClass}`);
-
-  if (formHandle) {
-    const isFormPresent = await formHandle.evaluate((form) => {
-      logger('Is Form Present:', form !== null);
-      return form !== null;
-    });
-
-    if (isFormPresent) {
-      logger('Set NOVALIDATE inside formHandle');
-      try {
-        const result = await formHandle.evaluate((form) => {
-          logger('Set NOVALIDATE inside EVALUATE');
-          form.setAttribute('novalidate', '');
-          return 'Evaluation successful';
-        });
-
-        logger('Evaluation Result:', result);
-      } catch (error) {
-        logger('Error inside evaluate:', error);
-      }
-    } else {
-      logger('Form not found in the DOM');
-    }
-  }
-}
-
+import {extractPath} from "./helpers";
+import {saveObjectToEnv} from "./env_helpers";
 
 /**
  * Fill form pages from given data array. Calls the pagehandler callbacks for
@@ -111,7 +69,7 @@ const fillGrantsFormPage = async (
   expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
 
   // Store submissionUrl.
-  const applicationId = await getApplicationNumberFromBreadCrumb(page);
+  // const applicationId = await getApplicationNumberFromBreadCrumb(page);
   const submissionUrl = await extractPath(page);
 
   // Hide the sliding popup once.
@@ -165,9 +123,7 @@ const fillGrantsFormPage = async (
     if (buttons.length > 0) {
       const firstButton = buttons[0];
       if (firstButton.selector) {
-        await clickButton(page, firstButton.selector, formClass, formPageKey);
-
-        // Here we already are on the new page that is loaded via clickButton
+        await clickButton(page, firstButton.selector);
 
         /**
          * If button is to save draft, then we verify that we got to page we
@@ -230,10 +186,6 @@ const fillProfileForm = async (
 
   // Hide the sliding popup once.
   await hideSlidePopup(page);
-
-  // Assertions based on the expected destination
-  // const initialPathname = new URL(page.url()).pathname;
-  // expect(initialPathname).toMatch(new RegExp(`^${formDetails.expectedDestination}/?$`));
 
   // Loop form pages
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
@@ -625,23 +577,8 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
   switch (selector.type) {
     case "data-drupal-selector":
       const customSelector = `[data-drupal-selector="${selector.value}"]`;
-      // Fill field with selector
       await page.locator(customSelector).fill(value);
-
-      // For some fields, playwright does not allow usage of data-drupal-selector
-      // but code below works even worse. Probably because it's missing some
-      // event triggering.
-
-      // If above causes issues, we may need to add support for
-      // page.$eval solution.
-
-      // Use page.$eval to set the value of input elements
-      // await page.$eval(customSelector, (element, value) => {
-      //   (element as HTMLInputElement).value = value ?? '';
-      // }, value);
-
       break;
-
 
     case "data-drupal-selector-sequential":
       const customSequentialSelector = `[data-drupal-selector="${selector.value}"]`;
@@ -964,14 +901,10 @@ const replacePlaceholder = (index: string, placeholder: string, value: string | 
  *
  * @param page
  * @param buttonSelector
- * @param formClass
- * @param nextSelector
  */
 const clickButton = async (
   page: Page,
-  buttonSelector: Selector,
-  formClass?: string,
-  nextSelector?: string) => {
+  buttonSelector: Selector) => {
   let element: Locator | null = null;
 
   switch (buttonSelector.type) {
@@ -995,25 +928,6 @@ const clickButton = async (
     ]);
   }
 };
-
-/**
- * Helper function to generate selectors based on rules. Deprecated?
- *
- * @param type
- * @param selectorValue
- */
-const buildSelector = (type: string, selectorValue: string) => {
-  if (type === 'data-drupal-selector') {
-    return `[${type}="${selectorValue}"]`;
-  }
-
-  if (type === 'locator') {
-    return selectorValue;
-  }
-
-  // Return as is as default
-  return selectorValue;
-}
 
 /**
  * Upload file.
@@ -1227,41 +1141,16 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
 
   if (formItems['edit-community-address-community-address-select']) {
     await page.locator('#edit-community-address-community-address-select').selectOption({ label: formItems['edit-community-address-community-address-select'].value});
-    // await fillSelectField(
-    //   formItems['edit-community-address-community-address-select'].selector ?? {
-    //     type: 'dom-id-first',
-    //     name: 'bank-account-selector',
-    //     value: '#edit-bank-account-account-number-select',
-    //   },
-    //   page,
-    //   undefined);
   }
 
   if (formItems['edit-bank-account-account-number-select']) {
     await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
-    // await fillSelectField(
-    //   formItems['edit-bank-account-account-number-select'].selector ?? {
-    //     type: 'data-drupal-selector',
-    //     name: 'bank-account-selector',
-    //     value: 'edit-bank-account-account-number-select'
-    //   },
-    //   page,
-    //   'use-random-value'
-    // );
   }
 
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
     const partialCommunityOfficialLabel = formItems['edit-community-officials-items-0-item-community-officials-select'].value;
     const optionToSelect = await page.locator('option', { hasText: partialCommunityOfficialLabel }).textContent() || '';
     await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ label: optionToSelect });
-    // await fillSelectField(
-    //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
-    //     type: 'data-drupal-selector',
-    //     name: 'community-officials-selector',
-    //     value: 'edit-community-officials-items-0-item-community-officials-select'
-    //   },
-    //   page,
-    //   'use-random-value');
   }
 }
 
@@ -1277,15 +1166,6 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
 async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
   if (formItems['edit-bank-account-account-number-select']) {
     await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
-    // await fillSelectField(
-    //   formItems['edit-bank-account-account-number-select'].selector ?? {
-    //     type: 'data-drupal-selector',
-    //     name: 'bank-account-selector',
-    //     value: 'edit-bank-account-account-number-select'
-    //   },
-    //   page,
-    //   'use-random-value'
-    // );
   }
 }
 
@@ -1299,48 +1179,15 @@ async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
  * @param page
  */
 async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page) {
-
   if (formItems['edit-bank-account-account-number-select']) {
     await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
-    // await fillSelectField(
-    //   formItems['edit-bank-account-account-number-select'].selector ?? {
-    //     type: 'data-drupal-selector',
-    //     name: 'bank-account-selector',
-    //     value: 'edit-bank-account-account-number-select'
-    //   },
-    //   page,
-    //   'use-random-value'
-    // );
   }
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
     const partialCommunityOfficialLabel = formItems['edit-community-officials-items-0-item-community-officials-select'].value;
     const optionToSelect = await page.locator('option', { hasText: partialCommunityOfficialLabel }).textContent() || '';
     await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ label: optionToSelect });
-    // await fillSelectField(
-    //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
-    //     type: 'data-drupal-selector',
-    //     name: 'community-officials-selector',
-    //     value: 'edit-community-officials-items-0-item-community-officials-select'
-    //   },
-    //   page,
-    //   'use-random-value');
   }
-  // await page.pause();
 }
-
-const fillSelectIfElementExists = async (
-  selector: Partial<FormFieldWithRemove> | undefined,
-  page: Page,
-  value: string
-) => {
-
-
-  if (selector) {
-    await fillSelectField(selector, page, value);
-  }
-
-
-};
 
 export {
   fillProfileForm,
@@ -1353,10 +1200,9 @@ export {
   fillSelectField,
   fillInputField,
   fillCheckboxField,
-  fillHakijanTiedotRegisteredCommunity,
-  fillSelectIfElementExists,
-  fillHakijanTiedotPrivatePerson,
-  fillHakijanTiedotUnregisteredCommunity,
   getApplicationNumberFromBreadCrumb,
+  fillHakijanTiedotRegisteredCommunity,
+  fillHakijanTiedotPrivatePerson,
+  fillHakijanTiedotUnregisteredCommunity
 };
 
