@@ -566,7 +566,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
     },
   },
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: ääkkösiävaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
     'edit-tulo-items-0-item-label': 'Virhe sivulla 3. Talous: Kuvaus tulosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
     'edit-meno-items-0-item-value': 'Virhe sivulla 3. Talous: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon'
   },
