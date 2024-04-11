@@ -26,7 +26,7 @@ import {FormData, PageHandlers} from "./data/test_data"
  * @param formID
  *   The form ID.
  * @param profileType
- *  Profile type used for this form. Private, registered..
+ *  Profile type used for this form. Private, registered.
  * @param pageHandlers
  *  Handler functions for form pages.
  */
@@ -112,8 +112,6 @@ const fillGrantsFormPage = async (
     if (firstButton.value === 'save-draft') {
       await verifyDraftSave(
         page,
-        formPageKey,
-        formPageObject,
         formID,
         profileType,
         submissionUrl,
@@ -125,8 +123,6 @@ const fillGrantsFormPage = async (
     if (firstButton.value === 'submit-form') {
       await verifySubmit(
         page,
-        formPageKey,
-        formPageObject,
         formID,
         profileType,
         submissionUrl,
@@ -199,20 +195,26 @@ const fillProfileForm = async (
 };
 
 /**
- * Verify that the application ws indeed saved as a draft. Maybe do data validation in separate test?
+ * The verifyDraftSave function.
+ *
+ * This function performs initial verification that an application has
+ * successfully been saved as a draft after clicking a forms
+ * "save-draft" button. Information about a saved application
+ * is saved to the env.
  *
  * @param page
- * @param formPageKey
- * @param formPageObject
+ *  Playwright page object.
  * @param formId
+ *   The form ID.
  * @param profileType
+ *  Profile type used for this form. Private, registered.
  * @param submissionUrl
+ *  The applications submission URL.
  * @param formKey
+ *  Form data key for saving to process.env the application info.
  */
 const verifyDraftSave = async (
   page: Page,
-  formPageKey: string,
-  formPageObject: Object,
   formId: string,
   profileType: string,
   submissionUrl: string,
@@ -235,20 +237,26 @@ const verifyDraftSave = async (
 };
 
 /**
- * Verify that the application got saved to Avus2.
+ * The verifySubmit function.
+ *
+ * This function performs initial verification that an application has
+ * successfully been submitted after clicking a forms
+ * "submit-form" button. Information about a submitted application
+ * is saved to the env.
  *
  * @param page
- * @param formPageKey
- * @param formPageObject
+ *  Playwright page object.
  * @param formId
+ *   The form ID.
  * @param profileType
+ *  Profile type used for this form. Private, registered.
  * @param submissionUrl
+ *  The applications submission URL.
  * @param formKey
+ *  Form data key for saving to process.env the application info.
  */
 const verifySubmit = async (
   page: Page,
-  formPageKey: string,
-  formPageObject: Object,
   formId: string,
   profileType: string,
   submissionUrl: string,
@@ -271,7 +279,6 @@ const verifySubmit = async (
     }
   }
   saveObjectToEnv(storeName, newData);
-
 }
 
 /**
