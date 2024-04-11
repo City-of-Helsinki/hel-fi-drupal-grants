@@ -275,6 +275,11 @@ const hideSlidePopup = async (page: Page) => {
     const slidingPopup = await page.locator('#sliding-popup');
     const agreeButton = await page.locator('.agree-button.eu-cookie-compliance-default-button');
 
+    if (!slidingPopup || !agreeButton) {
+      logger('Sliding popup already closed for this session.');
+      return;
+    }
+
     await Promise.all([
       slidingPopup.waitFor({state: 'visible', timeout: 1000}),
       agreeButton.waitFor({state: 'visible', timeout: 1000}),
