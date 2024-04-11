@@ -1,7 +1,9 @@
 import { faker } from '@faker-js/faker';
 import { Locator, Page, expect, test } from '@playwright/test';
-import { setupUnregisteredCommunity } from '../utils/helpers';
-import {selectRole} from "../utils/auth_helpers";
+import {selectRole} from "../../utils/auth_helpers";
+import path from 'path';
+
+const PATH_TO_TEST_PDF = path.join(__dirname, './data/attachments/test.pdf');
 
 test.describe('oma asiointi', () => {
     let page: Page;
@@ -374,4 +376,45 @@ const removeBankAccountAndCheckError = async (page: Page, deleteButtonLocator: L
     await page.getByRole('button', { name: 'Tallenna omat tiedot' }).click();
     const warningText = page.getByLabel("Notification").getByText("Sinun tulee lisätä vähintään yksi pankkitili").first();
     await expect(warningText).toBeVisible()
+}
+
+
+const uploadBankConfirmationFile = async (page: Page, selector: string) => {
+  const fileInput = page.locator(selector);
+  const fileLink = page.locator(".form-item-bankaccountwrapper-0-bank-confirmationfile a")
+  const responsePromise = page.waitForResponse(r => r.request().method() === "POST", {timeout: 15 * 1000})
+
+  // FIXME: Use locator actions and web assertions that wait automatically
+  await page.waitForTimeout(2000);
+
+  await expect(fileInput).toBeAttached();
+  await fileInput.setInputFiles(PATH_TO_TEST_PDF)
+
+  await page.waitForTimeout(2000);
+
+  await responsePromise;
+  await expect(fileLink).toBeVisible()
+}
+
+const setupUnregisteredCommunity = async (page: Page) => {
+  const communityName = faker.lorem.word()
+  const personName = faker.person.fullName()
+  const email = faker.internet.email()
+  const phoneNumber = faker.phone.number()
+
+  await page.goto('/fi/asiointirooli-valtuutus')
+
+  await page.locator('#edit-unregistered-community-selection').selectOption('new');
+  await page.getByRole('button', {name: 'Lisää uusi Rekisteröitymätön yhteisö tai ryhmä'}).click();
+  await page.getByRole('textbox', {name: 'Yhteisön tai ryhmän nimi'}).fill(communityName);
+  await page.getByLabel('Suomalainen tilinumero IBAN-muodossa').fill(process.env.TEST_USER_IBAN ?? '');
+  await uploadBankConfirmationFile(page, '[name="files[bankAccountWrapper_0_bank_confirmationFile]"]')
+
+  await page.getByLabel('Nimi', {exact: true}).fill(personName);
+  await page.getByLabel('Sähköpostiosoite').fill(email);
+  await page.getByLabel('Puhelinnumero').fill(phoneNumber);
+
+  // Submit
+  await page.getByRole('button', {name: 'Tallenna omat tiedot'}).click();
+  await expect(page.getByText('Profiilitietosi on tallennettu')).toBeVisible()
 }
