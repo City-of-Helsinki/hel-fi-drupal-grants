@@ -282,13 +282,16 @@ const verifySubmit = async (
 }
 
 /**
- * Fill Hakijan Tiedot page for registered community.
+ * The fillHakijanTiedotRegisteredCommunity function.
  *
- * This form page is always the same within applicant type, so we can use
- * function to do the filling.
+ * This function fills in profile information for registered
+ * communities on the first page of an application. The function is
+ * called on the first page of every registered community application test.
  *
  * @param formItems
+ *   The form items we are filling in.
  * @param page
+ *   Playwright page object.
  */
 async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) {
   if (formItems['edit-email']) {
@@ -314,28 +317,16 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
 }
 
 /**
- * Fill Hakijan Tiedot page for private person.
+ * The fillHakijanTiedotUnregisteredCommunity function.
  *
- * This form page is always the same within applicant type, so we can use
- * function to do the filling.
- *
- * @param formItems
- * @param page
- */
-async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
-  if (formItems['edit-bank-account-account-number-select']) {
-    await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
-  }
-}
-
-/**
- * Fill Hakijan Tiedot page for unregistered community.
- *
- * This form page is always the same within applicant type, so we can use
- * function to do the filling.
+ * This function fills in profile information for unregistered
+ * communities on the first page of an application. The function is
+ * called on the first page of every unregistered community application test.
  *
  * @param formItems
+ *   The form items we are filling in.
  * @param page
+ *   Playwright page object.
  */
 async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page) {
   if (formItems['edit-bank-account-account-number-select']) {
@@ -348,11 +339,29 @@ async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page
   }
 }
 
+/**
+ * The fillHakijanTiedotPrivatePerson function.
+ *
+ * This function fills in profile information for private persons
+ * on the first page of an application. The function is
+ * called on the first page of every private person application test.
+ *
+ * @param formItems
+ *   The form items we are filling in.
+ * @param page
+ *   Playwright page object.
+ */
+async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
+  if (formItems['edit-bank-account-account-number-select']) {
+    await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
+  }
+}
+
 export {
   fillProfileForm,
   fillGrantsFormPage,
   fillHakijanTiedotRegisteredCommunity,
-  fillHakijanTiedotPrivatePerson,
   fillHakijanTiedotUnregisteredCommunity,
+  fillHakijanTiedotPrivatePerson,
 };
 
