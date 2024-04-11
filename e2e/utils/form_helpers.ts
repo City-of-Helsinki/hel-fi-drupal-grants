@@ -18,7 +18,7 @@ import {FormData, PageHandlers} from "./data/test_data"
  * @param page
  *  Playwright page object.
  * @param formDetails
- *  Form details object containing all items paged.
+ *  Form details object containing all items and pages.
  * @param formPath
  *  URL to form. Can be used for checking form validity.
  * @param formClass
@@ -136,18 +136,19 @@ const fillGrantsFormPage = async (
 }
 
 /**
- * Fills profile form.
+ * The fillProfileForm function.
  *
- * This was used to develop this concept, hence this is using the original
- * method without any page handlers. This works because custom forms are much
- * more simpler tnan webforms.
- *
- * TODO: Refactor this function to use similar approach than with webforms.
+ * This function fills in profile form data with the passed
+ * in form details.
  *
  * @param page
+ *  Playwright page object.
  * @param formDetails
+ *  Form details object containing all items and pages.
  * @param formPath
+ *  URL to form. Can be used for checking form validity.
  * @param formClass
+ *  Form CSS class, to identify form we're on.
  */
 const fillProfileForm = async (
   page: Page,
@@ -155,17 +156,19 @@ const fillProfileForm = async (
   formPath: string,
   formClass: string,
 ) => {
+  logger('FORM', formPath, formClass);
 
   // Navigate to form url.
   await page.goto(formPath);
 
-  logger('FORM:', formDetails.title);
-
-  // Hide the sliding popup once.
+  // Hide the sliding popup.
   await hideSlidePopup(page);
 
-  // Loop form pages
+  // Loop form pages.
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
+    logger('Form page:', formPageKey);
+
+    // Loop page items and collect buttons.
     const buttons = [];
     for (const [itemKey, itemField] of Object.entries(formPageObject.items)) {
       if (itemField.role === 'button') {
@@ -175,22 +178,22 @@ const fillProfileForm = async (
       }
     }
 
-    // Click buttons after filling in the fields
+    // Click buttons after filling in the fields.
     for (const button of buttons) {
-      // @ts-ignore
+      if (!button.selector) continue;
       await clickButton(page, button.selector);
     }
 
+    // Wait for the page to load after clicking buttons.
     await page.waitForLoadState("load");
 
     // Compare expected errors with actual error messages on the page.
     const errorClass = '.form-item--error-message';
     await validateFormErrors(page, formDetails.expectedErrors, errorClass);
 
-    // Assertions based on the expected destination
+    // Assertions based on the expected destination.
     const actualPathname = new URL(page.url()).pathname;
     const expectedPathname = formDetails.expectedDestination;
-    // Check if actualPathname contains the expectedPathname
     expect(actualPathname).toContain(expectedPathname);
   }
 };
