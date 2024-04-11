@@ -67,27 +67,10 @@ const fillGrantsFormPage = async (
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
     logger('Form page:', formPageKey);
 
-    // Wait for the page to load.
-    await page.waitForLoadState('domcontentloaded');
-    await page.waitForLoadState('load');
-    await page.waitForLoadState('networkidle');
-
     // Validate form errors on the preview page.
     if (formPageKey === 'webform_preview') {
       const errorClass = '.hds-notification--error .hds-notification__body ul li';
       await validateFormErrors(page, formDetails.expectedErrors, errorClass);
-    }
-
-    // Make sure hidden fields are not visible.
-    if (formPageObject.itemsToBeHidden) {
-      await validateHiddenFields(page, formPageObject.itemsToBeHidden, formPageKey);
-    }
-
-    // Call a page handler to fill in the form page.
-    if (pageHandlers[formPageKey]) {
-      await pageHandlers[formPageKey](page, formPageObject);
-    } else {
-      continue;
     }
 
     // Collect any buttons on the page.
@@ -96,6 +79,21 @@ const fillGrantsFormPage = async (
       if (itemField.role === 'button') {
         buttons.push(itemField);
       }
+    }
+
+    // Wait for the page to load and call a page handler to fill in the form page.
+    if (pageHandlers[formPageKey]) {
+      await page.waitForLoadState('domcontentloaded');
+      await page.waitForLoadState('load');
+      await page.waitForLoadState('networkidle');
+      await pageHandlers[formPageKey](page, formPageObject);
+    } else {
+      continue;
+    }
+
+    // Make sure hidden fields are not visible.
+    if (formPageObject.itemsToBeHidden) {
+      await validateHiddenFields(page, formPageObject.itemsToBeHidden, formPageKey);
     }
 
     // Continue if we don't have any buttons.
