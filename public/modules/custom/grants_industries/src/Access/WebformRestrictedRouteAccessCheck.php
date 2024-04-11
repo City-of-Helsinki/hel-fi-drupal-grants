@@ -52,7 +52,9 @@ class WebformRestrictedRouteAccessCheck implements AccessInterface {
       return ($this->webformAccessCheckService->checkRestrictedRouteAccess()) ? AccessResult::allowed() : AccessResult::forbidden();
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException $exception) {
+      // phpcs:disable
       Error::logException(\Drupal::logger('grants_industries'), $exception);
+      // phpcs:enable
       return AccessResult::forbidden();
     }
   }
