@@ -69,6 +69,7 @@ const fillGrantsFormPage = async (
 
     // Validate form errors on the preview page.
     if (formPageKey === 'webform_preview') {
+      await page.waitForLoadState('load');
       const errorClass = '.hds-notification--error .hds-notification__body ul li';
       await validateFormErrors(page, formDetails.expectedErrors, errorClass);
     }
