@@ -39,7 +39,7 @@ fieldset.orienteering-map-composite--wrapper,
   span.visually-hidden {
     height: auto;
     width: max-content;
-    overflow: hidden;
+    overflow: visible;
     clip: initial;
     clip-path: initial;
     left: var(--spacing-layout-2-xs);
