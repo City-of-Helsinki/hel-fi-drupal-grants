@@ -1,8 +1,8 @@
 import {logger} from "./logger";
-import {hideSlidePopup} from "./helpers";
+import {hideSlidePopup, extractPath} from "./helpers";
 import {validateFormErrors} from "./error_validation_helpers";
 import {validateHiddenFields} from "./validation_helpers";
-import {saveObjectToEnv, extractPath} from "./helpers";
+import {saveObjectToEnv} from "./env_helpers";
 import {fillFormField, clickButton} from './input_helpers'
 import {Page, expect, test} from "@playwright/test";
 import {FormData, PageHandlers} from "./data/test_data"

@@ -2,7 +2,7 @@ import {Page, test} from '@playwright/test';
 import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
 import {fillGrantsFormPage, fillHakijanTiedotUnregisteredCommunity,} from "../../utils/form_helpers";
 import {selectRole} from "../../utils/auth_helpers";
-import {getObjectFromEnv} from "../../utils/helpers";
+import {getObjectFromEnv} from "../../utils/env_helpers";
 import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";

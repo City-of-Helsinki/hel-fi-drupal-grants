@@ -57,6 +57,9 @@
 }
 a.hds-button.webform-button--delete-draft:not(disabled) {
   text-decoration: none;
+  .hds-button__label_wrapper {
+    display: inline;
+  }
   .hds-button__label {
     text-decoration: underline;
   }
@@ -66,4 +69,11 @@ a.hds-button.webform-button--delete-draft:not(disabled) {
 }
 .openid-connect-login-form input[type=submit].hds-button {
   width: 220px;
+}
+.hds-button__label_wrapper {
+  align-items: center;
+  display: flex;
+  &:not(.hds-button) > .hds-button__label {
+    margin: 0 var(--spacing-2-xs);
+  }
 }

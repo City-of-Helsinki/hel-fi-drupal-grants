@@ -2,7 +2,8 @@ import {expect, Page, test} from "@playwright/test";
 import {FormData} from "./data/test_data";
 import {logger} from "./logger";
 import {getApplicationNumberFromBreadCrumb} from "./helpers";
-import {extractPath, getObjectFromEnv, saveObjectToEnv} from "./helpers";
+import {extractPath} from "./helpers";
+import {getObjectFromEnv, saveObjectToEnv} from "./env_helpers";
 import {validateSubmission} from "./validation_helpers";
 import {deleteDraftApplication} from "./deletion_helpers";
 
