@@ -190,7 +190,8 @@ elements: |
     '#help': 'A premiere of a production means the first public performance of the production in question. Fill in the premieres of productions that take place in Helsinki.'
   yleisolle_avoin_toiminta:
     '#title': 'The locations of the public events in Helsinki'
-    '#help': 'Here the public events refer to, for example, performances, screenings, exhibitions, and workshops, or other participatory activities.'
+  toiminta_markup:
+    '#markup': 'Here the public events refer to, for example, performances, screenings, exhibitions, and workshops, or other participatory activities.'
   ensimmainen_tila_fieldset:
     '#title': 'Location of the first public event in Helsinki'
   ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa:
