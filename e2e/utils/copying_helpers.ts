@@ -131,7 +131,7 @@ const makeApplicationCopy = async (
   logger(`Copying application: ${originalApplicationId}...`);
 
   await page.locator('#copy-application-modal-form-link').click();
-  await page.locator('span', { hasText: 'Käytä hakemusta pohjana' }).click();
+  await page.locator('#copy-application-modal-form-submit').click();
 
   // Wait for a redirect to the new application and store the new application ID and submission URL.
   await page.waitForURL('**/muokkaa');
