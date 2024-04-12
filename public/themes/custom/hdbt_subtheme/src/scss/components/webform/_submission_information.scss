@@ -58,6 +58,9 @@
     .hds-loading-spinner {
       left: 0; /* LTR */
     }
+    .hds-button {
+      min-width: fit-content;
+    }
     display: flex;
     flex-flow: row nowrap;
   }
