@@ -114,6 +114,7 @@ interface FormData {
   expectedErrors: {},
   viewPageSkipValidation?: boolean,
   testFormCopying?: boolean,
+  testBankAccountSwap?: boolean,
 }
 
 interface PageHandlers {

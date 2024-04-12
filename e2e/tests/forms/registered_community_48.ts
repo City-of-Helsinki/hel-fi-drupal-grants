@@ -19,6 +19,7 @@ import {getObjectFromEnv} from '../../utils/env_helpers';
 import {validateSubmission} from '../../utils/validation_helpers';
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
+import {swapBankAccounts} from "../../utils/bank_account_swap_helpers";
 
 const profileType = 'registered_community';
 const formId = '48';
@@ -594,6 +595,21 @@ test.describe('KUVAPROJ(48)', () => {
     test(`Copy form: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       await copyApplication(
+        key,
+        profileType,
+        formId,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
+
+  for (const [key, obj] of testDataArray) {
+    if (!obj.testBankAccountSwap) continue;
+    test(`Bank account swap: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await swapBankAccounts(
         key,
         profileType,
         formId,
