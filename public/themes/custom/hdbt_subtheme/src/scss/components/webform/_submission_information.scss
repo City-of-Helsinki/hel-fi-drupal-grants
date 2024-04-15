@@ -63,6 +63,7 @@
     }
     display: flex;
     flex-flow: row nowrap;
+    min-width: fit-content;
   }
 }
 .hel-icon.hel-icon--copy {
