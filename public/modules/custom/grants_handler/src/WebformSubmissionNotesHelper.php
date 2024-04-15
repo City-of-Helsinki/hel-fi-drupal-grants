@@ -20,7 +20,7 @@ class WebformSubmissionNotesHelper {
     $data = $submission->get('notes')->value;
     // Do no pass null values to json decode.
     if (!$data) {
-      return $data;
+      return [];
     }
     return Json::decode($data);
   }

@@ -2,7 +2,7 @@ import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker";
 import {ATTACHMENTS} from "../attachment_data";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
-import {createFormData} from "../../form_helpers";
+import {createFormData} from "../../form_data_helpers";
 import {
   viewPageFormatCurrency,
   viewPageFormatBoolean,
@@ -362,7 +362,7 @@ const baseForm_48: FormData = {
           value: "0",
           viewPageFormatter: viewPageFormatBoolean
         },
-        'edit-tila': {
+        "edit-tila": {
           role: 'multivalue',
           multi: {
             buttonSelector: {
@@ -698,22 +698,41 @@ const baseForm_48: FormData = {
           role: 'input',
           value: faker.lorem.sentences(3),
         },
-        'edit-muu-liite-items-0-item-attachment-upload': {
-          role: 'fileupload',
-          selector: {
-            type: 'locator',
-            name: 'data-drupal-selector',
-            value: '[name="files[muu_liite_items_0__item__attachment]"]',
-            resultValue: '.form-item-muu-liite-items-0--item--attachment a',
+        "edit-muu-liite": {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-muu-liite-add-submit',
+              resultValue: 'edit-muu-liite-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'fileupload',
+                  selector: {
+                    type: 'locator',
+                    name: 'data-drupal-selector',
+                    value: '[name="files[muu_liite_items_[INDEX]__item__attachment]"]',
+                    resultValue: '.form-item-muu-liite-items-[INDEX]--item--attachment a',
+                  },
+                  value: ATTACHMENTS.MUU_LIITE,
+                  viewPageFormatter: viewPageFormatFilePath
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-muu-liite-items-[INDEX]-item-description',
+                  },
+                  value: faker.lorem.sentences(1),
+                },
+              ],
+            },
           },
-          value: ATTACHMENTS.MUU_LIITE,
-          viewPageSelector: '.form-item-muu-liite',
-          viewPageFormatter: viewPageFormatFilePath
-        },
-        'edit-muu-liite-items-0-item-description': {
-          role: 'input',
-          value: faker.lorem.sentences(1),
-          viewPageSelector: '.form-item-muu-liite'
         },
         "edit-extra-info": {
           role: 'input',
@@ -904,7 +923,7 @@ const wrongEmail: FormDataWithRemoveOptionalProps = {
     },
   },
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: ääkkösiävaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
   },
 };
 
@@ -952,7 +971,7 @@ const wrongEmail3: FormDataWithRemoveOptionalProps = {
     },
   },
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite vaaraemaili ei kelpaa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: vaaraemaili ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
   },
 };
 
@@ -979,6 +998,20 @@ const under5000: FormDataWithRemoveOptionalProps = {
         'edit-toiminta-yhteisollisyys',
         'edit-toiminta-ammattimaisuus',
         'edit-toiminta-ekologisuus',
+      ],
+    },
+  },
+  expectedErrors: {},
+};
+
+const copyForm: FormDataWithRemoveOptionalProps = {
+  title: 'Original copy form',
+  testFormCopying: true,
+  formPages: {
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-muu-liite',
       ],
     },
   },
@@ -1015,6 +1048,7 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
  */
 const registeredCommunityApplications_48 = {
   draft: baseForm_48,
+  copy: createFormData(baseForm_48, copyForm),
   missing_values: createFormData(baseForm_48, missingValues),
   wrong_email: createFormData(baseForm_48, wrongEmail),
   wrong_email_2: createFormData(baseForm_48, wrongEmail2),

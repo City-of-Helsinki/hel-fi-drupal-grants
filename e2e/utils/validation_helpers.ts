@@ -361,6 +361,7 @@ const navigateAndValidateViewPage = async (
   const applicationId = thisStoreData.applicationId;
   const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
   await page.goto(viewPageURL);
+  await page.waitForURL('**/katso');
   const applicationIdContainer = await page.locator('.webform-submission__application_id');
   const applicationIdContainerText = await applicationIdContainer.textContent();
   expect(applicationIdContainerText).toContain(applicationId);
@@ -399,6 +400,29 @@ const navigateAndValidateProfilePage = async (
 
   await expect(headingContainer, `Failed to locate "${expectedHeading}" on "${profilePageURL}".`).toContainText(expectedHeading);
   logger('Profile data validation on page:', profilePageURL);
+}
+
+/**
+ * The validateHiddenFields function.
+ *
+ * This function checks that the passed in items
+ * in itemsToBeHidden are not visible on a given page.
+ * The functionality is used in tests where the value of
+ * field X alters the visibility of field Y.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param itemsToBeHidden
+ *   An array of items that should be hidden.
+ * @param formPageKey
+ *   The form page we are on.
+ */
+const validateHiddenFields = async (page: Page, itemsToBeHidden: string[], formPageKey: string) => {
+  for (const hiddenItem of itemsToBeHidden) {
+    const hiddenSelector = `[data-drupal-selector="${hiddenItem}"]`;
+    await expect(page.locator(hiddenSelector), `Field ${hiddenItem} is not hidden on ${formPageKey}.`).not.toBeVisible();
+    logger(`Field ${hiddenItem} is hidden on ${formPageKey}.`)
+  }
 }
 
 /**
@@ -495,5 +519,6 @@ const logValidationResults = (
 export {
   validateSubmission,
   validateProfileData,
-  validateExistingProfileData
+  validateExistingProfileData,
+  validateHiddenFields,
 }

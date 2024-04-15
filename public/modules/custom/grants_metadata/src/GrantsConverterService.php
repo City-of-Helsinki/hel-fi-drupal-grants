@@ -17,7 +17,7 @@ class GrantsConverterService {
   /**
    * Format dates to a given or default format.
    *
-   * @param string $value
+   * @param mixed $value
    *   Input value.
    * @param array $arguments
    *   Arguments, dateFormat is used.
@@ -25,7 +25,7 @@ class GrantsConverterService {
    * @return string
    *   Formatted datetime string.
    */
-  public function convertDates(string $value, array $arguments): string {
+  public function convertDates(mixed $value, array $arguments): string {
 
     try {
       if ($value === NULL || $value === '' || !isset($value)) {
