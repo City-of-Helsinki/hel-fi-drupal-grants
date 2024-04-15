@@ -2,10 +2,10 @@
 
 namespace Drupal\grants_place_of_operation\Plugin\WebformElement;
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
-use Drupal\Core\Datetime\DrupalDateTime;
 
 /**
  * Provides a 'place_of_operation_composite' element.
