@@ -1,8 +1,8 @@
 import {expect, Page, test} from "@playwright/test";
-import {FormData, FormField, Selector} from "./data/test_data";
+import {FormData, Selector, FormFieldWithSwap} from "./data/test_data";
 import {logger} from "./logger";
 import {clickButton, fillFormField} from "./input_helpers";
-import {PROFILE_INPUT_DATA} from "./data/profile_input_data";
+import cloneDeep from "lodash.clonedeep";
 
 /**
  * The swapBankAccounts function.
@@ -43,33 +43,19 @@ const swapBankAccounts = async (
   // Get the application ID and submission URL.
   const {applicationId, submissionUrl} = storedata[formKey];
 
-  for (const [pageKey, pageItems] of Object.entries(formDetails.formPages)) {
-    if (!pageItems.itemsToSwap) continue;
-
-    for (const [itemKey, itemValues] of Object.entries(pageItems.itemsToSwap)) {
-      let swapValue = itemValues.swap_value;
-
+  for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
+    if (!formPageObject.itemsToSwap) continue;
+    logger(`Doing swaps on page: ${formPageKey}.`);
+    for (const [itemKey, itemField] of Object.entries(formPageObject.itemsToSwap)) {
+      let originalItem = itemField;
+      let swapItem = cloneDeep(itemField);
+      swapItem.value = itemField.swapValue;
+      await performBankAccountSwap(page, itemKey, swapItem, submissionUrl, formPageKey);
+      await performBankAccountSwap(page, itemKey, originalItem, submissionUrl, formPageKey);
     }
   }
-
-  // Get "primaryIban" (the IBAN every application uses) and the secondary IBAN, "secondaryIban".
-  const {iban: primaryIban, iban2: secondaryIban} = PROFILE_INPUT_DATA;
-
-  if (!primaryIban || !secondaryIban) {
-    logger('Skipping bank account swap test: Iban values not set in PROFILE_INPUT_DATA.');
-    test.skip(true, 'Skip bank account swap test');
-    return;
-  }
-
-  logger(`Performing bank account swap test for: ${applicationId}...`);
-  logger(`Testing with bank accounts: ${primaryIban}, ${secondaryIban}.`)
-
-  // Swap to the new IBAN.
-  await performBankAccountSwap(page, secondaryIban, submissionUrl);
-
-  // Swap back to the original IBAN.
-  await performBankAccountSwap(page, primaryIban, submissionUrl);
 }
+
 
 /**
  * The performBankAccountSwap function.
@@ -82,30 +68,26 @@ const swapBankAccounts = async (
  *
  * @param page
  *   Page object from Playwright.
- * @param iban
+ * @param itemKey
+ *   The item key we are swapping.
+ * @param formField
  *   The IBAN we are swapping to.
  * @param submissionUrl
  *   The submission URL of the application.
+ * @param formPageKey
  */
-const performBankAccountSwap = async (page: Page, iban: string, submissionUrl: string) => {
+const performBankAccountSwap = async (
+  page: Page,
+  itemKey: string,
+  formField: FormFieldWithSwap,
+  submissionUrl: string,
+  formPageKey: string,
+) => {
   // Navigate to the application.
-  await navigateToApplicantDetailsPage(page, submissionUrl);
-
-  // Set the IBAN in the application.
-  logger(`Swapping to bank account: ${iban}.`);
-  const bankAccountField: FormField = {
-    role: 'select',
-    selector: {
-      type: 'by-label',
-      name: '',
-      value: 'edit-bank-account-account-number-select',
-    },
-    value: iban,
-  };
-  await fillFormField(page, bankAccountField, 'edit-bank-account-account-number-select');
-
-  // Save as draft and verify the swap.
-  await saveDraftAndVerifyBankAccount(page, iban);
+  await navigateToApplicantDetailsPage(page, submissionUrl, formPageKey);
+  logger(`Swapping field values for "${itemKey}" with value "${formField.value}".`);
+  await fillFormField(page, formField, itemKey);
+  await saveDraftAndVerifyBankAccount(page, itemKey, formField);
 };
 
 /**
@@ -118,12 +100,13 @@ const performBankAccountSwap = async (page: Page, iban: string, submissionUrl: s
  *   Page object from Playwright.
  * @param submissionUrl
  *   The submission URL of the application.
+ * @param formPageKey
  */
-const navigateToApplicantDetailsPage = async (page: Page, submissionUrl: string) => {
+const navigateToApplicantDetailsPage = async (page: Page, submissionUrl: string, formPageKey: string) => {
   const applicantDetailsLink: Selector = {
     type: 'form-topnavi-link',
     name: 'data-webform-page',
-    value: '1_hakijan_tiedot',
+    value: formPageKey,
   }
 
   await page.goto(submissionUrl);
@@ -148,25 +131,25 @@ const navigateToApplicantDetailsPage = async (page: Page, submissionUrl: string)
  *
  * @param page
  *   Page object from Playwright.
- * @param iban
+ * @param itemKey
+ * @param formField
  *   The IBAN we want to validate.
  */
-const saveDraftAndVerifyBankAccount = async (page: Page, iban: string) => {
+const saveDraftAndVerifyBankAccount = async (page: Page, itemKey:string, formField: FormFieldWithSwap) => {
   // Save the application as a draft.
   const saveDraftLink: Selector = {
     type: 'data-drupal-selector',
     name: 'data-drupal-selector',
     value: 'edit-actions-draft',
   }
-
   await clickButton(page, saveDraftLink);
   await page.waitForURL('**/katso');
 
-  // Make sure the that the new IBAN is located in all three places it should be.
-  await expect(page.locator('.application-attachment-list')).toContainText(iban);
-  await expect(page.locator('.form-item-bank-account')).toContainText(iban);
-  await expect(page.locator('.form-item-muu-liite')).toContainText(iban);
-  logger(`Bank account swapped and validated to be; ${iban}.`);
+  for (const selector of formField.viewPageClasses) {
+    if (!formField.value) continue;
+    await expect(page.locator(selector)).toContainText(formField.value);
+    logger(`Verified ${selector}: ${formField.value}`);
+  }
 };
 
 export { swapBankAccounts };

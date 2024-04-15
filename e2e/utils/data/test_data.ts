@@ -82,12 +82,12 @@ type FormItems = {
 };
 
 interface FormFieldWithSwap extends FormField {
-  swap_value: string;
-  view_page_classes: string[];
+  swapValue: string;
+  viewPageClasses: string[];
 }
 
 type FormItemsWithSwap = {
-  [itemKey: string]: Partial<FormFieldWithSwap>;
+  [itemKey: string]: FormFieldWithSwap;
 };
 
 interface FormDataWithRemove extends FormData {
@@ -156,6 +156,7 @@ export {
   FormItems,
   FormDataWithRemove,
   FormFieldWithRemove,
+  FormFieldWithSwap,
   FormDataWithRemoveOptionalProps,
   PageHandlers,
   FormPage,

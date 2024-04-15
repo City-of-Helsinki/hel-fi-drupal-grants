@@ -1033,8 +1033,8 @@ const bankAccountSwapForm: FormDataWithRemoveOptionalProps = {
             value: 'edit-bank-account-account-number-select',
           },
           value: PROFILE_INPUT_DATA.iban,
-          swap_value: PROFILE_INPUT_DATA.iban2,
-          view_page_classes: [
+          swapValue: PROFILE_INPUT_DATA.iban2,
+          viewPageClasses: [
             '.application-attachment-list',
             '.form-item-bank-account',
             '.form-item-muu-liite'
