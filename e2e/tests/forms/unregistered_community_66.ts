@@ -1,24 +1,13 @@
 import {Page, test} from '@playwright/test';
-import {logger} from "../../utils/logger";
-import {
-  FormData,
-  FormPage,
-  PageHandlers,
-} from '../../utils/data/test_data';
-import {
-  fillFormField,
-  fillGrantsFormPage, fillHakijanTiedotUnregisteredCommunity, fillInputField,
-  hideSlidePopup, uploadFile
-} from '../../utils/form_helpers';
-
-import {
-  unRegisteredCommunityApplications as applicationData
-} from '../../utils/data/application_data';
-import {selectRole} from '../../utils/auth_helpers';
-import {getObjectFromEnv} from '../../utils/env_helpers';
-import {validateSubmission} from '../../utils/validation_helpers';
+import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
+import {fillGrantsFormPage, fillHakijanTiedotUnregisteredCommunity,} from "../../utils/form_helpers";
+import {selectRole} from "../../utils/auth_helpers";
+import {getObjectFromEnv} from "../../utils/env_helpers";
+import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
+import {fillFormField, fillInputField, uploadFile} from "../../utils/input_helpers";
+import {unRegisteredCommunityApplications as applicationData} from '../../utils/data/application_data';
 
 const profileType = 'unregistered_community';
 const formId = '66';
