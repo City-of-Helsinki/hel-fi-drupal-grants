@@ -1056,7 +1056,7 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
 const registeredCommunityApplications_48 = {
   draft: baseForm_48,
   copy: createFormData(baseForm_48, copyForm),
-  swap_bank_accounts: createFormData(baseForm_48, copyForm),
+  swap_bank_accounts: createFormData(baseForm_48, bankAccountSwapForm),
   missing_values: createFormData(baseForm_48, missingValues),
   wrong_email: createFormData(baseForm_48, wrongEmail),
   wrong_email_2: createFormData(baseForm_48, wrongEmail2),
