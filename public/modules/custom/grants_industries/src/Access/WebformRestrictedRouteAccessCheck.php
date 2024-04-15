@@ -32,9 +32,15 @@ class WebformRestrictedRouteAccessCheck implements AccessInterface {
    *
    * @param \Drupal\grants_industries\Services\WebformAccessCheckService $webformAccessCheckService
    *   The WebformAccessCheckService service.
+   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
+   *   Logger factory.
    */
-  public function __construct(WebformAccessCheckService $webformAccessCheckService) {
+  public function __construct(
+    WebformAccessCheckService $webformAccessCheckService,
+    LoggerChannelFactory $loggerFactory) {
     $this->webformAccessCheckService = $webformAccessCheckService;
+    $this->logger = $loggerFactory->get('grants_industries');
+
   }
 
   /**
@@ -49,10 +55,11 @@ class WebformRestrictedRouteAccessCheck implements AccessInterface {
    */
   public function access(): AccessResultInterface {
     try {
-      return ($this->webformAccessCheckService->checkRestrictedRouteAccess()) ? AccessResult::allowed() : AccessResult::forbidden();
+      $checkRestrictedRouteResult = $this->webformAccessCheckService->checkRestrictedRouteAccess();
+      return ($checkRestrictedRouteResult) ? AccessResult::allowed() : AccessResult::forbidden();
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException $exception) {
-      Error::logException(\Drupal::logger('grants_industries'), $exception);
+      Error::logException($this->logger, $exception);
       return AccessResult::forbidden();
     }
   }

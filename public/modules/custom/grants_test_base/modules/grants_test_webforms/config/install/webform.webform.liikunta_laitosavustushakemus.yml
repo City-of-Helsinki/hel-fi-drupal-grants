@@ -5,27 +5,27 @@ dependencies:
   module:
     - grants_handler
     - grants_metadata
-# third_party_settings:
-#   grants_metadata:
-#     applicationTypeSelect: '57'
-#     applicationType: LIIKUNTALAITOS
-#     applicationTypeID: '57'
-#     applicationIndustry: KASKO
-#     applicantTypes:
-#       registered_community: registered_community
-#     applicationTypeTerms:
-#       45: '45'
-#       48: '48'
-#       51: '51'
-#       52: '52'
-#     applicationTargetGroup: '26'
-#     applicationOpen: '2022-10-03T11:08:26'
-#     applicationClose: '2023-07-30T11:19:00'
-#     applicationActingYearsType: next_x_years
-#     applicationActingYears: {  }
-#     applicationActingYearsNextCount: '1'
-#     applicationContinuous: 0
-#     disableCopying: 1
+third_party_settings:
+  grants_metadata:
+    applicationTypeSelect: '57'
+    applicationType: LIIKUNTALAITOS
+    applicationTypeID: '57'
+    applicationIndustry: KASKO
+    applicantTypes:
+      registered_community: registered_community
+    applicationTypeTerms:
+      45: '45'
+      48: '48'
+      51: '51'
+      52: '52'
+    applicationTargetGroup: '26'
+    applicationOpen: '2022-10-03T11:08:26'
+    applicationClose: '2023-07-30T11:19:00'
+    applicationActingYearsType: next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '1'
+    applicationContinuous: 0
+    disableCopying: 1
 weight: 0
 open: null
 close: null
