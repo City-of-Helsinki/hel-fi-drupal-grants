@@ -1021,7 +1021,28 @@ const copyForm: FormDataWithRemoveOptionalProps = {
 const bankAccountSwapForm: FormDataWithRemoveOptionalProps = {
   title: 'Bank account swap form',
   testBankAccountSwap: true,
-  formPages: {},
+  formPages: {
+    "1_hakijan_tiedot": {
+      items: {},
+      itemsToSwap: {
+        "edit-bank-account-account-number-select": {
+          role: 'select',
+          selector: {
+            type: 'by-label',
+            name: '',
+            value: 'edit-bank-account-account-number-select',
+          },
+          value: PROFILE_INPUT_DATA.iban,
+          swap_value: PROFILE_INPUT_DATA.iban2,
+          view_page_classes: [
+            '.application-attachment-list',
+            '.form-item-bank-account',
+            '.form-item-muu-liite'
+          ],
+        },
+      }
+    },
+  },
   expectedErrors: {},
 };
 

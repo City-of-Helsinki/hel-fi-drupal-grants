@@ -81,6 +81,15 @@ type FormItems = {
   [itemKey: string]: Partial<FormFieldWithRemove>;
 };
 
+interface FormFieldWithSwap extends FormField {
+  swap_value: string;
+  view_page_classes: string[];
+}
+
+type FormItemsWithSwap = {
+  [itemKey: string]: Partial<FormFieldWithSwap>;
+};
+
 interface FormDataWithRemove extends FormData {
   formPages: {
     [pageKey: string]: {
@@ -89,6 +98,7 @@ interface FormDataWithRemove extends FormData {
       };
       itemsToRemove?: RemoveList | undefined;
       itemsToBeHidden?: HiddenItemsList | undefined;
+      itemsToSwap?: FormItemsWithSwap | undefined;
     };
   };
 }
@@ -101,6 +111,7 @@ interface FormPage {
   items: FormItems;
   itemsToRemove?: RemoveList | undefined;
   itemsToBeHidden?: HiddenItemsList | undefined;
+  itemsToSwap?: FormItemsWithSwap | undefined;
 }
 
 interface FormData {

@@ -43,6 +43,15 @@ const swapBankAccounts = async (
   // Get the application ID and submission URL.
   const {applicationId, submissionUrl} = storedata[formKey];
 
+  for (const [pageKey, pageItems] of Object.entries(formDetails.formPages)) {
+    if (!pageItems.itemsToSwap) continue;
+
+    for (const [itemKey, itemValues] of Object.entries(pageItems.itemsToSwap)) {
+      let swapValue = itemValues.swap_value;
+
+    }
+  }
+
   // Get "primaryIban" (the IBAN every application uses) and the secondary IBAN, "secondaryIban".
   const {iban: primaryIban, iban2: secondaryIban} = PROFILE_INPUT_DATA;
 
