@@ -48,10 +48,10 @@ const deleteDraftApplication = async (formKey: string, page: Page, formDetails: 
 
   const method = Math.random() < 0.5 ? DeletionMethod.SubmissionUrl : DeletionMethod.ApplicationId;
   if (method === DeletionMethod.SubmissionUrl) {
-    logger('Deleting draft application with submission URL.')
+    logger('Deleting draft application with submission URL:', thisStoreData.submissionUrl)
     await deleteUsingSubmissionUrl(page, thisStoreData.submissionUrl);
   } else {
-    logger('Deleting draft application with Application ID.')
+    logger('Deleting draft application with Application ID:', thisStoreData.applicationId)
     await deleteUsingApplicationId(page, thisStoreData.applicationId);
   }
 }
@@ -73,6 +73,7 @@ const deleteDraftApplication = async (formKey: string, page: Page, formDetails: 
  */
 const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
   await page.goto(submissionUrl);
+  await page.waitForURL('**/muokkaa');
   await page.locator('#webform-button--delete-draft').click();
   page.once('dialog', async dialog => {
     await dialog.accept();
@@ -98,6 +99,7 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
  */
 const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
   await page.goto('/fi/oma-asiointi');
+  await page.waitForURL('**/oma-asiointi');
   await page.locator(`.application-delete-link-${applicationId}`).click();
   await page.waitForLoadState('load');
   await validateDeletionNotification(page, 'Application ID on Oma asiointi page.');
