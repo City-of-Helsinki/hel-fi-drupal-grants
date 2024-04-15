@@ -5,24 +5,24 @@ dependencies:
   module:
     - grants_handler
     - grants_metadata
-# third_party_settings:
-#   grants_metadata:
-#     applicationTypeSelect: '68'
-#     applicationType: HYVINYLEIS
-#     applicationTypeID: '68'
-#     applicationIndustry: KANSLIA
-#     applicantTypes:
-#       registered_community: registered_community
-#     applicationTypeTerms:
-#       49: '49'
-#     applicationTargetGroup: '21'
-#     applicationOpen: '2023-04-03T08:00:00'
-#     applicationClose: '2024-02-28T16:00:00'
-#     applicationActingYearsType: current_and_next_x_years
-#     applicationActingYears: {  }
-#     applicationActingYearsNextCount: '0'
-#     applicationContinuous: 0
-#     disableCopying: 0
+third_party_settings:
+  grants_metadata:
+    applicationTypeSelect: '68'
+    applicationType: HYVINYLEIS
+    applicationTypeID: '68'
+    applicationIndustry: KANSLIA
+    applicantTypes:
+      registered_community: registered_community
+    applicationTypeTerms:
+      49: '49'
+    applicationTargetGroup: '21'
+    applicationOpen: '2023-04-03T08:00:00'
+    applicationClose: '2024-02-28T16:00:00'
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '0'
+    applicationContinuous: 0
+    disableCopying: 0
 weight: 0
 open: null
 close: null
