@@ -59,8 +59,10 @@ class AdminApplicationsByUuidForm extends FormBase {
       $this->messenger()->addError('No deleting profiles in PROD environment');
     }
 
-    $uuid = $form_state->getValue('uuid');
-    $appEnv = $form_state->getValue('appEnv');
+    $input = $form_state->getUserInput();
+
+    $uuid = $input['uuid'] ?? null;
+    $appEnv = $input['appEnv'] ?? null;
 
     $form['uuid'] = [
       '#type' => 'textfield',
@@ -93,7 +95,7 @@ class AdminApplicationsByUuidForm extends FormBase {
       ],
     ];
 
-    $form['profileData'] = [
+    $form['appData'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Documents in ATV / @appEnv: @id', ['@id' => $uuid, '@appEnv' => $appEnv]),
       '#collapsible' => TRUE,
@@ -143,7 +145,7 @@ class AdminApplicationsByUuidForm extends FormBase {
    *   could/will break your forms.
    */
   public function getDataAtv(array &$form, FormStateInterface $form_state, Request $request): array {
-    return $form['profileData'];
+    return $form['appData'];
   }
 
   /**
@@ -200,53 +202,49 @@ class AdminApplicationsByUuidForm extends FormBase {
       }
       $userDocuments = $this->atvService->searchDocuments($searchParams);
 
-      $form_state->setStorage(['userdocs' => $userDocuments]);
-
-      $form['profileData']['applications'] = [
-        '#type' => 'fieldset',
-        '#title' => $this->t('Applications by type'),
-        // Added.
-        '#collapsible' => TRUE,
-        // Added.
-        '#collapsed' => FALSE,
-      ];
-
       $sortedByType = [];
       /** @var \Drupal\helfi_atv\AtvDocument $document */
       foreach ($userDocuments as $document) {
-        if ($document->getStatus() === 'DRAFT') {
-          $sortedByType[$document->getType()][] = $document;
-        }
+        $sortedByType[$document->getStatus()][$document->getType()][] = $document;
       }
 
-      foreach ($sortedByType as $type => $applications) {
-        $form['profileData']['applications'][$type] = [
+      $form_state->setStorage(['userdocs' => $sortedByType]);
+
+      foreach ($sortedByType as $status => $applicationsStatus) {
+        $form['appData'][$status] = [
           '#type' => 'fieldset',
-          '#title' => $type,
+          '#title' => $this->t('Status: ' . $status),
           // Added.
           '#collapsible' => TRUE,
           // Added.
           '#collapsed' => FALSE,
         ];
-        $typeOptions = [];
-        if (!empty($applications)) {
-          /** @var \Drupal\helfi_atv\AtvDocument $application */
-          foreach ($applications as $application) { // NOSONAR
-            $typeOptions[$application->getId()] = $application->getTransactionId();
-          }
-          $form['profileData']['applications'][$type]['selectedDelete'] = [
-            '#type' => 'checkboxes',
-            '#title' => $this->t('Select to delete'),
-            '#options' => $typeOptions,
+
+        foreach ($applicationsStatus as $type => $applications) {
+          $form['appData'][$status][$type] = [
+            '#type' => 'fieldset',
+            '#title' => $type,
+            '#collapsible' => TRUE,
+            '#collapsed' => FALSE,
           ];
+          $typeOptions = [];
+          if (!empty($applications)) {
+            /** @var \Drupal\helfi_atv\AtvDocument $application */
+            foreach ($applications as $application) {
+              $typeOptions[$application->getId()] = $application->getTransactionId();
+            }
+            $form['appData'][$status][$type]['selectedDelete'] = [
+              '#type' => 'checkboxes',
+              '#title' => $this->t('Select to delete'),
+              '#options' => $typeOptions,
+            ];
+          }
         }
-        $form['profileData']['applications']['selectAll'] = [
-          '#type' => 'multiple_select',
-          '#value' => $this->t('Delete selected'),
-        ];
       }
+
     }
     catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
+      $d = 'adsf';
     }
   }
 

@@ -1,22 +1,22 @@
-grants_admin_application.admin_delete:
-  title: ATV data
-  route_name: grants_admin_applications.admin_applications_uuid
-  parent: system.admin_reports
-  description: 'Delete user documents.'
-  weight: -1
-grants_admin_application.admin_reports:
-  title: ATV data
-  route_name: grants_admin_applications.admin_applications_buid
-  parent: grants_admin_application.admin_delete
-  description: 'See & delete user documents in ATV.'
-  weight: -1
 grants_admin_applications.resend_applications:
-  title: Resend application data
+  title: Resend Applications / Messages
   route_name: grants_admin_applications.resend_applications
   parent: grants_admin_application.admin_reports
   description: 'Resend application data through integration.'
+grants_admin_application.admin_delete:
+  title: Applications by user UUID & appEnv
+  route_name: grants_admin_applications.admin_applications_uuid
+  parent: grants_admin_applications.resend_applications
+  description: 'Delete user documents.'
+  weight: -1
+grants_admin_application.admin_reports:
+  title: Applications by buisness ID
+  route_name: grants_admin_applications.admin_applications_buid
+  parent: grants_admin_applications.resend_applications
+  description: 'See & delete user documents in ATV.'
+  weight: -1
 grants_admin_applications.submitted_applications_status:
   title: Submitted applications status
   route_name: grants_admin_applications.submitted_applications_status
-  parent: grants_admin_application.admin_reports
+  parent: grants_admin_applications.resend_applications
   description: 'Check for applications that are stuck in SUBMITTED state.'
