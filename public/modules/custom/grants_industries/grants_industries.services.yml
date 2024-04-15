@@ -6,13 +6,13 @@ services:
 
   grants_industries.webform_admin_route_access_check:
     class: Drupal\grants_industries\Access\WebformAdminRouteAccessCheck
-    arguments: ['@grants_industries.webform_access_check_service']
+    arguments: ['@grants_industries.webform_access_check_service', '@logger.factory']
     tags:
       - { name: access_check, applies_to: _webform_admin_route_access_check }
 
   grants_industries.webform_restricted_route_access_check:
     class: Drupal\grants_industries\Access\WebformRestrictedRouteAccessCheck
-    arguments: ['@grants_industries.webform_access_check_service']
+    arguments: ['@grants_industries.webform_access_check_service', '@logger.factory']
     tags:
       - { name: access_check, applies_to: _webform_restricted_route_access_check }
 

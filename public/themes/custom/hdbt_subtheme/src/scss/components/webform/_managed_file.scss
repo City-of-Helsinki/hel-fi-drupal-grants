@@ -30,9 +30,15 @@ fieldset.grants-attachments--wrapper {
       color: var(--color-disabled);
       cursor: not-allowed;
     }
+    &:focus-within {
+      outline: 2px black solid;
+      color: var(--color-white);
+      background: var(--color-black);
+      border-color: var(--color-white);
+    }
   }
   input[type=file] {
-    visibility: hidden;
+    opacity: 0;
     position: absolute;
   }
 

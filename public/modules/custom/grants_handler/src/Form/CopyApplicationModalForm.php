@@ -163,6 +163,9 @@ class CopyApplicationModalForm extends FormBase {
         'callback' => '::ajaxSubmitForm',
         'event' => 'click',
       ],
+      '#attributes' => [
+        'id' => 'copy-application-modal-form-submit',
+      ],
     ];
 
     // Set the form to not use AJAX if we're on a nojs path. When this form is

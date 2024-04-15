@@ -5,21 +5,22 @@ dependencies:
   module:
     - grants_handler
     - grants_metadata
-#third_party_settings:
-#  grants_metadata:
-#    applicationType: ECONOMICGRANTAPPLICATION
-#    applicationTypeID: '29'
-#    applicantTypes: registered_community
-#    applicationTypeTerms:
-#      1: '1'
-#      11: '11'
-#    applicationOpen: '2022-10-03T11:08:26'
-#    applicationClose: '2023-06-14T11:19:00'
-#    applicationContinuous: 0
-#    applicationTargetGroup: '12'
-#    disableCopying: 0
-#    applicationTypeSelect: '29'
-#    applicationIndustry: KASKO
+third_party_settings:
+  grants_metadata:
+    applicationType: ECONOMICGRANTAPPLICATION
+    applicationTypeID: '29'
+    applicantTypes:
+      registered_community: registered_community
+    applicationTypeTerms:
+      1: '1'
+      11: '11'
+    applicationOpen: '2022-10-03T11:08:26'
+    applicationClose: '2023-06-14T11:19:00'
+    applicationContinuous: 0
+    applicationTargetGroup: '12'
+    disableCopying: 0
+    applicationTypeSelect: '29'
+    applicationIndustry: KASKO
 weight: 0
 open: null
 close: null

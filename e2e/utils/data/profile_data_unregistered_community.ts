@@ -2,7 +2,7 @@ import {fakerFI as faker} from '@faker-js/faker';
 import {FormData, FormDataWithRemoveOptionalProps,} from "./test_data";
 import {PROFILE_INPUT_DATA} from "./profile_input_data";
 import {ATTACHMENTS} from "./attachment_data";
-import {createFormData} from "../form_helpers";
+import {createFormData} from "../form_data_helpers";
 
 const profileDataBase: FormData = {
   title: 'Save profile data',
@@ -263,8 +263,8 @@ const ibanTestData: FormDataWithRemoveOptionalProps = {
   },
   expectedDestination: '',
   expectedErrors: {
-    'edit-bankaccountwrapper-0-bank-bankaccount': ' Ei hyväksyttävä suomalainen IBAN: IBAN:FI1387667867985882',
-    'edit-bankaccountwrapper-1-bank-bankaccount': ' Ei hyväksyttävä suomalainen IBAN: @FI5777266988169614'
+    'edit-bankaccountwrapper-0-bank-bankaccount': 'Ei hyväksyttävä suomalainen IBAN: IBAN:FI1387667867985882',
+    'edit-bankaccountwrapper-1-bank-bankaccount': 'Ei hyväksyttävä suomalainen IBAN: @FI5777266988169614'
   }
 }
 

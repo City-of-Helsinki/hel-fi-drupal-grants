@@ -1,27 +1,13 @@
 import {Page, test} from '@playwright/test';
-import {logger} from "../../utils/logger";
-import {
-  FormData,
-  PageHandlers, FormPage, FormFieldWithRemove
-} from "../../utils/data/test_data";
-import {
-  fillGrantsFormPage,
-  fillInputField,
-  fillHakijanTiedotPrivatePerson,
-  uploadFile,
-  hideSlidePopup, fillFormField
-} from "../../utils/form_helpers";
-
-import {
-  privatePersonApplications as applicationData
-} from '../../utils/data/application_data';
+import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
+import {fillGrantsFormPage, fillHakijanTiedotPrivatePerson,} from "../../utils/form_helpers";
 import {selectRole} from "../../utils/auth_helpers";
-import {
-  getObjectFromEnv
-} from "../../utils/helpers";
+import {getObjectFromEnv} from "../../utils/env_helpers";
 import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
+import {fillFormField, fillInputField} from "../../utils/input_helpers";
+import {privatePersonApplications as applicationData} from '../../utils/data/application_data';
 
 const profileType = 'private_person';
 const formId = '48';

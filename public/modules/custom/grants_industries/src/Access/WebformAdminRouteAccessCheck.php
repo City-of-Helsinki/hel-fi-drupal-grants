@@ -6,6 +6,8 @@ use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
+use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Routing\Access\AccessInterface;
 use Drupal\Core\Utility\Error;
 use Drupal\grants_industries\Services\WebformAccessCheckService;
@@ -28,13 +30,25 @@ class WebformAdminRouteAccessCheck implements AccessInterface {
   protected WebformAccessCheckService $webformAccessCheckService;
 
   /**
+   * Logger.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   */
+  protected LoggerChannelInterface $logger;
+
+  /**
    * The class constructor.
    *
    * @param \Drupal\grants_industries\Services\WebformAccessCheckService $webformAccessCheckService
    *   The WebformAccessCheckService service.
+   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
+   *   The logger factory.
    */
-  public function __construct(WebformAccessCheckService $webformAccessCheckService) {
+  public function __construct(
+    WebformAccessCheckService $webformAccessCheckService,
+    LoggerChannelFactory $loggerFactory) {
     $this->webformAccessCheckService = $webformAccessCheckService;
+    $this->logger = $loggerFactory->get('grants_industries');
   }
 
   /**
@@ -49,10 +63,11 @@ class WebformAdminRouteAccessCheck implements AccessInterface {
    */
   public function access(): AccessResultInterface {
     try {
-      return ($this->webformAccessCheckService->checkAdminRouteAccess()) ? AccessResult::allowed() : AccessResult::forbidden();
+      $checkAdminRouteResult = $this->webformAccessCheckService->checkAdminRouteAccess();
+      return ($checkAdminRouteResult) ? AccessResult::allowed() : AccessResult::forbidden();
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException $exception) {
-      Error::logException(\Drupal::logger('grants_industries'), $exception);
+      Error::logException($this->logger, $exception);
       return AccessResult::forbidden();
     }
   }

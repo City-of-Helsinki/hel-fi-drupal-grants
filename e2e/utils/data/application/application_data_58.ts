@@ -2,7 +2,7 @@ import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 import {ATTACHMENTS} from "../attachment_data";
-import {createFormData} from "../../form_helpers";
+import {createFormData} from "../../form_data_helpers";
 import {
   viewPageFormatAddress,
   viewPageFormatCurrency,
@@ -407,7 +407,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
     },
   },
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: ääkkösiävaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
     'edit-orienteering-maps-items-0-item-othercompensations': 'Virhe sivulla 2. Avustustiedot: Arvo ei voi olla suurempi kuin "Talkootyö tuntia" ja "Kustannukset euroa" kenttien summa.',
   },
 };
