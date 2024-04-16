@@ -14,5 +14,5 @@ _core:
 id: media.file
 target_entity_type_id: media
 target_bundle: file
-default_langcode: fi
+default_langcode: en
 language_alterable: true
