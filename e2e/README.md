@@ -19,6 +19,8 @@ It's designed to test applications across all modern web browsers by running tes
 - Filling in an application from start to finnish.
 - Verifying the content of a submitted application.
 - Filling an application with missing/wrong data and verifying the printed error messages.
+- Swapping field values on an application and verifying that the values get swapped.
+- Copying an application and verifying that its content gets copied.
 - Deleting draft applications.
 
 ### User role tests
