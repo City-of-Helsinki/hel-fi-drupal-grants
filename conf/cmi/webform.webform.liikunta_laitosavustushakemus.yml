@@ -19,10 +19,13 @@ third_party_settings:
       52: '52'
       48: '48'
     applicationTargetGroup: '26'
-    applicationOpen: '2024-04-03T00:00:00'
-    applicationClose: '2024-04-30T23:59:59'
+    applicationOpen: '2024-04-01T00:00:00'
+    applicationClose: '2024-04-26T23:59:59'
     applicationActingYearsType: next_x_years
-    applicationActingYears: {  }
+    applicationActingYears:
+      2024: '2024'
+      2025: '2025'
+      2026: '2026'
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 1
@@ -490,7 +493,11 @@ elements: |-
       business_purpose:
         '#type': textarea
         '#title': 'Toiminnan kuvaus'
-        '#help': 'Jos haluat lis&auml;t&auml;, poistaa tai muuttaa toiminnan kuvausta tallenna hakemus luonnokseksi ja siirry yll&auml;pit&auml;m&auml;&auml;n toiminnan kuvausta omiin tietoihin.'
+        '#help': 'Tieto haetaan omat tiedot -osiosta'
+        '#maxlength': 500
+        '#counter_type': character
+        '#counter_maximum': 500
+        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
       community_practices_business:
         '#type': radios
         '#title': 'Harjoittaako yhteisö liiketoimintaa'

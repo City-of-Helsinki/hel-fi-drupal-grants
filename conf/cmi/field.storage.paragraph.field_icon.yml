@@ -5,6 +5,8 @@ dependencies:
   module:
     - hdbt_admin_tools
     - paragraphs
+_core:
+  default_config_hash: 7iZEPC0L92cS72FKcOv5gExrCL3CHSK9DaQU_5-4JPw
 id: paragraph.field_icon
 field_name: field_icon
 entity_type: paragraph

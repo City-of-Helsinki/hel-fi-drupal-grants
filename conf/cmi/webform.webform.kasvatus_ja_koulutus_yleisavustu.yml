@@ -18,12 +18,11 @@ third_party_settings:
       45: '45'
       48: '48'
     applicationTargetGroup: '21'
-    applicationOpen: '2023-04-03T08:00:00'
-    applicationClose: '2023-10-06T16:00:00'
+    applicationOpen: '2024-04-02T00:00:00'
+    applicationClose: '2024-10-04T16:00:00'
     applicationContinuous: 0
     disableCopying: 0
     applicationActingYears:
-      2023: '2023'
       2024: '2024'
       2025: '2025'
     applicationActingYearsType: fixed
@@ -424,7 +423,6 @@ elements: |-
         '#help': 'K&auml;ytt&ouml;selvityksess&auml; tulee kuvata lyhyesti, miten my&ouml;nnetty avustus on k&auml;ytetty. Avustuksen saajan on j&auml;rjestett&auml;v&auml; kirjanpitonsa niin, ett&auml; avustuksen k&auml;ytt&ouml;&auml; voidaan sielt&auml; seurata. Esimerkiksi jos yhteis&ouml; on saanut vuokra-avustusta, tilinp&auml;&auml;t&ouml;ksen tuloslaskelmasta tulee k&auml;yd&auml; ilmi avustuksen toteutuminen sek&auml; tuloissa ett&auml; menoissa. Lis&auml;&auml; tietoja avustuksen k&auml;yt&ouml;st&auml; voi my&ouml;s kirjoittaa erilliseen liitteeseen, jonka voi palauttaa K&auml;ytt&ouml;selvitys-liite kohdasta.'
         '#maxlength': 5000
         '#counter_type': character
-        '#counter_minimum': 1
         '#counter_maximum': 5000
         '#attributes':
           class:

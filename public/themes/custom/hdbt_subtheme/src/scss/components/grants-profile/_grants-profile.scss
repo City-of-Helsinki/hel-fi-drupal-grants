@@ -72,6 +72,10 @@ $breakpoint-xl: 1248px;
     padding-top: var(--spacing-l);
     padding-bottom: var(--spacing-l);
 
+    .hds-notification {
+      margin-bottom: var(--spacing-xl);
+    }
+
     fieldset.form-wrapper {
       border: 0;
       background-color: var(--color-silver-light);
@@ -309,7 +313,7 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
   margin-bottom: 0;
 }
 
-.openid-connect-login-form {
+.openid-connect-login-form.openid-connect-login-form {
   border-bottom: 0;
   padding-bottom: 0;
   margin-bottom: 0;

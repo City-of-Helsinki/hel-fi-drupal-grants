@@ -2,7 +2,12 @@ uuid: ad19cff5-8fb6-47b7-8de4-a447ab43d4b3
 langcode: en
 status: true
 dependencies:
+  config:
+    - node.type.landing_page
+    - node.type.page
+    - node.type.service
   module:
+    - file
     - locale
     - media
     - path
@@ -19,6 +24,7 @@ permissions:
   - 'access toolbar'
   - 'access webform overview'
   - 'create url aliases'
+  - 'delete own files'
   - 'edit any webform'
   - 'translate interface'
   - 'view any unpublished landing_page content'

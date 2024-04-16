@@ -14,9 +14,10 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
-use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Event\UserLogoutEvent;
 use Drupal\grants_handler\EventsService;
@@ -28,7 +29,6 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionStorageInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 /**
  * Implements hook_theme().
@@ -198,6 +198,7 @@ function grants_handler_theme(): array {
         'label' => NULL,
         'body' => NULL,
         'class' => NULL,
+        'aria_level' => NULL,
       ],
     ],
 
@@ -618,6 +619,7 @@ function _grants_handler_missing_data(
     '#label' => $str1,
     '#body' => Link::createFromRoute($str2, 'grants_profile.show')
       ->toString() . ' ' . $str3,
+    '#aria_level' => '2',
   ];
 }
 
@@ -766,6 +768,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
             '#class' => '',
             '#label' => t('Some information fetched from personal information', [], $tOpts),
             '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.', [], $tOpts),
+            '#aria_level' => '2',
           ],
         ];
         $required_fields_info_element = [
@@ -776,6 +779,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
               '#label' => t('Fill in the fields to all the questions that you can answer.', [], $tOpts),
               '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.', [], $tOpts),
               '#class' => 'notification-margin-bottom',
+              '#aria_level' => '2',
             ],
         ];
         $page_title_element = [];
@@ -876,6 +880,7 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     ->condition('field_form', $variables['webform']->id())
     ->condition('field_show_on_all_forms', TRUE);
   $query->condition($orGroup);
+  $query->accessCheck(FALSE);
   $results = $query->execute();
 
   // Load blocks.
@@ -903,8 +908,9 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
       '#label' => t('Note!', [], $tOpts),
       '#body' => t('Accept the terms and send the application.', [], $tOpts),
       '#class' => 'notification-margin-bottom',
+      '#aria_level' => '3',
     ];
-    $terms_info_rendered = Markup::create(render($terms_info));
+    $terms_info_rendered = Markup::create(\Drupal::service('renderer')->render($terms_info));
     // Add html for checkbox.
     $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div>
       ' . $terms_info_rendered . '
@@ -1294,7 +1300,8 @@ function grants_handler_preprocess_webform_submission_attachment_list(&$variable
   foreach ($attachmentsData as $att) {
     if (isset($att['fileName'])) {
       try {
-        $fileUploadTime = AttachmentHandler::getAttachmentUploadTime($attachmentEventsHandler['events'], $att['fileName']);
+        $events = $attachmentEventsHandler['events'];
+        $fileUploadTime = AttachmentHandlerHelper::getAttachmentUploadTime($events, $att['fileName']);
       }
       catch (Exception $e) {
         $fileUploadTime = '';

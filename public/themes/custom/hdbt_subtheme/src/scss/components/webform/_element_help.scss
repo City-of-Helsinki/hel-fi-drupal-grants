@@ -5,7 +5,7 @@
   width: var(--spacing-layout-xs);
   height: var(--spacing-layout-xs);
   position: absolute;
-  top: 0;
+  top: -2px;
   right: 0;
   z-index: 10;
 }
@@ -36,4 +36,11 @@ div[data-tippy-root] {
 }
 .webform-element-help--wrapper-short {
   max-width: fit-content;
+}
+.webform-element-help-container--title {
+  --border-width: 2px;
+  --outline-width: 3px;
+  --input-height: 56px;
+  --textarea-height: 149px;
+  --icon-size: var(--spacing-m);
 }

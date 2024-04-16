@@ -74,6 +74,9 @@ div.table-layout-form {
     color: var(--color-white);
     text-align: left;
   }
+  input.hds-text-input, input.hds-text-input__input {
+    background: transparent;
+  }
 }
 #subventions_table {
   td, th {
