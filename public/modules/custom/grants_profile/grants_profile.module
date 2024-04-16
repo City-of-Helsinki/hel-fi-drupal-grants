@@ -397,3 +397,14 @@ function grants_profile_preprocess_page(&$vars) {
     }
   }
 }
+
+/**
+ * Implements hook_user_delete().
+ */
+function grants_profile_user_delete($account) {
+  // Make sure that user sessions are removed after deleting them.
+  $database = \Drupal::service('database');
+  $database->delete('sessions')
+    ->condition('uid', $account->id())
+    ->execute();
+}
