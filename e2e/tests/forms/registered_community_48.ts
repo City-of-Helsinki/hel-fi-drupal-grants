@@ -7,7 +7,7 @@ import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
 import {fillFormField, fillInputField} from "../../utils/input_helpers";
-import {swapBankAccounts} from "../../utils/bank_account_swap_helpers";
+import {swapFieldValues} from "../../utils/field_swap_helpers";
 import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
 
 const profileType = 'registered_community';
@@ -595,13 +595,11 @@ test.describe('KUVAPROJ(48)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-    if (!obj.testBankAccountSwap) continue;
-    test(`Bank account swap: ${obj.title}`, async () => {
+    if (!obj.testFieldSwap) continue;
+    test(`Field swap: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-      await swapBankAccounts(
+      await swapFieldValues(
         key,
-        profileType,
-        formId,
         page,
         obj,
         storedata
@@ -610,7 +608,7 @@ test.describe('KUVAPROJ(48)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-    if (obj.viewPageSkipValidation || obj.testFormCopying) continue;
+    if (obj.viewPageSkipValidation || obj.testFormCopying || obj.testFieldSwap) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       await validateSubmission(

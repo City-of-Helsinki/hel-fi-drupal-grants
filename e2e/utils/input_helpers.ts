@@ -101,6 +101,7 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
     // Normal data-drupal-selector.
     case "data-drupal-selector":
       const customSelector = `[data-drupal-selector="${selector.value}"]`;
+      await page.locator(customSelector).fill('');
       await page.locator(customSelector).fill(value);
       break;
 

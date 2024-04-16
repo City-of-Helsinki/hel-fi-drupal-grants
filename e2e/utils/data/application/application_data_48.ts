@@ -41,8 +41,17 @@ const baseForm_48: FormData = {
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
+          selector: {
+            type: 'by-label',
+            name: '',
+            value: 'edit-bank-account-account-number-select',
+          },
           value: PROFILE_INPUT_DATA.iban,
-          viewPageSelector: '.form-item-bank-account',
+          viewPageSelectors: [
+            '.application-attachment-list',
+            '.form-item-bank-account',
+            '.form-item-muu-liite'
+          ],
         },
         "edit-community-address-community-address-select": {
           value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
@@ -99,9 +108,8 @@ const baseForm_48: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti',
           },
-          value: faker.lorem.words(30),
+          value: faker.lorem.words(10),
         },
-
         "edit-myonnetty-avustus": {
           role: 'dynamicmultivalue',
           label: '',
@@ -338,6 +346,11 @@ const baseForm_48: FormData = {
         },
         "edit-maara-kaikkiaan": {
           role: 'input',
+          selector: {
+            type: 'data-drupal-selector-sequential',
+            name: '',
+            value: 'edit-maara-kaikkiaan',
+          },
           value: faker.number.int({min: 1000, max: 100000}).toString(),
           viewPageFormatter: viewPageFormatNumber
         },
@@ -546,12 +559,22 @@ const baseForm_48: FormData = {
         },
         "edit-budget-static-income-entryfees": {
           role: 'input',
+          selector: {
+            type: 'data-drupal-selector-sequential',
+            name: '',
+            value: 'edit-budget-static-income-entryfees',
+          },
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-income',
           viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-income-sales": {
           role: 'input',
+          selector: {
+            type: 'data-drupal-selector-sequential',
+            name: '',
+            value: 'edit-budget-static-income-sales',
+          },
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-income',
           viewPageFormatter: viewPageFormatCurrency,
@@ -1018,30 +1041,35 @@ const copyForm: FormDataWithRemoveOptionalProps = {
   expectedErrors: {},
 };
 
-const bankAccountSwapForm: FormDataWithRemoveOptionalProps = {
-  title: 'Bank account swap form',
-  testBankAccountSwap: true,
+const fieldSwapForm: FormDataWithRemoveOptionalProps = {
+  title: 'Field swap form',
+  testFieldSwap: true,
   formPages: {
     "1_hakijan_tiedot": {
       items: {},
-      itemsToSwap: {
-        "edit-bank-account-account-number-select": {
-          role: 'select',
-          selector: {
-            type: 'by-label',
-            name: '',
-            value: 'edit-bank-account-account-number-select',
-          },
-          value: PROFILE_INPUT_DATA.iban,
-          swapValue: PROFILE_INPUT_DATA.iban2,
-          viewPageClasses: [
-            '.application-attachment-list',
-            '.form-item-bank-account',
-            '.form-item-muu-liite'
-          ],
-        },
-      }
+      itemsToSwap: [
+        {field: 'edit-bank-account-account-number-select', swapValue: PROFILE_INPUT_DATA.iban2},
+      ]
     },
+    "2_avustustiedot": {
+      items: {},
+      itemsToSwap: [
+        {field: 'edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti', swapValue: 'The new description!'},
+      ]
+    },
+    "4_suunniteltu_toiminta": {
+      items: {},
+      itemsToSwap: [
+        {field: 'edit-maara-kaikkiaan', swapValue: '1234'},
+      ]
+    },
+    "6_talous": {
+      items: {},
+      itemsToSwap: [
+        {field: 'edit-budget-static-income-entryfees', swapValue: '5678'},
+        {field: 'edit-budget-static-income-sales', swapValue: '999'}
+      ]
+    }
   },
   expectedErrors: {},
 };
@@ -1077,7 +1105,7 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
 const registeredCommunityApplications_48 = {
   draft: baseForm_48,
   copy: createFormData(baseForm_48, copyForm),
-  swap_bank_accounts: createFormData(baseForm_48, bankAccountSwapForm),
+  swap_fields: createFormData(baseForm_48, fieldSwapForm),
   missing_values: createFormData(baseForm_48, missingValues),
   wrong_email: createFormData(baseForm_48, wrongEmail),
   wrong_email_2: createFormData(baseForm_48, wrongEmail2),
