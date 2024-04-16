@@ -85,7 +85,7 @@ const swapFieldValuesOnPage = async (
 
     logger(`Swapping field: ${itemKey}`);
     logger(`Original value: ${itemField.value}`);
-    logger(`New value: ${itemToSwap.swapValue}\n`);
+    logger(`New value: ${itemToSwap.swapValue}`);
 
     itemField.value = itemToSwap.swapValue;
     await fillFormField(page, itemField, itemKey);
@@ -106,7 +106,7 @@ const swapFieldValuesOnPage = async (
 const goToSubmissionUrl = async (page: Page, submissionUrl: string) => {
   await page.goto(submissionUrl);
   await page.waitForURL('**/muokkaa');
-  logger(`Navigated to: ${submissionUrl}.\n`);
+  logger(`Navigated to: ${submissionUrl}.`);
 };
 
 /**
@@ -128,7 +128,7 @@ const navigateToApplicationPage = async (page: Page, formPageKey: string) => {
   }
   await clickButton(page, applicantDetailsLink);
   await page.waitForLoadState('load');
-  logger(`Loaded page: ${formPageKey}.\n`);
+  logger(`Loaded page: ${formPageKey}.`);
 };
 
 /**
