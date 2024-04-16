@@ -1,0 +1,15 @@
+diff --git a/core/lib/Drupal/Core/Asset/AssetResolver.php b/core/lib/Drupal/Core/Asset/AssetResolver.php
+index 251b9036f3..06ac3e41a4 100644
+--- a/core/lib/Drupal/Core/Asset/AssetResolver.php
++++ b/core/lib/Drupal/Core/Asset/AssetResolver.php
+@@ -325,7 +325,9 @@ public function getJsAssets(AttachedAssetsInterface $assets, $optimize, Language
+         });
+       }
+       $settings_in_header = in_array('core/drupalSettings', $header_js_libraries);
+-      $this->cache->set($cid, [$js_assets_header, $js_assets_footer, $settings, $settings_in_header], CacheBackendInterface::CACHE_PERMANENT, ['library_info']);
++      if (!empty($libraries_to_load)) {
++        $this->cache->set($cid, [$js_assets_header, $js_assets_footer, $settings, $settings_in_header], CacheBackendInterface::CACHE_PERMANENT, ['library_info']);
++      }
+     }
+
+     if ($settings !== FALSE) {
