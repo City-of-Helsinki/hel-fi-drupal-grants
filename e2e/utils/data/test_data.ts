@@ -52,7 +52,6 @@ interface FormField {
   role?: string;
   selector?: Selector;
   value?: string;
-  swapValue?: string;
   multi?: MultiValueField;
   dynamic_single?: DynamicSingleValueField;
   dynamic_multi?: DynamicMultiValueField;
