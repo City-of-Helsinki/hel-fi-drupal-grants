@@ -1,5 +1,5 @@
 uuid: cf491e60-aeb2-4ae7-9c51-e6196cc90e26
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -28,6 +28,7 @@ dependencies:
     - content_translation
     - entity_usage
     - external_entities
+    - file
     - grants_admin_applications
     - helfi_tpr
     - locale
@@ -125,6 +126,7 @@ permissions:
   - 'delete news_item revisions'
   - 'delete own announcement content'
   - 'delete own faq content'
+  - 'delete own files'
   - 'delete own form_page content'
   - 'delete own landing_page content'
   - 'delete own news_item content'

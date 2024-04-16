@@ -91,11 +91,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form = parent::buildForm($form, $form_state);
     $grantsProfile = $this->getGrantsProfileDocument();
 
-    $isNewGrantsProfile = $grantsProfile->getTransactionId();
-
     if ($grantsProfile == NULL) {
       return [];
     }
+
+    $isNewGrantsProfile = $grantsProfile->getTransactionId();
 
     // Handle multiple editors.
     $lockService = \DrupaL::service('grants_handler.form_lock_service');
@@ -128,9 +128,10 @@ you cannot do any modifications while the form is locked for them.',
       '#title' => 'isNewProfile',
       '#value' => $isNewGrantsProfile,
     ];
-    $form['foundingYearWrapper'] = [
+    $form['basicDetailsWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Year of establishment', [], $this->tOpts),
+      '#title' => $this->t('Basic details', [], $this->tOpts),
+      '#title_tag' => 'h4',
       'foundingYear' => [
         '#type' => 'textfield',
         '#title' => $this->t('Year of establishment', [], $this->tOpts),
@@ -141,10 +142,6 @@ you cannot do any modifications while the form is locked for them.',
           ],
         ],
       ],
-    ];
-    $form['companyNameShortWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Abbreviated name', [], $this->tOpts),
       'companyNameShort' => [
         '#type' => 'textfield',
         '#title' => $this->t('Abbreviated name', [], $this->tOpts),
@@ -156,21 +153,11 @@ you cannot do any modifications while the form is locked for them.',
           ],
         ],
       ],
-    ];
-
-    $form['companyHomePageWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Website address', [], $this->tOpts),
       'companyHomePage' => [
         '#type' => 'textfield',
         '#title' => $this->t('Website address', [], $this->tOpts),
         '#default_value' => $grantsProfileContent['companyHomePage'],
       ],
-    ];
-
-    $form['businessPurposeWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Purpose of operations', [], $this->tOpts),
       'businessPurpose' => [
         '#type' => 'textarea',
         '#title' => $this->t(
@@ -264,10 +251,10 @@ later when completing the grant application.',
 
     parent::profileContentFromWrappers($values, $grantsProfileContent);
 
-    $grantsProfileContent["foundingYear"] = $values["foundingYearWrapper"]["foundingYear"];
-    $grantsProfileContent["companyNameShort"] = $values["companyNameShortWrapper"]["companyNameShort"];
-    $grantsProfileContent["companyHomePage"] = $values["companyHomePageWrapper"]["companyHomePage"];
-    $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
+    $grantsProfileContent["foundingYear"] = $values["basicDetailsWrapper"]["foundingYear"];
+    $grantsProfileContent["companyNameShort"] = $values["basicDetailsWrapper"]["companyNameShort"];
+    $grantsProfileContent["companyHomePage"] = $values["basicDetailsWrapper"]["companyHomePage"];
+    $grantsProfileContent["businessPurpose"] = $values["basicDetailsWrapper"]["businessPurpose"];
   }
 
   /**
@@ -423,6 +410,7 @@ later when completing the grant application.',
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Addresses', [], $this->tOpts),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -588,6 +576,7 @@ later when completing the grant application.',
     $form['officialWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Persons responsible for operations', [], $this->tOpts),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="officials-wrapper">',
       '#suffix' => '</div>',
     ];

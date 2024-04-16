@@ -10,49 +10,8 @@ import {
   isDynamicMultiValueField, FormPage
 } from "./data/test_data"
 
-import {saveObjectToEnv, extractUrl} from "./helpers";
-
-
-/**
- * Set novalidate for given form. This bypasses the browser validations so that
- * our testing methods actually work.
- *
- * Does not work very well on webform forms.
- *
- * @param page
- * @param formClass
- */
-async function setNoValidate(page: Page, formClass: string) {
-  await page.waitForSelector(`.${formClass}`);
-  logger('Set NOVALIDATE called');
-
-  const formHandle = await page.$(`.${formClass}`);
-
-  if (formHandle) {
-    const isFormPresent = await formHandle.evaluate((form) => {
-      logger('Is Form Present:', form !== null);
-      return form !== null;
-    });
-
-    if (isFormPresent) {
-      logger('Set NOVALIDATE inside formHandle');
-      try {
-        const result = await formHandle.evaluate((form) => {
-          logger('Set NOVALIDATE inside EVALUATE');
-          form.setAttribute('novalidate', '');
-          return 'Evaluation successful';
-        });
-
-        logger('Evaluation Result:', result);
-      } catch (error) {
-        logger('Error inside evaluate:', error);
-      }
-    } else {
-      logger('Form not found in the DOM');
-    }
-  }
-}
-
+import {extractPath} from "./helpers";
+import {saveObjectToEnv} from "./env_helpers";
 
 /**
  * Fill form pages from given data array. Calls the pagehandler callbacks for
@@ -106,9 +65,12 @@ const fillGrantsFormPage = async (
     test.skip(true, 'Skip form test');
   }
 
+  // Make sure the needed profile exists.
+  expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
+
   // Store submissionUrl.
-  const applicationId = await getApplicationNumberFromBreadCrumb(page);
-  const submissionUrl = await extractUrl(page);
+  // const applicationId = await getApplicationNumberFromBreadCrumb(page);
+  const submissionUrl = await extractPath(page);
 
   // Hide the sliding popup once.
   await hideSlidePopup(page);
@@ -161,9 +123,7 @@ const fillGrantsFormPage = async (
     if (buttons.length > 0) {
       const firstButton = buttons[0];
       if (firstButton.selector) {
-        await clickButton(page, firstButton.selector, formClass, formPageKey);
-
-        // Here we already are on the new page that is loaded via clickButton
+        await clickButton(page, firstButton.selector);
 
         /**
          * If button is to save draft, then we verify that we got to page we
@@ -222,27 +182,23 @@ const fillProfileForm = async (
   // Navigate to form url.
   await page.goto(formPath);
 
+  logger('FORM:', formDetails.title);
+
   // Hide the sliding popup once.
   await hideSlidePopup(page);
 
-  // Assertions based on the expected destination
-  // const initialPathname = new URL(page.url()).pathname;
-  // expect(initialPathname).toMatch(new RegExp(`^${formDetails.expectedDestination}/?$`));
-
   // Loop form pages
-  for (const [formPageKey, formPageObject]
-    of Object.entries(formDetails.formPages)) {
+  for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
     const buttons = [];
-    for (const [itemKey, itemField]
-      of Object.entries(formPageObject.items)) {
+    for (const [itemKey, itemField] of Object.entries(formPageObject.items)) {
       if (itemField.role === 'button') {
-        // Collect buttons to be clicked later
+        // Collect buttons to be clicked later.
         buttons.push(itemField);
       } else if (itemField.role === 'multivalue') {
-        // Process multivalue fields separately
+        // Process multi-value fields separately.
         await fillMultiValueField(page, itemField, itemKey);
       } else {
-        // Or fill simple form field
+        // Or fill simple form field.
         await fillFormField(page, itemField, itemKey);
       }
     }
@@ -255,38 +211,52 @@ const fillProfileForm = async (
 
     await page.waitForLoadState("load");
 
-
-    // Capture all error messages on the page
+    // Capture all error messages on the page.
     const allErrorElements = await page.$$('.form-item--error-message'); // Adjust selector based on your actual HTML structure
     const actualErrorMessages = await Promise.all(
       allErrorElements.map(async (element) => await element.innerText())
     );
 
-    // Get configured expected errors
+    // Get the expected errors.
     const expectedErrors = Object.entries(formDetails.expectedErrors);
-    // If we are not testing error messages
+    const expectedErrorsArray = expectedErrors.map(([selector, expectedErrorMessage]) => expectedErrorMessage);
+
+    // Check if we get errors even if we're not waiting for any.
     if (expectedErrors.length === 0) {
-      // print errors to stdout
       if (actualErrorMessages.length !== 0) {
-        logger('ERRORS', actualErrorMessages);
+        console.debug('ERRORS, expected / actual', expectedErrors, actualErrorMessages);
       }
-      // Expect actual error messages size to be 0
       expect(actualErrorMessages.length).toBe(0);
     }
 
     // Check for expected error messages
+    const foundErrors: string[] = [];
+    const notFoundErrors: string[] = [];
     for (const [selector, expectedErrorMessage] of expectedErrors) {
-      if (expectedErrorMessage) {
-        logger('ERROR', expectedErrorMessage);
-        logger('ERRORS', actualErrorMessages);
-        // If an error is expected, check if it's present in the captured error messages
-        if (typeof expectedErrorMessage === "string") {
-          expect(actualErrorMessages.some((msg) => msg.includes(expectedErrorMessage))).toBe(true);
+      if (expectedErrorMessage && typeof expectedErrorMessage === "string") {
+        if (actualErrorMessages.some((msg) => msg.includes(expectedErrorMessage))) {
+          foundErrors.push(expectedErrorMessage)
         }
-      } else {
-        // If no error is expected, check if there are no error messages
-        expect(allErrorElements.length).toBe(0);
+        else {
+          notFoundErrors.push(expectedErrorMessage)
+        }
       }
+    }
+
+    // Make sure that no expected errors are missing.
+    if (expectedErrors.length > 0 && notFoundErrors.length !== 0) {
+      logger('MISMATCH IN FORM ERRORS!')
+      logger('The following errors were expected:', expectedErrors);
+      logger('The following errors were found:', foundErrors);
+      logger('The following errors are missing:', notFoundErrors);
+      expect(notFoundErrors).toEqual([]);
+    }
+
+    // Check for unexpected error messages.
+    const unexpectedErrors = actualErrorMessages.filter(msg => !expectedErrorsArray.includes(msg));
+    if (unexpectedErrors.length !== 0) {
+      logger('Unexpected errors:', unexpectedErrors);
+      expect(unexpectedErrors.length).toBe(0);
     }
 
     // Assertions based on the expected destination
@@ -405,19 +375,9 @@ const validateHiddenFields = async (page: Page, itemsToBeHidden: string[], formP
 const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
 
   // Capture all error messages on the page
-  const allErrorElements =
-    await page.$$('.hds-notification--error .hds-notification__body ul li');
-
-  // Extract text content from the error elements
-  const actualErrorMessages = await Promise.all(
-    allErrorElements.map(async (element) => {
-      try {
-        return await element.innerText();
-      } catch (error) {
-        logger('Error while fetching text content:', error);
-        return '';
-      }
-    })
+  const errorClass = '.hds-notification--error .hds-notification__body ul li';
+  const actualErrorMessages = await page.locator(errorClass).evaluateAll(elements =>
+    elements.map(element => element.textContent?.trim() || '').filter(text => text.trim().length > 0)
   );
 
   // Get configured expected errors from form PAGE
@@ -451,6 +411,7 @@ const validateFormErrors = async (page: Page, expectedErrorsArg: Object) => {
   // Make sure that no expected errors are missing.
   if (expectedErrors.length > 0 && notFoundErrors.length !== 0) {
     logger('MISMATCH IN FORM ERRORS!')
+    logger('All error messages on the page:', actualErrorMessages);
     logger('The following errors were expected:', expectedErrors);
     logger('The following errors were found:', foundErrors);
     logger('The following errors are missing:', notFoundErrors);
@@ -616,23 +577,8 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
   switch (selector.type) {
     case "data-drupal-selector":
       const customSelector = `[data-drupal-selector="${selector.value}"]`;
-      // Fill field with selector
       await page.locator(customSelector).fill(value);
-
-      // For some fields, playwright does not allow usage of data-drupal-selector
-      // but code below works even worse. Probably because it's missing some
-      // event triggering.
-
-      // If above causes issues, we may need to add support for
-      // page.$eval solution.
-
-      // Use page.$eval to set the value of input elements
-      // await page.$eval(customSelector, (element, value) => {
-      //   (element as HTMLInputElement).value = value ?? '';
-      // }, value);
-
       break;
-
 
     case "data-drupal-selector-sequential":
       const customSequentialSelector = `[data-drupal-selector="${selector.value}"]`;
@@ -955,14 +901,10 @@ const replacePlaceholder = (index: string, placeholder: string, value: string | 
  *
  * @param page
  * @param buttonSelector
- * @param formClass
- * @param nextSelector
  */
 const clickButton = async (
   page: Page,
-  buttonSelector: Selector,
-  formClass?: string,
-  nextSelector?: string) => {
+  buttonSelector: Selector) => {
   let element: Locator | null = null;
 
   switch (buttonSelector.type) {
@@ -988,25 +930,6 @@ const clickButton = async (
 };
 
 /**
- * Helper function to generate selectors based on rules. Deprecated?
- *
- * @param type
- * @param selectorValue
- */
-const buildSelector = (type: string, selectorValue: string) => {
-  if (type === 'data-drupal-selector') {
-    return `[${type}="${selectorValue}"]`;
-  }
-
-  if (type === 'locator') {
-    return selectorValue;
-  }
-
-  // Return as is as default
-  return selectorValue;
-}
-
-/**
  * Upload file.
  *
  * @param page
@@ -1026,24 +949,24 @@ const uploadFile = async (
     return;
   }
 
-  // Get upload handle
+  // Setup locators for file input and result link.
   const fileInput = page.locator(uploadSelector);
+  const resultLink = page.locator(fileLinkSelector);
 
-  // Get uploaded file link
-  const fileLink = page.locator(fileLinkSelector)
+  // Create a promise for the file upload.
+  const postResponsePromise = page.waitForResponse(response =>
+    response.request().method() === "POST" && response.status() === 200
+  );
 
-  const responsePromise = page.waitForResponse(r => r.request().method() === "POST", {timeout: 30 * 1000});
+  // Wait for all promises to fulfill.
+  await Promise.all([
+    fileInput.waitFor({ state: 'attached', timeout: 30000 }),
+    fileInput.setInputFiles(filePath),
+    postResponsePromise,
+    resultLink.waitFor({ state: 'visible', timeout: 30000 }),
+    expect(fileInput).toBeHidden(),
+  ]);
 
-  // FIXME: Use locator actions and web assertions that wait automatically
-  await page.waitForTimeout(2000);
-
-  await expect(fileInput).toBeAttached();
-  await fileInput.setInputFiles(filePath);
-
-  await page.waitForTimeout(2000);
-
-  await expect(fileInput, "File upload failed").toBeHidden();
-  await responsePromise;
 }
 
 /**
@@ -1218,41 +1141,16 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
 
   if (formItems['edit-community-address-community-address-select']) {
     await page.locator('#edit-community-address-community-address-select').selectOption({ label: formItems['edit-community-address-community-address-select'].value});
-    // await fillSelectField(
-    //   formItems['edit-community-address-community-address-select'].selector ?? {
-    //     type: 'dom-id-first',
-    //     name: 'bank-account-selector',
-    //     value: '#edit-bank-account-account-number-select',
-    //   },
-    //   page,
-    //   undefined);
   }
 
   if (formItems['edit-bank-account-account-number-select']) {
     await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
-    // await fillSelectField(
-    //   formItems['edit-bank-account-account-number-select'].selector ?? {
-    //     type: 'data-drupal-selector',
-    //     name: 'bank-account-selector',
-    //     value: 'edit-bank-account-account-number-select'
-    //   },
-    //   page,
-    //   'use-random-value'
-    // );
   }
 
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
     const partialCommunityOfficialLabel = formItems['edit-community-officials-items-0-item-community-officials-select'].value;
     const optionToSelect = await page.locator('option', { hasText: partialCommunityOfficialLabel }).textContent() || '';
     await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ label: optionToSelect });
-    // await fillSelectField(
-    //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
-    //     type: 'data-drupal-selector',
-    //     name: 'community-officials-selector',
-    //     value: 'edit-community-officials-items-0-item-community-officials-select'
-    //   },
-    //   page,
-    //   'use-random-value');
   }
 }
 
@@ -1268,15 +1166,6 @@ async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) 
 async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
   if (formItems['edit-bank-account-account-number-select']) {
     await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
-    // await fillSelectField(
-    //   formItems['edit-bank-account-account-number-select'].selector ?? {
-    //     type: 'data-drupal-selector',
-    //     name: 'bank-account-selector',
-    //     value: 'edit-bank-account-account-number-select'
-    //   },
-    //   page,
-    //   'use-random-value'
-    // );
   }
 }
 
@@ -1290,48 +1179,15 @@ async function fillHakijanTiedotPrivatePerson(formItems: any, page: Page) {
  * @param page
  */
 async function fillHakijanTiedotUnregisteredCommunity(formItems: any, page: Page) {
-
   if (formItems['edit-bank-account-account-number-select']) {
     await page.locator('#edit-bank-account-account-number-select').selectOption({ label: formItems['edit-bank-account-account-number-select'].value });
-    // await fillSelectField(
-    //   formItems['edit-bank-account-account-number-select'].selector ?? {
-    //     type: 'data-drupal-selector',
-    //     name: 'bank-account-selector',
-    //     value: 'edit-bank-account-account-number-select'
-    //   },
-    //   page,
-    //   'use-random-value'
-    // );
   }
   if (formItems['edit-community-officials-items-0-item-community-officials-select']) {
     const partialCommunityOfficialLabel = formItems['edit-community-officials-items-0-item-community-officials-select'].value;
     const optionToSelect = await page.locator('option', { hasText: partialCommunityOfficialLabel }).textContent() || '';
     await page.locator('#edit-community-officials-items-0-item-community-officials-select').selectOption({ label: optionToSelect });
-    // await fillSelectField(
-    //   formItems['edit-community-officials-items-0-item-community-officials-select'].selector ?? {
-    //     type: 'data-drupal-selector',
-    //     name: 'community-officials-selector',
-    //     value: 'edit-community-officials-items-0-item-community-officials-select'
-    //   },
-    //   page,
-    //   'use-random-value');
   }
-  // await page.pause();
 }
-
-const fillSelectIfElementExists = async (
-  selector: Partial<FormFieldWithRemove> | undefined,
-  page: Page,
-  value: string
-) => {
-
-
-  if (selector) {
-    await fillSelectField(selector, page, value);
-  }
-
-
-};
 
 export {
   fillProfileForm,
@@ -1344,8 +1200,8 @@ export {
   fillSelectField,
   fillInputField,
   fillCheckboxField,
+  getApplicationNumberFromBreadCrumb,
   fillHakijanTiedotRegisteredCommunity,
-  fillSelectIfElementExists,
   fillHakijanTiedotPrivatePerson,
   fillHakijanTiedotUnregisteredCommunity
 };

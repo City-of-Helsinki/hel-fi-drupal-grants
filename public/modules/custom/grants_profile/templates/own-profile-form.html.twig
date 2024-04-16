@@ -5,7 +5,7 @@
   <div class="grants-profile">
     <div class="grants-profile--basicinfo">
       <div class="container">
-        <h3>{{ "Basic details"|t({}, {'context': 'grants_profile'}) }}</h3>
+        <h3>{{ "Community official information"|t({}, {'context': 'grants_profile'}) }}</h3>
         <div class="grants-profile-prh-info">
           <p>{{ "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."|t({}, {'context': 'grants_profile'}) }}</p>
         </div>
@@ -28,11 +28,9 @@
             <dd class="grants-profile-item">{{ profile.registrationDate|date('d.m.Y') }}</dd>
           </div>
         </dl>
-        <dl>
-          <div>
-            {{ form.updatelink }}
-          </div>
-        </dl>
+        <div class="grants-profile--update-link">
+          {{ form.updatelink }}
+        </div>
       </div>
     </div>
     <h3 class="info-grants">{{ "Add association information"|t({}, {'context': 'grants_profile'}) }}</h3>

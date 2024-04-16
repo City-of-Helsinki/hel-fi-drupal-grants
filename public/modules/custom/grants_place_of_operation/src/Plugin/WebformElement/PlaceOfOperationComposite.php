@@ -5,6 +5,7 @@ namespace Drupal\grants_place_of_operation\Plugin\WebformElement;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
+use Drupal\Core\Datetime\DrupalDateTime;
 
 /**
  * Provides a 'place_of_operation_composite' element.
@@ -109,7 +110,8 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
         // Convert date strings.
         if ($fieldName === 'rentTimeBegin' || $fieldName === 'rentTimeEnd') {
           if ($fieldValue) {
-            $fieldValue = date("j.n.Y", strtotime(date($fieldValue)));
+            $dateTime = new DrupalDateTime($fieldValue);
+            $fieldValue = $dateTime->format('j.n.Y');
           }
         }
 

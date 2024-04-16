@@ -1,1 +1,5 @@
-{{ attachments }}
+{% if attachments['#items'][0] is not empty %}
+  {{ attachments }}
+{% else %}
+  <em>{{ "No attachments"|t }}</em>
+{% endif %}

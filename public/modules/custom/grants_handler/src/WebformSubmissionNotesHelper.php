@@ -18,6 +18,10 @@ class WebformSubmissionNotesHelper {
    */
   private static function getCustomData(WebformSubmissionInterface $submission) {
     $data = $submission->get('notes')->value;
+    // Do no pass null values to json decode.
+    if (!$data) {
+      return [];
+    }
     return Json::decode($data);
   }
 

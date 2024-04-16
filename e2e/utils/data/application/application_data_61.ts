@@ -376,27 +376,41 @@ const baseFormRegisteredCommunity_61: FormData = {
           value: ATTACHMENTS.TALOUSARVIO,
           viewPageFormatter: viewPageFormatFilePath,
         },
-        'edit-muu-liite-items-0-item-attachment-upload': {
-          role: 'fileupload',
-          selector: {
-            type: 'locator',
-            name: 'data-drupal-selector',
-            value: '[name="files[muu_liite_items_0__item__attachment]"]',
-            resultValue: '.form-item-muu-liite-items-0--item--attachment a',
+        "edit-muu-liite": {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-muu-liite-add-submit',
+              resultValue: 'edit-muu-liite-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'fileupload',
+                  selector: {
+                    type: 'locator',
+                    name: 'data-drupal-selector',
+                    value: '[name="files[muu_liite_items_[INDEX]__item__attachment]"]',
+                    resultValue: '.form-item-muu-liite-items-[INDEX]--item--attachment a',
+                  },
+                  value: ATTACHMENTS.MUU_LIITE,
+                  viewPageFormatter: viewPageFormatFilePath
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-muu-liite-items-[INDEX]-item-description',
+                  },
+                  value: faker.lorem.sentences(1),
+                },
+              ],
+            },
           },
-          value: ATTACHMENTS.MUU_LIITE,
-          viewPageSelector: '.form-item-muu-liite',
-          viewPageFormatter: viewPageFormatFilePath
-        },
-        'edit-muu-liite-items-0-item-description': {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-muu-liite-items-0-item-description',
-          },
-          value: faker.lorem.sentences(1),
-          viewPageSelector: '.form-item-muu-liite',
         },
         "edit-extra-info": {
           role: 'input',
@@ -439,6 +453,7 @@ const baseFormRegisteredCommunity_61: FormData = {
 
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
@@ -506,6 +521,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
 
 const wrongValues: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
+  viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {

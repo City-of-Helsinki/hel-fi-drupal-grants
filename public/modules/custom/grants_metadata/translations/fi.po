@@ -80,3 +80,6 @@ msgctxt "grants_metadata"
 msgid 'Subvention type'
 msgstr 'Avustuslajin koodi'
 
+msgctxt "grants_metadata"
+msgid "File name"
+msgstr "Tiedostonimi"

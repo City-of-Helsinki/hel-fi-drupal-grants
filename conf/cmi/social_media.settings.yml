@@ -1,6 +1,6 @@
 _core:
   default_config_hash: AyqoIo0GS3jnXfsBkJZCiVA4WsqNkQItXRfQMmg91jI
-langcode: fi
+langcode: en
 social_media:
   facebook_share:
     enable: 1
@@ -37,7 +37,7 @@ social_media:
     img: twitter
   email:
     enable: 1
-    text: 'Send as an email'
+    text: Sähköposti
     api_url: 'mailto:?subject=[current-page:title]&body=Check out this site [current-page:url]'
     api_event: href
     default_img: 0

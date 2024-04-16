@@ -146,6 +146,7 @@ function hdbt_subtheme_preprocess_views_view(&$variables): void {
 
       $query = \Drupal::entityQuery('taxonomy_term');
       $query->condition('vid', $exposedValueTerm);
+      $query->accessCheck(FALSE);
       $tids = $query->execute();
       $terms = Term::loadMultiple($tids);
       $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
@@ -590,6 +591,13 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
  */
 function hdbt_subtheme_preprocess_block__user_login_block(&$variables, $hook): void {
   $variables['content']['user_links'] = NULL;
+}
+
+/**
+ * Implements hook_preprocess_block__user_login_block().
+ */
+function hdbt_subtheme_preprocess_block__askemblock(&$variables, $hook): void {
+  $variables['current_language'] = \Drupal::languageManager()->getCurrentLanguage()->getId();
 }
 
 /**

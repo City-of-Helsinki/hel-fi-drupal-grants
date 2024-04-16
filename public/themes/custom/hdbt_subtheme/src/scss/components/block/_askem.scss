@@ -19,6 +19,9 @@
     font-size: 1.5rem;
     font-weight: 500;
   }
+  .askem-reaction-button.after-icons[aria-pressed=true] {
+    background: black;
+  }
   .askem-reaction:last-child .askem-reaction-button.askem-reaction-button .askem-label::after {
     @include pseudo-icon('face-sad', $spacing-and-half, $color-black, flex);
   }
@@ -104,5 +107,7 @@
       color: $color-white;
     }
   }
-
+  .askem-shares.askem-shares {
+    display:none;
+  }
 }

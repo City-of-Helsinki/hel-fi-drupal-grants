@@ -14,5 +14,5 @@ _core:
 id: node.form_page
 target_entity_type_id: node
 target_bundle: form_page
-default_langcode: fi
+default_langcode: en
 language_alterable: true
