@@ -111,7 +111,7 @@ const validateExistingProfileData = async (
 
   // Grab the hard-coded input data and filter the
   // data depending on the profile type.
-  let profileInputData: ProfileInputData = PROFILE_INPUT_DATA;
+  let profileInputData: Partial<ProfileInputData> = PROFILE_INPUT_DATA;
 
   if (profileType === 'private_person') {
     const privatePersonFields = [
@@ -323,17 +323,28 @@ const validateField = async (
   let rawInputValue = itemField.value
   let formattedInputValue = itemField.viewPageFormatter ? itemField.viewPageFormatter(rawInputValue) : rawInputValue;
 
-  // Get the item's selector.
+  // Get the item's selector or selectors.
+  let itemSelectors: string[] = [];
   let itemSelector = itemField.viewPageSelector ? itemField.viewPageSelector : viewPageBuildSelectorForItem(itemKey);
+
+  // Check for multiple values inside viewPageSelectors.
+  if (itemField.viewPageSelectors) {
+    itemSelectors = itemField.viewPageSelectors;
+  } else {
+    itemSelectors.push(itemSelector);
+  }
 
   // Attempt to locate the item and see if the input value matches the content on the page.
   try {
-    const targetItem = await page.locator(itemSelector);
-    const targetItemText = await targetItem.textContent({ timeout: 1000 });
-    if (targetItemText && targetItemText.includes(formattedInputValue)) {
-      validationSuccessCallback(constructMessage(MessageType.ValidationSuccess, itemKey, rawInputValue, formattedInputValue, itemSelector, targetItemText));
-    } else {
-      validationErrorCallback(constructMessage(MessageType.ValidationError, itemKey, rawInputValue, formattedInputValue, itemSelector, targetItemText));
+    for (const selector of itemSelectors) {
+      const targetItem = await page.locator(selector);
+      const targetItemText = await targetItem.textContent({ timeout: 1000 });
+
+      if (targetItemText && targetItemText.includes(formattedInputValue)) {
+        validationSuccessCallback(constructMessage(MessageType.ValidationSuccess, itemKey, rawInputValue, formattedInputValue, selector, targetItemText));
+      } else {
+        validationErrorCallback(constructMessage(MessageType.ValidationError, itemKey, rawInputValue, formattedInputValue, selector, targetItemText));
+      }
     }
   } catch (error) {
     validationErrorCallback(constructMessage(MessageType.ContentNotFound, itemKey, rawInputValue, formattedInputValue, itemSelector));
@@ -519,6 +530,7 @@ const logValidationResults = (
 export {
   validateSubmission,
   validateProfileData,
+  validateFormData,
   validateExistingProfileData,
   validateHiddenFields,
 }

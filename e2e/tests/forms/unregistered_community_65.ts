@@ -8,6 +8,7 @@ import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
 import {fillFormField, uploadFile} from "../../utils/input_helpers";
 import {unRegisteredCommunityApplications as applicationData} from '../../utils/data/application_data';
+import {swapFieldValues} from "../../utils/field_swap_helpers";
 
 const profileType = 'unregistered_community';
 const formId = '65';
@@ -142,7 +143,20 @@ test.describe('NUORLOMALEIR(65)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-    if (obj.viewPageSkipValidation || obj.testFormCopying) continue;
+    if (!obj.testFieldSwap) continue;
+    test(`Field swap: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await swapFieldValues(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
+
+  for (const [key, obj] of testDataArray) {
+    if (obj.viewPageSkipValidation || obj.testFormCopying || obj.testFieldSwap) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       await validateSubmission(
