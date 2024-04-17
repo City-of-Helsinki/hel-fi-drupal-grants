@@ -88,7 +88,7 @@ const swapFieldValuesOnPage = async (
     logger(`New value: ${itemToSwap.swapValue}`);
 
     itemField.value = itemToSwap.swapValue;
-    await fillFormField(page, itemField, itemKey);
+    await fillFormField(page, itemField, itemKey, true);
   }
 };
 
