@@ -16,13 +16,20 @@ import {logger} from "./logger";
  *   The form field we want to fill.
  * @param itemKey
  *   The item key.
+ * @param clearBefore
+ *   A boolean indicating if the field value should be cleared before filling.
  */
-const fillFormField = async (page: Page, formField: Partial<FormFieldWithRemove>, itemKey: string) => {
+const fillFormField = async (
+  page: Page,
+  formField: Partial<FormFieldWithRemove>,
+  itemKey: string,
+  clearBefore: boolean = false
+) => {
   const {selector, value, role} = formField;
 
   // Fill normal input field.
   if (role === "input" && value) {
-    await fillInputField(value, selector, page, itemKey);
+    await fillInputField(value, selector, page, itemKey, clearBefore);
   }
 
   // Fill a select field.
@@ -90,8 +97,16 @@ const fillFormField = async (page: Page, formField: Partial<FormFieldWithRemove>
  *   Page object from Playwright.
  * @param itemKey
  *   Item key used in data definition.
+ * @param clearBefore
+ *   A boolean indicating if the field value should be cleared before filling.
  */
-async function fillInputField(value: string, selector: Selector | undefined, page: Page, itemKey: string) {
+async function fillInputField(
+  value: string,
+  selector: Selector | undefined,
+  page: Page,
+  itemKey: string,
+  clearBefore: boolean = false
+) {
   if (!selector) {
     return;
   }
@@ -101,6 +116,9 @@ async function fillInputField(value: string, selector: Selector | undefined, pag
     // Normal data-drupal-selector.
     case "data-drupal-selector":
       const customSelector = `[data-drupal-selector="${selector.value}"]`;
+      if (clearBefore) {
+        await page.locator(customSelector).fill('');
+      }
       await page.locator(customSelector).fill(value);
       break;
 

@@ -1,0 +1,386 @@
+{
+	"info": {
+		"name": "Yrtti",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+	},
+	"item": [
+		{
+			"name": "Basic info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{YrttiPassu}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"BusinessId\": \"4015026-5\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{yrttibakend}}/api/BasicInfo",
+					"host": [
+						"{{yrttibakend}}"
+					],
+					"path": [
+						"api",
+						"BasicInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Statute",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{YrttiPassu}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"BusinessId\": \"2686723-5\",  \"AssociationStatus\": \"R\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{yrttibakend}}/api/Statute",
+					"host": [
+						"{{yrttibakend}}"
+					],
+					"path": [
+						"api",
+						"Statute"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RoleSearchWithSSN",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{YrttiPassu}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"PersonalIdentityCode\": \"200677-065P\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{yrttibakend}}/api/RoleSearchWithSSN",
+					"host": [
+						"{{yrttibakend}}"
+					],
+					"path": [
+						"api",
+						"RoleSearchWithSSN"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RoleSearchWithBusinessId",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{YrttiPassu}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"BusinessId\": \"2062559-3\"   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{yrttibakend}}/api/RoleSearchWithBusinessId",
+					"host": [
+						"{{yrttibakend}}"
+					],
+					"path": [
+						"api",
+						"RoleSearchWithBusinessId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RuleSearchWithBusinessId",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{YrttiPassu}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"BusinessId\": \"2120675-3\"   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{yrttibakend}}/api/RuleSearchWithBusinessId",
+					"host": [
+						"{{yrttibakend}}"
+					],
+					"path": [
+						"api",
+						"RuleSearchWithBusinessId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NotificationSearch",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{YrttiPassu}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"BusinessId\": \"2120675-3\"   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{yrttibakend}}/api/NotificationSearch",
+					"host": [
+						"{{yrttibakend}}"
+					],
+					"path": [
+						"api",
+						"NotificationSearch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NotificationBrowse",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{YrttiPassu}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"BusinessId\": \"2120675-3\"   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{yrttibakend}}/api/NotificationBrowse",
+					"host": [
+						"{{yrttibakend}}"
+					],
+					"path": [
+						"api",
+						"NotificationBrowse"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RuleSearchWithRecordNumber",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{YrttiPassu}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"BusinessId\": \"2120675-3\"   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{yrttibakend}}/api/RuleSearchWithRecordNumber",
+					"host": [
+						"{{yrttibakend}}"
+					],
+					"path": [
+						"api",
+						"RuleSearchWithRecordNumber"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ElectronicExtractSearch",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{YrttiPassu}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"BusinessId\": \"2120675-3\"   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{yrttibakend}}/api/ElectronicExtractSearch",
+					"host": [
+						"{{yrttibakend}}"
+					],
+					"path": [
+						"api",
+						"ElectronicExtractSearch"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
