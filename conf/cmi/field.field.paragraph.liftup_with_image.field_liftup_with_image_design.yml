@@ -7,6 +7,8 @@ dependencies:
     - paragraphs.paragraphs_type.liftup_with_image
   module:
     - options
+_core:
+  default_config_hash: HgOMd12P6n2j2g-xbpSaLL4-2NryMO3aFVN8QZmRpB0
 id: paragraph.liftup_with_image.field_liftup_with_image_design
 field_name: field_liftup_with_image_design
 entity_type: paragraph

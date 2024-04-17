@@ -164,7 +164,6 @@ permissions:
   - 'administer webform'
   - 'administer webform element access'
   - 'administer webform submission'
-  - 'assign admin role'
   - 'assign all roles'
   - 'assign content_producer role'
   - 'assign editor role'
