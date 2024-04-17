@@ -76,8 +76,8 @@ display:
       tab_options:
         title: Content
         description: 'Find and manage scheduled content'
-      display_description: 'Overview of all scheduled content, as a tab on main ''content admin'' page'
-      display_comment: 'Revision nid relationship is required because the content type is only stored at ''content'' level, not ''content revision'' level.'
+      display_description: "Overview of all scheduled content, as a tab on main 'content admin' page"
+      display_comment: "Revision nid relationship is required because the content type is only stored at 'content' level, not 'content revision' level."
     display_title: 'Content Overview'
   user_page:
     display_options:
@@ -86,7 +86,7 @@ display:
       tab_options:
         title: Content
         description: 'Find and manage scheduled content'
-      display_description: 'Scheduled content tab on user profile, showing just that user''s scheduled content'
+      display_description: "Scheduled content tab on user profile, showing just that user's scheduled content"
       arguments:
         uid:
           exception:
