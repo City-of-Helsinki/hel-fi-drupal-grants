@@ -56,6 +56,7 @@ interface FormField {
   dynamic_single?: DynamicSingleValueField;
   dynamic_multi?: DynamicMultiValueField;
   viewPageSelector?: string;
+  viewPageSelectors?: string[];
   viewPageFormatter?: ViewPageFormatterFunction
   viewPageSkipValidation?: boolean;
 }
@@ -65,6 +66,13 @@ type RemoveList = string[];
 type HiddenItemsList = string[];
 
 type ViewPageFormatterFunction = (param: string) => string;
+
+type FieldSwapItemList = FieldSwapItem[];
+
+type FieldSwapItem = {
+  field: string;
+  swapValue: string;
+};
 
 interface FormFieldWithRemove extends FormField {
   type?: string;
@@ -89,6 +97,7 @@ interface FormDataWithRemove extends FormData {
       };
       itemsToRemove?: RemoveList | undefined;
       itemsToBeHidden?: HiddenItemsList | undefined;
+      itemsToSwap?: FieldSwapItemList | undefined;
     };
   };
 }
@@ -101,6 +110,7 @@ interface FormPage {
   items: FormItems;
   itemsToRemove?: RemoveList | undefined;
   itemsToBeHidden?: HiddenItemsList | undefined;
+  itemsToSwap?: FieldSwapItemList | undefined;
 }
 
 interface FormData {
@@ -114,6 +124,7 @@ interface FormData {
   expectedErrors: {},
   viewPageSkipValidation?: boolean,
   testFormCopying?: boolean,
+  testFieldSwap?: boolean,
 }
 
 interface PageHandlers {
@@ -147,6 +158,7 @@ export {
   FormDataWithRemoveOptionalProps,
   PageHandlers,
   FormPage,
+  FieldSwapItemList,
   isMultiValueField,
   isDynamicMultiValueField,
 }

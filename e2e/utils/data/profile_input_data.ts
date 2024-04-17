@@ -9,15 +9,15 @@
  * "View" page.
  */
 interface ProfileInputData  {
-  iban?: string;
-  iban2?: string;
-  address?: string;
-  zipCode?: string;
-  city?: string;
-  communityOfficial?: string;
-  role?: string;
-  email?: string;
-  phone?: string;
+  iban: string;
+  iban2: string;
+  address: string;
+  zipCode: string;
+  city: string;
+  communityOfficial: string;
+  role: string;
+  email: string;
+  phone: string;
 }
 
 /**
