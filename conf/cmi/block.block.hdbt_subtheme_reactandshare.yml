@@ -1,5 +1,5 @@
-uuid: 70e4a18a-a763-43fa-8ccc-0dfc828b16d2
-langcode: en
+uuid: af39de2d-3f1f-4f67-bf3a-4ddadbbadf5f
+langcode: fi
 status: true
 dependencies:
   module:
@@ -7,19 +7,17 @@ dependencies:
     - node
   theme:
     - hdbt_subtheme
-_core:
-  default_config_hash: nH8M6u66xNnGzjplyiDZAKKeyzDR6NFyTMXNwDYzldk
-id: hdbt_subtheme_heroblock
+id: hdbt_subtheme_reactandshare
 theme: hdbt_subtheme
-region: before_content
-weight: -12
+region: after_content
+weight: 0
 provider: null
-plugin: hero_block
+plugin: react_and_share
 settings:
-  id: hero_block
-  label: 'Hero block'
+  id: react_and_share
+  label: 'React and Share'
   label_display: '0'
-  provider: hdbt_admin_tools
+  provider: helfi_platform_config
 visibility:
   'entity_bundle:node':
     id: 'entity_bundle:node'
@@ -27,6 +25,10 @@ visibility:
     context_mapping:
       node: '@node.node_route_context:node'
     bundles:
+      address: address
+      announcement: announcement
+      faq: faq
       form_page: form_page
-      landing_page: landing_page
+      news_item: news_item
       page: page
+      service: service
