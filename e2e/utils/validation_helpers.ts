@@ -34,6 +34,7 @@ const validateSubmission = async (
 
   const thisStoreData = storedata[formKey];
   if (thisStoreData.status === 'DRAFT') {
+    logger(`Validating draft application for application ID: ${thisStoreData.applicationId}...`);
     await navigateAndValidateViewPage(page, thisStoreData);
     await validateFormData(page, formDetails);
   } else {
