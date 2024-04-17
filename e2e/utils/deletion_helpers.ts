@@ -121,7 +121,7 @@ const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
  *   The application ID (e.g. LOCALT-060-0000202).
  */
 const validateDeletionNotification = async (page: Page, message: string, applicationId: string) => {
-  logger(`Verifying deletion for application with application ID: ${applicationId}...`);
+  logger(`Verifying deletion of application with application ID: ${applicationId}...`);
   const notificationContainer = await page.locator('.hds-notification.hds-notification--info');
   await expect(notificationContainer, "Failed to delete draft application").toContainText("Luonnos poistettu");
   logger(`Draft application deleted. Application deleted with: ${message}`);
