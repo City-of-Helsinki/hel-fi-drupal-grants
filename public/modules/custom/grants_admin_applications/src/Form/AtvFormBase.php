@@ -94,7 +94,6 @@ abstract class AtvFormBase extends FormBase {
     $password = getenv('AVUSTUS2_PASSWORD');
 
     try {
-
       $headers['X-hki-saveId'] = $saveId;
       self::updateSaveIdRecord($applicationId, $saveId);
 
@@ -115,6 +114,14 @@ abstract class AtvFormBase extends FormBase {
       $body = $res->getBody()->getContents();
       $messenger->addStatus('Integration response: ' . $body);
       $messenger->addStatus('Updated saveId to: ' . $saveId);
+
+      $eventService = \Drupal::service('grants_handler.events_service');
+      $eventService->logEvent(
+        $applicationId,
+        'HANDLER_RESEND_APP',
+        t('Application resent from Drupal Admin UI', [],  ['context' => 'grants_handler']),
+        $applicationId
+      );
 
       $logger->info(
         'Application resend - Integration status: @status - Response: @response',
