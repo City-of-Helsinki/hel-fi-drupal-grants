@@ -80,10 +80,10 @@ const baseFormRegisteredCommunity_57: FormData = {
           role: 'select',
           selector: {
             type: 'dom-id-first',
-            name: 'bank-account-selector',
+            name: '',
             value: '#edit-acting-year',
           },
-          value: '2025',
+          viewPageSkipValidation: true,
         },
         "edit-subventions-items-1-amount": {
           value: '5709,98',

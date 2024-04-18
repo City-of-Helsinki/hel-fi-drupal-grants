@@ -62,10 +62,10 @@ const baseFormRegisteredCommunity_56: FormData = {
           role: 'select',
           selector: {
             type: 'dom-id-first',
-            name: 'bank-account-selector',
+            name: '',
             value: '#edit-acting-year',
           },
-          value: '2024',
+          viewPageSkipValidation: true,
         },
         "compensation-no": {
           role: 'radio',
