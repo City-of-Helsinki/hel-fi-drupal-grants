@@ -62,6 +62,7 @@ class AdminApplicationsByUuidForm extends FormBase {
     $input = $form_state->getUserInput();
 
     $uuid = $input['uuid'] ?? null;
+    $status = $input['status'] ?? null;
     $appEnv = $input['appEnv'] ?? null;
 
     $form['uuid'] = [
@@ -70,12 +71,25 @@ class AdminApplicationsByUuidForm extends FormBase {
       '#required' => TRUE,
       '#default_value' => $uuid ?? '13cb60ae-269a-46da-9a43-da94b980c067',
     ];
+
     $form['appEnv'] = [
       '#type' => 'textfield',
       '#title' => $this->t('appEnv'),
       '#required' => TRUE,
       '#default_value' => $appEnv ?? 'TEST',
     ];
+
+    $form['status'] = array(
+      '#type' => 'radios',
+      '#title' => t('Application status'),
+      '#options' => [
+        'all' => 'All',
+        'DRAFT' => 'Draft',
+        'RECEIVED' => 'Received',
+        'SUBMITTED' => 'Submitted',
+      ],
+      '#default_value' => 'all',
+    );
 
     $form['getData'] = [
       '#type' => 'button',
@@ -104,8 +118,8 @@ class AdminApplicationsByUuidForm extends FormBase {
       '#suffix' => '</div>',
     ];
 
-    if ($uuid) {
-      $this->buildApplicationList($uuid, $appEnv, $form_state, $form);
+    if ($uuid && $status) {
+      $this->buildApplicationList($uuid, $appEnv, $status, $form_state, $form);
     }
 
     $form['actions']['delete_selected'] = [
@@ -191,60 +205,64 @@ class AdminApplicationsByUuidForm extends FormBase {
    *
    * @param mixed $uuid
    * @param mixed $appEnv
+   * @param mixed $status
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    * @param array $form
    */
-  public function buildApplicationList(mixed $uuid, mixed $appEnv, FormStateInterface $form_state, array &$form): void {
+  public function buildApplicationList(mixed $uuid, mixed $appEnv, mixed $status, FormStateInterface $form_state, array &$form): void {
     try {
       $searchParams = ['user_id' => $uuid];
       if ($appEnv) {
         $searchParams['lookfor'] = 'appenv:' . $appEnv;
+      }
+      if ($status && $status !== 'all') {
+        $searchParams['status'] = $status;
       }
       $userDocuments = $this->atvService->searchDocuments($searchParams);
 
       $sortedByType = [];
       /** @var \Drupal\helfi_atv\AtvDocument $document */
       foreach ($userDocuments as $document) {
-        $sortedByType[$document->getStatus()][$document->getType()][] = $document;
+        $sortedByType[$document->getType()][$document->getStatus()][] = $document;
       }
 
       $form_state->setStorage(['userdocs' => $sortedByType]);
 
-      foreach ($sortedByType as $status => $applicationsStatus) {
-        $form['appData'][$status] = [
-          '#type' => 'fieldset',
-          '#title' => $this->t('Status: ' . $status),
-          // Added.
+      foreach ($sortedByType as $type => $applicationsType) {
+        $form['appData'][$type] = [
+          '#type' => 'details',
+          '#title' => $this->t('Application: ' . $type),
           '#collapsible' => TRUE,
-          // Added.
-          '#collapsed' => FALSE,
+          '#collapsed' => TRUE,
         ];
 
-        foreach ($applicationsStatus as $type => $applications) {
-          $form['appData'][$status][$type] = [
+        foreach ($applicationsType as $status => $applications) {
+          $form['appData'][$type][$status] = [
             '#type' => 'fieldset',
-            '#title' => $type,
+            '#title' => $this->t('Status: ' . $status),
             '#collapsible' => TRUE,
             '#collapsed' => FALSE,
           ];
-          $typeOptions = [];
-          if (!empty($applications)) {
-            /** @var \Drupal\helfi_atv\AtvDocument $application */
-            foreach ($applications as $application) {
-              $typeOptions[$application->getId()] = $application->getTransactionId();
-            }
-            $form['appData'][$status][$type]['selectedDelete'] = [
-              '#type' => 'checkboxes',
-              '#title' => $this->t('Select to delete'),
-              '#options' => $typeOptions,
-            ];
+
+          if (empty($applications)) {
+            continue;
           }
+
+          $statusOptions = [];
+          /** @var \Drupal\helfi_atv\AtvDocument $application */
+          foreach ($applications as $application) {
+            $statusOptions[$application->getId()] = $application->getTransactionId();
+          }
+          $form['appData'][$type][$status]['selectedDelete'] = [
+            '#type' => 'checkboxes',
+            '#title' => $this->t('Select to delete'),
+            '#options' => $statusOptions,
+          ];
         }
       }
-
     }
     catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
-      $d = 'adsf';
+
     }
   }
 
