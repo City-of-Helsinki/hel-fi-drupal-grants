@@ -19,13 +19,13 @@ const formPages: PageHandlers = {
   },
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
-    if (items['edit-acting-year']) {
-      await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
+    if (items['edit-kenelle-haen-avustusta']) {
+      await page.locator('#edit-kenelle-haen-avustusta')
+        .selectOption(items['edit-kenelle-haen-avustusta'].value ?? '');
     }
 
     if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year')
-        .selectOption(items['edit-acting-year'].value ?? '');
+      await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
     }
 
     if (items['edit-subventions-items-0-amount']) {
