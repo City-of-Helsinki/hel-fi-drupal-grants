@@ -80,12 +80,11 @@ const baseForm_69: FormData = {
           role: 'select',
           selector: {
             type: 'dom-id-first',
-            name: 'acting-year-selector',
+            name: '',
             value: '#edit-acting-year',
           },
-          value: '2024',
+          viewPageSkipValidation: true,
         },
-
         'edit-jarjestimme-leireja-seuraavilla-alueilla': {
           role: 'multivalue',
           multi: {

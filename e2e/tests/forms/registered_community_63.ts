@@ -20,8 +20,7 @@ const formPages: PageHandlers = {
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year')
-        .selectOption(items['edit-acting-year'].value ?? '');
+      await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
     }
 
     if (items['edit-subventions-items-1-amount']) {
