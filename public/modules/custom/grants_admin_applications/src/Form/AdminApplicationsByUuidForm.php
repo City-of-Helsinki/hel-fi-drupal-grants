@@ -184,18 +184,128 @@ class AdminApplicationsByUuidForm extends FormBase {
       });
     }
 
+    $chunk_size = 10;
+    $chunks = array_chunk($docsToDelete, $chunk_size);
+    $num_chunks = count($chunks);
+
+    $operations = [];
+    for ($batch_id = 0; $batch_id < $num_chunks; $batch_id++) {
+      $operations[] = [
+        '\Drupal\grants_admin_applications\Form\AdminApplicationsByUuidForm::batchDeleteDocuments',
+        [ $batch_id + 1, $chunks[$batch_id] ],
+      ];
+    }
+
+    $batch = [
+      'title' => $this->t('Deleting documents'),
+      'init_message' => $this->t('Starting to process documents.'),
+      'progress_message' => $this->t('Completed @current out of @total batches.'),
+      'finished' => '\Drupal\grants_admin_applications\Form\AdminApplicationsByUuidForm::finishBatchDeleteDocuments',
+      'error_message' => $this->t('Document processing has encountered an error.'),
+      'operations' => $operations,
+    ];
+
+    batch_set($batch);
+  }
+
+  /**
+   * The batchDeleteDocuments function.
+   *
+   * This function deletes ATV documents in a batch.
+   *
+   * @param int $batch_id
+   *   The batch ID.
+   * @param array $docsToDelete
+   *   The documents to delete this batch.
+   * @param array $context
+   *   The batch context.
+   */
+  public static function batchDeleteDocuments(int $batch_id, array $docsToDelete, array &$context): void {
+    if (!isset($context['results']['updated'])) {
+      $context['results']['process'] = 'Delete documents';
+      $context['results']['updated'] = 0;
+      $context['results']['failed'] = 0;
+      $context['results']['progress'] = 0;
+      $context['results']['deleted_documents'] = [];
+    }
+
+    $context['results']['progress'] += count($docsToDelete);
+
+    $context['message'] = t('Processing batch #@batch_id with a batch size of @batch_size.', [
+      '@batch_id' => number_format($batch_id),
+      '@batch_size' => number_format(count($docsToDelete)),
+    ]);
+
     /** @var \Drupal\helfi_atv\AtvDocument $docToDelete */
     foreach ($docsToDelete as $docToDelete) {
       $transId = $docToDelete->getTransactionId();
+
       try {
-        $this->atvService->deleteDocument($docToDelete);
-        $this->messenger()->addStatus("Document $transId deleted");
+        $atvService = \Drupal::service('helfi_atv.atv_service');
+        $atvService->deleteDocument($docToDelete);
+
+        $context['results']['deleted_documents'][] = $transId;
+        $context['results']['updated']++;
       }
       catch (AtvDocumentNotFoundException | AtvFailedToConnectException | TokenExpiredException | GuzzleException $e) {
-        $this->messenger()->addError("Deleting document $transId failed." . $e->getMessage());
+        $context['results']['failed']++;
+        continue;
       }
     }
+  }
 
+  /**
+   * The finishBatchDeleteDocuments function.
+   *
+   * This functions logs messages after batchDeleteDocuments
+   * has finished execution.
+   *
+   * @param bool $success
+   *   TRUE if all batch API tasks were completed successfully.
+   * @param array $results
+   *   An array of processed documents.
+   * @param array $operations
+   *   A list of the operations that had not been completed.
+   * @param string $elapsed
+   *   The elapsed processing time in seconds.
+   */
+  public static function finishBatchDeleteDocuments(bool $success, array $results, array $operations, string $elapsed): void {
+    $messenger = \Drupal::messenger();
+
+    if ($success) {
+      $messenger->addMessage(
+        t('Processed @count documents. Deleted documents: @updated. Failed deletions: @failed. Elapsed time: @elapsed.', [
+        '@count' => $results['progress'],
+        '@updated' => $results['updated'],
+        '@failed' => $results['failed'],
+        '@elapsed' => $elapsed,
+      ]));
+
+      $messenger->addMessage(t('The deleted documents: @documents.', [
+        '@documents' => implode(', ', $results['deleted_documents']),
+      ]));
+
+      \Drupal::logger('grants_admin_applications')->info(
+        'Processed @count documents. Deleted documents: @updated. Failed deletions: @failed. Elapsed time: @elapsed.', [
+        '@count' => $results['progress'],
+        '@updated' => $results['updated'],
+        '@failed' => $results['failed'],
+        '@elapsed' => $elapsed,
+      ]);
+
+      \Drupal::logger('grants_admin_applications')->info(
+        'The deleted documents: @documents.', [
+        '@documents' => implode(', ', $results['deleted_documents']),
+      ]);
+    }
+    else {
+      $error_operation = reset($operations);
+      $message = t('An error occurred while processing %error_operation with arguments: @arguments', [
+        '%error_operation' => $error_operation[0],
+        '@arguments' => print_r($error_operation[1], TRUE),
+      ]);
+      $messenger->addError($message);
+    }
   }
 
   /**
