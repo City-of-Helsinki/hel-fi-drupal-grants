@@ -179,11 +179,9 @@ class AdminApplicationsByUuidForm extends FormBase {
     elseif (str_contains($triggeringElement['#id'], 'delete-selected')) {
       // Get form values & profile data.
       $values = $form_state->getValue('selectedDelete');
-
       $docsToDelete = array_filter($userDocuments, function ($item) use ($values) {
         return in_array($item->getId(), $values);
       });
-
     }
 
     /** @var \Drupal\helfi_atv\AtvDocument $docToDelete */
@@ -226,7 +224,7 @@ class AdminApplicationsByUuidForm extends FormBase {
         $sortedByType[$document->getType()][$document->getStatus()][] = $document;
       }
 
-      $form_state->setStorage(['userdocs' => $sortedByType]);
+      $form_state->setStorage(['userdocs' => $userDocuments]);
 
       foreach ($sortedByType as $type => $applicationsType) {
         $form['appData'][$type] = [
