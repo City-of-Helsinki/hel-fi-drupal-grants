@@ -33,31 +33,11 @@ const validateSubmission = async (
   }
 
   const thisStoreData = storedata[formKey];
-  if (thisStoreData.status === 'DRAFT') {
+  if (thisStoreData.status === 'DRAFT' || thisStoreData.status === 'RECEIVED') {
     logger(`Validating draft application with application ID: ${thisStoreData.applicationId}...`);
     await navigateAndValidateViewPage(page, thisStoreData);
     await validateFormData(page, formDetails);
-  } else {
-    await validateSent(page, formDetails, thisStoreData);
   }
-}
-
-/**
- * The validateSent function.
- *
- * @param page
- *   Page object from Playwright.
- * @param formDetails
- *   The form data.
- * @param thisStoreData
- *   The env form data.
- */
-const validateSent = async (
-  page: Page,
-  formDetails: FormData,
-  thisStoreData: any
-) => {
-  logger('Validate RECEIVED', thisStoreData);
 }
 
 /**

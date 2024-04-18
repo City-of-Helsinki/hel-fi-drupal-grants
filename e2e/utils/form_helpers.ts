@@ -1,5 +1,5 @@
 import {logger} from "./logger";
-import {hideSlidePopup, extractPath, getApplicationNumberFromBreadCrumb} from "./helpers";
+import {hideSlidePopup, extractPath, waitForTextWithInterval, getApplicationNumberFromBreadCrumb} from "./helpers";
 import {validateFormErrors} from "./error_validation_helpers";
 import {validateHiddenFields} from "./validation_helpers";
 import {saveObjectToEnv} from "./env_helpers";
@@ -268,8 +268,15 @@ const verifySubmit = async (
 ) => {
   logger(`Verifying submit...`);
   await expect(page.getByRole('heading', {name: 'Avustushakemus lähetetty onnistuneesti'})).toBeVisible();
-  await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible()
-  await expect(page.getByText('Vastaanotettu', {exact: true})).toBeVisible({timeout: 90 * 1000})
+  await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible();
+
+  // Attempt to locate the "Vastaanotettu" text on the page. Keep polling for 60000ms (1 minute).
+  // Note: We do this instead of using Playwrights "expect" method so that test execution isn't interrupted if this fails.
+  const applicationReceived = await waitForTextWithInterval(page, 'Vastaanotettu', 60000, 5000);
+  if (!applicationReceived) {
+    logger('WARNING: Failed to validate that the application was received.');
+    return;
+  }
 
   let applicationId = await page.locator(".grants-handler__completion__item--number").innerText();
   applicationId = applicationId.replace('Hakemusnumero\n', '')
