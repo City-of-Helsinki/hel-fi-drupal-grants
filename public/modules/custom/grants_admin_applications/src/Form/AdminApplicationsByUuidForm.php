@@ -64,6 +64,7 @@ class AdminApplicationsByUuidForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     if (str_contains(strtolower(ApplicationHandler::getAppEnv()), 'prod')) {
       $this->messenger()->addError('No deleting profiles in PROD environment');
+      return [];
     }
 
     $input = $form_state->getUserInput();

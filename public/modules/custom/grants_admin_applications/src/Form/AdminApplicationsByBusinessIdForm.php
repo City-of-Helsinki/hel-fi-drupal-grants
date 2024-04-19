@@ -54,9 +54,9 @@ class AdminApplicationsByBusinessIdForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
     if (str_contains(strtolower(ApplicationHandler::getAppEnv()), 'prod')) {
       $this->messenger()->addError('No deleting profiles in PROD environment');
+      return [];
     }
 
     $businessId = $form_state->getValue('businessId');
