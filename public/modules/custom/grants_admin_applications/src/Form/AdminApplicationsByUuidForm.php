@@ -221,6 +221,12 @@ class AdminApplicationsByUuidForm extends FormBase {
         $sortedByType[$document->getType()][$document->getStatus()][] = $document;
       }
 
+      // Sort by type and status.
+      ksort($sortedByType);
+      foreach ($sortedByType as $documentType => $documentStatuses) {
+        ksort($sortedByType[$documentType]);
+      }
+
       $form_state->setStorage(['userdocs' => $userDocuments]);
 
       foreach ($sortedByType as $type => $applicationsType) {
@@ -248,6 +254,9 @@ class AdminApplicationsByUuidForm extends FormBase {
           foreach ($applications as $application) {
             $statusOptions[$application->getId()] = $application->getTransactionId();
           }
+          // Sort by transaction ID.
+          asort($statusOptions);
+
           $form['appData'][$type][$status]['selectedDelete'] = [
             '#type' => 'checkboxes',
             '#title' => $this->t('Select to delete'),

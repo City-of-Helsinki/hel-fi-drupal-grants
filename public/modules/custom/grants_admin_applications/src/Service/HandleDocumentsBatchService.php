@@ -88,7 +88,7 @@ class HandleDocumentsBatchService {
    */
   public function run(array $documents): void {
     if (empty($documents)) {
-      $this->messenger->addMessage('No documents to process.');
+      $this->messenger->addError('No documents to process.');
       return;
     }
 
@@ -152,10 +152,6 @@ class HandleDocumentsBatchService {
         $this->atvService->deleteDocument($docToDelete);
         $context['results']['deleted_documents'][] = $transId;
         $context['results']['deleted']++;
-
-        if ($context['results']['progress'] == 2) {
-          throw new AtvDocumentNotFoundException('An error occured');
-        }
       }
       catch (AtvDocumentNotFoundException | AtvFailedToConnectException | TokenExpiredException | GuzzleException $e) {
         $context['results']['failed']++;
