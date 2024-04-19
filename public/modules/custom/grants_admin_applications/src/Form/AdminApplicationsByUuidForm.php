@@ -64,7 +64,6 @@ class AdminApplicationsByUuidForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-
     if (str_contains(strtolower(ApplicationHandler::getAppEnv()), 'prod')) {
       $this->messenger()->addError('No deleting profiles in PROD environment');
     }
@@ -91,12 +90,12 @@ class AdminApplicationsByUuidForm extends FormBase {
 
     $form['status'] = array(
       '#type' => 'radios',
-      '#title' => t('Application status'),
+      '#title' => $this->t('Application status'),
       '#options' => [
-        'all' => 'All',
-        'DRAFT' => 'Draft',
-        'RECEIVED' => 'Received',
-        'SUBMITTED' => 'Submitted',
+        'all' => $this->t('All'),
+        'DRAFT' => $this->t('Draft'),
+        'RECEIVED' => $this->t('Received'),
+        'SUBMITTED' => $this->t('Submitted'),
       ],
       '#default_value' => 'all',
     );
@@ -176,7 +175,6 @@ class AdminApplicationsByUuidForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-
     $triggeringElement = $form_state->getTriggeringElement();
 
     $storage = $form_state->getStorage();
