@@ -65,7 +65,7 @@ class AdminApplicationsByBusinessIdForm extends FormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Business ID'),
       '#required' => TRUE,
-      '#default_value' => $businessId,
+      '#default_value' => $businessId ?? '7009192-1',
     ];
 
     $form['getData'] = [
@@ -139,22 +139,14 @@ class AdminApplicationsByBusinessIdForm extends FormBase {
       }
 
       if (!empty($sortedByType)) {
-        $form['profileData']['applications'] = [
-          '#type' => 'fieldset',
-          '#title' => $this->t('Applications by type'),
-          // Added.
-          '#collapsible' => TRUE,
-          // Added.
-          '#collapsed' => FALSE,
-        ];
         foreach ($sortedByType as $type => $applications) {
-          $form['profileData']['applications'][$type] = [
-            '#type' => 'fieldset',
+          $form['profileData'][$type] = [
+            '#type' => 'details',
             '#title' => $type,
             // Added.
             '#collapsible' => TRUE,
             // Added.
-            '#collapsed' => FALSE,
+            '#collapsed' => TRUE,
           ];
           $typeOptions = [];
           if (!empty($applications)) {
@@ -162,7 +154,7 @@ class AdminApplicationsByBusinessIdForm extends FormBase {
             foreach ($applications as $application) {
               $typeOptions[$application->getId()] = $application->getTransactionId();
             }
-            $form['profileData']['applications'][$type]['selectedDelete'] = [
+            $form['profileData'][$type]['selectedDelete'] = [
               '#type' => 'checkboxes',
               '#title' => $this->t('Select to delete'),
               '#options' => $typeOptions,
@@ -184,7 +176,7 @@ class AdminApplicationsByBusinessIdForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-
+    $form_state->clearErrors();
   }
 
   /**
@@ -323,13 +315,13 @@ class AdminApplicationsByBusinessIdForm extends FormBase {
     }
 
     if (!empty($processed['deleted'])) {
-      $failedApplicationNumbers = array_values($processed['failed']);
+      $deletedApplicationNumbers = array_values($processed['deleted']);
       $this->messenger()
         ->addStatus(
           $this->t('Following documents were deleted, copy paste the
           list for marking these deleted in Avus2: @numbers',
             [
-              '@numbers' => implode(', ', $failedApplicationNumbers),
+              '@numbers' => implode(', ', $deletedApplicationNumbers),
             ])
         );
     }
