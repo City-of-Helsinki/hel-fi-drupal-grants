@@ -85,17 +85,17 @@ class AdminApplicationsByUuidForm extends FormBase {
       '#default_value' => $appEnv ?? 'TEST',
     ];
 
-    $form['status'] = array(
-      '#type' => 'radios',
+    $config = \Drupal::config('grants_metadata.settings');
+    $thirdPartyOpts = $config->get('third_party_options');
+    $applicationStatuses = $thirdPartyOpts['application_statuses'];
+    $applicationStatuses = ['all' => $this->t('All')] + $applicationStatuses;
+
+    $form['status'] = [
       '#title' => $this->t('Application status'),
-      '#options' => [
-        'all' => $this->t('All'),
-        'DRAFT' => $this->t('Draft'),
-        'RECEIVED' => $this->t('Received'),
-        'SUBMITTED' => $this->t('Submitted'),
-      ],
+      '#type' => 'select',
+      '#options' => $applicationStatuses,
       '#default_value' => 'all',
-    );
+    ];
 
     $form['getData'] = [
       '#type' => 'button',
