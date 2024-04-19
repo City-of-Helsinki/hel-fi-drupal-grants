@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_admin_applications\Service\HandleDocumentsBatchService;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
@@ -70,6 +71,7 @@ class AdminApplicationsByUuidForm extends FormBase {
     $input = $form_state->getUserInput();
     $uuid = $input['uuid'] ?? null;
     $type = $input['type'] ?? null;
+    $businessId = $input['businessId'] ?? null;
     $status = $input['status'] ?? null;
     $appEnv = $input['appEnv'] ?? null;
 
@@ -80,15 +82,22 @@ class AdminApplicationsByUuidForm extends FormBase {
     $form['uuid'] = [
       '#type' => 'textfield',
       '#title' => $this->t('UUID'),
-      '#required' => TRUE,
+      '#required' => FALSE,
       '#default_value' => $uuid ?? '13cb60ae-269a-46da-9a43-da94b980c067',
     ];
 
     $form['appEnv'] = [
       '#type' => 'textfield',
       '#title' => $this->t('appEnv'),
-      '#required' => TRUE,
+      '#required' => FALSE,
       '#default_value' => $appEnv ?? 'TEST',
+    ];
+
+    $form['businessId'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Business ID'),
+      '#required' => FALSE,
+      '#default_value' => $businessId ?? '7009192-1',
     ];
 
     // Get and sort application types.
@@ -147,8 +156,8 @@ class AdminApplicationsByUuidForm extends FormBase {
       '#suffix' => '</div>',
     ];
 
-    if ($uuid) {
-      $this->buildApplicationList($uuid, $appEnv, $type, $status, $form_state, $form);
+    if ($uuid || $businessId) {
+      $this->buildApplicationList($uuid, $businessId, $appEnv, $type, $status, $form_state, $form);
     }
 
     $form['actions']['delete_selected'] = [
@@ -198,16 +207,16 @@ class AdminApplicationsByUuidForm extends FormBase {
     $triggeringElement = $form_state->getTriggeringElement();
 
     $storage = $form_state->getStorage();
-    $userDocuments = $storage['userdocs'];
+    $documents = $storage['documents'];
     $docsToDelete = [];
 
     if (str_contains($triggeringElement['#id'], 'delete-all')) {
-      $docsToDelete = $userDocuments;
+      $docsToDelete = $documents;
     }
     elseif (str_contains($triggeringElement['#id'], 'delete-selected')) {
       // Get form values & profile data.
       $values = $form_state->getValue('selectedDelete');
-      $docsToDelete = array_filter($userDocuments, function ($item) use ($values) {
+      $docsToDelete = array_filter($documents, function ($item) use ($values) {
         return in_array($item->getId(), $values);
       });
     }
@@ -219,6 +228,7 @@ class AdminApplicationsByUuidForm extends FormBase {
    * Build Application list based on selections.
    *
    * @param mixed $uuid
+   * @param mixed $businessId
    * @param mixed $appEnv
    * @param mixed $type
    * @param mixed $status
@@ -227,41 +237,63 @@ class AdminApplicationsByUuidForm extends FormBase {
    */
   public function buildApplicationList(
     mixed $uuid,
+    mixed $businessId,
     mixed $appEnv,
     mixed $type,
     mixed $status,
     FormStateInterface $form_state,
     array &$form): void {
     try {
-      $searchParams = ['user_id' => $uuid];
 
-      if ($appEnv) {
-        $searchParams['lookfor'] = 'appenv:' . $appEnv;
-      }
-      if ($type && $type !== 'all') {
-        $searchParams['type'] = $type;
-      }
-      if ($status && $status !== 'all') {
-        $searchParams['status'] = $status;
+      // Apply the search params and search for documents.
+      $searchParams = array_filter([
+        'user_id' => $uuid ?: null,
+        'business_id' => $businessId ?: null,
+        'lookfor' => $appEnv ? "appenv:$appEnv" : null,
+        'type' => ($type && $type !== 'all') ? $type : null,
+        'status'=> ($status && $status !== 'all') ? $status : null,
+      ], function($value) {
+        return !is_null($value);
+      });
+      $documents = $this->atvService->searchDocuments($searchParams);
+
+      // If we can't find any documents, display an error.
+      if (!$documents) {
+        $formattedParams = implode(', ', array_map(
+          function ($key, $value) { return "$key: $value"; },
+          array_keys($searchParams),
+          array_values($searchParams)
+        ));
+        $form['appData']['error'] = [
+          '#markup' => "<p>No documents found with parameters: $formattedParams.<p>",
+        ];
+        return;
       }
 
-      $userDocuments = $this->atvService->searchDocuments($searchParams);
+      // Filter out any production documents and store the documents.
+      $documents = array_filter($documents, function (AtvDocument $item) {
+        $meta = $item->getMetadata();
+        if ($meta['appenv'] === 'production') {
+          return FALSE;
+        }
+        return TRUE;
+      });
+      $form_state->setStorage(['documents' => $documents]);
 
+      // Group the documents by type.
       $sortedByType = [];
       /** @var \Drupal\helfi_atv\AtvDocument $document */
-      foreach ($userDocuments as $document) {
+      foreach ($documents as $document) {
         $sortedByType[$document->getType()][$document->getStatus()][] = $document;
       }
 
-      // Sort by type and status.
+      // Sort by type, and within each type, by status.
       ksort($sortedByType);
       foreach ($sortedByType as $documentType => $documentStatuses) {
         ksort($sortedByType[$documentType]);
       }
 
-      $form_state->setStorage(['userdocs' => $userDocuments]);
-
-      // Build the form.
+      // Form elements by type.
       foreach ($sortedByType as $type => $applicationsType) {
         $form['appData'][$type] = [
           '#type' => 'details',
@@ -270,6 +302,7 @@ class AdminApplicationsByUuidForm extends FormBase {
           '#collapsed' => TRUE,
         ];
 
+        // Form elements by status.
         foreach ($applicationsType as $status => $applications) {
           $form['appData'][$type][$status] = [
             '#type' => 'fieldset',
@@ -290,6 +323,7 @@ class AdminApplicationsByUuidForm extends FormBase {
           // Sort the transaction IDs.
           asort($statusOptions);
 
+          // Add transaction ID checkbox options.
           $form['appData'][$type][$status]['selectedDelete'] = [
             '#type' => 'checkboxes',
             '#title' => $this->t('Select to delete'),

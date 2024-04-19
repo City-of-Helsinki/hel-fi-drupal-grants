@@ -135,7 +135,10 @@ class HandleDocumentsBatchService {
       $context['results']['deleted'] = 0;
       $context['results']['failed'] = 0;
       $context['results']['progress'] = 0;
-      $context['results']['deleted_documents'] = [];
+      $context['results']['deleted_document_ids'] = [];
+      $context['results']['deleted_transaction_ids'] = [];
+      $context['results']['failed_document_ids'] = [];
+      $context['results']['failed_transaction_ids'] = [];
     }
 
     $context['results']['progress'] += count($docsToDelete);
@@ -148,12 +151,16 @@ class HandleDocumentsBatchService {
     /** @var \Drupal\helfi_atv\AtvDocument $docToDelete */
     foreach ($docsToDelete as $docToDelete) {
       try {
-        $transId = $docToDelete->getTransactionId();
+        $transactionId = $docToDelete->getTransactionId();
+        $documentId = $docToDelete->getId();
         $this->atvService->deleteDocument($docToDelete);
-        $context['results']['deleted_documents'][] = $transId;
+        $context['results']['deleted_document_ids'][] = $documentId;
+        $context['results']['deleted_transaction_ids'][] = $transactionId;
         $context['results']['deleted']++;
       }
       catch (AtvDocumentNotFoundException | AtvFailedToConnectException | TokenExpiredException | GuzzleException $e) {
+        $context['results']['failed_document_ids'][] = $documentId;
+        $context['results']['failed_transaction_ids'][] = $transactionId;
         $context['results']['failed']++;
         $this->messenger->addError($e->getMessage());
         $this->logger->get('grants_admin_applications')->error($e->getMessage());
@@ -177,31 +184,50 @@ class HandleDocumentsBatchService {
    *   The elapsed processing time in seconds.
    */
   public function finish(bool $success, array $results, array $operations, string $elapsed): void {
+    // If the process failed, display a message and return.
     if (!$success) {
       $errorOperation = reset($operations);
-      $message = $this->t('An error occurred while processing %error_operation with arguments: @arguments', [
-        '%error_operation' => $errorOperation[0],
+      $message = $this->t('An error occurred while processing %errorOperation with arguments: @arguments', [
+        '%errorOperation' => $errorOperation[0],
         '@arguments' => print_r($errorOperation[1], TRUE),
       ]);
       $this->messenger->addError($message);
       return;
     }
 
-    $processMessage = $this->t(
-      'Processed @count documents. Deleted documents: @deleted. Failed deletions: @failed. Elapsed time: @elapsed.',[
-      '@count' => $results['progress'],
-      '@deleted' => $results['deleted'],
-      '@failed' => $results['failed'],
-      '@elapsed' => $elapsed,
-    ]);
+    // Log a general message about the processed documents.
+    if ($results['progress']) {
+      $processMessage = $this->t(
+        'Processed @count documents. Deleted documents: @deleted. Failed deletions: @failed. Elapsed time: @elapsed.', [
+        '@count' => $results['progress'],
+        '@deleted' => $results['deleted'],
+        '@failed' => $results['failed'],
+        '@elapsed' => $elapsed,
+      ]);
+      $this->messenger->addMessage($processMessage);
+      $this->logger->get('grants_admin_applications')->info($processMessage);
+    }
 
-    $deletedDocumentsMessage = $this->t('The deleted documents: @documents.', [
-      '@documents' => implode(', ', $results['deleted_documents']),
-    ]);
+    // Log a message about successful deletions.
+    if ($results['deleted_transaction_ids'] && $results['deleted_document_ids']) {
+      $deletedDocumentsMessage = $this->t(
+        'The following documents were deleted: Transaction IDs: @transactionIds. Document IDs: @documentIds.', [
+        '@transactionIds' => implode(', ', $results['deleted_transaction_ids']),
+        '@documentIds' => implode(', ', $results['deleted_document_ids']),
+      ]);
+      $this->messenger->addMessage($deletedDocumentsMessage);
+      $this->logger->get('grants_admin_applications')->info($deletedDocumentsMessage);
+    }
 
-    $this->messenger->addMessage($processMessage);
-    $this->messenger->addMessage($deletedDocumentsMessage);
-    $this->logger->get('grants_admin_applications')->info($processMessage);
-    $this->logger->get('grants_admin_applications')->info($deletedDocumentsMessage);
+    // Log a warning about deletions that failed.
+    if ($results['failed_transaction_ids'] && $results['failed_document_ids']) {
+      $failedDeletionMessage = $this->t(
+        'The following documents failed to delete: Transaction IDs: @transactionIds. Document IDs: @documentIds.', [
+        '@transactionIds' => implode(', ', $results['failed_transaction_ids']),
+        '@documentIds' => implode(', ', $results['failed_document_ids']),
+      ]);
+      $this->messenger->addWarning($failedDeletionMessage);
+      $this->logger->get('grants_admin_applications')->info($failedDeletionMessage);
+    }
   }
 }
