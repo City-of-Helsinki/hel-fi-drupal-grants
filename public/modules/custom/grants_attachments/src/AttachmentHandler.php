@@ -846,9 +846,11 @@ class AttachmentHandler {
    *   The new bank account confirmation file.
    */
   protected function addFileArrayToFormData(array &$submittedFormData, array $fileArray): void {
-    foreach ($submittedFormData['attachments'] as $key => $attachment) {
-      if ((int) $attachment['fileType'] === 45) {
-        unset($submittedFormData['attachments'][$key]);
+    if (isset($submittedFormData['attachments'])) {
+      foreach ($submittedFormData['attachments'] as $key => $attachment) {
+        if ((int) $attachment['fileType'] === 45) {
+          unset($submittedFormData['attachments'][$key]);
+        }
       }
     }
     if (isset($fileArray['integrationID'])) {
