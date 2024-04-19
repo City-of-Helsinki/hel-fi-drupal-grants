@@ -68,8 +68,13 @@ class AdminApplicationsByUuidForm extends FormBase {
 
     $input = $form_state->getUserInput();
     $uuid = $input['uuid'] ?? null;
+    $type = $input['type'] ?? null;
     $status = $input['status'] ?? null;
     $appEnv = $input['appEnv'] ?? null;
+
+    // Get the third party options.
+    $config = \Drupal::config('grants_metadata.settings');
+    $thirdPartyOpts = $config->get('third_party_options');
 
     $form['uuid'] = [
       '#type' => 'textfield',
@@ -85,15 +90,32 @@ class AdminApplicationsByUuidForm extends FormBase {
       '#default_value' => $appEnv ?? 'TEST',
     ];
 
-    $config = \Drupal::config('grants_metadata.settings');
-    $thirdPartyOpts = $config->get('third_party_options');
+    // Get and sort application types.
+    $applicationTypes = $thirdPartyOpts['application_types'];
+    foreach ($applicationTypes as $applicationId => $values) {
+      if (isset($values['code'])) {
+        $applicationTypeOptions[$values['code']] = sprintf('%s (%s)', $values['code'], $applicationId);
+      }
+    }
+    ksort($applicationTypeOptions);
+    $applicationTypeOptions = ['all' => $this->t('All')] + $applicationTypeOptions;
+
+    $form['type'] = [
+      '#title' => $this->t('Application type'),
+      '#type' => 'select',
+      '#options' => $applicationTypeOptions,
+      '#default_value' => 'all',
+    ];
+
+    // Get and sort application statuses.
     $applicationStatuses = $thirdPartyOpts['application_statuses'];
-    $applicationStatuses = ['all' => $this->t('All')] + $applicationStatuses;
+    ksort($applicationStatuses);
+    $applicationStatusOptions = ['all' => $this->t('All')] + $applicationStatuses;
 
     $form['status'] = [
       '#title' => $this->t('Application status'),
       '#type' => 'select',
-      '#options' => $applicationStatuses,
+      '#options' => $applicationStatusOptions,
       '#default_value' => 'all',
     ];
 
@@ -124,8 +146,8 @@ class AdminApplicationsByUuidForm extends FormBase {
       '#suffix' => '</div>',
     ];
 
-    if ($uuid && $status) {
-      $this->buildApplicationList($uuid, $appEnv, $status, $form_state, $form);
+    if ($uuid) {
+      $this->buildApplicationList($uuid, $appEnv, $type, $status, $form_state, $form);
     }
 
     $form['actions']['delete_selected'] = [
@@ -197,19 +219,31 @@ class AdminApplicationsByUuidForm extends FormBase {
    *
    * @param mixed $uuid
    * @param mixed $appEnv
+   * @param mixed $type
    * @param mixed $status
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    * @param array $form
    */
-  public function buildApplicationList(mixed $uuid, mixed $appEnv, mixed $status, FormStateInterface $form_state, array &$form): void {
+  public function buildApplicationList(
+    mixed $uuid,
+    mixed $appEnv,
+    mixed $type,
+    mixed $status,
+    FormStateInterface $form_state,
+    array &$form): void {
     try {
       $searchParams = ['user_id' => $uuid];
+
       if ($appEnv) {
         $searchParams['lookfor'] = 'appenv:' . $appEnv;
+      }
+      if ($type && $type !== 'all') {
+        $searchParams['type'] = $type;
       }
       if ($status && $status !== 'all') {
         $searchParams['status'] = $status;
       }
+
       $userDocuments = $this->atvService->searchDocuments($searchParams);
 
       $sortedByType = [];
@@ -252,7 +286,7 @@ class AdminApplicationsByUuidForm extends FormBase {
           foreach ($applications as $application) {
             $statusOptions[$application->getId()] = $application->getTransactionId();
           }
-          // Sort by transaction ID.
+          // Sort the transaction IDs.
           asort($statusOptions);
 
           $form['appData'][$type][$status]['selectedDelete'] = [
