@@ -9,7 +9,6 @@ use Drupal\grants_handler\ApplicationHandler;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
-use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,7 +58,6 @@ class AdminApplicationsByUuidForm extends FormBase {
     return 'grants_admin_applications_admin_applications';
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -69,7 +67,6 @@ class AdminApplicationsByUuidForm extends FormBase {
     }
 
     $input = $form_state->getUserInput();
-
     $uuid = $input['uuid'] ?? null;
     $status = $input['status'] ?? null;
     $appEnv = $input['appEnv'] ?? null;
@@ -229,6 +226,7 @@ class AdminApplicationsByUuidForm extends FormBase {
 
       $form_state->setStorage(['userdocs' => $userDocuments]);
 
+      // Build the form.
       foreach ($sortedByType as $type => $applicationsType) {
         $form['appData'][$type] = [
           '#type' => 'details',
@@ -266,7 +264,8 @@ class AdminApplicationsByUuidForm extends FormBase {
       }
     }
     catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
-
+      $this->messenger()->addError('Failed fetching applications.');
+      $this->messenger()->addError($e->getMessage());
     }
   }
 
