@@ -68,6 +68,7 @@ class AdminApplicationsByUuidForm extends FormBase {
       return [];
     }
 
+    // Get user inputs.
     $input = $form_state->getUserInput();
     $uuid = $input['uuid'] ?? null;
     $type = $input['type'] ?? null;
@@ -78,6 +79,22 @@ class AdminApplicationsByUuidForm extends FormBase {
     // Get the third party options.
     $config = \Drupal::config('grants_metadata.settings');
     $thirdPartyOpts = $config->get('third_party_options');
+
+    // Get and sort application types.
+    $applicationTypes = $thirdPartyOpts['application_types'];
+    $applicationTypeOptions = [];
+    foreach ($applicationTypes as $applicationId => $values) {
+      if (isset($values['code'])) {
+        $applicationTypeOptions[$values['code']] = sprintf('%s (%s)', $values['code'], $applicationId);
+      }
+    }
+    ksort($applicationTypeOptions);
+    $applicationTypeOptions = ['all' => $this->t('All')] + $applicationTypeOptions;
+
+    // Get and sort application statuses.
+    $applicationStatuses = $thirdPartyOpts['application_statuses'];
+    ksort($applicationStatuses);
+    $applicationStatusOptions = ['all' => $this->t('All')] + $applicationStatuses;
 
     $form['uuid'] = [
       '#type' => 'textfield',
@@ -100,27 +117,12 @@ class AdminApplicationsByUuidForm extends FormBase {
       '#default_value' => $businessId ?? '7009192-1',
     ];
 
-    // Get and sort application types.
-    $applicationTypes = $thirdPartyOpts['application_types'];
-    foreach ($applicationTypes as $applicationId => $values) {
-      if (isset($values['code'])) {
-        $applicationTypeOptions[$values['code']] = sprintf('%s (%s)', $values['code'], $applicationId);
-      }
-    }
-    ksort($applicationTypeOptions);
-    $applicationTypeOptions = ['all' => $this->t('All')] + $applicationTypeOptions;
-
     $form['type'] = [
       '#title' => $this->t('Application type'),
       '#type' => 'select',
       '#options' => $applicationTypeOptions,
       '#default_value' => 'all',
     ];
-
-    // Get and sort application statuses.
-    $applicationStatuses = $thirdPartyOpts['application_statuses'];
-    ksort($applicationStatuses);
-    $applicationStatusOptions = ['all' => $this->t('All')] + $applicationStatuses;
 
     $form['status'] = [
       '#title' => $this->t('Application status'),
@@ -205,23 +207,42 @@ class AdminApplicationsByUuidForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $triggeringElement = $form_state->getTriggeringElement();
-
     $storage = $form_state->getStorage();
-    $documents = $storage['documents'];
-    $docsToDelete = [];
+
+    $allDocuments = $storage['documents'];
+    $documentsToDelete = [];
 
     if (str_contains($triggeringElement['#id'], 'delete-all')) {
-      $docsToDelete = $documents;
+      $documentsToDelete = $allDocuments;
     }
-    elseif (str_contains($triggeringElement['#id'], 'delete-selected')) {
-      // Get form values & profile data.
-      $values = $form_state->getValue('selectedDelete');
-      $docsToDelete = array_filter($documents, function ($item) use ($values) {
-        return in_array($item->getId(), $values);
+    if (str_contains($triggeringElement['#id'], 'delete-selected')) {
+      $selectOptions = $form_state->getValue('selectedDelete');
+
+      // Filter and collect applications to delete (checked checkboxes).
+      $selectedToDelete = array_keys(array_filter($selectOptions, function($value) {
+        return $value;
+      }));
+
+      // Filter and collect applications to keep (unchecked checkboxes).
+      $selectedToKeep = array_keys(array_filter($selectOptions, function($value) {
+        return !$value;
+      }));
+
+      // Get the documents to delete based on the selections.
+      $documentsToDelete = array_filter($allDocuments, function (AtvDocument $item) use ($selectedToDelete, $selectedToKeep) {
+        if (!in_array($item->getId(), $selectedToDelete)) {
+          return FALSE;
+        }
+        if ($item->getType() == 'grants_profile' && $selectedToKeep) {
+          $profileDeletionError = "Skipped profile deletion: {$item->getId()}. Cannot delete profile while applications for it exist.";
+          $this->messenger()->addError($profileDeletionError);
+          return FALSE;
+        }
+        return TRUE;
       });
     }
 
-    $this->handleDocumentsBatchService->run($docsToDelete);
+    $this->handleDocumentsBatchService->run($documentsToDelete);
   }
 
   /**

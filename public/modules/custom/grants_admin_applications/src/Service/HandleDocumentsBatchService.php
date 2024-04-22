@@ -153,7 +153,7 @@ class HandleDocumentsBatchService {
       try {
         $transactionId = $docToDelete->getTransactionId();
         $documentId = $docToDelete->getId();
-        $this->atvService->deleteDocument($docToDelete);
+        //$this->atvService->deleteDocument($docToDelete);
         $context['results']['deleted_document_ids'][] = $documentId;
         $context['results']['deleted_transaction_ids'][] = $transactionId;
         $context['results']['deleted']++;
