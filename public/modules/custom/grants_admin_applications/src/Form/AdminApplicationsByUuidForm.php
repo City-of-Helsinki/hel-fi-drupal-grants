@@ -2,6 +2,10 @@
 
 namespace Drupal\grants_admin_applications\Form;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\CloseModalDialogCommand;
+use Drupal\Core\Ajax\OpenModalDialogCommand;
+use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_admin_applications\Service\HandleDocumentsBatchService;
@@ -84,8 +88,8 @@ class AdminApplicationsByUuidForm extends FormBase {
     $applicationTypes = $thirdPartyOpts['application_types'];
     $applicationTypeOptions = [];
     foreach ($applicationTypes as $applicationId => $values) {
-      if (isset($values['code'])) {
-        $applicationTypeOptions[$values['code']] = sprintf('%s (%s)', $values['code'], $applicationId);
+      if (isset($values['id'])) {
+        $applicationTypeOptions[$values['id']] = sprintf('%s (%s)', $values['id'], $applicationId);
       }
     }
     ksort($applicationTypeOptions);
@@ -96,25 +100,29 @@ class AdminApplicationsByUuidForm extends FormBase {
     ksort($applicationStatuses);
     $applicationStatusOptions = ['all' => $this->t('All')] + $applicationStatuses;
 
+    // Build the form.
     $form['uuid'] = [
       '#type' => 'textfield',
       '#title' => $this->t('UUID'),
       '#required' => FALSE,
-      '#default_value' => $uuid ?? '13cb60ae-269a-46da-9a43-da94b980c067',
+      '#default_value' => $uuid ?? '',
+      '#description' => $this->t('Enter a users UUID, e.g. 13cb60ae-269a-46da-9a43-da94b980c067'),
     ];
 
     $form['appEnv'] = [
       '#type' => 'textfield',
       '#title' => $this->t('appEnv'),
       '#required' => FALSE,
-      '#default_value' => $appEnv ?? 'TEST',
+      '#default_value' => $appEnv ?? '',
+      '#description' => $this->t('Enter a app env, e.g. TEST'),
     ];
 
     $form['businessId'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Business ID'),
       '#required' => FALSE,
-      '#default_value' => $businessId ?? '7009192-1',
+      '#default_value' => $businessId ?? '',
+      '#description' => $this->t('Enter a business ID, e.g. 7009192-1'),
     ];
 
     $form['type'] = [
@@ -158,6 +166,7 @@ class AdminApplicationsByUuidForm extends FormBase {
       '#suffix' => '</div>',
     ];
 
+    // Build the application listing form elements.
     if ($uuid || $businessId) {
       $this->buildApplicationList($uuid, $businessId, $appEnv, $type, $status, $form_state, $form);
     }
@@ -170,11 +179,11 @@ class AdminApplicationsByUuidForm extends FormBase {
     $form['actions']['delete_all'] = [
       '#type' => 'submit',
       '#value' => $this->t('Delete all above'),
+      '#attributes' => array('onclick' => 'if(!confirm("Delete ALL above?")){return false;}')
     ];
 
     return $form;
   }
-
 
   /**
    * {@inheritdoc}
@@ -209,54 +218,126 @@ class AdminApplicationsByUuidForm extends FormBase {
     $triggeringElement = $form_state->getTriggeringElement();
     $storage = $form_state->getStorage();
 
+    if (!isset($storage['documents'])) {
+      $noDocumentsMessage= $this->t('No documents to delete.');
+      $this->messenger()->addError($noDocumentsMessage);
+      return;
+    }
+
     $allDocuments = $storage['documents'];
-    $documentsToDelete = [];
 
     if (str_contains($triggeringElement['#id'], 'delete-all')) {
-      $documentsToDelete = $allDocuments;
+      $this->deleteDraftDocuments($allDocuments);
     }
+
     if (str_contains($triggeringElement['#id'], 'delete-selected')) {
       $selectOptions = $form_state->getValue('selectedDelete');
+      $documents = $this->filterBySelection($allDocuments, $selectOptions);
+      $this->deleteDraftDocuments($documents);
+    }
+  }
 
-      // Filter and collect applications to delete (checked checkboxes).
-      $selectedToDelete = array_keys(array_filter($selectOptions, function($value) {
-        return $value;
-      }));
+  /**
+   * The filterBySelection function.
+   *
+   * This function filters all the passed in documents
+   * so that only the ones that are found in the selected
+   * $selectOptions are returned. Additionally, any documents
+   * of the type grants_profile are filtered out, if every
+   * document hasn't been selected.
+   *
+   * @param array $documents
+   *   An array of ATV documents.
+   * @param array $selectOptions
+   *   An array of selected documents to be deleted.
+   *
+   * @return array
+   *  An array of ATV documents that passes the filtering.
+   */
+  private function filterBySelection(array $documents, array $selectOptions): array {
+    // Filter and collect applications to delete (checked checkboxes).
+    $selectedToDelete = array_keys(array_filter($selectOptions, function($value) {
+      return $value;
+    }));
 
-      // Filter and collect applications to keep (unchecked checkboxes).
-      $selectedToKeep = array_keys(array_filter($selectOptions, function($value) {
-        return !$value;
-      }));
+    // Get the documents to delete based on the selections.
+    return array_filter($documents, function (AtvDocument $document) use ($selectedToDelete, $documents) {
 
-      // Get the documents to delete based on the selections.
-      $documentsToDelete = array_filter($allDocuments, function (AtvDocument $item) use ($selectedToDelete, $selectedToKeep) {
-        if (!in_array($item->getId(), $selectedToDelete)) {
-          return FALSE;
-        }
-        if ($item->getType() == 'grants_profile' && $selectedToKeep) {
-          $profileDeletionError = "Skipped profile deletion: {$item->getId()}. Cannot delete profile while applications for it exist.";
-          $this->messenger()->addError($profileDeletionError);
-          return FALSE;
-        }
-        return TRUE;
-      });
+      // Check if the document is selected for deletion.
+      if (!in_array($document->getId(), $selectedToDelete)) {
+        return FALSE;
+      }
+
+      // Check if the document is a profile, which can only be deleted if everything is deleted.
+      if ($document->getType() == 'grants_profile' && count($selectedToDelete) < count($documents)) {
+        $failedDeletionMessage = $this->t(
+          'Skipped profile deletion: @tranId. Cannot delete profile while applications for it exist.', [
+          '@tranId' => $document->getTransactionId(),
+        ]);
+        $this->messenger()->addWarning($failedDeletionMessage);
+        return FALSE;
+      }
+
+      return TRUE;
+    });
+  }
+
+  /**
+   * The deleteDraftDocuments function.
+   *
+   * This function calls the handleDocumentsBatchService
+   * service and deleted any passed in documents that have their
+   * status set to DRAFT. Otherwise, a warning is displayed.
+   *
+   * @param array $documents
+   *   An array of ATV documents.
+   */
+  private function deleteDraftDocuments(array $documents): void {
+    $documentsToDelete = [];
+    $documentsToKeep = [];
+
+    /** @var \Drupal\helfi_atv\AtvDocument $document */
+    foreach ($documents as $document) {
+      if ($document->getStatus() === 'DRAFT') {
+        $documentsToDelete[] = $document;
+        continue;
+      }
+      $documentsToKeep[] = $document->getTransactionId();
+    }
+
+    if ($documentsToKeep) {
+      $failedDeletionMessage = $this->t(
+        'The following documents cannot be deleted since they are NOT marked as DRAFT. Deleted from Avus2 first: @tranIds.', [
+        '@tranIds' => implode(', ', $documentsToKeep),
+      ]);
+      $this->messenger()->addWarning($failedDeletionMessage);
     }
 
     $this->handleDocumentsBatchService->run($documentsToDelete);
   }
 
   /**
-   * Build Application list based on selections.
+   * The buildApplicationList function.
+   *
+   * This function builds a list of applications
+   * based on the passed in parameters.
    *
    * @param mixed $uuid
+   *   A users UUID.
    * @param mixed $businessId
+   *   A business ID.
    * @param mixed $appEnv
+   *   An app env.
    * @param mixed $type
+   *   An applications' type.
    * @param mixed $status
+   *   An applications' status.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
    * @param array $form
+   *   The form.
    */
-  public function buildApplicationList(
+  private function buildApplicationList(
     mixed $uuid,
     mixed $businessId,
     mixed $appEnv,
@@ -265,57 +346,19 @@ class AdminApplicationsByUuidForm extends FormBase {
     FormStateInterface $form_state,
     array &$form): void {
     try {
-
-      // Apply the search params and search for documents.
-      $searchParams = array_filter([
-        'user_id' => $uuid ?: null,
-        'business_id' => $businessId ?: null,
-        'lookfor' => $appEnv ? "appenv:$appEnv" : null,
-        'type' => ($type && $type !== 'all') ? $type : null,
-        'status'=> ($status && $status !== 'all') ? $status : null,
-      ], function($value) {
-        return !is_null($value);
-      });
+      $searchParams = $this->assembleSearchParams($uuid, $businessId, $appEnv, $type, $status);
       $documents = $this->atvService->searchDocuments($searchParams);
 
-      // If we can't find any documents, display an error.
-      if (!$documents) {
-        $formattedParams = implode(', ', array_map(
-          function ($key, $value) { return "$key: $value"; },
-          array_keys($searchParams),
-          array_values($searchParams)
-        ));
-        $form['appData']['error'] = [
-          '#markup' => "<p>No documents found with parameters: $formattedParams.<p>",
-        ];
+      if (empty($documents)) {
+        $this->handleNoDocumentsFound($form, $searchParams);
         return;
       }
 
-      // Filter out any production documents and store the documents.
-      $documents = array_filter($documents, function (AtvDocument $item) {
-        $meta = $item->getMetadata();
-        if ($meta['appenv'] === 'production') {
-          return FALSE;
-        }
-        return TRUE;
-      });
       $form_state->setStorage(['documents' => $documents]);
-
-      // Group the documents by type.
-      $sortedByType = [];
-      /** @var \Drupal\helfi_atv\AtvDocument $document */
-      foreach ($documents as $document) {
-        $sortedByType[$document->getType()][$document->getStatus()][] = $document;
-      }
-
-      // Sort by type, and within each type, by status.
-      ksort($sortedByType);
-      foreach ($sortedByType as $documentType => $documentStatuses) {
-        ksort($sortedByType[$documentType]);
-      }
+      $documentsByType = $this->sortDocuments($documents);
 
       // Form elements by type.
-      foreach ($sortedByType as $type => $applicationsType) {
+      foreach ($documentsByType as $type => $applicationsType) {
         $form['appData'][$type] = [
           '#type' => 'details',
           '#title' => $this->t('Application: ' . $type),
@@ -332,23 +375,11 @@ class AdminApplicationsByUuidForm extends FormBase {
             '#collapsed' => FALSE,
           ];
 
-          if (empty($applications)) {
-            continue;
-          }
-
-          $statusOptions = [];
-          /** @var \Drupal\helfi_atv\AtvDocument $application */
-          foreach ($applications as $application) {
-            $statusOptions[$application->getId()] = $application->getTransactionId();
-          }
-          // Sort the transaction IDs.
-          asort($statusOptions);
-
           // Add transaction ID checkbox options.
           $form['appData'][$type][$status]['selectedDelete'] = [
             '#type' => 'checkboxes',
             '#title' => $this->t('Select to delete'),
-            '#options' => $statusOptions,
+            '#options' => $this->buildSelectDeleteOptions($applications),
           ];
         }
       }
@@ -357,6 +388,114 @@ class AdminApplicationsByUuidForm extends FormBase {
       $this->messenger()->addError('Failed fetching applications.');
       $this->messenger()->addError($e->getMessage());
     }
+  }
+
+  /**
+   * The assembleSearchParams function.
+   *
+   * This function assembles an array of search parameters
+   * based on the passed in values. If a value is not set,
+   * then they key is omitted from the final search parameters
+   * array.
+   *
+   * @param mixed $uuid
+   *   A users UUID.
+   * @param mixed $businessId
+   *   A business ID.
+   * @param mixed $appEnv
+   *   An app env.
+   * @param mixed $type
+   *   An applications' type.
+   * @param mixed $status
+   *   An applications' status.
+   *
+   * @return array
+   *  An associative array of search params, prefixed with a key.
+   */
+  private function assembleSearchParams(mixed $uuid, mixed $businessId, mixed $appEnv, mixed $type,  mixed $status): array {
+    return array_filter([
+      'user_id' => $uuid ?: null,
+      'business_id' => $businessId ?: null,
+      'lookfor' => $appEnv ? "appenv:$appEnv" : null,
+      'type' => ($type && $type !== 'all') ? $type : null,
+      'status' => ($status && $status !== 'all') ? $status : null,
+    ], function($value) {
+      return !is_null($value);
+    });
+  }
+
+  /**
+   * The handleNoDocumentsFound function.
+   *
+   * This documents displays an error message to the users
+   * if no documents were found with the used search parameters.
+   *
+   * @param array $form
+   *   The form.
+   * @param array $searchParams
+   *   The used search parameters.
+   */
+  private function handleNoDocumentsFound(array &$form, array $searchParams): void {
+    $formattedParams = implode(', ', array_map(
+      function ($key, $value) { return "$key: $value"; },
+      array_keys($searchParams),
+      array_values($searchParams)
+    ));
+    $form['appData']['error'] = [
+      '#markup' => "<p>No documents found with parameters: $formattedParams.<p>",
+    ];
+  }
+
+  /**
+   * The sortDocuments function.
+   *
+   * This function sorts ATV documents that are displayed
+   * on the form. The documents are fist sorted by their
+   * type, and then each status inside ecah type is sorted.
+   *
+   * @param array $documents
+   *   An array of ATV documents.
+   *
+   * @return array
+   *   An array of sorted ATV documents.
+   */
+  private function sortDocuments(array $documents): array {
+    // Group and sort documents by type.
+    $sortedByType = [];
+    foreach ($documents as $document) {
+      $sortedByType[$document->getType()][$document->getStatus()][] = $document;
+    }
+    ksort($sortedByType);
+
+    // Sort statuses inside each type.
+    foreach ($sortedByType as $documentType => $documentStatuses) {
+      ksort($sortedByType[$documentType]);
+    }
+    return $sortedByType;
+  }
+
+  /**
+   * The buildSelectDeleteOptions function.
+   *
+   * This function builds an array associative array
+   * with application IDs and transactions IDs. These
+   * values are used to construct checkboxes for the form.
+   *
+   * @param array $applications
+   *   An array of ATV documents.
+   *
+   * @return array
+   *   The constructed options.
+   */
+  private function buildSelectDeleteOptions(array $applications): array {
+    $statusOptions = [];
+    /** @var \Drupal\helfi_atv\AtvDocument $application */
+    foreach ($applications as $application) {
+      $statusOptions[$application->getId()] = $application->getTransactionId();
+    }
+    // Sort the transaction IDs.
+    asort($statusOptions);
+    return $statusOptions;
   }
 
 }

@@ -135,9 +135,7 @@ class HandleDocumentsBatchService {
       $context['results']['deleted'] = 0;
       $context['results']['failed'] = 0;
       $context['results']['progress'] = 0;
-      $context['results']['deleted_document_ids'] = [];
       $context['results']['deleted_transaction_ids'] = [];
-      $context['results']['failed_document_ids'] = [];
       $context['results']['failed_transaction_ids'] = [];
     }
 
@@ -152,14 +150,11 @@ class HandleDocumentsBatchService {
     foreach ($docsToDelete as $docToDelete) {
       try {
         $transactionId = $docToDelete->getTransactionId();
-        $documentId = $docToDelete->getId();
         //$this->atvService->deleteDocument($docToDelete);
-        $context['results']['deleted_document_ids'][] = $documentId;
         $context['results']['deleted_transaction_ids'][] = $transactionId;
         $context['results']['deleted']++;
       }
       catch (AtvDocumentNotFoundException | AtvFailedToConnectException | TokenExpiredException | GuzzleException $e) {
-        $context['results']['failed_document_ids'][] = $documentId;
         $context['results']['failed_transaction_ids'][] = $transactionId;
         $context['results']['failed']++;
         $this->messenger->addError($e->getMessage());
@@ -198,7 +193,7 @@ class HandleDocumentsBatchService {
     // Log a general message about the processed documents.
     if ($results['progress']) {
       $processMessage = $this->t(
-        'Processed @count documents. Deleted documents: @deleted. Failed deletions: @failed. Elapsed time: @elapsed.', [
+        'Processed @count DRAFT documents. Deleted documents: @deleted. Failed deletions: @failed. Elapsed time: @elapsed.', [
         '@count' => $results['progress'],
         '@deleted' => $results['deleted'],
         '@failed' => $results['failed'],
@@ -209,24 +204,22 @@ class HandleDocumentsBatchService {
     }
 
     // Log a message about successful deletions.
-    if ($results['deleted_transaction_ids'] && $results['deleted_document_ids']) {
+    if ($results['deleted_transaction_ids']) {
       $deletedDocumentsMessage = $this->t(
-        'The following documents were deleted: Transaction IDs: @transactionIds. Document IDs: @documentIds.', [
+        'The following DRAFT documents were deleted: @transactionIds.', [
         '@transactionIds' => implode(', ', $results['deleted_transaction_ids']),
-        '@documentIds' => implode(', ', $results['deleted_document_ids']),
       ]);
       $this->messenger->addMessage($deletedDocumentsMessage);
       $this->logger->get('grants_admin_applications')->info($deletedDocumentsMessage);
     }
 
     // Log a warning about deletions that failed.
-    if ($results['failed_transaction_ids'] && $results['failed_document_ids']) {
+    if ($results['failed_transaction_ids']) {
       $failedDeletionMessage = $this->t(
-        'The following documents failed to delete: Transaction IDs: @transactionIds. Document IDs: @documentIds.', [
+        'The following documents failed to delete: @transactionIds.', [
         '@transactionIds' => implode(', ', $results['failed_transaction_ids']),
-        '@documentIds' => implode(', ', $results['failed_document_ids']),
       ]);
-      $this->messenger->addWarning($failedDeletionMessage);
+      $this->messenger->addError($failedDeletionMessage);
       $this->logger->get('grants_admin_applications')->info($failedDeletionMessage);
     }
   }
