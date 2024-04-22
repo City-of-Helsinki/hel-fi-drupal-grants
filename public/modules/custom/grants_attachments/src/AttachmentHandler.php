@@ -888,7 +888,7 @@ class AttachmentHandler {
 
         $this->eventService->logEvent(
           $applicationData["application_number"],
-          'HANDLER_ATT_DELETE',
+          'HANDLER_ATT_DELETED',
           $this->t('Attachment removed for the IBAN: @iban.',
             ['@iban' => $existingAccountNumber],
             ['context' => 'grants_attachments'],
