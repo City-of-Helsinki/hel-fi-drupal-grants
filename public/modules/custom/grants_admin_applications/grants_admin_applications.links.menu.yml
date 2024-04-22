@@ -14,10 +14,4 @@ grants_admin_application.admin_delete:
   parent: grants_admin_applications.submitted_applications_status
   description: 'Delete user documents.'
   weight: -1
-grants_admin_application.admin_reports:
-  title: Applications by business ID
-  route_name: grants_admin_applications.admin_applications_buid
-  parent: grants_admin_applications.submitted_applications_status
-  description: 'See & delete user documents in ATV.'
-  weight: -1
 
