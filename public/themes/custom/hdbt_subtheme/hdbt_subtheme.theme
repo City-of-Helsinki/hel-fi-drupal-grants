@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
@@ -56,9 +57,7 @@ function hdbt_subtheme_get_icons_path(): ?string {
     $icon_path = '/' . $theme_handler->getTheme('hdbt_subtheme')->getPath() . '/dist/icons/sprite.svg';
 
     // Add icons path as a global variable.
-    if (!empty($icon_path)) {
-      return $icon_path;
-    }
+    return $icon_path;
   }
   return $icon_path;
 }
@@ -157,7 +156,7 @@ function hdbt_subtheme_preprocess_views_view(&$variables): void {
         if ($term->hasTranslation($language)) {
           $translated_term = \Drupal::service('entity.repository')->getTranslationFromContext($term, $language);
           $tid = $term->id();
-          $termList[$tid] = $translated_term->getName();
+          $termList[$tid] = $translated_term->label();
         }
       }
 
@@ -235,19 +234,23 @@ function hdbt_subtheme_preprocess_views_view_fields(&$variables): void {
 function hdbt_subtheme_field_widget_paragraphs_form_alter(&$element, FormStateInterface &$form_state, $context): void {
   switch ($element['#paragraph_type']) {
     case 'myparagraphs':
-      $term = $form_state->getFormObject()->getEntity();
-
-      // Check if paragraph is inside a form term.
-      if ($term && ($term->getEntityTypeId() == 'taxonomy_term')) {
-        $voc = $term->bundle();
-        // Check if it is the desired voc.
-        if ($voc == 'my_voc') {
-          // To hide only one field.
-          // unset($element['subform']['field_to_be hidded']);
-          // To hide all the form.
-          $element = [];
+      if ($form_state->getFormObject() instanceof EntityForm) {
+        $term = $form_state->getFormObject()->getEntity();
+        // Check if paragraph is inside a form term.
+        if ($term && ($term->getEntityTypeId() == 'taxonomy_term')) {
+          $voc = $term->bundle();
+          // Check if it is the desired voc.
+          if ($voc == 'my_voc') {
+            // To hide only one field.
+            // unset($element['subform']['field_to_be hidded']);
+            // To hide all the form.
+            $element = [];
+          }
         }
       }
+      break;
+
+    default:
       break;
   }
 }

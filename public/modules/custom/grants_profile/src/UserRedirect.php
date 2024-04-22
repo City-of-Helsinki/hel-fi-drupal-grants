@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_profile;
 
-use Drupal\Component\Utility\SortArray;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Session\AccountInterface;
@@ -84,25 +83,6 @@ class UserRedirect implements UserRedirectInterface {
         }
       }
     }
-  }
-
-  /**
-   * Return requested configuration items (login or logout) ordered by weight.
-   *
-   * @param string $key
-   *   Configuration key (login or logout).
-   *
-   * @return array
-   *   Requested configuration items (login or logout) ordered by weight.
-   */
-  protected function getConfig($key) {
-    $config = $this->config->get($key);
-    if ($config) {
-      uasort($config, [SortArray::class, 'sortByWeightElement']);
-      return $config;
-    }
-
-    return [];
   }
 
 }

@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Returns responses for Grant Applications: Form Metadata routes.
+ *
+ * @phpstan-consistent-constructor
  */
 class ApplicationStatusCheckController extends ControllerBase {
 
@@ -82,7 +84,7 @@ class ApplicationStatusCheckController extends ControllerBase {
   /**
    * Builds the response.
    *
-   * @return Symfony\Component\HttpFoundation\JsonResponse
+   * @return JsonResponse
    *   Json representation of data.
    */
   public function build($submission_id = '') {

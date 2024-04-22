@@ -181,7 +181,7 @@ function grants_profile_form_alter(&$form, FormStateInterface $form_state, $form
 function grants_profile_preprocess_own_profile_registered_community(&$variables): void {
 
   $initials = NULL;
-  $name = $profile['companyName'] ?? '';
+  $name = $variables['profile']['companyName'] ?? '';
   $words = explode(' ', $name);
   if (count($words) >= 2) {
     $initials = strtoupper(substr($words[0], 0, 1) . substr(end($words), 0, 1));

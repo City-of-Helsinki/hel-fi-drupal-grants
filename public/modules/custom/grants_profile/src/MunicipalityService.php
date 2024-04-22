@@ -7,6 +7,7 @@ use Drupal\Core\KeyValueStore\KeyValueDatabaseFactory;
 use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,9 +19,9 @@ class MunicipalityService {
   /**
    * Logger Factory.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannel|LoggerChannelInterface
    */
-  protected LoggerChannel $loggerChannel;
+  protected LoggerChannel|LoggerChannelInterface $loggerChannel;
 
   /**
    * Constructs the service class.

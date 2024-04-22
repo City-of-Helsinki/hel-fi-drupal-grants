@@ -20,7 +20,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
   /**
    * The modules to load to run the test.
    *
-   * @var array
+   * @var array<string>
    */
   protected static $modules = [
     // Drupal modules.
@@ -70,7 +70,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
   public static function createSchema(): AtvSchema {
     $logger = \Drupal::service('logger.factory');
     $manager = \Drupal::typedDataManager();
-    $schema = new AtvSchema($manager, $logger);
+    $schema = new AtvSchema($manager);
     // Use relative path. It works in all environments.
     $schemaPath = __DIR__ . "/../../../../../../../conf/tietoliikennesanoma_schema.json";
     $schema->setSchema($schemaPath);
@@ -611,7 +611,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $applicationData->setValue($submissionData);
     // Search attachment data.
     $attachmentField = [];
-    foreach ($applicationData as $field) {
+    foreach ($submissionData as $field) {
       $name = $field->getName();
       if ($name !== 'attachments') {
         continue;

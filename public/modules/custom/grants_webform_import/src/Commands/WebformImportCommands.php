@@ -143,7 +143,7 @@ class WebformImportCommands extends DrushCommands {
   /**
    * The language manager.
    *
-   * @var \Drupal\Core\Language\ConfigurableLanguageManagerInterface
+   * @var \Drupal\language\ConfigurableLanguageManagerInterface
    */
   protected $languageManager;
 
@@ -172,9 +172,9 @@ class WebformImportCommands extends DrushCommands {
    *   Extension list module.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Config factory.
-   * @param GuzzleHttp\ClientInterface $httpClient
+   * @param \GuzzleHttp\ClientInterface $httpClient
    *   Http client.
-   * @param \Drupal\Core\Language\ConfigurableLanguageManagerInterface $languageManager
+   * @param \Drupal\language\ConfigurableLanguageManagerInterface $languageManager
    *   Language manager.
    */
   public function __construct(
@@ -428,10 +428,8 @@ class WebformImportCommands extends DrushCommands {
         'Authorization' => $authorizationHeader,
       ],
     ];
-    $response = $this->httpClient->get(
-      $url,
-      $options,
-    );
+    $request = $this->httpClient->request("GET", $url, $options);
+    $response = $this->httpClient->send($request);
     $statusCode = $response->getStatusCode();
 
     if ($statusCode !== 200) {

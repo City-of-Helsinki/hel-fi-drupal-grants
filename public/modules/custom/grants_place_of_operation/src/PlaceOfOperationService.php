@@ -172,6 +172,7 @@ class PlaceOfOperationService {
     foreach ($data as $key => $value) {
       $temp = [];
       foreach ($value as $v2) {
+        $vv = null;
         if ($v2['valueType'] === 'bool') {
           if ($v2['value'] === 'true') {
             $vv = 1;

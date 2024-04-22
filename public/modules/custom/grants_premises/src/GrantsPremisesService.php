@@ -181,7 +181,7 @@ class GrantsPremisesService {
     }
 
     $retval = [];
-    foreach ($data ?? [] as $key => $value) {
+    foreach ($data as $key => $value) {
       $temp = [];
       foreach ($value as $v2) {
         $vv = $v2['value'];

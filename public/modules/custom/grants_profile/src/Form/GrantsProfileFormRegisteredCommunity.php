@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Profile form.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
@@ -98,7 +100,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $isNewGrantsProfile = $grantsProfile->getTransactionId();
 
     // Handle multiple editors.
-    $lockService = \DrupaL::service('grants_handler.form_lock_service');
+    $lockService = \Drupal::service('grants_handler.form_lock_service');
     $locked = $lockService->isProfileFormLocked($grantsProfile->getId());
     if ($locked) {
       $form['#disabled'] = TRUE;
@@ -421,7 +423,9 @@ later when completing the grant application.',
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
     unset($addressValues['actions']);
+    $deltaindex = 0;
     foreach ($addressValues as $delta => $address) {
+      $deltaindex = $delta;
       if (array_key_exists('address', $address)) {
         $address = $address['address'];
       }
@@ -519,7 +523,7 @@ later when completing the grant application.',
             '#icon_left' => 'trash',
             '#value' => $this
               ->t('Delete', [], $this->tOpts),
-            '#name' => 'addressWrapper--' . ($delta + 1),
+            '#name' => 'addressWrapper--' . ($deltaindex + 1),
             '#submit' => [
               '::removeOne',
             ],
