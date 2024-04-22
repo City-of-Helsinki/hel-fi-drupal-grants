@@ -10,7 +10,7 @@ grants_admin_applications.resend_applications:
   description: 'Resend application data through integration.'
 grants_admin_application.admin_delete:
   title: Applications by user UUID, Business ID and appEnv
-  route_name: grants_admin_applications.admin_applications_uuid
+  route_name: grants_admin_applications.delete_applications
   parent: grants_admin_applications.submitted_applications_status
   description: 'Delete user documents.'
   weight: -1

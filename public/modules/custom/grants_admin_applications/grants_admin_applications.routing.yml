@@ -1,17 +1,10 @@
-grants_admin_applications.admin_applications_uuid:
-  path: '/admin/reports/admin-applications-uuid'
+grants_admin_applications.delete_applications:
+  path: '/admin/reports/delete-applications'
   defaults:
     _title: 'Delete testing applications'
-    _form: 'Drupal\grants_admin_applications\Form\AdminApplicationsByUuidForm'
+    _form: 'Drupal\grants_admin_applications\Form\DeleteApplicationsForm'
   requirements:
-    _permission: 'administer grants_admin_applications configuration'
-grants_admin_applications.admin_applications_buid:
-  path: '/admin/reports/admin-applications-buid'
-  defaults:
-    _title: 'Admin applications by Business id'
-    _form: 'Drupal\grants_admin_applications\Form\AdminApplicationsByBusinessIdForm'
-  requirements:
-    _permission: 'administer grants_admin_applications configuration'
+    _permission: 'administer grants_admin_delete_applications configuration'
 grants_admin_applications.resend_applications:
   path: '/admin/reports/resend-applications'
   defaults:

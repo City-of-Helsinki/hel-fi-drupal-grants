@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Provides a grants_admin_applications form.
  *
  */
-class AdminApplicationsByUuidForm extends FormBase {
+class DeleteApplicationsForm extends FormBase {
 
   /**
    * Access to ATV.
@@ -56,7 +56,7 @@ class AdminApplicationsByUuidForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId(): string {
-    return 'grants_admin_applications_admin_applications';
+    return 'grants_admin_applications_delete_applications';
   }
 
   /**
