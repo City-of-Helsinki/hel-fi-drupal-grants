@@ -85,6 +85,11 @@ abstract class AtvFormBase extends FormBase {
     $headers['X-hki-applicationNumber'] = $applicationId;
 
     $content = $atvDoc->getContent();
+    $status = $atvDoc->getStatus();
+
+    // Get formUpdate status - this cannot always be false (draft).
+    $content['formUpdate'] = FALSE;
+
     $myJSON = Json::encode($content);
 
     // Usually we set drafts to submitted state before sending to integrations,
