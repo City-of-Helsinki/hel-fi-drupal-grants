@@ -109,20 +109,20 @@ class AdminApplicationsByUuidForm extends FormBase {
       '#description' => $this->t('Enter a users UUID, e.g. 13cb60ae-269a-46da-9a43-da94b980c067'),
     ];
 
-    $form['appEnv'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('appEnv'),
-      '#required' => FALSE,
-      '#default_value' => $appEnv ?? '',
-      '#description' => $this->t('Enter a app env, e.g. TEST'),
-    ];
-
     $form['businessId'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Business ID'),
       '#required' => FALSE,
       '#default_value' => $businessId ?? '',
       '#description' => $this->t('Enter a business ID, e.g. 7009192-1'),
+    ];
+
+    $form['appEnv'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('appEnv'),
+      '#required' => FALSE,
+      '#default_value' => $appEnv ?? '',
+      '#description' => $this->t('Enter a app env, e.g. TEST'),
     ];
 
     $form['type'] = [
@@ -179,7 +179,7 @@ class AdminApplicationsByUuidForm extends FormBase {
     $form['actions']['delete_all'] = [
       '#type' => 'submit',
       '#value' => $this->t('Delete all above'),
-      '#attributes' => array('onclick' => 'if(!confirm("Delete ALL above?")){return false;}')
+      '#attributes' => array('onclick' => 'if(!confirm("Delete ALL above?")){return false;}'),
     ];
 
     return $form;
@@ -412,7 +412,7 @@ class AdminApplicationsByUuidForm extends FormBase {
    * @return array
    *  An associative array of search params, prefixed with a key.
    */
-  private function assembleSearchParams(mixed $uuid, mixed $businessId, mixed $appEnv, mixed $type,  mixed $status): array {
+  private function assembleSearchParams(mixed $uuid, mixed $businessId, mixed $appEnv, mixed $type, mixed $status): array {
     return array_filter([
       'user_id' => $uuid ?: null,
       'business_id' => $businessId ?: null,
