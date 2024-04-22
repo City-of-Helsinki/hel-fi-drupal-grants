@@ -7,9 +7,9 @@ use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\ListDataDefinition;
 
 /**
- * Define Yleisavustushakemus data.
+ * Define Asukasosallisuus, yleis- ja toiminta-avustushakemus data.
  */
-class KansliatyoDefinition extends ComplexDataDefinitionBase {
+class AsukasYleisToimDefinition extends ComplexDataDefinitionBase {
 
   use ApplicationDefinitionTrait;
 
