@@ -193,7 +193,7 @@ class HandleDocumentsBatchService {
     // Log a general message about the processed documents.
     if ($results['progress']) {
       $processMessage = $this->t(
-        'Processed @count DRAFT documents. Deleted documents: @deleted. Failed deletions: @failed. Elapsed time: @elapsed.', [
+        'Processed @count documents. Deleted documents: @deleted. Failed deletions: @failed. Elapsed time: @elapsed.', [
         '@count' => $results['progress'],
         '@deleted' => $results['deleted'],
         '@failed' => $results['failed'],
@@ -206,7 +206,7 @@ class HandleDocumentsBatchService {
     // Log a message about successful deletions.
     if ($results['deleted_transaction_ids']) {
       $deletedDocumentsMessage = $this->t(
-        'The following DRAFT documents were deleted: @transactionIds.', [
+        'The following documents were deleted: @transactionIds.', [
         '@transactionIds' => implode(', ', $results['deleted_transaction_ids']),
       ]);
       $this->messenger->addMessage($deletedDocumentsMessage);

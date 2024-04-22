@@ -5,6 +5,13 @@ grants_admin_applications.delete_applications:
     _form: 'Drupal\grants_admin_applications\Form\DeleteApplicationsForm'
   requirements:
     _permission: 'administer grants_admin_delete_applications configuration'
+grants_admin_applications.delete_applications_by_transaction_id:
+  path: '/admin/reports/delete-applications/delete-by-transaction-id'
+  defaults:
+    _title: 'Delete testing applications by transaction ID'
+    _form: 'Drupal\grants_admin_applications\Form\DeleteByTransactionIdForm'
+  requirements:
+    _permission: 'administer grants_admin_delete_applications configuration'
 grants_admin_applications.resend_applications:
   path: '/admin/reports/resend-applications'
   defaults:
