@@ -641,14 +641,19 @@ function hdbt_subtheme_preprocess_tpr_service_channel(array &$variables): void {
 
   $current_url = Url::fromRoute('<current>');
   $path = $current_url->toString();
+  $patharray = explode('/', $path);
+  foreach($patharray as $key => $value) {
+    $patharray[$key] = substr($value,0,62);
+  }
+  $path = implode('/', $patharray);
 
   // Remove link if the path is similar to TPR link or if the webform matches.
   foreach ($variables['content']['links']['#items']->getIterator() as $key => $item) {
     $values = $item->getValue();
     $item->setValue($values);
     if (
-      ($webform && strpos($values['uri'], $webform) !== FALSE) ||
-      strpos($values['uri'], $path) !== FALSE
+      ($webform && str_contains($values['uri'], $webform)) ||
+      str_contains($values['uri'], $path)
     ) {
       $items->removeItem($key);
     }
