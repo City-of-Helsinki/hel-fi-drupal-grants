@@ -44,7 +44,7 @@ class ResendApplicationsForm extends AtvFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): AdminApplicationsForm|static {
+  public static function create(ContainerInterface $container): ResendApplicationsForm|static {
     return new static(
       $container->get('helfi_atv.atv_service')
     );
@@ -53,14 +53,14 @@ class ResendApplicationsForm extends AtvFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'grants_admin_applications_resend_applications';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $applicationId = trim($form_state->getValue('applicationId'));
 
     $prefilledNumber = \Drupal::request()->query->get('transaction_id');
@@ -156,54 +156,7 @@ class ResendApplicationsForm extends AtvFormBase {
       ];
 
       if ($messages) {
-        foreach ($messages as $message) {
-
-          $resent = isset($message['resent']) && $message['resent'];
-          $avus2Received = isset($message['avus2received']) && $message['avus2received'];
-
-          $rowElement = [
-            'id' => [
-              '#markup' => $message['messageId'],
-            ],
-            'timestamp' => [
-              '#markup' => $message['sendDateTime'],
-            ],
-            'body' => [
-              '#markup' => $message['body'],
-            ],
-            'attachments' => (function () use ($message) {
-              if (isset($message['attachments'])) {
-                $attachment = reset($message['attachments']);
-                return [
-                  '#markup' => $attachment['fileName'] . ' - ' . $attachment['description'],
-                ];
-              }
-              return [
-                '#markup' => '-',
-              ];
-            })(),
-            'sentBy' => [
-              '#markup' => $message['sentBy'],
-            ],
-            'avus2received' => [
-              '#markup' => $avus2Received
-                ? $this->t('Yes', [], self::$tOpts)
-                : $this->t('No', [], self::$tOpts),
-            ],
-            'hasBeenResent' => [
-              '#markup' => $resent
-                ? $this->t('Yes', [], self::$tOpts)
-                : $this->t('No', [], self::$tOpts),
-            ],
-            'resendMessage' => [
-              '#type' => 'checkbox',
-              '#return_value' => $message['messageId'],
-            ],
-          ];
-
-          $form['status']['messageList'][] = $rowElement;
-
-        }
+        $this->buildMessages($messages, $form);
       }
 
       $form['disclaimer'] = [
@@ -250,7 +203,7 @@ class ResendApplicationsForm extends AtvFormBase {
   /**
    * Resend messages submit handler.
    */
-  public static function resendMessages(array $form, FormStateInterface $formState) {
+  public static function resendMessages(array $form, FormStateInterface $formState): void {
     $values = $formState->getValues();
     $eventService = \Drupal::service('grants_handler.events_service');
     $messenger = \Drupal::service('messenger');
@@ -315,7 +268,7 @@ class ResendApplicationsForm extends AtvFormBase {
    * @param string $applicationNumber
    *   The application number.
    */
-  private static function resendMessage(array $messageData, string $applicationNumber) {
+  private static function resendMessage(array $messageData, string $applicationNumber): void {
 
     $httpClient = \Drupal::service('http_client');
     $eventService = \Drupal::service('grants_handler.events_service');
@@ -362,7 +315,7 @@ class ResendApplicationsForm extends AtvFormBase {
   /**
    * GetStatus submit handler.
    */
-  public static function getStatus(array $form, FormStateInterface $formState) {
+  public static function getStatus(array $form, FormStateInterface $formState): void {
     $messenger = \Drupal::service('messenger');
     $logger = self::getLoggerChannel();
 
@@ -404,7 +357,7 @@ class ResendApplicationsForm extends AtvFormBase {
   /**
    * Resend application callback submit handler.
    */
-  public static function resendApplicationCallback(array $form, FormStateInterface $formState) {
+  public static function resendApplicationCallback(array $form, FormStateInterface $formState): void {
     $logger = self::getLoggerChannel();
     $messenger = \Drupal::service('messenger');
 
@@ -447,7 +400,7 @@ class ResendApplicationsForm extends AtvFormBase {
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request object, holding current path and request uri.
    *
-   * @return array
+   * @return \Drupal\Core\Ajax\AjaxResponse
    *   Must return AjaxResponse object or render array.
    *   Never return NULL or invalid render arrays. This
    *   could/will break your forms.
@@ -456,6 +409,63 @@ class ResendApplicationsForm extends AtvFormBase {
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('.grants-admin-applications-resend-applications', $form));
     return $response;
+  }
+
+  /**
+   * Build message list.
+   *
+   * @param mixed $messages
+   *   Loaded messages.
+   * @param array $form
+   *   Form object.
+   */
+  public function buildMessages(mixed $messages, array &$form): void {
+    foreach ($messages as $message) {
+      $resent = isset($message['resent']) && $message['resent'];
+      $avus2Received = isset($message['avus2received']) && $message['avus2received'];
+
+      $rowElement = [
+        'id' => [
+          '#markup' => $message['messageId'],
+        ],
+        'timestamp' => [
+          '#markup' => $message['sendDateTime'],
+        ],
+        'body' => [
+          '#markup' => $message['body'],
+        ],
+        'attachments' => (function () use ($message) {
+          if (isset($message['attachments'])) {
+            $attachment = reset($message['attachments']);
+            return [
+              '#markup' => $attachment['fileName'] . ' - ' . $attachment['description'],
+            ];
+          }
+          return [
+            '#markup' => '-',
+          ];
+        })(),
+        'sentBy' => [
+          '#markup' => $message['sentBy'],
+        ],
+        'avus2received' => [
+          '#markup' => $avus2Received
+            ? $this->t('Yes', [], self::$tOpts)
+            : $this->t('No', [], self::$tOpts),
+        ],
+        'hasBeenResent' => [
+          '#markup' => $resent
+            ? $this->t('Yes', [], self::$tOpts)
+            : $this->t('No', [], self::$tOpts),
+        ],
+        'resendMessage' => [
+          '#type' => 'checkbox',
+          '#return_value' => $message['messageId'],
+        ],
+      ];
+
+      $form['status']['messageList'][] = $rowElement;
+    }
   }
 
 }
