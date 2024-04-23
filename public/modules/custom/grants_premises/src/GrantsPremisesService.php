@@ -176,29 +176,30 @@ class GrantsPremisesService {
     $settings = $definition->getSettings();
     $data = NestedArray::getValue($documentData, $settings['jsonPath']);
 
-    if (!$data) {
+    if (empty($data)) {
       return [];
     }
 
-    $retval = [];
+    $returnValueArray = [];
     foreach ($data as $key => $value) {
       $temp = [];
-      foreach ($value as $v2) {
-        $vv = $v2['value'];
+      foreach ($value as $value2) {
+        $value2value = $value2['value'];
 
-        if ($v2['valueType'] === 'bool') {
-          if ($v2['value'] === 'true') {
-            $vv = 1;
+        // Map string booleans to int.
+        if ($value2['valueType'] === 'bool') {
+          if ($value2['value'] === 'true') {
+            $value2value = 1;
           }
-          if ($v2['value'] === 'false') {
-            $vv = 0;
+          if ($value2['value'] === 'false') {
+            $value2value = 0;
           }
         }
-        $temp[$v2['ID']] = $vv;
+        $temp[$value2['ID']] = $value2value;
       }
-      $retval[$key] = $temp;
+      $returnValueArray[$key] = $temp;
     }
-    return $retval;
+    return $returnValueArray;
   }
 
 }

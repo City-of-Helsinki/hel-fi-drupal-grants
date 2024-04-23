@@ -22,6 +22,7 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\language\ConfigurableLanguageManagerInterface;
 use Drush\Commands\DrushCommands;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -413,6 +414,7 @@ class WebformImportCommands extends DrushCommands {
    *
    * @return mixed
    *   Resulted webform data.
+   * @throws GuzzleException
    */
   private function getWebformDataFromEndpoint() {
     // Fetch the config.
@@ -428,8 +430,7 @@ class WebformImportCommands extends DrushCommands {
         'Authorization' => $authorizationHeader,
       ],
     ];
-    $request = $this->httpClient->request("GET", $url, $options);
-    $response = $this->httpClient->send($request);
+    $response = $this->httpClient->request("GET", $url, $options);
     $statusCode = $response->getStatusCode();
 
     if ($statusCode !== 200) {
