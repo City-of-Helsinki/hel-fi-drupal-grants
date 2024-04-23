@@ -1511,7 +1511,8 @@ class ApplicationHandler {
      */
 
     $webformSubmission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
-    $appDocument = $this->atvSchema->typedDataToDocumentContent($applicationData, $webformSubmission, $submittedFormData);
+    $appDocument = $this->atvSchema->typedDataToDocumentContent(
+      $applicationData, $webformSubmission, $submittedFormData);
     $myJSON = Json::encode($appDocument);
 
     if ($this->isDebug()) {

@@ -86,9 +86,13 @@ abstract class AtvFormBase extends FormBase {
 
     $content = $atvDoc->getContent();
     $status = $atvDoc->getStatus();
+    $content['formUpdate'] = TRUE;
 
-    // Get formUpdate status - this cannot always be false (draft).
-    $content['formUpdate'] = FALSE;
+    // First imports cannot be with TRUE values, so set it as false for
+    // SUBMITTED & DRAFT. @see ApplicationHandler::getFormUpdate comments.
+    if (in_array($status, ['SUBMITTED', 'DRAFT'])) {
+      $content['formUpdate'] = FALSE;
+    }
 
     $myJSON = Json::encode($content);
 
@@ -124,7 +128,7 @@ abstract class AtvFormBase extends FormBase {
       $eventService->logEvent(
         $applicationId,
         'HANDLER_RESEND_APP',
-        t('Application resent from Drupal Admin UI', [],  ['context' => 'grants_handler']),
+        t('Application resent from Drupal Admin UI', [], ['context' => 'grants_handler']),
         $applicationId
       );
 
