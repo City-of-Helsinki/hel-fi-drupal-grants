@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provides a grants_admin_applications form.
- *
  */
 class DeleteApplicationsForm extends FormBase {
 
@@ -159,7 +158,13 @@ class DeleteApplicationsForm extends FormBase {
 
     $form['appData'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Documents in ATV / @appEnv: @id', ['@id' => $uuid, '@appEnv' => $appEnv]),
+      '#title' => $this->t('Documents in ATV for: @appEnv @uuid @bid @type @status', [
+        '@uuid' => $uuid,
+        '@appEnv' => $appEnv,
+        '@bid' => $businessId,
+        '@type' => $type,
+        '@status' => $status,
+      ]),
       '#collapsible' => TRUE,
       '#collapsed' => FALSE,
       '#prefix' => '<div id="profile-data">',
@@ -366,7 +371,7 @@ class DeleteApplicationsForm extends FormBase {
       foreach ($documentsByType as $type => $applicationStatuses) {
         $form['appData'][$type] = [
           '#type' => 'details',
-          '#title' => "Application: $type",
+          '#title' => $this->t('Application: @type', ['@type' => $type]),
           '#collapsible' => TRUE,
           '#collapsed' => TRUE,
         ];
@@ -375,7 +380,7 @@ class DeleteApplicationsForm extends FormBase {
         foreach ($applicationStatuses as $status => $documents) {
           $form['appData'][$type][$status] = [
             '#type' => 'fieldset',
-            '#title' => "Status: $status",
+            '#title' => $this->t('Status: @status', ['@status' => $status]),
             '#collapsible' => TRUE,
             '#collapsed' => FALSE,
           ];
