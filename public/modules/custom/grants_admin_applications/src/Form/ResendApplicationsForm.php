@@ -401,7 +401,6 @@ class ResendApplicationsForm extends AtvFormBase {
    *   The request object, holding current path and request uri.
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
-   *    Must return AjaxResponse object or render array.
    *   Must return AjaxResponse object or render array.
    *   Never return NULL or invalid render arrays. This
    *   could/will break your forms.
@@ -416,9 +415,9 @@ class ResendApplicationsForm extends AtvFormBase {
    * Build message list.
    *
    * @param mixed $messages
-   *  Loaded messages
+   *   Loaded messages.
    * @param array $form
-   *  Form object
+   *   Form object.
    */
   public function buildMessages(mixed $messages, array &$form): void {
     foreach ($messages as $message) {
@@ -435,7 +434,7 @@ class ResendApplicationsForm extends AtvFormBase {
         'body' => [
           '#markup' => $message['body'],
         ],
-        'attachments' => (function() use ($message) {
+        'attachments' => (function () use ($message) {
           if (isset($message['attachments'])) {
             $attachment = reset($message['attachments']);
             return [

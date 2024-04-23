@@ -70,7 +70,7 @@ class DeleteByTransactionIdForm extends FormBase {
 
     // Get user inputs.
     $input = $form_state->getUserInput();
-    $transactionIds = $input['transactionIds'] ?? null;
+    $transactionIds = $input['transactionIds'] ?? NULL;
 
     // Build the form.
     $form['transaction_ids'] = [
@@ -84,7 +84,7 @@ class DeleteByTransactionIdForm extends FormBase {
     $form['actions']['submit_transactions'] = [
       '#type' => 'submit',
       '#value' => $this->t('Delete by transaction ID'),
-      '#attributes' => array('onclick' => 'if(!confirm("Delete entered transaction IDs?")){return false;}'),
+      '#attributes' => ['onclick' => 'if(!confirm("Delete ALL above?")){return false;}'],
     ];
 
     return $form;
@@ -104,7 +104,7 @@ class DeleteByTransactionIdForm extends FormBase {
     $transactionIds = $form_state->getValue('transaction_ids');
 
     if (!$transactionIds) {
-      $noDocumentsMessage= $this->t('No documents to delete.');
+      $noDocumentsMessage = $this->t('No documents to delete.');
       $this->messenger()->addError($noDocumentsMessage);
       return;
     }
@@ -115,7 +115,7 @@ class DeleteByTransactionIdForm extends FormBase {
     try {
       foreach ($transactionIds as $transactionId) {
         $searchParams = ['transaction_id' => $transactionId];
-        $document = $this->atvService->searchDocuments($searchParams, true);
+        $document = $this->atvService->searchDocuments($searchParams);
         $document = reset($document);
 
         if (!$document instanceof AtvDocument) {
@@ -126,7 +126,7 @@ class DeleteByTransactionIdForm extends FormBase {
       }
       $this->handleDocumentsBatchService->run($documentsToDelete);
     }
-    catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
       $this->messenger()->addError('Failed fetching applications.');
       $this->messenger()->addError($e->getMessage());
     }

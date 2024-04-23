@@ -56,13 +56,13 @@ class HandleDocumentsBatchService {
   /**
    * Class constructor.
    *
-   * @param AtvService $atvService
+   * @param \Drupal\helfi_atv\AtvService $atvService
    *   The AtvService service.
-   * @param MessengerInterface $messenger
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The MessengerInterface.
-   * @param LoggerChannelFactory $loggerFactory
+   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   The LoggerChannelFactory.
-   * @param ModuleExtensionList $moduleExtensionList
+   * @param \Drupal\Core\Extension\ModuleExtensionList $moduleExtensionList
    *   The ModuleExtensionList.
    */
   public function __construct(
@@ -150,7 +150,7 @@ class HandleDocumentsBatchService {
     foreach ($docsToDelete as $docToDelete) {
       try {
         $transactionId = $docToDelete->getTransactionId();
-        //$this->atvService->deleteDocument($docToDelete);
+        $this->atvService->deleteDocument($docToDelete);
         $context['results']['deleted_transaction_ids'][] = $transactionId;
         $context['results']['deleted']++;
       }
@@ -182,10 +182,9 @@ class HandleDocumentsBatchService {
     // If the process failed, display a message and return.
     if (!$success) {
       $errorOperation = reset($operations);
-      $message = $this->t('An error occurred while processing %errorOperation with arguments: @arguments', [
-        '%errorOperation' => $errorOperation[0],
-        '@arguments' => print_r($errorOperation[1], TRUE),
-      ]);
+      $message = $this->t('An error occurred while processing %errorOperation with arguments: @arguments',
+        ['%errorOperation' => $errorOperation[0], '@arguments' => print_r($errorOperation[1], TRUE)]
+      );
       $this->messenger->addError($message);
       return;
     }
@@ -194,11 +193,11 @@ class HandleDocumentsBatchService {
     if ($results['progress']) {
       $processMessage = $this->t(
         'Processed @count documents. Deleted documents: @deleted. Failed deletions: @failed. Elapsed time: @elapsed.', [
-        '@count' => $results['progress'],
-        '@deleted' => $results['deleted'],
-        '@failed' => $results['failed'],
-        '@elapsed' => $elapsed,
-      ]);
+          '@count' => $results['progress'],
+          '@deleted' => $results['deleted'],
+          '@failed' => $results['failed'],
+          '@elapsed' => $elapsed,
+        ]);
       $this->messenger->addMessage($processMessage);
       $this->logger->get('grants_admin_applications')->info($processMessage);
     }
@@ -207,8 +206,9 @@ class HandleDocumentsBatchService {
     if ($results['deleted_transaction_ids']) {
       $deletedDocumentsMessage = $this->t(
         'The following documents were deleted: @transactionIds.', [
-        '@transactionIds' => implode(', ', $results['deleted_transaction_ids']),
-      ]);
+          '@transactionIds' => implode(', ', $results['deleted_transaction_ids']),
+        ]
+      );
       $this->messenger->addMessage($deletedDocumentsMessage);
       $this->logger->get('grants_admin_applications')->info($deletedDocumentsMessage);
     }
@@ -217,10 +217,12 @@ class HandleDocumentsBatchService {
     if ($results['failed_transaction_ids']) {
       $failedDeletionMessage = $this->t(
         'The following documents failed to delete: @transactionIds.', [
-        '@transactionIds' => implode(', ', $results['failed_transaction_ids']),
-      ]);
+          '@transactionIds' => implode(', ', $results['failed_transaction_ids']),
+        ]
+      );
       $this->messenger->addError($failedDeletionMessage);
       $this->logger->get('grants_admin_applications')->info($failedDeletionMessage);
     }
   }
+
 }
