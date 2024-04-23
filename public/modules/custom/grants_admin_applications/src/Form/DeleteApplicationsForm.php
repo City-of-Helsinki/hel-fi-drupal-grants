@@ -64,7 +64,7 @@ class DeleteApplicationsForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): AdminApplicationsByBusinessIdForm|static {
+  public static function create(ContainerInterface $container): DeleteApplicationsForm|static {
     return new static(
       $container->get('helfi_atv.atv_service'),
       $container->get('grants_admin_applications.handle_documents_batch_service'),
