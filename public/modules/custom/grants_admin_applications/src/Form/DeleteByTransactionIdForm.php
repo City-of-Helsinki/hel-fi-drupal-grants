@@ -78,7 +78,7 @@ class DeleteByTransactionIdForm extends FormBase {
       '#title' => $this->t('Transaction IDs'),
       '#required' => FALSE,
       '#default_value' => $transactionIds ?? '',
-      '#description' => $this->t('Enter a comma-separated list of transaction IDs, e.g. 13cb60ae-269a-46da-9a43-da94b980c067'),
+      '#description' => $this->t('Enter a comma-separated list of transaction IDs, e.g. TEST-061-0000028, TEST-061-0000029'),
     ];
 
     $form['actions']['submit_transactions'] = [
