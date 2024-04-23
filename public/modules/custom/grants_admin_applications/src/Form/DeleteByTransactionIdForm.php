@@ -84,7 +84,7 @@ class DeleteByTransactionIdForm extends FormBase {
     $form['actions']['submit_transactions'] = [
       '#type' => 'submit',
       '#value' => $this->t('Delete by transaction ID'),
-      '#attributes' => ['onclick' => 'if(!confirm("Delete ALL above?")){return false;}'],
+      '#attributes' => ['onclick' => 'if(!confirm("Delete entered transaction IDs?")){return false;}'],
     ];
 
     return $form;
