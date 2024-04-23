@@ -91,6 +91,7 @@ const fillGrantsFormPage = async (
       await page.waitForLoadState('domcontentloaded');
       await page.waitForLoadState('load');
       await page.waitForLoadState('networkidle');
+
       await pageHandlers[formPageKey](page, formPageObject);
     } else {
       continue;

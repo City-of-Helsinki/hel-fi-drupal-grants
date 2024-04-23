@@ -96,7 +96,7 @@ export default defineConfig({
     },
     /* Form 29 tests. */
     {
-      name: 'forms-29-registered',
+      name: 'forms-29',
       testMatch: '/forms/registered_community_29.ts',
       dependencies: ['profile-registered_community']
     },
@@ -123,49 +123,49 @@ export default defineConfig({
     },
     /* Form 51 tests. */
     {
-      name: 'forms-51-registered',
+      name: 'forms-51',
       testMatch: '/forms/registered_community_51.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 52 tests. */
     {
-      name: 'forms-52-registered',
+      name: 'forms-52',
       testMatch: '/forms/registered_community_52.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 53 tests. */
     {
-      name: 'forms-53-registered',
+      name: 'forms-53',
       testMatch: '/forms/registered_community_53.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 54 tests. */
     {
-      name: 'forms-54-registered',
+      name: 'forms-54',
       testMatch: '/forms/registered_community_54.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 56 tests. */
     {
-      name: 'forms-56-registered',
+      name: 'forms-56',
       testMatch: '/forms/registered_community_56.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 57 tests. */
     {
-      name: 'forms-57-registered',
+      name: 'forms-57',
       testMatch: '/forms/registered_community_57.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 58 tests. */
     {
-      name: 'forms-58-registered',
+      name: 'forms-58',
       testMatch: '/forms/registered_community_58.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 60 tests. */
     {
-      name: 'forms-60-registered',
+      name: 'forms-60',
       testMatch: '/forms/registered_community_60.ts',
       dependencies: ['profile-registered_community']
     },
@@ -252,7 +252,7 @@ export default defineConfig({
     },
     /* Form 68 tests. */
     {
-      name: 'forms-68-registered',
+      name: 'forms-68',
       testMatch: '/forms/registered_community_68.ts',
       dependencies: ['profile-registered_community'],
     },
