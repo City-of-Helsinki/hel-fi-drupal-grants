@@ -5,6 +5,7 @@ namespace Drupal\Tests\grants_metadata\Kernel;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
+use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
@@ -610,14 +611,8 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
 
     $applicationData->setValue($submissionData);
     // Search attachment data.
-    $attachmentField = [];
-    foreach ($submissionData as $field) {
-      $name = $field->getName();
-      if ($name !== 'attachments') {
-        continue;
-      }
-      $attachmentField = $field;
-    }
+    $attachmentField = $this->getAttachmentField($applicationData);
+    $this->assertNotNull($attachmentField);
     // Handle attachment data.
     $definition = $attachmentField->getDataDefinition();
     $defaultValue = $definition->getSetting('defaultValue');
@@ -655,6 +650,21 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
         $this->assertEquals($shouldBeHidden, $metaData['element']['hidden']);
       }
     }
+  }
+  /**
+   * Return attachments data.
+   */
+  protected function getAttachmentField(ComplexDataInterface $applicationData) {
+    $attachmentField = null;
+    foreach ($applicationData as $field) {
+      $name = $field->getName();
+      if ($name !== 'attachments') {
+        continue;
+      }
+      $attachmentField = $field;
+      break;
+    }
+    return $attachmentField;
   }
 
 }
