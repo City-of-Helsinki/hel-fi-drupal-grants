@@ -634,7 +634,8 @@ function hdbt_subtheme_preprocess_tpr_service_channel(array &$variables): void {
 
   $current_url = Url::fromRoute('<current>');
 
-  // TPR only allows links that are 127 characters long. 102 is that minus https://avustukset.hel.fi.
+  // TPR only allows links that are 127 characters long.
+  // 102 is that minus https://avustukset.hel.fi.
   $path = substr($current_url->toString(), 0, 102);
 
   // Remove link if the path is similar to TPR link or if the webform matches.
