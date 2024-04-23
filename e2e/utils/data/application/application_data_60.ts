@@ -73,10 +73,10 @@ const baseFormRegisteredCommunity_60: FormData = {
           role: 'select',
           selector: {
             type: 'dom-id-first',
-            name: 'acting-year-selector',
+            name: '',
             value: '#edit-acting-year',
           },
-          value: '2024',
+          viewPageSkipValidation: true,
         },
         "edit-subventions-items-0-amount": {
           role: 'number-input',

@@ -1,0 +1,27 @@
+{% set content %}
+  {% for item in items %}
+    {{ item.content }}
+  {% endfor %}
+{% endset %}
+
+{% if content|render %}
+  <section class="lead-in" aria-labelledby="lead-in__label">
+    {% embed "@hdbt/misc/component.twig" with
+      {
+        component_classes: [
+        'component--lead-in',
+        'component--hardcoded'
+      ],
+      }
+    %}
+      {% block component_content %}
+
+        {{ content }}
+
+      {% endblock component_content %}
+    {% endembed %}
+    <span id="lead-in__label" class="is-hidden" {{ alternative_language ? create_attribute(({ 'lang': lang_attributes.fallback_lang, 'dir': lang_attributes.fallback_dir })) }}>
+      {{ 'Lead-in paragraph'|t({}, {'context': 'Page lead-in section explanation for screen readers'}) }}
+    </span>
+  </section>
+{% endif %}

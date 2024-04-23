@@ -19,6 +19,8 @@ It's designed to test applications across all modern web browsers by running tes
 - Filling in an application from start to finnish.
 - Verifying the content of a submitted application.
 - Filling an application with missing/wrong data and verifying the printed error messages.
+- Swapping field values on an application and verifying that the values get swapped.
+- Copying an application and verifying that its content gets copied.
 - Deleting draft applications.
 
 ### User role tests
@@ -74,7 +76,7 @@ APP_ENV="{ENTER A APP ENV}"
 # Set the disabled form variants.
 # A "form variant" is a type of form test. If you want to disable
 # everything except the "draft" test (saves a form as a draft), you can use this:
-# DISABLED_FORM_VARIANTS="success,copy,missing_values,wrong_values,wrong_email,wrong_email_2,wrong_email_3,under5000"
+# DISABLED_FORM_VARIANTS="success,copy,missing_values,swap_fields,wrong_values,wrong_email,wrong_email_2,wrong_email_3,under5000"
 DISABLED_FORM_VARIANTS="success"
 
 # Set the enabled form variants. If this is set, only variants specified here will be run.

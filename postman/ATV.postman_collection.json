@@ -1,0 +1,888 @@
+{
+	"info": {
+		"name": "ATV",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+	},
+	"item": [
+		{
+			"name": "get Profile Grants",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{atvApiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-Api-Key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "utf8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "transaction_id",
+							"value": "GRANTS-LOCAL-00000309",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{atvUrl}}/v1/documents/?type=grants_profile&business_id=2036583-2&lookfor=appenv:LOCALJ",
+					"host": [
+						"{{atvUrl}}"
+					],
+					"path": [
+						"v1",
+						"documents",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "grants_profile"
+						},
+						{
+							"key": "business_id",
+							"value": "2036583-2"
+						},
+						{
+							"key": "transaction_id",
+							"value": "GRANTS-LOCALJ-KASKOYLEIS-00002349",
+							"disabled": true
+						},
+						{
+							"key": "lookfor",
+							"value": "appenv:LOCALJ"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getByTransactionID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{atvApiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-Api-Key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "utf8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "transaction_id",
+							"value": "GRANTS-LOCAL-00000309",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{atvUrl}}/v1/documents/?transaction_id=GRANTS-LOCALT-YLEIS-00014723",
+					"host": [
+						"{{atvUrl}}"
+					],
+					"path": [
+						"v1",
+						"documents",
+						""
+					],
+					"query": [
+						{
+							"key": "transaction_id",
+							"value": "GRANTS-LOCALT-YLEIS-00014723"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDocumentByTransactinId Copy 2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{atvApiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-Api-Key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "utf8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "transaction_id",
+							"value": "GRANTS-LOCAL-00000309",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{atvTESTurl}}/v1/documents/?transaction_id=7769480-5",
+					"protocol": "https",
+					"host": [
+						"{{atvTESTurl}}"
+					],
+					"path": [
+						"v1",
+						"documents",
+						""
+					],
+					"query": [
+						{
+							"key": "transaction_id",
+							"value": "7769480-5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDocumentByMetadata",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{atvApiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-Api-Key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "utf8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"agw",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListDocuments",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{atvApiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-Api-Key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "utf8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"agw",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Searchtest",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{LOMapikey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-Api-Key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "utf8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents?lookfor=app_env:TEST,form_tool_id:HEL-TODISTUS-00000243-TEST",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"agw",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "lookfor",
+							"value": "app_env:TEST,form_tool_id:HEL-TODISTUS-00000243-TEST"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Statistics TEST",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{LOMapikey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-Api-Key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "utf8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents?lookfor=app_env:TEST,form_tool_id:HEL-TODISTUS-00000243-TEST",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"agw",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "lookfor",
+							"value": "app_env:TEST,form_tool_id:HEL-TODISTUS-00000243-TEST"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListDocuments Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"agw",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSingle",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{atvUrl}}/v1/documents/1ce20cc4-fe95-4a28-9268-d57cc9a2326c",
+					"host": [
+						"{{atvUrl}}"
+					],
+					"path": [
+						"v1",
+						"documents",
+						"1ce20cc4-fe95-4a28-9268-d57cc9a2326c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSingle Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/c60a1f0f-c65d-497c-9244-9c1e32518ceb",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"agw",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						"c60a1f0f-c65d-497c-9244-9c1e32518ceb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/c60a1f0f-c65d-497c-9244-9c1e32518ceb",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"agw",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						"c60a1f0f-c65d-497c-9244-9c1e32518ceb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSingle Copy 2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/c60a1f0f-c65d-497c-9244-9c1e32518ceb",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"agw",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						"c60a1f0f-c65d-497c-9244-9c1e32518ceb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByTypeId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/?type=grants_profile&business_id=4015026-5",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"agw",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "grants_profile"
+						},
+						{
+							"key": "business_id",
+							"value": "4015026-5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{atvApiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-Api-Key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": {\n        \"testi123\": \"tässä testisisältöä\"\n    }\n\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/c60a1f0f-c65d-497c-9244-9c1e32518ceb",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"agw",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						"c60a1f0f-c65d-497c-9244-9c1e32518ceb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDocument",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.apps.arodevtest.hel.fi/v1/documents/52fc2e27-ed79-4efe-923d-c17bbad80f37/attachments/111/",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"apps",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						"52fc2e27-ed79-4efe-923d-c17bbad80f37",
+						"attachments",
+						"111",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDocument Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.apps.arodevtest.hel.fi/v1/documents/52fc2e27-ed79-4efe-923d-c17bbad80f37/attachments/111/",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"apps",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						"52fc2e27-ed79-4efe-923d-c17bbad80f37",
+						"attachments",
+						"111",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteAttachment",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.apps.arodevtest.hel.fi/v1/documents/52fc2e27-ed79-4efe-923d-c17bbad80f37/attachments/111/",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"apps",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						"52fc2e27-ed79-4efe-923d-c17bbad80f37",
+						"attachments",
+						"111",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteAttachment Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.apps.arodevtest.hel.fi/v1/documents/52fc2e27-ed79-4efe-923d-c17bbad80f37/attachments/111/",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"apps",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						"52fc2e27-ed79-4efe-923d-c17bbad80f37",
+						"attachments",
+						"111",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteDocument",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.apps.arodevtest.hel.fi/v1/documents/{{ID-DEL}}/",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"apps",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						"{{ID-DEL}}",
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteDocument Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.apps.arodevtest.hel.fi/v1/documents/52fc2e27-ed79-4efe-923d-c17bbad80f37/attachments/111/",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"apps",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents",
+						"52fc2e27-ed79-4efe-923d-c17bbad80f37",
+						"attachments",
+						"111",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get profile",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{atvApiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-Api-Key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents?business_id=2036583-2&type=grants_profile",
+					"protocol": "https",
+					"host": [
+						"atv-api-hki-kanslia-atv-test",
+						"agw",
+						"arodevtest",
+						"hel",
+						"fi"
+					],
+					"path": [
+						"v1",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "business_id",
+							"value": "2036583-2"
+						},
+						{
+							"key": "type",
+							"value": "grants_profile"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{atvApiKey}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "X-Api-Key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "atvApiKey",
+			"value": ""
+		},
+		{
+			"key": "atvBackend",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ID to DEL",
+			"value": ""
+		}
+	]
+}

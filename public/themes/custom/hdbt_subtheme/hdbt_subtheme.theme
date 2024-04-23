@@ -85,7 +85,7 @@ function hdbt_subtheme_preprocess_menu(&$variables): void {
       // Check if url is current page where we are now. Ignore query strings.
       $current_path = explode('?', Drupal::request()->getRequestUri())[0];
       $item['currentPath'] = $current_path;
-      if ($item['url']->toString() == $current_path) {
+      if ($url->toString() == $current_path) {
         $item['is_currentPage'] = TRUE;
       }
     }
@@ -591,13 +591,6 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
  */
 function hdbt_subtheme_preprocess_block__user_login_block(&$variables, $hook): void {
   $variables['content']['user_links'] = NULL;
-}
-
-/**
- * Implements hook_preprocess_block__user_login_block().
- */
-function hdbt_subtheme_preprocess_block__askemblock(&$variables, $hook): void {
-  $variables['current_language'] = \Drupal::languageManager()->getCurrentLanguage()->getId();
 }
 
 /**

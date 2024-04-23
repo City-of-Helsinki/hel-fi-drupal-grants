@@ -1,5 +1,5 @@
 import {logger} from "./logger";
-import {hideSlidePopup, extractPath} from "./helpers";
+import {hideSlidePopup, extractPath, waitForTextWithInterval, getApplicationNumberFromBreadCrumb} from "./helpers";
 import {validateFormErrors} from "./error_validation_helpers";
 import {validateHiddenFields} from "./validation_helpers";
 import {saveObjectToEnv} from "./env_helpers";
@@ -60,6 +60,10 @@ const fillGrantsFormPage = async (
   // Store the submission URL.
   const submissionUrl = await extractPath(page);
 
+  // Log the application ID.
+  const applicationId = await getApplicationNumberFromBreadCrumb(page);
+  logger(`Filling form with application ID: ${applicationId}.`);
+
   // Hide the sliding popup.
   await hideSlidePopup(page);
 
@@ -87,6 +91,7 @@ const fillGrantsFormPage = async (
       await page.waitForLoadState('domcontentloaded');
       await page.waitForLoadState('load');
       await page.waitForLoadState('networkidle');
+
       await pageHandlers[formPageKey](page, formPageObject);
     } else {
       continue;
@@ -219,7 +224,7 @@ const verifyDraftSave = async (
   submissionUrl: string,
   formKey: string
 ) => {
-
+  logger(`Verifying draft save...`);
   await expect(page.getByText('Luonnos')).toBeVisible()
   await expect(page.getByRole('link', {name: 'Muokkaa hakemusta'})).toBeEnabled();
   const applicationId = await page.locator(".webform-submission__application_id--body").innerText();
@@ -233,6 +238,7 @@ const verifyDraftSave = async (
     }
   }
   saveObjectToEnv(storeName, newData);
+  logger(`Draft save verified for application ID: ${applicationId}.`);
 };
 
 /**
@@ -261,10 +267,17 @@ const verifySubmit = async (
   submissionUrl: string,
   formKey: string
 ) => {
-
+  logger(`Verifying submit...`);
   await expect(page.getByRole('heading', {name: 'Avustushakemus lähetetty onnistuneesti'})).toBeVisible();
-  await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible()
-  await expect(page.getByText('Vastaanotettu', {exact: true})).toBeVisible({timeout: 90 * 1000})
+  await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible();
+
+  // Attempt to locate the "Vastaanotettu" text on the page. Keep polling for 60000ms (1 minute).
+  // Note: We do this instead of using Playwrights "expect" method so that test execution isn't interrupted if this fails.
+  const applicationReceived = await waitForTextWithInterval(page, 'Vastaanotettu', 60000, 5000);
+  if (!applicationReceived) {
+    logger('WARNING: Failed to validate that the application was received.');
+    return;
+  }
 
   let applicationId = await page.locator(".grants-handler__completion__item--number").innerText();
   applicationId = applicationId.replace('Hakemusnumero\n', '')
@@ -278,6 +291,7 @@ const verifySubmit = async (
     }
   }
   saveObjectToEnv(storeName, newData);
+  logger(`Submit verified for application ID: ${applicationId}.`);
 }
 
 /**

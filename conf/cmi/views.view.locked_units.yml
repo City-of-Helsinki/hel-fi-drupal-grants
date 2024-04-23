@@ -7,7 +7,7 @@ dependencies:
     - helfi_tpr
     - user
 _core:
-  default_config_hash: ZsyMOcwmJLa4Ewb7MJ0P9xrYSMa-s5YlRrpY5VG_Kvg
+  default_config_hash: 0hlcjVvL7vdLtkyp8OVSiK8ue6rkEHayXkv5S316yTY
 id: locked_units
 label: 'Locked units'
 module: views
@@ -425,7 +425,7 @@ display:
           admin_label: ''
           plugin_id: text_custom
           empty: true
-          content: 'There is no content currently locked.'
+          content: 'There is no currently locked units.'
           tokenize: false
       sorts: {  }
       arguments: {  }

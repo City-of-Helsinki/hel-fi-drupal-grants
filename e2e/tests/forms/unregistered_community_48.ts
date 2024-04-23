@@ -8,6 +8,7 @@ import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
 import {fillFormField, fillInputField} from "../../utils/input_helpers";
 import {unRegisteredCommunityApplications as applicationData} from '../../utils/data/application_data';
+import {swapFieldValues} from "../../utils/field_swap_helpers";
 
 const profileType = 'unregistered_community';
 const formId = '48';
@@ -38,8 +39,7 @@ const formPages: PageHandlers = {
     // We need to check the presence of every item so that removed items will
     // not be filled. This is to enable testing for missing values & error handling.
     if (items['edit-acting-year']) {
-      // await fillSelectField(items['edit-acting-year'].selector, page, '');
-      await page.locator('#edit-acting-year').selectOption(items['edit-acting-year'].value ?? '');
+      await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
     }
 
     if (items['edit-subventions-items-0-amount']) {
@@ -598,7 +598,20 @@ test.describe('KUVAPROJ(48)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-    if (obj.viewPageSkipValidation || obj.testFormCopying) continue;
+    if (!obj.testFieldSwap) continue;
+    test(`Field swap: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await swapFieldValues(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
+
+  for (const [key, obj] of testDataArray) {
+    if (obj.viewPageSkipValidation || obj.testFormCopying || obj.testFieldSwap) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       await validateSubmission(

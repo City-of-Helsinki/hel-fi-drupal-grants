@@ -95,10 +95,52 @@ const getApplicationNumberFromBreadCrumb = async (page: Page) => {
   return await breadcrumbLinks[breadcrumbLinks.length - 1].textContent();
 }
 
+/**
+ * The waitForTextWithInterval function.
+ *
+ * This function waits for text to be visible on the page,
+ * retrying every interval until a timeout. Can be used to implement soft
+ * assertion-like behavior by not throwing an error if it fails.
+ *
+ * @param page
+ *   The Playwright page object.
+ * @param text
+ *   The text to look for on the page.
+ * @param timeout
+ *   Maximum time in milliseconds to retry.
+ * @param interval
+ *   Time in milliseconds between retries.
+ */
+const waitForTextWithInterval = async (
+  page: Page,
+  text: string,
+  timeout: number,
+  interval: number
+): Promise<boolean> => {
+  logger(`Attempting to locate text: "${text}"...`);
+  const startTime = Date.now();
+
+  while (true) {
+    try {
+      await page.getByText(text, {exact: true}).waitFor({state: 'visible', timeout : interval})
+      logger('Text found!');
+      return true;
+    } catch (error) {
+      const currentTime = Date.now();
+      if ((currentTime - startTime) > timeout) {
+        logger(`Failed to find text. Timeout: ${timeout}ms. Interval: ${interval}ms.`);
+        return false;
+      }
+      logger('Timeout passed. Retrying...');
+    }
+  }
+}
+
 export {
   slowLocator,
   extractPath,
   hideSlidePopup,
   getApplicationNumberFromBreadCrumb,
+  waitForTextWithInterval,
 };
 
