@@ -78,23 +78,7 @@ class DeleteApplicationsForm extends FormBase {
 
     // Get the third party options.
     $config = \Drupal::config('grants_metadata.settings');
-    $thirdPartyOpts = $config->get('third_party_options');
-
-    // Get and sort application types.
-    $applicationTypes = $thirdPartyOpts['application_types'];
-    $applicationTypeOptions = [];
-    foreach ($applicationTypes as $applicationId => $values) {
-      if (isset($values['id'])) {
-        $applicationTypeOptions[$values['id']] = sprintf('%s (%s)', $values['id'], $applicationId);
-      }
-    }
-    ksort($applicationTypeOptions);
-    $applicationTypeOptions = ['all' => $this->t('All')] + $applicationTypeOptions;
-
-    // Get and sort application statuses.
-    $applicationStatuses = $thirdPartyOpts['application_statuses'];
-    ksort($applicationStatuses);
-    $applicationStatusOptions = ['all' => $this->t('All')] + $applicationStatuses;
+    $thirdPartyOptions = $config->get('third_party_options');
 
     // Build the form.
     $form['uuid'] = [
@@ -124,14 +108,14 @@ class DeleteApplicationsForm extends FormBase {
     $form['type'] = [
       '#title' => $this->t('Application type'),
       '#type' => 'select',
-      '#options' => $applicationTypeOptions,
+      '#options' => $this->buildApplicationTypeOptions($thirdPartyOptions),
       '#default_value' => 'all',
     ];
 
     $form['status'] = [
       '#title' => $this->t('Application status'),
       '#type' => 'select',
-      '#options' => $applicationStatusOptions,
+      '#options' => $this->buildApplicationStatusOptions($thirdPartyOptions),
       '#default_value' => 'all',
     ];
 
@@ -354,7 +338,7 @@ class DeleteApplicationsForm extends FormBase {
       $documentsByType = $this->sortDocuments($documents);
 
       // Form elements by type.
-      foreach ($documentsByType as $type => $applicationsType) {
+      foreach ($documentsByType as $type => $applicationStatuses) {
         $form['appData'][$type] = [
           '#type' => 'details',
           '#title' => $this->t('Application: ' . $type),
@@ -363,7 +347,7 @@ class DeleteApplicationsForm extends FormBase {
         ];
 
         // Form elements by status.
-        foreach ($applicationsType as $status => $applications) {
+        foreach ($applicationStatuses as $status => $documents) {
           $form['appData'][$type][$status] = [
             '#type' => 'fieldset',
             '#title' => $this->t('Status: ' . $status),
@@ -375,7 +359,7 @@ class DeleteApplicationsForm extends FormBase {
           $form['appData'][$type][$status]['selectedDelete'] = [
             '#type' => 'checkboxes',
             '#title' => $this->t('Select to delete'),
-            '#options' => $this->buildSelectDeleteOptions($applications),
+            '#options' => $this->buildSelectDeleteOptions($documents),
           ];
         }
       }
@@ -477,21 +461,63 @@ class DeleteApplicationsForm extends FormBase {
    * with application IDs and transactions IDs. These
    * values are used to construct checkboxes for the form.
    *
-   * @param array $applications
+   * @param array $documents
    *   An array of ATV documents.
    *
    * @return array
    *   The constructed options.
    */
-  private function buildSelectDeleteOptions(array $applications): array {
+  private function buildSelectDeleteOptions(array $documents): array {
     $statusOptions = [];
-    /** @var \Drupal\helfi_atv\AtvDocument $application */
-    foreach ($applications as $application) {
-      $statusOptions[$application->getId()] = $application->getTransactionId();
+    /** @var \Drupal\helfi_atv\AtvDocument $document */
+    foreach ($documents as $document) {
+      $statusOptions[$document->getId()] = $document->getTransactionId();
     }
     // Sort the transaction IDs.
     asort($statusOptions);
     return $statusOptions;
+  }
+
+  /**
+   * The buildApplicationTypeOptions function.
+   *
+   * This function constructs the values for the application
+   * type dropdown.
+   *
+   * @param array $thirdPartyOptions
+   *   An array of third party settings.
+   *
+   * @return array
+   *   An array of application type options.
+   */
+  private function buildApplicationTypeOptions(array $thirdPartyOptions): array {
+    $applicationTypes = $thirdPartyOptions['application_types'];
+    $applicationTypeOptions = [];
+    foreach ($applicationTypes as $applicationId => $values) {
+      if (isset($values['id'])) {
+        $applicationTypeOptions[$values['id']] = sprintf('%s (%s)', $values['id'], $applicationId);
+      }
+    }
+    ksort($applicationTypeOptions);
+    return ['all' => $this->t('All')] + $applicationTypeOptions;
+  }
+
+  /**
+   * The buildApplicationStatusOptions function.
+   *
+   * This function constructs the values for the application
+   * status dropdown.
+   *
+   * @param array $thirdPartyOptions
+   *   An array of third party settings.
+   *
+   * @return array
+   *   An array of application status options.
+   */
+  private function buildApplicationStatusOptions(array $thirdPartyOptions): array {
+    $applicationStatuses = $thirdPartyOptions['application_statuses'];
+    ksort($applicationStatuses);
+    return ['all' => $this->t('All')] + $applicationStatuses;
   }
 
 }

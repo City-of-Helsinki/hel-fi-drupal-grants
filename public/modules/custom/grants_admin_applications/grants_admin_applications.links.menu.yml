@@ -13,11 +13,11 @@ grants_admin_application.delete_applications:
   route_name: grants_admin_applications.delete_applications
   parent: grants_admin_applications.submitted_applications_status
   description: 'Delete testing applications.'
-  weight: -1
+  weight: -2
 grants_admin_application.delete_applications_by_transaction_id:
   title: Delete testing applications by transaction ID
   route_name: grants_admin_applications.delete_applications_by_transaction_id
-  parent: grants_admin_application.delete_applications
+  parent: grants_admin_applications.submitted_applications_status
   description: 'Delete testing applications by transaction ID.'
-  weight: -2
+  weight: -1
 

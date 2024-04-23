@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_admin_applications\Form;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_admin_applications\Service\HandleDocumentsBatchService;
@@ -12,8 +13,6 @@ use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use function PHPUnit\Framework\isInstanceOf;
 
 /**
  * Provides a grants_admin_applications form.
@@ -137,7 +136,8 @@ class DeleteByTransactionIdForm extends FormBase {
    * The parseTransactionIds function.
    *
    * This function parses the passed in string of transaction IDs
-   * to an array of transaction IDs.
+   * to an array of transaction IDs. The string is also cleaned
+   * of extra dots, spaces and html characters.
    *
    * @param string $transactionIds
    *   The passed in string of transaction IDs.
@@ -147,8 +147,12 @@ class DeleteByTransactionIdForm extends FormBase {
    */
   private function parseTransactionIds(string $transactionIds): array {
     $transactionIds = str_replace(' ', '', $transactionIds);
+    $transactionIds = str_replace('.', '', $transactionIds);
     $transactionIds = explode(',', $transactionIds);
     $transactionIds = array_values($transactionIds);
+    $transactionIds = array_map(function ($id) {
+      return Html::escape($id);
+    }, $transactionIds);
     return array_unique($transactionIds);
   }
 
