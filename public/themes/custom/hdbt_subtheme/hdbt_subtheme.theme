@@ -562,6 +562,7 @@ function hdbt_subtheme_preprocess_html(&$variables): void {
 function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
   if ($form_id == 'openid_connect_login_form') {
     $form['openid_connect_client_tunnistamo_login']['#value'] = t('Log in');
+    $form['openid_connect_client_tunnistamo_login']['#attributes']['role'] = "link";
   }
 
   // Attach the restricted-datepicker library to the various forms.
