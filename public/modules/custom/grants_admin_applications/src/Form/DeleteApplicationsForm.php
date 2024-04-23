@@ -55,7 +55,8 @@ class DeleteApplicationsForm extends FormBase {
   public function __construct(
     AtvService $atvService,
     HandleDocumentsBatchService $handleDocumentsBatchService,
-    LoggerChannelFactory $loggerFactory) {
+    LoggerChannelFactory $loggerFactory
+  ) {
     $this->atvService = $atvService;
     $this->handleDocumentsBatchService = $handleDocumentsBatchService;
     $this->logger = $loggerFactory;
@@ -159,7 +160,10 @@ class DeleteApplicationsForm extends FormBase {
 
     $form['appData'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Documents in ATV / @appEnv: @id', ['@id' => $uuid, '@appEnv' => $appEnv]),
+      '#title' => $this->t('Documents in ATV / @appEnv: @id', [
+        '@id' => $uuid,
+        '@appEnv' => $appEnv,
+      ]),
       '#collapsible' => TRUE,
       '#collapsed' => FALSE,
       '#prefix' => '<div id="profile-data">',
@@ -256,13 +260,12 @@ class DeleteApplicationsForm extends FormBase {
    */
   private function filterBySelection(array $documents, array $selectOptions): array {
     // Filter and collect applications to delete (checked checkboxes).
-    $selectedToDelete = array_keys(array_filter($selectOptions, function ($value) {
+    $selectedToDelete = array_keys(array_filter($selectOptions, function($value) {
       return $value;
     }));
 
     // Get the documents to delete based on the selections.
-    return array_filter($documents, function (AtvDocument $document) use ($selectedToDelete, $documents) {
-
+    return array_filter($documents, function(AtvDocument $document) use ($selectedToDelete, $documents) {
       // Check if the document is selected for deletion.
       if (!in_array($document->getId(), $selectedToDelete)) {
         return FALSE;
@@ -277,7 +280,8 @@ class DeleteApplicationsForm extends FormBase {
           ]
         );
         $this->messenger()->addWarning($failedDeletionMessage);
-        $this->logger->get('grants_admin_applications')->notice($failedDeletionMessage);
+        $this->logger->get('grants_admin_applications')
+          ->notice($failedDeletionMessage);
         return FALSE;
       }
 
@@ -305,17 +309,20 @@ class DeleteApplicationsForm extends FormBase {
         $documentsToDelete[] = $document;
         continue;
       }
-      $documentsToKeep[] = $document->getTransactionId();
+      if ($document->getType() !== 'grants_profile') {
+        $documentsToKeep[] = $document->getTransactionId();
+      }
     }
 
     if ($documentsToKeep) {
       $failedDeletionMessage = $this->t(
-        'The following documents cannot be deleted since they are NOT marked as DRAFT. Deleted from Avus2 first: @tranIds.', [
+        'The following documents cannot be deleted since they are NOT marked as DRAFT. Delete them from Avus2 first: @tranIds.', [
           '@tranIds' => implode(', ', $documentsToKeep),
         ]
       );
       $this->messenger()->addWarning($failedDeletionMessage);
-      $this->logger->get('grants_admin_applications')->notice($failedDeletionMessage);
+      $this->logger->get('grants_admin_applications')
+        ->notice($failedDeletionMessage);
     }
 
     $this->handleDocumentsBatchService->run($documentsToDelete);
@@ -349,7 +356,8 @@ class DeleteApplicationsForm extends FormBase {
     mixed $type,
     mixed $status,
     FormStateInterface $form_state,
-    array &$form): void {
+    array &$form
+  ): void {
     try {
       $searchParams = $this->assembleSearchParams($uuid, $businessId, $appEnv, $type, $status);
       $documents = $this->atvService->searchDocuments($searchParams);
@@ -389,7 +397,7 @@ class DeleteApplicationsForm extends FormBase {
         }
       }
     }
-    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
+    catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
       $this->messenger()->addError('Failed fetching applications.');
       $this->messenger()->addError($e->getMessage());
     }
@@ -424,7 +432,7 @@ class DeleteApplicationsForm extends FormBase {
       'lookfor' => $appEnv ? "appenv:$appEnv" : NULL,
       'type' => ($type && $type !== 'all') ? $type : NULL,
       'status' => ($status && $status !== 'all') ? $status : NULL,
-    ], function ($value) {
+    ], function($value) {
       return !is_null($value);
     });
   }
@@ -442,7 +450,7 @@ class DeleteApplicationsForm extends FormBase {
    */
   private function handleNoDocumentsFound(array &$form, array $searchParams): void {
     $formattedParams = implode(', ', array_map(
-      fn ($key, $value) => "$key: $value",
+      fn($key, $value) => "$key: $value",
       array_keys($searchParams),
       array_values($searchParams)
     ));
