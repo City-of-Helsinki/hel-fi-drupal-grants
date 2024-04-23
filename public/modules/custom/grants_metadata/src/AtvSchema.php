@@ -395,7 +395,7 @@ class AtvSchema {
       $itemPropertyDefinitions = NULL;
       // Check if we have child definitions, ie itemDefinitions.
       if (method_exists($definition, 'getItemDefinition')) {
-        /** @var \Drupal\Core\TypedData\ComplexDataDefinitionBase $id */
+        /** @var \Drupal\Core\TypedData\ComplexDataDefinitionBase $itemDefinition */
         $itemDefinition = $definition->getItemDefinition();
         if ($itemDefinition !== NULL) {
           $itemPropertyDefinitions = $itemDefinition->getPropertyDefinitions();
@@ -729,7 +729,7 @@ class AtvSchema {
   /**
    * Extracts data from ATV document compensation field.
    *
-   * @param Drupal\Core\TypedData\DataDefinitionInterface $definition
+   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
    *   Field definition.
    * @param array $content
    *   ATV data.

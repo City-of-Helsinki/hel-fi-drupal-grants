@@ -13,7 +13,10 @@ use Drupal\node\NodeInterface;
  */
 function grants_menu_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
   if ($form_id === 'node_service_edit_form' || $form_id === 'node_service_form') {
-    $node = $form_state->getFormObject()->getEntity();
+    /** @var Drupal\node\NodeForm $formObject */
+    $formObject = $form_state->getFormObject();
+    \Drupal::messenger()->addError(get_class($formObject).' : '.$form_id);
+    $node = $formObject->getEntity();
     if ($node instanceof NodeInterface && $node->getType() === 'service') {
       if (isset($form['actions']['submit']['#submit'])) {
         $form['actions']['submit']['#submit'][] = '_grants_menu_service_node_form_submit';

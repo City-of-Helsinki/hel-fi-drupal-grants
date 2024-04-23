@@ -155,7 +155,7 @@ class ForceMenuLinkService {
       $this->logMessage('CREATED', $node, $menuLink);
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException | EntityStorageException $e) {
-      $this->logMessage('CREATE_FAILED', $node, $menuLink, $e);
+      $this->logMessage('CREATE_FAILED', $node, $menuLink ?? 'no $menuLink defined', $e);
     }
   }
 

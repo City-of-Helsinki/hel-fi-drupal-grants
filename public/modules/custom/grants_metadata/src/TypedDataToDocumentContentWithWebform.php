@@ -155,9 +155,9 @@ class TypedDataToDocumentContentWithWebform {
           }
         }
 
-        $page = null;
-        $section = null;
-        $element = null;
+        $page = NULL;
+        $section = NULL;
+        $element = NULL;
 
         // Special case for attachment fields.
         if (self::isAttachmentField($propertyName)) {
