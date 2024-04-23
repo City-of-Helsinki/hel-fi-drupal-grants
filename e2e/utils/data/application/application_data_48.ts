@@ -77,7 +77,13 @@ const baseForm_48: FormData = {
     "2_avustustiedot": {
       items: {
         "edit-acting-year": {
-          value: '2024',
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: '',
+            value: '#edit-acting-year',
+          },
+          viewPageSkipValidation: true,
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',

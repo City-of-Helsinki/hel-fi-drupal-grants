@@ -1,5 +1,5 @@
 import {logger} from "./logger";
-import {hideSlidePopup, extractPath, waitForTextWithInterval} from "./helpers";
+import {hideSlidePopup, extractPath, waitForTextWithInterval, getApplicationNumberFromBreadCrumb} from "./helpers";
 import {validateFormErrors} from "./error_validation_helpers";
 import {validateHiddenFields} from "./validation_helpers";
 import {saveObjectToEnv} from "./env_helpers";
@@ -60,6 +60,10 @@ const fillGrantsFormPage = async (
   // Store the submission URL.
   const submissionUrl = await extractPath(page);
 
+  // Log the application ID.
+  const applicationId = await getApplicationNumberFromBreadCrumb(page);
+  logger(`Filling form with application ID: ${applicationId}.`);
+
   // Hide the sliding popup.
   await hideSlidePopup(page);
 
@@ -87,6 +91,7 @@ const fillGrantsFormPage = async (
       await page.waitForLoadState('domcontentloaded');
       await page.waitForLoadState('load');
       await page.waitForLoadState('networkidle');
+
       await pageHandlers[formPageKey](page, formPageObject);
     } else {
       continue;
@@ -219,7 +224,7 @@ const verifyDraftSave = async (
   submissionUrl: string,
   formKey: string
 ) => {
-
+  logger(`Verifying draft save...`);
   await expect(page.getByText('Luonnos')).toBeVisible()
   await expect(page.getByRole('link', {name: 'Muokkaa hakemusta'})).toBeEnabled();
   const applicationId = await page.locator(".webform-submission__application_id--body").innerText();
@@ -233,6 +238,7 @@ const verifyDraftSave = async (
     }
   }
   saveObjectToEnv(storeName, newData);
+  logger(`Draft save verified for application ID: ${applicationId}.`);
 };
 
 /**
@@ -261,7 +267,7 @@ const verifySubmit = async (
   submissionUrl: string,
   formKey: string
 ) => {
-
+  logger(`Verifying submit...`);
   await expect(page.getByRole('heading', {name: 'Avustushakemus lähetetty onnistuneesti'})).toBeVisible();
   await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible();
 
@@ -285,6 +291,7 @@ const verifySubmit = async (
     }
   }
   saveObjectToEnv(storeName, newData);
+  logger(`Submit verified for application ID: ${applicationId}.`);
 }
 
 /**

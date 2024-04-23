@@ -292,37 +292,37 @@ elements: |-
       '#title': 'Edellisen avustuksen käyttöselvitys'
       yhdistyksen_kuluvan_vuoden_toiminta_avustus:
         '#type': textfield
-        '#size': 15
-        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Yhdistyksen kuluvan vuoden toiminta-avustus'
-        '#help': 'Kirjoita t&auml;h&auml;n yhdistyksen kuluvalle vuodelle my&ouml;nnetyn toiminta-avustuksen m&auml;&auml;r&auml;'
+        '#help': '<p>Kirjoita tähän yhdistyksen kuluvalle vuodelle myönnetyn toiminta-avustuksen määrä</p>'
+        '#size': 15
+        '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':
           class:
             - webform--medium
       selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta:
         '#type': textfield
-        '#size': 15
-        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Selvitys kuluvan vuoden toiminta-avustuksen käytöstä'
-        '#help': 'Ilmoita t&auml;ss&auml; euroina yhteens&auml;, kuinka paljon yhdistys on k&auml;ytt&auml;nyt ja k&auml;ytt&auml;&auml; kuluvan vuoden toiminta-avustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on viel&auml; kesken.&nbsp;&nbsp;'
+        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden toiminta-avustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.&nbsp;&nbsp;</p>'
+        '#size': 15
+        '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':
           class:
             - webform--medium
       yhdistyksen_kuluvan_vuoden_palkkausavustus_:
         '#type': textfield
-        '#size': 15
-        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Yhdistyksen kuluvan vuoden palkkausavustus '
-        '#help': 'Kirjoita t&auml;h&auml;n yhdistyksen kuluvalle vuodelle my&ouml;nnetyn palkkausavustuksen m&auml;&auml;r&auml;'
+        '#help': '<p>Kirjoita tähän yhdistyksen kuluvalle vuodelle myönnetyn palkkausavustuksen määrä</p>'
+        '#size': 15
+        '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':
           class:
             - webform--medium
       selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta:
         '#type': textfield
-        '#size': 15
-        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Selvitys kuluvan vuoden palkkausavustuksen käytöstä'
-        '#help': 'Ilmoita t&auml;ss&auml; euroina yhteens&auml;, kuinka paljon yhdistys on k&auml;ytt&auml;nyt ja k&auml;ytt&auml;&auml; kuluvan vuoden palkkausavustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on viel&auml; kesken.&nbsp;&nbsp;'
+        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden palkkausavustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.&nbsp;&nbsp;</p>'
+        '#size': 15
+        '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':
           class:
             - webform--medium
