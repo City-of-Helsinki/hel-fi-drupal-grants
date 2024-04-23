@@ -4,6 +4,7 @@ namespace Drupal\grants_admin_applications\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\grants_admin_applications\Service\HandleDocumentsBatchService;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\helfi_atv\AtvDocument;
@@ -35,11 +36,29 @@ class DeleteApplicationsForm extends FormBase {
   protected HandleDocumentsBatchService $handleDocumentsBatchService;
 
   /**
-   * Constructs a new GrantsProfileForm object.
+   * Logger.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelFactory
    */
-  public function __construct(AtvService $atvService, HandleDocumentsBatchService $handleDocumentsBatchService) {
+  protected LoggerChannelFactory $logger;
+
+  /**
+   * Class constructor.
+   *
+   * @param AtvService $atvService
+   *   The AtvService service.
+   * @param HandleDocumentsBatchService $handleDocumentsBatchService
+   *   The HandleDocumentsBatchService.
+   * @param LoggerChannelFactory $loggerFactory
+   *   The LoggerChannelFactory.
+   */
+  public function __construct(
+    AtvService $atvService,
+    HandleDocumentsBatchService $handleDocumentsBatchService,
+    LoggerChannelFactory $loggerFactory) {
     $this->atvService = $atvService;
     $this->handleDocumentsBatchService = $handleDocumentsBatchService;
+    $this->logger = $loggerFactory;
   }
 
   /**
@@ -49,6 +68,7 @@ class DeleteApplicationsForm extends FormBase {
     return new static(
       $container->get('helfi_atv.atv_service'),
       $container->get('grants_admin_applications.handle_documents_batch_service'),
+      $container->get('logger.factory'),
     );
   }
 
@@ -255,6 +275,7 @@ class DeleteApplicationsForm extends FormBase {
           '@tranId' => $document->getTransactionId(),
         ]);
         $this->messenger()->addWarning($failedDeletionMessage);
+        $this->logger->get('grants_admin_applications')->notice($failedDeletionMessage);
         return FALSE;
       }
 
@@ -291,6 +312,7 @@ class DeleteApplicationsForm extends FormBase {
         '@tranIds' => implode(', ', $documentsToKeep),
       ]);
       $this->messenger()->addWarning($failedDeletionMessage);
+      $this->logger->get('grants_admin_applications')->notice($failedDeletionMessage);
     }
 
     $this->handleDocumentsBatchService->run($documentsToDelete);
