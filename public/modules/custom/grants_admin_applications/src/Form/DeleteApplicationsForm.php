@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_admin_applications\Form;
 
+use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannelFactory;
@@ -42,6 +43,13 @@ class DeleteApplicationsForm extends FormBase {
   protected LoggerChannelFactory $logger;
 
   /**
+   * Configuration Factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactory
+   */
+  protected $configFactory;
+
+  /**
    * Class constructor.
    *
    * @param \Drupal\helfi_atv\AtvService $atvService
@@ -50,15 +58,19 @@ class DeleteApplicationsForm extends FormBase {
    *   The HandleDocumentsBatchService.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   The LoggerChannelFactory.
+   * @param \Drupal\Core\Config\ConfigFactory $configFactory
+   *   The config factory.
    */
   public function __construct(
     AtvService $atvService,
     HandleDocumentsBatchService $handleDocumentsBatchService,
-    LoggerChannelFactory $loggerFactory
+    LoggerChannelFactory $loggerFactory,
+    ConfigFactory $configFactory
   ) {
     $this->atvService = $atvService;
     $this->handleDocumentsBatchService = $handleDocumentsBatchService;
     $this->logger = $loggerFactory;
+    $this->configFactory = $configFactory;
   }
 
   /**
@@ -69,6 +81,7 @@ class DeleteApplicationsForm extends FormBase {
       $container->get('helfi_atv.atv_service'),
       $container->get('grants_admin_applications.handle_documents_batch_service'),
       $container->get('logger.factory'),
+      $container->get('config.factory')
     );
   }
 
@@ -97,7 +110,7 @@ class DeleteApplicationsForm extends FormBase {
     $appEnv = $input['appEnv'] ?? NULL;
 
     // Get the third party options.
-    $config = \Drupal::config('grants_metadata.settings');
+    $config = $this->configFactory->get('grants_metadata.settings');
     $thirdPartyOptions = $config->get('third_party_options');
 
     // Build the form.
@@ -262,12 +275,12 @@ class DeleteApplicationsForm extends FormBase {
    */
   private function filterBySelection(array $documents, array $selectOptions): array {
     // Filter and collect applications to delete (checked checkboxes).
-    $selectedToDelete = array_keys(array_filter($selectOptions, function($value) {
+    $selectedToDelete = array_keys(array_filter($selectOptions, function ($value) {
       return $value;
     }));
 
     // Get the documents to delete based on the selections.
-    return array_filter($documents, function(AtvDocument $document) use ($selectedToDelete, $documents) {
+    return array_filter($documents, function (AtvDocument $document) use ($selectedToDelete, $documents) {
       // Check if the document is selected for deletion.
       if (!in_array($document->getId(), $selectedToDelete)) {
         return FALSE;
@@ -399,7 +412,7 @@ class DeleteApplicationsForm extends FormBase {
         }
       }
     }
-    catch (AtvDocumentNotFoundException|AtvFailedToConnectException|GuzzleException $e) {
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
       $this->messenger()->addError('Failed fetching applications.');
       $this->messenger()->addError($e->getMessage());
     }
@@ -434,7 +447,7 @@ class DeleteApplicationsForm extends FormBase {
       'lookfor' => $appEnv ? "appenv:$appEnv" : NULL,
       'type' => ($type && $type !== 'all') ? $type : NULL,
       'status' => ($status && $status !== 'all') ? $status : NULL,
-    ], function($value) {
+    ], function ($value) {
       return !is_null($value);
     });
   }
