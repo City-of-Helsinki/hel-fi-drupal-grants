@@ -225,8 +225,9 @@ const verifyDraftSave = async (
   formKey: string
 ) => {
   logger(`Verifying draft save...`);
-  await expect(page.getByText('Luonnos')).toBeVisible()
-  await expect(page.getByRole('link', {name: 'Muokkaa hakemusta'})).toBeEnabled();
+  await page.waitForURL('**/katso');
+  await expect(await page.getByText('Luonnos')).toBeVisible()
+  await expect(await page.getByRole('link', {name: 'Muokkaa hakemusta'})).toBeEnabled();
   const applicationId = await page.locator(".webform-submission__application_id--body").innerText();
 
   const storeName = `${profileType}_${formId}`;
@@ -268,8 +269,9 @@ const verifySubmit = async (
   formKey: string
 ) => {
   logger(`Verifying submit...`);
-  await expect(page.getByRole('heading', {name: 'Avustushakemus lähetetty onnistuneesti'})).toBeVisible();
-  await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible();
+  await page.waitForURL('**/completion');
+  await expect(await page.getByRole('heading', {name: 'Avustushakemus lähetetty onnistuneesti'})).toBeVisible();
+  await expect(await page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible();
 
   // Attempt to locate the "Vastaanotettu" text on the page. Keep polling for 60000ms (1 minute).
   // Note: We do this instead of using Playwrights "expect" method so that test execution isn't interrupted if this fails.
