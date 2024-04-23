@@ -8,6 +8,7 @@ use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_metadata\AtvSchema;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -65,10 +66,13 @@ class EventsService {
     'HANDLER_ATT_OK' => 'HANDLER_ATT_OK',
     'HANDLER_ATT_DELETE' => 'HANDLER_ATT_DELETE',
     'HANDLER_RESEND_APP' => 'HANDLER_RESEND_APP',
+    'HANDLER_APP_COPIED' => 'HANDLER_APP_COPIED',
     'INTEGRATION_INFO_ATT_OK' => 'INTEGRATION_INFO_ATT_OK',
     'INTEGRATION_INFO_APP_OK' => 'INTEGRATION_INFO_APP_OK',
     'EVENT_INFO' => 'EVENT_INFO',
     'HANDLER_ATT_DELETED' => 'HANDLER_ATT_DELETED',
+    'INTEGRATION_ERROR_AVUS2' => 'INTEGRATION_ERROR_AVUS2',
+    'INTEGRATION_ERROR_ATV_ATT' => 'INTEGRATION_ERROR_ATV_ATT',
   ];
 
   /**
@@ -141,7 +145,7 @@ class EventsService {
 
     $eventDataJson = Json::encode($eventData);
 
-    if ($this->debug == TRUE) {
+    if (TRUE === $this->debug) {
       $this->logger->debug(
         'Event ID: %eventId, JSON:  %json',
         [
@@ -164,6 +168,9 @@ class EventsService {
 
     }
     catch (\Exception $e) {
+      throw new EventException($e->getMessage());
+    }
+    catch (GuzzleException $e) {
       throw new EventException($e->getMessage());
     }
 
