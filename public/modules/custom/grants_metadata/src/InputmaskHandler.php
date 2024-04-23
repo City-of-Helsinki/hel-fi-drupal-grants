@@ -40,6 +40,11 @@ class InputmaskHandler {
         ',',
         ' '
       );
+
+      if (isset($inputMask['suffix']) && !empty($inputMask['suffix'])) {
+        $retval = $retval . $inputMask['suffix'];
+      }
+
     }
 
     return $retval;
