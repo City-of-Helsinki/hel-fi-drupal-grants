@@ -99,8 +99,10 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
         'class' => ['link--switch-role'],
       ],
     ]);
-
-    $asiointiLink = Link::createFromRoute($companyName, 'grants_profile.show');
+    $asiointiLink = '';
+    if ($companyName) {
+      $asiointiLink = Link::createFromRoute($companyName, 'grants_profile.show');
+    }
 
     $build = [
       '#theme' => 'grants_oma_asiointi_asiointirooli_block',
