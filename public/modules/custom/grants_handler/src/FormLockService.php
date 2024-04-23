@@ -21,7 +21,7 @@ class FormLockService {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Drupal\Core\Logger\LoggerChannelFactory|LoggerChannelInterface|LoggerChannel
    */
   protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
 

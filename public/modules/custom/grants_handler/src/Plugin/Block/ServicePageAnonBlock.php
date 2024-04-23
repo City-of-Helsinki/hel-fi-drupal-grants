@@ -26,6 +26,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("Service Page Anon Block"),
  *   category = @Translation("Custom")
  * )
+ *
+ * @phpstan-consistent-constructor
  */
 class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginInterface {
 

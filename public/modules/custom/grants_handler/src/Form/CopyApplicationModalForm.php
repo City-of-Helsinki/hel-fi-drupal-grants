@@ -16,6 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a Grants Profile form.
+ *
+ * @phpstan-consistent-constructor
  */
 class CopyApplicationModalForm extends FormBase {
 

@@ -32,12 +32,14 @@ class ApplicationTimeoutMessageBlock extends BlockBase {
   public function build(): array {
 
     /** @var \Drupal\webform\Entity\WebformSubmission $submission */
-    if (!$submission = $this->getContextValue('webform_submission')) {
+    $submission = $this->getContextValue('webform_submission');
+    if (!$submission) {
       return [];
     }
 
     /** @var \Drupal\webform\Entity\Webform $webform */
-    if (!$webform = $submission->getWebform()) {
+    $webform = $submission->getWebform();
+    if (!$webform) {
       return [];
     }
 

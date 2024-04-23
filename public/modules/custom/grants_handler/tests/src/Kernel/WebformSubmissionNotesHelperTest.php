@@ -18,7 +18,7 @@ class WebformSubmissionNotesHelperTest extends KernelTestBase {
   /**
    * Modules to enable.
    *
-   * @var array
+   * @var array<string>
    */
   protected static $modules = ['system', 'webform', 'user', 'field'];
 
@@ -51,7 +51,8 @@ class WebformSubmissionNotesHelperTest extends KernelTestBase {
       'data' => ['name' => 'John Smith'],
     ];
     /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
-    return WebformSubmission::create($values);
+    $webform_submission = WebformSubmission::create($values);
+    return $webform_submission;
   }
 
   /**
