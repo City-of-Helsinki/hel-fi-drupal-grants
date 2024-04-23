@@ -8,6 +8,7 @@ use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_metadata\AtvSchema;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -141,7 +142,7 @@ class EventsService {
 
     $eventDataJson = Json::encode($eventData);
 
-    if ($this->debug == TRUE) {
+    if (TRUE === $this->debug) {
       $this->logger->debug(
         'Event ID: %eventId, JSON:  %json',
         [
@@ -164,6 +165,9 @@ class EventsService {
 
     }
     catch (\Exception $e) {
+      throw new EventException($e->getMessage());
+    }
+    catch (GuzzleException $e) {
       throw new EventException($e->getMessage());
     }
 

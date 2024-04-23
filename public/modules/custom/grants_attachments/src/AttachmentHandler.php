@@ -45,8 +45,6 @@ class AttachmentHandler {
    * Field names for attachments.
    *
    * @var string[]
-   *
-   * @todo get field names from form where field type is attachment.
    */
   protected static array $attachmentFieldNames = [];
 
