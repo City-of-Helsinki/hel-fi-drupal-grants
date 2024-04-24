@@ -7,7 +7,7 @@
         <div class="hds-notification__content">
           <div class="hds-notification__label" role="heading" aria-level="2">
             <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
-            <span>{{ "New message"|t }}</span>
+            <span>{{ "New message"|t({}, {'context': 'grants_oma_asiointi'}) }}</span>
           </div>
           {% for msg in unread %}
             <div class="hds-notification__body">
