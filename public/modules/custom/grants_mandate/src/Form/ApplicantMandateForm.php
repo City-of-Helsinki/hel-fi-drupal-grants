@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
+use Drupal\grants_mandate\GrantsMandateRedirectService;
 use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -39,16 +40,25 @@ class ApplicantMandateForm extends FormBase {
   protected GrantsMandateService $grantsMandateService;
 
   /**
+   * The redirect service.
+   *
+   * @var \Drupal\grants_mandate\GrantsMandateRedirectService
+   */
+  protected $redirectService;
+
+  /**
    * Constructs a new ModalAddressForm object.
    */
   public function __construct(
     GrantsProfileService $grantsProfileService,
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-    GrantsMandateService $grantsMandateService
+    GrantsMandateService $grantsMandateService,
+    GrantsMandateRedirectService $redirectService,
   ) {
     $this->grantsProfileService = $grantsProfileService;
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
     $this->grantsMandateService = $grantsMandateService;
+    $this->redirectService = $redirectService;
   }
 
   /**
@@ -58,7 +68,8 @@ class ApplicantMandateForm extends FormBase {
     return new static(
       $container->get('grants_profile.service'),
       $container->get('helfi_helsinki_profiili.userdata'),
-      $container->get('grants_mandate.service')
+      $container->get('grants_mandate.service'),
+      $container->get('grants_mandate_redirect.service'),
     );
   }
 
@@ -263,7 +274,8 @@ class ApplicantMandateForm extends FormBase {
 
         // Redirect user to grants profile page.
         $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
-        $redirect = new TrustedRedirectResponse($redirectUrl->toString());
+        $defaultRedirect = new TrustedRedirectResponse($redirectUrl->toString());
+        $redirect = $this->redirectService->getRedirect($defaultRedirect);
         $form_state->setResponse($redirect);
 
         break;
@@ -271,7 +283,8 @@ class ApplicantMandateForm extends FormBase {
       default:
         $mandateMode = 'ypa';
         $redirectUrl = Url::fromUri($this->grantsMandateService->getUserMandateRedirectUrl($mandateMode));
-        $redirect = new TrustedRedirectResponse($redirectUrl->toString());
+        $defaultRedirect = new TrustedRedirectResponse($redirectUrl->toString());
+        $redirect = $this->redirectService->getRedirect($defaultRedirect);
         $form_state->setResponse($redirect);
 
         break;

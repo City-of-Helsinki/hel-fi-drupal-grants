@@ -8,6 +8,11 @@ services:
         '@request_stack',
         '@grants_profile.service',
     ]
+  grants_mandate_redirect.service:
+    class: Drupal\grants_mandate\GrantsMandateRedirectService
+    arguments: [
+        '@request_stack',
+    ]
   grants_mandate.handle_mandate_errors:
     class: Drupal\grants_mandate\EventSubscriber\GrantsMandateExceptionSubscriber
     arguments: [ '@messenger','@logger.factory', '@helfi_audit_log.audit_log' ]

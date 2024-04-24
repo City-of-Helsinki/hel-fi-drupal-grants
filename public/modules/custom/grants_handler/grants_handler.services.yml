@@ -94,7 +94,10 @@ services:
 
   grants_handler.event_subscriber:
     class: Drupal\grants_handler\EventSubscriber\CompanySelectExceptionSubscriber
-    arguments: ['@messenger']
+    arguments: [
+        '@messenger',
+        '@grants_mandate_redirect.service'
+     ]
     tags:
       - { name: event_subscriber }
 
