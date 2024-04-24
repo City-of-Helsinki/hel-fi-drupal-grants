@@ -108,7 +108,12 @@ class ApplicantMandateForm extends FormBase {
     ]);
 
     $form['info'] = [
-      '#markup' => '<p>' . $this->t('Before proceeding to the grant application, you should choose an applicant role. You can continue applying as an individual or switch to applying on behalf of the community. When you choose to apply on behalf of a registered community, you will be transferred to Suomi.fi business authorization.', [], $tOpts) . '</p>',
+      '#markup' => '<p>' .
+      $this->t('Before proceeding to the grant application, you should
+         choose an applicant role. You can continue applying as an individual
+          or switch to applying on behalf of the community. When you choose to
+           apply on behalf of a registered community, you will be transferred
+            to Suomi.fi business authorization.', [], $tOpts) . '</p>',
     ];
     $form['actions'] = [
       '#type' => 'actions',
@@ -123,7 +128,9 @@ class ApplicantMandateForm extends FormBase {
       '#theme' => 'select_applicant_role',
       '#icon' => 'company',
       '#role' => $this->t('Registered community', [], $tOpts),
-      '#role_description' => $this->t('Registered community is, for example, a company, non-profit organization, organization or association', [], $tOpts),
+      '#role_description' => $this->t('Registered community is,
+       for example, a company, non-profit organization,
+        organization or association', [], $tOpts),
     ];
     $form['actions']['registered_community']['submit'] = [
       '#type' => 'submit',
@@ -196,7 +203,7 @@ class ApplicantMandateForm extends FormBase {
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    * @throws \Drupal\grants_mandate\GrantsMandateException
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     $tOpts = ['context' => 'grants_mandate'];
 
     $triggeringElement = $form_state->getTriggeringElement();
@@ -211,52 +218,7 @@ class ApplicantMandateForm extends FormBase {
     switch ($selectedType) {
       case 'unregistered_community':
 
-        $storage = $form_state->getStorage();
-        $userCommunities = $storage['userCommunities'];
-
-        $selectedCommunity = $form_state->getValue('unregistered_community_selection');
-
-        if ($selectedCommunity == 'new') {
-          $selectedProfileData['identifier'] = Uuid::uuid4()->toString();
-          $selectedProfileData['name'] = $this->t('New Unregistered Community or group', [], $tOpts)
-            ->render();
-          $selectedProfileData['complete'] = FALSE;
-
-          // Redirect user to grants profile page.
-          $redirectUrl = Url::fromRoute('grants_profile.edit');
-
-          $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
-
-        }
-        else {
-
-          $selectedCommunityObject = array_filter(
-            $userCommunities,
-            function ($item) use ($selectedCommunity) {
-              $meta = $item->getMetadata();
-              if ($meta['profile_id'] == $selectedCommunity) {
-                return TRUE;
-              }
-              return FALSE;
-            }
-          );
-
-          $selectedCommunityObject = reset($selectedCommunityObject);
-          $selectedMetadata = $selectedCommunityObject->getMetadata();
-          $selectedContent = $selectedCommunityObject->getContent();
-
-          $selectedProfileData['identifier'] = $selectedMetadata['profile_id'];
-          $selectedProfileData['name'] = $selectedContent["companyName"];
-          $selectedProfileData['complete'] = TRUE;
-
-          $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
-
-          // Redirect user to grants profile page.
-          $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
-        }
-
-        $redirect = new TrustedRedirectResponse($redirectUrl->toString());
-        $form_state->setResponse($redirect);
+        $redirect = $this->handleUnregisteredCommunity($form_state, $selectedProfileData, $tOpts);
 
         break;
 
@@ -266,7 +228,6 @@ class ApplicantMandateForm extends FormBase {
         // Redirect user to grants profile page.
         $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
         $redirect = new TrustedRedirectResponse($redirectUrl->toString());
-        $form_state->setResponse($redirect);
 
         break;
 
@@ -274,10 +235,73 @@ class ApplicantMandateForm extends FormBase {
         $mandateMode = 'ypa';
         $redirectUrl = Url::fromUri($this->grantsMandateService->getUserMandateRedirectUrl($mandateMode));
         $redirect = new TrustedRedirectResponse($redirectUrl->toString());
-        $form_state->setResponse($redirect);
 
         break;
     }
+    $form_state->setResponse($redirect);
+  }
+
+  /**
+   * Extract unregistered handling to method to make sonar shut up.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state object.
+   * @param array $selectedProfileData
+   *   Profile data.
+   * @param array $tOpts
+   *   Translation options.
+   *
+   * @return \Drupal\Core\Routing\TrustedRedirectResponse
+   *   Redirect response object.
+   */
+  public function handleUnregisteredCommunity(
+    FormStateInterface $form_state,
+    array $selectedProfileData,
+    array $tOpts): TrustedRedirectResponse {
+    $storage = $form_state->getStorage();
+    $userCommunities = $storage['userCommunities'];
+
+    $selectedCommunity = $form_state->getValue('unregistered_community_selection');
+
+    if ($selectedCommunity == 'new') {
+      $selectedProfileData['identifier'] = Uuid::uuid4()->toString();
+      $selectedProfileData['name'] = $this->t('New Unregistered Community or group', [], $tOpts)
+        ->render();
+      $selectedProfileData['complete'] = FALSE;
+
+      // Redirect user to grants profile page.
+      $redirectUrl = Url::fromRoute('grants_profile.edit');
+
+      $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
+    }
+    else {
+      $selectedCommunityObject = array_filter(
+        $userCommunities,
+        function ($item) use ($selectedCommunity) {
+          $meta = $item->getMetadata();
+          if ($meta['profile_id'] == $selectedCommunity) {
+            return TRUE;
+          }
+          return FALSE;
+        }
+      );
+
+      $selectedCommunityObject = reset($selectedCommunityObject);
+      $selectedMetadata = $selectedCommunityObject->getMetadata();
+      $selectedContent = $selectedCommunityObject->getContent();
+
+      $selectedProfileData['identifier'] = $selectedMetadata['profile_id'];
+      $selectedProfileData['name'] = $selectedContent["companyName"];
+      $selectedProfileData['complete'] = TRUE;
+
+      $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
+
+      // Redirect user to grants profile page.
+      $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
+    }
+
+    return new TrustedRedirectResponse($redirectUrl->toString());
+
   }
 
 }

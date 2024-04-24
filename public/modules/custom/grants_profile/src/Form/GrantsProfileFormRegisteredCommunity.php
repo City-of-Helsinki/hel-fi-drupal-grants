@@ -32,7 +32,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
   /**
    * Form Lock Service.
    *
-   * @var \Drupal\Core\Render\Element\FormLockService
+   * @var \Drupal\grants_handler\FormLockService
    */
   protected FormLockService $lockService;
 

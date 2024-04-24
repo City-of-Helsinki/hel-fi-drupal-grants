@@ -21,7 +21,7 @@ class GrantsWebformSummationField extends WebformElementBase {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultProperties() {
+  public function getDefaultProperties(): array {
 
     return parent::getDefaultProperties() + [
       'collect_field' => '',
@@ -35,7 +35,7 @@ class GrantsWebformSummationField extends WebformElementBase {
   /**
    * {@inheritdoc}
    */
-  public function form(array $form, FormStateInterface $form_state) {
+  public function form(array $form, FormStateInterface $form_state): array {
     $form = parent::form($form, $form_state);
 
     /** @var \Drupal\webform\WebformSubmissionForm $webformFormObject */
