@@ -434,7 +434,7 @@ class GrantsHandler extends WebformHandlerBase {
         if ($webform_submission->serial()) {
 
           $submissionData = $webform_submission->getData();
-          $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($submission);
+          $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($webform_submission);
 
           $this->applicationNumber = $applicationNumber;
           $this->submittedFormData['application_number'] = $this->applicationNumber;
