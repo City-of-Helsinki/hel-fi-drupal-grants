@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_profile;
 
-use Drupal\Component\Utility\SortArray;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Session\AccountInterface;
@@ -47,14 +46,14 @@ class UserRedirect implements UserRedirectInterface {
    * {@inheritdoc}
    */
   public function setLoginRedirection(string $url, AccountInterface $account = NULL) {
-    $this->prepareDestination($url, $account);
+    $this->prepareDestination($url);
   }
 
   /**
    * {@inheritdoc}
    */
   public function setLogoutRedirection(string $url, AccountInterface $account = NULL) {
-    $this->prepareDestination($url, $account);
+    $this->prepareDestination($url);
   }
 
   /**
@@ -62,10 +61,8 @@ class UserRedirect implements UserRedirectInterface {
    *
    * @param string $redirect_url
    *   Configuration key (login or logout).
-   * @param \Drupal\Core\Session\AccountInterface|null $account
-   *   User account to set destination for.
    */
-  protected function prepareDestination(string $redirect_url, AccountInterface $account = NULL) {
+  protected function prepareDestination(string $redirect_url) {
 
     $loggedin_user_roles = array_reverse($this->currentUser->getRoles());
 
@@ -84,25 +81,6 @@ class UserRedirect implements UserRedirectInterface {
         }
       }
     }
-  }
-
-  /**
-   * Return requested configuration items (login or logout) ordered by weight.
-   *
-   * @param string $key
-   *   Configuration key (login or logout).
-   *
-   * @return array
-   *   Requested configuration items (login or logout) ordered by weight.
-   */
-  protected function getConfig($key) {
-    $config = $this->config->get($key);
-    if ($config) {
-      uasort($config, [SortArray::class, 'sortByWeightElement']);
-      return $config;
-    }
-
-    return [];
   }
 
 }

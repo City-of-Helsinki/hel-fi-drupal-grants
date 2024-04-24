@@ -28,7 +28,7 @@ class GrantsConverterService {
   public function convertDates(mixed $value, array $arguments): string {
 
     try {
-      if ($value === NULL || $value === '' || !isset($value)) {
+      if ($value === NULL || $value === '') {
         $retval = '';
       }
       else {
@@ -124,7 +124,7 @@ class GrantsConverterService {
   /**
    * Convert "dot" float to "comma" float.
    *
-   * @param array|null $value
+   * @param array $value
    *   Value to be converted.
    *
    * @return string|null
