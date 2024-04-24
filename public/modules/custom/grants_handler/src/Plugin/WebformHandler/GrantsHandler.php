@@ -1015,7 +1015,6 @@ class GrantsHandler extends WebformHandlerBase {
     }
     catch (\Exception $e) {
       $current_errors = [];
-      // @todo add logger
     }
     return $current_errors;
   }
@@ -1296,7 +1295,7 @@ class GrantsHandler extends WebformHandlerBase {
         $this->submittedFormData);
     }
     catch (ReadOnlyException $e) {
-      // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-545
+      // Fix this here: https://helsinkisolutionoffice.atlassian.net/browse/AU-545
     }
     $applicationUploadStatus = FALSE;
     $redirectUrl = Url::fromRoute(
