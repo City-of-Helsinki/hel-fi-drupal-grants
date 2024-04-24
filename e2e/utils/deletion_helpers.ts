@@ -1,6 +1,7 @@
 import {expect, Page, test} from "@playwright/test";
 import {FormData} from "./data/test_data";
 import {logger} from "./logger";
+import {logCurrentUrl} from "./helpers";
 
 /**
  * The DeletionMethod enum.
@@ -75,11 +76,13 @@ const deleteDraftApplication = async (formKey: string, page: Page, formDetails: 
  */
 const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string, applicationId: string) => {
   await page.goto(submissionUrl);
+  await logCurrentUrl(page);
   await page.waitForURL('**/muokkaa');
   await page.locator('#webform-button--delete-draft').click();
   page.once('dialog', async dialog => {
     await dialog.accept();
   });
+  await logCurrentUrl(page);
   await page.waitForURL('/fi/oma-asiointi');
   await validateDeletionNotification(page, 'Submission URL.', applicationId);
 }
@@ -101,9 +104,11 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string, appli
  */
 const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
   await page.goto('/fi/oma-asiointi');
+  await logCurrentUrl(page);
   await page.waitForURL('**/oma-asiointi');
   await page.locator(`.application-delete-link-${applicationId}`).click();
   await page.waitForLoadState('load');
+  await logCurrentUrl(page);
   await validateDeletionNotification(page, 'Application ID on Oma asiointi page.', applicationId);
 }
 
