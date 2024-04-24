@@ -141,7 +141,7 @@ class HandleDocumentsBatchService {
 
     $context['results']['progress'] += count($docsToDelete);
 
-    $context['message'] = t('Processing batch #@batch_id with a batch size of @batch_size.', [
+    $context['message'] = $this->t('Processing batch #@batch_id with a batch size of @batch_size.', [
       '@batch_id' => number_format($batchId),
       '@batch_size' => number_format(count($docsToDelete)),
     ]);

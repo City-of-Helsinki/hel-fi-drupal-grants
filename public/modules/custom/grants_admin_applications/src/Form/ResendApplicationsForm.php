@@ -61,7 +61,7 @@ class ResendApplicationsForm extends AtvFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $applicationId = trim($form_state->getValue('applicationId'));
+    $applicationId = trim($form_state->getValue('applicationId') ?? '');
 
     $prefilledNumber = \Drupal::request()->query->get('transaction_id');
 
