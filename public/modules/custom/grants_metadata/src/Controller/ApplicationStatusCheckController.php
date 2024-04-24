@@ -84,7 +84,7 @@ class ApplicationStatusCheckController extends ControllerBase {
   /**
    * Builds the response.
    *
-   * @return JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   Json representation of data.
    */
   public function build($submission_id = '') {
