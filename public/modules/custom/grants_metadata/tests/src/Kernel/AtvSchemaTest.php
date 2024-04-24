@@ -69,7 +69,6 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
    * Create ATV Schema instance.
    */
   public static function createSchema(): AtvSchema {
-    $logger = \Drupal::service('logger.factory');
     $manager = \Drupal::typedDataManager();
     $schema = new AtvSchema($manager);
     // Use relative path. It works in all environments.
@@ -651,11 +650,12 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
       }
     }
   }
+
   /**
    * Return attachments data.
    */
   protected function getAttachmentField(ComplexDataInterface $applicationData) {
-    $attachmentField = null;
+    $attachmentField = NULL;
     foreach ($applicationData as $field) {
       $name = $field->getName();
       if ($name !== 'attachments') {

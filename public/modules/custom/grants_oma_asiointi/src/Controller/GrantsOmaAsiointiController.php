@@ -54,7 +54,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   /**
    * Logger access.
    *
-   * @var LoggerInterface
+   * @var \Psr\Log\LoggerInterface
    */
   protected LoggerInterface $logger;
 

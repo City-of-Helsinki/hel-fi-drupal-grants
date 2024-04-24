@@ -4,9 +4,7 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
-use Drupal\Core\Render\Element\Form;
 use Drupal\Core\TypedData\TypedDataManager;
-use Drupal\entity_module_bundle_plugin_test\Plugin\BundlePluginTest\First;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
@@ -34,9 +32,10 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
   /**
    * Form Lock Service.
    *
-   * @var FormLockService
+   * @var \Drupal\Core\Render\Element\FormLockService
    */
   protected FormLockService $lockService;
+
   /**
    * PRH data update service class.
    */

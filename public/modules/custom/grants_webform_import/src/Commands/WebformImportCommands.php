@@ -22,7 +22,6 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\language\ConfigurableLanguageManagerInterface;
 use Drush\Commands\DrushCommands;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -414,7 +413,8 @@ class WebformImportCommands extends DrushCommands {
    *
    * @return mixed
    *   Resulted webform data.
-   * @throws GuzzleException
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function getWebformDataFromEndpoint() {
     // Fetch the config.
