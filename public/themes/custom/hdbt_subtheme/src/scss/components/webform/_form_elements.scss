@@ -408,3 +408,12 @@ input[type=radio] + label.form-required::after {
     --icon-size: var(--spacing-layout-l);
   }
 }
+
+.hds-text-input__input-wrapper:focus-within:has(input[readonly]) {
+  outline: 2px black solid;
+  outline-offset: 2px;
+  margin-right: var(--spacing-2-xs);
+  input[readonly] {
+    width: calc(100% - var(--spacing-2-xs));
+  }
+}
