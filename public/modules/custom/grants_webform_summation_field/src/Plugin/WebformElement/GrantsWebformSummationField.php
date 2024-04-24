@@ -38,7 +38,7 @@ class GrantsWebformSummationField extends WebformElementBase {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
-    /** @var \Drupal\webform\WebformSubmissionForm $webformObject */
+    /** @var \Drupal\webform\WebformSubmissionForm $webformFormObject */
     $webformFormObject = $form_state->getFormObject();
 
     // Get webform object.
