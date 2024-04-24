@@ -78,6 +78,7 @@ function grants_metadata_node_presave(EntityInterface $entity): void {
     }
 
     if ($entity instanceof Node) {
+      /** @var \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem $referenceItem */
       $referenceItem = $entity->get('field_webform')->first();
     }
     else {
@@ -108,7 +109,7 @@ function grants_metadata_node_presave(EntityInterface $entity): void {
  * Implements hook_webform_presave().
  */
 function grants_metadata_webform_presave(Webform $entity): void {
-  // Get third aprty settings.
+  // Get third party settings.
   $thirdPartySettings = $entity->getThirdPartySettings('grants_metadata');
 
   // Get nodes that have attached this webform.
