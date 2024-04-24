@@ -1,5 +1,11 @@
 import {logger} from "./logger";
-import {hideSlidePopup, extractPath, waitForTextWithInterval, getApplicationNumberFromBreadCrumb} from "./helpers";
+import {
+  hideSlidePopup,
+  extractPath,
+  waitForTextWithInterval,
+  getApplicationNumberFromBreadCrumb,
+  logCurrentUrl
+} from "./helpers";
 import {validateFormErrors} from "./error_validation_helpers";
 import {validateHiddenFields} from "./validation_helpers";
 import {saveObjectToEnv} from "./env_helpers";
@@ -44,6 +50,7 @@ const fillGrantsFormPage = async (
 
   // Navigate to form url and make sure we get there. Skip the test otherwise.
   await page.goto(formPath);
+  await logCurrentUrl(page);
   const initialPathname = new URL(page.url()).pathname;
   const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
 
@@ -91,6 +98,7 @@ const fillGrantsFormPage = async (
       await page.waitForLoadState('domcontentloaded');
       await page.waitForLoadState('load');
       await page.waitForLoadState('networkidle');
+      await logCurrentUrl(page);
 
       await pageHandlers[formPageKey](page, formPageObject);
     } else {
@@ -160,6 +168,7 @@ const fillProfileForm = async (
 
   // Navigate to form url.
   await page.goto(formPath);
+  await logCurrentUrl(page);
 
   // Hide the sliding popup.
   await hideSlidePopup(page);
@@ -225,10 +234,16 @@ const verifyDraftSave = async (
   formKey: string
 ) => {
   logger(`Verifying draft save...`);
+  await logCurrentUrl(page);
   await page.waitForURL('**/katso');
   await expect(await page.getByText('Luonnos')).toBeVisible()
   await expect(await page.getByRole('link', {name: 'Muokkaa hakemusta'})).toBeEnabled();
   const applicationId = await page.locator(".webform-submission__application_id--body").innerText();
+
+  if (!applicationId) {
+    logger('WARNING: Failed retrieving application ID.');
+    return;
+  }
 
   const storeName = `${profileType}_${formId}`;
   const newData = {
@@ -269,6 +284,7 @@ const verifySubmit = async (
   formKey: string
 ) => {
   logger(`Verifying submit...`);
+  await logCurrentUrl(page);
   await page.waitForURL('**/completion');
   await expect(await page.getByRole('heading', {name: 'Avustushakemus lähetetty onnistuneesti'})).toBeVisible();
   await expect(await page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible();
@@ -281,8 +297,14 @@ const verifySubmit = async (
     return;
   }
 
+  await page.waitForLoadState('load');
   let applicationId = await page.locator(".grants-handler__completion__item--number").innerText();
   applicationId = applicationId.replace('Hakemusnumero\n', '')
+
+  if (!applicationId) {
+    logger('WARNING: Failed retrieving application ID.');
+    return;
+  }
 
   const storeName = `${profileType}_${formId}`;
   const newData = {
