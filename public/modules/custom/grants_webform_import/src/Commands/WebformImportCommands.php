@@ -413,6 +413,8 @@ class WebformImportCommands extends DrushCommands {
    *
    * @return mixed
    *   Resulted webform data.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function getWebformDataFromEndpoint() {
     // Fetch the config.
@@ -428,8 +430,7 @@ class WebformImportCommands extends DrushCommands {
         'Authorization' => $authorizationHeader,
       ],
     ];
-    $request = $this->httpClient->request("GET", $url, $options);
-    $response = $this->httpClient->send($request);
+    $response = $this->httpClient->request("GET", $url, $options);
     $statusCode = $response->getStatusCode();
 
     if ($statusCode !== 200) {

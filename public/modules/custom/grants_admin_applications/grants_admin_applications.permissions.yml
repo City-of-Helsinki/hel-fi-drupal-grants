@@ -1,5 +1,9 @@
-administer grants_admin_applications configuration:
-  title: 'Administer grants_admin_applications configuration'
+administer grants_admin_delete_applications configuration:
+  title: 'Administer grants_admin_delete_applications configuration'
+  description: 'Optional description.'
+  restrict access: true
+administer grants_admin_delete_applications_by_transaction_id configuration:
+  title: 'Administer grants_admin_delete_applications_by_transaction_id configuration'
   description: 'Optional description.'
   restrict access: true
 administer grants_admin_resend_applications configuration:

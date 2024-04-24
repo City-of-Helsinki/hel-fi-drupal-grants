@@ -1,16 +1,25 @@
-grants_admin_application.admin_reports:
-  title: ATV data
-  route_name: grants_admin_applications.admin_applications
-  parent: system.admin_reports
-  description: 'See & delete user documents in ATV.'
-  weight: -1
-grants_admin_applications.resend_applications:
-  title: Resend application data
-  route_name: grants_admin_applications.resend_applications
-  parent: grants_admin_application.admin_reports
-  description: 'Resend application data through integration.'
 grants_admin_applications.submitted_applications_status:
-  title: Submitted applications status
+  title: ATV Documents
   route_name: grants_admin_applications.submitted_applications_status
-  parent: grants_admin_application.admin_reports
+  parent: hdbt_admin_tools.overview
   description: 'Check for applications that are stuck in SUBMITTED state.'
+  weight: 10
+grants_admin_applications.resend_applications:
+  title: Resend Applications / Messages
+  route_name: grants_admin_applications.resend_applications
+  parent: grants_admin_applications.submitted_applications_status
+  description: 'Resend application data through integration.'
+  weight: 1
+grants_admin_application.delete_applications:
+  title: Delete testing applications
+  route_name: grants_admin_applications.delete_applications
+  parent: grants_admin_applications.submitted_applications_status
+  description: 'Delete testing applications.'
+  weight: 2
+grants_admin_application.delete_applications_by_transaction_id:
+  title: Delete testing applications by transaction ID
+  route_name: grants_admin_applications.delete_applications_by_transaction_id
+  parent: grants_admin_applications.submitted_applications_status
+  description: 'Delete testing applications by transaction ID.'
+  weight: 3
+

@@ -46,14 +46,14 @@ class UserRedirect implements UserRedirectInterface {
    * {@inheritdoc}
    */
   public function setLoginRedirection(string $url, AccountInterface $account = NULL) {
-    $this->prepareDestination($url, $account);
+    $this->prepareDestination($url);
   }
 
   /**
    * {@inheritdoc}
    */
   public function setLogoutRedirection(string $url, AccountInterface $account = NULL) {
-    $this->prepareDestination($url, $account);
+    $this->prepareDestination($url);
   }
 
   /**
@@ -61,10 +61,8 @@ class UserRedirect implements UserRedirectInterface {
    *
    * @param string $redirect_url
    *   Configuration key (login or logout).
-   * @param \Drupal\Core\Session\AccountInterface|null $account
-   *   User account to set destination for.
    */
-  protected function prepareDestination(string $redirect_url, AccountInterface $account = NULL) {
+  protected function prepareDestination(string $redirect_url) {
 
     $loggedin_user_roles = array_reverse($this->currentUser->getRoles());
 

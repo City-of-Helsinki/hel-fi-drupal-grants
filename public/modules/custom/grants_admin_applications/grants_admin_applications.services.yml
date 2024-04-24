@@ -1,0 +1,4 @@
+services:
+  grants_admin_applications.handle_documents_batch_service:
+    class: Drupal\grants_admin_applications\Service\HandleDocumentsBatchService
+    arguments: ['@helfi_atv.atv_service', '@messenger', '@logger.factory', '@extension.list.module']

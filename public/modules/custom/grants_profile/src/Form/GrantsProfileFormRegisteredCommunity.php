@@ -5,6 +5,7 @@ namespace Drupal\grants_profile\Form;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\grants_handler\FormLockService;
 use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
@@ -29,27 +30,38 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
   protected PRHUpdaterService $prhUpdaterService;
 
   /**
+   * Form Lock Service.
+   *
+   * @var \Drupal\Core\Render\Element\FormLockService
+   */
+  protected FormLockService $lockService;
+
+  /**
    * PRH data update service class.
    */
   public function __construct(
     TypedDataManager $typed_data_manager,
     GrantsProfileService $grantsProfileService,
     Session $session,
-    PRHUpdaterService $prhUpdaterService
+    PRHUpdaterService $prhUpdaterService,
+    FormLockService $lockService,
   ) {
     parent::__construct($typed_data_manager, $grantsProfileService, $session);
     $this->prhUpdaterService = $prhUpdaterService;
+    $this->lockService = $lockService;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
+
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),
       $container->get('session'),
-      $container->get('grants_profile.prh_updater_service')
+      $container->get('grants_profile.prh_updater_service'),
+      $container->get('grants_handler.form_lock_service')
     );
   }
 
@@ -114,7 +126,7 @@ you cannot do any modifications while the form is locked for them.',
         );
     }
     else {
-      $lockService->createOrRefreshProfileFormLock($grantsProfile->getId());
+      $this->lockService->createOrRefreshProfileFormLock($grantsProfile->getId());
     }
 
     // Get content from document.
