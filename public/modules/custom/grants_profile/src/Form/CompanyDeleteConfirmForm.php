@@ -5,6 +5,9 @@ namespace Drupal\grants_profile\Form;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\grants_mandate\GrantsMandateService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\grants_profile\GrantsProfileService;
 
 /**
  * Defines a confirmation form to confirm deletion of current company.
@@ -18,6 +21,32 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
    */
   private array $tOpts = ['context' => 'grants_profile'];
 
+  /** @var \Drupal\grants_mandate\GrantsMandateService $grantsMandateService */
+  protected GrantsMandateService $grantsMandateService;
+
+  /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+  protected GrantsProfileService $grantsProfileService;
+
+  /**
+   * Class constructor.
+   */
+  public function __construct(
+    GrantsProfileService $grantsProfileService,
+    GrantsMandateService $grantsMandateService) {
+    $this->grantsProfileService = $grantsProfileService;
+    $this->grantsMandateService = $grantsMandateService;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('grants_profile.service'),
+      $container->get('grants_mandate.service'),
+    );
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -27,7 +56,7 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
 
     $form['actions']['cancel'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Cancel'),
+      '#value' => $this->t('Casncel'),
       '#attributes' => ['class' => ['button', 'hds-button--secondary']],
       '#weight' => 10,
       '#limit_validation_errors' => [],
@@ -42,13 +71,13 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
-    $selectedCompany = \Drupal::service('grants_profile.service')->getSelectedRoleData();
-    $result = \Drupal::service('grants_profile.service')->removeProfile($selectedCompany);
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+    $result =  $this->grantsProfileService->removeProfile($selectedCompany);
 
     if ($result['success']) {
       $this->messenger()
         ->addStatus($this->t('Community removed', [], $this->tOpts), TRUE);
-      \Drupal::service('grants_mandate.service')->setPrivatePersonRole();
+      $this->grantsMandateService->setPrivatePersonRole();
       $returnUrl = Url::fromRoute('grants_mandate.mandateform');
     }
     else {
