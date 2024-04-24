@@ -453,7 +453,7 @@ const registeredCommunityApplications_64 = {
   copy: createFormData(baseFormRegisteredCommunity_64, copyForm),
   missing_values: createFormData(baseFormRegisteredCommunity_64, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_64, wrongValues),
-  success: createFormData(baseFormPrivatePerson_64, sendApplication),
+  success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
 }
 
 /**
@@ -464,7 +464,7 @@ const registeredCommunityApplications_64 = {
 const privatePersonApplications_64 = {
   draft: baseFormPrivatePerson_64,
   missing_values: createFormData(baseFormPrivatePerson_64, missingValuesPrivateUnregistered),
-  success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
+  success: createFormData(baseFormPrivatePerson_64, sendApplication),
 }
 
 /**
