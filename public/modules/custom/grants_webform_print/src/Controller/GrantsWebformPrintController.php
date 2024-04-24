@@ -15,13 +15,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Returns responses for Webform Printify routes.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsWebformPrintController extends ControllerBase {
 
   /**
    * The string translation service.
    *
-   * @var \Drupal\Core\StringTranslation\TranslationManager
+   * @var \Drupal\webform\WebformTranslationManager
    */
   protected $translationManager;
 
@@ -37,10 +39,11 @@ class GrantsWebformPrintController extends ControllerBase {
    *
    * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
    *   Language manager.
-   * @param \Drupal\webform\Entity\WebformTranslationManager $translationManager
+   * @param \Drupal\webform\WebformTranslationManager $translationManager
    *   Translation manager.
    */
-  public function __construct(LanguageManagerInterface $languageManager, WebformTranslationManager $translationManager) {
+  public function __construct(LanguageManagerInterface $languageManager,
+                              WebformTranslationManager $translationManager) {
     $this->languageManager = $languageManager;
     $this->translationManager = $translationManager;
 
