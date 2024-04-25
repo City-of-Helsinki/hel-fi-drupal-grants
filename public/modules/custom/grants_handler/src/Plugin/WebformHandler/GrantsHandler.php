@@ -1305,7 +1305,7 @@ class GrantsHandler extends WebformHandlerBase {
         $this->submittedFormData);
     }
     catch (ReadOnlyException $e) {
-      // Fix this here: https://helsinkisolutionoffice.atlassian.net/browse/AU-545
+      // Fix here: https://helsinkisolutionoffice.atlassian.net/browse/AU-545
     }
     $applicationUploadStatus = FALSE;
     $redirectUrl = Url::fromRoute(

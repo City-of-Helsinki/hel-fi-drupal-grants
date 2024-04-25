@@ -7,6 +7,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Session\AccountProxy;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionInterface;
@@ -72,6 +73,13 @@ class GrantsHandlerNavigationHelper {
   protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
 
   /**
+   * Drupal user account.
+   *
+   * @var \Drupal\Core\Session\AccountProxy
+   */
+  protected $currentUser;
+
+  /**
    * DB result cache.
    *
    * @var array
@@ -86,7 +94,8 @@ class GrantsHandlerNavigationHelper {
     MessengerInterface $messenger,
     EntityTypeManagerInterface $entity_type_manager,
     FormBuilderInterface $form_builder,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    AccountProxy $currentUser,
   ) {
 
     $this->database = $datababse;
@@ -94,6 +103,7 @@ class GrantsHandlerNavigationHelper {
     $this->entityTypeManager = $entity_type_manager;
     $this->formBuilder = $form_builder;
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
+    $this->currentUser = $currentUser;
 
     $this->cache = [];
   }
@@ -294,7 +304,7 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::PAGE_VISITED_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => \Drupal::currentUser()->id(),
+        'uid' => $this->currentUser->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => $page,
         'page' => $page,
@@ -364,7 +374,7 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::ERROR_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => \Drupal::currentUser()->id(),
+        'uid' => $this->currentUser->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => serialize($errors),
         'page' => $page,

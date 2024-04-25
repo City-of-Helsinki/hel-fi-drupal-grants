@@ -6,11 +6,13 @@ use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\grants_mandate\GrantsMandateService;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\grants_profile\GrantsProfileService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines a confirmation form to confirm deletion of current company.
+ *
+ * @phpstan-consistent-constructor
  */
 class CompanyDeleteConfirmForm extends ConfirmFormBase {
 
@@ -21,10 +23,18 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
    */
   private array $tOpts = ['context' => 'grants_profile'];
 
-  /** @var \Drupal\grants_mandate\GrantsMandateService $grantsMandateService */
+  /**
+   * Grants Mandate Service.
+   *
+   * @var \Drupal\grants_mandate\GrantsMandateService
+   */
   protected GrantsMandateService $grantsMandateService;
 
-  /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+  /**
+   * Grants Profile Service.
+   *
+   * @var \Drupal\grants_profile\GrantsProfileService
+   */
   protected GrantsProfileService $grantsProfileService;
 
   /**
@@ -56,7 +66,7 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
 
     $form['actions']['cancel'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Casncel'),
+      '#value' => $this->t('Cancel'),
       '#attributes' => ['class' => ['button', 'hds-button--secondary']],
       '#weight' => 10,
       '#limit_validation_errors' => [],
@@ -72,7 +82,7 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-    $result =  $this->grantsProfileService->removeProfile($selectedCompany);
+    $result = $this->grantsProfileService->removeProfile($selectedCompany);
 
     if ($result['success']) {
       $this->messenger()
