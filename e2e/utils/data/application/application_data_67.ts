@@ -676,6 +676,13 @@ const copyForm: FormDataWithRemoveOptionalProps = {
     'lisatiedot_ja_liitteet': {
       items: {},
       itemsToRemove: [
+        'edit-yhteison-saannot-attachment-upload',
+        'edit-vahvistettu-tilinpaatos-attachment-upload',
+        'edit-vahvistettu-toimintakertomus-attachment-upload',
+        'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload',
+        'edit-vuosikokouksen-poytakirja-attachment-upload',
+        'edit-toimintasuunnitelma-attachment-upload',
+        'edit-talousarvio-attachment-upload',
         'edit-muu-liite',
       ],
     },
