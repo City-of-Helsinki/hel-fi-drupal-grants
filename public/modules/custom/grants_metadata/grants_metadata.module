@@ -504,12 +504,22 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       if ($formParentData) {
         $parentIndustry = $formParentData->getThirdPartySetting('grants_metadata', 'applicationIndustry');
         $parentType = $formParentData->getThirdPartySetting('grants_metadata', 'applicationType');
-        $timeStamp = date('Ymd', time());
+
+        // Generate timestamp to identify clone.
+        // Add hours and minutes to prevent ID collisions.
+        // This takes 11 characters of the maximum, which is 32.
+        $timeStamp = date('ymdHi', time());
+
+        // Combine industry and type so we can truncate this part.
+        // This is in case the ID length limit is reached (32 characters).
+        // 21 characters reserved for industry and type.
+        $industryAndType = strtolower($parentIndustry) . '_' . strtolower($parentType);
+        $industryAndType = substr($industryAndType, 0, 21);
 
         $suggestedFormId = str_replace(
-          ['@industry', '@type', '@number'],
-          [strtolower($parentIndustry), strtolower($parentType), $timeStamp],
-          '@industry_@type_@number'
+          ['@industryandtype', '@number'],
+          [$industryAndType, $timeStamp],
+          '@industryandtype_@number'
         );
 
         $form['id']['#default_value'] = $suggestedFormId;
