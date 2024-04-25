@@ -504,18 +504,11 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       if ($formParentData) {
         $parentIndustry = $formParentData->getThirdPartySetting('grants_metadata', 'applicationIndustry');
         $parentType = $formParentData->getThirdPartySetting('grants_metadata', 'applicationType');
-        $parentFormId = $formParentData->id();
-
-        if (preg_match('/\d+$/', $parentFormId, $matches)) {
-          $versionNumber = (int) $matches[0] + 1;
-        }
-        else {
-          $versionNumber = 1;
-        }
+        $timeStamp = date('Ymd', time());
 
         $suggestedFormId = str_replace(
           ['@industry', '@type', '@number'],
-          [strtolower($parentIndustry), strtolower($parentType), $versionNumber],
+          [strtolower($parentIndustry), strtolower($parentType), $timeStamp],
           '@industry_@type_@number'
         );
 
