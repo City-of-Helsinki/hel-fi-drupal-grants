@@ -234,7 +234,7 @@ class AttachmentRemover {
     $query = $database->query("SELECT sid FROM {sessions}");
     $result = $query->fetchAll();
 
-    $activeSessions = array_map(fn($item) => sha1($item->sid), $result);
+    $activeSessions = array_map(fn($item) => $item->sid, $result);
 
     $pathsToClear = [
       "private://grants_attachments",
