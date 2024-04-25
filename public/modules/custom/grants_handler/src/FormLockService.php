@@ -21,7 +21,7 @@ class FormLockService {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Drupal\Core\Logger\LoggerChannelFactory|LoggerChannelInterface|LoggerChannel
    */
   protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
 
@@ -69,8 +69,8 @@ class FormLockService {
    * @param string $application_number
    *   Application number.
    */
-  public function createOrRefreshApplicationLock(string $application_number) {
-    return $this->createOrRefreshLock($application_number, self::LOCK_TYPE_APPLICATION);
+  public function createOrRefreshApplicationLock(string $application_number): void {
+    $this->createOrRefreshLock($application_number, self::LOCK_TYPE_APPLICATION);
   }
 
   /**
@@ -79,8 +79,8 @@ class FormLockService {
    * @param string $profile_id
    *   Profile id.
    */
-  public function createOrRefreshProfileFormLock(string $profile_id) {
-    return $this->createOrRefreshLock($profile_id, self::LOCK_TYPE_PROFILE);
+  public function createOrRefreshProfileFormLock(string $profile_id): void {
+    $this->createOrRefreshLock($profile_id, self::LOCK_TYPE_PROFILE);
   }
 
   /**
@@ -89,8 +89,8 @@ class FormLockService {
    * @param string $application_id
    *   Application id.
    */
-  public function releaseApplicationLock(string $application_id) {
-    return $this->releaseLock($application_id, self::LOCK_TYPE_APPLICATION);
+  public function releaseApplicationLock(string $application_id): void {
+    $this->releaseLock($application_id, self::LOCK_TYPE_APPLICATION);
   }
 
   /**
@@ -99,8 +99,8 @@ class FormLockService {
    * @param string $profile_id
    *   Profile id.
    */
-  public function releaseProfileFormLock(string $profile_id) {
-    return $this->releaseLock($profile_id, self::LOCK_TYPE_PROFILE);
+  public function releaseProfileFormLock(string $profile_id): void {
+    $this->releaseLock($profile_id, self::LOCK_TYPE_PROFILE);
   }
 
   /**
@@ -116,12 +116,7 @@ class FormLockService {
     $userProfile = $this->helsinkiProfiiliUserData->getUserData();
 
     // If lock owner is same as the current user.
-    if ($userProfile['sub'] === $lock->user_uuid) {
-      return FALSE;
-    }
-    else {
-      return TRUE;
-    }
+    return !($userProfile['sub'] === $lock->user_uuid);
   }
 
   /**
@@ -141,15 +136,13 @@ class FormLockService {
       ->condition('form_type', $lockType)
       ->condition('expire', $timeStamp, '>=');
 
-    $result = $query->execute()->fetch();
-
-    return $result;
+    return $query->execute()->fetch();
   }
 
   /**
    * Creates a lock for form or updates expire time of existing one.
    */
-  private function createOrRefreshLock(string $formId, int $lockType) {
+  private function createOrRefreshLock(string $formId, int $lockType): void {
     $userProfile = $this->helsinkiProfiiliUserData->getUserData();
     $existingLock = $this->getLock($formId, $lockType);
     $expirationPeriod = $this->getExpirationPeriod($lockType);
@@ -194,7 +187,7 @@ class FormLockService {
   /**
    * Release the lock of given form.
    */
-  public function releaseLock(string $formId, $lockType) {
+  public function releaseLock(string $formId, $lockType): void {
     $userProfile = $this->helsinkiProfiiliUserData->getUserData();
 
     $result = $this->database->delete(self::TABLE)

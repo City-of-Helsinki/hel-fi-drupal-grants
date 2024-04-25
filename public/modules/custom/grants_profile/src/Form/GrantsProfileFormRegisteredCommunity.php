@@ -32,7 +32,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
   /**
    * Form Lock Service.
    *
-   * @var \Drupal\Core\Render\Element\FormLockService
+   * @var \Drupal\grants_handler\FormLockService
    */
   protected FormLockService $lockService;
 
@@ -112,7 +112,8 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $isNewGrantsProfile = $grantsProfile->getTransactionId();
 
     // Handle multiple editors.
-    $locked = $this->lockService->isProfileFormLocked($grantsProfile->getId());
+    $lockService = \Drupal::service('grants_handler.form_lock_service');
+    $locked = $lockService->isProfileFormLocked($grantsProfile->getId());
     if ($locked) {
       $form['#disabled'] = TRUE;
       $this->messenger()

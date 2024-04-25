@@ -251,6 +251,10 @@ test.describe('ECONOMICGRANTAPPLICATION(29)', () => {
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
 
+  test.afterAll(async() => {
+    await page.close();
+  });
+
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
 
   for (const [key, obj] of testDataArray) {

@@ -25,6 +25,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Handler form.
+ *
+ * @phpstan-consistent-constructor
  */
 class MessageForm extends FormBase {
 
