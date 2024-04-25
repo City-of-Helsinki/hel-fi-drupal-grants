@@ -3,10 +3,7 @@
 namespace Drupal\grants_handler\Plugin\Block;
 
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Access\AccessResultAllowed;
-use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Access\AccessResultInterface;
-use Drupal\Core\Access\AccessResultNeutral;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Link;
@@ -26,6 +23,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("Service Page Anon Block"),
  *   category = @Translation("Custom")
  * )
+ *
+ * @phpstan-consistent-constructor
  */
 class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
@@ -107,7 +106,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
   /**
    * {@inheritdoc}
    */
-  protected function blockAccess(AccountInterface $account): AccessResultForbidden|AccessResultNeutral|AccessResult|AccessResultAllowed|AccessResultInterface {
+  protected function blockAccess(AccountInterface $account): AccessResultInterface {
 
     $node = $this->routeMatch->getParameter('node');
 
@@ -192,7 +191,8 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     if ($this->currentUser->isAuthenticated()) {
       $link = Link::fromTextAndUrl($mandateText, $mandateUrl);
-      $text = $this->t('Change your role and return to make the application with role which the application is instructed to be made.', [], $tOpts);
+      $text = $this->t('Change your role and return to make the
+       application with role which the application is instructed to be made.', [], $tOpts);
       $title = $this->t('Change role', [], $tOpts);
     }
     else {

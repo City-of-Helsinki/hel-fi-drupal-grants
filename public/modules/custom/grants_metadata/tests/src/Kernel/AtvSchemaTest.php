@@ -612,6 +612,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     // Search attachment data.
     $attachmentField = $this->getAttachmentField($applicationData);
     $this->assertNotNull($attachmentField);
+
     // Handle attachment data.
     $definition = $attachmentField->getDataDefinition();
     $defaultValue = $definition->getSetting('defaultValue');
