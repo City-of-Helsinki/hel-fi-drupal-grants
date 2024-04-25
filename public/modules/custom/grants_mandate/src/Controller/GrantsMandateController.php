@@ -8,6 +8,7 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Messenger\MessengerTrait;
+use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
@@ -162,7 +163,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Drupal\grants_mandate\GrantsMandateException
    */
-  public function mandateCallbackYpa(): RedirectResponse {
+  public function mandateCallbackYpa(): RedirectResponse|TrustedRedirectResponse {
     $tOpts = ['context' => 'grants_mandate'];
 
     $code = $this->requestStack->getMainRequest()->query->get('code');

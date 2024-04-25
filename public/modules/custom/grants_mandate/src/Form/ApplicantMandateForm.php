@@ -239,15 +239,14 @@ class ApplicantMandateForm extends FormBase {
         // Redirect user to grants profile page.
         $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
         $defaultRedirect = new TrustedRedirectResponse($redirectUrl->toString());
-        $redirect = $this->redirectService->getRedirect($defaultRedirect);
+        $redirect = $this->redirectService->getRedirect($defaultRedirect, TRUE);
 
         break;
 
       default:
         $mandateMode = 'ypa';
         $redirectUrl = Url::fromUri($this->grantsMandateService->getUserMandateRedirectUrl($mandateMode));
-        $defaultRedirect = new TrustedRedirectResponse($redirectUrl->toString());
-        $redirect = $this->redirectService->getRedirect($defaultRedirect);
+        $redirect = new TrustedRedirectResponse($redirectUrl->toString());
 
         break;
     }
@@ -284,8 +283,8 @@ class ApplicantMandateForm extends FormBase {
 
       // Redirect user to grants profile page.
       $redirectUrl = Url::fromRoute('grants_profile.edit');
-
       $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
+      return new TrustedRedirectResponse($redirectUrl->toString());
     }
     else {
       $selectedCommunityObject = array_filter(
@@ -313,7 +312,8 @@ class ApplicantMandateForm extends FormBase {
       $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
     }
 
-    return new TrustedRedirectResponse($redirectUrl->toString());
+    $defaultRedirect = new TrustedRedirectResponse($redirectUrl->toString());
+    return $this->redirectService->getRedirect($defaultRedirect, TRUE);
 
   }
 
