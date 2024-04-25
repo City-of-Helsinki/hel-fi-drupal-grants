@@ -3,6 +3,7 @@ import {FieldSwapItemList, FormData, FormPage, Selector} from "./data/test_data"
 import {logger} from "./logger";
 import {clickButton, fillFormField} from "./input_helpers";
 import {validateFormData} from "./validation_helpers";
+import {logCurrentUrl} from "./helpers";
 
 /**
  * The swapFieldValues function.
@@ -105,6 +106,7 @@ const swapFieldValuesOnPage = async (
  */
 const goToSubmissionUrl = async (page: Page, submissionUrl: string) => {
   await page.goto(submissionUrl);
+  await logCurrentUrl(page);
   await page.waitForURL('**/muokkaa');
   logger(`Navigated to: ${submissionUrl}.`);
 };
@@ -128,6 +130,7 @@ const navigateToApplicationPage = async (page: Page, formPageKey: string) => {
   }
   await clickButton(page, applicantDetailsLink);
   await page.waitForLoadState('load');
+  await logCurrentUrl(page);
   logger(`Loaded page: ${formPageKey}.`);
 };
 
@@ -147,6 +150,7 @@ const saveAsDraft = async (page: Page) => {
     value: 'edit-actions-draft',
   }
   await clickButton(page, saveDraftLink);
+  await logCurrentUrl(page);
   await page.waitForURL('**/katso');
   logger('Form saved as draft.')
 };

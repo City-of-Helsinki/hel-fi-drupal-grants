@@ -23,9 +23,10 @@ test.describe('Unregistered Community - Grants Profile', () => {
     }
   });
 
-  test.afterAll(() => {
+  test.afterAll(async() => {
     expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
     logger(`Profile exist for: ${profileType}`);
+    await page.close();
   });
 
   test('Profile form tests', async () => {

@@ -34,7 +34,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    *
    * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  protected $requestStack;
+  protected RequestStack $requestStack;
 
   /**
    * The current user.

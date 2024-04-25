@@ -3,6 +3,7 @@ import {logger} from "./logger";
 import {FormField, FormData, FormFieldWithRemove} from "./data/test_data"
 import {viewPageBuildSelectorForItem} from "./view_page_helpers";
 import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
+import {logCurrentUrl} from "./helpers";
 
 /**
  * The validateSubmission function.
@@ -353,6 +354,7 @@ const navigateAndValidateViewPage = async (
   const applicationId = thisStoreData.applicationId;
   const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
   await page.goto(viewPageURL);
+  await logCurrentUrl(page);
   await page.waitForURL('**/katso');
   const applicationIdContainer = await page.locator('.webform-submission__application_id');
   const applicationIdContainerText = await applicationIdContainer.textContent();
@@ -380,6 +382,7 @@ const navigateAndValidateProfilePage = async (
 
   const profilePageURL = '/fi/oma-asiointi/hakuprofiili';
   await page.goto(profilePageURL);
+  await logCurrentUrl(page);
 
   const headingMap: Record<string, string> = {
     registered_community: 'Yhteisön tiedot avustusasioinnissa',

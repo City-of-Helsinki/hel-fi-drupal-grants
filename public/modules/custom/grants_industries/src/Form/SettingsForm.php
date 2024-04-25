@@ -22,7 +22,7 @@ class SettingsForm extends ConfigFormBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
-    private EntityTypeManager $entityTypeManager,
+    private readonly EntityTypeManager $entityTypeManager,
   ) {
     parent::__construct($config_factory);
   }

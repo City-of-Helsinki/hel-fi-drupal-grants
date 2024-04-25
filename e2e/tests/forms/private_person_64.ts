@@ -177,6 +177,10 @@ test.describe('ASUKASPIEN(64)', () => {
     await selectRole(page, 'PRIVATE_PERSON');
   });
 
+  test.afterAll(async() => {
+    await page.close();
+  });
+
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
 
   for (const [key, obj] of testDataArray) {

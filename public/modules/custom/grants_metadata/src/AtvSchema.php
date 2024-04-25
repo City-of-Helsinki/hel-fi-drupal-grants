@@ -7,7 +7,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
-use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
@@ -21,9 +21,9 @@ class AtvSchema {
   /**
    * Drupal\Core\TypedData\TypedDataManager definition.
    *
-   * @var \Drupal\Core\TypedData\TypedDataManager
+   * @var \Drupal\Core\TypedData\TypedDataManagerInterface
    */
-  protected TypedDataManager $typedDataManager;
+  protected TypedDataManagerInterface $typedDataManager;
 
   /**
    * Schema structure as parsed from schema file.
@@ -42,7 +42,7 @@ class AtvSchema {
   /**
    * Constructs an AtvShcema object.
    */
-  public function __construct(TypedDataManager $typed_data_manager) {
+  public function __construct(TypedDataManagerInterface $typed_data_manager) {
     $this->typedDataManager = $typed_data_manager;
   }
 
