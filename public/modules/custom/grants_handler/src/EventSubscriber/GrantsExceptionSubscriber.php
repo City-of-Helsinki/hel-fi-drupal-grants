@@ -4,6 +4,7 @@ namespace Drupal\grants_handler\EventSubscriber;
 
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -23,9 +24,9 @@ class GrantsExceptionSubscriber implements EventSubscriberInterface {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory|\Drupal\Core\Logger\LoggerChannelInterface|\Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * The messenger.
@@ -44,7 +45,7 @@ class GrantsExceptionSubscriber implements EventSubscriberInterface {
    */
   public function __construct(
     MessengerInterface $messenger,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
   ) {
     $this->messenger = $messenger;
     $this->logger = $loggerFactory->get('grants_handler');

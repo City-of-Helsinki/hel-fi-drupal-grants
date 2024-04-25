@@ -5,6 +5,7 @@ namespace Drupal\grants_handler;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_metadata\AtvSchema;
 use GuzzleHttp\ClientInterface;
@@ -26,9 +27,9 @@ class EventsService {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Drupal\Core\Logger\LoggerChannelInterface|\Drupal\Core\Logger\LoggerChannelFactoryInterface
    */
-  protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
+  protected LoggerChannelInterface|LoggerChannelFactoryInterface $logger;
 
   /**
    * API endopoint.
@@ -92,7 +93,7 @@ class EventsService {
    */
   public function __construct(
     ClientInterface $http_client,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
   ) {
     $this->httpClient = $http_client;
     $this->logger = $loggerFactory->get('grants_handler_events_service');

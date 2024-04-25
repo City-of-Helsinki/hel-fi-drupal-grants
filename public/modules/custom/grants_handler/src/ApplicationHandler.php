@@ -9,6 +9,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManager;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -96,7 +98,7 @@ class ApplicationHandler {
    *
    * @var \Drupal\Core\Logger\LoggerChannel
    */
-  protected LoggerChannel $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Show messages.
@@ -221,7 +223,7 @@ class ApplicationHandler {
     AtvService $atvService,
     AtvSchema $atvSchema,
     GrantsProfileService $grantsProfileService,
-    LoggerChannelFactory $loggerChannelFactory,
+    LoggerChannelFactoryInterface $loggerChannelFactory,
     Messenger $messenger,
     EventsService $eventsService,
     Connection $datababse,

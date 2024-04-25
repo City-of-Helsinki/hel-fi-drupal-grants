@@ -7,6 +7,7 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Routing\Access\AccessInterface;
 use Drupal\Core\Utility\Error;
@@ -46,7 +47,7 @@ class WebformAdminRouteAccessCheck implements AccessInterface {
    */
   public function __construct(
     WebformAccessCheckService $webformAccessCheckService,
-    LoggerChannelFactory $loggerFactory) {
+    LoggerChannelFactoryInterface $loggerFactory) {
     $this->webformAccessCheckService = $webformAccessCheckService;
     $this->logger = $loggerFactory->get('grants_industries');
   }

@@ -5,6 +5,7 @@ namespace Drupal\grants_handler;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 
@@ -21,9 +22,9 @@ class FormLockService {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory|LoggerChannelInterface|LoggerChannel
+   * @var LoggerChannelInterface
    */
-  protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Constructs the FormLockService.
@@ -36,9 +37,9 @@ class FormLockService {
    *   The logger factory.
    */
   public function __construct(
-    private Connection $database,
-    private HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-    LoggerChannelFactory $loggerFactory,
+    private readonly Connection $database,
+    private readonly HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    LoggerChannelFactoryInterface $loggerFactory,
   ) {
     $this->logger = $loggerFactory->get('grants_handler_lock_service');
   }

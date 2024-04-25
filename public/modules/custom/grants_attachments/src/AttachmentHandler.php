@@ -7,6 +7,8 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -54,7 +56,7 @@ class AttachmentHandler {
    *
    * @var \Drupal\Core\Logger\LoggerChannel
    */
-  protected LoggerChannel $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Show messages messages.
@@ -103,7 +105,7 @@ class AttachmentHandler {
    *
    * @var \Drupal\file\FileStorage
    */
-  private $fileStorage;
+  private \Drupal\file\FileStorage|\Drupal\Core\Entity\EntityStorageInterface $fileStorage;
 
   /**
    * Attached file id's.
@@ -140,11 +142,14 @@ class AttachmentHandler {
    *   Audit log mandate errors.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function __construct(
     AttachmentRemover $grants_attachments_attachment_remover,
     Messenger $messenger,
-    LoggerChannelFactory $loggerChannelFactory,
+    LoggerChannelFactoryInterface $loggerChannelFactory,
     AtvService $atvService,
     GrantsProfileService $grantsProfileService,
     AtvSchema $atvSchema,
