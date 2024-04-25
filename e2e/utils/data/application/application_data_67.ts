@@ -472,7 +472,7 @@ const baseFormRegisteredCommunity_67: FormData = {
             value: '[name="files[vuosikokouksen_poytakirja_attachment]"]',
             resultValue: '.form-item-vuosikokouksen-poytakirja-attachment a',
           },
-          value: ATTACHMENTS.MUU_LIITE,
+          value: ATTACHMENTS.VUOSIKOKOUKSEN_POYTAKIRJA,
           viewPageSelector: '.form-item-vuosikokouksen-poytakirja',
           viewPageFormatter: viewPageFormatFilePath,
         },
