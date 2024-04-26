@@ -516,6 +516,15 @@ function hdbt_subtheme_preprocess_html(&$variables): void {
   $current_route = \Drupal::routeMatch();
   $route_name = $current_route->getRouteName();
 
+  if (
+    isset($variables['node_type']) &&
+    $variables['node_type'] === 'service' &&
+    \Drupal::currentUser()->isAuthenticated()
+  ) {
+    $redirectService = \Drupal::service('grants_mandate_redirect.service');
+    $redirectService->maybeSaveServicePage();
+  }
+
   if ($route_name == 'grants_oma_asiointi.front' || $route_name == 'grants_profile.show') {
     $variables['attributes']['class'][] = 'page--oma-asiointi';
   }

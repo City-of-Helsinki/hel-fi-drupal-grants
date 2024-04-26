@@ -89,6 +89,7 @@ class ApplicantMandateForm extends FormBase {
     $tOpts = ['context' => 'grants_mandate'];
 
     $userData = $this->helsinkiProfiiliUserData->getUserData();
+    $this->redirectService->handlePossibleServicePageRedirection();
 
     $profileOptions = [
       'new' => $this->t('Add new Unregistered community or group', [], $tOpts),

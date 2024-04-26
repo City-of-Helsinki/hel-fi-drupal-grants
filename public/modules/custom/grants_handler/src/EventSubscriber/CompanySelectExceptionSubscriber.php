@@ -37,6 +37,8 @@ class CompanySelectExceptionSubscriber implements EventSubscriberInterface {
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
+   * @param \Drupal\grants_mandate\GrantsMandateRedirectService $redirectService
+   *   Redirect service.
    */
   public function __construct(
     MessengerInterface $messenger,

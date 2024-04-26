@@ -12,6 +12,8 @@ services:
     class: Drupal\grants_mandate\GrantsMandateRedirectService
     arguments: [
         '@request_stack',
+        '@grants_profile.service',
+        '@current_route_match'
     ]
   grants_mandate.handle_mandate_errors:
     class: Drupal\grants_mandate\EventSubscriber\GrantsMandateExceptionSubscriber
