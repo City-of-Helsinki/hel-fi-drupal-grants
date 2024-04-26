@@ -46,7 +46,7 @@ third_party_options:
       code: KUVAKEHA
       dataDefinition:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaKehaDefinition
-        definitionId: grants_metadata_kaskoyleis
+        definitionId: grants_metadata_kuvakeha
       labels:
         fi: 'Kulttuurin kehittämisavustukset'
         en: 'Development grants for culture'
