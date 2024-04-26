@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManager;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -94,9 +95,9 @@ class ApplicationHandler {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel $logger;
+  protected LoggerChannel|LoggerChannelInterface $logger;
 
   /**
    * Show messages.
@@ -887,7 +888,7 @@ class ApplicationHandler {
     else {
       $submissionObject = reset($result);
     }
-    if ($submissionObject) {
+    if (!empty($submissionObject)) {
 
       $dataDefinition = self::getDataDefinition($document->getType());
 
@@ -915,7 +916,7 @@ class ApplicationHandler {
    * @param bool $refetch
    *   Force refetch from ATV.
    *
-   * @return Drupal\helfi_atv\AtvDocument
+   * @return \Drupal\helfi_atv\AtvDocument
    *   ATV Document
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
@@ -928,7 +929,6 @@ class ApplicationHandler {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
     $grantsProfileService = \Drupal::service('grants_profile.service');
     $selectedCompany = $grantsProfileService->getSelectedRoleData();
 
@@ -936,13 +936,13 @@ class ApplicationHandler {
     if ($selectedCompany == NULL) {
       throw new CompanySelectException('User not authorised');
     }
-    /** @var Drupal\helfi_atv\AtvDocument[] $document */
     try {
       $sParams = [
         'transaction_id' => $applicationNumber,
         'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
       ];
 
+      /** @var \Drupal\helfi_atv\AtvDocument[] $document */
       $document = $atvService->searchDocuments(
         $sParams,
         $refetch
@@ -2088,13 +2088,13 @@ class ApplicationHandler {
     string $applicationNumber,
     string $saveIdToValidate): string {
 
-    if ($submissionData == NULL || empty($submissionData)) {
+    if (empty($submissionData)) {
       if ($webform_submission == NULL) {
         $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
       }
       $submissionData = $webform_submission->getData();
     }
-    if ($submissionData == NULL || empty($submissionData)) {
+    if (empty($submissionData)) {
       $this->logger->log('info', 'No submissiondata when trying to validate saveid: %application_number @saveid', [
         '%application_number' => $applicationNumber,
         '@saveid' => $saveIdToValidate,

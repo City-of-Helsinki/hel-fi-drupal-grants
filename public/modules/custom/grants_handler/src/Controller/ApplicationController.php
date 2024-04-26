@@ -16,6 +16,7 @@ use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\grants_metadata\InputmaskHandler;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
@@ -200,7 +201,7 @@ class ApplicationController extends ControllerBase {
   /**
    * Print Drupal messages according to application status.
    *
-   * @var string $status
+   * @param string $status
    *  Status string from method.
    */
   public function showMessageForDataStatus(string $status) {
@@ -527,6 +528,7 @@ class ApplicationController extends ControllerBase {
     $isSubventionType = FALSE;
     $subventionType = '';
     try {
+      /** @var AtvDocument $atv_document */
       $atv_document = ApplicationHandler::atvDocumentFromApplicationNumber($submission_id);
     }
     catch (\Exception $e) {
