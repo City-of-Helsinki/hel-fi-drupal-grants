@@ -153,10 +153,10 @@ class AttachmentHandlerHelper {
       case '':
       case 'new':
         if (isset($field['isDeliveredLater'])) {
-          $retval['isDeliveredLater'] = $field['isDeliveredLater'] === "1";
+          $retval['isDeliveredLater'] = in_array($field['isDeliveredLater'], ['1', 'true']);
         }
         if (isset($field['isIncludedInOtherFile'])) {
-          $retval['isIncludedInOtherFile'] = $field['isIncludedInOtherFile'] === "1";
+          $retval['isIncludedInOtherFile'] = in_array($field['isIncludedInOtherFile'], ['1', 'true']);
         }
         $retval['isNewAttachment'] = TRUE;
         break;
