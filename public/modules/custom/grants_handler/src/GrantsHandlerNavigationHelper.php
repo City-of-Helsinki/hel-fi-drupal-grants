@@ -73,13 +73,6 @@ class GrantsHandlerNavigationHelper {
   protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
 
   /**
-   * Drupal user account.
-   *
-   * @var \Drupal\Core\Session\AccountProxy
-   */
-  protected $currentUser;
-
-  /**
    * DB result cache.
    *
    * @var array
@@ -95,7 +88,6 @@ class GrantsHandlerNavigationHelper {
     EntityTypeManagerInterface $entity_type_manager,
     FormBuilderInterface $form_builder,
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-    AccountProxy $currentUser,
   ) {
 
     $this->database = $datababse;
@@ -103,7 +95,6 @@ class GrantsHandlerNavigationHelper {
     $this->entityTypeManager = $entity_type_manager;
     $this->formBuilder = $form_builder;
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
-    $this->currentUser = $currentUser;
 
     $this->cache = [];
   }
@@ -304,7 +295,7 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::PAGE_VISITED_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => $this->currentUser->id(),
+        'uid' => $this->helsinkiProfiiliUserData->getCurrentUser()->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => $page,
         'page' => $page,
@@ -356,7 +347,7 @@ class GrantsHandlerNavigationHelper {
   public function logErrors(WebformSubmissionInterface $webformSubmission, array $errors, string $page) {
 
     $wfId = $webformSubmission->id();
-    // Get outta here if the submission hasn't been saved yet.
+    // Get out from here if the submission hasn't been saved yet.
     if ($wfId == NULL) {
       return;
     }
@@ -374,7 +365,7 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::ERROR_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => $this->currentUser->id(),
+        'uid' => $this->helsinkiProfiiliUserData->getCurrentUser()->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => serialize($errors),
         'page' => $page,

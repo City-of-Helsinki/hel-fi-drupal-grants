@@ -465,8 +465,7 @@ class GrantsHandler extends WebformHandlerBase {
    */
   public function preCreate(array &$values) {
 
-    $currentUser = \Drupal::currentUser();
-    $currentUserRoles = $currentUser->getRoles();
+    $currentUserRoles = $this->currentUser->getRoles();
 
     if (in_array('helsinkiprofiili', $currentUserRoles)) {
 
@@ -493,8 +492,7 @@ class GrantsHandler extends WebformHandlerBase {
   public function prepareForm(WebformSubmissionInterface $webform_submission, $operation, FormStateInterface $form_state): void {
     $tOpts = ['context' => 'grants_handler'];
 
-    $currentUser = \Drupal::currentUser();
-    $currentUserRoles = $currentUser->getRoles();
+    $currentUserRoles = $this->currentUser->getRoles();
 
     // If user is not authenticated via HP we don't do anything here.
     if (!in_array('helsinkiprofiili', $currentUserRoles)) {
@@ -643,8 +641,7 @@ class GrantsHandler extends WebformHandlerBase {
     }
     $tOpts = ['context' => 'grants_handler'];
 
-    $user = \Drupal::currentUser();
-    $roles = $user->getRoles();
+    $roles = $this->currentUser->getRoles();
 
     if (!in_array('helsinkiprofiili', $roles)) {
       return;
@@ -1368,8 +1365,7 @@ class GrantsHandler extends WebformHandlerBase {
         ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
     }
 
-    $lockService = \Drupal::service('grants_handler.form_lock_service');
-    $lockService->releaseApplicationLock($this->applicationNumber);
+    $this->formLockService->releaseApplicationLock($this->applicationNumber);
 
     $redirectResponse = new RedirectResponse($redirectUrl->toString());
     $this->applicationHandler->clearCache($this->applicationNumber);
