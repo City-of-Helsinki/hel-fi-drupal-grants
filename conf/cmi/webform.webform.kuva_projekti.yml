@@ -911,7 +911,7 @@ elements: |-
               value: registered_community
       markup_01:
         '#type': webform_markup
-        '#markup': 'Koskien koko hanketta, johon avustusta haetaan.'
+        '#markup': 'Kirjaa talousarvioon kaikki hankkeen tulot ja menot kokonaisuudessaan. Älä siis kirjaa vain niitä menoja, jotka on tarkoitus kattaa haetulla avustuksella.'
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
