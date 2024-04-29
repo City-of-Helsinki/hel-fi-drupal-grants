@@ -86,7 +86,7 @@ class GrantsHandlerNavigationHelper {
     MessengerInterface $messenger,
     EntityTypeManagerInterface $entity_type_manager,
     FormBuilderInterface $form_builder,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
 
     $this->database = $datababse;
@@ -294,7 +294,7 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::PAGE_VISITED_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => \Drupal::currentUser()->id(),
+        'uid' => $this->helsinkiProfiiliUserData->getCurrentUser()->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => $page,
         'page' => $page,
@@ -346,7 +346,7 @@ class GrantsHandlerNavigationHelper {
   public function logErrors(WebformSubmissionInterface $webformSubmission, array $errors, string $page) {
 
     $wfId = $webformSubmission->id();
-    // Get outta here if the submission hasn't been saved yet.
+    // Get out from here if the submission hasn't been saved yet.
     if ($wfId == NULL) {
       return;
     }
@@ -364,7 +364,7 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::ERROR_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => \Drupal::currentUser()->id(),
+        'uid' => $this->helsinkiProfiiliUserData->getCurrentUser()->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => serialize($errors),
         'page' => $page,

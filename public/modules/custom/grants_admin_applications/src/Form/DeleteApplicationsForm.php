@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @phpstan-consistent-constructor
  */
-class DeleteApplicationsForm extends FormBase {
+final class DeleteApplicationsForm extends FormBase {
 
   /**
    * Access to ATV.

@@ -200,8 +200,8 @@ class ApplicationController extends ControllerBase {
   /**
    * Print Drupal messages according to application status.
    *
-   * @var string $status
-   *  Status string from method.
+   * @param string $status
+   *   Status string from method.
    */
   public function showMessageForDataStatus(string $status) {
     $message = NULL;
@@ -527,6 +527,7 @@ class ApplicationController extends ControllerBase {
     $isSubventionType = FALSE;
     $subventionType = '';
     try {
+      /** @var \Drupal\helfi_atv\AtvDocument $atv_document */
       $atv_document = ApplicationHandler::atvDocumentFromApplicationNumber($submission_id);
     }
     catch (\Exception $e) {
