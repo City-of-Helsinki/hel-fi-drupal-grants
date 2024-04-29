@@ -110,10 +110,10 @@ class ApplicantMandateForm extends FormBase {
     $form['info'] = [
       '#markup' => '<p>' .
       $this->t('Before proceeding to the grant application, you should
-         choose an applicant role. You can continue applying as an individual
-          or switch to applying on behalf of the community. When you choose to
-           apply on behalf of a registered community, you will be transferred
-            to Suomi.fi business authorization.', [], $tOpts) . '</p>',
+choose an applicant role. You can continue applying as an individual
+or switch to applying on behalf of the community. When you choose to
+apply on behalf of a registered community, you will be transferred
+to Suomi.fi business authorization.', [], $tOpts) . '</p>',
     ];
     $form['actions'] = [
       '#type' => 'actions',
@@ -129,8 +129,8 @@ class ApplicantMandateForm extends FormBase {
       '#icon' => 'company',
       '#role' => $this->t('Registered community', [], $tOpts),
       '#role_description' => $this->t('Registered community is,
-       for example, a company, non-profit organization,
-        organization or association', [], $tOpts),
+for example, a company, non-profit organization,
+organization or association', [], $tOpts),
     ];
     $form['actions']['registered_community']['submit'] = [
       '#type' => 'submit',

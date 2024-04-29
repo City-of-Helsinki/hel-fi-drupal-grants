@@ -512,7 +512,6 @@ class ApplicationHandler {
 
     if (in_array($submissionStatus, [
       $applicationStatuses['SUBMITTED'],
-      $applicationStatuses['SENT'],
       $applicationStatuses['RECEIVED'],
       $applicationStatuses['PREPARING'],
       $applicationStatuses['PENDING'],
