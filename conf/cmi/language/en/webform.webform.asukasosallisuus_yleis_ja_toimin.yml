@@ -16,7 +16,7 @@ elements: |
     '#markup': 'Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.'
   email:
     '#title': 'Email address'
-    '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyv&auml;t viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
+    '#help': 'Provide the email address to which you want the messages and notifications related to this application to be sent and which is actively read.'
   contact_person_section:
     '#title': 'Contact person for the application'
   contact_person:
