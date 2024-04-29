@@ -1133,7 +1133,6 @@ class GrantsHandler extends WebformHandlerBase {
 
       $violations = $this->applicationHandler->validateApplication(
           $applicationData,
-          $form,
           $form_state,
           $webform_submission
         );
