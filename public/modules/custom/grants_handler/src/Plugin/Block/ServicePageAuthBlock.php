@@ -30,6 +30,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("Service Page Auth Block"),
  *   category = @Translation("Custom")
  * )
+ *
+ * @phpstan-consistent-constructor
  */
 class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
@@ -136,6 +138,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   protected function blockAccess(AccountInterface $account): AccessResultNeutral|AccessResult|AccessResultAllowed|AccessResultInterface {
+    $access = FALSE;
 
     try {
       $access = $this->checkFormAccess();
@@ -158,7 +161,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
 
     // No webform reference, no need for this block.
     if (!$webformId) {
-      return;
+      return [];
     }
     // Create link for new application.
     $applicationUrl = Url::fromRoute(

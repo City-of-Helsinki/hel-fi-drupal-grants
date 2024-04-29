@@ -565,6 +565,10 @@ test.describe('KUVAPROJ(48)', () => {
     await selectRole(page, 'UNREGISTERED_COMMUNITY');
   });
 
+  test.afterAll(async() => {
+    await page.close();
+  });
+
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
 
   for (const [key, obj] of testDataArray) {

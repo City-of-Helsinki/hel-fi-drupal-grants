@@ -939,7 +939,8 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-submit',
-          }
+          },
+          viewPageSkipValidation: true
         },
       },
       itemsToRemove: [],

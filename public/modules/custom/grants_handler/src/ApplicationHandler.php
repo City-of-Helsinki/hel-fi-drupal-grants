@@ -372,7 +372,6 @@ class ApplicationHandler {
     if (in_array($submissionStatus, [
       $applicationStatuses['DRAFT'],
       $applicationStatuses['SUBMITTED'],
-      $applicationStatuses['SENT'],
       $applicationStatuses['RECEIVED'],
       $applicationStatuses['PREPARING'],
     ])) {
@@ -388,7 +387,7 @@ class ApplicationHandler {
    * application period is over, unless handler has changed the status
    * to processing or something else.
    *
-   * @param \Drupal\webform\Entity\WebformSubmission|null $webform_submission
+   * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
    *   Submission in question.
    *
    * @return bool

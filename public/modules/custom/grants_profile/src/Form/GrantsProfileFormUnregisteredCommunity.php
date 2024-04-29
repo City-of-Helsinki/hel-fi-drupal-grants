@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Profile form.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 

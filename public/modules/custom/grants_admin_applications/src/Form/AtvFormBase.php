@@ -85,6 +85,15 @@ abstract class AtvFormBase extends FormBase {
     $headers['X-hki-applicationNumber'] = $applicationId;
 
     $content = $atvDoc->getContent();
+    $status = $atvDoc->getStatus();
+    $content['formUpdate'] = TRUE;
+
+    // First imports cannot be with TRUE values, so set it as false for
+    // SUBMITTED & DRAFT. @see ApplicationHandler::getFormUpdate comments.
+    if (in_array($status, ['SUBMITTED', 'DRAFT'])) {
+      $content['formUpdate'] = FALSE;
+    }
+
     $myJSON = Json::encode($content);
 
     // Usually we set drafts to submitted state before sending to integrations,
@@ -94,7 +103,6 @@ abstract class AtvFormBase extends FormBase {
     $password = getenv('AVUSTUS2_PASSWORD');
 
     try {
-
       $headers['X-hki-saveId'] = $saveId;
       self::updateSaveIdRecord($applicationId, $saveId);
 
@@ -115,6 +123,14 @@ abstract class AtvFormBase extends FormBase {
       $body = $res->getBody()->getContents();
       $messenger->addStatus('Integration response: ' . $body);
       $messenger->addStatus('Updated saveId to: ' . $saveId);
+
+      $eventService = \Drupal::service('grants_handler.events_service');
+      $eventService->logEvent(
+        $applicationId,
+        'HANDLER_RESEND_APP',
+        t('Application resent from Drupal Admin UI', [], ['context' => 'grants_handler']),
+        $applicationId
+      );
 
       $logger->info(
         'Application resend - Integration status: @status - Response: @response',

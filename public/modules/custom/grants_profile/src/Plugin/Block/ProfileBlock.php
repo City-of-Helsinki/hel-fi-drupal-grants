@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("Profile block"),
  *   category = @Translation("Profile"),
  * )
+ * @phpstan-consistent-constructor
  */
 class ProfileBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
