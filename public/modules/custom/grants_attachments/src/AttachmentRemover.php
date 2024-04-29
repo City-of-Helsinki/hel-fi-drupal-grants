@@ -271,18 +271,23 @@ class AttachmentRemover {
    */
   private function purgeInactiveSessionDirectories(string $schema, array $activeSessions): void {
     $directoryToClear = $this->fileSystem->realpath($schema);
+    if (!is_dir($directoryToClear)) {
+      return;
+    }
 
-    if (is_dir($directoryToClear)) {
-      $sessionDirectories = array_diff(scandir($directoryToClear), ['.', '..']);
+    $directories = scandir($directoryToClear);
+    if (!$directories) {
+      return;
+    }
 
-      foreach ($sessionDirectories as $sessionDirectory) {
+    $sessionDirectories = array_diff($directories, ['.', '..']);
+    foreach ($sessionDirectories as $sessionDirectory) {
 
-        // The directories are named after hashed session IDs.
-        // If a session isn't active, we remove any files associated with it.
-        if (!in_array($sessionDirectory, $activeSessions)) {
-          $sessionDirectoryPath = "$directoryToClear/$sessionDirectory";
-          $this->removeSessionDirectory($sessionDirectoryPath);
-        }
+      // The directories are named after hashed session IDs.
+      // If a session isn't active, we remove any files associated with it.
+      if (!in_array($sessionDirectory, $activeSessions)) {
+        $sessionDirectoryPath = "$directoryToClear/$sessionDirectory";
+        $this->removeSessionDirectory($sessionDirectoryPath);
       }
     }
   }
@@ -297,12 +302,17 @@ class AttachmentRemover {
    *   A path to a session directory.
    */
   private function removeSessionDirectory(string $sessionDirectoryPath): void {
-    $sessionAttachments = array_diff(scandir($sessionDirectoryPath), ['.', '..']);
+    $directoryContent = scandir($sessionDirectoryPath);
 
-    foreach ($sessionAttachments as $sessionFilename) {
-      $fileUri = "$sessionDirectoryPath/$sessionFilename";
-      $this->removeSessionAttachment($fileUri);
+    if ($directoryContent) {
+      $sessionAttachments = array_diff($directoryContent, ['.', '..']);
+
+      foreach ($sessionAttachments as $sessionFilename) {
+        $fileUri = "$sessionDirectoryPath/$sessionFilename";
+        $this->removeSessionAttachment($fileUri);
+      }
     }
+
     $this->loggerChannel->notice("Removing session directory: $sessionDirectoryPath");
     @rmdir($sessionDirectoryPath);
   }
@@ -322,14 +332,14 @@ class AttachmentRemover {
 
     if ($fileEntity) {
       try {
-        $this->loggerChannel->notice("Removing file entity for URI: $fileUri");
+        $this->loggerChannel->notice("Removing file entity with URI: $fileUri");
         $fileEntity->delete();
       } catch (\Exception $e) {
         $this->loggerChannel->error('Error purging leftover attachments: ' . $e->getMessage());
         $this->messenger->addError('Error purging leftover attachments');
       }
     } else {
-      $this->loggerChannel->notice("Removing file for URI: $fileUri");
+      $this->loggerChannel->notice("Removing file with URI: $fileUri");
       @unlink($fileUri);
     }
   }
