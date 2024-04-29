@@ -190,7 +190,6 @@ class GrantsHandlerNavigationHelper {
       }
       $this->cache[$webformId]['errors'] = $data;
     }
-
     return $data[$page] ?? $data;
   }
 
@@ -237,7 +236,7 @@ class GrantsHandlerNavigationHelper {
     }
     $query = $this->database->select(self::TABLE, 'l');
     $query->condition('sid', $webformSubmission->id());
-    $cacheKey = $webformSubmission->id();
+    $cacheKey = $webformSubmission->getWebform()->id();
     if (isset($this->cache[$cacheKey]['visits'])) {
       $submission_log = $this->cache[$cacheKey]['visits'];
     }
@@ -270,7 +269,6 @@ class GrantsHandlerNavigationHelper {
    * @throws \Exception
    */
   public function logPageVisit(WebformSubmissionInterface $webformSubmission, ?string $page) {
-
     // Set the page to the current page if it is empty.
     if (empty($page)) {
       $page = $this->getCurrentPage($webformSubmission);
@@ -284,7 +282,6 @@ class GrantsHandlerNavigationHelper {
     }
 
     $data = $webformSubmission->getData();
-
     // Only log the page if they haven't already visited it.
     if (!$hasVisitedPage) {
       $userData = $this->helsinkiProfiiliUserData->getUserData();
@@ -321,7 +318,7 @@ class GrantsHandlerNavigationHelper {
   public function logPageErrors(WebformSubmissionInterface $webformSubmission, FormStateInterface $form_state) {
     // Get form errors for this page.
     $form_errors = $form_state->getErrors();
-    $current_page = $webformSubmission->getCurrentPage();
+    $current_page = $this->getCurrentPage($webformSubmission);
     if (empty($form_errors)) {
       $this->deleteSubmissionLogs($webformSubmission, self::ERROR_OPERATION, $current_page);
     }
@@ -353,7 +350,7 @@ class GrantsHandlerNavigationHelper {
     if (!empty($errors)) {
 
       if (empty($page)) {
-        $page = $webformSubmission->getCurrentPage();
+        $page = $this->getCurrentPage($webformSubmission);
       }
 
       $userData = $this->helsinkiProfiiliUserData->getUserData();
@@ -371,7 +368,8 @@ class GrantsHandlerNavigationHelper {
         'timestamp' => (string) \Drupal::time()->getRequestTime(),
       ];
       $this->database->insert(self::TABLE)->fields($fields)->execute();
-      $this->cache[$webformSubmission->id()]['errors'] = NULL;
+      $webformId = $webformSubmission->getWebform()->id();
+      $this->cache[$webformId]['errors'] = NULL;
     }
   }
 
