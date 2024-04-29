@@ -64,11 +64,11 @@ msgid "Your mandate does not allow you to use this service."
 msgstr "Ditt medgivande tillåter dig inte att använda denna tjänst."
 
 msgctxt "grants_mandate"
-msgid "Before proceeding to the grant application, you should choose an applicant role. You can continue applying as an individual or switch to applying on behalf of the community. When you choose to apply on behalf of a registered community, you will be transferred to Suomi.fi business authorization."
+msgid "Before proceeding to the grant application, you should\nchoose an applicant role. You can continue applying as an individual\nor switch to applying on behalf of the community. When you choose to\napply on behalf of a registered community, you will be transferred\nto Suomi.fi business authorization."
 msgstr "Innan du går vidare till bidragsansökan bör du välja en sökanderoll. Du kan fortsätta att ansöka som privatperson eller byta till att ansöka på uppdrag av gemenskapen. När du väljer att ansöka på uppdrag av en registrerad gemenskap kommer du att överföras till Suomi.fi företagsauktorisering."
 
 msgctxt "grants_mandate"
-msgid "Registered community is, for example, a company, non-profit organization, organization or association"
+msgid "Registered community is,\nfor example, a company, non-profit organization,\norganization or association"
 msgstr "Registrerad gemenskap är till exempel ett företag, ideell organisation, organisation eller förening"
 
 msgctxt "grants_mandate"

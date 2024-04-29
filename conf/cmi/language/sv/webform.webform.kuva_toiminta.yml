@@ -273,7 +273,7 @@ elements: |
     '#help': '<p>Med uruppförande avser vi ett verk, som uppförs för första gången, ett helt nytt verk. En nypremiär är t.ex. inte ett uruppförande.</p>'
   toteutuneet_ensi_iltojen_maara_helsingissa:
     '#title': 'Antal premiärer i Helsingfors'
-    '#help': '<p>Premiär betyder den första föreställningen av produktionen. Fyll i här premiärerna som äger rum i Helsingfors.</p>'
+    '#help': '<p>Med premiär avser vi den första föreställningen av en produktion. Fyll i de premiärer som sker i Helsingfors.</p>'
   toteutuneet_tila_markup:
     '#markup': "<h4>Öppen verksamhet för publik i Helsingfors</h4>\r\n\r\n<p>Med öppen verksamhet avser vi här t.ex. föreställningar, utställningar, verkstäder eller annan verksamhet, där publiken kan vara delaktig.</p>"
   toteutuneet_tila:
@@ -379,6 +379,7 @@ elements: |
     '#otherCompensations__help': 'Även stadens övriga understöd'
     '#totalIncome__help': 'Anteckna samtliga inkomster, även de understöd som uppgetts i tidigare punkter.'
     '#plannedStateOperativeSubvention__title': 'Statens verksamhetsunderstöd (€)'
+    '#stateOperativeSubvention__title': 'Statens verksamhetsunderstöd (€)'
     '#otherCompensationFromCity__title': 'Helsingfors stads kulturtjänsters verksamhetsstöd (€)'
     '#otherCompensations__title': 'Övriga understöd (€)'
     '#totalIncome__title': 'Inkomster sammanlagt (€)'

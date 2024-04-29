@@ -16,6 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a grants_admin_applications form.
+ *
+ * @phpstan-consistent-constructor
  */
 class DeleteByTransactionIdForm extends FormBase {
 

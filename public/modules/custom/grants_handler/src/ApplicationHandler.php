@@ -13,7 +13,6 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
@@ -96,7 +95,7 @@ class ApplicationHandler {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
   protected LoggerChannelInterface $logger;
 
@@ -470,20 +469,17 @@ class ApplicationHandler {
       return $applicationStatuses['DRAFT'];
     }
 
-    if ($triggeringElement == '::submit') {
-      // Try to update status only if it's allowed.
-      if (self::canSubmissionBeSubmitted($webform_submission, NULL)) {
-        if (
-          $submittedFormData['status'] == 'DRAFT' ||
-          !isset($submittedFormData['status']) ||
-          $submittedFormData['status'] == '') {
-          // If old status is draft or it's not set, we'll update status in
-          // document with HEADER as well.
-          $this->newStatusHeader = $applicationStatuses['SUBMITTED'];
-        }
-
-        return $applicationStatuses['SUBMITTED'];
+    if ($triggeringElement == '::submit' && self::canSubmissionBeSubmitted($webform_submission, NULL)) {
+      if (
+        $submittedFormData['status'] == 'DRAFT' ||
+        !isset($submittedFormData['status']) ||
+        $submittedFormData['status'] == '') {
+        // If old status is draft or it's not set, we'll update status in
+        // document with HEADER as well.
+        $this->newStatusHeader = $applicationStatuses['SUBMITTED'];
       }
+
+      return $applicationStatuses['SUBMITTED'];
     }
 
     // If no other status determined, return existing one without changing.
@@ -517,7 +513,6 @@ class ApplicationHandler {
 
     if (in_array($submissionStatus, [
       $applicationStatuses['SUBMITTED'],
-      $applicationStatuses['SENT'],
       $applicationStatuses['RECEIVED'],
       $applicationStatuses['PREPARING'],
       $applicationStatuses['PENDING'],
@@ -889,7 +884,7 @@ class ApplicationHandler {
     else {
       $submissionObject = reset($result);
     }
-    if ($submissionObject) {
+    if (!empty($submissionObject)) {
 
       $dataDefinition = self::getDataDefinition($document->getType());
 
@@ -917,7 +912,7 @@ class ApplicationHandler {
    * @param bool $refetch
    *   Force refetch from ATV.
    *
-   * @return Drupal\helfi_atv\AtvDocument
+   * @return \Drupal\helfi_atv\AtvDocument
    *   ATV Document
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
@@ -930,7 +925,6 @@ class ApplicationHandler {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
     $grantsProfileService = \Drupal::service('grants_profile.service');
     $selectedCompany = $grantsProfileService->getSelectedRoleData();
 
@@ -938,13 +932,13 @@ class ApplicationHandler {
     if ($selectedCompany == NULL) {
       throw new CompanySelectException('User not authorised');
     }
-    /** @var Drupal\helfi_atv\AtvDocument[] $document */
     try {
       $sParams = [
         'transaction_id' => $applicationNumber,
         'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
       ];
 
+      /** @var \Drupal\helfi_atv\AtvDocument[] $document */
       $document = $atvService->searchDocuments(
         $sParams,
         $refetch
@@ -1056,8 +1050,6 @@ class ApplicationHandler {
    *
    * @param \Drupal\Core\TypedData\TypedDataInterface $applicationData
    *   Typed data object.
-   * @param array $form
-   *   Form array.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state object.
    * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
@@ -1068,7 +1060,6 @@ class ApplicationHandler {
    */
   public function validateApplication(
     TypedDataInterface $applicationData,
-    array &$form,
     FormStateInterface &$formState,
     WebformSubmission $webform_submission
   ): ConstraintViolationListInterface {
@@ -1297,16 +1288,19 @@ class ApplicationHandler {
     // Data must match the format of typed data, not the webform format.
     // Community address data defined in
     // grants_metadata/src/TypedData/Definition/ApplicationDefinitionTrait.
-    if (isset($submissionData["community_address"]["community_street"]) && !empty($submissionData["community_address"]["community_street"])) {
+    if (isset($submissionData["community_address"]["community_street"]) &&
+      !empty($submissionData["community_address"]["community_street"])) {
       $submissionData["community_street"] = $submissionData["community_address"]["community_street"];
     }
     if (isset($submissionData["community_address"]["community_city"]) && !empty($submissionData["community_address"]["community_city"])) {
       $submissionData["community_city"] = $submissionData["community_address"]["community_city"];
     }
-    if (isset($submissionData["community_address"]["community_post_code"]) && !empty($submissionData["community_address"]["community_post_code"])) {
+    if (isset($submissionData["community_address"]["community_post_code"]) &&
+      !empty($submissionData["community_address"]["community_post_code"])) {
       $submissionData["community_post_code"] = $submissionData["community_address"]["community_post_code"];
     }
-    if (isset($submissionData["community_address"]["community_country"]) && !empty($submissionData["community_address"]["community_country"])) {
+    if (isset($submissionData["community_address"]["community_country"]) &&
+      !empty($submissionData["community_address"]["community_country"])) {
       $submissionData["community_country"] = $submissionData["community_address"]["community_country"];
     }
 
@@ -2090,13 +2084,13 @@ class ApplicationHandler {
     string $applicationNumber,
     string $saveIdToValidate): string {
 
-    if ($submissionData == NULL || empty($submissionData)) {
+    if (empty($submissionData)) {
       if ($webform_submission == NULL) {
         $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
       }
       $submissionData = $webform_submission->getData();
     }
-    if ($submissionData == NULL || empty($submissionData)) {
+    if (empty($submissionData)) {
       $this->logger->log('info', 'No submissiondata when trying to validate saveid: %application_number @saveid', [
         '%application_number' => $applicationNumber,
         '@saveid' => $saveIdToValidate,
@@ -2140,15 +2134,14 @@ class ApplicationHandler {
 
     $applicationEvents = EventsService::filterEvents($submissionData['events'] ?? [], 'INTEGRATION_INFO_APP_OK');
 
-    if (!in_array($saveIdToValidate, $applicationEvents['event_targets'])) {
-      if (isset($submissionData['status']) && $submissionData['status'] != 'DRAFT') {
-        $this->logger->log('info', 'Data not saved to Avus. %application_number ATV:@saveid, Local: %local_save_id', [
-          '%application_number' => $applicationNumber,
-          '%local_save_id' => $latestSaveid,
-          '@saveid' => $saveIdToValidate,
-        ]);
-        return 'DATA_NOT_SAVED_AVUS2';
-      }
+    if (!in_array($saveIdToValidate, $applicationEvents['event_targets']) &&
+      isset($submissionData['status']) && $submissionData['status'] != 'DRAFT') {
+      $this->logger->log('info', 'Data not saved to Avus. %application_number ATV:@saveid, Local: %local_save_id', [
+        '%application_number' => $applicationNumber,
+        '%local_save_id' => $latestSaveid,
+        '@saveid' => $saveIdToValidate,
+      ]);
+      return 'DATA_NOT_SAVED_AVUS2';
     }
 
     $attachmentEvents = EventsService::filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
@@ -2161,25 +2154,11 @@ class ApplicationHandler {
       if ($fileField == NULL) {
         continue;
       }
-      if (self::isMulti($fileField)) {
-        foreach ($fileField as $muu_liite) {
-          if (isset($muu_liite['fileName'])) {
-            if (!in_array($muu_liite['fileName'], $attachmentEvents["event_targets"])) {
-              // $nonUploaded++;
-            }
-          }
-        }
-      }
-      else {
-        if (
-          (isset($fileField['fileName']) && !empty($fileField['fileName'])) &&
-          (isset($fileField['fileStatus']) && $fileField['fileStatus'] !== 'justUploaded')
+      if (!self::isMulti($fileField) && !empty($fileField['fileName']) &&
+          (isset($fileField['fileStatus']) && $fileField['fileStatus'] !== 'justUploaded') &&
+          !in_array($fileField['fileName'], $attachmentEvents["event_targets"])
         ) {
-          if (!in_array($fileField['fileName'], $attachmentEvents["event_targets"])) {
-            $nonUploaded++;
-          }
-        }
-
+        $nonUploaded++;
       }
     }
 
@@ -2262,12 +2241,6 @@ class ApplicationHandler {
   /**
    * Gets webform & submission with data and determines access.
    *
-   * @param \Drupal\Core\Session\AccountInterface $account
-   *   User account.
-   * @param string $operation
-   *   Operation we check access against.
-   * @param \Drupal\webform\Entity\Webform $webform
-   *   Webform object.
    * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
    *   Submission object.
    *
@@ -2276,7 +2249,7 @@ class ApplicationHandler {
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function singleSubmissionAccess(AccountInterface $account, string $operation, Webform $webform, WebformSubmission $webform_submission): bool {
+  public function singleSubmissionAccess(WebformSubmission $webform_submission): bool {
 
     // If we have account number, load details.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
