@@ -12,7 +12,6 @@ use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
@@ -1051,8 +1050,6 @@ class ApplicationHandler {
    *
    * @param \Drupal\Core\TypedData\TypedDataInterface $applicationData
    *   Typed data object.
-   * @param array $form
-   *   Form array.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state object.
    * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
@@ -2161,8 +2158,8 @@ class ApplicationHandler {
           (isset($fileField['fileStatus']) && $fileField['fileStatus'] !== 'justUploaded') &&
           !in_array($fileField['fileName'], $attachmentEvents["event_targets"])
         ) {
-          $nonUploaded++;
-        }
+        $nonUploaded++;
+      }
     }
 
     if ($nonUploaded !== 0) {
