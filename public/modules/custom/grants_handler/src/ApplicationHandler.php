@@ -469,20 +469,17 @@ class ApplicationHandler {
       return $applicationStatuses['DRAFT'];
     }
 
-    if ($triggeringElement == '::submit') {
-      // Try to update status only if it's allowed.
-      if (self::canSubmissionBeSubmitted($webform_submission, NULL)) {
-        if (
-          $submittedFormData['status'] == 'DRAFT' ||
-          !isset($submittedFormData['status']) ||
-          $submittedFormData['status'] == '') {
-          // If old status is draft or it's not set, we'll update status in
-          // document with HEADER as well.
-          $this->newStatusHeader = $applicationStatuses['SUBMITTED'];
-        }
-
-        return $applicationStatuses['SUBMITTED'];
+    if ($triggeringElement == '::submit' && self::canSubmissionBeSubmitted($webform_submission, NULL)) {
+      if (
+        $submittedFormData['status'] == 'DRAFT' ||
+        !isset($submittedFormData['status']) ||
+        $submittedFormData['status'] == '') {
+        // If old status is draft or it's not set, we'll update status in
+        // document with HEADER as well.
+        $this->newStatusHeader = $applicationStatuses['SUBMITTED'];
       }
+
+      return $applicationStatuses['SUBMITTED'];
     }
 
     // If no other status determined, return existing one without changing.
@@ -1066,7 +1063,6 @@ class ApplicationHandler {
    */
   public function validateApplication(
     TypedDataInterface $applicationData,
-    array &$form,
     FormStateInterface &$formState,
     WebformSubmission $webform_submission
   ): ConstraintViolationListInterface {
@@ -1295,16 +1291,19 @@ class ApplicationHandler {
     // Data must match the format of typed data, not the webform format.
     // Community address data defined in
     // grants_metadata/src/TypedData/Definition/ApplicationDefinitionTrait.
-    if (isset($submissionData["community_address"]["community_street"]) && !empty($submissionData["community_address"]["community_street"])) {
+    if (isset($submissionData["community_address"]["community_street"]) &&
+      !empty($submissionData["community_address"]["community_street"])) {
       $submissionData["community_street"] = $submissionData["community_address"]["community_street"];
     }
     if (isset($submissionData["community_address"]["community_city"]) && !empty($submissionData["community_address"]["community_city"])) {
       $submissionData["community_city"] = $submissionData["community_address"]["community_city"];
     }
-    if (isset($submissionData["community_address"]["community_post_code"]) && !empty($submissionData["community_address"]["community_post_code"])) {
+    if (isset($submissionData["community_address"]["community_post_code"]) &&
+      !empty($submissionData["community_address"]["community_post_code"])) {
       $submissionData["community_post_code"] = $submissionData["community_address"]["community_post_code"];
     }
-    if (isset($submissionData["community_address"]["community_country"]) && !empty($submissionData["community_address"]["community_country"])) {
+    if (isset($submissionData["community_address"]["community_country"]) &&
+      !empty($submissionData["community_address"]["community_country"])) {
       $submissionData["community_country"] = $submissionData["community_address"]["community_country"];
     }
 
@@ -2138,15 +2137,14 @@ class ApplicationHandler {
 
     $applicationEvents = EventsService::filterEvents($submissionData['events'] ?? [], 'INTEGRATION_INFO_APP_OK');
 
-    if (!in_array($saveIdToValidate, $applicationEvents['event_targets'])) {
-      if (isset($submissionData['status']) && $submissionData['status'] != 'DRAFT') {
-        $this->logger->log('info', 'Data not saved to Avus. %application_number ATV:@saveid, Local: %local_save_id', [
-          '%application_number' => $applicationNumber,
-          '%local_save_id' => $latestSaveid,
-          '@saveid' => $saveIdToValidate,
-        ]);
-        return 'DATA_NOT_SAVED_AVUS2';
-      }
+    if (!in_array($saveIdToValidate, $applicationEvents['event_targets']) &&
+      isset($submissionData['status']) && $submissionData['status'] != 'DRAFT') {
+      $this->logger->log('info', 'Data not saved to Avus. %application_number ATV:@saveid, Local: %local_save_id', [
+        '%application_number' => $applicationNumber,
+        '%local_save_id' => $latestSaveid,
+        '@saveid' => $saveIdToValidate,
+      ]);
+      return 'DATA_NOT_SAVED_AVUS2';
     }
 
     $attachmentEvents = EventsService::filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
@@ -2159,26 +2157,12 @@ class ApplicationHandler {
       if ($fileField == NULL) {
         continue;
       }
-      if (self::isMulti($fileField)) {
-        foreach ($fileField as $muu_liite) {
-          if (isset($muu_liite['fileName'])) {
-            if (!in_array($muu_liite['fileName'], $attachmentEvents["event_targets"])) {
-              // $nonUploaded++;
-            }
-          }
-        }
-      }
-      else {
-        if (
-          (isset($fileField['fileName']) && !empty($fileField['fileName'])) &&
-          (isset($fileField['fileStatus']) && $fileField['fileStatus'] !== 'justUploaded')
+      if (!self::isMulti($fileField) && !empty($fileField['fileName']) &&
+          (isset($fileField['fileStatus']) && $fileField['fileStatus'] !== 'justUploaded') &&
+          !in_array($fileField['fileName'], $attachmentEvents["event_targets"])
         ) {
-          if (!in_array($fileField['fileName'], $attachmentEvents["event_targets"])) {
-            $nonUploaded++;
-          }
+          $nonUploaded++;
         }
-
-      }
     }
 
     if ($nonUploaded !== 0) {
@@ -2260,12 +2244,6 @@ class ApplicationHandler {
   /**
    * Gets webform & submission with data and determines access.
    *
-   * @param \Drupal\Core\Session\AccountInterface $account
-   *   User account.
-   * @param string $operation
-   *   Operation we check access against.
-   * @param \Drupal\webform\Entity\Webform $webform
-   *   Webform object.
    * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
    *   Submission object.
    *
@@ -2274,7 +2252,7 @@ class ApplicationHandler {
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function singleSubmissionAccess(AccountInterface $account, string $operation, Webform $webform, WebformSubmission $webform_submission): bool {
+  public function singleSubmissionAccess(WebformSubmission $webform_submission): bool {
 
     // If we have account number, load details.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
