@@ -19,6 +19,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("Grants Front Banner"),
  *   category = @Translation("Oma Asiointi")
  * )
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsFrontBannerBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
