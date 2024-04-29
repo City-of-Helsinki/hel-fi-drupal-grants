@@ -192,7 +192,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     if ($this->currentUser->isAuthenticated()) {
       $link = Link::fromTextAndUrl($mandateText, $mandateUrl);
       $text = $this->t('Change your role and return to make the
-       application with role which the application is instructed to be made.', [], $tOpts);
+application with role which the application is instructed to be made.', [], $tOpts);
       $title = $this->t('Change role', [], $tOpts);
     }
     else {

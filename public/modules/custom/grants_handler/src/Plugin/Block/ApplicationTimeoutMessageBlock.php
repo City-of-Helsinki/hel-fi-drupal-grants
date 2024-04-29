@@ -57,7 +57,7 @@ class ApplicationTimeoutMessageBlock extends BlockBase {
       '#message_heading' => $this->t('The application period for this grant has closed.', [], ['context' => 'grants_handler']),
       '#message_body' =>
       $this->t('You can no longer submit an application because the
-        application period for this grant has closed.',
+application period for this grant has closed.',
           [],
           ['context' => 'grants_handler']),
       '#attached' => [
