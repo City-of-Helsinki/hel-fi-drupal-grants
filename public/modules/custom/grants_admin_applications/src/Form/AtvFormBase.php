@@ -33,9 +33,9 @@ abstract class AtvFormBase extends FormBase {
   /**
    * Update resent application save id to database.
    *
-   * @param mixed $applicationNumber
+   * @param string $applicationNumber
    *   The application number.
-   * @param mixed $saveId
+   * @param string $saveId
    *   The new save id.
    */
   public static function updateSaveIdRecord(string $applicationNumber, string $saveId) {
@@ -68,7 +68,7 @@ abstract class AtvFormBase extends FormBase {
   /**
    * Attempts to resend ATV document through integrations.
    *
-   * @param Drupal\helfi_atv\AtvDocument $atvDoc
+   * @param \Drupal\helfi_atv\AtvDocument $atvDoc
    *   The document to be resent.
    * @param string $applicationId
    *   Application id.

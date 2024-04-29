@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Provides a grants_admin_applications form.
  */
-class DeleteApplicationsForm extends FormBase {
+final class DeleteApplicationsForm extends FormBase {
 
   /**
    * Access to ATV.

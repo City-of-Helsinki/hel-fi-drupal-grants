@@ -3,6 +3,7 @@
 namespace Drupal\grants_handler\EventSubscriber;
 
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,6 +21,8 @@ class GuzzleHttpErrorExceptionSubscriber implements EventSubscriberInterface {
    * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
+
+  use StringTranslationTrait;
 
   /**
    * Constructs event subscriber.
