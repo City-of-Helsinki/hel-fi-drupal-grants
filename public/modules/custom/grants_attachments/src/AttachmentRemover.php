@@ -224,75 +224,113 @@ class AttachmentRemover {
   }
 
   /**
-   * Removes all files from attachment path.
+   * The purgeAllAttachments functions.
+   *
+   * This function purges all directories and attachments
+   * inside $pathsToClear that don't belong to an active session.
    */
   public function purgeAllAttachments(): void {
-
-    /** @var \Drupal\file\FileStorage $fileStorage */
-    $fileStorage = $this->fileStorage;
-    $database = $this->connection;
-    $query = $database->query("SELECT sid FROM {sessions}");
-    $result = $query->fetchAll();
-
-    $activeSessions = array_map(fn($item) => $item->sid, $result);
-
+    $activeSessions = $this->fetchActiveSessions();
     $pathsToClear = [
       "private://grants_attachments",
       "private://grants_messages",
       "private://grants_profile",
     ];
-    // Loop all private filepaths.
-    foreach ($pathsToClear as $schema) {
-      // Figure out realpath of the schema folder.
-      $attachmentPath = $this->fileSystem->realpath($schema);
-      if (is_dir($attachmentPath)) {
-        // Scan folder.
-        $sessionFolders = array_diff(scandir($attachmentPath), ['.', '..']);
-        // Loop session folders.
-        foreach ($sessionFolders as $sessionHash) {
-          // Remove files only for inactive sessions.
-          if (!in_array($sessionHash, $activeSessions)) {
-            // Create path for session hash.
-            $sessionPath = $attachmentPath . '/' . $sessionHash;
 
-            // Scan directory for this path.
-            $pathScan = scandir($sessionPath);
-            if (is_array($pathScan)) {
-              $sessionItems = array_diff($pathScan, ['.', '..']);
-            }
-            else {
-              $sessionItems = [];
-            }
-            // If we have items.
-            foreach ($sessionItems as $sessionFilename) {
-              // Try to load file entity.
-              $fileUri = $sessionPath . '/' . $sessionFilename;
-              $fileArray = $fileStorage->loadByProperties([
-                'uri' => $fileUri,
-              ]);
-              /** @var \Drupal\file\Entity\File $fileEntity */
-              $fileEntity = reset($fileArray);
-              // If entity does not exist.
-              if (!$fileEntity) {
-                // Just remove file.
-                @unlink($fileUri);
-              }
-              else {
-                // If it exist, remove file and entity.
-                try {
-                  $fileEntity->delete();
-                }
-                catch (\Exception $e) {
-                  $this->loggerChannel->error('Error purging leftover attachments');
-                  $this->messenger->addError('Error purging leftover attachments');
-                }
-              }
-            }
-            // Remove session folder after all have been deleted.
-            @rmdir($sessionPath);
-          }
+    foreach ($pathsToClear as $schema) {
+      $this->purgeInactiveSessionDirectories($schema, $activeSessions);
+    }
+  }
+
+  /**
+   * The fetchActiveSessions function.
+   *
+   * This function fetches the active session IDs
+   * from the DB. Not that the session IDs are stored
+   * and returned in a hashed format.
+   *
+   * @return array
+   *   Active session IDs.
+   */
+  private function fetchActiveSessions(): array {
+    $result = $this->connection->query("SELECT sid FROM {sessions}")->fetchAll();
+    return array_map(fn($item) => $item->sid, $result);
+  }
+
+  /**
+   * The purgeInactiveSessionDirectories function.
+   *
+   * This function purges directories and their attachments
+   * that don't belong to an active session. This is done
+   * by calling removeSessionDirectory(), which calls removeSessionAttachment().
+   *
+   * @param string $schema
+   *   The base schema path.
+   * @param array $activeSessions
+   *   List of active session IDs.
+   */
+  private function purgeInactiveSessionDirectories(string $schema, array $activeSessions): void {
+    $directoryToClear = $this->fileSystem->realpath($schema);
+
+    if (is_dir($directoryToClear)) {
+      $sessionDirectories = array_diff(scandir($directoryToClear), ['.', '..']);
+
+      foreach ($sessionDirectories as $sessionDirectory) {
+
+        // The directories are named after hashed session IDs.
+        // If a session isn't active, we remove any files associated with it.
+        if (!in_array($sessionDirectory, $activeSessions)) {
+          $sessionDirectoryPath = "$directoryToClear/$sessionDirectory";
+          $this->removeSessionDirectory($sessionDirectoryPath);
         }
       }
+    }
+  }
+
+  /**
+   * The removeSessionDirectory function.
+   *
+   * This function removes a session directory and all the files
+   * inside it by calling removeSessionAttachment().
+   *
+   * @param string $sessionDirectoryPath
+   *   A path to a session directory.
+   */
+  private function removeSessionDirectory(string $sessionDirectoryPath): void {
+    $sessionAttachments = array_diff(scandir($sessionDirectoryPath), ['.', '..']);
+
+    foreach ($sessionAttachments as $sessionFilename) {
+      $fileUri = "$sessionDirectoryPath/$sessionFilename";
+      $this->removeSessionAttachment($fileUri);
+    }
+    $this->loggerChannel->notice("Removing session directory: $sessionDirectoryPath");
+    @rmdir($sessionDirectoryPath);
+  }
+
+  /**
+   * The removeSessionAttachment function.
+   *
+   * This function deletes a file entity if it exists.
+   * Otherwise, delete the file directly.
+   *
+   * @param string $fileUri
+   *   URI of the file to delete.
+   */
+  private function removeSessionAttachment(string $fileUri): void {
+    $fileEntities = $this->fileStorage->loadByProperties(['uri' => $fileUri]);
+    $fileEntity = reset($fileEntities);
+
+    if ($fileEntity) {
+      try {
+        $this->loggerChannel->notice("Removing file entity for URI: $fileUri");
+        $fileEntity->delete();
+      } catch (\Exception $e) {
+        $this->loggerChannel->error('Error purging leftover attachments: ' . $e->getMessage());
+        $this->messenger->addError('Error purging leftover attachments');
+      }
+    } else {
+      $this->loggerChannel->notice("Removing file for URI: $fileUri");
+      @unlink($fileUri);
     }
   }
 
