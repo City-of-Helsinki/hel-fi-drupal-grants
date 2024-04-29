@@ -133,20 +133,10 @@ class ApplicationController extends ControllerBase {
       return AccessResult::forbidden('No submission found');
     }
 
-    $uri = $this->request->getCurrentRequest()->getUri();
-
-    $operation = 'view';
-    if (str_ends_with($uri, '/edit')) {
-      $operation = 'edit';
-    }
-
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
       $this->applicationHandler->singleSubmissionAccess(
-        $account,
-        $operation,
-        $webformObject,
         $webform_submissionObject
       ));
   }
@@ -179,20 +169,10 @@ class ApplicationController extends ControllerBase {
       return AccessResult::forbidden('No webform found');
     }
 
-    $uri = $this->request->getCurrentRequest()->getUri();
-
-    $operation = 'view';
-    if (str_ends_with($uri, '/edit')) {
-      $operation = 'edit';
-    }
-
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
       $this->applicationHandler->singleSubmissionAccess(
-        $account,
-        $operation,
-        $webform,
         $webform_submission
       ));
   }
