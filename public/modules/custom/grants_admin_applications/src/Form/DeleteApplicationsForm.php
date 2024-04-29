@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provides a grants_admin_applications form.
+ *
+ * @phpstan-consistent-constructor
  */
 class DeleteApplicationsForm extends FormBase {
 

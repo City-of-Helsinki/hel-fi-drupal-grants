@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provides a grants_admin_resend_applications form.
+ *
+ * @phpstan-consistent-constructor
  */
 class ResendApplicationsForm extends AtvFormBase {
 
@@ -256,7 +258,7 @@ class ResendApplicationsForm extends AtvFormBase {
 
     $messenger->addStatus(t(
       'Selected messages has been resent, processing the messages might take a few moments'
-    ), [], self::$tOpts);
+    , [], self::$tOpts));
     $formState->setRebuild();
   }
 
