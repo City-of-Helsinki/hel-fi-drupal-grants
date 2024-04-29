@@ -223,7 +223,7 @@ function _module_change_text_field_max_length($entity_type_id, $field_name, $new
     'SELECT data FROM {config} WHERE name = :name',
     [':name' => $name]
   )->fetchField();
-  $data = \Drupal\Component\Serialization\Json::decode($result);
+  $data = Json::decode($result);
   $data['settings']['max_length'] = $new_length;
 
   // Write settings back to the database.
@@ -265,7 +265,6 @@ function grants_handler_update_9001(&$sandbox) {
     ->createTable('grants_handler_saveids', $schema['grants_handler_saveids']);
 }
 
-use Drupal\Component\Serialization\Json;
 use Drupal\Core\Database\Database;
 use Drupal\node\Entity\Node;
 use Drupal\webform\Entity\Webform;

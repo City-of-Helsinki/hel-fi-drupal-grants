@@ -69,7 +69,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = $container->get('helfi_atv.atv_service');
     $instance->atvService = $atvService;
-    
+
     /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
     $instance->atvSchema = \Drupal::service('grants_metadata.atv_schema');
 
