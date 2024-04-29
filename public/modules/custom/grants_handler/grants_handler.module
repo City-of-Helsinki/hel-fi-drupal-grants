@@ -387,7 +387,8 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
     }
   }
   if (get_class($form_object) == 'Drupal\webform\WebformSubmissionForm') {
-    /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
+
+    /** @var \Drupal\webform\WebformSubmissionInterface $webformSubmission */
     $webformSubmission = $form_object->getEntity();
 
     // Get data from webform.
@@ -459,6 +460,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
       $grantsProfileService = \Drupal::service('grants_profile.service');
 
       $selectedCompany = $grantsProfileService->getSelectedRoleData();
+      $profileData = [];
       try {
         $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany ?? '');
       }
@@ -664,13 +666,13 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
 
   if (isset($form['pages'])) {
     foreach ($form['pages'] as $key => $value) {
-      if (!strstr($key, '#')) {
+      if (!str_contains($key, '#')) {
         $exploded_title = explode("'", $form['pages'][$key]['#attributes']['title']);
         if (isset($exploded_title[1])) {
           $stripped_title = $exploded_title[1];
-          if (isset($stripped_title) && strlen($stripped_title) > 0) {
+          if (strlen($stripped_title) > 0) {
             $form['pages'][$key]['#attributes']['title'] = $stripped_title;
-            if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
+            if ((!empty($all_errors[$key]))) {
               // Add an info to the title if there are errors.
               $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], $tOpts) . ')';
             }
@@ -1032,8 +1034,6 @@ function grants_handler_preprocess_grants_handler_webform_print_submission(&$var
 function grants_handler_preprocess_webform_submission_messages(&$variables) {
   $submission = $variables['submission'];
   $submissionData = $submission->getData();
-
-  /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
 
   $messages = [];
   if (isset($submissionData['messages']) && is_array($submissionData['messages'])) {
@@ -1499,6 +1499,8 @@ function grants_handler_preprocess_application_list_item(&$variables) {
  */
 function grants_handler_preprocess_application_status_tag(&$variables): void {
   try {
+    $submissionData = [];
+
     if ($variables['submission_data']) {
       $submissionData = $variables['submission_data'];
     }

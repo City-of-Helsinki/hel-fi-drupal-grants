@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystem;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\file\FileUsage\FileUsageInterface;
@@ -41,9 +42,9 @@ class AttachmentRemover {
   /**
    * Logger Factory.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel $loggerChannel;
+  protected LoggerChannel|LoggerChannelInterface $loggerChannel;
 
   /**
    * The current user.

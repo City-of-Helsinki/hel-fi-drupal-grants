@@ -26,7 +26,7 @@ class EventsService {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Drupal\Core\Logger\LoggerChannelFactory|\Drupal\Core\Logger\LoggerChannelInterface|\Drupal\Core\Logger\LoggerChannel
    */
   protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
 

@@ -37,7 +37,7 @@ class MessageService {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Drupal\Core\Logger\LoggerChannelFactory|\Drupal\Core\Logger\LoggerChannelInterface|\Drupal\Core\Logger\LoggerChannel
    */
   protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
 
@@ -90,7 +90,7 @@ class MessageService {
    *   The helfi_helsinki_profiili.userdata service.
    * @param \GuzzleHttp\ClientInterface $http_client
    *   Client to post data.
-   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
+   * @param \Drupal\Core\Logger\LoggerChannelFactory|\Drupal\Core\Logger\LoggerChannelInterface|\Drupal\Core\Logger\LoggerChannel $loggerFactory
    *   Log things.
    * @param \Drupal\grants_handler\EventsService $eventsService
    *   Log events to atv document.
@@ -100,7 +100,7 @@ class MessageService {
   public function __construct(
     HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata,
     ClientInterface $http_client,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $loggerFactory,
     EventsService $eventsService,
     AtvService $atvService
   ) {

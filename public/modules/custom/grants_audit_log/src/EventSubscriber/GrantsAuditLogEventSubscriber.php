@@ -62,7 +62,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
   /**
    * Validate message in AuditEvent::LOG event.
    *
-   * @param \Drupal\helfi_audit_log\AuditLogEvent $event
+   * @param \Drupal\helfi_audit_log\Event\AuditLogEvent $event
    *   Event to validate.
    */
   public function validate(AuditLogEvent $event) {

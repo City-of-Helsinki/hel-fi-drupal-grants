@@ -7,6 +7,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -52,9 +53,9 @@ class AttachmentHandler {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel $logger;
+  protected LoggerChannel|LoggerChannelInterface $logger;
 
   /**
    * Show messages messages.
@@ -216,7 +217,12 @@ class AttachmentHandler {
   /**
    * Get file fields.
    *
-   * @return string[]
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform.
+   * @param bool $preventKeys
+   *   Should this prevent keys.
+   *
+   * @return array
    *   Attachment fields.
    */
   public static function getAttachmentFieldNamesFromWebform(Webform $webform, $preventKeys = FALSE): array {
@@ -922,11 +928,11 @@ class AttachmentHandler {
    * @param string $applicationNumber
    *   Application number for attachment.
    *
-   * @return \stdClass[]
+   * @return array
    *   Data for JSON.
    *
-   * @throws \Drupal\grants_handler\EventException
    * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\grants_handler\EventException
    */
   public function getAttachmentByFieldValue(
     array $field,
