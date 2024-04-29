@@ -455,3 +455,11 @@ msgstr "Hakuaika ilmoitetaan myöhemmin"
 msgctxt "grants_premises"
 msgid "City"
 msgstr "Postitoimipaikka"
+
+msgctxt "grants_theme"
+msgid "items per page"
+msgstr "kpl sivulla"
+
+msgctxt "grants_theme"
+msgid "Items per page"
+msgstr "Merkintöjä sivua kohti"
