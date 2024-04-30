@@ -96,7 +96,7 @@
       Drupal.dialog($previewDialog, {
         title: Drupal.t('Are you sure you want to leave? Leave without saving.'),
         width: '33%',
-        closeText: Drupal.t('Close'),
+        closeText: Drupal.t('Close', {}, {context: 'grants_handler'}),
         buttons: [
           {
             text: Drupal.t('Leave the application'),

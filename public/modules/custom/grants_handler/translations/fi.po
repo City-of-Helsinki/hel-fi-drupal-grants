@@ -539,6 +539,7 @@ msgstr "Pyyntösi keskeytyi verkkovirheen takia."
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
 
+msgctxt "grants_handler"
 msgid "Close"
 msgstr "Sulje"
 
