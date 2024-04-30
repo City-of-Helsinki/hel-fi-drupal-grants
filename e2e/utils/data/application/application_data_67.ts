@@ -673,6 +673,10 @@ const copyForm: FormDataWithRemoveOptionalProps = {
   title: 'Original copy form',
   testFormCopying: true,
   formPages: {
+    '3_yhteison_tiedot': {
+      items: {},
+      itemsToRemove: ['edit-business-purpose'],
+    },
     'lisatiedot_ja_liitteet': {
       items: {},
       itemsToRemove: [
