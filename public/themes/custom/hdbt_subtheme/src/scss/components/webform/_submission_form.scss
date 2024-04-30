@@ -16,6 +16,7 @@ $breakpoint-xl: 1248px;
 
   .actions {
     display: flex;
+    flex-wrap: wrap;
   }
 
   button {
