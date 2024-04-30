@@ -5,12 +5,12 @@ namespace Drupal\grants_oma_asiointi\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_mandate\Controller\GrantsMandateController;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -18,6 +18,8 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Returns responses for Oma Asiointi routes.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsOmaAsiointiController extends ControllerBase implements ContainerInjectionInterface {
 
@@ -52,9 +54,9 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   /**
    * Logger access.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Psr\Log\LoggerInterface
    */
-  protected LoggerChannel $logger;
+  protected LoggerInterface $logger;
 
   /**
    * The grants_handler.application_handler service.
@@ -131,7 +133,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     }
 
     $grantsProfile = [];
-    /** @var \Drupal\helfi_atv\ATVDcocument | null $grantsProfileDocument */
+
+    /** @var \Drupal\helfi_atv\AtvDocument | null $grantsProfileDocument */
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
     if ($grantsProfileDocument) {
       $grantsProfile = $grantsProfileDocument->getContent();
@@ -146,7 +149,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     $updatedAt = $this->grantsProfileService->getUpdatedAt();
     $notificationShown = $this->grantsProfileService->getNotificationShown();
 
-    $notificationShownTimestamp = (int) ($notificationShown / 1000);
+    $notificationShownTimestamp = ((int) $notificationShown) / 1000;
     $threeMonthsAgoTimestamp = strtotime('-3 months');
 
     $showNotification = FALSE;

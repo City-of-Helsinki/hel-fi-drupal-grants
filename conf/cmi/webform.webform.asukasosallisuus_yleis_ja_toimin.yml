@@ -479,22 +479,6 @@ elements: |-
           class:
             - webform--large
         '#cols': 63
-    actions:
-      '#type': webform_actions
-      '#title': 'Submit button(s)'
-      '#submit__label': Lähetä
-      '#draft__label': 'Tallenna keskeneräisenä'
-      '#wizard_prev__label': '< Edellinen'
-      '#wizard_next__label': 'Seuraava >'
-      '#preview_prev__label': '< Edellinen'
-      '#preview_next__label': 'Esikatseluun >'
-      '#delete_hide': false
-      '#delete__label': 'Poista keskeneräinen'
-      '#delete__attributes':
-        class:
-          - hds-button
-          - hds-button--primary
-      '#delete__dialog': true
   3_yhteison_tiedot:
     '#type': webform_wizard_page
     '#title': '3. Yhteisön toiminta'
@@ -737,6 +721,22 @@ elements: |-
         '#multiple__add_more_button_label': 'Lisää liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
+  actions:
+    '#type': webform_actions
+    '#title': 'Submit button(s)'
+    '#submit__label': Lähetä
+    '#draft__label': 'Tallenna keskeneräisenä'
+    '#wizard_prev__label': '< Edellinen'
+    '#wizard_next__label': 'Seuraava >'
+    '#preview_prev__label': '< Edellinen'
+    '#preview_next__label': 'Esikatseluun >'
+    '#delete_hide': false
+    '#delete__label': 'Poista keskeneräinen'
+    '#delete__attributes':
+      class:
+        - hds-button
+        - hds-button--primary
+    '#delete__dialog': true
 css: ''
 javascript: ''
 settings:
@@ -834,7 +834,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: true
   preview_exclude_empty_checkbox: false
-  draft: all
+  draft: authenticated
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

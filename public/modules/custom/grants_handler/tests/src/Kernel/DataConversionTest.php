@@ -18,7 +18,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
   /**
    * The modules to load to run the test.
    *
-   * @var array
+   * @var array<string>
    */
   protected static $modules = [
     // Drupal modules.

@@ -666,7 +666,7 @@ class GrantsProfileService {
    * This method returns timestamp of the time
    * a profile was last updated.
    *
-   * @return string
+   * @return int|false
    *   Timestamp of last updated at.
    */
   public function getUpdatedAt() {
@@ -706,10 +706,10 @@ class GrantsProfileService {
    * This method sets a timestamp of the time
    * a notification was shown.
    *
-   * @return string
+   * @return bool|AtvDocument
    *   Timestamp of last time notification was shown.
    */
-  public function setNotificationShown($timestamp) {
+  public function setNotificationShown($timestamp): bool|AtvDocument {
     $profileMetadata['notification_shown'] = $timestamp;
 
     return $this->saveGrantsProfile([], $profileMetadata);

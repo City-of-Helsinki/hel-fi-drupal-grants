@@ -7,6 +7,8 @@
 
 /**
  * Implements hook_schema().
+ *
+ * @phpstan-consistent-constructor
  */
 function grants_handler_schema(): array {
   $schema = [];

@@ -1,6 +1,7 @@
 import {Page} from '@playwright/test';
 import {logger} from "./logger";
 import {existsSync, readFileSync} from 'fs';
+import {logCurrentUrl} from "./helpers";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON";
 type Mode = "new" | "existing";
@@ -24,6 +25,7 @@ const AUTH_FILE_PATH = '.auth/user.json';
 const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
   await checkLoginStateAndLogin(page);
   await page.goto("/fi/asiointirooli-valtuutus");
+  await logCurrentUrl(page);
 
   const roleIsLoggedIn = await page.locator("body")
     .evaluate((el, role) => el.classList.contains(`grants-role-${role.toLowerCase()}`), role);
@@ -110,6 +112,7 @@ const selectPrivatePersonRole = async (page: Page) => {
 const login = async (page: Page, SSN?: string) => {
   logger('Logging in...');
   await page.goto('/fi/user/login');
+  await logCurrentUrl(page);
   await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
   await page.locator("#fakevetuma2").click()
   await page.locator("#hetu_input").fill(SSN ?? process.env.TEST_USER_SSN ?? '');
@@ -202,6 +205,7 @@ const getSessionCookie = (): boolean | any => {
 const sessionIsValid = async (page: Page): Promise<boolean> => {
   logger('Visit user page to check session validity...');
   await page.goto('/fi/user');
+  await logCurrentUrl(page);
   const actualUrl = page.url();
 
   if (!actualUrl.includes('/asiointirooli-valtuutus') &&

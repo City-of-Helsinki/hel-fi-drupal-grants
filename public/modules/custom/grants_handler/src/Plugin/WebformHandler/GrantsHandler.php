@@ -94,7 +94,7 @@ class GrantsHandler extends WebformHandlerBase {
   /**
    * Application acting year options.
    *
-   * @var string
+   * @var array
    */
   protected array $applicationActingYears = [];
 
@@ -197,30 +197,39 @@ class GrantsHandler extends WebformHandlerBase {
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
 
-    /** @var \Drupal\Core\Session\AccountProxyInterface */
-    $instance->currentUser = $container->get('current_user');
+    /** @var \Drupal\Core\Session\AccountProxyInterface $currentUser */
+    $currentUser = $container->get('current_user');
+    $instance->currentUser = $currentUser;
 
-    /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData */
-    $instance->userExternalData = $container->get('helfi_helsinki_profiili.userdata');
+    /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $userExternalData */
+    $userExternalData = $container->get('helfi_helsinki_profiili.userdata');
+    $instance->userExternalData = $userExternalData;
 
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $instance->grantsProfileService = $container->get('grants_profile.service');
+    $grantsProfileService = $container->get('grants_profile.service');
+    $instance->grantsProfileService = $grantsProfileService;
 
-    /** @var \Drupal\Core\Datetime\DateFormatter */
-    $instance->dateFormatter = $container->get('date.formatter');
+    /** @var \Drupal\Core\Datetime\DateFormatter $dateFormatter */
+    $dateFormatter = $container->get('date.formatter');
+    $instance->dateFormatter = $dateFormatter;
 
-    /** @var \Drupal\grants_attachments\AttachmentHandler */
-    $instance->attachmentHandler = $container->get('grants_attachments.attachment_handler');
+    /** @var \Drupal\grants_attachments\AttachmentHandler $attachmentHandler */
+    $attachmentHandler = $container->get('grants_attachments.attachment_handler');
+    $instance->attachmentHandler = $attachmentHandler;
     $instance->attachmentHandler->setDebug($instance->isDebug());
 
-    /** @var \Drupal\grants_handler\ApplicationHandler */
-    $instance->applicationHandler = $container->get('grants_handler.application_handler');
+    /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
+    $applicationHandler = $container->get('grants_handler.application_handler');
+    $instance->applicationHandler = $applicationHandler;
     $instance->applicationHandler->setDebug($instance->isDebug());
 
-    /** @var \Drupal\grants_handler\GrantsHandlerNavigationHelper */
-    $instance->grantsFormNavigationHelper = $container->get('grants_handler.navigation_helper');
+    /** @var \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper */
+    $grantsFormNavigationHelper = $container->get('grants_handler.navigation_helper');
+    $instance->grantsFormNavigationHelper = $grantsFormNavigationHelper;
 
-    $instance->formLockService = $container->get('grants_handler.form_lock_service');
+    /** @var \Drupal\grants_handler\FormLockService $formLockService */
+    $formLockService = $container->get('grants_handler.form_lock_service');
+    $instance->formLockService = $formLockService;
 
     $instance->triggeringElement = '';
     $instance->applicationNumber = '';
@@ -312,6 +321,7 @@ class GrantsHandler extends WebformHandlerBase {
    * Calculate & set total values from added elements in webform.
    */
   protected function setTotals(): void {
+    $tempTotal = 0;
 
     if (isset($this->submittedFormData['myonnetty_avustus']) &&
       is_array($this->submittedFormData['myonnetty_avustus'])) {
@@ -434,7 +444,7 @@ class GrantsHandler extends WebformHandlerBase {
         if ($webform_submission->serial()) {
 
           $submissionData = $webform_submission->getData();
-          $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($submission);
+          $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($webform_submission);
 
           $this->applicationNumber = $applicationNumber;
           $this->submittedFormData['application_number'] = $this->applicationNumber;
@@ -455,8 +465,7 @@ class GrantsHandler extends WebformHandlerBase {
    */
   public function preCreate(array &$values) {
 
-    $currentUser = \Drupal::currentUser();
-    $currentUserRoles = $currentUser->getRoles();
+    $currentUserRoles = $this->currentUser->getRoles();
 
     if (in_array('helsinkiprofiili', $currentUserRoles)) {
 
@@ -483,8 +492,7 @@ class GrantsHandler extends WebformHandlerBase {
   public function prepareForm(WebformSubmissionInterface $webform_submission, $operation, FormStateInterface $form_state): void {
     $tOpts = ['context' => 'grants_handler'];
 
-    $currentUser = \Drupal::currentUser();
-    $currentUserRoles = $currentUser->getRoles();
+    $currentUserRoles = $this->currentUser->getRoles();
 
     // If user is not authenticated via HP we don't do anything here.
     if (!in_array('helsinkiprofiili', $currentUserRoles)) {
@@ -506,7 +514,7 @@ class GrantsHandler extends WebformHandlerBase {
       ]);
       $redirect = new RedirectResponse($url->toString());
       $redirect->send();
-      $this->redirect = TRUE;
+      $this->isRedirect = TRUE;
       return;
     }
 
@@ -582,7 +590,7 @@ class GrantsHandler extends WebformHandlerBase {
   /**
    * Get application acting years.
    *
-   * @param Drupal\webform\Entity\Webform $webform
+   * @param \Drupal\webform\Entity\Webform $webform
    *   Webform.
    *
    * @return array
@@ -628,13 +636,12 @@ class GrantsHandler extends WebformHandlerBase {
    * @throws \Exception
    */
   public function alterForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission): void {
-    if ($this->redirect) {
+    if ($this->isRedirect) {
       return;
     }
     $tOpts = ['context' => 'grants_handler'];
 
-    $user = \Drupal::currentUser();
-    $roles = $user->getRoles();
+    $roles = $this->currentUser->getRoles();
 
     if (!in_array('helsinkiprofiili', $roles)) {
       return;
@@ -1015,7 +1022,6 @@ class GrantsHandler extends WebformHandlerBase {
     }
     catch (\Exception $e) {
       $current_errors = [];
-      // @todo add logger
     }
     return $current_errors;
   }
@@ -1127,7 +1133,6 @@ class GrantsHandler extends WebformHandlerBase {
 
       $violations = $this->applicationHandler->validateApplication(
           $applicationData,
-          $form,
           $form_state,
           $webform_submission
         );
@@ -1141,7 +1146,7 @@ class GrantsHandler extends WebformHandlerBase {
 
         // If we HAVE errors, then refresh them from the.
         $this->messenger()
-          ->addError('Validation failed, please check inputs.', [], $tOpts);
+          ->addError($this->t('Validation failed, please check inputs.', [], $tOpts));
       }
     }
   }
@@ -1205,7 +1210,7 @@ class GrantsHandler extends WebformHandlerBase {
    */
   public function preSave(WebformSubmissionInterface $webform_submission) {
     // don't save ip address.
-    $webform_submission->remote_addr->value = '';
+    $webform_submission->setRemoteAddr('');
 
     if (empty($this->submittedFormData)) {
       // Submission data is not saved in storage controller,
@@ -1214,7 +1219,7 @@ class GrantsHandler extends WebformHandlerBase {
 
     }
 
-    // If for some reason applicant type is not present, make sure it get's
+    // If for some reason applicant type is not present, make sure it gets
     // added otherwise validation fails.
     if (!isset($this->submittedFormData['applicant_type'])) {
       $this->submittedFormData['applicant_type'] = $this->grantsProfileService->getApplicantType();
@@ -1296,7 +1301,7 @@ class GrantsHandler extends WebformHandlerBase {
         $this->submittedFormData);
     }
     catch (ReadOnlyException $e) {
-      // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-545
+      // Fix here: https://helsinkisolutionoffice.atlassian.net/browse/AU-545
     }
     $applicationUploadStatus = FALSE;
     $redirectUrl = Url::fromRoute(
@@ -1359,8 +1364,7 @@ class GrantsHandler extends WebformHandlerBase {
         ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
     }
 
-    $lockService = \Drupal::service('grants_handler.form_lock_service');
-    $lockService->releaseApplicationLock($this->applicationNumber);
+    $this->formLockService->releaseApplicationLock($this->applicationNumber);
 
     $redirectResponse = new RedirectResponse($redirectUrl->toString());
     $this->applicationHandler->clearCache($this->applicationNumber);

@@ -113,7 +113,7 @@ class ProfileConnector {
    * @return array
    *   Profile content with required fields.
    *
-   * @throws \Drupal\grants_profile\GransProfileException
+   * @throws GrantsProfileException
    */
   protected function initGrantsProfileRegisteredCommunity($profileData, array $companyData): array {
     $profileContent = $this->getRegisteredCompanyDataFromYdjhClient($companyData['identifier']);

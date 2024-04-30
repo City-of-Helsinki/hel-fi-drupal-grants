@@ -136,11 +136,24 @@ const waitForTextWithInterval = async (
   }
 }
 
+/**
+ * The logCurrentUrl function.
+ *
+ * This functions logs the current URL of the page.
+ *
+ * @param page
+ *  Playwright page object.
+ */
+const logCurrentUrl = async (page: Page) => {
+  logger('On URL:', page.url());
+}
+
 export {
   slowLocator,
   extractPath,
   hideSlidePopup,
   getApplicationNumberFromBreadCrumb,
   waitForTextWithInterval,
+  logCurrentUrl,
 };
 

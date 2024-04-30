@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Returns responses for Grants Handler routes.
+ *
+ * @phpstan-consistent-constructor
  */
 class MessageController extends ControllerBase {
 
