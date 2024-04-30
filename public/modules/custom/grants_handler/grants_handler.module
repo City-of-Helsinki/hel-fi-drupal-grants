@@ -1440,8 +1440,12 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     strtolower($submissionData["application_number"]),
   ];
 
-  $editApplicationLinkText = Markup::create(t('Edit application', [], $tOpts));
-  $viewApplicationLinkText = Markup::create(t('View application', [], $tOpts));
+  $editApplicationLinkText = Markup::create(
+    t('Edit application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
+  );
+  $viewApplicationLinkText = Markup::create(
+    t('View application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
+  );
 
   $variables['viewApplicationLink'] = Link::fromTextAndUrl($viewApplicationLinkText, $viewApplicationUrl);
   $variables['editApplicationLink'] = Link::fromTextAndUrl($editApplicationLinkText, $editApplicationUrl);
