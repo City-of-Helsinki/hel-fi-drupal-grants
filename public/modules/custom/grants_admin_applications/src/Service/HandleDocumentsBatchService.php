@@ -6,6 +6,7 @@ use Drupal\Core\Batch\BatchBuilder;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -68,7 +69,7 @@ class HandleDocumentsBatchService {
   public function __construct(
     AtvService $atvService,
     MessengerInterface $messenger,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
     ModuleExtensionList $moduleExtensionList) {
     $this->atvService = $atvService;
     $this->messenger = $messenger;

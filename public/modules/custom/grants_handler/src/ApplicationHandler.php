@@ -2084,7 +2084,11 @@ class ApplicationHandler {
 
     if (empty($submissionData)) {
       if ($webform_submission == NULL) {
-        $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
+        try {
+          $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
+        }
+        catch (\Exception $e) {
+        }
       }
       $submissionData = $webform_submission->getData();
     }
