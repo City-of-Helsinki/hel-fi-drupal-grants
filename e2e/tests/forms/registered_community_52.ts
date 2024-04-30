@@ -399,70 +399,35 @@ const formPages: PageHandlers = {
     }
 
     if (items['edit-yhteison-saannot-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-yhteison-saannot-attachment-upload'], 'edit-yhteison-saannot-attachment-upload');
     }
 
     if (items['edit-vahvistettu-tilinpaatos-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.value ?? '',
-        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-vahvistettu-tilinpaatos-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-vahvistettu-tilinpaatos-attachment-upload'], 'edit-vahvistettu-tilinpaatos-attachment-upload');
     }
 
     if (items['edit-vahvistettu-toimintakertomus-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-vahvistettu-toimintakertomus-attachment-upload'].selector?.value ?? '',
-        items['edit-vahvistettu-toimintakertomus-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-vahvistettu-toimintakertomus-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-vahvistettu-toimintakertomus-attachment-upload'], 'edit-vahvistettu-toimintakertomus-attachment-upload');
     }
 
     if (items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.value ?? '',
-        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'], 'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload');
     }
 
     if (items['edit-toimintasuunnitelma-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-toimintasuunnitelma-attachment-upload'].selector?.value ?? '',
-        items['edit-toimintasuunnitelma-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-toimintasuunnitelma-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-toimintasuunnitelma-attachment-upload'], 'edit-toimintasuunnitelma-attachment-upload');
     }
 
     if (items['edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload'].selector?.value ?? '',
-        items['edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload'], 'edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload');
     }
 
     if (items['edit-talousarvio-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-talousarvio-attachment-upload'].selector?.value ?? '',
-        items['edit-talousarvio-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-talousarvio-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-talousarvio-attachment-upload'], 'edit-talousarvio-attachment-upload');
     }
 
     if (items['edit-muu-liite']) {
-      await fillFormField(page, items['edit-muu-liite'], 'edit-muu-liite')
+      await fillFormField(page, items['edit-muu-liite'], 'edit-muu-liite');
     }
 
     if (items['edit-extra-info']) {

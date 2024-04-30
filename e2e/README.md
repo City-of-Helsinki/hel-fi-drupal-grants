@@ -210,3 +210,7 @@ BUSINESS_IDS="7009192-5"
 Execute the script
 make shell > e2e/clean-env.sh
 ```
+
+## Known problems
+
+- Sometimes the test fail because of a problem with uploading attachment to applications or profiles. This can usually be fixed by setting 777 permission on everything inside the /private directory.
