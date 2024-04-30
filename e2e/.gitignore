@@ -6,3 +6,4 @@ playwright/.cache/
 .test_env
 .env
 deleted_documents.txt
+*.zip

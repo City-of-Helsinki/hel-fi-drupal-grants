@@ -61,7 +61,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       $container->get('grants_profile.service'),
       $container->get('session'),
       $container->get('grants_profile.prh_updater_service'),
-      $container->get('grants_handler.form_lock_service')
+      $container->get('grants_handler.form_lock_service'),
     );
   }
 
@@ -112,8 +112,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $isNewGrantsProfile = $grantsProfile->getTransactionId();
 
     // Handle multiple editors.
-    $lockService = \Drupal::service('grants_handler.form_lock_service');
-    $locked = $lockService->isProfileFormLocked($grantsProfile->getId());
+    $locked = $this->lockService->isProfileFormLocked($grantsProfile->getId());
     if ($locked) {
       $form['#disabled'] = TRUE;
       $this->messenger()
@@ -364,13 +363,10 @@ later when completing the grant application.',
 
     $grantsProfileData = $storage['grantsProfileData'];
 
-    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $grantsProfileService = \Drupal::service('grants_profile.service');
-
     $profileDataArray = $grantsProfileData->toArray();
 
     try {
-      $success = $grantsProfileService->saveGrantsProfile($profileDataArray);
+      $success = $this->grantsProfileService->saveGrantsProfile($profileDataArray);
     }
     catch (\Exception $e) {
       $success = FALSE;

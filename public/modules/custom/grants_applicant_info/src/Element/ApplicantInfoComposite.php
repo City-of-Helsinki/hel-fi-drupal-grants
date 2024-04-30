@@ -307,10 +307,11 @@ class ApplicantInfoComposite extends WebformCompositeBase {
         'class' => ['grants-handler--prefilled-field'],
       ],
     ];
+    $registrationDate = '';
+
     if (isset($profileContent["registrationDate"])) {
       $regDate = new DrupalDateTime($profileContent["registrationDate"], 'Europe/Helsinki');
       $registrationDate = $regDate->format('d.m.Y');
-      ;
     }
     $elements['registrationDate'] = [
       '#type' => 'textfield',

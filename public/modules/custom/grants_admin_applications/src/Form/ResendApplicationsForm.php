@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provides a grants_admin_resend_applications form.
+ *
+ * @phpstan-consistent-constructor
  */
 class ResendApplicationsForm extends AtvFormBase {
 

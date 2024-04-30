@@ -19,6 +19,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("Grants Front Banner"),
  *   category = @Translation("Oma Asiointi")
  * )
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsFrontBannerBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
@@ -34,14 +36,14 @@ class GrantsFrontBannerBlock extends BlockBase implements ContainerFactoryPlugin
    *
    * @var \Drupal\Core\Session\AccountInterface
    */
-  protected $currentUser;
+  protected AccountInterface $currentUser;
 
   /**
    * The form builder.
    *
    * @var \Drupal\Core\Form\FormBuilder
    */
-  protected $formBuilder;
+  protected FormBuilder $formBuilder;
 
   /**
    * Construct block object.
@@ -92,7 +94,7 @@ class GrantsFrontBannerBlock extends BlockBase implements ContainerFactoryPlugin
     array $configuration,
     $plugin_id,
     $plugin_definition
-  ) {
+  ): static {
     return new static(
       $configuration,
       $plugin_id,
@@ -106,11 +108,10 @@ class GrantsFrontBannerBlock extends BlockBase implements ContainerFactoryPlugin
   /**
    * {@inheritdoc}
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
-  public function build() {
+  public function build(): array {
 
-    // @todo Refactor to support other profile types https://helsinkisolutionoffice.atlassian.net/browse/AU-662
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
 
     $getGrantsProfile = NULL;
