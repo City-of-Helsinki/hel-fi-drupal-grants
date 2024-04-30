@@ -3,7 +3,6 @@
 namespace Drupal\grants_profile;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;

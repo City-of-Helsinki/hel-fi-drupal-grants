@@ -3,16 +3,16 @@
 namespace Drupal\grants_attachments;
 
 use Drupal\Core\Entity\EntityStorageException;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TempStore\TempStoreException;
+use Drupal\file\FileStorage;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventException;
@@ -105,7 +105,7 @@ class AttachmentHandler {
    *
    * @var \Drupal\file\FileStorage
    */
-  private \Drupal\file\FileStorage|\Drupal\Core\Entity\EntityStorageInterface $fileStorage;
+  private FileStorage|EntityStorageInterface $fileStorage;
 
   /**
    * Attached file id's.

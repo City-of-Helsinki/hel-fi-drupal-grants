@@ -3,8 +3,6 @@
 namespace Drupal\grants_handler;
 
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -22,7 +20,7 @@ class FormLockService {
   /**
    * Logger.
    *
-   * @var LoggerChannelInterface
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
   protected LoggerChannelInterface $logger;
 

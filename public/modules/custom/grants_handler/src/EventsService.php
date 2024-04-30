@@ -3,8 +3,6 @@
 namespace Drupal\grants_handler;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_metadata\AtvSchema;
