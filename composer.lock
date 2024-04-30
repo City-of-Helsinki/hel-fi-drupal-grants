@@ -5274,12 +5274,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "452a027017bf5f1997d1c11d442928206eb0eacc"
+                "reference": "bbcdb37940ed2161b641017955ceb44253d5493b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/452a027017bf5f1997d1c11d442928206eb0eacc",
-                "reference": "452a027017bf5f1997d1c11d442928206eb0eacc",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/bbcdb37940ed2161b641017955ceb44253d5493b",
+                "reference": "bbcdb37940ed2161b641017955ceb44253d5493b",
                 "shasum": ""
             },
             "require": {
@@ -5300,7 +5300,7 @@
                 "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/feature/AU-1984-tunnistamo-v3",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2024-04-25T07:42:01+00:00"
+            "time": "2024-04-29T09:10:20+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -5486,15 +5486,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili.git",
-                "reference": "0c8a70d7e067a09916d9a7cfdc44ca9ac550679b"
+                "reference": "8a288d7a9221b466490970e2b901e43e74ce2c3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/0c8a70d7e067a09916d9a7cfdc44ca9ac550679b",
-                "reference": "0c8a70d7e067a09916d9a7cfdc44ca9ac550679b",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/zipball/8a288d7a9221b466490970e2b901e43e74ce2c3f",
+                "reference": "8a288d7a9221b466490970e2b901e43e74ce2c3f",
                 "shasum": ""
             },
             "require": {
+                "drupal/helfi_audit_log": "^0.9",
                 "drupal/helfi_tunnistamo": "^3.0",
                 "firebase/php-jwt": "^6.3"
             },
@@ -5520,7 +5521,7 @@
                 "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/tree/feature/AU-1984-tunnistamo-v3",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-helsinki-profiili/issues"
             },
-            "time": "2024-04-25T07:55:43+00:00"
+            "time": "2024-04-30T07:33:36+00:00"
         },
         {
             "name": "drupal/helfi_platform_config",
