@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_attachments\Element;
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\Xss;
@@ -218,7 +219,7 @@ class GrantsAttachments extends WebformCompositeBase {
   public static function getCompositeElements(array $element): array {
     $tOpts = ['context' => 'grants_attachments'];
 
-    $sessionHash = sha1(\Drupal::service('session')->getId());
+    $sessionHash = Crypt::hashBase64(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_attachments/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 20;
 

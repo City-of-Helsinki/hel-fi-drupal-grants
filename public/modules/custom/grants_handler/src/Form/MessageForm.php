@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_handler\Form;
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AppendCommand;
@@ -188,7 +189,7 @@ class MessageForm extends FormBase {
         '#required' => TRUE,
       ];
 
-      $sessionHash = sha1($this->session->getId());
+      $sessionHash = Crypt::hashBase64($this->session->getId());
       $upload_location = 'private://grants_messages/' . $sessionHash;
 
       $maxFileSizeInBytes = (1024 * 1024) * 20;
