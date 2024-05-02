@@ -156,7 +156,6 @@ class ResendApplicationsForm extends AtvFormBase {
           $this->t('Content'),
           $this->t('Attachments'),
           $this->t('Sent by', [], self::$tOpts),
-          $this->t('Avus2 has received the message*', [], self::$tOpts),
           $this->t('Has been resent', [], self::$tOpts),
           $this->t('Resend this message', [], self::$tOpts),
         ],
@@ -432,7 +431,6 @@ class ResendApplicationsForm extends AtvFormBase {
   public function buildMessages(mixed $messages, array &$form): void {
     foreach ($messages as $message) {
       $resent = isset($message['resent']) && $message['resent'];
-      $avus2Received = isset($message['avus2received']) && $message['avus2received'];
       $senderIsAvus2 = isset($message['sentBy']) && $message['sentBy'] === 'Avustusten kasittelyjarjestelma';
 
       $rowElement = [
@@ -458,11 +456,6 @@ class ResendApplicationsForm extends AtvFormBase {
         })(),
         'sentBy' => [
           '#markup' => $message['sentBy'],
-        ],
-        'avus2received' => [
-          '#markup' => $avus2Received
-            ? $this->t('Yes', [], self::$tOpts)
-            : $this->t('No', [], self::$tOpts),
         ],
         'hasBeenResent' => [
           '#markup' => $resent
