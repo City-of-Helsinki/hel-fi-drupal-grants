@@ -337,11 +337,13 @@ class AttachmentRemover {
       try {
         $this->loggerChannel->notice("Removing file entity with URI: $fileUri");
         $fileEntity->delete();
-      } catch (\Exception $e) {
+      }
+      catch (\Exception $e) {
         $this->loggerChannel->error('Error purging leftover attachments: ' . $e->getMessage());
         $this->messenger->addError('Error purging leftover attachments');
       }
-    } else {
+    }
+    else {
       $this->loggerChannel->notice("Removing file with URI: $fileUri");
       @unlink($fileUri);
     }
