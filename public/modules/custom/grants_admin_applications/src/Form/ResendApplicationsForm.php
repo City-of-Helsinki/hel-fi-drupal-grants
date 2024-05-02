@@ -120,6 +120,12 @@ class ResendApplicationsForm extends AtvFormBase {
     $document = $form_state->getValue('atvdocument');
     $messages = $form_state->getValue('messages');
 
+    if ($document) {
+      $documentArray = json_decode($document, TRUE);
+      $prettyJson = json_encode($documentArray, JSON_PRETTY_PRINT);
+      $document = $prettyJson;
+    }
+
     if ($status) {
       $form['status']['state'] = [
         '#title' => 'Status',
@@ -139,7 +145,6 @@ class ResendApplicationsForm extends AtvFormBase {
         '#type' => 'textarea',
         '#value' => $document,
         '#disabled' => TRUE,
-
       ];
 
       $form['status']['messageList'] = [
@@ -185,6 +190,9 @@ class ResendApplicationsForm extends AtvFormBase {
           ],
         ],
       ];
+
+      // Attach css library.
+      $form['#attached']['library'][] = 'grants_admin_applications/grants_admin_applications.resend_application';
     }
     return $form;
   }
@@ -425,6 +433,7 @@ class ResendApplicationsForm extends AtvFormBase {
     foreach ($messages as $message) {
       $resent = isset($message['resent']) && $message['resent'];
       $avus2Received = isset($message['avus2received']) && $message['avus2received'];
+      $senderIsAvus2 = isset($message['sentBy']) && $message['sentBy'] === 'Avustusten kasittelyjarjestelma';
 
       $rowElement = [
         'id' => [
@@ -460,9 +469,12 @@ class ResendApplicationsForm extends AtvFormBase {
             ? $this->t('Yes', [], self::$tOpts)
             : $this->t('No', [], self::$tOpts),
         ],
-        'resendMessage' => [
+        'resendMessage' => !$senderIsAvus2 ? [
           '#type' => 'checkbox',
           '#return_value' => $message['messageId'],
+        ] : ['#markup' => '',],
+        '#attributes' => [
+          'class' => $senderIsAvus2 ? ['from-avus2'] : ['from-author'],
         ],
       ];
 

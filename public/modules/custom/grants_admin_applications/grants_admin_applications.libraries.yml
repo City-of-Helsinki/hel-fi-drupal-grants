@@ -1,0 +1,5 @@
+grants_admin_applications.resend_application:
+  version: VERSION
+  css:
+    component:
+      css/resend_application.css: { }
