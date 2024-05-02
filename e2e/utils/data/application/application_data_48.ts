@@ -2,7 +2,7 @@ import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker";
 import {ATTACHMENTS} from "../attachment_data";
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
-import {createFormData} from "../../form_helpers";
+import {createFormData} from "../../form_data_helpers";
 import {
   viewPageFormatCurrency,
   viewPageFormatBoolean,
@@ -41,8 +41,17 @@ const baseForm_48: FormData = {
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
+          selector: {
+            type: 'by-label',
+            name: '',
+            value: 'edit-bank-account-account-number-select',
+          },
           value: PROFILE_INPUT_DATA.iban,
-          viewPageSelector: '.form-item-bank-account',
+          viewPageSelectors: [
+            '.application-attachment-list',
+            '.form-item-bank-account',
+            '.form-item-muu-liite'
+          ],
         },
         "edit-community-address-community-address-select": {
           value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
@@ -68,7 +77,13 @@ const baseForm_48: FormData = {
     "2_avustustiedot": {
       items: {
         "edit-acting-year": {
-          value: '2024',
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: '',
+            value: '#edit-acting-year',
+          },
+          viewPageSkipValidation: true,
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
@@ -99,9 +114,8 @@ const baseForm_48: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti',
           },
-          value: faker.lorem.words(30),
+          value: faker.lorem.words(10),
         },
-
         "edit-myonnetty-avustus": {
           role: 'dynamicmultivalue',
           label: '',
@@ -338,6 +352,11 @@ const baseForm_48: FormData = {
         },
         "edit-maara-kaikkiaan": {
           role: 'input',
+          selector: {
+            type: 'data-drupal-selector-sequential',
+            name: '',
+            value: 'edit-maara-kaikkiaan',
+          },
           value: faker.number.int({min: 1000, max: 100000}).toString(),
           viewPageFormatter: viewPageFormatNumber
         },
@@ -362,7 +381,7 @@ const baseForm_48: FormData = {
           value: "0",
           viewPageFormatter: viewPageFormatBoolean
         },
-        'edit-tila': {
+        "edit-tila": {
           role: 'multivalue',
           multi: {
             buttonSelector: {
@@ -546,12 +565,22 @@ const baseForm_48: FormData = {
         },
         "edit-budget-static-income-entryfees": {
           role: 'input',
+          selector: {
+            type: 'data-drupal-selector-sequential',
+            name: '',
+            value: 'edit-budget-static-income-entryfees',
+          },
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-income',
           viewPageFormatter: viewPageFormatCurrency,
         },
         "edit-budget-static-income-sales": {
           role: 'input',
+          selector: {
+            type: 'data-drupal-selector-sequential',
+            name: '',
+            value: 'edit-budget-static-income-sales',
+          },
           value: faker.number.int({min: 1, max: 5000}).toString(),
           viewPageSelector: '.form-item-budget-static-income',
           viewPageFormatter: viewPageFormatCurrency,
@@ -698,22 +727,41 @@ const baseForm_48: FormData = {
           role: 'input',
           value: faker.lorem.sentences(3),
         },
-        'edit-muu-liite-items-0-item-attachment-upload': {
-          role: 'fileupload',
-          selector: {
-            type: 'locator',
-            name: 'data-drupal-selector',
-            value: '[name="files[muu_liite_items_0__item__attachment]"]',
-            resultValue: '.form-item-muu-liite-items-0--item--attachment a',
+        "edit-muu-liite": {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-muu-liite-add-submit',
+              resultValue: 'edit-muu-liite-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'fileupload',
+                  selector: {
+                    type: 'locator',
+                    name: 'data-drupal-selector',
+                    value: '[name="files[muu_liite_items_[INDEX]__item__attachment]"]',
+                    resultValue: '.form-item-muu-liite-items-[INDEX]--item--attachment a',
+                  },
+                  value: ATTACHMENTS.MUU_LIITE,
+                  viewPageFormatter: viewPageFormatFilePath
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-muu-liite-items-[INDEX]-item-description',
+                  },
+                  value: faker.lorem.sentences(1),
+                },
+              ],
+            },
           },
-          value: ATTACHMENTS.MUU_LIITE,
-          viewPageSelector: '.form-item-muu-liite',
-          viewPageFormatter: viewPageFormatFilePath
-        },
-        'edit-muu-liite-items-0-item-description': {
-          role: 'input',
-          value: faker.lorem.sentences(1),
-          viewPageSelector: '.form-item-muu-liite'
         },
         "edit-extra-info": {
           role: 'input',
@@ -904,7 +952,7 @@ const wrongEmail: FormDataWithRemoveOptionalProps = {
     },
   },
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: ääkkösiävaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
   },
 };
 
@@ -952,7 +1000,7 @@ const wrongEmail3: FormDataWithRemoveOptionalProps = {
     },
   },
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite vaaraemaili ei kelpaa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: vaaraemaili ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
   },
 };
 
@@ -981,6 +1029,53 @@ const under5000: FormDataWithRemoveOptionalProps = {
         'edit-toiminta-ekologisuus',
       ],
     },
+  },
+  expectedErrors: {},
+};
+
+const copyForm: FormDataWithRemoveOptionalProps = {
+  title: 'Original copy form',
+  testFormCopying: true,
+  formPages: {
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-muu-liite',
+      ],
+    },
+  },
+  expectedErrors: {},
+};
+
+const fieldSwapForm: FormDataWithRemoveOptionalProps = {
+  title: 'Field swap form',
+  testFieldSwap: true,
+  formPages: {
+    "1_hakijan_tiedot": {
+      items: {},
+      itemsToSwap: [
+        {field: 'edit-bank-account-account-number-select', swapValue: PROFILE_INPUT_DATA.iban2},
+      ]
+    },
+    "2_avustustiedot": {
+      items: {},
+      itemsToSwap: [
+        {field: 'edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti', swapValue: 'The new description!'},
+      ]
+    },
+    "4_suunniteltu_toiminta": {
+      items: {},
+      itemsToSwap: [
+        {field: 'edit-maara-kaikkiaan', swapValue: '1234'},
+      ]
+    },
+    "6_talous": {
+      items: {},
+      itemsToSwap: [
+        {field: 'edit-budget-static-income-entryfees', swapValue: '5678'},
+        {field: 'edit-budget-static-income-sales', swapValue: '999'}
+      ]
+    }
   },
   expectedErrors: {},
 };
@@ -1015,6 +1110,8 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
  */
 const registeredCommunityApplications_48 = {
   draft: baseForm_48,
+  copy: createFormData(baseForm_48, copyForm),
+  swap_fields: createFormData(baseForm_48, fieldSwapForm),
   missing_values: createFormData(baseForm_48, missingValues),
   wrong_email: createFormData(baseForm_48, wrongEmail),
   wrong_email_2: createFormData(baseForm_48, wrongEmail2),

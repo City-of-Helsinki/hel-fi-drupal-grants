@@ -1,5 +1,5 @@
 uuid: bae77892-6e34-4e85-bed7-f5e729e4e4e6
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -13,8 +13,8 @@ settings:
   iss_allowed_domains: ''
   is_production: 0
   auto_login: 0
-  environment_url: 'https://api.hel.fi/sso-test'
-  client_scopes: ''
+  environment_url: 'https://tunnistus.test.hel.ninja/auth/realms/helsinki-tunnistus'
+  client_scopes: 'openid,email'
   client_roles:
     authenticated: '0'
     admin: '0'

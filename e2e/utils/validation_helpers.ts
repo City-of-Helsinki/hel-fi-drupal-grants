@@ -3,6 +3,7 @@ import {logger} from "./logger";
 import {FormField, FormData, FormFieldWithRemove} from "./data/test_data"
 import {viewPageBuildSelectorForItem} from "./view_page_helpers";
 import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
+import {logCurrentUrl} from "./helpers";
 
 /**
  * The validateSubmission function.
@@ -33,30 +34,11 @@ const validateSubmission = async (
   }
 
   const thisStoreData = storedata[formKey];
-  if (thisStoreData.status === 'DRAFT') {
+  if (thisStoreData.status === 'DRAFT' || thisStoreData.status === 'RECEIVED') {
+    logger(`Validating draft application with application ID: ${thisStoreData.applicationId}...`);
     await navigateAndValidateViewPage(page, thisStoreData);
     await validateFormData(page, formDetails);
-  } else {
-    await validateSent(page, formDetails, thisStoreData);
   }
-}
-
-/**
- * The validateSent function.
- *
- * @param page
- *   Page object from Playwright.
- * @param formDetails
- *   The form data.
- * @param thisStoreData
- *   The env form data.
- */
-const validateSent = async (
-  page: Page,
-  formDetails: FormData,
-  thisStoreData: any
-) => {
-  logger('Validate RECEIVED', thisStoreData);
 }
 
 /**
@@ -111,7 +93,7 @@ const validateExistingProfileData = async (
 
   // Grab the hard-coded input data and filter the
   // data depending on the profile type.
-  let profileInputData: ProfileInputData = PROFILE_INPUT_DATA;
+  let profileInputData: Partial<ProfileInputData> = PROFILE_INPUT_DATA;
 
   if (profileType === 'private_person') {
     const privatePersonFields = [
@@ -323,17 +305,28 @@ const validateField = async (
   let rawInputValue = itemField.value
   let formattedInputValue = itemField.viewPageFormatter ? itemField.viewPageFormatter(rawInputValue) : rawInputValue;
 
-  // Get the item's selector.
+  // Get the item's selector or selectors.
+  let itemSelectors: string[] = [];
   let itemSelector = itemField.viewPageSelector ? itemField.viewPageSelector : viewPageBuildSelectorForItem(itemKey);
+
+  // Check for multiple values inside viewPageSelectors.
+  if (itemField.viewPageSelectors) {
+    itemSelectors = itemField.viewPageSelectors;
+  } else {
+    itemSelectors.push(itemSelector);
+  }
 
   // Attempt to locate the item and see if the input value matches the content on the page.
   try {
-    const targetItem = await page.locator(itemSelector);
-    const targetItemText = await targetItem.textContent({ timeout: 1000 });
-    if (targetItemText && targetItemText.includes(formattedInputValue)) {
-      validationSuccessCallback(constructMessage(MessageType.ValidationSuccess, itemKey, rawInputValue, formattedInputValue, itemSelector, targetItemText));
-    } else {
-      validationErrorCallback(constructMessage(MessageType.ValidationError, itemKey, rawInputValue, formattedInputValue, itemSelector, targetItemText));
+    for (const selector of itemSelectors) {
+      const targetItem = await page.locator(selector);
+      const targetItemText = await targetItem.textContent({ timeout: 1000 });
+
+      if (targetItemText && targetItemText.includes(formattedInputValue)) {
+        validationSuccessCallback(constructMessage(MessageType.ValidationSuccess, itemKey, rawInputValue, formattedInputValue, selector, targetItemText));
+      } else {
+        validationErrorCallback(constructMessage(MessageType.ValidationError, itemKey, rawInputValue, formattedInputValue, selector, targetItemText));
+      }
     }
   } catch (error) {
     validationErrorCallback(constructMessage(MessageType.ContentNotFound, itemKey, rawInputValue, formattedInputValue, itemSelector));
@@ -361,6 +354,8 @@ const navigateAndValidateViewPage = async (
   const applicationId = thisStoreData.applicationId;
   const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
   await page.goto(viewPageURL);
+  await logCurrentUrl(page);
+  await page.waitForURL('**/katso');
   const applicationIdContainer = await page.locator('.webform-submission__application_id');
   const applicationIdContainerText = await applicationIdContainer.textContent();
   expect(applicationIdContainerText).toContain(applicationId);
@@ -387,6 +382,7 @@ const navigateAndValidateProfilePage = async (
 
   const profilePageURL = '/fi/oma-asiointi/hakuprofiili';
   await page.goto(profilePageURL);
+  await logCurrentUrl(page);
 
   const headingMap: Record<string, string> = {
     registered_community: 'Yhteisön tiedot avustusasioinnissa',
@@ -399,6 +395,29 @@ const navigateAndValidateProfilePage = async (
 
   await expect(headingContainer, `Failed to locate "${expectedHeading}" on "${profilePageURL}".`).toContainText(expectedHeading);
   logger('Profile data validation on page:', profilePageURL);
+}
+
+/**
+ * The validateHiddenFields function.
+ *
+ * This function checks that the passed in items
+ * in itemsToBeHidden are not visible on a given page.
+ * The functionality is used in tests where the value of
+ * field X alters the visibility of field Y.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param itemsToBeHidden
+ *   An array of items that should be hidden.
+ * @param formPageKey
+ *   The form page we are on.
+ */
+const validateHiddenFields = async (page: Page, itemsToBeHidden: string[], formPageKey: string) => {
+  for (const hiddenItem of itemsToBeHidden) {
+    const hiddenSelector = `[data-drupal-selector="${hiddenItem}"]`;
+    await expect(page.locator(hiddenSelector), `Field ${hiddenItem} is not hidden on ${formPageKey}.`).not.toBeVisible();
+    logger(`Field ${hiddenItem} is hidden on ${formPageKey}.`)
+  }
 }
 
 /**
@@ -495,5 +514,7 @@ const logValidationResults = (
 export {
   validateSubmission,
   validateProfileData,
-  validateExistingProfileData
+  validateFormData,
+  validateExistingProfileData,
+  validateHiddenFields,
 }

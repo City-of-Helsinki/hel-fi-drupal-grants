@@ -16,6 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("Grants Oma Asiointi Asiointirooli"),
  *   category = @Translation("Oma Asiointi")
  * )
+ *
+ * @phpstan-consistent-constructor
  */
 class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
@@ -99,8 +101,10 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
         'class' => ['link--switch-role'],
       ],
     ]);
-
-    $asiointiLink = Link::createFromRoute($companyName, 'grants_profile.show');
+    $asiointiLink = '';
+    if ($companyName) {
+      $asiointiLink = Link::createFromRoute($companyName, 'grants_profile.show');
+    }
 
     $build = [
       '#theme' => 'grants_oma_asiointi_asiointirooli_block',

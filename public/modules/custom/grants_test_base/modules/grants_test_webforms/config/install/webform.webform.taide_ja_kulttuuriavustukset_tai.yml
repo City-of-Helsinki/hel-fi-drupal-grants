@@ -5,24 +5,24 @@ dependencies:
   module:
     - grants_handler
     - grants_metadata
-# third_party_settings:
-#   grants_metadata:
-#     applicationTypeSelect: '50'
-#     applicationType: KUVAPERUS
-#     applicationTypeID: '50'
-#     applicationIndustry: KUVA
-#     applicantTypes:
-#       registered_community: registered_community
-#     applicationTypeTerms:
-#       62: '62'
-#     applicationTargetGroup: '22'
-#     applicationOpen: '2022-09-06T14:20:00'
-#     applicationClose: '2023-09-29T16:01:00'
-#     applicationContinuous: 0
-#     disableCopying: 1
-#     applicationActingYearsType: next_x_years
-#     applicationActingYears: {  }
-#     applicationActingYearsNextCount: '1'
+third_party_settings:
+  grants_metadata:
+    applicationTypeSelect: '50'
+    applicationType: KUVAPERUS
+    applicationTypeID: '50'
+    applicationIndustry: KUVA
+    applicantTypes:
+      registered_community: registered_community
+    applicationTypeTerms:
+      62: '62'
+    applicationTargetGroup: '22'
+    applicationOpen: '2022-09-06T14:20:00'
+    applicationClose: '2023-09-29T16:01:00'
+    applicationContinuous: 0
+    disableCopying: 1
+    applicationActingYearsType: next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '1'
 weight: 0
 open: null
 close: null
@@ -1272,7 +1272,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: all
+  draft: authenticated
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

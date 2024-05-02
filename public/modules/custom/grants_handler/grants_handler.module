@@ -626,7 +626,7 @@ function _grants_handler_missing_data(
 /**
  * Recursively alter number fields to allow decimals and commas.
  */
-function _grants_handler_alter_number_fields(&$element) {
+function _grants_handler_alter_number_fields(&$element): void {
   if (is_array($element)) {
     // Check if the element is a number field.
     if (isset($element['#type']) && $element['#type'] === 'number') {
@@ -642,7 +642,7 @@ function _grants_handler_alter_number_fields(&$element) {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
   $tOpts = ['context' => 'grants_handler'];
 
   $user = \Drupal::currentUser();
@@ -1199,8 +1199,8 @@ function grants_handler_webform_presave(WebformInterface $webform) {
   }
   // Enable the draft save if not already set.
   $draft_setting = $webform->getSetting('draft');
-  if ($draft_setting !== WebformInterface::DRAFT_ALL) {
-    $webform->setSetting('draft', WebformInterface::DRAFT_ALL);
+  if ($draft_setting !== WebformInterface::DRAFT_AUTHENTICATED) {
+    $webform->setSetting('draft', WebformInterface::DRAFT_AUTHENTICATED);
   }
   // Set purge status to prevent clutter in the db.
   if ($purge_setting !== WebformSubmissionStorageInterface::PURGE_ALL
@@ -1654,12 +1654,6 @@ function grants_handler_preprocess_message_notification_item(&$variables) {
 }
 
 /**
- * Implements hook_preprocess().
- */
-function grants_handler_preprocess_message_list(&$variables) {
-}
-
-/**
  * Process information box.
  *
  * @param array $variables
@@ -1959,6 +1953,10 @@ function grants_handler_webform_element_input_masks() {
   $input_masks["'alias': 'numeric', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'"] = [
     'title' => t('Grants decimal'),
     'example' => '1 789,20',
+  ];
+  $input_masks["'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"] = [
+    'title' => ('Grants currency'),
+    'example' => '1 789,20€',
   ];
   return $input_masks;
 }

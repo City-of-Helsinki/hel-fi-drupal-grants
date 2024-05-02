@@ -16,8 +16,6 @@ interface SelectorDetails {
   };
 }
 
-type PartialFormFieldWithRemove = Partial<FormFieldWithRemove>;
-
 interface Selector {
   type: string;
   label?: string;
@@ -58,6 +56,7 @@ interface FormField {
   dynamic_single?: DynamicSingleValueField;
   dynamic_multi?: DynamicMultiValueField;
   viewPageSelector?: string;
+  viewPageSelectors?: string[];
   viewPageFormatter?: ViewPageFormatterFunction
   viewPageSkipValidation?: boolean;
 }
@@ -67,6 +66,13 @@ type RemoveList = string[];
 type HiddenItemsList = string[];
 
 type ViewPageFormatterFunction = (param: string) => string;
+
+type FieldSwapItemList = FieldSwapItem[];
+
+type FieldSwapItem = {
+  field: string;
+  swapValue: string;
+};
 
 interface FormFieldWithRemove extends FormField {
   type?: string;
@@ -91,11 +97,11 @@ interface FormDataWithRemove extends FormData {
       };
       itemsToRemove?: RemoveList | undefined;
       itemsToBeHidden?: HiddenItemsList | undefined;
+      itemsToSwap?: FieldSwapItemList | undefined;
     };
   };
 }
 
-// Make formSelector and formPath optional in FormDataWithRemove
 type FormDataWithRemoveOptionalProps =
   Partial<Pick<FormDataWithRemove, 'formSelector' | 'formPath'>>
   & Omit<FormDataWithRemove, 'formSelector' | 'formPath'>;
@@ -104,6 +110,7 @@ interface FormPage {
   items: FormItems;
   itemsToRemove?: RemoveList | undefined;
   itemsToBeHidden?: HiddenItemsList | undefined;
+  itemsToSwap?: FieldSwapItemList | undefined;
 }
 
 interface FormData {
@@ -116,10 +123,12 @@ interface FormData {
   expectedDestination?: string;
   expectedErrors: {},
   viewPageSkipValidation?: boolean,
+  testFormCopying?: boolean,
+  testFieldSwap?: boolean,
 }
 
-interface ProfileData {
-  success: FormData
+interface PageHandlers {
+  [key: string]: (page: Page, formData: FormPage) => Promise<void>;
 }
 
 // Type guard for MultiValueField
@@ -132,37 +141,24 @@ function isDynamicMultiValueField(value: any): value is DynamicMultiValueField {
   return typeof value === 'object' && value !== null /* Add more conditions if needed */;
 }
 
-// Type guard for DynamicValueField
-function isDynamicSingleValueField(value: any): value is DynamicSingleValueField {
-  return typeof value === 'object' && value !== null /* Add more conditions if needed */;
-}
-
-interface PageHandlers {
-  [key: string]: (page: Page, formData: FormPage) => Promise<void>;
-}
-
-
-const applicationData = {}
-
 export {
   PROFILE_FILE_PATH,
   profileDataPrivatePerson,
   profileDataUnregisteredCommunity,
   profileDataRegisteredCommunity,
-  applicationData,
   FormData,
   MultiValueField,
   FormField,
   Selector,
-  isMultiValueField,
   DynamicSingleValueField,
   DynamicMultiValueField,
-  isDynamicMultiValueField,
-  isDynamicSingleValueField,
   FormItems,
   FormDataWithRemove,
   FormFieldWithRemove,
   FormDataWithRemoveOptionalProps,
   PageHandlers,
-  FormPage
+  FormPage,
+  FieldSwapItemList,
+  isMultiValueField,
+  isDynamicMultiValueField,
 }

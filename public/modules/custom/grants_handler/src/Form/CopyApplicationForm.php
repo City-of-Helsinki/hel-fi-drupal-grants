@@ -9,6 +9,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a Grants Handler form.
+ *
+ * @phpstan-consistent-constructor
  */
 class CopyApplicationForm extends FormBase {
 

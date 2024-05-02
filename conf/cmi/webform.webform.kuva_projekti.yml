@@ -665,7 +665,9 @@ elements: |-
     yleisolle_avoin_toiminta:
       '#type': webform_section
       '#title': 'Yleisölle avoin toiminta Helsingissä toteutetaan'
-      '#help': 'Yleisölle avoimella toiminnalla tarkoitetaan tässä mm. esityksiä, näyttelyitä ja työpajoja tai muita osallistavia toimintamuotoja.'
+      toiminta_markup:
+        '#type': webform_markup
+        '#markup': 'Yleisölle avoimella toiminnalla tarkoitetaan tässä mm. esityksiä, näyttelyitä ja työpajoja tai muita osallistavia toimintamuotoja.'
       ensimmainen_tila_fieldset:
         '#type': fieldset
         '#title': 'Ensimmäinen yleisölle avoimen tilaisuuden paikka Helsingissä'
@@ -909,7 +911,7 @@ elements: |-
               value: registered_community
       markup_01:
         '#type': webform_markup
-        '#markup': 'Koskien koko hanketta, johon avustusta haetaan.'
+        '#markup': 'Kirjaa talousarvioon kaikki hankkeen tulot ja menot kokonaisuudessaan. Älä siis kirjaa vain niitä menoja, jotka on tarkoitus kattaa haetulla avustuksella.'
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
@@ -1305,7 +1307,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: all
+  draft: authenticated
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

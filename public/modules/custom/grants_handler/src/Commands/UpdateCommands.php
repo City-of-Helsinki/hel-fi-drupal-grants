@@ -23,7 +23,7 @@ class UpdateCommands extends DrushCommands {
   /**
    * The key value store to use.
    *
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface
+   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface
    */
   protected $keyValueStore;
 

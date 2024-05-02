@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - paragraphs
+_core:
+  default_config_hash: tGfd4vmvsPZVSBXLP9lhbTGPn-HF1rBObr88RqELxgw
 id: paragraph.field_original_aspect_ratio
 field_name: field_original_aspect_ratio
 entity_type: paragraph

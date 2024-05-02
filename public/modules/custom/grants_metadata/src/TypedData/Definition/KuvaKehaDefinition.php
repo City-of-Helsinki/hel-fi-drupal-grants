@@ -8,7 +8,7 @@ use Drupal\Core\TypedData\ListDataDefinition;
 use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition;
 
 /**
- * Define Yleisavustushakemus data.
+ * Define Kulttuurin kehittämisavustukset data.
  */
 class KuvaKehaDefinition extends ComplexDataDefinitionBase {
 

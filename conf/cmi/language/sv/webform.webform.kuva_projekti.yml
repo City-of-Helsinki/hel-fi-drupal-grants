@@ -193,7 +193,8 @@ elements: |
     '#help': 'Med premi&auml;r avser vi den f&ouml;rsta f&ouml;rest&auml;llningen av en produktion. Fyll i de premi&auml;rer som sker i Helsingfors.'
   yleisolle_avoin_toiminta:
     '#title': 'Öppen verksamhet för publik i Helsingfors'
-    '#help': 'Med &ouml;ppen verksamhet avser vi h&auml;r t.ex. f&ouml;rest&auml;llningar, utst&auml;llningar, verkst&auml;der eller annan verksamhet, d&auml;r publiken kan vara delaktig.'
+  toiminta_markup:
+    '#markup': 'Med &ouml;ppen verksamhet avser vi h&auml;r t.ex. f&ouml;rest&auml;llningar, utst&auml;llningar, verkst&auml;der eller annan verksamhet, d&auml;r publiken kan vara delaktig.'
   ensimmainen_tila_fieldset:
     '#title': 'Platsen för det första öppna programmet i Helsingfors'
   ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa:
@@ -268,7 +269,7 @@ elements: |
   talousarvio:
     '#title': Budget
   markup_01:
-    '#markup': 'G&auml;llande hela projektet, som ni s&ouml;ker st&ouml;d f&ouml;r.'
+    '#markup': 'Skriv in projektets samtliga inkomster och utgifter i budgeten, så att helheten framgår. Anteckna alltså inte enbart de utgifter som täcks med det ansökta understödet.'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får stadsandelar (VOS)'
     '#help': 'Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
@@ -334,7 +335,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Skicka
-    '#draft__label': 'Spara som oavslutat'
+    '#draft__label': 'Spara som oavslutad'
     '#wizard_prev__label': '< Tidigare'
     '#wizard_next__label': 'Nästa >'
     '#preview_prev__label': '< Tidigare'

@@ -45,7 +45,6 @@ $breakpoint-xl: 1248px;
 
 }
 
-.webform-button--delete-draft .hds-button__label::before,
 .webform-button--draft .hds-button__label::before {
   background-color: currentColor;
   background-size: contain;
@@ -63,12 +62,6 @@ $breakpoint-xl: 1248px;
   transition: transform .2s linear;
   flex-shrink: 0;
   margin-right: var(--spacing-2-xs);
-}
-
-
-.webform-button--delete-draft .hds-button__label::before {
-  -webkit-mask-image: var(--hel-icon--trash);
-  mask-image: var(--hel-icon--trash);
 }
 
 .webform-button--draft .hds-button__label::before {

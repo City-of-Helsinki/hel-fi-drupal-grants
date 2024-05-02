@@ -16,11 +16,11 @@ third_party_settings:
     applicationTypeTerms:
       49: '49'
     applicationTargetGroup: '30'
-    applicationOpen: '2023-04-03T08:00:00'
-    applicationClose: '2024-02-28T16:00:00'
-    applicationActingYearsType: current_and_next_x_years
+    applicationOpen: '2024-05-02T08:00:00'
+    applicationClose: '2024-06-03T16:00:00'
+    applicationActingYearsType: next_x_years
     applicationActingYears: {  }
-    applicationActingYearsNextCount: '0'
+    applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
 weight: 0
@@ -380,7 +380,6 @@ elements: |-
         '#help': 'K&auml;ytt&ouml;selvityksess&auml; tulee kuvata lyhyesti, miten my&ouml;nnetty avustus on k&auml;ytetty. Avustuksen saajan on j&auml;rjestett&auml;v&auml; kirjanpitonsa niin, ett&auml; avustuksen k&auml;ytt&ouml;&auml; voidaan sielt&auml; seurata. Esimerkiksi jos yhteis&ouml; on saanut vuokra-avustusta, tilinp&auml;&auml;t&ouml;ksen tuloslaskelmasta tulee k&auml;yd&auml; ilmi avustuksen toteutuminen sek&auml; tuloissa ett&auml; menoissa. Lis&auml;&auml; tietoja avustuksen k&auml;yt&ouml;st&auml; voi my&ouml;s kirjoittaa erilliseen liitteeseen, jonka voi ladata ja l&auml;hett&auml;&auml; Muu-liitteen&auml;.'
         '#maxlength': 5000
         '#counter_type': character
-        '#counter_minimum': 1
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#states':
@@ -743,7 +742,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: all
+  draft: authenticated
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

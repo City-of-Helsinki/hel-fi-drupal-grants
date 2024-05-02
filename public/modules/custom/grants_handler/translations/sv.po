@@ -449,7 +449,7 @@ msgid "Print application"
 msgstr "Skriv ut ansökan"
 
 msgctxt "grants_handler"
-msgid "Change your role and return to make the application with role which the application is instructed to be made."
+msgid "Change your role and return to make the\napplication with role which the application is instructed to be made."
 msgstr "Byt roll och gå tillbaka för att göra ansökan med roll som ansökan är instruerad att göra."
 
 msgctxt "grants_handler"
@@ -578,7 +578,7 @@ msgid "The application period for this grant has closed."
 msgstr "Ansökningstiden för detta bidrag har löpt ut."
 
 msgctxt "grants_handler"
-msgid "You can no longer submit an application because the application period for this grant has closed."
+msgid "You can no longer submit an application because the\napplication period for this grant has closed."
 msgstr "Du kan inte längre skicka in denna ansökan eftersom att ansökningstiden har löpt ut."
 
 msgctxt "grants_handler"
@@ -632,3 +632,6 @@ msgstr "Servicesidan hittades inte!"
 msgctxt "grants_handler"
 msgid "Email"
 msgstr "E-post"
+
+msgid "The email address %mail is not valid. Use the format user@example.com."
+msgstr "%mail är inte en giltig e-postadress. Använd formen user@example.com."

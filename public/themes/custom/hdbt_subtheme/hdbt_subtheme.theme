@@ -44,34 +44,6 @@ function hdbt_subtheme_preprocess_status_messages(&$variables): void {
 }
 
 /**
- * Helper function to get the icons path.
- *
- * @return string|null
- *   Returns path for the icons SVG or null.
- */
-function hdbt_subtheme_get_icons_path(): ?string {
-  static $icon_path;
-  if (!isset($icon_path)) {
-    $theme_handler = \Drupal::service('theme_handler');
-    $icon_path = '/' . $theme_handler->getTheme('hdbt_subtheme')->getPath() . '/dist/icons/sprite.svg';
-
-    // Add icons path as a global variable.
-    if (!empty($icon_path)) {
-      return $icon_path;
-    }
-  }
-  return $icon_path;
-}
-
-/**
- * Implements hook_preprocess().
- */
-function hdbt_subtheme_preprocess(&$variables): void {
-  $variables['hdbt_subtheme_icons_path'] = hdbt_subtheme_get_icons_path();
-  $variables['#attached']['drupalSettings']['helfigrantapplicationsIconsPath'] = $variables['hdbt_subtheme_icons_path'];
-}
-
-/**
  * Implements hook_preprocess_HOOK().
  */
 function hdbt_subtheme_preprocess_menu(&$variables): void {
@@ -85,7 +57,7 @@ function hdbt_subtheme_preprocess_menu(&$variables): void {
       // Check if url is current page where we are now. Ignore query strings.
       $current_path = explode('?', Drupal::request()->getRequestUri())[0];
       $item['currentPath'] = $current_path;
-      if ($item['url']->toString() == $current_path) {
+      if ($url->toString() == $current_path) {
         $item['is_currentPage'] = TRUE;
       }
     }
@@ -157,7 +129,7 @@ function hdbt_subtheme_preprocess_views_view(&$variables): void {
         if ($term->hasTranslation($language)) {
           $translated_term = \Drupal::service('entity.repository')->getTranslationFromContext($term, $language);
           $tid = $term->id();
-          $termList[$tid] = $translated_term->getName();
+          $termList[$tid] = $translated_term->label();
         }
       }
 
@@ -226,29 +198,6 @@ function hdbt_subtheme_preprocess_views_view_fields(&$variables): void {
       $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('The application period will be announced later') . '</span>');
     }
     unset($variables['fields']['field_application_continuous']);
-  }
-}
-
-/**
- * Implements hook_field_widget_paragraphs_form_alter().
- */
-function hdbt_subtheme_field_widget_paragraphs_form_alter(&$element, FormStateInterface &$form_state, $context): void {
-  switch ($element['#paragraph_type']) {
-    case 'myparagraphs':
-      $term = $form_state->getFormObject()->getEntity();
-
-      // Check if paragraph is inside a form term.
-      if ($term && ($term->getEntityTypeId() == 'taxonomy_term')) {
-        $voc = $term->bundle();
-        // Check if it is the desired voc.
-        if ($voc == 'my_voc') {
-          // To hide only one field.
-          // unset($element['subform']['field_to_be hidded']);
-          // To hide all the form.
-          $element = [];
-        }
-      }
-      break;
   }
 }
 
@@ -562,6 +511,7 @@ function hdbt_subtheme_preprocess_html(&$variables): void {
 function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
   if ($form_id == 'openid_connect_login_form') {
     $form['openid_connect_client_tunnistamo_login']['#value'] = t('Log in');
+    $form['openid_connect_client_tunnistamo_login']['#attributes']['role'] = "link";
   }
 
   // Attach the restricted-datepicker library to the various forms.
@@ -591,13 +541,6 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
  */
 function hdbt_subtheme_preprocess_block__user_login_block(&$variables, $hook): void {
   $variables['content']['user_links'] = NULL;
-}
-
-/**
- * Implements hook_preprocess_block__user_login_block().
- */
-function hdbt_subtheme_preprocess_block__askemblock(&$variables, $hook): void {
-  $variables['current_language'] = \Drupal::languageManager()->getCurrentLanguage()->getId();
 }
 
 /**
@@ -640,15 +583,18 @@ function hdbt_subtheme_preprocess_tpr_service_channel(array &$variables): void {
   }
 
   $current_url = Url::fromRoute('<current>');
-  $path = $current_url->toString();
+
+  // TPR only allows links that are 127 characters long.
+  // 102 is that minus https://avustukset.hel.fi.
+  $path = substr($current_url->toString(), 0, 102);
 
   // Remove link if the path is similar to TPR link or if the webform matches.
   foreach ($variables['content']['links']['#items']->getIterator() as $key => $item) {
     $values = $item->getValue();
     $item->setValue($values);
     if (
-      ($webform && strpos($values['uri'], $webform) !== FALSE) ||
-      strpos($values['uri'], $path) !== FALSE
+      ($webform && str_contains($values['uri'], $webform)) ||
+      str_contains($values['uri'], $path)
     ) {
       $items->removeItem($key);
     }

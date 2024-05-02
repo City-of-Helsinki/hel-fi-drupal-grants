@@ -1,2 +1,4 @@
-{% include '@hdbt/misc/icon.twig' ignore missing with {icon: icon} %}
-<span class="hds-button__label">{{ text_label }}</span>
+<span class="hds-button__label_wrapper">
+  {% include '@hdbt/misc/icon.twig' ignore missing with {icon: icon} %}
+  <span class="hds-button__label">{{ text_label }}</span>
+</span>

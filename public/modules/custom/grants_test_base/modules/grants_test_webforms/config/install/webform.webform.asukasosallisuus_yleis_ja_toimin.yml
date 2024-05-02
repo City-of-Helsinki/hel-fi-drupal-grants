@@ -5,25 +5,25 @@ dependencies:
   module:
     - grants_handler
     - grants_metadata
-# third_party_settings:
-#   grants_metadata:
-#     applicationTypeSelect: '67'
-#     applicationType: ASUKASYLEISTOIM
-#     applicationTypeID: '67'
-#     applicationIndustry: KANSLIA
-#     applicantTypes:
-#       registered_community: registered_community
-#     applicationTypeTerms:
-#       45: '45'
-#       49: '49'
-#     applicationTargetGroup: '25'
-#     applicationOpen: '2023-07-12T00:00:00'
-#     applicationClose: '2023-11-30T00:00:00'
-#     applicationActingYearsType: current_and_next_x_years
-#     applicationActingYears: {  }
-#     applicationActingYearsNextCount: '2'
-#     applicationContinuous: 0
-#     disableCopying: 0
+third_party_settings:
+  grants_metadata:
+    applicationTypeSelect: '67'
+    applicationType: ASUKASYLEISTOIM
+    applicationTypeID: '67'
+    applicationIndustry: KANSLIA
+    applicantTypes:
+      registered_community: registered_community
+    applicationTypeTerms:
+      45: '45'
+      49: '49'
+    applicationTargetGroup: '25'
+    applicationOpen: '2023-07-12T00:00:00'
+    applicationClose: '2023-11-30T00:00:00'
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '2'
+    applicationContinuous: 0
+    disableCopying: 0
 weight: 0
 open: null
 close: null
@@ -837,7 +837,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: true
   preview_exclude_empty_checkbox: false
-  draft: all
+  draft: authenticated
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

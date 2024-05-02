@@ -88,3 +88,7 @@ msgstr "Lomake on arkistoitu ja muokkaaminen on estetty."
 
 msgid "Enter a year between 1900 - 2100."
 msgstr "Syötä vuosiluku väliltä 1900 - 2100."
+
+msgctxt "grants_metadata"
+msgid "File name"
+msgstr "Tiedostonimi"

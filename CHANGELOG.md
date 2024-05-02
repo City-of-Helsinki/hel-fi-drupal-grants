@@ -1,5 +1,45 @@
 # CHANGELOG
 
+## 2024.7
+- fd2f6b8a fix: AU-2299: Change langcode in config files (#1263)
+- b84ef613 Production configs.
+- d4fa686d fix; AU-2369: Return empty array instead of null/string if field is empty
+- 4c649d31 fix: AU-2347, E2E, Cleaning up the E2E code. (#1291)
+- 5fe1ba5f fix: AU-2359: Subvention type value input focus border (#1301)
+- 1fbf84ff fix: AU-2361: Managed File tab navigation (#1300)
+- aba2b5e1 fix: AU-2356: kuva toiminta translations (#1293)
+- 2497d90f fix: AU-2323, AU-2340, AU-2351, AU-2349 (#1296)
+- 07615b6a fix: AU-2344: remove padding and margin on view page lists (#1297)
+- 492ec4ae AU-2355: feature: AU-2355: Fixed convertDates so that it doesnt cause errors if null values are passed in. (#1298)
+- bfc9910e fix: AU-2297 change term for avustuskansio (#1295)
+- f6442d8f feat: AU-2048, E2E, Application copying test (#1287)
+- be010d4f fix: AU-2348: fix tyollisyys (#1289)
+- 05a71904 fix: AU-2345: Add translations for file name (#1292)
+- 870aaa68 fix: AU-2330: fix dates in Place of operations (#1290)
+- 9a62d026 fix: AU-1708: add counters to business purpose -fields (#1288)
+- d761c511 fix: AU-2306: remove views and styles related to grants news (#1285)
+- 7b0c81d0 fix: AU-2316 Remove "Delete Draft" button from javascript and move it to Form Actions (#1286)
+- f8431e4a AU-2325: Avoid function call without actual object (#1282)
+- 4cfd20dd feat: AU-2018: E2E, cleaned up auth_helpers.ts (#1280)
+- 9265bfb1 AU-2307 Fix navigation handler bug (#1276)
+- d84f3cb0 fix: AU-2313: remove useless info (#1283)
+- 7fee84cc fix: AU-2331: Fixed an issue with grants_place_of_operation free state. (#1284)
+- ebc27773 fix: AU-2230: default language back to fi
+- e68fb3f8 fix: AU-2326: Remove grants_healtz module (#1281)
+- ed26e662 feat: AU-2123: Drupal 10 update (#1241)
+- 35f10d2b rewrite: AU-2032: RewriteAttachmentHandler class (#1112)
+- 8bcf1861 fix: AU-2310: translate pattern (#1279)
+- 1bfa463f fix: AU-2324: fix profile tests (#1278)
+- 467bef4b fix: AU-2309: make styles match disable managed file button (#1275)
+- ea747704 feat: AU-2275: E2E, Added a .readme file. (#1274)
+- 631aa45b fix: AU-2281: remove empty UL from messages list in /katso page (#1273)
+- 70421652 fix: AU-2277: accessibility in Omat tiedot (#1268)
+- 73e2b4d4 tests: AU-2148: E2E, Made profile tests more robust (#1259)
+- b2acce8d feat: AU-2081: Add js_settings_build hook to force settings to allways be available
+- c9512cc3 fix: AU-2254: change omat tiedot swedish transation (#1270)
+- c95bf1b8 fix: AU-2297 remove asiointikansio -text from site (#1269)
+
+
 ## 2024.6
 - 2f96ca8e feat: AU-2290: Document status and date search parameters (#1266)
 - 2ea3d83c Update icon location in config file.

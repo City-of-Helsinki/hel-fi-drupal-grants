@@ -12,6 +12,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configure grants_industries settings for this site.
+ *
+ * @phpstan-consistent-constructor
  */
 class SettingsForm extends ConfigFormBase {
 
@@ -20,7 +22,7 @@ class SettingsForm extends ConfigFormBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
-    private EntityTypeManager $entityTypeManager,
+    private readonly EntityTypeManager $entityTypeManager,
   ) {
     parent::__construct($config_factory);
   }

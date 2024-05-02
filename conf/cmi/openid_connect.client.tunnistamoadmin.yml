@@ -1,5 +1,5 @@
 uuid: 82be1e93-121b-4da1-8e27-86688d63ae75
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -13,6 +13,6 @@ settings:
   iss_allowed_domains: ''
   is_production: 0
   auto_login: 0
-  environment_url: ''
+  environment_url: 'https://tunnistus.test.hel.ninja/auth/realms/helsinki-tunnistus'
   client_scopes: 'openid,email'
   client_roles: {  }

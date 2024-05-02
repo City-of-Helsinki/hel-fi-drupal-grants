@@ -49,6 +49,15 @@ export default defineConfig({
     },
     /* Profile tests. */
     {
+      name: 'profiles',
+      testMatch: [
+        '/profiles/private_person.ts',
+        '/profiles/unregistered_community.ts',
+        '/profiles/registered_community.ts',
+      ],
+      dependencies: ['auth-setup']
+    },
+    {
       name: 'profile-private_person',
       testMatch: '/profiles/private_person.ts',
       dependencies: ['auth-setup']
@@ -87,7 +96,7 @@ export default defineConfig({
     },
     /* Form 29 tests. */
     {
-      name: 'forms-29-registered',
+      name: 'forms-29',
       testMatch: '/forms/registered_community_29.ts',
       dependencies: ['profile-registered_community']
     },
@@ -114,55 +123,55 @@ export default defineConfig({
     },
     /* Form 51 tests. */
     {
-      name: 'forms-51-registered',
+      name: 'forms-51',
       testMatch: '/forms/registered_community_51.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 52 tests. */
     {
-      name: 'forms-52-registered',
+      name: 'forms-52',
       testMatch: '/forms/registered_community_52.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 53 tests. */
     {
-      name: 'forms-53-registered',
+      name: 'forms-53',
       testMatch: '/forms/registered_community_53.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 54 tests. */
     {
-      name: 'forms-54-registered',
+      name: 'forms-54',
       testMatch: '/forms/registered_community_54.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 56 tests. */
     {
-      name: 'forms-56-registered',
+      name: 'forms-56',
       testMatch: '/forms/registered_community_56.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 57 tests. */
     {
-      name: 'forms-57-registered',
+      name: 'forms-57',
       testMatch: '/forms/registered_community_57.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 58 tests. */
     {
-      name: 'forms-58-registered',
+      name: 'forms-58',
       testMatch: '/forms/registered_community_58.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 60 tests. */
     {
-      name: 'forms-60-registered',
+      name: 'forms-60',
       testMatch: '/forms/registered_community_60.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 61 tests. */
     {
-      name: 'forms-61-registered',
+      name: 'forms-61',
       testMatch: '/forms/registered_community_61.ts',
       dependencies: ['profile-registered_community']
     },
@@ -184,7 +193,7 @@ export default defineConfig({
     },
     /* Form 63 tests. */
     {
-      name: 'forms-63-registered',
+      name: 'forms-63',
       testMatch: '/forms/registered_community_63.ts',
       dependencies: ['profile-registered_community']
     },
@@ -241,9 +250,15 @@ export default defineConfig({
       testMatch: '/forms/registered_community_66.ts',
       dependencies: ['profile-registered_community']
     },
+    /* Form 67 tests. */
+    {
+      name: 'forms-67',
+      testMatch: '/forms/registered_community_67.ts',
+      dependencies: ['profile-registered_community'],
+    },
     /* Form 68 tests. */
     {
-      name: 'forms-68-registered',
+      name: 'forms-68',
       testMatch: '/forms/registered_community_68.ts',
       dependencies: ['profile-registered_community'],
     },

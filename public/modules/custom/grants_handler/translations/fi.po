@@ -452,7 +452,7 @@ msgid "Print application"
 msgstr "Tulosta hakemus"
 
 msgctxt "grants_handler"
-msgid "Change your role and return to make the application with role which the application is instructed to be made."
+msgid "Change your role and return to make the\napplication with role which the application is instructed to be made."
 msgstr "Vaihda asiointiroolia ja palaa tekemään hakemus palvelukuvauksen ohjeistamalla asiointiroolilla."
 
 msgctxt "grants_handler"
@@ -581,7 +581,7 @@ msgid "The application period for this grant has closed."
 msgstr "Tämän avustuksen hakuaika on päättynyt."
 
 msgctxt "grants_handler"
-msgid "You can no longer submit an application because the application period for this grant has closed."
+msgid "You can no longer submit an application because the\napplication period for this grant has closed."
 msgstr "Et voi enää lähettää hakemusta, sillä avustuksen hakuaika on päättynyt."
 
 msgctxt "grants_handler"
@@ -635,3 +635,6 @@ msgstr "Palvelusivua ei löytynyt!"
 msgctxt "grants_handler"
 msgid "Email"
 msgstr "Sähköposti"
+
+msgid "The email address %mail is not valid. Use the format user@example.com."
+msgstr "%mail ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com."

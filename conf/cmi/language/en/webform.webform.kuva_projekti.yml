@@ -190,7 +190,8 @@ elements: |
     '#help': 'A premiere of a production means the first public performance of the production in question. Fill in the premieres of productions that take place in Helsinki.'
   yleisolle_avoin_toiminta:
     '#title': 'The locations of the public events in Helsinki'
-    '#help': 'Here the public events refer to, for example, performances, screenings, exhibitions, and workshops, or other participatory activities.'
+  toiminta_markup:
+    '#markup': 'Here the public events refer to, for example, performances, screenings, exhibitions, and workshops, or other participatory activities.'
   ensimmainen_tila_fieldset:
     '#title': 'Location of the first public event in Helsinki'
   ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa:
@@ -265,7 +266,7 @@ elements: |
   talousarvio:
     '#title': 'Planned budget'
   markup_01:
-    '#markup': 'Regarding the whole project that the grant is applied for.'
+    '#markup': "Include all the planned incomes and expenses for the project in the planned budget. In other words, do not list only those expenses that are intended to be covered by the grant you're applying for."
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belongs to the central government subsidies system (VOS)'
     '#help': 'Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'

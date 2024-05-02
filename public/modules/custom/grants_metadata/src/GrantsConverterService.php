@@ -17,7 +17,7 @@ class GrantsConverterService {
   /**
    * Format dates to a given or default format.
    *
-   * @param string $value
+   * @param mixed $value
    *   Input value.
    * @param array $arguments
    *   Arguments, dateFormat is used.
@@ -25,10 +25,10 @@ class GrantsConverterService {
    * @return string
    *   Formatted datetime string.
    */
-  public function convertDates(string $value, array $arguments): string {
+  public function convertDates(mixed $value, array $arguments): string {
 
     try {
-      if ($value === NULL || $value === '' || !isset($value)) {
+      if ($value === NULL || $value === '') {
         $retval = '';
       }
       else {
@@ -124,16 +124,15 @@ class GrantsConverterService {
   /**
    * Convert "dot" float to "comma" float.
    *
-   * @param array|null $value
+   * @param array $value
    *   Value to be converted.
    *
    * @return string|null
-   *   Comman floated value.
+   *   Comma floated value.
    */
   public function convertToCommaFloat(array $value): ?string {
     $fieldValue = $value['value'] ?? '';
-    $fieldValue = str_replace(['€', '.', ' '], ['', ',', ''], $fieldValue);
-    return $fieldValue;
+    return str_replace(['€', '.', ' '], ['', ',', ''], $fieldValue);
   }
 
 }

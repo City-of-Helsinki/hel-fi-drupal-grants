@@ -34,7 +34,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): AdminApplicationsForm|static {
+  public static function create(ContainerInterface $container): SubmittedApplicationsForm|static {
     return new static(
       $container->get('helfi_atv.atv_service')
     );
@@ -290,7 +290,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
       /** @var Drupal\helfi_atv\AtvDocument[] $docs */
       $docs = self::getDocuments($options);
 
-      // Filter out grants profiles from documents
+      // Filter out grants profiles from documents.
       $documents = array_filter(
         array_map(function (AtvDocument $doc) {
           return [
@@ -302,7 +302,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
             'created_at' => $doc->getCreatedAt(),
           ];
         }, $docs),
-        function(array $doc) {
+        function (array $doc) {
           return $doc['type'] !== 'grants_profile';
         }
       );

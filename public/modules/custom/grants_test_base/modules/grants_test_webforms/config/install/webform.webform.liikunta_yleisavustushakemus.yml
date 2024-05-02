@@ -5,26 +5,26 @@ dependencies:
   module:
     - grants_handler
     - grants_metadata
-# third_party_settings:
-#   grants_metadata:
-#     applicationTypeSelect: '56'
-#     applicationType: LIIKUNTAYLEIS
-#     applicationTypeID: '56'
-#     applicationIndustry: KASKO
-#     applicantTypes:
-#       registered_community: registered_community
-#     applicationTypeTerms:
-#       52: '52'
-#       60: '60'
-#       71: '71'
-#     applicationTargetGroup: '26'
-#     applicationOpen: '2022-10-03T11:08:26'
-#     applicationClose: '2023-07-30T11:19:00'
-#     applicationActingYearsType: current_and_next_x_years
-#     applicationActingYears: {  }
-#     applicationActingYearsNextCount: '1'
-#     applicationContinuous: 1
-#     disableCopying: 1
+third_party_settings:
+  grants_metadata:
+    applicationTypeSelect: '56'
+    applicationType: LIIKUNTAYLEIS
+    applicationTypeID: '56'
+    applicationIndustry: KASKO
+    applicantTypes:
+      registered_community: registered_community
+    applicationTypeTerms:
+      52: '52'
+      60: '60'
+      71: '71'
+    applicationTargetGroup: '26'
+    applicationOpen: '2022-10-03T11:08:26'
+    applicationClose: '2023-07-30T11:19:00'
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '1'
+    applicationContinuous: 1
+    disableCopying: 1
 weight: 0
 open: null
 close: null
@@ -453,7 +453,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: all
+  draft: authenticated
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''
