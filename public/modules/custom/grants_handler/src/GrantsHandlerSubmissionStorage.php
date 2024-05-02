@@ -129,7 +129,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       );
 
       if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
-        throw new \Excpetion('ATV Document does not contain application number.');
+        throw new \Exception('ATV Document does not contain application number.');
       }
       $appData = self::setAtvDataToSubmission($document, $submission);
       $this->data[$submission->id()] = $appData;

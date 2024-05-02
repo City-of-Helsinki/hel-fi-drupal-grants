@@ -257,8 +257,8 @@ class ResendApplicationsForm extends AtvFormBase {
     }
 
     $messenger->addStatus(t(
-      'Selected messages has been resent, processing the messages might take a few moments'
-    ), [], self::$tOpts);
+      'Selected messages has been resent, processing the messages might take a few moments',
+     [], self::$tOpts));
     $formState->setRebuild();
   }
 

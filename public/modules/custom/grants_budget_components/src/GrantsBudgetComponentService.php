@@ -27,7 +27,7 @@ class GrantsBudgetComponentService {
   /**
    * Parse budget income fields.
    *
-   * @param \Drupal\Core\TypedData\Map $property
+   * @param \Drupal\Core\TypedData\Plugin\DataType\Map $property
    *   Property that is handled.
    *
    * @return array

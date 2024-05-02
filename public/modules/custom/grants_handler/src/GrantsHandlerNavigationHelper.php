@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_handler;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
@@ -42,6 +43,11 @@ class GrantsHandlerNavigationHelper {
    * @var \Drupal\Core\Database\Connection
    */
   protected Connection $database;
+
+  /**
+   * The time service.
+   */
+  protected readonly TimeInterface $timeInterface;
 
   /**
    * The messenger service.
@@ -87,8 +93,10 @@ class GrantsHandlerNavigationHelper {
     EntityTypeManagerInterface $entity_type_manager,
     FormBuilderInterface $form_builder,
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    TimeInterface $timeInterface,
   ) {
 
+    $this->timeInterface = $timeInterface;
     $this->database = $datababse;
     $this->messenger = $messenger;
     $this->entityTypeManager = $entity_type_manager;
@@ -295,7 +303,7 @@ class GrantsHandlerNavigationHelper {
         'user_uuid' => $userData['sub'] ?? '',
         'data' => $page,
         'page' => $page,
-        'timestamp' => (string) \Drupal::time()->getRequestTime(),
+        'timestamp' => (string) $this->timeInterface->getRequestTime(),
       ];
       $this->cache[$webformSubmission->getWebform()->id()]['visits'] = NULL;
       $query = $this->database->insert(self::TABLE, $fields);
@@ -365,7 +373,7 @@ class GrantsHandlerNavigationHelper {
         'user_uuid' => $userData['sub'] ?? '',
         'data' => serialize($errors),
         'page' => $page,
-        'timestamp' => (string) \Drupal::time()->getRequestTime(),
+        'timestamp' => (string) $this->timeInterface->getRequestTime(),
       ];
       $this->database->insert(self::TABLE)->fields($fields)->execute();
       $webformId = $webformSubmission->getWebform()->id();

@@ -4,6 +4,7 @@ namespace Drupal\grants_admin_applications\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
@@ -14,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provides a grants_admin_applications form.
+ *
+ * @phpstan-consistent-constructor
  */
 class SubmittedApplicationsForm extends AtvFormBase {
 
@@ -25,10 +28,18 @@ class SubmittedApplicationsForm extends AtvFormBase {
   protected AtvService $atvService;
 
   /**
+   * Immutable Config.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected ImmutableConfig $config;
+
+  /**
    * Constructs a new GrantsProfileForm object.
    */
-  public function __construct(AtvService $atvService) {
+  public function __construct(AtvService $atvService, ImmutableConfig $config) {
     $this->atvService = $atvService;
+    $this->config = $config;
   }
 
   /**
@@ -36,7 +47,8 @@ class SubmittedApplicationsForm extends AtvFormBase {
    */
   public static function create(ContainerInterface $container): SubmittedApplicationsForm|static {
     return new static(
-      $container->get('helfi_atv.atv_service')
+      $container->get('helfi_atv.atv_service'),
+      $container->get('grants_metadata.settings')
     );
   }
 
@@ -55,8 +67,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
       '#type' => 'status_messages',
     ];
 
-    $config = \Drupal::config('grants_metadata.settings');
-    $thirdPartyOpts = $config->get('third_party_options');
+    $thirdPartyOpts = $this->config->get('third_party_options');
 
     $form['filters']['status'] = [
       '#title' => $this->t('Application status'),
@@ -287,7 +298,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
     }
 
     try {
-      /** @var Drupal\helfi_atv\AtvDocument[] $docs */
+      /** @var \Drupal\helfi_atv\AtvDocument[] $docs */
       $docs = self::getDocuments($options);
 
       // Filter out grants profiles from documents.
@@ -333,7 +344,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request object, holding current path and request uri.
    *
-   * @return array
+   * @return \Drupal\Core\Ajax\AjaxResponse
    *   Must return AjaxResponse object or render array.
    *   Never return NULL or invalid render arrays. This
    *   could/will break your forms.

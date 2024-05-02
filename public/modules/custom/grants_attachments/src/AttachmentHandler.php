@@ -54,7 +54,7 @@ class AttachmentHandler {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
    */
   protected LoggerChannelInterface $logger;
 
@@ -221,7 +221,12 @@ class AttachmentHandler {
   /**
    * Get file fields.
    *
-   * @return string[]
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform.
+   * @param bool $preventKeys
+   *   Should this prevent keys.
+   *
+   * @return array
    *   Attachment fields.
    */
   public static function getAttachmentFieldNamesFromWebform(Webform $webform, $preventKeys = FALSE): array {
@@ -927,11 +932,11 @@ class AttachmentHandler {
    * @param string $applicationNumber
    *   Application number for attachment.
    *
-   * @return \stdClass[]
+   * @return array
    *   Data for JSON.
    *
-   * @throws \Drupal\grants_handler\EventException
    * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\grants_handler\EventException
    */
   public function getAttachmentByFieldValue(
     array $field,
