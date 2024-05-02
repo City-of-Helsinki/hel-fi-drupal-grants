@@ -3,7 +3,7 @@
 namespace Drupal\grants_profile;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -87,7 +87,7 @@ class GrantsProfileService {
     AtvService $helfiAtv,
     MessengerInterface $messenger,
     ProfileConnector $profileConnector,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
     GrantsProfileCache $grantsProfileCache,
   ) {
     $this->atvService = $helfiAtv;
