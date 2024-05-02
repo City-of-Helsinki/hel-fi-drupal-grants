@@ -61,7 +61,13 @@ const baseFormRegisteredCommunity_64: FormData = {
     "2_avustustiedot": {
       items: {
         "edit-acting-year": {
-          value: '2024',
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: '',
+            value: '#edit-acting-year',
+          },
+          viewPageSkipValidation: true,
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
@@ -458,7 +464,7 @@ const registeredCommunityApplications_64 = {
 const privatePersonApplications_64 = {
   draft: baseFormPrivatePerson_64,
   missing_values: createFormData(baseFormPrivatePerson_64, missingValuesPrivateUnregistered),
-  success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
+  success: createFormData(baseFormPrivatePerson_64, sendApplication),
 }
 
 /**

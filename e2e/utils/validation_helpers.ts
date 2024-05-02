@@ -3,6 +3,7 @@ import {logger} from "./logger";
 import {FormField, FormData, FormFieldWithRemove} from "./data/test_data"
 import {viewPageBuildSelectorForItem} from "./view_page_helpers";
 import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
+import {logCurrentUrl} from "./helpers";
 
 /**
  * The validateSubmission function.
@@ -33,30 +34,11 @@ const validateSubmission = async (
   }
 
   const thisStoreData = storedata[formKey];
-  if (thisStoreData.status === 'DRAFT') {
+  if (thisStoreData.status === 'DRAFT' || thisStoreData.status === 'RECEIVED') {
+    logger(`Validating draft application with application ID: ${thisStoreData.applicationId}...`);
     await navigateAndValidateViewPage(page, thisStoreData);
     await validateFormData(page, formDetails);
-  } else {
-    await validateSent(page, formDetails, thisStoreData);
   }
-}
-
-/**
- * The validateSent function.
- *
- * @param page
- *   Page object from Playwright.
- * @param formDetails
- *   The form data.
- * @param thisStoreData
- *   The env form data.
- */
-const validateSent = async (
-  page: Page,
-  formDetails: FormData,
-  thisStoreData: any
-) => {
-  logger('Validate RECEIVED', thisStoreData);
 }
 
 /**
@@ -372,6 +354,7 @@ const navigateAndValidateViewPage = async (
   const applicationId = thisStoreData.applicationId;
   const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
   await page.goto(viewPageURL);
+  await logCurrentUrl(page);
   await page.waitForURL('**/katso');
   const applicationIdContainer = await page.locator('.webform-submission__application_id');
   const applicationIdContainerText = await applicationIdContainer.textContent();
@@ -399,6 +382,7 @@ const navigateAndValidateProfilePage = async (
 
   const profilePageURL = '/fi/oma-asiointi/hakuprofiili';
   await page.goto(profilePageURL);
+  await logCurrentUrl(page);
 
   const headingMap: Record<string, string> = {
     registered_community: 'Yhteisön tiedot avustusasioinnissa',

@@ -127,7 +127,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Skicka
-    '#draft__label': 'Spara som oavslutat'
+    '#draft__label': 'Spara som oavslutad'
     '#wizard_prev__label': '< Tidigare'
     '#wizard_next__label': 'Nästa >'
     '#preview_prev__label': '< Tidigare'

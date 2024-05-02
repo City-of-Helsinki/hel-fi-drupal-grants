@@ -64,10 +64,10 @@ const baseFormRegisteredCommunity_52: FormData = {
           role: 'select',
           selector: {
             type: 'dom-id-first',
-            name: 'bank-account-selector',
+            name: '',
             value: '#edit-acting-year',
           },
-          value: '2024',
+          viewPageSkipValidation: true,
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
@@ -77,7 +77,6 @@ const baseFormRegisteredCommunity_52: FormData = {
         "edit-compensation-purpose": {
           value: faker.lorem.sentences(4),
         },
-
         "edit-myonnetty-avustus": {
           role: 'dynamicmultivalue',
           label: '',
@@ -1253,6 +1252,48 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
   },
 };
 
+const fieldSwapForm: FormDataWithRemoveOptionalProps = {
+  title: 'Field swap form',
+  testFieldSwap: true,
+  formPages: {
+    "1_hakijan_tiedot": {
+      items: {},
+      itemsToSwap: [
+        {field: 'edit-bank-account-account-number-select', swapValue: PROFILE_INPUT_DATA.iban2},
+      ]
+    },
+    "2_avustustiedot": {
+      items: {},
+      itemsToSwap: [
+        {field: 'edit-compensation-purpose', swapValue: 'The new purpose!'},
+      ]
+    },
+    "lisatiedot_ja_liitteet": {
+      items: {
+        'edit-yhteison-saannot-attachment-upload': {
+          role: 'checkbox',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-yhteison-saannot-isdeliveredlater'
+          },
+          value: 'Liite toimitetaan myöhemmin',
+        },
+        'edit-vahvistettu-tilinpaatos-attachment-upload': {
+          role: 'checkbox',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-vahvistettu-tilinpaatos-isincludedinotherfile'
+          },
+          value: 'Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä',
+        },
+      },
+    },
+  },
+  expectedErrors: {},
+};
+
 const sendApplication: FormDataWithRemoveOptionalProps = {
   title: 'Send to AVUS2',
   formPages: {
@@ -1279,6 +1320,7 @@ const registeredCommunityApplications_52 = {
   draft: baseFormRegisteredCommunity_52,
   missing_values: createFormData(baseFormRegisteredCommunity_52, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_52, wrongValues),
+  swap_fields: createFormData(baseFormRegisteredCommunity_52, fieldSwapForm),
   success: createFormData(baseFormRegisteredCommunity_52, sendApplication),
 }
 

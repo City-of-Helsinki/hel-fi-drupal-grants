@@ -14,12 +14,15 @@ use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Returns responses for grants_mandate routes.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsMandateController extends ControllerBase implements ContainerInjectionInterface {
 
@@ -31,7 +34,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    *
    * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  protected $requestStack;
+  protected RequestStack $requestStack;
 
   /**
    * The current user.
@@ -65,9 +68,9 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
   /**
    * Logger access.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannel|\Psr\Log\LoggerInterface
    */
-  protected LoggerChannel $logger;
+  protected LoggerChannel|LoggerInterface $logger;
 
   /**
    * Allowed roles.
@@ -108,7 +111,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
   /**
    * Check if user has required role in their mandate.
    *
-   * @var array $roles
+   * @param array $roles
    *   Array of user's roles.
    *
    * @return bool

@@ -39,8 +39,7 @@ const formPages: PageHandlers = {
     // We need to check the presence of every item so that removed items will
     // not be filled. This is to enable testing for missing values & error handling.
     if (items['edit-acting-year']) {
-      // await fillSelectField(items['edit-acting-year'].selector, page, '');
-      await page.locator('#edit-acting-year').selectOption(items['edit-acting-year'].value ?? '');
+      await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
     }
 
     if (items['edit-subventions-items-0-amount']) {
@@ -564,6 +563,10 @@ test.describe('KUVAPROJ(48)', () => {
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
     await selectRole(page, 'UNREGISTERED_COMMUNITY');
+  });
+
+  test.afterAll(async() => {
+    await page.close();
   });
 
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);

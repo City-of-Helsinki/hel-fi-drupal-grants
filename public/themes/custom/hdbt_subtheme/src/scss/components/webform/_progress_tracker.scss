@@ -204,6 +204,15 @@
   }
   .progress-step .progress-marker {
     color: var(--color-black);
+    &:focus-visible {
+      .grants-stepper__circle {
+        outline: var(--outline-width, 2px) solid var(--color-black);
+        outline-offset: 2px;
+      }
+      .grants-stepper__text {
+        outline: var(--outline-width, 2px) solid var(--color-black);
+      }
+    }
   }
   .progress-step:last-child {
     flex-grow: 1;

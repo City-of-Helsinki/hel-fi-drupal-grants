@@ -7,8 +7,8 @@ import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
 import {fillFormField, fillInputField, uploadFile} from "../../utils/input_helpers";
-import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
 import {swapFieldValues} from "../../utils/field_swap_helpers";
+import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
 
 const profileType = 'registered_community';
 const formId = '62';
@@ -25,8 +25,7 @@ const formPages: PageHandlers = {
     }
 
     if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year')
-        .selectOption(items['edit-acting-year'].value ?? '');
+      await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
     }
 
     if (items['edit-subventions-items-0-amount']) {
@@ -214,6 +213,10 @@ test.describe('NUORPROJ(62)', () => {
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
     await selectRole(page, 'REGISTERED_COMMUNITY');
+  });
+
+  test.afterAll(async() => {
+    await page.close();
   });
 
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);

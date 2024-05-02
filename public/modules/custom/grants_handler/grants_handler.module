@@ -1199,8 +1199,8 @@ function grants_handler_webform_presave(WebformInterface $webform) {
   }
   // Enable the draft save if not already set.
   $draft_setting = $webform->getSetting('draft');
-  if ($draft_setting !== WebformInterface::DRAFT_ALL) {
-    $webform->setSetting('draft', WebformInterface::DRAFT_ALL);
+  if ($draft_setting !== WebformInterface::DRAFT_AUTHENTICATED) {
+    $webform->setSetting('draft', WebformInterface::DRAFT_AUTHENTICATED);
   }
   // Set purge status to prevent clutter in the db.
   if ($purge_setting !== WebformSubmissionStorageInterface::PURGE_ALL
@@ -1950,6 +1950,10 @@ function grants_handler_webform_element_input_masks() {
   $input_masks["'alias': 'numeric', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'"] = [
     'title' => t('Grants decimal'),
     'example' => '1 789,20',
+  ];
+  $input_masks["'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"] = [
+    'title' => ('Grants currency'),
+    'example' => '1 789,20€',
   ];
   return $input_masks;
 }

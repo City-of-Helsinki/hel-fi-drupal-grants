@@ -1,6 +1,7 @@
 import {expect, Page, test} from "@playwright/test";
 import {FormData} from "./data/test_data";
 import {logger} from "./logger";
+import {logCurrentUrl} from "./helpers";
 
 /**
  * The DeletionMethod enum.
@@ -45,13 +46,13 @@ const deleteDraftApplication = async (formKey: string, page: Page, formDetails: 
   if (thisStoreData.status !== 'DRAFT') {
     return;
   }
-
+  logger(`Deleting draft application with application ID: ${thisStoreData.applicationId}...`);
   const method = Math.random() < 0.5 ? DeletionMethod.SubmissionUrl : DeletionMethod.ApplicationId;
   if (method === DeletionMethod.SubmissionUrl) {
-    logger('Deleting draft application with submission URL:', thisStoreData.submissionUrl)
-    await deleteUsingSubmissionUrl(page, thisStoreData.submissionUrl);
+    logger(`Deleting via submission URL: ${thisStoreData.submissionUrl}.`);
+    await deleteUsingSubmissionUrl(page, thisStoreData.submissionUrl, thisStoreData.applicationId);
   } else {
-    logger('Deleting draft application with Application ID:', thisStoreData.applicationId)
+    logger(`Deleting via Oma asiointi with ID: ${thisStoreData.applicationId}.`);
     await deleteUsingApplicationId(page, thisStoreData.applicationId);
   }
 }
@@ -70,16 +71,20 @@ const deleteDraftApplication = async (formKey: string, page: Page, formDetails: 
  *   Page object from Playwright.
  * @param submissionUrl
  *   The submission URL (e.g. /fi/hakemus/liikunta_toiminta_ja_tilankaytto/1391/muokkaa).
+ * @param applicationId
+ *   The application ID (e.g. LOCALT-060-0000202).
  */
-const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
+const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string, applicationId: string) => {
   await page.goto(submissionUrl);
+  await logCurrentUrl(page);
   await page.waitForURL('**/muokkaa');
   await page.locator('#webform-button--delete-draft').click();
   page.once('dialog', async dialog => {
     await dialog.accept();
   });
+  await logCurrentUrl(page);
   await page.waitForURL('/fi/oma-asiointi');
-  await validateDeletionNotification(page, 'Submission URL.');
+  await validateDeletionNotification(page, 'Submission URL.', applicationId);
 }
 
 /**
@@ -99,10 +104,12 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string) => {
  */
 const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
   await page.goto('/fi/oma-asiointi');
+  await logCurrentUrl(page);
   await page.waitForURL('**/oma-asiointi');
   await page.locator(`.application-delete-link-${applicationId}`).click();
   await page.waitForLoadState('load');
-  await validateDeletionNotification(page, 'Application ID on Oma asiointi page.');
+  await logCurrentUrl(page);
+  await validateDeletionNotification(page, 'Application ID on Oma asiointi page.', applicationId);
 }
 
 /**
@@ -115,11 +122,14 @@ const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
  *   Page object from Playwright.
  * @param message
  *   Message indicating which deleting method was used.
+ * @param applicationId
+ *   The application ID (e.g. LOCALT-060-0000202).
  */
-const validateDeletionNotification = async (page: Page, message: string) => {
+const validateDeletionNotification = async (page: Page, message: string, applicationId: string) => {
+  logger(`Verifying deletion of application with application ID: ${applicationId}...`);
   const notificationContainer = await page.locator('.hds-notification.hds-notification--info');
   await expect(notificationContainer, "Failed to delete draft application").toContainText("Luonnos poistettu");
-  logger('Draft application deleted. Application deleted with:', message);
+  logger(`Draft application deleted. Application deleted with: ${message}`);
 }
 
 export {

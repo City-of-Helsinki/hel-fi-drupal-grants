@@ -10,6 +10,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configure municipality config form.
+ *
+ * @phpstan-consistent-constructor
  */
 class MunicipalitySettingsForm extends ConfigFormBase {
 

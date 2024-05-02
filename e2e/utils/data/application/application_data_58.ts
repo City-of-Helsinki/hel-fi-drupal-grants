@@ -63,10 +63,10 @@ const baseFormRegisteredCommunity_58: FormData = {
           role: 'select',
           selector: {
             type: 'dom-id-first',
-            name: 'bank-account-selector',
+            name: '',
             value: '#edit-acting-year',
           },
-          value: '2024',
+          viewPageSkipValidation: true,
         },
         'edit-orienteering-maps': {
           role: 'multivalue',
@@ -424,7 +424,8 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-submit',
-          }
+          },
+          viewPageSkipValidation: true
         },
       },
       itemsToRemove: [],

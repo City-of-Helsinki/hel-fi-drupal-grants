@@ -21,8 +21,7 @@ const formPages: PageHandlers = {
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-acting-year']) {
-      // await fillSelectField(items['edit-acting-year'].selector, page, '');
-      await page.locator('#edit-acting-year').selectOption(items['edit-acting-year'].value ?? '');
+      await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
     }
 
     if (items['edit-subventions-items-0-amount']) {
@@ -159,6 +158,10 @@ test.describe('ASUKASPIEN(64)', () => {
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
     await selectRole(page, 'REGISTERED_COMMUNITY');
+  });
+
+  test.afterAll(async() => {
+    await page.close();
   });
 
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);

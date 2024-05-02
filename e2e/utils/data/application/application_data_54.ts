@@ -82,10 +82,10 @@ const baseFormRegisteredCommunity_54: FormData = {
           role: 'select',
           selector: {
             type: 'dom-id-first',
-            name: 'bank-account-selector',
+            name: '',
             value: '#edit-acting-year',
           },
-          value: '2025',
+          viewPageSkipValidation: true,
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
@@ -713,7 +713,8 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-submit',
-          }
+          },
+          viewPageSkipValidation: true
         },
       },
       itemsToRemove: [],

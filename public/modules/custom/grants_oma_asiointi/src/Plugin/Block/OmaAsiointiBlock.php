@@ -24,6 +24,8 @@ use Symfony\Component\HttpFoundation\Request;
  *   admin_label = @Translation("Grants Oma Asiointi"),
  *   category = @Translation("Oma Asiointi")
  * )
+ *
+ * @phpstan-consistent-constructor
  */
 class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
@@ -58,7 +60,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * Current request.
    *
-   * @var Symfony\Component\HttpFoundation\Request
+   * @var \Symfony\Component\HttpFoundation\Request
    */
   protected Request $request;
 
@@ -93,7 +95,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The grants_handler.application_handler service.
    * @param \Drupal\helfi_atv\AtvService $helfi_atv_atv_service
    *   The helfi_atv.atv_service service.
-   * @param Symfony\Component\HttpFoundation\Request $request
+   * @param \Symfony\Component\HttpFoundation\Request $request
    *   Current request object.
    * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
    *   Language manager.
@@ -213,8 +215,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       /**
        * Create rows for table.
        *
-       * @var integer $key
-       * @var  \Drupal\helfi_atv\AtvDocument $document
+       * @var \Drupal\helfi_atv\AtvDocument $document
        */
       foreach ($applicationDocuments as $document) {
         if (array_key_exists(

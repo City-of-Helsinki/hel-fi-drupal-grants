@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("Grants Oma Asiointi Hero"),
  *   category = @Translation("Oma Asiointi")
  * )
+ *
+ * @phpstan-consistent-constructor
  */
 class OmaAsiointiHeroBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
