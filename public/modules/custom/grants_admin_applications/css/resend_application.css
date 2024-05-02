@@ -1,0 +1,10 @@
+
+tr.from-avus2,
+tr.from-avus2:hover {
+ background: var(--color-copper-light);
+}
+
+tr.from-author,
+tr.from-author:hover {
+  background: var(--color-bus-light);
+}
