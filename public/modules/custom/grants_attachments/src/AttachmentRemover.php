@@ -6,8 +6,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystem;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -44,7 +43,7 @@ class AttachmentRemover {
    *
    * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel|LoggerChannelInterface $loggerChannel;
+  protected LoggerChannelInterface $loggerChannel;
 
   /**
    * The current user.
@@ -91,11 +90,14 @@ class AttachmentRemover {
    *   Entity type manager.
    * @param \Drupal\Core\File\FileSystem $fileSystem
    *   File system.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function __construct(
     FileUsageInterface $file_usage,
     MessengerInterface $messenger,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
     Connection $connection,
     AccountProxyInterface $currentUser,
     EntityTypeManagerInterface $entityTypeManager,
