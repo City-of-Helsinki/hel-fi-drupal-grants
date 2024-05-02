@@ -7,8 +7,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManager;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -94,9 +93,9 @@ class ApplicationHandler {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel|LoggerChannelInterface $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Show messages.
@@ -221,7 +220,7 @@ class ApplicationHandler {
     AtvService $atvService,
     AtvSchema $atvSchema,
     GrantsProfileService $grantsProfileService,
-    LoggerChannelFactory $loggerChannelFactory,
+    LoggerChannelFactoryInterface $loggerChannelFactory,
     Messenger $messenger,
     EventsService $eventsService,
     Connection $datababse,
@@ -2085,7 +2084,11 @@ class ApplicationHandler {
 
     if (empty($submissionData)) {
       if ($webform_submission == NULL) {
-        $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
+        try {
+          $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
+        }
+        catch (\Exception $e) {
+        }
       }
       $submissionData = $webform_submission->getData();
     }

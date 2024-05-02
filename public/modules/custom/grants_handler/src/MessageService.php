@@ -5,6 +5,7 @@ namespace Drupal\grants_handler;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_metadata\AtvSchema;
@@ -90,7 +91,7 @@ class MessageService {
    *   The helfi_helsinki_profiili.userdata service.
    * @param \GuzzleHttp\ClientInterface $http_client
    *   Client to post data.
-   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerFactory
    *   Log things.
    * @param \Drupal\grants_handler\EventsService $eventsService
    *   Log events to atv document.
@@ -100,7 +101,7 @@ class MessageService {
   public function __construct(
     HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata,
     ClientInterface $http_client,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
     EventsService $eventsService,
     AtvService $atvService
   ) {
