@@ -1392,18 +1392,14 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
-          <br/><br/>
-          <strong>Vaaditut liitteet</strong><br/>
-          Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilivuodelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilivuotta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus. Yksivuotisissa toiminta-avustuksissa liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma. Monivuotisissa toiminta-avustuksissa vaaditaan sen sijaan: talousarvio ja toimintasuunnitelma koko kaudelle, jolle avustusta haetaan.
-          <br/><br/>
-          Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin myös tiliote tai vastaava asiakirja, josta selviää tilinomistajan nimi ja tilinumero. Uusilta hakijoilta ja tapauksissa, joissa säännöt ovat muuttuneet edellisen hakemuksen jälkeen, tarvitaan myös yhdistyksen säännöt.
-          <br/><br/>
-          <strong>Usean liitteen toimittaminen yhtenä tiedostona</strong><br/>
-          Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.
-          <br/><br/>
-          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br/>
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä.
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p>
+          <h4>Vaaditut liitteet</h4>
+          <p>Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilivuodelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilivuotta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus. Yksivuotisissa toiminta-avustuksissa liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma. Monivuotisissa toiminta-avustuksissa vaaditaan sen sijaan: talousarvio ja toimintasuunnitelma koko kaudelle, jolle avustusta haetaan.</p>
+          <p>Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin myös tiliote tai vastaava asiakirja, josta selviää tilinomistajan nimi ja tilinumero. Uusilta hakijoilta ja tapauksissa, joissa säännöt ovat muuttuneet edellisen hakemuksen jälkeen, tarvitaan myös yhdistyksen säännöt.</p>
+          <h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
+          <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
+          <h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
+          <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä.</p>
       notification_attachments:
         '#type': webform_markup
         '#markup': |
