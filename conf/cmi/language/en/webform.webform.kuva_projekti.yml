@@ -318,7 +318,8 @@ elements: |
     '#markup': |-
       <p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.</p>
       <h4>Required appendices</h4>
-      <p>For the processing of the grant application, the required attachments are curricula vitae of the members of the working group in the case of a project by art professionals. As a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&#39;s name and the account number in the applicant&#39;s my data.</p>
+      <p>For the processing of the grant application, the required attachments are curricula vitae of the members of the working group in the case of a project by art professionals.</p>
+      <p>As a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder&#39;s name and the account number in the applicant&#39;s my data.</p>
       <h4>Submission of several appendices as a single file</h4>
       <p>You can submit several curricula vitae of the members of the working group as separate files in the Other attachment. If you wish, you can also submit several attachments as a single file.</p>
   notification_attachments:
