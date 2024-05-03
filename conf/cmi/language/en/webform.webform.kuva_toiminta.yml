@@ -471,5 +471,6 @@ elements: |
 settings:
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'
+  wizard_confirmation_label: '9. Complete'
   preview_label: '8. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'

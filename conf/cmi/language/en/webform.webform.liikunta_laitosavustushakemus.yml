@@ -288,5 +288,6 @@ elements: |
 settings:
   preview_label: '5. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
+  wizard_confirmation_label: '6. Complete'
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'
