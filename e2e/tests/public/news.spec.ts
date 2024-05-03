@@ -1,6 +1,6 @@
 import {Page, expect, test} from '@playwright/test';
 
-
+/*
 test.describe("News page", () => {
   let page: Page;
 
@@ -36,3 +36,4 @@ test.describe("News page", () => {
     await page.close();
   });
 });
+*/

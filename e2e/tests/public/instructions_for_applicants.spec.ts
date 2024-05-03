@@ -13,17 +13,16 @@ test.describe("Instructions page", () => {
   });
 
   test('page title', async () => {
-    const pageTitle = await page.title();
-    expect(pageTitle).toContain("Ohjeita hakijalle");
+    await expect(await page.title()).toContain("Ohjeita hakijalle");
   });
 
   test('verify hero', async () => {
-    await expect(page.getByRole('heading', {name: 'Ohjeita hakijalle'})).toBeVisible();
-    await expect(page.getByText('Tältä sivulta löydät tietoa myönnettävistä avustuksista ja niiden hakemisesta')).toBeVisible();
+    await expect(await page.getByRole('heading', {name: 'Ohjeita hakijalle'})).toBeVisible();
+    await expect(await page.getByText('Tältä sivulta löydät tietoa myönnettävistä avustuksista ja niiden hakemisesta.')).toBeVisible();
   });
 
   test('table of contents', async () => {
-    const tableOfContents = page.locator('#helfi-toc-table-of-contents-list');
+    const tableOfContents = await page.locator('#helfi-toc-table-of-contents-list');
 
     await expect(tableOfContents.getByRole('link', {name: 'Tutustu myönnettäviin avustuksiin'})).toBeEnabled();
     await expect(tableOfContents.getByRole('link', {name: 'Yleistä tietoa avustuksista'})).toBeEnabled();
@@ -38,14 +37,14 @@ test.describe("Instructions page", () => {
 
 
   test('Lisää aiheesta', async () => {
-    await expect(page.getByRole('heading', {name: 'Lisää aiheesta'})).toBeVisible();
-    await expect(page.getByRole('link', {name: 'Palvelun käyttöohjeet'})).toBeVisible();
+    await expect(await page.getByRole('heading', {name: 'Lisää aiheesta'})).toBeVisible();
+    await expect(await page.getByRole('link', {name: 'Palvelun käyttöohjeet'})).toBeVisible();
   });
 
 
   test('Helsingin kaupungin kirjaamo', async () => {
-    await expect(page.getByRole('heading', {name: 'Helsingin kaupungin kirjaamo'}).getByRole('link')).toBeVisible()
-    await expect(page.getByText('Kirjaamon asiakaspalvelu palvelee')).toBeVisible();
+    await expect(await page.getByRole('heading', {name: 'Helsingin kaupungin kirjaamo'}).getByRole('link')).toBeVisible()
+    await expect(await page.getByText('Kirjaamon asiakaspalvelu palvelee')).toBeVisible();
   });
 
   test.afterAll(async () => {

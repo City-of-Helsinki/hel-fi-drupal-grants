@@ -94,6 +94,12 @@ export default defineConfig({
       testMatch: '/forms/*',
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
     },
+    /* Run all smoke tests. */
+    {
+      name: 'smoke',
+      testMatch: '/public/*',
+      dependencies: ['setup']
+    },
     /* Form 29 tests. */
     {
       name: 'forms-29',

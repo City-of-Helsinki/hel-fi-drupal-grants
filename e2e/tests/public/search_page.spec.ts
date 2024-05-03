@@ -14,21 +14,20 @@ test.describe("Hakusivu", () => {
   });
 
   test('has title', async () => {
-    const pageTitle = await page.title()
-    expect(pageTitle).toContain('Etsi avustusta')
+    expect(await page.title()).toContain('Etsi avustusta')
   })
 
   test('contains header', async () => {
-    await expect(page.getByRole('heading', {name: 'Etsi avustusta'})).toBeVisible()
+    await expect(await page.getByRole('heading', {name: 'Etsi avustusta'})).toBeVisible()
   })
 
   test('search filter fields are visible', async () => {
-    await expect(page.getByRole('heading', {name: 'Rajaa hakua'})).toBeVisible()
-    await expect(page.getByText('Kohderyhmä')).toBeVisible()
-    await expect(page.getByText('Avustuslaji')).toBeVisible()
-    await expect(page.getByText('Avustuksen hakija')).toBeVisible()
-    await expect(page.getByText('Hakusana')).toBeVisible()
-    await expect(page.getByLabel('Näytä vain haettavissa olevat avustukset')).toBeVisible();
+    await expect(await page.getByRole('heading', {name: 'Rajaa hakua'})).toBeVisible()
+    await expect(await page.getByText('Valitse kohderyhmä')).toBeVisible()
+    await expect(await page.getByText('Millaiseen toimintaan haet avustusta?')).toBeVisible()
+    await expect(await page.getByText('Avustuksen hakija')).toBeVisible()
+    await expect(await page.getByText('Tai etsi hakusanalla')).toBeVisible()
+    await expect(await page.getByLabel('Näytä vain haettavissa olevat avustukset')).toBeVisible();
   });
 
   test('search results are initially visible', async () => {
@@ -37,7 +36,7 @@ test.describe("Hakusivu", () => {
   });
 
   test('can search for grants', async () => {
-    const inputField = page.getByPlaceholder('Etsi nimellä tai hakusanalla, esim toiminta-avustus')
+    const inputField = await page.getByPlaceholder('Etsi nimellä tai hakusanalla, esim toiminta-avustus')
     await inputField.fill('avustus');
 
     await page.getByRole('button', {name: 'Etsi'}).click();
@@ -48,7 +47,7 @@ test.describe("Hakusivu", () => {
   });
 
   test('invalid search returns no results', async () => {
-    const inputField = page.getByPlaceholder('Etsi nimellä tai hakusanalla, esim toiminta-avustus')
+    const inputField = await page.getByPlaceholder('Etsi nimellä tai hakusanalla, esim toiminta-avustus')
     await inputField.fill('xxxxxx');
 
     await page.getByRole('button', {name: 'Etsi'}).click();
@@ -59,12 +58,12 @@ test.describe("Hakusivu", () => {
   });
 
   test('search result link can be opened', async () => {
-    const inputField = page.getByPlaceholder('Etsi nimellä tai hakusanalla, esim toiminta-avustus')
+    const inputField = await page.getByPlaceholder('Etsi nimellä tai hakusanalla, esim toiminta-avustus')
     await inputField.clear();
 
     await page.getByRole('button', {name: 'Etsi'}).click();
 
-    const searchResultLinks = page.locator(".application_search--link")
+    const searchResultLinks = await page.locator(".application_search--link")
     const firstLink = searchResultLinks.first()
     await firstLink.click()
 

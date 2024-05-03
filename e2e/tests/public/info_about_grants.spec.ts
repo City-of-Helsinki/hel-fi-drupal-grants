@@ -25,7 +25,7 @@ test.describe("Info page", () => {
     await expect(page.getByRole('heading', {name: 'Kulttuuri ja vapaa-aika'})).toBeVisible();
     await expect(page.getByRole('heading', {name: 'Asukasosallisuuden avustukset', exact: true})).toBeVisible();
     await expect(page.getByRole('heading', {name: 'Muut Avustukset'})).toBeVisible();
-    await expect(page.getByRole('heading', {name: 'Ajankohtaista avustuksista'})).toBeVisible();
+    await expect(page.getByRole('heading', {name: 'Avustusten uutisia'})).toBeVisible();
   });
 
   test.afterAll(async () => {

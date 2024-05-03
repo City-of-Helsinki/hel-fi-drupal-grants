@@ -18,14 +18,14 @@ test.describe("Service instructions", () => {
   });
 
   test('heading', async () => {
-    await expect(page.getByRole('heading', {name: 'Palvelun käyttöohjeet'})).toBeVisible();
+    await expect(await page.getByRole('heading', {name: 'Palvelun käyttöohjeet'})).toBeVisible();
   });
 
   test('buttons', async () => {
-    await expect(page.getByRole('button', {name: 'Kirjautuminen ja tunnistautuminen', exact: true})).toBeVisible();
-    await expect(page.getByRole('button', {name: 'Omat tiedot', exact: true})).toBeVisible();
-    await expect(page.getByRole('button', {name: 'Hakemus ja liitteet', exact: true})).toBeVisible();
-    await expect(page.getByRole('button', {name: 'Oma asiointi ja viestitoiminnallisuus', exact: true})).toBeVisible();
+    await expect(await page.getByRole('button', {name: 'Kirjautuminen ja tunnistautuminen', exact: true})).toBeVisible();
+    await expect(await page.getByRole('button', {name: 'Omat tiedot', exact: true})).toBeVisible();
+    await expect(await page.getByRole('button', {name: 'Hakemus ja liitteet', exact: true})).toBeVisible();
+    await expect(await page.getByRole('button', {name: 'Oma asiointi ja viestitoiminnallisuus', exact: true})).toBeVisible();
   });
 
   test.afterAll(async () => {

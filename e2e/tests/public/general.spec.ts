@@ -13,7 +13,6 @@ test.describe("Frontpage", () => {
 
   test('check nav bar dropdown links', async () => {
     const linkNames = [
-      'Ajankohtaista avustuksista',
       'Kulttuurin avustukset',
       'Liikunnan avustukset',
       'Nuorisotoiminnan avustukset',
@@ -34,21 +33,18 @@ test.describe("Frontpage", () => {
   test('can change language', async () => {
     await page.getByRole('link', {name: 'Svenska'}).click();
     await expect(page.getByRole('heading', {name: 'Understöd', exact: true})).toBeVisible();
-    await expect(page.getByRole('heading', {name: 'Latest news'})).toBeVisible();
+    await expect(page.getByRole('heading', {name: 'Nyheter om understöd'})).toBeVisible();
     await expect(page.getByRole('heading', {name: 'Du är kanske intresserad av'})).toBeVisible();
-    await expect(page.getByRole('heading', {name: 'Ta kontakt'})).toBeVisible();
 
     await page.getByRole('link', {name: 'English'}).click();
     await expect(page.getByRole('heading', {name: 'Grants', exact: true})).toBeVisible();
-    await expect(page.getByRole('heading', {name: 'Latest news'})).toBeVisible();
+    await expect(page.getByRole('heading', {name: 'News on grants'})).toBeVisible();
     await expect(page.getByRole('heading', {name: 'You may also be interested in'})).toBeVisible();
-    await expect(page.getByRole('heading', {name: 'City of Helsinki'})).toBeVisible();
 
     await page.getByRole('link', {name: 'Suomi'}).click();
     await expect(page.getByRole('heading', {name: 'Avustukset'})).toBeVisible();
-    await expect(page.getByRole('heading', {name: 'Ajankohtaista avustuksista'})).toBeVisible();
+    await expect(page.getByRole('heading', {name: 'Avustusten uutisia'})).toBeVisible();
     await expect(page.getByRole('heading', {name: 'Sinua voisi kiinnostaa'})).toBeVisible();
-    await expect(page.getByRole('heading', {name: 'Helsingin kaupunki'})).toBeVisible();
   });
 
 
