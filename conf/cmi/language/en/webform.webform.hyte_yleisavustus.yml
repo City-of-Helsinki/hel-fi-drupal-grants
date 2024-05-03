@@ -194,7 +194,6 @@ elements: |
     '#title': Attachments
   attachments_info:
     '#markup': |-
-    '#markup': |-
       <p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.
       </p>
       <h4>Required attachments</h4>
