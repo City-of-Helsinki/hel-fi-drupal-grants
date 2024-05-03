@@ -4,6 +4,7 @@ namespace Drupal\grants_admin_applications\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -37,9 +38,9 @@ class SubmittedApplicationsForm extends AtvFormBase {
   /**
    * Constructs a new GrantsProfileForm object.
    */
-  public function __construct(AtvService $atvService, ImmutableConfig $config) {
+  public function __construct(AtvService $atvService, ConfigFactory $config) {
     $this->atvService = $atvService;
-    $this->config = $config;
+    $this->config = $config->get('grants_metadata.settings');
   }
 
   /**
@@ -48,7 +49,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
   public static function create(ContainerInterface $container): SubmittedApplicationsForm|static {
     return new static(
       $container->get('helfi_atv.atv_service'),
-      $container->get('grants_metadata.settings')
+      $container->get('config.factory'),
     );
   }
 
