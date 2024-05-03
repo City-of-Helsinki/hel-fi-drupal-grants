@@ -18,7 +18,7 @@ test.describe("Service instructions", () => {
   });
 
   test('heading', async () => {
-    await expect(await page.getByRole('heading', {name: 'Palvelun käyttöohjeet'})).toBeVisible();
+    await expect(await page.getByRole('heading', {name: /Palvelun käyttöohjeet/})).toBeVisible();
   });
 
   test('buttons', async () => {

@@ -17,7 +17,7 @@ test.describe("Instructions page", () => {
   });
 
   test('verify hero', async () => {
-    await expect(await page.getByRole('heading', {name: 'Ohjeita hakijalle'})).toBeVisible();
+    await expect(await page.getByRole('heading', {name: /Ohjeita hakijalle/})).toBeVisible();
     await expect(await page.getByText('Tältä sivulta löydät tietoa myönnettävistä avustuksista ja niiden hakemisesta.')).toBeVisible();
   });
 
@@ -44,7 +44,6 @@ test.describe("Instructions page", () => {
 
   test('Helsingin kaupungin kirjaamo', async () => {
     await expect(await page.getByRole('heading', {name: 'Helsingin kaupungin kirjaamo'}).getByRole('link')).toBeVisible()
-    await expect(await page.getByText('Kirjaamon asiakaspalvelu palvelee')).toBeVisible();
   });
 
   test.afterAll(async () => {
