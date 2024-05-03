@@ -465,7 +465,7 @@ class ResendApplicationsForm extends AtvFormBase {
         'resendMessage' => !$senderIsAvus2 ? [
           '#type' => 'checkbox',
           '#return_value' => $message['messageId'],
-        ] : ['#markup' => '',],
+        ] : ['#markup' => ''],
         '#attributes' => [
           'class' => $senderIsAvus2 ? ['from-avus2'] : ['from-author'],
         ],
