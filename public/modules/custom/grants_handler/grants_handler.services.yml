@@ -65,6 +65,7 @@ services:
 
   grants_handler.redirect_after_logout:
     class: Drupal\grants_handler\EventSubscriber\RedirectAfterLogoutSubscriber
+    arguments: ['@openid_connect_logout_redirect.redirect']
     tags:
       - { name: event_subscriber }
 

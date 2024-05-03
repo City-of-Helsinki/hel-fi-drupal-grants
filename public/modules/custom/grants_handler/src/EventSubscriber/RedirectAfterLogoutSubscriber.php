@@ -3,6 +3,7 @@
 namespace Drupal\grants_handler\EventSubscriber;
 
 use Drupal\grants_handler\Event\UserLogoutEvent;
+use Drupal\openid_connect_logout_redirect\Service\RedirectService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -15,7 +16,7 @@ class RedirectAfterLogoutSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  public function __construct() {}
+  public function __construct(protected RedirectService $redirectService) {}
 
   /**
    * Redirect user to front page after logout.
@@ -24,8 +25,7 @@ class RedirectAfterLogoutSubscriber implements EventSubscriberInterface {
    *   Event.
    */
   public function checkRedirection(UserLogoutEvent $event) {
-    $redirect_service = \Drupal::service('openid_connect_logout_redirect.redirect');
-    return $redirect_service->getLogoutRedirectUrl();
+    return $this->redirectService->getLogoutRedirectUrl();
   }
 
   /**
