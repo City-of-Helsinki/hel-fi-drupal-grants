@@ -7,6 +7,7 @@ use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvService;
@@ -85,6 +86,13 @@ class MessageService {
   protected AtvService $atvService;
 
   /**
+   * Current user.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected AccountProxyInterface $currentUser;
+
+  /**
    * Constructs a MessageService object.
    *
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata
@@ -103,13 +111,15 @@ class MessageService {
     ClientInterface $http_client,
     LoggerChannelFactoryInterface $loggerFactory,
     EventsService $eventsService,
-    AtvService $atvService
+    AtvService $atvService,
+    AccountProxyInterface $currentUser,
   ) {
     $this->helfiHelsinkiProfiiliUserdata = $helfi_helsinki_profiili_userdata;
     $this->httpClient = $http_client;
     $this->logger = $loggerFactory->get('grants_handler_message_service');
     $this->eventsService = $eventsService;
     $this->atvService = $atvService;
+    $this->currentUser = $currentUser;
 
     $this->endpoint = getenv('AVUSTUS2_MESSAGE_ENDPOINT');
     $this->username = getenv('AVUSTUS2_USERNAME');
@@ -154,7 +164,7 @@ class MessageService {
       $messageData['caseId'] = $submissionData["application_number"];
 
       if ($userData === NULL) {
-        $currentUser = \Drupal::currentUser();
+        $currentUser = $this->currentUser;
         $messageData['sentBy'] = $currentUser->getDisplayName();
       }
       else {

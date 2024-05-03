@@ -3,6 +3,7 @@
 namespace Drupal\grants_metadata;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\locale\StringDatabaseStorage;
 use Drupal\locale\TranslationString;
 
 /**
@@ -13,6 +14,15 @@ class GrantsConverterService {
   use StringTranslationTrait;
 
   const DEFAULT_DATETIME_FORMAT = 'c';
+
+  /**
+   * Constructs a new GrantsConverterService.
+   *
+   * @param \Drupal\locale\StringDatabaseStorage $storage
+   *   String database storage.
+   */
+  public function __construct(private StringDatabaseStorage $storage) {
+  }
 
   /**
    * Format dates to a given or default format.
@@ -94,8 +104,6 @@ class GrantsConverterService {
    *   passed through the t() function.
    */
   public function convertSportName(array|string $value): string {
-    /** @var \Drupal\locale\StringDatabaseStorage $storage */
-    $storage = \Drupal::service('locale.storage');
     $tOpts = ['context' => 'grants_club_section'];
     $original = $value['value'] ?? $value;
 
@@ -103,7 +111,7 @@ class GrantsConverterService {
       return '';
     }
 
-    $translationEntry = $storage->getTranslations([
+    $translationEntry = $this->storage->getTranslations([
       'translation' => $original,
       'context' => 'grants_club_section',
       'translated' => TRUE,

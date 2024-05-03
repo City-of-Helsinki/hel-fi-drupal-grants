@@ -13,7 +13,7 @@ services:
         '@logger.factory',
         '@grants_handler.events_service',
         '@helfi_atv.atv_service',
-        '@renderer'
+        '@current_user'
     ]
 
   grants_handler.application_handler:
