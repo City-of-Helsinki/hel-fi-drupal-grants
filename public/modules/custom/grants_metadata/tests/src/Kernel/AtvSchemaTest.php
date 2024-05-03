@@ -209,6 +209,25 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
     $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '38');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '123');
+    // activitiesInfoArray.
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Kuvaus');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'communityPracticesBusiness', 'false');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantPersonLocal', '11');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantPersonGlobal', '33');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'membersApplicantCommunityLocal', '2');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'membersApplicantCommunityGlobal', '22');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 6], 'feePerson', '11');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 7], 'feeCommunity', '111');
+    // Contact Info and Address.
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 0], 'contactPerson', 'Ari Eerola');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 1], 'phoneNumber', '0401234567');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 2], 'street', 'Testitie 3');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 3], 'city', 'Testilä');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 4], 'postCode', '00100');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 5], 'country', 'Suomi');
   }
 
   /**
@@ -689,10 +708,11 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     // Applicant info.
     $this->assertRegisteredCommunity($document);
     $this->assertDocumentField($document, ['applicationInfoArray', 0], 'applicationType', 'LIIKUNTAYLEIS', TRUE);
-    $this->assertDocumentField($document, ['applicationInfoArray', 6], 'acting_year', '2024');
+    $this->assertDocumentField($document, ['applicationInfoArray', 6], 'actingYear', '2024');
     // Additional information is string field.
-    $this->assertEquals('Lisätietoja hakemuksesta', $document['compensation']['additionalInformation']);
-    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko');
+    $this->assertEquals('Lisätiedot', $document['compensation']['additionalInformation']);
+    // This field is encoded because it is included by backend magic. That's why there is no metadata.
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko', TRUE);
     $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'Ostetaan kohde');
     // Handle subventions.
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '9');
