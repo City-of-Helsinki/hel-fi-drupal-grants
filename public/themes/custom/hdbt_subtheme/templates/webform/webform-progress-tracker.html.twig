@@ -45,7 +45,7 @@
       ] %}
       {% set attributes = create_attribute()
         .setAttribute('data-webform-' ~ page.type, page.name)
-        .setAttribute('title', page.title)
+        .setAttribute('title', (index + 1) ~ '/' ~ progress|length ~ ': ' ~ page.title)
         .setAttribute('class', 'grants-stepper__steps')
         .addClass(page_classes[page.name])
       %}
