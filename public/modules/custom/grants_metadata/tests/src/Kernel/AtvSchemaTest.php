@@ -266,6 +266,14 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '2');
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'pp@example.com');
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 3], 'phone', '1234567');
+    // Other compensation.
+    $arrayIndex1 = 'otherCompensationsInfo';
+    $arrayIndex2 = 'otherAppliedCompensationsArray';
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 0], 'issuer', '3');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 1], 'issuerName', 'EU');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 2], 'year', '2024');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 3], 'amount', '333');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 4], 'purpose', 'Etkot!');
   }
 
   /**
@@ -284,6 +292,25 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
     $this->assertRegisteredCommunity($document);
+    // Subventions
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '6');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '123');
+    // activitiesInfoArray.
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Kuvaus toiminnasta');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'communityPracticesBusiness', 'false');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantPersonLocal', '50');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantPersonGlobal', '100');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'membersApplicantCommunityLocal', '5');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'membersApplicantCommunityGlobal', '10');
+    // ApplicantOfficialsArray
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Testeeje');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '2');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'pp@example.com');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 3], 'phone', '1234567');
+    // compensationInfo.
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'purpose', 'Juhlat');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'compensationPreviousYear', 'true');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 3], 'explanation', 'Selvitystä ja lisää selvitystä');
   }
 
   /**
