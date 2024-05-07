@@ -198,7 +198,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
-    '#help': "&nbsp;Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nSamfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r."
+    '#help': "Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nSamfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
