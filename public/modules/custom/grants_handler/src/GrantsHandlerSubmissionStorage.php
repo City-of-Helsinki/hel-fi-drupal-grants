@@ -84,6 +84,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
 
     $instance->data = [];
 
+    /** @var static $instance */
     return $instance;
   }
 

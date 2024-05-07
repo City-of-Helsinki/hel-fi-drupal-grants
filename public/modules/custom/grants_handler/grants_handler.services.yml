@@ -30,6 +30,11 @@ services:
         '@database',
         '@language_manager',
         '@grants_handler.navigation_helper',
+        '@config.factory',
+        '@current_user',
+        '@datetime.time',
+        '@current_user',
+        '@datetime.time'
     ]
     calls:
       - [setAttachmentHandler, ['@?grants_attachments.attachment_handler']]
