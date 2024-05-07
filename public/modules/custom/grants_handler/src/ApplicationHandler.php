@@ -12,6 +12,7 @@ use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_mandate\CompanySelectException;
@@ -1046,7 +1047,7 @@ class ApplicationHandler {
   /**
    * Validate application data so that it is correct for saving to AVUS2.
    *
-   * @param \Drupal\Core\TypedData\TypedDataInterface $applicationData
+   * @param \Drupal\Core\TypedData\ComplexDataInterface $applicationData
    *   Typed data object.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state object.
@@ -1057,7 +1058,7 @@ class ApplicationHandler {
    *   Constraint violation object.
    */
   public function validateApplication(
-    TypedDataInterface $applicationData,
+    ComplexDataInterface $applicationData,
     FormStateInterface &$formState,
     WebformSubmission $webform_submission
   ): ConstraintViolationListInterface {
