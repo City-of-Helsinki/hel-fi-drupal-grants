@@ -13,7 +13,7 @@ use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\webform\Entity\WebformSubmission;
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client;
 
 /**
  * Handle message uploading and other things related.
@@ -32,9 +32,9 @@ class MessageService {
   /**
    * The HTTP client.
    *
-   * @var \GuzzleHttp\ClientInterface
+   * @var \GuzzleHttp\Client
    */
-  protected ClientInterface $httpClient;
+  protected Client $httpClient;
 
   /**
    * Logger.
@@ -97,7 +97,7 @@ class MessageService {
    *
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata
    *   The helfi_helsinki_profiili.userdata service.
-   * @param \GuzzleHttp\ClientInterface $http_client
+   * @param \GuzzleHttp\Client $http_client
    *   Client to post data.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerFactory
    *   Log things.
@@ -105,10 +105,12 @@ class MessageService {
    *   Log events to atv document.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access to ATV.
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
+   *   Current user.
    */
   public function __construct(
     HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata,
-    ClientInterface $http_client,
+    Client $http_client,
     LoggerChannelFactoryInterface $loggerFactory,
     EventsService $eventsService,
     AtvService $atvService,

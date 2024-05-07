@@ -26,7 +26,7 @@ use Drupal\helfi_helsinki_profiili\ProfileDataException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -51,9 +51,9 @@ class ApplicationHandler {
   /**
    * The HTTP client.
    *
-   * @var \GuzzleHttp\ClientInterface
+   * @var \GuzzleHttp\Client
    */
-  protected ClientInterface $httpClient;
+  protected Client $httpClient;
 
   /**
    * The helfi_helsinki_profiili.userdata service.
@@ -191,7 +191,7 @@ class ApplicationHandler {
   /**
    * Constructs an ApplicationUploader object.
    *
-   * @param \GuzzleHttp\ClientInterface $http_client
+   * @param \GuzzleHttp\Client $http_client
    *   The HTTP client.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata
    *   The helfi_helsinki_profiili.userdata service.
@@ -215,7 +215,7 @@ class ApplicationHandler {
    *   Access error messages.
    */
   public function __construct(
-    ClientInterface $http_client,
+    Client $http_client,
     HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata,
     AtvService $atvService,
     AtvSchema $atvSchema,

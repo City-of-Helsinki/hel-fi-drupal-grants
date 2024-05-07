@@ -1308,6 +1308,7 @@ class GrantsHandler extends WebformHandlerBase {
    */
   public function postsaveSubmitForm(): void {
     $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
+    $applicationData = NULL;
     // submitForm is triggering element when saving as draft.
     // Parse attachments to data structure.
     try {

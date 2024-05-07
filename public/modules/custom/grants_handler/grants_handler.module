@@ -1074,7 +1074,7 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
   if (ApplicationHandler::isSubmissionMessageable($submission, NULL)) {
     // Add message form.
     $variables['message_form'] = \Drupal::formBuilder()
-      ->getForm('Drupal\grants_handler\Form\MessageForm');
+      ->getForm('Drupal\grants_handler\Form\MessageForm', $submission);
   }
 }
 
