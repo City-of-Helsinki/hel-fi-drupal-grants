@@ -68,6 +68,37 @@ const pageCollection: PageCollection = {
       },
     ]
   },
+  "applicant_instructions": {
+    url: "/fi/ohjeita-hakijalle",
+    validatePageTitle: true,
+    components: [
+      {
+        className: ".page-title",
+        elements: [
+          { selector: "h1", count: 1 },
+        ],
+      },
+      {
+        className: ".component--lead-in",
+        elements: [
+          { selector: ".component__content", count: 1 },
+        ],
+      },
+      {
+        className: ".component--list-of-links",
+        elements: [
+          { selector: ".list-of-links__item", count: 1 },
+        ],
+      },
+      {
+        className: ".component--content-liftup",
+        elements: [
+          { selector: ".content-liftup__image", count: 1 },
+          { selector: ".content-liftup__text", count: 1 },
+        ],
+      },
+    ]
+  },
 };
 
 export {

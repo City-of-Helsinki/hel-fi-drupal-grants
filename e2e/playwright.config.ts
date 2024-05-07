@@ -100,6 +100,7 @@ export default defineConfig({
       testMatch: [
         '/public/front_page.ts',
         '/public/about_grants.ts',
+        '/public/applicant_instructions.ts',
       ],
       dependencies: ['setup']
     },
