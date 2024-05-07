@@ -45,10 +45,6 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
    *
    * @param array $element
    *   Element that is being processed.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state.
-   * @param array $complete_form
-   *   Full form.
    *
    * @return array[]
    *   Form API element for webform element.
@@ -58,11 +54,9 @@ class GrantsBudgetCostTotal extends WebformCompositeBase {
     $column = '';
     $fieldarray = [];
     foreach ($element['#collect_field'] as $key => $value) {
-      if ($value !== 0) {
-        if (strstr($element['#collect_field'][$key], '%%')) {
-          [$field, $column] = explode('%%', $element['#collect_field'][$key]);
-          $fieldarray[] = ['fieldName' => $field, 'columnName' => $column];
-        }
+    if ($value !== 0 && strstr($element['#collect_field'][$key], '%%')) {
+        [$field, $column] = explode('%%', $element['#collect_field'][$key]);
+        $fieldarray[] = ['fieldName' => $field, 'columnName' => $column];
       }
     }
 

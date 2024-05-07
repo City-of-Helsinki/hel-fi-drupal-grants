@@ -128,12 +128,11 @@ class GrantsConverterService {
    *   Value to be converted.
    *
    * @return string|null
-   *   Comman floated value.
+   *   Comma floated value.
    */
   public function convertToCommaFloat(array $value): ?string {
     $fieldValue = $value['value'] ?? '';
-    $fieldValue = str_replace(['€', '.', ' '], ['', ',', ''], $fieldValue);
-    return $fieldValue;
+    return str_replace(['€', '.', ' '], ['', ',', ''], $fieldValue);
   }
 
 }

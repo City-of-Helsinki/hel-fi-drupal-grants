@@ -5,16 +5,16 @@ namespace Drupal\grants_metadata\Plugin\DataType;
 use Drupal\Core\TypedData\Plugin\DataType\Map;
 
 /**
- * Address DataType.
+ * Asukasosallisuus, yleis- ja toiminta-avustushakemus.
  *
  * @DataType(
- * id = "grants_metadata_kansliatyo",
- * label = @Translation("Kansliatyo"),
+ * id = "grants_metadata_asukasyleistoim",
+ * label = @Translation("Asukasosallisuus, yleis- ja toiminta-avustushakemus"),
  * definition_class =
- *   "\Drupal\grants_metadata\TypedData\Definition\KansliatyoDefinition"
+ *   "\Drupal\grants_metadata\TypedData\Definition\AsukasYleisToimDefinition"
  * )
  */
-class KansliatyoData extends Map {
+class AsukasYleisToimData extends Map {
 
   use DataFormatTrait;
 

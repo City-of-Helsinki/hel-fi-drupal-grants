@@ -152,10 +152,6 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
       ];
 
       foreach ($mappings as $key => $value) {
-        if (empty($value)) {
-          // Not yet implemented in avus2.
-          continue;
-        }
         $this->createRepeatedMembershipDefinitions($key, $value, $info);
       }
 

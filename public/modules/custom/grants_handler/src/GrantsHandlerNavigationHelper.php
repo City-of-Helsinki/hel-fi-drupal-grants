@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_handler;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
@@ -42,6 +43,11 @@ class GrantsHandlerNavigationHelper {
    * @var \Drupal\Core\Database\Connection
    */
   protected Connection $database;
+
+  /**
+   * The time service.
+   */
+  protected readonly TimeInterface $timeInterface;
 
   /**
    * The messenger service.
@@ -86,9 +92,11 @@ class GrantsHandlerNavigationHelper {
     MessengerInterface $messenger,
     EntityTypeManagerInterface $entity_type_manager,
     FormBuilderInterface $form_builder,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    TimeInterface $timeInterface,
   ) {
 
+    $this->timeInterface = $timeInterface;
     $this->database = $datababse;
     $this->messenger = $messenger;
     $this->entityTypeManager = $entity_type_manager;
@@ -291,11 +299,11 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::PAGE_VISITED_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => \Drupal::currentUser()->id(),
+        'uid' => $this->helsinkiProfiiliUserData->getCurrentUser()->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => $page,
         'page' => $page,
-        'timestamp' => (string) \Drupal::time()->getRequestTime(),
+        'timestamp' => (string) $this->timeInterface->getRequestTime(),
       ];
       $this->cache[$webformSubmission->getWebform()->id()]['visits'] = NULL;
       $query = $this->database->insert(self::TABLE, $fields);
@@ -343,7 +351,7 @@ class GrantsHandlerNavigationHelper {
   public function logErrors(WebformSubmissionInterface $webformSubmission, array $errors, string $page) {
 
     $wfId = $webformSubmission->id();
-    // Get outta here if the submission hasn't been saved yet.
+    // Get out from here if the submission hasn't been saved yet.
     if ($wfId == NULL) {
       return;
     }
@@ -361,11 +369,11 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::ERROR_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => \Drupal::currentUser()->id(),
+        'uid' => $this->helsinkiProfiiliUserData->getCurrentUser()->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => serialize($errors),
         'page' => $page,
-        'timestamp' => (string) \Drupal::time()->getRequestTime(),
+        'timestamp' => (string) $this->timeInterface->getRequestTime(),
       ];
       $this->database->insert(self::TABLE)->fields($fields)->execute();
       $webformId = $webformSubmission->getWebform()->id();

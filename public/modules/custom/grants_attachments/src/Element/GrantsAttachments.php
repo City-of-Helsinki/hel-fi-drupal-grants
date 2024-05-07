@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_attachments\Element;
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\Xss;
@@ -218,7 +219,7 @@ class GrantsAttachments extends WebformCompositeBase {
   public static function getCompositeElements(array $element): array {
     $tOpts = ['context' => 'grants_attachments'];
 
-    $sessionHash = sha1(\Drupal::service('session')->getId());
+    $sessionHash = Crypt::hashBase64(\Drupal::service('session')->getId());
     $uploadLocation = 'private://grants_attachments/' . $sessionHash;
     $maxFileSizeInBytes = (1024 * 1024) * 20;
 
@@ -477,7 +478,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
     /** @var \Drupal\webform\WebformSubmissionForm $formObject */
     $formObject = $form_state->getFormObject();
-    /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
+    /** @var \Drupal\webform\WebformSubmissionInterface $webformSubmission */
     $webformSubmission = $formObject->getEntity();
     // Get data from webform.
     $webformData = $webformSubmission->getData();
@@ -570,7 +571,7 @@ class GrantsAttachments extends WebformCompositeBase {
         }
       }
     }
-    elseif ($isRemoveAction) {
+    elseif ($isRemoveAction && isset($fid)) {
 
       // Validate function is looping all file fields.
       // Check if we are actually currently trying to delete a
