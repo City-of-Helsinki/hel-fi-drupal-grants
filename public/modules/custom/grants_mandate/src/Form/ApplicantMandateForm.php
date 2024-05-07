@@ -12,6 +12,7 @@ use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Provides a Grants Profile form.
@@ -239,8 +240,8 @@ organization or association', [], $tOpts),
 
         // Redirect user to grants profile page.
         $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
-        $defaultRedirect = new TrustedRedirectResponse($redirectUrl->toString());
-        $redirect = $this->redirectService->getRedirect($defaultRedirect, TRUE);
+        $defaultRedirect = new RedirectResponse($redirectUrl->toString());
+        $redirect = $this->redirectService->getRedirect($defaultRedirect);
 
         break;
 
@@ -264,13 +265,13 @@ organization or association', [], $tOpts),
    * @param array $tOpts
    *   Translation options.
    *
-   * @return \Drupal\Core\Routing\TrustedRedirectResponse
+   * @return \Drupal\Core\Routing\RedirectResponse
    *   Redirect response object.
    */
   public function handleUnregisteredCommunity(
     FormStateInterface $form_state,
     array $selectedProfileData,
-    array $tOpts): TrustedRedirectResponse {
+    array $tOpts): RedirectResponse {
     $storage = $form_state->getStorage();
     $userCommunities = $storage['userCommunities'];
 
@@ -285,7 +286,7 @@ organization or association', [], $tOpts),
       // Redirect user to grants profile page.
       $redirectUrl = Url::fromRoute('grants_profile.edit');
       $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
-      return new TrustedRedirectResponse($redirectUrl->toString());
+      return new RedirectResponse($redirectUrl->toString());
     }
     else {
       $selectedCommunityObject = array_filter(
@@ -313,8 +314,8 @@ organization or association', [], $tOpts),
       $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
     }
 
-    $defaultRedirect = new TrustedRedirectResponse($redirectUrl->toString());
-    return $this->redirectService->getRedirect($defaultRedirect, TRUE);
+    $defaultRedirect = new RedirectResponse($redirectUrl->toString());
+    return $this->redirectService->getRedirect($defaultRedirect);
 
   }
 

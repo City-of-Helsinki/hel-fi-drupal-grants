@@ -3,7 +3,6 @@
 namespace Drupal\grants_mandate;
 
 use Drupal\Core\Routing\CurrentRouteMatch;
-use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\grants_profile\GrantsProfileService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -129,22 +128,17 @@ class GrantsMandateRedirectService {
    *
    * @param \Symfony\Component\HttpFoundation\Response $defaultRedirect
    *   Default redirect if there is none in the session data.
-   * @param bool $useTrustedRedirect
-   *   Should the method return TrustedRedirectResponse object instead.
    *
-   * @return \Symfony\Component\HttpFoundation\Response
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   The redirect response.
    */
-  public function getRedirect(Response $defaultRedirect, bool $useTrustedRedirect = FALSE) {
+  public function getRedirect(Response $defaultRedirect) {
     $session = $this->getSession();
     $redirectUri = $session->get(self::SESSION_KEY);
 
     if (!empty($redirectUri)) {
       $this->clearSessionVariables();
-      $redirectResponse = $useTrustedRedirect
-       ? new TrustedRedirectResponse($redirectUri)
-       : new RedirectResponse($redirectUri);
-      return $redirectResponse;
+      return new RedirectResponse($redirectUri);
     }
 
     return $defaultRedirect;

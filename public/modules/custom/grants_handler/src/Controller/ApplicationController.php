@@ -350,7 +350,8 @@ class ApplicationController extends ControllerBase {
     $acceptableApplicantTypes = array_values($thirdPartySettings['applicantTypes']);
 
     if (!in_array($currentRole['type'], $acceptableApplicantTypes)) {
-      return $this->redirect('<front>'); // TODO: maybe mandate selection route and message.
+      // @todo maybe mandate selection route and message.
+      return $this->redirect('<front>');
     }
 
     $newSubmission = $this->applicationHandler->initApplication($webform->id());
