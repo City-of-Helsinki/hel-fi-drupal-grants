@@ -240,7 +240,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
-    '#help': "<span style=\"font-size:11pt\"><span style=\"line-height:107%\"><span style=\"font-family:Calibri,sans-serif\">Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nSamfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r.</span></span></span>"
+    '#help': "Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nSamfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r."
     '#multiple__no_items_message': 'Inga v&auml;rden angivna. L&auml;gg till nytt inneh&aring;ll nedan.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -249,7 +249,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)'
-    '#help': "<span style=\"font-size:11pt\"><span style=\"line-height:107%\"><span style=\"font-family:Calibri,sans-serif\">Samfundet ska till denna punkt bifoga verksamhetsber&auml;ttelsen som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nOm verksamhetsber&auml;ttelsen ing&aring;r i bokslutet och du redan har bifogat den blanketten, beh&ouml;ver den inte bifogas separat. Ange i detta fall vid verksamhetsber&auml;ttelsen att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</span></span></span>"
+    '#help': "Samfundet ska till denna punkt bifoga verksamhetsber&auml;ttelsen som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nOm verksamhetsber&auml;ttelsen ing&aring;r i bokslutet och du redan har bifogat den blanketten, beh&ouml;ver den inte bifogas separat. Ange i detta fall vid verksamhetsber&auml;ttelsen att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -257,7 +257,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)'
-    '#help': "<span style=\"font-size:11pt\"><span style=\"line-height:107%\"><span style=\"font-family:Calibri,sans-serif\">Bifoga den undertecknade revisionsber&auml;ttelsen f&ouml;r samfundets senaste avslutade r&auml;kenskapsperiod h&auml;r.<br />\r\nOm den undertecknade revisionsber&auml;ttelsen ing&aring;r i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo; h&auml;r.</span></span></span>"
+    '#help': "Bifoga den undertecknade revisionsber&auml;ttelsen f&ouml;r samfundets senaste avslutade r&auml;kenskapsperiod h&auml;r.<br />\r\nOm den undertecknade revisionsber&auml;ttelsen ing&aring;r i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo; h&auml;r."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -265,7 +265,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vuosikokouksen_poytakirja:
     '#title': 'Protokoll från årsstämman med det godkända bokslutet för den föregående räkenskapsperioden'
-    '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Bifoga protokollet fr&aring;n samfundets m&ouml;te h&auml;r, d&auml;r bokslutet f&ouml;r den f&ouml;reg&aring;ende avslutade r&auml;kenskapsperioden har godk&auml;nts och ansvarsfrihet beviljats. Samfundens bokslut fastst&auml;lls alltid vid samfundets medlemsm&ouml;te. Om samfundet inte &auml;r skyldigt att ha ett &aring;rsm&ouml;te eller annat samfundsm&ouml;te d&auml;r bokslutet b&ouml;r godk&auml;nnas och ansvarsfrihet beviljas, beh&ouml;ver denna bilaga inte l&auml;mnas in.</span></span></span>'
+    '#help': 'Bifoga protokollet fr&aring;n samfundets m&ouml;te h&auml;r, d&auml;r bokslutet f&ouml;r den f&ouml;reg&aring;ende avslutade r&auml;kenskapsperioden har godk&auml;nts och ansvarsfrihet beviljats. Samfundens bokslut fastst&auml;lls alltid vid samfundets medlemsm&ouml;te. Om samfundet inte &auml;r skyldigt att ha ett &aring;rsm&ouml;te eller annat samfundsm&ouml;te d&auml;r bokslutet b&ouml;r godk&auml;nnas och ansvarsfrihet beviljas, beh&ouml;ver denna bilaga inte l&auml;mnas in.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -273,7 +273,7 @@ elements: |
     '#isAttachmentNew__title': ''
   toimintasuunnitelma:
     '#title': 'Verksamhetsplan (för det år du ansöker om understödet)'
-    '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Bifoga verksamhetsplanen f&ouml;r hela f&ouml;r samfundet h&auml;r. </span></span></span>'
+    '#help': 'Bifoga verksamhetsplanen f&ouml;r hela f&ouml;r samfundet h&auml;r. '
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -281,7 +281,7 @@ elements: |
     '#isAttachmentNew__title': ''
   talousarvio:
     '#title': 'Budget (för det år du ansöker om understödet)'
-    '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Budget (f&ouml;r det &aring;r du ans&ouml;ker om underst&ouml;det)</span></span></span>'
+    '#help': 'Budget (f&ouml;r det &aring;r du ans&ouml;ker om underst&ouml;det)'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

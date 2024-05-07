@@ -224,7 +224,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Confirmed financial statements (for the previous accounting period)'
-    '#help': "<span style=\"font-size:11pt\"><span style=\"line-height:107%\"><span style=\"font-family:Calibri,sans-serif\">The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association&rsquo;s annual meeting.<br />\r\nThe community&rsquo;s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association&rsquo;s accounting period is.</span></span></span>"
+    '#help': "The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association&rsquo;s annual meeting.<br />\r\nThe community&rsquo;s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association&rsquo;s accounting period is."
     '#multiple__no_items_message': 'No values ​​entered. Add new content below.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -233,7 +233,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Confirmed annual report (for the previous accounting period)'
-    '#help': "<span style=\"font-size:11pt\"><span style=\"line-height:107%\"><span style=\"font-family:Calibri,sans-serif\">An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;.</span></span></span>"
+    '#help': "An association must append to this section the annual report confirmed at the association&rsquo;s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -241,7 +241,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Confirmed audit or performance audit report (for the previous accounting period)'
-    '#help': "<span style=\"font-size:11pt\"><span style=\"line-height:107%\"><span style=\"font-family:Calibri,sans-serif\">Append here a signed audit or performance audit report for the previous accounting period for the community.<br />\r\nIf the signed audit or performance audit report is part of your community&rsquo;s financial statements and you already appended it to the form for the financial statements, select &ldquo;The attachment has been submitted as a single file or with another application&rdquo;.</span></span></span>"
+    '#help': "Append here a signed audit or performance audit report for the previous accounting period for the community.<br />\r\nIf the signed audit or performance audit report is part of your community&rsquo;s financial statements and you already appended it to the form for the financial statements, select &ldquo;The attachment has been submitted as a single file or with another application&rdquo;."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -249,7 +249,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vuosikokouksen_poytakirja:
     '#title': 'Minutes of the annual meeting confirming the financial statements for the previous accounting period'
-    '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Append here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association&rsquo;s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this attachment does not need to be submitted.</span></span></span>'
+    '#help': 'Append here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association&rsquo;s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this attachment does not need to be submitted.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -257,7 +257,7 @@ elements: |
     '#isAttachmentNew__title': ''
   toimintasuunnitelma:
     '#title': 'Action plan (for the year for which you are applying for a grant)'
-    '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Append here the action plan for the whole community. </span></span></span>'
+    '#help': 'Append here the action plan for the whole community. '
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -265,7 +265,7 @@ elements: |
     '#isAttachmentNew__title': ''
   talousarvio:
     '#title': 'Budget (for the year for which you are applying for a grant)'
-    '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Budget (for the year for which you are applying for a grant)</span></span></span>'
+    '#help': 'Budget (for the year for which you are applying for a grant)'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
