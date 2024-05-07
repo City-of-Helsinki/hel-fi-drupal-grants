@@ -131,6 +131,28 @@ interface PageHandlers {
   [key: string]: (page: Page, formData: FormPage) => Promise<void>;
 }
 
+interface PageCollection {
+  [key: string]: TestScenario;
+}
+
+interface TestScenario {
+  url: string;
+  validatePageTitle: boolean,
+  components: ComponentDetails[];
+}
+
+interface ComponentDetails {
+  className: string;
+  elements: ElementDetails[];
+  occurrences?: number;
+}
+
+interface ElementDetails {
+  selector: string;
+  count: number;
+}
+
+
 // Type guard for MultiValueField
 function isMultiValueField(value: any): value is MultiValueField {
   return typeof value === 'object' && value !== null /* Add more conditions if needed */;
@@ -159,6 +181,10 @@ export {
   PageHandlers,
   FormPage,
   FieldSwapItemList,
+  ComponentDetails,
+  ElementDetails,
+  TestScenario,
+  PageCollection,
   isMultiValueField,
   isDynamicMultiValueField,
 }

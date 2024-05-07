@@ -1,8 +1,8 @@
 import {Page, test} from '@playwright/test';
-import {testScenarios} from "../../utils/data/public_pages";
+import {pageCollection} from "../../utils/data/public_page_data";
 import {validateComponent, validatePageTitle} from "../../utils/public_helpers";
 
-const scenario = testScenarios['front_page'];
+const scenario = pageCollection['front_page'];
 
 test.describe(`Testing page: ${scenario.url}`, () => {
   let page: Page;
@@ -29,7 +29,7 @@ test.describe(`Testing page: ${scenario.url}`, () => {
       await validateComponent(page, component);
     }
   });
-  
+
 });
 
 /*test('login button', async () => {
