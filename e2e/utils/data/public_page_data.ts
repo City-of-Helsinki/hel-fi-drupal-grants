@@ -44,6 +44,30 @@ const pageCollection: PageCollection = {
       },
     ]
   },
+  "about_grants": {
+    url: "/fi/tietoa-avustuksista",
+    validatePageTitle: true,
+    components: [
+      {
+        className: ".hero",
+        elements: [
+          { selector: ".hero__title", count: 1 },
+        ],
+      },
+      {
+        className: ".component--list-of-links",
+        elements: [],
+        occurrences: 5,
+      },
+      {
+        className: ".component--news-list",
+        elements: [
+          { selector: ".component__title", count: 1 },
+          { selector: ".component__content", count: 1 },
+        ],
+      },
+    ]
+  },
 };
 
 export {

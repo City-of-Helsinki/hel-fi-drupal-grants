@@ -97,7 +97,10 @@ export default defineConfig({
     /* Run all smoke tests. */
     {
       name: 'smoke',
-      testMatch: '/public/frontpage.spec.ts',
+      testMatch: [
+        '/public/front_page.ts',
+        '/public/about_grants.ts',
+      ],
       dependencies: ['setup']
     },
     /* Form 29 tests. */
