@@ -344,6 +344,15 @@ class ApplicationController extends ControllerBase {
       );
     }
 
+    // Check applicant type before initializing a new draft.
+    $currentRole = $this->grantsProfileService->getSelectedRoleData();
+    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
+    $acceptableApplicantTypes = array_values($thirdPartySettings['applicantTypes']);
+
+    if (!in_array($currentRole['type'], $acceptableApplicantTypes)) {
+      return $this->redirect('<front>'); // TODO: maybe mandate selection route and message.
+    }
+
     $newSubmission = $this->applicationHandler->initApplication($webform->id());
 
     return $this->redirect(
