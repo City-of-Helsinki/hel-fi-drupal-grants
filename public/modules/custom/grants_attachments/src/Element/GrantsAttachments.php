@@ -478,7 +478,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
     /** @var \Drupal\webform\WebformSubmissionForm $formObject */
     $formObject = $form_state->getFormObject();
-    /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
+    /** @var \Drupal\webform\WebformSubmissionInterface $webformSubmission */
     $webformSubmission = $formObject->getEntity();
     // Get data from webform.
     $webformData = $webformSubmission->getData();
@@ -571,7 +571,7 @@ class GrantsAttachments extends WebformCompositeBase {
         }
       }
     }
-    elseif ($isRemoveAction) {
+    elseif ($isRemoveAction && isset($fid)) {
 
       // Validate function is looping all file fields.
       // Check if we are actually currently trying to delete a

@@ -41,7 +41,7 @@ class AttachmentRemover {
   /**
    * Logger Factory.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
    */
   protected LoggerChannelInterface $loggerChannel;
 
