@@ -244,7 +244,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Confirmed financial statements (for the previous accounting period)'
-    '#help': "<p>The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association’s annual meeting.<br />\r\nThe community’s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association’s accounting period is.</p>"
+    '#help': "<p>The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association’s annual meeting. The community’s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association’s accounting period is.</p>"
     '#multiple__no_items_message': '<p>Ei syötettyjä arvoja. Lisää uusi sisältö alta.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -253,7 +253,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Confirmed annual report (for the previous accounting period)'
-    '#help': "<p>An association must append to this section the annual report confirmed at the association’s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.</p>"
+    '#help': "<p>An association must append to this section the annual report confirmed at the association’s annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -261,7 +261,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Confirmed audit or performance audit report (for the previous accounting period)'
-    '#help': "<p>An association must append to this section the annual report confirmed at the association’s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.</p>"
+    '#help': "<p>An association must append to this section the annual report confirmed at the association’s annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

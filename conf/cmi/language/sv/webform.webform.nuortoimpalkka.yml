@@ -246,7 +246,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
-    '#help': "<p>Bokslutet ska innehålla minst resultaträkningen och balansräkningen. Samfundet ska till denna punkt lägga till bokslutet som godkänts och undertecknats vid samfundets medlemsmöte.<br />\r\nSamfundets räkenskapsperiod kan vara ett kalenderår eller en annan period. Vad gäller samfund anges det i deras egna stadgar vad samfundets räkenskapsperiod är.</p>"
+    '#help': "<p>Bokslutet ska innehålla minst resultaträkningen och balansräkningen. Samfundet ska till denna punkt lägga till bokslutet som godkänts och undertecknats vid samfundets medlemsmöte. Samfundets räkenskapsperiod kan vara ett kalenderår eller en annan period. Vad gäller samfund anges det i deras egna stadgar vad samfundets räkenskapsperiod är.</p>"
     '#multiple__no_items_message': '<p>Ei syötettyjä arvoja. Lisää uusi sisältö alta.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -255,7 +255,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)'
-    '#help': "<p>Samfundet ska till denna punkt bifoga verksamhetsberättelsen som godkänts och undertecknats vid samfundets medlemsmöte.<br />\r\nOm verksamhetsberättelsen ingår i bokslutet och du redan har bifogat den blanketten, behöver den inte bifogas separat. Ange i detta fall vid verksamhetsberättelsen att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
+    '#help': "<p>Samfundet ska till denna punkt bifoga verksamhetsberättelsen som godkänts och undertecknats vid samfundets medlemsmöte. Om verksamhetsberättelsen ingår i bokslutet och du redan har bifogat den blanketten, behöver den inte bifogas separat. Ange i detta fall vid verksamhetsberättelsen att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -263,7 +263,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)'
-    '#help': "<p>Bifoga den undertecknade revisionsberättelsen för samfundets senaste avslutade räkenskapsperiod här.<br />\r\nOm den undertecknade revisionsberättelsen ingår i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan” här.</p>"
+    '#help': "<p>Bifoga den undertecknade revisionsberättelsen för samfundets senaste avslutade räkenskapsperiod här. Om den undertecknade revisionsberättelsen ingår i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan” här.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

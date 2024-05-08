@@ -569,7 +569,7 @@ elements: |-
           <p>Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.</p>
           <h4>Usean liitteen toimittaminen yhten&auml; tiedostona</h4>
           <p>Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. </p>
-          <h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4><br />
+          <h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
           <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
       notification_attachments:
         '#type': webform_markup
@@ -595,8 +595,8 @@ elements: |-
         '#multiple': false
         '#filetype': '43'
         '#help': |-
-          Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.<br />
-          Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.
+          <p>Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.</p>
+          <p>Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.</p>
         '#title_display': before
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi sis&auml;lt&ouml; alta.'
         '#description__access': false
@@ -606,8 +606,8 @@ elements: |-
         '#multiple': false
         '#filetype': '4'
         '#help': |-
-          Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun toimintakertomuksen.<br />
-          Jos toimintakertomus on osana tilinp&auml;&auml;t&ouml;st&auml; ja liititte sen jo tilinp&auml;&auml;t&ouml;ksen mukana lomakkeelle, sit&auml; ei tarvitse liitt&auml;&auml; t&auml;h&auml;n erikseen. Valitse t&auml;llaisessa tilanteessa toimintakertomuksen kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
+          <p>Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun toimintakertomuksen.</p>
+          <p>Jos toimintakertomus on osana tilinp&auml;&auml;t&ouml;st&auml; ja liititte sen jo tilinp&auml;&auml;t&ouml;ksen mukana lomakkeelle, sit&auml; ei tarvitse liitt&auml;&auml; t&auml;h&auml;n erikseen. Valitse t&auml;llaisessa tilanteessa toimintakertomuksen kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
         '#title_display': before
         '#description__access': false
       vahvistettu_tilin_tai_toiminnantarkastuskertomus:
@@ -616,8 +616,8 @@ elements: |-
         '#multiple': false
         '#filetype': '5'
         '#help': |-
-          Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.<br />
-          Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
+          <p>Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilivuodelta.</p>
+          <p>Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
         '#title_display': before
         '#description__access': false
       vuosikokouksen_poytakirja:

@@ -263,7 +263,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
-    '#help': "Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nSamfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r."
+    '#help': "Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te. Samfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -271,7 +271,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)'
-    '#help': "Samfundet ska till denna punkt bifoga verksamhetsber&auml;ttelsen som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nOm verksamhetsber&auml;ttelsen ing&aring;r i bokslutet och du redan har bifogat den blanketten, beh&ouml;ver den inte bifogas separat. Ange i detta fall vid verksamhetsber&auml;ttelsen att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
+    '#help': "Samfundet ska till denna punkt bifoga verksamhetsber&auml;ttelsen som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te. Om verksamhetsber&auml;ttelsen ing&aring;r i bokslutet och du redan har bifogat den blanketten, beh&ouml;ver den inte bifogas separat. Ange i detta fall vid verksamhetsber&auml;ttelsen att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -279,7 +279,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)'
-    '#help': "Bifoga den undertecknade revisionsber&auml;ttelsen f&ouml;r samfundets senaste avslutade r&auml;kenskapsperiod h&auml;r.<br />\r\nOm den undertecknade revisionsber&auml;ttelsen ing&aring;r i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo; h&auml;r."
+    '#help': "Bifoga den undertecknade revisionsber&auml;ttelsen f&ouml;r samfundets senaste avslutade r&auml;kenskapsperiod h&auml;r. Om den undertecknade revisionsber&auml;ttelsen ing&aring;r i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo; h&auml;r."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

@@ -420,7 +420,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
     '#title': 'Bekräftade bokslut (från föregående avslutade räkenskapsår)'
-    '#help': "<p>Bokslutet ska innehålla minst en resultaträkning och en balansräkning. Föreningen bifogar härtill det på föreningens medlemsmöte godkända och undertecknade bokslutet.<br />\r\n<br />\r\nEnhetens redovisningsperiod kan vara ett kalenderår eller en annan period. När det gäller föreningar anger deras egna regler vad föreningens redovisningsperiod är.</p>"
+    '#help': "<p>Bokslutet ska innehålla minst en resultaträkning och en balansräkning. Föreningen bifogar härtill det på föreningens medlemsmöte godkända och undertecknade bokslutet. Enhetens redovisningsperiod kan vara ett kalenderår eller en annan period. När det gäller föreningar anger deras egna regler vad föreningens redovisningsperiod är.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -428,7 +428,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus_edelliselta_paattyneelta_tilikaudel:
     '#title': 'Bekräftad verksamhetsrapport (från föregående avslutade räkenskapsår)'
-    '#help': "<p>Föreningen bifogar till denna punkt den på föreningens medlemsmöte godkända verksamhetsberättelsen.<br />\r\nOm verksamhetsberättelsen är en del av bokslutet och du redan har bifogat den till formuläret tillsammans med bokslutet, behöver den inte bifogas här separat. Välj i en sådan situation \"Bilagan har lämnats in som en fil eller i samband med annan ansökan\" för aktivitetsrapporten.</p>"
+    '#help': "<p>Föreningen bifogar till denna punkt den på föreningens medlemsmöte godkända verksamhetsberättelsen. Om verksamhetsberättelsen är en del av bokslutet och du redan har bifogat den till formuläret tillsammans med bokslutet, behöver den inte bifogas här separat. Välj i en sådan situation \"Bilagan har lämnats in som en fil eller i samband med annan ansökan\" för aktivitetsrapporten.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -436,7 +436,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paa:
     '#title': 'Bekräftad redovisning eller verksamhetsrevisionsrapport (från föregående avslutade räkenskapsår)'
-    '#help': "<p>\"Bifoga här ett undertecknat konto eller verksamhetsrevisionsberättelse från företagets tidigare avslutade räkenskapsår.<br />\r\nOm det undertecknade kontot eller verksamhetsrevisionsberättelsen är en del av ditt företags bokslut och du redan har bifogat det till formuläret vid bokslutet, välj i detta avsnitt \"Bilagan har lämnats in som en fil eller i samband med en annan ansökan\".</p>"
+    '#help': "<p>\"Bifoga här ett undertecknat konto eller verksamhetsrevisionsberättelse från företagets tidigare avslutade räkenskapsår. Om det undertecknade kontot eller verksamhetsrevisionsberättelsen är en del av ditt företags bokslut och du redan har bifogat det till formuläret vid bokslutet, välj i detta avsnitt \"Bilagan har lämnats in som en fil eller i samband med en annan ansökan\".</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

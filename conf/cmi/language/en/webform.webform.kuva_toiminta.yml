@@ -421,7 +421,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta_:
     '#title': 'Confirmed financial statements (from the previous ended financial year)'
-    '#help': "<p>The financial statements must contain at least a profit and loss statement and a balance sheet. The association attaches to this point the financial statement approved and signed at the association's member meeting.<br />\r\n<br />\r\nThe entity's accounting period can be a calendar year or another period. In the case of associations, their own rules state what the association's accounting period is.</p>"
+    '#help': "<p>The financial statements must contain at least a profit and loss statement and a balance sheet. The association attaches to this point the financial statement approved and signed at the association's member meeting. The entity's accounting period can be a calendar year or another period. In the case of associations, their own rules state what the association's accounting period is.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
