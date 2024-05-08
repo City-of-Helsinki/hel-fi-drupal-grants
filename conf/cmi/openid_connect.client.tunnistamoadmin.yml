@@ -16,3 +16,4 @@ settings:
   environment_url: 'https://tunnistus.test.hel.ninja/auth/realms/helsinki-tunnistus'
   client_scopes: 'openid,email'
   client_roles: {  }
+  debug_log: false

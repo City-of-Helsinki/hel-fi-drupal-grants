@@ -21,3 +21,4 @@ settings:
     content_producer: '0'
     read_only: '0'
     helsinkiprofiili: '0'
+  debug_log: false
