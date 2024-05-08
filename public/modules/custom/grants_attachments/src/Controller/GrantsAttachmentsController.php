@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Returns responses for grants_attachments routes.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsAttachmentsController extends ControllerBase {
 
@@ -42,6 +44,13 @@ class GrantsAttachmentsController extends ControllerBase {
    * @var \Drupal\grants_handler\EventsService
    */
   protected EventsService $eventsService;
+
+  /**
+   * Requeststack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected RequestStack $request;
 
   /**
    * The controller constructor.

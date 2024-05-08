@@ -6,7 +6,7 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Core\KeyValueStore\KeyValueDatabaseFactory;
 use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
 use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +36,7 @@ class MunicipalityService {
   public function __construct(
     private readonly ClientInterface $httpClient,
     private readonly KeyValueDatabaseFactory $databaseFactory,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
     ) {
     $this->loggerChannel = $loggerFactory->get('grants_profile');
   }
