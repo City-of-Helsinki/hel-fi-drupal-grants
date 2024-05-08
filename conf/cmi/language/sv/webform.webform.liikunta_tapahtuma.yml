@@ -160,7 +160,7 @@ elements: |
   itemise_income:
     '#title': 'Evenemangets intäkter'
   markup_03:
-    '#markup': 'Specificera evenemangets int&auml;kter efter int&auml;ktstyp. Ange under int&auml;kterna &auml;ven andra underst&ouml;d som evenemanget har beviljats och vilka instanser som beviljat underst&ouml;d.&nbsp;'
+    '#markup': 'Specificera evenemangets int&auml;kter efter int&auml;ktstyp. Ange under int&auml;kterna &auml;ven andra underst&ouml;d som evenemanget har beviljats och vilka instanser som beviljat underst&ouml;d.'
   budget_other_income:
     '#title': Inkomst
     '#label__title': 'Typ av intäkt'
@@ -185,17 +185,14 @@ elements: |
     '#title': Bilagor
   attachments_info:
     '#markup': |-
-      <strong>Bilagor</strong>
-      <br/><br/>
-      Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.
-      <br/><br/>
-      Erforderliga bilagor
+      <p>Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.</p>
+      <h4>Erforderliga bilagor</h4>
       <ul><li>
       En fritt formulerad plan för evenemanget (en mer detaljerad beskrivning av evenemanget, arrangemanget och målgruppen)
       </li><li>
       Budget för evenemanget (om den inte tillräckligt tydligt framgår av ansökningsblanketten)
       </li></ul>
-      Om sökanden inte tidigare har ansökt om Helsingfors stads understöd eller om uppgifterna har förändrats, ska även ett utdrag ur registret som gäller sammanslutningsform lämnas i samband med ansökan.
+      <p>Om sökanden inte tidigare har ansökt om Helsingfors stads understöd eller om uppgifterna har förändrats, ska även ett utdrag ur registret som gäller sammanslutningsform lämnas i samband med ansökan.</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   tapahtumasuunnitelma:
