@@ -534,7 +534,7 @@ elements: |-
         '#type': webform_markup
         '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
           </p><h4>Vaaditut liitteet</h4>
-          <p><ul><li>Vapaamuotoinen tapahtumasuunnitelma (laajempi kuvaus tapahtumasta, sen järjestelyistä ja kohderyhmästä)</li><li>Tapahtumabudjetti (mikäli se ei tule riittävällä tavalla ilmi hakemuslomakkeella)</li></ul></p>
+          <ul><li>Vapaamuotoinen tapahtumasuunnitelma (laajempi kuvaus tapahtumasta, sen järjestelyistä ja kohderyhmästä)</li><li>Tapahtumabudjetti (mikäli se ei tule riittävällä tavalla ilmi hakemuslomakkeella)</li></ul>
           <p>Mikäli hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteenä tulee toimittaa myös ote yhteisömuotoa koskevasta rekisteristä.</p>'
       notification_attachments:
         '#type': webform_markup
