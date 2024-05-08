@@ -55,7 +55,7 @@ elements: |
     '#title': 'Camp locations'
   jarjestimme_leireja_seuraavilla_alueilla:
     '#title': 'We arranged camps in the following areas'
-    '#help': '<p>Enter here the names and postal code areas of all the facilities where you organised camps covered by holiday camp grants in the past season.&nbsp;</p>'
+    '#help': '<p>Enter here the names and postal code areas of all the facilities where you organised camps covered by holiday camp grants in the past season.</p>'
     '#premiseName__title': Location
   3_talousarvio:
     '#title': '3. Budget'

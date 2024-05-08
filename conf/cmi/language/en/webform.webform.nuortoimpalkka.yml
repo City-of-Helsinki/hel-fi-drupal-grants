@@ -193,7 +193,7 @@ elements: |
   edellisen_vuoden_palkkauskulut:
     '#title': 'Hiring costs of the previous year '
   markup:
-    '#markup': '<p>Specify here the hiring costs of the employee/s for the previous calendar year.&nbsp; Expenses eligible for the hiring grant are employees’ hiring costs, statutory and voluntary social security costs, statutory insurance policies and travel costs arising from an employee’s work.&nbsp; Include here only the hiring costs of the employee(s) on which you have/could have used the hiring grant. This does not include, for example, project workers.</p>'
+    '#markup': '<p>Specify here the hiring costs of the employee/s for the previous calendar year. Expenses eligible for the hiring grant are employees’ hiring costs, statutory and voluntary social security costs, statutory insurance policies and travel costs arising from an employee’s work.&nbsp; Include here only the hiring costs of the employee(s) on which you have/could have used the hiring grant. This does not include, for example, project workers.</p>'
   palkkauskulut:
     '#title': 'Hiring costs'
   lakisaateiset_ja_vapaaehtoiset_henkilosivukulut:

@@ -58,7 +58,7 @@ elements: |
     '#title': Lägerplatser
   jarjestimme_leireja_seuraavilla_alueilla:
     '#title': 'Vi ordnade läger i följande områden'
-    '#help': '<p>Ange här namnet och postnummerområdet för alla de gårdar på vilka ni har ordnat läger som omfattas av lägerstödet för semesterperioderna under den gångna säsongen.&nbsp;</p>'
+    '#help': '<p>Ange här namnet och postnummerområdet för alla de gårdar på vilka ni har ordnat läger som omfattas av lägerstödet för semesterperioderna under den gångna säsongen.</p>'
     '#premiseName__title': Verksamhetsställe
   3_talousarvio:
     '#title': '3. Budget'

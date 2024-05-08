@@ -62,13 +62,13 @@ elements: |
     '#help': 'Indicate here the amount of the operating grant received by the association for the current year'
   selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta:
     '#title': 'Report on the use of the operating grant for the current year'
-    '#help': 'Indicate here the total amount of the operating grant in euros that the association has spent and will spend in the current year. The indicated amount is always a partial estimate as the year is not yet over.&nbsp;&nbsp;'
+    '#help': 'Indicate here the total amount of the operating grant in euros that the association has spent and will spend in the current year. The indicated amount is always a partial estimate as the year is not yet over.'
   yhdistyksen_kuluvan_vuoden_palkkausavustus_:
     '#title': 'The association’s hiring grant for the current year '
     '#help': 'Indicate here the amount of the hiring grant received by the association for the current year'
   selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta:
     '#title': 'Report on the use of the hiring grant for the current year'
-    '#help': 'Indicate here the total amount of the hiring grant in euros that the association has spent and will spend in the current year. The indicated amount is always a partial estimate as the year is not yet over.&nbsp;&nbsp;'
+    '#help': 'Indicate here the total amount of the hiring grant in euros that the association has spent and will spend in the current year. The indicated amount is always a partial estimate as the year is not yet over.'
   sanallinen_selvitys_avustuksen_kaytosta:
     '#title': 'Description of the use of the grant for the current year'
     '#help': 'If you wish, you may provide details on the use of the operating and hiring grant or start-up grant for the current year and an estimate for the rest of the year here.'

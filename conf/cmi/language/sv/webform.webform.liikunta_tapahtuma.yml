@@ -160,7 +160,7 @@ elements: |
   itemise_income:
     '#title': 'Evenemangets intäkter'
   markup_03:
-    '#markup': 'Specificera evenemangets int&auml;kter efter int&auml;ktstyp. Ange under int&auml;kterna &auml;ven andra underst&ouml;d som evenemanget har beviljats och vilka instanser som beviljat underst&ouml;d.&nbsp;'
+    '#markup': 'Specificera evenemangets int&auml;kter efter int&auml;ktstyp. Ange under int&auml;kterna &auml;ven andra underst&ouml;d som evenemanget har beviljats och vilka instanser som beviljat underst&ouml;d.'
   budget_other_income:
     '#title': Inkomst
     '#label__title': 'Typ av intäkt'

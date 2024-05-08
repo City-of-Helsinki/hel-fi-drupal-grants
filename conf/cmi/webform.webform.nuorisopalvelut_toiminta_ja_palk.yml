@@ -302,7 +302,7 @@ elements: |-
       selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta:
         '#type': textfield
         '#title': 'Selvitys kuluvan vuoden toiminta-avustuksen käytöstä'
-        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden toiminta-avustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.&nbsp;&nbsp;</p>'
+        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden toiminta-avustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.</p>'
         '#size': 15
         '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':
@@ -320,7 +320,7 @@ elements: |-
       selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta:
         '#type': textfield
         '#title': 'Selvitys kuluvan vuoden palkkausavustuksen käytöstä'
-        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden palkkausavustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.&nbsp;&nbsp;</p>'
+        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden palkkausavustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.</p>'
         '#size': 15
         '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':

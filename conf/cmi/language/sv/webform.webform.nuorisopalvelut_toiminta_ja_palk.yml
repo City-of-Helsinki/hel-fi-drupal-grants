@@ -65,13 +65,13 @@ elements: |
     '#help': 'Ange h&auml;r det belopp f&ouml;r verksamhetsunderst&ouml;d som f&ouml;reningen beviljats f&ouml;r det innevarande &aring;ret'
   selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta:
     '#title': 'Redogörelse över användningen av verksamhetsunderstödför det innevarande året'
-    '#help': 'Ange h&auml;r i euro hur mycket av verksamhetsunderst&ouml;det f&ouml;r det innevarande &aring;ret f&ouml;reningen har anv&auml;nt och kommer att anv&auml;nda. Den angivna siffran &auml;r alltid delvis en uppskattning, eftersom &aring;ret fortfarande p&aring;g&aring;r.&nbsp;&nbsp;'
+    '#help': 'Ange h&auml;r i euro hur mycket av verksamhetsunderst&ouml;det f&ouml;r det innevarande &aring;ret f&ouml;reningen har anv&auml;nt och kommer att anv&auml;nda. Den angivna siffran &auml;r alltid delvis en uppskattning, eftersom &aring;ret fortfarande p&aring;g&aring;r.'
   yhdistyksen_kuluvan_vuoden_palkkausavustus_:
     '#title': 'Föreningens löneunderstöd för det innevarande året '
     '#help': 'Ange h&auml;r det belopp f&ouml;r l&ouml;neunderst&ouml;d som f&ouml;reningen beviljats f&ouml;r det innevarande &aring;ret'
   selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta:
     '#title': 'Redogörelse över användningen av löneunderstöd för det innevarande året'
-    '#help': 'Ange h&auml;r hur mycket av l&ouml;neunderst&ouml;det f&ouml;r det innevarande &aring;ret f&ouml;reningen har anv&auml;nt och kommer att anv&auml;nda i euro. Den angivna siffran &auml;r alltid delvis en uppskattning, eftersom &aring;ret fortfarande p&aring;g&aring;r.&nbsp;&nbsp;'
+    '#help': 'Ange h&auml;r hur mycket av l&ouml;neunderst&ouml;det f&ouml;r det innevarande &aring;ret f&ouml;reningen har anv&auml;nt och kommer att anv&auml;nda i euro. Den angivna siffran &auml;r alltid delvis en uppskattning, eftersom &aring;ret fortfarande p&aring;g&aring;r.'
   sanallinen_selvitys_avustuksen_kaytosta:
     '#title': 'Beskrivning av användningen av understöd för det innevarande året'
     '#help': 'Om du vill kan du h&auml;r ber&auml;tta mer om anv&auml;ndningen och uppskattningen av det innevarande &aring;rets verksamhets- och l&ouml;neunderst&ouml;d eller startunderst&ouml;d under resten av &aring;ret .'

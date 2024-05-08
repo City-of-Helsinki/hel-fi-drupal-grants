@@ -96,7 +96,7 @@ elements: |
       0: 'No'
   hankkeen_tai_toiminnan_lyhyt_esittelyteksti:
     '#title': 'A short description of the project or the activities'
-    '#help': '<p>The text can be published or used as a presentation as such or in a modified form along with the decision.&nbsp;</p>'
+    '#help': '<p>The text can be published or used as a presentation as such or in a modified form along with the decision.</p>'
     '#counter_maximum_message': '%d/700 characters remaining'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Other grants received for the same purpose'
