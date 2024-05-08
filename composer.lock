@@ -5465,16 +5465,16 @@
         },
         {
             "name": "drupal/helfi_gdpr_api",
-            "version": "0.9.6",
+            "version": "0.9.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api.git",
-                "reference": "1829a705b747da7cb00767d16ede03a0565dd1b3"
+                "reference": "53e7abd07eddcc886c1983c64fe1fa17c89a62a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-gdpr-api/zipball/1829a705b747da7cb00767d16ede03a0565dd1b3",
-                "reference": "1829a705b747da7cb00767d16ede03a0565dd1b3",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-gdpr-api/zipball/53e7abd07eddcc886c1983c64fe1fa17c89a62a9",
+                "reference": "53e7abd07eddcc886c1983c64fe1fa17c89a62a9",
                 "shasum": ""
             },
             "type": "drupal-module",
@@ -5487,10 +5487,10 @@
                 "GPL-2.0-or-later"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/tree/0.9.6",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/tree/0.9.7",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/issues"
             },
-            "time": "2024-03-20T06:59:35+00:00"
+            "time": "2024-05-08T09:26:38+00:00"
         },
         {
             "name": "drupal/helfi_helsinki_profiili",
