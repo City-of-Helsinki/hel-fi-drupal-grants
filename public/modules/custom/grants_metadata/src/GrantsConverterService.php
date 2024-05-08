@@ -3,7 +3,7 @@
 namespace Drupal\grants_metadata;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\locale\StringDatabaseStorage;
+use Drupal\locale\StringStorageInterface;
 use Drupal\locale\TranslationString;
 
 /**
@@ -18,10 +18,10 @@ class GrantsConverterService {
   /**
    * Constructs a new GrantsConverterService.
    *
-   * @param \Drupal\locale\StringDatabaseStorage $storage
+   * @param \Drupal\locale\StringStorageInterface $storage
    *   String database storage.
    */
-  public function __construct(private StringDatabaseStorage $storage) {
+  public function __construct(private StringStorageInterface $storage) {
   }
 
   /**
