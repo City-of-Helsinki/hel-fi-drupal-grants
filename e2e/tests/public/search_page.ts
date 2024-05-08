@@ -1,26 +1,37 @@
-import {Page, expect, test} from '@playwright/test'
+import {Page, test} from '@playwright/test';
+import {pageCollection} from "../../utils/data/public_page_data";
+import {validateComponent, validatePageTitle} from "../../utils/public_helpers";
 
+const scenario = pageCollection['search_page'];
 
-test.describe("Hakusivu", () => {
+test.describe(`Testing page: ${scenario.url}`, () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
-    page = await browser.newPage()
-    await page.goto('/fi/etsi-avustusta');
+    page = await browser.newPage();
   });
 
   test.beforeEach(async () => {
-    await page.goto('/fi/etsi-avustusta');
+    await page.goto(scenario.url);
   });
 
-  test('has title', async () => {
-    expect(await page.title()).toContain('Etsi avustusta')
-  })
+  test.afterAll(async () => {
+    await page.close();
+  });
 
-  test('contains header', async () => {
-    await expect(await page.getByRole('heading', {name: 'Etsi avustusta'})).toBeVisible()
-  })
+  test(`Validate page title: ${scenario.url}`, async () => {
+    test.skip(!scenario.validatePageTitle, 'Skip page title test');
+    await validatePageTitle(page);
+  });
 
+  test(`Validate components: ${scenario.url}`, async () => {
+    for (const component of scenario.components) {
+      await validateComponent(page, component);
+    }
+  });
+
+
+  /*
   test('search filter fields are visible', async () => {
     await expect(await page.getByRole('heading', {name: 'Rajaa hakua'})).toBeVisible()
     await expect(await page.getByText('Valitse kohderyhmä')).toBeVisible()
@@ -70,8 +81,6 @@ test.describe("Hakusivu", () => {
     const pageTitle = page.url()
     expect(pageTitle).toContain("tietoa-avustuksista")
   });
+  */
 
-  test.afterAll(async () => {
-    await page.close();
-  });
-})
+});

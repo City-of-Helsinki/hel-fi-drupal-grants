@@ -142,7 +142,7 @@ interface TestScenario {
 }
 
 interface ComponentDetails {
-  className: string;
+  containerClass: string;
   elements: ElementDetails[];
   occurrences?: number;
 }

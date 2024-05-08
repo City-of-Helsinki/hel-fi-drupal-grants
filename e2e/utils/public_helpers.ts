@@ -12,21 +12,21 @@ const validateComponent = async (page: Page, component: ComponentDetails) => {
   logger('Validating component...');
 
   // Extract data.
-  const { className, occurrences = 1, elements } = component;
-  logger(`Expecting ${occurrences} occurrences of "${className}" `);
+  const { containerClass, occurrences = 1, elements } = component;
+  logger(`Expecting ${occurrences} occurrences of "${containerClass}" `);
 
   // Check the count for each component.
-  const componentCount = await page.locator(className).count();
-  await expect(componentCount, `Expected ${occurrences} occurrences of "${className}" but found ${componentCount}.`).toBe(occurrences);
+  const componentCount = await page.locator(containerClass).count();
+  await expect(componentCount, `Expected ${occurrences} occurrences of "${containerClass}" but found ${componentCount}.`).toBe(occurrences);
 
   // For each component, check the count of the required elements.
   for (let i = 0; i < occurrences; i++) {
     for (const element of elements) {
       const { selector, count } = element;
-      logger(`Expecting ${count} occurrences "${selector}" in instance "${i + 1}" of "${className}"`);
+      logger(`Expecting ${count} occurrences "${selector}" in instance "${i + 1}" of "${containerClass}"`);
 
-      const elementCount = await page.locator(`${className} >> nth=${i} >> ${selector}`).count();
-      await expect(elementCount,  `Expected ${count} of "${selector}" in occurrence ${i + 1} of "${className}" but found ${elementCount}.`).toBe(count);
+      const elementCount = await page.locator(`${containerClass} >> nth=${i} >> ${selector}`).count();
+      await expect(elementCount,  `Expected ${count} of "${selector}" in occurrence ${i + 1} of "${containerClass}" but found ${elementCount}.`).toBe(count);
     }
   }
   logger('Component validated! \n');

@@ -101,6 +101,9 @@ export default defineConfig({
         '/public/front_page.ts',
         '/public/about_grants.ts',
         '/public/applicant_instructions.ts',
+        '/public/my_services.ts',
+        '/public/search_page.ts',
+        '/public/service_instructions.ts',
       ],
       dependencies: ['setup']
     },

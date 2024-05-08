@@ -11,7 +11,7 @@ test.describe(`Testing page: ${scenario.url}`, () => {
     page = await browser.newPage();
   });
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async () => {
     await page.goto(scenario.url);
   });
 
@@ -19,12 +19,12 @@ test.describe(`Testing page: ${scenario.url}`, () => {
     await page.close();
   });
 
-  test(`Validate page title: ${scenario.url}`, async ({ page }) => {
+  test(`Validate page title: ${scenario.url}`, async () => {
     test.skip(!scenario.validatePageTitle, 'Skip page title test');
     await validatePageTitle(page);
   });
 
-  test(`Validate components: ${scenario.url}`, async ({ page }) => {
+  test(`Validate components: ${scenario.url}`, async () => {
     for (const component of scenario.components) {
       await validateComponent(page, component);
     }

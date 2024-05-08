@@ -2,7 +2,7 @@ import {Page, test} from '@playwright/test';
 import {pageCollection} from "../../utils/data/public_page_data";
 import {validateComponent, validatePageTitle} from "../../utils/public_helpers";
 
-const scenario = pageCollection['applicant_instructions'];
+const scenario = pageCollection['service_instructions'];
 
 test.describe(`Testing page: ${scenario.url}`, () => {
   let page: Page;
@@ -31,4 +31,3 @@ test.describe(`Testing page: ${scenario.url}`, () => {
   });
 
 });
-
