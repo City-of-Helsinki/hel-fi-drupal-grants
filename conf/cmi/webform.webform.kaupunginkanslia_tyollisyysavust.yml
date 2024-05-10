@@ -251,13 +251,10 @@ elements: |-
       markup_02:
         '#type': webform_markup
         '#markup': |-
-          Kerro mit&auml; tarkoitusta varten avustusta haetaan ja laadi erittely kustannusten kohdentumisesta.<br />
-          <br />
-          Kerro<strong> </strong>arvioitu helsinkil&auml;isten ty&ouml;kokeilijoiden m&auml;&auml;r&auml; ja ty&ouml;kokeilujen yhteenlaskettu kesto avustusvuoden aikana. (1 hl&ouml;/1 kuukausi = 21,5 p&auml;iv&auml;&auml;). Ty&ouml;kokeilulla tarkoitetaan Kuntakokeilun sopimuksella olevia ty&ouml;kokeilijoita. (Sopimus ty&ouml;kokeilusta ty&ouml;paikalla). Kerro my&ouml;s mitk&auml; ovat ty&ouml;kokeilijoiden keskeisimm&auml;t ty&ouml;teht&auml;v&auml;t sek&auml; miten heid&auml;n ohjaamisestaan huolehditaan, mit&auml; tukea/koulutusta ty&ouml;kokeilijoille tarjotaan ty&ouml;kokeilun aikana, miten ty&ouml;kokeilijoiden polutusta avoimille ty&ouml;markkinoille tai koulutukseen tuetaan.<br />
-          <br />
-          Jos avustuksella on tarkoitus toteuttaa koulutuksia ja/tai ryhm&auml;toimintaa, kerro helsinkil&auml;isten ty&ouml;tt&ouml;mien arvioitu osallistujam&auml;&auml;r&auml;, koulutuksen nimi, sis&auml;lt&ouml; ja kesto. Kestoksi ilmoitetaan yksitt&auml;iseen koulutus-/tapaamiskertaan varattu aika sek&auml; koulutuskertojen kokonaism&auml;&auml;r&auml;. Kerro my&ouml;s, kuka henkil&ouml; tai mik&auml; taho vastaa koulutuksen/ryhm&auml;toiminnan toteutuksesta sek&auml; tapahtuuko toteutus yhdistyksen omana toimintana vai ostopalveluna.<br />
-          <br />
-          Jos haet kehitt&auml;misavustusta kuvaa<strong> hankkeen</strong> tarkoitus, aikataulu ja tavoitteet.
+          <p>Kerro mit&auml; tarkoitusta varten avustusta haetaan ja laadi erittely kustannusten kohdentumisesta.</p>
+          <p>Kerro arvioitu helsinkil&auml;isten ty&ouml;kokeilijoiden m&auml;&auml;r&auml; ja ty&ouml;kokeilujen yhteenlaskettu kesto avustusvuoden aikana. (1 hl&ouml;/1 kuukausi = 21,5 p&auml;iv&auml;&auml;). Ty&ouml;kokeilulla tarkoitetaan Kuntakokeilun sopimuksella olevia ty&ouml;kokeilijoita. (Sopimus ty&ouml;kokeilusta ty&ouml;paikalla). Kerro my&ouml;s mitk&auml; ovat ty&ouml;kokeilijoiden keskeisimm&auml;t ty&ouml;teht&auml;v&auml;t sek&auml; miten heid&auml;n ohjaamisestaan huolehditaan, mit&auml; tukea/koulutusta ty&ouml;kokeilijoille tarjotaan ty&ouml;kokeilun aikana, miten ty&ouml;kokeilijoiden polutusta avoimille ty&ouml;markkinoille tai koulutukseen tuetaan.</p>
+          <p>Jos avustuksella on tarkoitus toteuttaa koulutuksia ja/tai ryhm&auml;toimintaa, kerro helsinkil&auml;isten ty&ouml;tt&ouml;mien arvioitu osallistujam&auml;&auml;r&auml;, koulutuksen nimi, sis&auml;lt&ouml; ja kesto. Kestoksi ilmoitetaan yksitt&auml;iseen koulutus-/tapaamiskertaan varattu aika sek&auml; koulutuskertojen kokonaism&auml;&auml;r&auml;. Kerro my&ouml;s, kuka henkil&ouml; tai mik&auml; taho vastaa koulutuksen/ryhm&auml;toiminnan toteutuksesta sek&auml; tapahtuuko toteutus yhdistyksen omana toimintana vai ostopalveluna.</p>
+          <p>Jos haet kehitt&auml;misavustusta kuvaa<strong> hankkeen</strong> tarkoitus, aikataulu ja tavoitteet.</p>
       compensation_purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
@@ -515,9 +512,8 @@ elements: |-
         '#type': textarea
         '#title': 'Selvitys avustuksen käytöstä'
         '#help': |-
-          Kerro miten ja mihin tarkoitukseen edellinen ty&ouml;llisyysavustus on k&auml;ytetty. Mik&auml;li kyseess&auml; oli kehitt&auml;misavustus, avustuksella toteutusta kehitt&auml;mishankkeesta on annettava erillinen raportti (liitteell&auml;).<br />
-          <br />
-          Lis&auml;ksi tarvitaan kirjanpidollinen erittely toteutuneista kustannuksista, (avustuksen k&auml;ytt&ouml;&auml; kuvaava tuloslaskelma tms.), jonka toimittamisesta annetaan tarkemmat ohjeet hakuajan p&auml;&auml;ttymisen j&auml;lkeen. Erittely&auml; ei tarvitse liitt&auml;&auml; hakemukseen.
+          <p>Kerro miten ja mihin tarkoitukseen edellinen ty&ouml;llisyysavustus on k&auml;ytetty. Mik&auml;li kyseess&auml; oli kehitt&auml;misavustus, avustuksella toteutusta kehitt&auml;mishankkeesta on annettava erillinen raportti (liitteell&auml;).</p>
+          <p>Lis&auml;ksi tarvitaan kirjanpidollinen erittely toteutuneista kustannuksista, (avustuksen k&auml;ytt&ouml;&auml; kuvaava tuloslaskelma tms.), jonka toimittamisesta annetaan tarkemmat ohjeet hakuajan p&auml;&auml;ttymisen j&auml;lkeen. Erittely&auml; ei tarvitse liitt&auml;&auml; hakemukseen.</p>
         '#maxlength': 5000
         '#counter_type': character
         '#counter_maximum': 5000
@@ -662,17 +658,12 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet</strong><br />
-          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.&nbsp;<br />
-          <br />
-          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. &nbsp;<br />
-          <br />
-          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
-          &nbsp;
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet</h4>
+          <p>Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.</p><h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
+          <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.
+          </p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
+          <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': webform_markup
         '#markup': |
@@ -698,8 +689,8 @@ elements: |-
         '#multiple': false
         '#filetype': '43'
         '#help': |-
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.</span></span></span><br />
-          <span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.</span></span></span>
+          <p>Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.</p>
+          <p>Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.</p>
         '#title_display': before
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi sis&auml;lt&ouml; alta.'
         '#description__access': false
@@ -709,9 +700,8 @@ elements: |-
         '#multiple': false
         '#filetype': '4'
         '#help': |-
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun toimintakertomuksen.</span></span></span><br />
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Jos toimintakertomus on osana tilinp&auml;&auml;t&ouml;st&auml; ja liititte sen jo tilinp&auml;&auml;t&ouml;ksen mukana lomakkeelle, sit&auml; ei tarvitse liitt&auml;&auml; t&auml;h&auml;n erikseen. Valitse t&auml;llaisessa tilanteessa toimintakertomuksen kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</span></span></span><br />
-          &nbsp;
+          <p>Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun toimintakertomuksen.</p>
+          <p>Jos toimintakertomus on osana tilinp&auml;&auml;t&ouml;st&auml; ja liititte sen jo tilinp&auml;&auml;t&ouml;ksen mukana lomakkeelle, sit&auml; ei tarvitse liitt&auml;&auml; t&auml;h&auml;n erikseen. Valitse t&auml;llaisessa tilanteessa toimintakertomuksen kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
         '#title_display': before
         '#description__access': false
       vahvistettu_tilin_tai_toiminnantarkastuskertomus:
@@ -720,9 +710,8 @@ elements: |-
         '#multiple': false
         '#filetype': '5'
         '#help': |-
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.</span></span></span><br />
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</span></span></span><br />
-          &nbsp;
+          <p>Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.</p>
+          <p>Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
         '#title_display': before
         '#description__access': false
       vuosikokouksen_poytakirja:
@@ -738,7 +727,7 @@ elements: |-
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
         '#multiple': false
         '#filetype': '1'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. </span></span></span>'
+        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. '
         '#title_display': before
         '#description__access': false
       talousarvio:
