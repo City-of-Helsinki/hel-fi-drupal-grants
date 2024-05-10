@@ -126,13 +126,13 @@ class GrantsMandateRedirectService {
   /**
    * Gets the redirect for after profile selection redirection.
    *
-   * @param \Symfony\Component\HttpFoundation\Response $defaultRedirect
+   * @param \Symfony\Component\HttpFoundation\RedirectResponse $defaultRedirect
    *   Default redirect if there is none in the session data.
    *
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   The redirect response.
    */
-  public function getRedirect(Response $defaultRedirect) {
+  public function getRedirect(RedirectResponse $defaultRedirect) {
     $session = $this->getSession();
     $redirectUri = $session->get(self::SESSION_KEY);
 

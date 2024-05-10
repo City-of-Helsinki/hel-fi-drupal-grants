@@ -265,7 +265,7 @@ organization or association', [], $tOpts),
    * @param array $tOpts
    *   Translation options.
    *
-   * @return \Drupal\Core\Routing\RedirectResponse
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect response object.
    */
   public function handleUnregisteredCommunity(
