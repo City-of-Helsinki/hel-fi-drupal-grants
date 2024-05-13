@@ -38,14 +38,14 @@ test.describe(`Testing page: ${scenario.url}`, () => {
     }
   });
 
-  test('Application search: Controls', async () => {
+  test('Application filtering: Controls are visible', async () => {
     await expect(page.getByLabel('Etsi hakemusta')).toBeVisible()
     await expect(page.getByRole('button', {name: 'Etsi hakemusta'})).toBeEnabled()
     await expect(page.getByLabel('Näytä vain käsittelyssä olevat hakemukset')).toBeVisible()
     await expect(page.getByLabel('Järjestä')).toBeVisible()
   });
 
-  test('Application search: Can be sorted by date', async () => {
+  test('Application filtering: Can be sorted by date', async () => {
     const receivedApplications = await getReceivedApplicationCount(page);
     test.skip(!receivedApplications, 'Skip application search sort test');
 
@@ -58,7 +58,7 @@ test.describe(`Testing page: ${scenario.url}`, () => {
     expect(isAscending(applicationDates)).toBeTruthy();
   });
 
-  test('Application search: Filter by text', async () => {
+  test('Application filtering: Filter by text', async () => {
     const receivedApplicationsCount = await getReceivedApplicationCount(page);
     test.skip(!receivedApplicationsCount, 'Skip application search sort test');
 

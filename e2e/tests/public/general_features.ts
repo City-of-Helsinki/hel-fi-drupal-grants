@@ -5,11 +5,10 @@ test.describe("General features", () => {
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage();
-    await page.goto('/fi/avustukset');
   });
 
   test.beforeEach(async () => {
-
+    await page.goto('/fi/avustukset');
   });
 
   test.afterAll(async () => {
