@@ -31,6 +31,8 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     'node',
     'system',
     'language',
+    'locale',
+    'locale_test',
     // Contribs from drupal.org.
     'webform',
     'openid_connect',

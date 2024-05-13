@@ -104,4 +104,5 @@ settings:
   wizard_next_button_label: 'Next >'
   preview_label: '4. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
+  wizard_confirmation_label: '5. Complete'
 title: 'Education, supplementary discretionary grant application for afternoon activities'

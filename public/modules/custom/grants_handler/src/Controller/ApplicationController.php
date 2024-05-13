@@ -317,10 +317,10 @@ class ApplicationController extends ControllerBase {
       // Add message if application is not open.
       $tOpts = ['context' => 'grants_handler'];
       $this->messenger()->addError($this->t('This application is not open', [], $tOpts), TRUE);
-
+      $node_storage = $this->entityTypeManager()->getStorage('node');
       // @codingStandardsIgnoreStart
       // Get service page node.
-      $query = \Drupal::entityQuery('node')
+      $query = $node_storage->getQuery()
         ->accessCheck(FALSE)
         ->condition('type', 'service')
         ->condition('field_webform', $webform_id);
@@ -332,7 +332,7 @@ class ApplicationController extends ControllerBase {
         $this->messenger()->addError($this->t('Service page not found!', [], $tOpts), TRUE);
         return $this->redirect('<front>');
       }
-      $node_storage = $this->entityTypeManager()->getStorage('node');
+
       $node = $node_storage->load(reset($res));
 
       // Redirect user to service page with message.

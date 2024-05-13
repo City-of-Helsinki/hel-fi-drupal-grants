@@ -13,7 +13,7 @@ services:
         '@logger.factory',
         '@grants_handler.events_service',
         '@helfi_atv.atv_service',
-        '@renderer'
+        '@current_user'
     ]
 
   grants_handler.application_handler:
@@ -30,6 +30,11 @@ services:
         '@database',
         '@language_manager',
         '@grants_handler.navigation_helper',
+        '@config.factory',
+        '@current_user',
+        '@datetime.time',
+        '@current_user',
+        '@datetime.time'
     ]
     calls:
       - [setAttachmentHandler, ['@?grants_attachments.attachment_handler']]
@@ -65,6 +70,7 @@ services:
 
   grants_handler.redirect_after_logout:
     class: Drupal\grants_handler\EventSubscriber\RedirectAfterLogoutSubscriber
+    arguments: ['@openid_connect_logout_redirect.redirect']
     tags:
       - { name: event_subscriber }
 

@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\helfi_atv\AtvDocument;
+use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -25,7 +26,7 @@ abstract class AtvFormBase extends FormBase {
    * @return \Psr\Log\LoggerInterface
    *   The logger for the given channel.
    */
-  public static function getLoggerChannel() {
+  public static function getLoggerChannel(): LoggerInterface {
     $loggerFactory = \Drupal::service('logger.factory');
     return $loggerFactory->get('grants_admin_applications');
   }
@@ -37,8 +38,18 @@ abstract class AtvFormBase extends FormBase {
    *   The application number.
    * @param string $saveId
    *   The new save id.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\Core\TempStore\TempStoreException
+   * @throws \Drupal\grants_mandate\CompanySelectException
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public static function updateSaveIdRecord(string $applicationNumber, string $saveId) {
+  public static function updateSaveIdRecord(string $applicationNumber, string $saveId): void {
 
     $database = \Drupal::service('database');
     $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber(
