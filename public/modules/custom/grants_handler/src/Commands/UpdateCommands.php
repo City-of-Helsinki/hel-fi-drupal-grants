@@ -2,9 +2,10 @@
 
 namespace Drupal\grants_handler\Commands;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;
-use Drupal\node\Entity\Node;
 use Drush\Commands\DrushCommands;
 
 /**
@@ -20,6 +21,8 @@ use Drush\Commands\DrushCommands;
  */
 class UpdateCommands extends DrushCommands {
 
+  use StringTranslationTrait;
+
   /**
    * The key value store to use.
    *
@@ -28,13 +31,26 @@ class UpdateCommands extends DrushCommands {
   protected $keyValueStore;
 
   /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\Core\KeyValueStore\KeyValueFactoryInterface $key_value_factory
    *   The key value store to use.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager.
    */
-  public function __construct(KeyValueFactoryInterface $key_value_factory) {
+  public function __construct(
+    KeyValueFactoryInterface $key_value_factory,
+    EntityTypeManagerInterface $entityTypeManager,
+  ) {
     $this->keyValueStore = $key_value_factory;
+    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**
@@ -65,7 +81,7 @@ class UpdateCommands extends DrushCommands {
    */
   public function updateServicepageWebformReferences() {
 
-    $archivedWebForms = \Drupal::entityTypeManager()
+    $archivedWebForms = $this->entityTypeManager
       ->getStorage('webform')
       ->loadByProperties([
         'third_party_settings.grants_metadata.status' => 'archived',
@@ -82,18 +98,19 @@ class UpdateCommands extends DrushCommands {
       return;
     }
 
-    $entityQuery = \Drupal::entityQuery('node')
+    $entityQuery = $this->entityTypeManager->getStorage('node')
+      ->getQuery()
       // Access checks on content are required.
       ->accessCheck(FALSE)
       ->condition('type', 'service')
       ->condition('field_webform', $webformIds);
 
     $results = $entityQuery->execute();
-    $servicePages = Node::loadMultiple($results);
+    $servicePages = $this->entityTypeManager->getStorage('node')->loadMultiple($results);
 
     foreach ($servicePages as $page) {
       $currentWebform = reset($page->get('field_webform')->getValue());
-      $currentWebformObj = \Drupal::entityTypeManager()->getStorage('webform')->load($currentWebform['target_id']);
+      $currentWebformObj = $this->entityTypeManager->getStorage('webform')->load($currentWebform['target_id']);
       $applicationType = $currentWebformObj->getThirdPartySetting('grants_metadata', 'applicationType');
 
       $latestVersion = ApplicationHandler::getLatestApplicationForm($applicationType);
@@ -106,10 +123,9 @@ class UpdateCommands extends DrushCommands {
 
       $page->set('field_webform', $latestVersion->id());
 
-      $status = $latestVersion->isOpen();
-      grants_metadata_set_node_values($page, $status, $thirdPartySettings);
+      grants_metadata_set_node_values($page, $thirdPartySettings);
 
-      $this->output->writeLn(t('Updated webform reference for service page: @title (@formType: @newId)', [
+      $this->output->writeLn($this->t('Updated webform reference for service page: @title (@formType: @newId)', [
         '@title'    => $page->getTitle(),
         '@formType' => $thirdPartySettings['applicationType'],
         '@newId'    => $latestVersion->id(),

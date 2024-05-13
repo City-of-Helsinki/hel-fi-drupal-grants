@@ -815,7 +815,7 @@ class ApplicationHandler {
     });
 
     if (!$webform) {
-      return NULL;
+      return FALSE;
     }
 
     if ($all) {

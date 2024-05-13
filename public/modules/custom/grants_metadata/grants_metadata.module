@@ -507,7 +507,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       $formParent = $storage['parent_form'];
       $formStatus = 'development';
 
-      /** @var \Drupal\webform\Entity\Webform[] $webforms */
+      /** @var \Drupal\webform\Entity\Webform $formParentData */
       $formParentData = reset(\Drupal::entityTypeManager()
         ->getStorage('webform')
         ->loadByProperties([
@@ -581,7 +581,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     ];
   }
 
-  if ($form_id == 'webform_settings_form') {
+  if ($form_id == 'webform_settings_form' && isset($webform)) {
     $route_parameters = ['webform' => $webform->id()];
 
     $form['third_party_settings']['grants_metadata']['new_version'] = [
