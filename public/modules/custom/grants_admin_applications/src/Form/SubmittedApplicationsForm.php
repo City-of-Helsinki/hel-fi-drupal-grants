@@ -4,6 +4,7 @@ namespace Drupal\grants_admin_applications\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -37,9 +38,9 @@ class SubmittedApplicationsForm extends AtvFormBase {
   /**
    * Constructs a new GrantsProfileForm object.
    */
-  public function __construct(AtvService $atvService, ImmutableConfig $config) {
+  public function __construct(AtvService $atvService, ConfigFactory $config) {
     $this->atvService = $atvService;
-    $this->config = $config;
+    $this->config = $config->get('grants_metadata.settings');
   }
 
   /**
@@ -48,21 +49,21 @@ class SubmittedApplicationsForm extends AtvFormBase {
   public static function create(ContainerInterface $container): SubmittedApplicationsForm|static {
     return new static(
       $container->get('helfi_atv.atv_service'),
-      $container->get('grants_metadata.settings')
+      $container->get('config.factory')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'grants_admin_applications_admin_applications_status';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['status_messages'] = [
       '#type' => 'status_messages',
     ];
@@ -206,7 +207,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
   /**
    * Resend application callback submit handler.
    */
-  public static function resendApplicationCallback(array $form, FormStateInterface $formState) {
+  public static function resendApplicationCallback(array $form, FormStateInterface $formState): void {
     $logger = self::getLoggerChannel();
     $messenger = \Drupal::service('messenger');
     $triggeringElement = $formState->getTriggeringElement();
@@ -268,7 +269,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
   /**
    * GetStatus submit handler.
    */
-  public static function getStatus(array $form, FormStateInterface $formState) {
+  public static function getStatus(array $form, FormStateInterface $formState): void {
     $messenger = \Drupal::service('messenger');
     $logger = self::getLoggerChannel();
 

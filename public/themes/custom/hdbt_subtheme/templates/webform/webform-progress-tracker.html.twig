@@ -71,7 +71,7 @@
                     <span class="visually-hidden" data-webform-progress-state>
                       {% if is_active or is_completed %}{{ is_active ? 'Current'|t : 'Completed'|t }}{% endif %}
                     </span>
-              {{ page.title }}
+              {{ page.title|replace({'. ': '.&nbsp;'})|raw }}
             </p>
           {% endif %}
         </div>
