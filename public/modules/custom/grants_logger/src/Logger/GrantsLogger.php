@@ -15,10 +15,6 @@ use Psr\Log\LoggerInterface;
  */
 class GrantsLogger extends DbLog {
 
-  use RfcLoggerTrait;
-  use DependencySerializationTrait;
-
-
   /**
    * The helfi_helsinki_profiili.userdata service.
    *
