@@ -45,7 +45,7 @@
       ] %}
       {% set attributes = create_attribute()
         .setAttribute('data-webform-' ~ page.type, page.name)
-        .setAttribute('title', page.title)
+        .setAttribute('title', "Step"|t ~ " " ~ (index + 1) ~ '/' ~ progress|length ~ ': ' ~ page.title)
         .setAttribute('class', 'grants-stepper__steps')
         .addClass(page_classes[page.name])
       %}
@@ -54,8 +54,9 @@
           {% set is_disabled = true %}
         {% endif %}
         <div class="grants-stepper__step progress-marker{% if is_disabled %} grants-stepper__step__disabled{% endif %}" {% if is_disabled %}role="link" disabled="disabled"{% endif %}
-             {% if is_active %}aria-current="true"{% else %}aria-current="false"{% endif %}
-             data-webform-progress-step>
+          {% if is_active %}aria-current="step"{% else %}aria-current="false"{% endif %}
+          data-webform-progress-step
+        >
           <div class="grants-stepper__step__circle_container" data-webform-progress-link>
             <div class="grants-stepper__circle">
               <span aria-hidden="true" class="grants-stepper__error hel-icon hel-icon--error hel-icon--size-xs"></span>
@@ -67,8 +68,9 @@
           </div>
           {% if progress|length < max_pages %}
             <p class="grants-stepper__text" data-webform-progress-link>
-                    <span class="visually-hidden"
-                          data-webform-progress-state>{% if is_active or is_completed %}{{ is_active ? 'Current'|t : 'Completed'|t }}{% endif %}</span>
+                    <span class="visually-hidden" data-webform-progress-state>
+                      {% if is_active or is_completed %}{{ is_active ? 'Current'|t : 'Completed'|t }}{% endif %}
+                    </span>
               {{ page.title|replace({'. ': '.&nbsp;'})|raw }}
             </p>
           {% endif %}

@@ -145,3 +145,4 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '4. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '5. Slutförd'
