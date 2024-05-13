@@ -6,6 +6,7 @@ use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\grants_admin_applications\Service\HandleDocumentsBatchService;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\helfi_atv\AtvDocument;
@@ -18,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provides a grants_admin_applications form.
+ *
+ * @phpstan-consistent-constructor
  */
 final class DeleteApplicationsForm extends FormBase {
 
@@ -64,7 +67,7 @@ final class DeleteApplicationsForm extends FormBase {
   public function __construct(
     AtvService $atvService,
     HandleDocumentsBatchService $handleDocumentsBatchService,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
     ConfigFactory $configFactory
   ) {
     $this->atvService = $atvService;

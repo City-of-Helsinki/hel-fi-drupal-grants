@@ -107,6 +107,9 @@ $breakpoint-xl: 1248px;
   }
 
 }
+fieldset input[type="button"] {
+  margin-top: var(--spacing-m);
+}
 .webform-section-wrapper > .description {
   margin-bottom: var(--spacing-layout-xs);
 }
