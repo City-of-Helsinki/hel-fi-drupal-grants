@@ -195,7 +195,7 @@ elements: |-
             - subventions
       markup:
         '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
+        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan. Kirjaa tähän avustussumma vain sen vuoden osalta, jolle haet avustusta tällä hakemuksella.</p>'
       info_kyseessa_on_monivuotinen_avustus:
         '#type': webform_markup
         '#markup': |
