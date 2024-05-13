@@ -3,12 +3,9 @@
 namespace Drupal\grants_logger\Logger;
 
 use Drupal\Core\Database\Connection;
-use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\Logger\LogMessageParserInterface;
-use Drupal\Core\Logger\RfcLoggerTrait;
 use Drupal\dblog\Logger\DbLog;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Psr\Log\LoggerInterface;
 
 /**
  * Override DbLog to include custom data.
