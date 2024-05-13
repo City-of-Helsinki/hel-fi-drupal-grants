@@ -20,7 +20,11 @@ $breakpoint-xl: 1248px;
   }
 
   button {
-    margin-left: var(--spacing-2-xs);
+    margin-left: 0;
+
+    @include breakpoint($breakpoint-m) {
+      margin-left: var(--spacing-2-xs);
+    }
   }
 
   input {
