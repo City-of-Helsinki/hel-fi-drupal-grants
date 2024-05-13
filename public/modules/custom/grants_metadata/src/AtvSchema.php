@@ -421,7 +421,7 @@ class AtvSchema {
                 // Get value extracter.
                 $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
                 if ($valueExtracterConfig) {
-                  $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+                  $valueExtracterService = self::getDynamicService($valueExtracterConfig['service']);
                   $method = $valueExtracterConfig['method'];
                   // And try to get value from there.
                   $itemValue = $valueExtracterService->$method($v);
@@ -446,7 +446,7 @@ class AtvSchema {
                 // Get value extracter.
                 $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
                 if ($valueExtracterConfig) {
-                  $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+                  $valueExtracterService = self::getDynamicService($valueExtracterConfig['service']);
                   $method = $valueExtracterConfig['method'];
                   // And try to get value from there.
                   $itemValue = $valueExtracterService->$method($v);
@@ -499,7 +499,7 @@ class AtvSchema {
 
           $valueExtracterConfig = $definition->getSetting('webformValueExtracter');
           if ($valueExtracterConfig) {
-            $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+            $valueExtracterService = self::getDynamicService($valueExtracterConfig['service']);
             $method = $valueExtracterConfig['method'];
             // And try to get value from there.
             $retval = $valueExtracterService->$method($retval);
@@ -655,7 +655,7 @@ class AtvSchema {
   ): mixed {
     $fieldValues = [];
     if (isset($fullItemValueCallback['service'])) {
-      $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
+      $fullItemValueService = self::getDynamicService($fullItemValueCallback['service']);
       $funcName = $fullItemValueCallback['method'];
 
       $fieldValues = $fullItemValueService->$funcName($definition, $content, $arguments);
@@ -805,6 +805,16 @@ class AtvSchema {
     }
 
     return $metaData;
+  }
+
+  /**
+   * Get dynamically defined service via Drupal::service method.
+   *
+   * @param string $serviceName
+   *   Service name.
+   */
+  public static function getDynamicService(string $serviceName) {
+    return \Drupal::service($serviceName);
   }
 
 }

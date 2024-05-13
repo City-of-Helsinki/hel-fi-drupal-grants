@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\search_api\Plugin\views\query\SearchApiQuery;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
 
@@ -35,6 +36,10 @@ function grants_application_search_form_views_exposed_form_alter(&$form, FormSta
  * Implements hook_views_query_alter().
  */
 function grants_application_search_views_query_alter(ViewExecutable $view, QueryPluginBase $query): void {
+
+  if (!$query instanceof SearchApiQuery) {
+    return;
+  }
 
   // Alter the search page query.
   if ($view->id() == 'application_search_search_api' && $view->current_display === 'search_page') {

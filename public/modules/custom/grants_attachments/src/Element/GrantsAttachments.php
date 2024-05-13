@@ -58,7 +58,10 @@ class GrantsAttachments extends WebformCompositeBase {
     $element['#tree'] = TRUE;
     $element = parent::processWebformComposite($element, $form_state, $complete_form);
 
-    $submission = $form_state->getFormObject()->getEntity();
+    /** @var \Drupal\webform\WebformSubmissionForm $formObject */
+    $formObject = $form_state->getFormObject();
+    /** @var \Drupal\webform\Entity\WebformSubmission $submission */
+    $submission = $formObject->getEntity();
     $submissionData = $submission->getData();
 
     $storage = $form_state->getStorage();

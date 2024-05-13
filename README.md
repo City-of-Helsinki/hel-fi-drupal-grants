@@ -95,7 +95,7 @@ Each kind of test case has base class that are extended to create tests.
 
 Run tests related to AtvSchema: `vendor/bin/phpunit -c public/modules/custom/grants_metadata` It generates coverage report in html format under `public/modules/custom/grants_metadata/html-coverage`. Use browser to open `dashboard.html` to see the report.
 
-Run tests related to application handling: `vendor/bin/phpunit -c public/modules/custom/grants_handler` 
+Run tests related to application handling: `vendor/bin/phpunit -c public/modules/custom/grants_handler`
 
 ## E2E tests
 
