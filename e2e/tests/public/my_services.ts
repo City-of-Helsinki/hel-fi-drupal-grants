@@ -8,6 +8,7 @@ import {
   validateComponent,
   validatePageTitle
 } from "../../utils/public_helpers";
+import {logger} from "../../utils/logger";
 
 const scenario = pageCollection['my_services'];
 
@@ -39,13 +40,16 @@ test.describe(`Testing page: ${scenario.url}`, () => {
   });
 
   test('Application filtering: Controls are visible', async () => {
-    await expect(page.getByLabel('Etsi hakemusta')).toBeVisible()
-    await expect(page.getByRole('button', {name: 'Etsi hakemusta'})).toBeEnabled()
-    await expect(page.getByLabel('Näytä vain käsittelyssä olevat hakemukset')).toBeVisible()
-    await expect(page.getByLabel('Järjestä')).toBeVisible()
+    logger('Validating application filtering controls...');
+    await expect(page.getByLabel('Etsi hakemusta')).toBeVisible();
+    await expect(page.getByRole('button', {name: 'Etsi hakemusta'})).toBeEnabled();
+    await expect(page.getByLabel('Näytä vain käsittelyssä olevat hakemukset')).toBeVisible();
+    await expect(page.getByLabel('Järjestä')).toBeVisible();
+    logger('Application filtering controls validated.');
   });
 
   test('Application filtering: Can be sorted by date', async () => {
+    logger('Validating application filtering date sorting...');
     const receivedApplications = await getReceivedApplicationCount(page);
     test.skip(!receivedApplications, 'Skip application search sort test');
 
@@ -56,9 +60,11 @@ test.describe(`Testing page: ${scenario.url}`, () => {
 
     applicationDates = await getReceivedApplicationDateValues(page);
     expect(isAscending(applicationDates)).toBeTruthy();
+    logger('Application filtering date sorting validated.');
   });
 
   test('Application filtering: Filter by text', async () => {
+    logger('Validating application filtering text filtering...');
     const receivedApplicationsCount = await getReceivedApplicationCount(page);
     test.skip(!receivedApplicationsCount, 'Skip application search sort test');
 
@@ -71,6 +77,7 @@ test.describe(`Testing page: ${scenario.url}`, () => {
 
     const visibleApplicationsCount = await getReceivedApplicationCount(page);
     expect(visibleApplicationsCount).toBe(1);
+    logger('Application filtering text filtering validated.');
   });
 
 });
