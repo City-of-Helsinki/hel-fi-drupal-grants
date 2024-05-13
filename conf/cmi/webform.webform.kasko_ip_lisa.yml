@@ -33,7 +33,7 @@ template: false
 archive: false
 id: kasko_ip_lisa
 title: 'Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
-description: KASKOIPLISA
+description: '<p>KASKOIPLISA</p>'
 categories: {  }
 elements: |-
   avustukset_summa:

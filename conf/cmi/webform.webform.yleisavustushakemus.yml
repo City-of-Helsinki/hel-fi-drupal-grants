@@ -23,6 +23,8 @@ third_party_settings:
     applicationActingYears: {  }
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '2'
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -31,7 +33,7 @@ template: false
 archive: false
 id: yleisavustushakemus
 title: 'Kaupunginhallitus, yleisavustushakemus'
-description: ECONOMICGRANTAPPLICATION
+description: '<p>ECONOMICGRANTAPPLICATION</p>'
 categories: {  }
 elements: |-
   applicant_type:

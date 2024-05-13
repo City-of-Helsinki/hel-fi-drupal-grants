@@ -35,7 +35,7 @@ template: false
 archive: false
 id: liikunta_yleisavustushakemus
 title: 'Liikunta, yleisavustushakemus'
-description: LIIKUNTAYLEIS
+description: '<p>LIIKUNTAYLEIS</p>'
 categories: {  }
 elements: |-
   applicant_type:

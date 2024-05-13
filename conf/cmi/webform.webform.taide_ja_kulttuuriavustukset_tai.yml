@@ -33,7 +33,7 @@ template: false
 archive: false
 id: taide_ja_kulttuuriavustukset_tai
 title: 'Taiteen perusopetuksen avustukset'
-description: KUVAPERUS
+description: '<p>KUVAPERUS</p>'
 categories: {  }
 elements: |-
   avustukset_summa:

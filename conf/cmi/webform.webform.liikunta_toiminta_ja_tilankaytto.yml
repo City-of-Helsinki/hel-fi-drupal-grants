@@ -26,7 +26,7 @@ third_party_settings:
     applicationActingYearsNextCount: ''
     applicationContinuous: 0
     disableCopying: 1
-    status: development
+    status: released
     parent: ''
 weight: 0
 open: null
@@ -36,7 +36,7 @@ template: false
 archive: false
 id: liikunta_toiminta_ja_tilankaytto
 title: 'Liikunta, toiminta- ja tilankäyttöavustushakemus'
-description: LIIKUNTATILANKAYTTO
+description: '<p>LIIKUNTATILANKAYTTO</p>'
 categories: {  }
 elements: |-
   applicant_type:
