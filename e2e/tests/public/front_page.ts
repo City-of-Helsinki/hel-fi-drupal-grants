@@ -32,8 +32,3 @@ test.describe(`Testing page: ${scenario.url}`, () => {
 
 });
 
-/*test('login button', async () => {
-  await expect(await page.locator('.profile__login-link')).toHaveText('Kirjaudu');
-});
-*/
-
