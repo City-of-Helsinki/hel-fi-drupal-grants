@@ -22,10 +22,7 @@ third_party_settings:
     applicationOpen: '2024-04-01T00:00:00'
     applicationClose: '2024-04-26T23:59:59'
     applicationActingYearsType: next_x_years
-    applicationActingYears:
-      2024: '2024'
-      2025: '2025'
-      2026: '2026'
+    applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 1
@@ -37,7 +34,7 @@ template: false
 archive: false
 id: liikunta_laitosavustushakemus
 title: 'Liikunta, laitos- ja säätiöavustukset'
-description: LIIKUNTALAITOS
+description: '<p>LIIKUNTALAITOS</p>'
 categories: {  }
 elements: |-
   applicant_type:
@@ -347,7 +344,7 @@ elements: |-
               class:
                 - webform--small
             '#title': 'Myönnetyn avustuksen summa'
-            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
+            '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
           purpose:
             '#type': textarea
             '#title': 'Kuvaus käyttötarkoituksesta'
@@ -436,7 +433,7 @@ elements: |-
               class:
                 - webform--small
             '#title': 'Haetun avustuksen summa'
-            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
+            '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
           purpose:
             '#type': textarea
             '#title': 'Kuvaus käyttötarkoituksesta'
@@ -549,14 +546,6 @@ elements: |-
           <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
-      yhteison_saannot:
-        '#type': grants_attachments
-        '#title': 'Yhteisön säännöt'
-        '#multiple': false
-        '#filetype': '7'
-        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
-        '#title_display': ''
-        '#description__access': false
       vahvistettu_tilinpaatos:
         '#type': grants_attachments
         '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
@@ -730,7 +719,7 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '6. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
