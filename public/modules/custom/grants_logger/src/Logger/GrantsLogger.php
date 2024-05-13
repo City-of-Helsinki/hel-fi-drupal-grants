@@ -3,14 +3,19 @@
 namespace Drupal\grants_logger\Logger;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\Logger\LogMessageParserInterface;
-use Drupal\dblog\Logger\DbLog;
+use Drupal\Core\Logger\RfcLoggerTrait;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Psr\Log\LoggerInterface;
 
 /**
  * Override DbLog to include custom data.
  */
-class GrantsLogger extends DbLog {
+class GrantsLogger implements LoggerInterface {
+
+  use RfcLoggerTrait;
+  use DependencySerializationTrait;
 
 
   /**
@@ -44,7 +49,12 @@ class GrantsLogger extends DbLog {
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata
    *   The helfi_helsinki_profiili.userdata service.
    */
-  public function __construct(Connection $connection, LogMessageParserInterface $parser, HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata) {
+  public function __construct(
+    Connection $connection,
+    LogMessageParserInterface $parser,
+    HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata
+  ) {
+
     $this->connection = $connection;
     $this->parser = $parser;
     $this->helfiHelsinkiProfiiliUserdata = $helfiHelsinkiProfiiliUserdata;
