@@ -45,7 +45,55 @@ const validatePageTitle = async (page: Page) => {
   logger('Page title validated!');
 };
 
+/**
+ * The getReceivedApplicationDateValues function.
+ *
+ * @param page
+ */
+const getReceivedApplicationDateValues = async (page: Page) => {
+  const receivedApplications = await page.locator("#oma-asiointi__sent .application-list__item--submitted").all();
+
+  const datePromises = receivedApplications.map(async a => {
+    const innerText = await a.innerText();
+    const trimmedText = innerText.trim();
+    return new Date(trimmedText)
+  })
+
+  return await Promise.all(datePromises)
+}
+
+/**
+ * The getReceivedApplicationCount function.
+ *
+ * @param page
+ */
+const getReceivedApplicationCount = async (page: Page) => {
+  return await page.locator('.application-list [data-status="RECEIVED"]').count();
+}
+
+/**
+ * The isAscending function.
+ *
+ * @param dates
+ */
+const isAscending = function (dates: Date[]): boolean {
+  return dates.every((x, i) => i === 0 || x >= dates[i - 1]);
+};
+
+/**
+ * The isDescending function.
+ *
+ * @param dates
+ */
+const isDescending = function (dates: Date[]): boolean {
+  return dates.every((x, i) => i === 0 || x <= dates[i - 1]);
+};
+
 export {
   validateComponent,
-  validatePageTitle
+  validatePageTitle,
+  getReceivedApplicationDateValues,
+  getReceivedApplicationCount,
+  isDescending,
+  isAscending,
 }
