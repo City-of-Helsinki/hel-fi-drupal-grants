@@ -27,6 +27,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
     'file',
     'node',
     'system',
+    'language',
     // Contribs from drupal.org.
     'webform',
     'openid_connect',
@@ -41,6 +42,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
     'grants_attachments',
     'grants_budget_components',
     'grants_club_section',
+    'grants_mandate',
     'grants_metadata',
     'grants_handler',
     'grants_premises',
