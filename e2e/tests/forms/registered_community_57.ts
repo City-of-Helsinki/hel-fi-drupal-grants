@@ -72,15 +72,6 @@ const formPages: PageHandlers = {
         .fill(items['edit-additional-information'].value ?? '');
     }
 
-    if (items['edit-yhteison-saannot-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].value
-      )
-    }
-
     if (items['edit-vahvistettu-tilinpaatos-attachment-upload']) {
       await uploadFile(
         page,
