@@ -453,6 +453,9 @@ msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan. 
 msgid "Grant application (@number) saving failed. Error has been logged."
 msgstr "Det gick inte att spara bidragsansökan (@number). Ett fel har loggats."
 
+msgid "Grant application (<span id=\"saved-application-number\">@number</span>) saved."
+msgstr "Bidragsansökan @number sparat."
+
 msgid "User does not have proper mandate."
 msgstr "Användaren har inte korrekt mandat."
 
