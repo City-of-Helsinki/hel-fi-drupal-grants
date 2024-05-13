@@ -6,7 +6,6 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\grants_profile\GrantsProfileService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Mandate redirect service class.
