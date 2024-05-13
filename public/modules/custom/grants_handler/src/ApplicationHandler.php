@@ -728,6 +728,8 @@ class ApplicationHandler {
    *
    * @param string $applicationNumber
    *   Application number.
+   * @param bool $all
+   *   Should all matching webforms be returned?
    *
    * @return \Drupal\webform\Entity\Webform
    *   Webform object.
