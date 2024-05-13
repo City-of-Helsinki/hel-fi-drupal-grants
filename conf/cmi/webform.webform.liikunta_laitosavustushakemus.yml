@@ -37,7 +37,7 @@ template: false
 archive: false
 id: liikunta_laitosavustushakemus
 title: 'Liikunta, laitos- ja säätiöavustukset'
-description: LIIKUNTALAITOS
+description: 'LIIKUNTALAITOS'
 categories: {  }
 elements: |-
   applicant_type:
@@ -549,14 +549,6 @@ elements: |-
           <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
-      yhteison_saannot:
-        '#type': grants_attachments
-        '#title': 'Yhteisön säännöt'
-        '#multiple': false
-        '#filetype': '7'
-        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
-        '#title_display': ''
-        '#description__access': false
       vahvistettu_tilinpaatos:
         '#type': grants_attachments
         '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
