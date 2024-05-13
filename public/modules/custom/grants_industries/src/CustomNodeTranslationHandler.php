@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Utility\Error;
 use Drupal\grants_industries\Services\NodeAccessCheckService;
 use Drupal\node\NodeTranslationHandler;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -29,6 +30,13 @@ class CustomNodeTranslationHandler extends NodeTranslationHandler {
   protected NodeAccessCheckService $nodeAccessCheckService;
 
   /**
+   * The logger channel.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected LoggerInterface $loggerChannel;
+
+  /**
    * {@inheritdoc}
    */
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
@@ -36,6 +44,7 @@ class CustomNodeTranslationHandler extends NodeTranslationHandler {
     /** @var \Drupal\grants_industries\Services\NodeAccessCheckService $nodeAccessCheckService */
     $nodeAccessCheckService = $container->get('grants_industries.node_access_check_service');
     $instance->nodeAccessCheckService = $nodeAccessCheckService;
+    $instance->loggerChannel = $container->get('logger.factory')->get('grants_industries');
     return $instance;
   }
 
@@ -60,7 +69,7 @@ class CustomNodeTranslationHandler extends NodeTranslationHandler {
       }
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException $exception) {
-      Error::logException(\Drupal::logger('grants_industries'), $exception);
+      Error::logException($this->loggerChannel, $exception);
     }
 
     return $access;

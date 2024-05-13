@@ -163,7 +163,8 @@ class GrantsAttachmentsController extends ControllerBase {
         // Update in ATV.
         $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
           $applicationData,
-          $submission_id
+          $submission_id,
+          $submissionData,
         );
 
         if ($applicationUploadStatus) {

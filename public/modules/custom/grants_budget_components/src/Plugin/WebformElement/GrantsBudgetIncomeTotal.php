@@ -42,8 +42,10 @@ class GrantsBudgetIncomeTotal extends WebformElementBase {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
+    /** @var \Drupal\webform\WebformSubmissionForm $formObject */
+    $formObject = $form_state->getFormObject();
     // Get webform object.
-    $webform_obj = $form_state->getFormObject()->getWebform();
+    $webform_obj = $formObject->getWebform();
     $webform_field = $webform_obj->getElementsInitializedFlattenedAndHasValue();
     $collect_column = [];
 

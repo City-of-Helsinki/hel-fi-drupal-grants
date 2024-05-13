@@ -697,8 +697,10 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   $grantsProfileService = \Drupal::service('grants_profile.service');
   $selectedCompany = $grantsProfileService->getSelectedRoleData();
 
+  /** @var \Drupal\webform\WebformSubmissionForm $formObject */
+  $formObject = $form_state->getFormObject();
   /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
-  $webform_submission = $form_state->getFormObject()->getEntity();
+  $webform_submission = $formObject->getEntity();
   $formData = $webform_submission->getData();
 
   $webform = $webform_submission->getWebform();
@@ -1071,6 +1073,7 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
   // If submission is ok for messaging.
   if (ApplicationHandler::isSubmissionMessageable($submission, NULL)) {
     // Add message form.
+    // @phpstan-ignore-next-line
     $variables['message_form'] = \Drupal::formBuilder()
       ->getForm('Drupal\grants_handler\Form\MessageForm', $submission);
   }

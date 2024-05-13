@@ -29,7 +29,6 @@ module:
   date_range_formatter: 0
   datetime: 0
   datetime_range: 0
-  dblog: 0
   default_content: 0
   diff: 0
   disable_messages: 0
@@ -63,7 +62,6 @@ module:
   grants_club_section: 0
   grants_front_banner: 0
   grants_industries: 0
-  grants_logger: 0
   grants_mandate: 0
   grants_members: 0
   grants_metadata: 0
