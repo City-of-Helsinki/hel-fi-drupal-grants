@@ -8,10 +8,6 @@ test.describe('Navigation features', () => {
     await page.goto('/fi/avustukset');
   });
 
-  test.beforeEach(async () => {
-
-  });
-
   test.afterAll(async () => {
     await page.close();
   });

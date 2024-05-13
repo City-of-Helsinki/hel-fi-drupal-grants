@@ -5,8 +5,20 @@ import {logger} from "./logger";
 /**
  * The validateComponent function.
  *
+ * This function validates components data that's
+ * originally set in public_page_data.ts. This is
+ * done by:
+ *
+ * 1. Making sure that a given amount of components
+ * are present on the page.
+ *
+ * 2. Making sure that each component has the required
+ * elements.
+ *
  * @param page
+ *  Playwright page object.
  * @param component
+ *   A page component, like a paragraph or hero.
  */
 const validateComponent = async (page: Page, component: ComponentDetails) => {
   logger('Validating component...');
@@ -35,7 +47,11 @@ const validateComponent = async (page: Page, component: ComponentDetails) => {
 /**
  * The validatePageTitle function.
  *
+ * This function validates that the page title
+ * is set to "*** | Helsingin kaupunki".
+ *
  * @param page
+ *  Playwright page object.
  */
 const validatePageTitle = async (page: Page) => {
   logger(`Validating page title...`);
@@ -48,7 +64,11 @@ const validatePageTitle = async (page: Page) => {
 /**
  * The getReceivedApplicationDateValues function.
  *
+ * This function is used to for getting the dates
+ * from the submitted applications on the Oma-asiointi page.
+ *
  * @param page
+ *  Playwright page object.
  */
 const getReceivedApplicationDateValues = async (page: Page) => {
   const receivedApplications = await page.locator("#oma-asiointi__sent .application-list__item--submitted").all();
@@ -65,7 +85,11 @@ const getReceivedApplicationDateValues = async (page: Page) => {
 /**
  * The getReceivedApplicationCount function.
  *
+ * This function returns the count of received applications
+ * on the Oma-asiointi page.
+ *
  * @param page
+ *  Playwright page object.
  */
 const getReceivedApplicationCount = async (page: Page) => {
   return await page.locator('.application-list [data-status="RECEIVED"]').count();
@@ -74,7 +98,11 @@ const getReceivedApplicationCount = async (page: Page) => {
 /**
  * The isAscending function.
  *
+ * This function checks if a given date array
+ * is in ascending order.
+ *
  * @param dates
+ *  An array of dates.
  */
 const isAscending = function (dates: Date[]): boolean {
   return dates.every((x, i) => i === 0 || x >= dates[i - 1]);
@@ -83,7 +111,11 @@ const isAscending = function (dates: Date[]): boolean {
 /**
  * The isDescending function.
  *
+ * This function checks if a given date array
+ * is in descending order.
+ *
  * @param dates
+ *  An array of dates.
  */
 const isDescending = function (dates: Date[]): boolean {
   return dates.every((x, i) => i === 0 || x <= dates[i - 1]);

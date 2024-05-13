@@ -5,9 +5,6 @@ test.describe("General features", () => {
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage();
-  });
-
-  test.beforeEach(async () => {
     await page.goto('/fi/avustukset');
   });
 

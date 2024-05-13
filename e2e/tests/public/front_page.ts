@@ -9,9 +9,6 @@ test.describe(`Testing page: ${scenario.url}`, () => {
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage();
-  });
-
-  test.beforeEach(async () => {
     await page.goto(scenario.url);
   });
 
