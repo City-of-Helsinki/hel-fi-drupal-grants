@@ -49,5 +49,15 @@ test.describe(`Testing page: ${scenario.url}`, () => {
     logger('Language changing validated.');
   });
 
+  test('Main navigation: Sub-level toggling functionality', async () => {
+    logger('Validating main navigation sub-level toggling...');
+    const toggleButton = await page.locator('li.menu__item--children .menu__toggle-button');
+    await toggleButton.first().click();
+    const subItems = await page.locator('ul.menu--level-1:visible > li');
+    await expect(subItems.first()).toBeVisible();
+    await expect(toggleButton.first()).toHaveAttribute('aria-expanded', 'true');
+    logger('Main navigation sub-level toggling validated.');
+  });
+
 });
 
