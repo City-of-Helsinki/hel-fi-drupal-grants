@@ -59,7 +59,7 @@ elements: |
   subventions:
     '#title': Understöd
   markup:
-    '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången.</p>'
+    '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången. Ange här endast stödsumman för det år, för vilket du nu ansöker om stöd.</p>'
   info_kyseessa_on_monivuotinen_avustus:
     '#markup': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
