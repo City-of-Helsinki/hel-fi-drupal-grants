@@ -740,7 +740,8 @@ elements: |-
       budget_other_cost:
         '#type': grants_budget_other_cost
         '#title': 'Muut kulut'
-        '#help': 'Lisää alle kaikki hankkeen suunnitellut menot kululuokittain.'
+        '#description': 'Lisää alle kaikki hankkeen suunnitellut menot kululuokittain.'
+        '#description_display': before
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1
