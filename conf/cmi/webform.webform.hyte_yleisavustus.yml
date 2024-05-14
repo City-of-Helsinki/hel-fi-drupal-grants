@@ -16,7 +16,7 @@ third_party_settings:
     applicationTypeTerms:
       49: '49'
     applicationTargetGroup: '30'
-    applicationOpen: '2024-05-02T08:00:00'
+    applicationOpen: '2024-05-02T00:00:00'
     applicationClose: '2024-06-03T16:00:00'
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
@@ -722,7 +722,7 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '6. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
