@@ -1,6 +1,10 @@
 # CHANGELOG
 
 ## 2024.8
+- df0f3c7c fix: AU-2470: Fix stepper first line (#1368)
+- de25bce9 fix: AU-2497: Fix fieldset button top margin (#1369)
+- b5ef5013 fix: AU-635: Fix application resend form. (#1364)
+- 174066a4 fix: AU-2447: fix attachments styles (#1360)
 - 33b8ef30 Add form 67 to production forms
 - 2ab1b317 Production configs
 - d6673de4 Add pubsub + PHPCS
