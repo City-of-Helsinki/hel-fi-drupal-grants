@@ -52,7 +52,7 @@ const validateComponent = async (page: Page, component: ComponentDetails) => {
       }
     }
   }
-  logger('Component validated! \n');
+  logger('Component validated. \n');
 };
 
 /**
@@ -144,7 +144,7 @@ const validatePageTitle = async (page: Page) => {
   const title = await page.title();
   const titlePattern = /.*\| Helsingin kaupunki$/;
   await expect(title, `The page title '${title}' does not end with '| Helsingin kaupunki'.`).toMatch(titlePattern);
-  logger('Page title validated!');
+  logger('Page title validated.');
 };
 
 /**
