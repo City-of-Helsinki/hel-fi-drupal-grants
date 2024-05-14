@@ -88,7 +88,7 @@
   };
   $('a').on('click', function (event) {
     let containingElement = document.querySelector('form');
-    if (unsaved && !containingElement.contains( event.target )) {
+    if (unsaved && !containingElement.contains( event.target ) && !event.target.getAttribute('href').startsWith('#')) {
       event.preventDefault();
       const $previewDialog = $(
         `<div></div>`,
