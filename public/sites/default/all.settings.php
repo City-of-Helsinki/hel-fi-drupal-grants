@@ -5,10 +5,6 @@
  * Contains site specific overrides.
  */
 
-if (getenv('APP_ENV') == 'production') {
-  $config['openid_connect.client.tunnistamo']['settings']['is_production'] = TRUE;
-  $config['openid_connect.client.tunnistamoadmin']['settings']['is_production'] = TRUE;
-}
 
 $config['openid_connect.client.tunnistamo']['settings']['client_id'] = getenv('TUNNISTAMO_CLIENT_ID');
 $config['openid_connect.client.tunnistamo']['settings']['client_secret'] = getenv('TUNNISTAMO_CLIENT_SECRET');
