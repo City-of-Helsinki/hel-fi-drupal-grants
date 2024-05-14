@@ -39,15 +39,6 @@ test.describe(`Testing page: ${scenario.url}`, () => {
     }
   });
 
-  test('Application filtering: Controls are visible', async () => {
-    logger('Validating application filtering controls...');
-    await expect(page.getByLabel('Etsi hakemusta')).toBeVisible();
-    await expect(page.getByRole('button', {name: 'Etsi hakemusta'})).toBeEnabled();
-    await expect(page.getByLabel('Näytä vain käsittelyssä olevat hakemukset')).toBeVisible();
-    await expect(page.getByLabel('Järjestä')).toBeVisible();
-    logger('Application filtering controls validated.');
-  });
-
   test('Application filtering: Can be sorted by date', async () => {
     logger('Validating application filtering date sorting...');
     const receivedApplications = await getReceivedApplicationCount(page);

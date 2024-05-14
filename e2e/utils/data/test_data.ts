@@ -149,9 +149,10 @@ interface ComponentDetails {
 
 interface ElementDetails {
   selector: string;
-  count: number;
+  countExact?: number;
+  countAtLeast?: number;
+  expectedText?: string[];
 }
-
 
 // Type guard for MultiValueField
 function isMultiValueField(value: any): value is MultiValueField {

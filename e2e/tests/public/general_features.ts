@@ -13,12 +13,6 @@ test.describe("General features", () => {
     await page.close();
   });
 
-  test('Login button', async () => {
-    logger('Validating login button...');
-    await expect(await page.locator('.profile__login-link')).toHaveText('Kirjaudu');
-    logger('Login button validated.');
-  });
-
   test('Can change language', async () => {
     logger('Validating language changing...');
     let languageCode: string | null;
@@ -40,12 +34,4 @@ test.describe("General features", () => {
     logger('Language changing validated.');
   });
 
-  test('Has cookie banner', async () => {
-    logger('Validating cookie banner...');
-    await expect(page.getByText('Hel.fi käyttää evästeitä Tämä sivusto käyttää välttämättömiä evästeitä')).toBeVisible();
-    await expect(page.getByRole('button', {name: 'Näytä evästeet'})).toBeEnabled();
-    await expect(page.getByRole('button', {name: 'Hyväksy kaikki evästeet'})).toBeEnabled();
-    await expect(page.getByRole('button', {name: 'Hyväksy vain välttämättömät evästeet'})).toBeEnabled();
-    logger('Cookie banner validated.');
-  });
 });

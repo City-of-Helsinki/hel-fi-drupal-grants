@@ -1,6 +1,7 @@
 import {expect, Page} from "@playwright/test";
 import {ComponentDetails} from "./data/test_data";
 import {logger} from "./logger";
+import {text} from "stream/consumers";
 
 /**
  * The validateComponent function.
@@ -34,11 +35,35 @@ const validateComponent = async (page: Page, component: ComponentDetails) => {
   // For each component, check the count of the required elements.
   for (let i = 0; i < occurrences; i++) {
     for (const element of elements) {
-      const { selector, count } = element;
-      logger(`Expecting ${count} occurrences "${selector}" in instance "${i + 1}" of "${containerClass}"`);
+      const { selector, countExact, countAtLeast, expectedText } = element;
+      let errorMessage = '';
 
-      const elementCount = await page.locator(`${containerClass} >> nth=${i} >> ${selector}`).count();
-      await expect(elementCount,  `Expected ${count} of "${selector}" in occurrence ${i + 1} of "${containerClass}" but found ${elementCount}.`).toBe(count);
+      // Check for "exact" count of elements.
+      if (countExact) {
+        logger(`Expecting ${countExact} occurrences of "${selector}" in instance "${i + 1}" of "${containerClass}"`);
+        const elementCount = await page.locator(containerClass).nth(i).locator(selector).count();
+        errorMessage = `Expected ${countExact} of "${selector}" in occurrence ${i + 1} of "${containerClass}" but found ${elementCount}.`;
+        await expect(elementCount, errorMessage).toBe(countExact);
+      }
+
+      // Check for "at least" count of elements.
+      if (countAtLeast) {
+        logger(`Expecting at least ${countAtLeast} occurrences of "${selector}" in instance "${i + 1}" of "${containerClass}"`);
+        const elementCount = await page.locator(containerClass).nth(i).locator(selector).count();
+        errorMessage =`Expected at least ${countAtLeast} of "${selector}" in occurrence ${i + 1} of "${containerClass}" but found ${elementCount}.`
+        await expect(elementCount, errorMessage).toBeGreaterThanOrEqual(countAtLeast);
+      }
+
+      // Check for expected text inside of elements.
+      if (expectedText && expectedText.length) {
+        for (let j = 0; j < expectedText.length; j++) {
+          let textString = expectedText[j];
+          logger(`Expecting to find text "${textString}" in "${selector}" of "${containerClass}".`);
+          let elementWithText = await page.locator(containerClass).nth(i).locator(selector).getByText(textString).count();
+          errorMessage = `Expected text "${textString}" for "${selector}" in occurrence ${i + 1} of "${containerClass}" but found nothing".`;
+          await expect(elementWithText, errorMessage).toBeTruthy();
+        }
+      }
     }
   }
   logger('Component validated! \n');
@@ -68,9 +93,12 @@ const validatePageTitle = async (page: Page) => {
  * from the submitted applications on the Oma-asiointi page.
  *
  * @param page
- *  Playwright page object.
+ *   Playwright page object.
+ *
+ * @return
+ *   A promise containing an array of dates.
  */
-const getReceivedApplicationDateValues = async (page: Page) => {
+const getReceivedApplicationDateValues = async (page: Page): Promise<Date[]> => {
   const receivedApplications = await page.locator("#oma-asiointi__sent .application-list__item--submitted").all();
 
   const datePromises = receivedApplications.map(async a => {
@@ -89,9 +117,12 @@ const getReceivedApplicationDateValues = async (page: Page) => {
  * on the Oma-asiointi page.
  *
  * @param page
- *  Playwright page object.
+ *   Playwright page object.
+ *
+ * @return
+ *   A promise containing an number.
  */
-const getReceivedApplicationCount = async (page: Page) => {
+const getReceivedApplicationCount = async (page: Page): Promise<Number> => {
   return await page.locator('.application-list [data-status="RECEIVED"]').count();
 }
 
@@ -102,7 +133,10 @@ const getReceivedApplicationCount = async (page: Page) => {
  * is in ascending order.
  *
  * @param dates
- *  An array of dates.
+ *   An array of dates.
+ *
+ * @return
+ *   A boolean indicating if the passed in array is in ascending order.
  */
 const isAscending = function (dates: Date[]): boolean {
   return dates.every((x, i) => i === 0 || x >= dates[i - 1]);
@@ -116,6 +150,9 @@ const isAscending = function (dates: Date[]): boolean {
  *
  * @param dates
  *  An array of dates.
+ *
+ * @return
+ *   A boolean indicating if the passed in array is in descending order.
  */
 const isDescending = function (dates: Date[]): boolean {
   return dates.every((x, i) => i === 0 || x <= dates[i - 1]);
