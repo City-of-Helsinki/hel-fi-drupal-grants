@@ -66,8 +66,9 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
     /** @var \Drupal\webform\WebformSubmissionStorage $instance */
     $instance = parent::createInstance($container, $entity_type);
 
-    /** @var \Drupal\helfi_atv\AtvService atvService */
-    $instance->atvService = $container->get('helfi_atv.atv_service');
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    $atvService = $container->get('helfi_atv.atv_service');
+    $instance->atvService = $atvService;
 
     /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
     $instance->atvSchema = \Drupal::service('grants_metadata.atv_schema');
@@ -128,7 +129,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       );
 
       if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
-        throw new \Excpetion('ATV Document does not contain application number.');
+        throw new \Exception('ATV Document does not contain application number.');
       }
       $appData = self::setAtvDataToSubmission($document, $submission);
       $this->data[$submission->id()] = $appData;

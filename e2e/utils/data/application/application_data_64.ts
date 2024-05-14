@@ -2,7 +2,7 @@ import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 import {ATTACHMENTS} from "../attachment_data";
-import {createFormData} from "../../form_helpers";
+import {createFormData} from "../../form_data_helpers";
 import {
   viewPageFormatAddress,
   viewPageFormatBoolean,
@@ -61,7 +61,13 @@ const baseFormRegisteredCommunity_64: FormData = {
     "2_avustustiedot": {
       items: {
         "edit-acting-year": {
-          value: '2024',
+          role: 'select',
+          selector: {
+            type: 'dom-id-first',
+            name: '',
+            value: '#edit-acting-year',
+          },
+          viewPageSkipValidation: true,
         },
         "edit-subventions-items-0-amount": {
           value: '5709,98',
@@ -402,7 +408,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
     },
   },
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: ääkkösiävaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
   },
 };
 
@@ -458,7 +464,7 @@ const registeredCommunityApplications_64 = {
 const privatePersonApplications_64 = {
   draft: baseFormPrivatePerson_64,
   missing_values: createFormData(baseFormPrivatePerson_64, missingValuesPrivateUnregistered),
-  success: createFormData(baseFormRegisteredCommunity_64, sendApplication),
+  success: createFormData(baseFormPrivatePerson_64, sendApplication),
 }
 
 /**

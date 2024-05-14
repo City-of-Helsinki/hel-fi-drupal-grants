@@ -11,10 +11,13 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\EventsService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a Grants Profile form.
+ *
+ * @phpstan-consistent-constructor
  */
 class CopyApplicationModalForm extends FormBase {
 
@@ -41,9 +44,20 @@ class CopyApplicationModalForm extends FormBase {
   protected Renderer $renderer;
 
   /**
+   * Events service class.
+   *
+   * @var \Drupal\grants_handler\EventsService
+   */
+  protected EventsService $eventsService;
+
+  /**
    * Constructs a new ModalAddressForm object.
    */
-  public function __construct(ApplicationHandler $applicationHandler, Renderer $renderer) {
+  public function __construct(
+    ApplicationHandler $applicationHandler,
+    Renderer $renderer,
+    EventsService $eventsService,
+  ) {
     $debug = getenv('DEBUG');
 
     if ($debug == 'true') {
@@ -55,6 +69,7 @@ class CopyApplicationModalForm extends FormBase {
 
     $this->applicationHandler = $applicationHandler;
     $this->renderer = $renderer;
+    $this->eventsService = $eventsService;
   }
 
   /**
@@ -66,6 +81,7 @@ class CopyApplicationModalForm extends FormBase {
     $form = new static(
       $container->get('grants_handler.application_handler'),
       $container->get('renderer'),
+      $container->get('grants_handler.events_service'),
     );
     $form->setRequestStack($container->get('request_stack'));
     $form->setStringTranslation($container->get('string_translation'));
@@ -163,6 +179,9 @@ class CopyApplicationModalForm extends FormBase {
         'callback' => '::ajaxSubmitForm',
         'event' => 'click',
       ],
+      '#attributes' => [
+        'id' => 'copy-application-modal-form-submit',
+      ],
     ];
 
     // Set the form to not use AJAX if we're on a nojs path. When this form is
@@ -199,6 +218,7 @@ class CopyApplicationModalForm extends FormBase {
     $storage = $form_state->getStorage();
     /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
     $webform_submission = $storage['submission'];
+    $oldData = $webform_submission->getData();
     $webform = $webform_submission->getWebForm();
 
     // Init new application with copied data.
@@ -225,6 +245,13 @@ class CopyApplicationModalForm extends FormBase {
 
       $storage['newSubmission'] = $newSubmission;
       $form_state->setStorage($storage);
+
+      $this->eventsService->logEvent(
+        $newData['application_number'],
+        'HANDLER_APP_COPIED',
+        $this->t('Application copied from application id: @id', ['@id' => $oldData['application_number']], ['context' => 'grants_handler']),
+        $newData['application_number']
+      );
 
       $form_state->setRedirect(
         'grants_handler.edit_application',

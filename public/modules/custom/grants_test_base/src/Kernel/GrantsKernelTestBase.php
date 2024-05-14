@@ -14,7 +14,7 @@ class GrantsKernelTestBase extends KernelTestBase {
   /**
    * {@inheritDoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     // Basis for installing webform.
     $this->installSchema('webform', ['webform']);

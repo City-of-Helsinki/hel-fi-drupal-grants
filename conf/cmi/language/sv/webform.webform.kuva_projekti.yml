@@ -193,7 +193,8 @@ elements: |
     '#help': 'Med premi&auml;r avser vi den f&ouml;rsta f&ouml;rest&auml;llningen av en produktion. Fyll i de premi&auml;rer som sker i Helsingfors.'
   yleisolle_avoin_toiminta:
     '#title': 'Öppen verksamhet för publik i Helsingfors'
-    '#help': 'Med &ouml;ppen verksamhet avser vi h&auml;r t.ex. f&ouml;rest&auml;llningar, utst&auml;llningar, verkst&auml;der eller annan verksamhet, d&auml;r publiken kan vara delaktig.'
+  toiminta_markup:
+    '#markup': 'Med &ouml;ppen verksamhet avser vi h&auml;r t.ex. f&ouml;rest&auml;llningar, utst&auml;llningar, verkst&auml;der eller annan verksamhet, d&auml;r publiken kan vara delaktig.'
   ensimmainen_tila_fieldset:
     '#title': 'Platsen för det första öppna programmet i Helsingfors'
   ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa:
@@ -268,7 +269,7 @@ elements: |
   talousarvio:
     '#title': Budget
   markup_01:
-    '#markup': 'G&auml;llande hela projektet, som ni s&ouml;ker st&ouml;d f&ouml;r.'
+    '#markup': 'Skriv in projektets samtliga inkomster och utgifter i budgeten, så att helheten framgår. Anteckna alltså inte enbart de utgifter som täcks med det ansökta understödet.'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får stadsandelar (VOS)'
     '#help': 'Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
@@ -318,7 +319,13 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan<br role=\"presentation\" />\r\nom underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas,<br role=\"presentation\" />\r\nmeddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs meritf&ouml;rteckningar f&ouml;r arbetsgruppens<br role=\"presentation\" />\r\nmedlemmar n&auml;r det g&auml;ller projekt f&ouml;r yrkesm&auml;ssiga konstut&ouml;vare.<br />\r\n<br />\r\nF&ouml;r ny s&ouml;kande eller om bankkontaktuppgifterna har &auml;ndrats beh&ouml;vs &auml;ven kontoutdrag eller<br role=\"presentation\" />\r\nmotsvarande dokument som anger kontoinnehavarens namn och kontonummer i den s&ouml;kandes<br role=\"presentation\" />\r\negna uppgifter.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor</strong><br />\r\nDu kan bifoga flera meritf&ouml;rteckningar f&ouml;r arbetsgruppens medlemmar som enskilda bilagor genom<br role=\"presentation\" />\r\natt l&auml;gga till dem under rubriken &Ouml;vriga bilagor. Om du vill kan du ocks&aring; l&auml;mna in flera bilagor i en<br role=\"presentation\" />\r\nfil."
+    '#markup': |-
+      <p>Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.</p>
+      <h4>Erforderliga bilagor</h4>
+      <p>F&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs meritf&ouml;rteckningar f&ouml;r arbetsgruppens medlemmar n&auml;r det g&auml;ller projekt f&ouml;r yrkesm&auml;ssiga konstut&ouml;vare.</p>
+      <p>F&ouml;r ny s&ouml;kande eller om bankkontaktuppgifterna har &auml;ndrats beh&ouml;vs &auml;ven kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den s&ouml;kandes egna uppgifter.</p>
+      <h4>Inl&auml;mning av flera bilagor</h4>
+      <p>Du kan bifoga flera meritf&ouml;rteckningar f&ouml;r arbetsgruppens medlemmar som enskilda bilagor genom natt l&auml;gga till dem under rubriken &Ouml;vriga bilagor. Om du vill kan du ocks&aring; l&auml;mna in flera bilagor i en fil.</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   extra_info:
@@ -334,7 +341,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Skicka
-    '#draft__label': 'Spara som oavslutat'
+    '#draft__label': 'Spara som oavslutad'
     '#wizard_prev__label': '< Tidigare'
     '#wizard_next__label': 'Nästa >'
     '#preview_prev__label': '< Tidigare'

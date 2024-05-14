@@ -9,20 +9,22 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Returns responses for Webform Printify routes.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsWebformSubmissionPrintController extends ControllerBase {
 
   /**
    * The helfi_helsinkiprofiili service.
    *
-   * @var \Drupal\example\ExampleInterface
+   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
    */
   protected $helfiHelsinkiprofiili;
 
   /**
    * The helfi_atv service.
    *
-   * @var \Drupal\example\ExampleInterface
+   * @var \Drupal\helfi_atv\AtvService
    */
   protected $helfiAtv;
 

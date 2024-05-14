@@ -5,26 +5,26 @@ dependencies:
   module:
     - grants_handler
     - grants_metadata
-# third_party_settings:
-#   grants_metadata:
-#     applicationTypeSelect: '66'
-#     applicationType: NUORTOIMPALKENNAKKO
-#     applicationTypeID: '66'
-#     applicationIndustry: KUVA
-#     applicantTypes:
-#       registered_community: registered_community
-#       unregistered_community: unregistered_community
-#     applicationTypeTerms:
-#       45: '45'
-#       46: '46'
-#     applicationTargetGroup: '27'
-#     applicationOpen: '2023-10-16T00:00:00'
-#     applicationClose: '2023-12-15T23:59:59'
-#     applicationActingYears: {  }
-#     applicationContinuous: 0
-#     disableCopying: 0
-#     applicationActingYearsType: current_and_next_x_years
-#     applicationActingYearsNextCount: '1'
+third_party_settings:
+  grants_metadata:
+    applicationTypeSelect: '66'
+    applicationType: NUORTOIMPALKENNAKKO
+    applicationTypeID: '66'
+    applicationIndustry: KUVA
+    applicantTypes:
+      registered_community: registered_community
+      unregistered_community: unregistered_community
+    applicationTypeTerms:
+      45: '45'
+      46: '46'
+    applicationTargetGroup: '27'
+    applicationOpen: '2023-10-16T00:00:00'
+    applicationClose: '2023-12-15T23:59:59'
+    applicationActingYears: {  }
+    applicationContinuous: 0
+    disableCopying: 0
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYearsNextCount: '1'
 weight: 0
 open: null
 close: null
@@ -637,7 +637,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: all
+  draft: authenticated
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

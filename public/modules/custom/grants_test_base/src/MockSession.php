@@ -12,7 +12,7 @@ class MockSession extends Session {
   /**
    * Return id.
    */
-  public function getId() {
+  public function getId(): string {
     return '1234567890123456';
   }
 

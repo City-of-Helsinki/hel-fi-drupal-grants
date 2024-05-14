@@ -1,25 +1,14 @@
 import {Page, test} from '@playwright/test';
-import {logger} from "../../utils/logger";
-import {
-  FormData,
-  PageHandlers, FormPage, FormFieldWithRemove
-} from "../../utils/data/test_data";
-import {
-  fillGrantsFormPage,
-  fillInputField,
-  fillHakijanTiedotPrivatePerson,
-  uploadFile,
-  hideSlidePopup, fillFormField
-} from "../../utils/form_helpers";
-
-import {
-  privatePersonApplications as applicationData
-} from '../../utils/data/application_data';
+import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
+import {fillGrantsFormPage, fillHakijanTiedotPrivatePerson,} from "../../utils/form_helpers";
 import {selectRole} from "../../utils/auth_helpers";
 import {getObjectFromEnv} from "../../utils/env_helpers";
 import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
+import {fillFormField, fillInputField} from "../../utils/input_helpers";
+import {privatePersonApplications as applicationData} from '../../utils/data/application_data';
+import {swapFieldValues} from "../../utils/field_swap_helpers";
 
 const profileType = 'private_person';
 const formId = '48';
@@ -51,7 +40,7 @@ const formPages: PageHandlers = {
     // We need to check the presence of every item so that removed items will
     // not be filled. This is to enable testing for missing values & error handling.
     if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year').selectOption(items['edit-acting-year'].value ?? '');
+      await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
     }
 
     if (items['edit-subventions-items-0-amount']) {
@@ -575,6 +564,10 @@ test.describe('Private person KUVAPROJ(48)', () => {
     await selectRole(page, 'PRIVATE_PERSON');
   });
 
+  test.afterAll(async() => {
+    await page.close();
+  });
+
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
 
   for (const [key, obj] of testDataArray) {
@@ -608,7 +601,20 @@ test.describe('Private person KUVAPROJ(48)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-    if (obj.viewPageSkipValidation || obj.testFormCopying) continue;
+    if (!obj.testFieldSwap) continue;
+    test(`Field swap: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await swapFieldValues(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
+
+  for (const [key, obj] of testDataArray) {
+    if (obj.viewPageSkipValidation || obj.testFormCopying || obj.testFieldSwap) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       await validateSubmission(

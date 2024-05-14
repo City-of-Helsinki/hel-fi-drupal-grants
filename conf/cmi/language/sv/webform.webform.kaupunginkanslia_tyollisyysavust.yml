@@ -63,7 +63,7 @@ elements: |
   kayttotarkoitus:
     '#title': 'Användningsända&shy;mål'
   markup_02:
-    '#markup': "Ange f&ouml;r vilket &auml;ndam&aring;l ni s&ouml;ker underst&ouml;d och g&ouml;r upp en specifikation av hur kostnaderna f&ouml;rdelas.<br />\r\n<br />\r\nAnge det uppskattade antalet arbetspr&ouml;vare i Helsingfors och arbetspr&ouml;vningarnas sammanlagda l&auml;ngd under underst&ouml;ds&aring;ret. (1 person/1 m&aring;nad = 21,5 dagar). Med arbetspr&ouml;vning avses arbetspr&ouml;vare som omfattas av avtal om kommunf&ouml;rs&ouml;k. (Avtal om arbetspr&ouml;vning p&aring; en arbetsplats). Ange ocks&aring; vilka som &auml;r arbetspr&ouml;varnas viktigaste arbetsuppgifter och hur man ser till att arbetspr&ouml;varna handleds, vilket st&ouml;d/utbildning som arbetspr&ouml;varna erbjuds under arbetspr&ouml;vningen, och hur arbetspr&ouml;varnas v&auml;g in p&aring; den &ouml;ppna arbetsmarknaden eller en utbildning st&ouml;ds.<br />\r\n<br />\r\nOm st&ouml;det &auml;r avsett f&ouml;r utbildning och/eller gruppverksamhet, uppskatta hur m&aring;nga arbetsl&ouml;sa helsingforsbor som deltar, utbildningens namn, inneh&aring;ll och varaktighet. Som varaktighet anges den tid som avsatts f&ouml;r ett enskilt utbildnings-/m&ouml;testillf&auml;lle och det totala antalet utbildningstillf&auml;llen. Ange ocks&aring; vilken person eller instans som ansvarar f&ouml;r genomf&ouml;randet av utbildningen/gruppverksamheten och om genomf&ouml;randet sker i form av f&ouml;reningens egen verksamhet eller som k&ouml;pta tj&auml;nster.<br />\r\n<br />\r\nOm du ans&ouml;ker om utvecklingsunderst&ouml;d ska du beskriva <strong>projektets</strong> syfte, tidtabell och m&aring;l."
+    '#markup': "<p>Ange f&ouml;r vilket &auml;ndam&aring;l ni s&ouml;ker underst&ouml;d och g&ouml;r upp en specifikation av hur kostnaderna f&ouml;rdelas.</p><p>Ange det uppskattade antalet arbetspr&ouml;vare i Helsingfors och arbetspr&ouml;vningarnas sammanlagda l&auml;ngd under underst&ouml;ds&aring;ret. (1 person/1 m&aring;nad = 21,5 dagar). Med arbetspr&ouml;vning avses arbetspr&ouml;vare som omfattas av avtal om kommunf&ouml;rs&ouml;k. (Avtal om arbetspr&ouml;vning p&aring; en arbetsplats). Ange ocks&aring; vilka som &auml;r arbetspr&ouml;varnas viktigaste arbetsuppgifter och hur man ser till att arbetspr&ouml;varna handleds, vilket st&ouml;d/utbildning som arbetspr&ouml;varna erbjuds under arbetspr&ouml;vningen, och hur arbetspr&ouml;varnas v&auml;g in p&aring; den &ouml;ppna arbetsmarknaden eller en utbildning st&ouml;ds.</p><p>Om st&ouml;det &auml;r avsett f&ouml;r utbildning och/eller gruppverksamhet, uppskatta hur m&aring;nga arbetsl&ouml;sa helsingforsbor som deltar, utbildningens namn, inneh&aring;ll och varaktighet. Som varaktighet anges den tid som avsatts f&ouml;r ett enskilt utbildnings-/m&ouml;testillf&auml;lle och det totala antalet utbildningstillf&auml;llen. Ange ocks&aring; vilken person eller instans som ansvarar f&ouml;r genomf&ouml;randet av utbildningen/gruppverksamheten och om genomf&ouml;randet sker i form av f&ouml;reningens egen verksamhet eller som k&ouml;pta tj&auml;nster.</p><p>Om du ans&ouml;ker om utvecklingsunderst&ouml;d ska du beskriva <strong>projektets</strong> syfte, tidtabell och m&aring;l.</p>"
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
     '#counter_maximum_message': '%d/5000 tecken kvar'
@@ -162,7 +162,7 @@ elements: |
     '#markup': 'Ge en redovisning om underst&ouml;det som f&aring;tts fr&aring;n Helsingfors stad. Redovisningen g&ouml;rs om underst&ouml;det som beviljats f&ouml;r den senaste avslutade r&auml;kenskapsperioden. Redovisning g&ouml;rs inte om den innevarande r&auml;kenskapsperioden. Redovisningen kr&auml;vs f&ouml;r att f&aring; ett nytt underst&ouml;d. Om en redovisning inte g&ouml;rs, kommer ett underst&ouml;d inte att beviljas eller betalas ut. Det beviljade underst&ouml;det kan &aring;terkr&auml;vas om anv&auml;ndningen av det tidigare underst&ouml;det inte har redogjorts f&ouml;r p&aring; ett tillfredsst&auml;llande s&auml;tt.'
   compensation_explanation:
     '#title': 'Redovisning om användningen av understödet'
-    '#help': "Ber&auml;tta hur och f&ouml;r vilket &auml;ndam&aring;l det tidigare syssels&auml;ttningsst&ouml;det har anv&auml;nts. Om det var fr&aring;ga om utvecklingsunderst&ouml;d ska en separat rapport l&auml;mnas in (som bilaga) ang&aring;ende det utvecklingsprojekt som genomf&ouml;rts med underst&ouml;det.<br />\r\n<br />\r\nDessutom beh&ouml;vs en bokf&ouml;ringsm&auml;ssig specifikation av de faktiska kostnaderna (resultatr&auml;kning &ouml;ver anv&auml;ndningen av underst&ouml;det osv.). N&auml;rmare om hur den l&auml;mnas in ges efter det att ans&ouml;kningstidens g&aring;tt ut. Specifikationen beh&ouml;ver inte bifogas till ans&ouml;kan."
+    '#help': "Ber&auml;tta hur och f&ouml;r vilket &auml;ndam&aring;l det tidigare syssels&auml;ttningsst&ouml;det har anv&auml;nts. Om det var fr&aring;ga om utvecklingsunderst&ouml;d ska en separat rapport l&auml;mnas in (som bilaga) ang&aring;ende det utvecklingsprojekt som genomf&ouml;rts med underst&ouml;det. Dessutom beh&ouml;vs en bokf&ouml;ringsm&auml;ssig specifikation av de faktiska kostnaderna (resultatr&auml;kning &ouml;ver anv&auml;ndningen av underst&ouml;det osv.). N&auml;rmare om hur den l&auml;mnas in ges efter det att ans&ouml;kningstidens g&aring;tt ut. Specifikationen beh&ouml;ver inte bifogas till ans&ouml;kan."
     '#counter_maximum_message': '%d/5000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Samfundets verksamhet'
@@ -213,7 +213,14 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden &auml;r: bokslut, verksamhetsber&auml;ttelse, revisionsber&auml;ttelse och protokoll fr&aring;n &aring;rsst&auml;mman. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
+    '#markup': |-
+      <p>Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.</p>
+      <h4>Erforderliga bilagor</h4>
+      <p>F&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden &auml;r: bokslut, verksamhetsber&auml;ttelse, revisionsber&auml;ttelse och protokoll fr&aring;n &aring;rsst&auml;mman. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.</p>
+      <h4>Inl&auml;mning av flera bilagor i en fil</h4>
+      <p>Om du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>
+      <h4>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</h4>
+      <p>Om de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -226,7 +233,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
-    '#help': "Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nSamfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r."
+    '#help': "Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te. Samfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -234,7 +241,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)'
-    '#help': "Samfundet ska till denna punkt bifoga verksamhetsber&auml;ttelsen som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nOm verksamhetsber&auml;ttelsen ing&aring;r i bokslutet och du redan har bifogat den blanketten, beh&ouml;ver den inte bifogas separat. Ange i detta fall vid verksamhetsber&auml;ttelsen att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
+    '#help': "Samfundet ska till denna punkt bifoga verksamhetsber&auml;ttelsen som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te. Om verksamhetsber&auml;ttelsen ing&aring;r i bokslutet och du redan har bifogat den blanketten, beh&ouml;ver den inte bifogas separat. Ange i detta fall vid verksamhetsber&auml;ttelsen att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -242,7 +249,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)'
-    '#help': "Bifoga den undertecknade revisionsber&auml;ttelsen f&ouml;r samfundets senaste avslutade r&auml;kenskapsperiod h&auml;r.<br />\r\nOm den undertecknade revisionsber&auml;ttelsen ing&aring;r i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo; h&auml;r."
+    '#help': "Bifoga den undertecknade revisionsber&auml;ttelsen f&ouml;r samfundets senaste avslutade r&auml;kenskapsperiod h&auml;r. Om den undertecknade revisionsber&auml;ttelsen ing&aring;r i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo; h&auml;r."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -285,7 +292,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Skicka
-    '#draft__label': 'Spara som oavslutat'
+    '#draft__label': 'Spara som oavslutad'
     '#wizard_prev__label': '< Tidigare'
     '#wizard_next__label': 'Nästa >'
     '#preview_prev__label': '< Tidigare'

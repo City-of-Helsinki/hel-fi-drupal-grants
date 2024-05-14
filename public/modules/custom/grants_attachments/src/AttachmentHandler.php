@@ -3,14 +3,16 @@
 namespace Drupal\grants_attachments;
 
 use Drupal\Core\Entity\EntityStorageException;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TempStore\TempStoreException;
+use Drupal\file\FileStorage;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventException;
@@ -24,6 +26,7 @@ use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_audit_log\AuditLogService;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
+use Drupal\webform\Entity\Webform;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
@@ -44,8 +47,6 @@ class AttachmentHandler {
    * Field names for attachments.
    *
    * @var string[]
-   *
-   * @todo get field names from form where field type is attachment.
    */
   protected static array $attachmentFieldNames = [];
 
@@ -53,9 +54,9 @@ class AttachmentHandler {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Show messages messages.
@@ -104,7 +105,7 @@ class AttachmentHandler {
    *
    * @var \Drupal\file\FileStorage
    */
-  private $fileStorage;
+  private FileStorage|EntityStorageInterface $fileStorage;
 
   /**
    * Attached file id's.
@@ -141,11 +142,14 @@ class AttachmentHandler {
    *   Audit log mandate errors.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function __construct(
     AttachmentRemover $grants_attachments_attachment_remover,
     Messenger $messenger,
-    LoggerChannelFactory $loggerChannelFactory,
+    LoggerChannelFactoryInterface $loggerChannelFactory,
     AtvService $atvService,
     GrantsProfileService $grantsProfileService,
     AtvSchema $atvSchema,
@@ -211,6 +215,21 @@ class AttachmentHandler {
     if (!$webform) {
       return [];
     }
+    return self::getAttachmentFieldNamesFromWebform($webform, $preventKeys);
+  }
+
+  /**
+   * Get file fields.
+   *
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform.
+   * @param bool $preventKeys
+   *   Should this prevent keys.
+   *
+   * @return array
+   *   Attachment fields.
+   */
+  public static function getAttachmentFieldNamesFromWebform(Webform $webform, $preventKeys = FALSE): array {
     $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
     $applicationType = $thirdPartySettings["applicationType"];
 
@@ -835,9 +854,11 @@ class AttachmentHandler {
    *   The new bank account confirmation file.
    */
   protected function addFileArrayToFormData(array &$submittedFormData, array $fileArray): void {
-    foreach ($submittedFormData['attachments'] as $key => $attachment) {
-      if ((int) $attachment['fileType'] === 45) {
-        unset($submittedFormData['attachments'][$key]);
+    if (isset($submittedFormData['attachments'])) {
+      foreach ($submittedFormData['attachments'] as $key => $attachment) {
+        if ((int) $attachment['fileType'] === 45) {
+          unset($submittedFormData['attachments'][$key]);
+        }
       }
     }
     if (isset($fileArray['integrationID'])) {
@@ -872,12 +893,12 @@ class AttachmentHandler {
 
     if ($bankAccountAttachment) {
       try {
-        $integrationId = self::cleanIntegrationId($bankAccountAttachment['integrationID']);
+        $integrationId = AttachmentHandlerHelper::cleanIntegrationId($bankAccountAttachment['integrationID']);
         $this->atvService->deleteAttachmentViaIntegrationId($integrationId);
 
         $this->eventService->logEvent(
           $applicationData["application_number"],
-          'HANDLER_ATT_DELETE',
+          'HANDLER_ATT_DELETED',
           $this->t('Attachment removed for the IBAN: @iban.',
             ['@iban' => $existingAccountNumber],
             ['context' => 'grants_attachments'],
@@ -911,11 +932,11 @@ class AttachmentHandler {
    * @param string $applicationNumber
    *   Application number for attachment.
    *
-   * @return \stdClass[]
+   * @return array
    *   Data for JSON.
    *
-   * @throws \Drupal\grants_handler\EventException
    * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\grants_handler\EventException
    */
   public function getAttachmentByFieldValue(
     array $field,

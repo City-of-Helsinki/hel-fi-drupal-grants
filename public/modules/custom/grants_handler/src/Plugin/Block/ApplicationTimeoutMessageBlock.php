@@ -32,12 +32,14 @@ class ApplicationTimeoutMessageBlock extends BlockBase {
   public function build(): array {
 
     /** @var \Drupal\webform\Entity\WebformSubmission $submission */
-    if (!$submission = $this->getContextValue('webform_submission')) {
+    $submission = $this->getContextValue('webform_submission');
+    if (!$submission) {
       return [];
     }
 
     /** @var \Drupal\webform\Entity\Webform $webform */
-    if (!$webform = $submission->getWebform()) {
+    $webform = $submission->getWebform();
+    if (!$webform) {
       return [];
     }
 
@@ -53,7 +55,11 @@ class ApplicationTimeoutMessageBlock extends BlockBase {
     return [
       '#theme' => 'application_timeout_message',
       '#message_heading' => $this->t('The application period for this grant has closed.', [], ['context' => 'grants_handler']),
-      '#message_body' => $this->t('You can no longer submit an application because the application period for this grant has closed.', [], ['context' => 'grants_handler']),
+      '#message_body' =>
+      $this->t('You can no longer submit an application because the
+application period for this grant has closed.',
+          [],
+          ['context' => 'grants_handler']),
       '#attached' => [
         'library' => [
           'grants_handler/application-timeout-message',

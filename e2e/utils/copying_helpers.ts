@@ -1,7 +1,7 @@
 import {expect, Page, test} from "@playwright/test";
 import {FormData} from "./data/test_data";
 import {logger} from "./logger";
-import {getApplicationNumberFromBreadCrumb} from "./form_helpers";
+import {getApplicationNumberFromBreadCrumb, logCurrentUrl} from "./helpers";
 import {extractPath} from "./helpers";
 import {getObjectFromEnv, saveObjectToEnv} from "./env_helpers";
 import {validateSubmission} from "./validation_helpers";
@@ -113,6 +113,7 @@ const makeApplicationCopy = async (
   // Go to the "Katso" page of the original application we are copying.
   const viewPageURL = `/fi/hakemus/${originalApplicationId}/katso`;
   await page.goto(viewPageURL);
+  await logCurrentUrl(page);
   logger(`Navigated to: ${viewPageURL}.`);
 
   // Make sure we get there.
@@ -120,19 +121,28 @@ const makeApplicationCopy = async (
   const applicationIdContainerText = await applicationIdContainer.textContent();
   expect(applicationIdContainerText).toContain(originalApplicationId);
 
+  // Make sure the application can be copied. If not, skip this test.
+  const isCopyApplicationButtonVisible = await page.locator('#copy-application-modal-form-link').isVisible();
+  if (!isCopyApplicationButtonVisible) {
+    logger(`Copying disabled for application: ${originalApplicationId}. Skipping test.`);
+    test.skip(true, 'Skip copy test');
+  }
+
   // Copy the original application.
   logger(`Copying application: ${originalApplicationId}...`);
-  // Use #id as selector since the button text is not unique
+
   await page.locator('#copy-application-modal-form-link').click();
-  await page.locator('span', { hasText: 'Käytä hakemusta pohjana' }).click();
+  await page.locator('#copy-application-modal-form-submit').click();
 
   // Wait for a redirect to the new application and store the new application ID and submission URL.
+  await logCurrentUrl(page);
   await page.waitForURL('**/muokkaa');
   const newApplicationId = await getApplicationNumberFromBreadCrumb(page);
   const submissionUrl = await extractPath(page);
 
   // Save the new application as a draft.
   await page.locator('[data-drupal-selector="edit-actions-draft"]').click();
+  await logCurrentUrl(page);
   await page.waitForURL('**/katso');
 
   // Store the copied applications data to the env.

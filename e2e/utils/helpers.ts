@@ -1,4 +1,5 @@
 import {Locator, Page} from "@playwright/test";
+import {logger} from "./logger";
 
 /**
  * The slowLocator function.
@@ -47,8 +48,112 @@ const extractPath = async (page: Page) => {
   return new URL(fullUrl).pathname;
 }
 
+/**
+ * The hideSlidePopup function.
+ *
+ * This function hides the sliding popup (cookie consent)
+ * banner by clicking the "Agree" button on it.
+ *
+ * @param page
+ *  Playwright page object
+ */
+const hideSlidePopup = async (page: Page) => {
+  try {
+    const slidingPopup = await page.locator('#sliding-popup');
+    const agreeButton = await page.locator('.agree-button.eu-cookie-compliance-default-button');
+
+    if (!slidingPopup || !agreeButton) {
+      logger('Sliding popup already closed for this session.');
+      return;
+    }
+
+    await Promise.all([
+      slidingPopup.waitFor({state: 'visible', timeout: 1000}),
+      agreeButton.waitFor({state: 'visible', timeout: 1000}),
+      agreeButton.click(),
+    ]).then(async () => {
+      logger('Closed sliding popup.')
+    });
+  }
+  catch (error) {
+    logger('Sliding popup already closed for this session.')
+  }
+}
+
+/**
+ * The getApplicationNumberFromBreadCrumb function.
+ *
+ * This functions fetches an applications ID from
+ * the active breadcrumbs and returns the ID.
+ *
+ * @param page
+ *  Playwright page object.
+ */
+const getApplicationNumberFromBreadCrumb = async (page: Page) => {
+  const breadcrumbSelector = '.breadcrumb__link';
+  const breadcrumbLinks = await page.$$(breadcrumbSelector);
+  return await breadcrumbLinks[breadcrumbLinks.length - 1].textContent();
+}
+
+/**
+ * The waitForTextWithInterval function.
+ *
+ * This function waits for text to be visible on the page,
+ * retrying every interval until a timeout. Can be used to implement soft
+ * assertion-like behavior by not throwing an error if it fails.
+ *
+ * @param page
+ *   The Playwright page object.
+ * @param text
+ *   The text to look for on the page.
+ * @param timeout
+ *   Maximum time in milliseconds to retry.
+ * @param interval
+ *   Time in milliseconds between retries.
+ */
+const waitForTextWithInterval = async (
+  page: Page,
+  text: string,
+  timeout: number,
+  interval: number
+): Promise<boolean> => {
+  logger(`Attempting to locate text: "${text}"...`);
+  const startTime = Date.now();
+
+  while (true) {
+    try {
+      await page.getByText(text, {exact: true}).waitFor({state: 'visible', timeout : interval})
+      logger('Text found!');
+      return true;
+    } catch (error) {
+      const currentTime = Date.now();
+      if ((currentTime - startTime) > timeout) {
+        logger(`Failed to find text. Timeout: ${timeout}ms. Interval: ${interval}ms.`);
+        return false;
+      }
+      logger('Timeout passed. Retrying...');
+    }
+  }
+}
+
+/**
+ * The logCurrentUrl function.
+ *
+ * This functions logs the current URL of the page.
+ *
+ * @param page
+ *  Playwright page object.
+ */
+const logCurrentUrl = async (page: Page) => {
+  logger('On URL:', page.url());
+}
+
 export {
   slowLocator,
   extractPath,
+  hideSlidePopup,
+  getApplicationNumberFromBreadCrumb,
+  waitForTextWithInterval,
+  logCurrentUrl,
 };
 

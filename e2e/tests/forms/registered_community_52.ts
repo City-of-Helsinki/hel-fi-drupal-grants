@@ -1,24 +1,14 @@
 import {Page, test} from '@playwright/test';
-import {logger} from "../../utils/logger";
-import {
-  FormData,
-  FormPage,
-  PageHandlers,
-} from '../../utils/data/test_data';
-import {
-  fillFormField,
-  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-  hideSlidePopup, uploadFile
-} from '../../utils/form_helpers';
-
-import {
-  registeredCommunityApplications as applicationData
-} from '../../utils/data/application_data';
-import {selectRole} from '../../utils/auth_helpers';
-import {getObjectFromEnv} from '../../utils/env_helpers';
-import {validateSubmission} from '../../utils/validation_helpers';
+import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
+import {fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity,} from "../../utils/form_helpers";
+import {selectRole} from "../../utils/auth_helpers";
+import {getObjectFromEnv} from "../../utils/env_helpers";
+import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
+import {fillFormField, fillInputField, uploadFile} from "../../utils/input_helpers";
+import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
+import {swapFieldValues} from "../../utils/field_swap_helpers";
 
 const profileType = 'registered_community';
 const formId = '52';
@@ -30,8 +20,7 @@ const formPages: PageHandlers = {
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year')
-        .selectOption(items['edit-acting-year'].value ?? '');
+      await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
     }
 
     if (items['edit-subventions-items-0-amount']) {
@@ -410,70 +399,35 @@ const formPages: PageHandlers = {
     }
 
     if (items['edit-yhteison-saannot-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-yhteison-saannot-attachment-upload'], 'edit-yhteison-saannot-attachment-upload');
     }
 
     if (items['edit-vahvistettu-tilinpaatos-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.value ?? '',
-        items['edit-vahvistettu-tilinpaatos-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-vahvistettu-tilinpaatos-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-vahvistettu-tilinpaatos-attachment-upload'], 'edit-vahvistettu-tilinpaatos-attachment-upload');
     }
 
     if (items['edit-vahvistettu-toimintakertomus-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-vahvistettu-toimintakertomus-attachment-upload'].selector?.value ?? '',
-        items['edit-vahvistettu-toimintakertomus-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-vahvistettu-toimintakertomus-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-vahvistettu-toimintakertomus-attachment-upload'], 'edit-vahvistettu-toimintakertomus-attachment-upload');
     }
 
     if (items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.value ?? '',
-        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload'], 'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload');
     }
 
     if (items['edit-toimintasuunnitelma-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-toimintasuunnitelma-attachment-upload'].selector?.value ?? '',
-        items['edit-toimintasuunnitelma-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-toimintasuunnitelma-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-toimintasuunnitelma-attachment-upload'], 'edit-toimintasuunnitelma-attachment-upload');
     }
 
     if (items['edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload'].selector?.value ?? '',
-        items['edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload'], 'edit-vuokrasopimus-haettaessa-vuokra-avustusta-attachment-upload');
     }
 
     if (items['edit-talousarvio-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-talousarvio-attachment-upload'].selector?.value ?? '',
-        items['edit-talousarvio-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-talousarvio-attachment-upload'].value
-      )
+      await fillFormField(page, items['edit-talousarvio-attachment-upload'], 'edit-talousarvio-attachment-upload');
     }
 
     if (items['edit-muu-liite']) {
-      await fillFormField(page, items['edit-muu-liite'], 'edit-muu-liite')
+      await fillFormField(page, items['edit-muu-liite'], 'edit-muu-liite');
     }
 
     if (items['edit-extra-info']) {
@@ -496,6 +450,10 @@ test.describe('KASKOIPTOIM(52)', () => {
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
     await selectRole(page, 'REGISTERED_COMMUNITY');
+  });
+
+  test.afterAll(async() => {
+    await page.close();
   });
 
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
@@ -531,7 +489,20 @@ test.describe('KASKOIPTOIM(52)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-    if (obj.viewPageSkipValidation || obj.testFormCopying) continue;
+    if (!obj.testFieldSwap) continue;
+    test(`Field swap: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await swapFieldValues(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
+
+  for (const [key, obj] of testDataArray) {
+    if (obj.viewPageSkipValidation || obj.testFormCopying || obj.testFieldSwap) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       await validateSubmission(

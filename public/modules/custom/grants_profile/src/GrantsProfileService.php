@@ -3,7 +3,7 @@
 namespace Drupal\grants_profile;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -87,7 +87,7 @@ class GrantsProfileService {
     AtvService $helfiAtv,
     MessengerInterface $messenger,
     ProfileConnector $profileConnector,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
     GrantsProfileCache $grantsProfileCache,
   ) {
     $this->atvService = $helfiAtv;
@@ -666,7 +666,7 @@ class GrantsProfileService {
    * This method returns timestamp of the time
    * a profile was last updated.
    *
-   * @return string
+   * @return int|false
    *   Timestamp of last updated at.
    */
   public function getUpdatedAt() {
@@ -706,10 +706,10 @@ class GrantsProfileService {
    * This method sets a timestamp of the time
    * a notification was shown.
    *
-   * @return string
+   * @return bool|AtvDocument
    *   Timestamp of last time notification was shown.
    */
-  public function setNotificationShown($timestamp) {
+  public function setNotificationShown($timestamp): bool|AtvDocument {
     $profileMetadata['notification_shown'] = $timestamp;
 
     return $this->saveGrantsProfile([], $profileMetadata);

@@ -6,7 +6,7 @@
     "homepage": "https://github.com/City-of-Helsinki/drupal-helfi-platform",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "2024.7",
+    "version": "2024.8",
     "require": {
         "ext-json": "*",
         "composer/installers": "^1.9",
@@ -32,7 +32,7 @@
         "drupal/filename_transliteration": "^1.0",
         "drupal/hdbt": "^5.0",
         "drupal/hdbt_admin": "^2.0",
-        "drupal/helfi_atv": "^0.9.19",
+        "drupal/helfi_atv": "^0.9",
         "drupal/helfi_audit_log": "^0.9",
         "drupal/helfi_azure_fs": "^2",
         "drupal/helfi_drupal_tools": "dev-UHF-9315",
@@ -42,7 +42,6 @@
         "drupal/helfi_platform_config": "^4.3.18",
         "drupal/helfi_proxy": "^3.0",
         "drupal/helfi_tpr": "^2.1",
-        "drupal/helfi_tunnistamo": "^2.0",
         "drupal/helfi_yjdh": "^0.0.1",
         "drupal/http_client_log": "^1.0",
         "drupal/jquery_ui_draggable": "^2.0",
@@ -114,7 +113,8 @@
         "patches": {
             "drupal/core": {
                 "Fix missing wrapper from core form": "patches/fix-form-wrapper.patch",
-                "#3023228: Status messages show up twice": "https://www.drupal.org/files/issues/2023-07-19/3023228-39.patch"
+                "#3023228: Status messages show up twice": "https://www.drupal.org/files/issues/2023-07-19/3023228-39.patch",
+                "Asset resolver empty settings cache issue": "patches/assetresolver-settings.patch"
             },
             "drupal/content_lock": {
                 "Fix missing types": "https://www.drupal.org/files/issues/2021-10-15/array_filter_issue-3243486-a.patch"

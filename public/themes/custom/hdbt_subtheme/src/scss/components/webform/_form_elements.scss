@@ -99,6 +99,9 @@ $breakpoint-xl: 1248px;
   }
 
 }
+fieldset input[type="button"] {
+  margin-top: var(--spacing-m);
+}
 .webform-section-wrapper > .description {
   margin-bottom: var(--spacing-layout-xs);
 }
@@ -406,5 +409,14 @@ input[type=radio] + label.form-required::after {
   }
   &-xl {
     --icon-size: var(--spacing-layout-l);
+  }
+}
+
+.hds-text-input__input-wrapper:focus-within:has(input[readonly]) {
+  outline: 2px black solid;
+  outline-offset: 2px;
+  margin-right: var(--spacing-2-xs);
+  input[readonly] {
+    width: calc(100% - var(--spacing-2-xs));
   }
 }

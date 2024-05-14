@@ -21,7 +21,7 @@ class GrantsWebformSummationField extends WebformElementBase {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultProperties() {
+  public function getDefaultProperties(): array {
 
     return parent::getDefaultProperties() + [
       'collect_field' => '',
@@ -35,11 +35,14 @@ class GrantsWebformSummationField extends WebformElementBase {
   /**
    * {@inheritdoc}
    */
-  public function form(array $form, FormStateInterface $form_state) {
+  public function form(array $form, FormStateInterface $form_state): array {
     $form = parent::form($form, $form_state);
 
+    /** @var \Drupal\webform\WebformSubmissionForm $webformFormObject */
+    $webformFormObject = $form_state->getFormObject();
+
     // Get webform object.
-    $webform_obj = $form_state->getFormObject()->getWebform();
+    $webform_obj = $webformFormObject->getWebform();
     $webform_field = $webform_obj->getElementsInitializedFlattenedAndHasValue();
     $collect_column = [];
 
@@ -55,7 +58,6 @@ class GrantsWebformSummationField extends WebformElementBase {
         $collect_column[$field_key] = $field_detail['#title'];
       }
     }
-
     $form['grants_webform_summation_field'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('webform summation field settings'),
@@ -107,6 +109,7 @@ class GrantsWebformSummationField extends WebformElementBase {
       ],
       '#description' => $this->t('What type of data is collected.'),
     ];
+
     return $form;
   }
 

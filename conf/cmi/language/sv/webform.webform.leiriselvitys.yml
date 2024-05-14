@@ -58,7 +58,7 @@ elements: |
     '#title': Lägerplatser
   jarjestimme_leireja_seuraavilla_alueilla:
     '#title': 'Vi ordnade läger i följande områden'
-    '#help': '<p>Ange här namnet och postnummerområdet för alla de gårdar på vilka ni har ordnat läger som omfattas av lägerstödet för semesterperioderna under den gångna säsongen.&nbsp;</p>'
+    '#help': '<p>Ange här namnet och postnummerområdet för alla de gårdar på vilka ni har ordnat läger som omfattas av lägerstödet för semesterperioderna under den gångna säsongen.</p>'
     '#premiseName__title': Verksamhetsställe
   3_talousarvio:
     '#title': '3. Budget'
@@ -87,7 +87,14 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "<p>Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, ange detta under punkten Ytterligare information om bilagor.<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nDen obligatoriska bilagan till redogörelsen om lägerunderstöd under semesterperioden är Excel-bilagan Förhandsinformation om lägren som lämnades in med ansökan och som nu är kompletterad med uppgifterna om utfallet. Bilagan ska lämnas in samtidigt med redogörelsen. Om föreningens stadgar har ändrats ska också de nya stadgarna lämnas in. Stadgarna ska vara godkända av Patent- och registerstyrelsen.<br />\r\n<br />\r\n<strong>Inlämning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.<br />\r\n<br />\r\n<strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
+    '#markup': |-
+      <p>Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.</p>
+      <h4>Erforderliga bilagor</h4>
+      <p>Den obligatoriska bilagan till redogörelsen om lägerunderstöd under semesterperioden är Excel-bilagan Förhandsinformation om lägren som lämnades in med ansökan och som nu är kompletterad med uppgifterna om utfallet. Bilagan ska lämnas in samtidigt med redogörelsen. Om föreningens stadgar har ändrats ska också de nya stadgarna lämnas in. Stadgarna ska vara godkända av Patent- och registerstyrelsen.</p>
+      <h4>Inl&auml;mning av flera bilagor i en fil</h4>
+      <p>Om du vill kan du l&auml;mna in flera bilagor i en fil. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>
+      <h4>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</h4>
+      <p>Om de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Innehållet i bilagorna kan inte granskas i efterhand</div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>"
   yhteison_saannot:
@@ -127,7 +134,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Skicka
-    '#draft__label': 'Spara som oavslutat'
+    '#draft__label': 'Spara som oavslutad'
     '#wizard_prev__label': '< Tidigare'
     '#wizard_next__label': 'Nästa >'
     '#preview_prev__label': '< Tidigare'

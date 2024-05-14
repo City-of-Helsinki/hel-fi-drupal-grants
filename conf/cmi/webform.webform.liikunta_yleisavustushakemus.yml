@@ -292,18 +292,13 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen käsittelyä varten tulee toimittaa alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
-          <br /><br />
-          Vaaditut liitteet avustuslajeittain:
-          <br /><br />
-          Kohdeavustus: erillinen hakemusliite (webropol-lomake), joka löytyy liikunnan avustusten verkkosivuilta.
-          <br />Jos kyseessä on uusi yhdistys (ensimmäistä kertaa avustusta hakevat), toimitetaan erillisen hakemusliitteen lisäksi: yhdistyksen säännöt, sekä ote yhdistysrekisteristä.
-          <br />Mikäli hakija ei ole toimittanut Helsingin kaupungille hakuvuonna seuraavia liitteitä muiden avustushakujen yhteydessä, niin edellä mainittujen lisäksi tulee liittää myös: hakuvuotta koskeva toimintasuunnitelma, hakuvuotta koskeva talousarvio, tilinpäätös (viimeisin vahvistettu), jäljennös tilin- tai toiminnantarkastuskertomuksesta (viimeisin vahvistettu) sekä toimintakertomus (viimeisin vahvistettu).
-          <br />Starttiavustus: ote yhdistysrekisteristä, yhdistyksen säännöt, talousarvio ja toimintasuunnitelma.
-          <br />Muu: mahdollisten erillishakujen pakollisista liitteistä tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.
-          <br /><br />
-          Usean liitteen toimittaminen yhtenä tiedostona:
-          <br />Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet avustuslajeittain</h4>
+          <p>Kohdeavustus: erillinen hakemusliite (webropol-lomake), joka löytyy liikunnan avustusten verkkosivuilta. Jos kyseessä on uusi yhdistys (ensimmäistä kertaa avustusta hakevat), toimitetaan erillisen hakemusliitteen lisäksi: yhdistyksen säännöt, sekä ote yhdistysrekisteristä. Mikäli hakija ei ole toimittanut Helsingin kaupungille hakuvuonna seuraavia liitteitä muiden avustushakujen yhteydessä, niin edellä mainittujen lisäksi tulee liittää myös: hakuvuotta koskeva toimintasuunnitelma, hakuvuotta koskeva talousarvio, tilinpäätös (viimeisin vahvistettu), jäljennös tilin- tai toiminnantarkastuskertomuksesta (viimeisin vahvistettu) sekä toimintakertomus (viimeisin vahvistettu).</p>
+          <p>Starttiavustus: ote yhdistysrekisteristä, yhdistyksen säännöt, talousarvio ja toimintasuunnitelma.</p>
+          <p>Muu: mahdollisten erillishakujen pakollisista liitteistä tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.</p>
+          <h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
+          <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': webform_markup
         '#markup': |
@@ -453,7 +448,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: all
+  draft: authenticated
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

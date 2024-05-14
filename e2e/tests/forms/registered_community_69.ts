@@ -1,23 +1,14 @@
 import {Page, test} from '@playwright/test';
-import {
-  FormData,
-  FormPage,
-  PageHandlers,
-} from '../../utils/data/test_data';
-import {
-  fillFormField,
-  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-  hideSlidePopup, uploadFile
-} from '../../utils/form_helpers';
-
-import {
-  registeredCommunityApplications as applicationData
-} from '../../utils/data/application_data';
-import {selectRole} from '../../utils/auth_helpers';
-import {getObjectFromEnv} from '../../utils/env_helpers';
-import {validateSubmission} from '../../utils/validation_helpers';
+import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
+import {fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity,} from "../../utils/form_helpers";
+import {selectRole} from "../../utils/auth_helpers";
+import {getObjectFromEnv} from "../../utils/env_helpers";
+import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
+import {fillFormField, uploadFile} from "../../utils/input_helpers";
+import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
+import {swapFieldValues} from "../../utils/field_swap_helpers";
 
 const profileType = 'registered_community';
 const formId = '69';
@@ -29,8 +20,7 @@ const formPages: PageHandlers = {
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year')
-        .selectOption(items['edit-acting-year'].value ?? '');
+      await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
     }
 
     if (items['edit-jarjestimme-leireja-seuraavilla-alueilla']) {
@@ -109,6 +99,10 @@ test.describe('LEIRISELVITYS(69)', () => {
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
 
+  test.afterAll(async() => {
+    await page.close();
+  });
+
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
 
   for (const [key, obj] of testDataArray) {
@@ -142,7 +136,20 @@ test.describe('LEIRISELVITYS(69)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-    if (obj.viewPageSkipValidation || obj.testFormCopying) continue;
+    if (!obj.testFieldSwap) continue;
+    test(`Field swap: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await swapFieldValues(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
+
+  for (const [key, obj] of testDataArray) {
+    if (obj.viewPageSkipValidation || obj.testFormCopying || obj.testFieldSwap) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       await validateSubmission(

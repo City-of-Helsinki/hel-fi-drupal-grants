@@ -133,20 +133,10 @@ class ApplicationController extends ControllerBase {
       return AccessResult::forbidden('No submission found');
     }
 
-    $uri = $this->request->getCurrentRequest()->getUri();
-
-    $operation = 'view';
-    if (str_ends_with($uri, '/edit')) {
-      $operation = 'edit';
-    }
-
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
       $this->applicationHandler->singleSubmissionAccess(
-        $account,
-        $operation,
-        $webformObject,
         $webform_submissionObject
       ));
   }
@@ -179,20 +169,10 @@ class ApplicationController extends ControllerBase {
       return AccessResult::forbidden('No webform found');
     }
 
-    $uri = $this->request->getCurrentRequest()->getUri();
-
-    $operation = 'view';
-    if (str_ends_with($uri, '/edit')) {
-      $operation = 'edit';
-    }
-
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
       $this->applicationHandler->singleSubmissionAccess(
-        $account,
-        $operation,
-        $webform,
         $webform_submission
       ));
   }
@@ -200,8 +180,8 @@ class ApplicationController extends ControllerBase {
   /**
    * Print Drupal messages according to application status.
    *
-   * @var string $status
-   *  Status string from method.
+   * @param string $status
+   *   Status string from method.
    */
   public function showMessageForDataStatus(string $status) {
     $message = NULL;
@@ -341,6 +321,7 @@ class ApplicationController extends ControllerBase {
       // @codingStandardsIgnoreStart
       // Get service page node.
       $query = \Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
         ->condition('type', 'service')
         ->condition('field_webform', $webform_id);
       // @codingStandardsIgnoreEnd
@@ -526,6 +507,7 @@ class ApplicationController extends ControllerBase {
     $isSubventionType = FALSE;
     $subventionType = '';
     try {
+      /** @var \Drupal\helfi_atv\AtvDocument $atv_document */
       $atv_document = ApplicationHandler::atvDocumentFromApplicationNumber($submission_id);
     }
     catch (\Exception $e) {

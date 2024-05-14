@@ -46,7 +46,7 @@ third_party_options:
       code: KUVAKEHA
       dataDefinition:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaKehaDefinition
-        definitionId: grants_metadata_kaskoyleis
+        definitionId: grants_metadata_kuvakeha
       labels:
         fi: 'Kulttuurin kehittämisavustukset'
         en: 'Development grants for culture'
@@ -215,8 +215,8 @@ third_party_options:
       id: ASUKASYLEISTOIM
       code: ASUKASYLEISTOIM
       dataDefinition:
-        definitionClass: Drupal\grants_metadata\TypedData\Definition\KansliatyoDefinition
-        definitionId: grants_metadata_kansliatyo
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\AsukasYleisToimDefinition
+        definitionId: grants_metadata_asukasyleistoim
       labels:
         fi: 'Asukasosallisuus, yleis- ja toiminta-avustushakemus'
         en: 'Citizen Participation, general and operational grant application'
@@ -243,19 +243,12 @@ third_party_options:
         sv: 'Ungdomstjänst, utredning över lägerbidrag under semestertiden'
   application_statuses:
     DRAFT: DRAFT
-    SENT: SENT
     SUBMITTED: SUBMITTED
     RECEIVED: RECEIVED
     PREPARING: PREPARING
     PENDING: PENDING
     PROCESSING: PROCESSING
-    READY: READY
-    DONE: DONE
-    REJECTED: REJECTED
-    DELETED: DELETED
-    CANCELED: CANCELED
     CANCELLED: CANCELLED
-    CLOSED: CLOSED
     RESOLVED: RESOLVED
   subvention_types:
     1: 'Operating grant'
@@ -307,6 +300,7 @@ config_import_ignore:
   - 58
   - 60
   - 65
+  - 67
 overridden_configuration:
   -
     53:
@@ -444,5 +438,11 @@ overridden_configuration:
     63:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  -
+    67:
+      grants_metadata:
+        applicationOpen: '2024-01-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
         disableCopying: 0

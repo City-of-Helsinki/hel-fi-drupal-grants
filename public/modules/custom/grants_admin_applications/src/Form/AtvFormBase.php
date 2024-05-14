@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\helfi_atv\AtvDocument;
+use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -25,7 +26,7 @@ abstract class AtvFormBase extends FormBase {
    * @return \Psr\Log\LoggerInterface
    *   The logger for the given channel.
    */
-  public static function getLoggerChannel() {
+  public static function getLoggerChannel(): LoggerInterface {
     $loggerFactory = \Drupal::service('logger.factory');
     return $loggerFactory->get('grants_admin_applications');
   }
@@ -33,12 +34,22 @@ abstract class AtvFormBase extends FormBase {
   /**
    * Update resent application save id to database.
    *
-   * @param mixed $applicationNumber
+   * @param string $applicationNumber
    *   The application number.
-   * @param mixed $saveId
+   * @param string $saveId
    *   The new save id.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\Core\TempStore\TempStoreException
+   * @throws \Drupal\grants_mandate\CompanySelectException
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public static function updateSaveIdRecord(string $applicationNumber, string $saveId) {
+  public static function updateSaveIdRecord(string $applicationNumber, string $saveId): void {
 
     $database = \Drupal::service('database');
     $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber(
@@ -68,7 +79,7 @@ abstract class AtvFormBase extends FormBase {
   /**
    * Attempts to resend ATV document through integrations.
    *
-   * @param Drupal\helfi_atv\AtvDocument $atvDoc
+   * @param \Drupal\helfi_atv\AtvDocument $atvDoc
    *   The document to be resent.
    * @param string $applicationId
    *   Application id.
@@ -85,6 +96,15 @@ abstract class AtvFormBase extends FormBase {
     $headers['X-hki-applicationNumber'] = $applicationId;
 
     $content = $atvDoc->getContent();
+    $status = $atvDoc->getStatus();
+    $content['formUpdate'] = TRUE;
+
+    // First imports cannot be with TRUE values, so set it as false for
+    // SUBMITTED & DRAFT. @see ApplicationHandler::getFormUpdate comments.
+    if (in_array($status, ['SUBMITTED', 'DRAFT'])) {
+      $content['formUpdate'] = FALSE;
+    }
+
     $myJSON = Json::encode($content);
 
     // Usually we set drafts to submitted state before sending to integrations,
@@ -94,7 +114,6 @@ abstract class AtvFormBase extends FormBase {
     $password = getenv('AVUSTUS2_PASSWORD');
 
     try {
-
       $headers['X-hki-saveId'] = $saveId;
       self::updateSaveIdRecord($applicationId, $saveId);
 
@@ -115,6 +134,14 @@ abstract class AtvFormBase extends FormBase {
       $body = $res->getBody()->getContents();
       $messenger->addStatus('Integration response: ' . $body);
       $messenger->addStatus('Updated saveId to: ' . $saveId);
+
+      $eventService = \Drupal::service('grants_handler.events_service');
+      $eventService->logEvent(
+        $applicationId,
+        'HANDLER_RESEND_APP',
+        t('Application resent from Drupal Admin UI', [], ['context' => 'grants_handler']),
+        $applicationId
+      );
 
       $logger->info(
         'Application resend - Integration status: @status - Response: @response',

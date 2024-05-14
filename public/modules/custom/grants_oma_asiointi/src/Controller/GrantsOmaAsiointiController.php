@@ -5,12 +5,12 @@ namespace Drupal\grants_oma_asiointi\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_mandate\Controller\GrantsMandateController;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -18,6 +18,8 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Returns responses for Oma Asiointi routes.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsOmaAsiointiController extends ControllerBase implements ContainerInjectionInterface {
 
@@ -52,9 +54,9 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   /**
    * Logger access.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Psr\Log\LoggerInterface
    */
-  protected LoggerChannel $logger;
+  protected LoggerInterface $logger;
 
   /**
    * The grants_handler.application_handler service.
@@ -130,8 +132,11 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       throw new AccessDeniedHttpException('User not authorised');
     }
 
+    $grantsProfile = [];
+
+    /** @var \Drupal\helfi_atv\AtvDocument | null $grantsProfileDocument */
     $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
-    if (gettype($grantsProfileDocument) == 'object' && get_class($grantsProfileDocument) == 'Drupal\helfi_atv\AtvDocument') {
+    if ($grantsProfileDocument) {
       $grantsProfile = $grantsProfileDocument->getContent();
     }
 
@@ -142,9 +147,9 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     }
 
     $updatedAt = $this->grantsProfileService->getUpdatedAt();
-    $notification_shown = $this->grantsProfileService->getNotificationShown();
+    $notificationShown = $this->grantsProfileService->getNotificationShown();
 
-    $notificationShownTimestamp = (int) ($notification_shown / 1000);
+    $notificationShownTimestamp = ((int) $notificationShown) / 1000;
     $threeMonthsAgoTimestamp = strtotime('-3 months');
 
     $showNotification = FALSE;
@@ -171,24 +176,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     }
     $drafts = $applications['DRAFT'] ?? [];
     unset($applications['DRAFT']);
-
-    $other = [];
-    $unreadMsg = [];
-
-    foreach ($applications as $values) {
-      $other = array_merge($other, $values);
-      foreach ($values as $application) {
-        $appMessages = ApplicationHandler::parseMessages($application['#submission']);
-        foreach ($appMessages as $msg) {
-          if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
-            $unreadMsg[] = [
-              '#theme' => 'message_notification_item',
-              '#message' => $msg,
-            ];
-          }
-        }
-      }
-    }
+    // Parse messages.
+    [$other, $unreadMsg] = $this->parseMessages($applications);
 
     return [
       '#theme' => 'grants_oma_asiointi_front',
@@ -219,6 +208,30 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   }
 
   /**
+   * Parse messages from applications.
+   */
+  protected function parseMessages(array $applications) {
+    $other = [];
+    $unreadMsg = [];
+
+    foreach ($applications as $values) {
+      $other = array_merge($other, $values);
+      foreach ($values as $application) {
+        $appMessages = ApplicationHandler::parseMessages($application['#submission']);
+        foreach ($appMessages as $msg) {
+          if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
+            $unreadMsg[] = [
+              '#theme' => 'message_notification_item',
+              '#message' => $msg,
+            ];
+          }
+        }
+      }
+    }
+    return [$other, $unreadMsg];
+  }
+
+  /**
    * Get title for oma asiointi page.
    *
    * @return string
@@ -226,7 +239,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    */
   public function title() :string {
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-    return $selectedCompany['name'];
+    return $selectedCompany['name'] ?? '';
   }
 
 }

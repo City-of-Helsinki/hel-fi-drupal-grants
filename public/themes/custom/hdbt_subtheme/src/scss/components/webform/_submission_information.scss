@@ -58,8 +58,12 @@
     .hds-loading-spinner {
       left: 0; /* LTR */
     }
+    .hds-button {
+      min-width: fit-content;
+    }
     display: flex;
     flex-flow: row nowrap;
+    min-width: fit-content;
   }
 }
 .hel-icon.hel-icon--copy {
