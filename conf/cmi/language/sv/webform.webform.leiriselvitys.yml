@@ -60,6 +60,8 @@ elements: |
     '#title': 'Vi ordnade läger i följande områden'
     '#help': '<p>Ange här namnet och postnummerområdet för alla de gårdar på vilka ni har ordnat läger som omfattas av lägerstödet för semesterperioderna under den gångna säsongen.</p>'
     '#premiseName__title': Verksamhetsställe
+    '#multiple__item_label': 'lägerplats'
+    '#multiple__add_more_button_label': 'Lägg till ny lägerplats'
   3_talousarvio:
     '#title': '3. Budget'
   tulot:

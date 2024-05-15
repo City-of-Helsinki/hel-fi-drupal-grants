@@ -206,6 +206,7 @@ elements: |
   tila:
     '#title': 'Other premises'
     '#isOwnedByCity__title': 'City owns the property'
+    '#multiple__item_label': 'premise'
     '#multiple__add_more_button_label': 'Add new premise'
   aikataulu:
     '#title': Schedule

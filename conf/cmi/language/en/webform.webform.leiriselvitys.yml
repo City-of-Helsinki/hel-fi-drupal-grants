@@ -57,6 +57,8 @@ elements: |
     '#title': 'We arranged camps in the following areas'
     '#help': '<p>Enter here the names and postal code areas of all the facilities where you organised camps covered by holiday camp grants in the past season.</p>'
     '#premiseName__title': Location
+    '#multiple__item_label': 'location'
+    '#multiple__add_more_button_label': 'Add new location'
   3_talousarvio:
     '#title': '3. Budget'
   tulot:

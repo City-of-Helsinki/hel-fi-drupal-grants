@@ -641,6 +641,7 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
         '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseName__access': false
         '#premiseType__access': false
@@ -816,6 +817,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'vuokrattu tila'
+        '#multiple__add_more_button_label': 'Lisää uusi vuokrattu tila'
         '#premiseAddress__required': true
         '#premisePostalCode__required': true
         '#premisePostOffice__required': true

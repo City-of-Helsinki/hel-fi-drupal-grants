@@ -204,6 +204,8 @@ elements: |
   helsingissa_jarjestettava_tila:
     '#title': Plats
     '#citySection__help': 'Stadsmiljösektorns utrymmen omfattar till exempel skolornas klassrum. Kultur- och fritidssektorns utrymmen omfattar till exempel utrymmen som administreras av kultur-, biblioteks-, ungdoms- eller idrottstjänsterna. Sektorn för fostran och bildning omfattar till exempel arbetarinstitutens utrymmen.'
+    '#multiple__item_label': 'plats'
+    '#multiple__add_more_button_label': 'Lägg till ny plats'
   5_toiminnan_lahtokohdat:
     '#title': '5. Utgångspunkten för verksamheten'
     '#prev_button_label': '< Tidigare'

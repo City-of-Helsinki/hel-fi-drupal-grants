@@ -209,6 +209,7 @@ elements: |
   tila:
     '#title': 'Övriga lokaler'
     '#isOwnedByCity__title': 'Stadens eget utrymme'
+    '#multiple__item_label': 'lokal'
     '#multiple__add_more_button_label': 'Lägg till ny lokal'
   aikataulu:
     '#title': Tidtabell

@@ -477,6 +477,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
+        '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseAddress__access': false
         '#postCode__required': true
         '#location__access': false
@@ -704,6 +706,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
+        '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseType__access': false
         '#premiseAddress__access': false
         '#postCode__required': true

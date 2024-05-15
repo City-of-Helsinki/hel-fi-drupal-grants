@@ -241,6 +241,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
+        '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseName__required': true
         '#premiseType__access': false
         '#premiseAddress__access': false

@@ -171,6 +171,7 @@ elements: |
       0: 'No'
   jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa:
     '#title': 'We organised activities for young people at the following locations'
+    '#multiple__item_label': 'location'
     '#multiple__add_more_button_label': 'Add new location'
   jasenyydet_jarjestoissa_ja_muissa_yhteisoissa_osio:
     '#title': 'Memberships in organisations and other communities'
@@ -208,6 +209,8 @@ elements: |
     '#title': 'Rented facility'
   vuokratun_tilan_tiedot:
     '#title': 'Details of the rented facility'
+    '#multiple__item_label': 'rented facility'
+    '#multiple__add_more_button_label': 'Add new rented facility'
   lisatiedot_osio:
     '#title': 'Additional information'
   lisatiedot:

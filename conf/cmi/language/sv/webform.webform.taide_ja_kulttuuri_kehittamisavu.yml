@@ -185,6 +185,8 @@ elements: |
   tila:
     '#title': Plats
     '#multiple__no_items_message': '<p>Inga lokaler angivna. Lägg till lokalinformationen nedan.</p>'
+    '#multiple__item_label': 'plats'
+    '#multiple__add_more_button_label': 'Lägg till ny plats'
   aikataulu:
     '#title': Tidtabell
   festivaalin_tai_tapahtuman_paivamaarat:

@@ -182,6 +182,8 @@ elements: |
   tila:
     '#title': Premises
     '#multiple__no_items_message': '<p>No premises entered. Add the premise information below.</p>'
+    '#multiple__item_label': 'premise'
+    '#multiple__add_more_button_label': 'Add new premise'
   aikataulu:
     '#title': Schedule
   festivaalin_tai_tapahtuman_paivamaarat:
