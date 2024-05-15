@@ -17,7 +17,7 @@
         "drupal/better_exposed_filters": "^6.0",
         "drupal/block_field": "^1.0@RC",
         "drupal/content_access": "^2.0",
-        "drupal/core": "10.2.4",
+        "drupal/core": "^10.2",
         "drupal/core-composer-scaffold": "^10.0",
         "drupal/csp": "^1.24",
         "drupal/datatables": "^2.0",
