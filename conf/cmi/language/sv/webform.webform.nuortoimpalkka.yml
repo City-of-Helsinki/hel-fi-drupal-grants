@@ -196,7 +196,7 @@ elements: |
   edellisen_vuoden_palkkauskulut:
     '#title': 'Föregående års lönekostnader '
   markup:
-    '#markup': '<p>Specificera här medarbetarens eller medarbetarnas lönekostnader för föregående kalenderår.&nbsp; Godtagbara utgifter som berättigar till nyttjande av lönesubvention är lönekostnader för medarbetare, arbetsgivarens lagstadgade och frivilliga sociala avgifter samt medarbetarens resekostnader i arbetet.&nbsp; Inkludera här endast lönekostnaderna för den eller de medarbetare för vilka ni har/hade kunnat använda lönesubvention. Detta omfattar inte till exempel inte lönekostnader för olika slags projektanställda.</p>'
+    '#markup': '<p>Specificera här medarbetarens eller medarbetarnas lönekostnader för föregående kalenderår. Godtagbara utgifter som berättigar till nyttjande av lönesubvention är lönekostnader för medarbetare, arbetsgivarens lagstadgade och frivilliga sociala avgifter samt medarbetarens resekostnader i arbetet. Inkludera här endast lönekostnaderna för den eller de medarbetare för vilka ni har/hade kunnat använda lönesubvention. Detta omfattar inte till exempel inte lönekostnader för olika slags projektanställda.</p>'
   palkkauskulut:
     '#title': Lönekostnader
   lakisaateiset_ja_vapaaehtoiset_henkilosivukulut:
@@ -227,7 +227,14 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "<p>Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nDe obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens giltiga stadgar, det fastställda bokslutet för året före ansökningsåret, verksamhetsberättelsen och den undertecknade revisionsberättelsen samt protokollet från det möte där bokslutet har godkänts och ansvarsfrihet har behandlats. Övriga obligatoriska bilagor är budgeten och verksamhetsplanen för det år för vilket understödet söks. Stadgarna ska godkännas av Patent- och registerstyrelsen.<br />\r\n<br />\r\n<strong>Inlämning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du lämna in flera bilagor i en fil. Förklara detta i punkten Ytterligare information om bilagorna.<br />\r\n<br />\r\n<strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
+    '#markup': |-
+      <p>Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor.</p>
+      <h4>Erforderliga bilagor</h4>
+      <p>De obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens giltiga stadgar, det fastställda bokslutet för året före ansökningsåret, verksamhetsberättelsen och den undertecknade revisionsberättelsen samt protokollet från det möte där bokslutet har godkänts och ansvarsfrihet har behandlats. Övriga obligatoriska bilagor är budgeten och verksamhetsplanen för det år för vilket understödet söks. Stadgarna ska godkännas av Patent- och registerstyrelsen.</p>
+      <h4>Inl&auml;mning av flera bilagor i en fil</h4>
+      <p>Om du vill kan du lämna in flera bilagor i en fil. Förklara detta i punkten Ytterligare information om bilagorna.</p>
+      <h4>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</h4>
+      <p>Om de obligatoriska bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -239,7 +246,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
-    '#help': "<p>Bokslutet ska innehålla minst resultaträkningen och balansräkningen. Samfundet ska till denna punkt lägga till bokslutet som godkänts och undertecknats vid samfundets medlemsmöte.<br />\r\nSamfundets räkenskapsperiod kan vara ett kalenderår eller en annan period. Vad gäller samfund anges det i deras egna stadgar vad samfundets räkenskapsperiod är.</p>"
+    '#help': "<p>Bokslutet ska innehålla minst resultaträkningen och balansräkningen. Samfundet ska till denna punkt lägga till bokslutet som godkänts och undertecknats vid samfundets medlemsmöte. Samfundets räkenskapsperiod kan vara ett kalenderår eller en annan period. Vad gäller samfund anges det i deras egna stadgar vad samfundets räkenskapsperiod är.</p>"
     '#multiple__no_items_message': '<p>Ei syötettyjä arvoja. Lisää uusi sisältö alta.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -248,7 +255,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)'
-    '#help': "<p>Samfundet ska till denna punkt bifoga verksamhetsberättelsen som godkänts och undertecknats vid samfundets medlemsmöte.<br />\r\nOm verksamhetsberättelsen ingår i bokslutet och du redan har bifogat den blanketten, behöver den inte bifogas separat. Ange i detta fall vid verksamhetsberättelsen att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
+    '#help': "<p>Samfundet ska till denna punkt bifoga verksamhetsberättelsen som godkänts och undertecknats vid samfundets medlemsmöte. Om verksamhetsberättelsen ingår i bokslutet och du redan har bifogat den blanketten, behöver den inte bifogas separat. Ange i detta fall vid verksamhetsberättelsen att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -256,7 +263,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)'
-    '#help': "<p>Bifoga den undertecknade revisionsberättelsen för samfundets senaste avslutade räkenskapsperiod här.<br />\r\nOm den undertecknade revisionsberättelsen ingår i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan” här.</p>"
+    '#help': "<p>Bifoga den undertecknade revisionsberättelsen för samfundets senaste avslutade räkenskapsperiod här. Om den undertecknade revisionsberättelsen ingår i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan” här.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -311,4 +318,5 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '7. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '8. Slutförd'
 description: '<p>NUORTOIMPALKKA</p>'

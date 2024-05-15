@@ -5,3 +5,4 @@ form_tool_contact_info:
       css/form_tool_contact_info.css: {}
   dependencies:
     - webform/webform.composite
+    - drupal:locale

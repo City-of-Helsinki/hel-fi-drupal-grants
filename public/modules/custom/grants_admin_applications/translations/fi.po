@@ -26,7 +26,7 @@ msgstr "Avus2 on vastaanottanut viestin*"
 
 msgctxt "grants_admin_applications"
 msgid "Has been resent"
-msgstr "Låhetetty uudelleen"
+msgstr "Lähetetty uudelleen"
 
 msgctxt "grants_admin_applications"
 msgid "Resend this message"

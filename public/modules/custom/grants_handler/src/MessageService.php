@@ -5,13 +5,15 @@ namespace Drupal\grants_handler;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\webform\Entity\WebformSubmission;
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client;
 
 /**
  * Handle message uploading and other things related.
@@ -30,14 +32,14 @@ class MessageService {
   /**
    * The HTTP client.
    *
-   * @var \GuzzleHttp\ClientInterface
+   * @var \GuzzleHttp\Client
    */
-  protected ClientInterface $httpClient;
+  protected Client $httpClient;
 
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Drupal\Core\Logger\LoggerChannelFactory|\Drupal\Core\Logger\LoggerChannelInterface|\Drupal\Core\Logger\LoggerChannel
    */
   protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
 
@@ -84,31 +86,42 @@ class MessageService {
   protected AtvService $atvService;
 
   /**
+   * Current user.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected AccountProxyInterface $currentUser;
+
+  /**
    * Constructs a MessageService object.
    *
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata
    *   The helfi_helsinki_profiili.userdata service.
-   * @param \GuzzleHttp\ClientInterface $http_client
+   * @param \GuzzleHttp\Client $http_client
    *   Client to post data.
-   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerFactory
    *   Log things.
    * @param \Drupal\grants_handler\EventsService $eventsService
    *   Log events to atv document.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access to ATV.
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
+   *   Current user.
    */
   public function __construct(
     HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata,
-    ClientInterface $http_client,
-    LoggerChannelFactory $loggerFactory,
+    Client $http_client,
+    LoggerChannelFactoryInterface $loggerFactory,
     EventsService $eventsService,
-    AtvService $atvService
+    AtvService $atvService,
+    AccountProxyInterface $currentUser,
   ) {
     $this->helfiHelsinkiProfiiliUserdata = $helfi_helsinki_profiili_userdata;
     $this->httpClient = $http_client;
     $this->logger = $loggerFactory->get('grants_handler_message_service');
     $this->eventsService = $eventsService;
     $this->atvService = $atvService;
+    $this->currentUser = $currentUser;
 
     $this->endpoint = getenv('AVUSTUS2_MESSAGE_ENDPOINT');
     $this->username = getenv('AVUSTUS2_USERNAME');
@@ -153,7 +166,7 @@ class MessageService {
       $messageData['caseId'] = $submissionData["application_number"];
 
       if ($userData === NULL) {
-        $currentUser = \Drupal::currentUser();
+        $currentUser = $this->currentUser;
         $messageData['sentBy'] = $currentUser->getDisplayName();
       }
       else {

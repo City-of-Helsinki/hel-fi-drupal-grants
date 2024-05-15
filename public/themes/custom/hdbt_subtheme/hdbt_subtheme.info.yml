@@ -44,3 +44,6 @@ libraries-override:
   hdbt/matomo:
     js:
       dist/js/matomo.min.js: dist/js/matomo.min.js
+  webform/webform.wizard.pages:
+    js:
+      js/webform.wizard.pages.js: dist/js/webform.wizard.pages.min.js

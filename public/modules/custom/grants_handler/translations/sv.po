@@ -141,7 +141,7 @@ msgid "Edit application"
 msgstr "Uppdatera ansökning"
 
 msgctxt "grants_handler"
-msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page."
+msgid "Your data is safe, but not all the\ninformation in your application has been updated yet. Please wait \nmoment and reload the page."
 msgstr "Din information är säker, men all information i din ansökan har inte uppdaterats ännu. Vänligen vänta ett ögonblick och ladda om sidan."
 
 msgid "File upload failed, error has been logged."
@@ -452,6 +452,9 @@ msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan. 
 
 msgid "Grant application (@number) saving failed. Error has been logged."
 msgstr "Det gick inte att spara bidragsansökan (@number). Ett fel har loggats."
+
+msgid "Grant application (<span id=\"saved-application-number\">@number</span>) saved."
+msgstr "Bidragsansökan @number sparat."
 
 msgid "User does not have proper mandate."
 msgstr "Användaren har inte korrekt mandat."

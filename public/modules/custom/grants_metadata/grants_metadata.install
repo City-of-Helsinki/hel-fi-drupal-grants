@@ -20,6 +20,7 @@ function grants_metadata_update_9000(&$sandbox) {
 
   $tids = \Drupal::entityQuery('taxonomy_term')
     ->condition('vid', $vocabulary_name)
+    ->accessCheck(FALSE)
     ->execute();
 
   $term_storage = \Drupal::entityTypeManager()
@@ -31,6 +32,7 @@ function grants_metadata_update_9000(&$sandbox) {
   $query = \Drupal::entityQuery('taxonomy_term');
   $query->condition('vid', $vocabulary_name);
   $query->sort('weight');
+  $query->accessCheck(FALSE);
   $tids = $query->execute();
   $terms = Term::loadMultiple($tids);
 
@@ -159,8 +161,10 @@ function grants_metadata_update_9001(): void {
       $field_storage_definition = $field_config->getFieldStorageDefinition();
       $entity_type = $field_config->getTargetEntityTypeId();
 
+      /** @var \Drupal\Core\Entity\Sql\SqlContentEntityStorage $storage */
+      $storage = $entity_type_manager->getStorage($entity_type);
       /** @var \Drupal\Core\Entity\Sql\DefaultTableMapping $table_mapping */
-      $table_mapping = $entity_type_manager->getStorage($entity_type)->getTableMapping();
+      $table_mapping = $storage->getTableMapping();
 
       // Get current field's table name, revision table name and format column.
       $tables = [];
