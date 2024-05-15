@@ -19,7 +19,7 @@ base_field: id
 display:
   default:
     id: default
-    display_title: Isäntä
+    display_title: Master
     display_plugin: default
     position: 0
     display_options:
@@ -83,10 +83,10 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Käytä
+          submit_button: Apply
           reset_button: false
-          reset_button_label: Palauta
-          exposed_sorts_label: Lajittele
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -144,7 +144,7 @@ display:
           exception:
             value: all
             title_enable: false
-            title: Kaikki
+            title: All
           title_enable: false
           title: ''
           default_argument_type: raw
