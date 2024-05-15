@@ -13,7 +13,7 @@
         "cweagans/composer-patches": "^1.6.7",
         "druidfi/omen": "^0.2.0",
         "drupal/api_tools": "^1.0",
-        "drupal/autologout": "1.x-dev@dev",
+        "drupal/autologout": "^1.0",
         "drupal/better_exposed_filters": "^6.0",
         "drupal/block_field": "^1.0@RC",
         "drupal/content_access": "^2.0",
