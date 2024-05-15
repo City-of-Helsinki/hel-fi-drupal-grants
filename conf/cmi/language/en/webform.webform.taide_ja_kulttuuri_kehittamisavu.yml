@@ -261,7 +261,7 @@ elements: |
     '#markup': '<h4>Planned expenses</h4>'
   budget_other_cost:
     '#title': 'Other costs'
-    '#help': "Add below all the project's planned expenses by expense category."
+    '#description': "Add below all the project's planned expenses by expense category."
   muu_huomioitava_panostus:
     '#markup': '<h4>Other notable input</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
