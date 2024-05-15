@@ -24,6 +24,7 @@
         "drupal/date_range_formatter": "^4.0",
         "drupal/devel": "^5.0",
         "drupal/disable_messages": "^2.1",
+        "drupal/draggableviews": "^2.0",
         "drupal/entity_type_clone": "^4.0",
         "drupal/entityreference_filter": "^2.0",
         "drupal/error_page": "^2.0",
