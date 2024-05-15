@@ -2454,6 +2454,24 @@ class ApplicationHandler {
     return NULL;
   }
 
+  public static function getActiveApplicationWebforms($id): array {
+    $webforms = \Drupal::entityTypeManager()
+    ->getStorage('webform')
+    ->loadByProperties([
+      'third_party_settings.grants_metadata.applicationType' => $id,
+      'archive' => FALSE,
+    ]);
+
+    $result = [];
+
+    foreach ($webforms as $webform) {
+      $webformStatus = $webform->getThirdPartySetting('grants_metadata', 'status');
+      $result[$webformStatus][] = $webform;
+    }
+
+    return $result;
+  }
+
   /**
    * Helper function to checks, if user has grants_admin role rights.
    *

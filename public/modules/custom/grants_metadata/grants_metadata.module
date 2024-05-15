@@ -581,23 +581,36 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     ];
   }
 
+
+
   if ($form_id == 'webform_settings_form' && isset($webform)) {
+
+    $applicationTypeId = $bundle->getThirdPartySetting('grants_metadata', 'applicationType');
+    $isDuplicatable = TRUE;
+    if ($applicationTypeId) {
+      $applicationForms = ApplicationHandler::getActiveApplicationWebforms($applicationTypeId);
+
+      $isDuplicatable = count($applicationForms['released']) === 1 && count($applicationForms['development']) === 0;
+    }
+
     $route_parameters = ['webform' => $webform->id()];
 
-    $form['third_party_settings']['grants_metadata']['new_version'] = [
-      '#type' => 'link',
-      '#title' => t('Create a webform new version'),
-      '#url' => Url::fromRoute('entity.webform.duplicate_form', $route_parameters),
-      '#attributes' => ['class' => ['button', 'button--primary', 'form-submit']],
-    ];
-    $form['third_party_settings']['grants_metadata']['new_version_description'] = [
-      '#prefix' => '<div>',
-      '#suffix' => '</div>',
-      '#markup' => t(
-        'Allows you to duplicate the webform and automatically link the parent webform to this new form.
-        This will also archive the current version.'
-      ),
-    ];
+    if ($isDuplicatable) {
+      $form['third_party_settings']['grants_metadata']['new_version'] = [
+        '#type' => 'link',
+        '#title' => t('Create a webform new version'),
+        '#url' => Url::fromRoute('entity.webform.duplicate_form', $route_parameters),
+        '#attributes' => ['class' => ['button', 'button--primary', 'form-submit'], 'disabled' => 1],
+      ];
+      $form['third_party_settings']['grants_metadata']['new_version_description'] = [
+        '#prefix' => '<div>',
+        '#suffix' => '</div>',
+        '#markup' => t(
+          'Allows you to duplicate the webform and automatically link the parent webform to this new form.
+          This will also archive the current version.'
+        ),
+      ];
+    }
   }
 }
 
@@ -703,14 +716,13 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
 /**
  * Custom submit handler for form duplicate form.
  */
-function _grants_metadata_duplicate_form_submit($form, FormStateInterface &$form_state) {
+function _grants_metadata_duplicate_form_submit(array $form, FormStateInterface &$form_state) {
 
   $storage = $form_state->getStorage();
 
   $parentFormUuid = $storage['parent_form'] ?? NULL;
   if (!$parentFormUuid) {
     return;
-
   }
 
   /** @var \Drupal\webform\Entity\Webform[] */
@@ -726,16 +738,14 @@ function _grants_metadata_duplicate_form_submit($form, FormStateInterface &$form
     return;
   }
 
-  $parentForm->setThirdPartySetting('grants_metadata', 'status', 'archived');
-  $parentForm->set('archive', TRUE);
   $parentForm->save();
 
   $newFormId = $form_state->getValue('id');
   $newFormObject = Webform::load($newFormId);
 
   // @DEV: We might need do this an another way?
-  _grants_metadata_update_webform_references($parentForm, $newFormObject);
-  grants_metadata_webform_presave($newFormObject);
+  // _grants_metadata_update_webform_references($parentForm, $newFormObject);
+  // grants_metadata_webform_presave($newFormObject);
 }
 
 /**
