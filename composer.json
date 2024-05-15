@@ -45,6 +45,7 @@
         "drupal/helfi_yjdh": "^0.0.1",
         "drupal/http_client_log": "^1.0",
         "drupal/jquery_ui_draggable": "^2.0",
+        "drupal/js_cookie": "^1.0",
         "drupal/jsonapi_extras": "^3.23",
         "drupal/listjs": "^2.0",
         "drupal/menu_admin_per_menu": "^1.5",
