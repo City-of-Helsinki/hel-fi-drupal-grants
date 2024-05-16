@@ -20,6 +20,7 @@ use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Drupal\node\Entity\Node;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -208,6 +209,14 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       '#webformLink' => $webformLink,
     ];
 
+    if (!$this->isApplicationOpen($node)) {
+      $build['content'] = [
+        '#theme' => 'grants_service_page_block',
+        '#text' =>  $this->t('This application is not open', [], $tOpts),
+        '#auth' => 'not_open',
+      ];
+    }
+
     $build['#cache']['contexts'] = [
       'languages:language_content',
       'url.path',
@@ -271,7 +280,16 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
   }
 
   /**
-   * Checks if form is open and if user role has permission to it.
+   * The checkFormAccess function.
+   *
+   * This function checks whether the block should be displayed or not.
+   * The block is NOT displayed if:
+   *
+   * 1. We are NOT on a node.
+   * 2. The node has NOT referenced a Webform.
+   * 3. A Webform can NOT be found with the referenced ID.
+   * 4. The user has NOT selected a role.
+   * 4. The user does NOT have an allowed role for the form.
    *
    * @return bool
    *   Boolean value telling if user can see the new application button.
@@ -280,55 +298,76 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   private function checkFormAccess(): bool {
-
-    $access = FALSE;
-
     $node = $this->routeMatch->getParameter('node');
-
-    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-
-    $applicationContinuous = (bool) $node->get('field_application_continuous')->value;
-    $applicationPeriodStart = new Carbon($node->get('field_application_period')->value);
-    $applicationPeriodEnd = new Carbon($node->get('field_application_period')->end_value);
-    $now = new Carbon();
-
-    $applicationOpenByTime = $now->between($applicationPeriodStart, $applicationPeriodEnd);
+    if (!$node) {
+      return FALSE;
+    }
 
     $webformId = $node->get('field_webform')->target_id;
-
     if (!$webformId) {
-      $access = FALSE;
+      return FALSE;
     }
 
-    if ($applicationOpenByTime || $applicationContinuous) {
-      $access = TRUE;
-    }
-
-    $webform = $this->entityTypeManager->getStorage('webform')
-      ->load($webformId);
-
+    $webform = $this->entityTypeManager->getStorage('webform')->load($webformId);
     if (!$webform) {
       return FALSE;
     }
 
-    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
-
-    // Old applications have only single selection, we need to support this.
-    if (!is_array($thirdPartySettings["applicantTypes"])) {
-      $formApplicationTypes[] = $thirdPartySettings["applicantTypes"];
-    }
-    else {
-      $formApplicationTypes = array_values($thirdPartySettings["applicantTypes"]);
-    }
-
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     if (!$selectedCompany) {
-      $access = FALSE;
-    }
-    elseif (!in_array($selectedCompany["type"], $formApplicationTypes)) {
-      $access = FALSE;
+      return FALSE;
     }
 
-    return $access;
+    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
+    $applicantTypes = $this->normalizeApplicantTypes($thirdPartySettings['applicantTypes']);
+    if (!in_array($selectedCompany['type'], $applicantTypes)) {
+      return FALSE;
+    }
+
+    return TRUE;
+  }
+
+  /**
+   * The isApplicationOpen function.
+   *
+   * Determines if the application is currently open
+   * based on timing and continuous availability.
+   *
+   * @param \Drupal\node\Entity\Node $node
+   *   The node entity.
+   * @return bool
+   *   True if the application is open. Otherwise, false.
+   */
+  private function isApplicationOpen(Node $node): bool {
+    $continuous = (bool) $node->get('field_application_continuous')->value;
+
+    if ($continuous) {
+      return TRUE;
+    }
+
+    $periodStart = new Carbon($node->get('field_application_period')->value);
+    $periodEnd = new Carbon($node->get('field_application_period')->end_value);
+    $now = new Carbon();
+
+    return $now->between($periodStart, $periodEnd);
+  }
+
+  /**
+   * The normalizeApplicantTypes function.
+   *
+   * Normalizes applicant types to ensure compatibility
+   * with single and multiple type settings.
+   *
+   * @param mixed $applicantTypes
+   *   The applicant types from third-party settings, may be an array or a single value.
+   * @return array
+   *   An array of applicant types.
+   */
+  private function normalizeApplicantTypes(mixed $applicantTypes): array {
+    if (!is_array($applicantTypes)) {
+      return [$applicantTypes];
+    }
+    return array_values($applicantTypes);
   }
 
 }
