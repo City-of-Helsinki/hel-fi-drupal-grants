@@ -2009,3 +2009,31 @@ function grants_handler_js_settings_build(&$settings, AttachedAssetsInterface $a
   // See: AU-2081 https://helsinkisolutionoffice.atlassian.net/browse/AU-2081
   $settings['grants_handler_dummy_setting'] = TRUE;
 }
+
+/**
+ * Implements hook_options_list_alter().
+ *
+ * Appends possible webform status (In development / Production) to the
+ * option name and hides in-development options in PROD env.
+ */
+function grants_handler_options_list_alter(array &$options, array $context): void {
+  /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
+  $field_definition = $context['fieldDefinition'];
+
+  if ($field_definition->getName() === 'field_webform') {
+
+    $webforms = Webform::loadMultiple(array_keys($options));
+    $env = ApplicationHandler::getAppEnv();
+
+    foreach ($webforms as $key => $webform) {
+      $status = $webform->getThirdPartySetting('grants_metadata', 'status');
+
+      if ($env === 'PROD' && $status === 'development') {
+        unset($options[$key]);
+      }
+      elseif ($status === 'development' && $env !== 'PROD') {
+        $options[$key] .= ' (Development version)';
+      }
+    }
+  }
+}

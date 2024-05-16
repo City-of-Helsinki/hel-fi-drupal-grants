@@ -2454,15 +2454,24 @@ class ApplicationHandler {
     return NULL;
   }
 
-  public static function getActiveApplicationWebforms($id): array {
+  /**
+   * Get all Webform objects for given application id.
+   *
+   * @param string $id
+   *   Application ID.
+   */
+  public static function getActiveApplicationWebforms(string $id): array {
     $webforms = \Drupal::entityTypeManager()
-    ->getStorage('webform')
-    ->loadByProperties([
-      'third_party_settings.grants_metadata.applicationType' => $id,
-      'archive' => FALSE,
-    ]);
+      ->getStorage('webform')
+      ->loadByProperties([
+        'third_party_settings.grants_metadata.applicationType' => $id,
+        'archive' => FALSE,
+      ]);
 
-    $result = [];
+    $result = [
+      'released' => [],
+      'development' => [],
+    ];
 
     foreach ($webforms as $webform) {
       $webformStatus = $webform->getThirdPartySetting('grants_metadata', 'status');

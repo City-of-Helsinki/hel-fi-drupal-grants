@@ -61,6 +61,20 @@ function grants_metadata__validate_third_party_settings(array &$form, FormStateI
     $formValues["third_party_settings"]["grants_metadata"]["applicationTypeID"] = $applicationTypeSelect;
   }
 
+  $applicationStatus = $formValues["third_party_settings"]["grants_metadata"]["status"];
+  if (!empty($applicationStatus)) {
+
+    $categories = [
+      'development' => 'Kehityksessä',
+      'released'    => 'Tuotannossa',
+      'archived'    => 'Arkistoitu',
+    ];
+
+    $formValues['categories'] = [
+      $categories[$applicationStatus],
+    ];
+  }
+
   // Set values back to form state.
   $form_state->setValues($formValues);
 }
@@ -580,8 +594,6 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       '#empty_value' => '',
     ];
   }
-
-
 
   if ($form_id == 'webform_settings_form' && isset($webform)) {
 
