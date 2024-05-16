@@ -636,3 +636,6 @@ msgstr "E-post"
 
 msgid "The email address %mail is not valid. Use the format user@example.com."
 msgstr "%mail är inte en giltig e-postadress. Använd formen user@example.com."
+
+msgid "Remove @item @number"
+msgstr "Ta bort @item @number"
