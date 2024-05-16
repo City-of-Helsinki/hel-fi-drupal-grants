@@ -67,11 +67,10 @@ else
     echo "Disable Maintenance"
     # Disable maintenance mode
     drush state:set system.maintenance_mode 0 --input-format=integer
-    echo "DONE: Disable maintenance."
-
     if [ $? -ne 0 ]; then
       output_error_message "Deployment failure: Failed to disable maintenance_mode"
     fi
+    echo "DONE: Disable maintenance."
   fi
 
   echo "================== END FORM CONFIGS ==================="
