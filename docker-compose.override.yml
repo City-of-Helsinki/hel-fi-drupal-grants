@@ -7,7 +7,7 @@ services:
     network_mode: host
     tty: true
     environment:
-      - DISPLAY=${DISPLAY}
+      - DISPLAY=${DISPLAY:-""}
     extra_hosts:
       - "$$(DRUPAL_HOSTNAME):127.0.0.1"
     working_dir: /app/e2e
