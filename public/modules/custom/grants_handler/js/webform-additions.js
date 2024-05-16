@@ -2,6 +2,9 @@
   Drupal.behaviors.GrantsHandlerBehavior = {
     attach: function (context, settings) {
 
+      // Let's start by calling the translation lines that are used in overrides in the Form.
+      Drupal.t('Close', {}, {context: 'grants_handler'});
+
       $("#edit-bank-account-account-number-select").change(function () {
         // Get selected account from dropdown
         const selectedNumber = $(this).val();
