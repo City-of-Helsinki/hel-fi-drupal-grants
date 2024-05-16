@@ -48,6 +48,7 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra en personuppgift, spara ans&ouml;kan som ett utkast och g&aring; till dina uppgifter f&ouml;r att redigera personuppgiften.'
     '#title': 'Personer som ansvarar för samfundet'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj tjänsteman'
     '#name__title': Namn
     '#role__title': Roll
