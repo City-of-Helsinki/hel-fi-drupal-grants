@@ -2,16 +2,21 @@
 
 namespace Drupal\grants_handler\Plugin\Block;
 
+use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
+use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
+use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ServicePageBlockService;
 use Drupal\grants_profile\GrantsProfileService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -50,6 +55,20 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
   protected AccountProxy $currentUser;
 
   /**
+   * Entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManager
+   */
+  protected EntityTypeManager $entityTypeManager;
+
+  /**
+   * The service page block service.
+   *
+   * @var \Drupal\grants_handler\ServicePageBlockService
+   */
+  protected ServicePageBlockService $servicePageBlockService;
+
+  /**
    * Constructs a new ServicePageBlock instance.
    *
    * @param array $configuration
@@ -67,6 +86,10 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    *   Get route params.
    * @param \Drupal\Core\Session\AccountProxy $user
    *   Current user.
+   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
+   *   Entity info.
+   * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
+   *   The service page block service.
    */
   public function __construct(
     array $configuration,
@@ -74,12 +97,16 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     $plugin_definition,
     GrantsProfileService $grantsProfileService,
     CurrentRouteMatch $routeMatch,
-    AccountProxy $user
+    AccountProxy $user,
+    EntityTypeManager $entityTypeManager,
+    ServicePageBlockService $servicePageBlockService
     ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->grantsProfileService = $grantsProfileService;
     $this->routeMatch = $routeMatch;
     $this->currentUser = $user;
+    $this->entityTypeManager = $entityTypeManager;
+    $this->servicePageBlockService = $servicePageBlockService;
   }
 
   /**
@@ -93,6 +120,8 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('grants_profile.service'),
       $container->get('current_route_match'),
       $container->get('current_user'),
+      $container->get('entity_type.manager'),
+      $container->get('grants_handler.service_page_block_service'),
     );
   }
 
@@ -107,28 +136,11 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   protected function blockAccess(AccountInterface $account): AccessResultInterface {
-
-    $node = $this->routeMatch->getParameter('node');
-
-    if (!$node) {
-      return AccessResult::forbidden('No referenced item');
+    if (!$webform = $this->servicePageBlockService->loadServicePageWebform()) {
+      return AccessResult::forbidden('No referenced Webform.');
     }
 
-    $applicantTypes = $node->get('field_hakijatyyppi')->getValue();
-
-    $currentRole = $this->grantsProfileService->getSelectedRoleData();
-    $currentRoleType = NULL;
-    if ($currentRole) {
-      $currentRoleType = $currentRole['type'];
-    }
-
-    $isCorrectApplicantType = FALSE;
-
-    foreach ($applicantTypes as $applicantType) {
-      if (in_array($currentRoleType, $applicantType)) {
-        $isCorrectApplicantType = TRUE;
-      }
-    }
+    $isCorrectApplicantType = $this->servicePageBlockService->isCorrectApplicantType($webform);
 
     return AccessResult::allowedIf(!$isCorrectApplicantType);
   }
@@ -139,22 +151,18 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
   public function build() {
     $tOpts = ['context' => 'grants_handler'];
 
-    $node = $this->routeMatch->getParameter('node');
+    // Load the webform. No need to check if it exists since this
+    // has already been done in the access checks.
+    $webform = $this->servicePageBlockService->loadServicePageWebform();
+    $webformId = $webform->id();
 
-    $applicantTypes = $node->get('field_hakijatyyppi')->getValue();
-
-    $currentRole = $this->grantsProfileService->getSelectedRoleData();
-    $currentRoleType = NULL;
-    if ($currentRole) {
-      $currentRoleType = $currentRole['type'];
-    }
-
-    $isCorrectApplicantType = FALSE;
-
-    foreach ($applicantTypes as $applicantType) {
-      if (in_array($currentRoleType, $applicantType)) {
-        $isCorrectApplicantType = TRUE;
-      }
+    if (!ApplicationHandler::isApplicationOpen($webform)) {
+      $build['content'] = [
+        '#theme' => 'grants_service_page_block',
+        '#text' =>  $this->t('This application is not open', [], $tOpts),
+        '#auth' => 'not_open',
+      ];
+      return $build;
     }
 
     $mandateUrl = Url::fromRoute(
@@ -166,6 +174,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
         ],
       ]
     );
+
     $mandateText = [
       '#theme' => 'edit-label-with-icon',
       '#icon' => 'swap-user',
@@ -181,13 +190,12 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
         ],
       ]
     );
+
     $loginText = [
       '#theme' => 'edit-label-with-icon',
       '#icon' => 'signin',
       '#text_label' => $this->t('Log in'),
     ];
-
-    $link = NULL;
 
     if ($this->currentUser->isAuthenticated()) {
       $link = Link::fromTextAndUrl($mandateText, $mandateUrl);
@@ -201,20 +209,8 @@ application with role which the application is instructed to be made.', [], $tOp
       $title = $this->t('Identification', [], $tOpts);
     }
 
-    $node = $this->routeMatch->getParameter('node');
-    $webformArray = $node->get('field_webform')->getValue();
-
-    if ($webformArray) {
-      $webformName = $webformArray[0]['target_id'];
-
-      $webformLink = Url::fromRoute('grants_webform_print.print_webform',
-        [
-          'webform' => $webformName,
-        ]);
-    }
-    else {
-      $webformLink = NULL;
-    }
+    $webformLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webformId ]);
+    $isCorrectApplicantType = $this->servicePageBlockService->isCorrectApplicantType($webform);
 
     $build['content'] = [
       '#theme' => 'grants_service_page_block',
