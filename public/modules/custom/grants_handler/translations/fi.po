@@ -539,6 +539,10 @@ msgstr "Pyyntösi keskeytyi verkkovirheen takia."
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
 
+msgctxt "grants_handler"
+msgid "Close"
+msgstr "Sulje"
+
 msgid "Leave the application"
 msgstr "Poistu hakemukselta"
 
@@ -629,3 +633,6 @@ msgstr "Sähköposti"
 
 msgid "The email address %mail is not valid. Use the format user@example.com."
 msgstr "%mail ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com."
+
+msgid "Remove @item @number"
+msgstr "Poista @item @number"

@@ -542,6 +542,10 @@ msgstr "Din begäran uppfylldes inte på grund av nätverksfel."
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Är du säker att du vill stänga blanketten? Avsluta utan att spara."
 
+msgctxt "grants_handler"
+msgid "Close"
+msgstr "Stäng"
+
 msgid "Leave the application"
 msgstr "Avsluta från ansökningshandling"
 
@@ -632,3 +636,6 @@ msgstr "E-post"
 
 msgid "The email address %mail is not valid. Use the format user@example.com."
 msgstr "%mail är inte en giltig e-postadress. Använd formen user@example.com."
+
+msgid "Remove @item @number"
+msgstr "Ta bort @item @number"
