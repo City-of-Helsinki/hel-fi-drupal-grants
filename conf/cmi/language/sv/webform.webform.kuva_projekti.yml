@@ -304,6 +304,8 @@ elements: |
     '#marketing__title': 'Information, marknadsföring och tryckkostnader (€)'
   budget_other_cost:
     '#title': 'Övriga kostnader'
+    '#multiple__add_more_button_label': 'Lägg till en kostnad'
+    '#multiple__item_label': 'kostnad'
   muu_huomioitava_panostus_osio:
     '#markup': '<h4>&Ouml;vrig betydande insats</h4>'
   muu_huomioitava_panostus:

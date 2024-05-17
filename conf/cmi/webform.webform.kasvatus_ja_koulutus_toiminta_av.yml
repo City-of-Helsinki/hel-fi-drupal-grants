@@ -580,6 +580,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
     avustuksen_kaytto_palveluiden_ostot_eriteltyina:
       '#type': webform_section
       '#title': 'Avustuksen käyttö/Palveluiden ostot eriteltyinä'
@@ -640,6 +642,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi kulu'
+        '#multiple__item_label': 'kulu'
     muut_aineet_tarvikkeet_ja_tavarat:
       '#type': webform_section
       '#title': 'Muut aineet, tarvikkeet ja tavarat'
@@ -699,6 +703,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
     avustuksen_kaytto_muut_kulut_eriteltyina:
       '#type': webform_section
       '#title': 'Avustuksen käyttö/Muut kulut eriteltyinä'
@@ -760,6 +766,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
     asiakasmaksutulojen_kaytto_ja_mahdolliset_lahjoitukset_:
       '#type': webform_section
       '#title': 'Asiakasmaksutulojen käyttö (ja mahdolliset lahjoitukset)'
@@ -819,6 +827,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '5. Lisätiedot ja liitteet'

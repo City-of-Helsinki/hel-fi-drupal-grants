@@ -78,6 +78,8 @@ elements: |
   meno:
     '#title': Utgift
     '#help': '<p>Ange utgiftstypen här. Till exempel inkvarteringskostnader, matkostnader och lönekostnader för instruktörer kan vara utgifter för lägerverksamhet.</p>'
+    '#multiple__add_more_button_label': 'Lägg till en utgift'
+    '#multiple__item_label': 'utgift'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:

@@ -267,6 +267,8 @@ elements: |
   budget_other_cost:
     '#title': 'Övriga kostnader'
     '#description': 'Lägg till alla projektets planerade utgifter per utgiftskategori nedan.'
+    '#multiple__add_more_button_label': 'Lägg till en kostnad'
+    '#multiple__item_label': 'kostnad'
   muu_huomioitava_panostus:
     '#markup': '<h4>Övrig betydande insats</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:

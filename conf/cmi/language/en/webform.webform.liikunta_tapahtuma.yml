@@ -158,6 +158,8 @@ elements: |
     '#markup': 'Itemise the event&rsquo;s expenditure by type (e.g. venue rent, labour costs).'
   budget_other_cost:
     '#title': 'Expense item'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:

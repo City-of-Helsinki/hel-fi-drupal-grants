@@ -80,6 +80,7 @@ elements: |
     '#title': Utgift
     '#help': 'Ange h&auml;r vilken utgift det &auml;r fr&aring;ga om. Utgifter f&ouml;r l&auml;gerverksamheten &auml;r till exempel logikostnader, matkostnader och handledarnas l&ouml;nekostnader.'
     '#multiple__add_more_button_label': 'Lägg till en utgift'
+    '#multiple__item_label': 'utgift'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:

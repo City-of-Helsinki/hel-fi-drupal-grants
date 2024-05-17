@@ -143,6 +143,26 @@ elements: |
     '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   4_talous:
     '#title': '4. Budget'
+  muut_menot_4:
+    '#title': 'Other expenses'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
+  muut_palveluiden_ostot_2:
+    '#title': 'Other expenses'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
+  muut_menot_tarvikkeet:
+    '#title': 'Other expenses'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
+  muut_menot_2:
+    '#title': 'Other expenses'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
+  muut_menot_3:
+    '#title': 'Other expenses'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
   lisatiedot_ja_liitteet:
     '#title': '5. Additional information and appendices'
   lisatietoja_hakemukseen_liittyen:

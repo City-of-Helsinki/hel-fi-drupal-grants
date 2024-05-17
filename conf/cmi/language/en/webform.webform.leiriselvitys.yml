@@ -75,6 +75,8 @@ elements: |
   meno:
     '#title': 'Expense item'
     '#help': '<p>Indicate the type of expense here. Expenses from camp activities can be, for example, accommodation costs, food costs and the salaries of instructors.</p>'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
