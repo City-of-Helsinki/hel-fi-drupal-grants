@@ -124,12 +124,54 @@ function grants_metadata_node_presave(EntityInterface $entity): void {
 }
 
 /**
+ * Function to handle parent status during child status change.
+ *
+ * Parent webform will be archived if the a development
+ * version is being changed to production status.
+ *
+ * @param \Drupal\webform\Entity\Webform $entity
+ *   Webform entity.
+ */
+function _grants_metadata_handle_versions_status(Webform $entity) {
+  $parent = $entity->getThirdPartySetting('grants_metadata', 'parent');
+  $status = $entity->getThirdPartySetting('grants_metadata', 'status');
+
+  if (empty($parent) || empty($status) || $status !== 'released') {
+    return;
+  }
+
+  $orig = $entity->original;
+
+  if (!$orig) {
+    return;
+  }
+
+  $originalStatus = $orig->getThirdPartySetting('grants_metadata', 'status');
+
+  if ($status === $originalStatus) {
+    return;
+  }
+
+  /** @var \Drupal\webform\Entity\Webform $formParentData */
+  $formParentData = reset(\Drupal::entityTypeManager()
+    ->getStorage('webform')
+    ->loadByProperties([
+      'uuid' => $parent,
+    ]));
+
+  $formParentData->setThirdPartySetting('grants_metadata', 'status', 'archived');
+  $formParentData->set('archive', TRUE);
+  $formParentData->set('categories', ['Arkistoitu']);
+  $formParentData->save();
+}
+
+/**
  * Implements hook_webform_presave().
  */
 function grants_metadata_webform_presave(Webform $entity): void {
+  _grants_metadata_handle_versions_status($entity);
   // Get third party settings.
   $thirdPartySettings = $entity->getThirdPartySettings('grants_metadata');
-
   // Get nodes that have attached this webform.
   try {
     $entityQuery = \Drupal::entityQuery('node')
@@ -575,6 +617,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       ],
       '#required' => TRUE,
       '#default_value' => $formStatus ?? 'development',
+      '#disabled' => $isDuplicateForm,
       '#description' => t('
         If the form is in production, then no editing is allowed.
         In development: Form can be filled up in non-production environments.
@@ -602,7 +645,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     if ($applicationTypeId) {
       $applicationForms = ApplicationHandler::getActiveApplicationWebforms($applicationTypeId);
 
-      $isDuplicatable = count($applicationForms['released']) === 1 && count($applicationForms['development']) === 0;
+      $isDuplicatable = count($applicationForms['released']) <= 1 && count($applicationForms['development']) === 0;
     }
 
     $route_parameters = ['webform' => $webform->id()];
@@ -751,13 +794,6 @@ function _grants_metadata_duplicate_form_submit(array $form, FormStateInterface 
   }
 
   $parentForm->save();
-
-  $newFormId = $form_state->getValue('id');
-  $newFormObject = Webform::load($newFormId);
-
-  // @DEV: We might need do this an another way?
-  // _grants_metadata_update_webform_references($parentForm, $newFormObject);
-  // grants_metadata_webform_presave($newFormObject);
 }
 
 /**

@@ -2475,6 +2475,9 @@ class ApplicationHandler {
 
     foreach ($webforms as $webform) {
       $webformStatus = $webform->getThirdPartySetting('grants_metadata', 'status');
+      if (empty($webformStatus)) {
+        $webformStatus = 'released';
+      }
       $result[$webformStatus][] = $webform;
     }
 
