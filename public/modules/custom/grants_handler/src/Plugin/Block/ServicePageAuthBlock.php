@@ -145,7 +145,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     if (!ApplicationHandler::isApplicationOpen($webform)) {
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
-        '#text' =>  $this->t('This application is not open', [], $tOpts),
+        '#text' => $this->t('This application is not open', [], $tOpts),
         '#auth' => 'not_open',
       ];
       return $build;
@@ -204,7 +204,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     ]);
   }
 
-
   /**
    * The checkFormAccess function.
    *
@@ -225,7 +224,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
 
     return TRUE;
   }
-
 
   /**
    * The buildAsTprLink function.
@@ -255,7 +253,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     $node = $this->routeMatch->getParameter('node');
     $webformId = $node->get('field_webform')->target_id;
 
-    $link = Url::fromRoute('grants_handler.new_application', ['webform_id' => $webformId,], ['absolute' => TRUE]);
+    $link = Url::fromRoute('grants_handler.new_application', ['webform_id' => $webformId], ['absolute' => TRUE]);
 
     return [
       'title' => $this->t('New application', [], $tOpts),

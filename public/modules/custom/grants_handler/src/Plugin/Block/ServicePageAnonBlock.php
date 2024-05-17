@@ -147,7 +147,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     if (!ApplicationHandler::isApplicationOpen($webform)) {
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
-        '#text' =>  $this->t('This application is not open', [], $tOpts),
+        '#text' => $this->t('This application is not open', [], $tOpts),
         '#auth' => 'not_open',
       ];
       return $build;
@@ -197,7 +197,7 @@ application with role which the application is instructed to be made.', [], $tOp
       $title = $this->t('Identification', [], $tOpts);
     }
 
-    $webformLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webformId ]);
+    $webformLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webformId]);
     $isCorrectApplicantType = $this->servicePageBlockService->isCorrectApplicantType($webform);
 
     $build['content'] = [

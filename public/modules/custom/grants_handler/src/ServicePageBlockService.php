@@ -2,13 +2,13 @@
 
 namespace Drupal\grants_handler;
 
+use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
+use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\webform\Entity\Webform;
-use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 
 /**
  * Provides the ServicePageBlockService service.
@@ -85,8 +85,8 @@ class ServicePageBlockService {
       }
 
       return $webform;
-
-    } catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
+    }
+    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
       return FALSE;
     }
   }
@@ -97,7 +97,7 @@ class ServicePageBlockService {
    * This function checks if the current user is of
    * the correct applicant type for a given Webform.
    *
-   * @param Webform $webform
+   * @param \Drupal\webform\Entity\Webform $webform
    *   The Webform we want to check assess for.
    *
    * @return bool
@@ -124,7 +124,9 @@ class ServicePageBlockService {
    * with single and multiple type settings.
    *
    * @param mixed $applicantTypes
-   *   The applicant types from third-party settings, may be an array or a single value.
+   *   The applicant types from third-party settings.
+   *   This may be an array or a single value.
+   *
    * @return array
    *   An array of applicant types.
    */
@@ -134,4 +136,5 @@ class ServicePageBlockService {
     }
     return array_values($applicantTypes);
   }
+
 }
