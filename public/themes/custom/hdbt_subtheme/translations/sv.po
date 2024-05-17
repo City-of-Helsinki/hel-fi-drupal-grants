@@ -75,6 +75,9 @@ msgstr "Försöket att autentisera misslyckades."
 msgid "Application period"
 msgstr "Ansökningsperiod"
 
+msgid "Read more"
+msgstr "Läs mer"
+
 msgid "The application period will be announced later"
 msgstr "Ansökningsperiod meddelas senare"
 
