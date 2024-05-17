@@ -178,6 +178,7 @@ elements: |
   jasenyydet_jarjestoissa_ja_muissa_yhteisoissa:
     '#title': Membership
     '#multiple__add_more_button_label': 'Add new membership'
+    '#multiple__item_label': 'membership'
   nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
     '#title': 'Young people’s participation in planning and decision-making'
   miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:

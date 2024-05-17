@@ -178,9 +178,12 @@ elements: |
     '#multiple__add_more_button_label': 'Lägg till ny plats'
   jasenyydet_jarjestoissa_ja_muissa_yhteisoissa_osio:
     '#title': 'Medlemskap i organisationer och andra samfund'
+    '#multiple__add_more_button_label': 'Lägg till en medlemskap'
+    '#multiple__item_label': 'medlemskap'
   jasenyydet_jarjestoissa_ja_muissa_yhteisoissa:
     '#title': Medlemskap
     '#multiple__add_more_button_label': 'Lägg till en medlemskap'
+    '#multiple__item_label': 'medlemskap'
   nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
     '#title': 'Ungas deltagande i planering och beslutsfattande'
   miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:
