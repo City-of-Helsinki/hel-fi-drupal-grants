@@ -450,7 +450,7 @@ msgid "Application period"
 msgstr "Hakuaika"
 
 msgid "Read more"
-msgstr "Lue lisää"
+msgstr "Lisätietoja"
 
 msgid "The application period will be announced later"
 msgstr "Hakuaika ilmoitetaan myöhemmin"
