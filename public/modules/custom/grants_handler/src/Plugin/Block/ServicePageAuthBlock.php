@@ -94,7 +94,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     $this->helfiHelsinkiProfiili = $helfiHelsinkiProfiili;
     $this->routeMatch = $routeMatch;
     $this->currentUser = $user;
-    $this->grantsProfileService = $grantsProfileService;
     $this->servicePageBlockService = $servicePageBlockService;
   }
 

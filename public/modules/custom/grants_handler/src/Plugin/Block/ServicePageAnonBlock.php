@@ -6,7 +6,6 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
-use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
@@ -15,7 +14,6 @@ use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\ServicePageBlockService;
-use Drupal\grants_profile\GrantsProfileService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -32,13 +30,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * Profile service.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
    * Get route parameters.
    *
    * @var \Drupal\Core\Routing\CurrentRouteMatch
@@ -51,13 +42,6 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    * @var \Drupal\Core\Session\AccountProxy
    */
   protected AccountProxy $currentUser;
-
-  /**
-   * Entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManager
-   */
-  protected EntityTypeManager $entityTypeManager;
 
   /**
    * The service page block service.
