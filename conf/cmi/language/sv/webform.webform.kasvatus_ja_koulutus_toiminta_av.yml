@@ -160,6 +160,8 @@ elements: |
     '#title': 'Andra understöd'
   muut_avustukset_field:
     '#title': 'Andra understöd'
+    '#multiple__add_more_button_label': 'Lägg till en understöd'
+    '#multiple__item_label': 'understöd'
   menot_osio:
     '#title': Utgifter
   henkilostomenot_ja_vuokrat:

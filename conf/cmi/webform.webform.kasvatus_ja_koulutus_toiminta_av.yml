@@ -519,6 +519,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi avustus'
+        '#multiple__item_label': 'avustus'
     menot_osio:
       '#type': webform_section
       '#title': Menot

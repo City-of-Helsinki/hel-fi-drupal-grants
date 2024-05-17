@@ -283,6 +283,8 @@ elements: |-
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi tulo'
+        '#multiple__item_label': 'tulo'
     menot:
       '#type': webform_section
       '#title': Menot

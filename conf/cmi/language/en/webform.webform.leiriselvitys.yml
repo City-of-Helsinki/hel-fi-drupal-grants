@@ -68,6 +68,8 @@ elements: |
   tulo:
     '#title': 'Income item'
     '#help': '<p>Indicate the type of income here. Income from camp activities can be, for example, participation fees.</p>'
+    '#multiple__add_more_button_label': 'Add new income'
+    '#multiple__item_label': 'income'
   menot:
     '#title': Expenses
   markup_05:

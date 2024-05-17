@@ -192,6 +192,8 @@ elements: |
     '#title': 'Självfinansierad andel (€)'
   budget_other_income:
     '#title': 'Övriga intäkter'
+    '#multiple__add_more_button_label': 'Lägg till en intäkt'
+    '#multiple__item_label': 'intäkt'
   menot:
     '#title': 'Utgifter i budgeten'
   budget_other_cost:

@@ -69,6 +69,7 @@ elements: |
     '#title': 'Income item'
     '#help': 'Indicate here the type of income in question. An example of income from camping activities is participation fees.'
     '#multiple__add_more_button_label': 'Add new income'
+    '#multiple__item_label': 'income'
   menot:
     '#title': Expenses
   markup_05:

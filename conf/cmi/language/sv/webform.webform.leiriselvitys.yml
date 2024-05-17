@@ -71,6 +71,8 @@ elements: |
   tulo:
     '#title': Intäkt
     '#help': '<p>Ange intäktstypen här. Till exempel deltagaravgifter kan vara intäkter av lägerverksamhet.</p>'
+    '#multiple__add_more_button_label': 'Lägg till en intäkt'
+    '#multiple__item_label': 'intäkt'
   menot:
     '#title': Utgifter
   markup_05:

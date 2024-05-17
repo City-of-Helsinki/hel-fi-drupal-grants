@@ -152,6 +152,8 @@ elements: |
     '#markup': 'Itemise the event&rsquo;s revenue by type. Also record any other grants for the event and the parties that issued them.'
   budget_other_income:
     '#title': 'Income item'
+    '#multiple__add_more_button_label': 'Add new income'
+    '#multiple__item_label': 'income'
   itemise_cost:
     '#title': 'Event''s expenditure'
   markup_04:

@@ -188,6 +188,8 @@ elements: |
     '#title': 'Self-financing share (€)'
   budget_other_income:
     '#title': 'Other income'
+    '#multiple__add_more_button_label': 'Add new income'
+    '#multiple__item_label': 'income'
   menot:
     '#title': 'Expenses in the budget'
   budget_other_cost:
