@@ -2,8 +2,6 @@
 
 namespace Drupal\grants_handler\Plugin\Block;
 
-use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Block\BlockBase;
@@ -80,14 +78,10 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   Profile service.
    * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
    *   Get route params.
    * @param \Drupal\Core\Session\AccountProxy $user
    *   Current user.
-   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
-   *   Entity info.
    * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
    *   The service page block service.
    */
@@ -95,17 +89,13 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    GrantsProfileService $grantsProfileService,
     CurrentRouteMatch $routeMatch,
     AccountProxy $user,
-    EntityTypeManager $entityTypeManager,
     ServicePageBlockService $servicePageBlockService
     ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->grantsProfileService = $grantsProfileService;
     $this->routeMatch = $routeMatch;
     $this->currentUser = $user;
-    $this->entityTypeManager = $entityTypeManager;
     $this->servicePageBlockService = $servicePageBlockService;
   }
 
@@ -117,10 +107,8 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('grants_profile.service'),
       $container->get('current_route_match'),
       $container->get('current_user'),
-      $container->get('entity_type.manager'),
       $container->get('grants_handler.service_page_block_service'),
     );
   }
@@ -141,7 +129,6 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     }
 
     $isCorrectApplicantType = $this->servicePageBlockService->isCorrectApplicantType($webform);
-
     return AccessResult::allowedIf(!$isCorrectApplicantType);
   }
 
@@ -156,6 +143,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     $webform = $this->servicePageBlockService->loadServicePageWebform();
     $webformId = $webform->id();
 
+    // If the application isn't open, just display a message.
     if (!ApplicationHandler::isApplicationOpen($webform)) {
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
@@ -228,7 +216,7 @@ application with role which the application is instructed to be made.', [], $tOp
   /**
    * {@inheritdoc}
    */
-  public function getCacheTags() {
+  public function getCacheTags(): array {
     $cache_tags = parent::getCacheTags();
     $node = $this->routeMatch->getParameter('node');
     $nodeCacheTag = 'node:' . $node->id();

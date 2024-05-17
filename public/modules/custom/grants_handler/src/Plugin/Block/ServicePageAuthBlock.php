@@ -2,16 +2,12 @@
 
 namespace Drupal\grants_handler\Plugin\Block;
 
-use Carbon\Carbon;
-use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Access\AccessResultNeutral;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
-use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
@@ -20,10 +16,7 @@ use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\ServicePageBlockService;
-use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Drupal\node\Entity\Node;
-use Drupal\webform\Entity\Webform;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -61,20 +54,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
   protected AccountProxy $currentUser;
 
   /**
-   * Get profile data.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManager
-   */
-  protected EntityTypeManager $entityTypeManager;
-
-  /**
    * The service page block service.
    *
    * @var \Drupal\grants_handler\ServicePageBlockService
@@ -99,10 +78,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   Get route params.
    * @param \Drupal\Core\Session\AccountProxy $user
    *   Current user.
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   Get profile data.
-   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
-   *   Entity info.
    * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
    *   The service page block service.
    */
@@ -113,8 +88,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     HelsinkiProfiiliUserData $helfiHelsinkiProfiili,
     CurrentRouteMatch $routeMatch,
     AccountProxy $user,
-    GrantsProfileService $grantsProfileService,
-    EntityTypeManager $entityTypeManager,
     ServicePageBlockService $servicePageBlockService
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
@@ -122,7 +95,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     $this->routeMatch = $routeMatch;
     $this->currentUser = $user;
     $this->grantsProfileService = $grantsProfileService;
-    $this->entityTypeManager = $entityTypeManager;
     $this->servicePageBlockService = $servicePageBlockService;
   }
 
@@ -137,8 +109,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('helfi_helsinki_profiili.userdata'),
       $container->get('current_route_match'),
       $container->get('current_user'),
-      $container->get('grants_profile.service'),
-      $container->get('entity_type.manager'),
       $container->get('grants_handler.service_page_block_service'),
     );
   }
@@ -154,15 +124,10 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   protected function blockAccess(AccountInterface $account): AccessResultNeutral|AccessResult|AccessResultAllowed|AccessResultInterface {
-    if (!$webform = $this->servicePageBlockService->loadServicePageWebform()) {
-      return AccessResult::forbidden('No referenced Webform.');
+    if ($this->checkFormAccess()) {
+      return AccessResult::allowed();
     }
-
-    if (!$this->servicePageBlockService->isCorrectApplicantType($webform)) {
-      return AccessResult::forbidden('User is of wrong applicant type.');
-    }
-
-    return AccessResult::allowed();
+    return AccessResult::forbidden('User does not have access to form.');
   }
 
   /**
@@ -176,6 +141,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     $webform = $this->servicePageBlockService->loadServicePageWebform();
     $webformId = $webform->id();
 
+    // If the application isn't open, just display a message.
     if (!ApplicationHandler::isApplicationOpen($webform)) {
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
@@ -238,13 +204,38 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     ]);
   }
 
+
   /**
+   * The checkFormAccess function.
+   *
+   * This function checks if the current user has access
+   * to the Webform on the current service page.
+   *
+   * @return bool
+   *   TRUE if access is granted, FALSE otherwise.
+   */
+  private function checkFormAccess(): bool {
+    if (!$webform = $this->servicePageBlockService->loadServicePageWebform()) {
+      return FALSE;
+    }
+
+    if (!$this->servicePageBlockService->isCorrectApplicantType($webform)) {
+      return FALSE;
+    }
+
+    return TRUE;
+  }
+
+
+  /**
+   * The buildAsTprLink function.
+   *
    * Builds the link content as LinkItem values.
    *
    * @return array|bool
    *   False if nothing to show, otherwise ready to use array for LinkItem.
    */
-  public function buildAsTprLink() {
+  public function buildAsTprLink(): array|bool {
     $tOpts = ['context' => 'grants_handler'];
 
     if ($this->currentUser->isAnonymous()) {
@@ -256,26 +247,15 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       return FALSE;
     }
 
-    $node = $this->routeMatch->getParameter('node');
-
-    $webformId = $node->get('field_webform')->target_id;
-
-    try {
-      $access = $this->checkFormAccess();
-    }
-    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
-      $access = FALSE;
-    }
-
-    if (!$access) {
+    if (!$this->checkFormAccess()) {
       return FALSE;
     }
 
     // Create link for new application.
-    $link = Url::fromRoute('grants_handler.new_application',
-      [
-        'webform_id' => $webformId,
-      ], ['absolute' => TRUE]);
+    $node = $this->routeMatch->getParameter('node');
+    $webformId = $node->get('field_webform')->target_id;
+
+    $link = Url::fromRoute('grants_handler.new_application', ['webform_id' => $webformId,], ['absolute' => TRUE]);
 
     return [
       'title' => $this->t('New application', [], $tOpts),
