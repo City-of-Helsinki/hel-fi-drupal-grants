@@ -16,7 +16,7 @@ third_party_settings:
     applicationTypeTerms:
       49: '49'
     applicationTargetGroup: '30'
-    applicationOpen: '2024-05-02T08:00:00'
+    applicationOpen: '2024-05-02T00:00:00'
     applicationClose: '2024-06-03T16:00:00'
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
@@ -740,7 +740,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

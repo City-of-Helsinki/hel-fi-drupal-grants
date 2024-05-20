@@ -405,17 +405,6 @@ const baseFormRegisteredCommunity_57: FormData = {
         "edit-additional-information": {
           value: faker.lorem.sentences(3),
         },
-        'edit-yhteison-saannot-attachment-upload': {
-          role: 'fileupload',
-          selector: {
-            type: 'locator',
-            name: 'data-drupal-selector',
-            value: '[name="files[yhteison_saannot_attachment]"]',
-            resultValue: '.form-item-yhteison-saannot-attachment a',
-          },
-          value: ATTACHMENTS.YHTEISON_SAANNOT,
-          viewPageFormatter: viewPageFormatFilePath
-        },
         'edit-vahvistettu-tilinpaatos-attachment-upload': {
           role: 'fileupload',
           selector: {
@@ -587,7 +576,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'lisatiedot_ja_liitteet': {
       items: {},
       itemsToRemove: [
-        'edit-yhteison-saannot-attachment-upload',
         'edit-vahvistettu-tilinpaatos-attachment-upload',
         'edit-vahvistettu-toimintakertomus-attachment-upload',
         'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload',
@@ -612,7 +600,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-subventions-items-1-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
     'edit-compensation-purpose': 'Virhe sivulla 2. Avustustiedot: Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista kenttä on pakollinen.',
     'edit-community-practices-business-1': 'Virhe sivulla 3. Yhteisön toiminta: Harjoittaako yhteisö liiketoimintaa kenttä on pakollinen.',
-    'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-vahvistettu-tilinpaatos-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-vahvistettu-toimintakertomus-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-vahvistettu-tilin-tai-toiminnantarkastuskertomus-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',

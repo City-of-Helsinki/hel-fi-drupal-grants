@@ -195,7 +195,7 @@ elements: |-
             - subventions
       markup:
         '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
+        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan. Kirjaa tähän avustussumma vain sen vuoden osalta, jolle haet avustusta tällä hakemuksella.</p>'
       info_kyseessa_on_monivuotinen_avustus:
         '#type': webform_markup
         '#markup': |
@@ -740,7 +740,8 @@ elements: |-
       budget_other_cost:
         '#type': grants_budget_other_cost
         '#title': 'Muut kulut'
-        '#help': 'Lisää alle kaikki hankkeen suunnitellut menot kululuokittain.'
+        '#description': 'Lisää alle kaikki hankkeen suunnitellut menot kululuokittain.'
+        '#description_display': before
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1
@@ -1036,7 +1037,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

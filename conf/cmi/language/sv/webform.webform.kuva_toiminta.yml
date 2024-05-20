@@ -42,6 +42,7 @@ elements: |
     '#help': '<p>Om du vill lägga till, ta bort eller ändra personer, spara applikationen som ett utkast och gå till att underhålla personernas information i din egen data.</p>'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj motsvarande person'
     '#role__title': Roll
     '#email__title': E-post
@@ -367,7 +368,7 @@ elements: |
     '#markup': '<p>Föregående avslutade räkenskapsår. Enligt bokslutet.</p>'
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen fick statsandelar (VOS)'
-    '#help': '<p>Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.</p>'
+    '#help': 'Välj ja, bara om du med säkerhet vet att din organisation fick finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
     '#options':
       1: Ja
       0: Nej

@@ -1,5 +1,67 @@
 # CHANGELOG
 
+## 2024.8
+- df0f3c7c fix: AU-2470: Fix stepper first line (#1368)
+- de25bce9 fix: AU-2497: Fix fieldset button top margin (#1369)
+- b5ef5013 fix: AU-635: Fix application resend form. (#1364)
+- 174066a4 fix: AU-2447: fix attachments styles (#1360)
+- 33b8ef30 Add form 67 to production forms
+- 2ab1b317 Production configs
+- d6673de4 Add pubsub + PHPCS
+- cdd2ba68 Add hp environment urls to config.
+- eb8e3c04 Remove env urls from config
+- 83ce206a config: Automatic update (#1320)
+- 223a4c5f feat: AU-2408: Permission changes (#1356)
+- 7a852cce fix: AU-2474: Icons path (#1358)
+- cd8f9ccc fix: AU-2468: Change language back to FI (#1357)
+- 14d6afa3 fix: AU-2425: add aria label to application search (#1355)
+- 33c86553 fix: AU-2462: Remove unnecessary metdata generation (#1351)
+- cf6e2837 feat: AU-1984: Tunnistamo v3 päivitys (#1342)
+- 8be7c8ae feat: AU-2453, E2E, Test attachment checkboxes (#1352)
+- e9ec9bcd feat: AU-2404: tests for 67 (#1340)
+- 0e24049f fix: AU-2057: Application attachment purging fix (#1350)
+- 097294ad fix: AU-2419: PHPStan Errors, Part 3 (#1346)
+- ab6ccb82 fix: AU-2382: Rename definitions for ASUKASYLEISTOIM application (#1325)
+- 20430cbf fix: AU-2457: Fix attachment selections disappearing (#1347)
+- 6aaa31e4 fix: AU-2459: Fix translations (#1345)
+- f871e990 fix:  AU-2385: Navigation bug (#1339)
+- 21b23d7d fix: AU-2458: kuva projekti change in text (#1343)
+- 19c0b52b fix: AU-2376, AU-2377: fixes to KUVA toiminta SV translations (#1344)
+- cf043e33 AU-2402 Add missing data class (#1328)
+- e74fcfc4 feat: AU-2454: Fixed an issue regarding boolean values in the place of operations component. (#1337)
+- a08d2109 fix: AU-2455 Draft setting in webforms (#1338)
+- 625bcea0 fix: AU-2403: PHPStan Error Fixes, Part2 (#1334)
+- cfbd88d8 feat: AU-2397, AU-2401, E2E, Screenshots, bug-fixes and URL logging (#1335)
+- d0d84fe4 fix: AU-2375: add context to string in Oma asiointi (#1333)
+- 9a0f25ca fix: AU-2371: fix a letter in webform actions (#1336)
+- 5a440543 fix: AU-2428: Fix empty asiointirooli link (#1331)
+- d8ed6958 fix: AU-2452: Focus indicators to stepper and readonly fields (#1332)
+- 5469e922 fix: AU-2414: Change log in button to have role=link (#1329)
+- 9023e747 feat: AU-2381: Add event when resending applications via admin ui (#1321)
+- 00195f6b fix: AU-2396: First 74 phpstan errors (#1326)
+- babb3596 AU-2336: Make PHPCS happy (#1330)
+- 8fb3efff feat: AU-2336: Delete documents from Drupal UI (#1318)
+- a98640d2 fix: AU-2395: Hide buttons that link from TPR to the page we are already on. (#1327)
+- 7c4929d3 fix: AU-2400: Add access check for entity query (#1324)
+- 0a843164 feat: AU-2288: Add Askem block to the instance the way it was intended (#1312)
+- d79423d4 AU-2274: Small changes from event documentation. (#1323)
+- a50af5c0 feat: AU-2373: Fix notice during application copy. Add event to copied application (#1322)
+- c03c4b64 feat: AU-2343: Nuortoimpalkka input masks to euro fields. Show input mask prefix on submission view
+- ce7f674c fix: AU-2366: Fix application search card lead-in text display (#1314)
+- 219f96fc feat: AU-2389: E2E, Changed the edit-acting-year field in every test to always be dynamic (#1319)
+- 6f922f10 feat: AU-2383: E2E: Added more logging (#1311)
+- 09576ce1 feat: AU-2384: Implemented waitForTextWithInterval and used it when validating application submissions. (#1316)
+- 8a32d61c conf: Update configuration
+- 220b59b1 fix: AU-2363: Add user_delete hook to clean up any leftover sessions from the db
+- 45e3804c conf: Update configuration (#1260)
+- e1ef13e8 fix: AU-2386: Fix phpcs for theme (#1313)
+- 999b477d feat: AU-1882: Add Postman collections (#1294)
+- 0d895d8e feat: AU-2352, E2E: Implemented the possibility to test swapping field values (#1309)
+- 9063bb12 fix: AU-2346: Fix stray tooltip on kuva_projekti (#1302)
+- a70fd886 fix: AU-2365: /katso page buttons to stay on one line (#1304)
+- 2c97ec0f fix: AU-2081: ajax settings cache issues (#1307)
+
+
 ## 2024.7
 - fd2f6b8a fix: AU-2299: Change langcode in config files (#1263)
 - b84ef613 Production configs.
