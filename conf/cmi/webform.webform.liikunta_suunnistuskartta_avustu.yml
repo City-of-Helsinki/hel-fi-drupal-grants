@@ -234,6 +234,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi kartta'
+        '#multiple__item_label': 'kartta'
         '#mapName__help': 'Karttatyypillä tarkoitetaan ensi-, uusinta- tai ajantasaistuskartta'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page

@@ -57,6 +57,8 @@ elements: |
     '#title': 'Orienteering map grant'
   orienteering_maps:
     '#mapName__help': 'Map type refers to a new, remapped or updated map.'
+    '#multiple__add_more_button_label': 'Add new map'
+    '#multiple__item_label': 'map'
   lisatiedot_ja_liitteet:
     '#title': '3. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
