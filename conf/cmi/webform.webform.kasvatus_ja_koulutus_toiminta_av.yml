@@ -470,6 +470,8 @@ elements: |-
         '#premiseName__access': false
         '#premiseAddress__access': false
         '#address__access': false
+        '#multiple__add_more_button_label': 'Lisää toimintapaikka'
+        '#multiple__item_label': 'toimintapaikka'
   4_talous:
     '#type': webform_wizard_page
     '#title': '4. Talous'

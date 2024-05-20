@@ -146,6 +146,8 @@ elements: |
     '#title': 'Verksamhetsställets uppgifter'
   toimintapaikka:
     '#title': Verksamhetsställen
+    '#multiple__add_more_button_label': 'Lägg till en verksamhetsställen'
+    '#multiple__item_label': 'verksamhetsställen'
   4_talous:
     '#title': '4. Budget'
   talousarvio_osio:
