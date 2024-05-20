@@ -32,7 +32,7 @@
         "drupal/filename_transliteration": "^1.0",
         "drupal/hdbt": "^5.0",
         "drupal/hdbt_admin": "^2.0",
-        "drupal/helfi_atv": "^0.9",
+        "drupal/helfi_atv": "dev-feature/AU-1929-header-tests",
         "drupal/helfi_audit_log": "^0.9",
         "drupal/helfi_azure_fs": "^2",
         "drupal/helfi_drupal_tools": "dev-UHF-9315",
