@@ -40,6 +40,7 @@ elements: |
     '#help': 'If you want to add, remove or change persons, save the application as a draft and go to your data to maintain the information about people.'
     '#title': 'Persons responsible within the community'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
   2_avustustiedot:
     '#title': '2. Grant details'
     '#prev_button_label': '< Previous'
