@@ -1,2 +1,1 @@
-docker/openshift/entrypoints/20-deploy.sh
 .github/pull_request_template.md
