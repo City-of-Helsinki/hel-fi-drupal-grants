@@ -172,7 +172,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     $applicationLink = Link::fromTextAndUrl($applicationLinkText, $applicationLinkUrl);
     $descrtiption = $this->t('Please familiarize yourself with the instructions
     on this page before proceeding to the application.', [], $tOpts);
-    
+
     $webformLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webformId]);
 
     $build['content'] = [
