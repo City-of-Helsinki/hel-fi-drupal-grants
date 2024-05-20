@@ -405,3 +405,11 @@ msgstr "<strong><em>Vänligen observera:</em> Det här alternativet har säkerhe
 msgctxt "grants_premises"
 msgid "City"
 msgstr "Postanstalt"
+
+msgctxt "grants_theme"
+msgid "items per page"
+msgstr "per sida"
+
+msgctxt "grants_theme"
+msgid "Items per page"
+msgstr "Inlägg per sida"
