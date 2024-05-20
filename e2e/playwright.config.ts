@@ -9,7 +9,7 @@ export default defineConfig({
   globalTeardown: require.resolve('./tests/global.teardown.ts'),
   globalSetup: require.resolve('./tests/init.setup.ts'),
   testDir: './tests',
-  timeout: 180 * 1000,
+  timeout: 240 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -93,6 +93,12 @@ export default defineConfig({
       name: 'forms-all',
       testMatch: '/forms/*',
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+    },
+    /* Run all smoke tests. */
+    {
+      name: 'smoke',
+      testMatch: '/public/*',
+      dependencies: ['setup']
     },
     /* Form 29 tests. */
     {

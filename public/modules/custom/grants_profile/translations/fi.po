@@ -119,8 +119,8 @@ msgid "Business ID"
 msgstr "Y-tunnus"
 
 msgctxt "grants_profile"
-msgid 'If you want to change the information from Helsinki-profile\nyou can do that by going to the Helsinki-profile from this link.'
-msgstr 'Jos haluat muuttaa Helsinki-profiilin tietoja, voit tehdä sen menemällä Helsinki-profiiliin tästä linkistä.'
+msgid "If you want to change the information from Helsinki-profile\nyou can do that by going to the Helsinki-profile from this link."
+msgstr "Jos haluat muuttaa Helsinki-profiilin tietoja, voit tehdä sen menemällä Helsinki-profiiliin tästä linkistä."
 
 msgctxt "grants_profile"
 msgid "Community details not found in registries. Please contact customer service"

@@ -67,6 +67,7 @@
               delay: 100,
               allowHTML: true,
               interactive: false,
+              trigger: 'click',
               plugins: [hideOnEsc],
             },
             Drupal.webform.elementHelpIcon.options,

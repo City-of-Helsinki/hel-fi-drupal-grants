@@ -65,8 +65,8 @@
       </ul>
     {% endif %}
     {% if type != 'drafts' and items %}
-      <div class="hds-pagination-container">
-        <ul class="pagination application-list__pagination"></ul>
+      <div class="hds-pagination-container" {% if items|length < 11 %} style="display:none;"{% endif %}>
+        <ul aria-label={{"Pagination"|t}} role="navigation" class="pagination application-list__pagination"></ul>
       </div>
     {% endif %}
   </div>

@@ -31,21 +31,30 @@ fieldset.members-composite--wrapper.fieldgroup,
 fieldset.orienteering-map-composite--wrapper,
 .form-item-muu-liite fieldset.grants-attachments--wrapper.fieldgroup {
   border-width: 2px;
-  padding: var(--spacing-m) var(--spacing-l);
+  padding: var(--spacing-s);
   margin-top: var(--spacing-layout-2-xs);
-  min-width: 400px;
+  width: 100%;
   max-width: 100%;
 
-  span.visually-hidden {
+  legend > span.visually-hidden {
     height: auto;
     width: max-content;
     overflow: visible;
     clip: initial;
     clip-path: initial;
-    left: var(--spacing-layout-2-xs);
+    left: 0;
     top: -12px;
     background: white;
     padding-right: var(--spacing-xl);
+
+    @include breakpoint($breakpoint-m) {
+      left: var(--spacing-layout-2-xs);
+    }
+  }
+
+  @include breakpoint($breakpoint-m) {
+    min-width: 400px;
+    padding: var(--spacing-m) var(--spacing-l);
   }
 }
 
