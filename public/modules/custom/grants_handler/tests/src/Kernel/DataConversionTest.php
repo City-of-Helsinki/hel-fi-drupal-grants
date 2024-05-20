@@ -45,6 +45,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
     'grants_attachments',
     'grants_budget_components',
     'grants_club_section',
+    'grants_mandate',
     'grants_metadata',
     'grants_handler',
     'grants_premises',

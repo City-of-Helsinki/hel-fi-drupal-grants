@@ -139,7 +139,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $mandateUrl = Url::fromRoute(
       'grants_mandate.mandateform',
-      [],
+      ['redirect_to_service_page' => TRUE],
       [
         'attributes' => [
           'class' => ['hds-button', 'hds-button--primary'],
