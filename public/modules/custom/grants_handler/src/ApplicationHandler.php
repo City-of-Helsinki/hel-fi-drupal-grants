@@ -2485,6 +2485,23 @@ class ApplicationHandler {
   }
 
   /**
+   * Checks if user can duplicate a webform configuration with given Application ID.
+   *
+   * General rule is that one application type ID can have maximum number of 1
+   * Production & In development versions.
+   *
+   * @param string $id
+   *   Application ID.
+   *
+   * @return bool
+   *   Can the webform be duplicated.
+   */
+  public static function isApplicationWebformDuplicatable(string $id) {
+    $applicationForms = self::getActiveApplicationWebforms($id);
+    return count($applicationForms['released']) <= 1 && count($applicationForms['development']) === 0;
+  }
+
+  /**
    * Helper function to checks, if user has grants_admin role rights.
    *
    * @param \Drupal\Core\Session\AccountInterface $account

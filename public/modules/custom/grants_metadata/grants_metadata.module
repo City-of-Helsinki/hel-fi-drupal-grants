@@ -140,6 +140,7 @@ function _grants_metadata_handle_versions_status(Webform $entity) {
     return;
   }
 
+  /** @phpstan-ignore-next-line */
   $orig = $entity->original;
 
   if (!$orig) {
@@ -158,6 +159,10 @@ function _grants_metadata_handle_versions_status(Webform $entity) {
     ->loadByProperties([
       'uuid' => $parent,
     ]));
+
+  if (!$formParentData) {
+    return;
+  }
 
   $formParentData->setThirdPartySetting('grants_metadata', 'status', 'archived');
   $formParentData->set('archive', TRUE);
@@ -310,6 +315,7 @@ function grants_metadata_field_industry_options(): array {
 function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
 
   _grants_metadata_handle_admin_webform_alter($form, $form_state, $form_id);
+  $tOpts = ['context' => 'grants_metadata'];
 
   // Do not alter the Performance test webform.
   $current_route_match = \Drupal::service('current_route_match');
@@ -573,6 +579,19 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       if ($formParentData) {
         $parentIndustry = $formParentData->getThirdPartySetting('grants_metadata', 'applicationIndustry');
         $parentType = $formParentData->getThirdPartySetting('grants_metadata', 'applicationType');
+        $parentTypeId = $formParentData->getThirdPartySetting('grants_metadata', 'applicationType');
+
+        $isDuplicatable = ApplicationHandler::isApplicationWebformDuplicatable($parentTypeId);
+
+        if (!$isDuplicatable) {
+          $form['#disabled'] = TRUE;
+          array_unshift($form, [
+            '#type' => 'status_messages',
+          ]);
+          $message = t('Application form @id already has an active development version.', ['@id' => $parentTypeId]);
+          \Drupal::messenger()
+            ->addWarning($message);
+        }
 
         // Generate timestamp to identify clone.
         // Add hours and minutes to prevent ID collisions.
@@ -604,16 +623,18 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
           'uuid' => $formParent,
         ]));
 
-      $parentOptions = [$formParent => $parentWebform->get('title')];
+      if ($parentWebform) {
+        $parentOptions = [$formParent => $parentWebform->get('title')];
+      }
     }
 
     $form['third_party_settings']['grants_metadata']['status'] = [
       '#type' => 'radios',
       '#title' => t('Status'),
       '#options' => [
-        'released' => t('In production'),
-        'archived' => t('Archived'),
-        'development' => t('In development'),
+        'released' => t('In production', [], $tOpts),
+        'archived' => t('Archived', [], $tOpts),
+        'development' => t('In development', [], $tOpts),
       ],
       '#required' => TRUE,
       '#default_value' => $formStatus ?? 'development',
@@ -628,7 +649,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     $form['third_party_settings']['grants_metadata']['parent'] = [
       '#type' => 'select',
       '#title' => t('Parent'),
-      '#description' => t('Parent form, if this webform was duplicated or replaces existing form.'),
+      '#description' => t('Parent form, if this webform was duplicated or replaces existing form.', [], $tOpts),
       '#options' => $parentOptions,
       '#default_value' => $formParent,
       '#disabled' => TRUE,
@@ -640,12 +661,14 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
   if ($form_id == 'webform_settings_form' && isset($webform)) {
 
+    /** @var Drupal\webform\EntitySettings\WebformEntitySettingsGeneralForm|Drupal\webform\WebformEntityAddForm $formObject */
+    $formObject = $form_state->getFormObject();
+    /** @var Drupal\webform\Entity\Webform $bundle; */
+    $bundle = $formObject->getEntity();
     $applicationTypeId = $bundle->getThirdPartySetting('grants_metadata', 'applicationType');
     $isDuplicatable = TRUE;
     if ($applicationTypeId) {
-      $applicationForms = ApplicationHandler::getActiveApplicationWebforms($applicationTypeId);
-
-      $isDuplicatable = count($applicationForms['released']) <= 1 && count($applicationForms['development']) === 0;
+      $isDuplicatable = ApplicationHandler::isApplicationWebformDuplicatable($applicationTypeId);
     }
 
     $route_parameters = ['webform' => $webform->id()];
@@ -653,7 +676,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     if ($isDuplicatable) {
       $form['third_party_settings']['grants_metadata']['new_version'] = [
         '#type' => 'link',
-        '#title' => t('Create a webform new version'),
+        '#title' => t('Create a new version', [], $tOpts),
         '#url' => Url::fromRoute('entity.webform.duplicate_form', $route_parameters),
         '#attributes' => ['class' => ['button', 'button--primary', 'form-submit'], 'disabled' => 1],
       ];
@@ -661,8 +684,9 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
         '#prefix' => '<div>',
         '#suffix' => '</div>',
         '#markup' => t(
-          'Allows you to duplicate the webform and automatically link the parent webform to this new form.
-          This will also archive the current version.'
+          'Create a new webform version, and link the original version as parent.',
+          [],
+          $tOpts
         ),
       ];
     }

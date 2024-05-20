@@ -92,3 +92,23 @@ msgstr "Syötä vuosiluku väliltä 1900 - 2100."
 msgctxt "grants_metadata"
 msgid "File name"
 msgstr "Tiedostonimi"
+
+msgctxt "grants_metadata"
+msgid "In production"
+msgstr "Tuotannossa"
+
+msgctxt "grants_metadata"
+msgid "Archived"
+msgstr "Arkistoitu"
+
+msgctxt "grants_metadata"
+msgid "In development"
+msgstr "Kehityksessä"
+
+msgctxt "grants_metadata"
+msgid "Create a new webform version, and link the original version as parent."
+msgstr "Luo lomakkeesta uusi versio, johon on linkitetty alkuperäinen lomake Isäntä-kenttään."
+
+msgctxt "grants_metadata"
+msgid "Create a new version"
+msgstr "Luo uusi versio"
