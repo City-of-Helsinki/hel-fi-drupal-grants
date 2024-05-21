@@ -61,6 +61,8 @@ elements: |
     '#title': 'Understöd för framställning av orienteringskartor'
   orienteering_maps:
     '#mapName__help': 'Med karttyp avses första kartupplaga, förnyad kartupplaga eller uppdateringskarta'
+    '#multiple__add_more_button_label': 'Lägg till en kart'
+    '#multiple__item_label': 'kart'
   lisatiedot_ja_liitteet:
     '#title': '3. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:

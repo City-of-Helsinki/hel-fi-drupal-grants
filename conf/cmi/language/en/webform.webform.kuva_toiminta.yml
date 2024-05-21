@@ -182,6 +182,8 @@ elements: |
     '#premiseType__title': 'Type of space'
     '#isOwnedByApplicant__title': 'The space is owned by us'
     '#isOwnedByCity__title': 'The space is owned by the City of Helsinki'
+    '#multiple__item_label': 'space'
+    '#multiple__add_more_button_label': 'Add new space'
   4_toiminta:
     '#title': '4. Activity'
     '#prev_button_label': '< Previous'

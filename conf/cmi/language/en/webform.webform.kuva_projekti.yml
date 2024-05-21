@@ -207,6 +207,7 @@ elements: |
   tila:
     '#title': 'Other premises'
     '#isOwnedByCity__title': 'City owns the property'
+    '#multiple__item_label': 'premise'
     '#multiple__add_more_button_label': 'Add new premise'
   aikataulu:
     '#title': Schedule
@@ -300,6 +301,8 @@ elements: |
     '#marketing__title': 'Publicity, marketing, and printing (€)'
   budget_other_cost:
     '#title': 'Other costs'
+    '#multiple__add_more_button_label': 'Add new cost'
+    '#multiple__item_label': 'cost'
   muu_huomioitava_panostus_osio:
     '#markup': '<h4>Other notable input</h4>'
   muu_huomioitava_panostus:

@@ -189,10 +189,14 @@ elements: |
     '#title': 'Self-financing share (€)'
   budget_other_income:
     '#title': 'Other income'
+    '#multiple__add_more_button_label': 'Add new income'
+    '#multiple__item_label': 'income'
   menot:
     '#title': 'Expenses in the budget'
   budget_other_cost:
     '#title': Expenses
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
   lisatiedot_ja_liitteet:
     '#title': '6. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:

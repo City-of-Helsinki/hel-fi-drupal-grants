@@ -183,6 +183,8 @@ elements: |
   tila:
     '#title': Premises
     '#multiple__no_items_message': '<p>No premises entered. Add the premise information below.</p>'
+    '#multiple__item_label': 'premise'
+    '#multiple__add_more_button_label': 'Add new premise'
   aikataulu:
     '#title': Schedule
   festivaalin_tai_tapahtuman_paivamaarat:
@@ -263,6 +265,8 @@ elements: |
   budget_other_cost:
     '#title': 'Other costs'
     '#description': "Add below all the project's planned expenses by expense category."
+    '#multiple__add_more_button_label': 'Add new cost'
+    '#multiple__item_label': 'cost'
   muu_huomioitava_panostus:
     '#markup': '<h4>Other notable input</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:

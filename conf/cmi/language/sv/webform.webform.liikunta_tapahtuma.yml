@@ -166,6 +166,8 @@ elements: |
     '#title': Inkomst
     '#label__title': 'Typ av intäkt'
     '#value__title': 'Belopp (€)'
+    '#multiple__add_more_button_label': 'Lägg till en intäkt'
+    '#multiple__item_label': 'intäkt'
   itemise_cost:
     '#title': 'Evenemangets utgifter'
   markup_04:
@@ -174,6 +176,8 @@ elements: |
     '#title': Gående
     '#label__title': 'Typ av utgift'
     '#value__title': 'Belopp (€)'
+    '#multiple__add_more_button_label': 'Lägg till en utgift'
+    '#multiple__item_label': 'utgift'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
