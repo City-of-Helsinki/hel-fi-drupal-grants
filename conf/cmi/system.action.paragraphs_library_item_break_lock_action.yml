@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - content_lock
+_core:
+  default_config_hash: Rq-wiwnbjz-4hM7sipXKqSLkCIzM7zKUVbp2916bztc
 id: paragraphs_library_item_break_lock_action
 label: 'Break lock paragraphs_library_item'
 type: paragraphs_library_item

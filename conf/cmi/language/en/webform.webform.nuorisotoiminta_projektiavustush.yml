@@ -41,6 +41,7 @@ elements: |
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
@@ -188,10 +189,14 @@ elements: |
     '#title': 'Self-financing share (€)'
   budget_other_income:
     '#title': 'Other income'
+    '#multiple__add_more_button_label': 'Add new income'
+    '#multiple__item_label': 'income'
   menot:
     '#title': 'Expenses in the budget'
   budget_other_cost:
     '#title': Expenses
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
   lisatiedot_ja_liitteet:
     '#title': '6. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
@@ -203,7 +208,15 @@ elements: |
   liitteet:
     '#title': Attachments
   attachments_info:
-    '#markup': "<p>All the required attachments must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the &lsquo;Further clarification on attachments&rsquo; section of the application.</p>\r\n\r\n<p><strong>Required attachments</strong><br />\r\nIf you wish, you may attach a more detailed project plan and budget to the project grant application. Associations applying for a project grant must submit the current rules of the association as a mandatory attachment. The rules must be approved by the Finnish Patent and Registration Office.</p>\r\n\r\n<p><strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file. Please indicate this in the &lsquo;Further clarification on attachments&rsquo; section.</p>\r\n\r\n<p><strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;.</p>"
+    '#markup': |-
+      <p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.
+      </p>
+      <h4>Required attachments</h4>
+      <p>If you wish, you may attach a more detailed project plan and budget to the project grant application. Associations applying for a project grant must submit the current rules of the association as a mandatory attachment. The rules must be approved by the Finnish Patent and Registration Office.</p>
+      <h4>Submission of several attachments as a single file</h4>
+      <p>If you wish, you can submit several attachments as a single file. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;</p>
+      <h4>Attachments previously submitted to the City of Helsinki</h4>
+      <p>If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;.</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards.</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -250,6 +263,7 @@ elements: |
 settings:
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'
+  wizard_confirmation_label: '8. Complete'
   preview_label: '7. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
 title: 'Project grants for youth activities'

@@ -11,6 +11,8 @@ dependencies:
   module:
     - options
     - text
+_core:
+  default_config_hash: eNHAn55Gw5gSAhk7kimMoapBq0zog4RL6YxB3Dt5QOk
 id: paragraph.liftup_with_image.default
 targetEntityType: paragraph
 bundle: liftup_with_image

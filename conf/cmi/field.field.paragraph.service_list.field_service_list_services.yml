@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.paragraph.field_service_list_services
     - paragraphs.paragraphs_type.service_list
+_core:
+  default_config_hash: BZjWuIfNTc5Op1duIqH3ObCJwMI3QEwAgBq351kAzzA
 id: paragraph.service_list.field_service_list_services
 field_name: field_service_list_services
 entity_type: paragraph

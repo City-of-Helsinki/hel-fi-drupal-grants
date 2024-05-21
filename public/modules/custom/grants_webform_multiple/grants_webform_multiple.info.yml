@@ -2,7 +2,7 @@ name: Grants Webform Multiple Fields Alterer
 type: module
 description: Takes the webform multiple value fields and moves buttons and things around.
 package: helfi
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 libraries:
   - grants_webform_multiple/grants_webform_multiple
 dependencies:

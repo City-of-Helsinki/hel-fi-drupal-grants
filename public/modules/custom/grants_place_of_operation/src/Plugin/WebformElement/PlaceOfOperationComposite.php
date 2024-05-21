@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_place_of_operation\Plugin\WebformElement;
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
@@ -101,6 +102,8 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
   protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
     $value = $this->getValue($element, $webform_submission, $options);
     $lines = [];
+    $tOpts = ['context' => 'grants_place_of_operation'];
+
     foreach ($value as $fieldName => $fieldValue) {
       if (isset($element["#webform_composite_elements"][$fieldName])) {
         $webformElement = $element["#webform_composite_elements"][$fieldName];
@@ -109,7 +112,18 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
         // Convert date strings.
         if ($fieldName === 'rentTimeBegin' || $fieldName === 'rentTimeEnd') {
           if ($fieldValue) {
-            $fieldValue = date("j.n.Y", strtotime(date($fieldValue)));
+            $dateTime = new DrupalDateTime($fieldValue);
+            $fieldValue = $dateTime->format('j.n.Y');
+          }
+        }
+
+        // Convert boolean value.
+        if ($fieldName === 'free') {
+          if ($fieldValue === 'false') {
+            $fieldValue = $this->t('No', [], $tOpts);
+          }
+          if ($fieldValue === 'true') {
+            $fieldValue = $this->t('Yes', [], $tOpts);
           }
         }
 

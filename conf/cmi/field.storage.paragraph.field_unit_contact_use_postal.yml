@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - paragraphs
+_core:
+  default_config_hash: IJW1E-0LjLHAZbWCPAfCi5gYfYYDrBzcXN_nPBB_01g
 id: paragraph.field_unit_contact_use_postal
 field_name: field_unit_contact_use_postal
 entity_type: paragraph

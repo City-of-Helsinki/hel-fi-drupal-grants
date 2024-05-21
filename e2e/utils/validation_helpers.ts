@@ -1,16 +1,15 @@
-import {Page, expect} from "@playwright/test";
+import {Page, expect, test} from "@playwright/test";
 import {logger} from "./logger";
-import {
-  FormField,
-  FormData,
-  FormFieldWithRemove
-} from "./data/test_data"
+import {FormField, FormData, FormFieldWithRemove} from "./data/test_data"
 import {viewPageBuildSelectorForItem} from "./view_page_helpers";
+import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
+import {logCurrentUrl} from "./helpers";
 
 /**
  * The validateSubmission function.
  *
- * This function calls either validateDraft or
+ * This function is used to validate application submissions.
+ * The function calls either validateDraft or
  * validateSent, depending on the validation we are
  * performing.
  *
@@ -29,32 +28,111 @@ const validateSubmission = async (
   formDetails: FormData,
   storedata: any
 ) => {
+  if (storedata === undefined || storedata[formKey] === undefined) {
+    logger(`Skipping validation test: No env data stored after the "${formDetails.title}" test.`);
+    test.skip(true, 'Skip validation test');
+  }
 
   const thisStoreData = storedata[formKey];
-
-  if (thisStoreData.status === 'DRAFT') {
-    await validateDraft(page, formDetails, thisStoreData);
-  } else {
-    await validateSent(page, formDetails, thisStoreData);
+  if (thisStoreData.status === 'DRAFT' || thisStoreData.status === 'RECEIVED') {
+    logger(`Validating draft application with application ID: ${thisStoreData.applicationId}...`);
+    await navigateAndValidateViewPage(page, thisStoreData);
+    await validateFormData(page, formDetails);
   }
 }
 
 /**
- * The validateSent function.
+ * The validateProfileData function.
+ *
+ * This function validates profile data on the
+ * "/oma-asiointi/hakuprofiili" page.
  *
  * @param page
  *   Page object from Playwright.
  * @param formDetails
  *   The form data.
- * @param thisStoreData
- *   The env form data.
+ * @param formKey
+ *   The form variant key.
+ * @param profileType
+ *   The profile type we are validating.
  */
-const validateSent = async (
+const validateProfileData = async (
   page: Page,
   formDetails: FormData,
-  thisStoreData: any
+  formKey: string,
+  profileType: string,
 ) => {
-  logger('Validate RECEIVED', thisStoreData);
+  await navigateAndValidateProfilePage(page, profileType);
+  await validateFormData(page, formDetails);
+}
+
+
+/**
+ * The validateExistingProfileData function.
+ *
+ * This function validates only an existing profiles data
+ * on the "/oma-asiointi/hakuprofiili" page.
+ *
+ * The existing profile data originates from
+ * PROFILE_INPUT_DATA inside profile_input_data.ts.
+ *
+ * This data is tested in the situation where a new profile is NOT
+ * created when the tests are executed, but we still want to make
+ * sure that the profile has the correct information from a previous
+ * test.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param profileType
+ *   The profile type we are validating.
+ */
+const validateExistingProfileData = async (
+  page: Page,
+  profileType: string,
+) => {
+
+  // Grab the hard-coded input data and filter the
+  // data depending on the profile type.
+  let profileInputData: Partial<ProfileInputData> = PROFILE_INPUT_DATA;
+
+  if (profileType === 'private_person') {
+    const privatePersonFields = [
+      'iban',
+      'iban2',
+      'address',
+      'zipCode',
+      'city',
+      'phone'
+    ];
+
+    profileInputData = Object.keys(PROFILE_INPUT_DATA)
+      .filter((key): key is keyof ProfileInputData => privatePersonFields.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = PROFILE_INPUT_DATA[key];
+        return obj;
+      }, {} as Partial<ProfileInputData>);
+  }
+
+  // Navigate to the profile page.
+  await navigateAndValidateProfilePage(page, profileType);
+
+  // Validate the existing profiles data.
+  const profileDataWrapper = await page.locator('.grants-profile');
+  const profileData = await profileDataWrapper.textContent();
+  const validationErrors: string[] = [];
+
+  if (profileData) {
+    for (const [key, value] of Object.entries(profileInputData)) {
+      if (!profileData.includes(value)) {
+        validationErrors.push( `Profile data "${key}" with value "${value}" not found on profile page.`)
+      }
+    }
+  } else {
+    validationErrors.push(`Profile data not found on profile page.`)
+  }
+
+  expect(validationErrors).toEqual([]);
+  logger('Existing profile data validated.')
 }
 
 /**
@@ -69,17 +147,11 @@ const validateSent = async (
  *   Page object from Playwright.
  * @param formDetails
  *   The form data.
- * @param thisStoreData
- *   The env form data.
  */
-const validateDraft = async (
+const validateFormData = async (
   page: Page,
   formDetails: FormData,
-  thisStoreData: any
 ) => {
-
-  // Navigate to the applications "View" page and make sure we get to it.
-  await navigateAndValidateViewPage(page, thisStoreData);
 
   // Initialize message containers.
   const skipMessages: string[] = [];
@@ -118,7 +190,7 @@ const validateDraft = async (
   // Assert no validation errors.
   expect(validationErrors).toEqual([]);
   // Log results.
-  logDraftValidationResults(skipMessages, noValueMessages, validationSuccesses)
+  logValidationResults(skipMessages, noValueMessages, validationSuccesses);
 }
 
 /**
@@ -233,17 +305,28 @@ const validateField = async (
   let rawInputValue = itemField.value
   let formattedInputValue = itemField.viewPageFormatter ? itemField.viewPageFormatter(rawInputValue) : rawInputValue;
 
-  // Get the item's selector.
+  // Get the item's selector or selectors.
+  let itemSelectors: string[] = [];
   let itemSelector = itemField.viewPageSelector ? itemField.viewPageSelector : viewPageBuildSelectorForItem(itemKey);
+
+  // Check for multiple values inside viewPageSelectors.
+  if (itemField.viewPageSelectors) {
+    itemSelectors = itemField.viewPageSelectors;
+  } else {
+    itemSelectors.push(itemSelector);
+  }
 
   // Attempt to locate the item and see if the input value matches the content on the page.
   try {
-    const targetItem = await page.locator(itemSelector);
-    const targetItemText = await targetItem.textContent({ timeout: 1000 });
-    if (targetItemText && targetItemText.includes(formattedInputValue)) {
-      validationSuccessCallback(constructMessage(MessageType.ValidationSuccess, itemKey, rawInputValue, formattedInputValue, itemSelector, targetItemText));
-    } else {
-      validationErrorCallback(constructMessage(MessageType.ValidationError, itemKey, rawInputValue, formattedInputValue, itemSelector, targetItemText));
+    for (const selector of itemSelectors) {
+      const targetItem = await page.locator(selector);
+      const targetItemText = await targetItem.textContent({ timeout: 1000 });
+
+      if (targetItemText && targetItemText.includes(formattedInputValue)) {
+        validationSuccessCallback(constructMessage(MessageType.ValidationSuccess, itemKey, rawInputValue, formattedInputValue, selector, targetItemText));
+      } else {
+        validationErrorCallback(constructMessage(MessageType.ValidationError, itemKey, rawInputValue, formattedInputValue, selector, targetItemText));
+      }
     }
   } catch (error) {
     validationErrorCallback(constructMessage(MessageType.ContentNotFound, itemKey, rawInputValue, formattedInputValue, itemSelector));
@@ -270,11 +353,71 @@ const navigateAndValidateViewPage = async (
 
   const applicationId = thisStoreData.applicationId;
   const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
-  await page.goto(viewPageURL, {timeout: 10000});
+  await page.goto(viewPageURL);
+  await logCurrentUrl(page);
+  await page.waitForURL('**/katso');
   const applicationIdContainer = await page.locator('.webform-submission__application_id');
   const applicationIdContainerText = await applicationIdContainer.textContent();
   expect(applicationIdContainerText).toContain(applicationId);
   logger('Draft validation on page:', viewPageURL);
+}
+
+/**
+ * The navigateAndValidateProfilePage function.
+ *
+ * This function navigates to the "Profile"
+ * page and makes sure that we get to it. This is done
+ * so that we can validate the input profile data
+ * against the resulting data on the "Profile" page.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param profileType
+ *   The profile type we are validating.
+ */
+const navigateAndValidateProfilePage = async (
+  page: Page,
+  profileType: string
+) => {
+
+  const profilePageURL = '/fi/oma-asiointi/hakuprofiili';
+  await page.goto(profilePageURL);
+  await logCurrentUrl(page);
+
+  const headingMap: Record<string, string> = {
+    registered_community: 'Yhteisön tiedot avustusasioinnissa',
+    unregistered_community: 'Yhteisön tai ryhmän tiedot avustusasioinnissa',
+    private_person: 'Omat yhteystiedot',
+  };
+
+  let expectedHeading = headingMap[profileType];
+  let headingContainer = await page.locator('.info-grants');
+
+  await expect(headingContainer, `Failed to locate "${expectedHeading}" on "${profilePageURL}".`).toContainText(expectedHeading);
+  logger('Profile data validation on page:', profilePageURL);
+}
+
+/**
+ * The validateHiddenFields function.
+ *
+ * This function checks that the passed in items
+ * in itemsToBeHidden are not visible on a given page.
+ * The functionality is used in tests where the value of
+ * field X alters the visibility of field Y.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param itemsToBeHidden
+ *   An array of items that should be hidden.
+ * @param formPageKey
+ *   The form page we are on.
+ */
+const validateHiddenFields = async (page: Page, itemsToBeHidden: string[], formPageKey: string) => {
+  for (const hiddenItem of itemsToBeHidden) {
+    const hiddenSelector = `[data-drupal-selector="${hiddenItem}"]`;
+    await expect(page.locator(hiddenSelector), `Field ${hiddenItem} is not hidden on ${formPageKey}.`).not.toBeVisible();
+    logger(`Field ${hiddenItem} is hidden on ${formPageKey}.`)
+  }
 }
 
 /**
@@ -337,10 +480,10 @@ const constructMessage = (
 }
 
 /**
- * The logDraftValidationResults function.
+ * The logValidationResults function.
  *
- * This function log messages related to
- * the draft validation process.
+ * This function logs messages related to
+ * the validation process.
  *
  * @param skipMessages
  *   Array of messages for skipped items.
@@ -349,7 +492,7 @@ const constructMessage = (
  * @param validationSuccesses
  *   Array of detailed messages for successful validations.
  */
-const logDraftValidationResults = (
+const logValidationResults = (
   skipMessages: string[],
   noValueMessages: string[],
   validationSuccesses: string[]
@@ -369,5 +512,9 @@ const logDraftValidationResults = (
 };
 
 export {
-  validateSubmission
+  validateSubmission,
+  validateProfileData,
+  validateFormData,
+  validateExistingProfileData,
+  validateHiddenFields,
 }

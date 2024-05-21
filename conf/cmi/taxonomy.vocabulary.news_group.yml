@@ -1,5 +1,5 @@
 uuid: 47adbb2c-08b0-4bed-a2fe-4bcd2c5c737d
-langcode: fi
+langcode: en
 status: true
 dependencies: {  }
 name: 'News Group'

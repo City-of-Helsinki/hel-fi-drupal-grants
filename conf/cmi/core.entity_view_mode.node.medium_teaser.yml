@@ -1,5 +1,5 @@
 uuid: 1cdbc9d0-b83f-414c-b923-7f1d6060bfc6
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -8,5 +8,6 @@ _core:
   default_config_hash: nfD5YCnsOB1VlfTq8e5AAzDeyGcGfwdoi0U6uHWYVM8
 id: node.medium_teaser
 label: 'Medium Teaser'
+description: ''
 targetEntityType: node
 cache: true

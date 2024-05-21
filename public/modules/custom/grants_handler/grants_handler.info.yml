@@ -2,8 +2,9 @@ name: 'Grants Handler'
 type: module
 description: 'Grant applications webform handler module.'
 package: 'helfi'
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^9 || ^10
 dependencies:
+  - openid_connect_logout_redirect:openid_connect_logout_redirect
   - grants_attachments
   - 'webform:webform'
   - grants_metadata

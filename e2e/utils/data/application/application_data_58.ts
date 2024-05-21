@@ -2,7 +2,7 @@ import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
 import {PROFILE_INPUT_DATA} from "../profile_input_data";
 import {ATTACHMENTS} from "../attachment_data";
-import {createFormData} from "../../form_helpers";
+import {createFormData} from "../../form_data_helpers";
 import {
   viewPageFormatAddress,
   viewPageFormatCurrency,
@@ -63,10 +63,10 @@ const baseFormRegisteredCommunity_58: FormData = {
           role: 'select',
           selector: {
             type: 'dom-id-first',
-            name: 'bank-account-selector',
+            name: '',
             value: '#edit-acting-year',
           },
-          value: '2024',
+          viewPageSkipValidation: true,
         },
         'edit-orienteering-maps': {
           role: 'multivalue',
@@ -202,22 +202,41 @@ const baseFormRegisteredCommunity_58: FormData = {
           role: 'input',
           value: faker.lorem.sentences(3),
         },
-        'edit-muu-liite-items-0-item-attachment-upload': {
-          role: 'fileupload',
-          selector: {
-            type: 'locator',
-            name: 'data-drupal-selector',
-            value: '[name="files[muu_liite_items_0__item__attachment]"]',
-            resultValue: '.form-item-muu-liite-items-0--item--attachment a',
+        "edit-muu-liite": {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-muu-liite-add-submit',
+              resultValue: 'edit-muu-liite-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'fileupload',
+                  selector: {
+                    type: 'locator',
+                    name: 'data-drupal-selector',
+                    value: '[name="files[muu_liite_items_[INDEX]__item__attachment]"]',
+                    resultValue: '.form-item-muu-liite-items-[INDEX]--item--attachment a',
+                  },
+                  value: ATTACHMENTS.MUU_LIITE,
+                  viewPageFormatter: viewPageFormatFilePath
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-muu-liite-items-[INDEX]-item-description',
+                  },
+                  value: faker.lorem.sentences(1),
+                },
+              ],
+            },
           },
-          value: ATTACHMENTS.MUU_LIITE,
-          viewPageSelector: '.form-item-muu-liite',
-          viewPageFormatter: viewPageFormatFilePath
-        },
-        'edit-muu-liite-items-0-item-description': {
-          role: 'input',
-          value: faker.lorem.sentences(1),
-          viewPageSelector: '.form-item-muu-liite',
         },
         "edit-extra-info": {
           value: faker.lorem.sentences(2),
@@ -282,7 +301,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
@@ -315,20 +333,71 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
     },
     "2_avustustiedot": {
       items: {
-        "edit-orienteering-maps-items-0-item-voluntaryhours": {
-          value: '15',
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-orienteering-maps-items-0-item-cost": {
-          value: '100',
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
-        },
-        "edit-orienteering-maps-items-0-item-othercompensations": {
-          value: '2000',
-          viewPageSelector: '.form-item-orienteering-maps',
-          viewPageFormatter: viewPageFormatNumber,
+        'edit-orienteering-maps': {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-orienteering-maps-add-submit',
+              resultValue: 'edit-orienteering-maps-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-mapname',
+                  },
+                  value: faker.lorem.sentences(4),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-size',
+                  },
+                  value: faker.number.int({min: 12, max: 5000}).toString(),
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-voluntaryhours',
+                  },
+                  value: '15',
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-cost',
+                  },
+                  value: '100',
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector-sequential',
+                    name: 'data-drupal-selector',
+                    value: 'edit-orienteering-maps-items-[INDEX]-item-othercompensations',
+                  },
+                  value: '2000',
+                  viewPageFormatter: viewPageFormatNumber,
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
         },
       },
     },
@@ -337,9 +406,8 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite ääkkösiävaa ei kelpaa.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: ääkkösiävaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
     'edit-orienteering-maps-items-0-item-othercompensations': 'Virhe sivulla 2. Avustustiedot: Arvo ei voi olla suurempi kuin "Talkootyö tuntia" ja "Kustannukset euroa" kenttien summa.',
   },
 };
@@ -356,13 +424,13 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
             type: 'data-drupal-selector',
             name: 'data-drupal-selector',
             value: 'edit-actions-submit',
-          }
+          },
+          viewPageSkipValidation: true
         },
       },
       itemsToRemove: [],
     },
   },
-  expectedDestination: '',
   expectedErrors: {},
 };
 

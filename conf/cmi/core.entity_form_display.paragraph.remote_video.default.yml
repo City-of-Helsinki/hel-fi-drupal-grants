@@ -13,6 +13,8 @@ dependencies:
   module:
     - media_library
     - text
+_core:
+  default_config_hash: VflHWgcqxxjyQ5dI9XiXzqbtlh7Pl2_qqR3bz8Zj1jg
 id: paragraph.remote_video.default
 targetEntityType: paragraph
 bundle: remote_video

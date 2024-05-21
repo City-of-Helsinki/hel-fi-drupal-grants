@@ -3,6 +3,10 @@
   Drupal.behaviors.themeCommon = {
     attach: function attach() {
       $(document).ready(function () {
+        $('input:not(.js-webform-input-mask), textarea').on("change", function () {
+          this.value = $.trim($(this).val());
+        });
+
         const queryString = window.location.search;
         const subString = "items_per_page=";
 

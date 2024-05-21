@@ -5,6 +5,8 @@ dependencies:
   module:
     - options
     - paragraphs
+_core:
+  default_config_hash: lOHo2tNMLuDfRpxwxZQRYlZkedq3z7_M_L8eDWyc4rc
 id: paragraph.field_phasing_item_title_level
 field_name: field_phasing_item_title_level
 entity_type: paragraph

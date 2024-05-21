@@ -1,5 +1,5 @@
 uuid: 22918cbe-a173-4f32-b015-a3232a958ac1
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -77,6 +77,7 @@ is_admin: null
 permissions:
   - 'access administration pages'
   - 'access any webform configuration'
+  - 'access block library'
   - 'access content overview'
   - 'access entity usage statistics'
   - 'access files overview'
@@ -94,6 +95,8 @@ permissions:
   - 'access webform submission log'
   - 'access webform submission user'
   - 'administer account settings'
+  - 'administer block content'
+  - 'administer block types'
   - 'administer block_content display'
   - 'administer block_content fields'
   - 'administer block_content form display'
@@ -101,7 +104,6 @@ permissions:
   - 'administer content types'
   - 'administer display modes'
   - 'administer easy breadcrumb'
-  - 'administer entity print'
   - 'administer eu cookie compliance categories'
   - 'administer eu cookie compliance popup'
   - 'administer grants_attachments configuration'
@@ -162,13 +164,11 @@ permissions:
   - 'administer webform'
   - 'administer webform element access'
   - 'administer webform submission'
-  - 'assign admin role'
   - 'assign all roles'
   - 'assign content_producer role'
   - 'assign editor role'
   - 'assign read_only role'
   - 'break content lock'
-  - 'bypass entity print access'
   - 'bypass node access'
   - 'cancel account'
   - 'change own username'
@@ -212,6 +212,7 @@ permissions:
   - 'delete own address content'
   - 'delete own announcement content'
   - 'delete own file media'
+  - 'delete own files'
   - 'delete own form_page content'
   - 'delete own hel_map media'
   - 'delete own helfi_chart media'
@@ -266,7 +267,6 @@ permissions:
   - 'edit webform source'
   - 'edit webform twig'
   - 'edit webform variants'
-  - 'entity print access bundle paragraph_verkkolomake'
   - 'link to any page'
   - 'notify of path changes'
   - 'openid connect set own password'
@@ -290,7 +290,6 @@ permissions:
   - 'translate configuration'
   - 'translate editable entities'
   - 'translate file media'
-  - 'translate hauki_resource'
   - 'translate image media'
   - 'translate interface'
   - 'translate keywords taxonomy_term'

@@ -7,11 +7,11 @@ import {
 import {
   unRegisteredCommunityApplications as originalUnRegisteredCommunityApplications
 } from "./application/application_data_unregistered_community";
-import {filterOutDisabledFormVariants} from "../form_variant_helpers";
+import {getFormVariantsForTests} from "../form_variant_helpers";
 
-const privatePersonApplications = filterOutDisabledFormVariants(originalPrivatePersonApplications);
-const registeredCommunityApplications = filterOutDisabledFormVariants(originalRegisteredCommunityApplications);
-const unRegisteredCommunityApplications = filterOutDisabledFormVariants(originalUnRegisteredCommunityApplications);
+const privatePersonApplications = getFormVariantsForTests(originalPrivatePersonApplications);
+const registeredCommunityApplications = getFormVariantsForTests(originalRegisteredCommunityApplications);
+const unRegisteredCommunityApplications = getFormVariantsForTests(originalUnRegisteredCommunityApplications);
 
 export {
   privatePersonApplications,

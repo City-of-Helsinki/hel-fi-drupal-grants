@@ -42,6 +42,7 @@ elements: |
     '#help': '<p>If you want to add, delete or change people, save the application as a draft and go to maintain the people''s information in your own data.</p>'
     '#title': 'Persons responsible for operations'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
@@ -56,7 +57,7 @@ elements: |
   subventions:
     '#title': Grants
   markup:
-    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
+    '#markup': '<p>Only apply for one grant type at a time with each application. Enter the amount only regarding the year that you are applying the grant for with this application.</p>'
   info_kyseessa_on_monivuotinen_avustus:
     '#markup': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
@@ -182,6 +183,8 @@ elements: |
   tila:
     '#title': Premises
     '#multiple__no_items_message': '<p>No premises entered. Add the premise information below.</p>'
+    '#multiple__item_label': 'premise'
+    '#multiple__add_more_button_label': 'Add new premise'
   aikataulu:
     '#title': Schedule
   festivaalin_tai_tapahtuman_paivamaarat:
@@ -261,7 +264,9 @@ elements: |
     '#markup': '<h4>Planned expenses</h4>'
   budget_other_cost:
     '#title': 'Other costs'
-    '#help': "Add below all the project's planned expenses by expense category."
+    '#description': "Add below all the project's planned expenses by expense category."
+    '#multiple__add_more_button_label': 'Add new cost'
+    '#multiple__item_label': 'cost'
   muu_huomioitava_panostus:
     '#markup': '<h4>Other notable input</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
@@ -277,7 +282,14 @@ elements: |
   liitteet:
     '#title': Attachments
   attachments_info:
-    '#markup': "<p>All the attachments listed below must be submitted for the processing of the grant application. The<br role=\"presentation\" />\r\ngrant application may be rejected if the attachments are not submitted. If any of the attachments is<br role=\"presentation\" />\r\nmissing, let us know in the Further clarification on attachments section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nFor the processing of the grant application, the required attachments are a project plan for the<br role=\"presentation\" />\r\napplied period and a budget for the applied period.<br />\r\n<br role=\"presentation\" />\r\nAs a new applicant or when your banking information has changed, you are also required to submit<br role=\"presentation\" />\r\na bank statement or similar document indicating the account holder’s name and the account<br role=\"presentation\" />\r\nnumber in the applicant’s my data.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”</p>"
+    '#markup': |-
+      <p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.
+      </p>
+      <h4>Required attachments</h4>
+      <p>For the processing of the grant application, the required attachments are a project plan for the applied period and a budget for the applied period.</p>
+      <p>As a new applicant or when your banking information has changed, you are also required to submit a bank statement or similar document indicating the account holder’s name and the account number in the applicant’s my data.</p>
+      <h4>Submission of several attachments as a single file</h4>
+      <p>If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>"
   projektisuunnitelma_liite:
@@ -318,5 +330,6 @@ elements: |
 settings:
   preview_label: '8. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
+  wizard_confirmation_label: '9. Complete'
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'

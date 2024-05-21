@@ -1,22 +1,14 @@
 import {Page, test} from '@playwright/test';
-import {logger} from "../../utils/logger";
-import {
-  FormData,
-  FormPage,
-  PageHandlers,
-} from '../../utils/data/test_data';
-import {
-  fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity, fillInputField,
-  hideSlidePopup, uploadFile, fillFormField
-} from '../../utils/form_helpers';
-
-import {
-  registeredCommunityApplications as applicationData
-} from '../../utils/data/application_data';
-import {selectRole} from '../../utils/auth_helpers';
-import {getObjectFromEnv} from '../../utils/helpers';
-import {validateSubmission} from '../../utils/validation_helpers';
+import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
+import {fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity,} from "../../utils/form_helpers";
+import {selectRole} from "../../utils/auth_helpers";
+import {getObjectFromEnv} from "../../utils/env_helpers";
+import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
+import {copyApplication} from "../../utils/copying_helpers";
+import {fillFormField, uploadFile} from "../../utils/input_helpers";
+import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
+import {swapFieldValues} from "../../utils/field_swap_helpers";
 
 const profileType = 'registered_community';
 const formId = '57';
@@ -28,8 +20,7 @@ const formPages: PageHandlers = {
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-acting-year']) {
-      await page.locator('#edit-acting-year')
-        .selectOption(items['edit-acting-year'].value ?? '');
+      await fillFormField(page, items['edit-acting-year'], 'edit-acting-year');
     }
 
     if (items['edit-subventions-items-1-amount']) {
@@ -79,15 +70,6 @@ const formPages: PageHandlers = {
     if (items['edit-additional-information']) {
       await page.getByRole('textbox', {name: 'Lisätiedot'})
         .fill(items['edit-additional-information'].value ?? '');
-    }
-
-    if (items['edit-yhteison-saannot-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-yhteison-saannot-attachment-upload'].selector?.value ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-yhteison-saannot-attachment-upload'].value
-      )
     }
 
     if (items['edit-vahvistettu-tilinpaatos-attachment-upload']) {
@@ -144,26 +126,8 @@ const formPages: PageHandlers = {
       )
     }
 
-    if (items['edit-muu-liite-items-0-item-attachment-upload']) {
-      await uploadFile(
-        page,
-        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.value ?? '',
-        items['edit-muu-liite-items-0-item-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-muu-liite-items-0-item-attachment-upload'].value
-      )
-    }
-
-    if (items['edit-muu-liite-items-0-item-description']) {
-      await fillInputField(
-        items['edit-muu-liite-items-0-item-description'].value ?? '',
-        items['edit-muu-liite-items-0-item-description'].selector ?? {
-          type: 'data-drupal-selector',
-          name: 'data-drupal-selector',
-          value: 'edit-muu-liite-items-0-item-description',
-        },
-        page,
-        'edit-muu-liite-items-0-item-description'
-      );
+    if (items['edit-muu-liite']) {
+      await fillFormField(page, items['edit-muu-liite'], 'edit-muu-liite')
     }
 
     if (items['edit-extra-info']) {
@@ -180,27 +144,22 @@ const formPages: PageHandlers = {
   },
 };
 
-
 test.describe('LIIKUNTALAITOS(57)', () => {
   let page: Page;
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
-
-    // page.locator = slowLocator(page, 10000);
-
     await selectRole(page, 'REGISTERED_COMMUNITY');
   });
 
-  // @ts-ignore
+  test.afterAll(async() => {
+    await page.close();
+  });
+
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
 
   for (const [key, obj] of testDataArray) {
-
     test(`Form: ${obj.title}`, async () => {
-
-
-
       await fillGrantsFormPage(
         key,
         page,
@@ -209,16 +168,43 @@ test.describe('LIIKUNTALAITOS(57)', () => {
         obj.formSelector,
         formId,
         profileType,
-        formPages);
+        formPages
+      );
     });
   }
 
+  for (const [key, obj] of testDataArray) {
+    if (!obj.testFormCopying) continue;
+    test(`Copy form: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await copyApplication(
+        key,
+        profileType,
+        formId,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
 
   for (const [key, obj] of testDataArray) {
-    if (obj.viewPageSkipValidation) continue;
+    if (!obj.testFieldSwap) continue;
+    test(`Field swap: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await swapFieldValues(
+        key,
+        page,
+        obj,
+        storedata
+      );
+    });
+  }
+
+  for (const [key, obj] of testDataArray) {
+    if (obj.viewPageSkipValidation || obj.testFormCopying || obj.testFieldSwap) continue;
     test(`Validate: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
-      // expect(storedata).toBeDefined();
       await validateSubmission(
         key,
         page,
@@ -229,7 +215,7 @@ test.describe('LIIKUNTALAITOS(57)', () => {
   }
 
   for (const [key, obj] of testDataArray) {
-    test(`Delete DRAFTS: ${obj.title}`, async () => {
+    test(`Delete drafts: ${obj.title}`, async () => {
       const storedata = getObjectFromEnv(profileType, formId);
       await deleteDraftApplication(
         key,
@@ -239,6 +225,5 @@ test.describe('LIIKUNTALAITOS(57)', () => {
       );
     });
   }
-
 
 });

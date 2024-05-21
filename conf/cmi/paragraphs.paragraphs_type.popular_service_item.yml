@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: 2bMZkUDyWvsIuHFmjQt91AdkLTKouO-E3eBtDLrGLeM
+  default_config_hash: jy5_nKpUwT7lHJfYdALMFdmsRCYcN5TbmoXaIcc6tiA
 id: popular_service_item
 label: 'Popular service item'
 icon_uuid: null

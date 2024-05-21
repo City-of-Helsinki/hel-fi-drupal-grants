@@ -3,7 +3,20 @@
  * JavaScript behaviors for unsaved webforms.
  */
 
-(function ($, Drupal) {
+(function ($, Drupal, once) {
+  /**
+   * Dear future developer of this file,
+   *
+   * This is a javascript file that is imported as an override. This means that
+   * any Drupal.t function calls made here will not get passed to drupalTranslations
+   * variable, so you need to call those again in a Javascript function that you call
+   * in a file that you attach the regular way. In this file's case, that file is
+   * webform-additions.js that is used in all the places this override is used
+   * in as well.
+   *
+   * Yours,
+   * Past developer.
+   */
 
   'use strict';
 
@@ -37,12 +50,11 @@
       // Look for the 'data-webform-unsaved' attribute which indicates that
       // a multi-step webform has unsaved data.
       // @see \Drupal\webform\WebformSubmissionForm::buildForm
-
-      if ($('.js-webform-unsaved[data-webform-unsaved]').once('data-webform-unsaved').length) {
+      if ($(once('data-webform-unsaved', '.js-webform-unsaved[data-webform-unsaved]')).length) {
         unsaved = true;
       }
       else {
-        $('.js-webform-unsaved :input:not(:button, :submit, :reset, [type="hidden"])').once('webform-unsaved').on('change keypress', function (event, param1) {
+        $(once('webform-unsaved', $('.js-webform-unsaved :input:not(:button, :submit, :reset, [type="hidden"])'))).on('change keypress', function (event, param1) {
           // Ignore events triggered when #states API is changed,
           // which passes 'webform.states' as param1.
           // @see webform.states.js ::triggerEventHandlers().
@@ -52,9 +64,7 @@
         });
       }
 
-      $('.js-webform-unsaved button, .js-webform-unsaved input[type="submit"]', context)
-        .once('webform-unsaved')
-        .not('[data-webform-unsaved-ignore]')
+      $(once('webform-unsaved', $('.js-webform-unsaved button, .js-webform-unsaved input[type="submit"]', context))).not('[data-webform-unsaved-ignore]')
         .on('click', function (event) {
           // For reset button we must confirm unsaved changes before the
           // before unload event handler.
@@ -91,7 +101,7 @@
   };
   $('a').on('click', function (event) {
     let containingElement = document.querySelector('form');
-    if (unsaved && !containingElement.contains( event.target )) {
+    if (unsaved && !containingElement.contains( event.target ) && !event.target.getAttribute('href').startsWith('#')) {
       event.preventDefault();
       const $previewDialog = $(
         `<div></div>`,
@@ -99,6 +109,7 @@
       Drupal.dialog($previewDialog, {
         title: Drupal.t('Are you sure you want to leave? Leave without saving.'),
         width: '33%',
+        closeText: Drupal.t('Close', {}, {context: 'grants_handler'}),
         buttons: [
           {
             text: Drupal.t('Leave the application'),
@@ -179,4 +190,4 @@
     });
   });
 
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);

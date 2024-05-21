@@ -18,7 +18,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
   /**
    * The modules to load to run the test.
    *
-   * @var array
+   * @var array<string>
    */
   protected static $modules = [
     // Drupal modules.
@@ -27,9 +27,13 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
     'file',
     'node',
     'system',
+    'language',
+    'locale',
+    'locale_test',
     // Contribs from drupal.org.
     'webform',
     'openid_connect',
+    'openid_connect_logout_redirect',
     // Contrib hel.fi modules.
     'helfi_audit_log',
     'helfi_helsinki_profiili',
@@ -41,6 +45,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
     'grants_attachments',
     'grants_budget_components',
     'grants_club_section',
+    'grants_mandate',
     'grants_metadata',
     'grants_handler',
     'grants_premises',

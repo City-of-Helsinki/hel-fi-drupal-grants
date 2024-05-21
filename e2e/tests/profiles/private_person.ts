@@ -1,105 +1,73 @@
-import {
-  Page,
-  test
-} from '@playwright/test';
+import {expect, Page, test} from '@playwright/test';
 import {logger} from "../../utils/logger";
-
-
+import {runProfileFormTest, isProfileCreated} from '../../utils/profile_helpers';
 import {selectRole} from "../../utils/auth_helpers";
+import {validateExistingProfileData, validateProfileData} from "../../utils/validation_helpers";
+import {profileDataPrivatePerson as profileData, FormData} from '../../utils/data/test_data'
 
-import {
-  isProfileCreated,
-} from '../../utils/profile_helpers';
-import {
-  fillProfileForm,
-} from '../../utils/form_helpers'
-
-import {
-  profileDataPrivatePerson,
-  FormData,
-} from '../../utils/data/test_data'
-
-import {
-  deleteGrantsProfiles
-} from "../../utils/document_helpers";
-
-// Define a type for testResults
-type TestResults = {
-  numFailedTests?: number;
-  // Add other properties if needed
-};
-
-// Extend the globalThis type to include testResults
-declare global {
-  var testResults: TestResults | undefined;
-}
-const profileVariableName = 'profileCreatedPrivate';
-const profileType = 'private_person';
-
-test.describe('Private Person - Grants Profile', async () => {
+test.describe('Private person - Grants Profile', () => {
   let page: Page;
+  let profileExists: boolean;
+  let validateExistingProfile: boolean = false;
+  const testDataArray: [string, FormData][] = Object.entries(profileData);
+  const profileType = 'private_person';
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
-
-    // page.locator = slowLocator(page, 500);
-
     await selectRole(page, 'PRIVATE_PERSON');
+    profileExists = await isProfileCreated(profileType);
   });
 
-  test.beforeEach(async () => {
-    /*
-    1. If you want to skip tests during test declaration, you should use test.skip() inside the test.describe() callback.
-    2. If you want to skip tests during test execution, you should use test.skip() inside the beforeEach() hook.
-    */
-    const skip = await isProfileCreated(profileVariableName, profileType);
-    test.skip(skip);
+  test.afterAll(async() => {
+    expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
+    logger(`Profile exist for: ${profileType}`);
+    await page.close();
   });
 
-  // @ts-ignore
-  test('Profile creation', async () => {
-    const testDataArray: [string, FormData][] = Object.entries(profileDataPrivatePerson);
-    let successTest: FormData;
+  test('Profile form tests', async () => {
+    if (profileExists) {
+      logger('Profile already exists, skipping test.');
+      test.skip(profileExists);
+    }
+
+    logger('Running profile form tests.')
+    for (const [key, formData] of testDataArray) {
+      if (key === 'success') continue;
+      await runProfileFormTest(page, formData, profileType);
+    }
+
+    const successTestFormData = testDataArray.find(([key]) => key === 'success')?.[1];
+    if (successTestFormData) await runProfileFormTest(page, successTestFormData, profileType);
+  });
+
+  test('Validate profile data', async () => {
+    if (profileExists) {
+      logger('Profile already exists, skipping test.');
+      test.skip(profileExists);
+    }
+
+    logger('Validating profile form data.')
     for (const [key, obj] of testDataArray) {
-
-      if (key === 'success') {
-        successTest = obj;
-      } else {
-        // We must delete here manually profiles, since we don't want to do this always.
-        const deletedDocumentsCount = await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
-
-        const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-        logger(infoText);
-
-        await fillProfileForm(page, obj, obj.formPath, obj.formSelector);
-        // ehkä tähän väliin pitää laittaa tapa testata tallennuksen onnistumista?
-      }
+      if (obj.viewPageSkipValidation) continue;
+      await validateProfileData(page, obj, key, profileType);
     }
 
-    // @ts-ignore
-    if (successTest) {
-      // We must delete here manually profiles, since we don't want to do this always.
-      const deletedDocumentsCount = await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
-      const infoText = `Deleted ${deletedDocumentsCount} grant profiles from ATV)`;
-      logger(infoText, successTest.formSelector);
+    // Since profile data was just validated, there is no need to validate an exciting profile.
+    validateExistingProfile = true;
+    process.env[`profile_exists_${profileType}`] = 'TRUE';
+  });
 
-      await fillProfileForm(page, successTest, successTest.formPath ?? '', successTest.formSelector);
+  test('Validate existing profile', async () => {
+    if (validateExistingProfile) {
+      logger('Data already validated, skipping test.');
+      test.skip(validateExistingProfile);
     }
-  })
-})
 
-test.afterAll(() => {
-  // @ts-ignore
-  const hasFailedTests = globalThis.testResults?.numFailedTests > 0;
+    logger('Validating existing profile data.')
+    await validateExistingProfileData(page, profileType);
+    process.env[`profile_exists_${profileType}`] = 'TRUE';
+  });
 
-  // tässä vois ehkä vielä ihan tarkistaa jostain, että profiili löytyy oikeesti atvsta..
-
-  if (hasFailedTests) {
-    logger('There were failed tests in this test file.');
-    process.env.profileExistsPrivate = 'FALSE';
-  } else {
-    logger('All tests in this file passed.');
-    process.env.profileExistsPrivate = 'TRUE';
-  }
 });
+
 

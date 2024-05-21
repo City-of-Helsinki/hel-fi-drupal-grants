@@ -5,6 +5,7 @@ namespace Drupal\grants_metadata;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
+use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\Element\GrantsAttachments as GrantsAttachmentsElement;
 use Drupal\webform\Entity\Webform;
 
@@ -45,205 +46,228 @@ class TypedDataToDocumentContentWithWebform {
 
     $elements = $webform->getElementsDecodedAndFlattened();
     $documentStructure = [];
+    if (is_iterable($typedData)) {
+      foreach ($typedData as $property) {
 
-    foreach ($typedData as $property) {
+        // Get the property name and modify it the first time.
+        $propertyName = $property->getName();
+        $propertyName = self::modifyPropertyName($propertyName, TRUE);
 
-      // Get the property name and modify it the first time.
-      $propertyName = $property->getName();
-      $propertyName = self::modifyPropertyName($propertyName, TRUE);
+        // Load various settings.
+        $definition = $property->getDataDefinition();
+        $addConditionallyConfig = $definition->getSetting('addConditionally');
+        $skipZeroValue = $definition->getSetting('skipZeroValue');
+        $jsonPath = $definition->getSetting('jsonPath');
+        $requiredInJson = $definition->getSetting('requiredInJson');
+        $defaultValue = $definition->getSetting('defaultValue');
+        $valueCallback = $definition->getSetting('valueCallback');
+        $fullItemValueCallback = $definition->getSetting('fullItemValueCallback');
+        $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
+        $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
+        // Load the item value.
+        $value = AtvSchema::sanitizeInput($property->getValue());
+        $itemTypes = AtvSchema::getJsonTypeForDataType($definition);
+        $itemValue = AtvSchema::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
 
-      // Load various settings.
-      $definition = $property->getDataDefinition();
-      $addConditionallyConfig = $definition->getSetting('addConditionally');
-      $skipZeroValue = $definition->getSetting('skipZeroValue');
-      $jsonPath = $definition->getSetting('jsonPath');
-      $requiredInJson = $definition->getSetting('requiredInJson');
-      $defaultValue = $definition->getSetting('defaultValue');
-      $valueCallback = $definition->getSetting('valueCallback');
-      $fullItemValueCallback = $definition->getSetting('fullItemValueCallback');
-      $propertyStructureCallback = $definition->getSetting('propertyStructureCallback');
-      $hiddenFields = $definition->getSetting('hiddenFields') ?? [];
-
-      // Load the item value.
-      $value = AtvSchema::sanitizeInput($property->getValue());
-      $itemTypes = AtvSchema::getJsonTypeForDataType($definition);
-      $itemValue = AtvSchema::getItemValue($itemTypes, $value, $defaultValue, $valueCallback);
-
-      // Reset these variables to avoid unexpected behaviour inside loop.
-      $webformMainElement = [];
-      $webformLabelElement = [];
-
-      // Check for additional configurations.
-      if ($addConditionallyConfig &&
-          !self::getConditionStatus($addConditionallyConfig, $submittedFormData, $definition)) {
-        continue;
-      }
-
-      // Check that the json path is not null if we have a regular field.
-      if ($jsonPath === NULL && self::isRegularField($propertyName, $webform)) {
-        continue;
-      }
-
-      // Check if the callbacks need to be modified.
-      $propertyStructureCallback = self::modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
-      $fullItemValueCallback = self::modifyCallback($fullItemValueCallback, $webform, $submittedFormData);
-
-      // Handle regular fields.
-      if (self::isRegularField($propertyName, $webform)) {
-        $webformElements = self::getWebformElements($propertyName, $webform);
-        $webformMainElement = $webformElements['webformMainElement'];
-        $webformLabelElement = $webformElements['webformLabelElement'];
-        $propertyName = self::modifyPropertyName($propertyName);
-
-        // Handle regular fields with a property structure callback.
-        if ($propertyStructureCallback) {
-          $documentStructure = array_merge_recursive(
-            $documentStructure,
-            self::buildStructureArrayWithPropertyStructureCallback(
-              $property,
-              $propertyStructureCallback,
-              $webformMainElement,
-              $pages,
-              $elements,
-              $hiddenFields
-            )
-          );
-          continue;
-        }
-
-        // Load metadata. This should not be done here since
-        // it is causing weird behaviours. This metadata can be
-        // loaded here on iteration X of the loop, and the used
-        // further down in the method on iteration Y of the loop.
-        // @todo https://helsinkisolutionoffice.atlassian.net/browse/AU-2055
-        $extractedMetaData = self::extractMetadataFromWebform(
-          $property,
-          $propertyName,
-          $webformMainElement,
-          $webformLabelElement,
-          $pages,
-          $elements
-        );
-
-        $label = $webformLabelElement['#title'];
-        $page = $extractedMetaData['page'];
-        $section = $extractedMetaData['section'];
-        $element = $extractedMetaData['element'];
-
-        InputmaskHandler::addInputmaskToMetadata(
-          $element,
-          $webformMainElement ?? [],
-        );
-
-        $metaData = AtvSchema::getMetaData($page, $section, $element);
-      }
-      // Handle other types of fields.
-      else {
-        $label = $definition->getLabel();
-        $metaData = [];
-
-        if ($propertyStructureCallback) {
-          $documentStructure = array_merge_recursive(
-            $documentStructure,
-            self::getFieldValuesFromFullItemCallback(
-              $propertyStructureCallback,
-              $property,
-            )
-          );
-          continue;
-        }
-      }
-
-      // Special case for attachment fields.
-      if (self::isAttachmentField($propertyName)) {
+        // Reset these variables to avoid unexpected behaviour inside loop.
         $webformMainElement = [];
-        $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
-      }
+        $webformLabelElement = [];
 
-      // Add value translations.
-      if (isset($webformLabelElement['#options'][$itemValue])) {
-        $valueTranslation = $webformLabelElement['#options'][$itemValue];
-        if ($valueTranslation) {
-          $metaData['element']['valueTranslation'] = $valueTranslation;
+        // Check for additional configurations.
+        if ($addConditionallyConfig &&
+          !self::getConditionStatus($addConditionallyConfig, $submittedFormData, $definition)) {
+          continue;
         }
-      }
 
-      // Gather settings for parsing the json structure.
-      $propertyType = $definition->getDataType();
-      $numberOfItems = count($jsonPath);
-      $elementName = array_pop($jsonPath);
-      $baseIndex = count($jsonPath);
-      $schema = PropertySchema::getPropertySchema($elementName, $structure);
-
-      // Continue if the value is empty.
-      if (self::valueIsEmpty($propertyType, $itemValue, $defaultValue, $skipZeroValue)) {
-        continue;
-      }
-
-      // Continue of the json structure is too long.
-      if ($numberOfItems > 5) {
-        \Drupal::logger('grants_metadata')
-          ->error('@field failed parsing, check setup.', ['@field' => $elementName]);
-        continue;
-      }
-
-      // Build a reference to the document structure.
-      $reference = &$documentStructure;
-      foreach ($jsonPath as $path) {
-        if (!isset($reference[$path]) || !is_array($reference[$path])) {
-          $reference[$path] = [];
+        // Check that the json path is not null if we have a regular field.
+        if ($jsonPath === NULL && self::isRegularField($propertyName, $webform)) {
+          continue;
         }
-        $reference = &$reference[$path];
-      }
 
-      // Handle a json structure of the size 5-3.
-      if ($numberOfItems >= 3) {
-        if (is_array($itemValue) && AtvSchema::numericKeys($itemValue)) {
-          if ($fullItemValueCallback) {
-            self::handleFullItemValueCallback($reference, $elementName, $fullItemValueCallback, $property, $requiredInJson);
+        // Check if the callbacks need to be modified.
+        $propertyStructureCallback = self::modifyCallback($propertyStructureCallback, $webform, $submittedFormData);
+        $fullItemValueCallback = self::modifyCallback($fullItemValueCallback, $webform, $submittedFormData);
+
+        // Handle regular fields.
+        if (self::isRegularField($propertyName, $webform)) {
+          $webformElements = self::getWebformElements($propertyName, $webform);
+          $webformMainElement = $webformElements['webformMainElement'];
+          $webformLabelElement = $webformElements['webformLabelElement'];
+          $propertyName = self::modifyPropertyName($propertyName);
+
+          // Handle regular fields with a property structure callback.
+          if ($propertyStructureCallback) {
+            $documentStructure = array_merge_recursive(
+              $documentStructure,
+              self::buildStructureArrayWithPropertyStructureCallback(
+                $property,
+                $propertyStructureCallback,
+                $webformMainElement,
+                $pages,
+                $elements,
+                $hiddenFields
+              )
+            );
+            continue;
+          }
+
+          // Load metadata. This is not the optimal place for this.
+          // It may cause weird behaviour. This metadata can be
+          // loaded here on iteration X of the loop, and the used
+          // further down in the method on iteration Y of the loop.
+          // Ticket https://helsinkisolutionoffice.atlassian.net/browse/AU-2055
+          // fixed this issue for attachments fields.
+          $extractedMetaData = self::extractMetadataFromWebform(
+            $property,
+            $propertyName,
+            $webformMainElement,
+            $webformLabelElement,
+            $pages,
+            $elements
+          );
+
+          $label = $webformLabelElement['#title'];
+          $page = $extractedMetaData['page'];
+          $section = $extractedMetaData['section'];
+          $element = $extractedMetaData['element'];
+
+          InputmaskHandler::addInputmaskToMetadata(
+            $element,
+            $webformMainElement ?? [],
+          );
+
+          $metaData = AtvSchema::getMetaData($page, $section, $element);
+        }
+        // Handle other types of fields.
+        else {
+          $label = $definition->getLabel();
+          $metaData = [];
+
+          if ($propertyStructureCallback) {
+            $documentStructure = array_merge_recursive(
+              $documentStructure,
+              self::getFieldValuesFromFullItemCallback(
+                $propertyStructureCallback,
+                $property,
+              )
+            );
+            continue;
+          }
+        }
+
+        $page = NULL;
+        $section = NULL;
+        $element = NULL;
+
+        // Special case for attachment fields.
+        if (self::isAttachmentField($propertyName)) {
+          // Get attachment fields.
+          $attachmentFieldNames = AttachmentHandler::getAttachmentFieldNamesFromWebform($webform);
+          if (empty($attachmentFieldNames)) {
+            continue;
+          }
+          // Attachments are on the same page.
+          $webformElement = $webform->getElement($attachmentFieldNames[0]);
+          // We are only interested in page and section parts in metadata.
+          $extractedMetaData = self::extractMetadataFromWebform(
+            $property,
+            $propertyName,
+            $webformElement,
+            $webformElement,
+            $pages,
+            $elements
+          );
+          $page = $extractedMetaData['page'];
+          $section = $extractedMetaData['section'];
+          $element = $extractedMetaData['element'];
+          $metaData = AtvSchema::getMetaData($page, $section, $element);
+          $webformMainElement = [];
+          $webformMainElement['#webform_composite_elements'] = GrantsAttachmentsElement::getCompositeElements([]);
+        }
+        // Add value translations.
+        if (isset($webformLabelElement['#options'][$itemValue])) {
+          $valueTranslation = $webformLabelElement['#options'][$itemValue];
+          if ($valueTranslation) {
+            $metaData['element']['valueTranslation'] = $valueTranslation;
+          }
+        }
+
+        // Gather settings for parsing the json structure.
+        $propertyType = $definition->getDataType();
+        $numberOfItems = count($jsonPath);
+        $elementName = array_pop($jsonPath);
+        $baseIndex = count($jsonPath);
+        $schema = PropertySchema::getPropertySchema($elementName, $structure);
+
+        // Continue if the value is empty.
+        if (self::valueIsEmpty($propertyType, $itemValue, $defaultValue, $skipZeroValue)) {
+          continue;
+        }
+
+        // Continue of the json structure is too long.
+        if ($numberOfItems > 5) {
+          \Drupal::logger('grants_metadata')
+            ->error('@field failed parsing, check setup.', ['@field' => $elementName]);
+          continue;
+        }
+
+        // Build a reference to the document structure.
+        $reference = &$documentStructure;
+        foreach ($jsonPath as $path) {
+          if (!isset($reference[$path]) || !is_array($reference[$path])) {
+            $reference[$path] = [];
+          }
+          $reference = &$reference[$path];
+        }
+
+        // Handle a json structure of the size 5-3.
+        if ($numberOfItems >= 3) {
+          if (is_array($itemValue) && AtvSchema::numericKeys($itemValue)) {
+            if ($fullItemValueCallback) {
+              self::handleFullItemValueCallback($reference, $elementName, $fullItemValueCallback, $property, $requiredInJson);
+              self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
+              continue;
+            }
+            if (empty($itemValue) && $requiredInJson) {
+              $reference[$elementName] = $itemValue;
+              continue;
+            }
+            // Attachments are handled here among other things.
+            self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
             self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
             continue;
           }
-          if (empty($itemValue) && $requiredInJson) {
-            $reference[$elementName] = $itemValue;
+          $valueArray = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
+          $reference[] = $valueArray;
+          continue;
+        }
+
+        // Handle a json structure of the size 2.
+        if ($numberOfItems == 2) {
+          if (is_array($itemValue) && AtvSchema::numericKeys($itemValue) && $propertyType == 'list') {
+            self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
+            self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
             continue;
           }
-          self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
-          self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
+          if ($schema['type'] == 'string') {
+            $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;
+            continue;
+          }
+          $valueArray = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
+          $documentStructure[$jsonPath[$baseIndex - 1]][] = $valueArray;
           continue;
         }
-        $valueArray = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
-        $reference[] = $valueArray;
-        continue;
-      }
 
-      // Handle a json structure of the size 2.
-      if ($numberOfItems == 2) {
-        $metaData = AtvSchema::getMetaData($page, $section, $element);
-        if (is_array($itemValue) && AtvSchema::numericKeys($itemValue) && $propertyType == 'list') {
-          self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
-          self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
-          continue;
+        // Handle a json structure of the size 1.
+        if ($numberOfItems == 1) {
+          if ($propertyName == 'form_update') {
+            $reference[$elementName] = $itemValue === 'true';
+            continue;
+          }
+          $reference[$elementName] = $itemValue;
         }
-        if ($schema['type'] == 'string') {
-          $documentStructure[$jsonPath[$baseIndex - 1]][$elementName] = $itemValue;
-          continue;
-        }
-        $valueArray = self::getValueArray($elementName, $itemValue, $itemTypes['jsonType'], $label, $metaData);
-        $documentStructure[$jsonPath[$baseIndex - 1]][] = $valueArray;
-        continue;
-      }
-
-      // Handle a json structure of the size 1.
-      if ($numberOfItems == 1) {
-        if ($propertyName == 'form_update') {
-          $reference[$elementName] = $itemValue === 'true';
-          continue;
-        }
-        $reference[$elementName] = $itemValue;
       }
     }
-
     // Handle cases when no attachments info has been added.
     if (!array_key_exists('attachmentsInfo', $documentStructure)) {
       $documentStructure['attachmentsInfo'] = [];
@@ -252,7 +276,6 @@ class TypedDataToDocumentContentWithWebform {
     if (empty($documentStructure['attachmentsInfo'])) {
       $documentStructure['attachmentsInfo']['attachmentsArray'] = [];
     }
-
     // Optionally writ the data to a .json file. Used for testing.
     return $documentStructure;
   }
@@ -287,14 +310,16 @@ class TypedDataToDocumentContentWithWebform {
     mixed $defaultValue,
     array $hiddenFields,
     array $metaData): void {
-    foreach ($property as $itemIndex => $item) {
-      $reference[$elementName][$itemIndex] = self::getFieldValuesFromPropertyItem(
-        $item,
-        $webformMainElement,
-        $defaultValue,
-        $hiddenFields,
-        $metaData
-      );
+    if (is_iterable($property)) {
+      foreach ($property as $itemIndex => $item) {
+        $reference[$elementName][$itemIndex] = self::getFieldValuesFromPropertyItem(
+          $item,
+          $webformMainElement,
+          $defaultValue,
+          $hiddenFields,
+          $metaData
+        );
+      }
     }
   }
 
@@ -502,7 +527,7 @@ class TypedDataToDocumentContentWithWebform {
    *   The value of the item.
    * @param mixed $defaultValue
    *   The default value of the item.
-   * @param mixed $skipZeroValue
+   * @param bool|null $skipZeroValue
    *   A flag indicating if an item is to be skipped
    *   if the value is empty.
    *
@@ -693,7 +718,6 @@ class TypedDataToDocumentContentWithWebform {
           $itemMetaData['element'],
           $webformMainElement['#webform_composite_elements'][$itemName] ?? [],
         );
-
         $fieldValues[] = self::getValueArray($itemName, $itemValue, $itemTypes['jsonType'], $label, $itemMetaData);
       }
     }

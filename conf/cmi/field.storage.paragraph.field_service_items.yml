@@ -8,6 +8,8 @@ dependencies:
   enforced:
     config:
       - paragraphs.paragraphs_type.popular_services
+_core:
+  default_config_hash: sZutJyU-7_hluYx2gr40pLz4aF4jhpFLWMPqIiwTGpY
 id: paragraph.field_service_items
 field_name: field_service_items
 entity_type: paragraph

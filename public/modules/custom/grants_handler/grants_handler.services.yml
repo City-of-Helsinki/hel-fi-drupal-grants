@@ -13,7 +13,7 @@ services:
         '@logger.factory',
         '@grants_handler.events_service',
         '@helfi_atv.atv_service',
-        '@renderer'
+        '@current_user'
     ]
 
   grants_handler.application_handler:
@@ -30,6 +30,11 @@ services:
         '@database',
         '@language_manager',
         '@grants_handler.navigation_helper',
+        '@config.factory',
+        '@current_user',
+        '@datetime.time',
+        '@current_user',
+        '@datetime.time'
     ]
     calls:
       - [setAttachmentHandler, ['@?grants_attachments.attachment_handler']]
@@ -42,7 +47,7 @@ services:
         '@entity_type.manager',
         '@form_builder',
         '@helfi_helsinki_profiili.userdata',
-        '@tempstore.private'
+        '@datetime.time'
     ]
 
   grants_handler.events_service:
@@ -65,6 +70,7 @@ services:
 
   grants_handler.redirect_after_logout:
     class: Drupal\grants_handler\EventSubscriber\RedirectAfterLogoutSubscriber
+    arguments: ['@openid_connect_logout_redirect.redirect']
     tags:
       - { name: event_subscriber }
 
@@ -95,7 +101,10 @@ services:
 
   grants_handler.event_subscriber:
     class: Drupal\grants_handler\EventSubscriber\CompanySelectExceptionSubscriber
-    arguments: ['@messenger']
+    arguments: [
+        '@messenger',
+        '@grants_mandate_redirect.service'
+     ]
     tags:
       - { name: event_subscriber }
 
@@ -110,3 +119,7 @@ services:
     arguments: ['@messenger', '@logger.factory',]
     tags:
       - { name: event_subscriber }
+
+  grants_handler.service_page_block_service:
+    class: Drupal\grants_handler\ServicePageBlockService
+    arguments: ['@entity_type.manager', '@current_route_match', '@grants_profile.service']

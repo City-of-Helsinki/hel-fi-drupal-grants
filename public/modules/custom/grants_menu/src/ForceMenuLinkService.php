@@ -80,7 +80,12 @@ class ForceMenuLinkService {
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The MessengerInterface.
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager, MenuLinkManagerInterface $menuLinkManager, LanguageManagerInterface $languageManager, LoggerChannelFactoryInterface $loggerFactory, MessengerInterface $messenger) {
+  public function __construct(
+    EntityTypeManagerInterface $entityTypeManager,
+    MenuLinkManagerInterface $menuLinkManager,
+    LanguageManagerInterface $languageManager,
+    LoggerChannelFactoryInterface $loggerFactory,
+    MessengerInterface $messenger) {
     $this->entityTypeManager = $entityTypeManager;
     $this->menuLinkManager = $menuLinkManager;
     $this->languageManager = $languageManager;
@@ -155,7 +160,7 @@ class ForceMenuLinkService {
       $this->logMessage('CREATED', $node, $menuLink);
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException | EntityStorageException $e) {
-      $this->logMessage('CREATE_FAILED', $node, $menuLink, $e);
+      $this->logMessage('CREATE_FAILED', $node, $menuLink ?? 'no $menuLink defined', $e);
     }
   }
 
@@ -174,7 +179,10 @@ class ForceMenuLinkService {
    * @param mixed $exception
    *   An exception on failure.
    */
-  protected function logMessage(string $messageType, NodeInterface $node = NULL, MenuLinkContentInterface $menuLink = NULL, mixed $exception = NULL): void {
+  protected function logMessage(string $messageType,
+    NodeInterface $node = NULL,
+    MenuLinkContentInterface $menuLink = NULL,
+    mixed $exception = NULL): void {
     $message = match ($messageType) {
       'CREATED' => $this->t('Created the following menu item:'),
       'CREATE_FAILED' => $this->t('Failed to create the following menu item:'),

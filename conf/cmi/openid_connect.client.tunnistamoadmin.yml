@@ -1,5 +1,5 @@
 uuid: 82be1e93-121b-4da1-8e27-86688d63ae75
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -16,3 +16,4 @@ settings:
   environment_url: ''
   client_scopes: 'openid,email'
   client_roles: {  }
+  debug_log: false

@@ -2,7 +2,7 @@ statusStrings:
   en:
     DRAFT: Draft
     SENT: Sent
-    SUBMITTED: Sent
+    SUBMITTED: 'Sent - waiting for confirmation'
     RECEIVED: Received
     PREPARING: 'In Preparation'
     PENDING: Pending
@@ -34,7 +34,7 @@ statusStrings:
   sv:
     DRAFT: Utkast
     SENT: Skickad
-    SUBMITTED: Skickad
+    SUBMITTED: 'Skickad - väntar på bekräftelse'
     RECEIVED: Mottagen
     PREPARING: Förbereds
     PENDING: 'I väntan på'
@@ -47,4 +47,4 @@ statusStrings:
     CANCELLED: Annullerad
     CLOSED: Stängd
     RESOLVED: Behandlad
-langcode: fi
+langcode: en

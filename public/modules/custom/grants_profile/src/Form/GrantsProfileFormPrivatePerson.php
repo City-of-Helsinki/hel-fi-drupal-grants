@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Profile form.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
 
@@ -166,12 +168,13 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $form['phoneWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Telephone', [], $this->tOpts),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="phone-wrapper">',
       '#suffix' => '</div>',
     ];
     $form['phoneWrapper']['phone_number'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Telephone', [], $this->tOpts),
+      '#title' => $this->t('Personal telephone', [], $this->tOpts),
       '#default_value' => $grantsProfileContent['phone_number'] ?? '',
       '#required' => TRUE,
     ];

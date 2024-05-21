@@ -8,7 +8,6 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
-use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -24,6 +23,7 @@ use Drupal\webform\WebformRequestInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -78,7 +78,7 @@ class ApplicationController extends ControllerBase {
   /**
    * The request service.
    *
-   * @var \Drupal\Core\Http\RequestStack
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected RequestStack $request;
 
@@ -133,20 +133,10 @@ class ApplicationController extends ControllerBase {
       return AccessResult::forbidden('No submission found');
     }
 
-    $uri = $this->request->getCurrentRequest()->getUri();
-
-    $operation = 'view';
-    if (str_ends_with($uri, '/edit')) {
-      $operation = 'edit';
-    }
-
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
       $this->applicationHandler->singleSubmissionAccess(
-        $account,
-        $operation,
-        $webformObject,
         $webform_submissionObject
       ));
   }
@@ -179,20 +169,10 @@ class ApplicationController extends ControllerBase {
       return AccessResult::forbidden('No webform found');
     }
 
-    $uri = $this->request->getCurrentRequest()->getUri();
-
-    $operation = 'view';
-    if (str_ends_with($uri, '/edit')) {
-      $operation = 'edit';
-    }
-
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
       $this->applicationHandler->singleSubmissionAccess(
-        $account,
-        $operation,
-        $webform,
         $webform_submission
       ));
   }
@@ -200,8 +180,8 @@ class ApplicationController extends ControllerBase {
   /**
    * Print Drupal messages according to application status.
    *
-   * @var string $status
-   *  Status string from method.
+   * @param string $status
+   *   Status string from method.
    */
   public function showMessageForDataStatus(string $status) {
     $message = NULL;
@@ -337,10 +317,11 @@ class ApplicationController extends ControllerBase {
       // Add message if application is not open.
       $tOpts = ['context' => 'grants_handler'];
       $this->messenger()->addError($this->t('This application is not open', [], $tOpts), TRUE);
-
+      $node_storage = $this->entityTypeManager()->getStorage('node');
       // @codingStandardsIgnoreStart
       // Get service page node.
-      $query = \Drupal::entityQuery('node')
+      $query = $node_storage->getQuery()
+        ->accessCheck(FALSE)
         ->condition('type', 'service')
         ->condition('field_webform', $webform_id);
       // @codingStandardsIgnoreEnd
@@ -351,7 +332,7 @@ class ApplicationController extends ControllerBase {
         $this->messenger()->addError($this->t('Service page not found!', [], $tOpts), TRUE);
         return $this->redirect('<front>');
       }
-      $node_storage = $this->entityTypeManager()->getStorage('node');
+
       $node = $node_storage->load(reset($res));
 
       // Redirect user to service page with message.
@@ -361,6 +342,16 @@ class ApplicationController extends ControllerBase {
           'node' => $node->id(),
         ]
       );
+    }
+
+    // Check applicant type before initializing a new draft.
+    $currentRole = $this->grantsProfileService->getSelectedRoleData();
+    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
+    $acceptableApplicantTypes = array_values($thirdPartySettings['applicantTypes']);
+
+    if (!in_array($currentRole['type'], $acceptableApplicantTypes)) {
+      // @todo maybe mandate selection route and message.
+      return $this->redirect('<front>');
     }
 
     $newSubmission = $this->applicationHandler->initApplication($webform->id());
@@ -526,6 +517,7 @@ class ApplicationController extends ControllerBase {
     $isSubventionType = FALSE;
     $subventionType = '';
     try {
+      /** @var \Drupal\helfi_atv\AtvDocument $atv_document */
       $atv_document = ApplicationHandler::atvDocumentFromApplicationNumber($submission_id);
     }
     catch (\Exception $e) {

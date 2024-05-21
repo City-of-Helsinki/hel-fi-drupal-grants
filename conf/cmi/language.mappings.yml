@@ -1,6 +1,6 @@
 _core:
   default_config_hash: EMWe7Yu4Q5eD-NUfNuQAWGBvYUNZPIinztEtONSmsDc
-langcode: fi
+langcode: en
 map:
   'no': nb
   pt: pt-pt

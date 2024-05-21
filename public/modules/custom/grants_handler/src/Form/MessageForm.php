@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_handler\Form;
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AppendCommand;
@@ -13,7 +14,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\TypedData\TypedDataManager;
-use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_attachments\AttachmentRemover;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\MessageService;
@@ -25,6 +26,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Handler form.
+ *
+ * @phpstan-consistent-constructor
  */
 class MessageForm extends FormBase {
 
@@ -186,7 +189,7 @@ class MessageForm extends FormBase {
         '#required' => TRUE,
       ];
 
-      $sessionHash = sha1($this->session->getId());
+      $sessionHash = Crypt::hashBase64($this->session->getId());
       $upload_location = 'private://grants_messages/' . $sessionHash;
 
       $maxFileSizeInBytes = (1024 * 1024) * 20;
@@ -447,8 +450,8 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
       $response = $attachment['response'];
       $file = $attachment['file'];
 
-      $integrationId = AttachmentHandler::getIntegrationIdFromFileHref($response['href']);
-      $integrationId = AttachmentHandler::addEnvToIntegrationId($integrationId);
+      $integrationId = AttachmentHandlerHelper::getIntegrationIdFromFileHref($response['href']);
+      $integrationId = AttachmentHandlerHelper::addEnvToIntegrationId($integrationId);
 
       $data['attachments'] = [
         (object) [

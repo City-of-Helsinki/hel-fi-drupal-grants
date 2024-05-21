@@ -61,6 +61,14 @@ $breakpoint-xl: 1248px;
   }
 }
 
+.form-type-webform-multiple .webform-multiple-table table {
+  max-width: 100%;
+  width: 100%;
+  @include breakpoint($breakpoint-m) {
+    width: auto;
+  }
+}
+
 .hds-text-input {
   max-width: fit-content;
   width: 100%;
@@ -99,6 +107,9 @@ $breakpoint-xl: 1248px;
   }
 
 }
+fieldset input[type="button"] {
+  margin-top: var(--spacing-m);
+}
 .webform-section-wrapper > .description {
   margin-bottom: var(--spacing-layout-xs);
 }
@@ -119,8 +130,8 @@ $breakpoint-xl: 1248px;
     flex-flow: row nowrap;
     h3 + * > *:first-child > label:first-of-type,
     h3 + * > *:first-child > *:first-child > label:first-of-type {
-      margin-top: 0;
-      padding-top: var(--spacing-2-xs)
+      margin-top: var(--spacing-2-xs);
+      padding-top: 0;
     }
     h3 + * > *:first-child {
       > p {
@@ -129,14 +140,14 @@ $breakpoint-xl: 1248px;
       }
       > h4 {
         line-height: initial;
-        margin-top: 0;
+        margin-top: var(--spacing-m);
       }
     }
   }
   .webform-element-help-container--title {
     position: relative;
   }
-  > h2.webform-section-title, > h3.webform-section-title, > dt.webform-section-title {
+  > h2.webform-section-title, > h3.webform-section-title, > h4.webform-section-title, > dt.webform-section-title {
     color: var(--hdbt-color-black);
     display: block;
     font-weight: 500;
@@ -161,8 +172,11 @@ $breakpoint-xl: 1248px;
   > .webform-section-wrapper {
     font-size: var(--fontsize-body-m);
     width: 100%;
-    padding-left: var(--spacing-2-xl);
     --line-height: 1.5;
+
+    @include breakpoint($breakpoint-m) {
+      padding-left: var(--spacing-2-xl);
+    }
   }
   .form-required::after {
     content: '*';
@@ -170,7 +184,7 @@ $breakpoint-xl: 1248px;
   }
   legend, label {
     font-size: var(--fontsize-body-m);
-    margin-bottom: var(--spacing-3-xs);
+    margin-bottom: var(--spacing-2-xs);
     display: block;
     font-weight: 500;
     padding-right: var(--spacing-xl);
@@ -202,23 +216,23 @@ form .hds-text-input__input-wrapper, .hds-text-input__input-wrapper  {
   .text-count-wrapper {
     flex-basis: 100%;
   }
-  input, textarea,  {
+  input, textarea {
     &.webform--small {
       min-width: var(--webform-element-width--input-small);
       max-width: var(--webform-element-width--input-small);
-      width: 100vw;
+      width: 100%;
     }
 
     &.webform--medium {
       min-width: var(--webform-element-width--input-small);
       max-width: var(--webform-element-width--input-medium);
-      width: 100vw;
+      width: 100%;
     }
 
     &.webform--large {
       min-width: var(--webform-element-width--input-small);
       max-width: var(--webform-element-width--input-large);
-      width: 100vw;
+      width: 100%;
     }
   }
 }
@@ -267,6 +281,9 @@ fieldset.webform-composite-hidden-title {
 .hakemus-form-page {
   .main-content {
     margin-top: 0;
+  }
+  h1 {
+    word-break: break-all;
   }
 }
 
@@ -375,19 +392,46 @@ input[type=radio] + label.form-required::after {
 }
 
 .club-section__participants {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--spacing-l);
-
-  input.form-number.hds-text-input__input {
+  input.form-text.hds-text-input__input {
     width: 100%;
     max-width: 100%;
+  }
+  @include breakpoint($breakpoint-m) {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-l);
   }
 }
 
 .club-section__totalhours {
-  input.form-number.hds-text-input__input {
+  input.form-text.hds-text-input__input {
     width: 100%;
     max-width: 100%;
+  }
+}
+.hel-icon--size {
+  &-xs {
+    --icon-size: var(--spacing-layout-2-xs);
+  }
+  &-s {
+    --icon-size: var(--spacing-layout-xs);
+  }
+  &-m {
+    --icon-size: var(--spacing-layout-s);
+  };
+  &-l {
+    --icon-size: var(--spacing-layout-m);
+  }
+  &-xl {
+    --icon-size: var(--spacing-layout-l);
+  }
+}
+
+.hds-text-input__input-wrapper:focus-within:has(input[readonly]) {
+  outline: 2px black solid;
+  outline-offset: 2px;
+  margin-right: var(--spacing-2-xs);
+  input[readonly] {
+    width: calc(100% - var(--spacing-2-xs));
   }
 }

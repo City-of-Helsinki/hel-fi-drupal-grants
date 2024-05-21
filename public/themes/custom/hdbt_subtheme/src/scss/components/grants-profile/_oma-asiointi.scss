@@ -51,6 +51,11 @@
     margin-bottom: var(--spacing-s);
   }
 
+  h3 {
+    font-size: var(--fontsize-heading-m);
+    font-weight: 500;
+  }
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -240,6 +245,11 @@
   .link--stop-mandate {
     color: var(--color-white);
     margin-left: var(--spacing-layout-s);
+
+    @media (max-width: $breakpoint-m) {
+      display: block;
+      margin-left: 0;
+    }
   }
 
   .link--stop-mandate {
@@ -252,7 +262,7 @@
       background-color: var(--color-white);
       content: '';
       display: inline-block;
-      padding-right: var(--spacing-2-xl);
+      margin-right: 10px;
     }
   }
 
@@ -266,7 +276,7 @@
       background-color: var(--color-white);
       content: '';
       display: inline-block;
-      padding-right: var(--spacing-2-xl);
+      margin-right: 10px;
     }
   }
 }

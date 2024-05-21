@@ -2,8 +2,8 @@
 
 namespace Drupal\grants_mandate\EventSubscriber;
 
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
@@ -30,9 +30,9 @@ class GrantsMandateExceptionSubscriber implements EventSubscriberInterface {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Audit logger.
@@ -53,7 +53,7 @@ class GrantsMandateExceptionSubscriber implements EventSubscriberInterface {
    */
   public function __construct(
     MessengerInterface $messenger,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
     AuditLogService $auditLogService
   ) {
     $this->messenger = $messenger;

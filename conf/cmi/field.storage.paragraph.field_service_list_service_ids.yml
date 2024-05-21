@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - paragraphs
+_core:
+  default_config_hash: BkQHwD70xkWFPHXulWBSU1CN3fC21W4ng5KFvkJs1Eo
 id: paragraph.field_service_list_service_ids
 field_name: field_service_list_service_ids
 entity_type: paragraph

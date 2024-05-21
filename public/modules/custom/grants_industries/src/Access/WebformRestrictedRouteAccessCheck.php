@@ -6,7 +6,10 @@ use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Routing\Access\AccessInterface;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_industries\Services\WebformAccessCheckService;
 
 /**
@@ -26,14 +29,28 @@ class WebformRestrictedRouteAccessCheck implements AccessInterface {
    */
   protected WebformAccessCheckService $webformAccessCheckService;
 
+
+  /**
+   * Logger access.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   */
+  protected LoggerChannelInterface $logger;
+
   /**
    * The class constructor.
    *
    * @param \Drupal\grants_industries\Services\WebformAccessCheckService $webformAccessCheckService
    *   The WebformAccessCheckService service.
+   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
+   *   Logger factory.
    */
-  public function __construct(WebformAccessCheckService $webformAccessCheckService) {
+  public function __construct(
+    WebformAccessCheckService $webformAccessCheckService,
+    LoggerChannelFactoryInterface $loggerFactory) {
     $this->webformAccessCheckService = $webformAccessCheckService;
+    $this->logger = $loggerFactory->get('grants_industries');
+
   }
 
   /**
@@ -48,10 +65,11 @@ class WebformRestrictedRouteAccessCheck implements AccessInterface {
    */
   public function access(): AccessResultInterface {
     try {
-      return ($this->webformAccessCheckService->checkRestrictedRouteAccess()) ? AccessResult::allowed() : AccessResult::forbidden();
+      $checkRestrictedRouteResult = $this->webformAccessCheckService->checkRestrictedRouteAccess();
+      return ($checkRestrictedRouteResult) ? AccessResult::allowed() : AccessResult::forbidden();
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException $exception) {
-      watchdog_exception('grants_industries', $exception, $exception->getMessage());
+      Error::logException($this->logger, $exception);
       return AccessResult::forbidden();
     }
   }

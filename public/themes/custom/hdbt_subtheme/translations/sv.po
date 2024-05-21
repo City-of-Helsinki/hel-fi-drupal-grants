@@ -6,6 +6,9 @@ msgstr ""
 msgid "Here you can see details of your application"
 msgstr "Här kan du se detaljer om din ansökan"
 
+msgid "No attachments"
+msgstr "Inga bilagor"
+
 msgid "Application attachments"
 msgstr "Bilagor"
 
@@ -15,8 +18,14 @@ msgstr "Sänd"
 msgid "Handler information"
 msgstr "Händelser"
 
+msgid "No handler information set"
+msgstr "Ingen händelserinformation"
+
 msgid "Information message"
 msgstr "OBS"
+
+msgid "No status history"
+msgstr "Ingen statushistorik"
 
 msgid "Application statuses"
 msgstr "Status"
@@ -65,6 +74,9 @@ msgstr "Försöket att autentisera misslyckades."
 
 msgid "Application period"
 msgstr "Ansökningsperiod"
+
+msgid "Read more"
+msgstr "Läs mer"
 
 msgid "The application period will be announced later"
 msgstr "Ansökningsperiod meddelas senare"
@@ -396,3 +408,11 @@ msgstr "<strong><em>Vänligen observera:</em> Det här alternativet har säkerhe
 msgctxt "grants_premises"
 msgid "City"
 msgstr "Postanstalt"
+
+msgctxt "grants_theme"
+msgid "items per page"
+msgstr "per sida"
+
+msgctxt "grants_theme"
+msgid "Items per page"
+msgstr "Inlägg per sida"

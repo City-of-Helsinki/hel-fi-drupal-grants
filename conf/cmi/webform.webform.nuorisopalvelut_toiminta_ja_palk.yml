@@ -292,37 +292,37 @@ elements: |-
       '#title': 'Edellisen avustuksen käyttöselvitys'
       yhdistyksen_kuluvan_vuoden_toiminta_avustus:
         '#type': textfield
-        '#size': 15
-        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Yhdistyksen kuluvan vuoden toiminta-avustus'
-        '#help': 'Kirjoita t&auml;h&auml;n yhdistyksen kuluvalle vuodelle my&ouml;nnetyn toiminta-avustuksen m&auml;&auml;r&auml;'
+        '#help': '<p>Kirjoita tähän yhdistyksen kuluvalle vuodelle myönnetyn toiminta-avustuksen määrä</p>'
+        '#size': 15
+        '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':
           class:
             - webform--medium
       selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta:
         '#type': textfield
-        '#size': 15
-        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Selvitys kuluvan vuoden toiminta-avustuksen käytöstä'
-        '#help': 'Ilmoita t&auml;ss&auml; euroina yhteens&auml;, kuinka paljon yhdistys on k&auml;ytt&auml;nyt ja k&auml;ytt&auml;&auml; kuluvan vuoden toiminta-avustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on viel&auml; kesken.&nbsp;&nbsp;'
+        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden toiminta-avustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.</p>'
+        '#size': 15
+        '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':
           class:
             - webform--medium
       yhdistyksen_kuluvan_vuoden_palkkausavustus_:
         '#type': textfield
-        '#size': 15
-        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Yhdistyksen kuluvan vuoden palkkausavustus '
-        '#help': 'Kirjoita t&auml;h&auml;n yhdistyksen kuluvalle vuodelle my&ouml;nnetyn palkkausavustuksen m&auml;&auml;r&auml;'
+        '#help': '<p>Kirjoita tähän yhdistyksen kuluvalle vuodelle myönnetyn palkkausavustuksen määrä</p>'
+        '#size': 15
+        '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':
           class:
             - webform--medium
       selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta:
         '#type': textfield
-        '#size': 15
-        '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
         '#title': 'Selvitys kuluvan vuoden palkkausavustuksen käytöstä'
-        '#help': 'Ilmoita t&auml;ss&auml; euroina yhteens&auml;, kuinka paljon yhdistys on k&auml;ytt&auml;nyt ja k&auml;ytt&auml;&auml; kuluvan vuoden palkkausavustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on viel&auml; kesken.&nbsp;&nbsp;'
+        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden palkkausavustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.</p>'
+        '#size': 15
+        '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':
           class:
             - webform--medium
@@ -362,16 +362,13 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet</strong><br />
-          Toiminta- ja palkkausavustuksen ennakkohakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.<br />
-          <br />
-          <strong>Usean liitteen toimittaminen</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Kerro t&auml;st&auml; lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet</h4>
+          <p>Toiminta- ja palkkausavustuksen ennakkohakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.</p>
+          <h4>Usean liitteen toimittaminen</h4>
+          <p>Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Kerro t&auml;st&auml; lis&auml;selvitys liitteist&auml; -kohdassa.</p>
+          <h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
+          <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
       notification_attachments:
         '#type': webform_markup
         '#markup': |
@@ -620,7 +617,7 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '5. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true

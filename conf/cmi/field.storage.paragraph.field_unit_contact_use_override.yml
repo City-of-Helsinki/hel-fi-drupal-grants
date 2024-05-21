@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - paragraphs
+_core:
+  default_config_hash: JhxSlFXMuGY8uPkhNcY4fdQBtIjlSNHfvqVC7tzspno
 id: paragraph.field_unit_contact_use_override
 field_name: field_unit_contact_use_override
 entity_type: paragraph

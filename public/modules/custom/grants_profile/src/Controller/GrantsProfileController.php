@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Returns responses for Grants Profile routes.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsProfileController extends ControllerBase {
 
@@ -79,7 +81,7 @@ class GrantsProfileController extends ControllerBase {
   /**
    * Builds the response.
    *
-   * @return array|Symfony\Component\HttpFoundation\RedirectResponse
+   * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
    *   Data to render
    */
   public function viewProfile(): array|RedirectResponse {

@@ -1,5 +1,157 @@
 # CHANGELOG
 
+## 2024.8
+- df0f3c7c fix: AU-2470: Fix stepper first line (#1368)
+- de25bce9 fix: AU-2497: Fix fieldset button top margin (#1369)
+- b5ef5013 fix: AU-635: Fix application resend form. (#1364)
+- 174066a4 fix: AU-2447: fix attachments styles (#1360)
+- 33b8ef30 Add form 67 to production forms
+- 2ab1b317 Production configs
+- d6673de4 Add pubsub + PHPCS
+- cdd2ba68 Add hp environment urls to config.
+- eb8e3c04 Remove env urls from config
+- 83ce206a config: Automatic update (#1320)
+- 223a4c5f feat: AU-2408: Permission changes (#1356)
+- 7a852cce fix: AU-2474: Icons path (#1358)
+- cd8f9ccc fix: AU-2468: Change language back to FI (#1357)
+- 14d6afa3 fix: AU-2425: add aria label to application search (#1355)
+- 33c86553 fix: AU-2462: Remove unnecessary metdata generation (#1351)
+- cf6e2837 feat: AU-1984: Tunnistamo v3 päivitys (#1342)
+- 8be7c8ae feat: AU-2453, E2E, Test attachment checkboxes (#1352)
+- e9ec9bcd feat: AU-2404: tests for 67 (#1340)
+- 0e24049f fix: AU-2057: Application attachment purging fix (#1350)
+- 097294ad fix: AU-2419: PHPStan Errors, Part 3 (#1346)
+- ab6ccb82 fix: AU-2382: Rename definitions for ASUKASYLEISTOIM application (#1325)
+- 20430cbf fix: AU-2457: Fix attachment selections disappearing (#1347)
+- 6aaa31e4 fix: AU-2459: Fix translations (#1345)
+- f871e990 fix:  AU-2385: Navigation bug (#1339)
+- 21b23d7d fix: AU-2458: kuva projekti change in text (#1343)
+- 19c0b52b fix: AU-2376, AU-2377: fixes to KUVA toiminta SV translations (#1344)
+- cf043e33 AU-2402 Add missing data class (#1328)
+- e74fcfc4 feat: AU-2454: Fixed an issue regarding boolean values in the place of operations component. (#1337)
+- a08d2109 fix: AU-2455 Draft setting in webforms (#1338)
+- 625bcea0 fix: AU-2403: PHPStan Error Fixes, Part2 (#1334)
+- cfbd88d8 feat: AU-2397, AU-2401, E2E, Screenshots, bug-fixes and URL logging (#1335)
+- d0d84fe4 fix: AU-2375: add context to string in Oma asiointi (#1333)
+- 9a0f25ca fix: AU-2371: fix a letter in webform actions (#1336)
+- 5a440543 fix: AU-2428: Fix empty asiointirooli link (#1331)
+- d8ed6958 fix: AU-2452: Focus indicators to stepper and readonly fields (#1332)
+- 5469e922 fix: AU-2414: Change log in button to have role=link (#1329)
+- 9023e747 feat: AU-2381: Add event when resending applications via admin ui (#1321)
+- 00195f6b fix: AU-2396: First 74 phpstan errors (#1326)
+- babb3596 AU-2336: Make PHPCS happy (#1330)
+- 8fb3efff feat: AU-2336: Delete documents from Drupal UI (#1318)
+- a98640d2 fix: AU-2395: Hide buttons that link from TPR to the page we are already on. (#1327)
+- 7c4929d3 fix: AU-2400: Add access check for entity query (#1324)
+- 0a843164 feat: AU-2288: Add Askem block to the instance the way it was intended (#1312)
+- d79423d4 AU-2274: Small changes from event documentation. (#1323)
+- a50af5c0 feat: AU-2373: Fix notice during application copy. Add event to copied application (#1322)
+- c03c4b64 feat: AU-2343: Nuortoimpalkka input masks to euro fields. Show input mask prefix on submission view
+- ce7f674c fix: AU-2366: Fix application search card lead-in text display (#1314)
+- 219f96fc feat: AU-2389: E2E, Changed the edit-acting-year field in every test to always be dynamic (#1319)
+- 6f922f10 feat: AU-2383: E2E: Added more logging (#1311)
+- 09576ce1 feat: AU-2384: Implemented waitForTextWithInterval and used it when validating application submissions. (#1316)
+- 8a32d61c conf: Update configuration
+- 220b59b1 fix: AU-2363: Add user_delete hook to clean up any leftover sessions from the db
+- 45e3804c conf: Update configuration (#1260)
+- e1ef13e8 fix: AU-2386: Fix phpcs for theme (#1313)
+- 999b477d feat: AU-1882: Add Postman collections (#1294)
+- 0d895d8e feat: AU-2352, E2E: Implemented the possibility to test swapping field values (#1309)
+- 9063bb12 fix: AU-2346: Fix stray tooltip on kuva_projekti (#1302)
+- a70fd886 fix: AU-2365: /katso page buttons to stay on one line (#1304)
+- 2c97ec0f fix: AU-2081: ajax settings cache issues (#1307)
+
+
+## 2024.7
+- fd2f6b8a fix: AU-2299: Change langcode in config files (#1263)
+- b84ef613 Production configs.
+- d4fa686d fix; AU-2369: Return empty array instead of null/string if field is empty
+- 4c649d31 fix: AU-2347, E2E, Cleaning up the E2E code. (#1291)
+- 5fe1ba5f fix: AU-2359: Subvention type value input focus border (#1301)
+- 1fbf84ff fix: AU-2361: Managed File tab navigation (#1300)
+- aba2b5e1 fix: AU-2356: kuva toiminta translations (#1293)
+- 2497d90f fix: AU-2323, AU-2340, AU-2351, AU-2349 (#1296)
+- 07615b6a fix: AU-2344: remove padding and margin on view page lists (#1297)
+- 492ec4ae AU-2355: feature: AU-2355: Fixed convertDates so that it doesnt cause errors if null values are passed in. (#1298)
+- bfc9910e fix: AU-2297 change term for avustuskansio (#1295)
+- f6442d8f feat: AU-2048, E2E, Application copying test (#1287)
+- be010d4f fix: AU-2348: fix tyollisyys (#1289)
+- 05a71904 fix: AU-2345: Add translations for file name (#1292)
+- 870aaa68 fix: AU-2330: fix dates in Place of operations (#1290)
+- 9a62d026 fix: AU-1708: add counters to business purpose -fields (#1288)
+- d761c511 fix: AU-2306: remove views and styles related to grants news (#1285)
+- 7b0c81d0 fix: AU-2316 Remove "Delete Draft" button from javascript and move it to Form Actions (#1286)
+- f8431e4a AU-2325: Avoid function call without actual object (#1282)
+- 4cfd20dd feat: AU-2018: E2E, cleaned up auth_helpers.ts (#1280)
+- 9265bfb1 AU-2307 Fix navigation handler bug (#1276)
+- d84f3cb0 fix: AU-2313: remove useless info (#1283)
+- 7fee84cc fix: AU-2331: Fixed an issue with grants_place_of_operation free state. (#1284)
+- ebc27773 fix: AU-2230: default language back to fi
+- e68fb3f8 fix: AU-2326: Remove grants_healtz module (#1281)
+- ed26e662 feat: AU-2123: Drupal 10 update (#1241)
+- 35f10d2b rewrite: AU-2032: RewriteAttachmentHandler class (#1112)
+- 8bcf1861 fix: AU-2310: translate pattern (#1279)
+- 1bfa463f fix: AU-2324: fix profile tests (#1278)
+- 467bef4b fix: AU-2309: make styles match disable managed file button (#1275)
+- ea747704 feat: AU-2275: E2E, Added a .readme file. (#1274)
+- 631aa45b fix: AU-2281: remove empty UL from messages list in /katso page (#1273)
+- 70421652 fix: AU-2277: accessibility in Omat tiedot (#1268)
+- 73e2b4d4 tests: AU-2148: E2E, Made profile tests more robust (#1259)
+- b2acce8d feat: AU-2081: Add js_settings_build hook to force settings to allways be available
+- c9512cc3 fix: AU-2254: change omat tiedot swedish transation (#1270)
+- c95bf1b8 fix: AU-2297 remove asiointikansio -text from site (#1269)
+
+
+## 2024.6
+- 2f96ca8e feat: AU-2290: Document status and date search parameters (#1266)
+- 2ea3d83c Update icon location in config file.
+- 31370bda Restore jquery ui draggable
+- eefc430e docs: CHANGELOG
+- 1b9fe503 AU-2289: Add possibility to resend application messages
+- 9c6a71d1 config: Update configuration (#1250)
+- 4c87ee54 fix: AU-2236: add error if application is not open (#1225)
+- 52925649 feat: AU-2226, E2E, Implemented the possibilit to remove multi-value items with the itemsToRemove property (#1251)
+- 1d67206f fix: AU-2293: Fix ASKEM styles (#1256)
+
+## 2024.5
+- 3c538aff fix: AU-2215: add multivalue fields to tests (#1221)
+- 2da14900 fix: AU-2259: fix patterns in Year-field (#1244)
+- 6e66fc2f config: Update configuration (#1246)
+- f9200600 feat: AU-2233: E2E, Moved various variables to the .env file (#1233)
+- 23091378 feat: AU-2257: Allow grants_admins to access resend page and submitted applications page
+- b935655e fix: AU-2198: remove unwanted messages from thank you page (#1209)
+- 2e9bff92 fix: AU-2228: Make javascript load after content has loaded (#1240)
+- 9e4c690e config: Update configuration (#1243)
+- 90607241 feat AU-2234: skip deployment script (#1242)
+- 21ea0ced fix: AU-2213: Allow budget explantion to be saved without a value
+- fd572eb9 fix: AU-2254 profile tooltip text (#1238)
+- a1dd38e2 Comment out deploy scripts
+- 72264c63 fix: AU-2237: IBAN validation
+- d2a7f1aa feat: AU-1949: E2E, Implemented hidden field validation (#1220)
+- 4eb824be config: Update configuration (#1227)
+- fe317b64 fix: AU-2224: Recognize short ISO dates in print view (#1230)
+- c6e40ae1 feat: AU-1075: Enable helfi_paragraphs_news_list
+- 495b363d fix: AU-2209: Add user cache context. Remove unnecessary helfi_profiili dependency (#1215)
+- 0c7f6b63 fix: AU-2223: re-style status tags (#1236)
+- 2c05ce68 fix: AU-2090: change confirmation page text (#1234)
+- fe342e98 fix: AU-2203: update service page block text (#1235)
+- fc3c9ff0 fix: AU-2208: TPR link manipulation fixes
+- 8bccc3ed fix: AU-2214: ATV module updato to fix gdpr endpoints
+- c6ec37b6 feat: AU-2124: Askem (#1232)
+- eaa51770 fix: AU-2221: translate Hakija in SV applications (#1229)
+- 5e51a15f fix: AU-2032: Fix tests, this will cause conflicts. (#1231)
+- 5198904c fix: AU-2250: change word on KUVA toiminta
+- c6ccba4e fix: AU-2229: change KEHA avustuslaji term (#1226)
+- 5d8afae4 fix: AU-2234: Update helfi tools and update-platform configs (#1224)
+- 6256e81f fix: AU-2230: default language back to fi
+- 7a3727b4 (tag: AU-2225-module-versions, origin/main, main) Hotfix AU-2225-module-versions
+- 17cd2452 AU-2225: Add icon path to site settings conf.
+- dac3fe98 AU-2225: Patch crop module with urldecoded paths
+- 2fc8a797 feat: AU-2205, AU-2206: E2E, Fixed problems with number inputs and file uploads. (#1216)
+- b5af1bb6 AU-2225: Restore deployment scripts.
+- c4dafa09 AU-2225: New versio for azure modules.
+
+
 ## 2024.4
 - e8f617d5 Production config import
 - c8672739 fix: AU-2202-status-fix (#1212)

@@ -40,6 +40,7 @@ elements: |
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
@@ -152,12 +153,16 @@ elements: |
     '#markup': 'Itemise the event&rsquo;s revenue by type. Also record any other grants for the event and the parties that issued them.'
   budget_other_income:
     '#title': 'Income item'
+    '#multiple__add_more_button_label': 'Add new income'
+    '#multiple__item_label': 'income'
   itemise_cost:
     '#title': 'Event''s expenditure'
   markup_04:
     '#markup': 'Itemise the event&rsquo;s expenditure by type (e.g. venue rent, labour costs).'
   budget_other_cost:
     '#title': 'Expense item'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
@@ -170,17 +175,15 @@ elements: |
     '#title': Attachments
   attachments_info:
     '#markup': |-
-      <strong>Appendices</strong>
-      <br/><br/>
-      All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.
-      <br/><br/>
-      Required attachments:
+      <p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.
+      </p>
+      <h4>Required attachments</h4>
       <ul><li>
       Free form event plan (a broader description of the event, its organisation and the target group)
       </li><li>
       Event budget (if its not sufficiently indicated on the application form)
       </li></ul>
-      If the applicant has not previously applied for any grants from the City of Helsinki or if any of the relevant information has changed, an extract from the relevant register for the organisation type must also be attached to the application.
+      <p>If the applicant has not previously applied for any grants from the City of Helsinki or if any of the relevant information has changed, an extract from the relevant register for the organisation type must also be attached to the application.</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   tapahtumasuunnitelma:
@@ -212,5 +215,6 @@ elements: |
 settings:
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'
+  wizard_confirmation_label: '6. Complete'
   preview_label: '5. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'

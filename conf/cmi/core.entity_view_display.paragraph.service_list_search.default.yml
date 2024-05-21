@@ -10,6 +10,8 @@ dependencies:
     - paragraphs.paragraphs_type.service_list_search
   module:
     - text
+_core:
+  default_config_hash: 6s7ClCY0Ye2Q8BJVAPkAwGuxMVSrDzeGeGGghM7kDAg
 id: paragraph.service_list_search.default
 targetEntityType: paragraph
 bundle: service_list_search

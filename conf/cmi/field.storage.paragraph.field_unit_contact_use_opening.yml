@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - paragraphs
+_core:
+  default_config_hash: EkRUDoqRW8gFJlcd7U2qM9S6GDFlnFY3FLnrJRgHRoY
 id: paragraph.field_unit_contact_use_opening
 field_name: field_unit_contact_use_opening
 entity_type: paragraph

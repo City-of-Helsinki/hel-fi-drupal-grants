@@ -5,6 +5,7 @@ namespace Drupal\grants_profile\Form;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\grants_handler\FormLockService;
 use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
@@ -16,6 +17,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Profile form.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
@@ -27,27 +30,38 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
   protected PRHUpdaterService $prhUpdaterService;
 
   /**
+   * Form Lock Service.
+   *
+   * @var \Drupal\grants_handler\FormLockService
+   */
+  protected FormLockService $lockService;
+
+  /**
    * PRH data update service class.
    */
   public function __construct(
     TypedDataManager $typed_data_manager,
     GrantsProfileService $grantsProfileService,
     Session $session,
-    PRHUpdaterService $prhUpdaterService
+    PRHUpdaterService $prhUpdaterService,
+    FormLockService $lockService,
   ) {
     parent::__construct($typed_data_manager, $grantsProfileService, $session);
     $this->prhUpdaterService = $prhUpdaterService;
+    $this->lockService = $lockService;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
+
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),
       $container->get('session'),
-      $container->get('grants_profile.prh_updater_service')
+      $container->get('grants_profile.prh_updater_service'),
+      $container->get('grants_handler.form_lock_service'),
     );
   }
 
@@ -91,15 +105,14 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     $form = parent::buildForm($form, $form_state);
     $grantsProfile = $this->getGrantsProfileDocument();
 
-    $isNewGrantsProfile = $grantsProfile->getTransactionId();
-
     if ($grantsProfile == NULL) {
       return [];
     }
 
+    $isNewGrantsProfile = $grantsProfile->getTransactionId();
+
     // Handle multiple editors.
-    $lockService = \DrupaL::service('grants_handler.form_lock_service');
-    $locked = $lockService->isProfileFormLocked($grantsProfile->getId());
+    $locked = $this->lockService->isProfileFormLocked($grantsProfile->getId());
     if ($locked) {
       $form['#disabled'] = TRUE;
       $this->messenger()
@@ -112,7 +125,7 @@ you cannot do any modifications while the form is locked for them.',
         );
     }
     else {
-      $lockService->createOrRefreshProfileFormLock($grantsProfile->getId());
+      $this->lockService->createOrRefreshProfileFormLock($grantsProfile->getId());
     }
 
     // Get content from document.
@@ -128,9 +141,10 @@ you cannot do any modifications while the form is locked for them.',
       '#title' => 'isNewProfile',
       '#value' => $isNewGrantsProfile,
     ];
-    $form['foundingYearWrapper'] = [
+    $form['basicDetailsWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Year of establishment', [], $this->tOpts),
+      '#title' => $this->t('Basic details', [], $this->tOpts),
+      '#title_tag' => 'h4',
       'foundingYear' => [
         '#type' => 'textfield',
         '#title' => $this->t('Year of establishment', [], $this->tOpts),
@@ -141,10 +155,6 @@ you cannot do any modifications while the form is locked for them.',
           ],
         ],
       ],
-    ];
-    $form['companyNameShortWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Abbreviated name', [], $this->tOpts),
       'companyNameShort' => [
         '#type' => 'textfield',
         '#title' => $this->t('Abbreviated name', [], $this->tOpts),
@@ -156,21 +166,11 @@ you cannot do any modifications while the form is locked for them.',
           ],
         ],
       ],
-    ];
-
-    $form['companyHomePageWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Website address', [], $this->tOpts),
       'companyHomePage' => [
         '#type' => 'textfield',
         '#title' => $this->t('Website address', [], $this->tOpts),
         '#default_value' => $grantsProfileContent['companyHomePage'],
       ],
-    ];
-
-    $form['businessPurposeWrapper'] = [
-      '#type' => 'webform_section',
-      '#title' => $this->t('Purpose of operations', [], $this->tOpts),
       'businessPurpose' => [
         '#type' => 'textarea',
         '#title' => $this->t(
@@ -264,10 +264,10 @@ later when completing the grant application.',
 
     parent::profileContentFromWrappers($values, $grantsProfileContent);
 
-    $grantsProfileContent["foundingYear"] = $values["foundingYearWrapper"]["foundingYear"];
-    $grantsProfileContent["companyNameShort"] = $values["companyNameShortWrapper"]["companyNameShort"];
-    $grantsProfileContent["companyHomePage"] = $values["companyHomePageWrapper"]["companyHomePage"];
-    $grantsProfileContent["businessPurpose"] = $values["businessPurposeWrapper"]["businessPurpose"];
+    $grantsProfileContent["foundingYear"] = $values["basicDetailsWrapper"]["foundingYear"];
+    $grantsProfileContent["companyNameShort"] = $values["basicDetailsWrapper"]["companyNameShort"];
+    $grantsProfileContent["companyHomePage"] = $values["basicDetailsWrapper"]["companyHomePage"];
+    $grantsProfileContent["businessPurpose"] = $values["basicDetailsWrapper"]["businessPurpose"];
   }
 
   /**
@@ -363,13 +363,10 @@ later when completing the grant application.',
 
     $grantsProfileData = $storage['grantsProfileData'];
 
-    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $grantsProfileService = \Drupal::service('grants_profile.service');
-
     $profileDataArray = $grantsProfileData->toArray();
 
     try {
-      $success = $grantsProfileService->saveGrantsProfile($profileDataArray);
+      $success = $this->grantsProfileService->saveGrantsProfile($profileDataArray);
     }
     catch (\Exception $e) {
       $success = FALSE;
@@ -423,6 +420,7 @@ later when completing the grant application.',
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Addresses', [], $this->tOpts),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -433,7 +431,9 @@ later when completing the grant application.',
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
     unset($addressValues['actions']);
+    $deltaindex = 0;
     foreach ($addressValues as $delta => $address) {
+      $deltaindex = $delta;
       if (array_key_exists('address', $address)) {
         $address = $address['address'];
       }
@@ -531,7 +531,7 @@ later when completing the grant application.',
             '#icon_left' => 'trash',
             '#value' => $this
               ->t('Delete', [], $this->tOpts),
-            '#name' => 'addressWrapper--' . ($delta + 1),
+            '#name' => 'addressWrapper--' . ($deltaindex + 1),
             '#submit' => [
               '::removeOne',
             ],
@@ -588,6 +588,7 @@ later when completing the grant application.',
     $form['officialWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Persons responsible for operations', [], $this->tOpts),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="officials-wrapper">',
       '#suffix' => '</div>',
     ];

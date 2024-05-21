@@ -5,6 +5,8 @@ dependencies:
   module:
     - helfi_tpr
     - paragraphs
+_core:
+  default_config_hash: iMSMqYAV1104tfdgAYoPMgC1DF69wj9qLYsl4_hYbBM
 id: paragraph.field_unit_search_units
 field_name: field_unit_search_units
 entity_type: paragraph

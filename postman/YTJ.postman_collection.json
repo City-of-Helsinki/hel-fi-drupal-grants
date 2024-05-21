@@ -1,0 +1,218 @@
+{
+	"info": {
+		"name": "YTJ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+	},
+	"item": [
+		{
+			"name": "GetCompany",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{YtjPassu}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"BusinessId\": \"2686723-5\",  \"AssociationStatus\": \"R\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ytjbakend}}/api/GetCompany",
+					"host": [
+						"{{ytjbakend}}"
+					],
+					"path": [
+						"api",
+						"GetCompany"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchCompany",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{YtjPassu}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"SearchExpression\": \"Roihis\",  \n    \"FindAll\": \"true\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ytjbakend}}/api/SearchCompany",
+					"host": [
+						"{{ytjbakend}}"
+					],
+					"path": [
+						"api",
+						"SearchCompany"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCompanyStatus",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{YtjPassu}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"BusinessId\": \"2062559-3\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ytjbakend}}/api/GetCompany",
+					"host": [
+						"{{ytjbakend}}"
+					],
+					"path": [
+						"api",
+						"GetCompany"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUpdatedCompanies",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{YtjPassu}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"BusinessIds\": {\"string\":[\"2686723-5\", \"0195876-3\"]}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ytjbakend}}/api/GetUpdatedCompanies",
+					"host": [
+						"{{ytjbakend}}"
+					],
+					"path": [
+						"api",
+						"GetUpdatedCompanies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCompanyTaxDebt",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{YtjPassu}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{YrttiUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"BusinessIds\": {\"string\":[\"2686723-5\", \"0195876-3\"]}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ytjbakend}}/api/GetCompanyTaxDebt",
+					"host": [
+						"{{ytjbakend}}"
+					],
+					"path": [
+						"api",
+						"GetCompanyTaxDebt"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

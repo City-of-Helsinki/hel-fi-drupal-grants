@@ -63,23 +63,28 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
     ContainerInterface $container,
     EntityTypeInterface $entity_type): WebformSubmissionStorage|EntityHandlerInterface {
 
-    /** @var \Drupal\webform\WebformSubmissionStorage $instance */
+    /** @var self|static $instance */
     $instance = parent::createInstance($container, $entity_type);
 
-    /** @var \Drupal\helfi_atv\AtvService atvService */
-    $instance->atvService = $container->get('helfi_atv.atv_service');
+    /** @var \Drupal\helfi_atv\AtvService $atvService */
+    $atvService = $container->get('helfi_atv.atv_service');
+    $instance->atvService = $atvService;
 
     /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
-    $instance->atvSchema = \Drupal::service('grants_metadata.atv_schema');
+    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
+    $instance->atvSchema = $atvSchema;
 
-    /** @var \Drupal\Core\Session\AccountInterface account */
-    $instance->account = \Drupal::currentUser();
+    /** @var \Drupal\Core\Session\AccountInterface $account */
+    $account = \Drupal::currentUser();
+    $instance->account = $account;
 
-    /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData helsinkiProfiiliUserData */
-    $instance->helsinkiProfiiliUserData = \Drupal::service('helfi_helsinki_profiili.userdata');
+    /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData */
+    $helsinkiProfiiliUserData = \Drupal::service('helfi_helsinki_profiili.userdata');
+    $instance->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
 
     $instance->data = [];
 
+    /** @var static $instance */
     return $instance;
   }
 
@@ -117,6 +122,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       $this->buildPropertyQuery($entityQuery, $values);
       $result = $entityQuery->execute();
 
+      /** @var \Drupal\webform\WebformSubmissionInterface[] $submissionArray */
       $submissionArray = $this->loadMultiple($result);
       $submission = reset($submissionArray);
       if (!$submission) {
@@ -128,7 +134,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       );
 
       if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
-        throw new \Excpetion('ATV Document does not contain application number.');
+        throw new \Exception('ATV Document does not contain application number.');
       }
       $appData = self::setAtvDataToSubmission($document, $submission);
       $this->data[$submission->id()] = $appData;

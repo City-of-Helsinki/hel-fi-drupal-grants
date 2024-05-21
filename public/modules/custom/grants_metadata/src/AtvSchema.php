@@ -7,7 +7,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
-use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
@@ -21,9 +21,9 @@ class AtvSchema {
   /**
    * Drupal\Core\TypedData\TypedDataManager definition.
    *
-   * @var \Drupal\Core\TypedData\TypedDataManager
+   * @var \Drupal\Core\TypedData\TypedDataManagerInterface
    */
-  protected TypedDataManager $typedDataManager;
+  protected TypedDataManagerInterface $typedDataManager;
 
   /**
    * Schema structure as parsed from schema file.
@@ -42,7 +42,7 @@ class AtvSchema {
   /**
    * Constructs an AtvShcema object.
    */
-  public function __construct(TypedDataManager $typed_data_manager) {
+  public function __construct(TypedDataManagerInterface $typed_data_manager) {
     $this->typedDataManager = $typed_data_manager;
   }
 
@@ -395,7 +395,7 @@ class AtvSchema {
       $itemPropertyDefinitions = NULL;
       // Check if we have child definitions, ie itemDefinitions.
       if (method_exists($definition, 'getItemDefinition')) {
-        /** @var \Drupal\Core\TypedData\ComplexDataDefinitionBase $id */
+        /** @var \Drupal\Core\TypedData\ComplexDataDefinitionBase $itemDefinition */
         $itemDefinition = $definition->getItemDefinition();
         if ($itemDefinition !== NULL) {
           $itemPropertyDefinitions = $itemDefinition->getPropertyDefinitions();
@@ -421,7 +421,7 @@ class AtvSchema {
                 // Get value extracter.
                 $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
                 if ($valueExtracterConfig) {
-                  $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+                  $valueExtracterService = self::getDynamicService($valueExtracterConfig['service']);
                   $method = $valueExtracterConfig['method'];
                   // And try to get value from there.
                   $itemValue = $valueExtracterService->$method($v);
@@ -446,7 +446,7 @@ class AtvSchema {
                 // Get value extracter.
                 $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
                 if ($valueExtracterConfig) {
-                  $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+                  $valueExtracterService = self::getDynamicService($valueExtracterConfig['service']);
                   $method = $valueExtracterConfig['method'];
                   // And try to get value from there.
                   $itemValue = $valueExtracterService->$method($v);
@@ -499,7 +499,7 @@ class AtvSchema {
 
           $valueExtracterConfig = $definition->getSetting('webformValueExtracter');
           if ($valueExtracterConfig) {
-            $valueExtracterService = \Drupal::service($valueExtracterConfig['service']);
+            $valueExtracterService = self::getDynamicService($valueExtracterConfig['service']);
             $method = $valueExtracterConfig['method'];
             // And try to get value from there.
             $retval = $valueExtracterService->$method($retval);
@@ -655,7 +655,7 @@ class AtvSchema {
   ): mixed {
     $fieldValues = [];
     if (isset($fullItemValueCallback['service'])) {
-      $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
+      $fullItemValueService = self::getDynamicService($fullItemValueCallback['service']);
       $funcName = $fullItemValueCallback['method'];
 
       $fieldValues = $fullItemValueService->$funcName($definition, $content, $arguments);
@@ -729,7 +729,7 @@ class AtvSchema {
   /**
    * Extracts data from ATV document compensation field.
    *
-   * @param Drupal\Core\TypedData\DataDefinitionInterface $definition
+   * @param \Drupal\Core\TypedData\DataDefinitionInterface $definition
    *   Field definition.
    * @param array $content
    *   ATV data.
@@ -805,6 +805,16 @@ class AtvSchema {
     }
 
     return $metaData;
+  }
+
+  /**
+   * Get dynamically defined service via Drupal::service method.
+   *
+   * @param string $serviceName
+   *   Service name.
+   */
+  public static function getDynamicService(string $serviceName) {
+    return \Drupal::service($serviceName);
   }
 
 }

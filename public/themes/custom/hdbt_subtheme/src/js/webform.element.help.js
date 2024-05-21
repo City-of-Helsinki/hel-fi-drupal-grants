@@ -3,13 +3,15 @@
  * JavaScript behaviors for element help text (tooltip).
  */
 
-(function ($, Drupal) {
+(function ($, Drupal, once) {
+
+  'use strict';
+
   // @see https://atomiks.github.io/tippyjs/v5/all-props/
   // @see https://atomiks.github.io/tippyjs/v6/all-props/
   Drupal.webform = Drupal.webform || {};
   Drupal.webform.elementHelpIcon = Drupal.webform.elementHelpIcon || {};
-  Drupal.webform.elementHelpIcon.options =
-    Drupal.webform.elementHelpIcon.options || {};
+  Drupal.webform.elementHelpIcon.options = Drupal.webform.elementHelpIcon.options || {};
 
   /**
    * Element help icon.
@@ -28,7 +30,7 @@
       // Converted from ES6 to ES5.
       // @see https://babeljs.io/repl/
       const hideOnEsc = {
-        name: "hideOnEsc",
+        name: 'hideOnEsc',
         defaultValue: true,
         fn: function fn(_ref) {
           const { hide } = _ref;
@@ -50,23 +52,22 @@
         },
       };
 
-      $(context)
-        .find(".js-webform-element-help")
-        .once("webform-element-help")
-        .each(function () {
+      $(once('webform-element-help', '.js-webform-element-help', context)).each(
+        function () {
           const $link = $(this);
 
-          $link.on("click", function (event) {
+          $link.on('click', function (event) {
             // Prevent click from toggling <label>s wrapped around help.
             event.preventDefault();
           });
 
           const options = $.extend(
             {
-              content: $link.attr("data-webform-help"),
+              content: $link.attr('data-webform-help'),
               delay: 100,
               allowHTML: true,
               interactive: false,
+              trigger: 'click',
               plugins: [hideOnEsc],
             },
             Drupal.webform.elementHelpIcon.options,
@@ -76,4 +77,5 @@
         });
     },
   };
-})(jQuery, Drupal);
+
+})(jQuery, Drupal, once);

@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.paragraph.field_unit_contact_use_link
     - paragraphs.paragraphs_type.unit_contact_card
+_core:
+  default_config_hash: 5YM4zyd4QFS-EvNcAYglfKXoDrFqG9gtaKT7BAGIBTE
 id: paragraph.unit_contact_card.field_unit_contact_use_link
 field_name: field_unit_contact_use_link
 entity_type: paragraph

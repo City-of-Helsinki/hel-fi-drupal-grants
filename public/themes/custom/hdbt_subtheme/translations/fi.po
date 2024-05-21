@@ -40,11 +40,20 @@ msgstr "Yhteenveto hakemuksesi perustiedoista ja käsittelytilasta"
 msgid "Sent date"
 msgstr "Lähetyspäivänmäärä"
 
+msgid "No handler information set"
+msgstr "Ei käsittelijän tietoja"
+
 msgid "Handler information"
 msgstr "Käsittelijän tiedot"
 
+msgid "No status history"
+msgstr "Ei tilahistoriaa"
+
 msgid "Application statuses"
 msgstr "Hakemuksen tila"
+
+msgid "No attachments"
+msgstr "Ei liitteitä"
 
 msgid "Application attachments"
 msgstr "Hakemuksen liitteet"
@@ -86,7 +95,7 @@ msgid "My Services"
 msgstr "Oma asiointi"
 
 msgid "Go to My Services"
-msgstr "Siirry omaan asiointikansioon"
+msgstr "Siirry omaan asionti -sivulle"
 
 msgid "Grants profile"
 msgstr "Omat tiedot"
@@ -440,9 +449,20 @@ msgstr "<strong><em>Huomioithan:</em> Tällä valinnalla on tietoturvavaikutuksi
 msgid "Application period"
 msgstr "Hakuaika"
 
+msgid "Read more"
+msgstr "Lisätietoja"
+
 msgid "The application period will be announced later"
 msgstr "Hakuaika ilmoitetaan myöhemmin"
 
 msgctxt "grants_premises"
 msgid "City"
 msgstr "Postitoimipaikka"
+
+msgctxt "grants_theme"
+msgid "items per page"
+msgstr "kpl sivulla"
+
+msgctxt "grants_theme"
+msgid "Items per page"
+msgstr "Merkintöjä sivua kohti"

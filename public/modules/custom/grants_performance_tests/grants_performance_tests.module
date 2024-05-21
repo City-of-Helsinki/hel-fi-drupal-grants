@@ -20,7 +20,7 @@ function grants_performance_tests_user_login(UserInterface $account): void {
   $destination = Url::fromUserInput($redirect_url)->toString();
 
   if (in_array($performance_test_role, $account->getRoles())) {
-    /** @var \Symfony\Component\HttpFoundation\Request $currentRequest */
+    /** @var \Symfony\Component\HttpFoundation\Request $current_request */
     $current_request = \Drupal::service('request_stack')->getCurrentRequest();
     $current_request->query->set('destination', $destination);
   }

@@ -4,7 +4,6 @@ namespace Drupal\grants_attachments\Controller;
 
 use Drupal\Core\Access\AccessException;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
@@ -13,9 +12,12 @@ use Drupal\grants_handler\EventsService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Returns responses for grants_attachments routes.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsAttachmentsController extends ControllerBase {
 
@@ -44,13 +46,20 @@ class GrantsAttachmentsController extends ControllerBase {
   protected EventsService $eventsService;
 
   /**
+   * Requeststack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected RequestStack $request;
+
+  /**
    * The controller constructor.
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
    *   The helfi_atv service.
    * @param \Drupal\grants_handler\ApplicationHandler $applicationHandler
    *   Application handler.
-   * @param \Drupal\Core\Http\RequestStack $requestStack
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Drupal requests.
    * @param \Drupal\grants_handler\EventsService $eventsService
    *   Use submission events productively.
@@ -154,7 +163,8 @@ class GrantsAttachmentsController extends ControllerBase {
         // Update in ATV.
         $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
           $applicationData,
-          $submission_id
+          $submission_id,
+          $submissionData,
         );
 
         if ($applicationUploadStatus) {

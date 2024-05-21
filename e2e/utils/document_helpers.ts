@@ -1,19 +1,15 @@
 import {logger} from "./logger";
+import {getKeyValue, getAppEnvForATV} from './env_helpers';
 
-
-import {
-  getKeyValue,
-} from '../utils/helpers';
-
-
-type ATVMetadata = {
+interface ATVMetadata {
   appenv: string;
   profile_id: string;
   profile_type: string;
   notification_shown: string;
 }
 
-type ATVDocument = {
+interface ATVDocument {
+  content: any;
   id: string;
   type: string;
   service: string;
@@ -22,135 +18,127 @@ type ATVDocument = {
   metadata: ATVMetadata
 }
 
-type PaginatedDocumentlist = {
+interface PaginatedDocumentList {
   count: number;
   next: string | null;
   previous: string | null;
   results: ATVDocument[]
 }
 
-const APP_ENV = getKeyValue('APP_ENV');
+// Setup ATV keys.
 const ATV_API_KEY = getKeyValue('ATV_API_KEY');
 const ATV_BASE_URL = getKeyValue('TEST_ATV_URL');
-
-// Similarily as in ApplicationHandler.php
-const getAppEnvForATV = () => {
-  switch (APP_ENV) {
-    case "development":
-      return "DEV"
-    case "testing":
-      return "TEST"
-    case "staging":
-      return "STAGE"
-    default:
-      return APP_ENV.toUpperCase()
-  }
-}
-
-const BASE_HEADERS = {'X-API-KEY': ATV_API_KEY};
 const APP_ENV_FOR_ATV = getAppEnvForATV();
+const BASE_HEADERS = {'X-API-KEY': ATV_API_KEY};
 
-
+/**
+ * The fetchLatestProfileByType function.
+ *
+ * This function fetches the latest profile from ATV
+ * when given a users UUID and a profile type.
+ * The helper function fetchDocumentList() is used
+ * to do the actual fetching.
+ *
+ * @param userUUID
+ *   The users UUID.
+ * @param profileType
+ *   The profile type.
+ */
 const fetchLatestProfileByType = (userUUID: string, profileType: string) => {
   const currentUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV_FOR_ATV},profile_type:${profileType}&user_id=${userUUID}&type=grants_profile&sort=updated_at`;
-
-  // Use then to handle the asynchronous result
+  // Use then to handle the asynchronous result.
   return fetchDocumentList(currentUrl).then((documentList) => {
     if (documentList) {
-      // because ATV does not differentiate between registered / unregistered
-      // communities, we need to do the filtering here
+      // Because ATV does not differentiate between registered / unregistered
+      // communities, we need to do the filtering here.
       const thisTypes = documentList.results.filter((item) => item.metadata.profile_type === profileType);
       return thisTypes[0];
     }
   });
 }
 
-const fetchDocumentList = async (url: string) => {
-
+/**
+ * The function fetchDocumentList.
+ *
+ * This function uses fetch() to get a document list
+ * from ATV. The variable BASE_HEADERS is set as
+ * the headers for the call.
+ *
+ * @param url
+ *   The URL we are making a request to.
+ */
+const fetchDocumentList = async (url: string): Promise<PaginatedDocumentList | null> => {
   try {
-    // console.log('FETCH', url);
-
     const res = await fetch(url, {headers: BASE_HEADERS});
-
     if (!res.ok) {
       throw new Error(`HTTP error! Status: ${res.status}`);
     }
-
-        const json: PaginatedDocumentlist = await res.json();
-        return json;
-    } catch (error) {
-        logger("Error fetching document list:", error);
-        return null;
-    }
+    return await res.json();
+  } catch (error) {
+    logger("Error fetching document list:", error);
+    return null;
+  }
 };
 
+/**
+ * The deleteDocumentById function.
+ *
+ * This function deletes a documents that
+ * matches the passed in ID from ATV.
+ *
+ * @param id
+ *   The ID of the document we want to delete.
+ */
 const deleteDocumentById = async (id: string) => {
   try {
     const url = `${ATV_BASE_URL}/v1/documents/${id}`;
     const res = await fetch(url, {method: 'DELETE', headers: BASE_HEADERS});
-
-        if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return true;
-    } catch (error) {
-        logger("Error deleting document:", error);
-        return false;
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
     }
+    return true;
+  } catch (error) {
+    logger("Error deleting document:", error);
+    return false;
+  }
 };
 
 /**
- * Delete all grants profiles from atv for given user UUID.
+ * The deleteGrantsProfiles function.
  *
- * @param testUserUiid
+ * This function deletes grants profiles from ATV
+ * with the passed in user UUID and profile type.
+ *
+ * @param testUserUUID
+ *   The user UUID for the profile we want to delete.
  * @param profileType
+ *   The profile type we are deleting.
  */
-const deleteGrantsProfiles = async (testUserUiid: string, profileType: string) => {
-
-  const initialUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV_FOR_ATV},profile_type:${profileType}&user_id=${testUserUiid}&type=grants_profile&service_name=AvustushakemusIntegraatio&sort=updated_at`;
-
-  let currentUrl: string | null = initialUrl;
-
+const deleteGrantsProfiles = async (testUserUUID: string, profileType: string) => {
+  let currentUrl: string | null = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV_FOR_ATV},profile_type:${profileType}&user_id=${testUserUUID}&type=grants_profile&service_name=AvustushakemusIntegraatio&sort=updated_at`;
   let deletedDocumentsCount = 0;
 
   while (currentUrl != null) {
-    const documentList = await fetchDocumentList(currentUrl);
+    const documentList: PaginatedDocumentList|null = await fetchDocumentList(currentUrl);
 
     if (!documentList) return;
 
     currentUrl = documentList.next;
-
     const documentIds = documentList.results
-      .filter((item) => item.metadata.profile_type === profileType)
-      .map(r => r.id);
+      .filter((item: { metadata: { profile_type: string; }; }) => item.metadata.profile_type === profileType)
+      .map((r: { id: any; }) => r.id);
 
     const deletionPromises = documentIds.map(deleteDocumentById);
     const deletionResults = await Promise.all(deletionPromises);
-
     deletedDocumentsCount += deletionResults.filter(result => result).length;
   }
-
-  return deletedDocumentsCount;
+  logger(`Deleted ${deletedDocumentsCount} grant profiles from ATV.`);
 }
-
-/**
- * Delete application documents from ATV
- */
-const deleteGrantApplications = async (status: string, testUserUUID: string) => {
-
-}
-
 
 export {
-  ATVDocument,
-  PaginatedDocumentlist,
-  APP_ENV,
-  ATV_API_KEY,
   ATV_BASE_URL,
+  ATV_API_KEY,
   getAppEnvForATV,
-  fetchDocumentList,
-  deleteDocumentById,
-  BASE_HEADERS,
   deleteGrantsProfiles,
   fetchLatestProfileByType
 }

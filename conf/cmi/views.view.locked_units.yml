@@ -6,6 +6,8 @@ dependencies:
     - content_lock
     - helfi_tpr
     - user
+_core:
+  default_config_hash: 0hlcjVvL7vdLtkyp8OVSiK8ue6rkEHayXkv5S316yTY
 id: locked_units
 label: 'Locked units'
 module: views
@@ -423,7 +425,7 @@ display:
           admin_label: ''
           plugin_id: text_custom
           empty: true
-          content: 'There is no content currently locked.'
+          content: 'There is no currently locked units.'
           tokenize: false
       sorts: {  }
       arguments: {  }
@@ -601,6 +603,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }
   locked_units_block:
     id: locked_units_block
@@ -616,4 +619,5 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }
