@@ -6,19 +6,14 @@ echo "================== RUN FORM CONFIGS ==================="
 if [ "$SKIP_DEPLOY_SCRIPTS" = "true" ]; then
     echo "SKIP_DEPLOY_SCRIPTS is true. Skipping the steps."
 else
-  cd /var/www/html/public
+  source /init.sh
 
-  function output_error_message {
-    echo ${1}
-    php ../docker/openshift/notify.php "${1}" || true
-  }
-
-  function get_deploy_id {
+  function get_config_deploy_id {
     echo $(drush state:get deploy_id_config)
   }
 
   PREFIXED_OC_BUILD_NAME="GRANTS-$OPENSHIFT_BUILD_NAME"
-  DRUSH_GET_VAR=$(get_deploy_id)
+  DRUSH_GET_VAR=$(get_config_deploy_id)
 
   echo "Drush variable: $DRUSH_GET_VAR"
   echo "Prefixed build name: $PREFIXED_OC_BUILD_NAME"
@@ -67,11 +62,10 @@ else
     echo "Disable Maintenance"
     # Disable maintenance mode
     drush state:set system.maintenance_mode 0 --input-format=integer
-    echo "DONE: Disable maintenance."
-
     if [ $? -ne 0 ]; then
       output_error_message "Deployment failure: Failed to disable maintenance_mode"
     fi
+    echo "DONE: Disable maintenance."
   fi
 
   echo "================== END FORM CONFIGS ==================="

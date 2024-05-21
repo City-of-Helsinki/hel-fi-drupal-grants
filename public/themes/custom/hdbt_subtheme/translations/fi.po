@@ -449,6 +449,9 @@ msgstr "<strong><em>Huomioithan:</em> Tällä valinnalla on tietoturvavaikutuksi
 msgid "Application period"
 msgstr "Hakuaika"
 
+msgid "Read more"
+msgstr "Lisätietoja"
+
 msgid "The application period will be announced later"
 msgstr "Hakuaika ilmoitetaan myöhemmin"
 

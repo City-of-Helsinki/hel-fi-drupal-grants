@@ -193,10 +193,14 @@ elements: |
     '#title': 'Självfinansierad andel (€)'
   budget_other_income:
     '#title': 'Övriga intäkter'
+    '#multiple__add_more_button_label': 'Lägg till en intäkt'
+    '#multiple__item_label': 'intäkt'
   menot:
     '#title': 'Utgifter i budgeten'
   budget_other_cost:
     '#title': Utgifter
+    '#multiple__add_more_button_label': 'Lägg till en utgift'
+    '#multiple__item_label': 'utgift'
   lisatiedot_ja_liitteet:
     '#title': '6. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:

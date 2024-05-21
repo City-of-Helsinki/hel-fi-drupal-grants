@@ -36,7 +36,7 @@ fieldset.orienteering-map-composite--wrapper,
   width: 100%;
   max-width: 100%;
 
-  span.visually-hidden {
+  legend > span.visually-hidden {
     height: auto;
     width: max-content;
     overflow: visible;
