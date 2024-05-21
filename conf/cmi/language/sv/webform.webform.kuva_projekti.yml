@@ -210,6 +210,7 @@ elements: |
   tila:
     '#title': 'Övriga lokaler'
     '#isOwnedByCity__title': 'Stadens eget utrymme'
+    '#multiple__item_label': 'lokal'
     '#multiple__add_more_button_label': 'Lägg till ny lokal'
   aikataulu:
     '#title': Tidtabell
@@ -304,6 +305,8 @@ elements: |
     '#marketing__title': 'Information, marknadsföring och tryckkostnader (€)'
   budget_other_cost:
     '#title': 'Övriga kostnader'
+    '#multiple__add_more_button_label': 'Lägg till en kostnad'
+    '#multiple__item_label': 'kostnad'
   muu_huomioitava_panostus_osio:
     '#markup': '<h4>&Ouml;vrig betydande insats</h4>'
   muu_huomioitava_panostus:

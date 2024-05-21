@@ -181,6 +181,8 @@ elements: |
     '#title': Utrymme
     '#isOthersUse__title': 'Utrymmen som erbjuds även till andra (att hyra eller gratis)'
     '#isOwnedByApplicant__title': 'Utrymmet ägs av aktören'
+    '#multiple__item_label': 'utrymme'
+    '#multiple__add_more_button_label': 'Lägg till ny utrymme'
   4_toiminta:
     '#title': '4. Aktiviteter'
     '#prev_button_label': '< Tidigare'
@@ -279,6 +281,8 @@ elements: |
     '#markup': "<h4>Öppen verksamhet för publik i Helsingfors</h4>\r\n\r\n<p>Med öppen verksamhet avser vi här t.ex. föreställningar, utställningar, verkstäder eller annan verksamhet, där publiken kan vara delaktig.</p>"
   toteutuneet_tila:
     '#title': Plats
+    '#multiple__item_label': 'plats'
+    '#multiple__add_more_button_label': 'Lägg till ny plats'
   5_toiminnan_lahtokohdat:
     '#title': '5. Utgångspunkten för verksamheten'
     '#prev_button_label': '< Tidigare'

@@ -48,6 +48,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     'grants_attachments',
     'grants_budget_components',
     'grants_club_section',
+    'grants_mandate',
     'grants_metadata',
     'grants_handler',
     'grants_premises',

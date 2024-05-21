@@ -61,6 +61,8 @@ elements: |
     '#title': 'Vi ordnade läger i följande områden'
     '#help': '<p>Ange här namnet och postnummerområdet för alla de gårdar på vilka ni har ordnat läger som omfattas av lägerstödet för semesterperioderna under den gångna säsongen.</p>'
     '#premiseName__title': Verksamhetsställe
+    '#multiple__item_label': 'lägerplats'
+    '#multiple__add_more_button_label': 'Lägg till ny lägerplats'
   3_talousarvio:
     '#title': '3. Budget'
   tulot:
@@ -70,6 +72,8 @@ elements: |
   tulo:
     '#title': Intäkt
     '#help': '<p>Ange intäktstypen här. Till exempel deltagaravgifter kan vara intäkter av lägerverksamhet.</p>'
+    '#multiple__add_more_button_label': 'Lägg till en intäkt'
+    '#multiple__item_label': 'intäkt'
   menot:
     '#title': Utgifter
   markup_05:
@@ -77,6 +81,8 @@ elements: |
   meno:
     '#title': Utgift
     '#help': '<p>Ange utgiftstypen här. Till exempel inkvarteringskostnader, matkostnader och lönekostnader för instruktörer kan vara utgifter för lägerverksamhet.</p>'
+    '#multiple__add_more_button_label': 'Lägg till en utgift'
+    '#multiple__item_label': 'utgift'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:

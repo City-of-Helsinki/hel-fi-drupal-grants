@@ -232,6 +232,9 @@ elements: |
     '#title': 'Aktiva grengsektioner för helsingforsare'
   lajijaostot_info:
     '#markup': "<p>Regelbunden handledd idrottsverksamhet som ordnas av föreningen, enligt gren. Ange här antalet aktiva idrottsutövare från Helsingfors under föregående år, per sport, samt deras realiserade träningstimmar.</p>\r\n"
+  club_section:
+    '#multiple__add_more_button_label': 'Lägg till en sport'
+    '#multiple__item_label': 'sport'
   lisatiedot_ja_liitteet:
     '#title': '4. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
