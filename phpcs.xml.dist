@@ -8,7 +8,5 @@
     <exclude name="DrupalPractice.General.OptionsT.TforValue" />
     <exclude name="DrupalPractice.Objects.UnusedPrivateMethod.UnusedMethod" />
   </rule>
-  <!-- TODO enable Generic.PHP.RequireStrictTypes
   <rule ref="Generic.PHP.RequireStrictTypes" />
-  -->
 </ruleset>
