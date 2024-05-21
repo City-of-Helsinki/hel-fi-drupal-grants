@@ -148,14 +148,6 @@ elements: |
   toimintapaikka:
     '#title': Verksamhetsställen
     '#description': '<p>Fyll i kontaktinformation, gruppstrukturer och uppgifter om eventuell hyra för respektive verksamhetsställe. Blanketten räknar ihop uppgifterna automatiskt.</p>'
-    '#location__title': Verksamhetsställen
-    '#specialStudents__title': 'av vilka specialelever'
-    '#specialGroups__title': 'av vilka smågrupper för specialelever'
-    '#personnelCount__title': 'Antal anställda'
-    '#free__title': 'Verksamheten ordnas i lokaler som hyresfritt ställs till förfogande av stadens utbildnings-, social- eller ungdomsväsende'
-    '#totalRent__title': 'Euro sammanlagt under läsåret (€)'
-    '#rentTimeBegin__title': 'Hyrestid i under läsåret, fr.o.m.'
-    '#rentTimeEnd__title': 'Hyrestid i under läsåret, ft.o.m.'
     '#multiple__add_more_button_label': 'Lägg till en verksamhetsställen'
     '#multiple__item_label': 'verksamhetsställen'
   4_talous:
