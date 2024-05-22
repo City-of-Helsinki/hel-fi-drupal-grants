@@ -25,6 +25,8 @@ display:
           separator: ', '
         created:
           label: Luotu
+        redirect_bulk_form:
+          action_title: Valinnalla
       filters:
         redirect_source__path:
           expose:
@@ -35,5 +37,25 @@ display:
         language:
           expose:
             label: 'Alkuperäinen kieli'
+        status_code:
+          group_info:
+            group_items:
+              1:
+                title: '300 Useita valintoja'
+              2:
+                title: '301 Pysyvästi siirretty'
+              3:
+                title: '302 Löydetty'
+              4:
+                title: '303 Kts. toinen'
+              5:
+                title: '304 Muuttamaton'
+              6:
+                title: '305 Käytä proxyä'
+              7:
+                title: '307 Tilapäinen uudelleenohjaus'
+      title: Redirect
+    display_title: Isäntä
   page_1:
     display_title: Sivu
+label: Redirect

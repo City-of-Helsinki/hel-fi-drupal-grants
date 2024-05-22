@@ -23,6 +23,7 @@ display:
           separator: ', '
         type:
           separator: ', '
+          label: Sisältötyyppi
         name:
           label: Kirjoittaja
           separator: ', '
@@ -34,8 +35,10 @@ display:
           separator: ', '
         publish_on:
           separator: ', '
+          label: Julkaisupäivämäärä
         unpublish_on:
           separator: ', '
+          label: 'Julkaisun peruutuspäivämäärä'
         operations:
           label: Toimenpiteet
       filters:
@@ -58,10 +61,13 @@ display:
         langcode:
           expose:
             label: Kieli
+    display_title: Isäntä
   overview:
     display_options:
       tab_options:
         title: Sisältö
+      menu:
+        title: Ajastettu
   user_page:
     display_options:
       tab_options:
@@ -70,3 +76,5 @@ display:
         uid:
           exception:
             title: Kaikki
+      menu:
+        title: Ajastettu

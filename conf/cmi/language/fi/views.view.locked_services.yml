@@ -27,7 +27,7 @@ display:
             next: 'Seuraava ›'
             previous: '‹ Edellinen'
             first: '« Ensimmäinen'
-            last: 'Viimeinen »'
+            last: 'Last »'
           expose:
             offset_label: Offset
             items_per_page_label: 'Merkintöjä sivua kohti'

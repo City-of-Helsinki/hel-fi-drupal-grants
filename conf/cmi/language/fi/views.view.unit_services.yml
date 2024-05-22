@@ -6,12 +6,12 @@ display:
           submit_button: Käytä
           reset_button_label: Palauta
           exposed_sorts_label: Lajittele
-          sort_asc_label: Nousevasti
-          sort_desc_label: Laskevasti
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       arguments:
         id:
           exception:
             title: Kaikki
-    display_title: Oletus
+    display_title: Isäntä
   unit_services:
     display_title: Lohko
