@@ -6,8 +6,8 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystem;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\file\FileUsage\FileUsageInterface;
@@ -41,9 +41,9 @@ class AttachmentRemover {
   /**
    * Logger Factory.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel $loggerChannel;
+  protected LoggerChannelInterface $loggerChannel;
 
   /**
    * The current user.
@@ -90,11 +90,14 @@ class AttachmentRemover {
    *   Entity type manager.
    * @param \Drupal\Core\File\FileSystem $fileSystem
    *   File system.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function __construct(
     FileUsageInterface $file_usage,
     MessengerInterface $messenger,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
     Connection $connection,
     AccountProxyInterface $currentUser,
     EntityTypeManagerInterface $entityTypeManager,
@@ -334,11 +337,13 @@ class AttachmentRemover {
       try {
         $this->loggerChannel->notice("Removing file entity with URI: $fileUri");
         $fileEntity->delete();
-      } catch (\Exception $e) {
+      }
+      catch (\Exception $e) {
         $this->loggerChannel->error('Error purging leftover attachments: ' . $e->getMessage());
         $this->messenger->addError('Error purging leftover attachments');
       }
-    } else {
+    }
+    else {
       $this->loggerChannel->notice("Removing file with URI: $fileUri");
       @unlink($fileUri);
     }

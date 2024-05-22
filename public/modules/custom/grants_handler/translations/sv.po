@@ -141,7 +141,7 @@ msgid "Edit application"
 msgstr "Uppdatera ansökning"
 
 msgctxt "grants_handler"
-msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page."
+msgid "Your data is safe, but not all the\ninformation in your application has been updated yet. Please wait \nmoment and reload the page."
 msgstr "Din information är säker, men all information i din ansökan har inte uppdaterats ännu. Vänligen vänta ett ögonblick och ladda om sidan."
 
 msgid "File upload failed, error has been logged."
@@ -453,6 +453,9 @@ msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan. 
 msgid "Grant application (@number) saving failed. Error has been logged."
 msgstr "Det gick inte att spara bidragsansökan (@number). Ett fel har loggats."
 
+msgid "Grant application (<span id=\"saved-application-number\">@number</span>) saved."
+msgstr "Bidragsansökan @number sparat."
+
 msgid "User does not have proper mandate."
 msgstr "Användaren har inte korrekt mandat."
 
@@ -538,6 +541,10 @@ msgstr "Din begäran uppfylldes inte på grund av nätverksfel."
 
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Är du säker att du vill stänga blanketten? Avsluta utan att spara."
+
+msgctxt "grants_handler"
+msgid "Close"
+msgstr "Stäng"
 
 msgid "Leave the application"
 msgstr "Avsluta från ansökningshandling"
@@ -629,3 +636,6 @@ msgstr "E-post"
 
 msgid "The email address %mail is not valid. Use the format user@example.com."
 msgstr "%mail är inte en giltig e-postadress. Använd formen user@example.com."
+
+msgid "Remove @item @number"
+msgstr "Ta bort @item @number"

@@ -69,6 +69,17 @@ function grants_industries_entity_type_alter(array &$entity_types): void {
 }
 
 /**
+ * Implements hook_module_implements_alter().
+ */
+function grants_industries_module_implements_alter(&$implementations, $hook): void {
+  if ($hook == 'form_alter') {
+    $group = $implementations['grants_industries'];
+    unset($implementations['grants_industries']);
+    $implementations['grants_industries'] = $group;
+  }
+}
+
+/**
  * Implements hook_form_alter().
  */
 function grants_industries_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
@@ -85,6 +96,14 @@ function grants_industries_form_alter(&$form, FormStateInterface $form_state, $f
     $form['author_information']['#access'] = FALSE;
     $form['share_settings']['#access'] = FALSE;
     $form['advanced_settings']['#access'] = FALSE;
+
+    // Restrict access to certain third-party settings for non-admin users.
+    $form['third_party_settings']['grants_metadata']['applicationTypeSelect']['#disabled'] = TRUE;
+    $form['third_party_settings']['grants_metadata']['applicationType']['#disabled'] = TRUE;
+    $form['third_party_settings']['grants_metadata']['applicationTypeID']['#disabled'] = TRUE;
+    $form['third_party_settings']['grants_metadata']['applicationIndustry']['#disabled'] = TRUE;
+    $form['third_party_settings']['grants_metadata']['applicantTypes']['#disabled'] = TRUE;
+    $form['third_party_settings']['grants_metadata']['applicationTypeTerms']['#disabled'] = TRUE;
   }
 
   if (!in_array('helsinkiprofiili', $roles)) {

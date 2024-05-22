@@ -244,7 +244,6 @@ class TypedDataToDocumentContentWithWebform {
 
         // Handle a json structure of the size 2.
         if ($numberOfItems == 2) {
-          $metaData = AtvSchema::getMetaData($page, $section, $element);
           if (is_array($itemValue) && AtvSchema::numericKeys($itemValue) && $propertyType == 'list') {
             self::handlePropertyItems($reference, $elementName, $property, $webformMainElement, $defaultValue, $hiddenFields, $metaData);
             self::handlePossibleEmptyArray($documentStructure, $reference, $jsonPath);
@@ -269,7 +268,6 @@ class TypedDataToDocumentContentWithWebform {
         }
       }
     }
-
     // Handle cases when no attachments info has been added.
     if (!array_key_exists('attachmentsInfo', $documentStructure)) {
       $documentStructure['attachmentsInfo'] = [];

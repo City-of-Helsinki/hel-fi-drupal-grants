@@ -65,7 +65,7 @@ class ResendApplicationsForm extends AtvFormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $applicationId = trim($form_state->getValue('applicationId') ?? '');
 
-    $prefilledNumber = \Drupal::request()->query->get('transaction_id');
+    $prefilledNumber = $this->getRequest()->query->get('transaction_id');
 
     if (empty($applicationId) && $prefilledNumber) {
       $applicationId = $prefilledNumber;
@@ -120,6 +120,12 @@ class ResendApplicationsForm extends AtvFormBase {
     $document = $form_state->getValue('atvdocument');
     $messages = $form_state->getValue('messages');
 
+    if ($document) {
+      $documentArray = json_decode($document, TRUE);
+      $prettyJson = json_encode($documentArray, JSON_PRETTY_PRINT);
+      $document = $prettyJson;
+    }
+
     if ($status) {
       $form['status']['state'] = [
         '#title' => 'Status',
@@ -139,7 +145,6 @@ class ResendApplicationsForm extends AtvFormBase {
         '#type' => 'textarea',
         '#value' => $document,
         '#disabled' => TRUE,
-
       ];
 
       $form['status']['messageList'] = [
@@ -151,7 +156,6 @@ class ResendApplicationsForm extends AtvFormBase {
           $this->t('Content'),
           $this->t('Attachments'),
           $this->t('Sent by', [], self::$tOpts),
-          $this->t('Avus2 has received the message*', [], self::$tOpts),
           $this->t('Has been resent', [], self::$tOpts),
           $this->t('Resend this message', [], self::$tOpts),
         ],
@@ -185,6 +189,9 @@ class ResendApplicationsForm extends AtvFormBase {
           ],
         ],
       ];
+
+      // Attach css library.
+      $form['#attached']['library'][] = 'grants_admin_applications/grants_admin_applications.resend_application';
     }
     return $form;
   }
@@ -257,8 +264,8 @@ class ResendApplicationsForm extends AtvFormBase {
     }
 
     $messenger->addStatus(t(
-      'Selected messages has been resent, processing the messages might take a few moments'
-    ), [], self::$tOpts);
+      'Selected messages has been resent, processing the messages might take a few moments',
+     [], self::$tOpts));
     $formState->setRebuild();
   }
 
@@ -424,7 +431,7 @@ class ResendApplicationsForm extends AtvFormBase {
   public function buildMessages(mixed $messages, array &$form): void {
     foreach ($messages as $message) {
       $resent = isset($message['resent']) && $message['resent'];
-      $avus2Received = isset($message['avus2received']) && $message['avus2received'];
+      $senderIsAvus2 = isset($message['sentBy']) && $message['sentBy'] === 'Avustusten kasittelyjarjestelma';
 
       $rowElement = [
         'id' => [
@@ -450,19 +457,17 @@ class ResendApplicationsForm extends AtvFormBase {
         'sentBy' => [
           '#markup' => $message['sentBy'],
         ],
-        'avus2received' => [
-          '#markup' => $avus2Received
-            ? $this->t('Yes', [], self::$tOpts)
-            : $this->t('No', [], self::$tOpts),
-        ],
         'hasBeenResent' => [
           '#markup' => $resent
             ? $this->t('Yes', [], self::$tOpts)
             : $this->t('No', [], self::$tOpts),
         ],
-        'resendMessage' => [
+        'resendMessage' => !$senderIsAvus2 ? [
           '#type' => 'checkbox',
           '#return_value' => $message['messageId'],
+        ] : ['#markup' => ''],
+        '#attributes' => [
+          'class' => $senderIsAvus2 ? ['from-avus2'] : ['from-author'],
         ],
       ];
 

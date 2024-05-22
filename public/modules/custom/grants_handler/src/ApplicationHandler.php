@@ -2,17 +2,20 @@
 
 namespace Drupal\grants_handler;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManager;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_mandate\CompanySelectException;
@@ -27,7 +30,7 @@ use Drupal\helfi_helsinki_profiili\ProfileDataException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -52,9 +55,9 @@ class ApplicationHandler {
   /**
    * The HTTP client.
    *
-   * @var \GuzzleHttp\ClientInterface
+   * @var \GuzzleHttp\Client
    */
-  protected ClientInterface $httpClient;
+  protected Client $httpClient;
 
   /**
    * The helfi_helsinki_profiili.userdata service.
@@ -94,9 +97,9 @@ class ApplicationHandler {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel|LoggerChannelInterface $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Show messages.
@@ -190,9 +193,32 @@ class ApplicationHandler {
   protected GrantsHandlerNavigationHelper $grantsHandlerNavigationHelper;
 
   /**
+   * The configuration factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
+   * The current_user service.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   *   The current_user service.
+   */
+  protected $currentUser;
+
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $time;
+
+  /**
    * Constructs an ApplicationUploader object.
    *
-   * @param \GuzzleHttp\ClientInterface $http_client
+   * @param \GuzzleHttp\Client $http_client
    *   The HTTP client.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata
    *   The helfi_helsinki_profiili.userdata service.
@@ -214,19 +240,28 @@ class ApplicationHandler {
    *   Language manager.
    * @param \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper
    *   Access error messages.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The configuration factory.
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
+   *   The current_user service.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time service.
    */
   public function __construct(
-    ClientInterface $http_client,
+    Client $http_client,
     HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata,
     AtvService $atvService,
     AtvSchema $atvSchema,
     GrantsProfileService $grantsProfileService,
-    LoggerChannelFactory $loggerChannelFactory,
+    LoggerChannelFactoryInterface $loggerChannelFactory,
     Messenger $messenger,
     EventsService $eventsService,
     Connection $datababse,
     LanguageManager $languageManager,
-    GrantsHandlerNavigationHelper $grantsFormNavigationHelper
+    GrantsHandlerNavigationHelper $grantsFormNavigationHelper,
+    ConfigFactoryInterface $configFactory,
+    AccountProxyInterface $currentUser,
+    TimeInterface $time
   ) {
 
     $this->httpClient = $http_client;
@@ -249,6 +284,9 @@ class ApplicationHandler {
     $this->database = $datababse;
     $this->languageManager = $languageManager;
     $this->grantsHandlerNavigationHelper = $grantsFormNavigationHelper;
+    $this->configFactory = $configFactory;
+    $this->currentUser = $currentUser;
+    $this->time = $time;
   }
 
   /**
@@ -1047,7 +1085,7 @@ class ApplicationHandler {
   /**
    * Validate application data so that it is correct for saving to AVUS2.
    *
-   * @param \Drupal\Core\TypedData\TypedDataInterface $applicationData
+   * @param \Drupal\Core\TypedData\ComplexDataInterface $applicationData
    *   Typed data object.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state object.
@@ -1058,7 +1096,7 @@ class ApplicationHandler {
    *   Constraint violation object.
    */
   public function validateApplication(
-    TypedDataInterface $applicationData,
+    ComplexDataInterface $applicationData,
     FormStateInterface &$formState,
     WebformSubmission $webform_submission
   ): ConstraintViolationListInterface {
@@ -1184,7 +1222,7 @@ class ApplicationHandler {
 
     // Set the translation target language on the configuration factory.
     $this->languageManager->setConfigOverrideLanguage($language);
-    $translatedLabel = \Drupal::config("webform.webform.{$webform_id}")
+    $translatedLabel = $this->configFactory->get("webform.webform.{$webform_id}")
       ->get('title');
     $this->languageManager->setConfigOverrideLanguage($originalLanguage);
     return $translatedLabel;
@@ -2042,9 +2080,9 @@ class ApplicationHandler {
       'handler_id' => self::HANDLER_ID,
       'application_number' => $applicationNumber,
       'saveid' => $saveId,
-      'uid' => \Drupal::currentUser()->id(),
+      'uid' => $this->currentUser->id(),
       'user_uuid' => $userData['sub'] ?? '',
-      'timestamp' => (string) \Drupal::time()->getRequestTime(),
+      'timestamp' => (string) $this->time->getRequestTime(),
     ];
 
     $query = $this->database->insert(self::TABLE, $fields);
@@ -2085,7 +2123,11 @@ class ApplicationHandler {
 
     if (empty($submissionData)) {
       if ($webform_submission == NULL) {
-        $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
+        try {
+          $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
+        }
+        catch (\Exception $e) {
+        }
       }
       $submissionData = $webform_submission->getData();
     }

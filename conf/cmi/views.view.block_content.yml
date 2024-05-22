@@ -17,7 +17,7 @@ base_field: id
 display:
   default:
     id: default
-    display_title: Oletus
+    display_title: Default
     display_plugin: default
     position: 0
     display_options:
@@ -277,8 +277,8 @@ display:
           total_pages: null
           id: 0
           tags:
-            next: 'Seuraava ›'
-            previous: '‹ Edellinen'
+            next: 'Next ›'
+            previous: '‹ Previous'
           expose:
             items_per_page: false
             items_per_page_label: 'Merkintöjä sivua kohti'

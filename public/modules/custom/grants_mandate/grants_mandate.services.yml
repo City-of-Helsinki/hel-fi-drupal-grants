@@ -8,8 +8,24 @@ services:
         '@request_stack',
         '@grants_profile.service',
     ]
+  grants_mandate_redirect.service:
+    class: Drupal\grants_mandate\GrantsMandateRedirectService
+    arguments: [
+        '@request_stack',
+        '@grants_profile.service',
+        '@current_route_match'
+    ]
   grants_mandate.handle_mandate_errors:
     class: Drupal\grants_mandate\EventSubscriber\GrantsMandateExceptionSubscriber
     arguments: [ '@messenger','@logger.factory', '@helfi_audit_log.audit_log' ]
+    tags:
+      - { name: event_subscriber }
+  grants_mandate.request_subscriber:
+    class: Drupal\grants_mandate\EventSubscriber\GrantsMandateRequestSubscriber
+    arguments: [
+      '@request_stack',
+      '@current_user',
+      '@current_route_match'
+    ]
     tags:
       - { name: event_subscriber }

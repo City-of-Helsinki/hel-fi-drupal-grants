@@ -75,6 +75,9 @@ msgstr "Försöket att autentisera misslyckades."
 msgid "Application period"
 msgstr "Ansökningsperiod"
 
+msgid "Read more"
+msgstr "Läs mer"
+
 msgid "The application period will be announced later"
 msgstr "Ansökningsperiod meddelas senare"
 
@@ -405,3 +408,11 @@ msgstr "<strong><em>Vänligen observera:</em> Det här alternativet har säkerhe
 msgctxt "grants_premises"
 msgid "City"
 msgstr "Postanstalt"
+
+msgctxt "grants_theme"
+msgid "items per page"
+msgstr "per sida"
+
+msgctxt "grants_theme"
+msgid "Items per page"
+msgstr "Inlägg per sida"

@@ -2,6 +2,10 @@
   {% set authClass = 'grants-service-page-block--auth' %}
   {% set title = 'Create new application'|t({}, {'context': 'grants_handler'}) %}
   {% set icon = 'info' %}
+{% elseif auth == 'not_open' %}
+  {% set authClass = 'grants-service-page-block--anon' %}
+  {% set title = 'Application is not open'|t({}, {'context': 'grants_handler'}) %}
+  {% set icon = 'alert' %}
 {% else %}
   {% set authClass = 'grants-service-page-block--anon' %}
   {% set icon = 'alert' %}

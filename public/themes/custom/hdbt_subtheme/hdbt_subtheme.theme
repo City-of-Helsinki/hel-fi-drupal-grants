@@ -44,32 +44,6 @@ function hdbt_subtheme_preprocess_status_messages(&$variables): void {
 }
 
 /**
- * Helper function to get the icons path.
- *
- * @return string|null
- *   Returns path for the icons SVG or null.
- */
-function hdbt_subtheme_get_icons_path(): ?string {
-  static $icon_path;
-  if (!isset($icon_path)) {
-    $theme_handler = \Drupal::service('theme_handler');
-    $icon_path = '/' . $theme_handler->getTheme('hdbt_subtheme')->getPath() . '/dist/icons/sprite.svg';
-
-    // Add icons path as a global variable.
-    return $icon_path;
-  }
-  return $icon_path;
-}
-
-/**
- * Implements hook_preprocess().
- */
-function hdbt_subtheme_preprocess(&$variables): void {
-  $variables['hdbt_subtheme_icons_path'] = hdbt_subtheme_get_icons_path();
-  $variables['#attached']['drupalSettings']['helfigrantapplicationsIconsPath'] = $variables['hdbt_subtheme_icons_path'];
-}
-
-/**
  * Implements hook_preprocess_HOOK().
  */
 function hdbt_subtheme_preprocess_menu(&$variables): void {
@@ -515,6 +489,15 @@ function hdbt_subtheme_preprocess_html(&$variables): void {
 
   $current_route = \Drupal::routeMatch();
   $route_name = $current_route->getRouteName();
+
+  if (
+    isset($variables['node_type']) &&
+    $variables['node_type'] === 'service' &&
+    \Drupal::currentUser()->isAuthenticated()
+  ) {
+    $redirectService = \Drupal::service('grants_mandate_redirect.service');
+    $redirectService->maybeSaveServicePage();
+  }
 
   if ($route_name == 'grants_oma_asiointi.front' || $route_name == 'grants_profile.show') {
     $variables['attributes']['class'][] = 'page--oma-asiointi';

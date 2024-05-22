@@ -6,12 +6,11 @@ use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Routing\Access\AccessInterface;
 use Drupal\Core\Utility\Error;
 use Drupal\grants_industries\Services\WebformAccessCheckService;
-use Psr\Log\LoggerInterface;
 
 /**
  * Provides a 'WebformAdminRouteAccessCheck' access.
@@ -34,9 +33,9 @@ class WebformRestrictedRouteAccessCheck implements AccessInterface {
   /**
    * Logger access.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel|LoggerInterface
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel|LoggerInterface $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * The class constructor.
@@ -48,7 +47,7 @@ class WebformRestrictedRouteAccessCheck implements AccessInterface {
    */
   public function __construct(
     WebformAccessCheckService $webformAccessCheckService,
-    LoggerChannelFactory $loggerFactory) {
+    LoggerChannelFactoryInterface $loggerFactory) {
     $this->webformAccessCheckService = $webformAccessCheckService;
     $this->logger = $loggerFactory->get('grants_industries');
 

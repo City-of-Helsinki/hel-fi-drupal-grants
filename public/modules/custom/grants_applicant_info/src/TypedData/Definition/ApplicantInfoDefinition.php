@@ -17,6 +17,7 @@ class ApplicantInfoDefinition extends ComplexDataDefinitionBase {
 
     if (!isset($this->propertyDefinitions)) {
       /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
+      // @phpstan-ignore-next-line
       $grantsProfileService = \Drupal::service('grants_profile.service');
       $applicantType = $grantsProfileService->getApplicantType();
 

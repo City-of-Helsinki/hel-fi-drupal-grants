@@ -40,7 +40,7 @@ content:
           show: true
           weight: 1
         EMAIL:
-          label: Email
+          label: 'Send as an email'
           show: true
           weight: 2
         TELEPHONE:
