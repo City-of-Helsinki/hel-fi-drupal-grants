@@ -626,6 +626,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
+        '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseAddress__access': false
         '#location__access': false
         '#streetAddress__access': false
@@ -951,6 +953,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
+        '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
@@ -1269,7 +1273,7 @@ elements: |-
         '#type': radios
         '#required': true
         '#title': 'Organisaatio kuului valtionosuusjärjestelmään (VOS)'
-        '#help': 'Valitse kyllä, vain jos varmuudella tiedät organisaatiosi saavan rahoitusta juuri valtionosuuden muodossa. Tällä ei tarkoiteta kaikkia valtion myöntämiä avustuksia, vaan kyseessä on rajattua joukkoa koskeva lakisääteinen erillinen rahoitusmuoto. Taide- ja kulttuuritoimijoiden valtionosuudet ovat laskennallisiin osuuksiin, esimerkiksi henkilötyövuosiin ja niiden yksikköhintaan tai taiteen perusopetuksen opetustuntimäärään perustuvia tukia.'
+        '#help': 'Valitse kyllä, vain jos varmuudella tiedät organisaatiosi saaneen rahoitusta juuri valtionosuuden muodossa. Tällä ei tarkoiteta kaikkia valtion myöntämiä avustuksia, vaan kyseessä on rajattua joukkoa koskeva lakisääteinen erillinen rahoitusmuoto. Taide- ja kulttuuritoimijoiden valtionosuudet ovat laskennallisiin osuuksiin, esimerkiksi henkilötyövuosiin ja niiden yksikköhintaan tai taiteen perusopetuksen opetustuntimäärään perustuvia tukia.'
         '#options':
           1: Kyllä
           0: Ei
@@ -1603,7 +1607,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

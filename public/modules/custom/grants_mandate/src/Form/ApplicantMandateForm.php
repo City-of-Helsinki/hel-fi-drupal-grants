@@ -6,11 +6,13 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
+use Drupal\grants_mandate\GrantsMandateRedirectService;
 use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Provides a Grants Profile form.
@@ -41,16 +43,25 @@ class ApplicantMandateForm extends FormBase {
   protected GrantsMandateService $grantsMandateService;
 
   /**
+   * The redirect service.
+   *
+   * @var \Drupal\grants_mandate\GrantsMandateRedirectService
+   */
+  protected $redirectService;
+
+  /**
    * Constructs a new ModalAddressForm object.
    */
   public function __construct(
     GrantsProfileService $grantsProfileService,
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-    GrantsMandateService $grantsMandateService
+    GrantsMandateService $grantsMandateService,
+    GrantsMandateRedirectService $redirectService,
   ) {
     $this->grantsProfileService = $grantsProfileService;
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
     $this->grantsMandateService = $grantsMandateService;
+    $this->redirectService = $redirectService;
   }
 
   /**
@@ -60,7 +71,8 @@ class ApplicantMandateForm extends FormBase {
     return new static(
       $container->get('grants_profile.service'),
       $container->get('helfi_helsinki_profiili.userdata'),
-      $container->get('grants_mandate.service')
+      $container->get('grants_mandate.service'),
+      $container->get('grants_mandate_redirect.service'),
     );
   }
 
@@ -78,6 +90,7 @@ class ApplicantMandateForm extends FormBase {
     $tOpts = ['context' => 'grants_mandate'];
 
     $userData = $this->helsinkiProfiiliUserData->getUserData();
+    $this->redirectService->handlePossibleServicePageRedirection();
 
     $profileOptions = [
       'new' => $this->t('Add new Unregistered community or group', [], $tOpts),
@@ -227,7 +240,8 @@ organization or association', [], $tOpts),
 
         // Redirect user to grants profile page.
         $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
-        $redirect = new TrustedRedirectResponse($redirectUrl->toString());
+        $defaultRedirect = new RedirectResponse($redirectUrl->toString());
+        $redirect = $this->redirectService->getRedirect($defaultRedirect);
 
         break;
 
@@ -251,13 +265,13 @@ organization or association', [], $tOpts),
    * @param array $tOpts
    *   Translation options.
    *
-   * @return \Drupal\Core\Routing\TrustedRedirectResponse
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect response object.
    */
   public function handleUnregisteredCommunity(
     FormStateInterface $form_state,
     array $selectedProfileData,
-    array $tOpts): TrustedRedirectResponse {
+    array $tOpts): RedirectResponse {
     $storage = $form_state->getStorage();
     $userCommunities = $storage['userCommunities'];
 
@@ -271,8 +285,8 @@ organization or association', [], $tOpts),
 
       // Redirect user to grants profile page.
       $redirectUrl = Url::fromRoute('grants_profile.edit');
-
       $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
+      return new RedirectResponse($redirectUrl->toString());
     }
     else {
       $selectedCommunityObject = array_filter(
@@ -300,7 +314,8 @@ organization or association', [], $tOpts),
       $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
     }
 
-    return new TrustedRedirectResponse($redirectUrl->toString());
+    $defaultRedirect = new RedirectResponse($redirectUrl->toString());
+    return $this->redirectService->getRedirect($defaultRedirect);
 
   }
 

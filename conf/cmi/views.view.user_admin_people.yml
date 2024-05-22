@@ -16,7 +16,7 @@ base_field: uid
 display:
   default:
     id: default
-    display_title: Oletus
+    display_title: Default
     display_plugin: default
     position: 0
     display_options:
@@ -31,7 +31,7 @@ display:
           admin_label: ''
           entity_type: user
           plugin_id: user_bulk_form
-          label: Massapäivitys
+          label: 'Bulk update'
           exclude: false
           alter:
             alter_text: false
@@ -466,8 +466,8 @@ display:
           total_pages: 0
           id: 0
           tags:
-            next: 'Seuraava ›'
-            previous: '‹ Edellinen'
+            next: 'Next ›'
+            previous: '‹ Previous'
             first: '« Ensimmäinen'
             last: 'Viimeinen »'
           expose:

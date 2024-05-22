@@ -40,6 +40,7 @@ elements: |
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
@@ -226,6 +227,9 @@ elements: |
     '#title': 'Operating sport divisions for Helsinki residents'
   lajijaostot_info:
     '#markup': "<p>List the regular guided sports activities organised by the club/association by sport. Enter here the number of active members from Helsinki in the previous year, by sport, as well as their realized training hours.</p>\r\n"
+  club_section:
+    '#multiple__add_more_button_label': 'Add new sport'
+    '#multiple__item_label': 'sport'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:

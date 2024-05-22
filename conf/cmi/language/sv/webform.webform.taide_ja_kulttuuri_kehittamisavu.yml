@@ -42,6 +42,7 @@ elements: |
     '#help': '<p>Om du vill lägga till, ta bort eller ändra personer, spara applikationen som ett utkast och gå till att underhålla personernas information i din egen data.</p>'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj motsvarande person'
     '#role__title': Roll
     '#email__title': E-post
@@ -185,6 +186,8 @@ elements: |
   tila:
     '#title': Plats
     '#multiple__no_items_message': '<p>Inga lokaler angivna. Lägg till lokalinformationen nedan.</p>'
+    '#multiple__item_label': 'plats'
+    '#multiple__add_more_button_label': 'Lägg till ny plats'
   aikataulu:
     '#title': Tidtabell
   festivaalin_tai_tapahtuman_paivamaarat:
@@ -264,7 +267,9 @@ elements: |
     '#markup': '<h4>Planerade utgifter</h4>'
   budget_other_cost:
     '#title': 'Övriga kostnader'
-    '#help': 'Lägg till alla projektets planerade utgifter per utgiftskategori nedan.'
+    '#description': 'Lägg till alla projektets planerade utgifter per utgiftskategori nedan.'
+    '#multiple__add_more_button_label': 'Lägg till en kostnad'
+    '#multiple__item_label': 'kostnad'
   muu_huomioitava_panostus:
     '#markup': '<h4>Övrig betydande insats</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
@@ -291,7 +296,7 @@ elements: |
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>"
   projektisuunnitelma_liite:
     '#title': 'Projekt plan'
-    '#help': '<p>Projektplan för önskad period</p>'
+    '#help': '<p>Projektplan för den tid som ansökan gäller</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -299,7 +304,7 @@ elements: |
     '#isAttachmentNew__title': ''
   talousarvio_liite:
     '#title': Budget
-    '#help': '<p>Budget för den begärda perioden</p>'
+    '#help': '<p>Budget för den tid som ansökan gäller</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

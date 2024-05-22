@@ -42,6 +42,7 @@ elements: |
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
@@ -206,6 +207,7 @@ elements: |
   tila:
     '#title': 'Other premises'
     '#isOwnedByCity__title': 'City owns the property'
+    '#multiple__item_label': 'premise'
     '#multiple__add_more_button_label': 'Add new premise'
   aikataulu:
     '#title': Schedule
@@ -299,6 +301,8 @@ elements: |
     '#marketing__title': 'Publicity, marketing, and printing (€)'
   budget_other_cost:
     '#title': 'Other costs'
+    '#multiple__add_more_button_label': 'Add new cost'
+    '#multiple__item_label': 'cost'
   muu_huomioitava_panostus_osio:
     '#markup': '<h4>Other notable input</h4>'
   muu_huomioitava_panostus:

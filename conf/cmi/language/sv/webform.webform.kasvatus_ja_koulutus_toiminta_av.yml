@@ -42,6 +42,7 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj motsvarande person'
     '#role__title': Roll
     '#email__title': E-post
@@ -146,6 +147,8 @@ elements: |
     '#title': 'Verksamhetsställets uppgifter'
   toimintapaikka:
     '#title': Verksamhetsställen
+    '#multiple__add_more_button_label': 'Lägg till en verksamhetsställen'
+    '#multiple__item_label': 'verksamhetsställen'
   4_talous:
     '#title': '4. Budget'
   talousarvio_osio:
@@ -160,6 +163,8 @@ elements: |
     '#title': 'Andra understöd'
   muut_avustukset_field:
     '#title': 'Andra understöd'
+    '#multiple__add_more_button_label': 'Lägg till en understöd'
+    '#multiple__item_label': 'understöd'
   menot_osio:
     '#title': Utgifter
   henkilostomenot_ja_vuokrat:
@@ -168,12 +173,18 @@ elements: |
     '#title': 'Andra kostnader'
   muut_menot_4:
     '#title': 'Andra kostnader'
+    '#multiple__add_more_button_label': 'Lägg till en kostnad'
+    '#multiple__item_label': 'kostnad'
   avustuksen_kaytto_palveluiden_ostot_eriteltyina:
     '#title': 'Användning av understödet/Specifikation av köpta tjänster'
   avustuksen_kaytto_palveluiden_ostot_eriteltyina_2:
     '#title': 'Användning av understödet/Specifikation av köpta tjänster'
   muut_palveluiden_ostot:
     '#title': 'Köp av övriga tjänster'
+  muut_palveluiden_ostot_2:
+    '#title': 'Andra kostnader'
+    '#multiple__add_more_button_label': 'Lägg till en kostnad'
+    '#multiple__item_label': 'kostnad'
   muut_aineet_tarvikkeet_ja_tavarat:
     '#title': 'Användning av understödet/Specifikation av material, förnödenheter och varor'
   muut_aineet_tarvikkeet_ja_tavarat_2:
@@ -182,6 +193,8 @@ elements: |
     '#title': 'Övriga material, förnödenheter och varor'
   muut_menot_tarvikkeet:
     '#title': 'Andra kostnader'
+    '#multiple__add_more_button_label': 'Lägg till en kostnad'
+    '#multiple__item_label': 'kostnad'
   avustuksen_kaytto_muut_kulut_eriteltyina:
     '#title': 'Användning av understödet/Specifikation av övriga kostnader'
   avustuksen_kaytto_muut_kulut_eriteltyina_2:
@@ -190,6 +203,8 @@ elements: |
     '#title': 'Övriga utgifter'
   muut_menot_2:
     '#title': 'Övriga utgifter'
+    '#multiple__add_more_button_label': 'Lägg till en utgift'
+    '#multiple__item_label': 'kostnad'
   asiakasmaksutulojen_kaytto_ja_mahdolliset_lahjoitukset_:
     '#title': 'Användning av klientavgiftsinkomster (och eventuella donationer)'
   asiakasmaksutulojen_kaytto_ja_mahdolliset_lahjoitukset_2:
@@ -198,6 +213,8 @@ elements: |
     '#title': 'Övriga utgifter'
   muut_menot_3:
     '#title': 'Övriga utgifter'
+    '#multiple__add_more_button_label': 'Lägg till en utgift'
+    '#multiple__item_label': 'kostnad'
   lisatiedot_ja_liitteet:
     '#title': '5. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
