@@ -1199,8 +1199,8 @@ function grants_handler_webform_presave(WebformInterface $webform) {
   }
   // Enable the draft save if not already set.
   $draft_setting = $webform->getSetting('draft');
-  if ($draft_setting !== WebformInterface::DRAFT_AUTHENTICATED) {
-    $webform->setSetting('draft', WebformInterface::DRAFT_AUTHENTICATED);
+  if ($draft_setting !== WebformInterface::DRAFT_ALL) {
+    $webform->setSetting('draft', WebformInterface::DRAFT_ALL);
   }
   // Set purge status to prevent clutter in the db.
   if ($purge_setting !== WebformSubmissionStorageInterface::PURGE_ALL
