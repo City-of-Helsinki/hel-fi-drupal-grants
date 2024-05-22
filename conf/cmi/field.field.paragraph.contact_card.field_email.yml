@@ -11,7 +11,7 @@ id: paragraph.contact_card.field_email
 field_name: field_email
 entity_type: paragraph
 bundle: contact_card
-label: Email
+label: 'Send as an email'
 description: ''
 required: false
 translatable: false
