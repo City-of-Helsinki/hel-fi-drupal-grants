@@ -474,8 +474,8 @@ display:
           total_pages: 0
           id: 0
           tags:
-            next: 'Seuraava ›'
-            previous: '‹ Edellinen'
+            next: 'Next ›'
+            previous: '‹ Previous'
           expose:
             items_per_page: false
             items_per_page_label: 'Merkintöjä sivua kohti'
@@ -1009,8 +1009,8 @@ display:
           total_pages: 0
           id: 0
           tags:
-            next: 'Seuraava ›'
-            previous: '‹ Edellinen'
+            next: 'Next ›'
+            previous: '‹ Previous'
           expose:
             items_per_page: false
             items_per_page_label: 'Merkintöjä sivua kohti'
