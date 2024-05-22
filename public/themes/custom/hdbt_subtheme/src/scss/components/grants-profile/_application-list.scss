@@ -54,9 +54,6 @@
         top: 0;
         width: 100%;
         padding: var(--spacing-2-xs) var(--spacing-s) var(--spacing-2-xs) 0px;
-        > div.application-list__item--status_wrapper {
-          display:flex;
-        }
       }
     }
     &--status {
