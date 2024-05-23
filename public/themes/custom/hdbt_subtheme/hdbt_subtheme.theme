@@ -252,8 +252,16 @@ function grants_webform_print_preprocess_webform_submission_data(&$vars): void {
  *     #value.
  */
 function hdbt_subtheme_preprocess_webform_section(array &$variables): void {
-  if ($variables['title_tag'] == 'h2') {
-    $variables['title_tag'] = 'h3';
+  $route_name = \Drupal::routeMatch()->getRouteName();;
+  // Typically, the preview page route name contains 'webform_submission_preview'.
+  if (strpos($route_name, 'grants_handler.view_application') !== FALSE) {
+    if ($variables['title_tag'] == 'h2') {
+      $variables['title_tag'] = 'h4';
+    }
+  } else {
+    if ($variables['title_tag'] == 'h2') {
+      $variables['title_tag'] = 'h3';
+    }
   }
 }
 
