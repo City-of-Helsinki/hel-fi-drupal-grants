@@ -640,10 +640,10 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       '#default_value' => $formStatus ?? 'development',
       '#disabled' => $isDuplicateForm,
       '#description' => t('
-        If the form is in production, then no editing is allowed.
-        In development: Form can be filled up in non-production environments.
-        Archived forms usually have new version available.
-      '),
+<p>In production: Changing the webform elements is not allowed.</p>
+<p>In development: Webform elements can be edited. Form can be filled up in non-production environments.</p>
+<p>Archived: Older version of the form which cannot be filled anymore.</p>
+      ',[], $tOpts),
     ];
 
     $form['third_party_settings']['grants_metadata']['parent'] = [

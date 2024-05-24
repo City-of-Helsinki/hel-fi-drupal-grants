@@ -103,7 +103,7 @@ class UpdateCommands extends DrushCommands {
       // Access checks on content are required.
       ->accessCheck(FALSE)
       ->condition('type', 'service')
-      ->condition('field_webform', $webformIds);
+      ->condition('field_webform', $webformIds, 'IN');
 
     $results = $entityQuery->execute();
     $servicePages = $this->entityTypeManager->getStorage('node')->loadMultiple($results);

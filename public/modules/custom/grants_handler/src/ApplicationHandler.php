@@ -2444,6 +2444,7 @@ class ApplicationHandler {
       ->loadByProperties([
         'third_party_settings.grants_metadata.applicationType' => $id,
         'archive' => FALSE,
+        'third_party_settings.grants_metadata.status' => 'released'
       ]);
 
     $webform = reset($webforms);
