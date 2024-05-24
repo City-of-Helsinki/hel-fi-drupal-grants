@@ -57,7 +57,13 @@
       {% if prefix %}
         <span class="field-prefix">{{ prefix }}</span>
       {% endif %}
+      {% if view_application_page == true %}
+        <dl>
+      {% endif %}
       {{ children }}
+      {% if view_application_page == true %}
+        </dl>
+      {% endif %}
       {% if suffix %}
         <span class="field-suffix">{{ suffix }}</span>
       {% endif %}

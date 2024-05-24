@@ -239,6 +239,34 @@ function grants_webform_print_preprocess_webform_submission_data(&$vars): void {
 }
 
 /**
+ * @param array $variables
+ * @return void
+ */
+function hdbt_subtheme_preprocess_field(array &$variables): void {
+  $route_name = \Drupal::routeMatch()->getRouteName();;
+
+  $variables['view_application_page'] = false;
+
+  if (strpos($route_name, 'grants_handler.view_application') !== FALSE) {
+    $variables['view_application_page'] = true;
+  }
+}
+
+/**
+ * @param array $variables
+ * @return void
+ */
+function hdbt_subtheme_preprocess_form_element_label(array &$variables): void {
+  $route_name = \Drupal::routeMatch()->getRouteName();;
+
+  $variables['view_application_page'] = false;
+
+  if (strpos($route_name, 'grants_handler.view_application') !== FALSE) {
+    $variables['view_application_page'] = true;
+  }
+}
+
+/**
  * Prepares variables for webform section element templates.
  *
  * Default template: webform-section.html.twig.
@@ -253,7 +281,9 @@ function grants_webform_print_preprocess_webform_submission_data(&$vars): void {
  */
 function hdbt_subtheme_preprocess_webform_section(array &$variables): void {
   $route_name = \Drupal::routeMatch()->getRouteName();;
-  // Typically, the preview page route name contains 'webform_submission_preview'.
+
+  $variables['view_application_page'] = false;
+
   if (strpos($route_name, 'grants_handler.view_application') !== FALSE) {
     if ($variables['title_tag'] == 'h2') {
       $variables['title_tag'] = 'h4';
@@ -262,6 +292,7 @@ function hdbt_subtheme_preprocess_webform_section(array &$variables): void {
     if ($variables['title_tag'] == 'h2') {
       $variables['title_tag'] = 'h3';
     }
+    $variables['view_application_page'] = true;
   }
 }
 
@@ -353,6 +384,13 @@ function hdbt_subtheme_preprocess_form_element(array &$variables, $title_parents
   // Hide 'item' label[for].
   if ($type === 'item') {
     $variables['label']['#attributes']['webform-remove-for-attribute'] = TRUE;
+  }
+  $route_name = \Drupal::routeMatch()->getRouteName();;
+
+  $variables['view_application_page'] = false;
+
+  if (strpos($route_name, 'grants_handler.view_application') !== FALSE) {
+    $variables['view_application_page'] = true;
   }
 }
 
