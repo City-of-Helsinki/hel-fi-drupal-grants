@@ -198,6 +198,13 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
   /**
    * {@inheritdoc}
    */
+  public function getCacheMaxAge(): int {
+    return 600;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCacheContexts(): array {
     return Cache::mergeContexts(parent::getCacheContexts(), [
       'languages:language_content',
