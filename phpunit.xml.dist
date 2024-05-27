@@ -26,11 +26,17 @@
     <directory>./public/modules/custom/*/tests/src/Unit</directory>
     <directory>./public/themes/custom/*/tests/src/Unit</directory>
     <directory>./public/profiles/custom/*/tests/src/Unit</directory>
+    <directory>./public/modules/contrib/helfi_*/tests/src/Unit</directory>
+    <directory>./public/themes/contrib/helfi_*/tests/src/Unit</directory>
+    <directory>./public/profiles/contrib/helfi_*/tests/src/Unit</directory>
   </testsuite>
   <testsuite name="kernel">
     <directory>./public/modules/custom/*/tests/src/Kernel</directory>
     <directory>./public/themes/custom/*/tests/src/Kernel</directory>
     <directory>./public/profiles/custom/*/tests/src/Kernel</directory>
+    <directory>./public/modules/contrib/helfi_*/tests/src/Kernel</directory>
+    <directory>./public/themes/contrib/helfi_*/tests/src/Kernel</directory>
+    <directory>./public/profiles/contrib/helfi_*/tests/src/Kernel</directory>
   </testsuite>
   <testsuite name="functional">
     <directory>./public/modules/custom/*/tests/src/Functional</directory>
@@ -60,6 +66,7 @@
 <coverage processUncoveredFiles="true">
   <include>
     <directory suffix=".php">./public/modules/custom/*/src</directory>
+    <directory suffix=".php">./public/modules/contrib/helfi_*/src</directory>
     <directory suffix=".php">./public/themes/custom/*/src</directory>
     <directory suffix=".php">./public/profiles/custom/*/src</directory>
     <file>./public/modules/custom/*/*.module</file>
