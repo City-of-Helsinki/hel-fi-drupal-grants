@@ -45,7 +45,7 @@ class HandleDocumentsBatchService {
    *
    * @var \Drupal\Core\Logger\LoggerChannelFactory
    */
-  protected LoggerChannelFactory $logger;
+  protected LoggerChannelFactoryInterface $logger;
 
   /**
    * Module extension list.
