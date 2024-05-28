@@ -7,8 +7,9 @@ import {validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
 import {fillFormField, fillInputField} from "../../utils/input_helpers";
-import {privatePersonApplications as applicationData} from '../../utils/data/application_data';
 import {swapFieldValues} from "../../utils/field_swap_helpers";
+import {verifyDraftButton} from "../../utils/verify_draft_button_helpers";
+import {privatePersonApplications as applicationData} from '../../utils/data/application_data';
 
 const profileType = 'private_person';
 const formId = '64';
@@ -194,6 +195,19 @@ test.describe('ASUKASPIEN(64)', () => {
         formId,
         profileType,
         formPages
+      );
+    });
+  }
+
+  for (const [key, obj] of testDataArray) {
+    if (key !== 'draft') continue;
+    test(`Verify draft button: ${obj.title}`, async () => {
+      const storedata = getObjectFromEnv(profileType, formId);
+      await verifyDraftButton(
+        key,
+        page,
+        obj,
+        storedata
       );
     });
   }

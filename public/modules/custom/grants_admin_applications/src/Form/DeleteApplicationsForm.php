@@ -43,7 +43,7 @@ final class DeleteApplicationsForm extends FormBase {
    *
    * @var \Drupal\Core\Logger\LoggerChannelFactory
    */
-  protected LoggerChannelFactory $logger;
+  protected LoggerChannelFactoryInterface $logger;
 
   /**
    * Configuration Factory.
