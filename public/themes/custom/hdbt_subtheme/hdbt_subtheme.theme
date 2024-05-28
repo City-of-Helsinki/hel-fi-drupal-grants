@@ -242,6 +242,20 @@ function grants_webform_print_preprocess_webform_submission_data(&$vars): void {
  * @param array $variables
  * @return void
  */
+function hdbt_subtheme_preprocess_webform_element_base_html(array &$variables): void {
+  $route_name = \Drupal::routeMatch()->getRouteName();;
+
+  $variables['view_application_page'] = false;
+
+  if (strpos($route_name, 'grants_handler.view_application') !== FALSE) {
+    $variables['view_application_page'] = true;
+  }
+}
+
+/**
+ * @param array $variables
+ * @return void
+ */
 function hdbt_subtheme_preprocess_field(array &$variables): void {
   $route_name = \Drupal::routeMatch()->getRouteName();;
 
