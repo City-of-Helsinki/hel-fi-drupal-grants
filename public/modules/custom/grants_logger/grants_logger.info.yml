@@ -4,5 +4,4 @@ description: 'Grants logger override.'
 package: 'helfi'
 core_version_requirement: ^9 || ^10
 dependencies:
-  - 'dblog'
   - helfi_helsinki_profiili

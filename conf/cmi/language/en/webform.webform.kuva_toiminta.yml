@@ -42,6 +42,7 @@ elements: |
     '#help': '<p>If you want to add, delete or change people, save the application as a draft and go to maintain the people''s information in your own data.</p>'
     '#title': 'Persons responsible for operations '
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
@@ -181,6 +182,8 @@ elements: |
     '#premiseType__title': 'Type of space'
     '#isOwnedByApplicant__title': 'The space is owned by us'
     '#isOwnedByCity__title': 'The space is owned by the City of Helsinki'
+    '#multiple__item_label': 'space'
+    '#multiple__add_more_button_label': 'Add new space'
   4_toiminta:
     '#title': '4. Activity'
     '#prev_button_label': '< Previous'
@@ -368,7 +371,7 @@ elements: |
     '#markup': '<p>Regarding the previous completed financial year. As stated in the financial statements.</p>'
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belonged to the central government subsidies system (VOS)'
-    '#help': '<p>Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.</p>'
+    '#help': 'Select yes, only if you know for sure that your organization received funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'
     '#options':
       1: 'Yes'
       0: 'No'
@@ -480,5 +483,6 @@ elements: |
 settings:
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'
+  wizard_confirmation_label: '9. Complete'
   preview_label: '8. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'

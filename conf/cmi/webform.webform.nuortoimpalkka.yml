@@ -641,6 +641,7 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
         '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseName__access': false
         '#premiseType__access': false
@@ -673,6 +674,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää uusi jäsenyys'
+        '#multiple__item_label': 'jäsenyys'
     nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
       '#type': webform_section
       '#title': 'Nuorten osallistuminen suunnitteluun ja päätöksentekoon'
@@ -816,6 +818,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'vuokrattu tila'
+        '#multiple__add_more_button_label': 'Lisää uusi vuokrattu tila'
         '#premiseAddress__required': true
         '#premisePostalCode__required': true
         '#premisePostOffice__required': true
@@ -1081,7 +1085,7 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '8. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true

@@ -42,6 +42,7 @@ elements: |
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
@@ -143,6 +144,26 @@ elements: |
     '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   4_talous:
     '#title': '4. Budget'
+  muut_menot_4:
+    '#title': 'Other expenses'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
+  muut_palveluiden_ostot_2:
+    '#title': 'Other expenses'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
+  muut_menot_tarvikkeet:
+    '#title': 'Other expenses'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
+  muut_menot_2:
+    '#title': 'Other expenses'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
+  muut_menot_3:
+    '#title': 'Other expenses'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
   lisatiedot_ja_liitteet:
     '#title': '5. Additional information and appendices'
   lisatietoja_hakemukseen_liittyen:
@@ -241,5 +262,6 @@ elements: |
 settings:
   preview_label: '6. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
+  wizard_confirmation_label: '7. Complete'
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'

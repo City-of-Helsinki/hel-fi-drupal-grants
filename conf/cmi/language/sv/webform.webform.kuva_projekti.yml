@@ -42,6 +42,7 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj motsvarande person'
     '#role__title': Roll
     '#email__title': E-post
@@ -209,6 +210,7 @@ elements: |
   tila:
     '#title': 'Övriga lokaler'
     '#isOwnedByCity__title': 'Stadens eget utrymme'
+    '#multiple__item_label': 'lokal'
     '#multiple__add_more_button_label': 'Lägg till ny lokal'
   aikataulu:
     '#title': Tidtabell
@@ -303,6 +305,8 @@ elements: |
     '#marketing__title': 'Information, marknadsföring och tryckkostnader (€)'
   budget_other_cost:
     '#title': 'Övriga kostnader'
+    '#multiple__add_more_button_label': 'Lägg till en kostnad'
+    '#multiple__item_label': 'kostnad'
   muu_huomioitava_panostus_osio:
     '#markup': '<h4>&Ouml;vrig betydande insats</h4>'
   muu_huomioitava_panostus:
@@ -352,3 +356,4 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '8. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '9. Slutförd'

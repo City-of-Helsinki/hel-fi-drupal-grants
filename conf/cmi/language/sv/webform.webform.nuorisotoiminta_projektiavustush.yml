@@ -42,6 +42,7 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj motsvarande person'
     '#role__title': Roll
     '#email__title': E-post
@@ -192,10 +193,14 @@ elements: |
     '#title': 'Självfinansierad andel (€)'
   budget_other_income:
     '#title': 'Övriga intäkter'
+    '#multiple__add_more_button_label': 'Lägg till en intäkt'
+    '#multiple__item_label': 'intäkt'
   menot:
     '#title': 'Utgifter i budgeten'
   budget_other_cost:
     '#title': Utgifter
+    '#multiple__add_more_button_label': 'Lägg till en utgift'
+    '#multiple__item_label': 'utgift'
   lisatiedot_ja_liitteet:
     '#title': '6. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -263,3 +268,4 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '7. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '8. Slutförd'

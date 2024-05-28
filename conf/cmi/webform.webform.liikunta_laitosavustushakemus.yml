@@ -549,14 +549,6 @@ elements: |-
           <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
-      yhteison_saannot:
-        '#type': grants_attachments
-        '#title': 'Yhteisön säännöt'
-        '#multiple': false
-        '#filetype': '7'
-        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
-        '#title_display': ''
-        '#description__access': false
       vahvistettu_tilinpaatos:
         '#type': grants_attachments
         '#title': 'Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)'
@@ -730,7 +722,7 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '6. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true

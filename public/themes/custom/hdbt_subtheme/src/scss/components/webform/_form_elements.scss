@@ -61,6 +61,14 @@ $breakpoint-xl: 1248px;
   }
 }
 
+.form-type-webform-multiple .webform-multiple-table table {
+  max-width: 100%;
+  width: 100%;
+  @include breakpoint($breakpoint-m) {
+    width: auto;
+  }
+}
+
 .hds-text-input {
   max-width: fit-content;
   width: 100%;
@@ -164,8 +172,11 @@ fieldset input[type="button"] {
   > .webform-section-wrapper {
     font-size: var(--fontsize-body-m);
     width: 100%;
-    padding-left: var(--spacing-2-xl);
     --line-height: 1.5;
+
+    @include breakpoint($breakpoint-m) {
+      padding-left: var(--spacing-2-xl);
+    }
   }
   .form-required::after {
     content: '*';
@@ -205,23 +216,23 @@ form .hds-text-input__input-wrapper, .hds-text-input__input-wrapper  {
   .text-count-wrapper {
     flex-basis: 100%;
   }
-  input, textarea,  {
+  input, textarea {
     &.webform--small {
       min-width: var(--webform-element-width--input-small);
       max-width: var(--webform-element-width--input-small);
-      width: 100vw;
+      width: 100%;
     }
 
     &.webform--medium {
       min-width: var(--webform-element-width--input-small);
       max-width: var(--webform-element-width--input-medium);
-      width: 100vw;
+      width: 100%;
     }
 
     &.webform--large {
       min-width: var(--webform-element-width--input-small);
       max-width: var(--webform-element-width--input-large);
-      width: 100vw;
+      width: 100%;
     }
   }
 }
@@ -270,6 +281,9 @@ fieldset.webform-composite-hidden-title {
 .hakemus-form-page {
   .main-content {
     margin-top: 0;
+  }
+  h1 {
+    word-break: break-all;
   }
 }
 
@@ -378,18 +392,19 @@ input[type=radio] + label.form-required::after {
 }
 
 .club-section__participants {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--spacing-l);
-
-  input.form-number.hds-text-input__input {
+  input.form-text.hds-text-input__input {
     width: 100%;
     max-width: 100%;
+  }
+  @include breakpoint($breakpoint-m) {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-l);
   }
 }
 
 .club-section__totalhours {
-  input.form-number.hds-text-input__input {
+  input.form-text.hds-text-input__input {
     width: 100%;
     max-width: 100%;
   }

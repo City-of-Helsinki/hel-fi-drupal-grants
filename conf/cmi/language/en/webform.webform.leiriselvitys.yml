@@ -42,6 +42,7 @@ elements: |
     '#help': '<p>If you want to add, delete or change people, save the application as a draft and go to maintain the people''s information in your own data.</p>'
     '#title': 'Persons responsible for operations'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Camp locations'
@@ -57,6 +58,8 @@ elements: |
     '#title': 'We arranged camps in the following areas'
     '#help': '<p>Enter here the names and postal code areas of all the facilities where you organised camps covered by holiday camp grants in the past season.</p>'
     '#premiseName__title': Location
+    '#multiple__item_label': 'location'
+    '#multiple__add_more_button_label': 'Add new location'
   3_talousarvio:
     '#title': '3. Budget'
   tulot:
@@ -66,6 +69,8 @@ elements: |
   tulo:
     '#title': 'Income item'
     '#help': '<p>Indicate the type of income here. Income from camp activities can be, for example, participation fees.</p>'
+    '#multiple__add_more_button_label': 'Add new income'
+    '#multiple__item_label': 'income'
   menot:
     '#title': Expenses
   markup_05:
@@ -73,6 +78,8 @@ elements: |
   meno:
     '#title': 'Expense item'
     '#help': '<p>Indicate the type of expense here. Expenses from camp activities can be, for example, accommodation costs, food costs and the salaries of instructors.</p>'
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
@@ -141,6 +148,7 @@ elements: |
 settings:
   preview_label: '5. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
+  wizard_confirmation_label: '6. Complete'
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'
 description: ''

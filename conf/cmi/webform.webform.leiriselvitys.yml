@@ -241,6 +241,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
+        '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseName__required': true
         '#premiseType__access': false
         '#premiseAddress__access': false
@@ -281,6 +283,8 @@ elements: |-
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi tulo'
+        '#multiple__item_label': 'tulo'
     menot:
       '#type': webform_section
       '#title': Menot
@@ -297,6 +301,8 @@ elements: |-
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '4. Lisätiedot ja liitteet'
@@ -499,7 +505,7 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '6. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true

@@ -234,6 +234,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi kartta'
+        '#multiple__item_label': 'kartta'
         '#mapName__help': 'Karttatyypillä tarkoitetaan ensi-, uusinta- tai ajantasaistuskartta'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
@@ -395,7 +397,7 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '5. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true

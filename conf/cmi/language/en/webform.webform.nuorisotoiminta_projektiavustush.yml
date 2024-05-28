@@ -41,6 +41,7 @@ elements: |
     '#help': 'If you want to add, delete or change people, save the application as a draft and go to maintain the people&#39;s information in your own data.'
     '#title': 'Persons responsible for operations'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
@@ -188,10 +189,14 @@ elements: |
     '#title': 'Self-financing share (€)'
   budget_other_income:
     '#title': 'Other income'
+    '#multiple__add_more_button_label': 'Add new income'
+    '#multiple__item_label': 'income'
   menot:
     '#title': 'Expenses in the budget'
   budget_other_cost:
     '#title': Expenses
+    '#multiple__add_more_button_label': 'Add new expense'
+    '#multiple__item_label': 'expense'
   lisatiedot_ja_liitteet:
     '#title': '6. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
@@ -258,6 +263,7 @@ elements: |
 settings:
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'
+  wizard_confirmation_label: '8. Complete'
   preview_label: '7. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
 title: 'Project grants for youth activities'
