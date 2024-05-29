@@ -14,6 +14,18 @@
           $('#oma-asiointi__sent .application-list__count-value').html(sentList.update().matchingItems.length);
         });
 
+        $('#searchForApplication').click(function() {
+          const searchValue = $('#applicationListFilter').val();
+          sentList.search(searchValue);
+        });
+
+        $('#applicationListFilter').on('keypress', function(e) {
+          if (e.which == 13) {
+            const searchValue = $('#applicationListFilter').val();
+            sentList.search(searchValue);
+          }
+        });
+
         $('select.sort').change(function () {
           selectionArray = $(this).val().split(' ');
           var selection = selectionArray[1];
