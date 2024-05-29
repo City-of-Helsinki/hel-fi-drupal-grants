@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: _BB3ArQmoyYVjEZjy0JDCPbHuL5VOCW9ldfDBGkh1LI
+  default_config_hash: xPH76a4sTO1uLWP_ZsngVVA7ulD6ZzRw6AUy0AwFsww
 id: tpr_service
 label: 'TPR - Service'
 tags:
