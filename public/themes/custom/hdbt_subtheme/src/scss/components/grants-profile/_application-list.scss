@@ -6,9 +6,11 @@
   }
   &__item {
     display: block;
+    position: relative;
     background: var(--color-bus-light);
     margin: var(--spacing-m) 0;
-    padding: var(--spacing-m) var(--spacing-s);
+    padding: var(--spacing-2-xl) var(--spacing-s) var(--spacing-m);
+
     .new-message {
       background-color: var(--color-alert);
       display: inline-block;
@@ -46,6 +48,12 @@
       gap: var(--spacing-m);
       &__left {
         justify-content: flex-start;
+      }
+      &__top {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        padding: var(--spacing-2-xs) var(--spacing-s) var(--spacing-2-xs) 0px;
       }
     }
     &--status {
