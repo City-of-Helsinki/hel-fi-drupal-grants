@@ -342,7 +342,7 @@ const validateField = async (
 ) => {
 
   // Skip excluded items.
-  if (itemField.viewPageSkipValidation || itemField.printPageSkipValidation) {
+  if (itemField.viewPageSkipValidation || (itemField.printPageSkipValidation && pageType === 'printPage')) {
     let message = constructMessage(MessageType.SkipValidation, itemKey);
     skipMessageCallback(message);
     return;
