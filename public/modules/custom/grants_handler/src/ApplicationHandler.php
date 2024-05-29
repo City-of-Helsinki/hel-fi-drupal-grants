@@ -2444,7 +2444,7 @@ class ApplicationHandler {
       ->loadByProperties([
         'third_party_settings.grants_metadata.applicationType' => $id,
         'archive' => FALSE,
-        'third_party_settings.grants_metadata.status' => 'released'
+        'third_party_settings.grants_metadata.status' => 'released',
       ]);
 
     $webform = reset($webforms);
@@ -2486,7 +2486,7 @@ class ApplicationHandler {
   }
 
   /**
-   * Checks if user can duplicate a webform configuration with given Application ID.
+   * Checks if webform configuration can duplicated with given Application ID.
    *
    * General rule is that one application type ID can have maximum number of 1
    * Production & In development versions.

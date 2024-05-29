@@ -140,7 +140,7 @@ function _grants_metadata_handle_versions_status(Webform $entity) {
     return;
   }
 
-  /** @phpstan-ignore-next-line */
+  /* @phpstan-ignore-next-line */
   $orig = $entity->original;
 
   if (!$orig) {
@@ -611,6 +611,13 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
         );
 
         $form['id']['#default_value'] = $suggestedFormId;
+
+        $description = $parentType . PHP_EOL;
+        $description .= "Kopioitu: " . date('d.m.y H:i') . PHP_EOL;
+        $description .= "Alkuperäinen lomake: " . $formParentData->id();
+
+        $form['description']['#default_value'] = nl2br($description);
+
       }
 
     }
@@ -643,7 +650,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 <p>In production: Changing the webform elements is not allowed.</p>
 <p>In development: Webform elements can be edited. Form can be filled up in non-production environments.</p>
 <p>Archived: Older version of the form which cannot be filled anymore.</p>
-      ',[], $tOpts),
+      ', [], $tOpts),
     ];
 
     $form['third_party_settings']['grants_metadata']['parent'] = [
@@ -659,6 +666,17 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     ];
   }
 
+  if (isset($parentWebform) && !empty($parentWebform)) {
+    $form['third_party_settings']['grants_metadata']['view_parent'] = [
+      '#type' => 'link',
+      '#title' => t('View parent', [], $tOpts),
+      '#url' => Url::fromRoute('entity.webform.settings', [
+        'webform' => $parentWebform->id(),
+      ]),
+      '#attributes' => ['class' => ['button', 'button--primary', 'form-submit'], 'disabled' => 1],
+    ];
+  }
+
   if ($form_id == 'webform_settings_form' && isset($webform)) {
 
     /** @var Drupal\webform\EntitySettings\WebformEntitySettingsGeneralForm|Drupal\webform\WebformEntityAddForm $formObject */
@@ -666,8 +684,8 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     /** @var Drupal\webform\Entity\Webform $bundle; */
     $bundle = $formObject->getEntity();
     $applicationTypeId = $bundle->getThirdPartySetting('grants_metadata', 'applicationType');
-    $isDuplicatable = TRUE;
-    if ($applicationTypeId) {
+    $isDuplicatable = in_array($formStatus, ['', 'released']);
+    if ($applicationTypeId && $isDuplicatable) {
       $isDuplicatable = ApplicationHandler::isApplicationWebformDuplicatable($applicationTypeId);
     }
 
@@ -727,6 +745,8 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
   t('Form is published for production use, only limited editing is allowed.') :
   t('Form is archived and editing is not allowed.');
 
+  $showStatusMessage = FALSE;
+
   switch ($form_id) {
 
     case 'webform_settings_access_form':
@@ -735,6 +755,9 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
     case 'webform_settings_submissions_form':
     case 'webform_settings_form_form':
     case 'webform_settings_form':
+
+      $showStatusMessage = TRUE;
+
       if ($editingRestricted && !$isAdmin) {
         $form['#disabled'] = TRUE;
 
@@ -767,6 +790,7 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
       break;
 
     case 'webform_edit_form':
+      $showStatusMessage = TRUE;
       if ($archived || $editingRestricted) {
         \Drupal::messenger()
           ->addWarning($restrictionMsg);
@@ -789,6 +813,26 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
         unset($form['actions']['delete']);
       }
       break;
+  }
+
+  if ($showStatusMessage) {
+    array_unshift($form, [
+      '#theme' => 'status_messages',
+      '#message_list' => [
+        'status' => [
+          t(
+          'You are currently editing "@status" version of "@label"',
+          [
+            '@status' => $formStatus,
+            '@label' => $routeParam->label(),
+          ]
+          ),
+        ],
+      ],
+      '#status_headings' => [
+        'status' => t('Status message'),
+      ],
+    ]);
   }
 }
 
