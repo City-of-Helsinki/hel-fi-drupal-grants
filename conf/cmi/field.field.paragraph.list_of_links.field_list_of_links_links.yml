@@ -14,7 +14,7 @@ id: paragraph.list_of_links.field_list_of_links_links
 field_name: field_list_of_links_links
 entity_type: paragraph
 bundle: list_of_links
-label: Linkit
+label: Links
 description: 'Linkkilistan linkit.'
 required: true
 translatable: false
