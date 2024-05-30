@@ -76,7 +76,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          action_title: Toiminto
+          action_title: Action
           include_exclude: exclude
           selected_actions: {  }
         thumbnail__target_id:
@@ -334,7 +334,7 @@ display:
           entity_type: media
           entity_field: status
           plugin_id: field
-          label: Tila
+          label: Status
           exclude: false
           alter:
             alter_text: false
@@ -476,7 +476,7 @@ display:
           admin_label: ''
           entity_type: media
           plugin_id: entity_operations
-          label: Toimenpiteet
+          label: Operations
           exclude: false
           alter:
             alter_text: false
@@ -528,24 +528,24 @@ display:
           tags:
             next: 'Next ›'
             previous: '‹ Previous'
-            first: '« Ensimmäinen'
-            last: 'Viimeinen »'
+            first: '« First'
+            last: 'Last »'
           expose:
             items_per_page: false
-            items_per_page_label: 'Merkintöjä sivua kohti'
+            items_per_page_label: 'Items per page'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- Kaikki -'
+            items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
           quantity: 9
       exposed_form:
         type: basic
         options:
-          submit_button: Suodata
+          submit_button: Filter
           reset_button: false
-          reset_button_label: Palauta
-          exposed_sorts_label: Lajittele
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -702,7 +702,7 @@ display:
               authenticated: authenticated
           is_grouped: true
           group_info:
-            label: Julkaisutila
+            label: 'Published status'
             description: ''
             identifier: status
             optional: true
