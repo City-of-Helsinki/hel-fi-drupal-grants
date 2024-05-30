@@ -11,7 +11,6 @@ display:
         name:
           label: Författare
         status:
-          label: Status
           settings:
             format_custom_false: 'Ej publicerad'
             format_custom_true: Publicerad
@@ -19,6 +18,8 @@ display:
           label: Uppdaterad
         operations:
           label: Funktioner
+        revision_uid:
+          label: 'Redigerat senast'
       title: Innehåll
       pager:
         options:
@@ -45,8 +46,7 @@ display:
           expose:
             label: Innehållstyp
         status:
-          expose:
-            label: Status
+          expose: {  }
           group_info:
             label: 'Status för publicering'
             group_items:
