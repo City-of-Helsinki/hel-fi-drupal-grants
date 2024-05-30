@@ -2,12 +2,12 @@
   Drupal.behaviors.omaAsiointiFront = {
     attach: function (context, settings) {
       if ($("#oma-asiointi__sent")[0]) {
-        var sentListOptions = {
+        const sentListOptions = {
           valueNames: ['application-list__item--name', 'application-list__item--status', 'application-list__item--number', 'application-list__item--submitted'],
           pagination: true,
           page: 10,
         };
-        var sentList = new List('oma-asiointi__sent', sentListOptions);
+        const sentList = new List('oma-asiointi__sent', sentListOptions);
         $('#oma-asiointi__sent .application-list__count-value').html(sentList.update().matchingItems.length);
 
         sentList.on('searchComplete', function () {
@@ -27,9 +27,9 @@
         });
 
         $('select.sort').change(function () {
-          selectionArray = $(this).val().split(' ');
-          var selection = selectionArray[1];
-          var direction = selectionArray[0]
+          const selectionArray = $(this).val().split(' ');
+          const selection = selectionArray[1];
+          const direction = selectionArray[0]
           sentList.sort(selection, {order: direction});
         });
 
