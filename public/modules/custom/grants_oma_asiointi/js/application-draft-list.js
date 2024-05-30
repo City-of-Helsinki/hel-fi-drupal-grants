@@ -41,11 +41,7 @@
         $('#checkbox-processed').change(function() {
           if(this.checked) {
             sentList.filter(function(item) {
-              if (item.values()['application-list__item--status'] == $('#string-processed').text()) {
-                return true;
-              } else {
-                return false;
-              }
+              return item.values()['application-list__item--status'] == $('#string-processed').text()
             }); // Only items with id > 1 are shown in list
           } else {
           sentList.filter(function(item) {
