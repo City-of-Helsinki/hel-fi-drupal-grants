@@ -8,7 +8,6 @@ display:
           label: Otsikko
         type:
           label: Sisältötyyppi
-          separator: ', '
         name:
           label: Kirjoittaja
         status:
@@ -20,6 +19,8 @@ display:
           label: Päivitetty
         operations:
           label: Toimenpiteet
+        revision_uid:
+          label: 'Viimeisin muokkaaja'
       title: Sisältö
       pager:
         options:
