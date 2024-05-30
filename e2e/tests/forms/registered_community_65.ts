@@ -3,12 +3,14 @@ import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
 import {fillGrantsFormPage, fillHakijanTiedotRegisteredCommunity,} from "../../utils/form_helpers";
 import {selectRole} from "../../utils/auth_helpers";
 import {getObjectFromEnv} from "../../utils/env_helpers";
-import {validateSubmission} from "../../utils/validation_helpers";
+import {validatePrintPage, validateSubmission} from "../../utils/validation_helpers";
 import {deleteDraftApplication} from "../../utils/deletion_helpers";
 import {copyApplication} from "../../utils/copying_helpers";
 import {fillFormField, uploadFile} from "../../utils/input_helpers";
-import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
 import {swapFieldValues} from "../../utils/field_swap_helpers";
+import {logger} from "../../utils/logger";
+
+import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
 
 const profileType = 'registered_community';
 const formId = '65';
@@ -168,6 +170,32 @@ test.describe('NUORLOMALEIR(65)', () => {
         obj,
         storedata
       );
+    });
+  }
+
+  for (const [key, obj] of testDataArray) {
+    if (!obj.validatePrintPage) continue;
+    test(`Validate print page: ${obj.title}`, async ({browser}) => {
+      logger('Creating new browser context with disabled JS...');
+
+      // Create a new browser context with disabled JS to prevent the print call from happening
+      // when we visit the print page (Playwright can't handle the print dialog).
+      const JSDisabledContext = await browser.newContext({javaScriptEnabled: false});
+      const JSDisabledPage = await JSDisabledContext.newPage();
+      await selectRole(JSDisabledPage, 'REGISTERED_COMMUNITY');
+
+      // Run the test.
+      const storedata = getObjectFromEnv(profileType, formId);
+      await validatePrintPage(
+        key,
+        JSDisabledPage,
+        obj,
+        storedata
+      );
+
+      // Close the context.
+      await JSDisabledPage.close();
+      await JSDisabledContext.close();
     });
   }
 
