@@ -66,6 +66,7 @@ class RentIncomeComposite extends GrantsPremisesBase {
   protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
     $submissionValue = $this->getValue($element, $webform_submission, $options);
     $lines = [];
+    $lines[] = '<dl>';
 
     foreach ($submissionValue as $fieldName => $fieldValue) {
       if (isset($element["#webform_composite_elements"][$fieldName])) {
@@ -78,23 +79,24 @@ class RentIncomeComposite extends GrantsPremisesBase {
             $fieldValue = date("d.m.Y", strtotime(date($fieldValue)));
           }
         }
-
         if (!isset($webformElement['#access']) || ($webformElement['#access'] !== FALSE)) {
           if (isset($value)) {
-            $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
-            $lines[] = $value . '<br>';
+            $lines[] = '<dt>' . $webformElement['#title'] . '</dt>';
+            $lines[] = '<dd>' . $value . '</dd>';
           }
           elseif (!is_string($webformElement['#title'])) {
-            $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
-            $lines[] = $fieldValue . '<br>';
+            $lines[] = '<dt>' . $webformElement['#title']->render() . '</dt>';
+            $lines[] = '<dd>' . $fieldValue . '</dd>';
           }
           elseif (is_string($webformElement['#title'])) {
-            $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
-            $lines[] = $fieldValue . '<br>';
+            $lines[] = '<dt>' . $webformElement['#title'] . '</dt>';
+            $lines[] = '<dd>' . $fieldValue . '</dd>';
           }
         }
       }
     }
+    $lines[] = '</dl>';
+
     return $lines;
   }
 

@@ -65,6 +65,8 @@ class OrienteeringMapComposite extends WebformCompositeBase {
   protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
     $value = $this->getValue($element, $webform_submission, $options);
     $lines = [];
+    $lines[] = '<dl>';
+
     foreach ($value as $fieldName => $fieldValue) {
       if (isset($element["#webform_composite_elements"][$fieldName])) {
         $webformElement = $element["#webform_composite_elements"][$fieldName];
@@ -73,21 +75,21 @@ class OrienteeringMapComposite extends WebformCompositeBase {
 
         if (!isset($webformElement['#access']) || ($webformElement['#access'] !== FALSE)) {
           if (isset($value2)) {
-            $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
-            $lines[] = $value2 . '<br>';
+            $lines[] = '<dt>' . $webformElement['#title'] . '</dt>';
+            $lines[] = '<dd>' . $value2 . '</dd>';
           }
           elseif (!is_string($webformElement['#title'])) {
-            $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
-            $lines[] = $fieldValue . '<br>';
+            $lines[] = '<dt>' . $webformElement['#title']->render() . '</dt>';
+            $lines[] = '<dd>' . $fieldValue . '</dd>';
           }
           elseif (is_string($webformElement['#title'])) {
-            $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
-            $lines[] = $fieldValue . '<br>';
+            $lines[] = '<dt>' . $webformElement['#title'] . '</dt>';
+            $lines[] = '<dd>' . $fieldValue . '</dd>';
           }
         }
       }
     }
-
+    $lines[] = '</dl>';
     return $lines;
   }
 
