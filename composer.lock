@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae2fd6e688662bb5b3e3c461c8d41bba",
+    "content-hash": "af1670c076086c1c9e1722871f5e673e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5369,16 +5369,16 @@
         },
         {
             "name": "drupal/helfi_gdpr_api",
-            "version": "0.9.7",
+            "version": "dev-feature/AU-2503-gdpr-fixes",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api.git",
-                "reference": "53e7abd07eddcc886c1983c64fe1fa17c89a62a9"
+                "reference": "fcbdf69405f504f245ae785c4920c051ec3e4cdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-gdpr-api/zipball/53e7abd07eddcc886c1983c64fe1fa17c89a62a9",
-                "reference": "53e7abd07eddcc886c1983c64fe1fa17c89a62a9",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-gdpr-api/zipball/fcbdf69405f504f245ae785c4920c051ec3e4cdf",
+                "reference": "fcbdf69405f504f245ae785c4920c051ec3e4cdf",
                 "shasum": ""
             },
             "type": "drupal-module",
@@ -5391,10 +5391,10 @@
                 "GPL-2.0-or-later"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/tree/0.9.7",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/tree/feature/AU-2503-gdpr-fixes",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-gdpr-api/issues"
             },
-            "time": "2024-05-08T09:26:38+00:00"
+            "time": "2024-05-22T10:16:33+00:00"
         },
         {
             "name": "drupal/helfi_helsinki_profiili",
@@ -22337,12 +22337,20 @@
             "time": "2023-10-13T22:55:15+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "drupal/helfi_gdpr_api",
+            "version": "dev-feature/AU-2503-gdpr-fixes",
+            "alias": "0.9.8",
+            "alias_normalized": "0.9.8.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/block_field": 5,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
+        "drupal/helfi_gdpr_api": 20,
         "drupal/multivalue_form_element": 10,
         "drupal/session_limit": 10
     },

@@ -37,7 +37,7 @@
         "drupal/helfi_azure_fs": "^2",
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_formtool_embed": "dev-develop",
-        "drupal/helfi_gdpr_api": "^0.9",
+        "drupal/helfi_gdpr_api": "dev-feature/AU-2503-gdpr-fixes as 0.9.8",
         "drupal/helfi_helsinki_profiili": "^0.9",
         "drupal/helfi_platform_config": "^4.3.18",
         "drupal/helfi_proxy": "^3.0",
