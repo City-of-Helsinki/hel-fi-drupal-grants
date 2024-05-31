@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae2fd6e688662bb5b3e3c461c8d41bba",
+    "content-hash": "0f7cb191b29b9423b52d4e81cf03ef0c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5151,16 +5151,16 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "0.9.26",
+            "version": "dev-feature/AU-1407-document-tests",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "5eb89c56fe80b210198c8eb6b7f0a954597bdeee"
+                "reference": "07d0ed9ce804849e549c5e8f55b07d245437942e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/5eb89c56fe80b210198c8eb6b7f0a954597bdeee",
-                "reference": "5eb89c56fe80b210198c8eb6b7f0a954597bdeee",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/07d0ed9ce804849e549c5e8f55b07d245437942e",
+                "reference": "07d0ed9ce804849e549c5e8f55b07d245437942e",
                 "shasum": ""
             },
             "require": {
@@ -5178,10 +5178,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.26",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/feature/AU-1407-document-tests",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2024-05-27T09:09:33+00:00"
+            "time": "2024-05-31T20:05:31+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -22341,6 +22341,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/block_field": 5,
+        "drupal/helfi_atv": 20,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
         "drupal/multivalue_form_element": 10,
