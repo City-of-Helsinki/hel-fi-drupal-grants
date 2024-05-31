@@ -11,80 +11,84 @@
    */
   Drupal.behaviors.profileFormUnsaved = {
     attach: function (context) {
-      var initial_name = $('#edit-companynamewrapper-companyname').val();
-      var is_element_click = false;
+      const initial_name = $('#edit-companynamewrapper-companyname').val();
+      let is_element_click = false;
       $('form').submit(function() {
         window.onbeforeunload = null
         is_element_click = true;
       });
-      $('a').once('profile_dialog').on('click', function (event) {
-        is_element_click = true;
-        var current_name = $('#edit-companynamewrapper-companyname').val();
-        var unset_name = false
-        if (current_name == '') {
-          unset_name = true
-        }
 
-        let containingElement = document.querySelector('form');
-        if ((unset_name) && !containingElement.contains(event.target)) {
-          event.preventDefault();
-          const $previewDialog = $(
-            `<div></div>`,
-          ).appendTo('body');
-          Drupal.dialog($previewDialog, {
-            title: Drupal.t('You need to have a name for your unregistered community or group. Please add a name and save or cancel them.'),
-            width: '33%',
-            buttons: [
-              {
-                text: Drupal.t('Back to profile'),
-                buttonType: 'primary',
-                click() {
-                  $(this).dialog('close');
-                },
-              },
-            ],
-          }).showModal();
-        } else if ((current_name != initial_name) && !containingElement.contains(event.target)) {
-          event.preventDefault();
-          const $previewDialog = $(
-            `<div></div>`,
-          ).appendTo('body');
-          Drupal.dialog($previewDialog, {
-            title: Drupal.t('You have unsaved changes in your profile. Please save or cancel them.'),
-            width: '33%',
-            buttons: [
-              {
-                text: Drupal.t('Back to profile'),
-                buttonType: 'primary',
-                click() {
-                  $(this).dialog('close');
-                },
-              },
-            ],
-          }).showModal();
-        } else if (($('[data-drupal-selector="edit-isnewprofile"]').val() == 'initialSave') && !containingElement.contains(event.target)) {
-          event.preventDefault();
-          const $previewDialog = $(
-            `<div></div>`,
-          ).appendTo('body');
-          Drupal.dialog($previewDialog, {
-            title: Drupal.t('You have not saved your profile. Please save your profile before leaving the form.'),
-            width: '33%',
-            buttons: [
-              {
-                text: Drupal.t('Back to profile'),
-                buttonType: 'primary',
-                click() {
-                  $(this).dialog('close');
-                },
-              },
-            ],
-          }).showModal();
-        }
-        is_element_click = false;
+      once('profile_dialog', 'a').forEach((element) => {
+        element.addEventListener('click', (event) => {
+          is_element_click = true;
+          const current_name = $('#edit-companynamewrapper-companyname').val();
+          let unset_name = false
+          if (current_name === '') {
+            unset_name = true
+          }
 
-        // eslint-disable-next-line no-undef
-      })
+          let containingElement = document.querySelector('form');
+          if ((unset_name) && !containingElement.contains(event.target)) {
+            event.preventDefault();
+            const $previewDialog = $(
+              `<div></div>`,
+            ).appendTo('body');
+            Drupal.dialog($previewDialog, {
+              title: Drupal.t('You need to have a name for your unregistered community or group. Please add a name and save or cancel them.'),
+              width: '33%',
+              buttons: [
+                {
+                  text: Drupal.t('Back to profile'),
+                  buttonType: 'primary',
+                  click() {
+                    $(this).dialog('close');
+                  },
+                },
+              ],
+            }).showModal();
+          } else if ((current_name !== initial_name) && !containingElement.contains(event.target)) {
+            event.preventDefault();
+            const $previewDialog = $(
+              `<div></div>`,
+            ).appendTo('body');
+            Drupal.dialog($previewDialog, {
+              title: Drupal.t('You have unsaved changes in your profile. Please save or cancel them.'),
+              width: '33%',
+              buttons: [
+                {
+                  text: Drupal.t('Back to profile'),
+                  buttonType: 'primary',
+                  click() {
+                    $(this).dialog('close');
+                  },
+                },
+              ],
+            }).showModal();
+          } else if (($('[data-drupal-selector="edit-isnewprofile"]').val() === 'initialSave') && !containingElement.contains(event.target)) {
+            event.preventDefault();
+            const $previewDialog = $(
+              `<div></div>`,
+            ).appendTo('body');
+            Drupal.dialog($previewDialog, {
+              title: Drupal.t('You have not saved your profile. Please save your profile before leaving the form.'),
+              width: '33%',
+              buttons: [
+                {
+                  text: Drupal.t('Back to profile'),
+                  buttonType: 'primary',
+                  click() {
+                    $(this).dialog('close');
+                  },
+                },
+              ],
+            }).showModal();
+          }
+          is_element_click = false;
+
+        });
+      });
+
+      // eslint-disable-next-line no-undef
       window.onbeforeunload = function(event) {
         // Cancel the event as stated by the standard.
         // Chrome requires returnValue to be set.
