@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## 2024.9
+- 66fa090f fix: AU-2478: Add block cache for 10mins. (#1393)
+- dcdc3990 fix: AU-2434: remove extra label (#1392)
+- 52eb35b0 fix: AU-2473: Fix profiles (#1391)
+- 5e72ffc9 fix: UHF-9944: Update packages (#1381)
+- 212f9ec6 Hotfix AU-2514: Try to enable DRAFT saving
+- 5c1f974c Revert "fix: AU-2455 Draft setting in webforms (#1338)"
+- 12e98d6f fix: UHF-9939: update tools (#1383)
+- ff193a79 fix: AU-2434: fix accessible button names in custom composites (#1384)
+- c693486b feat: AU-2390, E2E, Smoke tests (#1373)
+- b1bc8519 fix: AU-2420: Fix jumplink at the start of a form page (#1374)
+- 6d545caa fix: AU-2423: Tooltip buttons to have readable title (#1385)
+- 52c51c0f feat: AU-2008: profile/mandate selection redirects. (#1348)
+- e2f45692 feat: AU-2488: Changes to service page blocks. (#1386)
+- 24464ae9 Revert "fix: AU-2455 Draft setting in webforms (#1338)" (#1389)
+- ae80791e fix: AU-2418: fix inconsistent language (#1353)
+- 0c41cfde fix: AU-2436: fix the listjs pagination on oma asiointi (#1376)
+- f46b78ae fix: AU-2423: Make tooltips click-triggered (#1382)
+- eb5ae150 fix: AU-2481, AU-2482: fix message translations (#1370)
+- e0eec497 fix: AU-2437: fix application responsive styles (#1359)
+- c992451f Add SonarCloud for release PR's
+- 7c6ca8cf config: Update configuration (#1365)
+- 5ef819ce fix: AU-2493: update status text (#1377)
+- db62194f fix: AU-2942: fix tooltip in kuva toiminta (#1378)
+- d8e6e69a fix: AU-2490, AU-2491: small fixes to KUVAKEHA (#1379)
+- 75948b10 fix: AU-2487: Update gdpr api module (#1366)
+- dc710e92 Hotfix AU-XX-remove-tunnistamo-url-all-settings
+- 5efc5580 Move prod config to prod.settings. Use env variable always.
+- f8689946 Remove hard coded environment urls.
+
 ## 2024.8
 - df0f3c7c fix: AU-2470: Fix stepper first line (#1368)
 - de25bce9 fix: AU-2497: Fix fieldset button top margin (#1369)
