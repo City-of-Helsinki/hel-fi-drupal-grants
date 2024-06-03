@@ -261,7 +261,7 @@ function hdbt_subtheme_preprocess_field(array &$variables): void {
 
   $variables['view_application_page'] = false;
 
-  if (strpos($route_name, 'grants_handler.view_application') !== FALSE) {
+  if (str_contains($route_name, 'grants_handler.view_application')) {
     $variables['view_application_page'] = true;
   }
 }
