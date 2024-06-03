@@ -1,6 +1,5 @@
-// eslint-disable-next-line no-unused-vars
-(($, Drupal, drupalSettings) => {
-  var unsaved = false;
+(($, Drupal) => {
+
   /**
    * Unsaved changes.
    *
@@ -88,32 +87,37 @@
         });
       });
 
-      // eslint-disable-next-line no-undef
       window.onbeforeunload = function(event) {
         // Cancel the event as stated by the standard.
         // Chrome requires returnValue to be set.
         let containingElement = document.querySelector('form');
 
-        var current_name = $('#edit-companynamewrapper-companyname').val();
-        var unset_name = false
+        const current_name = $('#edit-companynamewrapper-companyname').val();
+        let unset_name = false;
 
-        if (current_name == '') {
-          unset_name = true
+        if (current_name === '') {
+          unset_name = true;
         }
+
+        let message = '';
+
         if (unset_name && !containingElement.contains(event.target) && !is_element_click) {
-          event.preventDefault();
-          event.returnValue = Drupal.t('You need to have a name for your unregistered community or group. Are you sure you want to leave the form?');
+          message = Drupal.t('You need to have a name for your unregistered community or group. Are you sure you want to leave the form?');
         }
-        if ((current_name != initial_name) && !containingElement.contains(event.target) && !is_element_click) {
-          event.preventDefault();
-          event.returnValue = Drupal.t('You have unsaved changes in your profile. Are you sure you want to leave the form?');
+        if ((current_name !== initial_name) && !containingElement.contains(event.target) && !is_element_click) {
+          message = Drupal.t('You have unsaved changes in your profile. Are you sure you want to leave the form?');
         }
-        if (($('[data-drupal-selector="edit-isnewprofile"]').val() == 'initialSave') && !containingElement.contains(event.target) && !is_element_click) {
+        if (($('[data-drupal-selector="edit-isnewprofile"]').val() === 'initialSave') && !containingElement.contains(event.target) && !is_element_click) {
+          message = Drupal.t('You have not saved your profile. Are you sure you want to leave the form?');
+        }
+
+        if (message) {
           event.preventDefault();
-          event.returnValue = Drupal.t('You have not saved your profile. Are you sure you want to leave the form?');
+          // For modern browsers.
+          return message;
         }
         is_element_click = false;
       };
     }
   }
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal);
