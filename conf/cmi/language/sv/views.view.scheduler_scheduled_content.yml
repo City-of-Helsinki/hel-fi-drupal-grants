@@ -67,7 +67,7 @@ display:
       empty:
         area_text_custom:
           content: 'No scheduled content.'
-    display_title: Huvud
+    display_title: Förvald
   overview:
     display_options:
       menu:

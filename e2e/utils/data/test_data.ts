@@ -59,6 +59,7 @@ interface FormField {
   viewPageSelectors?: string[];
   viewPageFormatter?: ViewPageFormatterFunction
   viewPageSkipValidation?: boolean;
+  printPageSkipValidation?: boolean;
 }
 
 type RemoveList = string[];
@@ -125,6 +126,7 @@ interface FormData {
   viewPageSkipValidation?: boolean,
   testFormCopying?: boolean,
   testFieldSwap?: boolean,
+  validatePrintPage?: boolean,
 }
 
 interface PageHandlers {

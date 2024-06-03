@@ -54,23 +54,23 @@ msgstr "Varav små grupper för elever med särskilda behov"
 
 msgctxt "grants_place_of_operation"
 msgid "Personnel Count"
-msgstr "Antal personer"
+msgstr "Antal anställda"
 
 msgctxt "grants_place_of_operation"
 msgid "Is premise free"
-msgstr "Aktiviteterna anordnas i kostnadsfria lokaler som tillhandahålls av stadens utbildnings-, social- eller ungdomsförvaltningar"
+msgstr "Verksamheten ordnas i lokaler som hyresfritt ställs till förfogande av stadens utbildnings-, social- eller ungdomsväsende"
 
 msgctxt "grants_place_of_operation"
 msgid "Total Rent (€)"
-msgstr "Total hyra (€)"
+msgstr "Euro sammanlagt under läsåret"
 
 msgctxt "grants_place_of_operation"
 msgid "Rent time begin"
-msgstr "Hyresperiod under läsåret, från"
+msgstr "Hyrestid i under läsåret, fr.o.m."
 
 msgctxt "grants_place_of_operation"
 msgid "Rent time end"
-msgstr "Hyresperiod under läsåret, till"
+msgstr "Hyrestid i under läsåret, till"
 
 msgctxt "grants_place_of_operation"
 msgid "Yes"

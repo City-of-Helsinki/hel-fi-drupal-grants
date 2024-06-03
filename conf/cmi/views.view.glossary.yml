@@ -10,7 +10,7 @@ dependencies:
 _core:
   default_config_hash: _TuOQPG7BoDmbu8Qdrik_4uMn7IcbwPVpSh9IOV2IDg
 id: glossary
-label: Sanasto
+label: Glossary
 module: node
 description: 'All content, by letter.'
 tag: default
@@ -137,7 +137,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: 'Viimeksi päivitetty'
+          label: 'Last update'
           exclude: false
           alter:
             alter_text: false
@@ -204,19 +204,19 @@ display:
             previous: ‹‹
           expose:
             items_per_page: false
-            items_per_page_label: 'Merkintöjä sivua kohti'
+            items_per_page_label: 'Items per page'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- Kaikki -'
+            items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
       exposed_form:
         type: basic
         options:
-          submit_button: Käytä
+          submit_button: Apply
           reset_button: false
-          reset_button_label: Palauta
-          exposed_sorts_label: Lajittele
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -386,7 +386,7 @@ display:
       tags: {  }
   attachment_1:
     id: attachment_1
-    display_title: Liitetiedosto
+    display_title: Attachment
     display_plugin: attachment
     position: 2
     display_options:
@@ -453,7 +453,7 @@ display:
       tags: {  }
   page_1:
     id: page_1
-    display_title: Sivu
+    display_title: Page
     display_plugin: page
     position: 1
     display_options:
@@ -464,7 +464,7 @@ display:
       path: glossary
       menu:
         type: normal
-        title: Sanasto
+        title: Glossary
         weight: 0
         menu_name: main
         parent: ''
