@@ -298,15 +298,15 @@ function hdbt_subtheme_preprocess_webform_section(array &$variables): void {
 
   $variables['view_application_page'] = false;
 
-  if (strpos($route_name, 'grants_handler.view_application') !== FALSE) {
+  if (str_contains($route_name, 'grants_handler.view_application')) {
     if ($variables['title_tag'] == 'h2') {
       $variables['title_tag'] = 'h4';
     }
+    $variables['view_application_page'] = true;
   } else {
     if ($variables['title_tag'] == 'h2') {
       $variables['title_tag'] = 'h3';
     }
-    $variables['view_application_page'] = true;
   }
 }
 
