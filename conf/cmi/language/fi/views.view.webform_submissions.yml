@@ -6,15 +6,15 @@ display:
           submit_button: Käytä
           reset_button_label: Palauta
           exposed_sorts_label: Lajittele
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          sort_asc_label: Nousevasti
+          sort_desc_label: Laskevasti
       pager:
         options:
           tags:
-            previous: ‹‹
-            next: ››
+            previous: '‹ Edellinen'
+            next: 'Seuraava ›'
             first: '« Ensimmäinen'
-            last: 'Last »'
+            last: 'Viimeinen »'
           expose:
             items_per_page_label: 'Merkintöjä sivua kohti'
             items_per_page_options_all_label: '- Kaikki -'
@@ -22,8 +22,10 @@ display:
       fields:
         sid:
           separator: ', '
+          label: '#'
         in_draft:
           separator: ', '
+          label: Keskeneräinen
         created:
           label: Luotu
           separator: ', '
@@ -40,6 +42,8 @@ display:
         in_draft:
           exception:
             title: Kaikki
+      title: Verkkolomakelähetykset
+    display_title: Oletus
   embed_administer:
     display_options:
       fields:
@@ -47,8 +51,10 @@ display:
           action_title: Toiminto
         sid:
           separator: ', '
+          label: '#'
         in_draft:
           separator: ', '
+          label: Keskeneräinen
         sticky:
           label: Kiinnitetty
           separator: ', '
@@ -60,6 +66,7 @@ display:
           separator: ', '
         completed:
           separator: ', '
+          label: Valmis
         remote_addr:
           label: 'IP osoite'
           separator: ', '
@@ -79,8 +86,10 @@ display:
           action_title: Toiminto
         sid:
           separator: ', '
+          label: '#'
         in_draft:
           separator: ', '
+          label: Keskeneräinen
         sticky:
           label: Kiinnitetty
           separator: ', '
@@ -92,6 +101,7 @@ display:
           separator: ', '
         completed:
           separator: ', '
+          label: Valmis
         remote_addr:
           label: 'IP osoite'
           separator: ', '
@@ -113,8 +123,10 @@ display:
       fields:
         sid:
           separator: ', '
+          label: '#'
         in_draft:
           separator: ', '
+          label: Keskeneräinen
         sticky:
           label: Kiinnitetty
           separator: ', '
@@ -126,6 +138,7 @@ display:
           separator: ', '
         completed:
           separator: ', '
+          label: Valmis
         remote_addr:
           label: 'IP osoite'
           separator: ', '
@@ -139,3 +152,4 @@ display:
         locked:
           expose:
             label: Lukittu
+label: Verkkolomakelähetykset
