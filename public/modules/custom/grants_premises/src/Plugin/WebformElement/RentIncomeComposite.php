@@ -3,7 +3,7 @@
 namespace Drupal\grants_premises\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_premises\Plugin\GrantsPremisesBase;
+use Drupal\grants_premises\Plugin\GrantsCompositesBase;
 use Drupal\webform\WebformSubmissionInterface;
 
 /**
@@ -19,13 +19,13 @@ use Drupal\webform\WebformSubmissionInterface;
  *   states_wrapper = TRUE,
  * )
  *
- * @see \Drupal\grants_premises\Plugin\GrantsPremisesBase
+ * @see \Drupal\grants_premises\Plugin\GrantsCompositesBase
  * @see \Drupal\webform\Plugin\WebformElement\WebformCompositeBase
  * @see \Drupal\webform\Plugin\WebformElementBase
  * @see \Drupal\webform\Plugin\WebformElementInterface
  * @see \Drupal\webform\Annotation\WebformElement
  */
-class RentIncomeComposite extends GrantsPremisesBase {
+class RentIncomeComposite extends GrantsCompositesBase {
 
   /**
    * {@inheritdoc}
