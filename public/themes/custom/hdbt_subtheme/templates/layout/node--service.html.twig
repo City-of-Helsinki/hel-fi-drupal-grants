@@ -1,4 +1,4 @@
-{% embed '@hdbt/content/node.html.twig' with {'node_class': 'components components--service'} %}
+{% embed '@hdbt/content/node.html.twig' %}
 
   {% block main_content %}
 
@@ -10,7 +10,11 @@
 
     {{ content.field_content }}
 
-    {{ content.field_errand_service }}
+    <div class="components components--errand-services">
+      <div class="components__container">
+        {{ content.field_errand_service }}
+      </div>
+    </div>
 
     <div class="components components--bottom-content">
       <div class="components__container">
