@@ -20,6 +20,7 @@
   title_display == 'invisible' ? 'visually-hidden',
   required ? 'js-form-required',
   required ? 'form-required',
+  element['#element_type'] ? element['#element_type'],
 ]
 %}
 {% if title is not empty or required -%}
