@@ -35,9 +35,6 @@ libraries-override:
   core/drupal.dialog:
     js:
       misc/dialog/dialog.js: dist/js/dialog.min.js
-  hdbt/accordion:
-    js:
-      dist/js/accordion.min.js: dist/js/accordion.min.js
   webform/webform.element.help:
     js:
       js/webform.element.help.js: dist/js/webform.element.help.min.js
