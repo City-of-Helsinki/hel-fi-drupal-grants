@@ -38,6 +38,8 @@ libraries-override:
   webform/webform.element.help:
     js:
       js/webform.element.help.js: dist/js/webform.element.help.min.js
+  hdbt/hyphenopoly:
+    js: {}
   hdbt/matomo:
     js:
       dist/js/matomo.min.js: dist/js/matomo.min.js
