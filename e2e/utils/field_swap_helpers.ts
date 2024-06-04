@@ -50,7 +50,7 @@ const swapFieldValues = async (
 
   logger('Validating form with swapped values...');
   await saveAsDraft(page);
-  await validateFormData(page, formDetails);
+  await validateFormData(page, 'viewPage', formDetails);
 }
 
 /**

@@ -127,6 +127,7 @@ module:
   helfi_tunnistamo: 0
   helfi_user_roles: 0
   helfi_yjdh: 0
+  help: 0
   image: 0
   image_style_quality: 0
   imagecache_external: 0

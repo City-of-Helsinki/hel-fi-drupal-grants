@@ -5,7 +5,6 @@ namespace Drupal\grants_admin_applications\Form;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\grants_admin_applications\Service\HandleDocumentsBatchService;
 use Drupal\grants_handler\ApplicationHandler;
@@ -43,7 +42,7 @@ final class DeleteApplicationsForm extends FormBase {
    *
    * @var \Drupal\Core\Logger\LoggerChannelFactory
    */
-  protected LoggerChannelFactory $logger;
+  protected LoggerChannelFactoryInterface $logger;
 
   /**
    * Configuration Factory.
