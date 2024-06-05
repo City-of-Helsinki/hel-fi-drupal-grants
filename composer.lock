@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1389291c32578863a6468a8547586bec",
+    "content-hash": "c775723547ea21044115012b67cfea14",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5152,16 +5152,16 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "0.9.27",
+            "version": "dev-feature/AU-2518-userid",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "5309918e9da5543ded78c2b1c01acea44e1bcc93"
+                "reference": "499fee58af390c76077b760eec749549864d873c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/5309918e9da5543ded78c2b1c01acea44e1bcc93",
-                "reference": "5309918e9da5543ded78c2b1c01acea44e1bcc93",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/499fee58af390c76077b760eec749549864d873c",
+                "reference": "499fee58af390c76077b760eec749549864d873c",
                 "shasum": ""
             },
             "require": {
@@ -5179,10 +5179,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.27",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/feature/AU-2518-userid",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2024-06-04T07:33:04+00:00"
+            "time": "2024-06-04T11:15:16+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -22349,10 +22349,18 @@
             "time": "2023-10-13T22:55:15+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "drupal/helfi_atv",
+            "version": "dev-feature/AU-2518-userid",
+            "alias": "0.9.29",
+            "alias_normalized": "0.9.29.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/block_field": 5,
+        "drupal/helfi_atv": 20,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
         "drupal/multivalue_form_element": 10,
