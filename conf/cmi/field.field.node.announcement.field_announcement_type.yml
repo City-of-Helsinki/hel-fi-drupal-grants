@@ -7,6 +7,8 @@ dependencies:
     - node.type.announcement
   module:
     - options
+_core:
+  default_config_hash: gOT9BA0ts7QunTBMgEEAZH6lbJvRCIk-9AHYF8SBMug
 id: node.announcement.field_announcement_type
 field_name: field_announcement_type
 entity_type: node

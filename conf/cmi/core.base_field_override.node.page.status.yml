@@ -4,6 +4,8 @@ status: true
 dependencies:
   config:
     - node.type.page
+_core:
+  default_config_hash: sq-TgFSE-Ft53bktUufBtJVHiqZboy0IFAc5JH0iLJ4
 id: node.page.status
 field_name: status
 entity_type: node

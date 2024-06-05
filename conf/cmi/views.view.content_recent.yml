@@ -1,5 +1,5 @@
 uuid: 3bb526a6-99be-4e9d-9282-17c32310b6a6
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -8,7 +8,7 @@ dependencies:
 _core:
   default_config_hash: MxwbHUmXqKQgTGCTWcMxsfUH9NZJ8ZVqZp6801AOa40
 id: content_recent
-label: 'Uusin sisältö'
+label: 'Recent content'
 module: node
 description: 'Recent content.'
 tag: default
@@ -17,11 +17,11 @@ base_field: nid
 display:
   default:
     id: default
-    display_title: Oletus
+    display_title: Default
     display_plugin: default
     position: 0
     display_options:
-      title: 'Uusin sisältö'
+      title: 'Recent content'
       fields:
         title:
           id: title
@@ -131,10 +131,10 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Käytä
+          submit_button: Apply
           reset_button: false
-          reset_button_label: Palauta
-          exposed_sorts_label: Lajittele
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -155,7 +155,7 @@ display:
           admin_label: ''
           plugin_id: text_custom
           empty: true
-          content: 'Ei sisältöä.'
+          content: 'No content available.'
           tokenize: false
       sorts:
         changed:
@@ -290,7 +290,7 @@ display:
           required: true
       use_more: false
       use_more_always: false
-      use_more_text: Lisää
+      use_more_text: More
       link_display: '0'
       link_url: ''
       header: {  }

@@ -6,11 +6,13 @@ dependencies:
     - field.storage.paragraph.field_remote_video
     - media.type.remote_video
     - paragraphs.paragraphs_type.remote_video
+_core:
+  default_config_hash: EXTjrddbTsWRr2VDlxXQJcB0pQrLZGTeRStWnqxAOG0
 id: paragraph.remote_video.field_remote_video
 field_name: field_remote_video
 entity_type: paragraph
 bundle: remote_video
-label: 'Remote video'
+label: 'Remote video embed'
 description: ''
 required: true
 translatable: false

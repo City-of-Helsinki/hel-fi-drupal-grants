@@ -1,9 +1,10 @@
 uuid: cf491e60-aeb2-4ae7-9c51-e6196cc90e26
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
     - media.type.file
+    - media.type.hel_map
     - media.type.helfi_chart
     - media.type.image
     - media.type.remote_video
@@ -28,12 +29,18 @@ dependencies:
     - content_translation
     - entity_usage
     - external_entities
+    - file
     - grants_admin_applications
+    - helfi_api_base
     - helfi_tpr
     - locale
     - media
+    - menu_admin_per_menu
     - menu_link_content
     - node
+    - override_node_options
+    - paragraphs
+    - paragraphs_library
     - path
     - pathauto
     - publication_date
@@ -55,8 +62,10 @@ permissions:
   - 'access any webform configuration'
   - 'access content overview'
   - 'access entity usage statistics'
+  - 'access files overview'
+  - 'access media overview'
+  - 'access remote entities overview'
   - 'access site in maintenance mode'
-  - 'access site reports'
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'access tpr_ontology_word_details overview'
@@ -67,11 +76,12 @@ permissions:
   - 'access webform overview'
   - 'access webform submission log'
   - 'access webform submission user'
-  - 'administer grants_admin_applications configuration'
   - 'administer grants_admin_resend_applications configuration'
   - 'administer grants_admin_submitted_applications configuration'
+  - 'administer main menu items'
   - 'administer menu'
   - 'administer nodes'
+  - 'administer paragraphs library'
   - 'administer taxonomy'
   - 'administer users'
   - 'administer webform'
@@ -80,18 +90,22 @@ permissions:
   - 'assign all roles'
   - 'break content lock'
   - 'bypass node access'
+  - 'cancel account'
   - 'change own username'
   - 'create address content'
   - 'create announcement content'
   - 'create content translations'
   - 'create faq content'
   - 'create file media'
+  - 'create hel_map media'
   - 'create helfi_chart media'
   - 'create helfi_news external entity'
   - 'create image media'
   - 'create landing_page content'
+  - 'create media'
   - 'create news_item content'
   - 'create page content'
+  - 'create paragraph library item'
   - 'create remote_video media'
   - 'create service content'
   - 'create terms in avustuslaji'
@@ -123,13 +137,20 @@ permissions:
   - 'delete faq revisions'
   - 'delete form_page revisions'
   - 'delete landing_page revisions'
+  - 'delete media'
   - 'delete news_item revisions'
   - 'delete own announcement content'
   - 'delete own faq content'
+  - 'delete own file media'
+  - 'delete own files'
   - 'delete own form_page content'
+  - 'delete own hel_map media'
+  - 'delete own helfi_chart media'
+  - 'delete own image media'
   - 'delete own landing_page content'
   - 'delete own news_item content'
   - 'delete own page content'
+  - 'delete own remote_video media'
   - 'delete own service content'
   - 'delete page revisions'
   - 'delete service revisions'
@@ -142,17 +163,31 @@ permissions:
   - 'edit any address content'
   - 'edit any announcement content'
   - 'edit any faq content'
+  - 'edit any file media'
   - 'edit any form_page content'
+  - 'edit any hel_map media'
+  - 'edit any helfi_chart media'
+  - 'edit any image media'
   - 'edit any landing_page content'
   - 'edit any news_item content'
   - 'edit any page content'
+  - 'edit any remote_video media'
   - 'edit any service content'
   - 'edit any webform'
   - 'edit any webform submission'
   - 'edit own announcement content'
+  - 'edit own file media'
+  - 'edit own hel_map media'
+  - 'edit own helfi_chart media'
+  - 'edit own image media'
+  - 'edit own landing_page content'
   - 'edit own news_item content'
+  - 'edit own page content'
+  - 'edit own remote_video media'
+  - 'edit own service content'
   - 'edit own webform'
   - 'edit own webform submission'
+  - 'edit paragraph library item'
   - 'edit terms in avustuslaji'
   - 'edit terms in keywords'
   - 'edit terms in news_tags'
@@ -163,7 +198,11 @@ permissions:
   - 'edit webform source'
   - 'edit webform twig'
   - 'edit webform variants'
+  - 'link to any page'
   - 'notify of path changes'
+  - 'override landing_page published option'
+  - 'override page published option'
+  - 'override service published option'
   - 'revert address revisions'
   - 'revert all revisions'
   - 'revert announcement revisions'
@@ -176,7 +215,9 @@ permissions:
   - 'schedule publishing of nodes'
   - 'select account cancellation method'
   - 'set announcement published on date'
+  - 'set landing_page published on date'
   - 'set news_item published on date'
+  - 'set page published on date'
   - 'translate announcement node'
   - 'translate any webform'
   - 'translate article node'
@@ -193,17 +234,27 @@ permissions:
   - 'translate news_item node'
   - 'translate news_tags taxonomy_term'
   - 'translate own webform'
+  - 'translate page node'
   - 'translate remote_video media'
   - 'translate service node'
   - 'translate target_group taxonomy_term'
+  - 'translate tpr_errand_service'
+  - 'translate tpr_service'
+  - 'translate tpr_service_channel'
+  - 'translate tpr_unit'
   - 'translate ukk_kategoriat taxonomy_term'
   - 'translate unit_type taxonomy_term'
   - 'update any media'
   - 'update content translations'
+  - 'update media'
   - 'view address revisions'
+  - 'view all media revisions'
   - 'view all revisions'
   - 'view announcement revisions'
   - 'view any unpublished content'
+  - 'view any unpublished landing_page content'
+  - 'view any unpublished page content'
+  - 'view any unpublished service content'
   - 'view any webform submission'
   - 'view faq revisions'
   - 'view landing_page revisions'
@@ -214,6 +265,7 @@ permissions:
   - 'view scheduled content'
   - 'view service revisions'
   - 'view the administration theme'
+  - 'view unpublished paragraphs'
   - 'view unpublished tpr_errand_service'
   - 'view unpublished tpr_service'
   - 'view unpublished tpr_service_channel'

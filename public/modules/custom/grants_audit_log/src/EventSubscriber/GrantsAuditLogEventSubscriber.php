@@ -2,11 +2,11 @@
 
 namespace Drupal\grants_audit_log\EventSubscriber;
 
-use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\helfi_audit_log\Event\AuditLogEvent;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Subscribes to AuditLogEvent::LOG events.
@@ -62,7 +62,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
   /**
    * Validate message in AuditEvent::LOG event.
    *
-   * @param \Drupal\helfi_audit_log\AuditLogEvent $event
+   * @param \Drupal\helfi_audit_log\Event\AuditLogEvent $event
    *   Event to validate.
    */
   public function validate(AuditLogEvent $event) {

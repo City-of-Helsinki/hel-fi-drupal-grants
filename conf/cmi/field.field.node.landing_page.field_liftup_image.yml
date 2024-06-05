@@ -6,6 +6,8 @@ dependencies:
     - field.storage.node.field_liftup_image
     - media.type.image
     - node.type.landing_page
+_core:
+  default_config_hash: LmNZ-_b0A7CEHJsvBCOu0Bm5rL8wYMrWwy5BA_9LutI
 id: node.landing_page.field_liftup_image
 field_name: field_liftup_image
 entity_type: node

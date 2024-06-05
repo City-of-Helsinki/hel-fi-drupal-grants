@@ -8,6 +8,8 @@ dependencies:
     - paragraphs.paragraphs_type.phasing_item
   module:
     - text
+_core:
+  default_config_hash: 0TTk_RH5E44ucltGMV1DEE6fX5oyZLlHuhPhFo97gy4
 id: paragraph.phasing_item.default
 targetEntityType: paragraph
 bundle: phasing_item

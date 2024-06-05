@@ -1,5 +1,5 @@
 uuid: f17e1880-b683-42ca-af7d-6d2924789aca
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -8,5 +8,6 @@ _core:
   default_config_hash: q8QZDYrGHAdl67dw9Z1DdTCTIhOo3lpW0dGN70STnCk
 id: helfi_news.medium_teaser
 label: 'Medium Teaser'
+description: ''
 targetEntityType: helfi_news
 cache: true

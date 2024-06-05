@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - node
+_core:
+  default_config_hash: cm13t7QDA-t__CarrJ17eaPqqvH5AGwv4hsHul6Wtl0
 label: Helfi
 id: helfi
 description: 'A Linkit profile for Helfi.'

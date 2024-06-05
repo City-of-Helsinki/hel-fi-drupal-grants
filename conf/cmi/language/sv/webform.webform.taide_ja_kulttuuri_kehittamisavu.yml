@@ -42,6 +42,7 @@ elements: |
     '#help': '<p>Om du vill lägga till, ta bort eller ändra personer, spara applikationen som ett utkast och gå till att underhålla personernas information i din egen data.</p>'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj motsvarande person'
     '#role__title': Roll
     '#email__title': E-post
@@ -59,7 +60,7 @@ elements: |
   subventions:
     '#title': Understöd
   markup:
-    '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången.</p>'
+    '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången. Ange här endast stödsumman för det år, för vilket du nu ansöker om stöd.</p>'
   info_kyseessa_on_monivuotinen_avustus:
     '#markup': "<p>&nbsp;</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett jakande svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>"
   kyseessa_on_monivuotinen_avustus:
@@ -185,6 +186,8 @@ elements: |
   tila:
     '#title': Plats
     '#multiple__no_items_message': '<p>Inga lokaler angivna. Lägg till lokalinformationen nedan.</p>'
+    '#multiple__item_label': 'plats'
+    '#multiple__add_more_button_label': 'Lägg till ny plats'
   aikataulu:
     '#title': Tidtabell
   festivaalin_tai_tapahtuman_paivamaarat:
@@ -264,7 +267,9 @@ elements: |
     '#markup': '<h4>Planerade utgifter</h4>'
   budget_other_cost:
     '#title': 'Övriga kostnader'
-    '#help': 'Lägg till alla projektets planerade utgifter per utgiftskategori nedan.'
+    '#description': 'Lägg till alla projektets planerade utgifter per utgiftskategori nedan.'
+    '#multiple__add_more_button_label': 'Lägg till en kostnad'
+    '#multiple__item_label': 'kostnad'
   muu_huomioitava_panostus:
     '#markup': '<h4>Övrig betydande insats</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
@@ -280,12 +285,18 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "<p>Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nFör behandling av ansökan om understöd behövs projektplan för den tid som ansökan gäller och budget för den tid som ansökan gäller.<br role=\"presentation\" />\r\n<br />\r\nFör ny sökande eller om bankkontaktuppgifterna har ändrats behövs även kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den sökandes egna uppgifter.<br />\r\n<br />\r\n<strong>Inlämning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du lämna in flera bilagor i en fil. Ange i detta fall vid andra bilagor att ”Bilagan har<br role=\"presentation\" />\r\nlämnats in som en fil eller i samband med en annan ansökan”.</p>"
+    '#markup': |-
+      <p>Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.</p>
+      <h4>Erforderliga bilagor</h4>
+      <p>För behandling av ansökan om understöd behövs projektplan för den tid som ansökan gäller och budget för den tid som ansökan gäller.</p>
+      <p>För ny sökande eller om bankkontaktuppgifterna har ändrats behövs även kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den sökandes egna uppgifter.</p>
+      <h4>Inl&auml;mning av flera bilagor i en fil</h4>
+      <p>Om du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>"
   projektisuunnitelma_liite:
     '#title': 'Projekt plan'
-    '#help': '<p>Projektplan för önskad period</p>'
+    '#help': '<p>Projektplan för den tid som ansökan gäller</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -293,7 +304,7 @@ elements: |
     '#isAttachmentNew__title': ''
   talousarvio_liite:
     '#title': Budget
-    '#help': '<p>Budget för den begärda perioden</p>'
+    '#help': '<p>Budget för den tid som ansökan gäller</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -312,7 +323,7 @@ elements: |
     '#isAttachmentNew__title': ''
   actions:
     '#submit__label': Skicka
-    '#draft__label': 'Spara som oavslutat'
+    '#draft__label': 'Spara som oavslutad'
     '#wizard_prev__label': '< Tidigare'
     '#wizard_next__label': 'Nästa >'
     '#preview_prev__label': '< Tidigare'
@@ -323,3 +334,4 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '8. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '9. Slutförd'

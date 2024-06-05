@@ -1,5 +1,5 @@
 uuid: ea22926e-a8bc-4160-88f4-4e266e9447ee
-langcode: fi
+langcode: en
 status: true
 dependencies:
   config:
@@ -23,6 +23,8 @@ content:
     settings:
       responsive_image_style: image__3_2_content_area
       image_link: ''
+      image_loading:
+        attribute: eager
     third_party_settings: {  }
     weight: 0
     region: content

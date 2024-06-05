@@ -4,7 +4,10 @@ status: true
 dependencies:
   module:
     - helfi_tpr
+_core:
+  default_config_hash: mYXGkc9X4WnppyKBEO4sV7QYIqdB4c7wRN74IyWw53s
 id: tpr_service.teaser
 label: Teaser
+description: ''
 targetEntityType: tpr_service
 cache: true

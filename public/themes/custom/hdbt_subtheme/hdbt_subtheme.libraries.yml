@@ -1,5 +1,5 @@
 global-styling:
-  version: 1.1.1
+  version: 1.1.7
   css:
     theme:
       dist/css/styles.min.css: {}
@@ -12,6 +12,8 @@ global-scripting:
     dist/js/common.min.js: {}
   dependencies:
     - core/drupal
+    - core/jquery
+    - core/jquery.once
 
 matomo:
   version: 1.x

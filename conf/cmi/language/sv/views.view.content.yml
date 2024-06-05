@@ -19,6 +19,8 @@ display:
           label: Uppdaterad
         operations:
           label: Funktioner
+        revision_uid:
+          label: 'Redigerat senast'
       title: Innehåll
       pager:
         options:
@@ -52,8 +54,6 @@ display:
             group_items:
               1:
                 title: Publicerad
-              2:
-                title: 'Ej publicerad'
         langcode:
           expose:
             label: Språk

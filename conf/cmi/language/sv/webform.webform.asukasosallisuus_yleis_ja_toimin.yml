@@ -48,6 +48,7 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra en personuppgift, spara ans&ouml;kan som ett utkast och g&aring; till dina uppgifter f&ouml;r att redigera personuppgiften.'
     '#title': 'Personer som ansvarar för samfundet'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj tjänsteman'
     '#name__title': Namn
     '#role__title': Roll
@@ -164,7 +165,7 @@ elements: |
   actions:
     '#title': 'Skicka knapp(ar)'
     '#submit__label': Skicka
-    '#draft__label': 'Spara som oavslutat'
+    '#draft__label': 'Spara som oavslutad'
     '#wizard_prev__label': '< Tidigare'
     '#wizard_next__label': 'Nästa >'
     '#preview_prev__label': '< Tidigare'
@@ -221,7 +222,14 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<br />\r\n<br />\r\n<strong>Erforderliga bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden &auml;r: bokslut, verksamhetsber&auml;ttelse, revisionsber&auml;ttelse och protokoll fr&aring;n &aring;rsst&auml;mman. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.&nbsp;<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;. &nbsp;<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
+    '#markup': |-
+      <p>Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.</p>
+      <h4>Erforderliga bilagor</h4>
+      <p>F&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n den f&ouml;reg&aring;ende r&auml;kenskapsperioden &auml;r: bokslut, verksamhetsber&auml;ttelse, revisionsber&auml;ttelse och protokoll fr&aring;n &aring;rsst&auml;mman. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.</p>
+      <h4>Inl&auml;mning av flera bilagor i en fil</h4>
+      <p>Om du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>
+      <h4>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</h4>
+      <p>Om de erforderliga bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara olika i bilagor till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -233,7 +241,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
-    '#help': "<span style=\"font-size:11pt\"><span style=\"line-height:107%\"><span style=\"font-family:Calibri,sans-serif\">Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nSamfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r.</span></span></span>"
+    '#help': "Bokslutet ska inneh&aring;lla minst resultatr&auml;kningen och balansr&auml;kningen. Samfundet ska till denna punkt l&auml;gga till bokslutet som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te. Samfundets r&auml;kenskapsperiod kan vara ett kalender&aring;r eller en annan period. Vad g&auml;ller samfund anges det i deras egna stadgar vad samfundets r&auml;kenskapsperiod &auml;r."
     '#multiple__no_items_message': 'Inga v&auml;rden angivna. L&auml;gg till nytt inneh&aring;ll nedan.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -242,7 +250,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)'
-    '#help': "<span style=\"font-size:11pt\"><span style=\"line-height:107%\"><span style=\"font-family:Calibri,sans-serif\">Samfundet ska till denna punkt bifoga verksamhetsber&auml;ttelsen som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te.<br />\r\nOm verksamhetsber&auml;ttelsen ing&aring;r i bokslutet och du redan har bifogat den blanketten, beh&ouml;ver den inte bifogas separat. Ange i detta fall vid verksamhetsber&auml;ttelsen att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</span></span></span>"
+    '#help': "Samfundet ska till denna punkt bifoga verksamhetsber&auml;ttelsen som godk&auml;nts och undertecknats vid samfundets medlemsm&ouml;te. Om verksamhetsber&auml;ttelsen ing&aring;r i bokslutet och du redan har bifogat den blanketten, beh&ouml;ver den inte bifogas separat. Ange i detta fall vid verksamhetsber&auml;ttelsen att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -250,7 +258,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)'
-    '#help': "<span style=\"font-size:11pt\"><span style=\"line-height:107%\"><span style=\"font-family:Calibri,sans-serif\">Bifoga den undertecknade revisionsber&auml;ttelsen f&ouml;r samfundets senaste avslutade r&auml;kenskapsperiod h&auml;r.<br />\r\nOm den undertecknade revisionsber&auml;ttelsen ing&aring;r i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo; h&auml;r.</span></span></span>"
+    '#help': "Bifoga den undertecknade revisionsber&auml;ttelsen f&ouml;r samfundets senaste avslutade r&auml;kenskapsperiod h&auml;r. Om den undertecknade revisionsber&auml;ttelsen ing&aring;r i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo; h&auml;r."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -258,7 +266,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vuosikokouksen_poytakirja:
     '#title': 'Protokoll från årsstämman med det godkända bokslutet för den föregående räkenskapsperioden'
-    '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Bifoga protokollet fr&aring;n samfundets m&ouml;te h&auml;r, d&auml;r bokslutet f&ouml;r den f&ouml;reg&aring;ende avslutade r&auml;kenskapsperioden har godk&auml;nts och ansvarsfrihet beviljats. Samfundens bokslut fastst&auml;lls alltid vid samfundets medlemsm&ouml;te. Om samfundet inte &auml;r skyldigt att ha ett &aring;rsm&ouml;te eller annat samfundsm&ouml;te d&auml;r bokslutet b&ouml;r godk&auml;nnas och ansvarsfrihet beviljas, beh&ouml;ver denna bilaga inte l&auml;mnas in.</span></span></span>'
+    '#help': 'Bifoga protokollet fr&aring;n samfundets m&ouml;te h&auml;r, d&auml;r bokslutet f&ouml;r den f&ouml;reg&aring;ende avslutade r&auml;kenskapsperioden har godk&auml;nts och ansvarsfrihet beviljats. Samfundens bokslut fastst&auml;lls alltid vid samfundets medlemsm&ouml;te. Om samfundet inte &auml;r skyldigt att ha ett &aring;rsm&ouml;te eller annat samfundsm&ouml;te d&auml;r bokslutet b&ouml;r godk&auml;nnas och ansvarsfrihet beviljas, beh&ouml;ver denna bilaga inte l&auml;mnas in.'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -266,7 +274,7 @@ elements: |
     '#isAttachmentNew__title': ''
   toimintasuunnitelma:
     '#title': 'Verksamhetsplan (för det år du ansöker om understödet)'
-    '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Bifoga verksamhetsplanen f&ouml;r hela f&ouml;r samfundet h&auml;r. </span></span></span>'
+    '#help': 'Bifoga verksamhetsplanen f&ouml;r hela f&ouml;r samfundet h&auml;r. '
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -274,7 +282,7 @@ elements: |
     '#isAttachmentNew__title': ''
   talousarvio:
     '#title': 'Budget (för det år du ansöker om understödet)'
-    '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Budget (f&ouml;r det &aring;r du ans&ouml;ker om underst&ouml;det)</span></span></span>'
+    '#help': 'Budget (f&ouml;r det &aring;r du ans&ouml;ker om underst&ouml;det)'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -296,3 +304,4 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '5. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '6. Slutförd'

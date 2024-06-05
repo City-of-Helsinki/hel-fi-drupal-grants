@@ -22,9 +22,9 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\language\ConfigurableLanguageManagerInterface;
 use Drush\Commands\DrushCommands;
 use GuzzleHttp\ClientInterface;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Webmozart\PathUtil\Path;
 
 /**
  * Class to import webform files into config.
@@ -143,7 +143,7 @@ class WebformImportCommands extends DrushCommands {
   /**
    * The language manager.
    *
-   * @var \Drupal\Core\Language\ConfigurableLanguageManagerInterface
+   * @var \Drupal\language\ConfigurableLanguageManagerInterface
    */
   protected $languageManager;
 
@@ -172,9 +172,9 @@ class WebformImportCommands extends DrushCommands {
    *   Extension list module.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Config factory.
-   * @param GuzzleHttp\ClientInterface $httpClient
+   * @param \GuzzleHttp\ClientInterface $httpClient
    *   Http client.
-   * @param \Drupal\Core\Language\ConfigurableLanguageManagerInterface $languageManager
+   * @param \Drupal\language\ConfigurableLanguageManagerInterface $languageManager
    *   Language manager.
    */
   public function __construct(
@@ -413,6 +413,8 @@ class WebformImportCommands extends DrushCommands {
    *
    * @return mixed
    *   Resulted webform data.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function getWebformDataFromEndpoint() {
     // Fetch the config.
@@ -428,10 +430,7 @@ class WebformImportCommands extends DrushCommands {
         'Authorization' => $authorizationHeader,
       ],
     ];
-    $response = $this->httpClient->get(
-      $url,
-      $options,
-    );
+    $response = $this->httpClient->request("GET", $url, $options);
     $statusCode = $response->getStatusCode();
 
     if ($statusCode !== 200) {

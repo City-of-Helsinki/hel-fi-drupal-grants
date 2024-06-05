@@ -7,6 +7,8 @@ dependencies:
 third_party_settings:
   paragraphs_library:
     allow_library_conversion: true
+_core:
+  default_config_hash: hOHxTh_21XKcwZy2Hk26QVotbNt_9tkpNF3crIc3lco
 id: service_list_search
 label: 'Service List Search'
 icon_uuid: null

@@ -13,6 +13,8 @@ dependencies:
   enforced:
     config:
       - paragraphs.paragraphs_type.accordion_item
+_core:
+  default_config_hash: f3ncPjM7WKsN-bLZVQXMbSKIUMZYRk51A9j1Yly5XsE
 id: paragraph.accordion_item.default
 targetEntityType: paragraph
 bundle: accordion_item

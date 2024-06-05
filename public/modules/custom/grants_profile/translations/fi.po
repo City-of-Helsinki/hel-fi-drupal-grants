@@ -84,6 +84,10 @@ msgstr "Lisää yhteisön tai ryhmän tiedot"
 
 msgctxt "grants_profile"
 msgid "Basic details"
+msgstr "Perustiedot"
+
+msgctxt "grants_profile"
+msgid "Community official information"
 msgstr "Yhteisön viralliset tiedot"
 
 msgctxt "grants_profile"
@@ -115,8 +119,8 @@ msgid "Business ID"
 msgstr "Y-tunnus"
 
 msgctxt "grants_profile"
-msgid 'If you want to change the information from Helsinki-profile\nyou can do that by going to the Helsinki-profile from this link.'
-msgstr 'Jos haluat muuttaa Helsinki-profiilin tietoja, voit tehdä sen menemällä Helsinki-profiiliin tästä linkistä.'
+msgid "If you want to change the information from Helsinki-profile\nyou can do that by going to the Helsinki-profile from this link."
+msgstr "Jos haluat muuttaa Helsinki-profiilin tietoja, voit tehdä sen menemällä Helsinki-profiiliin tästä linkistä."
 
 msgctxt "grants_profile"
 msgid "Community details not found in registries. Please contact customer service"
@@ -393,6 +397,10 @@ msgid "Personal address"
 msgstr "Henkilökohtainen osoite"
 
 msgctxt "grants_profile"
+msgid "Personal telephone"
+msgstr "Henkilökohtainen puhelinnumero"
+
+msgctxt "grants_profile"
 msgid "Community or group address"
 msgstr "Yhteisön tai ryhmän osoite"
 
@@ -461,6 +469,10 @@ msgstr "Sinun tulee lisätä vähintään yksi toiminnasta vastaava henkilö"
 msgctxt "Yksityishenkilön asiointi"
 msgid "Personal information"
 msgstr "Omat tiedot"
+
+msgctxt "Yksityishenkilön asiointi"
+msgid "Official information"
+msgstr "Viralliset tiedot"
 
 msgctxt "Yksityishenkilön asiointi"
 msgid "Basic details"

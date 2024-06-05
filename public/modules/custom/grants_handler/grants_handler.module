@@ -8,14 +8,16 @@
 use Drupal\block_content\Entity\BlockContent;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Asset\AttachedAssetsInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
-use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Event\UserLogoutEvent;
 use Drupal\grants_handler\EventsService;
@@ -27,7 +29,6 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionStorageInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 /**
  * Implements hook_theme().
@@ -197,6 +198,7 @@ function grants_handler_theme(): array {
         'label' => NULL,
         'body' => NULL,
         'class' => NULL,
+        'aria_level' => NULL,
       ],
     ],
 
@@ -385,7 +387,8 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
     }
   }
   if (get_class($form_object) == 'Drupal\webform\WebformSubmissionForm') {
-    /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
+
+    /** @var \Drupal\webform\WebformSubmissionInterface $webformSubmission */
     $webformSubmission = $form_object->getEntity();
 
     // Get data from webform.
@@ -457,6 +460,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
       $grantsProfileService = \Drupal::service('grants_profile.service');
 
       $selectedCompany = $grantsProfileService->getSelectedRoleData();
+      $profileData = [];
       try {
         $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany ?? '');
       }
@@ -617,13 +621,14 @@ function _grants_handler_missing_data(
     '#label' => $str1,
     '#body' => Link::createFromRoute($str2, 'grants_profile.show')
       ->toString() . ' ' . $str3,
+    '#aria_level' => '2',
   ];
 }
 
 /**
  * Recursively alter number fields to allow decimals and commas.
  */
-function _grants_handler_alter_number_fields(&$element) {
+function _grants_handler_alter_number_fields(&$element): void {
   if (is_array($element)) {
     // Check if the element is a number field.
     if (isset($element['#type']) && $element['#type'] === 'number') {
@@ -639,7 +644,7 @@ function _grants_handler_alter_number_fields(&$element) {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
   $tOpts = ['context' => 'grants_handler'];
 
   $user = \Drupal::currentUser();
@@ -661,13 +666,13 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
 
   if (isset($form['pages'])) {
     foreach ($form['pages'] as $key => $value) {
-      if (!strstr($key, '#')) {
+      if (!str_contains($key, '#')) {
         $exploded_title = explode("'", $form['pages'][$key]['#attributes']['title']);
         if (isset($exploded_title[1])) {
           $stripped_title = $exploded_title[1];
-          if (isset($stripped_title) && strlen($stripped_title) > 0) {
+          if (strlen($stripped_title) > 0) {
             $form['pages'][$key]['#attributes']['title'] = $stripped_title;
-            if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
+            if ((!empty($all_errors[$key]))) {
               // Add an info to the title if there are errors.
               $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], $tOpts) . ')';
             }
@@ -692,8 +697,10 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   $grantsProfileService = \Drupal::service('grants_profile.service');
   $selectedCompany = $grantsProfileService->getSelectedRoleData();
 
+  /** @var \Drupal\webform\WebformSubmissionForm $formObject */
+  $formObject = $form_state->getFormObject();
   /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
-  $webform_submission = $form_state->getFormObject()->getEntity();
+  $webform_submission = $formObject->getEntity();
   $formData = $webform_submission->getData();
 
   $webform = $webform_submission->getWebform();
@@ -765,6 +772,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
             '#class' => '',
             '#label' => t('Some information fetched from personal information', [], $tOpts),
             '#body' => t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.', [], $tOpts),
+            '#aria_level' => '2',
           ],
         ];
         $required_fields_info_element = [
@@ -775,6 +783,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
               '#label' => t('Fill in the fields to all the questions that you can answer.', [], $tOpts),
               '#body' => t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.', [], $tOpts),
               '#class' => 'notification-margin-bottom',
+              '#aria_level' => '2',
             ],
         ];
         $page_title_element = [];
@@ -875,6 +884,7 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
     ->condition('field_form', $variables['webform']->id())
     ->condition('field_show_on_all_forms', TRUE);
   $query->condition($orGroup);
+  $query->accessCheck(FALSE);
   $results = $query->execute();
 
   // Load blocks.
@@ -902,8 +912,9 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
       '#label' => t('Note!', [], $tOpts),
       '#body' => t('Accept the terms and send the application.', [], $tOpts),
       '#class' => 'notification-margin-bottom',
+      '#aria_level' => '3',
     ];
-    $terms_info_rendered = Markup::create(render($terms_info));
+    $terms_info_rendered = Markup::create(\Drupal::service('renderer')->render($terms_info));
     // Add html for checkbox.
     $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div>
       ' . $terms_info_rendered . '
@@ -1026,8 +1037,6 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
   $submission = $variables['submission'];
   $submissionData = $submission->getData();
 
-  /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
-
   $messages = [];
   if (isset($submissionData['messages']) && is_array($submissionData['messages'])) {
     $submissionMessages = ApplicationHandler::parseMessages($submissionData);
@@ -1064,6 +1073,7 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
   // If submission is ok for messaging.
   if (ApplicationHandler::isSubmissionMessageable($submission, NULL)) {
     // Add message form.
+    // @phpstan-ignore-next-line
     $variables['message_form'] = \Drupal::formBuilder()
       ->getForm('Drupal\grants_handler\Form\MessageForm', $submission);
   }
@@ -1293,7 +1303,8 @@ function grants_handler_preprocess_webform_submission_attachment_list(&$variable
   foreach ($attachmentsData as $att) {
     if (isset($att['fileName'])) {
       try {
-        $fileUploadTime = AttachmentHandler::getAttachmentUploadTime($attachmentEventsHandler['events'], $att['fileName']);
+        $events = $attachmentEventsHandler['events'];
+        $fileUploadTime = AttachmentHandlerHelper::getAttachmentUploadTime($events, $att['fileName']);
       }
       catch (Exception $e) {
         $fileUploadTime = '';
@@ -1432,8 +1443,12 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     strtolower($submissionData["application_number"]),
   ];
 
-  $editApplicationLinkText = Markup::create(t('Edit application', [], $tOpts));
-  $viewApplicationLinkText = Markup::create(t('View application', [], $tOpts));
+  $editApplicationLinkText = Markup::create(
+    t('Edit application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
+  );
+  $viewApplicationLinkText = Markup::create(
+    t('View application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
+  );
 
   $variables['viewApplicationLink'] = Link::fromTextAndUrl($viewApplicationLinkText, $viewApplicationUrl);
   $variables['editApplicationLink'] = Link::fromTextAndUrl($editApplicationLinkText, $editApplicationUrl);
@@ -1496,6 +1511,8 @@ function grants_handler_preprocess_application_list_item(&$variables) {
  */
 function grants_handler_preprocess_application_status_tag(&$variables): void {
   try {
+    $submissionData = [];
+
     if ($variables['submission_data']) {
       $submissionData = $variables['submission_data'];
     }
@@ -1643,12 +1660,6 @@ function grants_handler_preprocess_message_notification_item(&$variables) {
   $message_link = Link::fromTextAndUrl($message['caseId'], $message_url);
 
   $variables['message_link'] = $message_link;
-}
-
-/**
- * Implements hook_preprocess().
- */
-function grants_handler_preprocess_message_list(&$variables) {
 }
 
 /**
@@ -1952,6 +1963,10 @@ function grants_handler_webform_element_input_masks() {
     'title' => t('Grants decimal'),
     'example' => '1 789,20',
   ];
+  $input_masks["'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"] = [
+    'title' => ('Grants currency'),
+    'example' => '1 789,20€',
+  ];
   return $input_masks;
 }
 
@@ -1985,5 +2000,44 @@ function grants_handler_user_login_form_submit(&$form, FormStateInterface $form_
   if ($user && !empty(array_intersect($roles, $user->getRoles()))) {
     // Redirect the user after login.
     $form_state->setRedirect('system.admin_content');
+  }
+}
+
+/**
+ * Implements hook_js_settings_build().
+ */
+function grants_handler_js_settings_build(&$settings, AttachedAssetsInterface $assets) {
+  // We set a dummy setting here for possibly fixing a problem with webform
+  // ajaxSettings being empty and breaking multivalue components
+  // and other components which are using ajax functions.
+  // See: AU-2081 https://helsinkisolutionoffice.atlassian.net/browse/AU-2081
+  $settings['grants_handler_dummy_setting'] = TRUE;
+}
+
+/**
+ * Implements hook_options_list_alter().
+ *
+ * Appends possible webform status (In development / Production) to the
+ * option name and hides in-development options in PROD env.
+ */
+function grants_handler_options_list_alter(array &$options, array $context): void {
+  /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
+  $field_definition = $context['fieldDefinition'];
+
+  if ($field_definition->getName() === 'field_webform') {
+
+    $webforms = Webform::loadMultiple(array_keys($options));
+    $env = ApplicationHandler::getAppEnv();
+
+    foreach ($webforms as $key => $webform) {
+      $status = $webform->getThirdPartySetting('grants_metadata', 'status');
+
+      if ($env === 'PROD' && $status === 'development') {
+        unset($options[$key]);
+      }
+      elseif ($status === 'development' && $env !== 'PROD') {
+        $options[$key] .= ' (Development version)';
+      }
+    }
   }
 }

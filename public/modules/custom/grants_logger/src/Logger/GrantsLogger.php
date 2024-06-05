@@ -12,7 +12,6 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
  */
 class GrantsLogger extends DbLog {
 
-
   /**
    * The helfi_helsinki_profiili.userdata service.
    *
@@ -44,7 +43,11 @@ class GrantsLogger extends DbLog {
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata
    *   The helfi_helsinki_profiili.userdata service.
    */
-  public function __construct(Connection $connection, LogMessageParserInterface $parser, HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata) {
+  public function __construct(
+    Connection $connection,
+    LogMessageParserInterface $parser,
+    HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata
+  ) {
     $this->connection = $connection;
     $this->parser = $parser;
     $this->helfiHelsinkiProfiiliUserdata = $helfiHelsinkiProfiiliUserdata;
@@ -53,7 +56,7 @@ class GrantsLogger extends DbLog {
   /**
    * {@inheritdoc}
    */
-  public function log($level, $message, array $context = []) {
+  public function log($level, $message, array $context = []): void {
 
     if ($this->helfiHelsinkiProfiiliUserdata->isAuthenticatedExternally()) {
       $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();

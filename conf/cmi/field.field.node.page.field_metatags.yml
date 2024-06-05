@@ -7,6 +7,8 @@ dependencies:
     - node.type.page
   module:
     - metatag
+_core:
+  default_config_hash: umfCmBUM3Qvbgnbf2Mms9ptk9QqXkx-P2bw7BHUvc8g
 id: node.page.field_metatags
 field_name: field_metatags
 entity_type: node

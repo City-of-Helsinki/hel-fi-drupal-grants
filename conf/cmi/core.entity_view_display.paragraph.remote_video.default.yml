@@ -12,6 +12,8 @@ dependencies:
     - paragraphs.paragraphs_type.remote_video
   module:
     - text
+_core:
+  default_config_hash: TfUdaKwrwdr5ime_VDVt5VlOtlUx4tcGTVyC7dmC3Gk
 id: paragraph.remote_video.default
 targetEntityType: paragraph
 bundle: remote_video

@@ -6,6 +6,8 @@ dependencies:
     - helfi_tpr
     - link
     - text
+_core:
+  default_config_hash: cOt6kKLKF6kBMVhPBG2d70sX0dCJoLkbONDl7nq9e3Q
 id: tpr_errand_service.tpr_errand_service.default
 targetEntityType: tpr_errand_service
 bundle: tpr_errand_service

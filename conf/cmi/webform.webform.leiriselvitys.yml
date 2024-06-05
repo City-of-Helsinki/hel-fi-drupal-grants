@@ -17,10 +17,13 @@ third_party_settings:
     applicationTypeTerms:
       54: '54'
     applicationTargetGroup: '27'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2029-08-30T11:19:00'
+    applicationOpen: '2024-09-01T00:00:00'
+    applicationClose: '2024-10-31T23:59:59'
     applicationActingYearsType: current_and_next_x_years
-    applicationActingYears: {  }
+    applicationActingYears:
+      2024: '2024'
+      2025: '2025'
+      2026: '2026'
     applicationActingYearsNextCount: '0'
     applicationContinuous: 0
     disableCopying: 0
@@ -238,6 +241,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
+        '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseName__required': true
         '#premiseType__access': false
         '#premiseAddress__access': false
@@ -278,6 +283,8 @@ elements: |-
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi tulo'
+        '#multiple__item_label': 'tulo'
     menot:
       '#type': webform_section
       '#title': Menot
@@ -294,6 +301,8 @@ elements: |-
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '4. Lisätiedot ja liitteet'
@@ -303,7 +312,7 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen&nbsp;'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen'
         '#counter_type': character
         '#attributes':
           class:
@@ -318,16 +327,13 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet</strong><br />
-          Loma-aikojen leiriavustusselvityksen pakollinen liite on sama ennakkotiedot leireistä excel-liite, joka toimitettiin hakemuksen yhteydessä ja on nyt täydennetty toteutuneilla tiedoilla. Liite on toimitettava selvityksen yhteydessä samaan aikaan. Jos yhdistyksen säännöt ovat muuttuneet, on ne myös toimitettava. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät.<br />
-          <br />
-          <strong>Usean liitteen toimittaminen yhtenä tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa. ​​​​​​​<br />
-          <br />
-          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet</h4>
+          <p>Loma-aikojen leiriavustusselvityksen pakollinen liite on sama ennakkotiedot leireistä excel-liite, joka toimitettiin hakemuksen yhteydessä ja on nyt täydennetty toteutuneilla tiedoilla. Liite on toimitettava selvityksen yhteydessä samaan aikaan. Jos yhdistyksen säännöt ovat muuttuneet, on ne myös toimitettava. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät.</p>
+          <h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
+          <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa.</p>
+          <h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
+          <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': webform_markup
         '#format': value
@@ -499,7 +505,7 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '6. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true

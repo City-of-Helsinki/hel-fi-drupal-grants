@@ -5,6 +5,7 @@ namespace Drupal\Tests\grants_metadata\Kernel;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
+use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
@@ -20,7 +21,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
   /**
    * The modules to load to run the test.
    *
-   * @var array
+   * @var array<string>
    */
   protected static $modules = [
     // Drupal modules.
@@ -29,9 +30,13 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     'file',
     'node',
     'system',
+    'language',
+    'locale',
+    'locale_test',
     // Contribs from drupal.org.
     'webform',
     'openid_connect',
+    'openid_connect_logout_redirect',
     // Contrib hel.fi modules.
     'helfi_audit_log',
     'helfi_helsinki_profiili',
@@ -43,6 +48,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     'grants_attachments',
     'grants_budget_components',
     'grants_club_section',
+    'grants_mandate',
     'grants_metadata',
     'grants_handler',
     'grants_premises',
@@ -68,9 +74,8 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
    * Create ATV Schema instance.
    */
   public static function createSchema(): AtvSchema {
-    $logger = \Drupal::service('logger.factory');
     $manager = \Drupal::typedDataManager();
-    $schema = new AtvSchema($manager, $logger);
+    $schema = new AtvSchema($manager);
     // Use relative path. It works in all environments.
     $schemaPath = __DIR__ . "/../../../../../../../conf/tietoliikennesanoma_schema.json";
     $schema->setSchema($schemaPath);
@@ -610,14 +615,9 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
 
     $applicationData->setValue($submissionData);
     // Search attachment data.
-    $attachmentField = [];
-    foreach ($applicationData as $field) {
-      $name = $field->getName();
-      if ($name !== 'attachments') {
-        continue;
-      }
-      $attachmentField = $field;
-    }
+    $attachmentField = $this->getAttachmentField($applicationData);
+    $this->assertNotNull($attachmentField);
+
     // Handle attachment data.
     $definition = $attachmentField->getDataDefinition();
     $defaultValue = $definition->getSetting('defaultValue');
@@ -655,6 +655,22 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
         $this->assertEquals($shouldBeHidden, $metaData['element']['hidden']);
       }
     }
+  }
+
+  /**
+   * Return attachments data.
+   */
+  protected function getAttachmentField(ComplexDataInterface $applicationData) {
+    $attachmentField = NULL;
+    foreach ($applicationData as $field) {
+      $name = $field->getName();
+      if ($name !== 'attachments') {
+        continue;
+      }
+      $attachmentField = $field;
+      break;
+    }
+    return $attachmentField;
   }
 
 }

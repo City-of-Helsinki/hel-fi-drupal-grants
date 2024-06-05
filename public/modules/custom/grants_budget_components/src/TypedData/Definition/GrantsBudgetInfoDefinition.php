@@ -123,7 +123,8 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
    *   Ready to use cost static definition
    */
   public static function getOtherCostDefinition() {
-    return ListDataDefinition::create('grants_budget_cost_other')
+    /** @var GrantsBudgetCostOtherDefinition $listDefinition */
+    $listDefinition = ListDataDefinition::create('grants_budget_cost_other')
       ->setSetting('fullItemValueCallback', [
         'service' => 'grants_budget_components.service',
         'method' => 'processBudgetOtherValues',
@@ -135,6 +136,7 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
       ->setSetting('jsonPath', [
         'otherCostRowsArrayStatic',
       ]);
+    return $listDefinition;
   }
 
   /**
@@ -144,7 +146,8 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
    *   Ready to use cost static definition
    */
   public static function getOtherIncomeDefinition() {
-    return ListDataDefinition::create('grants_budget_income_other')
+    /** @var GrantsBudgetIncomeOtherDefinition $listDefinition */
+    $listDefinition = ListDataDefinition::create('grants_budget_income_other')
       ->setSetting('fullItemValueCallback', [
         'service' => 'grants_budget_components.service',
         'method' => 'processBudgetOtherValues',
@@ -156,6 +159,7 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
       ->setSetting('jsonPath', [
         'otherIncomeRowsArrayStatic',
       ]);
+    return $listDefinition;
   }
 
 }

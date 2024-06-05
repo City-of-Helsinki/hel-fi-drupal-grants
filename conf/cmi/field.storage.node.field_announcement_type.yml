@@ -5,6 +5,8 @@ dependencies:
   module:
     - node
     - options
+_core:
+  default_config_hash: Ts2OHUdKbEs_D1DphKqUxunVfNP05pTOjKqxlwSxwE8
 id: node.field_announcement_type
 field_name: field_announcement_type
 entity_type: node

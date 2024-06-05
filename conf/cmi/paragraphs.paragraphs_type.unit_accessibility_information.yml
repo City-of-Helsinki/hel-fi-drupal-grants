@@ -2,6 +2,8 @@ uuid: 101ba286-4db2-4fbd-84f6-6b5458e04a44
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: 1hnh7uWWBx54Q1SXe3WQ_38MN5pDRuMMgqlogIKd6wM
 id: unit_accessibility_information
 label: 'Unit accessibility information'
 icon_uuid: null

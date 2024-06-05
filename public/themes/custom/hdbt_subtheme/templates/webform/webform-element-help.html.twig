@@ -13,7 +13,7 @@
  * @ingroup themeable
  */
 #}
-{% spaceless %}
+{% apply spaceless %}
 {{ attach_library('webform/webform.element.help') }}
-<span{{ attributes }}><span aria-hidden="true" class="hel-icon hel-icon--info-circle hel-icon--size-s"></span></span>
-{% endspaceless %}
+<button {{ attributes }}><span class="visually-hidden">{{ "Read more"|t }}: {{ help_title }}</span><span aria-hidden="true" class="hel-icon hel-icon--info-circle hel-icon--size-s"></span></button>
+{% endapply %}

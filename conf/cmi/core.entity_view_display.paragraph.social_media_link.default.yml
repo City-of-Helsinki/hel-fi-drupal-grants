@@ -9,6 +9,8 @@ dependencies:
   module:
     - hdbt_admin_tools
     - link
+_core:
+  default_config_hash: ev1SgFjJ5Hpldnoe4L20HCAJDpvl6Q5_ldGYSe92F1c
 id: paragraph.social_media_link.default
 targetEntityType: paragraph
 bundle: social_media_link

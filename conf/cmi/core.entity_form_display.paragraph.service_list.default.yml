@@ -10,6 +10,8 @@ dependencies:
   module:
     - select2
     - text
+_core:
+  default_config_hash: G-kR7KJ0n-KzPzxJiFmownVBKFJKbJjnTc8Rzxs4Ly4
 id: paragraph.service_list.default
 targetEntityType: paragraph
 bundle: service_list

@@ -42,6 +42,7 @@ elements: |
     '#help': '<p>If you want to add, delete or change people, save the application as a draft and go to maintain the people''s information in your own data.</p>'
     '#title': 'Persons responsible for operations'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
@@ -171,12 +172,14 @@ elements: |
       0: 'No'
   jarjestimme_toimintaa_nuorille_seuraavissa_paikoissa:
     '#title': 'We organised activities for young people at the following locations'
+    '#multiple__item_label': 'location'
     '#multiple__add_more_button_label': 'Add new location'
   jasenyydet_jarjestoissa_ja_muissa_yhteisoissa_osio:
     '#title': 'Memberships in organisations and other communities'
   jasenyydet_jarjestoissa_ja_muissa_yhteisoissa:
     '#title': Membership
     '#multiple__add_more_button_label': 'Add new membership'
+    '#multiple__item_label': 'membership'
   nuorten_osallistuminen_suunnitteluun_ja_paatoksentekoon:
     '#title': 'Young people’s participation in planning and decision-making'
   miten_nuoret_osallistuvat_yhdistyksen_toiminnan_suunnitteluun_ja:
@@ -193,7 +196,7 @@ elements: |
   edellisen_vuoden_palkkauskulut:
     '#title': 'Hiring costs of the previous year '
   markup:
-    '#markup': '<p>Specify here the hiring costs of the employee/s for the previous calendar year.&nbsp; Expenses eligible for the hiring grant are employees’ hiring costs, statutory and voluntary social security costs, statutory insurance policies and travel costs arising from an employee’s work.&nbsp; Include here only the hiring costs of the employee(s) on which you have/could have used the hiring grant. This does not include, for example, project workers.</p>'
+    '#markup': '<p>Specify here the hiring costs of the employee/s for the previous calendar year. Expenses eligible for the hiring grant are employees’ hiring costs, statutory and voluntary social security costs, statutory insurance policies and travel costs arising from an employee’s work. Include here only the hiring costs of the employee(s) on which you have/could have used the hiring grant. This does not include, for example, project workers.</p>'
   palkkauskulut:
     '#title': 'Hiring costs'
   lakisaateiset_ja_vapaaehtoiset_henkilosivukulut:
@@ -208,6 +211,8 @@ elements: |
     '#title': 'Rented facility'
   vuokratun_tilan_tiedot:
     '#title': 'Details of the rented facility'
+    '#multiple__item_label': 'rented facility'
+    '#multiple__add_more_button_label': 'Add new rented facility'
   lisatiedot_osio:
     '#title': 'Additional information'
   lisatiedot:
@@ -224,7 +229,15 @@ elements: |
   liitteet:
     '#title': Attachments
   attachments_info:
-    '#markup': "<p>All the required attachments must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the ‘Further clarification on attachments’ section of the application.<br />\r\n<br />\r\n<strong>Required attachments</strong><br />\r\nThe required attachments to the application for an operating and hiring grant are the association’s valid rules, the confirmed financial statements for the year preceding the application year, the annual report and the signed audit or performance audit report as well as the minutes of the meeting where the financial statements were confirmed and the discharge from liability processed. In addition, a budget and action plan for the year for which the grant is being applied for are mandatory attachments. The rules must be approved by the Finnish Patent and Registration Office.<br />\r\n<br />\r\n<strong>Submission of several attachments as a single file</strong><br />\r\nIf you wish, you can submit several attachments as a single file. Please indicate this in the ‘Further clarification on attachments’ section.<br />\r\n<br />\r\n<strong>Attachments previously submitted to the City of Helsinki</strong><br />\r\nIf the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application”.</p>"
+    '#markup': |-
+      <p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.
+      </p>
+      <h4>Required attachments</h4>
+      <p>The required attachments to the application for an operating and hiring grant are the association’s valid rules, the confirmed financial statements for the year preceding the application year, the annual report and the signed audit or performance audit report as well as the minutes of the meeting where the financial statements were confirmed and the discharge from liability processed. In addition, a budget and action plan for the year for which the grant is being applied for are mandatory attachments. The rules must be approved by the Finnish Patent and Registration Office.</p>
+      <h4>Submission of several attachments as a single file</h4>
+      <p>If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate &ldquo;The attachment has been submitted as a single file or with another application.&rdquo;</p>
+      <h4>Attachments previously submitted to the City of Helsinki</h4>
+      <p>If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate &ldquo;The attachment has been submitted as a single file or with another application&rdquo;.</p>
   notification_attachments:
     '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -236,7 +249,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilinpaatos:
     '#title': 'Confirmed financial statements (for the previous accounting period)'
-    '#help': "<p>The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association’s annual meeting.<br />\r\nThe community’s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association’s accounting period is.</p>"
+    '#help': "<p>The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association’s annual meeting. The community’s accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association’s accounting period is.</p>"
     '#multiple__no_items_message': '<p>Ei syötettyjä arvoja. Lisää uusi sisältö alta.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -245,7 +258,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_toimintakertomus:
     '#title': 'Confirmed annual report (for the previous accounting period)'
-    '#help': "<p>An association must append to this section the annual report confirmed at the association’s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.</p>"
+    '#help': "<p>An association must append to this section the annual report confirmed at the association’s annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -253,7 +266,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vahvistettu_tilin_tai_toiminnantarkastuskertomus:
     '#title': 'Confirmed audit or performance audit report (for the previous accounting period)'
-    '#help': "<p>An association must append to this section the annual report confirmed at the association’s annual meeting.<br />\r\nIf the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.</p>"
+    '#help': "<p>An association must append to this section the annual report confirmed at the association’s annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.</p>"
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -306,6 +319,7 @@ elements: |
 settings:
   preview_label: '7. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
+  wizard_confirmation_label: '8. Complete'
   wizard_prev_button_label: '< Previous'
   wizard_next_button_label: 'Next >'
 description: '<p>NUORTOIMPALKKA</p>'

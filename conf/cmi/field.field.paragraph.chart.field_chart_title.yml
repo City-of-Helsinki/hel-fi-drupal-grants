@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.paragraph.field_chart_title
     - paragraphs.paragraphs_type.chart
+_core:
+  default_config_hash: Upg7weedHxib4YN5RVInUQ6XtZ--TeQ-dr4bGHbebkQ
 id: paragraph.chart.field_chart_title
 field_name: field_chart_title
 entity_type: paragraph

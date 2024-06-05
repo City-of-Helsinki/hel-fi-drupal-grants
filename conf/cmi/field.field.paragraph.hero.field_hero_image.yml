@@ -6,6 +6,8 @@ dependencies:
     - field.storage.paragraph.field_hero_image
     - media.type.image
     - paragraphs.paragraphs_type.hero
+_core:
+  default_config_hash: JBn-_tz2XmqK05Ubda-7eretkRYuv6c2DfeHeE6-pEQ
 id: paragraph.hero.field_hero_image
 field_name: field_hero_image
 entity_type: paragraph

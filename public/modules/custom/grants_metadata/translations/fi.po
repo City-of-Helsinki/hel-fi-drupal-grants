@@ -88,3 +88,42 @@ msgstr "Lomake on arkistoitu ja muokkaaminen on estetty."
 
 msgid "Enter a year between 1900 - 2100."
 msgstr "Syötä vuosiluku väliltä 1900 - 2100."
+
+msgctxt "grants_metadata"
+msgid "File name"
+msgstr "Tiedostonimi"
+
+msgctxt "grants_metadata"
+msgid "In production"
+msgstr "Tuotannossa"
+
+msgctxt "grants_metadata"
+msgid "Archived"
+msgstr "Arkistoitu"
+
+msgctxt "grants_metadata"
+msgid "In development"
+msgstr "Kehityksessä"
+
+msgctxt "grants_metadata"
+msgid "Create a new webform version, and link the original version as parent."
+msgstr "Luo lomakkeesta uusi versio, johon on linkitetty alkuperäinen lomake Isäntä-kenttään."
+
+msgctxt "grants_metadata"
+msgid "Create a new version"
+msgstr "Luo uusi versio"
+
+msgctxt "grants_metadata"
+msgid ""
+"\n"
+"<p>In production: Changing the webform elements is not "
+"allowed.</p>\n"
+"<p>In development: Webform elements can be edited. Form "
+"can be filled up in non-production environments.</p>\n"
+"<p>Archived: "
+"Older version of the form which cannot be filled anymore.</p>\n"
+"      "
+msgstr ""
+"<p>Tuotannossa: Muutokset lomakkeen elementteihin estetty.</p>"
+"<p>Kehityksessä: Lomakkeen elementtejä voi muokata ja lomakkeen voi täyttää testi-ympäristöissä.</p>"
+"<p>Arkistoitu: Vanha versio, jonka päälle loppukäyttäjät eivät voi enään tehdä uusia hakemuksia.</p>"

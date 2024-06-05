@@ -17,6 +17,8 @@ dependencies:
     - helfi_platform_config
     - metatag
     - user
+_core:
+  default_config_hash: F-u8s9R9tXTY7ZzyOpQcQ6abxM8QlR2Asv_-C3fo3Mc
 id: node.page.default
 targetEntityType: node
 bundle: page

@@ -30,7 +30,7 @@ use Drupal\webform\Entity\Webform;
  * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   Form state.
  */
-function grants_metadata__validate_third_party_settings(array &$form, FormStateInterface $form_state) {
+function grants_metadata__validate_third_party_settings(array &$form, FormStateInterface $form_state): void {
 
   // Get config for third party settings.
   $config = \Drupal::config('grants_metadata.settings');
@@ -61,12 +61,28 @@ function grants_metadata__validate_third_party_settings(array &$form, FormStateI
     $formValues["third_party_settings"]["grants_metadata"]["applicationTypeID"] = $applicationTypeSelect;
   }
 
+  $applicationStatus = $formValues["third_party_settings"]["grants_metadata"]["status"];
+  if (!empty($applicationStatus)) {
+
+    $categories = [
+      'development' => 'Kehityksessä',
+      'released'    => 'Tuotannossa',
+      'archived'    => 'Arkistoitu',
+    ];
+
+    $formValues['categories'] = [
+      $categories[$applicationStatus],
+    ];
+  }
+
   // Set values back to form state.
   $form_state->setValues($formValues);
 }
 
 /**
  * Implements hook_ENTITY_TYPE_presave().
+ *
+ * @throws \Drupal\Core\TypedData\Exception\MissingDataException
  */
 function grants_metadata_node_presave(EntityInterface $entity): void {
 
@@ -79,10 +95,15 @@ function grants_metadata_node_presave(EntityInterface $entity): void {
       return;
     }
 
-    /** @var \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem $referenceItem */
-    $referenceItem = $entity->get('field_webform')->first();
+    if ($entity instanceof Node) {
+      /** @var \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem $referenceItem */
+      $referenceItem = $entity->get('field_webform')->first();
+    }
+    else {
+      return;
+    }
 
-    if (!$referenceItem) {
+    if (!isset($referenceItem)) {
       return;
     }
 
@@ -93,7 +114,7 @@ function grants_metadata_node_presave(EntityInterface $entity): void {
     /** @var \Drupal\Core\Entity\EntityInterface $referencedEntity */
     $referencedEntity = $entityAdapter->getValue();
 
-    if ($referencedEntity) {
+    if ($referencedEntity instanceof Webform) {
       $thirdPartySettings = $referencedEntity->getThirdPartySettings('grants_metadata');
       // Update node values from 3rd party settings.
       grants_metadata_set_node_values($entity, $thirdPartySettings);
@@ -103,12 +124,59 @@ function grants_metadata_node_presave(EntityInterface $entity): void {
 }
 
 /**
+ * Function to handle parent status during child status change.
+ *
+ * Parent webform will be archived if the a development
+ * version is being changed to production status.
+ *
+ * @param \Drupal\webform\Entity\Webform $entity
+ *   Webform entity.
+ */
+function _grants_metadata_handle_versions_status(Webform $entity) {
+  $parent = $entity->getThirdPartySetting('grants_metadata', 'parent');
+  $status = $entity->getThirdPartySetting('grants_metadata', 'status');
+
+  if (empty($parent) || empty($status) || $status !== 'released') {
+    return;
+  }
+
+  /* @phpstan-ignore-next-line */
+  $orig = $entity->original;
+
+  if (!$orig) {
+    return;
+  }
+
+  $originalStatus = $orig->getThirdPartySetting('grants_metadata', 'status');
+
+  if ($status === $originalStatus) {
+    return;
+  }
+
+  /** @var \Drupal\webform\Entity\Webform $formParentData */
+  $formParentData = reset(\Drupal::entityTypeManager()
+    ->getStorage('webform')
+    ->loadByProperties([
+      'uuid' => $parent,
+    ]));
+
+  if (!$formParentData) {
+    return;
+  }
+
+  $formParentData->setThirdPartySetting('grants_metadata', 'status', 'archived');
+  $formParentData->set('archive', TRUE);
+  $formParentData->set('categories', ['Arkistoitu']);
+  $formParentData->save();
+}
+
+/**
  * Implements hook_webform_presave().
  */
-function grants_metadata_webform_presave(Webform $entity) {
-  // Get third aprty settings.
+function grants_metadata_webform_presave(Webform $entity): void {
+  _grants_metadata_handle_versions_status($entity);
+  // Get third party settings.
   $thirdPartySettings = $entity->getThirdPartySettings('grants_metadata');
-
   // Get nodes that have attached this webform.
   try {
     $entityQuery = \Drupal::entityQuery('node')
@@ -244,9 +312,10 @@ function grants_metadata_field_industry_options(): array {
 /**
  * Alter form.
  */
-function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
 
   _grants_metadata_handle_admin_webform_alter($form, $form_state, $form_id);
+  $tOpts = ['context' => 'grants_metadata'];
 
   // Do not alter the Performance test webform.
   $current_route_match = \Drupal::service('current_route_match');
@@ -260,10 +329,16 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     }
   }
 
-  if ($form_id == 'webform_settings_form' || $form_id == 'webform_add_form' || $form_id == 'webform_duplicate_form') {
+  if ($form_id == 'webform_settings_form' ||
+    $form_id == 'webform_add_form' ||
+    $form_id == 'webform_duplicate_form') {
+
+    /** @var Drupal\webform\EntitySettings\WebformEntitySettingsGeneralForm|Drupal\webform\WebformEntityAddForm $formObject */
+    $formObject = $form_state->getFormObject();
+    /** @var Drupal\webform\Entity\Webform $bundle; */
+    $bundle = $formObject->getEntity();
 
     $isDuplicateForm = $form_id === 'webform_duplicate_form';
-    $bundle = $form_state->getFormObject()->getEntity();
 
     $config = \Drupal::config('grants_metadata.settings');
     $thirdPartyOptions = $config->get('third_party_options');
@@ -494,7 +569,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       $formParent = $storage['parent_form'];
       $formStatus = 'development';
 
-      /** @var \Drupal\webform\Entity\Webform[] $webforms */
+      /** @var \Drupal\webform\Entity\Webform $formParentData */
       $formParentData = reset(\Drupal::entityTypeManager()
         ->getStorage('webform')
         ->loadByProperties([
@@ -504,22 +579,45 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       if ($formParentData) {
         $parentIndustry = $formParentData->getThirdPartySetting('grants_metadata', 'applicationIndustry');
         $parentType = $formParentData->getThirdPartySetting('grants_metadata', 'applicationType');
-        $parentFormId = $formParentData->id();
+        $parentTypeId = $formParentData->getThirdPartySetting('grants_metadata', 'applicationType');
 
-        if (preg_match('/\d+$/', $parentFormId, $matches)) {
-          $versionNumber = (int) $matches[0] + 1;
+        $isDuplicatable = ApplicationHandler::isApplicationWebformDuplicatable($parentTypeId);
+
+        if (!$isDuplicatable) {
+          $form['#disabled'] = TRUE;
+          array_unshift($form, [
+            '#type' => 'status_messages',
+          ]);
+          $message = t('Application form @id already has an active development version.', ['@id' => $parentTypeId]);
+          \Drupal::messenger()
+            ->addWarning($message);
         }
-        else {
-          $versionNumber = 1;
-        }
+
+        // Generate timestamp to identify clone.
+        // Add hours and minutes to prevent ID collisions.
+        // This takes 11 characters of the maximum, which is 32.
+        $timeStamp = date('ymdHi', time());
+
+        // Combine industry and type so we can truncate this part.
+        // This is in case the ID length limit is reached (32 characters).
+        // 21 characters reserved for industry and type.
+        $industryAndType = strtolower($parentIndustry) . '_' . strtolower($parentType);
+        $industryAndType = substr($industryAndType, 0, 21);
 
         $suggestedFormId = str_replace(
-          ['@industry', '@type', '@number'],
-          [strtolower($parentIndustry), strtolower($parentType), $versionNumber],
-          '@industry_@type_@number'
+          ['@industryandtype', '@number'],
+          [$industryAndType, $timeStamp],
+          '@industryandtype_@number'
         );
 
         $form['id']['#default_value'] = $suggestedFormId;
+
+        $description = $parentType . PHP_EOL;
+        $description .= "Kopioitu: " . date('d.m.y H:i') . PHP_EOL;
+        $description .= "Alkuperäinen lomake: " . $formParentData->id();
+
+        $form['description']['#default_value'] = nl2br($description);
+
       }
 
     }
@@ -532,30 +630,33 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
           'uuid' => $formParent,
         ]));
 
-      $parentOptions = [$formParent => $parentWebform->get('title')];
+      if ($parentWebform) {
+        $parentOptions = [$formParent => $parentWebform->get('title')];
+      }
     }
 
     $form['third_party_settings']['grants_metadata']['status'] = [
       '#type' => 'radios',
       '#title' => t('Status'),
       '#options' => [
-        'released' => t('In production'),
-        'archived' => t('Archived'),
-        'development' => t('In development'),
+        'released' => t('In production', [], $tOpts),
+        'archived' => t('Archived', [], $tOpts),
+        'development' => t('In development', [], $tOpts),
       ],
       '#required' => TRUE,
       '#default_value' => $formStatus ?? 'development',
+      '#disabled' => $isDuplicateForm,
       '#description' => t('
-        If the form is in production, then no editing is allowed.
-        In development: Form can be filled up in non-production environments.
-        Archived forms usually have new version available.
-      '),
+<p>In production: Changing the webform elements is not allowed.</p>
+<p>In development: Webform elements can be edited. Form can be filled up in non-production environments.</p>
+<p>Archived: Older version of the form which cannot be filled anymore.</p>
+      ', [], $tOpts),
     ];
 
     $form['third_party_settings']['grants_metadata']['parent'] = [
       '#type' => 'select',
       '#title' => t('Parent'),
-      '#description' => t('Parent form, if this webform was duplicated or replaces existing form.'),
+      '#description' => t('Parent form, if this webform was duplicated or replaces existing form.', [], $tOpts),
       '#options' => $parentOptions,
       '#default_value' => $formParent,
       '#disabled' => TRUE,
@@ -565,23 +666,48 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     ];
   }
 
-  if ($form_id == 'webform_settings_form') {
+  if (isset($parentWebform) && !empty($parentWebform)) {
+    $form['third_party_settings']['grants_metadata']['view_parent'] = [
+      '#type' => 'link',
+      '#title' => t('View parent', [], $tOpts),
+      '#url' => Url::fromRoute('entity.webform.settings', [
+        'webform' => $parentWebform->id(),
+      ]),
+      '#attributes' => ['class' => ['button', 'button--primary', 'form-submit'], 'disabled' => 1],
+    ];
+  }
+
+  if ($form_id == 'webform_settings_form' && isset($webform)) {
+
+    /** @var Drupal\webform\EntitySettings\WebformEntitySettingsGeneralForm|Drupal\webform\WebformEntityAddForm $formObject */
+    $formObject = $form_state->getFormObject();
+    /** @var Drupal\webform\Entity\Webform $bundle; */
+    $bundle = $formObject->getEntity();
+    $applicationTypeId = $bundle->getThirdPartySetting('grants_metadata', 'applicationType');
+    $isDuplicatable = in_array($formStatus, ['', 'released']);
+    if ($applicationTypeId && $isDuplicatable) {
+      $isDuplicatable = ApplicationHandler::isApplicationWebformDuplicatable($applicationTypeId);
+    }
+
     $route_parameters = ['webform' => $webform->id()];
 
-    $form['third_party_settings']['grants_metadata']['new_version'] = [
-      '#type' => 'link',
-      '#title' => t('Create a webform new version'),
-      '#url' => Url::fromRoute('entity.webform.duplicate_form', $route_parameters),
-      '#attributes' => ['class' => ['button', 'button--primary', 'form-submit']],
-    ];
-    $form['third_party_settings']['grants_metadata']['new_version_description'] = [
-      '#prefix' => '<div>',
-      '#suffix' => '</div>',
-      '#markup' => t(
-        'Allows you to duplicate the webform and automatically link the parent webform to this new form.
-        This will also archive the current version.'
-      ),
-    ];
+    if ($isDuplicatable) {
+      $form['third_party_settings']['grants_metadata']['new_version'] = [
+        '#type' => 'link',
+        '#title' => t('Create a new version', [], $tOpts),
+        '#url' => Url::fromRoute('entity.webform.duplicate_form', $route_parameters),
+        '#attributes' => ['class' => ['button', 'button--primary', 'form-submit'], 'disabled' => 1],
+      ];
+      $form['third_party_settings']['grants_metadata']['new_version_description'] = [
+        '#prefix' => '<div>',
+        '#suffix' => '</div>',
+        '#markup' => t(
+          'Create a new webform version, and link the original version as parent.',
+          [],
+          $tOpts
+        ),
+      ];
+    }
   }
 }
 
@@ -619,6 +745,8 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
   t('Form is published for production use, only limited editing is allowed.') :
   t('Form is archived and editing is not allowed.');
 
+  $showStatusMessage = FALSE;
+
   switch ($form_id) {
 
     case 'webform_settings_access_form':
@@ -627,6 +755,9 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
     case 'webform_settings_submissions_form':
     case 'webform_settings_form_form':
     case 'webform_settings_form':
+
+      $showStatusMessage = TRUE;
+
       if ($editingRestricted && !$isAdmin) {
         $form['#disabled'] = TRUE;
 
@@ -659,6 +790,7 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
       break;
 
     case 'webform_edit_form':
+      $showStatusMessage = TRUE;
       if ($archived || $editingRestricted) {
         \Drupal::messenger()
           ->addWarning($restrictionMsg);
@@ -682,19 +814,38 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
       }
       break;
   }
+
+  if ($showStatusMessage) {
+    array_unshift($form, [
+      '#theme' => 'status_messages',
+      '#message_list' => [
+        'status' => [
+          t(
+          'You are currently editing "@status" version of "@label"',
+          [
+            '@status' => $formStatus,
+            '@label' => $routeParam->label(),
+          ]
+          ),
+        ],
+      ],
+      '#status_headings' => [
+        'status' => t('Status message'),
+      ],
+    ]);
+  }
 }
 
 /**
  * Custom submit handler for form duplicate form.
  */
-function _grants_metadata_duplicate_form_submit($form, FormStateInterface &$form_state) {
+function _grants_metadata_duplicate_form_submit(array $form, FormStateInterface &$form_state) {
 
   $storage = $form_state->getStorage();
 
   $parentFormUuid = $storage['parent_form'] ?? NULL;
   if (!$parentFormUuid) {
     return;
-
   }
 
   /** @var \Drupal\webform\Entity\Webform[] */
@@ -710,16 +861,7 @@ function _grants_metadata_duplicate_form_submit($form, FormStateInterface &$form
     return;
   }
 
-  $parentForm->setThirdPartySetting('grants_metadata', 'status', 'archived');
-  $parentForm->set('archive', TRUE);
   $parentForm->save();
-
-  $newFormId = $form_state->getValue('id');
-  $newFormObject = Webform::load($newFormId);
-
-  // @DEV: We might need do this an another way?
-  _grants_metadata_update_webform_references($parentForm, $newFormObject);
-  grants_metadata_webform_presave($newFormObject);
 }
 
 /**
@@ -760,7 +902,7 @@ function _grants_metadata_update_webform_references(Webform $originalForm, Webfo
  *
  * Disable certain fields if a webform is selected.
  */
-function grants_metadata_form_node_service_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function grants_metadata_form_node_service_edit_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
   $stateCondition = ['select[name="field_webform[0][target_id]"]' => ['filled' => FALSE]];
   $hiddenFields = [
     'field_avustuslaji',
@@ -787,7 +929,7 @@ function grants_metadata_form_node_service_edit_form_alter(&$form, FormStateInte
 /**
  * Implements hook_preprocess_HOOK().
  */
-function grants_metadata_preprocess_block(&$variables) {
+function grants_metadata_preprocess_block(&$variables): void {
 
   // Also invalidate breadcrumb cache.
   if ($variables["plugin_id"] == 'system_breadcrumb_block') {
@@ -887,7 +1029,7 @@ function grants_metadata_helfi_paragraph_types(): array {
 /**
  * Implements hook_sidebar_visibility_allowed_entities_alter().
  */
-function grants_metadata_sidebar_visibility_allowed_entities_alter(&$entities) {
+function grants_metadata_sidebar_visibility_allowed_entities_alter(&$entities): void {
   // Adds service content type to the list that allows
   // displaying a sidebar (such as sub-navigation).
   $entities['service'] = 'node';

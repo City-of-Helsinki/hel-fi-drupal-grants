@@ -37,7 +37,7 @@ msgstr "grantsProfileContent hittades inte!"
 
 msgctxt "grants_profile"
 msgid "Briefly describe the purpose for which the community is working and how the community is\nfulfilling its purpose. For example, you can use the text \"Community purpose and\nforms of action\" in the Community rules. Please do not describe the purpose of the grant here, it will be asked\nlater when completing the grant application."
-msgstr "Beskriv kortfattat syftet med vilket communityn arbetar och hur communityn uppfyller sitt syfte. Du kan till exempel använda texten \"Community purpose and forms of action\" i gemenskapens regler. Vänligen beskriv inte syftet av bidraget här kommer det att efterfrågas senare vid ifyllande av bidragsansökan."
+msgstr "Beskriv kortfattat syftet med vilket communityn arbetar och hur communityn uppfyller sitt syfte. Du kan till exempel använda texten \"Gemenskapens syfte och handlingsformer\" i gemenskapens regler. Vänligen beskriv inte syftet av bidraget här kommer det att efterfrågas senare vid ifyllande av bidragsansökan."
 
 msgctxt "grants_profile"
 msgid "@fieldname field is required"
@@ -87,6 +87,10 @@ msgid "Basic details"
 msgstr "Grundläggande information"
 
 msgctxt "grants_profile"
+msgid "Community official information"
+msgstr "Gemenskapens officiella information"
+
+msgctxt "grants_profile"
 msgid "Name of association"
 msgstr "Sammanslutningens namn"
 
@@ -115,8 +119,8 @@ msgid "Business ID"
 msgstr "FO-nummer"
 
 msgctxt "grants_profile"
-msgid 'If you want to change the information from Helsinki-profile\nyou can do that by going to the Helsinki-profile from this link.'
-msgstr 'Om du vill ändra informationen från Helsingfors-profilen kan du göra det genom att gå till Helsingfors-profilen från denna länk.'
+msgid "If you want to change the information from Helsinki-profile\nyou can do that by going to the Helsinki-profile from this link."
+msgstr "Om du vill ändra informationen från Helsingfors-profilen kan du göra det genom att gå till Helsingfors-profilen från denna länk."
 
 msgctxt "grants_profile"
 msgid "Community details not found in registries. Please contact customer service"
@@ -160,7 +164,7 @@ msgstr "Syftet med verksamheten"
 
 msgctxt "grants_profile"
 msgid "Description of the purpose of the activity of the registered association (max. 500 characters)"
-msgstr "Beskrivning av syftet med den registrerade gemenskapens verksamhet (500 merkkiä)"
+msgstr "Beskrivning av syftet med den registrerade gemenskapens verksamhet (max. 500 tecken)"
 
 msgctxt "grants_profile"
 msgid "Addresses"
@@ -354,6 +358,10 @@ msgid "Personal address"
 msgstr "Personlig adress"
 
 msgctxt "grants_profile"
+msgid "Personal telephone"
+msgstr "Personlig telefon"
+
+msgctxt "grants_profile"
 msgid "Community or group address"
 msgstr "Gemenskaps- eller gruppadress"
 
@@ -418,6 +426,10 @@ msgstr "Du måste lägga till en tjänsteman"
 msgctxt "Yksityishenkilön asiointi"
 msgid "Personal information"
 msgstr "Personlig information"
+
+msgctxt "Yksityishenkilön asiointi"
+msgid "Official information"
+msgstr "Officiell information"
 
 msgctxt "Yksityishenkilön asiointi"
 msgid "Basic details"

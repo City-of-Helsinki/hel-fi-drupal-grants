@@ -3,6 +3,7 @@
 namespace Drupal\grants_metadata;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\locale\StringStorageInterface;
 use Drupal\locale\TranslationString;
 
 /**
@@ -15,9 +16,18 @@ class GrantsConverterService {
   const DEFAULT_DATETIME_FORMAT = 'c';
 
   /**
+   * Constructs a new GrantsConverterService.
+   *
+   * @param \Drupal\locale\StringStorageInterface $storage
+   *   String database storage.
+   */
+  public function __construct(private StringStorageInterface $storage) {
+  }
+
+  /**
    * Format dates to a given or default format.
    *
-   * @param string $value
+   * @param mixed $value
    *   Input value.
    * @param array $arguments
    *   Arguments, dateFormat is used.
@@ -25,10 +35,10 @@ class GrantsConverterService {
    * @return string
    *   Formatted datetime string.
    */
-  public function convertDates(string $value, array $arguments): string {
+  public function convertDates(mixed $value, array $arguments): string {
 
     try {
-      if ($value === NULL || $value === '' || !isset($value)) {
+      if ($value === NULL || $value === '') {
         $retval = '';
       }
       else {
@@ -94,8 +104,6 @@ class GrantsConverterService {
    *   passed through the t() function.
    */
   public function convertSportName(array|string $value): string {
-    /** @var \Drupal\locale\StringDatabaseStorage $storage */
-    $storage = \Drupal::service('locale.storage');
     $tOpts = ['context' => 'grants_club_section'];
     $original = $value['value'] ?? $value;
 
@@ -103,7 +111,7 @@ class GrantsConverterService {
       return '';
     }
 
-    $translationEntry = $storage->getTranslations([
+    $translationEntry = $this->storage->getTranslations([
       'translation' => $original,
       'context' => 'grants_club_section',
       'translated' => TRUE,
@@ -124,16 +132,15 @@ class GrantsConverterService {
   /**
    * Convert "dot" float to "comma" float.
    *
-   * @param array|null $value
+   * @param array $value
    *   Value to be converted.
    *
    * @return string|null
-   *   Comman floated value.
+   *   Comma floated value.
    */
   public function convertToCommaFloat(array $value): ?string {
     $fieldValue = $value['value'] ?? '';
-    $fieldValue = str_replace(['€', '.', ' '], ['', ',', ''], $fieldValue);
-    return $fieldValue;
+    return str_replace(['€', '.', ' '], ['', ',', ''], $fieldValue);
   }
 
 }

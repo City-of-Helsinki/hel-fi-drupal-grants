@@ -3,9 +3,9 @@
 namespace Drupal\openid_connect_logout_redirect\Service;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;
-use Drupal\Core\Http\RequestStack;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * RedirectService to handle saving and retriving logout redirection.

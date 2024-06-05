@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - content_lock
+_core:
+  default_config_hash: BYMmlD0tKdPGgDwBx6LuNAc9HhkbpbA8HzJuwFMlWdI
 id: node_break_lock_action
 label: 'Break lock node'
 type: node

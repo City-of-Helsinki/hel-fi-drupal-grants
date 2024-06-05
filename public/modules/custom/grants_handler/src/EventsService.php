@@ -3,11 +3,11 @@
 namespace Drupal\grants_handler;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_metadata\AtvSchema;
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -18,16 +18,16 @@ class EventsService {
   /**
    * The HTTP client.
    *
-   * @var \GuzzleHttp\ClientInterface
+   * @var \GuzzleHttp\Client
    */
-  protected ClientInterface $httpClient;
+  protected Client $httpClient;
 
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Drupal\Core\Logger\LoggerChannelInterface|\Drupal\Core\Logger\LoggerChannelFactoryInterface
    */
-  protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
+  protected LoggerChannelInterface|LoggerChannelFactoryInterface $logger;
 
   /**
    * API endopoint.
@@ -56,16 +56,22 @@ class EventsService {
    * @var array|string[]
    */
   public static array $eventTypes = [
+    'AVUSTUS2_MSG_OK' => 'AVUSTUS2_MSG_OK',
     'STATUS_UPDATE' => 'STATUS_UPDATE',
     'MESSAGE_AVUS2' => 'MESSAGE_AVUS2',
     'MESSAGE_APP' => 'MESSAGE_APP',
     'MESSAGE_READ' => 'MESSAGE_READ',
+    'MESSAGE_RESEND' => 'MESSAGE_RESEND',
     'HANDLER_ATT_OK' => 'HANDLER_ATT_OK',
     'HANDLER_ATT_DELETE' => 'HANDLER_ATT_DELETE',
+    'HANDLER_RESEND_APP' => 'HANDLER_RESEND_APP',
+    'HANDLER_APP_COPIED' => 'HANDLER_APP_COPIED',
     'INTEGRATION_INFO_ATT_OK' => 'INTEGRATION_INFO_ATT_OK',
     'INTEGRATION_INFO_APP_OK' => 'INTEGRATION_INFO_APP_OK',
     'EVENT_INFO' => 'EVENT_INFO',
     'HANDLER_ATT_DELETED' => 'HANDLER_ATT_DELETED',
+    'INTEGRATION_ERROR_AVUS2' => 'INTEGRATION_ERROR_AVUS2',
+    'INTEGRATION_ERROR_ATV_ATT' => 'INTEGRATION_ERROR_ATV_ATT',
   ];
 
   /**
@@ -78,14 +84,14 @@ class EventsService {
   /**
    * Constructs a MessageService object.
    *
-   * @param \GuzzleHttp\ClientInterface $http_client
+   * @param \GuzzleHttp\Client $http_client
    *   Client to post data.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   Log things.
    */
   public function __construct(
-    ClientInterface $http_client,
-    LoggerChannelFactory $loggerFactory,
+    Client $http_client,
+    LoggerChannelFactoryInterface $loggerFactory,
   ) {
     $this->httpClient = $http_client;
     $this->logger = $loggerFactory->get('grants_handler_events_service');
@@ -138,7 +144,7 @@ class EventsService {
 
     $eventDataJson = Json::encode($eventData);
 
-    if ($this->debug == TRUE) {
+    if (TRUE === $this->debug) {
       $this->logger->debug(
         'Event ID: %eventId, JSON:  %json',
         [
@@ -161,6 +167,9 @@ class EventsService {
 
     }
     catch (\Exception $e) {
+      throw new EventException($e->getMessage());
+    }
+    catch (GuzzleException $e) {
       throw new EventException($e->getMessage());
     }
 

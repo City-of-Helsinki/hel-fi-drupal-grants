@@ -48,6 +48,7 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra en personuppgift, spara ans&ouml;kan som ett utkast och g&aring; till dina uppgifter f&ouml;r att redigera personuppgiften.'
     '#title': 'Personer som ansvarar för samfundet'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj tjänsteman'
     '#name__title': Namn
     '#role__title': Roll
@@ -149,7 +150,7 @@ elements: |
   actions:
     '#title': 'Skicka knapp(ar)'
     '#submit__label': Skicka
-    '#draft__label': 'Spara som oavslutat'
+    '#draft__label': 'Spara som oavslutad'
     '#wizard_prev__label': '< Tidigare'
     '#wizard_next__label': 'Nästa >'
     '#preview_prev__label': '< Tidigare'
@@ -165,6 +166,7 @@ elements: |
     '#title': Verksamhets&shy;beskrivning
     '#description': 'Verksamhetsbeskrivningen redigeras i dina uppgifter.'
     '#help': 'Informationen h&auml;mtas fr&aring;n avsnittet med personuppgifter'
+    '#counter_maximum_message': '%d/500 tecken kvar'
   community_practices_business:
     '#title': 'Bedriver samfundet affärsverksamhet'
     '#options':
@@ -223,3 +225,4 @@ settings:
   wizard_next_button_label: 'Nästa >'
   preview_label: '5. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '6. Slutförd'

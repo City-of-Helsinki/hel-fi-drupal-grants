@@ -62,7 +62,7 @@ msgstr "Oma asiointi"
 
 msgctxt "grants_oma_asiointi"
 msgid "Go to My Services"
-msgstr "Siirry omaan asiointikansioon"
+msgstr "Siirry oma asiointi -sivulle"
 
 msgid "Community applications"
 msgstr "Yhteisön hakemukset"

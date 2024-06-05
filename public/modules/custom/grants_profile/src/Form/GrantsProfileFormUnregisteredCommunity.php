@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Provides a Grants Profile form.
+ *
+ * @phpstan-consistent-constructor
  */
 class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
@@ -117,7 +119,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     ];
     $form['companyNameWrapper'] = [
       '#type' => 'webform_section',
-      '#title' => $this->t('Name of the community or group', [], $this->tOpts),
+      '#title' => $this->t('Basic details', [], $this->tOpts),
+      '#title_tag' => 'h4',
     ];
     $form['companyNameWrapper']['companyName'] = [
       '#type' => 'textfield',
@@ -364,6 +367,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Addresses', [], $this->tOpts),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -500,6 +504,7 @@ One address is mandatory information in your personal information and on the app
     $form['officialWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Persons responsible for operations', [], $this->tOpts),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="officials-wrapper">',
       '#suffix' => '</div>',
     ];

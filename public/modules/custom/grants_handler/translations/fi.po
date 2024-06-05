@@ -141,7 +141,7 @@ msgid 'Edit application'
 msgstr 'Muokkaa hakemusta'
 
 msgctxt "grants_handler"
-msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page."
+msgid "Your data is safe, but not all the\ninformation in your application has been updated yet. Please wait a\nmoment and reload the page."
 msgstr "Tietosi ovat turvassa, mutta kaikkia hakemuksesi tietoja ei ole vielä päivitetty. Odota hetki ja lataa sivu uudelleen."
 
 msgid "File upload failed, error has been logged."
@@ -452,7 +452,7 @@ msgid "Print application"
 msgstr "Tulosta hakemus"
 
 msgctxt "grants_handler"
-msgid "Change your role and return to make the application with role which the application is instructed to be made."
+msgid "Change your role and return to make the\napplication with role which the application is instructed to be made."
 msgstr "Vaihda asiointiroolia ja palaa tekemään hakemus palvelukuvauksen ohjeistamalla asiointiroolilla."
 
 msgctxt "grants_handler"
@@ -548,6 +548,10 @@ msgstr "Pyyntösi keskeytyi verkkovirheen takia."
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
 
+msgctxt "grants_handler"
+msgid "Close"
+msgstr "Sulje"
+
 msgid "Leave the application"
 msgstr "Poistu hakemukselta"
 
@@ -581,7 +585,7 @@ msgid "The application period for this grant has closed."
 msgstr "Tämän avustuksen hakuaika on päättynyt."
 
 msgctxt "grants_handler"
-msgid "You can no longer submit an application because the application period for this grant has closed."
+msgid "You can no longer submit an application because the\napplication period for this grant has closed."
 msgstr "Et voi enää lähettää hakemusta, sillä avustuksen hakuaika on päättynyt."
 
 msgctxt "grants_handler"
@@ -635,3 +639,9 @@ msgstr "Palvelusivua ei löytynyt!"
 msgctxt "grants_handler"
 msgid "Email"
 msgstr "Sähköposti"
+
+msgid "The email address %mail is not valid. Use the format user@example.com."
+msgstr "%mail ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com."
+
+msgid "Remove @item @number"
+msgstr "Poista @item @number"

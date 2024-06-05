@@ -15,6 +15,9 @@ interface ProfileInputData  {
   zipCode: string;
   city: string;
   communityOfficial: string;
+  role: string;
+  email: string;
+  phone: string;
 }
 
 /**
@@ -30,8 +33,12 @@ const PROFILE_INPUT_DATA: ProfileInputData = {
   zipCode: '91435',
   city: 'Kuopio',
   communityOfficial: 'Marko Niemi',
+  role: 'Vastuuhenkilö',
+  email: 'marko.niemi78@gmail.com',
+  phone: '0401234567'
 }
 
 export {
+  ProfileInputData,
   PROFILE_INPUT_DATA,
 }

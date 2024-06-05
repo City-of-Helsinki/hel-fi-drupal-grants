@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - paragraphs
+_core:
+  default_config_hash: GqWo9FnzbXw3KP_ZmCh0VZOCH6snY_n_U9iqjiAeKnY
 id: paragraph.field_unit_search_meta_placehold
 field_name: field_unit_search_meta_placehold
 entity_type: paragraph

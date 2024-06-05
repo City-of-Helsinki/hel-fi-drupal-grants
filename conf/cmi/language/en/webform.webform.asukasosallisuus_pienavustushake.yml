@@ -40,6 +40,7 @@ elements: |
     '#help': 'If you want to add, remove or change persons, save the application as a draft and go to your data to maintain the information about people.'
     '#title': 'Persons responsible within the community'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
   2_avustustiedot:
     '#title': '2. Grant details'
     '#prev_button_label': '< Previous'
@@ -146,8 +147,8 @@ elements: |
     '#title': 'Description of activities'
   business_purpose:
     '#title': 'Description of activities'
-    '#description': 'The description of activities is maintained in your data.'
-    '#help': 'The information is retrieved from the personal information section'
+    '#counter_maximum_message': '%d/500 characters remaining'
+    '#help': 'The description of activities is maintained in your data.'
   community_practices_business:
     '#title': 'Is the entity is engaged in business?'
     '#options':
@@ -206,3 +207,4 @@ settings:
   wizard_next_button_label: 'Next >'
   preview_label: '5. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
+  wizard_confirmation_label: '6. Complete'

@@ -18,12 +18,27 @@ fieldset.grants-attachments--wrapper {
 }
 .grants-applications-managed_file {
   position:relative;
-  label {
+  label.hds-button--secondary:not(:disabled):not(.eu-cookie-compliance-default-button):not(.eu-cookie-compliance-save-preferences-button) {
     position: relative;
     left: 0;
+    &:has(input:disabled) {
+      background-color: transparent;
+      background-color: var(--background-color-disabled, transparent);
+      border-color: transparent;
+      border-color: var(--border-color-disabled, transparent);
+      color: #999898;
+      color: var(--color-disabled);
+      cursor: not-allowed;
+    }
+    &:focus-within {
+      outline: 2px black solid;
+      color: var(--color-white);
+      background: var(--color-black);
+      border-color: var(--color-white);
+    }
   }
   input[type=file] {
-    visibility: hidden;
+    opacity: 0;
     position: absolute;
   }
 

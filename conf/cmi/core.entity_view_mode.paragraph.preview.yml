@@ -1,5 +1,5 @@
 uuid: 31cb18e5-f634-497c-bd7e-573494f84c8b
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -8,5 +8,6 @@ _core:
   default_config_hash: h3BeHVei4Lnyqbkao3YiF4KqoY-DhRvUNfEgKG8Rgjg
 id: paragraph.preview
 label: Preview
+description: ''
 targetEntityType: paragraph
 cache: true

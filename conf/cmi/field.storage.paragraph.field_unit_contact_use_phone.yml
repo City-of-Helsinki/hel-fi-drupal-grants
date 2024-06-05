@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - paragraphs
+_core:
+  default_config_hash: qdbdLcNLUkzkSnYSTHOrIJC1KpctIhzPNEvlkvUlQdE
 id: paragraph.field_unit_contact_use_phone
 field_name: field_unit_contact_use_phone
 entity_type: paragraph

@@ -4,6 +4,8 @@ namespace Drupal\grants_admin_applications\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
@@ -14,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provides a grants_admin_applications form.
+ *
+ * @phpstan-consistent-constructor
  */
 class SubmittedApplicationsForm extends AtvFormBase {
 
@@ -25,34 +29,89 @@ class SubmittedApplicationsForm extends AtvFormBase {
   protected AtvService $atvService;
 
   /**
+   * Immutable Config.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected ImmutableConfig $config;
+
+  /**
    * Constructs a new GrantsProfileForm object.
    */
-  public function __construct(AtvService $atvService) {
+  public function __construct(AtvService $atvService, ConfigFactory $config) {
     $this->atvService = $atvService;
+    $this->config = $config->get('grants_metadata.settings');
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): AdminApplicationsForm|static {
+  public static function create(ContainerInterface $container): SubmittedApplicationsForm|static {
     return new static(
-      $container->get('helfi_atv.atv_service')
+      $container->get('helfi_atv.atv_service'),
+      $container->get('config.factory')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'grants_admin_applications_admin_applications_status';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['status_messages'] = [
       '#type' => 'status_messages',
+    ];
+
+    $thirdPartyOpts = $this->config->get('third_party_options');
+
+    $form['filters']['status'] = [
+      '#title' => $this->t('Application status'),
+      '#type' => 'select',
+      '#options' => $thirdPartyOpts['application_statuses'],
+      '#default_value' => 'SUBMITTED',
+    ];
+
+    $form['filters']['created_at'] = [
+      '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => [
+          'container-inline',
+        ],
+      ],
+    ];
+
+    $form['filters']['created_at']['created_after'] = [
+      '#title' => $this->t('Created after'),
+      '#type' => 'datetime',
+      '#date_date_element' => 'date',
+      '#date_time_element' => 'none',
+    ];
+
+    $form['filters']['created_at']['created_before'] = [
+      '#title' => $this->t('Created before'),
+      '#type' => 'datetime',
+      '#date_date_element' => 'date',
+      '#date_time_element' => 'none',
+    ];
+
+    $form['filters']['created_at']['updated_after'] = [
+      '#title' => $this->t('Updated after'),
+      '#type' => 'datetime',
+      '#date_date_element' => 'date',
+      '#date_time_element' => 'none',
+    ];
+
+    $form['filters']['created_at']['updated_before'] = [
+      '#title' => $this->t('Updated before'),
+      '#type' => 'datetime',
+      '#date_date_element' => 'date',
+      '#date_time_element' => 'none',
     ];
 
     $form['getStatus'] = [
@@ -82,12 +141,14 @@ class SubmittedApplicationsForm extends AtvFormBase {
           $this->t('Application number'),
           $this->t('Status'),
           $this->t('Status history'),
+          $this->t('Timestamps'),
           $this->t('Resend'),
           $this->t('Status page'),
         ],
       ];
 
       foreach ($documents as $document) {
+
         $url = Url::fromRoute(
           'grants_admin_applications.resend_applications',
           ['transaction_id' => $document['transaction_id']],
@@ -107,6 +168,10 @@ class SubmittedApplicationsForm extends AtvFormBase {
           'status_history' => [
             '#type' => 'textarea',
             '#value' => $this->printStatusHistory($document['status_history']),
+          ],
+          'timestamps' => [
+            '#markup' => "<strong>Created at</strong> {$document['created_at']} <br/>" .
+            "<strong>Updated at</strong> {$document['updated_at']}",
           ],
           'resend' => [
             '#type' => 'submit',
@@ -142,7 +207,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
   /**
    * Resend application callback submit handler.
    */
-  public static function resendApplicationCallback(array $form, FormStateInterface $formState) {
+  public static function resendApplicationCallback(array $form, FormStateInterface $formState): void {
     $logger = self::getLoggerChannel();
     $messenger = \Drupal::service('messenger');
     $triggeringElement = $formState->getTriggeringElement();
@@ -204,21 +269,59 @@ class SubmittedApplicationsForm extends AtvFormBase {
   /**
    * GetStatus submit handler.
    */
-  public static function getStatus(array $form, FormStateInterface $formState) {
+  public static function getStatus(array $form, FormStateInterface $formState): void {
     $messenger = \Drupal::service('messenger');
     $logger = self::getLoggerChannel();
 
-    try {
-      /** @var Drupal\helfi_atv\AtvDocument[] $docs */
-      $docs = self::getDocuments();
+    $options = [];
 
-      $documents = array_map(function (AtvDocument $doc) {
-        return [
-          'status' => $doc->getStatus(),
-          'status_history' => $doc->getStatusHistory(),
-          'transaction_id' => $doc->getTransactionId(),
-        ];
-      }, $docs);
+    $values = $formState->getValues();
+
+    if (!empty($values['status'])) {
+      $options['status'] = $values['status'];
+    }
+
+    $dateTimeValues = [
+      'created_after',
+      'created_before',
+      'updated_after',
+      'updated_before',
+    ];
+
+    foreach ($dateTimeValues as $dateTimeValue) {
+      if (!isset($values[$dateTimeValue])) {
+        continue;
+      }
+
+      $timestamp = $values[$dateTimeValue]->format('Y-m-d');
+      $options[$dateTimeValue] = $timestamp;
+
+    }
+
+    try {
+      /** @var \Drupal\helfi_atv\AtvDocument[] $docs */
+      $docs = self::getDocuments($options);
+
+      // Filter out grants profiles from documents.
+      $documents = array_filter(
+        array_map(function (AtvDocument $doc) {
+          return [
+            'type' => $doc->getType(),
+            'status' => $doc->getStatus(),
+            'status_history' => $doc->getStatusHistory(),
+            'transaction_id' => $doc->getTransactionId(),
+            'updated_at' => $doc->getUpdatedAt(),
+            'created_at' => $doc->getCreatedAt(),
+          ];
+        }, $docs),
+        function (array $doc) {
+          return $doc['type'] !== 'grants_profile';
+        }
+      );
+
+      if (empty($documents)) {
+        $messenger->addWarning(t('No documents found.'));
+      }
 
       $formState->set('documents', $documents);
       $formState->setRebuild();
@@ -242,7 +345,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request object, holding current path and request uri.
    *
-   * @return array
+   * @return \Drupal\Core\Ajax\AjaxResponse
    *   Must return AjaxResponse object or render array.
    *   Never return NULL or invalid render arrays. This
    *   could/will break your forms.
@@ -262,11 +365,11 @@ class SubmittedApplicationsForm extends AtvFormBase {
       'status' => 'SUBMITTED',
     ];
 
-    $activeOptions = array_merge($options, $defaultOptions);
+    $activeOptions = array_merge($defaultOptions, $options);
 
     $sParams = [
-      'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
-      'status' => $activeOptions['status'],
+      ...['lookfor' => 'appenv:' . ApplicationHandler::getAppEnv()],
+      ...$activeOptions,
     ];
 
     return \Drupal::service('helfi_atv.atv_service')->searchDocuments($sParams);

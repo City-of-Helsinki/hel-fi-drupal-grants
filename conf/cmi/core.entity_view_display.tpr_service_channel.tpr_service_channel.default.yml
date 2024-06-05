@@ -8,6 +8,8 @@ dependencies:
     - link
     - telephone
     - text
+_core:
+  default_config_hash: BTW_HW2OYa0RCH89g2y9lkd3VN_gzGOx1F8pjFoClNk
 id: tpr_service_channel.tpr_service_channel.default
 targetEntityType: tpr_service_channel
 bundle: tpr_service_channel
@@ -70,10 +72,9 @@ content:
     weight: 19
     region: content
   email:
-    type: string
+    type: email_mailto
     label: hidden
-    settings:
-      link_to_entity: false
+    settings: {  }
     third_party_settings: {  }
     weight: 9
     region: content
@@ -103,6 +104,13 @@ content:
       format_custom_true: ''
     third_party_settings: {  }
     weight: 22
+    region: content
+  information:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
     region: content
   langcode:
     type: language
@@ -218,5 +226,4 @@ content:
     weight: 0
     region: content
 hidden:
-  information: true
   search_api_excerpt: true

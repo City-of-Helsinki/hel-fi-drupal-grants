@@ -95,7 +95,7 @@ msgid "My Services"
 msgstr "Oma asiointi"
 
 msgid "Go to My Services"
-msgstr "Siirry omaan asiointikansioon"
+msgstr "Siirry omaan asionti -sivulle"
 
 msgid "Grants profile"
 msgstr "Omat tiedot"
@@ -449,9 +449,20 @@ msgstr "<strong><em>Huomioithan:</em> Tällä valinnalla on tietoturvavaikutuksi
 msgid "Application period"
 msgstr "Hakuaika"
 
+msgid "Read more"
+msgstr "Lisätietoja"
+
 msgid "The application period will be announced later"
 msgstr "Hakuaika ilmoitetaan myöhemmin"
 
 msgctxt "grants_premises"
 msgid "City"
 msgstr "Postitoimipaikka"
+
+msgctxt "grants_theme"
+msgid "items per page"
+msgstr "kpl sivulla"
+
+msgctxt "grants_theme"
+msgid "Items per page"
+msgstr "Merkintöjä sivua kohti"

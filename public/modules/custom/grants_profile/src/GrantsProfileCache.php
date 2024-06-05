@@ -2,9 +2,10 @@
 
 namespace Drupal\grants_profile;
 
-use Drupal\Core\Http\RequestStack;
 use Drupal\helfi_atv\AtvDocument;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class to control profile caching things.
@@ -14,21 +15,21 @@ class GrantsProfileCache {
   /**
    * Request stack for session access.
    *
-   * @var \Drupal\Core\Http\RequestStack
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected RequestStack $requestStack;
 
   /**
    * Session.
    *
-   * @var \Symfony\Component\HttpFoundation\Session\Session
+   * @var \Symfony\Component\HttpFoundation\Session\Session|SessionInterface
    */
-  protected Session $session;
+  protected Session|SessionInterface $session;
 
   /**
    * Constructs a GrantsProfileCache object.
    *
-   * @param \Drupal\Core\Http\RequestStack $requestStack
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Storage factory for temp store.
    */
   public function __construct(RequestStack $requestStack) {
@@ -50,10 +51,10 @@ class GrantsProfileCache {
   /**
    * Get session.
    *
-   * @return \Symfony\Component\HttpFoundation\Session\Session
+   * @return \Symfony\Component\HttpFoundation\Session\Session|SessionInterface
    *   Session object
    */
-  public function getSession(): Session {
+  public function getSession(): Session|SessionInterface {
     if (isset($this->session)) {
       return $this->session;
     }
