@@ -153,12 +153,14 @@ function _grants_metadata_handle_versions_status(Webform $entity) {
     return;
   }
 
-  /** @var \Drupal\webform\Entity\Webform $formParentData */
-  $formParentData = reset(\Drupal::entityTypeManager()
+  $arrayVariable = \Drupal::entityTypeManager()
     ->getStorage('webform')
     ->loadByProperties([
       'uuid' => $parent,
-    ]));
+    ]);
+
+  /** @var \Drupal\webform\Entity\Webform $formParentData */
+  $formParentData = reset($arrayVariable);
 
   if (!$formParentData) {
     return;
@@ -320,6 +322,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
   // Do not alter the Performance test webform.
   $current_route_match = \Drupal::service('current_route_match');
   $current_route_name = $current_route_match->getRouteName();
+  $formStatus = NULL;
 
   if ($current_route_name === 'entity.webform.settings') {
     $webform = $current_route_match->getParameter('webform');
@@ -337,6 +340,9 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     $formObject = $form_state->getFormObject();
     /** @var Drupal\webform\Entity\Webform $bundle; */
     $bundle = $formObject->getEntity();
+
+    $formStatus = $bundle->getThirdPartySetting('grants_metadata', 'status');
+    $formParent = $bundle->getThirdPartySetting('grants_metadata', 'parent');
 
     $isDuplicateForm = $form_id === 'webform_duplicate_form';
 
@@ -561,20 +567,19 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       '#default_value' => $bundle->getThirdPartySetting('grants_metadata', 'disableCopying'),
     ];
 
-    $formStatus = $bundle->getThirdPartySetting('grants_metadata', 'status');
-    $formParent = $bundle->getThirdPartySetting('grants_metadata', 'parent');
-
     if ($isDuplicateForm) {
       $storage = $form_state->getStorage();
       $formParent = $storage['parent_form'];
       $formStatus = 'development';
 
-      /** @var \Drupal\webform\Entity\Webform $formParentData */
-      $formParentData = reset(\Drupal::entityTypeManager()
+      $arrayVAr2 = \Drupal::entityTypeManager()
         ->getStorage('webform')
         ->loadByProperties([
           'uuid' => $formParent,
-        ]));
+        ]);
+
+      /** @var \Drupal\webform\Entity\Webform $formParentData */
+      $formParentData = reset($arrayVAr2);
 
       if ($formParentData) {
         $parentIndustry = $formParentData->getThirdPartySetting('grants_metadata', 'applicationIndustry');
@@ -624,11 +629,12 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 
     $parentOptions = [];
     if (!empty($formParent)) {
-      $parentWebform = reset(\Drupal::entityTypeManager()
+      $variable = \Drupal::entityTypeManager()
         ->getStorage('webform')
         ->loadByProperties([
           'uuid' => $formParent,
-        ]));
+        ]);
+      $parentWebform = reset($variable);
 
       if ($parentWebform) {
         $parentOptions = [$formParent => $parentWebform->get('title')];

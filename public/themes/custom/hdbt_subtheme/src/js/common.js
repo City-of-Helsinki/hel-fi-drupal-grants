@@ -3,7 +3,7 @@
   Drupal.behaviors.themeCommon = {
     attach: function attach() {
       $(document).ready(function () {
-        $('input:not(.js-webform-input-mask), textarea').on("change", function () {
+        $('input:not([type="file"]):not(.js-webform-input-mask), textarea').on("change", function () {
           this.value = $.trim($(this).val());
         });
 
