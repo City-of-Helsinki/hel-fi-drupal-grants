@@ -2,7 +2,7 @@
 
 namespace Drupal\grants_premises\Plugin\WebformElement;
 
-use Drupal\grants_premises\Plugin\GrantsCompositesBase;
+use Drupal\grants_premises\Plugin\GrantsPremisesBase;
 
 /**
  * Provides a 'rented_premise_composite' element.
@@ -17,12 +17,12 @@ use Drupal\grants_premises\Plugin\GrantsCompositesBase;
  *   states_wrapper = TRUE,
  * )
  *
- * @see \Drupal\grants_premises\Plugin\GrantsCompositesBase
+ * @see \Drupal\grants_premises\Plugin\GrantsPremisesBase
  * @see \Drupal\webform\Plugin\WebformElement\WebformCompositeBase
  * @see \Drupal\webform\Plugin\WebformElementBase
  * @see \Drupal\webform\Plugin\WebformElementInterface
  * @see \Drupal\webform\Annotation\WebformElement
  */
-class RentedPremiseComposite extends GrantsCompositesBase {
+class RentedPremiseComposite extends GrantsPremisesBase {
 
 }
