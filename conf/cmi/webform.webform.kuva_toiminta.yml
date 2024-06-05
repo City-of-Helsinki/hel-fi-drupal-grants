@@ -26,6 +26,7 @@ third_party_settings:
       2026: '2026'
     applicationActingYearsType: fixed
     applicationActingYearsNextCount: ''
+    status: released
 weight: 0
 open: null
 close: null

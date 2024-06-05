@@ -24,6 +24,7 @@ third_party_settings:
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
+    status: released
 weight: 0
 open: null
 close: null

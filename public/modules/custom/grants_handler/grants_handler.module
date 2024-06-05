@@ -1622,7 +1622,7 @@ function grants_handler_preprocess_message_list_item(&$variables) {
 
   $message = $variables['message'];
 
-  if ($message['messageStatus'] == 'UNREAD') {
+  if (isset($message['messageStatus']) && $message['messageStatus'] == 'UNREAD') {
     $markReadLink = Link::createFromRoute(t('Mark as read', [], $tOpts), 'grants_handler.message_read',
       [
         'message_id' => $message['messageId'],
@@ -1641,7 +1641,7 @@ function grants_handler_preprocess_message_list_item(&$variables) {
     $markReadLink = '';
   }
   $variables['sender'] = t('My message', [], $tOpts);
-  if ($message['sentBy'] == 'Avustusten kasittelyjarjestelma') {
+  if (isset($message['sentBy']) && $message['sentBy'] == 'Avustusten kasittelyjarjestelma') {
     $variables['sender'] = t('Applications Helsinki', [], $tOpts);
     $variables['markReadLink'] = $markReadLink;
   }
@@ -1743,10 +1743,18 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
 
   $isApplicationOpen = ApplicationHandler::isApplicationOpen($webform);
 
+  if (!isset($thirdPartySettings["status"])) {
+    // Use TRUE if not set so we disallow copying if status is not set
+    $isApplicationArchived = TRUE;
+  }
+  else{
+    $isApplicationArchived = $thirdPartySettings["status"] === 'archived';
+  }
+
   // Show copy button only if copying has not been disabled.
   if (
     $thirdPartySettings["disableCopying"] != 1 &&
-    $thirdPartySettings["status"] !== 'archived' &&
+    $isApplicationArchived &&
     $isApplicationOpen
   ) {
     $copyApplicationUrl = Url::fromRoute(

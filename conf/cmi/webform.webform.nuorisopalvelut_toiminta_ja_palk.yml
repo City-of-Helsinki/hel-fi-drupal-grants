@@ -28,7 +28,7 @@ third_party_settings:
     disableCopying: 0
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '1'
-    status: development
+    status: released
     parent: ''
 weight: 0
 open: null

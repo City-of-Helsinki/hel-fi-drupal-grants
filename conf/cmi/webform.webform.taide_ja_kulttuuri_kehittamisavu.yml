@@ -25,6 +25,7 @@ third_party_settings:
     applicationActingYears: {  }
     applicationActingYearsType: next_x_years
     applicationActingYearsNextCount: '1'
+    status: released
 weight: 0
 open: null
 close: null
