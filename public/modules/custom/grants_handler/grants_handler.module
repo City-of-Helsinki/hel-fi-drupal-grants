@@ -1754,7 +1754,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   // Show copy button only if copying has not been disabled.
   if (
     $thirdPartySettings["disableCopying"] != 1 &&
-    $isApplicationArchived &&
+    !$isApplicationArchived &&
     $isApplicationOpen
   ) {
     $copyApplicationUrl = Url::fromRoute(
