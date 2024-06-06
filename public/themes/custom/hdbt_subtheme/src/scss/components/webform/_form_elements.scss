@@ -283,7 +283,8 @@ fieldset.webform-composite-hidden-title {
     margin-top: 0;
   }
   h1 {
-    word-break: break-all;
+    word-break: break-word;
+    hyphens: auto;
   }
 }
 
