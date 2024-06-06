@@ -97,6 +97,8 @@ const generateTests = (
         testFunction: async (page: Page, browser: Browser) => {
           logger('Creating new browser context with disabled JS...');
 
+          // Create a new browser context with disabled JS to prevent the print call from happening
+          // when we visit the print page (Playwright can't handle the print dialog).
           const JSDisabledContext = await browser.newContext({ javaScriptEnabled: false });
           const JSDisabledPage = await JSDisabledContext.newPage();
           await selectRole(JSDisabledPage, 'REGISTERED_COMMUNITY');
