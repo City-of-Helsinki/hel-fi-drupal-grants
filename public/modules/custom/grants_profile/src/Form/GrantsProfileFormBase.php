@@ -815,7 +815,8 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
 
     // In some cases GDPR data deletions may leave grant profiles
     // with an empty content && user_id. As we match user_id from the metadata,
-    // which is not cleared by ATV during GDPR process, we may find an empty profiles.
+    // which is not cleared by ATV during GDPR process,
+    // we may find an empty profiles.
     // So let's delete the old document and initialize a new one.
     if (
       $grantsProfile &&
