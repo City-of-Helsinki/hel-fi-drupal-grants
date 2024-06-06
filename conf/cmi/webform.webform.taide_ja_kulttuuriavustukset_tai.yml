@@ -34,7 +34,8 @@ archive: false
 id: taide_ja_kulttuuriavustukset_tai
 title: 'Taiteen perusopetuksen avustukset'
 description: '<p>KUVAPERUS</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field

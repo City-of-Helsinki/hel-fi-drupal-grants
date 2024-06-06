@@ -37,7 +37,8 @@ archive: false
 id: liikunta_laitosavustushakemus
 title: 'Liikunta, laitos- ja säätiöavustukset'
 description: LIIKUNTALAITOS
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden

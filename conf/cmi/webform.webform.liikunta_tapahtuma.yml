@@ -34,7 +34,8 @@ archive: false
 id: liikunta_tapahtuma
 title: 'Liikunta, tapahtuma-avustushakemus'
 description: '<p>LIIKUNTATAPAHTUMA</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden

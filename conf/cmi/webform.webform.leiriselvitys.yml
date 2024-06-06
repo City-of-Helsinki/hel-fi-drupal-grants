@@ -37,7 +37,8 @@ archive: false
 id: leiriselvitys
 title: 'Nuorisopalvelu, loma-aikojen leiriavustusselvitys'
 description: '<p>LEIRISELVITYS</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field

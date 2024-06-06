@@ -35,7 +35,8 @@ archive: false
 id: nuorisotoiminta_projektiavustush
 title: 'Nuorisotoimi, projektiavustushakemus'
 description: '<p>NUORPROJ</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field

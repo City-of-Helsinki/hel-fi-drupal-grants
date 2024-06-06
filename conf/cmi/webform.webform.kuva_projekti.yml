@@ -36,7 +36,8 @@ archive: false
 id: kuva_projekti
 title: 'Taide- ja kulttuuriavustukset: projektiavustukset'
 description: '<p>KUVAPROJ</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field

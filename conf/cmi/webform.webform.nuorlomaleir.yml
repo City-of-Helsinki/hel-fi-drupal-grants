@@ -35,7 +35,8 @@ archive: false
 id: nuorlomaleir
 title: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
 description: '<p>NUORLOMALEIR</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden

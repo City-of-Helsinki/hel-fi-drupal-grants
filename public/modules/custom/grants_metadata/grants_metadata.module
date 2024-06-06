@@ -132,7 +132,7 @@ function grants_metadata_node_presave(EntityInterface $entity): void {
  * @param \Drupal\webform\Entity\Webform $entity
  *   Webform entity.
  */
-function _grants_metadata_handle_versions_status(Webform $entity) {
+function _grants_metadata_handle_versions_status(Webform $entity): void {
   $parent = $entity->getThirdPartySetting('grants_metadata', 'parent');
   $status = $entity->getThirdPartySetting('grants_metadata', 'status');
 
@@ -169,7 +169,18 @@ function _grants_metadata_handle_versions_status(Webform $entity) {
   $formParentData->setThirdPartySetting('grants_metadata', 'status', 'archived');
   $formParentData->set('archive', TRUE);
   $formParentData->set('categories', ['Arkistoitu']);
-  $formParentData->save();
+  try {
+    $formParentData->save();
+    \Drupal::messenger()->addStatus(t('Form @id status updated to @status',
+      [
+        '@id' => $formParentData->id(),
+        '@status' => $status,
+      ]));
+    \Drupal::messenger()->addStatus(t('Parent form @id archived.', ['@id' => $formParentData->id()]));
+  }
+  catch (EntityStorageException $e) {
+    \Drupal::messenger()->addStatus(t('Parent form @id archiving failed.', ['@id' => $formParentData->id()]));
+  }
 }
 
 /**

@@ -38,7 +38,8 @@ archive: false
 id: kasvatus_ja_koulutus_yleisavustu
 title: 'Kasvatus ja koulutus, yleisavustushakemus'
 description: KASKOYLEIS
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden

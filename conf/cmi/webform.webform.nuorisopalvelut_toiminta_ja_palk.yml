@@ -39,7 +39,8 @@ archive: false
 id: nuorisopalvelut_toiminta_ja_palk
 title: 'Nuorisotoiminta, toiminta- ja palkkausavustus ennakkohakemus'
 description: NUORTOIMPALKENNAKKO
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field

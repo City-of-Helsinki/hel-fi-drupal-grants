@@ -36,7 +36,8 @@ archive: false
 id: ymparistopalvelut_yleisavustus
 title: 'Ympäristöpalvelut, yleisavustushakemus'
 description: '<p>YMPARISTOYLEIS</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden

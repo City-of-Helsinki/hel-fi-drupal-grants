@@ -36,7 +36,8 @@ archive: false
 id: kuva_toiminta
 title: 'Taide- ja kulttuuriavustukset: toiminta-avustukset'
 description: '<p>KUVATOIM</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field
