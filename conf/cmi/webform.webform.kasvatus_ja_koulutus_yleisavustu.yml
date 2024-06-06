@@ -14,9 +14,9 @@ third_party_settings:
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      64: '64'
       45: '45'
       48: '48'
+      64: '64'
     applicationTargetGroup: '21'
     applicationOpen: '2024-04-02T00:00:00'
     applicationClose: '2024-10-04T16:00:00'
@@ -27,6 +27,8 @@ third_party_settings:
       2025: '2025'
     applicationActingYearsType: fixed
     applicationActingYearsNextCount: ''
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -36,7 +38,8 @@ archive: false
 id: kasvatus_ja_koulutus_yleisavustu
 title: 'Kasvatus ja koulutus, yleisavustushakemus'
 description: KASKOYLEIS
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden

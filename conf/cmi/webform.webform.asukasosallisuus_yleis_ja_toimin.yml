@@ -24,6 +24,7 @@ third_party_settings:
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
+    status: released
 weight: 0
 open: null
 close: null
@@ -33,7 +34,8 @@ archive: false
 id: asukasosallisuus_yleis_ja_toimin
 title: 'Asukasosallisuus, yleis- ja toiminta-avustushakemus'
 description: ASUKASYLEISTOIM
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page

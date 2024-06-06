@@ -24,7 +24,7 @@ class WebformRouteSubscriber extends RouteSubscriberBase {
    * @var array
    */
   protected array $adminOnlyWebformRoutes = [
-    'entity.webform.edit_form',
+  // 'entity.webform.edit_form',
     'entity.webform.test_form',
     'entity.webform.results_submissions',
     'entity.webform.settings_form',
