@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_premises\Plugin;
 
-use Drupal\grants_composites\Plugin\GrantsCompositesBase;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 
