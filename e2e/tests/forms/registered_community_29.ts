@@ -4,7 +4,7 @@ import {fillHakijanTiedotRegisteredCommunity,} from "../../utils/form_helpers";
 import {fillFormField, fillInputField, uploadFile} from "../../utils/input_helpers";
 
 import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
-import {generateTests} from "../../utils/form_test_runners";
+import {generateTests} from "../../utils/test_generator_helpers";
 import {Role, selectRole} from "../../utils/auth_helpers";
 
 const formPages: PageHandlers = {
@@ -256,11 +256,9 @@ test.describe('ECONOMICGRANTAPPLICATION(29)', () => {
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
   const tests = generateTests(profileType, formId, formPages, testDataArray);
 
-  console.log(testDataArray);
-
-  for (const { name, fn } of tests) {
-    test(name, async () => {
-      await fn(page, browser);
+  for (const { testName, testFunction } of tests) {
+    test(testName, async () => {
+      await testFunction(page, browser);
     });
   }
 
