@@ -65,6 +65,7 @@
         "drupal/tvp": "^1.0",
         "drupal/webform": "^6.2",
         "drupal/webform_rest": "^4.0",
+        "drupal/webform_translation_permissions": "^2.0",
         "drupal/webform_views": "^5.2",
         "drush/drush": "^12",
         "globalcitizen/php-iban": "^4.1",

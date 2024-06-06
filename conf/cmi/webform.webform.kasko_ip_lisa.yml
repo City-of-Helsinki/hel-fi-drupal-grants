@@ -23,6 +23,8 @@ third_party_settings:
     disableCopying: 0
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '1'
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -31,8 +33,9 @@ template: false
 archive: false
 id: kasko_ip_lisa
 title: 'Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus'
-description: KASKOIPLISA
-categories: {  }
+description: '<p>KASKOIPLISA</p>'
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field

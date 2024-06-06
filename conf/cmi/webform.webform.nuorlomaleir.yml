@@ -20,13 +20,12 @@ third_party_settings:
     applicationOpen: '2024-09-01T00:00:00'
     applicationClose: '2024-10-31T23:59:59'
     applicationActingYearsType: next_x_years
-    applicationActingYears:
-      2024: '2024'
-      2025: '2025'
-      2026: '2026'
+    applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -35,8 +34,9 @@ template: false
 archive: false
 id: nuorlomaleir
 title: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
-description: NUORLOMALEIR
-categories: {  }
+description: '<p>NUORLOMALEIR</p>'
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden

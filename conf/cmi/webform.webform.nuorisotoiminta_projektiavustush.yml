@@ -24,6 +24,8 @@ third_party_settings:
     applicationActingYearsNextCount: '1'
     applicationContinuous: 1
     disableCopying: 0
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -32,8 +34,9 @@ template: false
 archive: false
 id: nuorisotoiminta_projektiavustush
 title: 'Nuorisotoimi, projektiavustushakemus'
-description: NUORPROJ
-categories: {  }
+description: '<p>NUORPROJ</p>'
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field
