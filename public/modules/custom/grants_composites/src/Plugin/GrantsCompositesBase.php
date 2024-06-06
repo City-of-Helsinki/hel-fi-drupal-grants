@@ -43,8 +43,12 @@ class GrantsCompositesBase extends WebformCompositeBase {
     foreach ($value as $fieldName => $fieldValue) {
       if (isset($element["#webform_composite_elements"][$fieldName])) {
         $webformElement = $element["#webform_composite_elements"][$fieldName];
-
         $value2 = $webformElement['#options'][$fieldValue] ?? NULL;
+
+        // Convert date strings.
+        if (($fieldName === 'dateBegin' || $fieldName === 'dateEnd') && $fieldValue) {
+          $fieldValue = date("d.m.Y", strtotime(date($fieldValue)));
+        }
 
         if (!isset($webformElement['#access']) || ($webformElement['#access'] !== FALSE)) {
           if (isset($value2)) {
