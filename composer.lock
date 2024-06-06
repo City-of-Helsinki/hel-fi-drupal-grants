@@ -4987,16 +4987,16 @@
         },
         {
             "name": "drupal/hdbt",
-            "version": "6.5.18",
+            "version": "6.5.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-hdbt.git",
-                "reference": "0733b0f5bce1ea1467cfca998280309fa91bef9c"
+                "reference": "14c0591acc5fba933ab83384905d88c3e3512c8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/0733b0f5bce1ea1467cfca998280309fa91bef9c",
-                "reference": "0733b0f5bce1ea1467cfca998280309fa91bef9c",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/14c0591acc5fba933ab83384905d88c3e3512c8a",
+                "reference": "14c0591acc5fba933ab83384905d88c3e3512c8a",
                 "shasum": ""
             },
             "require": {
@@ -5014,10 +5014,10 @@
                 "Drupal"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.5.18",
+                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.5.19",
                 "issues": "https://github.com/City-of-Helsinki/drupal-hdbt/issues"
             },
-            "time": "2024-06-03T13:03:44+00:00"
+            "time": "2024-06-04T13:35:36+00:00"
         },
         {
             "name": "drupal/hdbt_admin",
@@ -5152,16 +5152,16 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "0.9.26",
+            "version": "0.9.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "5eb89c56fe80b210198c8eb6b7f0a954597bdeee"
+                "reference": "75789679831359fa65f579e8ac68458438b42a01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/5eb89c56fe80b210198c8eb6b7f0a954597bdeee",
-                "reference": "5eb89c56fe80b210198c8eb6b7f0a954597bdeee",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/75789679831359fa65f579e8ac68458438b42a01",
+                "reference": "75789679831359fa65f579e8ac68458438b42a01",
                 "shasum": ""
             },
             "require": {
@@ -5179,10 +5179,10 @@
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.26",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.28",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2024-05-27T09:09:33+00:00"
+            "time": "2024-06-05T04:54:09+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",
@@ -5442,16 +5442,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "4.3.60",
+            "version": "4.3.61",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "5325477652218592b37907d622cce89c2b0786cf"
+                "reference": "72db3a0c5d89bdbb29fc4d1a21173eace44ec225"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/5325477652218592b37907d622cce89c2b0786cf",
-                "reference": "5325477652218592b37907d622cce89c2b0786cf",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/72db3a0c5d89bdbb29fc4d1a21173eace44ec225",
+                "reference": "72db3a0c5d89bdbb29fc4d1a21173eace44ec225",
                 "shasum": ""
             },
             "require": {
@@ -5562,10 +5562,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.3.60",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.3.61",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2024-06-04T06:56:15+00:00"
+            "time": "2024-06-05T13:08:07+00:00"
         },
         {
             "name": "drupal/helfi_proxy",
@@ -14959,16 +14959,16 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v7.1.0",
+            "version": "v7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "9564f64c16f99e29f252eafc642965e8fcb755ce"
+                "reference": "47aa818121ed3950acd2b58d1d37d08a94f9bf55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/9564f64c16f99e29f252eafc642965e8fcb755ce",
-                "reference": "9564f64c16f99e29f252eafc642965e8fcb755ce",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/47aa818121ed3950acd2b58d1d37d08a94f9bf55",
+                "reference": "47aa818121ed3950acd2b58d1d37d08a94f9bf55",
                 "shasum": ""
             },
             "require": {
@@ -15006,7 +15006,7 @@
                 "options"
             ],
             "support": {
-                "source": "https://github.com/symfony/options-resolver/tree/v7.1.0"
+                "source": "https://github.com/symfony/options-resolver/tree/v7.1.1"
             },
             "funding": [
                 {
@@ -15022,7 +15022,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-18T09:32:20+00:00"
+            "time": "2024-05-31T14:57:53+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -16739,16 +16739,16 @@
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v7.1.0",
+            "version": "v7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "353688d70dcd43e8f7a5cc13b9afba49d4946c39"
+                "reference": "db82c2b73b88734557cfc30e3270d83fa651b712"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/353688d70dcd43e8f7a5cc13b9afba49d4946c39",
-                "reference": "353688d70dcd43e8f7a5cc13b9afba49d4946c39",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/db82c2b73b88734557cfc30e3270d83fa651b712",
+                "reference": "db82c2b73b88734557cfc30e3270d83fa651b712",
                 "shasum": ""
             },
             "require": {
@@ -16795,7 +16795,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v7.1.0"
+                "source": "https://github.com/symfony/var-exporter/tree/v7.1.1"
             },
             "funding": [
                 {
@@ -16811,7 +16811,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-22T10:14:54+00:00"
+            "time": "2024-05-31T14:57:53+00:00"
         },
         {
             "name": "symfony/yaml",
