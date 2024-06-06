@@ -1,5 +1,0 @@
-name: Grants Webform Composite Components Base
-type: module
-description: The description.
-package: Helfi
-core_version_requirement: ^9 || ^10
