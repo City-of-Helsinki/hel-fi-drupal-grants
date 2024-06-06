@@ -2,10 +2,10 @@ import {Browser, Page, test} from '@playwright/test';
 import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
 import {fillHakijanTiedotRegisteredCommunity,} from "../../utils/form_helpers";
 import {fillFormField, fillInputField, uploadFile} from "../../utils/input_helpers";
-
-import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
 import {generateTests} from "../../utils/test_generator_helpers";
 import {Role, selectRole} from "../../utils/auth_helpers";
+
+import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
 
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {

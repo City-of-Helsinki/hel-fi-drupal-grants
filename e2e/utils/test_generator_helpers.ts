@@ -8,11 +8,12 @@ import {copyApplication} from "./copying_helpers";
 import {swapFieldValues} from "./field_swap_helpers";
 import {validatePrintPage, validateSubmission} from "./validation_helpers";
 import {deleteDraftApplication} from "./deletion_helpers";
+import {verifyDraftButton} from "./verify_draft_button_helpers";
 
 /**
  * The generateTests function.
  *
- * This function generates the tests for the given profile type,
+ * This function generates tests for a given profile type,
  * form ID, form pages, and test data array.
  *
  * @param profileType
@@ -23,6 +24,9 @@ import {deleteDraftApplication} from "./deletion_helpers";
  *   The form pages to use for the tests.
  * @param testDataArray
  *   The test data array to use for the tests.
+ *
+ * @return
+ *   An array of generated tests containing test name and test function.
  */
 const generateTests = (
   profileType: string,
@@ -34,7 +38,7 @@ const generateTests = (
 
   for (const [key, obj] of testDataArray) {
 
-    // Draft and success tests.
+    // All form variants do the form filling test.
     tests.push({
       testName: `Form: ${obj.title}`,
       testFunction: async (page: Page) => {
@@ -60,6 +64,17 @@ const generateTests = (
         testFunction: async (page: Page) => {
           const storedata = getObjectFromEnv(profileType, formId);
           await swapFieldValues(key, page, obj, storedata);
+        }
+      });
+    }
+
+    // Verify draft button on for the draft variant.
+    if (key === 'draft') {
+      tests.push({
+        testName: `Verify draft button: ${obj.title}`,
+        testFunction: async (page: Page) => {
+          const storedata = getObjectFromEnv(profileType, formId);
+          await verifyDraftButton(key, page, obj, storedata);
         }
       });
     }
@@ -95,19 +110,20 @@ const generateTests = (
       });
     }
 
-    // Deletion tests.
-    tests.push({
-      testName: `Delete drafts: ${obj.title}`,
-      testFunction: async (page: Page) => {
-        const storedata = getObjectFromEnv(profileType, formId);
-        await deleteDraftApplication(key, page, obj, storedata);
-      }
-    });
+    // Deletion tests for all except the success variant.
+    if (key !== 'success') {
+      tests.push({
+        testName: `Delete drafts: ${obj.title}`,
+        testFunction: async (page: Page) => {
+          const storedata = getObjectFromEnv(profileType, formId);
+          await deleteDraftApplication(key, page, obj, storedata);
+        }
+      });
+    }
   }
 
   return tests;
 };
-
 
 export {
   generateTests,
