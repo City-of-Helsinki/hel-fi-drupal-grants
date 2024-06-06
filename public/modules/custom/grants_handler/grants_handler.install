@@ -369,4 +369,3 @@ function grants_handler_update_9008(&$sandbox) {
     ->schema()
     ->createTable('grants_handler_locks', $schema['grants_handler_locks']);
 }
-

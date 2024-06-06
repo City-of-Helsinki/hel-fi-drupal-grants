@@ -1744,10 +1744,10 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $isApplicationOpen = ApplicationHandler::isApplicationOpen($webform);
 
   if (!isset($thirdPartySettings["status"])) {
-    // Use TRUE if not set so we disallow copying if status is not set
+    // Use TRUE if not set so we disallow copying if status is not set.
     $isApplicationArchived = TRUE;
   }
-  else{
+  else {
     $isApplicationArchived = $thirdPartySettings["status"] === 'archived';
   }
 
