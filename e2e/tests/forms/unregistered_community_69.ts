@@ -1,4 +1,4 @@
-import {Browser, Page, test} from '@playwright/test';
+import {Page, test} from '@playwright/test';
 import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
 import {fillHakijanTiedotUnregisteredCommunity,} from "../../utils/form_helpers";
 import {fillFormField, uploadFile} from "../../utils/input_helpers";
@@ -86,7 +86,6 @@ const formPages: PageHandlers = {
 
 test.describe('LEIRISELVITYS(69)', () => {
   let page: Page;
-  let browser: Browser;
 
   const profileType = 'unregistered_community';
   const formId = '69';
@@ -104,7 +103,7 @@ test.describe('LEIRISELVITYS(69)', () => {
   const tests = generateTests(profileType, formId, formPages, testDataArray);
 
   for (const { testName, testFunction } of tests) {
-    test(testName, async () => {
+    test(testName, async ({browser}) => {
       await testFunction(page, browser);
     });
   }

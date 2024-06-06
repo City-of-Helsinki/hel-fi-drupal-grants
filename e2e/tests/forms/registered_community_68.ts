@@ -1,4 +1,4 @@
-import {Browser, Page, test} from '@playwright/test';
+import {Page, test} from '@playwright/test';
 import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
 import {fillHakijanTiedotRegisteredCommunity} from "../../utils/form_helpers";
 import {fillFormField, fillInputField, uploadFile} from "../../utils/input_helpers";
@@ -241,7 +241,6 @@ const formPages: PageHandlers = {
 
 test.describe('HYVINYLEIS(68)', () => {
   let page: Page;
-  let browser: Browser;
 
   const profileType = 'registered_community';
   const formId = '68';
@@ -259,7 +258,7 @@ test.describe('HYVINYLEIS(68)', () => {
   const tests = generateTests(profileType, formId, formPages, testDataArray);
 
   for (const { testName, testFunction } of tests) {
-    test(testName, async () => {
+    test(testName, async ({browser}) => {
       await testFunction(page, browser);
     });
   }
