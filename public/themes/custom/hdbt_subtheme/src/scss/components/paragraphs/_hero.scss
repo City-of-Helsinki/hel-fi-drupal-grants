@@ -19,3 +19,12 @@ $breakpoint-xl: 1248px;
     }
   }
 }
+
+.hero__image-container[tabindex="-1"] {
+  outline: none;
+}
+
+.hero__image-container[aria-hidden="true"] {
+  user-select: none;
+  pointer-events: none;
+}
