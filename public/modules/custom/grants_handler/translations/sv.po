@@ -371,6 +371,12 @@ msgctxt "grants_handler"
 msgid "There may be a delay in changing the status. For example, due to maintenance breaks, the delay can be longer than normal."
 msgstr "Det kan finnas en fördröjning vid ändring av läge. Till exempel, på grund av underhållsuppehåll, kan förseningen vara längre än normalt."
 
+msgid "Application period is closed. You can edit the draft, but not submit it"
+msgstr "Ansökningstiden är stängd. Du kan redigera utkastet, men inte skicka in det."
+
+msgid "The application form has changed, make a new application."
+msgstr "Ansökningsformuläret har ändrats, gör en ny ansökan."
+
 msgctxt "grants_handler"
 msgid "Application period is closed, no further editing is allowed."
 msgstr "Ansökningsperioden är stängd, ingen ytterligare redigering är tillåten."

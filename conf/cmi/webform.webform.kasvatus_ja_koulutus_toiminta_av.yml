@@ -23,6 +23,8 @@ third_party_settings:
     applicationActingYearsNextCount: '0'
     applicationContinuous: 0
     disableCopying: 0
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -31,8 +33,9 @@ template: false
 archive: false
 id: kasvatus_ja_koulutus_toiminta_av
 title: 'Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
-description: KASKOIPTOIM
-categories: {  }
+description: '<p>KASKOIPTOIM</p>'
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden

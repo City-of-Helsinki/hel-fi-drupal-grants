@@ -777,13 +777,31 @@ moment and reload the page.',
       WebformArrayHelper::removeValue($form['actions']['draft']['#submit'], '::rebuild');
     }
 
+    // It's possible to edit sent application, until handler
+    // has changed status from RECEIVED.
+    //
+    // Drafts should be able to edited, unless the webform has changed,
+    // eg: editing draft ouside application period is ok, unless the underlying
+    // webform has changed.
+    //
     if (!ApplicationHandler::isSubmissionChangesAllowed($webform_submission)) {
+
+      $status = ApplicationHandler::getWebformStatus($webform_submission->getWebform());
+
+      switch ($status) {
+        case 'archived':
+          $errorMsg = $this->t('The application form has changed, make a new application.');
+          $form['#disabled'] = TRUE;
+          break;
+
+        default:
+          $errorMsg = $this->t('Application period is closed. You can edit the draft, but not submit it.');
+          $form['actions']['submit']['#disabled'] = TRUE;
+          break;
+      }
+
       $this->messenger()
-        ->addError(
-          $this->t('Application period is closed, no further editing is allowed.',
-            [],
-            $tOpts), TRUE);
-      $form['#disabled'] = TRUE;
+        ->addError($errorMsg);
     }
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
@@ -901,7 +919,8 @@ moment and reload the page.',
     if ($webform->hasWizardPages()) {
       $validations = [
         '::validateForm',
-        '::draft',
+        '::noValidate',
+       // '::draft',
       ];
       // Allow forward access to all but the confirmation page.
       foreach ($form_state->get('pages') as $page_key => $page) {
