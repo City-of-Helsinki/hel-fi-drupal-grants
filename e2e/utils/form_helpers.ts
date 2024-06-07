@@ -54,12 +54,14 @@ const fillGrantsFormPage = async (
   const initialPathname = new URL(page.url()).pathname;
   const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
 
-  try {
-    expect(initialPathname).toMatch(expectedPattern);
-  } catch (error) {
-    logger(`Skipping test: Application not open in "${formDetails.title}" test.`);
-    test.skip(true, 'Skip form test');
+  // If we end up on the wrong page and the application is closed, then skip the test.
+  if (!expectedPattern.test(initialPathname) && await isApplicationClosed(page)) {
+    logger('WARNING: The application is closed. This test will be skipped.');
+    test.skip(true, 'Skip form test. Application is closed.');
   }
+
+  // The application is open at this point. Make sure we get to the correct URL.
+  expect(initialPathname, 'Error accessing the application at the expected destination.').toMatch(expectedPattern);
 
   // Make sure the needed profile exists.
   expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
@@ -317,6 +319,31 @@ const verifySubmit = async (
   saveObjectToEnv(storeName, newData);
   logger(`Submit verified for application ID: ${applicationId}.`);
 }
+
+/**
+ * The isApplicationClosed function.
+ *
+ * This function checks if an application is closed.
+ * Applications that are closed redirect the user to the applications
+ * service page and display an error message.
+ *
+ * @param page
+ *   Playwright page object.
+ */
+const isApplicationClosed = async (page: Page) => {
+  if (page.url().includes('/fi/tietoa-avustuksista/')) {
+    const errorMessageSelector = '.hds-notification--error .hds-notification__body';
+    const errorMessage = await page.locator(errorMessageSelector);
+
+    if (errorMessage) {
+      const errorMessageText = await errorMessage.innerText();
+      if (errorMessageText.includes('Tämä avustushaku ei ole avoimena')) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
 
 /**
  * The fillHakijanTiedotRegisteredCommunity function.

@@ -25,6 +25,7 @@ third_party_settings:
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
+    status: released
 weight: 0
 open: null
 close: null
@@ -34,7 +35,8 @@ archive: false
 id: nuortoimpalkka
 title: 'Nuorisopalvelu, toiminta- ja palkkausavustushakemus'
 description: NUORTOIMPALKKA
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden

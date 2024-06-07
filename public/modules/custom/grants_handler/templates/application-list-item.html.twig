@@ -4,36 +4,6 @@
   id="{{ applicationNumber }}"
   class="application-list__item {{ classes|join(' ') }}"
 >
-  <div class="application-list__item__row" data-open-start="{{ openStartDate }}" data-open-end="{{ openEndDate }}">
-    <div>
-      {% if (statusString == 'DRAFT' and errorType == 'NOT_OPEN') %}
-        <div data-status="ERROR" class="hide-spinner application-list__item--status application-list__item--status--error" data-application-number="{{ applicationNumber }}">
-          <span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span>
-          <span>{{ "Application period ended"|t({}, {'context': 'grants_handler'})}}</span>
-        </div>
-      {% else %}
-        {{ statusTag }}
-      {% endif %}
-      {% if hasUnread == 'TRUE' %}
-        <div class="new-message"><span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span> {{ hasUnreadText }}</div>
-      {% endif %}
-    </div>
-    {% if (statusString == 'DRAFT') %}
-        <div class="application-list__item--delete">
-          <a class="hds-button hds-button--supplementary application-delete-link-{{ applicationNumber }}" href="{{ deleteApplicationUrl }}">
-            <span aria-hidden="true" class="hel-icon hel-icon--trash hel-icon--size-s"></span>
-            <span class="hds-button__label">{{ "Delete application"|t({}, {'context': 'grants_handler'})}}</span>
-          </a>
-        </div>
-    {% else %}
-      <div class="application-list__item--print">
-        <a class="hds-button hds-button--supplementary" href="{{ printApplicationUrl }}">
-          <span aria-hidden="true" class="hel-icon hel-icon--printer hel-icon--size-s"></span>
-          <span class="hds-button__label">{{ "Print application"|t({}, {'context': 'grants_handler'})}}</span>
-        </a>
-      </div>
-    {% endif %}
-  </div>
   <h3 class="application-list__item--name">
     {{ applicationFormName }}
   </h3>
@@ -76,11 +46,45 @@
   </div>
   {% if (statusString == 'DRAFT') %}
     <div class="application-list__item__link">
-      {{ editApplicationLink }}&nbsp;<i class="hel-icon icon hel-icon--arrow-right hel-icon--size-m vertical-align-small-or-medium-icon" aria-hidden="true"></i>
+      {{ editApplicationLink }} &nbsp;<i class="hel-icon icon hel-icon--arrow-right hel-icon--size-m vertical-align-small-or-medium-icon" aria-hidden="true"></i>
     </div>
   {% else %}
     <div class="application-list__item__link">
       {{ viewApplicationLink }}&nbsp;<i class="hel-icon icon hel-icon--arrow-right hel-icon--size-m vertical-align-small-or-medium-icon" aria-hidden="true"></i>
     </div>
   {% endif %}
+  <div class="application-list__item__row application-list__item__row__top" data-open-start="{{ openStartDate }}" data-open-end="{{ openEndDate }}">
+    <div class="application-list__item--status_wrapper">
+      {% if (statusString == 'DRAFT' and errorType in ['NOT_OPEN', 'ARCHIVED']) %}
+        <div data-status="ERROR" class="hide-spinner application-list__item--status application-list__item--status--error" data-application-number="{{ applicationNumber }}">
+          <span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span>
+          {% if errorType == 'ARCHIVED' %}
+            <span>{{ "Application form expired"|t({}, {'context': 'grants_handler'})}}</span>
+          {% else %}
+            <span>{{ "Application period ended"|t({}, {'context': 'grants_handler'})}}</span>
+          {% endif %}
+        </div>
+      {% else %}
+        {{ statusTag }}
+      {% endif %}
+      {% if hasUnread == 'TRUE' %}
+        <div class="new-message"><span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span> {{ hasUnreadText }}</div>
+      {% endif %}
+    </div>
+    {% if (statusString == 'DRAFT') %}
+      <div class="application-list__item--delete">
+        <a class="hds-button hds-button--supplementary application-delete-link-{{ applicationNumber }}" href="{{ deleteApplicationUrl }}">
+          <span aria-hidden="true" class="hel-icon hel-icon--trash hel-icon--size-s"></span>
+          <span class="hds-button__label">{{ "Delete application"|t({}, {'context': 'grants_handler'})}} <span class="visually-hidden">{{ applicationFormName }}</span></span>
+        </a>
+      </div>
+    {% else %}
+      <div class="application-list__item--print">
+        <a class="hds-button hds-button--supplementary" href="{{ printApplicationUrl }}">
+          <span aria-hidden="true" class="hel-icon hel-icon--printer hel-icon--size-s"></span>
+          <span class="hds-button__label">{{ "Print application"|t({}, {'context': 'grants_handler'})}} <span class="visually-hidden">{{ applicationFormName }}</span></span>
+        </a>
+      </div>
+    {% endif %}
+  </div>
 </li>

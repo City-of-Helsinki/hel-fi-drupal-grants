@@ -40,7 +40,8 @@ const baseFormRegisteredCommunity_64: FormData = {
         "edit-community-address-community-address-select": {
           value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
           viewPageSelector: '.form-item-community-address',
-          viewPageFormatter: viewPageFormatAddress
+          viewPageFormatter: viewPageFormatAddress,
+          printPageSkipValidation: true,
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
@@ -415,6 +416,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
 const copyForm: FormDataWithRemoveOptionalProps = {
   title: 'Original copy form',
   testFormCopying: true,
+  validatePrintPage: true,
   formPages: {
     'lisatiedot_ja_liitteet': {
       items: {},

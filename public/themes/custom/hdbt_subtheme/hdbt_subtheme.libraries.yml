@@ -13,7 +13,7 @@ global-scripting:
   dependencies:
     - core/drupal
     - core/jquery
-    - core/jquery.once
+    - core/ajax
 
 matomo:
   version: 1.x

@@ -19,6 +19,8 @@ display:
           label: Uppdaterad
         operations:
           label: Funktioner
+        revision_uid:
+          label: 'Redigerat senast'
       title: Innehåll
       pager:
         options:
