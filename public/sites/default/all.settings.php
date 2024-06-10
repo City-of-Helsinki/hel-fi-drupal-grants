@@ -20,7 +20,7 @@ $settings['error_page']['template_dir'] = '../error_templates';
 $config['openid_connect.client.tunnistamoadmin']['settings']['ad_roles'] = [
   [
     'ad_role' => '[sl_avustustest_paakayttajat]',
-    'roles' => ['ad_user', 'super_administrator'],
+    'roles' => ['ad_user', 'grants_admin'],
   ],
   [
     'ad_role' => '[sl_avustustest_pk_kanslia_kayttajat]',

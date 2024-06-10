@@ -40,7 +40,7 @@ const setDisabledFormVariants = (): void => {
 const setEnabledFormVariants = (): void => {
   if (!process.env.ENABLED_FORM_VARIANTS) {
     process.env.ENABLED_FORM_VARIANTS = 'FALSE';
-    logger('ENABLED_FORM_VARIANTS has not been set in .env. Running tests that are not disabled');
+    logger('ENABLED_FORM_VARIANTS has not been set in .env. Running tests that are not disabled.');
     return;
   }
   const variants = process.env.ENABLED_FORM_VARIANTS.split(',').map(variant => variant.trim());
