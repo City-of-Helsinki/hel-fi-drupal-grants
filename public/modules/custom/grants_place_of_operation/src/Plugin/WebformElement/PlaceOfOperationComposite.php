@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_place_of_operation\Plugin\WebformElement;
 
-use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\Plugin\WebformElement\GrantsCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;

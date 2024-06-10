@@ -3,7 +3,6 @@
 namespace Drupal\grants_members\Plugin\WebformElement;
 
 use Drupal\grants_handler\Plugin\WebformElement\GrantsCompositeBase;
-use Drupal\webform\WebformSubmissionInterface;
 
 /**
  * Provides a 'members_composite' element.

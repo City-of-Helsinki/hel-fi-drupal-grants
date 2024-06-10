@@ -4,7 +4,6 @@ namespace Drupal\grants_premises\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_premises\Plugin\GrantsPremisesBase;
-use Drupal\webform\WebformSubmissionInterface;
 
 /**
  * Provides a 'rent_income_composite' element.

@@ -50,4 +50,5 @@ class OrienteeringMapComposite extends GrantsCompositeBase {
     // @see \Drupal\webform\Plugin\WebformElement\TextBase::form
     return $form;
   }
+
 }

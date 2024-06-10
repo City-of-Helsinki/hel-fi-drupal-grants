@@ -60,7 +60,6 @@ class GrantsCompositeBase extends WebformCompositeBase {
     }
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -99,19 +98,23 @@ class GrantsCompositeBase extends WebformCompositeBase {
   }
 
   /**
-   * @param $webformElement
+   * Format Field value for a webform element.
+   *
+   * @param array $webformElement
    *   Webform Element.
-   * @param $fieldName
+   * @param string $fieldName
    *   Field name in question.
-   * @param $fieldValue
+   * @param string $fieldValue
    *   Value of the Field.
+   * @param array $dateFieldNamesArray
+   *   Array of Date Fields names.
    *
    * @return string
-   *   The formatted Field Value
+   *   The formatted Field Value.
    */
-  public function formatFieldValue($webformElement,
-                                    $fieldName,
-                                    $fieldValue,
+  public function formatFieldValue(array $webformElement,
+                                    string $fieldName,
+                                    string $fieldValue,
                                     $dateFieldNamesArray = ['dateBegin', 'dateEnd']) {
     if (in_array($fieldName, $dateFieldNamesArray) && $fieldValue) {
       return date("d.m.Y", strtotime($fieldValue));
@@ -119,10 +122,28 @@ class GrantsCompositeBase extends WebformCompositeBase {
     return $webformElement['#options'][$fieldValue] ?? $fieldValue;
   }
 
+  /**
+   * Check if access to the composite is not prohibited.
+   *
+   * @param array $webformElement
+   *   The webformelement whose access is needed to be checked.
+   *
+   * @return bool
+   *   Is the composite accessible.
+   */
   public function isCompositeAccessible($webformElement) {
     return !isset($webformElement['#access']) || $webformElement['#access'] !== FALSE;
   }
 
+  /**
+   * Since our titles might need rendering, this makes sure we have a string.
+   *
+   * @param mixed $title
+   *   The title.
+   *
+   * @return string
+   *   The correctly rendered title.
+   */
   public function renderCompositeTitle($title) {
     return is_string($title) ? $title : $title->render();
   }

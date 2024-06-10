@@ -20,4 +20,5 @@ class GrantsPremisesBase extends GrantsCompositeBase {
     // @see \Drupal\webform\Plugin\WebformElementBase::defaultBaseProperties
     return [] + parent::defineDefaultProperties();
   }
+
 }
