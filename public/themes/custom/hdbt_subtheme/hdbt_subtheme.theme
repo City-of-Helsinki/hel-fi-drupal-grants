@@ -245,10 +245,10 @@ function grants_webform_print_preprocess_webform_submission_data(&$vars): void {
 function hdbt_subtheme_preprocess_webform_element_base_html(array &$variables): void {
   $route_name = \Drupal::routeMatch()->getRouteName();;
 
-  $variables['view_application_page'] = false;
+  $variables['view_application_page'] = FALSE;
 
   if (str_contains(($route_name ?? ''), 'grants_handler.view_application')) {
-    $variables['view_application_page'] = true;
+    $variables['view_application_page'] = TRUE;
   }
 }
 
@@ -259,10 +259,10 @@ function hdbt_subtheme_preprocess_webform_element_base_html(array &$variables): 
 function hdbt_subtheme_preprocess_field(array &$variables): void {
   $route_name = \Drupal::routeMatch()->getRouteName();
 
-  $variables['view_application_page'] = false;
+  $variables['view_application_page'] = FALSE;
 
   if (str_contains(($route_name ?? ''), 'grants_handler.view_application')) {
-    $variables['view_application_page'] = true;
+    $variables['view_application_page'] = TRUE;
   }
 }
 
@@ -273,10 +273,10 @@ function hdbt_subtheme_preprocess_field(array &$variables): void {
 function hdbt_subtheme_preprocess_form_element_label(array &$variables): void {
   $route_name = \Drupal::routeMatch()->getRouteName();;
 
-  $variables['view_application_page'] = false;
+  $variables['view_application_page'] = FALSE;
 
   if (str_contains(($route_name ?? ''), 'grants_handler.view_application')) {
-    $variables['view_application_page'] = true;
+    $variables['view_application_page'] = TRUE;
   }
 }
 
@@ -296,13 +296,13 @@ function hdbt_subtheme_preprocess_form_element_label(array &$variables): void {
 function hdbt_subtheme_preprocess_webform_section(array &$variables): void {
   $route_name = \Drupal::routeMatch()->getRouteName();;
 
-  $variables['view_application_page'] = false;
+  $variables['view_application_page'] = FALSE;
 
   if (str_contains(($route_name ?? ''), 'grants_handler.view_application')) {
     if ($variables['title_tag'] == 'h2') {
       $variables['title_tag'] = 'h4';
     }
-    $variables['view_application_page'] = true;
+    $variables['view_application_page'] = TRUE;
   } else {
     if ($variables['title_tag'] == 'h2') {
       $variables['title_tag'] = 'h3';
@@ -401,10 +401,10 @@ function hdbt_subtheme_preprocess_form_element(array &$variables, $title_parents
   }
   $route_name = \Drupal::routeMatch()->getRouteName();;
 
-  $variables['view_application_page'] = false;
+  $variables['view_application_page'] = FALSE;
 
   if (str_contains(($route_name ?? ''), 'grants_handler.view_application')) {
-    $variables['view_application_page'] = true;
+    $variables['view_application_page'] = TRUE;
   }
 }
 
