@@ -184,14 +184,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     // person details, but let's update the basic info
     // data, so users might get less confused.
     try {
-
-      $tokenData = $this->helsinkiProfiiliUserData->getUserData();
-      $timestamp = time();
-
-      if ($tokenData && isset($tokenData['exp']) && $tokenData['exp'] < $timestamp) {
-        $this->helsinkiProfiiliUserData->refreshTokens();
-      }
-
       $this->helsinkiProfiiliUserData->getUserProfileData(TRUE);
 
       $this->messenger()->addStatus(
