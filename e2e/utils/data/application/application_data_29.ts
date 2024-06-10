@@ -12,15 +12,10 @@ import {
   viewPageFormatNumber
 } from "../../view_page_formatters";
 
-
-const formPath = '/fi/hakemus/kaupunginhallituksen-yleisavustushakemus';
-const formSelector = 'webform-submission-yleisavustushakemus-form';
-
-
 const baseForm_29: FormData = {
   title: 'Save as draft.',
-  formSelector: formSelector,
-  formPath: formPath,
+  formSelector: 'webform-submission-yleisavustushakemus-form',
+  formPath: '/fi/hakemus/kaupunginhallituksen-yleisavustushakemus',
   formPages: {
     "1_hakijan_tiedot": {
       items: {
