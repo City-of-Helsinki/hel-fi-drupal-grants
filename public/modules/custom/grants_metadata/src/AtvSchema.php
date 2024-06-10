@@ -678,52 +678,44 @@ class AtvSchema {
    *   Array with IDs that the function will look for.
    *
    * @return array
-   *   Assocative arrow with the results if they are found.
+   *   Associative array with the results if they are found.
    */
   public static function extractDataForWebForm(array $content, array $keys): array {
     $values = [];
+
     if (!isset($content['compensation'])) {
       return $values;
     }
 
-    foreach ($content['compensation'] as $key => $item) {
-      if (is_numeric($key)) {
-        if (in_array($item['ID'], $keys) && !in_array($item['ID'], $values)) {
+    self::extractValues($content['compensation'], $keys, $values);
+
+    return $values;
+  }
+
+  /**
+   * Recursively extract values from nested arrays.
+   *
+   * @param array $items
+   *   The array to search through.
+   * @param array $keys
+   *   Array with IDs that the function will look for.
+   * @param array &$values
+   *   Associative array to store the results.
+   */
+  private static function extractValues(array $items, array $keys, array &$values) {
+    foreach ($items as $key => $item) {
+      if (is_numeric($key) && isset($item['ID']) && in_array($item['ID'], $keys)) {
+        if (!array_key_exists($item['ID'], $values)) {
           $values[$item['ID']] = $item['value'];
         }
-      }
-      else {
-        if (!is_array($item)) {
+      } elseif (is_array($item)) {
+        self::extractValues($item, $keys, $values);
+      } else {
+        if (!is_numeric($key) && !is_array($item) && in_array($key, $keys)) {
           $values[$key] = $item;
-          continue;
-        }
-        foreach ($item as $key2 => $item2) {
-          if (!is_array($item2)) {
-            $values[$key2] = $item2;
-          }
-          elseif (AtvSchema::numericKeys($item2)) {
-            foreach ($item2 as $item3) {
-              if (AtvSchema::numericKeys($item3)) {
-                foreach ($item3 as $item4) {
-                  if (in_array($item4['ID'], $keys) && !array_key_exists($item4['ID'], $values)) {
-                    $values[$item4['ID']] = $item4['value'];
-                  }
-                }
-              }
-              else {
-                if (isset($item3['ID']) && in_array($item3['ID'], $keys) && !array_key_exists($item3['ID'], $values)) {
-                  $values[$item3['ID']] = $item3['value'];
-                }
-              }
-            }
-          }
-          elseif (is_numeric($key2) && in_array($item2['ID'], $keys) && !in_array($item2['ID'], $values)) {
-            $values[$item2['ID']] = $item2['value'];
-          }
         }
       }
     }
-    return $values;
   }
 
   /**
