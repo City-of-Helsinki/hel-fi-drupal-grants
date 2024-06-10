@@ -23,6 +23,8 @@ third_party_settings:
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 1
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -31,8 +33,9 @@ template: false
 archive: false
 id: liikunta_tapahtuma
 title: 'Liikunta, tapahtuma-avustushakemus'
-description: LIIKUNTATAPAHTUMA
-categories: {  }
+description: '<p>LIIKUNTATAPAHTUMA</p>'
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden

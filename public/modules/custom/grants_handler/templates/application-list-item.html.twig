@@ -55,10 +55,14 @@
   {% endif %}
   <div class="application-list__item__row application-list__item__row__top" data-open-start="{{ openStartDate }}" data-open-end="{{ openEndDate }}">
     <div class="application-list__item--status_wrapper">
-      {% if (statusString == 'DRAFT' and errorType == 'NOT_OPEN') %}
+      {% if (statusString == 'DRAFT' and errorType in ['NOT_OPEN', 'ARCHIVED']) %}
         <div data-status="ERROR" class="hide-spinner application-list__item--status application-list__item--status--error" data-application-number="{{ applicationNumber }}">
           <span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span>
-          <span>{{ "Application period ended"|t({}, {'context': 'grants_handler'})}}</span>
+          {% if errorType == 'ARCHIVED' %}
+            <span>{{ "Application form expired"|t({}, {'context': 'grants_handler'})}}</span>
+          {% else %}
+            <span>{{ "Application period ended"|t({}, {'context': 'grants_handler'})}}</span>
+          {% endif %}
         </div>
       {% else %}
         {{ statusTag }}

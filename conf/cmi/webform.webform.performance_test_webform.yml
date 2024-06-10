@@ -11,7 +11,8 @@ archive: false
 id: performance_test_webform
 title: 'ÄLÄ KÄYTÄ | Suorituskykytestien lomake'
 description: ''
-categories: {  }
+categories:
+  - Performance test
 elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page

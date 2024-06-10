@@ -24,6 +24,8 @@ third_party_settings:
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -32,8 +34,9 @@ template: false
 archive: false
 id: kaupunginkanslia_tyollisyysavust
 title: 'Kaupunginkanslia, työllisyysavustushakemus'
-description: KANSLIATYO
-categories: {  }
+description: '<p>KANSLIATYO</p>'
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden
