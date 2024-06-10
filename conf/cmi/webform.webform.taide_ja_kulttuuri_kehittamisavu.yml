@@ -25,6 +25,7 @@ third_party_settings:
     applicationActingYears: {  }
     applicationActingYearsType: next_x_years
     applicationActingYearsNextCount: '1'
+    status: released
 weight: 0
 open: null
 close: null
@@ -34,7 +35,8 @@ archive: false
 id: taide_ja_kulttuuri_kehittamisavu
 title: 'Kulttuurin kehittämisavustukset'
 description: '<p>KUVAKEHA</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page

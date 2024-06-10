@@ -23,6 +23,8 @@ third_party_settings:
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -31,8 +33,9 @@ template: false
 archive: false
 id: taide_ja_kulttuuriavustukset_tai
 title: 'Taiteen perusopetuksen avustukset'
-description: KUVAPERUS
-categories: {  }
+description: '<p>KUVAPERUS</p>'
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field

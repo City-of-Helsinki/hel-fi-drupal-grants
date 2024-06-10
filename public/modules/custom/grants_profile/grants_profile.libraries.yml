@@ -2,8 +2,10 @@ profile_dialog:
   version: 1.x
   js:
     js/profile_dialog.js: {}
-  depencies:
+  dependencies:
+    - core/drupal
     - core/jquery
+    - core/once
 
 pattern_error:
   js:

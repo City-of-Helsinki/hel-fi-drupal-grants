@@ -68,6 +68,7 @@ dependencies:
     - views_bulk_edit
     - webform
     - webform_submission_log
+    - webform_translation_permissions
 _core:
   default_config_hash: fnOpQQ5r1eprWvQPrJPWRfDqxozQiZnwIdYFPKb0lbM
 id: admin
@@ -295,6 +296,7 @@ permissions:
   - 'translate keywords taxonomy_term'
   - 'translate landing_page node'
   - 'translate menu_link_content'
+  - 'translate own webform'
   - 'translate page node'
   - 'translate remote_video media'
   - 'translate service node'

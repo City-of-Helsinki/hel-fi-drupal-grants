@@ -22,13 +22,12 @@ third_party_settings:
     applicationOpen: '2024-04-01T00:00:00'
     applicationClose: '2024-04-26T23:59:59'
     applicationActingYearsType: next_x_years
-    applicationActingYears:
-      2024: '2024'
-      2025: '2025'
-      2026: '2026'
+    applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 1
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -38,7 +37,8 @@ archive: false
 id: liikunta_laitosavustushakemus
 title: 'Liikunta, laitos- ja säätiöavustukset'
 description: LIIKUNTALAITOS
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden

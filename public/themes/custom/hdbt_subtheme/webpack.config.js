@@ -4,13 +4,12 @@ const glob = require('glob');
 const FriendlyErrorsWebpackPlugin = require('@nuxt/friendly-errors-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
-const SvgToSprite = require('./webpack.svgToSprite');
 const { merge } = require('webpack-merge');
-const {globSync} = require("glob");
+const SvgToSprite = require('./webpack.svgToSprite');
 
 // Handle entry points.
 const Entries = () => {
-  let entries = {
+  const entries = {
     styles: ['./src/scss/styles.scss'],
     // Special handling for some javascript or scss.
     // 'some-component': [
@@ -24,18 +23,16 @@ const Entries = () => {
     // Some javascript what is needed to ignore and handled separately.
     // './src/js/some-component.js'
   ];
-  const { globSync } = require("glob");
 
-  globSync(pattern, {ignore: ignore}).map((item) => {
-    entries[path.parse(item).name] = `./${item}` }
-  );
+  // eslint-disable-next-line array-callback-return
+  glob.sync(pattern, { ignore }).map((item) => {
+    entries[path.parse(item).name] = `./${item}`;
+  });
   return entries;
 };
 
-
 module.exports = (env, argv) => {
-
-  const isDev = (argv.mode === 'development');
+  const isDev = argv.mode === 'development';
 
   // Set the base config
   const config = {
@@ -54,9 +51,7 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.svg$/,
-          include: [
-            path.resolve(__dirname, 'src/icons')
-          ],
+          include: [path.resolve(__dirname, 'src/icons')],
           type: 'asset/resource',
         },
         {
@@ -82,8 +77,8 @@ module.exports = (env, argv) => {
             {
               loader: 'postcss-loader',
               options: {
-                'postcssOptions': {
-                  'config': path.join(__dirname, 'postcss.config.js'),
+                postcssOptions: {
+                  config: path.join(__dirname, 'postcss.config.js'),
                 },
                 sourceMap: isDev,
               },
@@ -92,7 +87,7 @@ module.exports = (env, argv) => {
               loader: 'sass-loader',
               options: {
                 sourceMap: isDev,
-                additionalData: "$debug_mode: " + isDev + ";",
+                additionalData: `$debug_mode: ${isDev};`,
               },
             },
           ],
@@ -101,11 +96,8 @@ module.exports = (env, argv) => {
       ],
     },
     resolve: {
-      modules: [
-        path.join(__dirname, 'node_modules'),
-      ],
+      modules: [path.join(__dirname, 'node_modules')],
       extensions: ['.js', '.json'],
-      preferRelative: true,
     },
     plugins: [
       // Uncomment following lines to create svg icon sprite.
@@ -118,7 +110,7 @@ module.exports = (env, argv) => {
       new RemoveEmptyScriptsPlugin(),
       new MiniCssExtractPlugin({
         filename: 'css/[name].min.css',
-      })
+      }),
     ],
     watchOptions: {
       aggregateTimeout: 300,
@@ -129,8 +121,8 @@ module.exports = (env, argv) => {
     performance: {
       hints: false,
       maxEntrypointSize: 512000,
-      maxAssetSize: 512000
-    }
+      maxAssetSize: 512000,
+    },
   };
 
   if (argv.mode === 'production') {
@@ -146,10 +138,7 @@ module.exports = (env, argv) => {
             terserOptions: {
               ecma: 2015,
               mangle: {
-                reserved:[
-                  'Drupal',
-                  'drupalSettings'
-                ]
+                reserved: ['Drupal', 'drupalSettings'],
               },
               format: {
                 comments: false,
@@ -162,8 +151,8 @@ module.exports = (env, argv) => {
     });
 
     return full_config;
-
-  } else if (argv.mode === 'development') {
+  }
+  if (argv.mode === 'development') {
     const SourceMapDevToolPlugin = require('webpack/lib/SourceMapDevToolPlugin');
 
     const full_config = merge(config, {
@@ -173,11 +162,10 @@ module.exports = (env, argv) => {
         new SourceMapDevToolPlugin({
           filename: '[file].map',
           exclude: [/node_modules/, /images/, /spritemap/, /svg-sprites/],
-        })
-      ]
+        }),
+      ],
     });
 
     return full_config;
-
   }
 };

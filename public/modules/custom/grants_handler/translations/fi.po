@@ -356,6 +356,9 @@ msgid "Draft expired"
 msgstr "Luonnos vanhentunut"
 
 msgctxt "grants_handler"
+msgid "Application form expired"
+msgstr "Hakemuspohja vanhentunut"
+
 msgid "Application period ended"
 msgstr "Hakuaika päättynyt"
 
@@ -370,6 +373,12 @@ msgstr "Muistathan varmistaa, että hakemuksen tila vaihtuu “Lähetetty - odot
 msgctxt "grants_handler"
 msgid "There may be a delay in changing the status. For example, due to maintenance breaks, the delay can be longer than normal."
 msgstr "Tilan vaihtumisessa voi olla viivettä. Esimerkiksi huoltokatkoista johtuen viive voi olla normaaliakin pidempi."
+
+msgid "Application period is closed. You can edit the draft, but not submit it."
+msgstr "Hakemusaika on päättynyt. Voit muokata luonnosta, mutta et lähettää sitä."
+
+msgid "The application form has changed, make a new application."
+msgstr "Hakemuspohja muuttunut, tee uusi hakemus."
 
 msgctxt "grants_handler"
 msgid "Application period is closed, no further editing is allowed."

@@ -27,6 +27,7 @@ third_party_settings:
     applicationActingYearsNextCount: '0'
     applicationContinuous: 0
     disableCopying: 0
+    status: released
 weight: 0
 open: null
 close: null
@@ -36,7 +37,8 @@ archive: false
 id: leiriselvitys
 title: 'Nuorisopalvelu, loma-aikojen leiriavustusselvitys'
 description: '<p>LEIRISELVITYS</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field
