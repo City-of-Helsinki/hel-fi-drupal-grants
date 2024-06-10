@@ -811,6 +811,23 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       $grantsProfile = $this->grantsProfileService->createNewProfile($selectedRoleData);
     }
 
+    $isRegisteredCommunity = $selectedRoleData['type'] === 'registered_community';
+
+    // In some cases GDPR data deletions may leave grant profiles
+    // with an empty content && user_id. As we match user_id from the metadata,
+    // which is not cleared by ATV during GDPR process,
+    // we may find an empty profiles.
+    // So let's delete the old document and initialize a new one.
+    if (
+      $grantsProfile &&
+      !$isRegisteredCommunity &&
+      empty($grantsProfile->getContent()) &&
+      empty($grantsProfile->getUserId())
+    ) {
+      $this->grantsProfileService->removeGrantsProfileDocument($grantsProfile);
+      $grantsProfile = $this->grantsProfileService->createNewProfile($selectedRoleData);
+    }
+
     return $grantsProfile;
   }
 
