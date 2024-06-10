@@ -4,7 +4,7 @@ namespace Drupal\grants_place_of_operation\Plugin\WebformElement;
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
+use Drupal\grants_handler\Plugin\WebformElement\GrantsCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 
 /**
@@ -25,7 +25,7 @@ use Drupal\webform\WebformSubmissionInterface;
  * @see \Drupal\webform\Plugin\WebformElementInterface
  * @see \Drupal\webform\Annotation\WebformElement
  */
-class PlaceOfOperationComposite extends WebformCompositeBase {
+class PlaceOfOperationComposite extends GrantsCompositeBase {
 
   /**
    * {@inheritdoc}
@@ -92,58 +92,47 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
-  protected function formatHtmlItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array|string {
+  protected function formatHtmlItemValue(array $element,
+                                         WebformSubmissionInterface $webform_submission,
+                                         array $options = []): array|string {
     return $this->formatTextItemValue($element, $webform_submission, $options);
   }
 
   /**
    * {@inheritdoc}
    */
-  protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
+  protected function formatTextItemValue(array $element,
+                                         WebformSubmissionInterface $webform_submission,
+                                         array $options = []): array {
     $value = $this->getValue($element, $webform_submission, $options);
-    $lines = [];
-    $lines[] = '<dl>';
+    $lines = ['<dl>'];
 
     $tOpts = ['context' => 'grants_place_of_operation'];
 
     foreach ($value as $fieldName => $fieldValue) {
-      if (isset($element["#webform_composite_elements"][$fieldName])) {
-        $webformElement = $element["#webform_composite_elements"][$fieldName];
-        $value2 = $webformElement['#options'][$fieldValue] ?? NULL;
+      if (!isset($element["#webform_composite_elements"][$fieldName])) {
+        continue;
+      }
+      $webformElement = $element["#webform_composite_elements"][$fieldName];
 
-        // Convert date strings.
-        if ($fieldName === 'rentTimeBegin' || $fieldName === 'rentTimeEnd') {
-          if ($fieldValue) {
-            $dateTime = new DrupalDateTime($fieldValue);
-            $fieldValue = $dateTime->format('j.n.Y');
-          }
+      // Convert date strings.
+      $fieldValue = parent::formatFieldValue($webformElement, $fieldName, $fieldValue, ['rentTimeBegin', 'rentTimeEnd']);
+
+      // Convert boolean value.
+      if ($fieldName === 'free') {
+        if ($fieldValue === 'false') {
+          $fieldValue = $this->t('No', [], $tOpts);
         }
-
-        // Convert boolean value.
-        if ($fieldName === 'free') {
-          if ($fieldValue === 'false') {
-            $fieldValue = $this->t('No', [], $tOpts);
-          }
-          if ($fieldValue === 'true') {
-            $fieldValue = $this->t('Yes', [], $tOpts);
-          }
-        }
-
-        if (!isset($webformElement['#access']) || ($webformElement['#access'] !== FALSE)) {
-          if (isset($value2)) {
-            $lines[] = '<dt>' . $webformElement['#title'] . '</dt>';
-            $lines[] = '<dd>' . $value2 . '</dd>';
-          }
-          elseif (!is_string($webformElement['#title'])) {
-            $lines[] = '<dt>' . $webformElement['#title']->render() . '</dt>';
-            $lines[] = '<dd>' . $fieldValue . '</dd>';
-          }
-          elseif (is_string($webformElement['#title'])) {
-            $lines[] = '<dt>' . $webformElement['#title'] . '</dt>';
-            $lines[] = '<dd>' . $fieldValue . '</dd>';
-          }
+        if ($fieldValue === 'true') {
+          $fieldValue = $this->t('Yes', [], $tOpts);
         }
       }
+
+      if (parent::isCompositeAccessible($webformElement)) {
+        $lines[] = '<dt>' . parent::renderCompositeTitle($webformElement['#title']) . '</dt>';
+        $lines[] = '<dd>' . $fieldValue . '</dd>';
+      }
+
     }
     $lines[] = '</dl>';
     return $lines;
