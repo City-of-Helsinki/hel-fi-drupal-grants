@@ -1295,8 +1295,8 @@ settings:
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label:'Edellinen'
-  wizard_next_button_label:'Seuraava'
+  wizard_prev_button_label: 'Edellinen'
+  wizard_next_button_label: 'Seuraava'
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
