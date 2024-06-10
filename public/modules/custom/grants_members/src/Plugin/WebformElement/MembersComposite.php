@@ -17,7 +17,7 @@ use Drupal\grants_handler\Plugin\WebformElement\GrantsCompositeBase;
  *   states_wrapper = TRUE,
  * )
  *
- * @see \Drrupal\webform\Plugin\WebformElement\GrantsCompositeBase
+ * @see \Drupal\webform\Plugin\WebformElement\GrantsCompositeBase
  * @see \Drupal\webform\Plugin\WebformElementBase
  * @see \Drupal\webform\Plugin\WebformElementInterface
  * @see \Drupal\webform\Annotation\WebformElement
