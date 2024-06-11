@@ -82,7 +82,8 @@ const validateInlineFormErrors = async (page: Page, expectedInlineErrors: Expect
   for (const inlineError of expectedInlineErrors) {
     logger(`Validating inline form error: ${inlineError.errorMessage}`)
     const locator = await page.locator(inlineError.selector).locator('.form-item--error-message');
-    await expect(locator, 'Failed to validate inline form error.').toHaveText(inlineError.errorMessage, {useInnerText: true});
+    const textContent = await locator.innerText();
+    await expect(textContent.trim(), 'Failed to validate inline form error.').toBe(inlineError.errorMessage);
   }
 
   logger('Inline errors validated successfully.');
