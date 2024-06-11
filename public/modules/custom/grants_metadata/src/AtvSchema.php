@@ -599,36 +599,37 @@ class AtvSchema {
     }
 
     if ($itemTypes['dataType'] === 'string' && $itemTypes['jsonType'] === 'bool') {
-      if ($itemValue === FALSE) {
-        $itemValue = 'false';
-      }
-      if ($itemValue === '0') {
-        $itemValue = 'false';
-      }
-      if ($itemValue === 0) {
-        $itemValue = 'false';
-      }
-      if ($itemValue === TRUE) {
-        $itemValue = 'true';
-      }
-      if ($itemValue === '1') {
-        $itemValue = 'true';
-      }
-      if ($itemValue === 1) {
-        $itemValue = 'true';
-      }
-      if ($itemValue == 'Yes') {
-        $itemValue = 'true';
-      }
-      if ($itemValue == 'No') {
-        $itemValue = 'false';
-      }
+      $itemValue = self::convertToBooleanString($itemValue);
     }
 
     if ($itemTypes['jsonType'] == 'int') {
       $itemValue = str_replace('_', '', $itemValue);
     }
 
+    return $itemValue;
+  }
+
+  /**
+   * Converts a value to its boolean string representation.
+   *
+   * @param mixed $itemValue
+   *   The item value to be converted.
+   *
+   * @return string The converted boolean string representation of the item value.
+   */
+  private static function convertToBooleanString(mixed $itemValue): string {
+    $falseValues = [FALSE, '0', 0, 'No'];
+    $trueValues = [TRUE, '1', 1, 'Yes'];
+
+    if (in_array($itemValue, $falseValues, TRUE)) {
+      return 'false';
+    }
+
+    if (in_array($itemValue, $trueValues, TRUE)) {
+      return 'true';
+    }
+
+    // Return orignal values as fallback.
     return $itemValue;
   }
 
@@ -687,7 +688,7 @@ class AtvSchema {
       return $values;
     }
 
-    self::extractValues($content['compensation'], $keys, $values);
+    self::extractValuesRecursively($content['compensation'], $keys, $values);
 
     return $values;
   }
@@ -702,18 +703,20 @@ class AtvSchema {
    * @param array &$values
    *   Associative array to store the results.
    */
-  private static function extractValues(array $items, array $keys, array &$values) {
+  private static function extractValuesRecursively(array $items, array $keys, array &$values) {
     foreach ($items as $key => $item) {
-      if (is_numeric($key) && isset($item['ID']) && in_array($item['ID'], $keys)) {
-        if (!array_key_exists($item['ID'], $values)) {
-          $values[$item['ID']] = $item['value'];
-        }
-      } elseif (is_array($item)) {
-        self::extractValues($item, $keys, $values);
-      } else {
-        if (!is_numeric($key) && !is_array($item) && in_array($key, $keys)) {
-          $values[$key] = $item;
-        }
+      if (is_array($item)) {
+        self::extractValuesRecursively($item, $keys, $values);
+      }
+      if (in_array($key, $keys) && !in_array($key, $values)) {
+        $values[$key] = $item;
+      }
+      if (is_numeric($key) &&
+          !AtvSchema::numericKeys($item) &&
+          isset($item['ID']) &&
+          in_array($item['ID'], $keys) &&
+          !in_array($item['ID'], $values)) {
+        $values[$item['ID']] = $item['value'];
       }
     }
   }

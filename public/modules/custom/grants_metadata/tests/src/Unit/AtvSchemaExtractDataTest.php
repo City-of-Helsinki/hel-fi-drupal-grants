@@ -5,7 +5,13 @@ namespace Drupal\Tests\grants_metadata\Unit;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\Tests\UnitTestCase;
 
-class AtvSchemExtractDataTest extends UnitTestCase {
+/**
+ * Tests AtvSchema class.
+ *
+ * @covers \Drupal\grants_metadata\AtvSchema
+ * @group grants_metadata
+ */
+class AtvSchemaExtractDataTest extends UnitTestCase {
 
   /**
    * Test extractDataForWebForm with a simple non-nested compensation array.
@@ -153,4 +159,5 @@ class AtvSchemExtractDataTest extends UnitTestCase {
 
     $this->assertEquals($expected, $result);
   }
+
 }
