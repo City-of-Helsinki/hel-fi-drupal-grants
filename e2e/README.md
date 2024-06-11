@@ -18,9 +18,11 @@ It's designed to test applications across all modern web browsers by running tes
 #### The following functionality is tested:
 - Filling in an application from start to finnish.
 - Verifying the content of a submitted application.
-- Filling an application with missing/wrong data and verifying the printed error messages.
+- Verifying the "save as draft" button is present on an active application.
+- Filling an application with missing/wrong data and verifying the printed error messages (both inline form errors and general error messages printed at the top of the page can be tested).
 - Swapping field values on an application and verifying that the values get swapped.
 - Copying an application and verifying that its content gets copied.
+- Printing an application and verifying that the printed content is correct.
 - Deleting draft applications.
 
 ### User role tests
