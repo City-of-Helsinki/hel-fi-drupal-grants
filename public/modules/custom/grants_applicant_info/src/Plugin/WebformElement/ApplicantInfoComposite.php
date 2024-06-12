@@ -3,7 +3,7 @@
 namespace Drupal\grants_applicant_info\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
+use Drupal\grants_handler\Plugin\WebformElement\GrantsCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @see \Drupal\webform\Plugin\WebformElementInterface
  * @see \Drupal\webform\Annotation\WebformElement
  */
-class ApplicantInfoComposite extends WebformCompositeBase {
+class ApplicantInfoComposite extends GrantsCompositeBase {
 
   /**
    * Routes which should use submission data.
