@@ -362,3 +362,20 @@
 
   }
 }
+.webform-submission-data {
+  dl {
+    dt {
+      font-weight: bold;
+    }
+    dd {
+      margin: 0;
+      padding: 0;
+    }
+    dl {
+      padding-left: var(--spacing-2-xs);
+    }
+    > br {
+      display:none;
+    }
+  }
+}

@@ -100,7 +100,7 @@ class GrantsBudgetBase extends WebformCompositeBase {
 
       $items[$composite_key] = [
         '#type' => 'inline_template',
-        '#template' => '<b>{{ title }}:</b> {{ value }}',
+        '#template' => '<dt>{{ title }}:</dt><dd>{{ value }}</dd>',
         '#context' => [
           'title' => $composite_title,
           'value' => $composite_value,
