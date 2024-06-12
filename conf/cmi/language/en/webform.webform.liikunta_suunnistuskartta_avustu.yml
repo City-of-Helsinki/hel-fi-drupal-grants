@@ -2,8 +2,8 @@ title: 'Sports, grant application for orienteering maps'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   yhteiso_jolle_haetaan_avustusta:
     '#title': 'Community for which the grant is being applied for'
   prh_markup:
@@ -46,8 +46,8 @@ elements: |
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   avustuksen_tiedot:
     '#title': 'Grant details'
   avustuksentiedot_info:
@@ -96,14 +96,14 @@ elements: |
   actions:
     '#submit__label': Submit
     '#draft__label': 'Save as draft'
-    '#wizard_prev__label': '< Previous'
-    '#wizard_next__label': 'Next >'
-    '#preview_prev__label': '< Previous'
-    '#preview_next__label': 'Preview >'
+    '#wizard_prev__label': 'Previous'
+    '#wizard_next__label': 'Next'
+    '#preview_prev__label': 'Previous'
+    '#preview_next__label': 'Preview'
     '#delete__label': 'Delete unfinished'
 settings:
   preview_label: '4. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
   wizard_confirmation_label: '5. Complete'
-  wizard_prev_button_label: '< Previous'
-  wizard_next_button_label: 'Next >'
+  wizard_prev_button_label: 'Previous'
+  wizard_next_button_label: 'Next'

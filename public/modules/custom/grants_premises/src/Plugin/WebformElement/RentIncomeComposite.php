@@ -4,7 +4,6 @@ namespace Drupal\grants_premises\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_premises\Plugin\GrantsPremisesBase;
-use Drupal\webform\WebformSubmissionInterface;
 
 /**
  * Provides a 'rent_income_composite' element.
@@ -51,51 +50,6 @@ class RentIncomeComposite extends GrantsPremisesBase {
     // @see \Drupal\webform\Plugin\WebformElementBase::form
     // @see \Drupal\webform\Plugin\WebformElement\TextBase::form
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function formatHtmlItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array|string {
-    return $this->formatTextItemValue($element, $webform_submission, $options);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
-    $submissionValue = $this->getValue($element, $webform_submission, $options);
-    $lines = [];
-
-    foreach ($submissionValue as $fieldName => $fieldValue) {
-      if (isset($element["#webform_composite_elements"][$fieldName])) {
-        $webformElement = $element["#webform_composite_elements"][$fieldName];
-        $value = $webformElement['#options'][$fieldValue] ?? NULL;
-
-        // Convert date strings.
-        if ($fieldName === 'dateBegin' || $fieldName === 'dateEnd') {
-          if ($fieldValue) {
-            $fieldValue = date("d.m.Y", strtotime(date($fieldValue)));
-          }
-        }
-
-        if (!isset($webformElement['#access']) || ($webformElement['#access'] !== FALSE)) {
-          if (isset($value)) {
-            $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
-            $lines[] = $value . '<br>';
-          }
-          elseif (!is_string($webformElement['#title'])) {
-            $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
-            $lines[] = $fieldValue . '<br>';
-          }
-          elseif (is_string($webformElement['#title'])) {
-            $lines[] = '<strong>' . $webformElement['#title'] . '</strong>';
-            $lines[] = $fieldValue . '<br>';
-          }
-        }
-      }
-    }
-    return $lines;
   }
 
 }
