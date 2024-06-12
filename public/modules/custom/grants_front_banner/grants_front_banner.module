@@ -36,12 +36,6 @@ function grants_front_banner_helfi_paragraph_types(): array {
       'landing_page' => [
         'field_content' => [
           'front_banner',
-          'front_page_latest_news',
-        ],
-      ],
-      'page' => [
-        'field_content' => [
-          'front_page_latest_news',
         ],
       ],
     ],
