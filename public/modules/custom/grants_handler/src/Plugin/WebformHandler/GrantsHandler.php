@@ -1186,6 +1186,8 @@ moment and reload the page.',
       }
       else {
 
+        // tähän pitää lisätä virheet joka elementille, että nähdään ne.
+
         // If we HAVE errors, then refresh them from the.
         $this->messenger()
           ->addError($this->t('Validation failed, please check inputs.', [], $tOpts));
