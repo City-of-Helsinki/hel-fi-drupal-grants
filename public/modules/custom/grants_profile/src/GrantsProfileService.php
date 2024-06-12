@@ -715,27 +715,4 @@ class GrantsProfileService {
     return $this->saveGrantsProfile([], $profileMetadata);
   }
 
-  /**
-   * Delete the given grants profile document.
-   *
-   * @param \Drupal\helfi_atv\AtvDocument $document
-   *   The document to be deleted.
-   *
-   * @return bool
-   *   Was the document deleted?
-   */
-  public function removeGrantsProfileDocument(AtvDocument $document): bool {
-    try {
-      $this->atvService->deleteDocument($document);
-      return TRUE;
-    }
-    catch (\Throwable $e) {
-      $id = $document->getId();
-      $this->logger->error('Error removing empty profile (id: @id) from ATV: @e',
-        ['@e' => $e->getMessage(), '@id' => $id],
-      );
-      return FALSE;
-    }
-  }
-
 }
