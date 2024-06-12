@@ -12,7 +12,7 @@ id: performance_test_webform
 title: 'ÄLÄ KÄYTÄ | Suorituskykytestien lomake'
 description: ''
 categories:
-  - Performance test
+  - 'Performance test'
 elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
