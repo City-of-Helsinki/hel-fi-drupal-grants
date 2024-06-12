@@ -1,15 +1,20 @@
 <?php
 
+namespace Drupal\Tests\grants_metadata\Unit;
+
 use Drupal\grants_metadata\AtvSchema;
-use PHPUnit\Framework\TestCase;
+use Drupal\Tests\UnitTestCase;
 
 /**
- * Unit tests for the getItemValue method in the AtvSchema class.
+ * Tests AtvSchema class.
+ *
+ * @covers \Drupal\grants_metadata\AtvSchema
+ * @group grants_metadata
  */
-class AtvSchemaGetItemValueTest extends TestCase {
+class AtvSchemaGetItemValueTest extends UnitTestCase {
 
   /**
-   * Tests the case when the item value is null with a default value provided.
+   * Test null item value with a default value.
    */
   public function testNullItemValueWithDefault() {
     $itemTypes = ['dataType' => 'string', 'jsonType' => 'string'];
@@ -22,7 +27,7 @@ class AtvSchemaGetItemValueTest extends TestCase {
   }
 
   /**
-   * Tests the case when the item value is an integer and needs to be converted to a string.
+   * Test item value as integer converted to string.
    */
   public function testItemValueAsString() {
     $itemTypes = ['dataType' => 'string', 'jsonType' => 'string'];
@@ -35,7 +40,7 @@ class AtvSchemaGetItemValueTest extends TestCase {
   }
 
   /**
-   * Tests the case when the item value is boolean true and needs to be converted to the string "true".
+   * Test boolean true converted to string "true".
    */
   public function testBooleanTrueToString() {
     $itemTypes = ['dataType' => 'string', 'jsonType' => 'bool'];
@@ -48,7 +53,7 @@ class AtvSchemaGetItemValueTest extends TestCase {
   }
 
   /**
-   * Tests the case when the item value is boolean false and needs to be converted to the string "false".
+   * Test boolean false converted to string "false".
    */
   public function testBooleanFalseToString() {
     $itemTypes = ['dataType' => 'string', 'jsonType' => 'bool'];
@@ -61,7 +66,7 @@ class AtvSchemaGetItemValueTest extends TestCase {
   }
 
   /**
-   * Tests the case when the item value is a string representing an integer with underscores.
+   * Test integer json type with underscores removed.
    */
   public function testIntJsonType() {
     $itemTypes = ['dataType' => 'string', 'jsonType' => 'int'];
@@ -74,7 +79,7 @@ class AtvSchemaGetItemValueTest extends TestCase {
   }
 
   /**
-   * Tests the case when the item value is the string "Yes" and needs to be converted to the string "true".
+   * Test string "Yes" converted to "true".
    */
   public function testBooleanStringYes() {
     $itemTypes = ['dataType' => 'string', 'jsonType' => 'bool'];
@@ -87,7 +92,7 @@ class AtvSchemaGetItemValueTest extends TestCase {
   }
 
   /**
-   * Tests the case when the item value is the string "No" and needs to be converted to the string "false".
+   * Test string "No" converted to "false".
    */
   public function testBooleanStringNo() {
     $itemTypes = ['dataType' => 'string', 'jsonType' => 'bool'];
@@ -100,7 +105,7 @@ class AtvSchemaGetItemValueTest extends TestCase {
   }
 
   /**
-   * Tests the case when the item value is the string "0" and needs to be converted to the string "false".
+   * Test string "0" converted to "false".
    */
   public function testZeroStringToFalse() {
     $itemTypes = ['dataType' => 'string', 'jsonType' => 'bool'];
@@ -113,7 +118,7 @@ class AtvSchemaGetItemValueTest extends TestCase {
   }
 
   /**
-   * Tests the case when the item value is the string "1" and needs to be converted to the string "true".
+   * Test string "1" converted to "true".
    */
   public function testOneStringToTrue() {
     $itemTypes = ['dataType' => 'string', 'jsonType' => 'bool'];
@@ -126,7 +131,7 @@ class AtvSchemaGetItemValueTest extends TestCase {
   }
 
   /**
-   * Tests the case when both the item value and default value are null.
+   * Test null item value with no default value.
    */
   public function testDefaultValueNotSet() {
     $itemTypes = ['dataType' => 'string', 'jsonType' => 'string'];

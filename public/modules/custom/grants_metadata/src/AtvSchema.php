@@ -615,7 +615,8 @@ class AtvSchema {
    * @param mixed $itemValue
    *   The item value to be converted.
    *
-   * @return string The converted boolean string representation of the item value.
+   * @return string
+   *   The converted boolean string representation of the item value.
    */
   private static function convertToBooleanString(mixed $itemValue): string {
     $falseValues = [FALSE, '0', 0, 'No'];
