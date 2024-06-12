@@ -2,8 +2,8 @@ title: 'Arts and culture grants: Operational grants'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   hakemusprofiili:
     '#title': 'Retrieved information'
   prh_markup:
@@ -46,8 +46,8 @@ elements: |
     '#community_officials_select__title': 'Select official'
   2_avustustiedot:
     '#title': '2. Grant details'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   avustuksen_tiedot:
     '#title': 'Grant details'
   acting_year:
@@ -135,8 +135,8 @@ elements: |
         '#counter_maximum_message': '%d/1000 characters remaining'
   3_yhteison_tiedot:
     '#title': '3. Information regarding the organization'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   jasenmaara:
     '#title': Members
   jasenmaara_fieldset:
@@ -186,8 +186,8 @@ elements: |
     '#multiple__add_more_button_label': 'Add new space'
   4_toiminta:
     '#title': '4. Activity'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   suunniteltu_toiminta:
     '#title': 'Planned activities'
   arvio_maarasta_markup:
@@ -286,8 +286,8 @@ elements: |
     '#isOwnedByCity__title': 'The space is owned by the City of Helsinki'
   5_toiminnan_lahtokohdat:
     '#title': '5.  The basis for the activities'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   toiminnan_sisallot:
     '#title': Contents
   toiminta_taiteelliset_lahtokohdat:
@@ -332,8 +332,8 @@ elements: |
     '#counter_maximum_message': '%d/1000 characters remaining'
   6_talous:
     '#title': '6. Finances'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   talousarvio:
     '#title': 'Planned budget'
   markup_01:
@@ -475,14 +475,14 @@ elements: |
   actions:
     '#submit__label': Submit
     '#draft__label': 'Save as draft'
-    '#wizard_prev__label': '< Previous'
-    '#wizard_next__label': 'Next >'
-    '#preview_prev__label': '< Previous'
-    '#preview_next__label': 'Preview >'
+    '#wizard_prev__label': 'Previous'
+    '#wizard_next__label': 'Next'
+    '#preview_prev__label': 'Previous'
+    '#preview_next__label': 'Preview'
     '#delete__label': 'Delete unfinished'
 settings:
-  wizard_prev_button_label: '< Previous'
-  wizard_next_button_label: 'Next >'
+  wizard_prev_button_label: 'Previous'
+  wizard_next_button_label: 'Next'
   wizard_confirmation_label: '9. Complete'
   preview_label: '8. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'

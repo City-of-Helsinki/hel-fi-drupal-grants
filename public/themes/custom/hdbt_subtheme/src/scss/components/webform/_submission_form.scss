@@ -43,6 +43,17 @@ $breakpoint-xl: 1248px;
     order: 3;
   }
 
+  button.webform-button--next span::after,
+  button.webform-button--preview span::after {
+    content: '\003e';
+    margin-left: var(--spacing-2-xs);
+  }
+
+  button.webform-button--previous span::before {
+    content: '\003c';
+    margin-right: var(--spacing-2-xs);
+  }
+
   input.webform-button--previous {
     background: white;
     color: var(--border-color);
