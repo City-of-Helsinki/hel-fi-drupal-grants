@@ -2,8 +2,8 @@ title: 'Stöd för grundläggande konstundervisning'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   hakemusprofiili:
     '#title': 'Hämtade uppgifter'
   prh_markup:
@@ -49,8 +49,8 @@ elements: |
     '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   avustuksen_tiedot:
     '#title': 'Preciserad information '
   acting_year:
@@ -110,8 +110,8 @@ elements: |
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Uppgifter om den ansökande organisationen'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   jasenmaara:
     '#title': Medlemsantal
   jasenmaara_fieldset:
@@ -141,8 +141,8 @@ elements: |
     '#isOwnedByApplicant__title': 'Utrymmet ägs av aktören'
   4_toiminta:
     '#title': '4. Förverkligad verksamhet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   tiedot_opetuksesta:
     '#title': 'Uppgifter om undervisningen'
   markup_01:
@@ -209,8 +209,8 @@ elements: |
     '#multiple__add_more_button_label': 'Lägg till ny plats'
   5_toiminnan_lahtokohdat:
     '#title': '5. Utgångspunkten för verksamheten'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   toiminnan_sisallot:
     '#title': 'Verksamhetens innehåll'
   toiminta_tasa_arvo:
@@ -239,8 +239,8 @@ elements: |
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:
     '#title': '6. Ekonomisk'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   talousarvio:
     '#title': Budget
   processed_text:
@@ -377,14 +377,14 @@ elements: |
   actions:
     '#submit__label': Skicka
     '#draft__label': 'Spara som oavslutad'
-    '#wizard_prev__label': '< Tidigare'
-    '#wizard_next__label': 'Nästa >'
-    '#preview_prev__label': '< Tidigare'
-    '#preview_next__label': 'För förhandsvisning >'
+    '#wizard_prev__label': 'Tidigare'
+    '#wizard_next__label': 'Nästa'
+    '#preview_prev__label': 'Tidigare'
+    '#preview_next__label': 'För förhandsvisning'
     '#delete__label': 'Radera oavslutat'
 settings:
-  wizard_prev_button_label: '< Tidigare'
-  wizard_next_button_label: 'Nästa >'
+  wizard_prev_button_label: 'Tidigare'
+  wizard_next_button_label: 'Nästa'
   preview_label: '8. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
   wizard_confirmation_label: '9. Slutförd'
