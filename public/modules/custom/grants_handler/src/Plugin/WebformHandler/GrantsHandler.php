@@ -756,6 +756,18 @@ moment and reload the page.',
             $tOpts));
       }
 
+      $webform = $webform_submission->getWebform();
+      $breakingChanges = ApplicationHandler::hasBreakingChangesInNewerVersion($webform);
+
+      if ($breakingChanges && $submissionData['status'] === 'RECEIVED') {
+        $form['#disabled'] = TRUE;
+        $this->messenger()
+          ->addWarning(
+            $this->t('Application form has changed. You cannot do any further edits.',
+              [],
+              $tOpts));
+      }
+
       $locked = $this->formLockService->isApplicationFormLocked($this->applicationNumber);
       if ($locked) {
         $form['#disabled'] = TRUE;
