@@ -2,8 +2,8 @@ title: 'Stadskansliet, ansökan om sysselsättningsunderstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   yhteiso_jolle_haetaan_avustusta:
     '#title': 'Samfund för vilket understödet ansöks'
   prh_markup:
@@ -49,8 +49,8 @@ elements: |
     '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   avustuksen_tiedot:
     '#title': 'Uppgifter om understödet'
   acting_year:
@@ -167,8 +167,8 @@ elements: |
     '#counter_maximum_message': '%d/5000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Samfundets verksamhet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   business_info:
     '#title': Verksamhets&shy;beskrivning
   business_purpose:
@@ -294,14 +294,14 @@ elements: |
   actions:
     '#submit__label': Skicka
     '#draft__label': 'Spara som oavslutad'
-    '#wizard_prev__label': '< Tidigare'
-    '#wizard_next__label': 'Nästa >'
-    '#preview_prev__label': '< Tidigare'
-    '#preview_next__label': ' För förhandsvisning >'
+    '#wizard_prev__label': 'Tidigare'
+    '#wizard_next__label': 'Nästa'
+    '#preview_prev__label': 'Tidigare'
+    '#preview_next__label': 'För förhandsvisning'
     '#delete__label': ' Radera oavslutat'
 settings:
-  wizard_prev_button_label: '< Tidigare'
-  wizard_next_button_label: 'Nästa >'
+  wizard_prev_button_label: 'Tidigare'
+  wizard_next_button_label: 'Nästa'
   preview_label: '5. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
   wizard_confirmation_label: '6. Slutförd'

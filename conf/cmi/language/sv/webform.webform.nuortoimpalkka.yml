@@ -2,8 +2,8 @@ title: 'Ungdomstjänst, ansökan om verksamhets- och anställningsbidrag'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   hakemusprofiili:
     '#title': 'Den sökandes uppgifter'
   prh_markup:
@@ -49,8 +49,8 @@ elements: |
     '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   avustuksen_tiedot:
     '#title': 'Uppgifter om understödet'
   acting_year:
@@ -136,8 +136,8 @@ elements: |
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Verksamhet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   yhdistyksen_jasenmaara_tai_aktiivisesti_toimintaan_osallistuvien:
     '#title': 'Antal medlemmar i föreningen eller antal aktiva deltagare'
   jasenmaara_fieldset:
@@ -311,14 +311,14 @@ elements: |
   actions:
     '#submit__label': Skicka
     '#draft__label': 'Spara som oavslutad'
-    '#wizard_prev__label': '< Tidigare'
-    '#wizard_next__label': 'Nästa >'
-    '#preview_prev__label': '< Tidigare'
-    '#preview_next__label': ' För förhandsvisning >'
+    '#wizard_prev__label': 'Tidigare'
+    '#wizard_next__label': 'Nästa'
+    '#preview_prev__label': 'Tidigare'
+    '#preview_next__label': 'För förhandsvisning'
     '#delete__label': ' Radera oavslutat'
 settings:
-  wizard_prev_button_label: '< Tidigare'
-  wizard_next_button_label: 'Nästa >'
+  wizard_prev_button_label: 'Tidigare'
+  wizard_next_button_label: 'Nästa'
   preview_label: '7. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
   wizard_confirmation_label: '8. Slutförd'
