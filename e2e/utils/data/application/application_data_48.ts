@@ -457,7 +457,8 @@ const baseForm_48: FormData = {
         "edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara": {
           role: 'input',
           value: "2023-11-01",
-          viewPageFormatter: viewPageFormatDate
+          viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#kuva_projekti--aikataulu',
         },
         "edit-festivaalin-tai-tapahtuman-kohdalla-tapahtuman-paivamaarat": {
           role: 'input',
@@ -466,12 +467,14 @@ const baseForm_48: FormData = {
         "edit-hanke-alkaa": {
           role: 'input',
           value: "2023-11-01",
-          viewPageFormatter: viewPageFormatDate
+          viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#kuva_projekti--aikataulu',
         },
         "edit-hanke-loppuu": {
           role: 'input',
           value: "2023-12-01",
-          viewPageFormatter: viewPageFormatDate
+          viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#kuva_projekti--aikataulu',
         },
         "edit-laajempi-hankekuvaus": {
           role: 'input',
