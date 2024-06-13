@@ -416,12 +416,14 @@ const baseForm_49: FormData = {
         "edit-hanke-alkaa": {
           role: 'input',
           value: "2023-11-01",
-          viewPageFormatter: viewPageFormatDate
+          viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#taide_ja_kulttuuri_kehittamisavu--aikataulu'
         },
         "edit-hanke-loppuu": {
           role: 'input',
           value: "2023-12-01",
-          viewPageFormatter: viewPageFormatDate
+          viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#taide_ja_kulttuuri_kehittamisavu--aikataulu'
         },
         "edit-laajempi-hankekuvaus": {
           role: 'input',
@@ -749,7 +751,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [
         'edit-tila-items-0-item-premisename',
         'edit-tila-items-0-item-postcode',
-        'edit-tila-items-0-item-isownedbycity',
+        'edit-tila-items-0-item-isownedbycity-1',
         'edit-hanke-alkaa',
         'edit-hanke-loppuu',
       ],
@@ -757,14 +759,14 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     '6_talous': {
       items: {},
       itemsToRemove: [
-        'edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-',
+        'edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-1',
       ],
     },
     'lisatiedot_ja_liitteet': {
       items: {},
       itemsToRemove: [
-        'edit-projektisuunnitelma-attachment-upload',
-        'edit-talousarvio-attachment-upload',
+        'edit-projektisuunnitelma-liite-attachment-upload',
+        'edit-talousarvio-liite-attachment-upload',
       ],
     },
   },
@@ -781,15 +783,15 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-hankkeen-nimi': 'Virhe sivulla 2. Avustustiedot: Hankkeen nimi kenttä on pakollinen.',
     'edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti': 'Virhe sivulla 2. Avustustiedot: Hankkeen tai toiminnan lyhyt esittelyteksti kenttä on pakollinen.',
     'edit-vuodet-joille-monivuotista-avustusta-on-haettu-tai-myonetty': 'Virhe sivulla 2. Avustustiedot: Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty kenttä on pakollinen.',
-    'edit-erittely-kullekin-vuodelle-haettavasta-avustussummasta': 'Virhe sivulla 2. Erittely kullekin vuodelle haettavasta avustussummasta kenttä on pakollinen.',
+    'edit-erittely-kullekin-vuodelle-haettavasta-avustussummasta': 'Virhe sivulla 2. Avustustiedot: Erittely kullekin vuodelle haettavasta avustussummasta kenttä on pakollinen.',
     'edit-tila-items-0-item-premisename': 'Virhe sivulla 4. Suunniteltu toiminta: Tilan nimi kenttä on pakollinen.',
     'edit-tila-items-0-item-postcode': 'Virhe sivulla 4. Suunniteltu toiminta: Postinumero kenttä on pakollinen.',
-    'edit-tila-items-0-item-isownedbycity': 'Virhe sivulla 4. Suunniteltu toiminta: Kyseessä on kaupungin omistama tila kenttä on pakollinen.',
+    'edit-tila-items-0-item-isownedbycity-1': 'Virhe sivulla 4. Suunniteltu toiminta: Kyseessä on kaupungin omistama tila kenttä on pakollinen.',
     'edit-hanke-alkaa': 'Virhe sivulla 4. Suunniteltu toiminta: Hanke alkaa kenttä on pakollinen.',
     'edit-hanke-loppuu': 'Virhe sivulla 4. Suunniteltu toiminta: Hanke loppuu kenttä on pakollinen.',
-    'edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-': 'Virhe sivulla 6. Talous: Organisaatio kuuluu valtionosuusjärjestelmään (VOS) kenttä on pakollinen.',
-    'edit-projektisuunnitelma-attachment-upload': 'Virhe sivulla 7. Lisätiedot ja liitteet: Projektisuunnitelma ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
-    'edit-talousarvio-attachment-upload': 'Virhe sivulla 7. Lisätiedot ja liitteet: Talousarvio ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-1': 'Virhe sivulla 6. Talous: Organisaatio kuuluu valtionosuusjärjestelmään (VOS) kenttä on pakollinen.',
+    'edit-projektisuunnitelma-liite-attachment-upload': 'Virhe sivulla 7. Lisätiedot ja liitteet: Projektisuunnitelma ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-talousarvio-liite-attachment-upload': 'Virhe sivulla 7. Lisätiedot ja liitteet: Talousarvio ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
   },
 };
 
