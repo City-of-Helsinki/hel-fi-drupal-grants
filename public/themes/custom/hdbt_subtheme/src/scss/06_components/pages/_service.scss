@@ -1,13 +1,10 @@
 .node--type-service {
-  .errand-service__channels .service-channel__links {
-    a[href^="https://avustukset.hel.fi"] {
-      display: none;
-    }
+  .errand-service__channels .service-channel__links a[href^="https://avustukset.hel.fi"] {
+    display: none;
   }
-  .service-channel__info {
-    p:first-of-type {
-      margin-top: 0;
-    }
+
+  .service-channel__info p:first-of-type {
+    margin-top: 0;
   }
 
   .service-channel--mail {
@@ -15,27 +12,29 @@
   }
 
 }
-#block-servicepageauthblock-2, #block-servicepageanonblock-2, #block-grantspreviewlink-2 {
+
+#block-servicepageauthblock-2,
+#block-servicepageanonblock-2,
+#block-grantspreviewlink-2 {
   display: none;
+
+  @include breakpoint(max-width ($breakpoint-m - 0.1)) {
+    display: block;
+    margin: var(--spacing-s);
+  }
+
+  @include breakpoint(max-width ($breakpoint-l - 0.1)) {
+    display: block;
+    margin: var(--spacing-l);
+  }
 
   > .grants-service-page-block > * {
     margin: var(--spacing-2-xs) 0 var(--spacing-2-xs) var(--spacing-2-xs) ;
   }
-}
-@include breakpoint(max-width ($breakpoint-l - 0.1)) {
-  #block-servicepageauthblock-2, #block-servicepageanonblock-2, #block-grantspreviewlink-2 {
-    display: block;
-    margin: var(--spacing-l);
-  }
-  .node--type-service {
-    a.hds-button[href*="uusi-hakemus"] {
+
+  .node--type-service a.hds-button[href*="uusi-hakemus"] {
+    @include breakpoint(max-width ($breakpoint-l - 0.1)) {
       display: none;
     }
-  }
-}
-@include breakpoint(max-width ($breakpoint-m - 0.1)) {
-  #block-servicepageauthblock-2, #block-servicepageanonblock-2, #block-grantspreviewlink-2 {
-    display: block;
-    margin: var(--spacing-s);
   }
 }

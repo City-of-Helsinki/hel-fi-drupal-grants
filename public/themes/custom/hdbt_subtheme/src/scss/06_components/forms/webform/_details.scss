@@ -1,5 +1,4 @@
 details.accordion {
-  border-bottom: 1px solid var(--border-color);
   --background-color: var(--color-white);
   --border-color: var(--color-black-60);
   --padding-horizontal: var(--spacing-m);
@@ -12,38 +11,44 @@ details.accordion {
   --content-font-color: var(--color-black-90);
   --content-font-size: var(--fontsize-body-m);
   --content-line-height: var(--lineheight-l);
+  border-bottom: 1px solid var(--border-color);
+
   .accordion_content {
     padding-bottom: var(--padding-vertical);
   }
 }
+
 details.accordion[open] .accordion_heading_container span.hel-icon {
   transform: rotate(180deg);
 }
+
 .accordion_header {
-  position: relative;
+  align-items: center;
   color: var(--header-font-color);
+  display: flex;
   font-size: var(--header-font-size);
   font-weight: 700;
-  line-height: var(--header-line-height);
-  padding-top: var(--padding-vertical);
-  padding-bottom: var(--padding-vertical);
-  display: flex;
   justify-content: space-between;
-  align-items: center;
+  line-height: var(--header-line-height);
   list-style: none;
+  padding-bottom: var(--padding-vertical);
+  padding-top: var(--padding-vertical);
+  position: relative;
 }
+
 .accordion_heading_container {
+  align-items: center;
+  box-sizing: border-box;
   cursor: pointer;
-  width: 100%;
   display: grid;
   grid-template-columns: auto calc(var(--button-size));
-  box-sizing: border-box;
-  align-items: center;
+  width: 100%;
+
   span.hel-icon {
-    box-sizing: border-box;
     border: 2px solid transparent;
-    width: var(--button-size)!important;
+    box-sizing: border-box;
     height: var(--button-size)!important;
     margin: auto;
+    width: var(--button-size)!important;
   }
 }

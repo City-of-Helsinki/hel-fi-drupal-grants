@@ -22,14 +22,13 @@
   --focus-outline-color: var(--color-coat-of-arms);
 
   a.tabledrag-handle .handle {
-    width: 24px;
     height: 24px;
+    width: 24px;
   }
+
   input.form-number {
-    -webkit-appearance: none;
     background-color: var(--input-background-default);
     border: var(--border-width) solid var(--input-border-color-default);
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     color: var(--input-color-default);
     font-size: 1.125em;
@@ -38,34 +37,40 @@
     padding: 0 var(--spacing-s);
     width: 100%;
   }
+
   table {
     border-collapse: collapse;
-    border-spacing: 0px;
+    border-spacing: 0;
     margin-bottom: var(--spacing-m);
 
     td {
-      border-top: 2px var(--color-black-20) solid;
       border-bottom: 2px var(--color-black-20) solid;
-      padding-top: var(--spacing-m);
+      border-top: 2px var(--color-black-20) solid;
       padding-left: var(--spacing-m);
-      @media (max-width: 768px) {
+      padding-top: var(--spacing-m);
+
+      @include breakpoint(max-width $breakpoint-m) {
         border: 2px var(--color-black-20) solid;
       }
     }
+
     td.webform-multiple-table--operations {
-      border-top: 2px var(--color-black-20) solid;
       border-bottom: 2px var(--color-black-20) solid;
-      padding-top: var(--spacing-m);
+      border-top: 2px var(--color-black-20) solid;
       padding-left: var(--spacing-m);
-      @media (max-width: 768px) {
+      padding-top: var(--spacing-m);
+
+      @include breakpoint(max-width $breakpoint-m) {
+        background: var(--color-white);
         border: 2px var(--color-black-20) solid;
-        background: white;
         padding: 10px 5px 5px;
       }
     }
+
     td:first-child {
       border-left: 2px var(--color-black-20) solid;
     }
+
     td:last-child {
       border-right: 2px var(--color-black-20) solid;
       padding: var(--spacing-m);

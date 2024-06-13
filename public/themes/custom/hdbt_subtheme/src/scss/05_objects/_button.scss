@@ -42,7 +42,7 @@
   --background-color: rgb(255 0 0);
 }
 
-a.hds-button.webform-button--delete-draft:not(disabled) {
+a.hds-button.webform-button--delete-draft:not(:disabled) {
   text-decoration: none;
 
   .hds-button__label_wrapper {

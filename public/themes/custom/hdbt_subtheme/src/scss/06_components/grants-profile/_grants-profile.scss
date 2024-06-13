@@ -1,80 +1,91 @@
 .grants-profile {
   hr {
-    margin: var(--spacing-layout-xs) 0;
     border: 1px solid var(--color-silver);
+    margin: var(--spacing-layout-xs) 0;
   }
+
   h3.info-grants {
     border-bottom: 2px solid var(--color-silver);
     padding-bottom: var(--spacing-l);
   }
+
   &--title {
+    align-items: center;
     display: flex;
     flex-flow: row nowrap;
-    align-items: center;
 
     .grants-profile--initials {
-      display: none;
-      margin-right: var(--spacing-m);
       border-radius: 50%;
-      width: var(--spacing-4-xl);
-      height: var(--spacing-4-xl);
-      line-height: var(--spacing-4-xl);
+      display: none;
       font-size: var(--fontsize-body-xl);
       font-weight: bold;
+      height: var(--spacing-4-xl);
+      line-height: var(--spacing-4-xl);
+      margin-right: var(--spacing-m);
       text-align: center;
       vertical-align: middle;
+      width: var(--spacing-4-xl);
+
+      @include breakpoint($breakpoint-l) {
+        display: block;
+      }
+
       &:hover, &:active, &:focus {
         text-decoration: underline;
       }
+
       &-colorscheme {
         &-2 {
           background-color: var(--color-bus);
           color: var(--color-white);
         }
+
         &-1 {
           background-color: var(--color-engel);
           color: var(--color-black);
 
         }
+
         &-0 {
           background-color: var(--color-tram);
           color: var(--color-white);
         }
       }
-      @include breakpoint($breakpoint-l) {
-        display: block;
-      }
     }
+
     h1 {
       flex-grow: 100;
     }
   }
+
   &--basicinfo {
-    background-color: var(--color-silver-light);
-    padding-top: var(--spacing-l);
-    padding-bottom: var(--spacing-2-xs);
-    border-bottom: 8px solid var(--color-engel-dark);
     --line-height: 1.5;
+    background-color: var(--color-silver-light);
+    border-bottom: 8px solid var(--color-engel-dark);
+    padding-bottom: var(--spacing-2-xs);
+    padding-top: var(--spacing-l);
 
     h3 {
       font-size: var(--fontsize-heading-l);
-      padding-top: 0;
       margin-top: 0;
+      padding-top: 0;
     }
   }
+
   &--extrainfo {
-    padding-top: var(--spacing-l);
     padding-bottom: var(--spacing-l);
+    padding-top: var(--spacing-l);
 
     .hds-notification {
       margin-bottom: var(--spacing-xl);
     }
 
     fieldset.form-wrapper {
-      border: 0;
       background-color: var(--color-silver-light);
+      border: 0;
       padding: var(--spacing-l);
     }
+
     fieldset.inline-error-message {
       background-color: unset;
       padding: 0 0 0 var(--spacing-2-xs);
@@ -84,21 +95,24 @@
       }
     }
   }
+
   &--update-link {
-    margin-top: var(--spacing-layout-xs);
     margin-bottom: var(--spacing-layout-2-xs);
+    margin-top: var(--spacing-layout-xs);
   }
+
   &--infotext {
-  font-size: var(--fontsize-body-l);
-  margin-bottom: var(--spacing-s);
+    font-size: var(--fontsize-body-l);
+    margin-bottom: var(--spacing-s);
   }
+
   &--wrapper {
     display: flex;
     flex-wrap: wrap;
 
     &-item {
-      width: 100%;
       margin-bottom: var(--spacing-layout-2-xs);
+      width: 100%;
 
       @include breakpoint($breakpoint-s) {
         flex: 1;
@@ -107,9 +121,9 @@
     }
 
     &-item:first-child {
-      width: 100%;
       flex: auto;
       margin-bottom: var(--spacing-layout-2-xs);
+      width: 100%;
     }
   }
 
@@ -122,35 +136,34 @@
   }
 
   &--officials {
-    padding-left: 0;
     margin-left: 0;
+    padding-left: 0;
 
     &-item {
-      list-style: none;
+      border-left: 4px var(--color-copper) solid;
       display: flex;
       flex-flow: row nowrap;
-      max-width: var(--webform-element-width--input-large);
-      width: 100%;
       justify-content: space-between;
-      border-left: 4px var(--color-copper) solid;
-      padding-left: var(--spacing-layout-xs);
-      margin-left: 0;
+      list-style: none;
       margin-bottom: var(--spacing-layout-s);
-      &-wrapper {
+      margin-left: 0;
+      max-width: var(--webform-element-width--input-large);
+      padding-left: var(--spacing-layout-xs);
+      width: 100%;
 
-      }
       &--position {
-        margin-top: 0;
-        padding-top: 0;
-        margin-bottom: var(--spacing-layout-2-xs);
         font-size: var(--fontsize-heading-xs);
         font-weight: bold;
+        margin-bottom: var(--spacing-layout-2-xs);
+        margin-top: 0;
+        padding-top: 0;
       }
     }
-
   }
+
   &--officials-edit-wrapper {
     text-align:right;
+
     a {
       display: inline-block;
     }
@@ -166,7 +179,13 @@
       display: none;
     }
   }
+
+  .hds-text-input__label {
+    display: inline-block;
+    margin-top: 0;
+  }
 }
+
 .page--oma-asiointi__private-person {
   .grants-profile--basicinfo {
     border-bottom: 8px solid var(--color-copper);
@@ -177,29 +196,28 @@
     grid-template-columns: 1fr 1fr;
   }
 }
+
 .page--oma-asiointi__unregistered-community {
   .grants-profile--wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
 }
+
 .hds-link .hel-icon {
-  vertical-align: bottom;
   margin-right: var(--spacing-2-xs);
+  vertical-align: bottom;
 }
+
 .hds-link span.link-label {
-  margin-right: var(--spacing-m);
   font-weight: bold;
+  margin-right: var(--spacing-m);
 }
+
 .bold-link {
   font-weight: bold;
 }
-.grants-profile {
-  .hds-text-input__label {
-    display: inline-block;
-    margin-top: 0;
-  }
-}
+
 div.applicant-info--from-prh,
 div.applicant-info--from-grants {
   display: grid;
@@ -219,98 +237,112 @@ div.applicant-info--from-grants {
     }
   }
 }
+
 div.applicant-info--from-prh {
   border-bottom: 2px solid var(--color-silver);
   margin-bottom: var(--spacing-layout-xs);
   padding-bottom: var(--spacing-layout-2-xs);
 }
+
 div.grants-handler--prefilled-field, .grants-profile-prh-info {
   .field-prefix {
     display: block;
     position: absolute;
-    top: 0;
     right: var(--spacing-layout-s);
+    top: 0;
   }
+
   .hds-text-input__input-wrapper,
   .description {
-    white-space: normal;
     display: inline-block;
+    white-space: normal;
   }
+
   .hel-icon--check-circle-fill {
     color: var(--color-success);
     vertical-align: middle;
   }
+
   .hds-text-input__input,
   .webform-element-description {
     color: var(--color-black);
-    line-height: var(--spacing-m);
-    position: relative;
     display: block;
     font-size: var(--fontsize-body-m);
+    line-height: var(--spacing-m);
+    position: relative;
   }
+
   .hds-text-input__label {
     margin-bottom: 0;
   }
 }
+
 .grants-profile--imported-section .webform-section-flex-wrapper {
   background-color: var(--color-silver-light);
-  padding-top: var(--spacing-l);
-  padding-left: var(--spacing-l);
-  padding-right: var(--spacing-l);
-  padding-bottom: var(--spacing-2-xs);
   border-bottom: 8px solid var(--color-engel-dark);
   display: block;
+  padding-bottom: var(--spacing-2-xs);
+  padding-left: var(--spacing-l);
+  padding-right: var(--spacing-l);
+  padding-top: var(--spacing-l);
   width: 100%;
 
   h3.webform-section-title {
     font-size: var(--fontsize-heading-l);
-    padding-top: 0;
-    margin-top: 0;
-    width: 100%;
     font-weight: 400;
-    max-width: 100%
+    margin-top: 0;
+    max-width: 100%;
+    padding-top: 0;
+    width: 100%;
   }
+
   .webform-section-wrapper {
     padding: 0;
   }
+
   .hds-text-input {
     margin-bottom: 0;
   }
+
   #edit-grants-profile-items-container {
-    margin-top: var(--spacing-layout-xs);
-    margin-bottom: var(--spacing-layout-xs);
     display: flex;
-    width: 100%;
     flex-flow: row wrap;
     justify-content: space-between;
+    margin-bottom: var(--spacing-layout-xs);
+    margin-top: var(--spacing-layout-xs);
+    width: 100%;
+
     > div {
-      min-width: 160px;
       margin: 0 var(--spacing-layout-xs) 0 0;
+      min-width: 160px;
     }
+
     .hds-text-input__input-wrapper {
       display: none;
     }
+
     label {
-      margin: 0;
       font-size: var(--fontsize-body-m);
       font-weight: bold;
+      margin: 0;
     }
-
   }
+
   .form-item-prh-markup {
+    border-bottom: 2px solid var(--color-silver);
     padding-bottom: var(--spacing-layout-xs);
     padding-top: var(--spacing-layout-xs);
-    border-bottom: 2px solid var(--color-silver);
   }
 }
+
 .grants-profile__local-tasks__wrapper {
   margin-bottom: 0;
 }
 
 .openid-connect-login-form.openid-connect-login-form {
   border-bottom: 0;
-  padding-bottom: 0;
   margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .grants-profile--links {

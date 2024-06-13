@@ -2,72 +2,77 @@
 .webform-print-footer {
   display: none;
 }
+
 .webform-print .main-content {
   display: block;
 }
+
 .webform-submission--view-mode-html,
 .webform-submission-data-preview-page,
 .webform-print-page-html {
   .hds-text-input {
     max-width: 100%;
   }
+
   .print-label {
-    margin-bottom: var(--spacing-3-xs);
     display: block;
-    margin-top: 0;
-    font-weight: 500;
-    padding-right: var(--spacing-xl);
-    max-width: -moz-fit-content;
-    max-width: fit-content;
-    position: relative;
     font-size: var(--fontsize-body-m);
+    font-weight: 500;
+    margin-bottom: var(--spacing-3-xs);
+    margin-top: 0;
+    max-width: fit-content;
+    padding-right: var(--spacing-xl);
+    position: relative;
   }
+
   .webform-section-flex-wrapper h3+*>*:first-child>*:first-child, .webform-section-flex-wrapper h3+*>*:first-child>*:first-child label:first-of-type {
     line-height: normal;
   }
+
   .print-notification {
     border: 2px var(--color-black) solid;
     font-weight: bold;
-    padding: var(--spacing-layout-s);
     margin-top: var(--spacing-2-xl);
+    padding: var(--spacing-layout-s);
 
     .print-notification--icon {
-      vertical-align: text-top;
-      margin-right: var(--spacing-2-xs);
       height: 22px;
+      margin-right: var(--spacing-2-xs);
+      vertical-align: text-top;
       width: 22px;
     }
   }
-  .webform-print-page-wizard-page ~ .webform-print-page-wizard-page {
-    h2 {
-      page-break-before: always;
-      page-break-after: avoid;
-    }
+
+  .webform-print-page-wizard-page ~ .webform-print-page-wizard-page h2 {
+    page-break-after: avoid;
+    page-break-before: always;
   }
+
   div.hds-text-input__input {
+    background: var(--color-white);
+    border: 2px var(--color-black) solid;
     height: var(--spacing-2-xl);
     width: 100%;
-    background: white;
-    border: 2px var(--color-black) solid;
   }
+
   div.hds-text-input__textarea {
+    background: var(--color-white);
+    border: 2px var(--color-black) solid;
     height: var(--spacing-layout-2-xl);
     width: 100%;
-    background: white;
-    border: 2px var(--color-black) solid;
   }
-  .webform-print-page-body {
-    h2 {
-      margin-bottom: var(--spacing-layout-s);
-    }
+
+  .webform-print-page-body h2 {
+    margin-bottom: var(--spacing-layout-s);
   }
 
   .webform-print-wrapper-table {
+    border: 0 transparent solid;
     display: table;
-    width: 100%;
     max-width: 100%;
-    border: 0px transparent solid;
     overflow-x: initial;
+    width: 100%;
+
     thead,
     tbody,
     tfoot,
@@ -76,27 +81,30 @@
     td,
     td:first-child,
     th {
-      color: black;
       background: transparent;
       border: 0;
+      color: var(--color-black);
     }
 
     ul {
       margin: 0;
       padding: 0;
+
       li {
-        list-style: none;
-        margin-top: 0mm;
-        padding: 1rem 0;
         border-bottom: 1px var(--color-black-50) solid;
+        list-style: none;
+        margin-top: 0;
+        padding: 1rem 0;
+
         &:last-of-type {
-          border-bottom: 0px transparent solid;
+          border-bottom: 0 transparent solid;
         }
       }
     }
 
     thead {
       display: table-header-group;
+
       th {
         padding: 0;
       }
@@ -106,21 +114,26 @@
       display: table-footer-group;
     }
   }
+
   .webform-submission-data > section {
-    padding-top: var(--spacing-layout-l);
     border-top: 1px var(--color-black-20) solid;
+    padding-top: var(--spacing-layout-l);
+
     > .webform-section-flex-wrapper {
       display: block;
+
       > h2 {
-        width: 100% !important;
-        min-width: 100%;
-        margin: 0mm 0 2mm !important;
-        padding: 0 !important;
         font-size: var(--fontsize-heading-l) !important;
         font-weight: 500;
+        margin: 0 0 2mm !important;
+        min-width: 100%;
+        padding: 0 !important;
+        width: 100% !important;
       }
+
       > .webform-section-wrapper {
         padding: 6mm 0;
+
         label {
           font-weight: 500;
         }
@@ -134,29 +147,33 @@
 
   @media print {
     @page {
-      size: A4;
       margin: 0;
+      size: A4;
     }
+
     h1 {
       margin: 0;
       position: relative;
     }
+
     details {
       page-break-before: always;
     }
+
     .details-section-divider {
       page-break-after: always;
     }
 
     label {
-      margin-bottom: 0;
       font-size: 8pt;
+      margin-bottom: 0;
     }
+
     section {
-      padding-top: 0 !important;
-      border-top: 0px var(--color-black-20) solid !important;
+      border-top: 0 var(--color-black-20) solid !important;
       margin-bottom: 0;
       padding-bottom: 0;
+      padding-top: 0 !important;
     }
 
     div.main-content {
@@ -179,186 +196,207 @@
     .webform-multiple-table--operations {
       display: none !important;
     }
+
     .gin--horizontal-toolbar .dialog-off-canvas-main-canvas {
       padding: 0 !important;
     }
 
     .hds-text-input {
       max-width: 100%;
+
       .hds-text-input__input {
         height: 1cm;
       }
+
       textarea.hds-text-input__input, div.hds-text-input__textarea {
         height: 6cm;
-        width: 100%;
         max-width: 100%;
         min-width: 100%;
+        width: 100%;
       }
     }
+
     .hds-text-input .hds-text-input__input[readonly],
     .hds-text-input .hds-text-input__input {
-      border: 2px black solid;
+      border: 2px var(--color-black) solid;
     }
 
     .webform {
       &-element {
-        position: relative;
-        border: 1px black solid;
-        padding: 2.5mm;
+        border: 1px var(--color-black) solid;
         margin-bottom: 8mm;
+        padding: 2.5mm;
+        position: relative;
       }
 
       &-preview {
-        margin-top: 0mm;
+        margin-top: 0;
+
         label {
-          position: absolute;
-          width: 100%;
-          top: -100%;
-          left: 0;
+          align-items: flex-end;
+          display: flex;
           font-size: 8pt;
           height: 100%;
-          display: flex;
-          align-items: flex-end;
+          left: 0;
           pointer-events: none;
+          position: absolute;
+          top: -100%;
+          width: 100%;
         }
+
         .webform-element {
-          position: relative;
-          top: 5mm;
+          border: 1px var(--color-black) solid;
           margin-bottom: 8mm;
           padding: 2.5mm;
-          border: 1px black solid;
+          position: relative;
+          top: 5mm;
         }
+
         .webform-multiple-table--operations {
           display: none;
         }
       }
+
       &-print {
 
         &-header {
-          background: white;
-          font-size: 9pt;
+          align-items: center;
+          background: var(--color-white);
+          border-bottom: 1px var(--color-black-40) solid;
           display: flex;
           flex-flow: row nowrap;
-          align-items: center;
-          position: fixed;
+          font-size: 9pt;
+          height: 21mm;
           left: 0;
+          max-width: 100%;
+          min-width: 100%;
+          position: fixed;
           top: 0;
           width: 100%;
-          min-width: 100%;
-          max-width: 100%;
           z-index: 1000;
-          border-bottom: 1px var(--color-black-40) solid;
-          height: 21mm;
-          svg {
-            display: block;
-            height: 25mm;
-            width: 55mm;
-            margin-right: 3mm;
-            color: black;
-          }
-          .webform-print-header-left-text {
-            width: 100%;
-            text-align: left;
-            color: var(--color-black-40);
-          }
-          .webform-print-header-right-text {
-            width: 100%;
-            color: var(--color-black-40);
-            text-align: right;
-          }
-        }
-        &-footer {
-          display: flex;
-          flex-flow: row nowrap;
-          align-items: center;
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          min-width: 100%;
-          max-width: 100%;
-          z-index: 1000;
-          background: white;
-          border-top: 1px var(--color-black-40) solid;
-          height: 17mm;
-          font-size: 9pt;
 
           svg {
+            color: var(--color-black);
             display: block;
-            height: 15mm;
-            width: 33mm;
+            height: 25mm;
             margin-right: 3mm;
-            color: black;
+            width: 55mm;
           }
-          .webform-print-footer-left-text {
-            width: 100%;
+
+          .webform-print-header-left-text {
             color: var(--color-black-40);
             text-align: left;
-          }
-          .webform-print-footer-right-text {
             width: 100%;
+          }
+
+          .webform-print-header-right-text {
             color: var(--color-black-40);
             text-align: right;
+            width: 100%;
+          }
+        }
+
+        &-footer {
+          align-items: center;
+          background: var(--color-white);
+          border-top: 1px var(--color-black-40) solid;
+          bottom: 0;
+          display: flex;
+          flex-flow: row nowrap;
+          font-size: 9pt;
+          height: 17mm;
+          left: 0;
+          max-width: 100%;
+          min-width: 100%;
+          position: fixed;
+          width: 100%;
+          z-index: 1000;
+
+          svg {
+            color: var(--color-black);
+            display: block;
+            height: 15mm;
+            margin-right: 3mm;
+            width: 33mm;
+          }
+
+          .webform-print-footer-left-text {
+            color: var(--color-black-40);
+            text-align: left;
+            width: 100%;
+          }
+
+          .webform-print-footer-right-text {
+            color: var(--color-black-40);
+            text-align: right;
+            width: 100%;
           }
         }
 
         &-header-space {
-          height: 21mm;
-          background: white;
+          background: var(--color-white);
           font-size: 9pt;
+          height: 21mm;
         }
 
         &-footer-space {
-          height: 17mm;
-          background: white;
+          background: var(--color-white);
           font-size: 9pt;
+          height: 17mm;
         }
 
         &-wrapper-table {
-          margin: 0;
           border: 0;
+          margin: 0;
           overflow-x: initial;
         }
 
       }
+
       &-section-flex-wrapper {
         flex-flow: row wrap;
+
         > h3.webform-section-title {
-          width: 100%;
           max-width: 100%;
+          width: 100%;
         }
       }
+
       &-section-grid-wrapper {
         display: flex;
         flex-flow: row nowrap;
+
         > h3.webform-section-title {
-          width: 100%;
-          max-width: 5cm;
-          margin-top: 0;
           font-size: 1.25rem;
+          margin-top: 0;
+          max-width: 5cm;
+          width: 100%;
         }
+
         > dl.webform-section-contents {
+          margin-top: 0;
+          max-width: 100%;
           padding-left: 1cm;
           width: 100%;
-          max-width: 100%;
-          margin-top: 0;
+
           dt {
             font-weight: bold;
-            padding: 0;
             margin:0;
+            padding: 0;
             page-break-after: avoid;
           }
+
           dd {
-            page-break-before: avoid;
-            padding: 0;
             margin: 0;
+            padding: 0;
+            page-break-before: avoid;
           }
         }
       }
+
       &-print-page-body h2 {
         margin-bottom: 1cm;
       }
     }
-
   }
 }

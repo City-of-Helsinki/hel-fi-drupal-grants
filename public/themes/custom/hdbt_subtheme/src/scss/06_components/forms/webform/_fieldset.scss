@@ -1,16 +1,19 @@
 fieldset.grants-fieldset {
   .fieldset-wrapper {
-    gap: 0 var(--spacing-layout-2-xs);
+    align-items: flex-end;
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-end;
+    gap: 0 var(--spacing-layout-2-xs);
+
     .form-item--error-message {
       grid-column: 1;
     }
   }
+
   &-short {
     max-width: var(--webform-element-width--input-large);
   }
+
   &-medium {
     .fieldset-wrapper {
       justify-content: center;
@@ -18,6 +21,7 @@ fieldset.grants-fieldset {
     max-width: var(--webform-element-width--fieldset);
   }
 }
+
 fieldset.premises-composite--wrapper.fieldgroup,
 fieldset.rented-premise-composite--wrapper.fieldgroup,
 .community_officials_wrapper fieldset.fieldgroup,
@@ -31,21 +35,21 @@ fieldset.members-composite--wrapper.fieldgroup,
 fieldset.orienteering-map-composite--wrapper,
 .form-item-muu-liite fieldset.grants-attachments--wrapper.fieldgroup {
   border-width: 2px;
-  padding: var(--spacing-s);
   margin-top: var(--spacing-layout-2-xs);
-  width: 100%;
   max-width: 100%;
+  padding: var(--spacing-s);
+  width: 100%;
 
   legend > span.visually-hidden {
-    height: auto;
-    width: max-content;
-    overflow: visible;
-    clip: initial;
-    clip-path: initial;
-    left: 0;
-    top: -12px;
     background: white;
+    clip-path: initial;
+    clip: initial;
+    height: auto;
+    left: 0;
+    overflow: visible;
     padding-right: var(--spacing-xl);
+    top: -12px;
+    width: max-content;
 
     @include breakpoint($breakpoint-m) {
       left: var(--spacing-layout-2-xs);

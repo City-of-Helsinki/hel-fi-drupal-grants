@@ -15,13 +15,14 @@
     margin-bottom: var(--spacing-l);
     position: relative;
     width: 100%;
+
     @include breakpoint($breakpoint-s) {
       margin-left: var(--spacing-m);
       width: calc(50% - var(--spacing-m));
+    }
 
-      @include breakpoint($breakpoint-l) {
-        width: calc(calc(100% / 3) - var(--spacing-m));
-      }
+    @include breakpoint($breakpoint-l) {
+      width: calc(calc(100% / 3) - var(--spacing-m));
     }
 
     .hds-card__body {
@@ -31,10 +32,8 @@
 
     .hds-card--mandate-card-content {
       display: grid;
-      grid-gap: var(--spacing-m);
       gap: var(--spacing-m);
+      grid-gap: var(--spacing-m);
     }
-
   }
-
 }

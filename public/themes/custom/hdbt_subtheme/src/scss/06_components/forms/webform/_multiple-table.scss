@@ -1,33 +1,38 @@
 .webform-multiple-table {
   table {
-    margin-bottom: var(--spacing-2-xs);
-    border: 0px var(--color-white) solid;
     border-collapse: collapse;
+    border: 0px var(--color-white) solid;
+    margin-bottom: var(--spacing-2-xs);
     max-width: fit-content;
   }
+
   .webform-multiple-table--operations-two {
     min-width: 60px;
   }
-  tbody tr, thead tr {
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-  }
 
+  tbody tr,
+  thead tr {
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
 
   td, th {
-    padding: 0;
-    min-width: 0;
     max-width: 100%;
+    min-width: 0;
+    padding: 0;
     width: 100%;
   }
+
   table thead th {
     padding: var(--spacing-layout-2-xs);
   }
 
 }
+
 div.hidden-head table {
   display:table;
+
   thead th {
     padding: 0;
   }
@@ -40,44 +45,51 @@ div.hidden-head table {
     }
   }
 }
+
 div.table-layout-form {
   input.hds-text-input__input {
     width: 100%;
   }
+
   table {
     border: 1px var(--color-black) solid;
     max-width: var(--webform-element-width--input-large);
-    tbody {
-      tr {
-        border: §0px var(--color-black-30) solid;
-        td {
-          padding: 0;
-          border: 1px var(--color-black-30) solid;
 
-          input.hds-text-input__input[readonly] {
-            padding: var(--spacing-layout-2-xs);
-          }
+    tbody tr {
+      border: §0px var(--color-black-30) solid;
+
+      td {
+        border: 1px var(--color-black-30) solid;
+        padding: 0;
+
+        input.hds-text-input__input[readonly] {
+          padding: var(--spacing-layout-2-xs);
         }
       }
     }
+
     .form-item {
       margin-bottom: 0;
     }
   }
 }
+
 .hds-text-input .hds-text-input__input.input--borderless {
-  border: 0px transparent solid;
+  border: 0 transparent solid;
 }
+
 #edit-subventions-items {
   thead {
     background: var(--color-black-90);
     color: var(--color-white);
     text-align: left;
   }
+
   input.hds-text-input, input.hds-text-input__input {
     background: transparent;
   }
 }
+
 #subventions_table {
   td, th {
     &.webform-multiple-table--operations {
@@ -93,14 +105,10 @@ div.table-layout-form {
   }
 }
 
-.form-item-muu-liite {
-  .webform-multiple-table--operations {
-    display: none;
-  }
+.form-item-muu-liite .webform-multiple-table--operations {
+  display: none;
 }
 
-.hidden-head {
-  > label {
-    display: none;
-  }
+.hidden-head > label {
+  display: none;
 }

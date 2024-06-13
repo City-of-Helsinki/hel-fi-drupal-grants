@@ -1,24 +1,27 @@
 .webform-element-help {
   background: var(--color-white);
-  color: var(--hdbt-color-black);
   border: 2px solid transparent;
-  width: var(--spacing-layout-xs);
+  color: var(--hdbt-color-black);
   height: var(--spacing-layout-xs);
-  position: absolute;
-  top: -2px;
-  right: 0;
-  z-index: 10;
   padding: 0;
+  position: absolute;
+  right: 0;
+  top: -2px;
+  width: var(--spacing-layout-xs);
+  z-index: 10;
 }
+
 div[data-tippy-root] {
   width: 350px;
 }
+
 .tippy-box {
   background-color: var(--color-black-5);
   border-left: var(--spacing-xs) var(--color-coat-of-arms) solid;
-  padding: var(--spacing-s);
-  color: var(--hdbt-color-black);
   border-radius: 0;
+  color: var(--hdbt-color-black);
+  padding: var(--spacing-s);
+
   .webform-element-help--content {
     white-space: normal;
 
@@ -32,12 +35,15 @@ div[data-tippy-root] {
     }
   }
 }
+
 .tippy-arrow {
   color: var(--color-black-5);
 }
+
 .webform-element-help--wrapper-short {
   max-width: fit-content;
 }
+
 .webform-element-help-container--title {
   --border-width: 2px;
   --outline-width: 3px;

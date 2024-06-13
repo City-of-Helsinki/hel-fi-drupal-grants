@@ -1,53 +1,59 @@
 .node--form-page .list-of-links {
   margin-left: 0;
+  margin-top: 0;
   width: 100%;
+
   @include breakpoint($breakpoint-m) {
     margin-top: 0;
   }
-  margin-top: 0;
+
   > .container {
     padding-top: 0;
   }
+
   .list-of-links {
     &__title {
-      margin: 0;
-      border-top: 2px solid var(--color-black-20);;
-      margin-bottom: var(--spacing-layout-xl);
+      border-top: 2px solid var(--color-black-20);
+      margin: 0 0 var(--spacing-layout-xl);
     }
-    &__container {
 
+    &__container {
       @include breakpoint($breakpoint-s) {
         width: calc(100% - var(--spacing-layout-xl));
-        @include breakpoint($breakpoint-m) {
-          width: 100%;
-        }
       }
 
-    }
-    &__content {
       @include breakpoint($breakpoint-m) {
-        margin: 0 var(--spacing-m) 0 0;
+        width: 100%;
+      }
+    }
+
+    &__content {
+      height: auto;
+      margin-top: 0;
+
+      @include breakpoint($breakpoint-m) {
         display: grid;
         grid-template-columns: auto auto auto;
+        margin: 0 var(--spacing-m) 0 0;
       }
-      margin-top: 0;
-      height: auto;
     }
+
     &__item {
-      border-left: 4px solid var(--color-copper);;
-      margin-right: -4px;
       align-self: stretch;
+      border-left: 4px solid var(--color-copper);
+      margin-right: -4px;
       padding-left: var(--spacing-m);
       padding-right: var(--spacing-m);
-
-
     }
   }
-}.list-of-links--without-image .list-of-links__item {
+}
+
+.list-of-links--without-image .list-of-links__item {
   .list-of-links__item__desc {
+    color: var(--color-black-90);
     font-size: var(--fontsize-body-m);
-    color: var(--color-black-90);;
   }
+
   .list-of-links__item__title {
     font-size: var(--fontsize-heading-m);
   }
