@@ -64,9 +64,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-hankkeen-nimi'].value ?? '');
     }
 
-    if (items['edit-kyseessa-on-festivaali-tai-tapahtuma-0']) {
+    if (items['edit-kyseessa-on-festivaali-tai-tapahtuma-1']) {
       await page.locator('#edit-kyseessa-on-festivaali-tai-tapahtuma')
-        .getByText(items['edit-kyseessa-on-festivaali-tai-tapahtuma-0'].value ?? '').click();
+        .getByText(items['edit-kyseessa-on-festivaali-tai-tapahtuma-1'].value ?? '').click();
     }
 
     if (items['edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti']) {
@@ -108,24 +108,40 @@ const formPages: PageHandlers = {
       await fillFormField(page, items['edit-tila'], 'edit-tila')
     }
 
-    if (items['edit-festivaalin-tai-tapahtuman-kohdalla-tapahtuman-paivamaarat']) {
-      await page.getByLabel('Festivaalin tai tapahtuman kohdalla tapahtuman päivämäärät')
-        .fill(items['edit-festivaalin-tai-tapahtuman-kohdalla-tapahtuman-paivamaarat'].value ?? '');
+    if (items['edit-festivaalin-tai-tapahtuman-paivamaarat']) {
+      await fillInputField(
+        items['edit-festivaalin-tai-tapahtuman-paivamaarat'].value ?? '',
+        items['edit-festivaalin-tai-tapahtuman-paivamaarat'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-festivaalin-tai-tapahtuman-paivamaarat',
+        },
+        page,
+        'edit-festivaalin-tai-tapahtuman-paivamaarat'
+      );
     }
 
     if (items['edit-hanke-alkaa']) {
-      await page.getByLabel('Hanke alkaa')
+      await page.locator('#edit-hanke-alkaa')
         .fill(items['edit-hanke-alkaa'].value ?? '');
     }
 
     if (items['edit-hanke-loppuu']) {
-      await page.getByLabel('Hanke loppuu')
+      await page.locator('#edit-hanke-loppuu')
         .fill(items['edit-hanke-loppuu'].value ?? '');
     }
 
     if (items['edit-laajempi-hankekuvaus']) {
-      await page.getByRole('textbox', {name: 'Laajempi hankekuvaus Laajempi hankekuvaus'})
-        .fill(items['edit-laajempi-hankekuvaus'].value ?? '');
+      await fillInputField(
+        items['edit-laajempi-hankekuvaus'].value ?? '',
+        items['edit-laajempi-hankekuvaus'].selector ?? {
+          type: 'data-drupal-selector',
+          name: 'data-drupal-selector',
+          value: 'edit-laajempi-hankekuvaus',
+        },
+        page,
+        'edit-laajempi-hankekuvaus'
+      );
     }
 
   },
@@ -231,17 +247,17 @@ const formPages: PageHandlers = {
       await fillFormField(page, items['edit-budget-other-cost'], 'edit-budget-other-cost')
     }
 
-    if (items['edit-muu-huomioitava-panostus']) {
-      thisItem = items['edit-muu-huomioitava-panostus'];
+    if (items['edit-sisaltyyko-toiminnan-toteuttamiseen-jotain-muuta-rahanarvoista-p']) {
+      thisItem = items['edit-sisaltyyko-toiminnan-toteuttamiseen-jotain-muuta-rahanarvoista-p'];
       await fillInputField(
         thisItem.value ?? '',
         thisItem.selector ?? {
           type: 'data-drupal-selector',
           name: 'data-drupal-selector',
-          value: 'edit-muu-huomioitava-panostus',
+          value: 'edit-sisaltyyko-toiminnan-toteuttamiseen-jotain-muuta-rahanarvoista-p',
         },
         page,
-        'edit-muu-huomioitava-panostus'
+        'edit-sisaltyyko-toiminnan-toteuttamiseen-jotain-muuta-rahanarvoista-p'
       );
     }
 
@@ -253,21 +269,21 @@ const formPages: PageHandlers = {
         .fill(items['edit-additional-information'].value ?? '');
     }
 
-    if (items['edit-projektisuunnitelma-attachment-upload']) {
+    if (items['edit-projektisuunnitelma-liite-attachment-upload']) {
       await uploadFile(
         page,
-        items['edit-projektisuunnitelma-attachment-upload'].selector?.value ?? '',
-        items['edit-projektisuunnitelma-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-projektisuunnitelma-attachment-upload'].value
+        items['edit-projektisuunnitelma-liite-attachment-upload'].selector?.value ?? '',
+        items['edit-projektisuunnitelma-liite-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-projektisuunnitelma-liite-attachment-upload'].value
       )
     }
 
-    if (items['edit-talousarvio-attachment-upload']) {
+    if (items['edit-talousarvio-liite-attachment-upload']) {
       await uploadFile(
         page,
-        items['edit-talousarvio-attachment-upload'].selector?.value ?? '',
-        items['edit-talousarvio-attachment-upload'].selector?.resultValue ?? '',
-        items['edit-talousarvio-attachment-upload'].value
+        items['edit-talousarvio-liite-attachment-upload'].selector?.value ?? '',
+        items['edit-talousarvio-liite-attachment-upload'].selector?.resultValue ?? '',
+        items['edit-talousarvio-liite-attachment-upload'].value
       )
     }
     if (items['edit-muu-liite']) {

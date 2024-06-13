@@ -16,7 +16,7 @@ import {
 const baseForm_49: FormData = {
   title: 'Save as draft.',
   formSelector: 'webform-submission-taide-ja-kulttuuri-kehittamisavu-form',
-  formPath: '/fi/hakemus/taide-ja-kulttuuri-kehittamisavu',
+  formPath: '/fi/form/taide-ja-kulttuuri-kehittamisavu',
   formPages: {
     "1_hakijan_tiedot": {
       items: {
@@ -97,8 +97,7 @@ const baseForm_49: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-kyseessa-on-monivuotinen-avustus-1',
           },
-          value: "1",
-          viewPageFormatter: viewPageFormatBoolean
+          value: "Kyllä",
         },
         "edit-vuodet-joille-monivuotista-avustusta-on-haettu-tai-myonetty": {
           role: 'input',
@@ -125,15 +124,14 @@ const baseForm_49: FormData = {
         "edit-hankkeen-nimi": {
           value: faker.lorem.words(3).toLocaleUpperCase()
         },
-        "edit-kyseessa-on-festivaali-tai-tapahtuma-0": {
+        "edit-kyseessa-on-festivaali-tai-tapahtuma-1": {
           role: 'radio',
           selector: {
             type: 'dom-id-label',
             name: 'data-drupal-selector',
-            value: 'edit-kyseessa-on-festivaali-tai-tapahtuma-0',
+            value: 'edit-kyseessa-on-festivaali-tai-tapahtuma-1',
           },
-          value: "0",
-          viewPageFormatter: viewPageFormatBoolean
+          value: "Kyllä",
         },
         "edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti": {
           role: 'input',
@@ -411,7 +409,7 @@ const baseForm_49: FormData = {
             expectedErrors: {}
           },
         },
-        "edit-festivaalin-tai-tapahtuman-kohdalla-tapahtuman-paivamaarat": {
+        "edit-festivaalin-tai-tapahtuman-paivamaarat": {
           role: 'input',
           value: faker.lorem.words(10),
         },
@@ -604,7 +602,7 @@ const baseForm_49: FormData = {
             expectedErrors: {}
           },
         },
-        "edit-muu-huomioitava-panostus": {
+        "edit-sisaltyyko-toiminnan-toteuttamiseen-jotain-muuta-rahanarvoista-p": {
           role: 'input',
           value: faker.lorem.sentences(3),
         },
@@ -624,24 +622,24 @@ const baseForm_49: FormData = {
         "edit-additional-information": {
           value: faker.lorem.sentences(3),
         },
-        'edit-projektisuunnitelma-attachment-upload': {
+        'edit-projektisuunnitelma-liite-attachment-upload': {
           role: 'fileupload',
           selector: {
             type: 'locator',
             name: 'data-drupal-selector',
-            value: '[name="files[projektisuunnitelma_attachment]"]',
-            resultValue: '.form-item-projektisuunnitelma-attachment a',
+            value: '[name="files[projektisuunnitelma_liite_attachment]"]',
+            resultValue: '.form-item-projektisuunnitelma-liite-attachment a',
           },
           value: ATTACHMENTS.TOIMINTASUUNNITELMA,
           viewPageFormatter: viewPageFormatFilePath
         },
-        'edit-talousarvio-attachment-upload': {
+        'edit-talousarvio-liite-attachment-upload': {
           role: 'fileupload',
           selector: {
             type: 'locator',
             name: 'data-drupal-selector',
-            value: '[name="files[talousarvio_attachment]"]',
-            resultValue: '.form-item-talousarvio-attachment a',
+            value: '[name="files[talousarvio_liite_attachment]"]',
+            resultValue: '.form-item-talousarvio-liite-attachment a',
           },
           value: ATTACHMENTS.TALOUSARVIO,
           viewPageFormatter: viewPageFormatFilePath
