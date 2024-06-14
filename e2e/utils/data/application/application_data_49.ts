@@ -760,6 +760,8 @@ const missingValues: FormDataWithRemoveOptionalProps = {
       items: {},
       itemsToRemove: [
         'edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-1',
+        'edit-budget-other-cost-items-0-item-label',
+        'edit-budget-other-cost-items-1-item-value',
       ],
     },
     'lisatiedot_ja_liitteet': {
@@ -790,6 +792,8 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-hanke-alkaa': 'Virhe sivulla 4. Suunniteltu toiminta: Hanke alkaa kenttä on pakollinen.',
     'edit-hanke-loppuu': 'Virhe sivulla 4. Suunniteltu toiminta: Hanke loppuu kenttä on pakollinen.',
     'edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-1': 'Virhe sivulla 6. Talous: Organisaatio kuuluu valtionosuusjärjestelmään (VOS) kenttä on pakollinen.',
+    'edit-budget-other-cost-items-0-item-label': 'Virhe sivulla 6. Talous: Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
+    'edit-budget-other-cost-items-1-item-value': 'Virhe sivulla 6. Talous: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
     'edit-projektisuunnitelma-liite-attachment-upload': 'Virhe sivulla 7. Lisätiedot ja liitteet: Projektisuunnitelma ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-talousarvio-liite-attachment-upload': 'Virhe sivulla 7. Lisätiedot ja liitteet: Talousarvio ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
   },
@@ -813,9 +817,88 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
       },
       itemsToRemove: [],
     },
+    '4_suunniteltu_toiminta': {
+      items: {
+"edit-tila": {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-tila-add-submit',
+              resultValue: 'edit-tila-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-premisename',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-postcode',
+                  },
+                  value: '123',
+                },
+                {
+                  role: 'radio',
+                  selector: {
+                    type: 'partial-for-attribute',
+                    name: '',
+                    value: 'edit-tila-items-[INDEX]-item-isownedbycity-1',
+                  },
+                  value: "Kyllä",
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-premisename',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-postcode',
+                  },
+                  value: faker.location.zipCode(),
+                },
+                {
+                  role: 'radio',
+                  selector: {
+                    type: 'partial-for-attribute',
+                    name: '',
+                    value: 'edit-tila-items-[INDEX]-item-isownedbycity-0',
+                  },
+                  value: "Ei",
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
+        },
+      },
+      itemsToRemove: [],
+    },
   },
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: ääkkösiävaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
+    'edit-tila-items-0-item-postcode': 'Virhe sivulla 4. Suunniteltu toiminta: Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena.',
   },
 };
 
