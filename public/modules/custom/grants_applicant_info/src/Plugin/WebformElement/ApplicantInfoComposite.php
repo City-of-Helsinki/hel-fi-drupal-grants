@@ -3,7 +3,7 @@
 namespace Drupal\grants_applicant_info\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
+use Drupal\grants_handler\Plugin\WebformElement\GrantsCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @see \Drupal\webform\Plugin\WebformElementInterface
  * @see \Drupal\webform\Annotation\WebformElement
  */
-class ApplicantInfoComposite extends WebformCompositeBase {
+class ApplicantInfoComposite extends GrantsCompositeBase {
 
   /**
    * Routes which should use submission data.
@@ -90,15 +90,17 @@ class ApplicantInfoComposite extends WebformCompositeBase {
   protected function formatTextItemValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []): array {
     $value = $this->getValue($element, $webform_submission, $options);
     $lines = [];
+    $lines[] = '<dl>';
     foreach ($value as $fieldName => $fieldValue) {
       if (isset($element["#webform_composite_elements"][$fieldName])) {
         $webformElement = $element["#webform_composite_elements"][$fieldName];
         if ($webformElement && isset($webformElement['#title'])) {
-          $lines[] = '<strong>' . $webformElement['#title']->render() . '</strong>';
-          $lines[] = $fieldValue;
+          $lines[] = '<dt>' . $webformElement['#title']->render() . '</dt>';
+          $lines[] = '<dd>' . $fieldValue . '</dd>';
         }
       }
     }
+    $lines[] = '</dl>';
 
     return $lines;
   }

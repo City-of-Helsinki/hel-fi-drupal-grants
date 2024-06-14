@@ -33,18 +33,11 @@ third_party_options:
         sv: 'Fostran och utbildning, allmän bidragsansökan'
   application_statuses:
     DRAFT: DRAFT
-    SENT: SENT
     SUBMITTED: SUBMITTED
     RECEIVED: RECEIVED
     PENDING: PENDING
     PROCESSING: PROCESSING
-    READY: READY
-    DONE: DONE
-    REJECTED: REJECTED
-    DELETED: DELETED
-    CANCELED: CANCELED
     CANCELLED: CANCELLED
-    CLOSED: CLOSED
   subvention_types:
     1: Toiminta-avustus
     2: Palkkausavustus

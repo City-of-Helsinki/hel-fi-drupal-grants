@@ -38,6 +38,17 @@
     text-decoration: underline;
   }
 
+  button.webform-button--next span::after,
+  button.webform-button--preview span::after {
+    content: '\003e';
+    margin-left: var(--spacing-2-xs);
+  }
+
+  button.webform-button--previous span::before {
+    content: '\003c';
+    margin-right: var(--spacing-2-xs);
+  }
+
   input.webform-button--previous {
     background: var(--color-white);
     color: var(--border-color);
