@@ -489,7 +489,7 @@ msgid "Log in to the service and do the identification."
 msgstr "Logga in på tjänsten och gör identifieringen."
 
 msgctxt "grants_handler"
-msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
+msgid "Please familiarize yourself with the instructions\non this page before proceeding to the application."
 msgstr "Bekanta dig med instruktionerna på den här sidan innan du går vidare till ansökan."
 
 msgctxt "grants_handler"
