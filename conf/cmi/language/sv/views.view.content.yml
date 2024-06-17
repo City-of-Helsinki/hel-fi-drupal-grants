@@ -11,7 +11,6 @@ display:
         name:
           label: Författare
         status:
-          label: Status
           settings:
             format_custom_false: 'Ej publicerad'
             format_custom_true: Publicerad
@@ -47,8 +46,7 @@ display:
           expose:
             label: Innehållstyp
         status:
-          expose:
-            label: Status
+          expose: {  }
           group_info:
             label: 'Status för publicering'
             group_items:
@@ -66,6 +64,9 @@ display:
         field_avustuslaji_target_id_entityreference_filter:
           expose:
             label: 'Typ av bidrag'
+        revision_uid:
+          expose:
+            label: 'Redigerat senast'
     display_title: Förvald
   page_1:
     display_title: Sida
