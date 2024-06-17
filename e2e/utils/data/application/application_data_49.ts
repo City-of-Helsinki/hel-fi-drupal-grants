@@ -13,45 +13,45 @@ import {
   viewPageFormatNumber
 } from "../../view_page_formatters";
 
-/**
- * Basic form data for successful submit to Avus2. This object contains ALL
- * fields with proper data for REGISTERED COMMUNITY. Then you override this for
- * private persons & unregistered community for 1st page at least.
- *
- * And then when you want to test out different options for any given group, you
- * just override suitable object and use that for running tests.
- *
- */
-const baseForm_48: FormData = {
+const baseForm_49: FormData = {
   title: 'Save as draft.',
-  formSelector: 'webform-submission-kuva-projekti-form',
-  formPath: '/fi/form/kuva-projekti',
+  formSelector: 'webform-submission-taide-ja-kulttuuri-kehittamisavu-form',
+  formPath: '/fi/form/taide-ja-kulttuuri-kehittamisavu',
   formPages: {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-email',
+          },
           value: faker.internet.email(),
           viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person',
+          },
           value: faker.person.fullName(),
         },
         "edit-contact-person-phone-number": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-contact-person-phone-number',
+          },
           value: faker.phone.number(),
         },
         "edit-bank-account-account-number-select": {
           role: 'select',
-          selector: {
-            type: 'by-label',
-            name: '',
-            value: 'edit-bank-account-account-number-select',
-          },
           value: PROFILE_INPUT_DATA.iban,
-          viewPageSelectors: [
-            '.application-attachment-list',
-            '.form-item-bank-account',
-            '.form-item-muu-liite'
-          ],
+          viewPageSelector: '.form-item-bank-account',
         },
         "edit-community-address-community-address-select": {
           value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
@@ -88,7 +88,34 @@ const baseForm_48: FormData = {
         "edit-subventions-items-0-amount": {
           value: '5709,98',
           viewPageSelector: '.form-item-subventions',
-          viewPageFormatter: viewPageFormatCurrency
+          viewPageFormatter: viewPageFormatCurrency,
+        },
+        "edit-kyseessa-on-monivuotinen-avustus-1": {
+          role: 'radio',
+          selector: {
+            type: 'dom-id-label',
+            name: 'data-drupal-selector',
+            value: 'edit-kyseessa-on-monivuotinen-avustus-1',
+          },
+          value: "Kyllä",
+        },
+        "edit-vuodet-joille-monivuotista-avustusta-on-haettu-tai-myonetty": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-vuodet-joille-monivuotista-avustusta-on-haettu-tai-myonetty',
+          },
+          value: faker.lorem.words(5),
+        },
+        "edit-erittely-kullekin-vuodelle-haettavasta-avustussummasta": {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-erittely-kullekin-vuodelle-haettavasta-avustussummasta',
+          },
+          value: faker.lorem.words(5),
         },
         "edit-ensisijainen-taiteen-ala": {
           role: 'select',
@@ -97,15 +124,14 @@ const baseForm_48: FormData = {
         "edit-hankkeen-nimi": {
           value: faker.lorem.words(3).toLocaleUpperCase()
         },
-        "edit-kyseessa-on-festivaali-tai-tapahtuma-0": {
+        "edit-kyseessa-on-festivaali-tai-tapahtuma-1": {
           role: 'radio',
           selector: {
             type: 'dom-id-label',
             name: 'data-drupal-selector',
             value: 'edit-kyseessa-on-festivaali-tai-tapahtuma-1',
           },
-          value: "0",
-          viewPageFormatter: viewPageFormatBoolean
+          value: "Kyllä",
         },
         "edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti": {
           role: 'input',
@@ -255,54 +281,47 @@ const baseForm_48: FormData = {
             name: 'data-drupal-selector',
             value: '3_yhteison_tiedot',
           },
-          viewPageSkipValidation: true,
+          viewPageSkipValidation: true
         },
       },
     },
     '3_yhteison_tiedot': {
       items: {
         "edit-members-applicant-person-global": {
-          value: faker.number.int({min: 1, max: 100}).toString(),
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-person-local": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-community-global": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-members-applicant-community-local": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-kokoaikainen-henkilosto": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-kokoaikainen-henkilotyovuosia": {
-          role: 'input',
-          value: faker.number.float({
-            min: 1,
-            max: 100,
-            precision: 2
-          }).toString(),
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-osa-aikainen-henkilosto": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-osa-aikainen-henkilotyovuosia": {
-          role: 'input',
-          value: faker.number.float({
-            min: 1,
-            max: 100,
-            precision: 2
-          }).toString(),
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "edit-vapaaehtoinen-henkilosto": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
+          value: faker.number.int({min: 12, max: 5000}).toString(),
+          viewPageFormatter: viewPageFormatNumber,
         },
         "nextbutton": {
           role: 'button',
@@ -313,74 +332,10 @@ const baseForm_48: FormData = {
           },
           viewPageSkipValidation: true,
         },
-      },
+      }
     },
     "4_suunniteltu_toiminta": {
       items: {
-        "edit-tapahtuma-tai-esityspaivien-maara-helsingissa": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
-        },
-        "edit-esitykset-maara-helsingissa": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
-        },
-        "edit-tyopaja-maara-helsingissa": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
-        },
-        "edit-nayttelyt-maara-helsingissa": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
-        },
-        "edit-esitykset-maara-kaikkiaan": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
-        },
-        "edit-nayttelyt-maara-kaikkiaan": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
-        },
-        "edit-tyopaja-maara-kaikkiaan": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 100}).toString(),
-        },
-        "edit-maara-helsingissa": {
-          role: 'input',
-          value: faker.number.int({min: 100, max: 10000}).toString(),
-          viewPageFormatter: viewPageFormatNumber
-        },
-        "edit-maara-kaikkiaan": {
-          role: 'input',
-          selector: {
-            type: 'data-drupal-selector-sequential',
-            name: '',
-            value: 'edit-maara-kaikkiaan',
-          },
-          value: faker.number.int({min: 1000, max: 100000}).toString(),
-          viewPageFormatter: viewPageFormatNumber
-        },
-        "edit-kantaesitysten-maara": {
-          role: 'input',
-          value: faker.number.int({min: 10, max: 100}).toString(),
-        },
-        "edit-ensi-iltojen-maara-helsingissa": {
-          role: 'input',
-          value: faker.number.int({min: 10, max: 100}).toString(),
-        },
-        "edit-ensimmainen-yleisolle-avoimen-tilaisuuden-paikka-helsingissa": {
-          role: 'input',
-          value: faker.company.buzzPhrase(),
-        },
-        "edit-postinumero": {
-          role: 'input',
-          value: faker.number.int({min: 10000, max: 99999}).toString(),
-        },
-        "edit-kyseessa-on-kaupungin-omistama-tila-1": {
-          role: 'radio',
-          value: "0",
-          viewPageFormatter: viewPageFormatBoolean
-        },
         "edit-tila": {
           role: 'multivalue',
           multi: {
@@ -454,13 +409,7 @@ const baseForm_48: FormData = {
             expectedErrors: {}
           },
         },
-        "edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara": {
-          role: 'input',
-          value: "2023-11-01",
-          viewPageFormatter: viewPageFormatDate,
-          viewPageSelector: '#kuva_projekti--aikataulu',
-        },
-        "edit-festivaalin-tai-tapahtuman-kohdalla-tapahtuman-paivamaarat": {
+        "edit-festivaalin-tai-tapahtuman-paivamaarat": {
           role: 'input',
           value: faker.lorem.words(10),
         },
@@ -468,13 +417,13 @@ const baseForm_48: FormData = {
           role: 'input',
           value: "2023-11-01",
           viewPageFormatter: viewPageFormatDate,
-          viewPageSelector: '#kuva_projekti--aikataulu',
+          viewPageSelector: '#taide_ja_kulttuuri_kehittamisavu--aikataulu'
         },
         "edit-hanke-loppuu": {
           role: 'input',
           value: "2023-12-01",
           viewPageFormatter: viewPageFormatDate,
-          viewPageSelector: '#kuva_projekti--aikataulu',
+          viewPageSelector: '#taide_ja_kulttuuri_kehittamisavu--aikataulu'
         },
         "edit-laajempi-hankekuvaus": {
           role: 'input',
@@ -594,60 +543,6 @@ const baseForm_48: FormData = {
           viewPageSelector: '.form-item-budget-static-income',
           viewPageFormatter: viewPageFormatCurrency,
         },
-        "edit-budget-static-cost-personnelsidecosts": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatCurrency,
-        },
-        "edit-budget-static-cost-performerfees": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatCurrency,
-        },
-        "edit-budget-static-cost-otherfees": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatCurrency,
-        },
-        "edit-budget-static-cost-showcosts": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatCurrency,
-        },
-        "edit-budget-static-cost-travelcosts": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatCurrency,
-        },
-        "edit-budget-static-cost-transportcosts": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatCurrency,
-        },
-        "edit-budget-static-cost-equipment": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatCurrency,
-        },
-        "edit-budget-static-cost-premises": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatCurrency,
-        },
-        "edit-budget-static-cost-marketing": {
-          role: 'input',
-          value: faker.number.int({min: 1, max: 5000}).toString(),
-          viewPageSelector: '.form-item-budget-static-cost',
-          viewPageFormatter: viewPageFormatCurrency,
-        },
         'edit-budget-other-cost': {
           role: 'multivalue',
           multi: {
@@ -709,7 +604,7 @@ const baseForm_48: FormData = {
             expectedErrors: {}
           },
         },
-        "edit-muu-huomioitava-panostus": {
+        "edit-sisaltyyko-toiminnan-toteuttamiseen-jotain-muuta-rahanarvoista-p": {
           role: 'input',
           value: faker.lorem.sentences(3),
         },
@@ -727,8 +622,29 @@ const baseForm_48: FormData = {
     "lisatiedot_ja_liitteet": {
       items: {
         "edit-additional-information": {
-          role: 'input',
           value: faker.lorem.sentences(3),
+        },
+        'edit-projektisuunnitelma-liite-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[projektisuunnitelma_liite_attachment]"]',
+            resultValue: '.form-item-projektisuunnitelma-liite-attachment a',
+          },
+          value: ATTACHMENTS.TOIMINTASUUNNITELMA,
+          viewPageFormatter: viewPageFormatFilePath
+        },
+        'edit-talousarvio-liite-attachment-upload': {
+          role: 'fileupload',
+          selector: {
+            type: 'locator',
+            name: 'data-drupal-selector',
+            value: '[name="files[talousarvio_liite_attachment]"]',
+            resultValue: '.form-item-talousarvio-liite-attachment a',
+          },
+          value: ATTACHMENTS.TALOUSARVIO,
+          viewPageFormatter: viewPageFormatFilePath
         },
         "edit-muu-liite": {
           role: 'multivalue',
@@ -777,26 +693,15 @@ const baseForm_48: FormData = {
             name: 'data-drupal-selector',
             value: 'webform_preview',
           },
-          viewPageSkipValidation: true,
+          viewPageSkipValidation: true
         },
       },
     },
     "webform_preview": {
       items: {
         "accept_terms_1": {
-          role: 'checkbox',
-          // selector: {
-          //   type: 'label',
-          //   name: 'Label',
-          //   details: {
-          //     label: 'Vakuutamme, että hakemuksessa ja sen liitteissä antamamme tiedot ovat oikeita, ja hyväksymme avustusehdot',
-          //     options: {
-          //       exact: true
-          //     }
-          //   },
-          // },
           value: "1",
-          viewPageSkipValidation: true,
+          viewPageSkipValidation: true
         },
         "sendbutton": {
           role: 'button',
@@ -806,137 +711,96 @@ const baseForm_48: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-actions-draft',
           },
-          viewPageSkipValidation: true,
+          viewPageSkipValidation: true
         },
       },
     },
   },
   expectedErrors: {},
-  expectedDestination: "/fi/hakemus/kuva_projekti/",
+  expectedDestination: "/fi/hakemus/taide_ja_kulttuuri_kehittamisavu/",
 }
 
-
-/**
- * Basic form data for successful submit to Avus2.
- *
- * Private person.
- */
-const baseFormPrivatePerson_48: FormData = createFormData(
-  baseForm_48,
-  {
-    formPages: {
-      "1_hakijan_tiedot": {
-        items: {
-          "edit-bank-account-account-number-select": {
-            role: 'select',
-            value: PROFILE_INPUT_DATA.iban,
-            viewPageSelector: '.form-item-bank-account',
-          },
-          "edit-community-officials-items-0-item-community-officials-select": {
-            viewPageSkipValidation: true,
-          },
-          "edit-email": {
-            viewPageSkipValidation: true,
-          },
-          "edit-contact-person": {
-            viewPageSkipValidation: true,
-          },
-          "edit-contact-person-phone-number": {
-            viewPageSkipValidation: true,
-          },
-          "edit-community-address-community-address-select": {
-            viewPageSkipValidation: true,
-          },
-        },
-      },
-    },
-  }
-);
-
-
-/**
- * Basic form data for successful submit to Avus2.
- *
- * Unregistered community.
- */
-const baseFormUnRegisteredCommunity_48: FormData = createFormData(
-  baseForm_48,
-  {
-    formPages: {
-      "1_hakijan_tiedot": {
-        items: {
-          "edit-bank-account-account-number-select": {
-            role: 'select',
-            value: PROFILE_INPUT_DATA.iban,
-            viewPageSelector: '.form-item-bank-account',
-          },
-          "edit-community-officials-items-0-item-community-officials-select": {
-            role: 'select',
-            value: PROFILE_INPUT_DATA.communityOfficial,
-            viewPageSelector: '.form-item-community-officials',
-          },
-          "edit-email": {
-           viewPageSkipValidation: true,
-          },
-          "edit-contact-person": {
-            viewPageSkipValidation: true,
-          },
-          "edit-contact-person-phone-number": {
-            viewPageSkipValidation: true,
-          },
-          "edit-community-address-community-address-select": {
-            viewPageSkipValidation: true,
-          },
-          "nextbutton": {
-            role: 'button',
-            selector: {
-              type: 'form-topnavi-link',
-              name: 'data-drupal-selector',
-              value: '2_avustustiedot',
-            },
-            viewPageSkipValidation: true,
-          },
-        },
-      },
-    },
-  }
-);
-
-/**
- * Overridden form to remove some values.
- */
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values',
   viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
-      itemsToRemove: ['edit-bank-account-account-number-select'],
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+        'edit-email',
+        'edit-contact-person',
+        'edit-contact-person-phone-number',
+        'edit-community-address-community-address-select'
+      ],
     },
     '2_avustustiedot': {
       items: {},
       itemsToRemove: [
-        'edit-myonnetty-avustus-items-0-item-issuer',
-        'edit-myonnetty-avustus-items-0-item-year',
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+        'edit-ensisijainen-taiteen-ala',
+        'edit-hankkeen-nimi',
+        'edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti',
+        'edit-vuodet-joille-monivuotista-avustusta-on-haettu-tai-myonetty',
+        'edit-erittely-kullekin-vuodelle-haettavasta-avustussummasta',
       ],
     },
     '4_suunniteltu_toiminta': {
       items: {},
       itemsToRemove: [
-        'edit-tila-items-1-item-premisename',
+        'edit-tila-items-0-item-premisename',
+        'edit-tila-items-0-item-postcode',
+        'edit-tila-items-0-item-isownedbycity-1',
+        'edit-hanke-alkaa',
+        'edit-hanke-loppuu',
       ],
-    }
+    },
+    '6_talous': {
+      items: {},
+      itemsToRemove: [
+        'edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-1',
+        'edit-budget-other-cost-items-0-item-label',
+        'edit-budget-other-cost-items-1-item-value',
+      ],
+    },
+    'lisatiedot_ja_liitteet': {
+      items: {},
+      itemsToRemove: [
+        'edit-projektisuunnitelma-liite-attachment-upload',
+        'edit-talousarvio-liite-attachment-upload',
+      ],
+    },
   },
   expectedErrors: {
     'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
-    'edit-myonnetty-avustus-items-0-item-issuer': 'Virhe sivulla 2. Avustustiedot: Avustuksen myöntäjä kenttä on pakollinen.',
-    'edit-myonnetty-avustus-items-0-item-year': 'Virhe sivulla 2. Avustustiedot: Vuosi kenttä on pakollinen.',
-    'edit-tila-items-1-item-premisename': 'Virhe sivulla 4. Suunniteltu toiminta: Tilan nimi kenttä on pakollinen.'
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä on pakollinen.',
+    'edit-contact-person': 'Virhe sivulla 1. Hakijan tiedot: Yhteyshenkilö kenttä on pakollinen.',
+    'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
+    'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Yhteisön osoite kenttä on pakollinen.',
+    'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-ensisijainen-taiteen-ala': 'Virhe sivulla 2. Avustustiedot: Ensisijainen taiteenala kenttä on pakollinen.',
+    'edit-hankkeen-nimi': 'Virhe sivulla 2. Avustustiedot: Hankkeen nimi kenttä on pakollinen.',
+    'edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti': 'Virhe sivulla 2. Avustustiedot: Hankkeen tai toiminnan lyhyt esittelyteksti kenttä on pakollinen.',
+    'edit-vuodet-joille-monivuotista-avustusta-on-haettu-tai-myonetty': 'Virhe sivulla 2. Avustustiedot: Tulevat vuodet, joiden ajalle monivuotista avustusta haetaan tai on myönnetty kenttä on pakollinen.',
+    'edit-erittely-kullekin-vuodelle-haettavasta-avustussummasta': 'Virhe sivulla 2. Avustustiedot: Erittely kullekin vuodelle haettavasta avustussummasta kenttä on pakollinen.',
+    'edit-tila-items-0-item-premisename': 'Virhe sivulla 4. Suunniteltu toiminta: Tilan nimi kenttä on pakollinen.',
+    'edit-tila-items-0-item-postcode': 'Virhe sivulla 4. Suunniteltu toiminta: Postinumero kenttä on pakollinen.',
+    'edit-tila-items-0-item-isownedbycity-1': 'Virhe sivulla 4. Suunniteltu toiminta: Kyseessä on kaupungin omistama tila kenttä on pakollinen.',
+    'edit-hanke-alkaa': 'Virhe sivulla 4. Suunniteltu toiminta: Hanke alkaa kenttä on pakollinen.',
+    'edit-hanke-loppuu': 'Virhe sivulla 4. Suunniteltu toiminta: Hanke loppuu kenttä on pakollinen.',
+    'edit-organisaatio-kuuluu-valtionosuusjarjestelmaan-vos-1': 'Virhe sivulla 6. Talous: Organisaatio kuuluu valtionosuusjärjestelmään (VOS) kenttä on pakollinen.',
+    'edit-budget-other-cost-items-0-item-label': 'Virhe sivulla 6. Talous: Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon',
+    'edit-budget-other-cost-items-1-item-value': 'Virhe sivulla 6. Talous: Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon',
+    'edit-projektisuunnitelma-liite-attachment-upload': 'Virhe sivulla 7. Lisätiedot ja liitteet: Projektisuunnitelma ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
+    'edit-talousarvio-liite-attachment-upload': 'Virhe sivulla 7. Lisätiedot ja liitteet: Talousarvio ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
   },
 };
 
-const wrongEmail: FormDataWithRemoveOptionalProps = {
-  title: 'Wrong email 1',
+const wrongValues: FormDataWithRemoveOptionalProps = {
+  title: 'Wrong values',
   viewPageSkipValidation: true,
   formPages: {
     '1_hakijan_tiedot': {
@@ -953,134 +817,89 @@ const wrongEmail: FormDataWithRemoveOptionalProps = {
       },
       itemsToRemove: [],
     },
+    '4_suunniteltu_toiminta': {
+      items: {
+        "edit-tila": {
+          role: 'multivalue',
+          multi: {
+            buttonSelector: {
+              type: 'data-drupal-selector',
+              name: 'data-drupal-selector',
+              value: 'edit-tila-add-submit',
+              resultValue: 'edit-tila-items-[INDEX]',
+            },
+            //@ts-ignore
+            items: {
+              0: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-premisename',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-postcode',
+                  },
+                  value: '123',
+                },
+                {
+                  role: 'radio',
+                  selector: {
+                    type: 'partial-for-attribute',
+                    name: '',
+                    value: 'edit-tila-items-[INDEX]-item-isownedbycity-1',
+                  },
+                  value: "Kyllä",
+                },
+              ],
+              1: [
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-premisename',
+                  },
+                  value: faker.lorem.words(3).toLocaleUpperCase(),
+                },
+                {
+                  role: 'input',
+                  selector: {
+                    type: 'data-drupal-selector',
+                    name: 'data-drupal-selector',
+                    value: 'edit-tila-items-[INDEX]-item-postcode',
+                  },
+                  value: faker.location.zipCode(),
+                },
+                {
+                  role: 'radio',
+                  selector: {
+                    type: 'partial-for-attribute',
+                    name: '',
+                    value: 'edit-tila-items-[INDEX]-item-isownedbycity-0',
+                  },
+                  value: "Ei",
+                },
+              ],
+            },
+            expectedErrors: {}
+          },
+        },
+      },
+      itemsToRemove: [],
+    },
   },
   expectedErrors: {
     'edit-email': 'Virhe sivulla 1. Hakijan tiedot: ääkkösiävaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
+    'edit-tila-items-0-item-postcode': 'Virhe sivulla 4. Suunniteltu toiminta: Käytä muotoa FI-XXXXX tai syötä postinumero viisinumeroisena.',
   },
-};
-
-const wrongEmail2: FormDataWithRemoveOptionalProps = {
-  title: 'Wrong email 2',
-  viewPageSkipValidation: true,
-  formPages: {
-    '1_hakijan_tiedot': {
-      items: {
-        "edit-email": {
-          role: 'input',
-          value: 'ääkkösiävaa@jdssd.fi',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-email',
-          }
-        },
-      },
-      itemsToRemove: [],
-    },
-  },
-  expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Sähköpostiosoite kenttä ei ole oikeassa muodossa.',
-  },
-};
-
-const wrongEmail3: FormDataWithRemoveOptionalProps = {
-  title: 'Wrong email 3',
-  viewPageSkipValidation: true,
-  formPages: {
-    '1_hakijan_tiedot': {
-      items: {
-        "edit-email": {
-          role: 'input',
-          value: 'vaaraemaili',
-          selector: {
-            type: 'data-drupal-selector',
-            name: 'data-drupal-selector',
-            value: 'edit-email',
-          }
-        },
-      },
-      itemsToRemove: [],
-    },
-  },
-  expectedErrors: {
-    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: vaaraemaili ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.',
-  },
-};
-
-const under5000: FormDataWithRemoveOptionalProps = {
-  title: 'Fields under 5000e',
-  viewPageSkipValidation: true,
-  formPages: {
-    '2_avustustiedot': {
-      items: {
-        "edit-subventions-items-0-amount": {
-          value: '3210',
-          viewPageSelector: '.form-item-subventions',
-          viewPageFormatter: viewPageFormatCurrency
-        },
-      },
-      itemsToRemove: ['edit-bank-account-account-number-select'],
-    },
-    '5_toiminnan_lahtokohdat': {
-      items: {},
-      itemsToBeHidden: [
-        'edit-toiminta-taiteelliset-lahtokohdat',
-        'edit-toiminta-tasa-arvo',
-        'edit-toiminta-saavutettavuus',
-        'edit-toiminta-yhteisollisyys',
-        'edit-toiminta-ammattimaisuus',
-        'edit-toiminta-ekologisuus',
-      ],
-    },
-  },
-  expectedErrors: {},
-};
-
-const copyForm: FormDataWithRemoveOptionalProps = {
-  title: 'Original copy form',
-  testFormCopying: true,
-  formPages: {
-    'lisatiedot_ja_liitteet': {
-      items: {},
-      itemsToRemove: [
-        'edit-muu-liite',
-      ],
-    },
-  },
-  expectedErrors: {},
-};
-
-const fieldSwapForm: FormDataWithRemoveOptionalProps = {
-  title: 'Field swap form',
-  testFieldSwap: true,
-  formPages: {
-    "1_hakijan_tiedot": {
-      items: {},
-      itemsToSwap: [
-        {field: 'edit-bank-account-account-number-select', swapValue: PROFILE_INPUT_DATA.iban2},
-      ]
-    },
-    "2_avustustiedot": {
-      items: {},
-      itemsToSwap: [
-        {field: 'edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti', swapValue: 'The new description!'},
-      ]
-    },
-    "4_suunniteltu_toiminta": {
-      items: {},
-      itemsToSwap: [
-        {field: 'edit-maara-kaikkiaan', swapValue: '1234'},
-      ]
-    },
-    "6_talous": {
-      items: {},
-      itemsToSwap: [
-        {field: 'edit-budget-static-income-entryfees', swapValue: '5678'},
-        {field: 'edit-budget-static-income-sales', swapValue: '999'}
-      ]
-    }
-  },
-  expectedErrors: {},
 };
 
 const sendApplication: FormDataWithRemoveOptionalProps = {
@@ -1105,50 +924,13 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
   expectedErrors: {},
 };
 
-/**
- * All data for registered community, keyed with id. Those do not matter.
- *
- * Each keyed formdata in this object will result a new test run for this form.
- *
- */
-const registeredCommunityApplications_48 = {
-  draft: baseForm_48,
-  copy: createFormData(baseForm_48, copyForm),
-  swap_fields: createFormData(baseForm_48, fieldSwapForm),
-  missing_values: createFormData(baseForm_48, missingValues),
-  wrong_email: createFormData(baseForm_48, wrongEmail),
-  wrong_email_2: createFormData(baseForm_48, wrongEmail2),
-  wrong_email_3: createFormData(baseForm_48, wrongEmail3),
-  under5000: createFormData(baseForm_48, under5000),
-  success: createFormData(baseForm_48, sendApplication),
-}
-
-/**
- * All data for private persons' applications.
- *
- * Each keyed formdata in this object will result a new test run for this form.
- */
-const privatePersonApplications_48 = {
-  draft: baseFormPrivatePerson_48,
-  under5000: createFormData(baseForm_48, under5000),
-  missing_values: createFormData(baseFormPrivatePerson_48, missingValues),
-  success: createFormData(baseFormPrivatePerson_48, sendApplication),
-}
-
-/**
- * All data for unregistered community applications.
- *
- * Each keyed formdata in this object will result a new test run for this form.
- */
-const unRegisteredCommunityApplications_48 = {
-  draft: baseFormUnRegisteredCommunity_48,
-  under5000: createFormData(baseForm_48, under5000),
-  missing_values: createFormData(baseFormUnRegisteredCommunity_48, missingValues),
-  success: createFormData(baseFormUnRegisteredCommunity_48, sendApplication),
+const registeredCommunityApplications_49 = {
+  draft: baseForm_49,
+  missing_values: createFormData(baseForm_49, missingValues),
+  wrong_values: createFormData(baseForm_49, wrongValues),
+  success: createFormData(baseForm_49, sendApplication),
 }
 
 export {
-  privatePersonApplications_48,
-  registeredCommunityApplications_48,
-  unRegisteredCommunityApplications_48
+  registeredCommunityApplications_49
 }

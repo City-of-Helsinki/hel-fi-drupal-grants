@@ -66,6 +66,9 @@ display:
         field_avustuslaji_target_id_entityreference_filter:
           expose:
             label: 'Typ av bidrag'
+        revision_uid:
+          expose:
+            label: 'Redigerat senast'
     display_title: Förvald
   page_1:
     display_title: Sida

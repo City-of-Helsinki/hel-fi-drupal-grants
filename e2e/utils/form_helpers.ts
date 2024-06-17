@@ -172,6 +172,10 @@ const fillProfileForm = async (
   await page.goto(formPath);
   await logCurrentUrl(page);
 
+  // Make sure we reached the correct profile form.
+  await expect(page.locator('body'), 'Reached the wrong profile form.').toHaveClass(new RegExp(`\\b${formClass}\\b`));
+  logger(`Reached the profile form: ${formClass}.`);
+
   // Hide the sliding popup.
   await hideSlidePopup(page);
 
@@ -293,7 +297,7 @@ const verifySubmit = async (
 
   // Attempt to locate the "Vastaanotettu" text on the page. Keep polling for 60000ms (1 minute).
   // Note: We do this instead of using Playwrights "expect" method so that test execution isn't interrupted if this fails.
-  const applicationReceived = await waitForTextWithInterval(page, 'Vastaanotettu', 60000, 5000);
+  const applicationReceived = await waitForTextWithInterval(page, 'Vastaanotettu');
   if (!applicationReceived) {
     logger('WARNING: Failed to validate that the application was received.');
     return;
