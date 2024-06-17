@@ -819,7 +819,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
     },
     '4_suunniteltu_toiminta': {
       items: {
-"edit-tila": {
+        "edit-tila": {
           role: 'multivalue',
           multi: {
             buttonSelector: {
