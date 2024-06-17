@@ -172,6 +172,10 @@ const fillProfileForm = async (
   await page.goto(formPath);
   await logCurrentUrl(page);
 
+  // Make sure we reached the correct profile form.
+  await expect(page.locator('body'), 'Reached the wrong profile form.').toHaveClass(new RegExp(`\\b${formClass}\\b`));
+  logger(`Reached the profile form: ${formClass}.`);
+
   // Hide the sliding popup.
   await hideSlidePopup(page);
 
