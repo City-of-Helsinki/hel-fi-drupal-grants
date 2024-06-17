@@ -9,11 +9,11 @@
         <div class="application-list-filter hds-text-input">
           <label for="applicationListFilter" class="hds-text-input__label">{{ "Search for an application"|t({}, {'context': 'grants_handler'})}}</label>
           <div class="hds-text-input__input-wrapper">
-            <input autocomplete="off" class="hds-text-input__input search" type="text" name="applicationListFilter" id="applicationListFilter" />
+            <input autocomplete="off" class="hds-text-input__input" type="text" name="applicationListFilter" id="applicationListFilter" />
           </div>
         </div>
         <div>
-          <button type="button" class="hds-button hds-button--primary">
+          <button id="searchForApplication" type="button" class="hds-button hds-button--primary">
             <span class="hds-button__label">{{ "Search for application"|t({}, {'context': 'grants_handler'})}}</span>
             <span aria-hidden="true" class="hel-icon hel-icon--search"></span>
           </button>
@@ -64,7 +64,7 @@
         {% endfor %}
       </ul>
     {% endif %}
-    {% if type != 'drafts' and items %}
+    {% if items %}
       <div class="hds-pagination-container" {% if items|length < 11 %} style="display:none;"{% endif %}>
         <ul aria-label={{"Pagination"|t}} role="navigation" class="pagination application-list__pagination"></ul>
       </div>

@@ -40,7 +40,8 @@ const baseFormRegisteredCommunity_67: FormData = {
         "edit-community-address-community-address-select": {
           value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
           viewPageSelector: '.form-item-community-address',
-          viewPageFormatter: viewPageFormatAddress
+          viewPageFormatter: viewPageFormatAddress,
+          printPageSkipValidation: true,
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
@@ -355,6 +356,7 @@ const baseFormRegisteredCommunity_67: FormData = {
             value: 'edit-compensation-boolean-1',
           },
           value: "Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
+          printPageSkipValidation: true,
         },
         "edit-compensation-explanation": {
           value: faker.lorem.sentences(4),
@@ -672,6 +674,7 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
 const copyForm: FormDataWithRemoveOptionalProps = {
   title: 'Original copy form',
   testFormCopying: true,
+  validatePrintPage: true,
   formPages: {
     '3_yhteison_tiedot': {
       items: {},

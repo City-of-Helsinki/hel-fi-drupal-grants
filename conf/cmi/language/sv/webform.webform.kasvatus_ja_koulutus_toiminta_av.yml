@@ -2,8 +2,8 @@ title: 'Fostran och utbildning, ansökan om verksamhetsbidrag för organisatöre
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   yhteiso_jolle_haetaan_avustusta:
     '#title': 'Samfund för vilket understödet ansöks'
   prh_markup:
@@ -49,8 +49,8 @@ elements: |
     '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   avustuksen_tiedot:
     '#title': 'Uppgifter om understödet'
   acting_year:
@@ -130,13 +130,13 @@ elements: |
     '#counter_maximum_message': '%d/5000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Samfundets verksamhet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   business_info:
     '#title': Verksamhets&shy;beskrivning
   business_purpose:
-    '#title': 'Beskrivning av verksamheten'
-    '#help': 'Informationen h&auml;mtas fr&aring;n avsnittet med personuppgifter'
+    '#title': Verksamhetsbeskrivning
+    '#help': 'Om du vill lägga till, ta bort eller ändra verksamhetsbeskrivningen, spara ansökan som ett utkast och gå till dina uppgifter för att redigera verksamhetsbeskrivningen.'
     '#counter_maximum_message': '%d/500 tecken kvar'
   community_practices_business:
     '#title': 'Bedriver samfundet affärsverksamhet'
@@ -144,9 +144,10 @@ elements: |
       1: Ja
       0: Nej
   toimintapaikkojen_perustiedot:
-    '#title': 'Verksamhetsställets uppgifter'
+    '#title': 'Verksamhets&shy;ställets uppgifter'
   toimintapaikka:
     '#title': Verksamhetsställen
+    '#description': '<p>Fyll i kontaktinformation, gruppstrukturer och uppgifter om eventuell hyra för respektive verksamhetsställe. Blanketten räknar ihop uppgifterna automatiskt.</p>'
     '#multiple__add_more_button_label': 'Lägg till en verksamhetsställen'
     '#multiple__item_label': 'verksamhetsställen'
   4_talous:
@@ -159,6 +160,7 @@ elements: |
     '#title': Inkomster
   tulot:
     '#title': Inkomster
+    '#compensation__title': 'Önskat understöd (€)'
   muut_avustukset:
     '#title': 'Andra understöd'
   muut_avustukset_field:
@@ -169,6 +171,8 @@ elements: |
     '#title': Utgifter
   henkilostomenot_ja_vuokrat:
     '#title': 'Användning av understödet/Specifikation av personalkostnader och hyror'
+    '#description': '<p>Användning av understödet/Specifikation av personalkostnader och hyror</p>'
+    '#personnelSideCosts__title': 'Lönebikostnader (€)'
   muut_menot:
     '#title': 'Andra kostnader'
   muut_menot_4:
@@ -179,6 +183,7 @@ elements: |
     '#title': 'Användning av understödet/Specifikation av köpta tjänster'
   avustuksen_kaytto_palveluiden_ostot_eriteltyina_2:
     '#title': 'Användning av understödet/Specifikation av köpta tjänster'
+    '#travelCosts__title': 'Resor (€)'
   muut_palveluiden_ostot:
     '#title': 'Köp av övriga tjänster'
   muut_palveluiden_ostot_2:
@@ -209,6 +214,8 @@ elements: |
     '#title': 'Användning av klientavgiftsinkomster (och eventuella donationer)'
   asiakasmaksutulojen_kaytto_ja_mahdolliset_lahjoitukset_2:
     '#title': 'Användning av klientavgiftsinkomster (och eventuella donationer)'
+    '#description': '<p>Beräknad användning av inkomsterna från avgifter uttagna för eftermiddagsverksamhet (specifikation enligt ändamål)</p>'
+    '#personnelSideCosts__title': 'Lönebikostnader (€)'
   muut_kulut_2:
     '#title': 'Övriga utgifter'
   muut_menot_3:
@@ -237,7 +244,7 @@ elements: |
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
-    '#title': 'Gemenskapens regler'
+    '#title': 'Samfundets stadgar'
     '#help': 'Ny s&ouml;kande eller stadgar som &auml;ndrats'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
@@ -277,6 +284,8 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
   vuokrasopimus_haettaessa_vuokra_avustusta_:
+    '#title': 'Hyresavtalet (om du söker hyresunderstöd)'
+    '#help': '<p>Bifoga hyresavtalet, om du söker hyresunderstöd</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
@@ -304,14 +313,14 @@ elements: |
   actions:
     '#submit__label': Skicka
     '#draft__label': 'Spara som oavslutad'
-    '#wizard_prev__label': '< Tidigare'
-    '#wizard_next__label': 'Nästa >'
-    '#preview_prev__label': '< Tidigare'
-    '#preview_next__label': ' För förhandsvisning >'
+    '#wizard_prev__label': 'Tidigare'
+    '#wizard_next__label': 'Nästa'
+    '#preview_prev__label': 'Tidigare'
+    '#preview_next__label': 'För förhandsvisning'
     '#delete__label': ' Radera oavslutat'
 settings:
-  wizard_prev_button_label: '< Tidigare'
-  wizard_next_button_label: 'Nästa >'
+  wizard_prev_button_label: 'Tidigare'
+  wizard_next_button_label: 'Nästa'
   preview_label: '6. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
   wizard_confirmation_label: '7. Slutförd'
