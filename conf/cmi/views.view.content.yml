@@ -766,6 +766,61 @@ display:
           reference_display: 'avustuslajit:entity_reference_1'
           reference_arguments: ''
           hide_empty_filter: true
+        revision_uid:
+          id: revision_uid
+          table: node_revision
+          field: revision_uid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: revision_uid
+          plugin_id: user_name
+          operator: in
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: revision_uid_op
+            label: 'Revision user'
+            description: ''
+            use_operator: false
+            operator: revision_uid_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: revision_uid
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              json_api_user: '0'
+              read_only: '0'
+              helsinkiprofiili: '0'
+              content_producer_industry: '0'
+              content_producer: '0'
+              grants_producer_industry: '0'
+              grants_producer: '0'
+              ad_user: '0'
+              grants_admin: '0'
+              admin: '0'
+              editor: '0'
+              super_administrator: '0'
+              performance_test_user: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
       filter_groups:
         operator: AND
         groups:
