@@ -113,10 +113,10 @@ class PlaceOfOperationComposite extends GrantsCompositeBase {
       $webformElement = $element["#webform_composite_elements"][$fieldName];
 
       // Convert boolean value.
-      if ($fieldName === 'free' && $fieldValue === 'false' || $fieldValue === false) {
+      if ($fieldName === 'free' && $fieldValue === 'false' || $fieldValue === FALSE) {
         $fieldValue = 0;
       }
-      if ($fieldName === 'free' && $fieldValue === 'true' || $fieldValue === true) {
+      if ($fieldName === 'free' && $fieldValue === 'true' || $fieldValue === TRUE) {
         $fieldValue = 1;
       }
 
