@@ -1,15 +1,13 @@
-import {Page, test} from "@playwright/test";
-import {FieldSwapItemList, FormData, FormPage, Selector} from "./data/test_data";
+import {expect, Page, test} from "@playwright/test";
+import {FieldSwapItemList, FormData, FormPage, Selector, TooltipsList} from "./data/test_data";
 import {logger} from "./logger";
 import {clickButton, fillFormField} from "./input_helpers";
-import {validateFormData} from "./validation_helpers";
 import {logCurrentUrl} from "./helpers";
 
 /**
- * The swapFieldValues function.
+ * The validateTooltips function.
  *
- * This function tests swapping field values.
- * This is done by:
+ * TBD.
  *
  * 1. Navigating to the submission URL with goToSubmissionUrl.
  * 2. Looping all form pages and checking if itemsToSwap is set.
@@ -26,35 +24,33 @@ import {logCurrentUrl} from "./helpers";
  * @param storedata
  *   The env form data.
  */
-const swapFieldValues = async (
+const validateTooltips = async (
   formKey: string,
   page: Page,
   formDetails: FormData,
   storedata: any
 ) => {
   if (storedata === undefined || storedata[formKey] === undefined) {
-    logger(`Skipping field value swap test: No env data stored after the "${formDetails.title}" test.`);
-    test.skip(true, 'Skip field value swap test');
+    logger(`Skipping tooltip validation test: No env data stored after the "${formDetails.title}" test.`);
+    test.skip(true, 'Skip bank account swap test');
     return;
   }
 
   const {applicationId, submissionUrl} = storedata[formKey];
-  logger(`Performing field swap test for application: ${applicationId}...`);
+  logger(`Performing tooltip validation for application: ${applicationId}...`);
   await goToSubmissionUrl(page, submissionUrl);
 
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
-    if (!formPageObject.itemsToSwap) continue;
-    let itemsToSwap = formPageObject.itemsToSwap;
-    await swapFieldValuesOnPage(page, formPageKey, formPageObject, itemsToSwap);
+    if (!formPageObject.tooltipsToValidate) continue;
+    let tooltipsToValidate = formPageObject.tooltipsToValidate;
+    await validateTooltipsOnPage(page, formPageKey, tooltipsToValidate);
   }
 
-  logger('Validating form with swapped values...');
-  await saveAsDraft(page);
-  await validateFormData(page, 'viewPage', formDetails);
+  logger('Tooltips validated.');
 }
 
 /**
- * The swapFieldValuesOnPage function.
+ * The validateTooltipsOnPage function.
  *
  * This function performs the swapping of field
  * values on a given application page. This is done by:
@@ -67,29 +63,22 @@ const swapFieldValues = async (
  *   Page object from Playwright.
  * @param formPageKey
  *   A form pages key.
- * @param formPageObject
- *   An object containing all the form data.
- * @param itemsToSwap
- *   The items that need to be swapped.
+ * @param tooltipsToValidate
+ *   A list of tooltips to validate on a give page.
  */
-const swapFieldValuesOnPage = async (
+const validateTooltipsOnPage = async (
   page: Page,
   formPageKey: string,
-  formPageObject: FormPage,
-  itemsToSwap: FieldSwapItemList
+  tooltipsToValidate: TooltipsList,
 ) => {
   await navigateToApplicationPage(page, formPageKey);
 
-  for (const [itemKey, itemField] of Object.entries(formPageObject.items)) {
-    const itemToSwap = itemsToSwap.find(item => item.field === itemKey);
-    if (!itemToSwap || !itemField.value || !itemField.selector) continue;
-
-    logger(`Swapping field: ${itemKey}`);
-    logger(`Original value: ${itemField.value}`);
-    logger(`New value: ${itemToSwap.swapValue}`);
-
-    itemField.value = itemToSwap.swapValue;
-    await fillFormField(page, itemField, itemKey, true);
+  for (const tooltip of tooltipsToValidate) {
+    logger(`Validating tooltip: ${tooltip.aria_label} with message: ${tooltip.message}`);
+    await page.locator(`[aria-label="${tooltip.aria_label}"]`).click();
+    await page.waitForTimeout(1000);
+    const tooltipContent = await page.locator('.tippy-content .webform-element-help--content').innerText();
+    expect(tooltipContent.trim()).toBe(tooltip.message);
   }
 };
 
@@ -134,26 +123,5 @@ const navigateToApplicationPage = async (page: Page, formPageKey: string) => {
   logger(`Loaded page: ${formPageKey}.`);
 };
 
-/**
- * The saveAsDraft function.
- *
- * This function saves and application
- * as draft.
- *
- * @param page
- *   Page object from Playwright.
- */
-const saveAsDraft = async (page: Page) => {
-  const saveDraftLink: Selector = {
-    type: 'data-drupal-selector',
-    name: 'data-drupal-selector',
-    value: 'edit-actions-draft',
-  }
-  await clickButton(page, saveDraftLink);
-  await logCurrentUrl(page);
-  await page.waitForURL('**/katso');
-  logger('Form saved as draft.')
-};
-
-export { swapFieldValues };
+export { validateTooltips };
 

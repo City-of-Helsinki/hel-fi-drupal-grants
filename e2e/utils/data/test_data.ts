@@ -75,6 +75,13 @@ type FieldSwapItem = {
   swapValue: string;
 };
 
+type TooltipsList = Tooltip[];
+
+type Tooltip = {
+  aria_label: string;
+  message: string;
+};
+
 interface FormFieldWithRemove extends FormField {
   type?: string;
   label?: string;
@@ -99,6 +106,7 @@ interface FormDataWithRemove extends FormData {
       itemsToRemove?: RemoveList | undefined;
       itemsToBeHidden?: HiddenItemsList | undefined;
       itemsToSwap?: FieldSwapItemList | undefined;
+      tooltipsToValidate?: TooltipsList| undefined;
     };
   };
 }
@@ -112,6 +120,7 @@ interface FormPage {
   itemsToRemove?: RemoveList | undefined;
   itemsToBeHidden?: HiddenItemsList | undefined;
   itemsToSwap?: FieldSwapItemList | undefined;
+  tooltipsToValidate?: TooltipsList| undefined;
 }
 
 interface FormData {
@@ -127,6 +136,7 @@ interface FormData {
   testFormCopying?: boolean,
   testFieldSwap?: boolean,
   validatePrintPage?: boolean,
+  validateTooltips?: boolean,
 }
 
 interface PageHandlers {
@@ -188,6 +198,8 @@ export {
   ElementDetails,
   TestScenario,
   PageCollection,
+  TooltipsList,
+  Tooltip,
   isMultiValueField,
   isDynamicMultiValueField,
 }
