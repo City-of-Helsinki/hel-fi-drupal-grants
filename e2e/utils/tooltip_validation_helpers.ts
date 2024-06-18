@@ -7,13 +7,12 @@ import {logCurrentUrl} from "./helpers";
 /**
  * The validateTooltips function.
  *
- * TBD.
+ * This function performs the tooltip validation test.
+ * This is done by:
  *
  * 1. Navigating to the submission URL with goToSubmissionUrl.
- * 2. Looping all form pages and checking if itemsToSwap is set.
- * 3. Swapping field values with swapFieldValuesOnPage.
- * 4. Saving the form as draft with saveAsDraft.
- * 5. Validating that the values were changed with validateFormData.
+ * 2. Looping all form pages and checking if tooltipsToValidate is set.
+ * 3. Validating tooltips with validateTooltipsOnPage.
  *
  * @param formKey
  *   The form variant key.
@@ -52,12 +51,12 @@ const validateTooltips = async (
 /**
  * The validateTooltipsOnPage function.
  *
- * This function performs the swapping of field
- * values on a given application page. This is done by:
+ * This function performs validates the tooltips
+ * on a given page. This is done by:
  *
  * 1. Navigating to the desired application page with navigateToApplicationPage.
- * 2. Swapping the values of the fields inside itemsToSwap
- *    by calling fillFormField after the field values have been manipulated.
+ * 2. Validating the tooltips by clicking the corresponding
+ *    aria-label and checking the message.
  *
  * @param page
  *   Page object from Playwright.
@@ -74,8 +73,8 @@ const validateTooltipsOnPage = async (
   await navigateToApplicationPage(page, formPageKey);
 
   for (const tooltip of tooltipsToValidate) {
-    logger(`Validating tooltip: ${tooltip.aria_label} with message: ${tooltip.message}`);
-    await page.locator(`[aria-label="${tooltip.aria_label}"]`).click();
+    logger(`Validating tooltip: "${tooltip.aria_label}" with message: "${tooltip.message}".`);
+    await page.locator(`[aria-label="${tooltip.aria_label}"]:visible`).click();
     await page.waitForTimeout(1000);
     const tooltipContent = await page.locator('.tippy-content .webform-element-help--content').innerText();
     expect(tooltipContent.trim()).toBe(tooltip.message);
