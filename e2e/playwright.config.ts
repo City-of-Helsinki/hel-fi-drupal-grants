@@ -127,6 +127,12 @@ export default defineConfig({
       testMatch: '/forms/registered_community_48.ts',
       dependencies: ['profile-registered_community']
     },
+    /* Form 49 tests. */
+    {
+      name: 'forms-49',
+      testMatch: '/forms/registered_community_49.ts',
+      dependencies: ['profile-registered_community']
+    },
     /* Form 51 tests. */
     {
       name: 'forms-51',
