@@ -111,7 +111,9 @@ class AtvSchema {
         if (is_array($jsonPath)) {
           $elementName = array_pop($jsonPath);
 
-          $typedDataValues[$definitionKey] = $this->getValueFromDocument($documentContent, $jsonPath, $elementName, $definition);
+          $typedDataValues[$definitionKey] = DocumentValueExtractor::getValueFromDocument(
+            $documentContent, $jsonPath, $elementName, $definition
+          );
         }
       }
     }
@@ -385,7 +387,7 @@ class AtvSchema {
       $newContent = $content[$newKey];
       // And since we're not in root element, call self
       // to drill down to desired element.
-      return $this->getValueFromDocument($newContent, $pathArray, $elementName, $definition);
+      return DocumentValueExtractor::getValueFromDocument($newContent, $pathArray, $elementName, $definition);
     }
     // If we are at the root of content, and the given element exists.
     elseif (array_key_exists($elementName, $content)) {
@@ -748,7 +750,7 @@ class AtvSchema {
     $pathArray = $definition->getSetting('jsonPath');
     $elementName = array_pop($pathArray);
     // Pick up the value for the master field.
-    $value = $this->getValueFromDocument($content, $pathArray, $elementName, $definition);
+    $value = DocumentValueExtractor::getValueFromDocument($content, $pathArray, $elementName, $definition);
     $relatedValue = match ($relations['type']) {
       // We use values 1 and 0 for boolean fields in webform.
       'boolean' => $value ? 1 : 0,
