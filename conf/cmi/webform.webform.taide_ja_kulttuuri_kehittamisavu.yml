@@ -18,11 +18,14 @@ third_party_settings:
       74: '74'
       73: '73'
     applicationTargetGroup: '22'
-    applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-07-31T11:19:00'
+    applicationOpen: '2024-06-05T10:00:26'
+    applicationClose: '2024-09-02T16:02:00'
     applicationContinuous: 0
     disableCopying: 0
-    applicationActingYears: {  }
+    applicationActingYears:
+      2024: '2024'
+      2025: '2025'
+      2026: '2026'
     applicationActingYearsType: next_x_years
     applicationActingYearsNextCount: '1'
     status: released
@@ -1028,8 +1031,8 @@ settings:
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: 'Edellinen'
-  wizard_next_button_label: 'Seuraava'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
