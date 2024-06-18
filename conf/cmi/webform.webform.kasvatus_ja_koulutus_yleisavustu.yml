@@ -14,9 +14,9 @@ third_party_settings:
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
+      64: '64'
       45: '45'
       48: '48'
-      64: '64'
     applicationTargetGroup: '21'
     applicationOpen: '2024-04-02T00:00:00'
     applicationClose: '2024-10-04T16:00:00'
@@ -771,8 +771,8 @@ settings:
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: 'Edellinen'
-  wizard_next_button_label: 'Seuraava'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''

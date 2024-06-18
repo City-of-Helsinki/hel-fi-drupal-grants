@@ -1200,7 +1200,10 @@ moment and reload the page.',
 
         // If we HAVE errors, then refresh them from the.
         $this->messenger()
-          ->addError($this->t('Validation failed, please check inputs.', [], $tOpts));
+          ->addError($this->t('The application cannot be submitted because not all
+mandatory questions have been answered. Return to the application form and fill in
+at least those questions and fields that are marked with an asterisk (*). You can
+submit the application only after you have provided all the necessary information.', [], $tOpts));
       }
     }
   }

@@ -114,10 +114,30 @@ const getApplicationNumberFromBreadCrumb = async (page: Page) => {
 const waitForTextWithInterval = async (
   page: Page,
   text: string,
-  timeout: number,
-  interval: number
+  timeout?: number,
+  interval?: number,
 ): Promise<boolean> => {
   logger(`Attempting to locate text: "${text}"...`);
+
+  // Default values for timeouts.
+  const DEFAULT_TIMEOUT = 60000;
+  const DEFAULT_INTERVAL = 5000;
+
+  // Read from environment variables or use defaults.
+  const envTimeout = process.env.WAIT_FOR_TEXT_TIMEOUT ? parseInt(process.env.WAIT_FOR_TEXT_TIMEOUT) : DEFAULT_TIMEOUT;
+  const envInterval = process.env.WAIT_FOR_TEXT_INTERVAL ? parseInt(process.env.WAIT_FOR_TEXT_INTERVAL) : DEFAULT_INTERVAL;
+
+  // Check for passed in values.
+  timeout = timeout ?? envTimeout;
+  interval = interval ?? envInterval;
+
+  // Check if the environment variables are correctly set, otherwise use defaults.
+  if (timeout < interval) {
+    logger(`Environment variables invalid. Using default values: Timeout ${DEFAULT_TIMEOUT}ms, Interval ${DEFAULT_INTERVAL}ms`);
+    timeout = DEFAULT_TIMEOUT;
+    interval = DEFAULT_INTERVAL;
+  }
+
   const startTime = Date.now();
 
   while (true) {

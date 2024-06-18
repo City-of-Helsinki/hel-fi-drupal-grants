@@ -53,6 +53,13 @@
 
         });
     }
+    if ($("#oma-asiointi__drafts")[0]) {
+      const draftsListOptions = {
+        pagination: true,
+        page: 10,
+      };
+      new List('oma-asiointi__drafts', draftsListOptions);
+    }
   }
 };
 })(jQuery, Drupal, drupalSettings);

@@ -106,26 +106,21 @@ class PlaceOfOperationComposite extends GrantsCompositeBase {
     $value = $this->getValue($element, $webform_submission, $options);
     $lines = ['<dl>'];
 
-    $tOpts = ['context' => 'grants_place_of_operation'];
-
     foreach ($value as $fieldName => $fieldValue) {
       if (!isset($element["#webform_composite_elements"][$fieldName])) {
         continue;
       }
       $webformElement = $element["#webform_composite_elements"][$fieldName];
 
-      // Convert date strings.
-      $fieldValue = parent::formatFieldValue($webformElement, $fieldName, $fieldValue, ['rentTimeBegin', 'rentTimeEnd']);
-
       // Convert boolean value.
-      if ($fieldName === 'free') {
-        if ($fieldValue === 'false') {
-          $fieldValue = $this->t('No', [], $tOpts);
-        }
-        if ($fieldValue === 'true') {
-          $fieldValue = $this->t('Yes', [], $tOpts);
-        }
+      if ($fieldName === 'free' && $fieldValue === 'false' || $fieldValue === FALSE) {
+        $fieldValue = 0;
       }
+      if ($fieldName === 'free' && $fieldValue === 'true' || $fieldValue === TRUE) {
+        $fieldValue = 1;
+      }
+
+      $fieldValue = parent::formatFieldValue($webformElement, $fieldName, $fieldValue, ['rentTimeBegin', 'rentTimeEnd']);
 
       if (parent::isCompositeAccessible($webformElement)) {
         $lines[] = '<dt>' . parent::renderCompositeTitle($webformElement['#title']) . '</dt>';

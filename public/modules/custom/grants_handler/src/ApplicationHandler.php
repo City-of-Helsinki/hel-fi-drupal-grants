@@ -1110,7 +1110,7 @@ class ApplicationHandler {
     $isProd = self::isProduction($appEnv);
 
     if (
-      ($isProd && $status !== 'production') ||
+      ($isProd && $status !== 'released') ||
       $status === 'archived'
     ) {
       return FALSE;

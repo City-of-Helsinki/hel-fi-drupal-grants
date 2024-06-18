@@ -493,7 +493,7 @@ msgid "Log in to the service and do the identification."
 msgstr "Kirjaudu palveluun ja tee tunnistautuminen."
 
 msgctxt "grants_handler"
-msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
+msgid "Please familiarize yourself with the instructions\non this page before proceeding to the application."
 msgstr "Tutustuthan ohjeistukseen tällä sivulla ennen hakemukselle siirtymistä."
 
 msgctxt "grants_handler"
@@ -625,8 +625,8 @@ msgid "Additional information concerning the application"
 msgstr "Lisätietoja hakemukseen liittyen"
 
 msgctxt "grants_handler"
-msgid "Validation failed, please check inputs."
-msgstr "Kenttien validaatio epäonnistui, tarkista syötteet."
+msgid "The application cannot be submitted because not all\nmandatory questions have been answered. Return to the application form and fill in\nat least those questions and fields that are marked with an asterisk (*). You can\nsubmit the application only after you have provided all the necessary information."
+msgstr "Hakemusta ei voida lähettää, koska kaikkiin pakollisiin kysymyksiin ei ole vastattu. Palaa hakulomakkeeseen ja täytä ainakin ne kysymykset ja kentät, jotka on merkitty tähdellä (*). Voit lähettää hakemuksen vasta, kun olet antanut kaikki pakolliset tiedot."
 
 msgctxt "grants_handler"
 msgid "No applications in progress."
