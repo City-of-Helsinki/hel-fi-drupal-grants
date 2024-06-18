@@ -80,11 +80,13 @@ const baseFormRegisteredCommunity_53: FormData = {
           role: 'input',
           value: '2023-09-23',
           viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#kasko_ip_lisa--ajalle_alkaen',
         },
         "edit-paattyy": {
           role: 'input',
           value: '2023-11-30',
           viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#kasko_ip_lisa--ajalle_alkaen',
         },
         "nextbutton": {
           role: 'button',

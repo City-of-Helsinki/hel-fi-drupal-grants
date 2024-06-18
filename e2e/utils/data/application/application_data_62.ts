@@ -393,10 +393,12 @@ const baseFormRegisteredCommunity_62: FormData = {
         "edit-projekti-alkaa": {
           value: '2023-12-01',
           viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#nuorisotoiminta_projektiavustush--projektin_aikataulu',
         },
         "edit-projekti-loppuu": {
           value: '2023-12-31',
           viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#nuorisotoiminta_projektiavustush--projektin_aikataulu',
         },
         "edit-osallistujat-7-28": {
           value: faker.number.int({min: 12, max: 5000}).toString(),

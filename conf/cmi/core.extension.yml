@@ -127,6 +127,7 @@ module:
   helfi_tunnistamo: 0
   helfi_user_roles: 0
   helfi_yjdh: 0
+  help: 0
   image: 0
   image_style_quality: 0
   imagecache_external: 0
@@ -215,6 +216,7 @@ module:
   webform: 0
   webform_rest: 0
   webform_submission_log: 0
+  webform_translation_permissions: 0
   webform_ui: 0
   webform_views: 0
   grants_handler: 1

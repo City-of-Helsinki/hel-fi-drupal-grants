@@ -2,8 +2,8 @@ title: 'Understöd för konst och kultur: Projektstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   hakemusprofiili:
     '#title': 'Hämtade uppgifter'
   prh_markup:
@@ -49,8 +49,8 @@ elements: |
     '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   avustuksen_tiedot:
     '#title': 'Preciserad information'
   acting_year:
@@ -123,8 +123,8 @@ elements: |
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Uppgifter om den ansökande organisationen'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   jasenmaara:
     '#title': Medlemsantal
   jasenmaara_fieldset:
@@ -155,8 +155,8 @@ elements: |
     '#title': 'Frivilliga: Personer'
   4_suunniteltu_toiminta:
     '#title': '4. Verksamhet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   arvio_maarista:
     '#title': 'En uppskattning av omfattningen på verksamheten'
     '#description': 'Mata in uppgifterna gällande hela projektet, som stödet gäller. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet.'
@@ -230,8 +230,8 @@ elements: |
     '#help': 'Ber&auml;tta kort och koncist om projektet. Varf&ouml;r, vad, f&ouml;r vem, hur och med vilka m&aring;ls&auml;ttningar?'
   5_toiminnan_lahtokohdat:
     '#title': '5. Utgångspunkten för verksamheten'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   toiminnan_sisallot:
     '#title': 'Verksamhetens innehåll'
   toiminta_taiteelliset_lahtokohdat:
@@ -266,8 +266,8 @@ elements: |
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:
     '#title': '6. Ekonomi'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   talousarvio:
     '#title': Budget
   markup_01:
@@ -346,14 +346,14 @@ elements: |
   actions:
     '#submit__label': Skicka
     '#draft__label': 'Spara som oavslutad'
-    '#wizard_prev__label': '< Tidigare'
-    '#wizard_next__label': 'Nästa >'
-    '#preview_prev__label': '< Tidigare'
-    '#preview_next__label': 'För förhandsvisning >'
+    '#wizard_prev__label': 'Tidigare'
+    '#wizard_next__label': 'Nästa'
+    '#preview_prev__label': 'Tidigare'
+    '#preview_next__label': 'För förhandsvisning'
     '#delete__label': 'Radera oavslutat'
 settings:
-  wizard_prev_button_label: '< Tidigare'
-  wizard_next_button_label: 'Nästa >'
+  wizard_prev_button_label: 'Tidigare'
+  wizard_next_button_label: 'Nästa'
   preview_label: '8. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
   wizard_confirmation_label: '9. Slutförd'

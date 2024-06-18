@@ -6,6 +6,16 @@ import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
 import {logCurrentUrl} from "./helpers";
 
 /**
+ *  The pageType type.
+ *
+ *  This type describes the types of pages field validation
+ *  can be performed on. Field validation is done differently on
+ *  the "printPage" page, since everything is just printed inside one
+ *  big blob.
+ */
+type pageType = "viewPage" | "profilePage" | "printPage";
+
+/**
  * The validateSubmission function.
  *
  * This function is used to validate application submissions.
@@ -37,7 +47,42 @@ const validateSubmission = async (
   if (thisStoreData.status === 'DRAFT' || thisStoreData.status === 'RECEIVED') {
     logger(`Validating draft application with application ID: ${thisStoreData.applicationId}...`);
     await navigateAndValidateViewPage(page, thisStoreData);
-    await validateFormData(page, formDetails);
+    await validateFormData(page, 'viewPage', formDetails);
+  }
+}
+
+/**
+ * The validatePrintPage function.
+ *
+ * This function is used to validate an applications "print" page.
+ * This is done by navigating to the print page and making sure
+ * that the submitted form data is present on the page.
+ *
+ * @param formKey
+ *   The form variant key.
+ * @param page
+ *   Page object from Playwright.
+ * @param formDetails
+ *   The form data.
+ * @param storedata
+ *   The env form data.
+ */
+const validatePrintPage = async (
+  formKey: string,
+  page: Page,
+  formDetails: FormData,
+  storedata: any
+) => {
+  if (storedata === undefined || storedata[formKey] === undefined) {
+    logger(`Skipping print content test: No env data stored after the "${formDetails.title}" test.`);
+    test.skip(true, 'Skip print content test');
+  }
+
+  const thisStoreData = storedata[formKey];
+  if (thisStoreData.status === 'DRAFT' || thisStoreData.status === 'RECEIVED') {
+    logger(`Validating print content for application ID: ${thisStoreData.applicationId}...`);
+    await navigateAndValidatePrintPage(page, thisStoreData);
+    await validateFormData(page, 'printPage', formDetails);
   }
 }
 
@@ -63,7 +108,7 @@ const validateProfileData = async (
   profileType: string,
 ) => {
   await navigateAndValidateProfilePage(page, profileType);
-  await validateFormData(page, formDetails);
+  await validateFormData(page, 'profilePage', formDetails);
 }
 
 
@@ -145,11 +190,14 @@ const validateExistingProfileData = async (
  *
  * @param page
  *   Page object from Playwright.
+ * @param pageType
+ *   The page type validation is being performed on.
  * @param formDetails
  *   The form data.
  */
 const validateFormData = async (
   page: Page,
+  pageType: pageType,
   formDetails: FormData,
 ) => {
 
@@ -173,14 +221,14 @@ const validateFormData = async (
       // that iterates over the fields items.
       if (itemField.role === 'dynamicmultivalue' || itemField.role === 'multivalue') {
         await validateMultiValueFields(
-          itemKey, itemField, page,
+          itemKey, itemField, page, pageType,
           skipMessageCallback, noValueMessageCallback,
           validationErrorCallback, validationSuccessCallback
         );
       } else {
         // Normal field validation.
         await validateField(
-          itemKey, itemField, page,
+          itemKey, itemField, page, pageType,
           skipMessageCallback, noValueMessageCallback,
           validationErrorCallback, validationSuccessCallback
         );
@@ -206,6 +254,8 @@ const validateFormData = async (
  *   The item field from teh form data.
  * @param page
  *   Page object from Playwright.
+ * @param pageType
+ *   The page type validation is being performed on.
  * @param skipMessageCallback
  *   Callback for skipMessages.
  * @param noValueMessageCallback
@@ -219,6 +269,7 @@ const validateMultiValueFields = async (
   itemKey: string,
   itemField: FormField | FormFieldWithRemove,
   page: Page,
+  pageType: pageType,
   skipMessageCallback: (message: string) => void,
   noValueMessageCallback: (message: string) => void,
   validationErrorCallback: (message: string) => void,
@@ -239,7 +290,7 @@ const validateMultiValueFields = async (
   for (const multiItemArray of Object.values(multiItemsArray)) {
     for (const multiItem of multiItemArray) {
       await validateField(
-        itemKey, multiItem, page,
+        itemKey, multiItem, page, pageType,
         skipMessageCallback, noValueMessageCallback,
         validationErrorCallback, validationSuccessCallback
       );
@@ -268,6 +319,8 @@ const validateMultiValueFields = async (
  *   The item field from teh form data.
  * @param page
  *   Page object from Playwright.
+ * @param pageType
+ *   The page type validation is being performed on.
  * @param skipMessageCallback
  *   Callback for skipMessages.
  * @param noValueMessageCallback
@@ -281,6 +334,7 @@ const validateField = async (
   itemKey: string,
   itemField: FormField | FormFieldWithRemove,
   page: Page,
+  pageType: pageType,
   skipMessageCallback: (message: string) => void,
   noValueMessageCallback: (message: string) => void,
   validationErrorCallback: (message: string) => void,
@@ -288,7 +342,7 @@ const validateField = async (
 ) => {
 
   // Skip excluded items.
-  if (itemField.viewPageSkipValidation) {
+  if (itemField.viewPageSkipValidation || (itemField.printPageSkipValidation && pageType === 'printPage')) {
     let message = constructMessage(MessageType.SkipValidation, itemKey);
     skipMessageCallback(message);
     return;
@@ -315,6 +369,14 @@ const validateField = async (
   } else {
     itemSelectors.push(itemSelector);
   }
+
+  // If we are validating the print page, then the items selector is always the same,
+  // since everything is printed inside one big blob without any defining classes.
+  if (pageType === 'printPage') {
+    itemSelectors = [];
+    itemSelectors.push('.webform-print-content');
+  }
+
 
   // Attempt to locate the item and see if the input value matches the content on the page.
   try {
@@ -360,6 +422,37 @@ const navigateAndValidateViewPage = async (
   const applicationIdContainerText = await applicationIdContainer.textContent();
   expect(applicationIdContainerText).toContain(applicationId);
   logger('Draft validation on page:', viewPageURL);
+}
+
+/**
+ * The navigateAndValidatePrintPage function.
+ *
+ * This function navigates to an applications "Print"
+ * page and makes sure that we get to it. This is done
+ * so that we can validate the input application data
+ * against the resulting data on the "Print" page.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param thisStoreData
+ *   The env form data.
+ */
+const navigateAndValidatePrintPage = async (
+  page: Page,
+  thisStoreData: any
+) => {
+
+  // Navigate to the page.
+  const applicationId = thisStoreData.applicationId;
+  const printPageURL = `/fi/hakemus/${applicationId}/tulosta`;
+  await page.goto(printPageURL);
+  await logCurrentUrl(page);
+  await page.waitForURL('**/tulosta');
+
+  // Validate the application number.
+  const applicationIdContainer = await page.locator('.transaction-id');
+  await expect(applicationIdContainer).toHaveText(applicationId);
+  logger('Print validation on page:', printPageURL);
 }
 
 /**
@@ -517,4 +610,5 @@ export {
   validateFormData,
   validateExistingProfileData,
   validateHiddenFields,
+  validatePrintPage,
 }

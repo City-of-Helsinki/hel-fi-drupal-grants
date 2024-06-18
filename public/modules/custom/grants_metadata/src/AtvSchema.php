@@ -599,36 +599,38 @@ class AtvSchema {
     }
 
     if ($itemTypes['dataType'] === 'string' && $itemTypes['jsonType'] === 'bool') {
-      if ($itemValue === FALSE) {
-        $itemValue = 'false';
-      }
-      if ($itemValue === '0') {
-        $itemValue = 'false';
-      }
-      if ($itemValue === 0) {
-        $itemValue = 'false';
-      }
-      if ($itemValue === TRUE) {
-        $itemValue = 'true';
-      }
-      if ($itemValue === '1') {
-        $itemValue = 'true';
-      }
-      if ($itemValue === 1) {
-        $itemValue = 'true';
-      }
-      if ($itemValue == 'Yes') {
-        $itemValue = 'true';
-      }
-      if ($itemValue == 'No') {
-        $itemValue = 'false';
-      }
+      $itemValue = self::convertToBooleanString($itemValue);
     }
 
     if ($itemTypes['jsonType'] == 'int') {
       $itemValue = str_replace('_', '', $itemValue);
     }
 
+    return $itemValue;
+  }
+
+  /**
+   * Converts a value to its boolean string representation.
+   *
+   * @param mixed $itemValue
+   *   The item value to be converted.
+   *
+   * @return string
+   *   The converted boolean string representation of the item value.
+   */
+  private static function convertToBooleanString(mixed $itemValue): string {
+    $falseValues = [FALSE, '0', 0, 'No'];
+    $trueValues = [TRUE, '1', 1, 'Yes'];
+
+    if (in_array($itemValue, $falseValues, TRUE)) {
+      return 'false';
+    }
+
+    if (in_array($itemValue, $trueValues, TRUE)) {
+      return 'true';
+    }
+
+    // Return orignal values as fallback.
     return $itemValue;
   }
 
@@ -678,52 +680,46 @@ class AtvSchema {
    *   Array with IDs that the function will look for.
    *
    * @return array
-   *   Assocative arrow with the results if they are found.
+   *   Associative array with the results if they are found.
    */
   public static function extractDataForWebForm(array $content, array $keys): array {
     $values = [];
+
     if (!isset($content['compensation'])) {
       return $values;
     }
 
-    foreach ($content['compensation'] as $key => $item) {
-      if (is_numeric($key)) {
-        if (in_array($item['ID'], $keys) && !in_array($item['ID'], $values)) {
-          $values[$item['ID']] = $item['value'];
-        }
+    self::extractValuesRecursively($content['compensation'], $keys, $values);
+
+    return $values;
+  }
+
+  /**
+   * Recursively extract values from nested arrays.
+   *
+   * @param array $items
+   *   The array to search through.
+   * @param array $keys
+   *   Array with IDs that the function will look for.
+   * @param array &$values
+   *   Associative array to store the results.
+   */
+  private static function extractValuesRecursively(array $items, array $keys, array &$values) {
+    foreach ($items as $key => $item) {
+      if (is_array($item)) {
+        self::extractValuesRecursively($item, $keys, $values);
       }
-      else {
-        if (!is_array($item)) {
-          $values[$key] = $item;
-          continue;
-        }
-        foreach ($item as $key2 => $item2) {
-          if (!is_array($item2)) {
-            $values[$key2] = $item2;
-          }
-          elseif (AtvSchema::numericKeys($item2)) {
-            foreach ($item2 as $item3) {
-              if (AtvSchema::numericKeys($item3)) {
-                foreach ($item3 as $item4) {
-                  if (in_array($item4['ID'], $keys) && !array_key_exists($item4['ID'], $values)) {
-                    $values[$item4['ID']] = $item4['value'];
-                  }
-                }
-              }
-              else {
-                if (isset($item3['ID']) && in_array($item3['ID'], $keys) && !array_key_exists($item3['ID'], $values)) {
-                  $values[$item3['ID']] = $item3['value'];
-                }
-              }
-            }
-          }
-          elseif (is_numeric($key2) && in_array($item2['ID'], $keys) && !in_array($item2['ID'], $values)) {
-            $values[$item2['ID']] = $item2['value'];
-          }
-        }
+      if (in_array($key, $keys) && !in_array($key, $values)) {
+        $values[$key] = $item;
+      }
+      if (is_numeric($key) &&
+          !AtvSchema::numericKeys($item) &&
+          isset($item['ID']) &&
+          in_array($item['ID'], $keys) &&
+          !in_array($item['ID'], $values)) {
+        $values[$item['ID']] = $item['value'];
       }
     }
-    return $values;
   }
 
   /**

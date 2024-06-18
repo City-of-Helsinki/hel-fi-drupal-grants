@@ -15,7 +15,7 @@ field_name: field_list_of_links_links
 entity_type: paragraph
 bundle: list_of_links
 label: Links
-description: 'The links that you want the paragraph to display.'
+description: 'Linkkilistan linkit.'
 required: true
 translatable: false
 default_value: {  }

@@ -1443,8 +1443,12 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     strtolower($submissionData["application_number"]),
   ];
 
-  $editApplicationLinkText = Markup::create(t('Edit application', [], $tOpts));
-  $viewApplicationLinkText = Markup::create(t('View application', [], $tOpts));
+  $editApplicationLinkText = Markup::create(
+    t('Edit application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
+  );
+  $viewApplicationLinkText = Markup::create(
+    t('View application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
+  );
 
   $variables['viewApplicationLink'] = Link::fromTextAndUrl($viewApplicationLinkText, $viewApplicationUrl);
   $variables['editApplicationLink'] = Link::fromTextAndUrl($editApplicationLinkText, $editApplicationUrl);
@@ -1473,11 +1477,16 @@ function grants_handler_preprocess_application_list_item(&$variables) {
       ->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
   }
 
+  $status = ApplicationHandler::getWebformStatus($webform);
+
   $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
   $variables['openEndDate'] = strtotime($thirdPartySettings['applicationClose']);
   $variables['isContinuous'] = $thirdPartySettings['applicationContinuous'] != 0;
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
     $variables['errorType'] = 'NOT_OPEN';
+  }
+  elseif ($status === 'archived') {
+    $variables['errorType'] = 'ARCHIVED';
   }
   try {
     if (array_key_exists($submissionData["status"], ApplicationHandler::getApplicationStatuses())) {
@@ -1613,7 +1622,7 @@ function grants_handler_preprocess_message_list_item(&$variables) {
 
   $message = $variables['message'];
 
-  if ($message['messageStatus'] == 'UNREAD') {
+  if (isset($message['messageStatus']) && $message['messageStatus'] == 'UNREAD') {
     $markReadLink = Link::createFromRoute(t('Mark as read', [], $tOpts), 'grants_handler.message_read',
       [
         'message_id' => $message['messageId'],
@@ -1632,7 +1641,7 @@ function grants_handler_preprocess_message_list_item(&$variables) {
     $markReadLink = '';
   }
   $variables['sender'] = t('My message', [], $tOpts);
-  if ($message['sentBy'] == 'Avustusten kasittelyjarjestelma') {
+  if (isset($message['sentBy']) && $message['sentBy'] == 'Avustusten kasittelyjarjestelma') {
     $variables['sender'] = t('Applications Helsinki', [], $tOpts);
     $variables['markReadLink'] = $markReadLink;
   }
@@ -1734,8 +1743,20 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
 
   $isApplicationOpen = ApplicationHandler::isApplicationOpen($webform);
 
-  // Show copy button when the application is open and copying is not disabled.
-  if ($thirdPartySettings["disableCopying"] != 1 && $isApplicationOpen) {
+  if (!isset($thirdPartySettings["status"])) {
+    // Use TRUE if not set so we disallow copying if status is not set.
+    $isApplicationArchived = TRUE;
+  }
+  else {
+    $isApplicationArchived = $thirdPartySettings["status"] === 'archived';
+  }
+
+  // Show copy button only if copying has not been disabled.
+  if (
+    $thirdPartySettings["disableCopying"] != 1 &&
+    !$isApplicationArchived &&
+    $isApplicationOpen
+  ) {
     $copyApplicationUrl = Url::fromRoute(
       'grants_handler.copy_application_modal',
       [
@@ -1999,4 +2020,32 @@ function grants_handler_js_settings_build(&$settings, AttachedAssetsInterface $a
   // and other components which are using ajax functions.
   // See: AU-2081 https://helsinkisolutionoffice.atlassian.net/browse/AU-2081
   $settings['grants_handler_dummy_setting'] = TRUE;
+}
+
+/**
+ * Implements hook_options_list_alter().
+ *
+ * Appends possible webform status (In development / Production) to the
+ * option name and hides in-development options in PROD env.
+ */
+function grants_handler_options_list_alter(array &$options, array $context): void {
+  /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
+  $field_definition = $context['fieldDefinition'];
+
+  if ($field_definition->getName() === 'field_webform') {
+
+    $webforms = Webform::loadMultiple(array_keys($options));
+    $env = ApplicationHandler::getAppEnv();
+
+    foreach ($webforms as $key => $webform) {
+      $status = $webform->getThirdPartySetting('grants_metadata', 'status');
+
+      if ($env === 'PROD' && $status === 'development') {
+        unset($options[$key]);
+      }
+      elseif ($status === 'development' && $env !== 'PROD') {
+        $options[$key] .= ' (Development version)';
+      }
+    }
+  }
 }

@@ -1,17 +1,10 @@
 import {Page, test} from '@playwright/test';
 import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
-import {fillGrantsFormPage, fillHakijanTiedotUnregisteredCommunity,} from "../../utils/form_helpers";
-import {selectRole} from "../../utils/auth_helpers";
-import {getObjectFromEnv} from "../../utils/env_helpers";
-import {validateSubmission} from "../../utils/validation_helpers";
-import {deleteDraftApplication} from "../../utils/deletion_helpers";
-import {copyApplication} from "../../utils/copying_helpers";
+import {fillHakijanTiedotUnregisteredCommunity} from "../../utils/form_helpers";
 import {fillFormField, fillInputField, uploadFile} from "../../utils/input_helpers";
+import {generateTests} from "../../utils/test_generator_helpers";
+import {Role, selectRole} from "../../utils/auth_helpers";
 import {unRegisteredCommunityApplications as applicationData} from '../../utils/data/application_data';
-import {swapFieldValues} from "../../utils/field_swap_helpers";
-
-const profileType = 'unregistered_community';
-const formId = '62';
 
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
@@ -210,9 +203,12 @@ const formPages: PageHandlers = {
 test.describe('NUORPROJ(62)', () => {
   let page: Page;
 
+  const profileType = 'unregistered_community';
+  const formId = '62';
+
   test.beforeAll(async ({browser}) => {
-    page = await browser.newPage()
-    await selectRole(page, 'UNREGISTERED_COMMUNITY');
+    page = await browser.newPage();
+    await selectRole(page, profileType.toUpperCase() as Role);
   });
 
   test.afterAll(async() => {
@@ -220,73 +216,11 @@ test.describe('NUORPROJ(62)', () => {
   });
 
   const testDataArray: [string, FormData][] = Object.entries(applicationData[formId]);
+  const tests = generateTests(profileType, formId, formPages, testDataArray);
 
-  for (const [key, obj] of testDataArray) {
-    test(`Form: ${obj.title}`, async () => {
-      await fillGrantsFormPage(
-        key,
-        page,
-        obj,
-        obj.formPath,
-        obj.formSelector,
-        formId,
-        profileType,
-        formPages
-      );
+  for (const { testName, testFunction } of tests) {
+    test(testName, async ({browser}) => {
+      await testFunction(page, browser);
     });
   }
-
-  for (const [key, obj] of testDataArray) {
-    if (!obj.testFormCopying) continue;
-    test(`Copy form: ${obj.title}`, async () => {
-      const storedata = getObjectFromEnv(profileType, formId);
-      await copyApplication(
-        key,
-        profileType,
-        formId,
-        page,
-        obj,
-        storedata
-      );
-    });
-  }
-
-  for (const [key, obj] of testDataArray) {
-    if (!obj.testFieldSwap) continue;
-    test(`Field swap: ${obj.title}`, async () => {
-      const storedata = getObjectFromEnv(profileType, formId);
-      await swapFieldValues(
-        key,
-        page,
-        obj,
-        storedata
-      );
-    });
-  }
-
-  for (const [key, obj] of testDataArray) {
-    if (obj.viewPageSkipValidation || obj.testFormCopying || obj.testFieldSwap) continue;
-    test(`Validate: ${obj.title}`, async () => {
-      const storedata = getObjectFromEnv(profileType, formId);
-      await validateSubmission(
-        key,
-        page,
-        obj,
-        storedata
-      );
-    });
-  }
-
-  for (const [key, obj] of testDataArray) {
-    test(`Delete drafts: ${obj.title}`, async () => {
-      const storedata = getObjectFromEnv(profileType, formId);
-      await deleteDraftApplication(
-        key,
-        page,
-        obj,
-        storedata
-      );
-    });
-  }
-
 });
