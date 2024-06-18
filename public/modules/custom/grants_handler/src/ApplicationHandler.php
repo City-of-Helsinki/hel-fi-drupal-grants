@@ -763,6 +763,56 @@ class ApplicationHandler {
   }
 
   /**
+   * Checks if there is breaking changes in newer webform versions.
+   *
+   * Breakin changes in this context means any Avus2 changes, that makes
+   * submitting older webform to fail.
+   *
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform id.
+   *
+   * @return bool
+   *   If there is any breaking changes.
+   */
+  public static function hasBreakingChangesInNewerVersion(Webform $webform) {
+    static $map = [];
+
+    $uuid = $webform->uuid();
+
+    if (isset($map[$uuid])) {
+      return $map[$uuid];
+    }
+
+    $applicationType = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
+
+    $latestApplicationForm = self::getLatestApplicationForm($applicationType);
+    $parent = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'parent');
+    $hasBreakingChanges = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'avus2BreakingChange');
+
+    while (!empty($parent)) {
+
+      $map[$parent] = $hasBreakingChanges;
+
+      $wf = reset(\Drupal::entityTypeManager()
+        ->getStorage('webform')
+        ->loadByProperties([
+          'uuid' => $parent,
+        ]));
+
+      $parent = $wf->getThirdPartySetting('grants_metadata', 'parent');
+
+      // No need to check the flag,
+      // if we already have a newer version with breaking changes.
+      if (!$hasBreakingChanges) {
+        $hasBreakingChanges = $wf->getThirdPartySetting('grants_metadata', 'avus2BreakingChange');
+      }
+    }
+
+    return $map[$uuid] ?? FALSE;
+
+  }
+
+  /**
    * Extract webform id from application number string.
    *
    * @param string $applicationNumber
