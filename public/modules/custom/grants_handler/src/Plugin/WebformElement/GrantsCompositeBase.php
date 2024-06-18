@@ -104,18 +104,21 @@ class GrantsCompositeBase extends WebformCompositeBase {
    *   Webform Element.
    * @param string $fieldName
    *   Field name in question.
-   * @param string $fieldValue
+   * @param mixed $fieldValue
    *   Value of the Field.
    * @param array $dateFieldNamesArray
    *   Array of Date Fields names.
    *
-   * @return string
+   * @return mixed
    *   The formatted Field Value.
    */
   public function formatFieldValue(array $webformElement,
-                                    string $fieldName,
-                                    string $fieldValue,
-                                    $dateFieldNamesArray = ['dateBegin', 'dateEnd']) {
+                                   string $fieldName,
+                                   mixed $fieldValue,
+                                   array $dateFieldNamesArray = ['dateBegin', 'dateEnd']): mixed {
+    if ($fieldValue === NULL) {
+      return NULL;
+    }
     if (in_array($fieldName, $dateFieldNamesArray) && $fieldValue) {
       return date("d.m.Y", strtotime($fieldValue));
     }
