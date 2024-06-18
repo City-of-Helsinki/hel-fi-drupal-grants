@@ -66,6 +66,11 @@ type RemoveList = string[];
 
 type HiddenItemsList = string[];
 
+type ExpectedInlineError = {
+  selector: string;
+  errorMessage: string;
+}
+
 type ViewPageFormatterFunction = (param: string) => string;
 
 type FieldSwapItemList = FieldSwapItem[];
@@ -99,6 +104,7 @@ interface FormDataWithRemove extends FormData {
       itemsToRemove?: RemoveList | undefined;
       itemsToBeHidden?: HiddenItemsList | undefined;
       itemsToSwap?: FieldSwapItemList | undefined;
+      expectedInlineErrors?: ExpectedInlineError[] | undefined;
     };
   };
 }
@@ -112,6 +118,7 @@ interface FormPage {
   itemsToRemove?: RemoveList | undefined;
   itemsToBeHidden?: HiddenItemsList | undefined;
   itemsToSwap?: FieldSwapItemList | undefined;
+  expectedInlineErrors?: ExpectedInlineError[] | undefined;
 }
 
 interface FormData {
@@ -188,6 +195,7 @@ export {
   ElementDetails,
   TestScenario,
   PageCollection,
+  ExpectedInlineError,
   isMultiValueField,
   isDynamicMultiValueField,
 }
