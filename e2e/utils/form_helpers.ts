@@ -6,7 +6,7 @@ import {
   getApplicationNumberFromBreadCrumb,
   logCurrentUrl
 } from "./helpers";
-import {validateFormErrors} from "./error_validation_helpers";
+import {validateFormErrors, validateInlineFormErrors} from "./error_validation_helpers";
 import {validateHiddenFields} from "./validation_helpers";
 import {saveObjectToEnv} from "./env_helpers";
 import {fillFormField, clickButton} from './input_helpers'
@@ -110,6 +110,11 @@ const fillGrantsFormPage = async (
     // Make sure hidden fields are not visible.
     if (formPageObject.itemsToBeHidden) {
       await validateHiddenFields(page, formPageObject.itemsToBeHidden, formPageKey);
+    }
+
+    // Make sure any expected inline errors are present.
+    if (formPageObject.expectedInlineErrors) {
+      await validateInlineFormErrors(page, formPageObject.expectedInlineErrors);
     }
 
     // Continue if we don't have any buttons.

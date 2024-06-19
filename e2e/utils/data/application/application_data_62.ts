@@ -868,6 +868,10 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
         'edit-budget-other-income-items-0-item-value',
         'edit-budget-other-cost-items-0-item-label'
       ],
+      expectedInlineErrors: [
+        { selector: '.webform-type-grants-budget-other-income', errorMessage: 'Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon' },
+        { selector: '.webform-type-grants-budget-other-cost', errorMessage: 'Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon' },
+      ],
     },
     'webform_preview': {
       items: {
@@ -905,6 +909,10 @@ const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [
         'edit-budget-other-income-items-0-item-value',
         'edit-budget-other-cost-items-0-item-label'
+      ],
+      expectedInlineErrors: [
+        { selector: '.webform-type-grants-budget-other-income', errorMessage: 'Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon' },
+        { selector: '.webform-type-grants-budget-other-cost', errorMessage: 'Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon' },
       ],
     },
     'webform_preview': {
