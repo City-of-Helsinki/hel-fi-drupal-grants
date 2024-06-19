@@ -3,13 +3,17 @@
 namespace Drupal\grants_metadata;
 
 use Drupal\Core\TypedData\DataDefinitionInterface;
-use Drupal\grants_metadata\AtvSchema;
-use Drupal\grants_metadata\InputmaskHandler;
 
+/**
+ * Provide a DocumentValueExtractorClass.
+ *
+ * This class is used for getting values from
+ * ATV document.
+ */
 class DocumentValueExtractor {
 
   /**
-   * Retrieves the value from document content based on the given path and element name.
+   * Retrieves the value from document.
    *
    * @param array $content
    *   The decoded JSON content of the document.
@@ -33,9 +37,11 @@ class DocumentValueExtractor {
 
     if (array_key_exists($newKey, $content)) {
       return self::drillDownToElement($content[$newKey], $pathArray, $elementName, $definition);
-    } elseif (array_key_exists($elementName, $content)) {
+    }
+    elseif (array_key_exists($elementName, $content)) {
       return self::processRootElement($content, $elementName, $definition);
-    } elseif (AtvSchema::numericKeys($content)) {
+    }
+    elseif (AtvSchema::numericKeys($content)) {
       return self::processNumericKeys($content, $elementName, $definition);
     }
 
@@ -125,10 +131,12 @@ class DocumentValueExtractor {
               $itemValue ?? $v['value'],
               $meta ?? []
             );
-          } else {
+          }
+          else {
             $retval[$key][$key2] = $itemValue ?? $v;
           }
-        } else {
+        }
+        else {
           $itemValue = self::extractSimpleItemValue($v, $itemPropertyDefinitions, $key2);
           $retval[$key][$key2] = $itemValue ?? $v;
         }
@@ -145,8 +153,6 @@ class DocumentValueExtractor {
    *   The nested array item to process.
    * @param array|null $itemPropertyDefinitions
    *   The property definitions for the item.
-   * @param string|int $key
-   *   The key for the current item.
    *
    * @return mixed
    *   The processed item value.
@@ -293,7 +299,8 @@ class DocumentValueExtractor {
   protected static function parseBooleanValue(string $value): string {
     if ($value == 'true') {
       return '1';
-    } elseif ($value == 'false') {
+    }
+    elseif ($value == 'false') {
       return '0';
     }
     return '0';
@@ -350,4 +357,5 @@ class DocumentValueExtractor {
   protected static function getDynamicService(string $serviceName): object {
     return \Drupal::service($serviceName);
   }
+
 }
