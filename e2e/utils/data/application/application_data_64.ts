@@ -101,6 +101,9 @@ const baseFormRegisteredCommunity_64: FormData = {
           viewPageSkipValidation: true,
         },
       },
+      tooltipsToValidate: [
+        { aria_label: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista', message: 'Kerro mitä tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri käyttökohteet. Kerro myös mitä avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.' },
+      ]
     },
     '3_yhteison_tiedot': {
       items: {
@@ -141,7 +144,10 @@ const baseFormRegisteredCommunity_64: FormData = {
           },
           viewPageSkipValidation: true,
         },
-      }
+      },
+      tooltipsToValidate: [
+        { aria_label: 'Toiminnan kuvaus', message: 'Tieto haetaan omat tiedot -osiosta' },
+      ]
     },
     "lisatiedot_ja_liitteet": {
       items: {
