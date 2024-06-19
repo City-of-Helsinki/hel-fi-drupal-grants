@@ -15,7 +15,7 @@ settings:
   default_delete_button_label: Poista
   default_form_submit_once: false
   default_form_open_message: 'Tätä lomaketta ei ole vielä avattu lähetyksille.'
-  default_form_close_message: 'Sorry… This form is closed to new submissions.'
+  default_form_close_message: 'Tämä hakemuspohja on suljettu.'
   default_form_exception_message: 'Unable to display this webform. Please contact the site administrator.'
   default_form_confidential_message: 'Tämä lomake on luottamuksellinen. Sinun täytyy <a href="[site:login-url]/logout?destination=[current-page:url:relative]">kirjautua ulos</a> lähettääksesi se.'
   default_form_access_denied_message: 'Please login to access this form.'
