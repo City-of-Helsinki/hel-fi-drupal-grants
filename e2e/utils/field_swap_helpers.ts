@@ -4,6 +4,7 @@ import {logger} from "./logger";
 import {clickButton, fillFormField} from "./input_helpers";
 import {validateFormData} from "./validation_helpers";
 import {logCurrentUrl} from "./helpers";
+import {goToSubmissionUrl, navigateToApplicationPage} from "./navigation_helpers";
 
 /**
  * The swapFieldValues function.
@@ -91,47 +92,6 @@ const swapFieldValuesOnPage = async (
     itemField.value = itemToSwap.swapValue;
     await fillFormField(page, itemField, itemKey, true);
   }
-};
-
-/**
- * The goToSubmissionUrl function.
- *
- * This function navigates to an applications
- * submission URL.
- *
- * @param page
- *   Page object from Playwright.
- * @param submissionUrl
- *   A submission URL.
- */
-const goToSubmissionUrl = async (page: Page, submissionUrl: string) => {
-  await page.goto(submissionUrl);
-  await logCurrentUrl(page);
-  await page.waitForURL('**/muokkaa');
-  logger(`Navigated to: ${submissionUrl}.`);
-};
-
-/**
- * The navigateToApplicationPage function.
- *
- * This function navigate to a given page
- * (formPageKey) on an application.
- *
- * @param page
- *   Page object from Playwright.
- * @param formPageKey
- *   A form pages key (the page we are navigating to).
- */
-const navigateToApplicationPage = async (page: Page, formPageKey: string) => {
-  const applicantDetailsLink: Selector = {
-    type: 'form-topnavi-link',
-    name: 'data-webform-page',
-    value: formPageKey,
-  }
-  await clickButton(page, applicantDetailsLink);
-  await page.waitForLoadState('load');
-  await logCurrentUrl(page);
-  logger(`Loaded page: ${formPageKey}.`);
 };
 
 /**
