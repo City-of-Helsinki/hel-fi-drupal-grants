@@ -114,36 +114,60 @@ class DocumentValueExtractor {
    *   The parsed typed data structure for the array element.
    */
   protected static function processArrayElement(
-    array $content,
-    string $elementName,
-    ?array $itemPropertyDefinitions
+  array $content,
+  string $elementName,
+  ?array $itemPropertyDefinitions
   ): array {
     $retval = [];
 
     foreach ($content[$elementName] as $key => $value) {
       foreach ($value as $key2 => $v) {
-        $itemValue = NULL;
-        if (is_array($v)) {
-          $itemValue = self::processNestedArrayItem($v, $itemPropertyDefinitions);
-          if (array_key_exists('value', $v)) {
-            $meta = isset($v['meta']) ? json_decode($v['meta'], TRUE) : NULL;
-            $retval[$key][$v['ID']] = InputmaskHandler::convertPossibleInputmaskValue(
-              $itemValue ?? $v['value'],
-              $meta ?? []
-            );
-          }
-          else {
-            $retval[$key][$key2] = $itemValue ?? $v;
-          }
-        }
-        else {
-          $itemValue = self::extractSimpleItemValue($v, $itemPropertyDefinitions, $key2);
-          $retval[$key][$key2] = $itemValue ?? $v;
-        }
+        self::getArrayElementItemValue($v, $key, $key2, $itemPropertyDefinitions, $retval);
       }
     }
 
     return $retval;
+  }
+
+  /**
+   * Gets the value of an item within an array element.
+   *
+   * @param mixed $v
+   *   The item value to process.
+   * @param mixed $key
+   *   The key of the current array element.
+   * @param mixed $key2
+   *   The subkey of the current array element.
+   * @param array|null $itemPropertyDefinitions
+   *   The property definitions for the item.
+   * @param array $retval
+   *   The array to store the processed value.
+   */
+  protected static function getArrayElementItemValue(
+  $v,
+  $key,
+  $key2,
+  ?array $itemPropertyDefinitions,
+  array &$retval
+  ) {
+    $itemValue = NULL;
+    if (is_array($v)) {
+      $itemValue = self::processNestedArrayItem($v, $itemPropertyDefinitions);
+      if (array_key_exists('value', $v)) {
+        $meta = isset($v['meta']) ? json_decode($v['meta'], TRUE) : NULL;
+        $retval[$key][$v['ID']] = InputmaskHandler::convertPossibleInputmaskValue(
+        $itemValue ?? $v['value'],
+        $meta ?? []
+        );
+      }
+      else {
+        $retval[$key][$key2] = $itemValue ?? $v;
+      }
+    }
+    else {
+      $itemValue = self::extractSimpleItemValue($v, $itemPropertyDefinitions, $key2);
+      $retval[$key][$key2] = $itemValue ?? $v;
+    }
   }
 
   /**
@@ -304,19 +328,6 @@ class DocumentValueExtractor {
       return '0';
     }
     return '0';
-  }
-
-  /**
-   * Checks if the keys of an array are numeric.
-   *
-   * @param array $array
-   *   The array to check.
-   *
-   * @return bool
-   *   TRUE if the keys are numeric, FALSE otherwise.
-   */
-  protected static function numericKeys(array $array): bool {
-    return array_keys($array) === range(0, count($array) - 1);
   }
 
   /**
