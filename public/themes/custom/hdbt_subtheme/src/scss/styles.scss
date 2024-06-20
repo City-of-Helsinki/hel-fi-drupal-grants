@@ -1,10 +1,7 @@
-//
 // @file
 // This file includes all imports
-//
 
 @import "~breakpoint-sass";
-
 @import "hdbt";
 
 // This folder structure is based loosely on ITCSS
@@ -18,13 +15,3 @@
 @import '05_objects/_index';
 @import "06_components/_index";
 @import "07_utilities/_index";
-
-@import "~hds-core/lib/icons/icon.min.css";
-@import "~hds-core/lib/icons/all.min.css";
-
-// Todo: move imports to ITCSS folders.
-@import "./library/_index";
-@import "./layout/_index";
-@import "./state/_states";
-@import "./base/_index";
-@import "./components/_index";

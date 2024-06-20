@@ -1,0 +1,74 @@
+.webform-submission-form .form-actions {
+  border-top: 1px rgba($color-black, 0.6) solid;
+  margin-top: var(--spacing-l);
+  padding-top: var(--spacing-2-xl);;
+
+  @include breakpoint($breakpoint-m) {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  button {
+    margin-left: 0;
+
+    @include breakpoint($breakpoint-m) {
+      margin-left: var(--spacing-2-xs);
+    }
+  }
+
+  input {
+    margin-bottom: var(--spacing-layout-2-xs);
+    width: 100%;
+
+    @include breakpoint($breakpoint-m) {
+      width: auto;
+    }
+  }
+
+  input.webform-button--draft {
+    background: transparent;
+    border: 0 transparent solid;
+    color: var(--hdbt-color-black);
+    order: 3;
+    text-decoration: underline;
+  }
+
+  button.webform-button--next span::after,
+  button.webform-button--preview span::after {
+    content: '\003e';
+    margin-left: var(--spacing-2-xs);
+  }
+
+  button.webform-button--previous span::before {
+    content: '\003c';
+    margin-right: var(--spacing-2-xs);
+  }
+
+  input.webform-button--previous {
+    background: var(--color-white);
+    color: var(--border-color);
+  }
+
+}
+
+.webform-button--draft .hds-button__label::before {
+  background-color: currentColor;
+  background-size: contain;
+  content: "";
+  display: inline-block;
+  flex-shrink: 0;
+  height: 24px;
+  margin-right: var(--spacing-2-xs);
+  mask-image: var(--hel-icon--download-cloud);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 24px 24px;
+  transition: transform .2s linear;
+  vertical-align: bottom;
+  width: 24px;
+}
