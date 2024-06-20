@@ -23,6 +23,7 @@ It's designed to test applications across all modern web browsers by running tes
 - Swapping field values on an application and verifying that the values get swapped.
 - Copying an application and verifying that its content gets copied.
 - Printing an application and verifying that the printed content is correct.
+- Verifying that the tooltips on the application fields work.
 - Deleting draft applications.
 
 ### User role tests
