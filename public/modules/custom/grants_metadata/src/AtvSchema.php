@@ -111,7 +111,9 @@ class AtvSchema {
         if (is_array($jsonPath)) {
           $elementName = array_pop($jsonPath);
 
-          $typedDataValues[$definitionKey] = $this->getValueFromDocument($documentContent, $jsonPath, $elementName, $definition);
+          $typedDataValues[$definitionKey] = DocumentValueExtractor::getValueFromDocument(
+            $documentContent, $jsonPath, $elementName, $definition
+          );
         }
       }
     }
@@ -354,170 +356,6 @@ class AtvSchema {
   }
 
   /**
-   * Get value from document content for given element / path.
-   *
-   * @param array $content
-   *   Decoded JSON content for document.
-   * @param array $pathArray
-   *   Path in JSONn document. From definition settings.
-   * @param string $elementName
-   *   ELement name in JSON.
-   * @param \Drupal\Core\TypedData\DataDefinitionInterface|null $definition
-   *   Data definition setup.
-   *
-   * @return mixed
-   *   Parsed typed data structure.
-   */
-  protected function getValueFromDocument(
-    array $content,
-    array $pathArray,
-    string $elementName,
-    ?DataDefinitionInterface $definition
-  ): mixed {
-    // Get new key to me evalued.
-    $newKey = array_shift($pathArray);
-
-    $type = $definition->getDataType();
-
-    // If key exist in content array.
-    if (array_key_exists($newKey, $content)) {
-      // Get content for key.
-      $newContent = $content[$newKey];
-      // And since we're not in root element, call self
-      // to drill down to desired element.
-      return $this->getValueFromDocument($newContent, $pathArray, $elementName, $definition);
-    }
-    // If we are at the root of content, and the given element exists.
-    elseif (array_key_exists($elementName, $content)) {
-
-      $thisElement = $content[$elementName];
-
-      $itemPropertyDefinitions = NULL;
-      // Check if we have child definitions, ie itemDefinitions.
-      if (method_exists($definition, 'getItemDefinition')) {
-        /** @var \Drupal\Core\TypedData\ComplexDataDefinitionBase $itemDefinition */
-        $itemDefinition = $definition->getItemDefinition();
-        if ($itemDefinition !== NULL) {
-          $itemPropertyDefinitions = $itemDefinition->getPropertyDefinitions();
-        }
-      }
-      // Check if we have child definitions, ie itemDefinitions.
-      if (method_exists($definition, 'getPropertyDefinitions')) {
-        $itemPropertyDefinitions = $definition->getPropertyDefinitions();
-      }
-
-      // If element is array.
-      if (is_array($thisElement)) {
-        $retval = [];
-        // We need to loop values and structure data in array as well.
-        foreach ($content[$elementName] as $key => $value) {
-          foreach ($value as $key2 => $v) {
-            $itemValue = NULL;
-            if (is_array($v)) {
-
-              // If we have definitions for given property.
-              if (isset($v['ID']) && is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$v['ID']])) {
-                $itemPropertyDefinition = $itemPropertyDefinitions[$v['ID']];
-                // Get value extracter.
-                $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
-                if ($valueExtracterConfig) {
-                  $valueExtracterService = self::getDynamicService($valueExtracterConfig['service']);
-                  $method = $valueExtracterConfig['method'];
-                  // And try to get value from there.
-                  $itemValue = $valueExtracterService->$method($v);
-                }
-              }
-
-              if (array_key_exists('value', $v)) {
-                $meta = isset($v['meta']) ? json_decode($v['meta'], TRUE) : NULL;
-                $retval[$key][$v['ID']] = InputmaskHandler::convertPossibleInputmaskValue(
-                  $itemValue ?? $v['value'],
-                  $meta ?? [],
-                );
-              }
-              else {
-                $retval[$key][$key2] = $itemValue ?? $v;
-              }
-            }
-            else {
-              // If we have definitions for given property.
-              if (is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$key2])) {
-                $itemPropertyDefinition = $itemPropertyDefinitions[$key2];
-                // Get value extracter.
-                $valueExtracterConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
-                if ($valueExtracterConfig) {
-                  $valueExtracterService = self::getDynamicService($valueExtracterConfig['service']);
-                  $method = $valueExtracterConfig['method'];
-                  // And try to get value from there.
-                  $itemValue = $valueExtracterService->$method($v);
-                }
-              }
-
-              $retval[$key][$key2] = $itemValue ?? $v;
-            }
-          }
-        }
-        return $retval;
-      }
-      // If element is not array.
-      else {
-        // Return value as is.
-        return $content[$elementName];
-      }
-    }
-    // If keys are numeric, we know that we need to decode the last
-    // item with id's / names in array.
-    elseif (self::numericKeys($content)) {
-      // Loop content.
-      foreach ($content as $value) {
-        // If content is not array, it means that content is returnable as is.
-        if (!is_array($value)) {
-          return $value;
-        }
-
-        // If value is an array, then we need to return desired element value.
-        if ($value['ID'] == $elementName) {
-          // Make sure that the element value is a string.
-          $parseValue = is_string($value['value']) ? $value['value'] : '';
-          $meta = isset($value['meta']) ? json_decode($value['meta'], TRUE) : NULL;
-
-          $retval = htmlspecialchars_decode($parseValue);
-
-          if ($type == 'boolean') {
-            if ($retval == 'true') {
-              $retval = '1';
-            }
-            elseif ($retval == 'false') {
-              $retval = '0';
-            }
-            else {
-              $retval = '0';
-            }
-          }
-
-          $retval = InputmaskHandler::convertPossibleInputmaskValue($retval, $meta);
-
-          $valueExtracterConfig = $definition->getSetting('webformValueExtracter');
-          if ($valueExtracterConfig) {
-            $valueExtracterService = self::getDynamicService($valueExtracterConfig['service']);
-            $method = $valueExtracterConfig['method'];
-            // And try to get value from there.
-            $retval = $valueExtracterService->$method($retval);
-          }
-
-          return $retval;
-        }
-      }
-    }
-    else {
-      // If no item is specified with given name.
-      return NULL;
-    }
-    // shouldn't get here that often.
-    return NULL;
-  }
-
-  /**
    * Parse incorrect json string & decode.
    *
    * @param array $atvDocument
@@ -748,7 +586,7 @@ class AtvSchema {
     $pathArray = $definition->getSetting('jsonPath');
     $elementName = array_pop($pathArray);
     // Pick up the value for the master field.
-    $value = $this->getValueFromDocument($content, $pathArray, $elementName, $definition);
+    $value = DocumentValueExtractor::getValueFromDocument($content, $pathArray, $elementName, $definition);
     $relatedValue = match ($relations['type']) {
       // We use values 1 and 0 for boolean fields in webform.
       'boolean' => $value ? 1 : 0,
