@@ -26,11 +26,13 @@
     }
   }
 
-  .hds-icon {
+  .hel-icon {
     display: none;
 
     @include breakpoint($breakpoint-s) {
+      --icon-size: 48px;
       display: block;
+      flex-shrink: 0;
     }
   }
 }

@@ -1,0 +1,7 @@
+{% if language == 'sv' %}
+  {{ source('@hdbt/src/icons/hdbt/logo/helsinki-sv.svg') }}
+{% elseif language == 'ru' %}
+  {{ source('@hdbt/src/icons/hdbt/logo/helsinki-ru.svg') }}
+{% else %}
+  {{ source('@hdbt/src/icons/hdbt/logo/helsinki.svg') }}
+{% endif %}
