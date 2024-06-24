@@ -1171,6 +1171,13 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-contact-person-phone-number',
         'edit-community-address-community-address-select',
       ],
+      expectedInlineErrors: [
+        { selector: '.form-item-bank-account-account-number-select', errorMessage: 'Valitse tilinumero kenttä on pakollinen.' },
+        { selector: '.form-item-email', errorMessage: 'Sähköpostiosoite kenttä on pakollinen.' },
+        { selector: '.form-item-contact-person', errorMessage: 'Yhteyshenkilö kenttä on pakollinen.' },
+        { selector: '.form-item-contact-person-phone-number', errorMessage: 'Puhelinnumero kenttä on pakollinen.' },
+        { selector: '.webform-type-community-address-composite', errorMessage: 'Yhteisön osoite kenttä on pakollinen.' },
+      ],
     },
     '2_avustustiedot': {
       items: {},
@@ -1224,6 +1231,9 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
         },
       },
       itemsToRemove: [],
+      expectedInlineErrors: [
+        { selector: '.form-item-email', errorMessage: 'Sähköpostiosoite kenttä ei ole oikeassa muodossa.' },
+      ],
     },
     '4_talous': {
       items: {},
