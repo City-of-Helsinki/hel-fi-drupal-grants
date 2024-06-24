@@ -1,0 +1,117 @@
+.grants-profile--menuitem--login,
+.grants-profile--menuitem--logout {
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  font-size: var(--fontsize-body-s);
+  height: var(--spacing-xl);
+  margin-left: var(--spacing-2-xs);
+  margin-right: var(--spacing-2-xs);
+  position: relative;
+  text-align: center;
+  width: var(--spacing-xl);
+
+  .hel-icon {
+    display: block;
+    margin: auto;
+  }
+
+  &-triggertext {
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    display:block;
+    max-height: 1px;
+    max-width: 1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+  }
+}
+
+.block--grants-profile--menuitem {
+  align-items: center;
+  display: flex;
+  grid-area: brand;
+  z-index: 2;
+}
+
+.block--branding {
+  flex-grow: 10;
+}
+
+.grants-frontpage-info-block {
+  margin-bottom: var(--spacing-layout-xl);
+}
+
+.grants-profile--menuitem {
+  height: var(--spacing-m);
+  margin-left: var(--spacing-2-xs);
+  margin-right: var(--spacing-2-xs);
+  position: relative;
+  width: var(--spacing-m);
+
+  @include breakpoint($breakpoint-m) {
+    height: var(--spacing-2-xl);
+    width: var(--spacing-2-xl);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  &--notifications {
+    background-color: var(--color-error);
+    border: 2px var(--color-white) solid;
+    border-radius: 50%;
+    color: var(--color-white);
+    font-size: var(--fontsize-body-s);
+    font-weight: bold;
+    height: var(--spacing-xs) 1.25;
+    line-height: var(--spacing-layout-2-xs);
+    position: absolute;
+    right: -5px;
+    text-align: center;
+    top: -5px;
+    width: var(--spacing-xs) 1.25;
+    z-index: 2;
+  }
+
+  &--initials {
+    border-radius: 50%;
+    font-weight: bold;
+    height: var(--spacing-m);
+    line-height: var(--spacing-m);
+    text-align: center;
+    vertical-align: middle;
+    width: var(--spacing-m);
+
+    @include breakpoint($breakpoint-m) {
+      height: var(--spacing-2-xl);
+      line-height: var(--spacing-2-xl);
+      width: var(--spacing-2-xl);
+    }
+
+    &:hover, &:active, &:focus {
+      text-decoration: underline;
+    }
+
+    &-colorscheme {
+      &-2 {
+        background-color: var(--color-bus);
+        color: var(--color-white);
+      }
+
+      &-1 {
+        background-color: var(--color-engel);
+        color: var(--color-black);
+
+      }
+
+      &-0 {
+        background-color: var(--color-tram);
+        color: var(--color-white);
+      }
+    }
+  }
+}

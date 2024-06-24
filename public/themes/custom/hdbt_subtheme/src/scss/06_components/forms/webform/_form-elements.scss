@@ -1,0 +1,468 @@
+.js-form-type-webform-table {
+  table {
+    width: 100%;
+  }
+
+  th {
+    text-align: left;
+  }
+
+  td {
+    vertical-align: middle;
+
+    > div {
+      height: auto;
+      margin-bottom: 0;
+
+      label {
+        margin: -1px;
+      }
+    }
+  }
+
+  .hds-text-input label {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+}
+
+.form-item {
+  margin-bottom: var(--spacing-layout-xs);
+  position: relative;
+
+  input[type="date"],
+  input[type="time"] {
+    appearance: none;
+    background-color: var(--input-background-default);
+    border: var(--border-width) solid var(--input-border-color-default);
+    box-sizing: border-box;
+    color: var(--input-color-default);
+    font-size: 1.125em;
+    height: var(--input-height);
+    line-height: normal;
+    padding: 0 var(--spacing-s);
+    width: 100%;
+    will-change: transform,box-shadow;
+  }
+}
+
+.webform-section {
+  padding-bottom: var(--spacing-layout-2-xs);
+
+  table:first-of-type {
+    margin-top: 0;
+  }
+}
+
+.form-type-webform-multiple .webform-multiple-table table {
+  max-width: 100%;
+  width: 100%;
+
+  @include breakpoint($breakpoint-m) {
+    width: auto;
+  }
+}
+
+.hds-text-input {
+  max-width: fit-content;
+  width: 100%;
+}
+
+.webform-section-grid-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @include breakpoint($breakpoint-m) {
+    grid-row-gap: var(--spacing-xl);
+    grid-template-columns: 1fr 2fr;
+  }
+
+  > dt.webform-section-title {
+    color: var(--hdbt-color-black);
+    display: block;
+    flex-shrink: 0;
+    font-size: var(--fontsize-heading-s);
+    font-weight: 500;
+    hyphens: none;
+    line-height: 1;
+    margin-bottom: var(--spacing-3-xs);
+    margin-top: 0;
+    padding-right: var(--spacing-2-xl);
+    width: 100%;
+  }
+
+  .webform-section-wrapper {
+    margin-bottom: var(--spacing-layout-xs);
+    padding-left: var(--spacing-2-xl);
+
+    @include breakpoint($breakpoint-m) {
+      margin-bottom: 0;
+      padding-left: 0;
+    }
+  }
+}
+
+fieldset input[type="button"] {
+  margin-top: var(--spacing-m);
+}
+
+.webform-section-wrapper > .description {
+  margin-bottom: var(--spacing-layout-xs);
+}
+
+.grants__page-header {
+  margin-bottom: var(--spacing-layout-l);
+  font-size: 2rem;
+
+  @include breakpoint($breakpoint-m) {
+    font-size: 3rem;
+  }
+}
+
+.webform-section-flex-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  justify-content: left;
+
+  @include breakpoint($breakpoint-m) {
+    flex-flow: row nowrap;
+
+    h3 + * > *:first-child > label:first-of-type,
+    h3 + * > *:first-child > *:first-child > label:first-of-type {
+      margin-top: var(--spacing-2-xs);
+      padding-top: 0;
+    }
+
+    h3 + * > *:first-child {
+      > p {
+        line-height: initial;
+        margin-top: var(--spacing-2-xs);
+      }
+
+      > h4 {
+        line-height: initial;
+        margin-top: var(--spacing-m);
+      }
+    }
+  }
+
+  .webform-element-help-container--title {
+    position: relative;
+  }
+
+  > h2.webform-section-title, > h3.webform-section-title, > h4.webform-section-title, > dt.webform-section-title {
+    color: var(--hdbt-color-black);
+    display: block;
+    flex-shrink: 0;
+    font-size: 24px;
+    font-weight: 500;
+    hyphens: manual;
+    margin-bottom: var(--spacing-3-xs);
+    margin-top: 0;
+    padding-right: var(--spacing-2-xl);
+    width: 100%;
+
+    @include breakpoint($breakpoint-m) {
+      font-size: 32px;
+      max-width: 350px;
+      width: 30%;
+    }
+  }
+
+  h4 {
+    font-size: var(--fontsize-heading-m);
+    line-height: 38px;
+  }
+
+  > .webform-section-wrapper {
+    --line-height: 1.5;
+    font-size: var(--fontsize-body-m);
+    width: 100%;
+
+    @include breakpoint($breakpoint-m) {
+      padding-left: var(--spacing-2-xl);
+    }
+  }
+
+  .form-required::after {
+    content: '*';
+    display: inline;
+  }
+
+  legend, label {
+    display: block;
+    font-size: var(--fontsize-body-m);
+    font-weight: 500;
+    margin-bottom: var(--spacing-2-xs);
+    max-width: fit-content;
+    padding-right: var(--spacing-xl);
+    position: relative;
+  }
+
+  fieldset legend {
+    font-weight: 700;
+  }
+
+  label.hds-radio-button__label {
+    font-weight: normal;
+  }
+
+  .checkboxes--wrapper label {
+    font-weight: normal;
+  }
+
+  .js-form-type-textarea .hds-text-input__input-wrapper {
+    display: block;
+  }
+
+  .has-error,
+  .grant-applications--select-wrapper:has(.has-error) {
+    border-color: var(--color-error);
+  }
+}
+
+form .hds-text-input__input-wrapper, .hds-text-input__input-wrapper  {
+  flex-flow: row wrap;
+
+  .text-count-wrapper {
+    flex-basis: 100%;
+  }
+
+  input, textarea {
+    &.webform--small {
+      max-width: var(--webform-element-width--input-small);
+      min-width: var(--webform-element-width--input-small);
+      width: 100%;
+    }
+
+    &.webform--medium {
+      max-width: var(--webform-element-width--input-medium);
+      min-width: var(--webform-element-width--input-small);
+      width: 100%;
+    }
+
+    &.webform--large {
+      max-width: var(--webform-element-width--input-large);
+      min-width: var(--webform-element-width--input-small);
+      width: 100%;
+    }
+  }
+}
+
+.webform--small div.grant-applications--select-wrapper {
+  max-width: var(--webform-element-width--input-small);
+  min-width: var(--webform-element-width--input-small);
+  width: 100%;
+}
+
+.webform--medium div.grant-applications--select-wrapper {
+  max-width: var(--webform-element-width--input-medium);
+  min-width: var(--webform-element-width--input-small);
+  width: 100%;
+}
+
+.webform--large div.grant-applications--select-wrapper {
+  max-width: var(--webform-element-width--input-medium);
+  min-width: var(--webform-element-width--input-small);
+  width: 100%;
+}
+
+form .hds-checkbox {
+  display:block;
+
+  label.hds-checkbox__label::after {
+    content: '';
+  }
+}
+
+fieldset.webform-composite-hidden-title {
+  margin-bottom: var(--spacing-layout-2-xs);
+  margin-top: 0;
+}
+
+.form-item-bank-account-account-number-select,
+.form-item-community-address-community-address-select {
+  margin-bottom: 0;
+}
+
+.grants-profile-grants-profile table thead th h4 {
+  margin: 0;
+}
+
+.hakemus-form-page {
+  .main-content {
+    margin-top: 0;
+  }
+
+  h1 {
+    hyphens: auto;
+    word-break: break-word;
+  }
+}
+
+.hakemus-form-errors ul li {
+  list-style-type: none;
+}
+
+.community_officials_wrapper {
+  .webform-readonly {
+    margin: 0;
+  }
+
+  .hds-text-input__input-wrapper {
+    margin: 0;
+  }
+
+  input[readonly="readonly"] {
+    height: 1.25rem;
+    margin: 0;
+    max-width: 330px;
+  }
+}
+
+.form-item--error-message {
+  color: var(--color-error);
+  margin-bottom: var(--spacing-layout-s);
+  margin-top: var(--spacing-layout-2-xs);
+
+  fieldset &,
+  .community_officials_wrapper & {
+    margin-bottom: 0;
+  }
+
+  &::before {
+    --icon-size: 1.5rem;
+
+    @include pseudo-icon('alert-circle-fill');
+    background-color: var(--color-error);
+    content: ' ';
+    display: inline-block;
+  }
+}
+
+input[type='radio'] + label.form-required::after {
+  content: '';
+}
+
+.hds-radio-button:last-of-type, .hds-checkbox:last-of-type {
+  margin-bottom: 0;
+
+  > label {
+    margin-bottom: 0;
+  }
+}
+
+/* Styles for the Place of Operation Composite component */
+.place-of-operation-composite--wrapper.fieldgroup,
+.club-section-composite--wrapper.fieldgroup {
+  .hds-text-input {
+    @include breakpoint($breakpoint-l) {
+      max-width: 100%;
+    }
+  }
+
+  .hds-radio-button .hds-radio-button__label {
+    line-height: var(--lineheight-m)!important;
+  }
+}
+
+.place-of-operation-group {
+  &__location,
+  &__students,
+  &__groups,
+  &__personnel,
+  &__rent,
+  &__time {
+    @include breakpoint($breakpoint-l) {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &--address {
+      @include breakpoint($breakpoint-l) {
+        margin-top: 0 !important;
+        width: 65%;
+      }
+    }
+
+    &--post-code {
+      @include breakpoint($breakpoint-l) {
+        margin-top: 0 !important;
+        width: 30%;
+      }
+    }
+
+    &--student-count,
+    &--special-student-count,
+    &--group-count,
+    &--special-group-count,
+    &--personnel-count,
+    &--rent-amount,
+    &--time-start,
+    &--time-end {
+      @include breakpoint($breakpoint-l) {
+        margin-top: 0 !important;
+        width: 47.5%;
+      }
+    }
+  }
+}
+
+.club-section__participants {
+  @include breakpoint($breakpoint-m) {
+    display: flex;
+    gap: var(--spacing-l);
+    justify-content: space-between;
+  }
+
+  input.form-text.hds-text-input__input {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+.club-section__totalhours {
+  input.form-text.hds-text-input__input {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+.hel-icon--size {
+  &-xs {
+    --icon-size: var(--spacing-layout-2-xs);
+  }
+
+  &-s {
+    --icon-size: var(--spacing-layout-xs);
+  }
+
+  &-m {
+    --icon-size: var(--spacing-layout-s);
+  }
+
+  &-l {
+    --icon-size: var(--spacing-layout-m);
+  }
+
+  &-xl {
+    --icon-size: var(--spacing-layout-l);
+  }
+}
+
+.hds-text-input__input-wrapper:focus-within:has(input[readonly]) {
+  margin-right: var(--spacing-2-xs);
+  outline: 2px var(--color-black) solid;
+  outline-offset: 2px;
+
+  input[readonly] {
+    width: calc(100% - var(--spacing-2-xs));
+  }
+}
