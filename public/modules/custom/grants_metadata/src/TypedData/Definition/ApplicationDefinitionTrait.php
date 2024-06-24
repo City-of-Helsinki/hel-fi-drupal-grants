@@ -53,6 +53,7 @@ trait ApplicationDefinitionTrait {
     if ($applicantType === 'registered_community') {
 
       $info['email'] = DataDefinition::create('email')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'applicantInfoArray',
@@ -69,6 +70,7 @@ trait ApplicationDefinitionTrait {
         ->setSetting('defaultValue', []);
 
       $info['contact_person'] = DataDefinition::create('string')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'currentAddressInfoArray',
@@ -76,6 +78,7 @@ trait ApplicationDefinitionTrait {
         ]);
 
       $info['contact_person_phone_number'] = DataDefinition::create('string')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'currentAddressInfoArray',
@@ -83,6 +86,7 @@ trait ApplicationDefinitionTrait {
         ]);
 
       $info['community_street'] = DataDefinition::create('string')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'currentAddressInfoArray',
@@ -94,6 +98,7 @@ trait ApplicationDefinitionTrait {
         ]);
 
       $info['community_city'] = DataDefinition::create('string')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'currentAddressInfoArray',
@@ -105,6 +110,7 @@ trait ApplicationDefinitionTrait {
         ]);
 
       $info['community_post_code'] = DataDefinition::create('string')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'currentAddressInfoArray',
@@ -206,6 +212,7 @@ trait ApplicationDefinitionTrait {
         'status',
       ]);
     $info['acting_year'] = DataDefinition::create('string')
+      ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
         'applicationInfoArray',
@@ -218,6 +225,7 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['account_number'] = DataDefinition::create('string')
+      ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
         'bankAccountArray',
@@ -302,6 +310,7 @@ trait ApplicationDefinitionTrait {
       ->addConstraint('NotBlank');
 
     $info['benefits_loans'] = DataDefinition::create('string')
+      ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
         'benefitsInfoArray',
@@ -309,6 +318,7 @@ trait ApplicationDefinitionTrait {
       ]);
 
     $info['benefits_premises'] = DataDefinition::create('string')
+      ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
         'benefitsInfoArray',
@@ -378,6 +388,7 @@ trait ApplicationDefinitionTrait {
       ->setSetting('hiddenFields', ['integrationID', 'fileType']);
 
     $info['extra_info'] = DataDefinition::create('string')
+      ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'attachmentsInfo',
         'generalInfoArray',
