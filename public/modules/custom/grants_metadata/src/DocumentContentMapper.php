@@ -91,7 +91,8 @@ class DocumentContentMapper {
       }
       elseif (is_array($jsonPath)) {
         $elementName = array_pop($jsonPath);
-        $typedDataValues[$definitionKey] = DocumentValueExtractor::getValueFromDocument($documentContent, $jsonPath, $elementName, $definition);
+        $typedDataValues[$definitionKey] = DocumentValueExtractor::getValueFromDocument(
+          $documentContent, $jsonPath, $elementName, $definition);
       }
     }
     return $typedDataValues;
