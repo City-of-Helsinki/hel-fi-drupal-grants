@@ -11,7 +11,7 @@ dependencies:
 _core:
   default_config_hash: YPgxGC8TmLtfCOLGCCHJcdH2llA7QksUkdi1abhB7Ro
 id: webform_submissions
-label: 'Webform submissions'
+label: Verkkolomakelähetykset
 module: views
 description: 'Default webform submissions views.'
 tag: ''
@@ -20,11 +20,11 @@ base_field: sid
 display:
   default:
     id: default
-    display_title: Master
+    display_title: Oletus
     display_plugin: default
     position: 0
     display_options:
-      title: 'Webform submissions'
+      title: Verkkolomakelähetykset
       fields:
         sid:
           id: sid
@@ -102,7 +102,7 @@ display:
           entity_type: webform_submission
           entity_field: in_draft
           plugin_id: field
-          label: Draft
+          label: Keskeneräinen
           exclude: false
           alter:
             alter_text: false
@@ -169,7 +169,7 @@ display:
           entity_type: webform_submission
           entity_field: created
           plugin_id: field
-          label: Created
+          label: Luotu
           exclude: false
           alter:
             alter_text: false
@@ -245,7 +245,7 @@ display:
           entity_type: webform_submission
           entity_field: remote_addr
           plugin_id: field
-          label: 'IP address'
+          label: 'IP osoite'
           exclude: false
           alter:
             alter_text: false
@@ -309,7 +309,7 @@ display:
           admin_label: ''
           entity_type: webform_submission
           plugin_id: entity_link
-          label: Operations
+          label: Toimenpiteet
           exclude: false
           alter:
             alter_text: false
@@ -350,7 +350,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: view
+          text: näkymä
           output_url_as_text: false
           absolute: false
       pager:
@@ -361,29 +361,30 @@ display:
           total_pages: null
           id: 0
           tags:
-            next: ››
-            previous: ‹‹
-            first: '« First'
-            last: 'Last »'
+            next: 'Seuraava ›'
+            previous: '‹ Edellinen'
+            first: '« Ensimmäinen'
+            last: 'Viimeinen »'
           expose:
             items_per_page: false
-            items_per_page_label: 'Items per page'
+            items_per_page_label: 'Merkintöjä sivua kohti'
             items_per_page_options: '5, 10, 25, 50, 100, 200'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
+            items_per_page_options_all_label: '- Kaikki -'
             offset: false
             offset_label: Offset
           quantity: 9
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Käytä
           reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          reset_button_label: Palauta
+          exposed_sorts_label: Lajittele
           expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          sort_asc_label: Nousevasti
+          sort_desc_label: Laskevasti
       access:
         type: none
         options: {  }
@@ -431,7 +432,8 @@ display:
           field: uid
           entity_type: webform_submission
           entity_field: uid
-          plugin_id: numeric
+          plugin_id: entity_target_id
+          target_entity_type_id: user
         in_draft:
           id: in_draft
           table: webform_submission
@@ -446,7 +448,7 @@ display:
           exception:
             value: all
             title_enable: false
-            title: All
+            title: Kaikki
           title_enable: false
           title: ''
           default_argument_type: fixed
@@ -591,7 +593,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: 'Displaying @start - @end of @total'
+          content: 'Näytetään @start - @end / @total'
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -660,7 +662,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          action_title: Action
+          action_title: Toiminto
           include_exclude: exclude
           selected_actions: {  }
         sid:
@@ -739,7 +741,7 @@ display:
           entity_type: webform_submission
           entity_field: in_draft
           plugin_id: field
-          label: Draft
+          label: Keskeneräinen
           exclude: false
           alter:
             alter_text: false
@@ -806,7 +808,7 @@ display:
           entity_type: webform_submission
           entity_field: sticky
           plugin_id: field
-          label: Sticky
+          label: Kiinnitetty
           exclude: false
           alter:
             alter_text: false
@@ -873,7 +875,7 @@ display:
           entity_type: webform_submission
           entity_field: locked
           plugin_id: field
-          label: Locked
+          label: Lukittu
           exclude: false
           alter:
             alter_text: false
@@ -940,7 +942,7 @@ display:
           entity_type: webform_submission
           entity_field: created
           plugin_id: field
-          label: Created
+          label: Luotu
           exclude: false
           alter:
             alter_text: false
@@ -1016,7 +1018,7 @@ display:
           entity_type: webform_submission
           entity_field: completed
           plugin_id: field
-          label: Completed
+          label: Valmis
           exclude: false
           alter:
             alter_text: false
@@ -1092,7 +1094,7 @@ display:
           entity_type: webform_submission
           entity_field: remote_addr
           plugin_id: field
-          label: 'IP address'
+          label: 'IP osoite'
           exclude: false
           alter:
             alter_text: false
@@ -1157,7 +1159,7 @@ display:
           entity_type: null
           entity_field: null
           plugin_id: entity_operations
-          label: Operations
+          label: Toimenpiteet
           exclude: false
           alter:
             alter_text: false
@@ -1262,7 +1264,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: Sticky
+            label: Kiinnitetty
             description: ''
             use_operator: false
             operator: sticky_op
@@ -1304,7 +1306,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: Locked
+            label: Lukittu
             description: ''
             use_operator: false
             operator: locked_op
@@ -1596,7 +1598,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          action_title: Action
+          action_title: Toiminto
           include_exclude: include
           selected_actions:
             - webform_submission_make_lock_action
@@ -1679,7 +1681,7 @@ display:
           entity_type: webform_submission
           entity_field: in_draft
           plugin_id: field
-          label: Draft
+          label: Keskeneräinen
           exclude: false
           alter:
             alter_text: false
@@ -1746,7 +1748,7 @@ display:
           entity_type: webform_submission
           entity_field: sticky
           plugin_id: field
-          label: Sticky
+          label: Kiinnitetty
           exclude: false
           alter:
             alter_text: false
@@ -1813,7 +1815,7 @@ display:
           entity_type: webform_submission
           entity_field: locked
           plugin_id: field
-          label: Locked
+          label: Lukittu
           exclude: false
           alter:
             alter_text: false
@@ -1880,7 +1882,7 @@ display:
           entity_type: webform_submission
           entity_field: created
           plugin_id: field
-          label: Created
+          label: Luotu
           exclude: false
           alter:
             alter_text: false
@@ -1956,7 +1958,7 @@ display:
           entity_type: webform_submission
           entity_field: completed
           plugin_id: field
-          label: Completed
+          label: Valmis
           exclude: false
           alter:
             alter_text: false
@@ -2032,7 +2034,7 @@ display:
           entity_type: webform_submission
           entity_field: remote_addr
           plugin_id: field
-          label: 'IP address'
+          label: 'IP osoite'
           exclude: false
           alter:
             alter_text: false
@@ -2096,7 +2098,7 @@ display:
           admin_label: ''
           entity_type: webform_submission
           plugin_id: entity_link
-          label: Operations
+          label: Toimenpiteet
           exclude: false
           alter:
             alter_text: false
@@ -2137,7 +2139,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: view
+          text: näkymä
           output_url_as_text: false
           absolute: false
         edit_webform_submission:
@@ -2149,7 +2151,7 @@ display:
           admin_label: ''
           entity_type: webform_submission
           plugin_id: entity_link_edit
-          label: Operations
+          label: Toimenpiteet
           exclude: false
           alter:
             alter_text: false
@@ -2190,7 +2192,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: edit
+          text: muokkaa
           output_url_as_text: false
           absolute: false
       access:
@@ -2256,7 +2258,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: Sticky
+            label: Kiinnitetty
             description: ''
             use_operator: false
             operator: sticky_op
@@ -2298,7 +2300,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: Locked
+            label: Lukittu
             description: ''
             use_operator: false
             operator: locked_op
@@ -2531,7 +2533,7 @@ display:
           entity_type: webform_submission
           entity_field: in_draft
           plugin_id: field
-          label: Draft
+          label: Keskeneräinen
           exclude: false
           alter:
             alter_text: false
@@ -2598,7 +2600,7 @@ display:
           entity_type: webform_submission
           entity_field: sticky
           plugin_id: field
-          label: Sticky
+          label: Kiinnitetty
           exclude: false
           alter:
             alter_text: false
@@ -2665,7 +2667,7 @@ display:
           entity_type: webform_submission
           entity_field: locked
           plugin_id: field
-          label: Locked
+          label: Lukittu
           exclude: false
           alter:
             alter_text: false
@@ -2732,7 +2734,7 @@ display:
           entity_type: webform_submission
           entity_field: created
           plugin_id: field
-          label: Created
+          label: Luotu
           exclude: false
           alter:
             alter_text: false
@@ -2808,7 +2810,7 @@ display:
           entity_type: webform_submission
           entity_field: completed
           plugin_id: field
-          label: Completed
+          label: Valmis
           exclude: false
           alter:
             alter_text: false
@@ -2884,7 +2886,7 @@ display:
           entity_type: webform_submission
           entity_field: remote_addr
           plugin_id: field
-          label: 'IP address'
+          label: 'IP osoite'
           exclude: false
           alter:
             alter_text: false
@@ -2948,7 +2950,7 @@ display:
           admin_label: ''
           entity_type: webform_submission
           plugin_id: entity_link
-          label: Operations
+          label: Toimenpiteet
           exclude: false
           alter:
             alter_text: false
@@ -2989,7 +2991,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: view
+          text: näkymä
           output_url_as_text: false
           absolute: false
       access:
@@ -3055,7 +3057,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: Sticky
+            label: Kiinnitetty
             description: ''
             use_operator: false
             operator: sticky_op
@@ -3097,7 +3099,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: Locked
+            label: Lukittu
             description: ''
             use_operator: false
             operator: locked_op

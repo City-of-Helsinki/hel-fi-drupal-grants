@@ -6,3 +6,4 @@ name: 'Target group'
 vid: target_group
 description: 'Target group of the application'
 weight: 0
+new_revision: false
