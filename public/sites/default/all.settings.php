@@ -82,4 +82,12 @@ $config['openid_connect.client.tunnistamoadmin']['settings']['ad_roles'] = [
     'ad_role' => 'sg_kanslia_kayttajat',
     'roles' => ['ad_user', 'content_producer_industry'],
   ],
+  [
+    'ad_role' => 'Drupal_Helfi_kaupunkitaso_paakayttajat',
+    'roles' => ['ad_user', 'grants_admin'],
+  ],
+  [
+    'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_suppea',
+    'roles' => ['ad_user', 'content_producer'],
+  ],
 ];
