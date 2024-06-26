@@ -18,6 +18,7 @@ use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventException;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
@@ -528,7 +529,7 @@ class AttachmentHandler {
 
     // Check if a user changed the bank account in the application.
     $dataDefinition = ApplicationHandler::getDataDefinition($applicationDocument->getType());
-    $existingData = $this->atvSchema->documentContentToTypedData(
+    $existingData = DocumentContentMapper::documentContentToTypedData(
       $applicationDocument->getContent(),
       $dataDefinition,
       $applicationDocument->getMetadata()

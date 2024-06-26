@@ -6,6 +6,7 @@ use Drupal\Core\Entity\EntityHandlerInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -166,8 +167,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
   public static function setAtvDataToSubmission(AtvDocument $document, WebformSubmissionInterface $submission): array {
     $dataDefinition = ApplicationHandler::getDataDefinition($document->getType());
 
-    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
-    $sData = $atvSchema->documentContentToTypedData(
+    $sData = DocumentContentMapper::documentContentToTypedData(
       $document->getContent(),
       $dataDefinition,
       $document->getMetadata()

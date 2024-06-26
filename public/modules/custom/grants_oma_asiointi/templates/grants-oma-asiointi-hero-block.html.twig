@@ -16,11 +16,11 @@
     {% block container_content %}
       <div class="hero__text-content">
       {% if roleType == 'private_person' %}
-        <span aria-hidden="true" class="hds-icon hds-icon--user hds-icon--size-l"></span>
+        {% include "@hdbt/misc/icon.twig" with {icon: 'user'} %}
       {% elseif roleType == 'unregistered_community' %}
-        <span aria-hidden="true" class="hds-icon hds-icon--group hds-icon--size-l"></span>
+        {% include "@hdbt/misc/icon.twig" with {icon: 'group'} %}
       {% else %}
-      <span aria-hidden="true" class="hds-icon hds-icon--company hds-icon--size-l"></span>
+        {% include "@hdbt/misc/icon.twig" with {icon: 'company'} %}
       {% endif %}
         <h1 class="hero__title">
           {{ title }}

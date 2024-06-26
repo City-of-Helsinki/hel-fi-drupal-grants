@@ -19,6 +19,7 @@ use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -751,9 +752,6 @@ class ApplicationHandler {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
-    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
-
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
     $selectedCompany = $grantsProfileService->getSelectedRoleData();
@@ -811,7 +809,7 @@ class ApplicationHandler {
 
       $dataDefinition = self::getDataDefinition($document->getType());
 
-      $sData = $atvSchema->documentContentToTypedData(
+      $sData = DocumentContentMapper::documentContentToTypedData(
         $document->getContent(),
         $dataDefinition,
         $document->getMetadata()
@@ -1159,7 +1157,7 @@ class ApplicationHandler {
     $dataDefinitionKeys = self::getDataDefinitionClass($submissionData['application_type']);
     $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
 
-    $submissionObject->setData($this->atvSchema->documentContentToTypedData($newDocument->getContent(), $dataDefinition));
+    $submissionObject->setData(DocumentContentMapper::documentContentToTypedData($newDocument->getContent(), $dataDefinition));
     return $submissionObject;
   }
 
@@ -1444,9 +1442,6 @@ class ApplicationHandler {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
-    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
-
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
 
@@ -1514,7 +1509,7 @@ class ApplicationHandler {
 
           // Convert the data.
           $dataDefinition = self::getDataDefinition($document->getType());
-          $submissionData = $atvSchema->documentContentToTypedData(
+          $submissionData = DocumentContentMapper::documentContentToTypedData(
             $document->getContent(),
             $dataDefinition,
             $document->getMetadata()

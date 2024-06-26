@@ -76,14 +76,17 @@ const validateInlineFormErrors = async (page: Page, expectedInlineErrors: Expect
 
   // Refresh the page by clicking the active navigation item.
   await page.locator('.progress-step.is-active').click();
+
+  // Wait for the page to fully load and display errors.
+  await page.waitForLoadState('domcontentloaded');
   await page.waitForLoadState('load');
+  await page.waitForLoadState('networkidle');
 
   // Validate the inline form errors after the page refresh.
   for (const inlineError of expectedInlineErrors) {
     logger(`Validating inline form error: ${inlineError.errorMessage}`)
-    const locator = await page.locator(inlineError.selector).locator('.form-item--error-message');
-    const textContent = await locator.innerText();
-    await expect(textContent.trim(), 'Failed to validate inline form error.').toBe(inlineError.errorMessage);
+    const errorContainer = await page.locator(inlineError.selector).locator('.form-item--error-message');
+    await expect(errorContainer, 'Failed to validate inline form error.').toContainText(inlineError.errorMessage);
   }
 
   logger('Inline errors validated successfully.');
