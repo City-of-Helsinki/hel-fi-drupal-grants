@@ -1,17 +1,22 @@
 # CHANGELOG
 
 ## 2024.11
-f51d2404 conf: Update configuration (#1448)
-59ae3b28 fix: AU-2342: Hide attachments with only a description in preview page (#1450)
-627f2856 feat: AU-2329, E2E: Test tooltip functionality (#1446)
-b654a641 feat: AU-1743: Refactor getValueFromDocument method to it's own class (#1449)
-eb28b8c0 docs: Add missing 67 example json.
-d681469a conf: Update configuration (#1447)
-136cf7c6 fix: AU-2541: Fixed a bug in GrantsCompositeBase.php. (#1445)
-82cc3776 conf: Update configuration (#1432)
-8f16f14e feat: AU-448: Breakin change flag and logic to determine if newer versions have a breaking change. Disable versioning fields for non superusers. Translate closed webform text (#1439)
-b7031e4d feat: AU-2216, E2E: Inline form error validation (#1430)
-
+- b5a5d25a feat: AU-1744: refactor document content to typed data (#1452)
+- 2c112734 feat: AU-2544: Added new ad-group <-> drupal-role mappings. (#1455)
+- 4b3daea4 fix: AU-2317: Show data of kuvaproj application in print view (#1454)
+- a51a826f fix: AU-2542: Attempting to fix inline form error validation. (#1453)
+- da3ff075 Update configuration (#1451)
+- 2e87485b UHF-9946: hdbt_subtheme refactoring and updating (#1441)
+- f51d2404 conf: Update configuration (#1448)
+- 59ae3b28 fix: AU-2342: Hide attachments with only a description in preview page (#1450)
+- 627f2856 feat: AU-2329, E2E: Test tooltip functionality (#1446)
+- b654a641 feat: AU-1743: Refactor getValueFromDocument method to it's own class (#1449)
+- eb28b8c0 docs: Add missing 67 example json.
+- d681469a conf: Update configuration (#1447)
+- 136cf7c6 fix: AU-2541: Fixed a bug in GrantsCompositeBase.php. (#1445)
+- 82cc3776 conf: Update configuration (#1432)
+- 8f16f14e feat: AU-448: Breakin change flag and logic to determine if newer versions have a breaking change. Disable versioning fields for non superusers. Translate closed webform text (#1439)
+- b7031e4d feat: AU-2216, E2E: Inline form error validation (#1430)
 
 ## 2024.10
 - f0b6aafc fix: AU-2508: add missing filter to content editor (#1443)
