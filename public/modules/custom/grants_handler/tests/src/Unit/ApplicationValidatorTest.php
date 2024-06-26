@@ -3,6 +3,7 @@
 namespace Drupal\Tests\grants_handler\Unit;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\grants_handler\ApplicationValidator;
 use Drupal\grants_metadata\Tests\TestDataRetriever;
 use Drupal\Tests\UnitTestCase;
@@ -74,18 +75,29 @@ class ApplicationValidatorTest extends UnitTestCase {
   public function testProcessViolation(): void {
     $violation = $this->createMock(ConstraintViolationInterface::class);
     $formState = $this->createMock(FormStateInterface::class);
-    $appProps = [];
+    $dataInterface = $this->createMock(ComplexDataInterface::class);
+
+    $definition = $this->createMock('Drupal\grants_test_base\TypedData\Definition\TestDataDefinition');
+    $appProps = ['test' => $dataInterface];
     $formElementsDecodedAndFlattened = [];
     $erroredItems = [];
     $violationPrints = [];
 
-    $violation->expects($this->once())
+    $violation->expects($this->any())
       ->method('getMessage')
       ->willReturn('Test violation message');
 
+    $violation->expects($this->once())
+      ->method('getPropertyPath')
+      ->willReturn('test.violation');
+
     $formState->expects($this->once())
       ->method('setErrorByName')
-      ->with($this->equalTo('test'), $this->equalTo('Test violation message'));
+      ->with($this->equalTo('test][violation'), $this->equalTo('Test violation message'));
+
+    $dataInterface->expects($this->once())
+      ->method('getDataDefinition')
+      ->willReturn($definition);
 
     $this->applicationValidator->processViolation(
       $violation,
@@ -94,6 +106,7 @@ class ApplicationValidatorTest extends UnitTestCase {
       $formElementsDecodedAndFlattened,
       $erroredItems,
       $violationPrints);
+    $this->assertEquals('Test violation message', $violationPrints['test.violation']);
   }
 
 }
