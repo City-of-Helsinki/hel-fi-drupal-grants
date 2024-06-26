@@ -11,6 +11,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\EventsService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -21,13 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class CopyApplicationModalForm extends FormBase {
 
-  /**
-   * Is debug on or off?
-   *
-   * @var bool
-   */
-  protected bool $debug;
-
+  use DebuggableTrait;
 
   /**
    * Application handler class.
@@ -51,25 +47,29 @@ class CopyApplicationModalForm extends FormBase {
   protected EventsService $eventsService;
 
   /**
+   * Application status service.
+   *
+   * @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   */
+  protected ApplicationStatusService $applicationStatusService;
+
+  /**
    * Constructs a new ModalAddressForm object.
    */
   public function __construct(
     ApplicationHandler $applicationHandler,
     Renderer $renderer,
     EventsService $eventsService,
+    ApplicationStatusService $applicationStatusService
   ) {
-    $debug = getenv('DEBUG');
 
-    if ($debug == 'true') {
-      $this->debug = TRUE;
-    }
-    else {
-      $this->debug = FALSE;
-    }
+    // When argument is set to null, get the debug value from environment.
+    $this->setDebug(NULL);
 
     $this->applicationHandler = $applicationHandler;
     $this->renderer = $renderer;
     $this->eventsService = $eventsService;
+    $this->applicationStatusService = $applicationStatusService;
   }
 
   /**
@@ -82,6 +82,7 @@ class CopyApplicationModalForm extends FormBase {
       $container->get('grants_handler.application_handler'),
       $container->get('renderer'),
       $container->get('grants_handler.events_service'),
+      $container->get('grants_handler.application_status_service')
     );
     $form->setRequestStack($container->get('request_stack'));
     $form->setStringTranslation($container->get('string_translation'));
@@ -198,12 +199,13 @@ class CopyApplicationModalForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
+  public function validateForm(array &$form, FormStateInterface $form_state): void {
     $storage = $form_state->getStorage();
     /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
     $webform_submission = $storage['submission'];
     $webform = $webform_submission->getWebForm();
-    $isApplicationOpen = ApplicationHandler::isApplicationOpen($webform);
+
+    $isApplicationOpen = $this->applicationStatusService->isApplicationOpen($webform);
     $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
 
     // If copying is disabled in 3rd party settings, do not allow forward.

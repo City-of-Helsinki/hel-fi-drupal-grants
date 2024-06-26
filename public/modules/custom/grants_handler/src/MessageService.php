@@ -21,6 +21,7 @@ use GuzzleHttp\Client;
 class MessageService {
 
   use StringTranslationTrait;
+  use DebuggableTrait;
 
   /**
    * The helfi_helsinki_profiili.userdata service.
@@ -71,12 +72,6 @@ class MessageService {
    */
   protected string $password;
 
-  /**
-   * Print / log debug things.
-   *
-   * @var bool
-   */
-  protected bool $debug;
 
   /**
    * Atv access.
@@ -91,6 +86,13 @@ class MessageService {
    * @var \Drupal\Core\Session\AccountProxyInterface
    */
   protected AccountProxyInterface $currentUser;
+
+  /**
+   * Application status service.
+   *
+   * @var \Drupal\grants_handler\ApplicationStatusService
+   */
+  protected ApplicationStatusService $applicationStatusService;
 
   /**
    * Constructs a MessageService object.
@@ -115,6 +117,7 @@ class MessageService {
     EventsService $eventsService,
     AtvService $atvService,
     AccountProxyInterface $currentUser,
+    ApplicationStatusService $applicationStatusService
   ) {
     $this->helfiHelsinkiProfiiliUserdata = $helfi_helsinki_profiili_userdata;
     $this->httpClient = $http_client;
@@ -122,20 +125,13 @@ class MessageService {
     $this->eventsService = $eventsService;
     $this->atvService = $atvService;
     $this->currentUser = $currentUser;
+    $this->applicationStatusService = $applicationStatusService;
 
     $this->endpoint = getenv('AVUSTUS2_MESSAGE_ENDPOINT');
     $this->username = getenv('AVUSTUS2_USERNAME');
     $this->password = getenv('AVUSTUS2_PASSWORD');
 
-    $debug = getenv('debug');
-
-    if ($debug == 'true') {
-      $this->debug = TRUE;
-    }
-    else {
-      $this->debug = FALSE;
-    }
-
+    $this->setDebug(NULL);
   }
 
   /**
@@ -223,5 +219,207 @@ class MessageService {
     }
     return FALSE;
   }
+
+  /**
+   * Check if given submission is allowed to be messaged.
+   *
+   * @param \Drupal\webform\Entity\WebformSubmission|null $submission
+   *   Submission in question.
+   * @param string|null $status
+   *   If no object is available, do text comparison.
+   *
+   * @return bool
+   *   Is submission editable?
+   */
+  public function isSubmissionMessageable(?WebformSubmission $submission, ?string $status): bool {
+
+    if (NULL === $submission) {
+      $submissionStatus = $status;
+    }
+    else {
+      $data = $submission->getData();
+      $submissionStatus = $data['status'];
+    }
+
+    $applicationStatuses = $this->applicationStatusService->getApplicationStatuses();
+
+    if (in_array($submissionStatus, [
+      $applicationStatuses['SUBMITTED'],
+      $applicationStatuses['RECEIVED'],
+      $applicationStatuses['PREPARING'],
+      $applicationStatuses['PENDING'],
+      $applicationStatuses['PROCESSING'],
+    ])) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * @param array $data
+   * @param $onlyUnread
+   * @param $showHiddenMessages
+   *
+   * @return array
+   */
+  public function parseMessages(array $data, $onlyUnread = FALSE, $showHiddenMessages = FALSE): array {
+    if (!isset($data['events'])) {
+      return [];
+    }
+
+    $messageEvents = $this->filterMessageEvents($data['events']);
+    $resentMessages = $this->filterResentMessages($data['events'], $showHiddenMessages);
+    $avus2ReceivedIds = $this->filterAvus2ReceivedMessages($data['events']);
+    $eventIds = array_column($messageEvents, 'eventTarget');
+
+    $messages = [];
+    $unread = [];
+
+    foreach ($data['messages'] as $message) {
+      $ts = strtotime($message["sendDateTime"]);
+
+      if (in_array($message['messageId'], $resentMessages)) {
+        continue;
+      }
+
+      $this->setResentAndAvus2ReceivedFlags($message, $resentMessages, $avus2ReceivedIds, $showHiddenMessages);
+
+      $msgUnread = $this->setMessageStatusAndCheckIfUnread($message, $eventIds);
+
+      if ($onlyUnread === TRUE && $msgUnread === TRUE) {
+        $unread[$ts] = $message;
+      }
+      $messages[$ts] = $message;
+    }
+    return $onlyUnread === TRUE ? $unread : $messages;
+  }
+
+  private function filterMessageEvents(array $events): array {
+    return array_filter($events, function ($event) {
+      return $event['eventType'] == $this->eventsService->getEventTypes()['MESSAGE_READ'];
+    });
+  }
+
+  private function filterResentMessages(array $events, bool $showHiddenMessages): array {
+    $resentMessages = array_filter($events, function ($event) {
+      return $event['eventType'] == $this->eventsService->getEventTypes()['MESSAGE_RESEND'];
+    });
+
+    return $showHiddenMessages ? $resentMessages : array_unique(array_map(function ($message) {
+      return $message['eventTarget'];
+    }, $resentMessages));
+  }
+
+  private function filterAvus2ReceivedMessages(array $events): array {
+    $avus2ReceivedMessages = array_filter($events, function ($event) {
+      return $event['eventType'] == $this->eventsService->getEventTypes()['AVUSTUS2_MSG_OK'];
+    });
+
+    return array_unique(array_column($avus2ReceivedMessages, 'eventTarget'));
+  }
+
+  private function setResentAndAvus2ReceivedFlags(
+    array &$message,
+    array $resentMessages,
+    array $avus2ReceivedIds,
+    bool $showHiddenMessages
+  ): void {
+    if (in_array($message['messageId'], $resentMessages) && $showHiddenMessages) {
+      $message['resent'] = TRUE;
+    }
+
+    if (in_array($message['messageId'], $avus2ReceivedIds)) {
+      $message['avus2received'] = TRUE;
+    }
+  }
+
+  private function setMessageStatusAndCheckIfUnread(array &$message, array $eventIds): bool {
+    if (in_array($message['messageId'], $eventIds)) {
+      $message['messageStatus'] = 'READ';
+      return FALSE;
+    } else {
+      $message['messageStatus'] = 'UNREAD';
+      return TRUE;
+    }
+  }
+
+  /**
+   * Figure out from events which messages are unread.
+   *
+   * @param array $data
+   *   Submission data.
+   * @param bool $onlyUnread
+   *   Return only unread messages.
+   * @param bool $showHiddenMessages
+   *   Should we return the hidden messages. (For exmaple: resent messages).
+   *
+   * @return array
+   *   Parsed messages with read information
+   * /
+  public function parseMessages(array $data, $onlyUnread = FALSE, $showHiddenMessages = FALSE): array {
+    if (!isset($data['events'])) {
+      return [];
+    }
+
+    $messageEvents = array_filter($data['events'], function ($event) {
+      if ($event['eventType'] == $this->eventsService->getEventTypes()['MESSAGE_READ']) {
+        return TRUE;
+      }
+      return FALSE;
+    });
+
+    $resentMessages = array_filter($data['events'], function ($event) {
+      return $event['eventType'] == $this->eventsService->getEventTypes()['MESSAGE_RESEND'];
+    });
+
+    $resentMessages = array_unique(array_map(function ($message) {
+      return $message['eventTarget'];
+    }, $resentMessages));
+
+    $avus2ReceivedMessages = array_filter($data['events'], function ($event) {
+      return $event['eventType'] == $this->eventsService->getEventTypes()['AVUSTUS2_MSG_OK'];
+    });
+
+    $avus2ReceivedIds = array_unique(array_column($avus2ReceivedMessages, 'eventTarget'));
+    $eventIds = array_column($messageEvents, 'eventTarget');
+
+    $messages = [];
+    $unread = [];
+
+    foreach ($data['messages'] as $message) {
+      $msgUnread = NULL;
+      $ts = strtotime($message["sendDateTime"]);
+
+      if (in_array($message['messageId'], $resentMessages) && !$showHiddenMessages) {
+        continue;
+      }
+      elseif (in_array($message['messageId'], $resentMessages) && $showHiddenMessages) {
+        $message['resent'] = TRUE;
+      }
+
+      if (in_array($message['messageId'], $avus2ReceivedIds)) {
+        $message['avus2received'] = TRUE;
+      }
+
+      if (in_array($message['messageId'], $eventIds)) {
+        $message['messageStatus'] = 'READ';
+        $msgUnread = FALSE;
+      }
+      else {
+        $message['messageStatus'] = 'UNREAD';
+        $msgUnread = TRUE;
+      }
+
+      if ($onlyUnread === TRUE && $msgUnread === TRUE) {
+        $unread[$ts] = $message;
+      }
+      $messages[$ts] = $message;
+    }
+    if ($onlyUnread === TRUE) {
+      return $unread;
+    }
+    return $messages;
+  }*/
+
 
 }

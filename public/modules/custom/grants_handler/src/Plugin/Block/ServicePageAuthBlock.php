@@ -15,6 +15,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -61,6 +62,13 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
   protected ServicePageBlockService $servicePageBlockService;
 
   /**
+   * The application status service.
+   *
+   * @var \Drupal\grants_handler\ApplicationStatusService
+   */
+  protected ApplicationStatusService $applicationStatusService;
+
+  /**
    * Constructs a new ServicePageBlock instance.
    *
    * @param array $configuration
@@ -88,13 +96,15 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     HelsinkiProfiiliUserData $helfiHelsinkiProfiili,
     CurrentRouteMatch $routeMatch,
     AccountProxy $user,
-    ServicePageBlockService $servicePageBlockService
+    ServicePageBlockService $servicePageBlockService,
+    ApplicationStatusService $applicationStatusService
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
     $this->helfiHelsinkiProfiili = $helfiHelsinkiProfiili;
     $this->routeMatch = $routeMatch;
     $this->currentUser = $user;
     $this->servicePageBlockService = $servicePageBlockService;
+    $this->applicationStatusService = $applicationStatusService;
   }
 
   /**
@@ -109,6 +119,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('current_route_match'),
       $container->get('current_user'),
       $container->get('grants_handler.service_page_block_service'),
+      $container->get('grants_handler.application_status_service')
     );
   }
 
@@ -141,7 +152,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     $webformId = $webform->id();
 
     // If the application isn't open, just display a message.
-    if (!ApplicationHandler::isApplicationOpen($webform)) {
+    if (!$this->applicationStatusService->isApplicationOpen($webform)) {
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
         '#text' => $this->t('This application is not open', [], $tOpts),

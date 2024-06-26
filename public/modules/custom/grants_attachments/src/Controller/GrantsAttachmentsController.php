@@ -8,6 +8,7 @@ use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\EventsService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -53,6 +54,13 @@ class GrantsAttachmentsController extends ControllerBase {
   protected RequestStack $request;
 
   /**
+   * Application status service.
+   *
+   * @var \Drupal\grants_handler\ApplicationStatusService
+   */
+  protected ApplicationStatusService $applicationStatusService;
+
+  /**
    * The controller constructor.
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
@@ -68,13 +76,15 @@ class GrantsAttachmentsController extends ControllerBase {
     AtvService $helfi_atv,
     ApplicationHandler $applicationHandler,
     RequestStack $requestStack,
-    EventsService $eventsService
+    EventsService $eventsService,
+    ApplicationStatusService $applicationStatusService
   ) {
     $this->helfiAtv = $helfi_atv;
     $this->applicationHandler = $applicationHandler;
 
     $this->request = $requestStack;
     $this->eventsService = $eventsService;
+    $this->applicationStatusService = $applicationStatusService;
 
   }
 
@@ -87,6 +97,7 @@ class GrantsAttachmentsController extends ControllerBase {
       $container->get('grants_handler.application_handler'),
       $container->get('request_stack'),
       $container->get('grants_handler.events_service'),
+      $container->get('grants_handler.application_status_service')
     );
   }
 
@@ -116,7 +127,7 @@ class GrantsAttachmentsController extends ControllerBase {
     $integrationId = str_replace('_', '/', $integration_id);
     $destination = $this->request->getMainRequest()->get('destination');
 
-    if ($submissionData['status'] != ApplicationHandler::getApplicationStatuses()['DRAFT']) {
+    if ($submissionData['status'] != $this->applicationStatusService->getApplicationStatuses()['DRAFT']) {
       throw new AccessException('Only application in DRAFT status allows attachments to be deleted.');
     }
 
@@ -143,7 +154,7 @@ class GrantsAttachmentsController extends ControllerBase {
         }
 
         // Create event for deletion.
-        $event = EventsService::getEventData(
+        $event = $this->eventsService->getEventData(
           'HANDLER_ATT_DELETED',
           $submission_id,
           $this->t('Attachment deleted from the field: @field.',

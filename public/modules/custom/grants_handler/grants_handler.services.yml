@@ -13,7 +13,8 @@ services:
         '@logger.factory',
         '@grants_handler.events_service',
         '@helfi_atv.atv_service',
-        '@current_user'
+        '@current_user',
+        '@grants_handler.application_status_service'
     ]
 
   grants_handler.application_handler:
@@ -33,8 +34,8 @@ services:
         '@config.factory',
         '@current_user',
         '@datetime.time',
-        '@current_user',
-        '@datetime.time'
+        '@grants_handler.application_validator',
+        '@grants_handler.application_status_service',
     ]
     calls:
       - [setAttachmentHandler, ['@?grants_attachments.attachment_handler']]
@@ -123,3 +124,14 @@ services:
   grants_handler.service_page_block_service:
     class: Drupal\grants_handler\ServicePageBlockService
     arguments: ['@entity_type.manager', '@current_route_match', '@grants_profile.service']
+
+  grants_handler.application_validator:
+    class: Drupal\grants_handler\ApplicationValidator
+    arguments: [
+      '@grants_handler.navigation_helper',
+      '@logger.factory'
+    ]
+
+  grants_handler.application_status_service:
+    class: Drupal\grants_handler\ApplicationStatusService
+    arguments: [ '@config.factory' ]

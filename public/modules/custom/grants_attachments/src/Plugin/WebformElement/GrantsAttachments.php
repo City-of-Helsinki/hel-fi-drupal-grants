@@ -205,7 +205,8 @@ class GrantsAttachments extends WebformCompositeBase {
     $tOpts = ['context' => 'grants_attachments'];
 
     $submissionData = $webform_submission->getData();
-    $attachmentEvents = EventsService::filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
+    $eventsService = \Drupal::service('grants_handler.events_service');
+    $attachmentEvents = $eventsService->filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
 
     if (!is_array($value)) {
       return [];

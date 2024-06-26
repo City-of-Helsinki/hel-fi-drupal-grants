@@ -8,6 +8,7 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventException;
+use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -37,9 +38,19 @@ class ResendApplicationsForm extends AtvFormBase {
   protected AtvService $atvService;
 
   /**
+   * Message service.
+   *
+   * @var \Drupal\grants_handler\MessageService
+   */
+  protected MessageService $messageService;
+
+  /**
    * Constructs a new GrantsProfileForm object.
    */
-  public function __construct(AtvService $atvService) {
+  public function __construct(
+    AtvService $atvService,
+    MessageService $messageService
+  ) {
     $this->atvService = $atvService;
   }
 
@@ -48,7 +59,8 @@ class ResendApplicationsForm extends AtvFormBase {
    */
   public static function create(ContainerInterface $container): ResendApplicationsForm|static {
     return new static(
-      $container->get('helfi_atv.atv_service')
+      $container->get('helfi_atv.atv_service'),
+      $container->get('grants_handler.message_service')
     );
   }
 
@@ -328,6 +340,9 @@ class ResendApplicationsForm extends AtvFormBase {
     $messenger = \Drupal::service('messenger');
     $logger = self::getLoggerChannel();
 
+    /** @var \Drupal\grants_handler\MessageService $messageService */
+    $messageService = \Drupal::service('grants_handler.message_service');
+
     try {
       $applicationId = $formState->getValue('applicationId');
       $placeholders = ['@applicationId' => $applicationId];
@@ -342,7 +357,7 @@ class ResendApplicationsForm extends AtvFormBase {
         return;
       }
 
-      $messages = ApplicationHandler::parseMessages($atvDoc->getContent(), FALSE, TRUE);
+      $messages = $messageService->parseMessages($atvDoc->getContent(), FALSE, TRUE);
 
       $messenger->addStatus(t('Application found: @applicationId', $placeholders));
       $statusArray = $atvDoc->getStatusArray();

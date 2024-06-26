@@ -8,6 +8,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\MessageService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -76,7 +77,14 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
    *
    * @var \Drupal\Core\Session\AccountInterface
    */
-  protected $currentUser;
+  protected AccountInterface $currentUser;
+
+  /**
+   * The grants_handler.message_service service.
+   *
+   * @var \Drupal\grants_handler\MessageService
+   */
+  protected MessageService $messageService;
 
   /**
    * Construct block object.
@@ -113,6 +121,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     Request $request,
     LanguageManagerInterface $languageManager,
     AccountInterface $currentUser,
+    MessageService $messageService
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->helfiHelsinkiProfiiliUserdata = $helsinkiProfiiliUserData;
@@ -122,6 +131,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     $this->request = $request;
     $this->languageManager = $languageManager;
     $this->currentUser = $currentUser;
+    $this->messageService = $messageService;
   }
 
   /**
@@ -154,7 +164,8 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       $container->get('helfi_atv.atv_service'),
       $container->get('request_stack')->getCurrentRequest(),
       $container->get('language_manager'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('grants_handler.message_service')
     );
   }
 
@@ -236,7 +247,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
 
             $submission = ApplicationHandler::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
             $submissionData = $submission->getData();
-            $submissionMessages = ApplicationHandler::parseMessages($submissionData, TRUE);
+            $submissionMessages = $this->messageService->parseMessages($submissionData, TRUE);
             $messages += $submissionMessages;
 
             if ($submissionData['form_timestamp']) {

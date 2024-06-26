@@ -292,7 +292,7 @@ class AttachmentHandler {
         $attachmentFieldDescription = $attachmentHeaders[$deletedAttachment['fileType']];
 
         // Create event for deletion.
-        $event = EventsService::getEventData(
+        $event = $this->eventService->getEventData(
           'HANDLER_ATT_DELETED',
           $submittedFormData['application_number'],
           $this->t('Attachment deleted from the field: @field.',
@@ -645,7 +645,7 @@ class AttachmentHandler {
       );
 
       if ($uploadResult) {
-        $submittedFormData['events'][] = EventsService::getEventData(
+        $submittedFormData['events'][] = $this->eventService->getEventData(
           'HANDLER_ATT_OK',
           $applicationNumber,
           $this->t('Attachment uploaded for the IBAN: @iban.', ['@iban' => $accountNumber]),
@@ -969,7 +969,7 @@ class AttachmentHandler {
           $retval['integrationID'] = $field["integrationID"];
         }
 
-        $event = EventsService::getEventData(
+        $event = $this->eventService->getEventData(
           'HANDLER_ATT_OK',
           $applicationNumber,
           $this->t('Attachment uploaded to the field: @field.',
@@ -1000,7 +1000,7 @@ class AttachmentHandler {
     }
 
     if (isset($field['fileStatus']) && $field['fileStatus'] === 'justUploaded') {
-      $event = EventsService::getEventData(
+      $event = $this->eventService->getEventData(
         'HANDLER_ATT_OK',
         $applicationNumber,
         $this->t('Attachment uploaded to the field: @field.',

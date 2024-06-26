@@ -14,12 +14,15 @@ use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationException;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\grants_handler\ApplicationValidator;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\GrantsException;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
 use Drupal\grants_handler\WebformSubmissionNotesHelper;
 use Drupal\grants_mandate\CompanySelectException;
+use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -32,6 +35,7 @@ use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Main handler for Grants forms.
@@ -204,7 +208,25 @@ class GrantsHandler extends WebformHandlerBase {
    *
    * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  protected $requestStack;
+  protected RequestStack $requestStack;
+
+  /**
+   * @var \Drupal\grants_handler\ApplicationValidator
+   */
+  protected ApplicationValidator $applicationValidator;
+
+  /**
+   * Status service.
+   *
+   * @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   */
+  protected ApplicationStatusService $applicationStatusService;
+
+  /**
+   *
+   * @var ApplicationDataService
+   */
+  protected ApplicationDataService $applicationDataService;
 
   /**
    * {@inheritdoc}
@@ -242,6 +264,14 @@ class GrantsHandler extends WebformHandlerBase {
     $grantsFormNavigationHelper = $container->get('grants_handler.navigation_helper');
     $instance->grantsFormNavigationHelper = $grantsFormNavigationHelper;
 
+    /** @var \Drupal\grants_handler\ApplicationValidator $applicationValidator */
+    $instance->applicationValidator = $container->get('grants_handler.application_validator');
+    $instance->applicationValidator->setDebug($instance->isDebug());
+
+    /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
+    $instance->applicationStatusService = $container->get('grants_handler.application_status_service');
+    $instance->applicationStatusService->setDebug($instance->isDebug());
+
     /** @var \Drupal\grants_handler\FormLockService $formLockService */
     $formLockService = $container->get('grants_handler.form_lock_service');
     $instance->formLockService = $formLockService;
@@ -253,6 +283,10 @@ class GrantsHandler extends WebformHandlerBase {
     /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
     $requestStack = $container->get('request_stack');
     $instance->requestStack = $requestStack;
+
+    /** @var \Drupal\grants_metadata\ApplicationDataService $applicationDataService */
+    $applicationDataService = $container->get('grants_metadata.application_data_service');
+    $instance->applicationDataService = $applicationDataService;
 
     $instance->triggeringElement = '';
     $instance->applicationNumber = '';
@@ -740,7 +774,7 @@ class GrantsHandler extends WebformHandlerBase {
     $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $this->applicationActingYears;
 
     if ($this->applicationNumber) {
-      $dataIntegrityStatus = $this->applicationHandler->validateDataIntegrity(
+      $dataIntegrityStatus = $this->applicationDataService->validateDataIntegrity(
         NULL,
         $submissionData,
         $this->applicationNumber,
@@ -796,9 +830,9 @@ moment and reload the page.',
     // eg: editing draft ouside application period is ok, unless the underlying
     // webform has changed.
     //
-    if (!ApplicationHandler::isSubmissionChangesAllowed($webform_submission)) {
+    if (!$this->applicationStatusService->isSubmissionChangesAllowed($webform_submission)) {
 
-      $status = ApplicationHandler::getWebformStatus($webform_submission->getWebform());
+      $status = $this->applicationStatusService->getWebformStatus($webform_submission->getWebform());
 
       switch ($status) {
         case 'archived':
@@ -1021,7 +1055,7 @@ moment and reload the page.',
 
     }
 
-    $applicationStatuses = ApplicationHandler::getApplicationStatuses();
+    $applicationStatuses = $this->applicationStatusService->getApplicationStatuses();
 
     // If new status is submitted, ie save to Avus2..
     if ($newStatus == $applicationStatuses['SUBMITTED']) {
@@ -1067,7 +1101,10 @@ moment and reload the page.',
    * @return array|null
    *   All current errors.
    */
-  public function validate(WebformSubmissionInterface $webform_submission, FormStateInterface $form_state, array &$form): ?array {
+  public function validate(
+    WebformSubmissionInterface $webform_submission,
+    FormStateInterface $form_state,
+    array &$form): ?array {
     try {
       // Validate form.
       parent::validateForm($form, $form_state, $webform_submission);
@@ -1085,12 +1122,13 @@ moment and reload the page.',
    *
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   public function validateForm(
     array &$form,
     FormStateInterface $form_state,
     WebformSubmissionInterface $webform_submission
-  ) {
+  ): void {
 
     $tOpts = ['context' => 'grants_handler'];
 
@@ -1166,7 +1204,7 @@ moment and reload the page.',
     $this->setFromThirdPartySettings($webform_submission->getWebform());
 
     // Figure out status for this application.
-    $this->newStatus = $this->applicationHandler->getNewStatus(
+    $this->newStatus = $this->applicationStatusService->getNewStatus(
       $triggeringElement,
       $this->submittedFormData,
       $webform_submission
@@ -1175,7 +1213,7 @@ moment and reload the page.',
     $this->submittedFormData['status'] = $this->newStatus;
 
     // Application submitted.
-    if ($this->applicationHandler->getNewStatusHeader() == ApplicationHandler::getApplicationStatuses()['SUBMITTED']) {
+    if ($this->applicationStatusService->getNewStatusHeader() == $this->applicationStatusService->getApplicationStatuses()['SUBMITTED']) {
       $this->submittedFormData['form_timestamp_submitted'] = $dt->format('Y-m-d\TH:i:s');
     }
     $this->validate($webform_submission, $form_state, $form);
@@ -1185,7 +1223,7 @@ moment and reload the page.',
       $applicationData = $this->applicationHandler->webformToTypedData(
           $this->submittedFormData);
 
-      $violations = $this->applicationHandler->validateApplication(
+      $violations = $this->applicationValidator->validateApplication(
           $applicationData,
           $form_state,
           $webform_submission
@@ -1331,9 +1369,10 @@ submit the application only after you have provided all the necessary informatio
       $this->getLogger('grants_handler')->error($e->getMessage());
     }
 
+
     // Try to update status only if it's allowed.
-    if (ApplicationHandler::canSubmissionBeSubmitted($webform_submission, NULL)) {
-      $this->submittedFormData['status'] = ApplicationHandler::getApplicationStatuses()['SUBMITTED'];
+    if ($this->applicationStatusService->canSubmissionBeSubmitted($webform_submission, NULL)) {
+      $this->submittedFormData['status'] = $this->applicationStatusService->getApplicationStatuses()['SUBMITTED'];
     }
   }
 
@@ -1502,7 +1541,7 @@ submit the application only after you have provided all the necessary informatio
 
     try {
       // Get new status from method that figures that out.
-      $this->submittedFormData['status'] = $this->applicationHandler->getNewStatus(
+      $this->submittedFormData['status'] = $this->applicationStatusService->getNewStatus(
         $this->triggeringElement,
         $this->submittedFormData,
         $webform_submission

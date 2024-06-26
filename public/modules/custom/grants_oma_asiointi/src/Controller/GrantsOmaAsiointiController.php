@@ -7,6 +7,7 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\MessageService;
 use Drupal\grants_mandate\Controller\GrantsMandateController;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
@@ -73,7 +74,22 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   protected AtvService $helfiAtvAtvService;
 
   /**
+   * Message service.
+   *
+   * @var \Drupal\grants_handler\MessageService $messageService
+   */
+  protected MessageService $messageService;
+
+  /**
    * CompanyController constructor.
+   *
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   * @param \Drupal\grants_handler\ApplicationHandler $grants_handler_application_handler
+   * @param \Drupal\helfi_atv\AtvService $helfi_atv_atv_service
+   * @param \Drupal\grants_handler\MessageService $messageService
    */
   public function __construct(
     RequestStack $requestStack,
@@ -82,6 +98,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     GrantsProfileService $grantsProfileService,
     ApplicationHandler $grants_handler_application_handler,
     AtvService $helfi_atv_atv_service,
+    MessageService $messageService
   ) {
     $this->requestStack = $requestStack;
     $this->currentUser = $current_user;
@@ -90,6 +107,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     $this->logger = $this->getLogger('grants_oma_asiointi');
     $this->applicationHandler = $grants_handler_application_handler;
     $this->helfiAtvAtvService = $helfi_atv_atv_service;
+    $this->messageService = $messageService;
   }
 
   /**
@@ -103,6 +121,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       $container->get('grants_profile.service'),
       $container->get('grants_handler.application_handler'),
       $container->get('helfi_atv.atv_service'),
+      $container->get('grants_handler.message_service')
     );
   }
 
@@ -217,7 +236,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     foreach ($applications as $values) {
       $other = array_merge($other, $values);
       foreach ($values as $application) {
-        $appMessages = ApplicationHandler::parseMessages($application['#submission']);
+        $appMessages = $this->messageService->parseMessages($application['#submission']);
         foreach ($appMessages as $msg) {
           if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
             $unreadMsg[] = [

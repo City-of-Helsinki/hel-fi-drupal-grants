@@ -55,7 +55,7 @@ class EventsService {
    *
    * @var array|string[]
    */
-  public static array $eventTypes = [
+  public array $eventTypes = [
     'AVUSTUS2_MSG_OK' => 'AVUSTUS2_MSG_OK',
     'STATUS_UPDATE' => 'STATUS_UPDATE',
     'MESSAGE_AVUS2' => 'MESSAGE_AVUS2',
@@ -109,6 +109,15 @@ class EventsService {
       $this->debug = FALSE;
     }
 
+  }
+
+  /**
+   * Get event types.
+   *
+   * @return string[]
+   */
+  public function getEventTypes(): array {
+    return $this->eventTypes;
   }
 
   /**
@@ -187,9 +196,9 @@ class EventsService {
    * @return array
    *   Filtered events.
    */
-  public static function filterEvents(array $events, string $typeKey): array {
+  public function filterEvents(array $events, string $typeKey): array {
     $messageEvents = array_filter($events, function ($event) use ($typeKey) {
-      if ($event['eventType'] == self::$eventTypes[$typeKey]) {
+      if ($event['eventType'] == $this->eventTypes[$typeKey]) {
         return TRUE;
       }
       return FALSE;
@@ -219,10 +228,10 @@ class EventsService {
    *
    * @throws \Drupal\grants_handler\EventException
    */
-  public static function getEventData(string $eventType, string $applicationNumber, string $eventDescription, string $eventTarget): array {
+  public function getEventData(string $eventType, string $applicationNumber, string $eventDescription, string $eventTarget): array {
     $eventData = [];
 
-    if (!in_array($eventType, self::$eventTypes)) {
+    if (!in_array($eventType, $this->eventTypes)) {
       throw new EventException('Not valid event type: ' . $eventType);
     }
     else {

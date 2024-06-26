@@ -82,44 +82,6 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     return $schema;
   }
 
-  /**
-   * Load test data from data directory.
-   */
-  public static function loadSubmissionData($formName): array {
-    $filePath = __DIR__ . "/../../data/{$formName}.data.json";
-    return json_decode(file_get_contents($filePath), TRUE);
-  }
-
-  /**
-   * Get typed data object for webform data.
-   *
-   * This is ripped off from ApplicationHandler class.
-   *
-   * @param array $submittedFormData
-   *   Form data.
-   * @param string $formId
-   *   Webform id.
-   *
-   * @return \Drupal\Core\TypedData\TypedDataInterface
-   *   Typed data with values set.
-   *
-   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
-   */
-  public static function webformToTypedData(array $submittedFormData, string $formId): TypedDataInterface {
-    $definitionsMappings = Mappings::DEFINITIONS;
-    // Datatype plugin requires the module enablation.
-    if (!isset($definitionsMappings[$formId])) {
-      throw new \Exception('Unknown form id');
-    }
-    $dataDefinition = ($definitionsMappings[$formId]['class'])::create($definitionsMappings[$formId]['parameter']);
-
-    $typeManager = $dataDefinition->getTypedDataManager();
-    $applicationData = $typeManager->create($dataDefinition);
-
-    $applicationData->setValue($submittedFormData);
-
-    return $applicationData;
-  }
 
   /**
    * Helper function to fetch the given field from document for tests.

@@ -12,7 +12,9 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
+use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\InputmaskHandler;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\GrantsProfileService;
@@ -97,6 +99,15 @@ class ApplicationController extends ControllerBase {
   protected ApplicationHandler $applicationHandler;
 
   /**
+   * Application data service.
+   *
+   * @var \Drupal\grants_metadata\ApplicationDataService
+   */
+  protected ApplicationDataService $applicationDataService;
+
+  protected ApplicationStatusService $applicationStatusService;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): ApplicationController {
@@ -110,6 +121,8 @@ class ApplicationController extends ControllerBase {
     $instance->request = $container->get('request_stack');
     $instance->grantsProfileService = $container->get('grants_profile.service');
     $instance->applicationHandler = $container->get('grants_handler.application_handler');
+    $instance->applicationDataService = $container->get('grants_metadata.application_data_service');
+    $instance->applicationStatusService = $container->get('grants_handler.application_status_service');
     return $instance;
   }
 
@@ -125,6 +138,7 @@ class ApplicationController extends ControllerBase {
    *
    * @return \Drupal\Core\Access\AccessResultInterface
    *   The access result.
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function access(AccountInterface $account, string $webform, string $webform_submission): AccessResultInterface {
     $webformObject = Webform::load($webform);
@@ -234,7 +248,7 @@ class ApplicationController extends ControllerBase {
         $webform = $webform_submission->getWebform();
         $submissionData = $webform_submission->getData();
 
-        $saveIdValidates = $this->applicationHandler->validateDataIntegrity(
+        $saveIdValidates = $this->applicationDataService->validateDataIntegrity(
           $webform_submission,
           NULL,
           $submissionData['application_number'],
@@ -313,7 +327,7 @@ class ApplicationController extends ControllerBase {
 
     $webform = Webform::load($webform_id);
 
-    if (!ApplicationHandler::isApplicationOpen($webform)) {
+    if (!$this->applicationStatusService->isApplicationOpen($webform)) {
       // Add message if application is not open.
       $tOpts = ['context' => 'grants_handler'];
       $this->messenger()->addError($this->t('This application is not open', [], $tOpts), TRUE);

@@ -173,7 +173,10 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       $document->getMetadata()
     );
 
-    $sData['messages'] = ApplicationHandler::parseMessages($sData);
+    /** @var \Drupal\grants_handler\MessageService $messageService */
+    $messageService = \Drupal::service('grants_handler.message_service');
+
+    $sData['messages'] = $messageService->parseMessages($sData);
 
     $submission->setData($sData);
     return $sData;
