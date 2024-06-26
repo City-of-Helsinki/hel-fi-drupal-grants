@@ -18,6 +18,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_mandate\CompanySelectException;
+use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileService;
@@ -165,13 +166,6 @@ class ApplicationHandler {
   protected LanguageManager $languageManager;
 
   /**
-   * Applicationtypes.
-   *
-   * @var array
-   */
-  protected static array $applicationTypes;
-
-  /**
    * Application statuses.
    *
    * @var array
@@ -221,6 +215,20 @@ class ApplicationHandler {
    * @var \Drupal\grants_handler\ApplicationStatusService
    */
   protected ApplicationStatusService $applicationStatusService;
+
+  /**
+   * Application data service.
+   *
+   * @var \Drupal\grants_metadata\ApplicationDataService
+   */
+  protected ApplicationDataService $applicationDataService;
+
+  /**
+   * Application data service.
+   *
+   * @var \Drupal\grants_metadata\ApplicationInitService
+   */
+  protected ApplicationInitService $applicationInitService;
 
   /**
    * Constructs an ApplicationUploader object.
@@ -275,6 +283,8 @@ class ApplicationHandler {
     TimeInterface $time,
     ApplicationValidator $applicationValidator,
     ApplicationStatusService $applicationStatusService,
+    ApplicationDataService $applicationDataService,
+    ApplicationInitService $applicationInitService
   ) {
 
     $this->httpClient = $http_client;
@@ -304,7 +314,8 @@ class ApplicationHandler {
     $this->applicationValidator = $applicationValidator;
     $this->applicationStatusService = $applicationStatusService;
     $this->applicationStatuses = $this->applicationStatusService->getApplicationStatuses();
-
+    $this->applicationDataService = $applicationDataService;
+    $this->applicationInitService = $applicationInitService;
   }
 
   /**
@@ -319,100 +330,6 @@ class ApplicationHandler {
    */
 
   /**
-   * Get application types from config.
-   *
-   * @return array
-   *   Application types parsed from active config.
-   */
-  public static function getApplicationTypes(): array {
-    if (!isset(self::$applicationTypes)) {
-      $config = \Drupal::config('grants_metadata.settings');
-      $thirdPartyOpts = $config->get('third_party_options');
-      $applicationTypes = [];
-      foreach ((array) $thirdPartyOpts['application_types'] as $applicationTypeId => $config) {
-        $tempConfig = $config;
-        foreach ($config['labels'] as $lang => $label) {
-          $tempConfig[$lang] = $label;
-        }
-        $tempConfig['applicationTypeId'] = $applicationTypeId;
-        $applicationTypes[$config['id']] = $tempConfig;
-      }
-      self::$applicationTypes = $applicationTypes;
-    }
-
-    return self::$applicationTypes;
-  }
-
-  /**
-   * Set application types from config.
-   *
-   * This is for test cases.
-   */
-  public static function setApplicationTypes($applicationTypes): void {
-    self::$applicationTypes = $applicationTypes;
-  }
-
-
-
-  /**
-   * All app envs in array.
-   *
-   * @return array
-   *   Unique environments.
-   */
-  public static function getAppEnvs() {
-
-    $envs = [
-      'DEV',
-      'PROD',
-      'TEST',
-      'STAGE',
-      'LOCAL',
-      'LOCALJ',
-      'LOCALP',
-      self::getAppEnv(),
-    ];
-
-    return array_unique($envs);
-  }
-
-  /**
-   * Return Application environment shortcode.
-   *
-   * If environment is one of the set ones, use those. But if not, use one in
-   * .env file.
-   *
-   * @return string
-   *   Shortcode from current environment.
-   */
-  public static function getAppEnv(): string {
-    $appEnv = getenv('APP_ENV');
-
-    if ($appEnv == 'development') {
-      $appParam = 'DEV';
-    }
-    else {
-      if ($appEnv == 'production') {
-        $appParam = 'PROD';
-      }
-      else {
-        if ($appEnv == 'testing') {
-          $appParam = 'TEST';
-        }
-        else {
-          if ($appEnv == 'staging') {
-            $appParam = 'STAGE';
-          }
-          else {
-            $appParam = strtoupper($appEnv);
-          }
-        }
-      }
-    }
-    return $appParam;
-  }
-
-  /**
    * Generate application number from submission id.
    *
    * @param \Drupal\webform\Entity\WebformSubmission $submission
@@ -424,7 +341,7 @@ class ApplicationHandler {
    *   Generated number.
    */
   public static function createApplicationNumber(WebformSubmission &$submission, $useOldFormat = FALSE): string {
-    $appParam = self::getAppEnv();
+    $appParam = Helpers::getAppEnv();
 
     $serial = $submission->serial();
     $applicationType = $submission->getWebform()
@@ -458,7 +375,7 @@ class ApplicationHandler {
    */
   public static function getAvailableApplicationNumber(WebformSubmission &$submission): string {
 
-    $appParam = self::getAppEnv();
+    $appParam = Helpers::getAppEnv();
     $serial = $submission->serial();
     $webform_id = $submission->getWebform()->id();
     $applicationTypeId = $submission->getWebform()
@@ -640,7 +557,7 @@ class ApplicationHandler {
       ->execute();
     $webforms = Webform::loadMultiple(array_keys($wids));
 
-    $applicationTypes = self::getApplicationTypes();
+    $applicationTypes = Helpers::getApplicationTypes();
 
     // Look for for application type and return if found.
     $webform = array_filter($webforms, function ($wf) use ($webformTypeId, $applicationTypes, $fieldToCheck) {
@@ -683,7 +600,7 @@ class ApplicationHandler {
    * @return \Drupal\webform\Entity\Webform
    *   Webform object.
    */
-  public static function getWebformByUuid(string $uuid, string $application_number) {
+  public static function getWebformByUuid(string $uuid, string $application_number): Webform|bool|array {
 
     $wids = \Drupal::entityQuery('webform')
       ->condition('uuid', $uuid)
@@ -767,7 +684,7 @@ class ApplicationHandler {
     if ($document == NULL) {
       $sParams = [
         'transaction_id' => $applicationNumber,
-        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+        'lookfor' => 'appenv:' . Helpers::getAppEnv(),
       ];
 
       $document = $atvService->searchDocuments(
@@ -807,6 +724,7 @@ class ApplicationHandler {
     }
     if (!empty($submissionObject)) {
 
+      // TODO: update to normal method or fix other way
       $dataDefinition = self::getDataDefinition($document->getType());
 
       $sData = DocumentContentMapper::documentContentToTypedData(
@@ -841,7 +759,7 @@ class ApplicationHandler {
   public static function atvDocumentFromApplicationNumber(
     string $applicationNumber,
     bool $refetch = FALSE
-  ) {
+  ): array|AtvDocument {
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
@@ -856,7 +774,7 @@ class ApplicationHandler {
     try {
       $sParams = [
         'transaction_id' => $applicationNumber,
-        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+        'lookfor' => 'appenv:' . Helpers::getAppEnv(),
       ];
 
       /** @var \Drupal\helfi_atv\AtvDocument[] $document */
@@ -897,7 +815,7 @@ class ApplicationHandler {
     if (!isset($this->atvDocument) || $refetch === TRUE) {
       $sParams = [
         'transaction_id' => $transactionId,
-        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+        'lookfor' => 'appenv:' . Helpers::getAppEnv(),
       ];
 
       $res = $this->atvService->searchDocuments($sParams);
@@ -905,49 +823,6 @@ class ApplicationHandler {
     }
 
     return $this->atvDocument;
-  }
-
-  /**
-   * Get typed data object for webform data.
-   *
-   * @param array $submittedFormData
-   *   Form data.
-   *
-   * @return \Drupal\Core\TypedData\TypedDataInterface
-   *   Typed data with values set.
-   */
-  public function webformToTypedData(
-    array $submittedFormData
-  ): TypedDataInterface {
-
-    $dataDefinitionKeys = self::getDataDefinitionClass($submittedFormData['application_type']);
-
-    $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
-
-    $typeManager = $dataDefinition->getTypedDataManager();
-    $applicationData = $typeManager->create($dataDefinition);
-
-    $applicationData->setValue($submittedFormData);
-
-    return $applicationData;
-  }
-
-  /**
-   * Get webform title based on id and language code.
-   */
-  private function getWebformTitle($webform_id, $langCode) {
-    // Get the target language object.
-    $language = $this->languageManager->getLanguage($langCode);
-
-    // Remember original language before this operation.
-    $originalLanguage = $this->languageManager->getConfigOverrideLanguage();
-
-    // Set the translation target language on the configuration factory.
-    $this->languageManager->setConfigOverrideLanguage($language);
-    $translatedLabel = $this->configFactory->get("webform.webform.{$webform_id}")
-      ->get('title');
-    $this->languageManager->setConfigOverrideLanguage($originalLanguage);
-    return $translatedLabel;
   }
 
   /**
@@ -990,7 +865,7 @@ class ApplicationHandler {
     }
     else {
       $copy = TRUE;
-      $submissionData = self::clearDataForCopying($submissionData);
+      $submissionData = Helpers::clearDataForCopying($submissionData);
       $budgetInfoKeys = $this->getBudgetInfoKeysForCopying($submissionData);
     }
 
@@ -1074,7 +949,7 @@ class ApplicationHandler {
 
     try {
       // Merge sender details to new stuff.
-      $submissionData = array_merge($submissionData, $this->parseSenderDetails());
+      $submissionData = array_merge($submissionData, $this->applicationInitService->parseSenderDetails());
     }
     catch (ApplicationException $e) {
       $this->logger->error('Sender details parsing threw error: @error', ['@error' => $e->getMessage()]);
@@ -1120,7 +995,7 @@ class ApplicationHandler {
     $atvDocument->setHumanReadableType($humanReadableTypes);
 
     $atvDocument->setMetadata([
-      'appenv' => self::getAppEnv(),
+      'appenv' => Helpers::getAppEnv(),
       // Hmm, maybe no save id at this point?
       'saveid' => $copy ? 'copiedSave' : 'initialSave',
       'applicationnumber' => $applicationNumber,
@@ -1130,8 +1005,10 @@ class ApplicationHandler {
       'form_uuid' => $webform->uuid(),
     ]);
 
+
+
     // Do data conversion.
-    $typeData = $this->webformToTypedData($submissionData);
+    $typeData = $this->applicationDataService->webformToTypedData($submissionData);
 
     $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
       $typeData,
@@ -1154,7 +1031,8 @@ class ApplicationHandler {
       );
     }
 
-    $dataDefinitionKeys = self::getDataDefinitionClass($submissionData['application_type']);
+
+    $dataDefinitionKeys = $this->applicationDataService->getDataDefinitionClass($submissionData['application_type']);
     $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
 
     $submissionObject->setData(DocumentContentMapper::documentContentToTypedData($newDocument->getContent(), $dataDefinition));
@@ -1279,7 +1157,7 @@ class ApplicationHandler {
       $t_args = [
         '%myJSON' => $myJSON,
       ];
-      if (self::getAppEnv() !== 'PROD') {
+      if (Helpers::getAppEnv() !== 'PROD') {
         $this->logger
           ->debug('DEBUG: Sent JSON: %myJSON', $t_args);
       }
@@ -1293,7 +1171,7 @@ class ApplicationHandler {
       }
 
       // Current environment as a header to be added to meta -fields.
-      $headers['X-hki-appEnv'] = self::getAppEnv();
+      $headers['X-hki-appEnv'] = Helpers::getAppEnv();
       // Set application number to meta as well to enable better searches.
       $headers['X-hki-applicationNumber'] = $applicationNumber;
       // Set new saveid and save it to db.
@@ -1389,19 +1267,9 @@ class ApplicationHandler {
    *   Type of the application.
    */
   public static function getDataDefinition(string $type) {
-    $defClass = self::getApplicationTypes()[$type]['dataDefinition']['definitionClass'];
-    $defId = self::getApplicationTypes()[$type]['dataDefinition']['definitionId'];
+    $defClass = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionClass'];
+    $defId = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionId'];
     return $defClass::create($defId);
-  }
-
-  /**
-   * Get data definition class from application type.
-   *
-   * @param string $type
-   *   Type of the application.
-   */
-  public static function getDataDefinitionClass(string $type) {
-    return self::getApplicationTypes()[$type]['dataDefinition'];
   }
 
   /**
@@ -1504,10 +1372,11 @@ class ApplicationHandler {
         continue;
       }
 
-      if (array_key_exists($document->getType(), ApplicationHandler::getApplicationTypes())) {
+      if (array_key_exists($document->getType(), Helpers::getApplicationTypes())) {
         try {
 
           // Convert the data.
+          // TODO: fix static method
           $dataDefinition = self::getDataDefinition($document->getType());
           $submissionData = DocumentContentMapper::documentContentToTypedData(
             $document->getContent(),
@@ -1737,41 +1606,6 @@ class ApplicationHandler {
 
 
   /**
-   * Clear application data for noncopyable elements.
-   *
-   * @param array $data
-   *   Data to copy from.
-   *
-   * @return array
-   *   Cleaned values.
-   */
-  public static function clearDataForCopying(array $data): array {
-
-    unset($data["sender_firstname"]);
-    unset($data["sender_lastname"]);
-    unset($data["sender_person_id"]);
-    unset($data["sender_user_id"]);
-    unset($data["sender_email"]);
-    unset($data["metadata"]);
-    unset($data["attachments"]);
-    unset($data["form_timestamp_submitted"]);
-    unset($data["form_timestamp_created"]);
-
-    $data['events'] = [];
-    $data['messages'] = [];
-    $data['status_updates'] = [];
-
-    // Clear uploaded files..
-    foreach (AttachmentHandler::getAttachmentFieldNames($data["application_number"]) as $fieldName) {
-      unset($data[$fieldName]);
-    }
-    unset($data["application_number"]);
-
-    return $data;
-
-  }
-
-  /**
    * Gets webform & submission with data and determines access.
    *
    * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
@@ -1826,24 +1660,6 @@ class ApplicationHandler {
   }
 
   /**
-   * Easier method to check if we're in production.
-   *
-   * @param string $appEnv
-   *   App env from handler.
-   *
-   * @return bool
-   *   Is production env?
-   */
-  public static function isProduction(string $appEnv): bool {
-    $proenvs = [
-      'production',
-      'PRODUCTION',
-      'PROD',
-    ];
-    return in_array($appEnv, $proenvs);
-  }
-
-  /**
    * Tries to find latest webform for given application ID.
    *
    * @param mixed $id
@@ -1851,6 +1667,8 @@ class ApplicationHandler {
    *
    * @return \Drupal\webform\Entity\Webform|null
    *   Return webform object if found, else null.
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public static function getLatestApplicationForm($id): Webform|NULL {
     $webforms = \Drupal::entityTypeManager()
@@ -1916,114 +1734,6 @@ class ApplicationHandler {
     return count($applicationForms['released']) <= 1 && count($applicationForms['development']) === 0;
   }
 
-  /**
-   * Helper function to checks, if user has grants_admin role rights.
-   *
-   * @param \Drupal\Core\Session\AccountInterface $account
-   *   User account.
-   *
-   * @return bool
-   *   Does user have grant_admin rights.
-   */
-  public static function isGrantAdmin(AccountInterface $account) {
-    $currentRoles = $account->getRoles();
-    $isAdmin = in_array('grants_admin', $currentRoles) || $account->id() === '1';
-    return $isAdmin;
-  }
 
-  /**
-   * Get budgetInfo keys, that should be copied.
-   *
-   * @param array $submissionData
-   *   Submission data.
-   *
-   * @return array
-   *   Array containing the the keys to be copied.
-   */
-  private function getBudgetInfoKeysForCopying($submissionData) {
-    try {
-      $typeData = $this->webformToTypedData($submissionData);
-      /** @var \Drupal\Core\TypedData\ComplexDataDefinitionBase */
-      $dataDefinition = $typeData->getDataDefinition();
-      $propertyDefinitions = $dataDefinition->getPropertyDefinitions();
-
-      /** @var \Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition */
-      $budgetInfoDefinition = $propertyDefinitions['budgetInfo'] ?? NULL;
-      if ($budgetInfoDefinition) {
-        $budgetInfoKeys = array_keys($budgetInfoDefinition->getPropertyDefinitions()) ?? [];
-        return $budgetInfoKeys;
-      }
-    }
-    catch (\Exception $e) {
-      return [];
-    }
-
-    return [];
-  }
-
-  /**
-   * The handleBankAccountCopying method.
-   *
-   * This method handles the copying of a bank
-   * account confirmation file when a grants application
-   * is copied. This will:
-   *
-   * 1. Call handleBankAccountConfirmation() which modifies
-   * $submissionData so that it contains a bank account
-   * confirmation file that is fetched from the selected account
-   * on the copied application.
-   *
-   * 2. Convert $submissionData into document content.
-   *
-   * 3. Patch the already existing AtvDocument with
-   * the newly added bank account confirmation file.
-   *
-   * @param \Drupal\helfi_atv\AtvDocument $newDocument
-   *   The newly created AtvDocument we are patching.
-   * @param \Drupal\webform\Entity\WebformSubmission $submissionObject
-   *   A webform submission object based on the copied application.
-   * @param array $submissionData
-   *   The submission data from the copied application.
-   *
-   * @return \Drupal\helfi_atv\AtvDocument
-   *   Either the unmodified AtvDocument that already exists,
-   *   or one that has been patched with a bank account
-   *   confirmation file.
-   */
-  protected function handleBankAccountCopying(
-    AtvDocument $newDocument,
-    WebformSubmission $submissionObject,
-    array $submissionData): AtvDocument {
-
-    $newDocumentId = $newDocument->getId();
-    $applicationNumber = $newDocument->getTransactionId();
-    $bankAccountNumber = $submissionData['bank_account']["account_number"] ?? FALSE;
-
-    if (!$newDocumentId || !$applicationNumber || !$bankAccountNumber) {
-      return $newDocument;
-    }
-
-    try {
-      $this->attachmentHandler->handleBankAccountConfirmation(
-        $bankAccountNumber,
-        $applicationNumber,
-        $submissionData,
-        TRUE
-      );
-
-      $typeData = $this->webformToTypedData($submissionData);
-      $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
-        $typeData,
-        $submissionObject,
-        $submissionData);
-
-      $newDocument->setContent($appDocumentContent);
-      $newDocument = $this->atvService->patchDocument($newDocumentId, $newDocument->toArray());
-    }
-    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | EventException | GuzzleException $e) {
-      $this->logger->error('Error: %msg', ['%msg' => $e->getMessage()]);
-    }
-    return $newDocument;
-  }
 
 }

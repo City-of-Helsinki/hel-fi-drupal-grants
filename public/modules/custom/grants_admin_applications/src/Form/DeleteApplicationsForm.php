@@ -8,6 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\grants_admin_applications\Service\HandleDocumentsBatchService;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -98,7 +99,7 @@ final class DeleteApplicationsForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    if (str_contains(strtolower(ApplicationHandler::getAppEnv()), 'prod')) {
+    if (str_contains(strtolower(Helpers::getAppEnv()), 'prod')) {
       $this->messenger()->addError('No deleting profiles in PROD environment');
       return [];
     }

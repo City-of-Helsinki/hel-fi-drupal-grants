@@ -8,6 +8,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_profile\GrantsProfileService;
@@ -190,7 +191,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     }
 
     $helsinkiProfileData = $this->helfiHelsinkiProfiiliUserdata->getUserProfileData();
-    $appEnv = ApplicationHandler::getAppEnv();
+    $appEnv = Helpers::getAppEnv();
     $lookForAppEnv = 'appenv:' . $appEnv;
 
     $messages = [];
@@ -231,7 +232,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       foreach ($applicationDocuments as $document) {
         if (array_key_exists(
           $document->getType(),
-          ApplicationHandler::getApplicationTypes())
+          Helpers::getApplicationTypes())
         ) {
 
           try {
@@ -289,7 +290,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       '#allSubmissions' => $submissions,
       '#submissions' => array_slice($submissions, 0, 2),
       '#userProfileData' => $helsinkiProfileData['myProfile'],
-      '#applicationTypes' => ApplicationHandler::getApplicationTypes(),
+      '#applicationTypes' => Helpers::getApplicationTypes(),
       '#lang' => $lang->getId(),
       '#link' => $link,
       '#allMessagesLink' => $allMessagesLink,

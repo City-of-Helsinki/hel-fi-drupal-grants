@@ -8,17 +8,23 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\InputmaskHandler;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
+use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvFailedToConnectException;
+use Drupal\helfi_helsinki_profiili\ProfileDataException;
+use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformRequestInterface;
@@ -105,7 +111,19 @@ class ApplicationController extends ControllerBase {
    */
   protected ApplicationDataService $applicationDataService;
 
+  /**
+   * Application status service.
+   *
+   * @var \Drupal\grants_handler\ApplicationStatusService
+   */
   protected ApplicationStatusService $applicationStatusService;
+
+  /**
+   * Application init service.
+   *
+   * @var \Drupal\grants_handler\ApplicationInitService
+   */
+  protected ApplicationInitService $applicationInitService;
 
   /**
    * {@inheritdoc}
@@ -123,6 +141,8 @@ class ApplicationController extends ControllerBase {
     $instance->applicationHandler = $container->get('grants_handler.application_handler');
     $instance->applicationDataService = $container->get('grants_metadata.application_data_service');
     $instance->applicationStatusService = $container->get('grants_handler.application_status_service');
+    $instance->applicationInitService = $container->get('grants_handler.application_init_service');
+
     return $instance;
   }
 
@@ -368,7 +388,12 @@ class ApplicationController extends ControllerBase {
       return $this->redirect('<front>');
     }
 
-    $newSubmission = $this->applicationHandler->initApplication($webform->id());
+    try {
+      $newSubmission = $this->applicationInitService->initApplication($webform->id());
+    }
+    catch (\Exception $e) {
+      $d = 'asdf';
+    }
 
     return $this->redirect(
       'grants_handler.edit_application',

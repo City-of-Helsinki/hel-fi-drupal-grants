@@ -11,9 +11,11 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\EventsService;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -54,13 +56,21 @@ class CopyApplicationModalForm extends FormBase {
   protected ApplicationStatusService $applicationStatusService;
 
   /**
+   * Application init service.
+   *
+   * @var \Drupal\grants_handler\ApplicationInitService
+   */
+  protected ApplicationInitService $applicationInitService;
+
+  /**
    * Constructs a new ModalAddressForm object.
    */
   public function __construct(
     ApplicationHandler $applicationHandler,
     Renderer $renderer,
     EventsService $eventsService,
-    ApplicationStatusService $applicationStatusService
+    ApplicationStatusService $applicationStatusService,
+    ApplicationInitService $applicationInitService
   ) {
 
     // When argument is set to null, get the debug value from environment.
@@ -70,6 +80,7 @@ class CopyApplicationModalForm extends FormBase {
     $this->renderer = $renderer;
     $this->eventsService = $eventsService;
     $this->applicationStatusService = $applicationStatusService;
+    $this->applicationInitService = $applicationInitService;
   }
 
   /**
@@ -82,7 +93,8 @@ class CopyApplicationModalForm extends FormBase {
       $container->get('grants_handler.application_handler'),
       $container->get('renderer'),
       $container->get('grants_handler.events_service'),
-      $container->get('grants_handler.application_status_service')
+      $container->get('grants_handler.application_status_service'),
+      $container->get('grants_handler.application_init_service')
     );
     $form->setRequestStack($container->get('request_stack'));
     $form->setStringTranslation($container->get('string_translation'));
@@ -221,7 +233,7 @@ class CopyApplicationModalForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     $storage = $form_state->getStorage();
     /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
     $webform_submission = $storage['submission'];
@@ -230,7 +242,7 @@ class CopyApplicationModalForm extends FormBase {
 
     // Init new application with copied data.
     try {
-      $newSubmission = $this->applicationHandler->initApplication($webform->id(), $webform_submission->getData());
+      $newSubmission = $this->applicationInitService->initApplication($webform->id(), $webform_submission->getData());
       $newData = $newSubmission->getData();
     }
     catch (\Exception $e) {

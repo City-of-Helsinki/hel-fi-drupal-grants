@@ -9,6 +9,7 @@ use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -217,7 +218,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
 
       $sParams = [
         'transaction_id' => $transactionId,
-        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+        'lookfor' => 'appenv:' . Helpers::getAppEnv(),
       ];
 
       $res = \Drupal::service('helfi_atv.atv_service')->searchDocuments($sParams);
@@ -368,7 +369,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
     $activeOptions = array_merge($defaultOptions, $options);
 
     $sParams = [
-      ...['lookfor' => 'appenv:' . ApplicationHandler::getAppEnv()],
+      ...['lookfor' => 'appenv:' . Helpers::getAppEnv()],
       ...$activeOptions,
     ];
 

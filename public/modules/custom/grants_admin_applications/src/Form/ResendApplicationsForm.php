@@ -7,6 +7,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\EventException;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
@@ -214,7 +215,7 @@ class ResendApplicationsForm extends AtvFormBase {
   private static function getDocument($applicationId) {
     $sParams = [
       'transaction_id' => $applicationId,
-      'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+      'lookfor' => 'appenv:' . Helpers::getAppEnv(),
     ];
 
     $res = \Drupal::service('helfi_atv.atv_service')->searchDocuments($sParams);

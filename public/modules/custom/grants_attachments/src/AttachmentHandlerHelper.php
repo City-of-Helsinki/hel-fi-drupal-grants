@@ -3,6 +3,7 @@
 namespace Drupal\grants_attachments;
 
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 
 /**
  * Helper class for static helper functions.
@@ -104,7 +105,7 @@ class AttachmentHandlerHelper {
    */
   public static function addEnvToIntegrationId(mixed $integrationID): mixed {
 
-    $appParam = ApplicationHandler::getAppEnv();
+    $appParam = Helpers::getAppEnv();
 
     $atvVersion = getenv('ATV_VERSION');
     $removeBeforeThis = '/' . $atvVersion;

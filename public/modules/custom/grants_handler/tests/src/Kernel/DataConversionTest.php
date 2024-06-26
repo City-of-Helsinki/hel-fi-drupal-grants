@@ -7,6 +7,7 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\GrantsHandlerSubmissionStorage;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_test_base\Kernel\GrantsKernelTestBase;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\webform\Entity\WebformSubmission;
@@ -87,7 +88,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
         ],
       ],
     ];
-    ApplicationHandler::setApplicationTypes($applicationTypes);
+    Helpers::setApplicationTypes($applicationTypes);
   }
 
   /**
@@ -95,6 +96,9 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
    */
   public function testDataConversion(): void {
     $this->initSession();
+
+    $submissionStorage = $this->createMock('Drupal\grants_handler\GrantsHandlerSubmissionStorage');
+
     $submissionObject = WebformSubmission::create(['webform_id' => 'kuva_projekti']);
     $submissionObject->set('serial', 'TEST-1234');
     $customSettings = ['skip_available_number_check' => TRUE];
@@ -111,7 +115,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
     $document = AtvDocument::create($data);
     $document->setMetadata([]);
     // Do the actual data setting.
-    GrantsHandlerSubmissionStorage::setAtvDataToSubmission($document, $submissionObject);
+    $submissionStorage->setAtvDataToSubmission($document, $submissionObject);
     $expectedValues = [
       'members_applicant_person_global' => '50',
       'members_applicant_person_local' => '20',

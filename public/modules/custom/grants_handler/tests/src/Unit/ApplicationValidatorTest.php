@@ -22,8 +22,18 @@ class ApplicationValidatorTest extends UnitTestCase {
    */
   protected ApplicationValidator $applicationValidator;
 
+  /**
+   * The TestDataRetriever service.
+   *
+   * @var \Drupal\grants_metadata\Tests\TestDataRetriever
+   */
   protected TestDataRetriever $testDataRetriever;
 
+  /**
+   * Test data.
+   *
+   * @var array
+   */
   protected array $testData;
 
 
@@ -49,7 +59,7 @@ class ApplicationValidatorTest extends UnitTestCase {
     $this->testDataRetriever = new TestDataRetriever();
 
     try {
-      $this->testData = TestDataRetriever::loadTestData();
+      $this->testData = $this->testDataRetriever->loadTestData();
       $d = 'asdf';
     }
     catch (\Exception $e) {
@@ -76,7 +86,13 @@ class ApplicationValidatorTest extends UnitTestCase {
       ->method('setErrorByName')
       ->with($this->equalTo('test'), $this->equalTo('Test violation message'));
 
-    $this->applicationValidator->processViolation($violation, $appProps, $formState, $formElementsDecodedAndFlattened, $erroredItems, $violationPrints);
+    $this->applicationValidator->processViolation(
+      $violation,
+      $appProps,
+      $formState,
+      $formElementsDecodedAndFlattened,
+      $erroredItems,
+      $violationPrints);
   }
 }
 

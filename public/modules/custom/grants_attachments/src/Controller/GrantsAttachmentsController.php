@@ -2,15 +2,25 @@
 
 namespace Drupal\grants_attachments\Controller;
 
+use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
+use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessException;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\TempStore\TempStoreException;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\EventsService;
+use Drupal\grants_mandate\CompanySelectException;
+use Drupal\grants_metadata\ApplicationDataService;
+use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_helsinki_profiili\TokenExpiredException;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -61,6 +71,13 @@ class GrantsAttachmentsController extends ControllerBase {
   protected ApplicationStatusService $applicationStatusService;
 
   /**
+   * Application data service.
+   *
+   * @var \Drupal\grants_metadata\ApplicationDataService
+   */
+  protected ApplicationDataService $applicationDataService;
+
+  /**
    * The controller constructor.
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
@@ -77,7 +94,8 @@ class GrantsAttachmentsController extends ControllerBase {
     ApplicationHandler $applicationHandler,
     RequestStack $requestStack,
     EventsService $eventsService,
-    ApplicationStatusService $applicationStatusService
+    ApplicationStatusService $applicationStatusService,
+    ApplicationDataService $applicationDataService
   ) {
     $this->helfiAtv = $helfi_atv;
     $this->applicationHandler = $applicationHandler;
@@ -85,19 +103,21 @@ class GrantsAttachmentsController extends ControllerBase {
     $this->request = $requestStack;
     $this->eventsService = $eventsService;
     $this->applicationStatusService = $applicationStatusService;
+    $this->applicationDataService = $applicationDataService;
 
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('helfi_atv.atv_service'),
       $container->get('grants_handler.application_handler'),
       $container->get('request_stack'),
       $container->get('grants_handler.events_service'),
-      $container->get('grants_handler.application_status_service')
+      $container->get('grants_handler.application_status_service'),
+      $container->get('grants_metadata.application_data_service')
     );
   }
 
@@ -117,11 +137,14 @@ class GrantsAttachmentsController extends ControllerBase {
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function deleteAttachment(string $submission_id, string $integration_id) {
+  public function deleteAttachment(string $submission_id, string $integration_id): RedirectResponse {
     $tOpts = ['context' => 'grants_attachments'];
 
     // Load submission & data.
-    $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
+    try {
+      $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
+    }
+    catch (\Exception $e) {}
     $submissionData = $submission->getData();
     // Rebuild integration id from url.
     $integrationId = str_replace('_', '/', $integration_id);
@@ -168,7 +191,7 @@ class GrantsAttachmentsController extends ControllerBase {
 
         // Build data -> should validate ok, since we're
         // only deleting attachments & adding events..
-        $applicationData = $this->applicationHandler->webformToTypedData(
+        $applicationData = $this->applicationDataService->webformToTypedData(
           $submissionData);
 
         // Update in ATV.

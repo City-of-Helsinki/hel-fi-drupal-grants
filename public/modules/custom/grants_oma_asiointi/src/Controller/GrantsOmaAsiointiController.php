@@ -7,6 +7,7 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\grants_mandate\Controller\GrantsMandateController;
 use Drupal\grants_profile\GrantsProfileService;
@@ -178,7 +179,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       $showNotification = TRUE;
     }
 
-    $appEnv = ApplicationHandler::getAppEnv();
+    $appEnv = Helpers::getAppEnv();
 
     try {
       // Get applications from ATV.

@@ -9,9 +9,11 @@ use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\TempStore\TempStoreException;
+use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\DebuggableTrait;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -183,8 +185,8 @@ final class ApplicationDataService {
    *   Should skip integrity check.
    */
   private function shouldSkipIntegrityCheck(array $submissionData): bool {
-    $appEnv = ApplicationHandler::getAppEnv();
-    $isProduction = ApplicationHandler::isProduction($appEnv);
+    $appEnv = Helpers::getAppEnv();
+    $isProduction = Helpers::isProduction($appEnv);
     return !$isProduction && isset($submissionData['status']) && $submissionData['status'] === 'DRAFT';
   }
 
@@ -345,6 +347,53 @@ final class ApplicationDataService {
       }
     }
     return FALSE;
+  }
+
+  /**
+   * Get typed data object for webform data.
+   *
+   * @param array $submittedFormData
+   *   Form data.
+   *
+   * @return \Drupal\Core\TypedData\TypedDataInterface
+   *   Typed data with values set.
+   */
+  public function webformToTypedData(
+    array $submittedFormData
+  ): TypedDataInterface {
+
+    $dataDefinitionKeys = $this->getDataDefinitionClass($submittedFormData['application_type']);
+
+    $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
+
+    $typeManager = $dataDefinition->getTypedDataManager();
+    $applicationData = $typeManager->create($dataDefinition);
+
+    $applicationData->setValue($submittedFormData);
+
+    return $applicationData;
+  }
+
+  /**
+   * Get data definition class from application type.
+   *
+   * @param string $type
+   *   Type of the application.
+   */
+  public function getDataDefinitionClass(string $type) {
+    return Helpers::getApplicationTypes()[$type]['dataDefinition'];
+  }
+
+  /**
+   * Get data definition class from application type.
+   *
+   * @param string $type
+   *   Type of the application.
+   */
+  public function getDataDefinition(string $type) {
+    $defClass = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionClass'];
+    $defId = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionId'];
+    return $defClass::create($defId);
   }
 
 }

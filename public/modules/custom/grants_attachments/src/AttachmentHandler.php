@@ -15,8 +15,11 @@ use Drupal\Core\TempStore\TempStoreException;
 use Drupal\file\FileStorage;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\DebuggableTrait;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\EventException;
 use Drupal\grants_handler\EventsService;
+use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileException;
@@ -36,6 +39,7 @@ use GuzzleHttp\Exception\GuzzleException;
 class AttachmentHandler {
 
   use StringTranslationTrait;
+  use DebuggableTrait;
 
   /**
    * The grants_attachments.attachment_remover service.
@@ -50,7 +54,6 @@ class AttachmentHandler {
    * @var string[]
    */
   protected static array $attachmentFieldNames = [];
-
 
   /**
    * Logger.
@@ -116,11 +119,12 @@ class AttachmentHandler {
   protected array $attachmentFileIds;
 
   /**
-   * Debug status.
+   * Application data service.
    *
-   * @var bool
+   * @var \Drupal\grants_metadata\ApplicationDataService
    */
-  protected bool $debug;
+  protected ApplicationDataService $applicationDataService;
+
 
   /**
    * Constructs an AttachmentHandler object.
@@ -157,6 +161,7 @@ class AttachmentHandler {
     EventsService $eventService,
     AuditLogService $auditLogService,
     EntityTypeManagerInterface $entityTypeManager,
+    ApplicationDataService $applicationDataService
   ) {
 
     $this->attachmentRemover = $grants_attachments_attachment_remover;
@@ -174,31 +179,10 @@ class AttachmentHandler {
     $this->auditLogService = $auditLogService;
     $this->fileStorage = $entityTypeManager->getStorage('file');
 
-    $this->debug = getenv('debug') ?? FALSE;
+    $this->applicationDataService = $applicationDataService;
 
-  }
+    $this->setDebug(NULL);
 
-  /**
-   * If debug is on or not.
-   *
-   * @return bool
-   *   TRue or false depending on if debug is on or not.
-   */
-  public function isDebug(): bool {
-    if ($this->debug === TRUE) {
-      return TRUE;
-    }
-    return FALSE;
-  }
-
-  /**
-   * Set debug.
-   *
-   * @param bool $debug
-   *   True or false.
-   */
-  public function setDebug(bool $debug): void {
-    $this->debug = $debug;
   }
 
   /**
@@ -528,7 +512,7 @@ class AttachmentHandler {
     }
 
     // Check if a user changed the bank account in the application.
-    $dataDefinition = ApplicationHandler::getDataDefinition($applicationDocument->getType());
+    $dataDefinition = $this->applicationDataService->getDataDefinition($applicationDocument->getType());
     $existingData = DocumentContentMapper::documentContentToTypedData(
       $applicationDocument->getContent(),
       $dataDefinition,
@@ -594,7 +578,7 @@ class AttachmentHandler {
     try {
       $applicationDocumentResults = $this->atvService->searchDocuments([
         'transaction_id' => $applicationNumber,
-        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+        'lookfor' => 'appenv:' . Helpers::getAppEnv(),
       ]);
       return reset($applicationDocumentResults);
     }

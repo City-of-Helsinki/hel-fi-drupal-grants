@@ -14,6 +14,7 @@ use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationException;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ApplicationValidator;
 use Drupal\grants_handler\FormLockService;
@@ -229,6 +230,13 @@ class GrantsHandler extends WebformHandlerBase {
   protected ApplicationDataService $applicationDataService;
 
   /**
+   * Init application data.
+   *
+   * @var ApplicationInitService
+   */
+  protected ApplicationInitService $applicationInitService;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -287,6 +295,10 @@ class GrantsHandler extends WebformHandlerBase {
     /** @var \Drupal\grants_metadata\ApplicationDataService $applicationDataService */
     $applicationDataService = $container->get('grants_metadata.application_data_service');
     $instance->applicationDataService = $applicationDataService;
+
+    /** @var \Drupal\grants_handler\ApplicationInitService $applicationInitService */
+    $applicationInitService = $container->get('grants_handler.application_init_service');
+    $instance->applicationInitService = $applicationInitService;
 
     $instance->triggeringElement = '';
     $instance->applicationNumber = '';
@@ -1220,7 +1232,7 @@ moment and reload the page.',
     $all_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
     if ($triggeringElement == '::submit' && ($all_errors === NULL || self::emptyRecursive($all_errors))) {
-      $applicationData = $this->applicationHandler->webformToTypedData(
+      $applicationData = $this->applicationDataService->webformToTypedData(
           $this->submittedFormData);
 
       $violations = $this->applicationValidator->validateApplication(
@@ -1394,7 +1406,7 @@ submit the application only after you have provided all the necessary informatio
     catch (\Throwable $e) {
     }
     try {
-      $applicationData = $this->applicationHandler->webformToTypedData(
+      $applicationData = $this->applicationDataService->webformToTypedData(
         $this->submittedFormData);
     }
     catch (ReadOnlyException $e) {
@@ -1548,7 +1560,7 @@ submit the application only after you have provided all the necessary informatio
       );
 
       // Build application data for sending to Avus2.
-      $applicationData = $this->applicationHandler->webformToTypedData(
+      $applicationData = $this->applicationDataService->webformToTypedData(
         $this->submittedFormData);
 
       // Upload application via integration.

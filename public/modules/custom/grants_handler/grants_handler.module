@@ -19,6 +19,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\Event\UserLogoutEvent;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Form\CopyApplicationModalForm;
@@ -1374,7 +1375,7 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
     return;
   }
 
-  $applicationTypes = ApplicationHandler::getApplicationTypes();
+  $applicationTypes = Helpers::getApplicationTypes();
 
   $variables['applicationFormName'] = $applicationTypes[$submissionData["application_type"]][$language];
 
@@ -2066,7 +2067,7 @@ function grants_handler_options_list_alter(array &$options, array $context): voi
   if ($field_definition->getName() === 'field_webform') {
 
     $webforms = Webform::loadMultiple(array_keys($options));
-    $env = ApplicationHandler::getAppEnv();
+    $env = Helpers::getAppEnv();
 
     foreach ($webforms as $key => $webform) {
       $status = $webform->getThirdPartySetting('grants_metadata', 'status');

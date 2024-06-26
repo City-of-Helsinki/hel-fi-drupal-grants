@@ -161,8 +161,8 @@ class ApplicationStatusService implements ContainerInjectionInterface {
 
     // TODO: nää pois applicationhandlerista
     $status = $this->getWebformStatus($webform);
-    $appEnv = ApplicationHandler::getAppEnv();
-    $isProd = ApplicationHandler::isProduction($appEnv);
+    $appEnv = Helpers::getAppEnv();
+    $isProd = Helpers::isProduction($appEnv);
 
     if (
       ($isProd && $status !== 'released') ||

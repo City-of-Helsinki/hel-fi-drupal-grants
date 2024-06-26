@@ -8,6 +8,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Yaml\Parser;
@@ -100,7 +101,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
    */
   private function isEnvironmentAllowed(): bool {
     // Get current env from handler method.
-    $appEnv = ApplicationHandler::getAppEnv();
+    $appEnv = Helpers::getAppEnv();
 
     // If current env is in allowed, return true.
     if (in_array($appEnv, self::ALLOWED_ENVIRONMENTS)) {

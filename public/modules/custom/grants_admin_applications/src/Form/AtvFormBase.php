@@ -6,6 +6,7 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
@@ -92,7 +93,7 @@ abstract class AtvFormBase extends FormBase {
     $headers = [];
     $saveId = Uuid::uuid4()->toString();
     // Current environment as a header to be added to meta -fields.
-    $headers['X-hki-appEnv'] = ApplicationHandler::getAppEnv();
+    $headers['X-hki-appEnv'] = Helpers::getAppEnv();
     $headers['X-hki-applicationNumber'] = $applicationId;
 
     $content = $atvDoc->getContent();

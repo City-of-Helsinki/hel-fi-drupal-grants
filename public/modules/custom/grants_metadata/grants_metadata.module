@@ -13,6 +13,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_metadata\Validator\EndDateValidator;
 use Drupal\grants_metadata\Validator\YearValidator;
 use Drupal\helfi_platform_config\DTO\ParagraphTypeCollection;
@@ -774,7 +775,7 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
   $formStatus = $routeParam->getThirdPartySetting('grants_metadata', 'status');
 
   $currentUser = Drupal::currentUser();
-  $isAdmin = ApplicationHandler::isGrantAdmin($currentUser);
+  $isAdmin = Helpers::isGrantAdmin($currentUser);
 
   $released = $formStatus === 'released';
   $archived = $formStatus === 'archived';
@@ -983,7 +984,7 @@ function grants_metadata_preprocess_block(&$variables): void {
  * Implements hook_webform_access().
  */
 function grants_metadata_webform_access(Webform $entity, string $operation, AccountInterface $account) {
-  $isAdmin = ApplicationHandler::isGrantAdmin($account);
+  $isAdmin = Helpers::isGrantAdmin($account);
   $restrictedOps = ['duplicate', 'delete', 'test'];
 
   if (in_array($operation, $restrictedOps) && !$isAdmin) {

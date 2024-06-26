@@ -36,6 +36,8 @@ services:
         '@datetime.time',
         '@grants_handler.application_validator',
         '@grants_handler.application_status_service',
+        '@grants_metadata.application_data_service',
+        '@grants_handler.application_init_service',
     ]
     calls:
       - [setAttachmentHandler, ['@?grants_attachments.attachment_handler']]
@@ -135,3 +137,19 @@ services:
   grants_handler.application_status_service:
     class: Drupal\grants_handler\ApplicationStatusService
     arguments: [ '@config.factory' ]
+
+  grants_handler.application_init_service:
+    class: Drupal\grants_handler\ApplicationInitService
+    arguments: [
+      '@helfi_helsinki_profiili.userdata',
+      '@grants_profile.service',
+      '@language_manager',
+      '@grants_metadata.application_data_service',
+      '@grants_handler.application_status_service',
+      '@logger.factory',
+      '@config.factory',
+      '@grants_metadata.atv_schema',
+      '@helfi_atv.atv_service',
+    ]
+    calls:
+      - [ setAttachmentHandler, [ '@?grants_attachments.attachment_handler' ] ]

@@ -9,6 +9,7 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\file\Entity\File;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
@@ -139,7 +140,7 @@ class GrantsProfileService {
     $newProfileData['metadata'] = [
       'profile_type' => $selectedCompanyArray['type'],
       'profile_id' => $selectedCompany,
-      'appenv' => ApplicationHandler::getAppEnv(),
+      'appenv' => Helpers::getAppEnv(),
       'notification_shown' => (string) time(),
     ];
 
@@ -328,7 +329,7 @@ class GrantsProfileService {
       ];
     }
 
-    $appEnv = ApplicationHandler::getAppEnv();
+    $appEnv = Helpers::getAppEnv();
 
     try {
       // Get applications from ATV.
@@ -498,14 +499,14 @@ class GrantsProfileService {
       $searchParams = [
         'type' => 'grants_profile',
         'business_id' => $profileIdentifier['identifier'],
-        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+        'lookfor' => 'appenv:' . Helpers::getAppEnv(),
       ];
     }
     else {
       // Others, cannot.
       $searchParams = [
         'type' => 'grants_profile',
-        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv() .
+        'lookfor' => 'appenv:' . Helpers::getAppEnv() .
         ',profile_id:' . $profileIdentifier['identifier'] .
         ',profile_type:' . $profileIdentifier['type'],
       ];
@@ -602,7 +603,7 @@ class GrantsProfileService {
     $searchParams = [
       'type' => 'grants_profile',
       'user_id' => $userId,
-      'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv() . ',profile_type:' . $profileType,
+      'lookfor' => 'appenv:' . Helpers::getAppEnv() . ',profile_type:' . $profileType,
     ];
 
     try {

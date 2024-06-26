@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Utility\WebformElementHelper;
@@ -621,7 +622,7 @@ class GrantsAttachments extends WebformCompositeBase {
       $integrationId = str_replace($baseUrl, '', $attachmentResponse['href']);
       $integrationId = str_replace($baseUrlApps, '', $integrationId);
 
-      $appParam = ApplicationHandler::getAppEnv();
+      $appParam = Helpers::getAppEnv();
       if ($appParam !== 'PROD') {
         $integrationId = '/' . $appParam . $integrationId;
       }
