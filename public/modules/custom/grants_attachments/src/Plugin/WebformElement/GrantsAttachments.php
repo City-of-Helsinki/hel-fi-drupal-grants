@@ -228,7 +228,8 @@ class GrantsAttachments extends WebformCompositeBase {
     // during ATV save.
     if (
       (isset($value['description']) && !empty($value['description'])) &&
-      (!isset($value['attachmentName']) || empty($value['attachmentName']))
+      (!isset($value['attachmentName']) || empty($value['attachmentName'])) &&
+      $value['fileType'] == '0'
     ) {
       return [];
     }
