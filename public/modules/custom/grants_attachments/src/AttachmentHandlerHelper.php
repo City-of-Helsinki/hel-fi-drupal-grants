@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_attachments;
 
-use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Helpers;
 
 /**

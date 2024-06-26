@@ -2,25 +2,16 @@
 
 namespace Drupal\grants_attachments\Controller;
 
-use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Access\AccessException;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\TempStore\TempStoreException;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\EventsService;
-use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\ApplicationDataService;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
-use Drupal\helfi_helsinki_profiili\TokenExpiredException;
-use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -144,7 +135,8 @@ class GrantsAttachmentsController extends ControllerBase {
     try {
       $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
     }
-    catch (\Exception $e) {}
+    catch (\Exception $e) {
+    }
     $submissionData = $submission->getData();
     // Rebuild integration id from url.
     $integrationId = str_replace('_', '/', $integration_id);

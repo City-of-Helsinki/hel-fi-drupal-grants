@@ -2,11 +2,11 @@
 
 namespace Drupal\Tests\grants_handler\Unit;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\ApplicationValidator;
 use Drupal\grants_metadata\Tests\TestDataRetriever;
 use Drupal\Tests\UnitTestCase;
 use Symfony\Component\Validator\ConstraintViolationInterface;
-use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Test for ApplicationValidator.
@@ -36,7 +36,9 @@ class ApplicationValidatorTest extends UnitTestCase {
    */
   protected array $testData;
 
-
+  /**
+   *
+   */
   public static function getModules(): array {
     return ['grants_handler', 'grants_metadata'];
   }
@@ -50,7 +52,6 @@ class ApplicationValidatorTest extends UnitTestCase {
     $navigationHelper = $this->createMock('Drupal\grants_handler\GrantsHandlerNavigationHelper');
     $loggerFactory = $this->createMock('Drupal\Core\Logger\LoggerChannelFactoryInterface');
     $loggerChannel = $this->createMock('Drupal\Core\Logger\LoggerChannelInterface');
-
 
     $loggerFactory->method('get')->willReturn($loggerChannel);
 
@@ -94,5 +95,5 @@ class ApplicationValidatorTest extends UnitTestCase {
       $erroredItems,
       $violationPrints);
   }
-}
 
+}

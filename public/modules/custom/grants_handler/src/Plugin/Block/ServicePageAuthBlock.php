@@ -14,7 +14,6 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
-use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;

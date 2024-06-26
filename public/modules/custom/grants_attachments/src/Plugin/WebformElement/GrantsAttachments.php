@@ -5,7 +5,6 @@ namespace Drupal\grants_attachments\Plugin\WebformElement;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\Element\GrantsAttachments as ElementGrantsAttachments;
-use Drupal\grants_handler\EventsService;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 

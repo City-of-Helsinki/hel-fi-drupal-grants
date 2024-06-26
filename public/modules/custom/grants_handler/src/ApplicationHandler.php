@@ -12,7 +12,6 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataInterface;
@@ -24,7 +23,6 @@ use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\ProfileDataException;
@@ -32,7 +30,6 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -262,9 +259,9 @@ class ApplicationHandler {
    * @param \Drupal\Component\Datetime\TimeInterface $time
    *   The time service.
    * @param \Drupal\grants_handler\ApplicationValidator $applicationValidator
-   *  Validate Application data.
+   *   Validate Application data.
    * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
-   *  Handle Application statuses.
+   *   Handle Application statuses.
    */
   public function __construct(
     Client $http_client,
@@ -483,6 +480,7 @@ class ApplicationHandler {
    *
    * @return bool
    *   If there is any breaking changes.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -724,7 +722,7 @@ class ApplicationHandler {
     }
     if (!empty($submissionObject)) {
 
-      // TODO: update to normal method or fix other way
+      // @todo update to normal method or fix other way
       $dataDefinition = self::getDataDefinition($document->getType());
 
       $sData = DocumentContentMapper::documentContentToTypedData(
@@ -792,8 +790,6 @@ class ApplicationHandler {
     $document = reset($document);
     return $document;
   }
-
-
 
   /**
    * Atv document holding this application.
@@ -1005,8 +1001,6 @@ class ApplicationHandler {
       'form_uuid' => $webform->uuid(),
     ]);
 
-
-
     // Do data conversion.
     $typeData = $this->applicationDataService->webformToTypedData($submissionData);
 
@@ -1030,7 +1024,6 @@ class ApplicationHandler {
         $submissionData
       );
     }
-
 
     $dataDefinitionKeys = $this->applicationDataService->getDataDefinitionClass($submissionData['application_type']);
     $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
@@ -1376,7 +1369,7 @@ class ApplicationHandler {
         try {
 
           // Convert the data.
-          // TODO: fix static method
+          // @todo fix static method.
           $dataDefinition = self::getDataDefinition($document->getType());
           $submissionData = DocumentContentMapper::documentContentToTypedData(
             $document->getContent(),
@@ -1603,8 +1596,6 @@ class ApplicationHandler {
 
   }
 
-
-
   /**
    * Gets webform & submission with data and determines access.
    *
@@ -1667,6 +1658,7 @@ class ApplicationHandler {
    *
    * @return \Drupal\webform\Entity\Webform|null
    *   Return webform object if found, else null.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -1733,7 +1725,5 @@ class ApplicationHandler {
     $applicationForms = self::getActiveApplicationWebforms($id);
     return count($applicationForms['released']) <= 1 && count($applicationForms['development']) === 0;
   }
-
-
 
 }

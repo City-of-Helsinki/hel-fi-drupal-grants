@@ -6,7 +6,6 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\Core\TypedData\ComplexDataInterface;
-use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
 use Drupal\grants_test_base\Kernel\GrantsKernelTestBase;
@@ -81,7 +80,6 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $schema->setSchema($schemaPath);
     return $schema;
   }
-
 
   /**
    * Helper function to fetch the given field from document for tests.

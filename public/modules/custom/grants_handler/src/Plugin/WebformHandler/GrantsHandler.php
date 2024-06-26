@@ -219,20 +219,20 @@ class GrantsHandler extends WebformHandlerBase {
   /**
    * Status service.
    *
-   * @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   * @var \Drupal\grants_handler\ApplicationStatusService
    */
   protected ApplicationStatusService $applicationStatusService;
 
   /**
    *
-   * @var ApplicationDataService
+   * @var \Drupal\grants_metadata\ApplicationDataService
    */
   protected ApplicationDataService $applicationDataService;
 
   /**
    * Init application data.
    *
-   * @var ApplicationInitService
+   * @var \Drupal\grants_handler\ApplicationInitService
    */
   protected ApplicationInitService $applicationInitService;
 
@@ -1380,7 +1380,6 @@ submit the application only after you have provided all the necessary informatio
     catch (\Exception $e) {
       $this->getLogger('grants_handler')->error($e->getMessage());
     }
-
 
     // Try to update status only if it's allowed.
     if ($this->applicationStatusService->canSubmissionBeSubmitted($webform_submission, NULL)) {

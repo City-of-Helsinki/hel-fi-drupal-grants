@@ -5,6 +5,9 @@ namespace Drupal\grants_handler;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 
+/**
+ *
+ */
 class Helpers {
 
   private static string $appEnv;
@@ -176,6 +179,5 @@ class Helpers {
     $isAdmin = in_array('grants_admin', $currentRoles) || $account->id() === '1';
     return $isAdmin;
   }
-
 
 }

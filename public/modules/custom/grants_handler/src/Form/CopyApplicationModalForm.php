@@ -15,7 +15,6 @@ use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\EventsService;
-use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -51,7 +50,7 @@ class CopyApplicationModalForm extends FormBase {
   /**
    * Application status service.
    *
-   * @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   * @var \Drupal\grants_handler\ApplicationStatusService
    */
   protected ApplicationStatusService $applicationStatusService;
 

@@ -19,11 +19,10 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHandler;
-use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\Event\UserLogoutEvent;
-use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Form\CopyApplicationModalForm;
 use Drupal\grants_handler\GrantsErrorStorage;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\webform\Entity\Webform;
@@ -1286,9 +1285,8 @@ function grants_handler_preprocess_webform_submission_handler_details(&$variable
   $submission = $variables['submission'];
   $submissionData = $submission->getData();
 
-  /** @var EventsService $eventService */
+  /** @var \Drupal\grants_handler\EventsService $eventService */
   $eventService = \Drupal::service('grants_handler.events_service');
-
 
   $handlerEvents = array_filter($submissionData['events'], function ($event) use ($eventService) {
     if ($event['eventType'] == $eventService->getEventTypes()['EVENT_INFO']) {
@@ -1362,7 +1360,7 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $tOpts = ['context' => 'grants_handler'];
 
-  // Get status service and get listed statuses
+  // Get status service and get listed statuses.
   /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
   $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
   $applicationStatuses = $applicationStatusService->getApplicationStatuses();
@@ -1460,8 +1458,6 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
     '#submission_data' => $submissionData,
   ];
 
-
-
   $variables['classes'] = [
     strtolower($applicationStatuses[$submissionData["status"]]),
     strtolower($submissionData["application_number"]),
@@ -1535,7 +1531,7 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
  */
 function grants_handler_preprocess_application_status_tag(&$variables): void {
 
-  // Get status service and get listed statuses
+  // Get status service and get listed statuses.
   $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
   $applicationStatuses = $applicationStatusService->getApplicationStatuses();
 

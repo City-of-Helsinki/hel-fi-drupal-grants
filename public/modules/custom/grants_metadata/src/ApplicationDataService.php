@@ -2,26 +2,21 @@
 
 namespace Drupal\grants_metadata;
 
-use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
-use Drupal\Core\TempStore\TempStoreException;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\DebuggableTrait;
-use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\EventsService;
-use Drupal\grants_mandate\CompanySelectException;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
-use Drupal\helfi_helsinki_profiili\TokenExpiredException;
+use Drupal\grants_handler\Helpers;
 use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
+/**
+ *
+ */
 final class ApplicationDataService {
 
   use DebuggableTrait;
@@ -153,7 +148,8 @@ final class ApplicationDataService {
         try {
           $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
         }
-        catch (\Exception|GuzzleException $e) {}
+        catch (\Exception | GuzzleException $e) {
+        }
       }
       return $webform_submission->getData();
     }
@@ -198,6 +194,7 @@ final class ApplicationDataService {
    *
    * @return string
    *   Latest save id.
+   *
    * @throws \Exception
    */
   private function getLatestSaveid(string $applicationNumber): string {
@@ -244,9 +241,9 @@ final class ApplicationDataService {
         '%local_save_id' => $latestSaveid,
         '@saveid' => $saveIdToValidate,
       ]);
-      return true;
+      return TRUE;
     }
-    return false;
+    return FALSE;
   }
 
   /**
@@ -279,9 +276,9 @@ final class ApplicationDataService {
         '%local_save_id' => $latestSaveid,
         '@saveid' => $saveIdToValidate,
       ]);
-      return true;
+      return TRUE;
     }
-    return false;
+    return FALSE;
   }
 
   /**
@@ -326,9 +323,9 @@ final class ApplicationDataService {
         '%local_save_id' => $latestSaveid,
         '@saveid' => $saveIdToValidate,
       ]);
-      return true;
+      return TRUE;
     }
-    return false;
+    return FALSE;
   }
 
   /**

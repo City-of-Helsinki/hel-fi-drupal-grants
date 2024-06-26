@@ -8,7 +8,6 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
-use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -19,12 +18,8 @@ use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\InputmaskHandler;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
-use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
-use Drupal\helfi_helsinki_profiili\ProfileDataException;
-use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformRequestInterface;
@@ -158,6 +153,7 @@ class ApplicationController extends ControllerBase {
    *
    * @return \Drupal\Core\Access\AccessResultInterface
    *   The access result.
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function access(AccountInterface $account, string $webform, string $webform_submission): AccessResultInterface {

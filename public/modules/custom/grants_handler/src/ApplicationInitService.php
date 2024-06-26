@@ -21,6 +21,9 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use GuzzleHttp\Exception\GuzzleException;
 
+/**
+ *
+ */
 class ApplicationInitService {
 
   /**
@@ -324,7 +327,6 @@ class ApplicationInitService {
         $submissionData
       );
     }
-
 
     $dataDefinitionKeys = $this->applicationDataService->getDataDefinitionClass($submissionData['application_type']);
     $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);

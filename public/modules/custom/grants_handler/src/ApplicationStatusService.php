@@ -9,6 +9,9 @@ use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ *
+ */
 class ApplicationStatusService implements ContainerInjectionInterface {
 
   use DebuggableTrait;
@@ -159,7 +162,7 @@ class ApplicationStatusService implements ContainerInjectionInterface {
       return $applicationContinuous;
     }
 
-    // TODO: nää pois applicationhandlerista
+    // @todo nää pois applicationhandlerista
     $status = $this->getWebformStatus($webform);
     $appEnv = Helpers::getAppEnv();
     $isProd = Helpers::isProduction($appEnv);
@@ -272,7 +275,8 @@ class ApplicationStatusService implements ContainerInjectionInterface {
 
     if ($triggeringElement == '::submitForm') {
       $status = $this->applicationStatuses['DRAFT'];
-    } elseif ($triggeringElement == '::submit' && $this->canSubmissionBeSubmitted($webform_submission, NULL)) {
+    }
+    elseif ($triggeringElement == '::submit' && $this->canSubmissionBeSubmitted($webform_submission, NULL)) {
       if ($status == 'DRAFT' || $status == '') {
         $status = $this->applicationStatuses['SUBMITTED'];
       }
@@ -307,6 +311,5 @@ class ApplicationStatusService implements ContainerInjectionInterface {
 
     return $status;
   }
-
 
 }

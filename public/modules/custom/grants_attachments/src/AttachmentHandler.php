@@ -16,9 +16,9 @@ use Drupal\file\FileStorage;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\DebuggableTrait;
-use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\EventException;
 use Drupal\grants_handler\EventsService;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\DocumentContentMapper;
@@ -124,7 +124,6 @@ class AttachmentHandler {
    * @var \Drupal\grants_metadata\ApplicationDataService
    */
   protected ApplicationDataService $applicationDataService;
-
 
   /**
    * Constructs an AttachmentHandler object.

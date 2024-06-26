@@ -77,7 +77,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   /**
    * Message service.
    *
-   * @var \Drupal\grants_handler\MessageService $messageService
+   * @var \Drupal\grants_handler\MessageService
    */
   protected MessageService $messageService;
 
@@ -143,6 +143,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    *
    * @return array
    *   Render array
+   *
    * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function build(): array {

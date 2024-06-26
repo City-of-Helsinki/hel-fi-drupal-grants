@@ -7,7 +7,6 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Site\Settings;
-use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Helpers;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\Filesystem\Path;

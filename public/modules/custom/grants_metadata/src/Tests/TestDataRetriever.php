@@ -2,17 +2,18 @@
 
 namespace Drupal\grants_metadata\Tests;
 
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
-use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\Tests\grants_metadata\Kernel\Mappings;
 
+/**
+ *
+ */
 class TestDataRetriever {
 
   private static array $applicantTypes = [
     'private_person',
     'registered_community',
-    'unregistered_community'
+    'unregistered_community',
   ];
 
   /**
@@ -21,7 +22,7 @@ class TestDataRetriever {
    * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
    */
   public function loadTestData(): array {
-    /** @var ModuleHandlerInterface $moduleHandler */
+    /** @var \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler */
 
     $modulePath = __DIR__ . '/../../tests/data';
 
@@ -48,12 +49,14 @@ class TestDataRetriever {
     return $testData;
   }
 
+  /**
+   *
+   */
   protected static function anyKeyExists(array $keys, array $array): bool {
     $flippedKeys = array_flip($keys);
     $commonKeys = array_intersect_key($flippedKeys, $array);
     return count($commonKeys) > 0;
   }
-
 
   /**
    * Get typed data object for webform data.
@@ -77,7 +80,7 @@ class TestDataRetriever {
       throw new \Exception('Unknown form id');
     }
 
-    /** @var TypedDataInterface $dataDefinition */
+    /** @var \Drupal\Core\TypedData\TypedDataInterface $dataDefinition */
     $dataDefinition = ($definitionsMappings[$formId]['class'])::create($definitionsMappings[$formId]['parameter']);
 
     $applicationData = $this->typedDataManager->create($dataDefinition);

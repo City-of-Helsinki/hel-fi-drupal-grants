@@ -2,6 +2,9 @@
 
 namespace Drupal\grants_handler;
 
+/**
+ *
+ */
 trait DebuggableTrait {
 
   protected bool $debug = FALSE;
@@ -39,4 +42,5 @@ trait DebuggableTrait {
 
     return $this->debug;
   }
+
 }

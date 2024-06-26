@@ -11,9 +11,8 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
-use Drupal\grants_handler\ApplicationHandler;
-use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\GrantsErrorStorage;
+use Drupal\grants_handler\Helpers;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Utility\WebformElementHelper;
 

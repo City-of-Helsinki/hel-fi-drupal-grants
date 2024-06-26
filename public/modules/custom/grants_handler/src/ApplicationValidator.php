@@ -33,9 +33,9 @@ final class ApplicationValidator {
    * Constructor.
    *
    * @param \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsHandlerNavigationHelper
-   *  Navigation error helper.
+   *   Navigation error helper.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
-   *  Logger channel factory.
+   *   Logger channel factory.
    */
   public function __construct(
     private readonly GrantsHandlerNavigationHelper $grantsHandlerNavigationHelper,
@@ -49,9 +49,10 @@ final class ApplicationValidator {
    * Create.
    *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *  Container.
+   *   Container.
+   *
    * @return \Drupal\grants_handler\ApplicationValidator
-   *  Validator object
+   *   Validator object
    */
   public static function create(ContainerInterface $container): ApplicationValidator {
     return new ApplicationValidator(
@@ -127,6 +128,9 @@ final class ApplicationValidator {
     }
   }
 
+  /**
+   *
+   */
   public function processViolation(
     ConstraintViolationInterface $violation,
     array $appProps,
