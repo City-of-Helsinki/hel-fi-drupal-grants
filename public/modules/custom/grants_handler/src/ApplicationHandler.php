@@ -1450,7 +1450,7 @@ class ApplicationHandler {
     $userData = $helsinkiProfiiliService->getUserData();
 
     /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
-    $applicationStatusService = \Drupal::service('grants_handler.application_status');
+    $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
 
     /** @var \Drupal\grants_handler\MessageService $messageService */
     $messageService = \Drupal::service('grants_handler.message_service');

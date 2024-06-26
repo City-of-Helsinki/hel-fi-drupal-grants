@@ -268,23 +268,17 @@ class ApplicationStatusService implements ContainerInjectionInterface {
     array $submittedFormData,
     WebformSubmissionInterface $webform_submission
   ): string {
+    $status = $submittedFormData['status'] ?? $this->applicationStatuses['DRAFT'];
 
     if ($triggeringElement == '::submitForm') {
-      $this->newStatusHeader = $this->applicationStatuses['SUBMITTED'];
-    }
-    else {
-      $this->newStatusHeader = $submittedFormData['status'] ?? $this->applicationStatuses['DRAFT'];
-    }
-
-    if ($triggeringElement == '::submit' &&
-      $this->canSubmissionBeSubmitted($webform_submission, NULL)) {
-      $this->newStatusHeader = $this->applicationStatuses['SUBMITTED'];
+      $status = $this->applicationStatuses['DRAFT'];
+    } elseif ($triggeringElement == '::submit' && $this->canSubmissionBeSubmitted($webform_submission, NULL)) {
+      if ($status == 'DRAFT' || $status == '') {
+        $status = $this->applicationStatuses['SUBMITTED'];
+      }
     }
 
-
-    // If no other status determined, return existing one without changing.
-    // submission should ALWAYS have status set if it's something else
-    // than DRAFT.
+    $this->newStatusHeader = $status;
     return $this->newStatusHeader;
   }
 
