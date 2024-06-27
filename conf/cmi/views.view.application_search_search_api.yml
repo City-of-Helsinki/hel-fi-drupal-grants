@@ -35,7 +35,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Etsi avustusta'
+      title: 'Application search'
       fields:
         field_target_group:
           id: field_target_group
@@ -785,9 +785,9 @@ display:
       exposed_form:
         type: bef
         options:
-          submit_button: Etsi
+          submit_button: Search
           reset_button: true
-          reset_button_label: Tyhjennä
+          reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
@@ -856,7 +856,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: "<h3>Tuloksia ei löytynyt</h3>\r\n"
+            value: '<h3>No results were found</h3>'
             format: full_html
           tokenize: false
       sorts:
@@ -967,7 +967,7 @@ display:
           exposed: true
           expose:
             operator_id: field_target_group_op
-            label: 'Valitse kohderyhmä'
+            label: 'Choose a target group'
             description: ''
             use_operator: false
             operator: field_target_group_op
@@ -1023,7 +1023,7 @@ display:
           exposed: true
           expose:
             operator_id: field_avustuslaji_op
-            label: 'Millaiseen toimintaan haet avustusta?'
+            label: 'What kind of activity are you applying grant for?'
             description: ''
             use_operator: false
             operator: field_avustuslaji_op
@@ -1077,7 +1077,7 @@ display:
           exposed: true
           expose:
             operator_id: field_hakijatyyppi_op
-            label: 'Avustuksen hakija'
+            label: Applicant
             description: ''
             use_operator: false
             operator: field_hakijatyyppi_op
@@ -1126,7 +1126,7 @@ display:
           exposed: true
           expose:
             operator_id: search_api_fulltext_op
-            label: 'Tai etsi hakusanalla'
+            label: 'Or search with a keyword'
             description: ''
             use_operator: false
             operator: search_api_fulltext_op
@@ -1150,7 +1150,7 @@ display:
               grants_admin: '0'
               admin: '0'
             expose_fields: false
-            placeholder: 'Etsi nimellä tai hakusanalla, esim toiminta-avustus'
+            placeholder: 'Search by name or keyword'
             searched_fields_id: search_api_fulltext_searched_fields
           is_grouped: false
           group_info:
@@ -1200,7 +1200,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: '<strong>@total</strong> hakutulosta'
+          content: '<strong>@total</strong> search results'
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -1237,7 +1237,7 @@ display:
       path: etsi-avustusta
       menu:
         type: normal
-        title: 'Etsi avustusta'
+        title: 'Application search'
         description: ''
         weight: -49
         expanded: false
