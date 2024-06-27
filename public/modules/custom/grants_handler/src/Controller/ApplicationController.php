@@ -333,10 +333,8 @@ class ApplicationController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect to edit form.
    *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \Drupal\helfi_helsinki_profiili\ProfileDataException
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function newApplication(string $webform_id): RedirectResponse {
@@ -380,7 +378,6 @@ class ApplicationController extends ControllerBase {
     $acceptableApplicantTypes = array_values($thirdPartySettings['applicantTypes']);
 
     if (!in_array($currentRole['type'], $acceptableApplicantTypes)) {
-      // @todo maybe mandate selection route and message.
       return $this->redirect('<front>');
     }
 

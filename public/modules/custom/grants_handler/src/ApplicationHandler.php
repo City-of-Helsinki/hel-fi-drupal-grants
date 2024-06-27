@@ -1159,9 +1159,8 @@ class ApplicationHandler {
     try {
 
       $headers = [];
-      if ($this->newStatusHeader && $this->newStatusHeader != '') {
-        $headers['X-Case-Status'] = $this->newStatusHeader;
-      }
+
+      $headers['X-Case-Status'] = $this->applicationStatusService->getNewStatusHeader();
 
       // Current environment as a header to be added to meta -fields.
       $headers['X-hki-appEnv'] = Helpers::getAppEnv();

@@ -17,6 +17,7 @@ use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\ProfileDataException;
+use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use GuzzleHttp\Exception\GuzzleException;
@@ -121,218 +122,6 @@ class ApplicationInitService {
    */
   public function setAttachmentHandler(AttachmentHandler $attachmentHandler): void {
     $this->attachmentHandler = $attachmentHandler;
-  }
-
-  /**
-   * Method to initialise application document in ATV. Create & save.
-   *
-   * If data is given, use that data to copy things to new application.
-   *
-   * @param string $webform_id
-   *   Id of a webform of created application.
-   * @param array $submissionData
-   *   If we want to pass any initial data for new application, do it with
-   *   this.
-   *   Must be like webform data.
-   *
-   * @return \Drupal\webform\Entity\WebformSubmission
-   *   Newly created application content.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\ProfileDataException
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
-   * @throws \Drupal\grants_profile\GrantsProfileException
-   */
-  public function initApplication(string $webform_id, array $submissionData = []): WebformSubmission {
-
-    $webform = Webform::load($webform_id);
-    $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
-    $userProfileData = $this->helfiHelsinkiProfiiliUserdata->getUserProfileData();
-
-    if ($userData == NULL) {
-      // We absolutely cannot create new application without user data.
-      throw new ProfileDataException('No Helsinki profile data found');
-    }
-    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-    $companyData = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
-
-    // If we've given data to work with, clear it for copying.
-    if (empty($submissionData)) {
-      $copy = FALSE;
-    }
-    else {
-      $copy = TRUE;
-      $submissionData = Helpers::clearDataForCopying($submissionData);
-      $budgetInfoKeys = $this->getBudgetInfoKeysForCopying($submissionData);
-    }
-
-    // Set.
-    $submissionData['application_type_id'] = $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID');
-    $submissionData['application_type'] = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
-    $submissionData['applicant_type'] = $this->grantsProfileService->getApplicantType();
-    $submissionData['status'] = $this->applicationStatusService->getApplicationStatuses()['DRAFT'];
-    $submissionData['company_number'] = $selectedCompany['identifier'];
-    $submissionData['business_purpose'] = $companyData['businessPurpose'] ?? '';
-
-    if ($selectedCompany["type"] === 'registered_community') {
-      $submissionData['hakijan_tiedot'] = [
-        'applicantType' => $selectedCompany["type"],
-        'applicant_type' => $selectedCompany["type"],
-        'communityOfficialName' => $selectedCompany["name"],
-        'companyNumber' => $selectedCompany["identifier"],
-        'registrationDate' => $companyData["registrationDate"],
-        'home' => $companyData["companyHome"],
-        'communityOfficialNameShort' => $companyData["companyNameShort"],
-        'foundingYear' => $companyData["foundingYear"],
-        'homePage' => $companyData["companyHomePage"],
-      ];
-    }
-    if ($selectedCompany["type"] === 'unregistered_community') {
-      $submissionData['hakijan_tiedot'] = [
-        'applicantType' => $selectedCompany["type"],
-        'applicant_type' => $selectedCompany["type"],
-        'communityOfficialName' => $companyData["companyName"],
-        'firstname' => $userData["given_name"],
-        'lastname' => $userData["family_name"],
-        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
-        'email' => $userData["email"],
-        'street' => $companyData["addresses"][0]["street"],
-        'city' => $companyData["addresses"][0]["city"],
-        'postCode' => $companyData["addresses"][0]["postCode"],
-        'country' => $companyData["addresses"][0]["country"],
-      ];
-    }
-    if ($selectedCompany["type"] === 'private_person') {
-      $submissionData['hakijan_tiedot'] = [
-        'applicantType' => $selectedCompany["type"],
-        'applicant_type' => $selectedCompany["type"],
-        'firstname' => $userData["given_name"],
-        'lastname' => $userData["family_name"],
-        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"] ?? '',
-        'email' => $userData["email"],
-        'street' => $companyData["addresses"][0]["street"] ?? '',
-        'city' => $companyData["addresses"][0]["city"] ?? '',
-        'postCode' => $companyData["addresses"][0]["postCode"] ?? '',
-        'country' => $companyData["addresses"][0]["country"] ?? '',
-      ];
-    }
-    // Data must match the format of typed data, not the webform format.
-    // Community address data defined in
-    // grants_metadata/src/TypedData/Definition/ApplicationDefinitionTrait.
-    if (isset($submissionData["community_address"]["community_street"]) &&
-      !empty($submissionData["community_address"]["community_street"])) {
-      $submissionData["community_street"] = $submissionData["community_address"]["community_street"];
-    }
-    if (isset($submissionData["community_address"]["community_city"]) && !empty($submissionData["community_address"]["community_city"])) {
-      $submissionData["community_city"] = $submissionData["community_address"]["community_city"];
-    }
-    if (isset($submissionData["community_address"]["community_post_code"]) &&
-      !empty($submissionData["community_address"]["community_post_code"])) {
-      $submissionData["community_post_code"] = $submissionData["community_address"]["community_post_code"];
-    }
-    if (isset($submissionData["community_address"]["community_country"]) &&
-      !empty($submissionData["community_address"]["community_country"])) {
-      $submissionData["community_country"] = $submissionData["community_address"]["community_country"];
-    }
-
-    // Copy budget component fields into budgetInfo.
-    if ($copy && isset($budgetInfoKeys)) {
-      foreach ($budgetInfoKeys as $budgetKey) {
-        if (isset($submissionData[$budgetKey])) {
-          $submissionData['budgetInfo'][$budgetKey] = $submissionData[$budgetKey];
-        }
-      }
-    }
-
-    try {
-      // Merge sender details to new stuff.
-      $submissionData = array_merge($submissionData, $this->parseSenderDetails());
-    }
-    catch (ApplicationException $e) {
-      $this->logger->error('Sender details parsing threw error: @error', ['@error' => $e->getMessage()]);
-    }
-
-    // Set form timestamp to current time.
-    // apparently this is always set to latest submission.
-    $dt = new \DateTime();
-    $dt->setTimezone(new \DateTimeZone('Europe/Helsinki'));
-    $submissionData['form_timestamp'] = $dt->format('Y-m-d\TH:i:s');
-    $submissionData['form_timestamp_created'] = $dt->format('Y-m-d\TH:i:s');
-
-    $submissionObject = WebformSubmission::create([
-      'webform_id' => $webform->id(),
-      'draft' => TRUE,
-    ]);
-    $submissionObject->set('in_draft', TRUE);
-    $submissionObject->save();
-
-    $applicationNumber = ApplicationHandler::createApplicationNumber($submissionObject);
-    $submissionData['application_number'] = $applicationNumber;
-
-    $atvDocument = AtvDocument::create([]);
-    $atvDocument->setTransactionId($applicationNumber);
-    $atvDocument->setStatus($this->applicationStatusService->getApplicationStatuses()['DRAFT']);
-    $atvDocument->setType($submissionData['application_type']);
-    $atvDocument->setService(getenv('ATV_SERVICE'));
-    $atvDocument->setUserId($userData['sub']);
-    $atvDocument->setTosFunctionId(getenv('ATV_TOS_FUNCTION_ID'));
-    $atvDocument->setTosRecordId(getenv('ATV_TOS_RECORD_ID'));
-    if ($submissionData['applicant_type'] == 'registered_community') {
-      $atvDocument->setBusinessId($selectedCompany['identifier']);
-    }
-    $atvDocument->setDraft(TRUE);
-    $atvDocument->setDeletable(FALSE);
-
-    $humanReadableTypes = [
-      'en' => $this->getWebformTitle($webform_id, 'en'),
-      'fi' => $this->getWebformTitle($webform_id, 'fi'),
-      'sv' => $this->getWebformTitle($webform_id, 'sv'),
-    ];
-
-    $atvDocument->setHumanReadableType($humanReadableTypes);
-
-    $atvDocument->setMetadata([
-      'appenv' => Helpers::getAppEnv(),
-      // Hmm, maybe no save id at this point?
-      'saveid' => $copy ? 'copiedSave' : 'initialSave',
-      'applicationnumber' => $applicationNumber,
-      'language' => $this->languageManager->getCurrentLanguage()->getId(),
-      'applicant_type' => $selectedCompany['type'],
-      'applicant_id' => $selectedCompany['identifier'],
-      'form_uuid' => $webform->uuid(),
-    ]);
-
-    // Do data conversion.
-    $typeData = $this->applicationDataService->webformToTypedData($submissionData);
-
-    $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
-      $typeData,
-      $submissionObject,
-      $submissionData);
-
-    $atvDocument->setContent($appDocumentContent);
-
-    // Post the initial version of the document to ATV.
-    $newDocument = $this->atvService->postDocument($atvDocument);
-
-    // If we are copying an application, then call handleBankAccountCopying().
-    // This will patch the already existing $newDocument with a bank account
-    // confirmation file.
-    if ($copy) {
-      $newDocument = $this->handleBankAccountCopying(
-        $newDocument,
-        $submissionObject,
-        $submissionData
-      );
-    }
-
-    $dataDefinitionKeys = $this->applicationDataService->getDataDefinitionClass($submissionData['application_type']);
-    $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
-
-    $submissionObject->setData(DocumentContentMapper::documentContentToTypedData($newDocument->getContent(), $dataDefinition));
-    return $submissionObject;
   }
 
   /**
@@ -453,8 +242,8 @@ class ApplicationInitService {
   protected function handleBankAccountCopying(
     AtvDocument $newDocument,
     WebformSubmission $submissionObject,
-    array $submissionData): AtvDocument {
-
+    array $submissionData
+  ): AtvDocument {
     $newDocumentId = $newDocument->getId();
     $applicationNumber = $newDocument->getTransactionId();
     $bankAccountNumber = $submissionData['bank_account']["account_number"] ?? FALSE;
@@ -480,10 +269,351 @@ class ApplicationInitService {
       $newDocument->setContent($appDocumentContent);
       $newDocument = $this->atvService->patchDocument($newDocumentId, $newDocument->toArray());
     }
-    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | EventException | GuzzleException $e) {
+    catch (AtvDocumentNotFoundException|AtvFailedToConnectException|EventException|GuzzleException $e) {
       $this->logger->error('Error: %msg', ['%msg' => $e->getMessage()]);
     }
     return $newDocument;
   }
 
+  /**
+   * Method to initialise application document in ATV. Create & save.
+   *
+   * If data is given, use that data to copy things to new application.
+   *
+   * @param string $webform_id
+   *   Id of a webform of created application.
+   * @param array $submissionData
+   *   If we want to pass any initial data for new application, do it with
+   *   this.
+   *   Must be like webform data.
+   *
+   * @return \Drupal\webform\Entity\WebformSubmission
+   *   Newly created application content.
+   *
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\ProfileDataException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * @throws \Drupal\grants_profile\GrantsProfileException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function initApplication(string $webform_id, array $submissionData = []): WebformSubmission {
+    $webform = Webform::load($webform_id);
+    $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
+    $userProfileData = $this->helfiHelsinkiProfiiliUserdata->getUserProfileData();
+
+    if ($userData == NULL || $webform == NULL) {
+      throw new ProfileDataException('No Helsinki profile data found');
+    }
+
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+    $companyData = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
+
+    // Before initialization, check if we are copying an application.
+    $copy = !empty($submissionData);
+
+    // Initialize submission data.
+    $submissionData = $this->setInitialSubmissionData(
+      $webform,
+      $selectedCompany,
+      $companyData,
+      $userData,
+      $userProfileData,
+      $submissionData);
+
+    // If we are copying an application, we need to clear some data.
+    if ($copy) {
+      $submissionData = Helpers::clearDataForCopying($submissionData);
+      $submissionData = $this->copyBudgetComponentFields($submissionData);
+    }
+
+    // We need to map community address fields to submission data.
+    $submissionData = $this->mapCommunityAddress($submissionData);
+
+    // Set sender details.
+    $submissionData = array_merge($submissionData, $this->parseSenderDetailsSafely());
+
+    // Set timestamps.
+    $this->setFormTimestamps($submissionData);
+
+    $submissionObject = $this->createSubmissionObject($webform);
+    $submissionData['application_number'] = ApplicationHandler::createApplicationNumber($submissionObject);
+
+    $atvDocument = $this->createAtvDocument($submissionData, $selectedCompany, $webform_id, $userData, $copy);
+    $typeData = $this->applicationDataService->webformToTypedData($submissionData);
+    $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($typeData, $submissionObject, $submissionData);
+    $atvDocument->setContent($appDocumentContent);
+    $newDocument = $this->atvService->postDocument($atvDocument);
+
+    if ($copy) {
+      $newDocument = $this->handleBankAccountCopying($newDocument, $submissionObject, $submissionData);
+    }
+
+    $dataDefinition = $this->getDataDefinition($submissionData['application_type']);
+    $submissionObject->setData(DocumentContentMapper::documentContentToTypedData($newDocument->getContent(), $dataDefinition));
+
+    return $submissionObject;
+  }
+
+  /**
+   * Set initial submission data.
+   *
+   * @param $webform
+   *   Webform object.
+   * @param $selectedCompany
+   *   Selected company data.
+   * @param $companyData
+   *   Company data.
+   * @param $userData
+   *   User data.
+   * @param $userProfileData
+   *   User profile data.
+   * @param array $submissionData
+   *   Submission data.
+   *
+   * @return array
+   *   Submission data with initial data set.
+   */
+  private function setInitialSubmissionData(
+    $webform,
+    $selectedCompany,
+    $companyData,
+    $userData,
+    $userProfileData,
+    array $submissionData
+  ): array {
+    $submissionData['application_type_id'] = $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID');
+    $submissionData['application_type'] = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
+    $submissionData['applicant_type'] = $this->grantsProfileService->getApplicantType();
+    $submissionData['status'] = $this->applicationStatusService->getApplicationStatuses()['DRAFT'];
+    $submissionData['company_number'] = $selectedCompany['identifier'];
+    $submissionData['business_purpose'] = $companyData['businessPurpose'] ?? '';
+
+    $submissionData['hakijan_tiedot'] = $this->getHakijanTiedot($selectedCompany, $companyData, $userData, $userProfileData);
+
+    return $submissionData;
+  }
+
+  /**
+   * Get hakijan tiedot.
+   *
+   * @param array $selectedCompany
+   *   Selected company data.
+   * @param array $companyData
+   *   Company data.
+   * @param array $userData
+   *   User data.
+   * @param array $userProfileData
+   *   User profile data.
+   *
+   * @return array
+   *   Hakijan tiedot.
+   */
+  private function getHakijanTiedot($selectedCompany, $companyData, $userData, $userProfileData): array {
+    return match ($selectedCompany["type"]) {
+      'registered_community' => [
+        'applicantType' => $selectedCompany["type"],
+        'applicant_type' => $selectedCompany["type"],
+        'communityOfficialName' => $selectedCompany["name"],
+        'companyNumber' => $selectedCompany["identifier"],
+        'registrationDate' => $companyData["registrationDate"],
+        'home' => $companyData["companyHome"],
+        'communityOfficialNameShort' => $companyData["companyNameShort"],
+        'foundingYear' => $companyData["foundingYear"],
+        'homePage' => $companyData["companyHomePage"],
+      ],
+      'unregistered_community' => [
+        'applicantType' => $selectedCompany["type"],
+        'applicant_type' => $selectedCompany["type"],
+        'communityOfficialName' => $companyData["companyName"],
+        'firstname' => $userData["given_name"],
+        'lastname' => $userData["family_name"],
+        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"],
+        'email' => $userData["email"],
+        'street' => $companyData["addresses"][0]["street"],
+        'city' => $companyData["addresses"][0]["city"],
+        'postCode' => $companyData["addresses"][0]["postCode"],
+        'country' => $companyData["addresses"][0]["country"],
+      ],
+      'private_person' => [
+        'applicantType' => $selectedCompany["type"],
+        'applicant_type' => $selectedCompany["type"],
+        'firstname' => $userData["given_name"],
+        'lastname' => $userData["family_name"],
+        'socialSecurityNumber' => $userProfileData["myProfile"]["verifiedPersonalInformation"]["nationalIdentificationNumber"] ?? '',
+        'email' => $userData["email"],
+        'street' => $companyData["addresses"][0]["street"] ?? '',
+        'city' => $companyData["addresses"][0]["city"] ?? '',
+        'postCode' => $companyData["addresses"][0]["postCode"] ?? '',
+        'country' => $companyData["addresses"][0]["country"] ?? '',
+      ],
+      default => [],
+    };
+  }
+
+  /**
+   * Map community address fields to submission data.
+   *
+   * @param array $submissionData
+   *   Submission data.
+   *
+   * @return array
+   *   Submission data with community address fields mapped.
+   */
+  private function mapCommunityAddress(array $submissionData): array {
+    if (!empty($submissionData["community_address"]["community_street"])) {
+      $submissionData["community_street"] = $submissionData["community_address"]["community_street"];
+    }
+    if (!empty($submissionData["community_address"]["community_city"])) {
+      $submissionData["community_city"] = $submissionData["community_address"]["community_city"];
+    }
+    if (!empty($submissionData["community_address"]["community_post_code"])) {
+      $submissionData["community_post_code"] = $submissionData["community_address"]["community_post_code"];
+    }
+    if (
+      !empty($submissionData["community_address"]["community_country"])) {
+      $submissionData["community_country"] = $submissionData["community_address"]["community_country"];
+    }
+    return $submissionData;
+  }
+
+  /**
+   * Copy budget component fields to budgetInfo.
+   *
+   * @param array $submissionData
+   *   Submission data.
+   *
+   * @return array
+   *   Submission data with budgetInfo fields copied.
+   */
+  private function copyBudgetComponentFields(array $submissionData): array {
+    $budgetInfoKeys = $this->getBudgetInfoKeysForCopying($submissionData);
+    foreach ($budgetInfoKeys as $budgetKey) {
+      if (isset($submissionData[$budgetKey])) {
+        $submissionData['budgetInfo'][$budgetKey] = $submissionData[$budgetKey];
+      }
+    }
+    return $submissionData;
+  }
+
+  /**
+   * Parse sender details safely.
+   *
+   * @return array
+   *   Sender details.
+   */
+  private function parseSenderDetailsSafely(): array {
+    try {
+      return $this->parseSenderDetails();
+    }
+    catch (\Exception $e) {
+      $this->logger->error('Sender details parsing threw error: @error', ['@error' => $e->getMessage()]);
+      return [];
+    }
+  }
+
+  /**
+   * Set form timestamps.
+   *
+   * @param array $submissionData
+   *  Submission data.
+   */
+  private function setFormTimestamps(array &$submissionData): void {
+    $dt = new \DateTime();
+    $dt->setTimezone(new \DateTimeZone('Europe/Helsinki'));
+    $submissionData['form_timestamp'] = $dt->format('Y-m-d\TH:i:s');
+    $submissionData['form_timestamp_created'] = $dt->format('Y-m-d\TH:i:s');
+  }
+
+  /**
+   * Create a new submission object.
+   *
+   * @param $webform
+   *  Webform object.
+   *
+   * @return \Drupal\webform\Entity\WebformSubmission
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  private function createSubmissionObject($webform): WebformSubmission {
+    $submissionObject = WebformSubmission::create([
+      'webform_id' => $webform->id(),
+      'draft' => TRUE,
+    ]);
+    $submissionObject->set('in_draft', TRUE);
+    $submissionObject->save();
+    return $submissionObject;
+  }
+
+  /**
+   * Create AtvDocument object for new application.
+   *
+   * @param array $submissionData
+   *  Submissin data.
+   * @param $selectedCompany
+   *  Selected company data.
+   * @param string $webform_id
+   *  Webform ID
+   * @param $userData
+   *  User data
+   * @param bool $copy
+   *  Is this a copy operation.
+   *
+   * @return \Drupal\helfi_atv\AtvDocument
+   */
+  private function createAtvDocument(
+    array $submissionData,
+    $selectedCompany,
+    string $webform_id,
+    $userData,
+    bool $copy
+  ): AtvDocument {
+    $webform = Webform::load($webform_id);
+
+    $atvDocument = AtvDocument::create([]);
+    $atvDocument->setTransactionId($submissionData['application_number']);
+    $atvDocument->setStatus($this->applicationStatusService->getApplicationStatuses()['DRAFT']);
+    $atvDocument->setType($submissionData['application_type']);
+    $atvDocument->setService(getenv('ATV_SERVICE'));
+    $atvDocument->setUserId($userData['sub']);
+    $atvDocument->setTosFunctionId(getenv('ATV_TOS_FUNCTION_ID'));
+    $atvDocument->setTosRecordId(getenv('ATV_TOS_RECORD_ID'));
+    if ($submissionData['applicant_type'] == 'registered_community') {
+      $atvDocument->setBusinessId($selectedCompany['identifier']);
+    }
+    $atvDocument->setDraft(TRUE);
+    $atvDocument->setDeletable(FALSE);
+
+    $humanReadableTypes = [
+      'en' => $this->getWebformTitle($webform_id, 'en'),
+      'fi' => $this->getWebformTitle($webform_id, 'fi'),
+      'sv' => $this->getWebformTitle($webform_id, 'sv'),
+    ];
+    $atvDocument->setHumanReadableType($humanReadableTypes);
+
+    $atvDocument->setMetadata([
+      'appenv' => Helpers::getAppEnv(),
+      'saveid' => $copy ? 'copiedSave' : 'initialSave',
+      'applicationnumber' => $submissionData['application_number'],
+      'language' => $this->languageManager->getCurrentLanguage()->getId(),
+      'applicant_type' => $selectedCompany['type'],
+      'applicant_id' => $selectedCompany['identifier'],
+      'form_uuid' => $webform->uuid(),
+    ]);
+
+    return $atvDocument;
+  }
+
+  /**
+   * Get data definition for given application type.
+   *
+   * @param string $applicationType
+   *   Application type.
+   *
+   * @return \Drupal\Core\TypedData\TypedDataInterface
+   *   Data definition.
+   */
+  private function getDataDefinition(string $applicationType) {
+    $dataDefinitionKeys = $this->applicationDataService->getDataDefinitionClass($applicationType);
+    return $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
+  }
 }
