@@ -1,4 +1,3 @@
-langcode: en
 roles:
   hp_user_roles:
     - helsinkiprofiili

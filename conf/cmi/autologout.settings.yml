@@ -1,5 +1,6 @@
 _core:
   default_config_hash: pYO-DH32fm7GYMJrNx5syvfx2n-5s88kvuddFKXC758
+langcode: en
 enabled: true
 timeout: 1800
 max_timeout: 172800

@@ -4,5 +4,5 @@ status: true
 dependencies: {  }
 id: login_page_info
 label: 'Login page info'
-revision: 0
+revision: false
 description: ''

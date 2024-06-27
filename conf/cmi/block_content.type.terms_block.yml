@@ -4,5 +4,5 @@ status: true
 dependencies: {  }
 id: terms_block
 label: Ehtolohko
-revision: 0
+revision: false
 description: 'Lohko esikatselusivulle'
