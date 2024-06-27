@@ -229,7 +229,7 @@ final class ApplicationValidator {
     FormStateInterface &$formState,
     array &$erroredItems
   ): void {
-    if (($formElement = $formElementsDecodedAndFlattened[$propertyPath]) && isset($formElement['#parents'])) {
+    if (($formElement = $formElementsDecodedAndFlattened[$propertyPath] ?? NULL) && isset($formElement['#parents'])) {
       $formState->setError($formElement, $violation->getMessage());
     }
     else {

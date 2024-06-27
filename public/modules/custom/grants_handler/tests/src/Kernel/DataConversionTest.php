@@ -95,7 +95,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
   public function testDataConversion(): void {
     $this->initSession();
 
-    $submissionStorage = $this->createMock('Drupal\grants_handler\GrantsHandlerSubmissionStorage');
+    $submissionStorage = \Drupal::entityTypeManager()->getStorage('webform_submission');
 
     $submissionObject = WebformSubmission::create(['webform_id' => 'kuva_projekti']);
     $submissionObject->set('serial', 'TEST-1234');
