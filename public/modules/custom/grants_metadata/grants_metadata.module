@@ -773,8 +773,6 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
   $routeParam = \Drupal::routeMatch()->getParameter('webform');
   $formStatus = $routeParam->getThirdPartySetting('grants_metadata', 'status');
 
-  $currentUser = Drupal::currentUser();
-
   $released = $formStatus === 'released';
   $archived = $formStatus === 'archived';
   $editingRestricted = ($released || $archived);
