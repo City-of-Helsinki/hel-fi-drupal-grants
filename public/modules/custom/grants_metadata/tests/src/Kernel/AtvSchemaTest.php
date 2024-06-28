@@ -787,7 +787,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertEquals('Lisätiedot', $document['compensation']['additionalInformation']);
     // This field is encoded because it is included by backend magic. That's why there is no metadata.
     $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko', TRUE);
-    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'Ostetaan kohde');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'purpose', 'Ostetaan kohde');
     // Handle subventions.
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '9');
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '0');
