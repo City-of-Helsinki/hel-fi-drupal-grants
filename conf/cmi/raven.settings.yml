@@ -44,4 +44,4 @@ tunnel: false
 modules: false
 cron_monitor_id: ''
 profiles_sample_rate: null
-disable_deprecated_alter: false
+http_compression: true

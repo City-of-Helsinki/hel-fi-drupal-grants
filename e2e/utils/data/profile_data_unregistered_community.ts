@@ -6,7 +6,7 @@ import {createFormData} from "../form_data_helpers";
 
 const profileDataBase: FormData = {
   title: 'Save profile data',
-  formSelector: 'grants-profile-unregistered-community',
+  formSelector: 'grants-role-unregistered_community',
   formPath: '/fi/oma-asiointi/hakuprofiili/muokkaa',
   formPages: {
     'onlyone': {

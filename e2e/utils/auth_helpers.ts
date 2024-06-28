@@ -261,6 +261,7 @@ const checkLoginStateAndLogin = async (page: Page) => {
 }
 
 export {
+  Role,
   selectRole,
   checkLoginStateAndLogin
 }

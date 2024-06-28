@@ -5,6 +5,7 @@ namespace Drupal\grants_handler\Plugin\WebformHandler;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\DrupalKernel;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\TempStore\TempStoreException;
@@ -192,6 +193,20 @@ class GrantsHandler extends WebformHandlerBase {
   protected GrantsHandlerNavigationHelper $grantsFormNavigationHelper;
 
   /**
+   * The Drupal kernel.
+   *
+   * @var \Drupal\Core\DrupalKernel
+   */
+  protected DrupalKernel $kernel;
+
+  /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected $requestStack;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -230,6 +245,14 @@ class GrantsHandler extends WebformHandlerBase {
     /** @var \Drupal\grants_handler\FormLockService $formLockService */
     $formLockService = $container->get('grants_handler.form_lock_service');
     $instance->formLockService = $formLockService;
+
+    /** @var \Drupal\Core\DrupalKernel $kernel */
+    $kernel = $container->get('kernel');
+    $instance->kernel = $kernel;
+
+    /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+    $requestStack = $container->get('request_stack');
+    $instance->requestStack = $requestStack;
 
     $instance->triggeringElement = '';
     $instance->applicationNumber = '';
@@ -553,12 +576,12 @@ class GrantsHandler extends WebformHandlerBase {
 
       $url = Url::fromRoute('grants_profile.edit');
       $response = new RedirectResponse($url->toString());
-      $request = \Drupal::request();
+      $request = $this->requestStack->getCurrentRequest();
       // Save the session so things like messages get saved.
       $request->getSession()->save();
       $response->prepare($request);
       // Make sure to trigger kernel events.
-      \Drupal::service('kernel')->terminate($request, $response);
+      $this->kernel->terminate($request, $response);
       $response->send();
       return;
     }
@@ -574,12 +597,12 @@ class GrantsHandler extends WebformHandlerBase {
       }
       $url = Url::fromRoute('grants_profile.edit');
       $response = new RedirectResponse($url->toString());
-      $request = \Drupal::request();
+      $request = $this->requestStack->getCurrentRequest();
       // Save the session so things like messages get saved.
       $request->getSession()->save();
       $response->prepare($request);
       // Make sure to trigger kernel events.
-      \Drupal::service('kernel')->terminate($request, $response);
+      $this->kernel->terminate($request, $response);
       $response->send();
       return;
     }
@@ -727,10 +750,22 @@ class GrantsHandler extends WebformHandlerBase {
         $form['#disabled'] = TRUE;
         $this->messenger()
           ->addWarning($this->t('Your data is safe, but not all the
-          information in your application has been updated yet. Please wait a
-           moment and reload the page.',
+information in your application has been updated yet. Please wait a
+moment and reload the page.',
             [],
             $tOpts));
+      }
+
+      $webform = $webform_submission->getWebform();
+      $breakingChanges = ApplicationHandler::hasBreakingChangesInNewerVersion($webform);
+
+      if ($breakingChanges && $submissionData['status'] === 'RECEIVED') {
+        $form['#disabled'] = TRUE;
+        $this->messenger()
+          ->addWarning(
+            $this->t('Application form has changed. You cannot do any further edits.',
+              [],
+              $tOpts));
       }
 
       $locked = $this->formLockService->isApplicationFormLocked($this->applicationNumber);
@@ -754,13 +789,31 @@ class GrantsHandler extends WebformHandlerBase {
       WebformArrayHelper::removeValue($form['actions']['draft']['#submit'], '::rebuild');
     }
 
+    // It's possible to edit sent application, until handler
+    // has changed status from RECEIVED.
+    //
+    // Drafts should be able to edited, unless the webform has changed,
+    // eg: editing draft ouside application period is ok, unless the underlying
+    // webform has changed.
+    //
     if (!ApplicationHandler::isSubmissionChangesAllowed($webform_submission)) {
+
+      $status = ApplicationHandler::getWebformStatus($webform_submission->getWebform());
+
+      switch ($status) {
+        case 'archived':
+          $errorMsg = $this->t('The application form has changed, make a new application.');
+          $form['#disabled'] = TRUE;
+          break;
+
+        default:
+          $errorMsg = $this->t('Application period is closed. You can edit the draft, but not submit it.');
+          $form['actions']['submit']['#disabled'] = TRUE;
+          break;
+      }
+
       $this->messenger()
-        ->addError(
-          $this->t('Application period is closed, no further editing is allowed.',
-            [],
-            $tOpts), TRUE);
-      $form['#disabled'] = TRUE;
+        ->addError($errorMsg);
     }
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
@@ -878,7 +931,8 @@ class GrantsHandler extends WebformHandlerBase {
     if ($webform->hasWizardPages()) {
       $validations = [
         '::validateForm',
-        '::draft',
+        '::noValidate',
+       // '::draft',
       ];
       // Allow forward access to all but the confirmation page.
       foreach ($form_state->get('pages') as $page_key => $page) {
@@ -1146,7 +1200,10 @@ class GrantsHandler extends WebformHandlerBase {
 
         // If we HAVE errors, then refresh them from the.
         $this->messenger()
-          ->addError($this->t('Validation failed, please check inputs.', [], $tOpts));
+          ->addError($this->t('The application cannot be submitted because not all
+mandatory questions have been answered. Return to the application form and fill in
+at least those questions and fields that are marked with an asterisk (*). You can
+submit the application only after you have provided all the necessary information.', [], $tOpts));
       }
     }
   }
@@ -1285,6 +1342,7 @@ class GrantsHandler extends WebformHandlerBase {
    */
   public function postsaveSubmitForm(): void {
     $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
+    $applicationData = NULL;
     // submitForm is triggering element when saving as draft.
     // Parse attachments to data structure.
     try {
@@ -1303,7 +1361,6 @@ class GrantsHandler extends WebformHandlerBase {
     catch (ReadOnlyException $e) {
       // Fix here: https://helsinkisolutionoffice.atlassian.net/browse/AU-545
     }
-    $applicationUploadStatus = FALSE;
     $redirectUrl = Url::fromRoute(
         '<front>',
         [

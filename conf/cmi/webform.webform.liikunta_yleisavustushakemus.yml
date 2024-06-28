@@ -25,6 +25,8 @@ third_party_settings:
     applicationActingYearsNextCount: '0'
     applicationContinuous: 1
     disableCopying: 1
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -33,8 +35,9 @@ template: false
 archive: false
 id: liikunta_yleisavustushakemus
 title: 'Liikunta, yleisavustushakemus'
-description: LIIKUNTAYLEIS
-categories: {  }
+description: '<p>LIIKUNTAYLEIS</p>'
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden
@@ -90,8 +93,8 @@ elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
@@ -205,8 +208,8 @@ elements: |-
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     avustuksen_tiedot:
       '#type': webform_section
       '#title': 'Avustuksen tiedot'
@@ -292,18 +295,13 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen käsittelyä varten tulee toimittaa alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
-          <br /><br />
-          Vaaditut liitteet avustuslajeittain:
-          <br /><br />
-          Kohdeavustus: erillinen hakemusliite (webropol-lomake), joka löytyy liikunnan avustusten verkkosivuilta.
-          <br />Jos kyseessä on uusi yhdistys (ensimmäistä kertaa avustusta hakevat), toimitetaan erillisen hakemusliitteen lisäksi: yhdistyksen säännöt, sekä ote yhdistysrekisteristä.
-          <br />Mikäli hakija ei ole toimittanut Helsingin kaupungille hakuvuonna seuraavia liitteitä muiden avustushakujen yhteydessä, niin edellä mainittujen lisäksi tulee liittää myös: hakuvuotta koskeva toimintasuunnitelma, hakuvuotta koskeva talousarvio, tilinpäätös (viimeisin vahvistettu), jäljennös tilin- tai toiminnantarkastuskertomuksesta (viimeisin vahvistettu) sekä toimintakertomus (viimeisin vahvistettu).
-          <br />Starttiavustus: ote yhdistysrekisteristä, yhdistyksen säännöt, talousarvio ja toimintasuunnitelma.
-          <br />Muu: mahdollisten erillishakujen pakollisista liitteistä tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.
-          <br /><br />
-          Usean liitteen toimittaminen yhtenä tiedostona:
-          <br />Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet avustuslajeittain</h4>
+          <p>Kohdeavustus: erillinen hakemusliite (webropol-lomake), joka löytyy liikunnan avustusten verkkosivuilta. Jos kyseessä on uusi yhdistys (ensimmäistä kertaa avustusta hakevat), toimitetaan erillisen hakemusliitteen lisäksi: yhdistyksen säännöt, sekä ote yhdistysrekisteristä. Mikäli hakija ei ole toimittanut Helsingin kaupungille hakuvuonna seuraavia liitteitä muiden avustushakujen yhteydessä, niin edellä mainittujen lisäksi tulee liittää myös: hakuvuotta koskeva toimintasuunnitelma, hakuvuotta koskeva talousarvio, tilinpäätös (viimeisin vahvistettu), jäljennös tilin- tai toiminnantarkastuskertomuksesta (viimeisin vahvistettu) sekä toimintakertomus (viimeisin vahvistettu).</p>
+          <p>Starttiavustus: ote yhdistysrekisteristä, yhdistyksen säännöt, talousarvio ja toimintasuunnitelma.</p>
+          <p>Muu: mahdollisten erillishakujen pakollisista liitteistä tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.</p>
+          <h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
+          <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': webform_markup
         '#markup': |
@@ -345,10 +343,10 @@ elements: |-
     '#title': 'Submit button(s)'
     '#submit__label': Lähetä
     '#draft__label': 'Tallenna keskeneräisenä'
-    '#wizard_prev__label': '< Edellinen'
-    '#wizard_next__label': 'Seuraava >'
-    '#preview_prev__label': '< Edellinen'
-    '#preview_next__label': 'Esikatseluun >'
+    '#wizard_prev__label': 'Edellinen'
+    '#wizard_next__label': 'Seuraava'
+    '#preview_prev__label': 'Edellinen'
+    '#preview_next__label': 'Esikatseluun'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -433,13 +431,13 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '5. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: '< Edellinen'
-  wizard_next_button_label: 'Seuraava >'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
@@ -453,7 +451,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

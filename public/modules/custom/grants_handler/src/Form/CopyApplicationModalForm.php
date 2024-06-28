@@ -107,6 +107,7 @@ class CopyApplicationModalForm extends FormBase {
   public static function getDataDialogOptions(): array {
     return [
       'width' => '33%',
+      'closeText' => t('Close'),
     ];
   }
 
@@ -206,9 +207,13 @@ class CopyApplicationModalForm extends FormBase {
     $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
 
     // If copying is disabled in 3rd party settings, do not allow forward.
-    if ($thirdPartySettings["disableCopying"] == 1 || !$isApplicationOpen) {
+    if ($thirdPartySettings["disableCopying"] == 1 ||
+        $thirdPartySettings["status"] === 'archived' ||
+        !$isApplicationOpen
+        ) {
       $form_state->setErrorByName('modal_markup', 'Copying is disabled for this form.');
     }
+
   }
 
   /**

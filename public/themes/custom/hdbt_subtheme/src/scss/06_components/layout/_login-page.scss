@@ -1,0 +1,9 @@
+.user-login__text-container {
+  background: var(--color-white);
+  max-width: 500px;
+  padding: var(--spacing-m);
+
+  p:first-of-type {
+    margin-top: 0;
+  }
+}

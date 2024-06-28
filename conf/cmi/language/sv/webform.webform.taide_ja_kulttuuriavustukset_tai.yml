@@ -2,8 +2,8 @@ title: 'Stöd för grundläggande konstundervisning'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   hakemusprofiili:
     '#title': 'Hämtade uppgifter'
   prh_markup:
@@ -42,14 +42,15 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj motsvarande person'
     '#role__title': Roll
     '#email__title': E-post
     '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   avustuksen_tiedot:
     '#title': 'Preciserad information '
   acting_year:
@@ -109,8 +110,8 @@ elements: |
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Uppgifter om den ansökande organisationen'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   jasenmaara:
     '#title': Medlemsantal
   jasenmaara_fieldset:
@@ -140,8 +141,8 @@ elements: |
     '#isOwnedByApplicant__title': 'Utrymmet ägs av aktören'
   4_toiminta:
     '#title': '4. Förverkligad verksamhet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   tiedot_opetuksesta:
     '#title': 'Uppgifter om undervisningen'
   markup_01:
@@ -204,10 +205,12 @@ elements: |
   helsingissa_jarjestettava_tila:
     '#title': Plats
     '#citySection__help': 'Stadsmiljösektorns utrymmen omfattar till exempel skolornas klassrum. Kultur- och fritidssektorns utrymmen omfattar till exempel utrymmen som administreras av kultur-, biblioteks-, ungdoms- eller idrottstjänsterna. Sektorn för fostran och bildning omfattar till exempel arbetarinstitutens utrymmen.'
+    '#multiple__item_label': 'plats'
+    '#multiple__add_more_button_label': 'Lägg till ny plats'
   5_toiminnan_lahtokohdat:
     '#title': '5. Utgångspunkten för verksamheten'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   toiminnan_sisallot:
     '#title': 'Verksamhetens innehåll'
   toiminta_tasa_arvo:
@@ -236,8 +239,8 @@ elements: |
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:
     '#title': '6. Ekonomisk'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   talousarvio:
     '#title': Budget
   processed_text:
@@ -303,7 +306,14 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret &auml;r: bokslut, verksamhetsber&auml;ttelse och revisionsber&auml;ttelse. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.<br />\r\n<br />\r\nF&ouml;r ny s&ouml;kande eller om bankkontaktuppgifterna har &auml;ndrats beh&ouml;vs &auml;ven kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den s&ouml;kandes egna uppgifter. F&ouml;r ny s&ouml;kande eller om stadgarna har &auml;ndrats sedan f&ouml;reg&aring;ende ans&ouml;kan beh&ouml;vs &auml;ven f&ouml;reningens stadgar.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.<br />\r\n<br />\r\n<strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har l&auml;mnats in som bilagor till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;. Men samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara sinsemellan olika i bilagor till de olika ans&ouml;kningarna."
+    '#markup': |-
+      <p>Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.</p>
+      <h4>Erforderliga bilagor</h4>
+      <p>F&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs styrkta bilagor fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret som samfundet har godk&auml;nt och undertecknat vid sitt m&ouml;te samt bilagor f&ouml;r det verksamhets&aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks. Bilagorna fr&aring;n det f&ouml;reg&aring;ende r&auml;kenskaps&aring;ret &auml;r: bokslut, verksamhetsber&auml;ttelse och revisionsber&auml;ttelse. Bilagorna f&ouml;r det &aring;r f&ouml;r vilket underst&ouml;det ans&ouml;ks &auml;r: budget och verksamhetsplan.</p>
+      <h4>Inl&auml;mning av flera bilagor i en fil</h4>
+      <p>Om du vill kan du l&auml;mna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>
+      <h4>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</h4>
+      <p>Om de obligatoriska bilagorna redan har l&auml;mnats in som bilagor till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;. Men samfundets fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget f&aring;r inte vara sinsemellan olika i bilagor till de olika ans&ouml;kningarna.</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -367,13 +377,14 @@ elements: |
   actions:
     '#submit__label': Skicka
     '#draft__label': 'Spara som oavslutad'
-    '#wizard_prev__label': '< Tidigare'
-    '#wizard_next__label': 'Nästa >'
-    '#preview_prev__label': '< Tidigare'
-    '#preview_next__label': 'För förhandsvisning >'
+    '#wizard_prev__label': 'Tidigare'
+    '#wizard_next__label': 'Nästa'
+    '#preview_prev__label': 'Tidigare'
+    '#preview_next__label': 'För förhandsvisning'
     '#delete__label': 'Radera oavslutat'
 settings:
-  wizard_prev_button_label: '< Tidigare'
-  wizard_next_button_label: 'Nästa >'
+  wizard_prev_button_label: Tidigare
+  wizard_next_button_label: Nästa
   preview_label: '8. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '9. Slutförd'

@@ -2,8 +2,8 @@ title: 'Ungdomsverksamhet, projektunderstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   hakemusprofiili:
     '#title': 'Hämtade uppgifter'
   prh_markup:
@@ -42,14 +42,15 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj motsvarande person'
     '#role__title': Roll
     '#email__title': E-post
     '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   avustuksen_kohde:
     '#title': 'Stödets föremål'
   kenelle_haen_avustusta:
@@ -178,8 +179,8 @@ elements: |
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:
     '#title': '5. Budget'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   tulot:
     '#title': 'Budgetens intäkter'
   markup_02:
@@ -192,10 +193,14 @@ elements: |
     '#title': 'Självfinansierad andel (€)'
   budget_other_income:
     '#title': 'Övriga intäkter'
+    '#multiple__add_more_button_label': 'Lägg till en intäkt'
+    '#multiple__item_label': 'intäkt'
   menot:
     '#title': 'Utgifter i budgeten'
   budget_other_cost:
     '#title': Utgifter
+    '#multiple__add_more_button_label': 'Lägg till en utgift'
+    '#multiple__item_label': 'utgift'
   lisatiedot_ja_liitteet:
     '#title': '6. Ytterligare information och bilagor'
   lisatietoja_hakemukseen_liittyen:
@@ -207,7 +212,14 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "<p>Alla obligatoriska bilagor ska l&auml;mnas in f&ouml;r behandling av underst&ouml;dsans&ouml;kan. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten i ans&ouml;kan Ytterligare information om bilagor.</p>\r\n\r\n<p><strong>Erforderliga bilagor</strong><br />\r\nOm du vill kan du bifoga projektets mer detaljerade projektplan och budget till ans&ouml;kan om projektst&ouml;d. N&auml;r f&ouml;reningar ans&ouml;ker om projektst&ouml;d ska f&ouml;reningens giltiga stadgar l&auml;mnas in som en obligatorisk bilaga. Stadgarna ska godk&auml;nnas av Patent- och registerstyrelsen.</p>\r\n\r\n<p><strong>Inl&auml;mning av flera bilagor i en fil</strong><br />\r\nOm du vill kan du l&auml;mna in flera bilagor i en fil. Ber&auml;tta om detta i punkten Ytterligare information om bilagorna.</p>\r\n\r\n<p><strong>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</strong><br />\r\nOm de obligatoriska bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Sammanslutningens fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget kan inte vara olika i bilagorna till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>"
+    '#markup': |-
+      <p>Alla obligatoriska bilagor ska l&auml;mnas in f&ouml;r behandling av underst&ouml;dsans&ouml;kan. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten i ans&ouml;kan Ytterligare information om bilagor.</p>
+      <h4>Erforderliga bilagor</h4>
+      <p>Om du vill kan du bifoga projektets mer detaljerade projektplan och budget till ans&ouml;kan om projektst&ouml;d. N&auml;r f&ouml;reningar ans&ouml;ker om projektst&ouml;d ska f&ouml;reningens giltiga stadgar l&auml;mnas in som en obligatorisk bilaga. Stadgarna ska godk&auml;nnas av Patent- och registerstyrelsen.</p>
+      <h4>Inl&auml;mning av flera bilagor i en fil</h4>
+      <p>Om du vill kan du l&auml;mna in flera bilagor i en fil. Ber&auml;tta om detta i punkten Ytterligare information om bilagorna.</p>
+      <h4>Bilagor som tidigare l&auml;mnats in till Helsingfors stad</h4>
+      <p>Om de obligatoriska bilagorna redan har l&auml;mnats in som bilaga till en annan ans&ouml;kan om underst&ouml;d till Helsingfors stad, beh&ouml;ver samma bilagor inte l&auml;mnas in igen. Sammanslutningens fastst&auml;llda bokslut, verksamhetsber&auml;ttelse, verksamhetsplan och budget kan inte vara olika i bilagorna till de olika ans&ouml;kningarna. Ange i detta fall vid de inl&auml;mnade bilagorna att &rdquo;Bilagan har l&auml;mnats in som en fil eller i samband med en annan ans&ouml;kan&rdquo;.</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   yhteison_saannot:
@@ -246,13 +258,14 @@ elements: |
   actions:
     '#submit__label': Skicka
     '#draft__label': 'Spara som oavslutad'
-    '#wizard_prev__label': '< Tidigare'
-    '#wizard_next__label': 'Nästa >'
-    '#preview_prev__label': '< Tidigare'
-    '#preview_next__label': 'För förhandsvisning >'
+    '#wizard_prev__label': 'Tidigare'
+    '#wizard_next__label': 'Nästa'
+    '#preview_prev__label': 'Tidigare'
+    '#preview_next__label': 'För förhandsvisning'
     '#delete__label': 'Radera oavslutat'
 settings:
-  wizard_prev_button_label: '< Tidigare'
-  wizard_next_button_label: 'Nästa >'
+  wizard_prev_button_label: Tidigare
+  wizard_next_button_label: Nästa
   preview_label: '7. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '8. Slutförd'

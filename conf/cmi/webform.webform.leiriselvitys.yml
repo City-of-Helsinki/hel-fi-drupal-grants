@@ -27,6 +27,7 @@ third_party_settings:
     applicationActingYearsNextCount: '0'
     applicationContinuous: 0
     disableCopying: 0
+    status: released
 weight: 0
 open: null
 close: null
@@ -36,7 +37,8 @@ archive: false
 id: leiriselvitys
 title: 'Nuorisopalvelu, loma-aikojen leiriavustusselvitys'
 description: '<p>LEIRISELVITYS</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field
@@ -92,8 +94,8 @@ elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
@@ -218,8 +220,8 @@ elements: |-
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Leiripaikat'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     avustuksen_tiedot:
       '#type': webform_section
       '#title': 'Avustuksen tiedot'
@@ -241,6 +243,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
+        '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseName__required': true
         '#premiseType__access': false
         '#premiseAddress__access': false
@@ -281,6 +285,8 @@ elements: |-
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi tulo'
+        '#multiple__item_label': 'tulo'
     menot:
       '#type': webform_section
       '#title': Menot
@@ -297,6 +303,8 @@ elements: |-
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '4. Lisätiedot ja liitteet'
@@ -306,7 +314,7 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen&nbsp;'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen'
         '#counter_type': character
         '#attributes':
           class:
@@ -321,16 +329,13 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet</strong><br />
-          Loma-aikojen leiriavustusselvityksen pakollinen liite on sama ennakkotiedot leireistä excel-liite, joka toimitettiin hakemuksen yhteydessä ja on nyt täydennetty toteutuneilla tiedoilla. Liite on toimitettava selvityksen yhteydessä samaan aikaan. Jos yhdistyksen säännöt ovat muuttuneet, on ne myös toimitettava. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät.<br />
-          <br />
-          <strong>Usean liitteen toimittaminen yhtenä tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa. ​​​​​​​<br />
-          <br />
-          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet</h4>
+          <p>Loma-aikojen leiriavustusselvityksen pakollinen liite on sama ennakkotiedot leireistä excel-liite, joka toimitettiin hakemuksen yhteydessä ja on nyt täydennetty toteutuneilla tiedoilla. Liite on toimitettava selvityksen yhteydessä samaan aikaan. Jos yhdistyksen säännöt ovat muuttuneet, on ne myös toimitettava. Sääntöjen täytyy olla Patentti- ja rekisterihallituksen hyväksymät.</p>
+          <h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
+          <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa.</p>
+          <h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
+          <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': webform_markup
         '#format': value
@@ -414,10 +419,10 @@ elements: |-
     '#title': 'Submit button(s)'
     '#submit__label': Lähetä
     '#draft__label': 'Tallenna keskeneräisenä'
-    '#wizard_prev__label': '< Edellinen'
-    '#wizard_next__label': 'Seuraava >'
-    '#preview_prev__label': '< Edellinen'
-    '#preview_next__label': 'Esikatseluun >'
+    '#wizard_prev__label': 'Edellinen'
+    '#wizard_next__label': 'Seuraava'
+    '#preview_prev__label': 'Edellinen'
+    '#preview_next__label': 'Esikatseluun'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -502,13 +507,13 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '6. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: '< Edellinen'
-  wizard_next_button_label: 'Seuraava >'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
@@ -522,7 +527,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

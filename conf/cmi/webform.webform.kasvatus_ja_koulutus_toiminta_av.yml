@@ -23,6 +23,8 @@ third_party_settings:
     applicationActingYearsNextCount: '0'
     applicationContinuous: 0
     disableCopying: 0
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -31,8 +33,9 @@ template: false
 archive: false
 id: kasvatus_ja_koulutus_toiminta_av
 title: 'Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
-description: KASKOIPTOIM
-categories: {  }
+description: '<p>KASKOIPTOIM</p>'
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden
@@ -88,8 +91,8 @@ elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
@@ -206,8 +209,8 @@ elements: |-
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     avustuksen_tiedot:
       '#type': webform_section
       '#title': 'Avustuksen tiedot'
@@ -324,10 +327,10 @@ elements: |-
           year:
             '#type': textfield
             '#required': true
+            '#title': Vuosi
             '#attributes':
               class:
                 - webform--small
-            '#title': Vuosi
             '#maxlength': 4
             '#pattern': ^(19\d\d|20\d\d|2100)$
             '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
@@ -410,7 +413,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="compensation_boolean"]':
-              value: 'true'
+              value: '1'
         '#markup': 'Anna k&auml;ytt&ouml;selvitys Helsingin kaupungilta saadusta avustuksesta. Avustuksen k&auml;ytt&ouml;selvitys tehd&auml;&auml;n avustuksesta, joka koskee viimeisint&auml; p&auml;&auml;ttynytt&auml; tilikautta. K&auml;ytt&ouml;selvityst&auml; ei tehd&auml; k&auml;ynniss&auml; olevalta tilikaudelta. K&auml;ytt&ouml;selvityksen antaminen on seuraavan avustuksen saamisen ehtona. Mik&auml;li k&auml;ytt&ouml;selvityst&auml; ei tehd&auml;, avustusta ei my&ouml;nnet&auml; eik&auml; makseta. My&ouml;nnetty avustus voidaan peri&auml; takaisin, jos edellisen avustuksen k&auml;ytt&ouml;&auml; ei ole hyv&auml;ksytt&auml;v&auml;sti selvitetty.'
       compensation_explanation:
         '#type': textarea
@@ -434,8 +437,8 @@ elements: |-
   3_yhteison_tiedot:
     '#type': webform_wizard_page
     '#title': '3. Yhteisön toiminta'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     business_info:
       '#type': webform_section
       '#title': 'Toiminnan kuvaus'
@@ -463,6 +466,8 @@ elements: |-
         '#type': place_of_operation_composite
         '#title': Toimintapaikka
         '#multiple': true
+        '#description': '<p>Ilmoita tässä kohdassa eri osoitteissa toimivien toimintapaikkojen yhteystiedot ja ryhmärakennetiedot. Lomake laskee ilmoitetut tiedot yhteensä.</p>'
+        '#description_display': before
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
@@ -470,6 +475,8 @@ elements: |-
         '#premiseName__access': false
         '#premiseAddress__access': false
         '#address__access': false
+        '#multiple__add_more_button_label': 'Lisää toimintapaikka'
+        '#multiple__item_label': 'toimintapaikka'
   4_talous:
     '#type': webform_wizard_page
     '#title': '4. Talous'
@@ -519,6 +526,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi avustus'
+        '#multiple__item_label': 'avustus'
     menot_osio:
       '#type': webform_section
       '#title': Menot
@@ -527,6 +536,7 @@ elements: |-
         '#title': 'Avustuksen käyttö/Henkilöstömenot ja vuokrat eriteltyinä'
         '#multiple': false
         '#incomeGroup': general
+        '#description': '<p>Avustuksen käyttö/Henkilöstömenot ja vuokrat eriteltyinä</p>'
         '#personnelSocialSecurityCosts__access': false
         '#materials__access': false
         '#transport__access': false
@@ -580,6 +590,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
     avustuksen_kaytto_palveluiden_ostot_eriteltyina:
       '#type': webform_section
       '#title': 'Avustuksen käyttö/Palveluiden ostot eriteltyinä'
@@ -640,6 +652,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi kulu'
+        '#multiple__item_label': 'kulu'
     muut_aineet_tarvikkeet_ja_tavarat:
       '#type': webform_section
       '#title': 'Muut aineet, tarvikkeet ja tavarat'
@@ -699,6 +713,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
     avustuksen_kaytto_muut_kulut_eriteltyina:
       '#type': webform_section
       '#title': 'Avustuksen käyttö/Muut kulut eriteltyinä'
@@ -760,6 +776,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
     asiakasmaksutulojen_kaytto_ja_mahdolliset_lahjoitukset_:
       '#type': webform_section
       '#title': 'Asiakasmaksutulojen käyttö (ja mahdolliset lahjoitukset)'
@@ -768,6 +786,7 @@ elements: |-
         '#title': 'Asiakasmaksutulojen käyttö (ja mahdolliset lahjoitukset)'
         '#multiple': false
         '#incomeGroup': general
+        '#description': '<p>Arvio iltapäivätoiminnan asiakasmaksutulojen käytöstä (erittely käyttötarkoituksen mukaan)</p>'
         '#personnelSocialSecurityCosts__access': false
         '#transport__access': false
         '#food__access': false
@@ -819,6 +838,8 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__sorting': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '5. Lisätiedot ja liitteet'
@@ -843,17 +864,12 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet</strong><br />
-          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.&nbsp;<br />
-          <br />
-          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;. &nbsp;<br />
-          <br />
-          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
-          &nbsp;
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet</h4>
+          <p>Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.</p><h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
+          <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.
+          </p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
+          <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': webform_markup
         '#markup': |
@@ -879,8 +895,8 @@ elements: |-
         '#multiple': false
         '#filetype': '43'
         '#help': |-
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.</span></span></span><br />
-          <span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.</span></span></span>
+          <p>Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.</p>
+          <p>Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.</p>
         '#title_display': before
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi sis&auml;lt&ouml; alta.'
         '#description__access': false
@@ -890,9 +906,8 @@ elements: |-
         '#multiple': false
         '#filetype': '4'
         '#help': |-
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun toimintakertomuksen.</span></span></span><br />
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Jos toimintakertomus on osana tilinp&auml;&auml;t&ouml;st&auml; ja liititte sen jo tilinp&auml;&auml;t&ouml;ksen mukana lomakkeelle, sit&auml; ei tarvitse liitt&auml;&auml; t&auml;h&auml;n erikseen. Valitse t&auml;llaisessa tilanteessa toimintakertomuksen kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</span></span></span><br />
-          &nbsp;
+          <p>Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun toimintakertomuksen.</p>
+          <p>Jos toimintakertomus on osana tilinp&auml;&auml;t&ouml;st&auml; ja liititte sen jo tilinp&auml;&auml;t&ouml;ksen mukana lomakkeelle, sit&auml; ei tarvitse liitt&auml;&auml; t&auml;h&auml;n erikseen. Valitse t&auml;llaisessa tilanteessa toimintakertomuksen kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
         '#title_display': before
         '#description__access': false
       vahvistettu_tilin_tai_toiminnantarkastuskertomus:
@@ -901,9 +916,8 @@ elements: |-
         '#multiple': false
         '#filetype': '5'
         '#help': |-
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.</span></span></span><br />
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</span></span></span><br />
-          &nbsp;
+          <p>Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.</p>
+          <p>Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
         '#title_display': before
         '#description__access': false
       toimintasuunnitelma:
@@ -911,7 +925,7 @@ elements: |-
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
         '#multiple': false
         '#filetype': '1'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. </span></span></span>'
+        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. '
         '#title_display': before
         '#description__access': false
       vuokrasopimus_haettaessa_vuokra_avustusta_:
@@ -927,7 +941,7 @@ elements: |-
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#multiple': false
         '#filetype': '2'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
+        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.'
         '#title_display': before
         '#description__access': false
       extra_info:
@@ -960,10 +974,10 @@ elements: |-
     '#title': 'Submit button(s)'
     '#submit__label': Lähetä
     '#draft__label': 'Tallenna keskeneräisenä'
-    '#wizard_prev__label': '< Edellinen'
-    '#wizard_next__label': 'Seuraava >'
-    '#preview_prev__label': '< Edellinen'
-    '#preview_next__label': 'Esikatseluun >'
+    '#wizard_prev__label': 'Edellinen'
+    '#wizard_next__label': 'Seuraava'
+    '#preview_prev__label': 'Edellinen'
+    '#preview_next__label': 'Esikatseluun'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -1048,13 +1062,13 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '7. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: '< Edellinen'
-  wizard_next_button_label: 'Seuraava >'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
@@ -1068,7 +1082,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

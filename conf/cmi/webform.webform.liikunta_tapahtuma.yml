@@ -23,6 +23,8 @@ third_party_settings:
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 1
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -31,8 +33,9 @@ template: false
 archive: false
 id: liikunta_tapahtuma
 title: 'Liikunta, tapahtuma-avustushakemus'
-description: LIIKUNTATAPAHTUMA
-categories: {  }
+description: '<p>LIIKUNTATAPAHTUMA</p>'
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden
@@ -61,8 +64,8 @@ elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
@@ -171,8 +174,8 @@ elements: |-
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     avustuksen_tiedot:
       '#type': webform_section
       '#title': 'Avustuksen tiedot'
@@ -483,7 +486,7 @@ elements: |-
       '#title': 'Tapahtuman tulot'
       markup_03:
         '#type': webform_markup
-        '#markup': 'Erittele tapahtuman tulot tulotyypeitt&auml;in. Kirjaa tuloihin erikseen my&ouml;s tapahtumalle my&ouml;nnetyt muut avustukset sek&auml; niiden my&ouml;nt&auml;j&auml;taho.&nbsp;'
+        '#markup': 'Erittele tapahtuman tulot tulotyypeitt&auml;in. Kirjaa tuloihin erikseen my&ouml;s tapahtumalle my&ouml;nnetyt muut avustukset sek&auml; niiden my&ouml;nt&auml;j&auml;taho.'
       budget_other_income:
         '#type': grants_budget_other_income
         '#title': Tulo
@@ -495,6 +498,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi tulo'
+        '#multiple__item_label': 'tulo'
     itemise_cost:
       '#type': webform_section
       '#title': 'Tapahtuman menot'
@@ -512,6 +517,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '4. Lisätiedot ja liitteet'
@@ -532,7 +539,10 @@ elements: |-
       '#title': Liitteet
       attachments_info:
         '#type': webform_markup
-        '#markup': '<strong>Liitteet</strong><br /><br />Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.<br /><br />Vaaditut liitteet:<ul><li>Vapaamuotoinen tapahtumasuunnitelma (laajempi kuvaus tapahtumasta, sen järjestelyistä ja kohderyhmästä)</li><li>Tapahtumabudjetti (mikäli se ei tule riittävällä tavalla ilmi hakemuslomakkeella)</li></ul>Mikäli hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteenä tulee toimittaa myös ote yhteisömuotoa koskevasta rekisteristä.'
+        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet</h4>
+          <ul><li>Vapaamuotoinen tapahtumasuunnitelma (laajempi kuvaus tapahtumasta, sen järjestelyistä ja kohderyhmästä)</li><li>Tapahtumabudjetti (mikäli se ei tule riittävällä tavalla ilmi hakemuslomakkeella)</li></ul>
+          <p>Mikäli hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteenä tulee toimittaa myös ote yhteisömuotoa koskevasta rekisteristä.</p>'
       notification_attachments:
         '#type': webform_markup
         '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div><div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p><p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div></div></div>'
@@ -569,10 +579,10 @@ elements: |-
     '#title': 'Submit button(s)'
     '#submit__label': Lähetä
     '#draft__label': 'Tallenna keskeneräisenä'
-    '#wizard_prev__label': '< Edellinen'
-    '#wizard_next__label': 'Seuraava >'
-    '#preview_prev__label': '< Edellinen'
-    '#preview_next__label': 'Esikatseluun >'
+    '#wizard_prev__label': 'Edellinen'
+    '#wizard_next__label': 'Seuraava'
+    '#preview_prev__label': 'Edellinen'
+    '#preview_next__label': 'Esikatseluun'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -657,13 +667,13 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '6. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: '< Edellinen'
-  wizard_next_button_label: 'Seuraava >'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: false
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
@@ -677,7 +687,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

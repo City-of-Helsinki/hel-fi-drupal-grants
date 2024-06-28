@@ -1,5 +1,6 @@
 import {expect, Page} from "@playwright/test";
 import {logger} from "./logger";
+import {ExpectedInlineError} from "./data/test_data";
 
 /**
  * The validateFormErrors function.
@@ -58,6 +59,40 @@ const validateFormErrors = async (page: Page, expectedErrors: Object, errorConta
   logger('Errors validated successfully.')
 }
 
+/**
+ * The validateInlineFormErrors function.
+ *
+ * This function validates that the expected inline form
+ * errors are present on the page. The validation is done
+ * by refreshing the page and checking the inline errors.
+ *
+ * @param page
+ *   Playwright page object.
+ * @param expectedInlineErrors
+ *   An object containing the expected inline form errors.
+ */
+const validateInlineFormErrors = async (page: Page, expectedInlineErrors: ExpectedInlineError[]) => {
+  logger('Validating inline form errors...');
+
+  // Refresh the page by clicking the active navigation item.
+  await page.locator('.progress-step.is-active').click();
+
+  // Wait for the page to fully load and display errors.
+  await page.waitForLoadState('domcontentloaded');
+  await page.waitForLoadState('load');
+  await page.waitForLoadState('networkidle');
+
+  // Validate the inline form errors after the page refresh.
+  for (const inlineError of expectedInlineErrors) {
+    logger(`Validating inline form error: ${inlineError.errorMessage}`)
+    const errorContainer = await page.locator(inlineError.selector).locator('.form-item--error-message');
+    await expect(errorContainer, 'Failed to validate inline form error.').toContainText(inlineError.errorMessage);
+  }
+
+  logger('Inline errors validated successfully.');
+}
+
 export {
   validateFormErrors,
+  validateInlineFormErrors,
 }

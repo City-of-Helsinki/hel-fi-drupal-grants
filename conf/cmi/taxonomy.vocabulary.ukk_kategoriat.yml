@@ -6,3 +6,4 @@ name: UKK-kategoriat
 vid: ukk_kategoriat
 description: 'Usein kysyttyjen kysymysten lajitteluperusteet'
 weight: 0
+new_revision: false

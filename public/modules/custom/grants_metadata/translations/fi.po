@@ -80,6 +80,70 @@ msgctxt "grants_metadata"
 msgid 'Subvention type'
 msgstr 'Avustuslajin koodi'
 
+msgid "Form is published for production use, only limited editing is allowed."
+msgstr "Lomake on julkaistu tuotantokäyttöön, muokkaus toimintoja rajoitettu."
+
+msgid "Form is archived and editing is not allowed."
+msgstr "Lomake on arkistoitu ja muokkaaminen on estetty."
+
+msgid "Enter a year between 1900 - 2100."
+msgstr "Syötä vuosiluku väliltä 1900 - 2100."
+
 msgctxt "grants_metadata"
 msgid "File name"
 msgstr "Tiedostonimi"
+
+msgctxt "grants_metadata"
+msgid "In production"
+msgstr "Tuotannossa"
+
+msgctxt "grants_metadata"
+msgid "Archived"
+msgstr "Arkistoitu"
+
+msgctxt "grants_metadata"
+msgid "In development"
+msgstr "Kehityksessä"
+
+msgctxt "grants_metadata"
+msgid "Create a new webform version, and link the original version as parent."
+msgstr "Luo lomakkeesta uusi versio, johon on linkitetty alkuperäinen lomake Isäntä-kenttään."
+
+msgctxt "grants_metadata"
+msgid "Create a new version"
+msgstr "Luo uusi versio"
+
+msgctxt "grants_metadata"
+msgid ""
+"\n"
+"<p>In production: Changing the webform elements is not "
+"allowed.</p>\n"
+"<p>In development: Webform elements can be edited. Form "
+"can be filled up in non-production environments.</p>\n"
+"<p>Archived: "
+"Older version of the form which cannot be filled anymore.</p>\n"
+"<strong>Only admins/developers should change this, if required.</strong>\n"
+"      "
+msgstr ""
+"<p>Tuotannossa: Muutokset lomakkeen elementteihin estetty.</p>"
+"<p>Kehityksessä: Lomakkeen elementtejä voi muokata ja lomakkeen voi täyttää testi-ympäristöissä.</p>"
+"<p>Arkistoitu: Vanha versio, jonka päälle loppukäyttäjät eivät voi enään tehdä uusia hakemuksia.</p>"
+"<strong>Tämä valinta on kehittäjille.</strong>\n"
+
+msgctxt "grants_metadata"
+msgid "Mark this version with a breaking changes flag.\n"
+"This will prevent applications created with an older webform version, which are in draft or received status,\n"
+"from being edited, even if normal rules would otherwise permit it.\n"
+"<strong>Only admins/developers should change this, if required.</strong>"
+msgstr "Merkitse tämä, jos version yhteydessä on tapahtunut merkittäviä Avus2 muutoksia. Merkittävät muutokset estävät vanhempien lomakkeiden 'Vastaanotettu'-tilassa olevien hakemuksien muokkauksen, vaikka normaalisti tämä olisi mahdollista.\n"
+"<strong>Tämä valinta on kehittäjille.</strong>"
+
+msgctxt "grants_metadata"
+msgid "This webform version has breaking changes with Avus2"
+msgstr "Lomakeversio sisältää rikkovia/merkittäviä muutoksia Avus2 kanssa."
+
+msgctxt "grants_metadata"
+msgid "Parent form, if this webform was duplicated or replaces existing form.\n"
+"<strong>Only admins/developers should change this, if required.</strong>"
+msgstr "Alkuperäinen lomakke, josta tämä lomakepohja on kopioitu.\n"
+"<strong>Tämä valinta on kehittäjille.</strong>"

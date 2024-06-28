@@ -4,6 +4,7 @@ import {logger} from "./logger";
 import {clickButton, fillFormField} from "./input_helpers";
 import {validateFormData} from "./validation_helpers";
 import {logCurrentUrl} from "./helpers";
+import {goToSubmissionUrl, navigateToApplicationPage} from "./navigation_helpers";
 
 /**
  * The swapFieldValues function.
@@ -33,8 +34,8 @@ const swapFieldValues = async (
   storedata: any
 ) => {
   if (storedata === undefined || storedata[formKey] === undefined) {
-    logger(`Skipping bank account swap test: No env data stored after the "${formDetails.title}" test.`);
-    test.skip(true, 'Skip bank account swap test');
+    logger(`Skipping field value swap test: No env data stored after the "${formDetails.title}" test.`);
+    test.skip(true, 'Skip field value swap test');
     return;
   }
 
@@ -50,7 +51,7 @@ const swapFieldValues = async (
 
   logger('Validating form with swapped values...');
   await saveAsDraft(page);
-  await validateFormData(page, formDetails);
+  await validateFormData(page, 'viewPage', formDetails);
 }
 
 /**
@@ -91,47 +92,6 @@ const swapFieldValuesOnPage = async (
     itemField.value = itemToSwap.swapValue;
     await fillFormField(page, itemField, itemKey, true);
   }
-};
-
-/**
- * The goToSubmissionUrl function.
- *
- * This function navigates to an applications
- * submission URL.
- *
- * @param page
- *   Page object from Playwright.
- * @param submissionUrl
- *   A submission URL.
- */
-const goToSubmissionUrl = async (page: Page, submissionUrl: string) => {
-  await page.goto(submissionUrl);
-  await logCurrentUrl(page);
-  await page.waitForURL('**/muokkaa');
-  logger(`Navigated to: ${submissionUrl}.`);
-};
-
-/**
- * The navigateToApplicationPage function.
- *
- * This function navigate to a given page
- * (formPageKey) on an application.
- *
- * @param page
- *   Page object from Playwright.
- * @param formPageKey
- *   A form pages key (the page we are navigating to).
- */
-const navigateToApplicationPage = async (page: Page, formPageKey: string) => {
-  const applicantDetailsLink: Selector = {
-    type: 'form-topnavi-link',
-    name: 'data-webform-page',
-    value: formPageKey,
-  }
-  await clickButton(page, applicantDetailsLink);
-  await page.waitForLoadState('load');
-  await logCurrentUrl(page);
-  logger(`Loaded page: ${formPageKey}.`);
 };
 
 /**

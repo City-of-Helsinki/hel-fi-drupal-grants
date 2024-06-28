@@ -223,11 +223,22 @@ class GrantsAttachments extends WebformCompositeBase {
       }
     }
 
+    // Hide value, if only description field is filled.
+    // We filter all attachment fields without an attachment
+    // during ATV save.
+    if (
+      (isset($value['description']) && !empty($value['description'])) &&
+      (!isset($value['attachmentName']) || empty($value['attachmentName'])) &&
+      $value['fileType'] == '0'
+    ) {
+      return [];
+    }
+
     // This notes that we have uploaded file in process.
     if (isset($value['attachment']) && $value['attachment'] !== NULL) {
       // Load file.
       /** @var \Drupal\file\FileInterface|null $file */
-      $file = \Drupal::entityTypeManager()
+      $file = $this->entityTypeManager
         ->getStorage('file')
         ->load($value['attachment']);
       // File is found, then show filename.

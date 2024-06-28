@@ -126,6 +126,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Address'),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -337,6 +338,14 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $originalData = $document->getContent();
 
     try {
+
+      $tokenData = $this->helsinkiProfiiliUserData->getUserData();
+      $timestamp = time();
+
+      if ($tokenData && isset($tokenData['exp']) && $tokenData['exp'] < $timestamp) {
+        $this->helsinkiProfiiliUserData->refreshTokens();
+      }
+
       $freshData = $this->helsinkiProfiiliUserData->getUserProfileData(TRUE);
 
       $possibleChanges = [];

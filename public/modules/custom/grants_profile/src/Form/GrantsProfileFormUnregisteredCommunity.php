@@ -184,6 +184,14 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     // person details, but let's update the basic info
     // data, so users might get less confused.
     try {
+
+      $tokenData = $this->helsinkiProfiiliUserData->getUserData();
+      $timestamp = time();
+
+      if ($tokenData && isset($tokenData['exp']) && $tokenData['exp'] < $timestamp) {
+        $this->helsinkiProfiiliUserData->refreshTokens();
+      }
+
       $this->helsinkiProfiiliUserData->getUserProfileData(TRUE);
 
       $this->messenger()->addStatus(
@@ -367,6 +375,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     $form['addressWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Addresses', [], $this->tOpts),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -503,6 +512,7 @@ One address is mandatory information in your personal information and on the app
     $form['officialWrapper'] = [
       '#type' => 'webform_section',
       '#title' => $this->t('Persons responsible for operations', [], $this->tOpts),
+      '#title_tag' => 'h4',
       '#prefix' => '<div id="officials-wrapper">',
       '#suffix' => '</div>',
     ];

@@ -25,6 +25,8 @@ third_party_settings:
     applicationActingYears: {  }
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '0'
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -33,8 +35,9 @@ template: false
 archive: false
 id: kuva_projekti
 title: 'Taide- ja kulttuuriavustukset: projektiavustukset'
-description: KUVAPROJ
-categories: {  }
+description: '<p>KUVAPROJ</p>'
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field
@@ -117,8 +120,8 @@ elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
@@ -243,8 +246,8 @@ elements: |-
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     avustuksen_tiedot:
       '#type': webform_section
       '#title': 'Avustuksen tiedot'
@@ -425,8 +428,8 @@ elements: |-
   3_yhteison_tiedot:
     '#type': webform_wizard_page
     '#title': '3. Yhteisön tiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     jasenmaara:
       '#type': webform_section
       '#title': Jäsenmäärä
@@ -537,8 +540,8 @@ elements: |-
   4_suunniteltu_toiminta:
     '#type': webform_wizard_page
     '#title': '4. Suunniteltu toiminta'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     arvio_maarista:
       '#type': webform_section
       '#title': 'Arvio määristä'
@@ -704,6 +707,7 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
         '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseType__access': false
         '#premiseAddress__access': false
@@ -763,8 +767,8 @@ elements: |-
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
     '#title': '5. Toiminnan lähtökohdat'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     toiminnan_sisallot:
       '#type': webform_section
       '#title': 'Toiminnan sisällöt'
@@ -894,8 +898,8 @@ elements: |-
   6_talous:
     '#type': webform_wizard_page
     '#title': '6. Talous'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     talousarvio:
       '#type': webform_section
       '#title': Talousarvio
@@ -1017,6 +1021,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi kulu'
+        '#multiple__item_label': 'kulu'
       muu_huomioitava_panostus_osio:
         '#type': webform_markup
         '#markup': '<h4>Muu huomioitava panostus</h4>'
@@ -1054,15 +1060,12 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet</strong><br />
-          Avustushakemuksen k&auml;sittely&auml; varten tarvitaan ty&ouml;ryhm&auml;n j&auml;senten ansioluettelot, kun kyseess&auml; on taiteen ammattilaisten hanke.&nbsp;<br />
-          <br />
-          Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin my&ouml;s tiliote tai vastaava asiakirja, josta selvi&auml;&auml; tilinomistajan nimi ja tilinumero.<br />
-          <br />
-          <strong>Usean liitteen toimittaminen</strong><br />
-          Voit toimittaa useampia ty&ouml;ryhm&auml;n j&auml;senten ansioluetteloita erillisin&auml; tiedostoina liitt&auml;m&auml;ll&auml; ne Muu liite -kohtaan. Voit halutessasi my&ouml;s toimittaa useampia liitteit&auml; yhten&auml; tiedostona.
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet</h4>
+          <p>Avustushakemuksen k&auml;sittely&auml; varten tarvitaan ty&ouml;ryhm&auml;n j&auml;senten ansioluettelot, kun kyseess&auml; on taiteen ammattilaisten hanke.</p>
+          <p>Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin my&ouml;s tiliote tai vastaava asiakirja, josta selvi&auml;&auml; tilinomistajan nimi ja tilinumero.</p>
+          <h4>Usean liitteen toimittaminen</h4>
+          <p>Voit toimittaa useampia ty&ouml;ryhm&auml;n j&auml;senten ansioluetteloita erillisin&auml; tiedostoina liitt&auml;m&auml;ll&auml; ne Muu liite -kohtaan. Voit halutessasi my&ouml;s toimittaa useampia liitteit&auml; yhten&auml; tiedostona.</p>
       notification_attachments:
         '#type': webform_markup
         '#markup': |
@@ -1104,10 +1107,10 @@ elements: |-
     '#title': 'Submit button(s)'
     '#submit__label': Lähetä
     '#draft__label': 'Tallenna keskeneräisenä'
-    '#wizard_prev__label': '< Edellinen'
-    '#wizard_next__label': 'Seuraava >'
-    '#preview_prev__label': '< Edellinen'
-    '#preview_next__label': 'Esikatseluun >'
+    '#wizard_prev__label': 'Edellinen'
+    '#wizard_next__label': 'Seuraava'
+    '#preview_prev__label': 'Edellinen'
+    '#preview_next__label': 'Esikatseluun'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -1287,13 +1290,13 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '9. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: '< Edellinen'
-  wizard_next_button_label: 'Seuraava >'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
@@ -1307,7 +1310,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

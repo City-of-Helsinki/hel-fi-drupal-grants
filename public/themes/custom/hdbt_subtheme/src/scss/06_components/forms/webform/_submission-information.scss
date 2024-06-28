@@ -1,0 +1,85 @@
+.webform-submission-information {
+  background: var(--color-silver-light);
+  margin-top: var(--spacing-3-xl);
+  padding: var(--spacing-l);
+
+  .webform-submission-information {
+    margin-top: var(--spacing-l);
+    padding: 0;
+  }
+
+  h4 {
+    margin-top: 0;
+  }
+
+  h5 {
+    font-size: var(--fontsize-body-m);
+    margin-top: var(--spacing-s);
+  }
+
+  &__row {
+    display: flex;
+
+    &-edit {
+      margin-top: var(--spacing-s);
+    }
+
+    &-top {
+      align-items: center;
+      border-bottom: 1px solid var(--color-black-20);
+      justify-content: space-between;
+
+      @include breakpoint(max-width 550px) {
+        display: block;
+      }
+    }
+
+    &-main {
+      flex-flow: row nowrap;
+      gap: var(--spacing-m);
+      justify-content: space-between;
+
+      @include breakpoint(max-width 1179px) {
+        flex-flow: row wrap;
+      }
+
+      > div {
+        flex: 1;
+
+        @include breakpoint(max-width 1179px) {
+          flex: auto;
+          width: 100%;
+        }
+
+        ul {
+          list-style-type: none;
+          margin-bottom: 0;
+          padding-left: 0;
+
+          li {
+            margin: 0;
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+
+  &__supportlinks {
+    display: flex;
+    flex-flow: row nowrap;
+    min-width: fit-content;
+
+    .hds-loading-spinner {
+      left: 0; /* LTR */
+    }
+
+    .hds-button {
+      min-width: fit-content;
+    }
+  }
+}
+
+.hel-icon.hel-icon--copy {
+  mask-image: url("data:image/svg+xml,%3Csvg class='Icon-module_icon__1Jtzj icon_hel-icon__1YqNC Icon-module_s__2WGWe icon_hel-icon--size-s__2Lkik' viewBox='0 0 24 24' role='img' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect width='24' height='24'%3E%3C/rect%3E%3Cpath fill='currentColor' d='M6,10 L6,12 L5,12 L5,18 L12,18 L12,17 L14,17 L14,19 C14,19.5522847 13.5522847,20 13,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,11 C3,10.4477153 3.44771525,10 4,10 L6,10 Z M20,4 C20.5522847,4 21,4.44771525 21,5 L21,15 C21,15.5522847 20.5522847,16 20,16 L8,16 C7.44771525,16 7,15.5522847 7,15 L7,5 C7,4.44771525 7.44771525,4 8,4 L20,4 Z M19,6 L9,6 L9,14 L19,14 L19,6 Z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+}

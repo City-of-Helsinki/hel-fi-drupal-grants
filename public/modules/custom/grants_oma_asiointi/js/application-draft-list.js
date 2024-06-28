@@ -2,22 +2,34 @@
   Drupal.behaviors.omaAsiointiFront = {
     attach: function (context, settings) {
       if ($("#oma-asiointi__sent")[0]) {
-        var sentListOptions = {
+        const sentListOptions = {
           valueNames: ['application-list__item--name', 'application-list__item--status', 'application-list__item--number', 'application-list__item--submitted'],
           pagination: true,
           page: 10,
         };
-        var sentList = new List('oma-asiointi__sent', sentListOptions);
+        const sentList = new List('oma-asiointi__sent', sentListOptions);
         $('#oma-asiointi__sent .application-list__count-value').html(sentList.update().matchingItems.length);
 
         sentList.on('searchComplete', function () {
           $('#oma-asiointi__sent .application-list__count-value').html(sentList.update().matchingItems.length);
         });
 
+        $('#searchForApplication').click(function() {
+          const searchValue = $('#applicationListFilter').val();
+          sentList.search(searchValue);
+        });
+
+        $('#applicationListFilter').on('keypress', function(e) {
+          if (e.which == 13) {
+            const searchValue = $('#applicationListFilter').val();
+            sentList.search(searchValue);
+          }
+        });
+
         $('select.sort').change(function () {
-          selectionArray = $(this).val().split(' ');
-          var selection = selectionArray[1];
-          var direction = selectionArray[0]
+          const selectionArray = $(this).val().split(' ');
+          const selection = selectionArray[1];
+          const direction = selectionArray[0]
           sentList.sort(selection, {order: direction});
         });
 
@@ -29,11 +41,7 @@
         $('#checkbox-processed').change(function() {
           if(this.checked) {
             sentList.filter(function(item) {
-              if (item.values()['application-list__item--status'] == $('#string-processed').text()) {
-                return true;
-              } else {
-                return false;
-              }
+              return item.values()['application-list__item--status'] == $('#string-processed').text()
             }); // Only items with id > 1 are shown in list
           } else {
           sentList.filter(function(item) {
@@ -44,6 +52,13 @@
           $('#oma-asiointi__sent .application-list__count-value').html(sentList.update().matchingItems.length);
 
         });
+    }
+    if ($("#oma-asiointi__drafts")[0]) {
+      const draftsListOptions = {
+        pagination: true,
+        page: 10,
+      };
+      new List('oma-asiointi__drafts', draftsListOptions);
     }
   }
 };

@@ -5,6 +5,7 @@ namespace Drupal\grants_mandate;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\TempStore\TempStoreException;
 use Drupal\Core\Url;
@@ -100,7 +101,7 @@ class GrantsMandateService {
   public function __construct(
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
     ClientInterface $httpClient,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
     RequestStack $requestStack,
     GrantsProfileService $grantsProfileService,
   ) {

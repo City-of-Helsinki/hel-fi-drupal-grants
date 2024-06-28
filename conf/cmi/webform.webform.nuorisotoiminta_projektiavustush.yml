@@ -24,6 +24,8 @@ third_party_settings:
     applicationActingYearsNextCount: '1'
     applicationContinuous: 1
     disableCopying: 0
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -32,8 +34,9 @@ template: false
 archive: false
 id: nuorisotoiminta_projektiavustush
 title: 'Nuorisotoimi, projektiavustushakemus'
-description: NUORPROJ
-categories: {  }
+description: '<p>NUORPROJ</p>'
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field
@@ -116,8 +119,8 @@ elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
@@ -245,8 +248,8 @@ elements: |-
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     avustuksen_kohde:
       '#type': webform_section
       '#title': 'Avustuksen kohde'
@@ -579,8 +582,8 @@ elements: |-
   6_talous:
     '#type': webform_wizard_page
     '#title': '5. Talousarvio'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     tulot:
       '#type': webform_section
       '#title': 'Talousarvion tulot'
@@ -609,6 +612,8 @@ elements: |-
         '#multiple': true
         '#incomeGroup': general
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi tulo'
+        '#multiple__item_label': 'tulo'
     menot:
       '#type': webform_section
       '#title': 'Talousarvion menot'
@@ -622,6 +627,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '6. Lisätiedot ja liitteet'
@@ -647,15 +654,12 @@ elements: |-
         '#type': webform_markup
         '#markup': |-
           <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p>
-
-          <p><strong>Vaaditut liitteet</strong><br />
-          Projektiavustushakemukseen voi halutessaan liittää projektin tarkemman suunnitelman sekä sen talousarvion. Yhdistysten hakiessa projektiavustusta pakollisena liitteenä on toimitettava yhdistyksen voimassa olevat säännöt. Sääntöjen tulee olla patentti- ja rekisterihallituksen hyväksymiä.</p>
-
-          <p><strong>Usean liitteen toimittaminen yhtenä tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa.</p>
-
-          <p><strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
+          <h4>Vaaditut liitteet</h4>
+          <p>Projektiavustushakemukseen voi halutessaan liittää projektin tarkemman suunnitelman sekä sen talousarvion. Yhdistysten hakiessa projektiavustusta pakollisena liitteenä on toimitettava yhdistyksen voimassa olevat säännöt. Sääntöjen tulee olla patentti- ja rekisterihallituksen hyväksymiä.</p>
+          <h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
+          <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa.</p>
+          <h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
+          <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': webform_markup
         '#markup': |
@@ -725,10 +729,10 @@ elements: |-
     '#title': 'Submit button(s)'
     '#submit__label': Lähetä
     '#draft__label': 'Tallenna keskeneräisenä'
-    '#wizard_prev__label': '< Edellinen'
-    '#wizard_next__label': 'Seuraava >'
-    '#preview_prev__label': '< Edellinen'
-    '#preview_next__label': 'Esikatseluun >'
+    '#wizard_prev__label': 'Edellinen'
+    '#wizard_next__label': 'Seuraava'
+    '#preview_prev__label': 'Edellinen'
+    '#preview_next__label': 'Esikatseluun'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -908,13 +912,13 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '8. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: '< Edellinen'
-  wizard_next_button_label: 'Seuraava >'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
@@ -928,7 +932,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

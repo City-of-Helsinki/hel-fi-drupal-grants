@@ -141,7 +141,7 @@ msgid 'Edit application'
 msgstr 'Muokkaa hakemusta'
 
 msgctxt "grants_handler"
-msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page."
+msgid "Your data is safe, but not all the\ninformation in your application has been updated yet. Please wait a\nmoment and reload the page."
 msgstr "Tietosi ovat turvassa, mutta kaikkia hakemuksesi tietoja ei ole vielä päivitetty. Odota hetki ja lataa sivu uudelleen."
 
 msgid "File upload failed, error has been logged."
@@ -356,6 +356,13 @@ msgid "Draft expired"
 msgstr "Luonnos vanhentunut"
 
 msgctxt "grants_handler"
+msgid "Application form expired"
+msgstr "Hakemuspohja vanhentunut"
+
+msgctxt "grants_handler"
+msgid "Application form has changed. You cannot do any further edits."
+msgstr "Hakemuspohja on muuttunut. Et voi enää tehdä muutoksia tähän hakemukseen."
+
 msgid "Application period ended"
 msgstr "Hakuaika päättynyt"
 
@@ -370,6 +377,12 @@ msgstr "Muistathan varmistaa, että hakemuksen tila vaihtuu “Lähetetty - odot
 msgctxt "grants_handler"
 msgid "There may be a delay in changing the status. For example, due to maintenance breaks, the delay can be longer than normal."
 msgstr "Tilan vaihtumisessa voi olla viivettä. Esimerkiksi huoltokatkoista johtuen viive voi olla normaaliakin pidempi."
+
+msgid "Application period is closed. You can edit the draft, but not submit it."
+msgstr "Hakemusaika on päättynyt. Voit muokata luonnosta, mutta et lähettää sitä."
+
+msgid "The application form has changed, make a new application."
+msgstr "Hakemuspohja muuttunut, tee uusi hakemus."
 
 msgctxt "grants_handler"
 msgid "Application period is closed, no further editing is allowed."
@@ -480,7 +493,7 @@ msgid "Log in to the service and do the identification."
 msgstr "Kirjaudu palveluun ja tee tunnistautuminen."
 
 msgctxt "grants_handler"
-msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
+msgid "Please familiarize yourself with the instructions\non this page before proceeding to the application."
 msgstr "Tutustuthan ohjeistukseen tällä sivulla ennen hakemukselle siirtymistä."
 
 msgctxt "grants_handler"
@@ -538,6 +551,10 @@ msgstr "Pyyntösi keskeytyi verkkovirheen takia."
 
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Oletko varma että haluat keskeyttää lomakkeen täyttämisen? Poistu tallentamatta."
+
+msgctxt "grants_handler"
+msgid "Close"
+msgstr "Sulje"
 
 msgid "Leave the application"
 msgstr "Poistu hakemukselta"
@@ -608,8 +625,8 @@ msgid "Additional information concerning the application"
 msgstr "Lisätietoja hakemukseen liittyen"
 
 msgctxt "grants_handler"
-msgid "Validation failed, please check inputs."
-msgstr "Kenttien validaatio epäonnistui, tarkista syötteet."
+msgid "The application cannot be submitted because not all\nmandatory questions have been answered. Return to the application form and fill in\nat least those questions and fields that are marked with an asterisk (*). You can\nsubmit the application only after you have provided all the necessary information."
+msgstr "Hakemusta ei voida lähettää, koska kaikkiin pakollisiin kysymyksiin ei ole vastattu. Palaa hakulomakkeeseen ja täytä ainakin ne kysymykset ja kentät, jotka on merkitty tähdellä (*). Voit lähettää hakemuksen vasta, kun olet antanut kaikki pakolliset tiedot."
 
 msgctxt "grants_handler"
 msgid "No applications in progress."
@@ -629,3 +646,6 @@ msgstr "Sähköposti"
 
 msgid "The email address %mail is not valid. Use the format user@example.com."
 msgstr "%mail ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com."
+
+msgid "Remove @item @number"
+msgstr "Poista @item @number"

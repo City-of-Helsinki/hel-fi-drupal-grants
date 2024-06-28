@@ -2,21 +2,26 @@
 
 namespace Drupal\grants_handler;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManager;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -27,7 +32,7 @@ use Drupal\helfi_helsinki_profiili\ProfileDataException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -52,9 +57,9 @@ class ApplicationHandler {
   /**
    * The HTTP client.
    *
-   * @var \GuzzleHttp\ClientInterface
+   * @var \GuzzleHttp\Client
    */
-  protected ClientInterface $httpClient;
+  protected Client $httpClient;
 
   /**
    * The helfi_helsinki_profiili.userdata service.
@@ -94,9 +99,9 @@ class ApplicationHandler {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel|LoggerChannelInterface $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Show messages.
@@ -190,9 +195,32 @@ class ApplicationHandler {
   protected GrantsHandlerNavigationHelper $grantsHandlerNavigationHelper;
 
   /**
+   * The configuration factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
+   * The current_user service.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   *   The current_user service.
+   */
+  protected $currentUser;
+
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $time;
+
+  /**
    * Constructs an ApplicationUploader object.
    *
-   * @param \GuzzleHttp\ClientInterface $http_client
+   * @param \GuzzleHttp\Client $http_client
    *   The HTTP client.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata
    *   The helfi_helsinki_profiili.userdata service.
@@ -214,19 +242,28 @@ class ApplicationHandler {
    *   Language manager.
    * @param \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper
    *   Access error messages.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The configuration factory.
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
+   *   The current_user service.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time service.
    */
   public function __construct(
-    ClientInterface $http_client,
+    Client $http_client,
     HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata,
     AtvService $atvService,
     AtvSchema $atvSchema,
     GrantsProfileService $grantsProfileService,
-    LoggerChannelFactory $loggerChannelFactory,
+    LoggerChannelFactoryInterface $loggerChannelFactory,
     Messenger $messenger,
     EventsService $eventsService,
     Connection $datababse,
     LanguageManager $languageManager,
-    GrantsHandlerNavigationHelper $grantsFormNavigationHelper
+    GrantsHandlerNavigationHelper $grantsFormNavigationHelper,
+    ConfigFactoryInterface $configFactory,
+    AccountProxyInterface $currentUser,
+    TimeInterface $time
   ) {
 
     $this->httpClient = $http_client;
@@ -249,6 +286,9 @@ class ApplicationHandler {
     $this->database = $datababse;
     $this->languageManager = $languageManager;
     $this->grantsHandlerNavigationHelper = $grantsFormNavigationHelper;
+    $this->configFactory = $configFactory;
+    $this->currentUser = $currentUser;
+    $this->time = $time;
   }
 
   /**
@@ -724,15 +764,67 @@ class ApplicationHandler {
   }
 
   /**
+   * Checks if there is breaking changes in newer webform versions.
+   *
+   * Breakin changes in this context means any Avus2 changes, that makes
+   * submitting older webform to fail.
+   *
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform id.
+   *
+   * @return bool
+   *   If there is any breaking changes.
+   */
+  public static function hasBreakingChangesInNewerVersion(Webform $webform) {
+    static $map = [];
+
+    $uuid = $webform->uuid();
+
+    if (isset($map[$uuid])) {
+      return $map[$uuid];
+    }
+
+    $applicationType = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
+
+    $latestApplicationForm = self::getLatestApplicationForm($applicationType);
+    $parent = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'parent');
+    $hasBreakingChanges = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'avus2BreakingChange');
+
+    while (!empty($parent)) {
+
+      $map[$parent] = $hasBreakingChanges;
+
+      $wf = reset(\Drupal::entityTypeManager()
+        ->getStorage('webform')
+        ->loadByProperties([
+          'uuid' => $parent,
+        ]));
+
+      $parent = $wf->getThirdPartySetting('grants_metadata', 'parent');
+
+      // No need to check the flag,
+      // if we already have a newer version with breaking changes.
+      if (!$hasBreakingChanges) {
+        $hasBreakingChanges = $wf->getThirdPartySetting('grants_metadata', 'avus2BreakingChange');
+      }
+    }
+
+    return $map[$uuid] ?? FALSE;
+
+  }
+
+  /**
    * Extract webform id from application number string.
    *
    * @param string $applicationNumber
    *   Application number.
+   * @param bool $all
+   *   Should all matching webforms be returned?
    *
    * @return \Drupal\webform\Entity\Webform
    *   Webform object.
    */
-  public static function getWebformFromApplicationNumber(string $applicationNumber): ?Webform {
+  public static function getWebformFromApplicationNumber(string $applicationNumber, $all = FALSE): bool|Webform|array {
 
     $isOldFormat = FALSE;
     if (strpos($applicationNumber, 'GRANTS') !== FALSE) {
@@ -774,9 +866,39 @@ class ApplicationHandler {
     });
 
     if (!$webform) {
-      return NULL;
+      return FALSE;
     }
+
+    if ($all) {
+      return $webform;
+    }
+
     return reset($webform);
+  }
+
+  /**
+   * Get Webform object by UUID.
+   *
+   * @param string $uuid
+   *   Uuid of the webform.
+   * @param string $application_number
+   *   The application number.
+   *
+   * @return \Drupal\webform\Entity\Webform
+   *   Webform object.
+   */
+  public static function getWebformByUuid(string $uuid, string $application_number) {
+
+    $wids = \Drupal::entityQuery('webform')
+      ->condition('uuid', $uuid)
+      ->execute();
+
+    // Fallback to original method, if webform for some reason is not found.
+    if (empty($wids)) {
+      return self::getWebformFromApplicationNumber($application_number);
+    }
+
+    return Webform::load(reset($wids));
   }
 
   /**
@@ -814,24 +936,25 @@ class ApplicationHandler {
   ): ?WebformSubmission {
 
     $submissionSerial = self::getSerialFromApplicationNumber($applicationNumber);
-    $webform = self::getWebformFromApplicationNumber($applicationNumber);
+    $webform = self::getWebformFromApplicationNumber($applicationNumber, TRUE);
 
     if (!$webform) {
       return NULL;
     }
 
+    $webformIds = array_map(function ($element) {
+      return $element->id();
+    }, $webform);
+
     $result = \Drupal::entityTypeManager()
       ->getStorage('webform_submission')
       ->loadByProperties([
         'serial' => $submissionSerial,
-        'webform_id' => $webform->id(),
+        'webform_id' => $webformIds,
       ]);
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
-
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
-    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
 
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
@@ -887,7 +1010,7 @@ class ApplicationHandler {
 
       $dataDefinition = self::getDataDefinition($document->getType());
 
-      $sData = $atvSchema->documentContentToTypedData(
+      $sData = DocumentContentMapper::documentContentToTypedData(
         $document->getContent(),
         $dataDefinition,
         $document->getMetadata()
@@ -980,6 +1103,17 @@ class ApplicationHandler {
       return $applicationContinuous;
     }
 
+    $status = self::getWebformStatus($webform);
+    $appEnv = self::getAppEnv();
+    $isProd = self::isProduction($appEnv);
+
+    if (
+      ($isProd && $status !== 'released') ||
+      $status === 'archived'
+    ) {
+      return FALSE;
+    }
+
     // If today is between open & close dates return true.
     if ($now->getTimestamp() > $from->getTimestamp() && $now->getTimestamp() < $to->getTimestamp()) {
       return TRUE;
@@ -1047,7 +1181,7 @@ class ApplicationHandler {
   /**
    * Validate application data so that it is correct for saving to AVUS2.
    *
-   * @param \Drupal\Core\TypedData\TypedDataInterface $applicationData
+   * @param \Drupal\Core\TypedData\ComplexDataInterface $applicationData
    *   Typed data object.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state object.
@@ -1058,7 +1192,7 @@ class ApplicationHandler {
    *   Constraint violation object.
    */
   public function validateApplication(
-    TypedDataInterface $applicationData,
+    ComplexDataInterface $applicationData,
     FormStateInterface &$formState,
     WebformSubmission $webform_submission
   ): ConstraintViolationListInterface {
@@ -1184,7 +1318,7 @@ class ApplicationHandler {
 
     // Set the translation target language on the configuration factory.
     $this->languageManager->setConfigOverrideLanguage($language);
-    $translatedLabel = \Drupal::config("webform.webform.{$webform_id}")
+    $translatedLabel = $this->configFactory->get("webform.webform.{$webform_id}")
       ->get('title');
     $this->languageManager->setConfigOverrideLanguage($originalLanguage);
     return $translatedLabel;
@@ -1367,6 +1501,7 @@ class ApplicationHandler {
       'language' => $this->languageManager->getCurrentLanguage()->getId(),
       'applicant_type' => $selectedCompany['type'],
       'applicant_id' => $selectedCompany['identifier'],
+      'form_uuid' => $webform->uuid(),
     ]);
 
     // Do data conversion.
@@ -1396,7 +1531,7 @@ class ApplicationHandler {
     $dataDefinitionKeys = self::getDataDefinitionClass($submissionData['application_type']);
     $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
 
-    $submissionObject->setData($this->atvSchema->documentContentToTypedData($newDocument->getContent(), $dataDefinition));
+    $submissionObject->setData(DocumentContentMapper::documentContentToTypedData($newDocument->getContent(), $dataDefinition));
     return $submissionObject;
   }
 
@@ -1778,9 +1913,6 @@ class ApplicationHandler {
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
-    /** @var \Drupal\grants_metadata\AtvSchema $atvSchema */
-    $atvSchema = \Drupal::service('grants_metadata.atv_schema');
-
     /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
     $grantsProfileService = \Drupal::service('grants_profile.service');
 
@@ -1842,16 +1974,22 @@ class ApplicationHandler {
 
           // Convert the data.
           $dataDefinition = self::getDataDefinition($document->getType());
-          $submissionData = $atvSchema->documentContentToTypedData(
+          $submissionData = DocumentContentMapper::documentContentToTypedData(
             $document->getContent(),
             $dataDefinition,
             $document->getMetadata()
           );
 
+          $metaData = $document->getMetadata();
+
           // Load the webform submission ID.
           $applicationNumber = $submissionData['application_number'];
           $serial = self::getSerialFromApplicationNumber($applicationNumber);
-          $webform = self::getWebformFromApplicationNumber($applicationNumber);
+
+          $webformUuidExists = isset($metaData['form_uuid']) && !empty($metaData['form_uuid']);
+          $webform = $webformUuidExists
+            ? self::getWebformByUuid($metaData['form_uuid'], $applicationNumber)
+            : self::getWebformFromApplicationNumber($applicationNumber);
 
           if (!$webform || !$serial) {
             continue;
@@ -1963,7 +2101,7 @@ class ApplicationHandler {
     }
 
     // If we can't find a submission, then create one.
-    $webformSubmission = self::createWebformSubmissionWithSerialAndWebformId($serial, $webformId, $document);
+    $webformSubmission = self::createWebformSubmissionWithSerialAndWebformId($serial, $document);
     return $webformSubmission->id();
   }
 
@@ -1975,8 +2113,6 @@ class ApplicationHandler {
    *
    * @param string $serial
    *   A webform submission serial.
-   * @param string $webformId
-   *   A webform ID.
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   An ATV document.
    *
@@ -1988,8 +2124,17 @@ class ApplicationHandler {
    */
   protected static function createWebformSubmissionWithSerialAndWebformId(
     string $serial,
-    string $webformId,
     AtvDocument $document): WebformSubmission {
+
+    $metaData = $document->getMetadata();
+    $webformUuidExists = isset($metaData['form_uuid']) && !empty($metaData['form_uuid']);
+
+    $webform = $webformUuidExists
+    ? self::getWebformByUuid($metaData['form_uuid'], $document->getTransactionId())
+    : self::getWebformFromApplicationNumber($document->getTransactionId());
+
+    $webformId = $webform->id();
+
     $submissionObject = WebformSubmission::create(['webform_id' => $webformId]);
     $submissionObject->set('serial', $serial);
 
@@ -2042,9 +2187,9 @@ class ApplicationHandler {
       'handler_id' => self::HANDLER_ID,
       'application_number' => $applicationNumber,
       'saveid' => $saveId,
-      'uid' => \Drupal::currentUser()->id(),
+      'uid' => $this->currentUser->id(),
       'user_uuid' => $userData['sub'] ?? '',
-      'timestamp' => (string) \Drupal::time()->getRequestTime(),
+      'timestamp' => (string) $this->time->getRequestTime(),
     ];
 
     $query = $this->database->insert(self::TABLE, $fields);
@@ -2085,7 +2230,11 @@ class ApplicationHandler {
 
     if (empty($submissionData)) {
       if ($webform_submission == NULL) {
-        $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
+        try {
+          $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
+        }
+        catch (\Exception $e) {
+        }
       }
       $submissionData = $webform_submission->getData();
     }
@@ -2190,6 +2339,22 @@ class ApplicationHandler {
       }
     }
     return FALSE;
+  }
+
+  /**
+   * Get webform status string from third party settings.
+   *
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform object to check.
+   *
+   * @return string
+   *   Status string
+   */
+  public static function getWebformStatus(Webform $webform): string {
+    $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
+    $status = $thirdPartySettings['status'] ?? 'development';
+
+    return $status;
   }
 
   /**
@@ -2307,6 +2472,94 @@ class ApplicationHandler {
       'PROD',
     ];
     return in_array($appEnv, $proenvs);
+  }
+
+  /**
+   * Tries to find latest webform for given application ID.
+   *
+   * @param mixed $id
+   *   Application id (eg. KASKOIPLISA)
+   *
+   * @return \Drupal\webform\Entity\Webform|null
+   *   Return webform object if found, else null.
+   */
+  public static function getLatestApplicationForm($id): Webform|NULL {
+    $webforms = \Drupal::entityTypeManager()
+      ->getStorage('webform')
+      ->loadByProperties([
+        'third_party_settings.grants_metadata.applicationType' => $id,
+        'archive' => FALSE,
+        'third_party_settings.grants_metadata.status' => 'released',
+      ]);
+
+    $webform = reset($webforms);
+    if ($webform) {
+      return $webform;
+    }
+
+    return NULL;
+  }
+
+  /**
+   * Get all Webform objects for given application id.
+   *
+   * @param string $id
+   *   Application ID.
+   */
+  public static function getActiveApplicationWebforms(string $id): array {
+    $webforms = \Drupal::entityTypeManager()
+      ->getStorage('webform')
+      ->loadByProperties([
+        'third_party_settings.grants_metadata.applicationType' => $id,
+        'archive' => FALSE,
+      ]);
+
+    $result = [
+      'released' => [],
+      'development' => [],
+    ];
+
+    foreach ($webforms as $webform) {
+      $webformStatus = $webform->getThirdPartySetting('grants_metadata', 'status');
+      if (empty($webformStatus)) {
+        $webformStatus = 'released';
+      }
+      $result[$webformStatus][] = $webform;
+    }
+
+    return $result;
+  }
+
+  /**
+   * Checks if webform configuration can duplicated with given Application ID.
+   *
+   * General rule is that one application type ID can have maximum number of 1
+   * Production & In development versions.
+   *
+   * @param string $id
+   *   Application ID.
+   *
+   * @return bool
+   *   Can the webform be duplicated.
+   */
+  public static function isApplicationWebformDuplicatable(string $id) {
+    $applicationForms = self::getActiveApplicationWebforms($id);
+    return count($applicationForms['released']) <= 1 && count($applicationForms['development']) === 0;
+  }
+
+  /**
+   * Helper function to checks, if user has grants_admin role rights.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   User account.
+   *
+   * @return bool
+   *   Does user have grant_admin rights.
+   */
+  public static function isGrantAdmin(AccountInterface $account) {
+    $currentRoles = $account->getRoles();
+    $isAdmin = in_array('grants_admin', $currentRoles) || $account->id() === '1';
+    return $isAdmin;
   }
 
   /**

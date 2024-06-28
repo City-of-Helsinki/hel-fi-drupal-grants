@@ -9,7 +9,7 @@ export default defineConfig({
   globalTeardown: require.resolve('./tests/global.teardown.ts'),
   globalSetup: require.resolve('./tests/init.setup.ts'),
   testDir: './tests',
-  timeout: 180 * 1000,
+  timeout: 300 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -94,6 +94,12 @@ export default defineConfig({
       testMatch: '/forms/*',
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
     },
+    /* Run all smoke tests. */
+    {
+      name: 'smoke',
+      testMatch: '/public/*',
+      dependencies: ['setup']
+    },
     /* Form 29 tests. */
     {
       name: 'forms-29',
@@ -119,6 +125,12 @@ export default defineConfig({
     {
       name: 'forms-48-registered',
       testMatch: '/forms/registered_community_48.ts',
+      dependencies: ['profile-registered_community']
+    },
+    /* Form 49 tests. */
+    {
+      name: 'forms-49',
+      testMatch: '/forms/registered_community_49.ts',
       dependencies: ['profile-registered_community']
     },
     /* Form 51 tests. */

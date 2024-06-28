@@ -2,8 +2,8 @@ title: 'Citizen Participation, small grant application'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   hakemusprofiili:
     '#title': 'Applicant details'
   prh_markup:
@@ -40,10 +40,11 @@ elements: |
     '#help': 'If you want to add, remove or change persons, save the application as a draft and go to your data to maintain the information about people.'
     '#title': 'Persons responsible within the community'
     '#multiple__add_more_button_label': 'Add person'
+    '#multiple__item_label': person
   2_avustustiedot:
     '#title': '2. Grant details'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   avustuksen_tiedot:
     '#title': 'Grant details'
   acting_year:
@@ -133,15 +134,15 @@ elements: |
   actions:
     '#submit__label': Submit
     '#draft__label': 'Save as draft'
-    '#wizard_prev__label': '< Previous'
-    '#wizard_next__label': 'Next >'
-    '#preview_prev__label': '< Previous'
-    '#preview_next__label': 'Preview >'
+    '#wizard_prev__label': 'Previous'
+    '#wizard_next__label': 'Next'
+    '#preview_prev__label': 'Previous'
+    '#preview_next__label': 'Preview'
     '#delete__label': 'Delete draft'
   3_yhteison_tiedot:
     '#title': '3. Activities of the community'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   business_info:
     '#title': 'Description of activities'
   business_purpose:
@@ -178,8 +179,8 @@ elements: |
     '#help': 'How many community members does the community currently have in Helsinki who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.'
   lisatiedot_ja_liitteet:
     '#title': '4. Additional information and appendices'
-    '#prev_button_label': '< Previous'
-    '#next_button_label': 'Next >'
+    '#prev_button_label': 'Previous'
+    '#next_button_label': 'Next'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -202,7 +203,8 @@ elements: |
     '#integrationID__title': ''
     '#isAttachmentNew__title': ''
 settings:
-  wizard_prev_button_label: '< Previous'
-  wizard_next_button_label: 'Next >'
+  wizard_prev_button_label: Previous
+  wizard_next_button_label: Next
   preview_label: '5. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
+  wizard_confirmation_label: '6. Complete'

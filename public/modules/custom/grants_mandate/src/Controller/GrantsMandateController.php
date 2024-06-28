@@ -12,6 +12,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_mandate\GrantsMandateRedirectService;
 use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
 use Psr\Log\LoggerInterface;
@@ -80,6 +81,13 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
   protected array $allowedRoles;
 
   /**
+   * The redirect service.
+   *
+   * @var \Drupal\grants_mandate\GrantsMandateRedirectService
+   */
+  protected $redirectService;
+
+  /**
    * Grants Mandate Controller constructor.
    */
   public function __construct(
@@ -89,12 +97,14 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
     GrantsMandateService $grantsMandateService,
     GrantsProfileService $grantsProfileService,
     ConfigFactoryInterface $configFactory,
+    GrantsMandateRedirectService $redirectService,
   ) {
     $this->requestStack = $requestStack;
     $this->currentUser = $current_user;
     $this->languageManager = $language_manager;
     $this->grantsMandateService = $grantsMandateService;
     $this->grantsProfileService = $grantsProfileService;
+    $this->redirectService = $redirectService;
     $this->logger = $this->getLogger('grants_mandate');
     $this->allowedRoles = [
       'http://valtuusrekisteri.suomi.fi/avustushakemuksen_tekeminen',
@@ -137,7 +147,8 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
       $container->get('language_manager'),
       $container->get('grants_mandate.service'),
       $container->get('grants_profile.service'),
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('grants_mandate_redirect.service'),
     );
   }
 
@@ -210,8 +221,9 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
 
     // Redirect user based on if the user has a profile.
     $redirectUrl = $grantsProfile ? Url::fromRoute('grants_oma_asiointi.front') : Url::fromRoute('grants_profile.edit');
+    $defaultRedirect = new RedirectResponse($redirectUrl->toString());
 
-    return new RedirectResponse($redirectUrl->toString());
+    return $this->redirectService->getRedirect($defaultRedirect);
   }
 
   /**

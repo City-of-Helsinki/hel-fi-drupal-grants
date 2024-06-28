@@ -43,17 +43,17 @@ class CommunityOfficialsComposite extends WebformCompositeBase {
 
     if (array_key_exists((int) $value['role'], $roles)) {
       return [
-        '' . $roles[(int) $value['role']] ?? '',
-        $value['name'],
-        $value['email'],
-        $value['phone'],
+        '' . ($roles[(int) $value['role']] ?? '') . ': ' .
+        $value['name'] . ' (' .
+        $value['email'] . ', ' .
+        $value['phone'] . ')',
       ];
     }
     else {
       return [
-        $value['name'],
-        $value['email'],
-        $value['phone'],
+        $value['name'] . ' (' .
+        $value['email'] . ', ' .
+        $value['phone'] . ')',
       ];
     }
 

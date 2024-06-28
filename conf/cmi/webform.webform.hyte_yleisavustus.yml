@@ -16,13 +16,15 @@ third_party_settings:
     applicationTypeTerms:
       49: '49'
     applicationTargetGroup: '30'
-    applicationOpen: '2024-05-02T08:00:00'
+    applicationOpen: '2024-05-02T00:00:00'
     applicationClose: '2024-06-03T16:00:00'
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -31,8 +33,9 @@ template: false
 archive: false
 id: hyte_yleisavustus
 title: 'Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustushakemus'
-description: HYVINYLEIS
-categories: {  }
+description: '<p>HYVINYLEIS</p>'
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden
@@ -86,8 +89,8 @@ elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
@@ -201,8 +204,8 @@ elements: |-
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     avustuksen_tiedot:
       '#type': webform_section
       '#title': 'Avustuksen tiedot'
@@ -396,8 +399,8 @@ elements: |-
   3_yhteison_tiedot:
     '#type': webform_wizard_page
     '#title': '3. Yhteisön toiminta'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     business_info:
       '#type': webform_section
       '#title': 'Toiminnan kuvaus'
@@ -544,7 +547,7 @@ elements: |-
         '#title': 'Yhteisön säännöt'
         '#multiple': false
         '#filetype': '7'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Uusi hakija tai säännöt muuttuneet.</span></span></span>'
+        '#help': 'Uusi hakija tai säännöt muuttuneet.'
         '#title_display': before
         '#description__access': false
       vahvistettu_tilinpaatos:
@@ -553,8 +556,8 @@ elements: |-
         '#multiple': false
         '#filetype': '43'
         '#help': |-
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.</span></span></span><br />
-          <span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.</span></span></span>
+          <p>Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.</p>
+          <p>Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.</p>
         '#title_display': before
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi sis&auml;lt&ouml; alta.'
         '#description__access': false
@@ -564,9 +567,8 @@ elements: |-
         '#multiple': false
         '#filetype': '4'
         '#help': |-
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun toimintakertomuksen.</span></span></span><br />
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Jos toimintakertomus on osana tilinp&auml;&auml;t&ouml;st&auml; ja liititte sen jo tilinp&auml;&auml;t&ouml;ksen mukana lomakkeelle, sit&auml; ei tarvitse liitt&auml;&auml; t&auml;h&auml;n erikseen. Valitse t&auml;llaisessa tilanteessa toimintakertomuksen kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</span></span></span><br />
-          &nbsp;
+          <p>Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun toimintakertomuksen.</p>
+          <p>Jos toimintakertomus on osana tilinp&auml;&auml;t&ouml;st&auml; ja liititte sen jo tilinp&auml;&auml;t&ouml;ksen mukana lomakkeelle, sit&auml; ei tarvitse liitt&auml;&auml; t&auml;h&auml;n erikseen. Valitse t&auml;llaisessa tilanteessa toimintakertomuksen kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
         '#title_display': before
         '#description__access': false
       vahvistettu_tilin_tai_toiminnantarkastuskertomus:
@@ -575,9 +577,8 @@ elements: |-
         '#multiple': false
         '#filetype': '5'
         '#help': |-
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.</span></span></span><br />
-          <span style="font-size:11pt"><span style="line-height:107%"><span style="font-family:Calibri,sans-serif">Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</span></span></span><br />
-          &nbsp;
+          <p>Liit&auml; t&auml;h&auml;n allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteis&ouml;n edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta.</p>
+          <p>Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
         '#title_display': before
         '#description__access': false
       vuosikokouksen_poytakirja:
@@ -585,7 +586,7 @@ elements: |-
         '#title': 'Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös'
         '#multiple': false
         '#filetype': '8'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n yhteis&ouml;n kokouksen p&ouml;yt&auml;kirja, jossa edellisen p&auml;&auml;ttyneen tilikauden tilinp&auml;&auml;t&ouml;s on vahvistettu ja vastuuvapaus my&ouml;nnetty. Yhdistyksill&auml; tilinp&auml;&auml;t&ouml;s vahvistetaan aina yhdistyksen j&auml;senkokouksessa. Mik&auml;li yhteis&ouml;lt&auml; ei edellytet&auml; vuosikokousta tai muuta yhteis&ouml;n kokousta, jossa tilinp&auml;&auml;t&ouml;s tulisi vahvistaa ja vastuuvapaus my&ouml;nt&auml;&auml;, ei t&auml;t&auml; liitett&auml; tarvitse toimittaa.</span></span></span>'
+        '#help': 'Liit&auml; t&auml;h&auml;n yhteis&ouml;n kokouksen p&ouml;yt&auml;kirja, jossa edellisen p&auml;&auml;ttyneen tilikauden tilinp&auml;&auml;t&ouml;s on vahvistettu ja vastuuvapaus my&ouml;nnetty. Yhdistyksill&auml; tilinp&auml;&auml;t&ouml;s vahvistetaan aina yhdistyksen j&auml;senkokouksessa. Mik&auml;li yhteis&ouml;lt&auml; ei edellytet&auml; vuosikokousta tai muuta yhteis&ouml;n kokousta, jossa tilinp&auml;&auml;t&ouml;s tulisi vahvistaa ja vastuuvapaus my&ouml;nt&auml;&auml;, ei t&auml;t&auml; liitett&auml; tarvitse toimittaa.'
         '#title_display': before
         '#description__access': false
       toimintasuunnitelma:
@@ -593,7 +594,7 @@ elements: |-
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
         '#multiple': false
         '#filetype': '1'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. </span></span></span>'
+        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. '
         '#title_display': before
         '#description__access': false
       talousarvio:
@@ -634,10 +635,10 @@ elements: |-
     '#title': 'Submit button(s)'
     '#submit__label': Lähetä
     '#draft__label': 'Tallenna keskeneräisenä'
-    '#wizard_prev__label': '< Edellinen'
-    '#wizard_next__label': 'Seuraava >'
-    '#preview_prev__label': '< Edellinen'
-    '#preview_next__label': 'Esikatseluun >'
+    '#wizard_prev__label': 'Edellinen'
+    '#wizard_next__label': 'Seuraava'
+    '#preview_prev__label': 'Edellinen'
+    '#preview_next__label': 'Esikatseluun'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -722,13 +723,13 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '6. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: '< Edellinen'
-  wizard_next_button_label: 'Seuraava >'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
@@ -742,7 +743,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

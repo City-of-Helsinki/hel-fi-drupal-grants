@@ -6,7 +6,7 @@ import {
   getApplicationNumberFromBreadCrumb,
   logCurrentUrl
 } from "./helpers";
-import {validateFormErrors} from "./error_validation_helpers";
+import {validateFormErrors, validateInlineFormErrors} from "./error_validation_helpers";
 import {validateHiddenFields} from "./validation_helpers";
 import {saveObjectToEnv} from "./env_helpers";
 import {fillFormField, clickButton} from './input_helpers'
@@ -54,12 +54,14 @@ const fillGrantsFormPage = async (
   const initialPathname = new URL(page.url()).pathname;
   const expectedPattern = new RegExp(`^${formDetails.expectedDestination}`);
 
-  try {
-    expect(initialPathname).toMatch(expectedPattern);
-  } catch (error) {
-    logger(`Skipping test: Application not open in "${formDetails.title}" test.`);
-    test.skip(true, 'Skip form test');
+  // If we end up on the wrong page and the application is closed, then skip the test.
+  if (!expectedPattern.test(initialPathname) && await isApplicationClosed(page)) {
+    logger('WARNING: The application is closed. This test will be skipped.');
+    test.skip(true, 'Skip form test. Application is closed.');
   }
+
+  // The application is open at this point. Make sure we get to the correct URL.
+  expect(initialPathname, 'Error accessing the application at the expected destination.').toMatch(expectedPattern);
 
   // Make sure the needed profile exists.
   expect(process.env[`profile_exists_${profileType}`], `Profile does not exist for: ${profileType}`).toBe('TRUE');
@@ -108,6 +110,11 @@ const fillGrantsFormPage = async (
     // Make sure hidden fields are not visible.
     if (formPageObject.itemsToBeHidden) {
       await validateHiddenFields(page, formPageObject.itemsToBeHidden, formPageKey);
+    }
+
+    // Make sure any expected inline errors are present.
+    if (formPageObject.expectedInlineErrors) {
+      await validateInlineFormErrors(page, formPageObject.expectedInlineErrors);
     }
 
     // Continue if we don't have any buttons.
@@ -169,6 +176,10 @@ const fillProfileForm = async (
   // Navigate to form url.
   await page.goto(formPath);
   await logCurrentUrl(page);
+
+  // Make sure we reached the correct profile form.
+  await expect(page.locator('body'), 'Reached the wrong profile form.').toHaveClass(new RegExp(`\\b${formClass}\\b`));
+  logger(`Reached the profile form: ${formClass}.`);
 
   // Hide the sliding popup.
   await hideSlidePopup(page);
@@ -291,7 +302,7 @@ const verifySubmit = async (
 
   // Attempt to locate the "Vastaanotettu" text on the page. Keep polling for 60000ms (1 minute).
   // Note: We do this instead of using Playwrights "expect" method so that test execution isn't interrupted if this fails.
-  const applicationReceived = await waitForTextWithInterval(page, 'Vastaanotettu', 60000, 5000);
+  const applicationReceived = await waitForTextWithInterval(page, 'Vastaanotettu');
   if (!applicationReceived) {
     logger('WARNING: Failed to validate that the application was received.');
     return;
@@ -317,6 +328,31 @@ const verifySubmit = async (
   saveObjectToEnv(storeName, newData);
   logger(`Submit verified for application ID: ${applicationId}.`);
 }
+
+/**
+ * The isApplicationClosed function.
+ *
+ * This function checks if an application is closed.
+ * Applications that are closed redirect the user to the applications
+ * service page and display an error message.
+ *
+ * @param page
+ *   Playwright page object.
+ */
+const isApplicationClosed = async (page: Page) => {
+  if (page.url().includes('/fi/tietoa-avustuksista/')) {
+    const errorMessageSelector = '.hds-notification--error .hds-notification__body';
+    const errorMessage = await page.locator(errorMessageSelector);
+
+    if (errorMessage) {
+      const errorMessageText = await errorMessage.innerText();
+      if (errorMessageText.includes('Tämä avustushaku ei ole avoimena')) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
 
 /**
  * The fillHakijanTiedotRegisteredCommunity function.

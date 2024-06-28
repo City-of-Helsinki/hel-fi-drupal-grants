@@ -28,6 +28,8 @@ third_party_settings:
     disableCopying: 0
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '1'
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -37,7 +39,8 @@ archive: false
 id: nuorisopalvelut_toiminta_ja_palk
 title: 'Nuorisotoiminta, toiminta- ja palkkausavustus ennakkohakemus'
 description: NUORTOIMPALKENNAKKO
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   avustukset_summa:
     '#type': grants_webform_summation_field
@@ -120,8 +123,8 @@ elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
@@ -249,8 +252,8 @@ elements: |-
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     avustuksen_tiedot:
       '#type': webform_section
       '#title': 'Avustuksen tiedot'
@@ -302,7 +305,7 @@ elements: |-
       selvitys_kuluvan_vuoden_toiminta_avustuksen_kaytosta:
         '#type': textfield
         '#title': 'Selvitys kuluvan vuoden toiminta-avustuksen käytöstä'
-        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden toiminta-avustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.&nbsp;&nbsp;</p>'
+        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden toiminta-avustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.</p>'
         '#size': 15
         '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':
@@ -320,7 +323,7 @@ elements: |-
       selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta:
         '#type': textfield
         '#title': 'Selvitys kuluvan vuoden palkkausavustuksen käytöstä'
-        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden palkkausavustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.&nbsp;&nbsp;</p>'
+        '#help': '<p>Ilmoita tässä euroina yhteensä, kuinka paljon yhdistys on käyttänyt ja käyttää kuluvan vuoden palkkausavustusta. Ilmoitettu luku on aina osittain arvio, koska vuosi on vielä kesken.</p>'
         '#size': 15
         '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#attributes':
@@ -362,16 +365,13 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet</strong><br />
-          Toiminta- ja palkkausavustuksen ennakkohakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.<br />
-          <br />
-          <strong>Usean liitteen toimittaminen</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Kerro t&auml;st&auml; lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Helsingin kaupungille aiemmin toimitetut liitteet</strong><br />
-          Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet</h4>
+          <p>Toiminta- ja palkkausavustuksen ennakkohakemuksen pakolliset liitteet ovat yhdistyksen voimassa olevat s&auml;&auml;nn&ouml;t sek&auml; yhdistyksen talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. S&auml;&auml;nt&ouml;jen t&auml;ytyy olla Patentti- ja rekisterihallituksen hyv&auml;ksym&auml;t.</p>
+          <h4>Usean liitteen toimittaminen</h4>
+          <p>Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Kerro t&auml;st&auml; lis&auml;selvitys liitteist&auml; -kohdassa.</p>
+          <h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
+          <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteen&auml;, samoja liitteit&auml; ei tarvitse toimittaa uudelleen. Yhteis&ouml;n vahvistettu tilinp&auml;&auml;t&ouml;s, toimintakertomus, toimintasuunnitelma ja talousarvio eiv&auml;t voi olla erilaisia eri hakemusten liitteen&auml;. Merkitse t&auml;ll&ouml;in toimitettujen liitteiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
       notification_attachments:
         '#type': webform_markup
         '#markup': |
@@ -437,10 +437,10 @@ elements: |-
     '#title': 'Submit button(s)'
     '#submit__label': Lähetä
     '#draft__label': 'Tallenna keskeneräisenä'
-    '#wizard_prev__label': '< Edellinen'
-    '#wizard_next__label': 'Seuraava >'
-    '#preview_prev__label': '< Edellinen'
-    '#preview_next__label': 'Esikatseluun >'
+    '#wizard_prev__label': 'Edellinen'
+    '#wizard_next__label': 'Seuraava'
+    '#preview_prev__label': 'Edellinen'
+    '#preview_next__label': 'Esikatseluun'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -620,13 +620,13 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '5. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: '< Edellinen'
-  wizard_next_button_label: 'Seuraava >'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
@@ -640,7 +640,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

@@ -19,6 +19,7 @@ const baseFormRegisteredCommunity_64: FormData = {
   title: 'Save as draft.',
   formSelector: 'webform-submission-asukasosallisuus-pienavustushake-form',
   formPath: '/fi/form/asukasosallisuus-pienavustushake',
+  validateTooltips: true,
   formPages: {
     "1_hakijan_tiedot": {
       items: {
@@ -40,7 +41,8 @@ const baseFormRegisteredCommunity_64: FormData = {
         "edit-community-address-community-address-select": {
           value: `${PROFILE_INPUT_DATA.address}, ${PROFILE_INPUT_DATA.zipCode}, ${PROFILE_INPUT_DATA.city}`,
           viewPageSelector: '.form-item-community-address',
-          viewPageFormatter: viewPageFormatAddress
+          viewPageFormatter: viewPageFormatAddress,
+          printPageSkipValidation: true,
         },
         "edit-community-officials-items-0-item-community-officials-select": {
           role: 'select',
@@ -57,6 +59,12 @@ const baseFormRegisteredCommunity_64: FormData = {
           viewPageSkipValidation: true,
         },
       },
+      tooltipsToValidate: [
+        { aria_label: 'Sähköpostiosoite', message: 'Ilmoita sähköpostiosoite, johon tähän hakemukseen liittyvät viestit sekä herätteet osoitetaan ja jota luetaan aktiivisesti' },
+        { aria_label: 'Valitse osoite', message: 'Jos haluat lisätä, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään osoitetietoa omiin tietoihin.' },
+        { aria_label: 'Valitse tilinumero', message: 'Jos haluat lisätä, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään tilinumerotietoa omiin tietoihin.' },
+        { aria_label: 'Valitse toiminnasta vastaavat henkilöt', message: 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.' },
+      ]
     },
     "2_avustustiedot": {
       items: {
@@ -93,6 +101,9 @@ const baseFormRegisteredCommunity_64: FormData = {
           viewPageSkipValidation: true,
         },
       },
+      tooltipsToValidate: [
+        { aria_label: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista', message: 'Kerro mitä tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri käyttökohteet. Kerro myös mitä avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.' },
+      ]
     },
     '3_yhteison_tiedot': {
       items: {
@@ -133,7 +144,10 @@ const baseFormRegisteredCommunity_64: FormData = {
           },
           viewPageSkipValidation: true,
         },
-      }
+      },
+      tooltipsToValidate: [
+        { aria_label: 'Toiminnan kuvaus', message: 'Tieto haetaan omat tiedot -osiosta' },
+      ]
     },
     "lisatiedot_ja_liitteet": {
       items: {
@@ -234,6 +248,7 @@ const baseFormRegisteredCommunity_64: FormData = {
 const baseFormPrivatePerson_64: FormData = createFormData(
   baseFormRegisteredCommunity_64,
   {
+    validateTooltips: false,
     formPages: {
       "1_hakijan_tiedot": {
         items: {
@@ -271,6 +286,7 @@ const baseFormPrivatePerson_64: FormData = createFormData(
 const baseFormUnRegisteredCommunity_64: FormData = createFormData(
   baseFormRegisteredCommunity_64,
   {
+    validateTooltips: false,
     formPages: {
       "1_hakijan_tiedot": {
         items: {
@@ -314,6 +330,7 @@ const baseFormUnRegisteredCommunity_64: FormData = createFormData(
 const missingValues: FormDataWithRemoveOptionalProps = {
   title: 'Missing values',
   viewPageSkipValidation: true,
+  validateTooltips: false,
   formPages: {
     '1_hakijan_tiedot': {
       items: {},
@@ -391,6 +408,7 @@ const missingValuesPrivateUnregistered: FormDataWithRemoveOptionalProps = {
 const wrongValues: FormDataWithRemoveOptionalProps = {
   title: 'Wrong values',
   viewPageSkipValidation: true,
+  validateTooltips: false,
   formPages: {
     '1_hakijan_tiedot': {
       items: {
@@ -415,6 +433,8 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
 const copyForm: FormDataWithRemoveOptionalProps = {
   title: 'Original copy form',
   testFormCopying: true,
+  validatePrintPage: true,
+  validateTooltips: false,
   formPages: {
     'lisatiedot_ja_liitteet': {
       items: {},
@@ -428,6 +448,7 @@ const copyForm: FormDataWithRemoveOptionalProps = {
 
 const sendApplication: FormDataWithRemoveOptionalProps = {
   title: 'Send to AVUS2',
+  validateTooltips: false,
   formPages: {
     'webform_preview': {
       items: {

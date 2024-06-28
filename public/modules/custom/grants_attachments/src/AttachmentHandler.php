@@ -3,19 +3,22 @@
 namespace Drupal\grants_attachments;
 
 use Drupal\Core\Entity\EntityStorageException;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TempStore\TempStoreException;
+use Drupal\file\FileStorage;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\EventException;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
@@ -52,9 +55,9 @@ class AttachmentHandler {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannel $logger;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Show messages messages.
@@ -103,7 +106,7 @@ class AttachmentHandler {
    *
    * @var \Drupal\file\FileStorage
    */
-  private $fileStorage;
+  private FileStorage|EntityStorageInterface $fileStorage;
 
   /**
    * Attached file id's.
@@ -140,11 +143,14 @@ class AttachmentHandler {
    *   Audit log mandate errors.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function __construct(
     AttachmentRemover $grants_attachments_attachment_remover,
     Messenger $messenger,
-    LoggerChannelFactory $loggerChannelFactory,
+    LoggerChannelFactoryInterface $loggerChannelFactory,
     AtvService $atvService,
     GrantsProfileService $grantsProfileService,
     AtvSchema $atvSchema,
@@ -216,7 +222,12 @@ class AttachmentHandler {
   /**
    * Get file fields.
    *
-   * @return string[]
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform.
+   * @param bool $preventKeys
+   *   Should this prevent keys.
+   *
+   * @return array
    *   Attachment fields.
    */
   public static function getAttachmentFieldNamesFromWebform(Webform $webform, $preventKeys = FALSE): array {
@@ -518,7 +529,7 @@ class AttachmentHandler {
 
     // Check if a user changed the bank account in the application.
     $dataDefinition = ApplicationHandler::getDataDefinition($applicationDocument->getType());
-    $existingData = $this->atvSchema->documentContentToTypedData(
+    $existingData = DocumentContentMapper::documentContentToTypedData(
       $applicationDocument->getContent(),
       $dataDefinition,
       $applicationDocument->getMetadata()
@@ -922,11 +933,11 @@ class AttachmentHandler {
    * @param string $applicationNumber
    *   Application number for attachment.
    *
-   * @return \stdClass[]
+   * @return array
    *   Data for JSON.
    *
-   * @throws \Drupal\grants_handler\EventException
    * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\grants_handler\EventException
    */
   public function getAttachmentByFieldValue(
     array $field,

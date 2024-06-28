@@ -18,9 +18,12 @@ It's designed to test applications across all modern web browsers by running tes
 #### The following functionality is tested:
 - Filling in an application from start to finnish.
 - Verifying the content of a submitted application.
-- Filling an application with missing/wrong data and verifying the printed error messages.
+- Verifying the "save as draft" button is present on an active application.
+- Filling an application with missing/wrong data and verifying the printed error messages (both inline form errors and general error messages printed at the top of the page can be tested).
 - Swapping field values on an application and verifying that the values get swapped.
 - Copying an application and verifying that its content gets copied.
+- Printing an application and verifying that the printed content is correct.
+- Verifying that the tooltips on the application fields work.
 - Deleting draft applications.
 
 ### User role tests
@@ -36,6 +39,11 @@ It's designed to test applications across all modern web browsers by running tes
   - Filling in a profile form with data that is specific for that role.
   - Verifying the data.
 - Filling a profile form with missing/wrong data and verifying the printed error messages.
+
+### Smoke tests
+- Smoke test have been implemented to lightly test the general site. These tests mainly check that certain components exist on various pages.
+- These tests are located in the `/e2e/tests/public/` directory. The test files are named after the page the tests are executed on.
+- The tests use data that is derived from the `/e2e/utilis/data/public_page_data.ts`.
 
 ## Environment setup.
 
@@ -56,6 +64,8 @@ The file should be located in the `/e2e` directory.
 - **ENABLED_FORM_VARIANTS**: Can be used to explicitly run specific form variants. Others are skipped.
 - **DISABLED_FORM_VARIANTS**: Can be used to disable form variants (types of form tests).
 - **CREATE_PROFILE**: Boolean indicating if new profiles should be created on each test run.
+- **WAIT_FOR_TEXT_TIMEOUT**: The time to wait for text in MS (defaults to 60000, 1 minute). Used by the waitForTextWithInterval() function.
+- **WAIT_FOR_TEXT_INTERVAL**: How often to query text in MS (defaults to 5000, 5 seconds). Used by the waitForTextWithInterval() function.
 
 Example `.env` file:
 ```
@@ -86,6 +96,14 @@ ENABLED_FORM_VARIANTS="copy"
 # If you set this to "FALSE", a new profile will only be created once every hour,
 # leading to faster tests.
 CREATE_PROFILE="FALSE"
+
+# Wait for text timeout (how long to wait) in MS (defaults to 60000, 1 minute).
+# Used by the waitForTextWithInterval() function. This is mainly used when verifying applications sent to Avus2.
+WAIT_FOR_TEXT_TIMEOUT="10000"
+
+# Wait for text interval (how often to query) in MS (defaults to 5000, 5 second).
+# Used by the waitForTextWithInterval() function. This is mainly used when verifying applications sent to Avus2.
+WAIT_FOR_TEXT_INTERVAL="5000"
 
 # A flag indicating if the "debugging mode" should be turned on.
 # Messages will be printed during test runs if set to "TRUE".
@@ -210,3 +228,7 @@ BUSINESS_IDS="7009192-5"
 Execute the script
 make shell > e2e/clean-env.sh
 ```
+
+## Known problems
+
+- Sometimes the test fail because of a problem with uploading attachment to applications or profiles. This can usually be fixed by setting 777 permission on everything inside the /private directory.

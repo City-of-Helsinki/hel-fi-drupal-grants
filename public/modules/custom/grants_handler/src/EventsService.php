@@ -3,11 +3,10 @@
 namespace Drupal\grants_handler;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_metadata\AtvSchema;
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 
@@ -19,16 +18,16 @@ class EventsService {
   /**
    * The HTTP client.
    *
-   * @var \GuzzleHttp\ClientInterface
+   * @var \GuzzleHttp\Client
    */
-  protected ClientInterface $httpClient;
+  protected Client $httpClient;
 
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Drupal\Core\Logger\LoggerChannelInterface|\Drupal\Core\Logger\LoggerChannelFactoryInterface
    */
-  protected LoggerChannelFactory|LoggerChannelInterface|LoggerChannel $logger;
+  protected LoggerChannelInterface|LoggerChannelFactoryInterface $logger;
 
   /**
    * API endopoint.
@@ -85,14 +84,14 @@ class EventsService {
   /**
    * Constructs a MessageService object.
    *
-   * @param \GuzzleHttp\ClientInterface $http_client
+   * @param \GuzzleHttp\Client $http_client
    *   Client to post data.
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
    *   Log things.
    */
   public function __construct(
-    ClientInterface $http_client,
-    LoggerChannelFactory $loggerFactory,
+    Client $http_client,
+    LoggerChannelFactoryInterface $loggerFactory,
   ) {
     $this->httpClient = $http_client;
     $this->logger = $loggerFactory->get('grants_handler_events_service');

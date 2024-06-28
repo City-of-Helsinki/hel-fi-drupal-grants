@@ -4,11 +4,13 @@ description: 'Grant applications webform handler module.'
 package: 'helfi'
 core_version_requirement: ^9 || ^10
 dependencies:
+  - openid_connect_logout_redirect:openid_connect_logout_redirect
   - grants_attachments
   - 'webform:webform'
   - grants_metadata
   - grants_profile
   - helfi_atv
+  - grants_mandate
 
 'interface translation project': grants_handler
 'interface translation server pattern': modules/custom/grants_handler/translations/%language.po

@@ -18,13 +18,17 @@ third_party_settings:
       74: '74'
       73: '73'
     applicationTargetGroup: '22'
-    applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-07-31T11:19:00'
+    applicationOpen: '2024-06-05T10:00:26'
+    applicationClose: '2024-09-02T16:02:00'
     applicationContinuous: 0
     disableCopying: 0
-    applicationActingYears: {  }
+    applicationActingYears:
+      2024: '2024'
+      2025: '2025'
+      2026: '2026'
     applicationActingYearsType: next_x_years
     applicationActingYearsNextCount: '1'
+    status: released
 weight: 0
 open: null
 close: null
@@ -34,13 +38,14 @@ archive: false
 id: taide_ja_kulttuuri_kehittamisavu
 title: 'Kulttuurin kehittämisavustukset'
 description: '<p>KUVAKEHA</p>'
-categories: {  }
+categories:
+  - Tuotannossa
 elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
@@ -160,8 +165,8 @@ elements: |-
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     avustuksen_tiedot:
       '#type': webform_section
       '#title': 'Avustuksen tiedot'
@@ -195,7 +200,7 @@ elements: |-
             - subventions
       markup:
         '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
+        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan. Kirjaa tähän avustussumma vain sen vuoden osalta, jolle haet avustusta tällä hakemuksella.</p>'
       info_kyseessa_on_monivuotinen_avustus:
         '#type': webform_markup
         '#markup': |
@@ -401,8 +406,8 @@ elements: |-
   3_yhteison_tiedot:
     '#type': webform_wizard_page
     '#title': '3. Yhteisön tiedot'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     jasenmaara:
       '#type': webform_section
       '#title': Jäsenmäärä
@@ -517,8 +522,8 @@ elements: |-
   4_suunniteltu_toiminta:
     '#type': webform_wizard_page
     '#title': '4. Suunniteltu toiminta'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     yleisolle_avoin_toiminta:
       '#type': webform_section
       '#title': 'Yleisölle avoin toiminta Helsingissä toteutetaan'
@@ -536,6 +541,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__item_label': 'tila'
+        '#multiple__add_more_button_label': 'Lisää uusi tila'
         '#premiseType__access': false
         '#premiseAddress__access': false
         '#location__access': false
@@ -589,8 +596,8 @@ elements: |-
   5_toiminnan_lahtokohdat:
     '#type': webform_wizard_page
     '#title': '5. Toiminnan lähtökohdat'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     toiminnan_sisallot:
       '#type': webform_section
       '#title': 'Toiminnan sisällöt'
@@ -685,8 +692,8 @@ elements: |-
   6_talous:
     '#type': webform_wizard_page
     '#title': '6. Talous'
-    '#prev_button_label': '< Edellinen'
-    '#next_button_label': 'Seuraava >'
+    '#prev_button_label': 'Edellinen'
+    '#next_button_label': 'Seuraava'
     talousarvio:
       '#type': webform_section
       '#title': Talousarvio
@@ -740,7 +747,8 @@ elements: |-
       budget_other_cost:
         '#type': grants_budget_other_cost
         '#title': 'Muut kulut'
-        '#help': 'Lisää alle kaikki hankkeen suunnitellut menot kululuokittain.'
+        '#description': 'Lisää alle kaikki hankkeen suunnitellut menot kululuokittain.'
+        '#description_display': before
         '#multiple': true
         '#incomeGroup': general
         '#multiple__min_items': 1
@@ -748,6 +756,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi kulu'
+        '#multiple__item_label': 'kulu'
       muu_huomioitava_panostus:
         '#type': webform_markup
         '#markup': '<h4>Muu huomioitava panostus</h4>'
@@ -781,17 +791,12 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet</strong>
-          <div class="ewa-rteLine">Avustushakemuksen k&auml;sittely&auml; varten tarvitaan projektisuunnitelma haetulle ajanjaksolle</div>
-
-          <div class="ewa-rteLine">sek&auml; budjetti haetulle ajanjaksolle.&nbsp;</div>
-          <br />
-          Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin my&ouml;s tiliote tai vastaava asiakirja, josta selvi&auml;&auml; tilinomistajan nimi ja tilinumero.<br />
-          <br />
-          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet</h4>
+          <p>Avustushakemuksen k&auml;sittely&auml; varten tarvitaan projektisuunnitelma haetulle ajanjaksolle sek&auml; budjetti haetulle ajanjaksolle.</p>
+          <p>Uusilta hakijoilta ja tapauksissa, joissa pankkiyhteystiedot ovat muuttuneet, tarvitaan hakijan Omiin tietoihin my&ouml;s tiliote tai vastaava asiakirja, josta selvi&auml;&auml; tilinomistajan nimi ja tilinumero.</p>
+          <h4>Usean liitteen toimittaminen yhten&auml; tiedostona</h4>
+          <p>Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
       notification_attachments:
         '#type': webform_markup
         '#markup': |
@@ -849,10 +854,10 @@ elements: |-
     '#title': 'Submit button(s)'
     '#submit__label': Lähetä
     '#draft__label': 'Tallenna keskeneräisenä'
-    '#wizard_prev__label': '< Edellinen'
-    '#wizard_next__label': 'Seuraava >'
-    '#preview_prev__label': '< Edellinen'
-    '#preview_next__label': 'Esikatseluun >'
+    '#wizard_prev__label': 'Edellinen'
+    '#wizard_next__label': 'Seuraava'
+    '#preview_prev__label': 'Edellinen'
+    '#preview_next__label': 'Esikatseluun'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -1021,13 +1026,13 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '9. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: '< Edellinen'
-  wizard_next_button_label: 'Seuraava >'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
@@ -1041,7 +1046,7 @@ settings:
   preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
-  draft: authenticated
+  draft: all
   draft_multiple: false
   draft_auto_save: false
   draft_saved_message: ''

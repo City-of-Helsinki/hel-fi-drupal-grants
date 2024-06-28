@@ -2,8 +2,8 @@ title: 'Understöd för konst och kultur: Projektstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   hakemusprofiili:
     '#title': 'Hämtade uppgifter'
   prh_markup:
@@ -42,14 +42,15 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj motsvarande person'
     '#role__title': Roll
     '#email__title': E-post
     '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   avustuksen_tiedot:
     '#title': 'Preciserad information'
   acting_year:
@@ -122,8 +123,8 @@ elements: |
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_yhteison_tiedot:
     '#title': '3. Uppgifter om den ansökande organisationen'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   jasenmaara:
     '#title': Medlemsantal
   jasenmaara_fieldset:
@@ -154,8 +155,8 @@ elements: |
     '#title': 'Frivilliga: Personer'
   4_suunniteltu_toiminta:
     '#title': '4. Verksamhet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   arvio_maarista:
     '#title': 'En uppskattning av omfattningen på verksamheten'
     '#description': 'Mata in uppgifterna gällande hela projektet, som stödet gäller. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet.'
@@ -209,6 +210,7 @@ elements: |
   tila:
     '#title': 'Övriga lokaler'
     '#isOwnedByCity__title': 'Stadens eget utrymme'
+    '#multiple__item_label': 'lokal'
     '#multiple__add_more_button_label': 'Lägg till ny lokal'
   aikataulu:
     '#title': Tidtabell
@@ -228,8 +230,8 @@ elements: |
     '#help': 'Ber&auml;tta kort och koncist om projektet. Varf&ouml;r, vad, f&ouml;r vem, hur och med vilka m&aring;ls&auml;ttningar?'
   5_toiminnan_lahtokohdat:
     '#title': '5. Utgångspunkten för verksamheten'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   toiminnan_sisallot:
     '#title': 'Verksamhetens innehåll'
   toiminta_taiteelliset_lahtokohdat:
@@ -264,8 +266,8 @@ elements: |
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:
     '#title': '6. Ekonomi'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   talousarvio:
     '#title': Budget
   markup_01:
@@ -303,6 +305,8 @@ elements: |
     '#marketing__title': 'Information, marknadsföring och tryckkostnader (€)'
   budget_other_cost:
     '#title': 'Övriga kostnader'
+    '#multiple__add_more_button_label': 'Lägg till en kostnad'
+    '#multiple__item_label': 'kostnad'
   muu_huomioitava_panostus_osio:
     '#markup': '<h4>&Ouml;vrig betydande insats</h4>'
   muu_huomioitava_panostus:
@@ -319,7 +323,13 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': "Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan<br role=\"presentation\" />\r\nom underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas,<br role=\"presentation\" />\r\nmeddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.<br />\r\n<br />\r\n<strong>Obligatoriska bilagor</strong><br />\r\nF&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs meritf&ouml;rteckningar f&ouml;r arbetsgruppens<br role=\"presentation\" />\r\nmedlemmar n&auml;r det g&auml;ller projekt f&ouml;r yrkesm&auml;ssiga konstut&ouml;vare.<br />\r\n<br />\r\nF&ouml;r ny s&ouml;kande eller om bankkontaktuppgifterna har &auml;ndrats beh&ouml;vs &auml;ven kontoutdrag eller<br role=\"presentation\" />\r\nmotsvarande dokument som anger kontoinnehavarens namn och kontonummer i den s&ouml;kandes<br role=\"presentation\" />\r\negna uppgifter.<br />\r\n<br />\r\n<strong>Inl&auml;mning av flera bilagor</strong><br />\r\nDu kan bifoga flera meritf&ouml;rteckningar f&ouml;r arbetsgruppens medlemmar som enskilda bilagor genom<br role=\"presentation\" />\r\natt l&auml;gga till dem under rubriken &Ouml;vriga bilagor. Om du vill kan du ocks&aring; l&auml;mna in flera bilagor i en<br role=\"presentation\" />\r\nfil."
+    '#markup': |-
+      <p>Alla bilagor som anges nedan m&aring;ste l&auml;mnas in f&ouml;r behandling av ans&ouml;kan om underst&ouml;d. Ans&ouml;kan om underst&ouml;d kan avsl&aring;s om bilagorna inte har l&auml;mnats in. Om n&aring;gon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ans&ouml;kan.</p>
+      <h4>Erforderliga bilagor</h4>
+      <p>F&ouml;r behandling av ans&ouml;kan om underst&ouml;d beh&ouml;vs meritf&ouml;rteckningar f&ouml;r arbetsgruppens medlemmar n&auml;r det g&auml;ller projekt f&ouml;r yrkesm&auml;ssiga konstut&ouml;vare.</p>
+      <p>F&ouml;r ny s&ouml;kande eller om bankkontaktuppgifterna har &auml;ndrats beh&ouml;vs &auml;ven kontoutdrag eller motsvarande dokument som anger kontoinnehavarens namn och kontonummer i den s&ouml;kandes egna uppgifter.</p>
+      <h4>Inl&auml;mning av flera bilagor</h4>
+      <p>Du kan bifoga flera meritf&ouml;rteckningar f&ouml;r arbetsgruppens medlemmar som enskilda bilagor genom natt l&auml;gga till dem under rubriken &Ouml;vriga bilagor. Om du vill kan du ocks&aring; l&auml;mna in flera bilagor i en fil.</p>
   notification_attachments:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   extra_info:
@@ -336,13 +346,14 @@ elements: |
   actions:
     '#submit__label': Skicka
     '#draft__label': 'Spara som oavslutad'
-    '#wizard_prev__label': '< Tidigare'
-    '#wizard_next__label': 'Nästa >'
-    '#preview_prev__label': '< Tidigare'
-    '#preview_next__label': 'För förhandsvisning >'
+    '#wizard_prev__label': 'Tidigare'
+    '#wizard_next__label': 'Nästa'
+    '#preview_prev__label': 'Tidigare'
+    '#preview_next__label': 'För förhandsvisning'
     '#delete__label': 'Radera oavslutat'
 settings:
-  wizard_prev_button_label: '< Tidigare'
-  wizard_next_button_label: 'Nästa >'
+  wizard_prev_button_label: Tidigare
+  wizard_next_button_label: Nästa
   preview_label: '8. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '9. Slutförd'

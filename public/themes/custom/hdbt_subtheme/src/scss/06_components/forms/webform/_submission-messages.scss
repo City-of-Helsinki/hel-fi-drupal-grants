@@ -1,0 +1,44 @@
+.webform-submission-messages {
+  background: var(--color-silver-light);
+  margin-top: var(--spacing-3-xl);
+  padding: var(--spacing-l);
+
+  h4,
+  h5 {
+    margin-top: 0;
+  }
+
+  hr {
+    margin: var(--spacing-l) 0;
+  }
+
+  &__new-message {
+    align-items: center;
+    background: var(--color-alert);
+    display: inline-flex;
+    font-weight: bold;
+    gap: var(--spacing-2-xs);
+    margin-bottom: var(--spacing-m);
+    padding: var(--spacing-2-xs) var(--spacing-xs);
+    text-transform: uppercase;
+  }
+
+  &__messages-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__message {
+    margin: 0;
+    padding: 0;
+
+    &__attachments {
+      list-style: none;
+    }
+
+    .hds-button {
+      margin-top: var(--spacing-s);
+    }
+  }
+}

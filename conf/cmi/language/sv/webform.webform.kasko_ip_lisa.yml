@@ -2,8 +2,8 @@ title: 'Fostran och utbildning, ansökan om extra bidrag enligt behovsprövning 
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   hakemusprofiili:
     '#title': 'Hämtade uppgifter'
   prh_markup:
@@ -42,14 +42,15 @@ elements: |
     '#help': 'Om du vill l&auml;gga till, ta bort eller &auml;ndra personer, spara applikationen som ett utkast och g&aring; till att underh&aring;lla personernas information i din egen data.'
     '#title': 'Personer som ansvarar för verksamheten'
     '#multiple__add_more_button_label': 'Lägg till en person'
+    '#multiple__item_label': person
     '#community_officials_select__title': 'Välj motsvarande person'
     '#role__title': Roll
     '#email__title': E-post
     '#phone__title': Telefonnummer
   2_avustustiedot:
     '#title': '2. Uppgifter om understödet'
-    '#prev_button_label': '< Tidigare'
-    '#next_button_label': 'Nästa >'
+    '#prev_button_label': 'Tidigare'
+    '#next_button_label': 'Nästa'
   avustuksen_tiedot:
     '#title': 'Uppgifter om understödet'
   acting_year:
@@ -98,13 +99,14 @@ elements: |
   actions:
     '#submit__label': Skicka
     '#draft__label': 'Spara som oavslutad'
-    '#wizard_prev__label': '< Tidigare'
-    '#wizard_next__label': 'Nästa >'
-    '#preview_prev__label': '< Tidigare'
-    '#preview_next__label': 'För förhandsvisning >'
+    '#wizard_prev__label': 'Tidigare'
+    '#wizard_next__label': 'Nästa'
+    '#preview_prev__label': 'Tidigare'
+    '#preview_next__label': 'För förhandsvisning'
     '#delete__label': 'Radera oavslutat'
 settings:
-  wizard_prev_button_label: '< Tidigare'
-  wizard_next_button_label: 'Nästa >'
+  wizard_prev_button_label: Tidigare
+  wizard_next_button_label: Nästa
   preview_label: '4. Bekräfta, förhandsgranska och skicka'
   preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '5. Slutförd'

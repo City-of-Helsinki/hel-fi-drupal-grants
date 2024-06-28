@@ -59,11 +59,17 @@ interface FormField {
   viewPageSelectors?: string[];
   viewPageFormatter?: ViewPageFormatterFunction
   viewPageSkipValidation?: boolean;
+  printPageSkipValidation?: boolean;
 }
 
 type RemoveList = string[];
 
 type HiddenItemsList = string[];
+
+type ExpectedInlineError = {
+  selector: string;
+  errorMessage: string;
+}
 
 type ViewPageFormatterFunction = (param: string) => string;
 
@@ -72,6 +78,13 @@ type FieldSwapItemList = FieldSwapItem[];
 type FieldSwapItem = {
   field: string;
   swapValue: string;
+};
+
+type TooltipsList = Tooltip[];
+
+type Tooltip = {
+  aria_label: string;
+  message: string;
 };
 
 interface FormFieldWithRemove extends FormField {
@@ -98,6 +111,8 @@ interface FormDataWithRemove extends FormData {
       itemsToRemove?: RemoveList | undefined;
       itemsToBeHidden?: HiddenItemsList | undefined;
       itemsToSwap?: FieldSwapItemList | undefined;
+      tooltipsToValidate?: TooltipsList| undefined;
+      expectedInlineErrors?: ExpectedInlineError[] | undefined;
     };
   };
 }
@@ -111,6 +126,8 @@ interface FormPage {
   itemsToRemove?: RemoveList | undefined;
   itemsToBeHidden?: HiddenItemsList | undefined;
   itemsToSwap?: FieldSwapItemList | undefined;
+  tooltipsToValidate?: TooltipsList| undefined;
+  expectedInlineErrors?: ExpectedInlineError[] | undefined;
 }
 
 interface FormData {
@@ -125,10 +142,35 @@ interface FormData {
   viewPageSkipValidation?: boolean,
   testFormCopying?: boolean,
   testFieldSwap?: boolean,
+  validatePrintPage?: boolean,
+  validateTooltips?: boolean,
 }
 
 interface PageHandlers {
   [key: string]: (page: Page, formData: FormPage) => Promise<void>;
+}
+
+interface PageCollection {
+  [key: string]: TestScenario;
+}
+
+interface TestScenario {
+  url: string;
+  validatePageTitle: boolean,
+  components: ComponentDetails[];
+}
+
+interface ComponentDetails {
+  containerClass: string;
+  elements: ElementDetails[];
+  occurrences?: number;
+}
+
+interface ElementDetails {
+  selector: string;
+  countExact?: number;
+  countAtLeast?: number;
+  expectedText?: string[];
 }
 
 // Type guard for MultiValueField
@@ -159,6 +201,13 @@ export {
   PageHandlers,
   FormPage,
   FieldSwapItemList,
+  ComponentDetails,
+  ElementDetails,
+  TestScenario,
+  PageCollection,
+  TooltipsList,
+  Tooltip,
+  ExpectedInlineError,
   isMultiValueField,
   isDynamicMultiValueField,
 }

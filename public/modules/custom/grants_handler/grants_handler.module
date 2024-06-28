@@ -387,7 +387,8 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
     }
   }
   if (get_class($form_object) == 'Drupal\webform\WebformSubmissionForm') {
-    /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
+
+    /** @var \Drupal\webform\WebformSubmissionInterface $webformSubmission */
     $webformSubmission = $form_object->getEntity();
 
     // Get data from webform.
@@ -459,6 +460,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
       $grantsProfileService = \Drupal::service('grants_profile.service');
 
       $selectedCompany = $grantsProfileService->getSelectedRoleData();
+      $profileData = [];
       try {
         $profileData = $grantsProfileService->getGrantsProfileContent($selectedCompany ?? '');
       }
@@ -626,7 +628,7 @@ function _grants_handler_missing_data(
 /**
  * Recursively alter number fields to allow decimals and commas.
  */
-function _grants_handler_alter_number_fields(&$element) {
+function _grants_handler_alter_number_fields(&$element): void {
   if (is_array($element)) {
     // Check if the element is a number field.
     if (isset($element['#type']) && $element['#type'] === 'number') {
@@ -642,7 +644,7 @@ function _grants_handler_alter_number_fields(&$element) {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
   $tOpts = ['context' => 'grants_handler'];
 
   $user = \Drupal::currentUser();
@@ -664,13 +666,13 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
 
   if (isset($form['pages'])) {
     foreach ($form['pages'] as $key => $value) {
-      if (!strstr($key, '#')) {
+      if (!str_contains($key, '#')) {
         $exploded_title = explode("'", $form['pages'][$key]['#attributes']['title']);
         if (isset($exploded_title[1])) {
           $stripped_title = $exploded_title[1];
-          if (isset($stripped_title) && strlen($stripped_title) > 0) {
+          if (strlen($stripped_title) > 0) {
             $form['pages'][$key]['#attributes']['title'] = $stripped_title;
-            if ((isset($all_errors[$key]) && !empty($all_errors[$key]))) {
+            if ((!empty($all_errors[$key]))) {
               // Add an info to the title if there are errors.
               $form['pages'][$key]['#attributes']['title'] .= ' (' . t('Errors', [], $tOpts) . ')';
             }
@@ -695,8 +697,10 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   $grantsProfileService = \Drupal::service('grants_profile.service');
   $selectedCompany = $grantsProfileService->getSelectedRoleData();
 
+  /** @var \Drupal\webform\WebformSubmissionForm $formObject */
+  $formObject = $form_state->getFormObject();
   /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
-  $webform_submission = $form_state->getFormObject()->getEntity();
+  $webform_submission = $formObject->getEntity();
   $formData = $webform_submission->getData();
 
   $webform = $webform_submission->getWebform();
@@ -1033,8 +1037,6 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
   $submission = $variables['submission'];
   $submissionData = $submission->getData();
 
-  /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
-
   $messages = [];
   if (isset($submissionData['messages']) && is_array($submissionData['messages'])) {
     $submissionMessages = ApplicationHandler::parseMessages($submissionData);
@@ -1071,6 +1073,7 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
   // If submission is ok for messaging.
   if (ApplicationHandler::isSubmissionMessageable($submission, NULL)) {
     // Add message form.
+    // @phpstan-ignore-next-line
     $variables['message_form'] = \Drupal::formBuilder()
       ->getForm('Drupal\grants_handler\Form\MessageForm', $submission);
   }
@@ -1199,8 +1202,8 @@ function grants_handler_webform_presave(WebformInterface $webform) {
   }
   // Enable the draft save if not already set.
   $draft_setting = $webform->getSetting('draft');
-  if ($draft_setting !== WebformInterface::DRAFT_AUTHENTICATED) {
-    $webform->setSetting('draft', WebformInterface::DRAFT_AUTHENTICATED);
+  if ($draft_setting !== WebformInterface::DRAFT_ALL) {
+    $webform->setSetting('draft', WebformInterface::DRAFT_ALL);
   }
   // Set purge status to prevent clutter in the db.
   if ($purge_setting !== WebformSubmissionStorageInterface::PURGE_ALL
@@ -1440,8 +1443,12 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     strtolower($submissionData["application_number"]),
   ];
 
-  $editApplicationLinkText = Markup::create(t('Edit application', [], $tOpts));
-  $viewApplicationLinkText = Markup::create(t('View application', [], $tOpts));
+  $editApplicationLinkText = Markup::create(
+    t('Edit application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
+  );
+  $viewApplicationLinkText = Markup::create(
+    t('View application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
+  );
 
   $variables['viewApplicationLink'] = Link::fromTextAndUrl($viewApplicationLinkText, $viewApplicationUrl);
   $variables['editApplicationLink'] = Link::fromTextAndUrl($editApplicationLinkText, $editApplicationUrl);
@@ -1470,11 +1477,16 @@ function grants_handler_preprocess_application_list_item(&$variables) {
       ->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
   }
 
+  $status = ApplicationHandler::getWebformStatus($webform);
+
   $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
   $variables['openEndDate'] = strtotime($thirdPartySettings['applicationClose']);
   $variables['isContinuous'] = $thirdPartySettings['applicationContinuous'] != 0;
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
     $variables['errorType'] = 'NOT_OPEN';
+  }
+  elseif ($status === 'archived') {
+    $variables['errorType'] = 'ARCHIVED';
   }
   try {
     if (array_key_exists($submissionData["status"], ApplicationHandler::getApplicationStatuses())) {
@@ -1499,6 +1511,8 @@ function grants_handler_preprocess_application_list_item(&$variables) {
  */
 function grants_handler_preprocess_application_status_tag(&$variables): void {
   try {
+    $submissionData = [];
+
     if ($variables['submission_data']) {
       $submissionData = $variables['submission_data'];
     }
@@ -1608,7 +1622,7 @@ function grants_handler_preprocess_message_list_item(&$variables) {
 
   $message = $variables['message'];
 
-  if ($message['messageStatus'] == 'UNREAD') {
+  if (isset($message['messageStatus']) && $message['messageStatus'] == 'UNREAD') {
     $markReadLink = Link::createFromRoute(t('Mark as read', [], $tOpts), 'grants_handler.message_read',
       [
         'message_id' => $message['messageId'],
@@ -1627,7 +1641,7 @@ function grants_handler_preprocess_message_list_item(&$variables) {
     $markReadLink = '';
   }
   $variables['sender'] = t('My message', [], $tOpts);
-  if ($message['sentBy'] == 'Avustusten kasittelyjarjestelma') {
+  if (isset($message['sentBy']) && $message['sentBy'] == 'Avustusten kasittelyjarjestelma') {
     $variables['sender'] = t('Applications Helsinki', [], $tOpts);
     $variables['markReadLink'] = $markReadLink;
   }
@@ -1646,12 +1660,6 @@ function grants_handler_preprocess_message_notification_item(&$variables) {
   $message_link = Link::fromTextAndUrl($message['caseId'], $message_url);
 
   $variables['message_link'] = $message_link;
-}
-
-/**
- * Implements hook_preprocess().
- */
-function grants_handler_preprocess_message_list(&$variables) {
 }
 
 /**
@@ -1735,8 +1743,20 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
 
   $isApplicationOpen = ApplicationHandler::isApplicationOpen($webform);
 
-  // Show copy button when the application is open and copying is not disabled.
-  if ($thirdPartySettings["disableCopying"] != 1 && $isApplicationOpen) {
+  if (!isset($thirdPartySettings["status"])) {
+    // Use TRUE if not set so we disallow copying if status is not set.
+    $isApplicationArchived = TRUE;
+  }
+  else {
+    $isApplicationArchived = $thirdPartySettings["status"] === 'archived';
+  }
+
+  // Show copy button only if copying has not been disabled.
+  if (
+    $thirdPartySettings["disableCopying"] != 1 &&
+    !$isApplicationArchived &&
+    $isApplicationOpen
+  ) {
     $copyApplicationUrl = Url::fromRoute(
       'grants_handler.copy_application_modal',
       [
@@ -2000,4 +2020,32 @@ function grants_handler_js_settings_build(&$settings, AttachedAssetsInterface $a
   // and other components which are using ajax functions.
   // See: AU-2081 https://helsinkisolutionoffice.atlassian.net/browse/AU-2081
   $settings['grants_handler_dummy_setting'] = TRUE;
+}
+
+/**
+ * Implements hook_options_list_alter().
+ *
+ * Appends possible webform status (In development / Production) to the
+ * option name and hides in-development options in PROD env.
+ */
+function grants_handler_options_list_alter(array &$options, array $context): void {
+  /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
+  $field_definition = $context['fieldDefinition'];
+
+  if ($field_definition->getName() === 'field_webform') {
+
+    $webforms = Webform::loadMultiple(array_keys($options));
+    $env = ApplicationHandler::getAppEnv();
+
+    foreach ($webforms as $key => $webform) {
+      $status = $webform->getThirdPartySetting('grants_metadata', 'status');
+
+      if ($env === 'PROD' && $status === 'development') {
+        unset($options[$key]);
+      }
+      elseif ($status === 'development' && $env !== 'PROD') {
+        $options[$key] .= ' (Development version)';
+      }
+    }
+  }
 }

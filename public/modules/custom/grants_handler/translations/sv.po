@@ -141,7 +141,7 @@ msgid "Edit application"
 msgstr "Uppdatera ansökning"
 
 msgctxt "grants_handler"
-msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page."
+msgid "Your data is safe, but not all the\ninformation in your application has been updated yet. Please wait \nmoment and reload the page."
 msgstr "Din information är säker, men all information i din ansökan har inte uppdaterats ännu. Vänligen vänta ett ögonblick och ladda om sidan."
 
 msgid "File upload failed, error has been logged."
@@ -371,6 +371,12 @@ msgctxt "grants_handler"
 msgid "There may be a delay in changing the status. For example, due to maintenance breaks, the delay can be longer than normal."
 msgstr "Det kan finnas en fördröjning vid ändring av läge. Till exempel, på grund av underhållsuppehåll, kan förseningen vara längre än normalt."
 
+msgid "Application period is closed. You can edit the draft, but not submit it"
+msgstr "Ansökningstiden är stängd. Du kan redigera utkastet, men inte skicka in det."
+
+msgid "The application form has changed, make a new application."
+msgstr "Ansökningsformuläret har ändrats, gör en ny ansökan."
+
 msgctxt "grants_handler"
 msgid "Application period is closed, no further editing is allowed."
 msgstr "Ansökningsperioden är stängd, ingen ytterligare redigering är tillåten."
@@ -453,6 +459,9 @@ msgstr "Du har inte de nödvändiga behörigheterna för att göra en ansökan. 
 msgid "Grant application (@number) saving failed. Error has been logged."
 msgstr "Det gick inte att spara bidragsansökan (@number). Ett fel har loggats."
 
+msgid "Grant application (<span id=\"saved-application-number\">@number</span>) saved."
+msgstr "Bidragsansökan @number sparat."
+
 msgid "User does not have proper mandate."
 msgstr "Användaren har inte korrekt mandat."
 
@@ -480,7 +489,7 @@ msgid "Log in to the service and do the identification."
 msgstr "Logga in på tjänsten och gör identifieringen."
 
 msgctxt "grants_handler"
-msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
+msgid "Please familiarize yourself with the instructions\non this page before proceeding to the application."
 msgstr "Bekanta dig med instruktionerna på den här sidan innan du går vidare till ansökan."
 
 msgctxt "grants_handler"
@@ -538,6 +547,10 @@ msgstr "Din begäran uppfylldes inte på grund av nätverksfel."
 
 msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Är du säker att du vill stänga blanketten? Avsluta utan att spara."
+
+msgctxt "grants_handler"
+msgid "Close"
+msgstr "Stäng"
 
 msgid "Leave the application"
 msgstr "Avsluta från ansökningshandling"
@@ -608,8 +621,8 @@ msgid "Additional information concerning the application"
 msgstr "Ytterligare information för ansökan"
 
 msgctxt "grants_handler"
-msgid "Validation failed, please check inputs."
-msgstr "Valideringen misslyckades, kontrollera ingångarna."
+msgid "The application cannot be submitted because not all\nmandatory questions have been answered. Return to the application form and fill in\nat least those questions and fields that are marked with an asterisk (*). You can\nsubmit the application only after you have provided all the necessary information."
+msgstr "Ansökan kan inte skickas in eftersom inte alla obligatoriska frågor har besvarats. Gå tillbaka till ansökningsformuläret och fyll i åtminstone de frågor och fält som är markerade med en asterisk (*). Du kan skicka in ansökan först när du har lämnat all nödvändig information."
 
 msgctxt "grants_handler"
 msgid "No applications in progress."
@@ -629,3 +642,6 @@ msgstr "E-post"
 
 msgid "The email address %mail is not valid. Use the format user@example.com."
 msgstr "%mail är inte en giltig e-postadress. Använd formen user@example.com."
+
+msgid "Remove @item @number"
+msgstr "Ta bort @item @number"

@@ -13,11 +13,12 @@ settings:
   iss_allowed_domains: ''
   is_production: 0
   auto_login: 0
-  environment_url: 'https://api.hel.fi/sso-test'
-  client_scopes: ''
+  environment_url: ''
+  client_scopes: 'openid,email'
   client_roles:
     authenticated: '0'
     admin: '0'
     content_producer: '0'
     read_only: '0'
     helsinkiprofiili: '0'
+  debug_log: false

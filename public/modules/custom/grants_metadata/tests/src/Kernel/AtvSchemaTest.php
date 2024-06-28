@@ -30,9 +30,13 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     'file',
     'node',
     'system',
+    'language',
+    'locale',
+    'locale_test',
     // Contribs from drupal.org.
     'webform',
     'openid_connect',
+    'openid_connect_logout_redirect',
     // Contrib hel.fi modules.
     'helfi_audit_log',
     'helfi_helsinki_profiili',
@@ -44,6 +48,8 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     'grants_attachments',
     'grants_budget_components',
     'grants_club_section',
+    'grants_mandate',
+    'grants_metadata',
     'grants_handler',
     'grants_members',
     'grants_metadata',

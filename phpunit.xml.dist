@@ -15,7 +15,6 @@
   <ini name="error_reporting" value="32767"/>
     <!-- Do not limit the amount of memory tests take to run. -->
   <ini name="memory_limit" value="-1"/>
-  <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="public/sites/simpletest"/>
   <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome","chromeOptions":{"w3c": false}}, "http://chromium:4444"]' />
   <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"chromeOptions":{"w3c": false }}, "http://chromium:4444"]'/>
   <env name="DTT_API_OPTIONS" value='{"socketTimeout": 360, "domWaitTimeout": 3600000}' />
@@ -27,21 +26,32 @@
     <directory>./public/modules/custom/*/tests/src/Unit</directory>
     <directory>./public/themes/custom/*/tests/src/Unit</directory>
     <directory>./public/profiles/custom/*/tests/src/Unit</directory>
+    <directory>./public/modules/contrib/helfi_atv/tests/src/Unit</directory>
+    <directory>./public/modules/contrib/helfi_audit_log/tests/src/Unit</directory>
+    <directory>./public/modules/contrib/helfi_helsinki_profiili/tests/src/Unit</directory>
   </testsuite>
   <testsuite name="kernel">
     <directory>./public/modules/custom/*/tests/src/Kernel</directory>
     <directory>./public/themes/custom/*/tests/src/Kernel</directory>
     <directory>./public/profiles/custom/*/tests/src/Kernel</directory>
+    <directory>./public/modules/contrib/helfi_atv/tests/src/Kernel</directory>
+    <directory>./public/modules/contrib/helfi_audit_log/tests/src/Kernel</directory>
   </testsuite>
   <testsuite name="functional">
     <directory>./public/modules/custom/*/tests/src/Functional</directory>
     <directory>./public/themes/custom/*/tests/src/Functional</directory>
     <directory>./public/profiles/custom/*/tests/src/Functional</directory>
+    <directory>./public/modules/contrib/helfi_audit_log/tests/src/Functional</directory>
   </testsuite>
   <testsuite name="functional-javascript">
     <directory>./public/modules/custom/*/tests/src/FunctionalJavascript</directory>
     <directory>./public/themes/custom/*/tests/src/FunctionalJavascript</directory>
     <directory>./public/profiles/custom/*/tests/src/FunctionalJavascript</directory>
+    <directory>./public/modules/contrib/helfi_atv/tests/src/FunctionalJavascript</directory>
+    <directory>./public/modules/contrib/helfi_audit_log/tests/src/FunctionalJavascript</directory>
+    <directory>./public/modules/contrib/helfi_gdpr_api/tests/src/FunctionalJavascript</directory>
+    <directory>./public/modules/contrib/helfi_helsinki_profiili/tests/src/FunctionalJavascript</directory>
+    <directory>./public/modules/contrib/helfi_yjdh/tests/src/FunctionalJavascript</directory>
   </testsuite>
   <testsuite name="existing-site">
     <directory>./tests/dtt/src/ExistingSite</directory>

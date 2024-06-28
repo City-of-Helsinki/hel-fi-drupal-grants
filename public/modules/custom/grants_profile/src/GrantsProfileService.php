@@ -3,7 +3,7 @@
 namespace Drupal\grants_profile;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -87,7 +87,7 @@ class GrantsProfileService {
     AtvService $helfiAtv,
     MessengerInterface $messenger,
     ProfileConnector $profileConnector,
-    LoggerChannelFactory $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
     GrantsProfileCache $grantsProfileCache,
   ) {
     $this->atvService = $helfiAtv;
@@ -713,6 +713,29 @@ class GrantsProfileService {
     $profileMetadata['notification_shown'] = $timestamp;
 
     return $this->saveGrantsProfile([], $profileMetadata);
+  }
+
+  /**
+   * Delete the given grants profile document.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $document
+   *   The document to be deleted.
+   *
+   * @return bool
+   *   Was the document deleted?
+   */
+  public function removeGrantsProfileDocument(AtvDocument $document): bool {
+    try {
+      $this->atvService->deleteDocument($document);
+      return TRUE;
+    }
+    catch (\Throwable $e) {
+      $id = $document->getId();
+      $this->logger->error('Error removing empty profile (id: @id) from ATV: @e',
+        ['@e' => $e->getMessage(), '@id' => $id],
+      );
+      return FALSE;
+    }
   }
 
 }
