@@ -146,13 +146,13 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertArrayHasKey('value', $fieldData);
     $this->assertArrayHasKey('valueType', $fieldData);
     $this->assertArrayHasKey('label', $fieldData);
-    $this->assertArrayHasKey('meta', $fieldData);
 
     $this->assertEquals($fieldName, $fieldData['ID']);
     $this->assertEquals($value, $fieldData['value']);
     if ($skipMetaChecks) {
       return;
     }
+    $this->assertArrayHasKey('meta', $fieldData);
     $meta = json_decode($fieldData['meta'], TRUE);
     $this->assertArrayHasKey('page', $meta);
     $this->assertArrayHasKey('section', $meta);
@@ -870,6 +870,17 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
     $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '100');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 0], 'subventionType', '2');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 1], 'amount', '200');
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 0, 0], 'subventionType', '1', TRUE);
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 0, 1], 'amount', '1');
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 0, 2], 'usedAmount', '2');
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 1, 0], 'subventionType', '2', TRUE);
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 1, 1], 'amount', '3');
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 1, 2], 'usedAmount', '4');
   }
 
   /**
