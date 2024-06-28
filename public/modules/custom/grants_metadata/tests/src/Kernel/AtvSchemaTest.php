@@ -360,6 +360,13 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
     $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '14');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '35');
+    // Specific data for this form:
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'purpose', 'Kuaus');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'timeFrameBegin', '2024-07-07');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 2], 'timeFrameEnd', '2024-09-22');
   }
 
   /**
