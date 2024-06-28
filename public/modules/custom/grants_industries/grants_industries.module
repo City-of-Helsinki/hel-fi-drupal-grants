@@ -227,13 +227,13 @@ function grants_industries_openid_connect_post_authorize(UserInterface $account,
         $industryKey = 'SOTE';
       }
       // New mappings.
-      if (str_contains($ad_group_lower, 'laaja_Kanslia') || str_contains($ad_group_lower, 'suppea_Kanslia')) {
+      if (str_contains($ad_group_lower, 'laaja_kanslia') || str_contains($ad_group_lower, 'suppea_kanslia')) {
         $industryKey = 'KANSLIA';
       }
-      if (str_contains($ad_group_lower, 'laaja_Kasko') || str_contains($ad_group_lower, 'suppea_Kasko')) {
+      if (str_contains($ad_group_lower, 'laaja_kasko') || str_contains($ad_group_lower, 'suppea_kasko')) {
         $industryKey = 'KASKO';
       }
-      if (str_contains($ad_group_lower, 'laaja_Kuva') || str_contains($ad_group_lower, 'suppea_Kuva')) {
+      if (str_contains($ad_group_lower, 'laaja_kuva') || str_contains($ad_group_lower, 'suppea_kuva')) {
         $industryKey = 'KUVA';
       }
       if ($industryKey != '') {
