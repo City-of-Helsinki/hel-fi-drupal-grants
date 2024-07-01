@@ -1,6 +1,5 @@
 _core:
   default_config_hash: QdiqmcH9tjpstXqCQKv4G4rHYE4HjWLFkVzyqooqEWM
-langcode: en
 third_party_settings:
   shortcut:
     module_link: true

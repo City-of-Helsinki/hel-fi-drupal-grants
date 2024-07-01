@@ -320,6 +320,6 @@ settings:
   preview_label: '7. Confirm, preview, and submit'
   preview_title: 'Confirm, preview, and submit'
   wizard_confirmation_label: '8. Complete'
-  wizard_prev_button_label: 'Previous'
-  wizard_next_button_label: 'Next'
+  wizard_prev_button_label: Previous
+  wizard_next_button_label: Next
 description: '<p>NUORTOIMPALKKA</p>'

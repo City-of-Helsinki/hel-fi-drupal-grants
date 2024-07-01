@@ -28,7 +28,7 @@ _core:
 name: 'Basic form_page'
 type: form_page
 description: "Content type for pages that include information that doesn't age as quickly as for example article or news content."
-help: ''
+help: null
 new_revision: true
 preview_mode: 1
 display_submitted: false
