@@ -48,17 +48,20 @@
   {% for item in items %}
     {{ item.content }}
   {% endfor %}
-{% else %}
-  {% if view_application_page %}
-    <dt{{ title_attributes.addClass(title_classes) }}>{{ label }}: </dt>
+{% elseif view_application_page %}
+  {% if label_hidden %}
+    {% for item in items %}
+      {{ item.content }}
+    {% endfor %}
   {% else %}
-    <div{{ title_attributes.addClass(title_classes) }}>{{ label }}: </div>
-  {% endif %}
-  {% for item in items %}
-    {% if view_application_page %}
+    <dt{{ title_attributes.addClass(title_classes) }}>{{ label }}: </dt>
+    {% for item in items %}
       <dd{{ item.attributes }}>{{ item.content }}</dd>
-    {% else %}
-      <div{{ item.attributes }}>{{ item.content }}</div>
-    {% endif %}
+    {% endfor %}
+  {% endif %}
+{% else %}
+  <div{{ title_attributes.addClass(title_classes) }}>{{ label }}: </div>
+  {% for item in items %}
+    <div{{ item.attributes }}>{{ item.content }}</div>
   {% endfor %}
 {% endif %}
