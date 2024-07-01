@@ -204,14 +204,13 @@ function grants_industries_openid_connect_post_authorize(UserInterface $account,
     foreach ($context["user_data"]["ad_groups"] as $ad_group) {
       $industryKey = '';
       $ad_group_lower = strtolower($ad_group);
-      // @todo remove in prod
+      // If user has one of the designated groups, set the industry key.
       if (str_contains($ad_group_lower, 'owakayttajat')) {
         $industryKey = 'KUVA';
       }
       if (str_contains($ad_group_lower, 'kanslia_kayttajat')) {
         $industryKey = 'KANSLIA';
       }
-      // If user has one of the designated groups, set the industry key.
       if (str_contains($ad_group_lower, 'ta_kuva')) {
         $industryKey = 'KUVA';
       }
@@ -226,6 +225,16 @@ function grants_industries_openid_connect_post_authorize(UserInterface $account,
       }
       if (str_contains($ad_group_lower, 'ta_sote')) {
         $industryKey = 'SOTE';
+      }
+      // New mappings.
+      if (str_contains($ad_group_lower, 'laaja_kanslia') || str_contains($ad_group_lower, 'suppea_kanslia')) {
+        $industryKey = 'KANSLIA';
+      }
+      if (str_contains($ad_group_lower, 'laaja_kasko') || str_contains($ad_group_lower, 'suppea_kasko')) {
+        $industryKey = 'KASKO';
+      }
+      if (str_contains($ad_group_lower, 'laaja_kuva') || str_contains($ad_group_lower, 'suppea_kuva')) {
+        $industryKey = 'KUVA';
       }
       if ($industryKey != '') {
         $industryKeys[] = $industryKey;
