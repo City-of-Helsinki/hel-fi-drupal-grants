@@ -303,7 +303,7 @@ class AtvSchema {
    *   The converted boolean string representation of the item value.
    */
   private static function convertToBooleanString(mixed $itemValue): string {
-    $falseValues = [FALSE, '0', 0, 'No'];
+    $falseValues = [FALSE, '0', 0, 'No', NULL];
     $trueValues = [TRUE, '1', 1, 'Yes'];
 
     if (in_array($itemValue, $falseValues, TRUE)) {
