@@ -267,7 +267,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'purpose', 'Bileet!');
     $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'compensationPreviousYear', 'false');
     $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 2], 'explanation', '');
-    // ApplicantOfficialsArray
+    // ApplicantOfficialsArray.
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Testeeje');
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '2');
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'pp@example.com');
@@ -298,7 +298,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
     $this->assertRegisteredCommunity($document);
-    // Subventions
+    // Subventions.
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '6');
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '123');
     // activitiesInfoArray.
@@ -308,7 +308,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantPersonGlobal', '100');
     $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'membersApplicantCommunityLocal', '5');
     $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'membersApplicantCommunityGlobal', '10');
-    // ApplicantOfficialsArray
+    // ApplicantOfficialsArray.
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Testeeje');
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '2');
     $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'pp@example.com');
@@ -335,7 +335,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
     $this->assertRegisteredCommunity($document);
-    // Activites info
+    // Activites info.
     $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Description of activities');
     $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'communityPracticesBusiness', 'false');
     $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantPersonLocal', '120');
@@ -617,7 +617,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
     // Applicant info.
     $this->assertRegisteredCommunity($document);
-    // Budget
+    // Budget.
     $this->assertDocumentField($document, ['budgetInfo', 'incomeGroupsArrayStatic', 0, 'otherIncomeRowsArrayStatic', 0], 'tulo_0', '100');
     $this->assertDocumentField($document, ['budgetInfo', 'costGroupsArrayStatic', 0, 'otherCostRowsArrayStatic', 0], 'meno_0', '200');
 
@@ -785,7 +785,8 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertDocumentField($document, ['applicationInfoArray', 6], 'actingYear', '2024');
     // Additional information is string field.
     $this->assertEquals('Lisätiedot', $document['compensation']['additionalInformation']);
-    // This field is encoded because it is included by backend magic. That's why there is no metadata.
+    // This field is encoded because it is included by backend magic.
+    // That's why there is no metadata.
     $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko', TRUE);
     $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'purpose', 'Ostetaan kohde');
     // Handle subventions.
@@ -814,7 +815,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertRegisteredCommunity($document);
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '12');
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '4500');
-    // Budget
+    // Budget.
     $this->assertDocumentField($document, ['budgetInfo', 'incomeGroupsArrayStatic', 0, 'otherIncomeRowsArrayStatic', 0], 'tulo_0', '1000');
     $this->assertDocumentField($document, ['budgetInfo', 'costGroupsArrayStatic', 0, 'otherCostRowsArrayStatic', 0], 'meno_0', '2000');
   }
@@ -837,9 +838,21 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     // Handle subventions.
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '4');
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '230');
-    // Budget
-    $this->assertDocumentField($document, ['budgetInfo', 'incomeGroupsArrayStatic', 0, 'otherIncomeRowsArrayStatic', 0], 'budget_other_income_0', '150');
-    $this->assertDocumentField($document, ['budgetInfo', 'costGroupsArrayStatic', 0, 'otherCostRowsArrayStatic', 0], 'budget_other_cost_0', '160');
+    // Budget.
+    $this->assertDocumentField($document, [
+      'budgetInfo',
+      'incomeGroupsArrayStatic',
+      0,
+      'otherIncomeRowsArrayStatic',
+      0,
+    ], 'budget_other_income_0', '150');
+    $this->assertDocumentField($document, [
+      'budgetInfo',
+      'costGroupsArrayStatic',
+      0,
+      'otherCostRowsArrayStatic',
+      0,
+    ], 'budget_other_cost_0', '160');
   }
 
   /**
