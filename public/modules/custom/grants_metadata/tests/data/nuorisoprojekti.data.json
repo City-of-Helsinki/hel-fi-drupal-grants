@@ -1,0 +1,172 @@
+{
+	"avustukset_summa": "230",
+	"applicant_type": "registered_community",
+	"application_number": "LOCALPAK-062-0000634",
+	"status": "DRAFT",
+  "hakijan_tiedot": {
+    "applicantType": "registered_community",
+    "applicant_type": "registered_community",
+    "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
+    "companyNumber": "2036583-2",
+    "registrationDate": "10.05.2006",
+    "home": "VOIKKAA",
+    "communityOfficialNameShort": "AE",
+    "foundingYear": "1337",
+    "homePage": "arieerola.example.com"
+  },
+  "email": "ari.eerola@example.com",
+	"contact_person": "Testaaja",
+	"contact_person_phone_number": "1234567",
+	"community_officials": [
+		{
+			"community_officials_select": "0",
+			"name": "Testeeje",
+			"role": "2",
+			"roletext": "Contact person",
+			"email": "pp@example.com",
+			"phone": "1234567"
+		}
+	],
+	"kenelle_haen_avustusta": "Nuorisoyhdistys",
+	"acting_year": "2025",
+	"subventions": [
+		{
+			"subventionTypeTitle": "Project grant",
+			"subventionType": "4",
+			"amount": "230,00\u20ac"
+		}
+	],
+	"olemme_saaneet_muita_avustuksia": "0",
+	"myonnetty_avustus": [
+
+	],
+	"olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta": "0",
+	"haettu_avustus_tieto": [
+
+	],
+	"jasenet_7_28": "100",
+	"jasenet_kaikki": "120",
+	"projektin_nimi": "Nimi",
+	"projektin_tavoitteet": "Tavoite",
+	"projektin_sisalto": "Sis\u00e4lt\u00f6",
+	"projekti_alkaa": "2024-08-08",
+	"projekti_loppuu": "2024-09-09",
+	"osallistujat_7_28": "50",
+	"osallistujat_kaikki": "60",
+	"projektin_paikka_2": "Helsinki",
+	"omarahoitusosuuden_kuvaus": "Tilanne",
+	"omarahoitusosuus": "300",
+	"budget_other_income": [
+		{
+			"label": "Tulos",
+			"value": "150",
+			"incomeGroupName": "general"
+		}
+	],
+	"budget_other_cost": [
+		{
+			"label": "Menos",
+			"value": "160",
+			"costGroupName": "general"
+		}
+	],
+	"additional_information": "Lis\u00e4tedot",
+	"yhteison_saannot": null,
+	"projektisuunnitelma_liite": null,
+	"projektin_talousarvio": null,
+	"extra_info": "",
+	"muu_liite": [
+		{
+			"attachment": null,
+			"attachmentName": "",
+			"description": "",
+			"fileStatus": "",
+			"fileType": "",
+			"integrationID": "",
+			"isAttachmentNew": "",
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false
+		}
+	],
+	"application_type": "NUORPROJ",
+	"application_type_id": "62",
+	"form_timestamp": "2024-06-28T17:09:29",
+	"form_timestamp_created": "2024-06-28T17:07:08",
+	"form_timestamp_submitted": null,
+	"account_number": "FI7544197469984736",
+	"myonnetty_avustus_total": 0,
+	"haettu_avustus_tieto_total": 0,
+	"benefits_loans": "",
+	"benefits_premises": "",
+	"business_purpose": "fbvd zb ",
+	"community_practices_business": null,
+	"sender_firstname": "Nordea",
+	"sender_lastname": "Demo",
+	"sender_person_id": "210281-9988",
+	"sender_user_id": "280f75c5-6a20-4091-b22d-dfcdce7fef60",
+	"sender_email": "profiilitesti@mailinator.com",
+	"attachments": [
+		{
+			"description": "Confirmation for account FI7544197469984736",
+			"fileName": "truck_clipart_15144_4.jpg",
+			"isNewAttachment": true,
+			"fileType": 45,
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false,
+			"integrationID": "\/LOCALPAK\/v1\/documents\/111678ec-1435-44dd-a6f0-d9efe76c3b1e\/attachments\/104370\/"
+		}
+	],
+	"form_update": false,
+	"status_updates": [
+
+	],
+	"events": [
+		{
+			"eventType": "HANDLER_ATT_OK",
+			"eventID": "61ce3954-a0a1-416e-9928-6f8c54e02f41",
+			"caseId": "LOCALPAK-062-0000634",
+			"eventDescription": "Attachment uploaded for the IBAN: FI7544197469984736.",
+			"eventTarget": "truck_clipart_15144_4.jpg",
+			"eventSource": "GrantsApplications",
+			"timeUpdated": "2024-06-28T17:09:32",
+			"timeCreated": "2024-06-28T17:09:32"
+		}
+	],
+	"messages": [
+
+	],
+	"lisakysymys_2": null,
+	"metadata": {
+		"appenv": "LOCALPAK",
+		"saveid": "initialSave",
+		"language": "en",
+		"form_uuid": "d31bafb4-dcbd-459c-9bf1-3e0ec9d92dc0",
+		"applicant_id": "7769480-5",
+		"applicant_type": "registered_community",
+		"applicationnumber": "LOCALPAK-062-0000634"
+	},
+	"community_street": "dfvg",
+	"community_city": "vfdsg",
+	"community_post_code": "12345",
+	"community_country": "Suomi",
+	"incomeGroupName": "general",
+	"costGroupName": "general",
+	"budgetInfo": {
+		"budget_other_income": [
+			{
+				"label": "Tulos",
+				"value": "150",
+				"incomeGroupName": "general"
+			}
+		],
+		"budget_other_cost": [
+			{
+				"label": "Menos",
+				"value": "160",
+				"costGroupName": "general"
+			}
+		]
+	},
+	"compensation_total_amount": 0,
+	"registration_date": "2020-12-08T00:00:00"
+}

@@ -51,6 +51,10 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     'grants_mandate',
     'grants_metadata',
     'grants_handler',
+    'grants_members',
+    'grants_metadata',
+    'grants_orienteering_map',
+    'grants_place_of_operation',
     'grants_premises',
     'grants_profile',
     // Test modules.
@@ -69,6 +73,8 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
       ->getDefinition('session')
       ->setClass('Drupal\\grants_test_base\\MockSession');
   }
+
+  /* Helper functions to prepare for testing: */
 
   /**
    * Create ATV Schema instance.
@@ -121,6 +127,8 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     return $applicationData;
   }
 
+  /* Helper methods for tests: */
+
   /**
    * Helper function to fetch the given field from document for tests.
    */
@@ -138,148 +146,19 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertArrayHasKey('value', $fieldData);
     $this->assertArrayHasKey('valueType', $fieldData);
     $this->assertArrayHasKey('label', $fieldData);
-    $this->assertArrayHasKey('meta', $fieldData);
 
     $this->assertEquals($fieldName, $fieldData['ID']);
     $this->assertEquals($value, $fieldData['value']);
     if ($skipMetaChecks) {
       return;
     }
+    $this->assertArrayHasKey('meta', $fieldData);
     $meta = json_decode($fieldData['meta'], TRUE);
     $this->assertArrayHasKey('page', $meta);
     $this->assertArrayHasKey('section', $meta);
     $this->assertArrayHasKey('element', $meta);
     $this->assertTrue(isset($meta['element']['hidden']));
 
-  }
-
-  /**
-   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
-   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
-   */
-  public function testYleisAvustusHakemus() : void {
-    $schema = self::createSchema();
-    $webform = self::loadWebform('yleisavustushakemus');
-    $this->initSession();
-    $this->assertNotNull($webform);
-    $pages = $webform->getPages('edit');
-    $submissionData = self::loadSubmissionData('yleisavustushakemus');
-    $typedData = self::webformToTypedData($submissionData, 'yleisavustushakemus');
-    // Run the actual data conversion.
-    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
-    // Applicant info.
-    $this->assertRegisteredCommunity($document);
-
-    // Applicant officials.
-    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Ari Eerola');
-    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '3');
-    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'ari.eerola@example.com');
-    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 3], 'phone', '0501234567');
-    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 0], 'name', 'Eero Arila');
-    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 1], 'role', '3');
-    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 2], 'email', 'eero.arila@example.com');
-    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 3], 'phone', '0507654321');
-    // Contact Info and Address.
-    $this->assertDocumentField($document, ['currentAddressInfoArray', 0], 'contactPerson', 'Eero Arila');
-    $this->assertDocumentField($document, ['currentAddressInfoArray', 1], 'phoneNumber', '0507654321');
-    $this->assertDocumentField($document, ['currentAddressInfoArray', 2], 'street', 'Testitie 1');
-    $this->assertDocumentField($document, ['currentAddressInfoArray', 3], 'city', 'Testilä');
-    $this->assertDocumentField($document, ['currentAddressInfoArray', 4], 'postCode', '00100');
-    $this->assertDocumentField($document, ['currentAddressInfoArray', 5], 'country', 'Suomi');
-    // Application Info.
-    $applicationNumber = 'GRANTS-LOCALPAK-ECONOMICGRANTAPPLICATION-00000001';
-    $this->assertDocumentField($document, ['applicationInfoArray', 0], 'applicationNumber', $applicationNumber);
-    $this->assertDocumentField($document, ['applicationInfoArray', 1], 'status', 'DRAFT');
-    $this->assertDocumentField($document, ['applicationInfoArray', 2], 'actingYear', '2023');
-    // compensationInfo.
-    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'compensationPreviousYear', '');
-    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'totalAmount', '0', TRUE);
-    // Handle subventions.
-    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
-    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '0');
-    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 0], 'subventionType', '5');
-    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 1], 'amount', '0');
-    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 0], 'subventionType', '36');
-    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 1], 'amount', '0');
-
-    // bankAccountArray.
-    $this->assertDocumentField($document, ['bankAccountArray', 0], 'accountNumber', 'FI21 1234 5600 0007 85');
-
-    // benefitsInfoArray.
-    $this->assertDocumentField($document, ['benefitsInfoArray', 0], 'loans', '13');
-    $this->assertDocumentField($document, ['benefitsInfoArray', 1], 'premises', '13');
-    // activitiesInfoArray.
-    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko');
-    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'membersApplicantPersonLocal', '100');
-    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantPersonGlobal', '150');
-    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantCommunityLocal', '10');
-    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'membersApplicantCommunityGlobal', '15');
-    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'feePerson', '10');
-    $this->assertDocumentField($document, ['activitiesInfoArray', 6], 'feeCommunity', '200');
-
-    // Attachment info lives outside compensation array.
-    $attachmentOne = $document['attachmentsInfo']['attachmentsArray'][0];
-    $this->assertCount(6, $attachmentOne);
-    $fieldData = $attachmentOne[0];
-    $this->assertDocumentFieldArray($fieldData, 'description', 'Yhteisön säännöt (uusi hakija tai säännöt muuttuneet)');
-    $fieldData = $attachmentOne[1];
-    $this->assertDocumentFieldArray($fieldData, 'fileName', 'truck_clipart_15144.jpg');
-    $fieldData = $attachmentOne[2];
-    $this->assertDocumentFieldArray($fieldData, 'fileType', '7');
-    $fieldData = $attachmentOne[3];
-    $integrationId = '/LOCAL/v1/documents/4f3d41b8-e133-4ac7-b31a-9ece0aeba114/attachments/7657/';
-    $this->assertDocumentFieldArray($fieldData, 'integrationID', $integrationId);
-    $fieldData = $attachmentOne[4];
-    $this->assertDocumentFieldArray($fieldData, 'isDeliveredLater', 'false');
-    $fieldData = $attachmentOne[5];
-    $this->assertDocumentFieldArray($fieldData, 'isIncludedInOtherFile', 'false');
-
-    $attachmentTwo = $document['attachmentsInfo']['attachmentsArray'][1];
-    $this->assertCount(5, $attachmentTwo);
-    $fieldData = $attachmentTwo[0];
-    $this->assertDocumentFieldArray($fieldData, 'description', 'Toimintakertomus');
-    // We are also testing that there is no file name data.
-    $fieldData = $attachmentTwo[1];
-    $this->assertDocumentFieldArray($fieldData, 'fileType', '7');
-    $fieldData = $attachmentTwo[2];
-    $this->assertDocumentFieldArray($fieldData, 'integrationID', '');
-    $fieldData = $attachmentTwo[3];
-    $this->assertDocumentFieldArray($fieldData, 'isDeliveredLater', 'false');
-    $fieldData = $attachmentTwo[4];
-    $this->assertDocumentFieldArray($fieldData, 'isIncludedInOtherFile', 'true');
-    // Additional information is string field.
-    $this->assertEquals('Lisätietoja hakemuksesta', $document['compensation']['additionalInformation']);
-    // Test requiredInJson setting.
-    $fieldExists = isset($document['compensation']['otherCompensationsInfo']['otherCompensationsArray']);
-    $this->assertEquals(TRUE, $fieldExists);
-  }
-
-  /**
-   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
-   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
-   */
-  public function testYleisAvustusHakemusWithFailingDefinition() : void {
-    $schema = self::createSchema();
-    $webform = self::loadWebform('yleisavustushakemus');
-    $this->initSession();
-    $this->assertNotNull($webform);
-    $pages = $webform->getPages('edit');
-    $submissionData = self::loadSubmissionData('yleisavustushakemus');
-    $typedData = self::webformToTypedData($submissionData, 'failed');
-    // Run the actual data conversion.
-    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
-    // activitiesInfoArray.
-    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko');
-    $level6Exists = isset($document['compensation']['activitiesInfoArray']['level3']);
-    $this->assertEquals(FALSE, $level6Exists);
-    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'membersApplicantPersonGlobal', '150');
-    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantCommunityLocal', '10');
-    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantCommunityGlobal', '15');
-    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'feePerson', '10');
-    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'feeCommunity', '200');
-    // Test skipZeroValue setting.
-    $fieldExists = isset($document['compensation']['shouldNotExist']);
-    $this->assertEquals(FALSE, $fieldExists);
   }
 
   /**
@@ -317,6 +196,198 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertDocumentField($document, ['applicantInfoArray', 6], 'communityOfficialName', $name);
     $this->assertDocumentField($document, ['applicantInfoArray', 7], 'communityOfficialNameShort', 'AE');
     $this->assertDocumentField($document, ['applicantInfoArray', 8], 'email', 'ari.eerola@example.com');
+  }
+
+  /* Start actual test methods: */
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testAsukaPienaHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('asukasosallisuus_pienavustushake');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('asukapiena');
+    $typedData = self::webformToTypedData($submissionData, 'asukapiena');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '38');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '123');
+    // activitiesInfoArray.
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Kuvaus');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'communityPracticesBusiness', 'false');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantPersonLocal', '11');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantPersonGlobal', '33');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'membersApplicantCommunityLocal', '2');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'membersApplicantCommunityGlobal', '22');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 6], 'feePerson', '11');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 7], 'feeCommunity', '111');
+    // Contact Info and Address.
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 0], 'contactPerson', 'Ari Eerola');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 1], 'phoneNumber', '0401234567');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 2], 'street', 'Testitie 3');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 3], 'city', 'Testilä');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 4], 'postCode', '00100');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 5], 'country', 'Suomi');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testAsukaYleisToimHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('asukasosallisuus_yleis_ja_toimin');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('asukasyleistoim');
+    $typedData = self::webformToTypedData($submissionData, 'asukasyleistoim');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '123');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 0], 'subventionType', '6');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 1], 'amount', '321');
+    // activitiesInfoArray.
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Kuvaus toiminnasta');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'communityPracticesBusiness', 'false');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantPersonLocal', '2');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantPersonGlobal', '12');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'membersApplicantCommunityLocal', '1');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'membersApplicantCommunityGlobal', '11');
+    // generalInfoArray.
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'purpose', 'Bileet!');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'compensationPreviousYear', 'false');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 2], 'explanation', '');
+    // ApplicantOfficialsArray.
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Testeeje');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '2');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'pp@example.com');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 3], 'phone', '1234567');
+    // Other compensation.
+    $arrayIndex1 = 'otherCompensationsInfo';
+    $arrayIndex2 = 'otherAppliedCompensationsArray';
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 0], 'issuer', '3');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 1], 'issuerName', 'EU');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 2], 'year', '2024');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 3], 'amount', '333');
+    $this->assertDocumentField($document, [$arrayIndex1, $arrayIndex2, 0, 4], 'purpose', 'Etkot!');
+  }
+
+  /**
+   *
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testHyvinYleisHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('hyte_yleisavustus');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('hyvinyleis');
+    $typedData = self::webformToTypedData($submissionData, 'hyvinyleis');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '6');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '123');
+    // activitiesInfoArray.
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Kuvaus toiminnasta');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'communityPracticesBusiness', 'false');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantPersonLocal', '50');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantPersonGlobal', '100');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'membersApplicantCommunityLocal', '5');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'membersApplicantCommunityGlobal', '10');
+    // ApplicantOfficialsArray.
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Testeeje');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '2');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'pp@example.com');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 3], 'phone', '1234567');
+    // compensationInfo.
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'purpose', 'Juhlat');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'compensationPreviousYear', 'true');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 3], 'explanation', 'Selvitystä ja lisää selvitystä');
+  }
+
+  /**
+   *
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testKansliaTyoHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('kaupunginkanslia_tyollisyysavust');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('kansliatyo');
+    $typedData = self::webformToTypedData($submissionData, 'kansliatyo');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Activites info.
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Description of activities');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'communityPracticesBusiness', 'false');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantPersonLocal', '120');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantPersonGlobal', '120');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'membersApplicantCommunityLocal', '12');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'membersApplicantCommunityGlobal', '12');
+  }
+
+  /**
+   *
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testKaskoIpLisaHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('kasko_ip_lisa');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('kaskoiplisa');
+    $typedData = self::webformToTypedData($submissionData, 'kaskoiplisa');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '14');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '35');
+    // Specific data for this form:
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'purpose', 'Kuaus');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'timeFrameBegin', '2024-07-07');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 2], 'timeFrameEnd', '2024-09-22');
+  }
+
+  /**
+   *
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testKaskoToimintaHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('kasvatus_ja_koulutus_toiminta_av');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('kaskotoiminta');
+    $typedData = self::webformToTypedData($submissionData, 'kaskotoiminta');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '11');
   }
 
   /**
@@ -494,6 +565,67 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
   /**
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
    */
+  public function testKuvaKehaHakemus() {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('taide_ja_kulttuuri_kehittamisavu');
+    $pages = $webform->getPages('edit');
+    $this->assertNotNull($webform);
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('kuvakeha');
+    $typedData = self::webformToTypedData($submissionData, 'kuvakeha');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '44');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '12');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testKuvaPerusHakemus() {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('taide_ja_kulttuuriavustukset_tai');
+    $pages = $webform->getPages('edit');
+    $this->assertNotNull($webform);
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('kuvaperus');
+    $typedData = self::webformToTypedData($submissionData, 'kuvaperus');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '34');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '230');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testLeiriSelvitysHakemus() {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('leiriselvitys');
+    $pages = $webform->getPages('edit');
+    $this->assertNotNull($webform);
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('leiriselvitys');
+    $typedData = self::webformToTypedData($submissionData, 'leiriselvitys');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Budget.
+    $this->assertDocumentField($document, ['budgetInfo', 'incomeGroupsArrayStatic', 0, 'otherIncomeRowsArrayStatic', 0], 'tulo_0', '100');
+    $this->assertDocumentField($document, ['budgetInfo', 'costGroupsArrayStatic', 0, 'otherCostRowsArrayStatic', 0], 'meno_0', '200');
+
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
   public function testLiikuntaTapahtumaHakemus(): void {
     $schema = self::createSchema();
     $webform = self::loadWebform('liikunta_tapahtuma');
@@ -584,6 +716,323 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $keys = ['compensationInfo', 'premisesCompensation', 'rentCostsArray', 0];
     $this->assertDocumentField($document, $keys, 'rentCostsHours', '123');
     $this->assertDocumentField($document, ['compensationInfo', 'premisesCompensation', 'rentCostsArray', 0], 'rentCostsHours', '123');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testLiikuntaLaitosHakemus() {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('liikunta_laitosavustushakemus');
+    $pages = $webform->getPages('edit');
+    $this->assertNotNull($webform);
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('liikuntalaitos');
+    $typedData = self::webformToTypedData($submissionData, 'liikuntalaitos');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '12');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 0], 'subventionType', '5');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 1], 'amount', '34');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 0], 'subventionType', '8');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 1], 'amount', '234');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 3, 0], 'subventionType', '9');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 3, 1], 'amount', '1234');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testLiikuntaSuunnistusHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('liikunta_suunnistuskartta_avustu');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('liikuntasuunnistus');
+    $typedData = self::webformToTypedData($submissionData, 'liikuntasuunnistus');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    $this->assertDocumentField($document, ['orienteeringMapInfo', 'orienteeringMapsArray', 0, 0], 'mapName', 'Karttala');
+    $this->assertDocumentField($document, ['orienteeringMapInfo', 'orienteeringMapsArray', 0, 1], 'size', '34');
+    $this->assertDocumentField($document, ['orienteeringMapInfo', 'orienteeringMapsArray', 0, 2], 'voluntaryHours', '10');
+    $this->assertDocumentField($document, ['orienteeringMapInfo', 'orienteeringMapsArray', 0, 3], 'cost', '100');
+    $this->assertDocumentField($document, ['orienteeringMapInfo', 'orienteeringMapsArray', 0, 4], 'otherCompensations', '10');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testLiikuntaYleisavustusHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('liikunta_yleisavustushakemus');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('liikuntayleis');
+    $typedData = self::webformToTypedData($submissionData, 'liikuntayleis');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    $this->assertDocumentField($document, ['applicationInfoArray', 0], 'applicationType', 'LIIKUNTAYLEIS', TRUE);
+    $this->assertDocumentField($document, ['applicationInfoArray', 6], 'actingYear', '2024');
+    // Additional information is string field.
+    $this->assertEquals('Lisätiedot', $document['compensation']['additionalInformation']);
+    // This field is encoded because it is included by backend magic.
+    // That's why there is no metadata.
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko', TRUE);
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'purpose', 'Ostetaan kohde');
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '9');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '0');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 0], 'subventionType', '31');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 1], 'amount', '0');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 0], 'subventionType', '43');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 1], 'amount', '125');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testNuorisoLomaHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('nuorlomaleir');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('nuorisoloma');
+    $typedData = self::webformToTypedData($submissionData, 'nuorisoloma');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '12');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '4500');
+    // Budget.
+    $this->assertDocumentField($document, ['budgetInfo', 'incomeGroupsArrayStatic', 0, 'otherIncomeRowsArrayStatic', 0], 'tulo_0', '1000');
+    $this->assertDocumentField($document, ['budgetInfo', 'costGroupsArrayStatic', 0, 'otherCostRowsArrayStatic', 0], 'meno_0', '2000');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testNuorisoProjektiHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('nuorisotoiminta_projektiavustush');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('nuorisoprojekti');
+    $typedData = self::webformToTypedData($submissionData, 'nuorisoprojekti');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '4');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '230');
+    // Budget.
+    $this->assertDocumentField($document, [
+      'budgetInfo',
+      'incomeGroupsArrayStatic',
+      0,
+      'otherIncomeRowsArrayStatic',
+      0,
+    ], 'budget_other_income_0', '150');
+    $this->assertDocumentField($document, [
+      'budgetInfo',
+      'costGroupsArrayStatic',
+      0,
+      'otherCostRowsArrayStatic',
+      0,
+    ], 'budget_other_cost_0', '160');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testNuorisoToimintaHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('nuorisopalvelut_toiminta_ja_palk');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('nuorisotoiminta');
+    $typedData = self::webformToTypedData($submissionData, 'nuorisotoiminta');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '1000');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 0], 'subventionType', '2');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 1], 'amount', '2000');
+
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   */
+  public function testNuorToimEnnakkoHakemus(): void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('nuorisopalvelut_toiminta_ja_palk');
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $this->initSession();
+    $submissionData = self::loadSubmissionData('nuortoimennakko');
+    $typedData = self::webformToTypedData($submissionData, 'nuortoimennakko');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '100');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 0], 'subventionType', '2');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 1], 'amount', '200');
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 0, 0], 'subventionType', '1', TRUE);
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 0, 1], 'amount', '1');
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 0, 2], 'usedAmount', '2');
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 1, 0], 'subventionType', '2', TRUE);
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 1, 1], 'amount', '3');
+    $this->assertDocumentField($document, ['compensationInfo', 'previousYearArray', 1, 2], 'usedAmount', '4');
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
+   */
+  public function testYleisAvustusHakemus() : void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('yleisavustushakemus');
+    $this->initSession();
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $submissionData = self::loadSubmissionData('yleisavustushakemus');
+    $typedData = self::webformToTypedData($submissionData, 'yleisavustushakemus');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // Applicant info.
+    $this->assertRegisteredCommunity($document);
+
+    // Applicant officials.
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 0], 'name', 'Ari Eerola');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 1], 'role', '3');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 2], 'email', 'ari.eerola@example.com');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 0, 3], 'phone', '0501234567');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 0], 'name', 'Eero Arila');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 1], 'role', '3');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 2], 'email', 'eero.arila@example.com');
+    $this->assertDocumentField($document, ['applicantOfficialsArray', 1, 3], 'phone', '0507654321');
+    // Contact Info and Address.
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 0], 'contactPerson', 'Eero Arila');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 1], 'phoneNumber', '0507654321');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 2], 'street', 'Testitie 1');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 3], 'city', 'Testilä');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 4], 'postCode', '00100');
+    $this->assertDocumentField($document, ['currentAddressInfoArray', 5], 'country', 'Suomi');
+    // Application Info.
+    $applicationNumber = 'GRANTS-LOCALPAK-ECONOMICGRANTAPPLICATION-00000001';
+    $this->assertDocumentField($document, ['applicationInfoArray', 0], 'applicationNumber', $applicationNumber);
+    $this->assertDocumentField($document, ['applicationInfoArray', 1], 'status', 'DRAFT');
+    $this->assertDocumentField($document, ['applicationInfoArray', 2], 'actingYear', '2023');
+    // compensationInfo.
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'compensationPreviousYear', '');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'totalAmount', '0', TRUE);
+    // Handle subventions.
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '0');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 0], 'subventionType', '5');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 1, 1], 'amount', '0');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 0], 'subventionType', '36');
+    $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 2, 1], 'amount', '0');
+
+    // bankAccountArray.
+    $this->assertDocumentField($document, ['bankAccountArray', 0], 'accountNumber', 'FI21 1234 5600 0007 85');
+
+    // benefitsInfoArray.
+    $this->assertDocumentField($document, ['benefitsInfoArray', 0], 'loans', '13');
+    $this->assertDocumentField($document, ['benefitsInfoArray', 1], 'premises', '13');
+    // activitiesInfoArray.
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'membersApplicantPersonLocal', '100');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantPersonGlobal', '150');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantCommunityLocal', '10');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'membersApplicantCommunityGlobal', '15');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'feePerson', '10');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 6], 'feeCommunity', '200');
+
+    // Attachment info lives outside compensation array.
+    $attachmentOne = $document['attachmentsInfo']['attachmentsArray'][0];
+    $this->assertCount(6, $attachmentOne);
+    $fieldData = $attachmentOne[0];
+    $this->assertDocumentFieldArray($fieldData, 'description', 'Yhteisön säännöt (uusi hakija tai säännöt muuttuneet)');
+    $fieldData = $attachmentOne[1];
+    $this->assertDocumentFieldArray($fieldData, 'fileName', 'truck_clipart_15144.jpg');
+    $fieldData = $attachmentOne[2];
+    $this->assertDocumentFieldArray($fieldData, 'fileType', '7');
+    $fieldData = $attachmentOne[3];
+    $integrationId = '/LOCAL/v1/documents/4f3d41b8-e133-4ac7-b31a-9ece0aeba114/attachments/7657/';
+    $this->assertDocumentFieldArray($fieldData, 'integrationID', $integrationId);
+    $fieldData = $attachmentOne[4];
+    $this->assertDocumentFieldArray($fieldData, 'isDeliveredLater', 'false');
+    $fieldData = $attachmentOne[5];
+    $this->assertDocumentFieldArray($fieldData, 'isIncludedInOtherFile', 'false');
+
+    $attachmentTwo = $document['attachmentsInfo']['attachmentsArray'][1];
+    $this->assertCount(5, $attachmentTwo);
+    $fieldData = $attachmentTwo[0];
+    $this->assertDocumentFieldArray($fieldData, 'description', 'Toimintakertomus');
+    // We are also testing that there is no file name data.
+    $fieldData = $attachmentTwo[1];
+    $this->assertDocumentFieldArray($fieldData, 'fileType', '7');
+    $fieldData = $attachmentTwo[2];
+    $this->assertDocumentFieldArray($fieldData, 'integrationID', '');
+    $fieldData = $attachmentTwo[3];
+    $this->assertDocumentFieldArray($fieldData, 'isDeliveredLater', 'false');
+    $fieldData = $attachmentTwo[4];
+    $this->assertDocumentFieldArray($fieldData, 'isIncludedInOtherFile', 'true');
+    // Additional information is string field.
+    $this->assertEquals('Lisätietoja hakemuksesta', $document['compensation']['additionalInformation']);
+    // Test requiredInJson setting.
+    $fieldExists = isset($document['compensation']['otherCompensationsInfo']['otherCompensationsArray']);
+    $this->assertEquals(TRUE, $fieldExists);
+  }
+
+  /**
+   * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
+   */
+  public function testYleisAvustusHakemusWithFailingDefinition() : void {
+    $schema = self::createSchema();
+    $webform = self::loadWebform('yleisavustushakemus');
+    $this->initSession();
+    $this->assertNotNull($webform);
+    $pages = $webform->getPages('edit');
+    $submissionData = self::loadSubmissionData('yleisavustushakemus');
+    $typedData = self::webformToTypedData($submissionData, 'failed');
+    // Run the actual data conversion.
+    $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
+    // activitiesInfoArray.
+    $this->assertDocumentField($document, ['activitiesInfoArray', 0], 'businessPurpose', 'Massin teko');
+    $level6Exists = isset($document['compensation']['activitiesInfoArray']['level3']);
+    $this->assertEquals(FALSE, $level6Exists);
+    $this->assertDocumentField($document, ['activitiesInfoArray', 1], 'membersApplicantPersonGlobal', '150');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 2], 'membersApplicantCommunityLocal', '10');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 3], 'membersApplicantCommunityGlobal', '15');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 4], 'feePerson', '10');
+    $this->assertDocumentField($document, ['activitiesInfoArray', 5], 'feeCommunity', '200');
+    // Test skipZeroValue setting.
+    $fieldExists = isset($document['compensation']['shouldNotExist']);
+    $this->assertEquals(FALSE, $fieldExists);
   }
 
   /**

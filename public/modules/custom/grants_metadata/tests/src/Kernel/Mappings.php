@@ -11,13 +11,17 @@ class Mappings {
       'class' => 'Drupal\grants_metadata\TypedData\Definition\AsukaPienaDefinition',
       'parameter' => 'grants_metadata_asukaspien',
     ],
+    'asukasyleistoim' => [
+      'class' => 'Drupal\grants_metadata\TypedData\Definition\AsukasYleisToimDefinition',
+      'parameter' => 'grants_metadata_asukasyleistoim',
+    ],
     'hyvinyleis' => [
       'class' => 'Drupal\grants_metadata\TypedData\Definition\HyvinYleisDefinition',
       'parameter' => 'grants_metadata_hyvinyleis',
     ],
     'kansliatyo' => [
-      'class' => 'Drupal\grants_metadata\TypedData\Definition\KansliatyoDefinition',
-      'parameter' => 'grants_metadata_kansliatyo',
+      'class' => 'Drupal\grants_metadata\TypedData\Definition\TyollisyysavustusHakemusDefinition',
+      'parameter' => 'grants_metadata_tyollisyysavustushakemus',
     ],
     'kaskoiplisa' => [
       'class' => 'Drupal\grants_metadata\TypedData\Definition\KaskoIltapaivaLisaDefinition',
@@ -39,13 +43,17 @@ class Mappings {
       'class' => 'Drupal\grants_metadata\TypedData\Definition\KuvaPerusDefinition',
       'parameter' => 'grants_metadata_kuvaperus',
     ],
+    'kuva_projekti' => [
+      'class' => 'Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition',
+      'parameter' => 'grants_metadata_kuvaprojekti',
+    ],
     'kuva_toiminta' => [
       'class' => 'Drupal\grants_metadata\TypedData\Definition\KuvaToimintaDefinition',
       'parameter' => 'grants_metadata_kuvatoiminta',
     ],
-    'kuva_projekti' => [
-      'class' => 'Drupal\grants_metadata\TypedData\Definition\KuvaProjektiDefinition',
-      'parameter' => 'grants_metadata_kuvaprojekti',
+    'leiriselvitys' => [
+      'class' => 'Drupal\grants_metadata\TypedData\Definition\NuorisoLeiriSelvitysDefinition',
+      'parameter' => 'grants_metadata_nuorisoleiriselvitys',
     ],
     'liikuntalaitos' => [
       'class' => 'Drupal\grants_metadata\TypedData\Definition\LiikuntaLaitosDefinition',
