@@ -44,6 +44,13 @@ function grants_webform_print_theme($existing, $type, $theme, $path) {
     'webform_submission_form__grants_webform_print' => [
       'render element' => 'page',
     ],
+    'element_help_print' => [
+      'variables' => [
+        'attachment_description' => NULL,
+        'description' => NULL,
+        'help' => NULL,
+      ],
+    ],
   ];
 }
 

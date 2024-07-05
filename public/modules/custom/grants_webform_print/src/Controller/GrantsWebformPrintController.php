@@ -171,16 +171,11 @@ class GrantsWebformPrintController extends ControllerBase {
 
     // Apply translations to the element itself.
     if (!empty($translatedFields[$key])) {
-      // Unset type since we do not want to override that from trans.
-      unset($translatedFields[$key]['#type']);
-      $element['#description'] = preg_replace('/^(<br>)*/',
-          '',
-          ($translatedFields[$key]['#attachment_desription'] ?? '') . '<br>' .
-          ($translatedFields[$key]['#description'] ?? '') . '<br>' .
-          ($translatedFields[$key]['#help'] ?? ''));
-      unset($translatedFields[$key]['#attachment_desription']);
-      unset($translatedFields[$key]['#description']);
-      unset($translatedFields[$key]['#help']);
+      $element['#description'] = $this->handleHelpText(
+        $translatedFields[$key],
+        ['#type', '#attachment_desription', '#description', '#help']
+      );
+
       foreach ($translatedFields[$key] as $fieldName => $translatedValue) {
         // Replace with translated text. only if it's a string.
         if (isset($element[$fieldName]) && !is_array($translatedValue)) {
@@ -190,11 +185,7 @@ class GrantsWebformPrintController extends ControllerBase {
     }
     // If there are no translations, just manipulate description.
     else {
-      $element['#description'] = preg_replace('/^(<br>)*/',
-          '',
-        ($element["#attachment__description"] ?? '') . '<br>' .
-        ($element['#description'] ?? '') . '<br>' .
-        ($element['#help'] ?? ''));
+      $element['#description'] = $this->handleHelpText($element);
     }
     unset($element['#help']);
     // Add ID for the field as otherwise a warning will appear.
@@ -365,6 +356,42 @@ class GrantsWebformPrintController extends ControllerBase {
       }
     }
     return $element['#options'];
+  }
+
+  /**
+   * Handle help text and attachment descriptions.
+   *
+   * @param array $element
+   *   Element to handle.
+   * @param array $keys_to_unset
+   *   Keys to unset from element.
+   *
+   * @return array|string
+   *   Returns a render array for the help text or an empty string.
+   */
+  private function handleHelpText(array &$element, array $keys_to_unset = []): array|string {
+    $render = '';
+
+    if (
+      !empty($element['#help']) ||
+      !empty($element['#attachment_desription']) ||
+      !empty($element['#description'])
+    ) {
+      $render = [
+        '#theme' => 'element_help_print',
+        '#attachment_description' => $element['#attachment_desription'] ?? '',
+        '#description' => $element['#description'] ?? '',
+        '#help' => $element['#help'] ?? '',
+      ];
+    }
+
+    if (!empty($keys_to_unset)) {
+      foreach ($keys_to_unset as $key) {
+        unset($element[$key]);
+      }
+    }
+
+    return $render;
   }
 
 }

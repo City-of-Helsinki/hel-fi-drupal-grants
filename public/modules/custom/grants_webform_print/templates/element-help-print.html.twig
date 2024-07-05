@@ -1,0 +1,9 @@
+{% if attachment_description %}
+  <p>{{ attachment_description }}</p>
+{% endif %}
+{% if description %}
+  <p>{{ description }}</p>
+{% endif %}
+{% if help %}
+  <p>{% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'info'} %} {{ help|striptags|raw }}</p>
+{% endif %}
