@@ -421,3 +421,21 @@
     }
   }
 }
+
+.webform-print-page-html .webform-section-wrapper {
+  // Reduce top-margin from all print-label elements and immediate h4 elements.
+  > h4,
+  .print-label {
+    margin-top: var(--spacing-2-xs);
+    line-height: 1.5;
+  }
+
+  fieldset {
+    padding: var(--spacing-s);
+
+    @include breakpoint($breakpoint-m) {
+      min-width: 400px;
+      padding: var(--spacing-s) var(--spacing-m);
+    }
+  }
+}
