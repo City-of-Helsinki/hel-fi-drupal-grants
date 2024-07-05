@@ -30,7 +30,7 @@ msgstr "Tila on omassa omistuksessa"
 
 msgctxt "grants_premises"
 msgid "Is other use"
-msgstr "On muuta käyttöä"
+msgstr "Tilaa tarjotaan muiden käyttöön (ilmaiseksi tai vuokralla)"
 
 msgctxt "grants_premises"
 msgid "Is premise free"
@@ -215,4 +215,3 @@ msgstr "Tuntimäärä yhteensä"
 msgctxt "rent_income_composite"
 msgid "Rental income (€)"
 msgstr "Vuokratuloa (€)"
-
