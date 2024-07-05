@@ -234,23 +234,7 @@ class GrantsWebformPrintController extends ControllerBase {
       case 'orienteering_map_composite':
       case 'place_of_operation_composite':
         $element['#theme'] = 'composite_print';
-        $composite_inputs = match ($element['#type']) {
-          'rented_premise_composite', 'premises_composite' => PremisesComposite::getCompositeElements($element),
-          'members_composite' => MembersComposite::getCompositeElements($element),
-          'club_section_composite' => ClubSectionComposite::getCompositeElements($element),
-          'orienteering_map_composite' => OrienteeringMapComposite::getCompositeElements($element),
-          'place_of_operation_composite' => PlaceOfOperationComposite::getCompositeElements($element),
-          'default' => [],
-        };
-
-        foreach ($composite_inputs as $id => &$input) {
-          if (!isset($input['#type'])) {
-            continue;
-          }
-          $input['#id'] = $id;
-          $input = $this->alterFieldTemplates($input, $translatedFields);
-        }
-        $element['#composite_inputs'] = $composite_inputs;
+        $element['#composite_inputs'] = $this->getCompositeInputFields($element, $translatedFields);
         break;
 
       case 'community_address_composite':
@@ -402,6 +386,37 @@ class GrantsWebformPrintController extends ControllerBase {
       }
     }
     return $element['#options'];
+  }
+
+  /**
+   * Get composite input field sets.
+   *
+   * @param array $element
+   *   Element to handle.
+   * @param array $translatedFields
+   *   Translated fields.
+   *
+   * @return array
+   *   Composite fields render array.
+   */
+  public function getCompositeInputFields(array $element, array $translatedFields): array {
+    $composite_inputs = match ($element['#type']) {
+      'rented_premise_composite', 'premises_composite' => PremisesComposite::getCompositeElements($element),
+      'members_composite' => MembersComposite::getCompositeElements($element),
+      'club_section_composite' => ClubSectionComposite::getCompositeElements($element),
+      'orienteering_map_composite' => OrienteeringMapComposite::getCompositeElements($element),
+      'place_of_operation_composite' => PlaceOfOperationComposite::getCompositeElements($element),
+      'default' => [],
+    };
+
+    foreach ($composite_inputs as $id => &$input) {
+      if (!isset($input['#type'])) {
+        continue;
+      }
+      $input['#id'] = $id;
+      $input = $this->alterFieldTemplates($input, $translatedFields);
+    }
+    return $composite_inputs;
   }
 
   /**
