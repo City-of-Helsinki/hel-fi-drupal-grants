@@ -29,10 +29,7 @@ function grants_webform_print_theme($existing, $type, $theme, $path) {
         'webform' => NULL,
       ],
     ],
-    'premises_composite_print' => [
-      'render element' => 'element',
-    ],
-    'rented_premises_composite_print' => [
+    'composite_print' => [
       'render element' => 'element',
     ],
     'textarea_print' => [
