@@ -764,16 +764,19 @@ class ApplicationHandler {
   }
 
   /**
-   * Checks if there is breaking changes in newer webform versions.
+   * Check for breaking changes in newer webform versions.
    *
-   * Breakin changes in this context means any Avus2 changes, that makes
-   * submitting older webform to fail.
+   * In this context, breaking changes means all Avus2 changes that
+   * will cause the submission of the older webform to fail.
    *
    * @param \Drupal\webform\Entity\Webform $webform
    *   Webform id.
    *
    * @return bool
    *   If there is any breaking changes.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public static function hasBreakingChangesInNewerVersion(Webform $webform) {
     static $map = [];
@@ -794,12 +797,13 @@ class ApplicationHandler {
 
       $map[$parent] = $hasBreakingChanges;
 
-      $wf = reset(\Drupal::entityTypeManager()
+      $loaded_webform = \Drupal::entityTypeManager()
         ->getStorage('webform')
         ->loadByProperties([
           'uuid' => $parent,
-        ]));
+        ]);
 
+      $wf = reset($loaded_webform);
       $parent = $wf->getThirdPartySetting('grants_metadata', 'parent');
 
       // No need to check the flag,
