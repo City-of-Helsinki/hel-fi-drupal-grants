@@ -198,8 +198,9 @@ fieldset input[type="button"] {
 
   // Note. Fieldset, legend, label and help-button styles are so fragile that
   // the whole fieldset component needs refactoring. If you need to change
-  // styles in this component, make sure to thoroughly test your changes as a
-  // single change can potentially affect multiple components in the web forms.
+  // styles concerning the fieldset or fieldset legend components, make sure
+  // to thoroughly test your changes as a single change can potentially
+  // affect multiple components in the each webform.
   legend, label {
     display: block;
     font-size: var(--fontsize-body-m);
@@ -223,9 +224,25 @@ fieldset input[type="button"] {
     padding-right: var(--spacing-xl);
   }
 
-  // Fix the position of the legend inside the fieldset with help button.
+  // Fix the position of a span label in the fieldset with a help button.
   fieldset legend > span:has(button.webform-element-help) {
     padding-right: var(--spacing-xl);
+  }
+
+  // Fix the position of the legend inside the fieldset with a help button,
+  // when a fieldset is masking itself as a field group or the span element
+  // inside the fieldset legend has class fieldset-legend.
+  fieldset legend > span.fieldset-legend:has(button.webform-element-help),
+  fieldset.fieldgroup legend > span:has(button.webform-element-help):not(.visually-hidden.fieldset-legend) {
+    padding-right: var(--spacing-l);
+  }
+
+  // Fix the position of the span inside the legend with help button,
+  // when fieldset is marked as "grants-fieldset". Apply the same padding
+  // to the span element inside a fieldset masking itself as a field group.
+  fieldset legend > span.fieldset-legend:has(button.webform-element-help),
+  fieldset.fieldgroup legend span.fieldset-legend:not(.visually-hidden):has(button.webform-element-help) {
+    padding-right: 0;
   }
 
   label.hds-radio-button__label {
