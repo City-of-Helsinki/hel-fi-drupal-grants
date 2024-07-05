@@ -8,7 +8,12 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\grants_budget_components\Element\GrantsBudgetCostStatic;
 use Drupal\grants_budget_components\Element\GrantsBudgetIncomeStatic;
+use Drupal\grants_club_section\Element\ClubSectionComposite;
 use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
+use Drupal\grants_members\Element\MembersComposite;
+use Drupal\grants_orienteering_map\Element\OrienteeringMapComposite;
+use Drupal\grants_place_of_operation\Element\PlaceOfOperationComposite;
+use Drupal\grants_premises\Element\PremisesComposite;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformTranslationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -199,18 +204,53 @@ class GrantsWebformPrintController extends ControllerBase {
     $element['#title'] = $element['#title'] ?? '';
     $element['#description'] = $element['#description'] ?? '';
 
+    return $this->alterFieldTemplates($element, $translatedFields);
+  }
+
+  /**
+   * Alter field render arrays based on their types.
+   *
+   * @param array $element
+   *   Element to alter.
+   * @param array $translatedFields
+   *   If there is translated value for given field, they're here.
+   *
+   * @return array
+   *   Returns the altered element.
+   */
+  private function alterFieldTemplates(array $element, array $translatedFields) : array {
+
+    // Add ID for the field as otherwise a warning will appear.
     switch ($element['#type'] ?? '') {
       case 'webform_wizard_page':
         $element['#type'] = 'container';
         unset($element['#attributes']['readonly']);
         break;
 
-      case 'premises_composite':
-        $element['#theme'] = 'premises_composite_print';
-        break;
-
       case 'rented_premise_composite':
-        $element['#theme'] = 'rented_premises_composite_print';
+      case 'premises_composite':
+      case 'members_composite':
+      case 'club_section_composite':
+      case 'orienteering_map_composite':
+      case 'place_of_operation_composite':
+        $element['#theme'] = 'composite_print';
+        $composite_inputs = match ($element['#type']) {
+          'rented_premise_composite', 'premises_composite' => PremisesComposite::getCompositeElements($element),
+          'members_composite' => MembersComposite::getCompositeElements($element),
+          'club_section_composite' => ClubSectionComposite::getCompositeElements($element),
+          'orienteering_map_composite' => OrienteeringMapComposite::getCompositeElements($element),
+          'place_of_operation_composite' => PlaceOfOperationComposite::getCompositeElements($element),
+          'default' => [],
+        };
+
+        foreach ($composite_inputs as $id => &$input) {
+          if (!isset($input['#type'])) {
+            continue;
+          }
+          $input['#id'] = $id;
+          $input = $this->alterFieldTemplates($input, $translatedFields);
+        }
+        $element['#composite_inputs'] = $composite_inputs;
         break;
 
       case 'community_address_composite':
@@ -238,6 +278,7 @@ class GrantsWebformPrintController extends ControllerBase {
         break;
 
       case 'hidden':
+      case 'applicant_info':
         $element['#type'] = 'markup';
         break;
 
