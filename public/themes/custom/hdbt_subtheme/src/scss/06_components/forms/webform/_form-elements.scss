@@ -373,7 +373,7 @@ fieldset.webform-composite-hidden-title {
   }
 
   &::before {
-    --icon-size: 1.5rem;
+    --icon-size: 1.6rem;
 
     @include pseudo-icon('alert-circle-fill');
     background-color: var(--color-error);
