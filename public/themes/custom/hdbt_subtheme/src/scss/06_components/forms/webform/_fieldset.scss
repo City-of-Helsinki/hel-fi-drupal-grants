@@ -57,14 +57,19 @@ fieldset.orienteering-map-composite--wrapper,
     clip-path: initial;
     clip: initial;
     height: auto;
-    left: 0;
+    margin-left: calc(var(--spacing-2-xs) * -1);
+    left: auto;
     overflow: visible;
-    padding-right: var(--spacing-xl);
+    padding: 0 var(--spacing-2-xs);
     top: -12px;
     width: max-content;
 
+    &:has(button.webform-element-help) {
+      padding-right: var(--spacing-xl);
+    }
+
     @include breakpoint($breakpoint-m) {
-      left: var(--spacing-layout-2-xs);
+      left: auto;
     }
   }
 }

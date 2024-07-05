@@ -196,18 +196,36 @@ fieldset input[type="button"] {
     display: inline;
   }
 
+  // Note. Fieldset, legend, label and help-button styles are so fragile that
+  // the whole fieldset component needs refactoring. If you need to change
+  // styles in this component, make sure to thoroughly test your changes as a
+  // single change can potentially affect multiple components in the web forms.
   legend, label {
     display: block;
     font-size: var(--fontsize-body-m);
     font-weight: 500;
     margin-bottom: var(--spacing-2-xs);
     max-width: fit-content;
-    padding-right: var(--spacing-xl);
     position: relative;
   }
 
-  fieldset legend {
-    font-weight: 700;
+  // Set the default values for legend position in a fieldset.
+  legend {
+    padding: 0 var(--spacing-2-xs);
+    margin-left: calc(var(--spacing-2-xs) * -1);
+    left: auto;
+  }
+
+  // Set the default right padding for the fieldset legend and label,
+  // if there is a help button next to the label.
+  legend:has(button.webform-element-help),
+  label:has(button.webform-element-help) {
+    padding-right: var(--spacing-xl);
+  }
+
+  // Fix the position of the legend inside the fieldset with help button.
+  fieldset legend > span:has(button.webform-element-help) {
+    padding-right: var(--spacing-xl);
   }
 
   label.hds-radio-button__label {
