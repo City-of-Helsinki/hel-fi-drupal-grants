@@ -87,9 +87,9 @@ class GrantsWebformPrintController extends ControllerBase {
     // Pass decoded array & translations to traversing.
     $webformArray = $this->traverseWebform($webformArray, $elementTranslations);
     // Handle acting_year options.
-    if (isset($webformArray["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"])) {
+    if (isset($webformArray['2_avustustiedot']['avustuksen_tiedot']['acting_year']['#options'])) {
       $actingYears = GrantsHandler::getApplicationActingYears($webform);
-      $webformArray["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $actingYears;
+      $webformArray['2_avustustiedot']['avustuksen_tiedot']['acting_year']['#options'] = $actingYears;
     }
 
     unset($webformArray['actions']);
@@ -126,11 +126,11 @@ class GrantsWebformPrintController extends ControllerBase {
    *   If there is translated value for given field, they're here.
    */
   private function traverseWebform(array $webformArray, array $elementTranslations): array {
-    $transfromed = [];
+    $transformed = [];
     foreach ($webformArray as $key => $item) {
-      $transfromed[$key] = $this->fixWebformElement($item, $key, $elementTranslations);
+      $transformed[$key] = $this->fixWebformElement($item, $key, $elementTranslations);
     }
-    return $transfromed;
+    return $transformed;
   }
 
   /**
@@ -146,9 +146,10 @@ class GrantsWebformPrintController extends ControllerBase {
   private function fixWebformElement(array $element, string $key, array $translatedFields): array {
 
     // Remove states from printing.
-    unset($element["#states"]);
-    // In case of custom component, the element parts are in #element
-    // so we need to spread those out for printing.
+    unset($element['#states']);
+
+    // In case of custom component, the element parts are in #element,
+    // and we need to spread those out for printing.
     if (isset($element['#element'])) {
       $elements = $element['#element'];
       unset($element['#element']);
@@ -181,7 +182,7 @@ class GrantsWebformPrintController extends ControllerBase {
       unset($translatedFields[$key]['#description']);
       unset($translatedFields[$key]['#help']);
       foreach ($translatedFields[$key] as $fieldName => $translatedValue) {
-        // Replace with translated text. only if it's an string.
+        // Replace with translated text. only if it's a string.
         if (isset($element[$fieldName]) && !is_array($translatedValue)) {
           $element[$fieldName] = $translatedValue;
         }
@@ -196,7 +197,7 @@ class GrantsWebformPrintController extends ControllerBase {
         ($element['#help'] ?? ''));
     }
     unset($element['#help']);
-    // If no id for the field, we get warnigns.
+    // Add ID for the field as otherwise a warning will appear.
     $element['#id'] = $key;
 
     // Force description display after element.
