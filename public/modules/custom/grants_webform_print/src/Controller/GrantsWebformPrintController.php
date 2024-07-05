@@ -371,6 +371,11 @@ class GrantsWebformPrintController extends ControllerBase {
           '#type' => 'textfield',
           '#theme' => 'textfield_print',
         ];
+        // Handle the help text for each field.
+        if ($element['#' . $name . '__help'] ?? FALSE) {
+          $markup[$name]['#help'] = $element['#' . $name . '__help'];
+          $markup[$name]['#help'] = $this->handleHelpText($markup[$name]);
+        }
       }
     }
     return $markup;
