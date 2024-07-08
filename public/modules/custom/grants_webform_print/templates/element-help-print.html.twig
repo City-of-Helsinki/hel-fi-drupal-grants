@@ -5,5 +5,6 @@
   <p>{{ description }}</p>
 {% endif %}
 {% if help %}
+  {# todo: Get rid of striptags|raw once the help texts for configurations like webform.webform.liikunta_tapahtuma.yml:531 has been fixed. #}
   <p>{% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'info'} %} {{ help|striptags|raw }}</p>
 {% endif %}
