@@ -196,18 +196,53 @@ fieldset input[type="button"] {
     display: inline;
   }
 
+  // Note. Fieldset, legend, label and help-button styles are so fragile that
+  // the whole fieldset component needs refactoring. If you need to change
+  // styles concerning the fieldset or fieldset legend components, make sure
+  // to thoroughly test your changes as a single change can potentially
+  // affect multiple components in the each webform.
   legend, label {
     display: block;
     font-size: var(--fontsize-body-m);
     font-weight: 500;
     margin-bottom: var(--spacing-2-xs);
     max-width: fit-content;
-    padding-right: var(--spacing-xl);
     position: relative;
   }
 
-  fieldset legend {
-    font-weight: 700;
+  // Set the default values for legend position in a fieldset.
+  legend {
+    padding: 0 var(--spacing-2-xs);
+    margin-left: calc(var(--spacing-2-xs) * -1);
+    left: auto;
+  }
+
+  // Set the default right padding for the fieldset legend and label,
+  // if there is a help button next to the label.
+  legend:has(button.webform-element-help),
+  label:has(button.webform-element-help) {
+    padding-right: var(--spacing-xl);
+  }
+
+  // Fix the position of a span label in the fieldset with a help button.
+  fieldset legend > span:has(button.webform-element-help) {
+    padding-right: var(--spacing-xl);
+  }
+
+  // Fix the position of the legend inside the fieldset with a help button,
+  // when a fieldset is masking itself as a field group or the span element
+  // inside the fieldset legend has class fieldset-legend.
+  fieldset legend > span.fieldset-legend:has(button.webform-element-help),
+  fieldset.fieldgroup legend > span:has(button.webform-element-help):not(.visually-hidden.fieldset-legend) {
+    padding-right: var(--spacing-l);
+  }
+
+  // Fix the position of the span inside the legend with help button,
+  // when fieldset is marked as "grants-fieldset". Apply the same padding
+  // to the span element inside a fieldset masking itself as a field group.
+  fieldset legend > span.fieldset-legend:has(button.webform-element-help),
+  fieldset.fieldgroup legend span.fieldset-legend:not(.visually-hidden):has(button.webform-element-help) {
+    padding-right: 0;
   }
 
   label.hds-radio-button__label {
@@ -338,7 +373,7 @@ fieldset.webform-composite-hidden-title {
   }
 
   &::before {
-    --icon-size: 1.5rem;
+    --icon-size: 1.6rem;
 
     @include pseudo-icon('alert-circle-fill');
     background-color: var(--color-error);

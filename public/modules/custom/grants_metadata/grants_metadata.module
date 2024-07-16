@@ -797,9 +797,7 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
 
       $showStatusMessage = TRUE;
 
-      if ($editingRestricted && !$isAdmin) {
-        $form['#disabled'] = TRUE;
-
+      if ($editingRestricted) {
         \Drupal::messenger()
           ->addWarning($restrictionMsg);
 

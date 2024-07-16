@@ -14,25 +14,24 @@ use Drupal\webform\Entity\WebformSubmission;
  * @see template_preprocess_webform_actions()
  */
 function grants_webform_actions_alter_preprocess_webform_actions(array &$variables) {
-  $sid = $variables["element"]["#webform_submission"] ?? NULL;
+  $sid = $variables['element']['#webform_submission'] ?? FALSE;
+  if (!$sid) {
+    return;
+  }
 
   /** @var \Drupal\webform\Entity\WebformSubmission $webform_submission */
   $webform_submission = WebformSubmission::load($sid);
 
-  if (!$webform_submission) {
-    return;
-  }
-
   $data = $webform_submission->getData();
 
-  if (isset($data["application_number"])) {
-    $variables['applicationNumber'] = $data["application_number"];
+  if (isset($data['application_number'])) {
+    $variables['applicationNumber'] = $data['application_number'];
   }
 
   $deleteDraftLinkText = [
     '#theme' => 'edit-label-with-icon',
     '#icon' => 'trash',
-    '#text_label' => t('Delete draft', [], ['context' => "grants_handler"]),
+    '#text_label' => t('Delete draft', [], ['context' => 'grants_handler']),
   ];
   $deleteDraftUrl = Url::fromRoute('grants_handler.clear-navigations', ['submission_id' => $variables['applicationNumber']]);
   $deleteDraftLink = [
@@ -40,12 +39,18 @@ function grants_webform_actions_alter_preprocess_webform_actions(array &$variabl
     '#title' => $deleteDraftLinkText,
     '#url' => $deleteDraftUrl,
     '#id' => 'webform-button--delete-draft',
-    '#attributes' => ['class' => ['webform-button--delete-draft', 'hds-button', 'hds-button--supplementary']],
+    '#attributes' => [
+      'class' => [
+        'webform-button--delete-draft',
+        'hds-button',
+        'hds-button--supplementary',
+      ],
+    ],
   ];
   $lockService = \Drupal::service('grants_handler.form_lock_service');
   $lockedStatus = FALSE;
-  if (!empty($data["application_number"])) {
-    $lockedStatus = $lockService->isApplicationFormLocked($data["application_number"]);
+  if (!empty($data['application_number'])) {
+    $lockedStatus = $lockService->isApplicationFormLocked($data['application_number']);
   }
   $draft_variables = [];
   if ($data['status'] == 'DRAFT' && !$lockedStatus) {

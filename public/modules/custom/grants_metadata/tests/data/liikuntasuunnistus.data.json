@@ -1,0 +1,127 @@
+{
+	"applicant_type": "registered_community",
+	"avustukset_summa": "0",
+	"application_number": "LOCALPAK-058-0000260",
+	"status": "DRAFT",
+	"hakijan_tiedot": {
+    "applicantType": "registered_community",
+    "applicant_type": "registered_community",
+    "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
+    "companyNumber": "2036583-2",
+    "registrationDate": "10.05.2006",
+    "home": "VOIKKAA",
+    "communityOfficialNameShort": "AE",
+    "foundingYear": "1337",
+    "homePage": "arieerola.example.com"
+  },
+  "email": "ari.eerola@example.com",
+	"contact_person": "Testaaja",
+	"contact_person_phone_number": "76544321",
+	"community_officials": [
+		{
+			"community_officials_select": "0",
+			"name": "Testeeje",
+			"role": "2",
+			"roletext": "Contact person",
+			"email": "pp@example.com",
+			"phone": "1234567"
+		}
+	],
+	"acting_year": "2024",
+	"orienteering_maps": [
+		{
+			"mapName": "Karttala",
+			"size": "34",
+			"voluntaryHours": "10",
+			"cost": "100",
+			"otherCompensations": "10"
+		}
+	],
+	"additional_information": "Lis\u00e4tiedot",
+	"extra_info": "",
+	"muu_liite": [
+		{
+			"attachment": null,
+			"attachmentName": "",
+			"description": "",
+			"fileStatus": "",
+			"fileType": "",
+			"integrationID": "",
+			"isAttachmentNew": "",
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false
+		}
+	],
+	"subventions": null,
+	"application_type": "LIIKUNTASUUNNISTUS",
+	"application_type_id": "58",
+	"form_timestamp": "2024-06-28T16:43:33",
+	"form_timestamp_created": "2024-06-28T16:42:27",
+	"form_timestamp_submitted": null,
+	"account_number": "FI7544197469984736",
+	"myonnetty_avustus": [
+
+	],
+	"olemme_saaneet_muita_avustuksia": 0,
+	"haettu_avustus_tieto": null,
+	"olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta": 0,
+	"myonnetty_avustus_total": 0,
+	"haettu_avustus_tieto_total": "0",
+	"benefits_loans": "",
+	"benefits_premises": "",
+	"business_purpose": "fbvd zb ",
+	"community_practices_business": null,
+	"sender_firstname": "Nordea",
+	"sender_lastname": "Demo",
+	"sender_person_id": "210281-9988",
+	"sender_user_id": "280f75c5-6a20-4091-b22d-dfcdce7fef60",
+	"sender_email": "profiilitesti@mailinator.com",
+	"attachments": [
+		{
+			"description": "Confirmation for account FI7544197469984736",
+			"fileName": "truck_clipart_15144_4.jpg",
+			"isNewAttachment": true,
+			"fileType": 45,
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false,
+			"integrationID": "\/LOCALPAK\/v1\/documents\/cb22dadc-3772-4652-9878-6ae4de84be45\/attachments\/104368\/"
+		}
+	],
+	"form_update": false,
+	"status_updates": [
+
+	],
+	"events": [
+		{
+			"eventType": "HANDLER_ATT_OK",
+			"eventID": "59b929e9-86d6-42a3-bfef-f2cf0ebb71de",
+			"caseId": "LOCALPAK-058-0000260",
+			"eventDescription": "Attachment uploaded for the IBAN: FI7544197469984736.",
+			"eventTarget": "truck_clipart_15144_4.jpg",
+			"eventSource": "GrantsApplications",
+			"timeUpdated": "2024-06-28T16:43:34",
+			"timeCreated": "2024-06-28T16:43:34"
+		}
+	],
+	"messages": [
+
+	],
+	"metadata": {
+		"appenv": "LOCALPAK",
+		"saveid": "initialSave",
+		"language": "en",
+		"form_uuid": "c8f17f73-a908-42b0-869a-08ce25741005",
+		"applicant_id": "7769480-5",
+		"applicant_type": "registered_community",
+		"applicationnumber": "LOCALPAK-058-0000260"
+	},
+	"community_street": "dfvg",
+	"community_city": "vfdsg",
+	"community_post_code": "12345",
+	"community_country": "Suomi",
+	"budgetInfo": [
+
+	],
+	"compensation_total_amount": 0,
+	"registration_date": "2020-12-08T00:00:00"
+}

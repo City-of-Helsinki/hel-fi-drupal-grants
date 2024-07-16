@@ -1,4 +1,11 @@
 fieldset.grants-fieldset {
+  padding: var(--spacing-s);
+
+  @include breakpoint($breakpoint-m) {
+    min-width: 400px;
+    padding: var(--spacing-s) var(--spacing-m);
+  }
+
   .fieldset-wrapper {
     align-items: flex-end;
     display: flex;
@@ -40,25 +47,30 @@ fieldset.orienteering-map-composite--wrapper,
   padding: var(--spacing-s);
   width: 100%;
 
+  @include breakpoint($breakpoint-m) {
+    min-width: 400px;
+    padding: var(--spacing-s) var(--spacing-m);
+  }
+
   legend > span.visually-hidden {
     background: white;
     clip-path: initial;
     clip: initial;
     height: auto;
-    left: 0;
+    margin-left: calc(var(--spacing-2-xs) * -1);
+    left: auto;
     overflow: visible;
-    padding-right: var(--spacing-xl);
+    padding: 0 var(--spacing-2-xs);
     top: -12px;
     width: max-content;
 
-    @include breakpoint($breakpoint-m) {
-      left: var(--spacing-layout-2-xs);
+    &:has(button.webform-element-help) {
+      padding-right: var(--spacing-xl);
     }
-  }
 
-  @include breakpoint($breakpoint-m) {
-    min-width: 400px;
-    padding: var(--spacing-m) var(--spacing-l);
+    @include breakpoint($breakpoint-m) {
+      left: auto;
+    }
   }
 }
 

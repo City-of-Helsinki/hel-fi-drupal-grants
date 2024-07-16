@@ -2,14 +2,14 @@
 
 namespace Drupal\grants_webform_summation_field\Element;
 
-use Drupal\Core\Render\Element\FormElement;
+use Drupal\Core\Render\Element\FormElementBase;
 
 /**
  * Provides a webform element for an grants_webform_summation_field.
  *
  * @FormElement("grants_webform_summation_field")
  */
-class GrantsWebformSummationField extends FormElement {
+class GrantsWebformSummationField extends FormElementBase {
 
   /**
    * {@inheritdoc}

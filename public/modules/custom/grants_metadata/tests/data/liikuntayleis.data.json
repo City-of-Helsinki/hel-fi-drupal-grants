@@ -1,0 +1,111 @@
+{
+	"applicant_type": "registered_community",
+	"avustukset_summa": "125",
+	"application_number": "LOCALPAK-056-0000201",
+	"status": "DRAFT",
+    "hakijan_tiedot": {
+        "applicantType": "registered_community",
+        "applicant_type": "registered_community",
+        "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
+        "companyNumber": "2036583-2",
+        "registrationDate": "10.05.2006",
+        "home": "VOIKKAA",
+        "communityOfficialNameShort": "AE",
+        "foundingYear": "1337",
+        "homePage": "arieerola.example.com"
+    },
+	"email": "ari.eerola@example.com",
+	"contact_person": "Ari Eerola",
+    "contact_person_phone_number": "0401234567",
+	"community_address": null,
+	"bank_account": null,
+	"community_officials": [
+
+	],
+	"acting_year": "2024",
+	"subventions": [
+		{
+			"subventionTypeTitle": "Muu",
+			"subventionType": "9",
+			"amount": "0"
+		},
+		{
+			"subventionTypeTitle": "Starttiavustus",
+			"subventionType": "31",
+			"amount": "0"
+		},
+		{
+			"subventionTypeTitle": "Kohdeavustus",
+			"subventionType": "43",
+			"amount": "125,00"
+		}
+	],
+	"compensation_purpose": "Ostetaan kohde",
+	"additional_information": "Lis\u00e4tiedot",
+	"extra_info": "",
+	"muu_liite": [
+		{
+			"attachment": null,
+			"attachmentName": "",
+			"description": "",
+			"fileStatus": "",
+			"fileType": "",
+			"integrationID": "",
+			"isAttachmentNew": "",
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false
+		}
+	],
+	"community_street": null,
+	"community_city": null,
+	"community_post_code": null,
+	"application_type": "LIIKUNTAYLEIS",
+	"application_type_id": "56",
+	"form_timestamp": "2024-04-13T00:32:43",
+	"form_timestamp_created": "2024-03-13T12:29:57",
+	"form_timestamp_submitted": null,
+	"account_number": null,
+	"myonnetty_avustus": [
+
+	],
+	"olemme_saaneet_muita_avustuksia": 0,
+	"haettu_avustus_tieto": null,
+	"olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta": 0,
+	"myonnetty_avustus_total": 0,
+	"haettu_avustus_tieto_total": "0",
+	"benefits_loans": null,
+	"benefits_premises": null,
+	"business_purpose": "Massin teko",
+	"community_practices_business": null,
+	"sender_firstname": "Nordea",
+	"sender_lastname": "Demo",
+	"sender_person_id": "210281-9988",
+	"sender_user_id": "280f75c5-6a20-4091-b22d-dfcdce7fef60",
+	"sender_email": "miika.korpisalo@hel.fi",
+	"attachments": [
+
+	],
+	"form_update": false,
+	"status_updates": [
+
+	],
+	"events": [
+
+	],
+	"messages": [
+
+	],
+	"metadata": {
+		"appenv": "LOCALPAK",
+		"saveid": "7b2bec20-3a8b-4d55-bf0c-0a721be61324",
+		"language": "fi",
+		"applicant_id": "7769480-5",
+		"applicant_type": "registered_community",
+		"applicationnumber": "LOCALPAK-056-0000201"
+	},
+	"budgetInfo": [
+
+	],
+	"compensation_total_amount": 0,
+	"registration_date": "2020-12-08T00:00:00"
+}

@@ -29,14 +29,14 @@ settings:
   default_form_submit_back: false
   default_form_details_toggle: true
   default_form_file_limit: ''
-  default_wizard_prev_button_label: 'Previous'
-  default_wizard_next_button_label: 'Next'
+  default_wizard_prev_button_label: Previous
+  default_wizard_next_button_label: Next
   default_wizard_start_label: Alkaa
   default_wizard_confirmation_label: Valmis
   default_wizard_toggle_show_label: 'Näytä kaikki'
   default_wizard_toggle_hide_label: 'Piilota kaikki'
   default_preview_next_button_label: Preview
-  default_preview_prev_button_label: 'Previous'
+  default_preview_prev_button_label: Previous
   default_preview_label: Preview
   default_preview_title: '[webform:title]: Preview'
   default_preview_message: 'Please review your submission. Your submission is not complete until you press the "Submit" button!'

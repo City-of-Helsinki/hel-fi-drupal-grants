@@ -1,0 +1,133 @@
+{
+	"applicant_type": "registered_community",
+	"application_number": "LOCAL-064-0000058",
+	"status": "DRAFT",
+	"hakijan_tiedot": {
+        "applicantType": "registered_community",
+        "applicant_type": "registered_community",
+        "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
+        "companyNumber": "2036583-2",
+        "registrationDate": "10.05.2006",
+        "home": "VOIKKAA",
+        "communityOfficialNameShort": "AE",
+        "foundingYear": "1337",
+        "homePage": "arieerola.example.com"
+    },
+	"email": "ari.eerola@example.com",
+	"contact_person": "Ari Eerola",
+    "contact_person_phone_number": "0401234567",
+	"community_officials": [
+		{
+			"community_officials_select": "0",
+			"name": "Testeeje",
+			"role": "2",
+			"roletext": "Yhteyshenkil\u00f6",
+			"email": "pp@example.com",
+			"phone": "1234567"
+		}
+	],
+	"acting_year": "2024",
+	"subventions": [
+		{
+			"subventionTypeTitle": "Pienavustus",
+			"subventionType": "38",
+			"amount": "123,00\u20ac"
+		}
+	],
+	"purpose": "Lyhyt kuvaus",
+	"olemme_saaneet_muita_avustuksia": "0",
+	"myonnetty_avustus": [
+
+	],
+	"olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta": "0",
+	"haettu_avustus_tieto": [
+
+	],
+	"benefits_loans": "Kuvaus lainoista ja takauksista",
+	"benefits_premises": "Kuvaus tiloihin liittyv\u00e4st\u00e4 tuesta",
+	"business_purpose": "Kuvaus",
+	"community_practices_business": "0",
+	"fee_person": "11,00\u20ac",
+	"fee_community": "111,00\u20ac",
+	"members_applicant_person_global": "33",
+	"members_applicant_person_local": "11",
+	"members_applicant_community_global": "22",
+	"members_applicant_community_local": "2",
+	"additional_information": "Lis\u00e4tiedot",
+	"extra_info": "Lis\u00e4selvitys",
+	"muu_liite": [
+		{
+			"attachment": null,
+			"attachmentName": "",
+			"description": "",
+			"fileStatus": "",
+			"fileType": "",
+			"integrationID": "",
+			"isAttachmentNew": "",
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false
+		}
+	],
+	"community_street": "Testitie 3",
+	"community_city": "Testilä",
+	"community_post_code": "00100",
+	"application_type": "ASUKASPIEN",
+	"application_type_id": "64",
+	"form_timestamp": "2024-04-30T13:54:01",
+	"form_timestamp_created": "2024-04-30T13:40:35",
+	"form_timestamp_submitted": null,
+	"account_number": "FI7544197469984736",
+	"myonnetty_avustus_total": 0,
+	"haettu_avustus_tieto_total": 0,
+	"sender_firstname": "Nordea",
+	"sender_lastname": "Demo",
+	"sender_person_id": "210281-9988",
+	"sender_user_id": "280f75c5-6a20-4091-b22d-dfcdce7fef60",
+	"sender_email": "testaaja@hel.fi",
+	"attachments": [
+		{
+			"description": "Varmistus tilinumerolle FI7544197469984736",
+			"fileName": "truck_clipart_15144_4.jpg",
+			"isNewAttachment": true,
+			"fileType": 45,
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false,
+			"integrationID": "\/LOCALPAK\/v1\/documents\/69408f47-fd34-4146-97bc-829539dd24a3\/attachments\/61771\/"
+		}
+	],
+	"form_update": false,
+	"status_updates": [
+
+	],
+	"events": [
+		{
+			"eventType": "HANDLER_ATT_OK",
+			"eventID": "45f22f02-c68d-4320-9151-c4fa098ac699",
+			"caseId": "LOCALPAK-064-0000058",
+			"eventDescription": "Attachment uploaded for the IBAN: FI7544197469984736.",
+			"eventTarget": "truck_clipart_15144_4.jpg",
+			"eventSource": "GrantsApplications",
+			"timeUpdated": "2024-04-30T13:54:02",
+			"timeCreated": "2024-04-30T13:54:02"
+		}
+	],
+	"messages": [
+
+	],
+	"compensation_boolean": "0",
+	"compensation_explanation": "",
+	"metadata": {
+		"appenv": "LOCALPAK",
+		"saveid": "initialSave",
+		"language": "fi",
+		"applicant_id": "7769480-5",
+		"applicant_type": "registered_community",
+		"applicationnumber": "LOCALPAK-064-0000058"
+	},
+	"community_country": "Suomi",
+	"budgetInfo": [
+
+	],
+	"compensation_total_amount": 0,
+	"registration_date": "2020-12-08T00:00:00"
+}
