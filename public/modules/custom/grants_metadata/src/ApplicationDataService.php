@@ -7,7 +7,7 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Helpers;
@@ -15,7 +15,7 @@ use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
- *
+ * Application data service.
  */
 final class ApplicationDataService {
 
@@ -53,19 +53,34 @@ final class ApplicationDataService {
   protected EventsService $eventsService;
 
   /**
+   * Application getter service.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
    *   Logger channel factory.
+   * @param \Drupal\Core\Database\Connection $datababse
+   *   Database connection.
+   * @param \Drupal\grants_handler\EventsService $eventsService
+   *   Events service.
+   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   *   Application getter service.
    */
   public function __construct(
     LoggerChannelFactoryInterface $loggerChannelFactory,
     Connection $datababse,
-    EventsService $eventsService
+    EventsService $eventsService,
+    ApplicationGetterService $applicationGetterService
   ) {
     $this->logger = $loggerChannelFactory->get('grants_application_handler');
     $this->database = $datababse;
     $this->eventsService = $eventsService;
+    $this->applicationGetterService = $applicationGetterService;
   }
 
   /**
@@ -146,7 +161,7 @@ final class ApplicationDataService {
     if (empty($submissionData)) {
       if ($webform_submission == NULL) {
         try {
-          $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($applicationNumber);
+          $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
         }
         catch (\Exception | GuzzleException $e) {
         }
@@ -290,6 +305,8 @@ final class ApplicationDataService {
    *   Application number.
    * @param string $latestSaveid
    *   Latest save id.
+   * @param string $saveIdToValidate
+   *   Save id to validate.
    *
    * @return bool
    *   Are there pending file uploads.

@@ -8,7 +8,7 @@ use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\file\Entity\File;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -64,6 +64,13 @@ class GrantsProfileService {
   protected GrantsProfileCache $grantsProfileCache;
 
   /**
+   * Getter service.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
+
+  /**
    * Variable for translation context.
    *
    * @var array|string[] Translation context for class
@@ -89,13 +96,23 @@ class GrantsProfileService {
     MessengerInterface $messenger,
     ProfileConnector $profileConnector,
     LoggerChannelFactoryInterface $loggerFactory,
-    GrantsProfileCache $grantsProfileCache,
+    GrantsProfileCache $grantsProfileCache
   ) {
     $this->atvService = $helfiAtv;
     $this->messenger = $messenger;
     $this->profileConnector = $profileConnector;
     $this->logger = $loggerFactory->get('helfi_atv');
     $this->grantsProfileCache = $grantsProfileCache;
+  }
+
+  /**
+   * Set application getter service.
+   *
+   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   *   The application getter service.
+   */
+  public function setApplicationGetterService(ApplicationGetterService $applicationGetterService): void {
+    $this->applicationGetterService = $applicationGetterService;
   }
 
   /**
@@ -312,6 +329,8 @@ class GrantsProfileService {
    *
    * @return array
    *   Was the removal successful
+   *
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function removeProfile(array $companyData): array {
     if ($companyData['type'] !== 'unregistered_community') {
@@ -333,7 +352,7 @@ class GrantsProfileService {
 
     try {
       // Get applications from ATV.
-      $applications = ApplicationHandler::getCompanyApplications(
+      $applications = $this->applicationGetterService->getCompanyApplications(
         $companyData,
         $appEnv,
         FALSE,

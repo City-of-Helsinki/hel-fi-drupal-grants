@@ -10,11 +10,13 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\Url;
+use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\EventsService;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -62,6 +64,13 @@ class CopyApplicationModalForm extends FormBase {
   protected ApplicationInitService $applicationInitService;
 
   /**
+   * Application getter service.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
+
+  /**
    * Constructs a new ModalAddressForm object.
    */
   public function __construct(
@@ -69,7 +78,8 @@ class CopyApplicationModalForm extends FormBase {
     Renderer $renderer,
     EventsService $eventsService,
     ApplicationStatusService $applicationStatusService,
-    ApplicationInitService $applicationInitService
+    ApplicationInitService $applicationInitService,
+    ApplicationGetterService $applicationGetterService
   ) {
 
     // When argument is set to null, get the debug value from environment.
@@ -80,6 +90,7 @@ class CopyApplicationModalForm extends FormBase {
     $this->eventsService = $eventsService;
     $this->applicationStatusService = $applicationStatusService;
     $this->applicationInitService = $applicationInitService;
+    $this->applicationGetterService = $applicationGetterService;
   }
 
   /**
@@ -93,7 +104,8 @@ class CopyApplicationModalForm extends FormBase {
       $container->get('renderer'),
       $container->get('grants_handler.events_service'),
       $container->get('grants_handler.application_status_service'),
-      $container->get('grants_handler.application_init_service')
+      $container->get('grants_handler.application_init_service'),
+      $container->get('grants_handler.application_getter_service')
     );
     $form->setRequestStack($container->get('request_stack'));
     $form->setStringTranslation($container->get('string_translation'));
@@ -134,7 +146,7 @@ class CopyApplicationModalForm extends FormBase {
     $form['#theme'] = 'application_copy_modal_form';
 
     try {
-      $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
+      $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
 
       if ($webform_submission != NULL) {
         // Set webform submission template.
@@ -151,7 +163,10 @@ class CopyApplicationModalForm extends FormBase {
       }
 
     }
-    catch (\Exception $e) {
+    catch (\Exception | GuzzleException $e) {
+      $this->logger('copy_application_modal_form')->error('Error: %error', [
+        '%error' => $e->getMessage(),
+      ]);
     }
 
     // Add a link to show this form in a modal dialog if we're not already in

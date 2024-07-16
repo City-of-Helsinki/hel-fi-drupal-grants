@@ -12,7 +12,7 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -51,6 +51,13 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
   protected ServicePageBlockService $servicePageBlockService;
 
   /**
+   * The application status service.
+   *
+   * @var \Drupal\grants_handler\ApplicationStatusService
+   */
+  protected ApplicationStatusService $applicationStatusService;
+
+  /**
    * Constructs a new ServicePageBlock instance.
    *
    * @param array $configuration
@@ -68,6 +75,8 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    *   Current user.
    * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
    *   The service page block service.
+   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   *   The application status service.
    */
   public function __construct(
     array $configuration,
@@ -75,12 +84,14 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     $plugin_definition,
     CurrentRouteMatch $routeMatch,
     AccountProxy $user,
-    ServicePageBlockService $servicePageBlockService
+    ServicePageBlockService $servicePageBlockService,
+    ApplicationStatusService $applicationStatusService
     ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatch = $routeMatch;
     $this->currentUser = $user;
     $this->servicePageBlockService = $servicePageBlockService;
+    $this->applicationStatusService = $applicationStatusService;
   }
 
   /**
@@ -94,6 +105,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('current_route_match'),
       $container->get('current_user'),
       $container->get('grants_handler.service_page_block_service'),
+      $container->get('grants_handler.application_status_service')
     );
   }
 
@@ -128,7 +140,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     $webformId = $webform->id();
 
     // If the application isn't open, just display a message.
-    if (!ApplicationHandler::isApplicationOpen($webform)) {
+    if (!$this->applicationStatusService->isApplicationOpen($webform)) {
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
         '#text' => $this->t('This application is not open', [], $tOpts),

@@ -2,14 +2,16 @@
 
 namespace Drupal\grants_metadata\Tests;
 
-use Drupal\Core\TypedData\TypedDataInterface;
-use Drupal\Tests\grants_metadata\Kernel\Mappings;
-
 /**
- *
+ * Get test data.
  */
 class TestDataRetriever {
 
+  /**
+   * Applicant types.
+   *
+   * @var array
+   */
   private static array $applicantTypes = [
     'private_person',
     'registered_community',
@@ -17,13 +19,12 @@ class TestDataRetriever {
   ];
 
   /**
-   * Load test data from data directory.
+   * Load test data.
    *
-   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
+   * @return array
+   *   Test data.
    */
   public function loadTestData(): array {
-    /** @var \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler */
-
     $modulePath = __DIR__ . '/../../tests/data';
 
     $testData = [];
@@ -50,44 +51,20 @@ class TestDataRetriever {
   }
 
   /**
+   * Check if any key exists in array.
    *
+   * @param array $keys
+   *   Keys to check.
+   * @param array $array
+   *   Array to check.
+   *
+   * @return bool
+   *   True if any key exists.
    */
   protected static function anyKeyExists(array $keys, array $array): bool {
     $flippedKeys = array_flip($keys);
     $commonKeys = array_intersect_key($flippedKeys, $array);
     return count($commonKeys) > 0;
-  }
-
-  /**
-   * Get typed data object for webform data.
-   *
-   * This is ripped off from ApplicationHandler class.
-   *
-   * @param array $submittedFormData
-   *   Form data.
-   * @param string $formId
-   *   Webform id.
-   *
-   * @return \Drupal\Core\TypedData\TypedDataInterface
-   *   Typed data with values set.
-   *
-   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
-   */
-  private function webformToTypedData(array $submittedFormData, string $formId): TypedDataInterface {
-    $definitionsMappings = Mappings::DEFINITIONS;
-    // Datatype plugin requires the module enablation.
-    if (!isset($definitionsMappings[$formId])) {
-      throw new \Exception('Unknown form id');
-    }
-
-    /** @var \Drupal\Core\TypedData\TypedDataInterface $dataDefinition */
-    $dataDefinition = ($definitionsMappings[$formId]['class'])::create($definitionsMappings[$formId]['parameter']);
-
-    $applicationData = $this->typedDataManager->create($dataDefinition);
-
-    $applicationData->setValue($submittedFormData);
-
-    return $applicationData;
   }
 
 }

@@ -17,13 +17,12 @@ use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\ProfileDataException;
-use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
- *
+ * Init applications service.
  */
 class ApplicationInitService {
 
@@ -70,6 +69,8 @@ class ApplicationInitService {
   protected LoggerChannelInterface $logger;
 
   /**
+   * Config factory.
+   *
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   private ConfigFactoryInterface $configFactory;
@@ -95,6 +96,28 @@ class ApplicationInitService {
    */
   protected AttachmentHandler $attachmentHandler;
 
+  /**
+   * Constructor.
+   *
+   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata
+   *   The helfi_helsinki_profiili.userdata service.
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   The grants_profile.service service.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   *   The current language service.
+   * @param \Drupal\grants_metadata\ApplicationDataService $applicationDataService
+   *   The grants_metadata.application_data service.
+   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   *   The application status service.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
+   *   The logger channel factory.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The config factory.
+   * @param \Drupal\grants_metadata\AtvSchema $atvSchema
+   *   The atv schema.
+   * @param \Drupal\helfi_atv\AtvService $atvService
+   *   The atv service.
+   */
   public function __construct(
     HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata,
     GrantsProfileService $grantsProfileService,
@@ -118,7 +141,10 @@ class ApplicationInitService {
   }
 
   /**
+   * Set attachment handler.
+   *
    * @param \Drupal\grants_attachments\AttachmentHandler $attachmentHandler
+   *   Attachment handler.
    */
   public function setAttachmentHandler(AttachmentHandler $attachmentHandler): void {
     $this->attachmentHandler = $attachmentHandler;
@@ -269,7 +295,7 @@ class ApplicationInitService {
       $newDocument->setContent($appDocumentContent);
       $newDocument = $this->atvService->patchDocument($newDocumentId, $newDocument->toArray());
     }
-    catch (AtvDocumentNotFoundException|AtvFailedToConnectException|EventException|GuzzleException $e) {
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | EventException | GuzzleException $e) {
       $this->logger->error('Error: %msg', ['%msg' => $e->getMessage()]);
     }
     return $newDocument;
@@ -358,28 +384,28 @@ class ApplicationInitService {
   /**
    * Set initial submission data.
    *
-   * @param $webform
+   * @param \Drupal\webform\Entity\Webform $webform
    *   Webform object.
-   * @param $selectedCompany
+   * @param array $selectedCompany
    *   Selected company data.
-   * @param $companyData
+   * @param array $companyData
    *   Company data.
-   * @param $userData
+   * @param array $userData
    *   User data.
-   * @param $userProfileData
+   * @param array $userProfileData
    *   User profile data.
    * @param array $submissionData
    *   Submission data.
    *
    * @return array
-   *   Submission data with initial data set.
+   *   Submission data.
    */
   private function setInitialSubmissionData(
-    $webform,
-    $selectedCompany,
-    $companyData,
-    $userData,
-    $userProfileData,
+    Webform $webform,
+    array $selectedCompany,
+    array $companyData,
+    array $userData,
+    array $userProfileData,
     array $submissionData
   ): array {
     $submissionData['application_type_id'] = $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID');
@@ -516,7 +542,7 @@ class ApplicationInitService {
    * Set form timestamps.
    *
    * @param array $submissionData
-   *  Submission data.
+   *   Submission data.
    */
   private function setFormTimestamps(array &$submissionData): void {
     $dt = new \DateTime();
@@ -528,13 +554,15 @@ class ApplicationInitService {
   /**
    * Create a new submission object.
    *
-   * @param $webform
-   *  Webform object.
+   * @param \Drupal\webform\Entity\Webform $webform
+   *   Webform object.
    *
    * @return \Drupal\webform\Entity\WebformSubmission
+   *   Submission object
+   *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  private function createSubmissionObject($webform): WebformSubmission {
+  private function createSubmissionObject(Webform $webform): WebformSubmission {
     $submissionObject = WebformSubmission::create([
       'webform_id' => $webform->id(),
       'draft' => TRUE,
@@ -548,23 +576,24 @@ class ApplicationInitService {
    * Create AtvDocument object for new application.
    *
    * @param array $submissionData
-   *  Submissin data.
-   * @param $selectedCompany
-   *  Selected company data.
+   *   Submissin data.
+   * @param array $selectedCompany
+   *   Selected company data.
    * @param string $webform_id
-   *  Webform ID
-   * @param $userData
-   *  User data
+   *   Webform ID.
+   * @param array $userData
+   *   User data.
    * @param bool $copy
-   *  Is this a copy operation.
+   *   Is this a copy operation.
    *
    * @return \Drupal\helfi_atv\AtvDocument
+   *   AtvDocument object.
    */
   private function createAtvDocument(
     array $submissionData,
-    $selectedCompany,
+    array $selectedCompany,
     string $webform_id,
-    $userData,
+    array $userData,
     bool $copy
   ): AtvDocument {
     $webform = Webform::load($webform_id);
@@ -616,4 +645,5 @@ class ApplicationInitService {
     $dataDefinitionKeys = $this->applicationDataService->getDataDefinitionClass($applicationType);
     return $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
   }
+
 }

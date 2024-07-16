@@ -1531,8 +1531,13 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
  */
 function grants_handler_preprocess_application_status_tag(&$variables): void {
 
-  // Get status service and get listed statuses.
+  /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+  $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
+
+  /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
   $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
+
+  // Get status service and get listed statuses.
   $applicationStatuses = $applicationStatusService->getApplicationStatuses();
 
   try {
@@ -1542,7 +1547,7 @@ function grants_handler_preprocess_application_status_tag(&$variables): void {
       $submissionData = $variables['submission_data'];
     }
     elseif ($variables['submission']) {
-      $submissionObject = ApplicationHandler::submissionObjectFromApplicationNumber($variables['applicationID']);
+      $submissionObject = $applicationGetterService->submissionObjectFromApplicationNumber($variables['applicationID']);
       $submissionData = $submissionObject->getData();
     }
     if (array_key_exists($submissionData["status"], $applicationStatuses)) {

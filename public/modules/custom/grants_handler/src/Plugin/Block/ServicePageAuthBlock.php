@@ -87,6 +87,8 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   Current user.
    * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
    *   The service page block service.
+   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   *   The application status service.
    */
   public function __construct(
     array $configuration,

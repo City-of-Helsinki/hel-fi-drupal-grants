@@ -7,15 +7,18 @@ use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\DrupalKernel;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\TempStore\TempStoreException;
 use Drupal\Core\TypedData\Exception\ReadOnlyException;
 use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationException;
+use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\grants_handler\ApplicationUploaderService;
 use Drupal\grants_handler\ApplicationValidator;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsErrorStorage;
@@ -212,6 +215,8 @@ class GrantsHandler extends WebformHandlerBase {
   protected RequestStack $requestStack;
 
   /**
+   * Application validator.
+   *
    * @var \Drupal\grants_handler\ApplicationValidator
    */
   protected ApplicationValidator $applicationValidator;
@@ -224,6 +229,7 @@ class GrantsHandler extends WebformHandlerBase {
   protected ApplicationStatusService $applicationStatusService;
 
   /**
+   * Application data service.
    *
    * @var \Drupal\grants_metadata\ApplicationDataService
    */
@@ -237,9 +243,27 @@ class GrantsHandler extends WebformHandlerBase {
   protected ApplicationInitService $applicationInitService;
 
   /**
+   * Uploader class.
+   *
+   * @var \Drupal\grants_handler\ApplicationUploaderService
+   */
+  protected ApplicationUploaderService $applicationUploaderService;
+
+  /**
+   * Access to application data.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
+
+  /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition): WebformHandlerBase| GrantsHandler| ContainerFactoryPluginInterface {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
 
     /** @var \Drupal\Core\Session\AccountProxyInterface $currentUser */
@@ -273,11 +297,13 @@ class GrantsHandler extends WebformHandlerBase {
     $instance->grantsFormNavigationHelper = $grantsFormNavigationHelper;
 
     /** @var \Drupal\grants_handler\ApplicationValidator $applicationValidator */
-    $instance->applicationValidator = $container->get('grants_handler.application_validator');
+    $applicationValidator = $container->get('grants_handler.application_validator');
+    $instance->applicationValidator = $applicationValidator;
     $instance->applicationValidator->setDebug($instance->isDebug());
 
     /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
-    $instance->applicationStatusService = $container->get('grants_handler.application_status_service');
+    $applicationStatusService = $container->get('grants_handler.application_status_service');
+    $instance->applicationStatusService = $applicationStatusService;
     $instance->applicationStatusService->setDebug($instance->isDebug());
 
     /** @var \Drupal\grants_handler\FormLockService $formLockService */
@@ -299,6 +325,14 @@ class GrantsHandler extends WebformHandlerBase {
     /** @var \Drupal\grants_handler\ApplicationInitService $applicationInitService */
     $applicationInitService = $container->get('grants_handler.application_init_service');
     $instance->applicationInitService = $applicationInitService;
+
+    /** @var \Drupal\grants_handler\ApplicationUploaderService $applicationUploaderService */
+    $applicationUploaderService = $container->get('grants_handler.application_uploader_service');
+    $instance->applicationUploaderService = $applicationUploaderService;
+
+    /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+    $applicationGetterService = $container->get('grants_handler.application_getter_service');
+    $instance->applicationGetterService = $applicationGetterService;
 
     $instance->triggeringElement = '';
     $instance->applicationNumber = '';
@@ -1058,7 +1092,7 @@ moment and reload the page.',
     if ($applicationNumber != '') {
       // Get document from ATV.
       try {
-        $document = $this->applicationHandler->getAtvDocument($applicationNumber);
+        $document = $this->applicationGetterService->getAtvDocument($applicationNumber);
         $oldStatus = $document->getStatus();
       }
       catch (TempStoreException | AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
@@ -1163,7 +1197,7 @@ moment and reload the page.',
     try {
       $this->submittedFormData = array_merge(
         $this->submittedFormData,
-        $this->applicationHandler->parseSenderDetails());
+        ApplicationHandler::parseSenderDetails());
     }
     catch (ApplicationException $e) {
     }
@@ -1420,7 +1454,7 @@ submit the application only after you have provided all the necessary informatio
         ]
       );
     try {
-      $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
+      $applicationUploadStatus = $this->applicationUploaderService->handleApplicationUploadToAtv(
         $applicationData,
         $this->applicationNumber,
         $this->submittedFormData
@@ -1474,7 +1508,9 @@ submit the application only after you have provided all the necessary informatio
     $this->formLockService->releaseApplicationLock($this->applicationNumber);
 
     $redirectResponse = new RedirectResponse($redirectUrl->toString());
-    $this->applicationHandler->clearCache($this->applicationNumber);
+
+    $this->applicationUploaderService->clearCache($this->applicationNumber);
+
     $redirectResponse->send();
 
   }
@@ -1563,7 +1599,7 @@ submit the application only after you have provided all the necessary informatio
         $this->submittedFormData);
 
       // Upload application via integration.
-      $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadViaIntegration(
+      $applicationUploadStatus = $this->applicationUploaderService->handleApplicationUploadViaIntegration(
         $applicationData,
         $this->applicationNumber,
         $this->submittedFormData

@@ -153,3 +153,35 @@ services:
     ]
     calls:
       - [ setAttachmentHandler, [ '@?grants_attachments.attachment_handler' ] ]
+
+  grants_handler.application_getter_service:
+    class: Drupal\grants_handler\ApplicationGetterService
+    arguments: [
+      '@helfi_atv.atv_service',
+      '@helfi_helsinki_profiili.userdata',
+      '@grants_handler.application_status_service',
+      '@grants_handler.message_service',
+      '@logger.factory',
+      '@entity_type.manager'
+    ]
+    calls:
+      - [ setGrantsProfileService, [ '@?grants_profile.service' ] ]
+
+  grants_handler.application_uploader_service:
+    class: Drupal\grants_handler\ApplicationUploaderService
+    arguments: [
+      '@helfi_atv.atv_service',
+      '@grants_metadata.atv_schema',
+      '@grants_handler.application_status_service',
+      '@grants_handler.message_service',
+      '@http_client',
+      '@logger.factory',
+      '@language_manager',
+      '@messenger',
+      '@grants_handler.application_getter_service',
+      '@helfi_helsinki_profiili.userdata'
+    ]
+
+  grants_handler.application_access_handler:
+    class: Drupal\grants_handler\ApplicationAccessHandler
+    arguments: ['@grants_profile.service']

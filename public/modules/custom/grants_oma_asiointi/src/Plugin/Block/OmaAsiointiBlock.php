@@ -7,6 +7,7 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
@@ -88,6 +89,13 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
   protected MessageService $messageService;
 
   /**
+   * The application getter service.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
+
+  /**
    * Construct block object.
    *
    * @param array $configuration
@@ -110,6 +118,10 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   Language manager.
    * @param \Drupal\Core\Session\AccountInterface $currentUser
    *   Current user.
+   * @param \Drupal\grants_handler\MessageService $messageService
+   *   MEssage service.
+   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   *   Application getters.
    */
   public function __construct(
     array $configuration,
@@ -122,7 +134,8 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     Request $request,
     LanguageManagerInterface $languageManager,
     AccountInterface $currentUser,
-    MessageService $messageService
+    MessageService $messageService,
+    ApplicationGetterService $applicationGetterService
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->helfiHelsinkiProfiiliUserdata = $helsinkiProfiiliUserData;
@@ -133,6 +146,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     $this->languageManager = $languageManager;
     $this->currentUser = $currentUser;
     $this->messageService = $messageService;
+    $this->applicationGetterService = $applicationGetterService;
   }
 
   /**
@@ -166,12 +180,15 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       $container->get('request_stack')->getCurrentRequest(),
       $container->get('language_manager'),
       $container->get('current_user'),
-      $container->get('grants_handler.message_service')
+      $container->get('grants_handler.message_service'),
+      $container->get('grants_handler.application_getter_service')
     );
   }
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function build() {
 
@@ -246,7 +263,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
               continue;
             }
 
-            $submission = ApplicationHandler::submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
+            $submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($document->getTransactionId(), $document);
             $submissionData = $submission->getData();
             $submissionMessages = $this->messageService->parseMessages($submissionData, TRUE);
             $messages += $submissionMessages;

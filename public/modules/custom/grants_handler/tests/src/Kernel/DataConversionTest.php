@@ -2,6 +2,8 @@
 
 namespace Drupal\grants_handler\Kernel\TestDataConversion;
 
+use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
+use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
@@ -95,7 +97,18 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
   public function testDataConversion(): void {
     $this->initSession();
 
-    $submissionStorage = \Drupal::entityTypeManager()->getStorage('webform_submission');
+    try {
+      /** @var \Drupal\grants_handler\GrantsHandlerSubmissionStorage $submissionStorage */
+      $submissionStorage = \Drupal::entityTypeManager()
+        ->getStorage('webform_submission');
+    }
+    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
+      $submissionStorage = NULL;
+    }
+
+    if (!$submissionStorage) {
+      $this->fail('Could not get submission storage');
+    }
 
     $submissionObject = WebformSubmission::create(['webform_id' => 'kuva_projekti']);
     $submissionObject->set('serial', 'TEST-1234');

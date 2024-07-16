@@ -6,6 +6,7 @@ use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
@@ -72,6 +73,13 @@ class WebformNavigationController extends ControllerBase {
   protected AtvService $atvService;
 
   /**
+   * Get application data.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): WebformNavigationController {
@@ -84,6 +92,8 @@ class WebformNavigationController extends ControllerBase {
     $instance->formLockService = $container->get('grants_handler.form_lock_service');
     $instance->wfNaviHelper = $container->get('grants_handler.navigation_helper');
     $instance->atvService = $container->get('helfi_atv.atv_service');
+    $instance->applicationGetterService = $container->get('grants_handler.application_getter_service');
+
     return $instance;
   }
 
@@ -113,7 +123,7 @@ class WebformNavigationController extends ControllerBase {
     }
 
     try {
-      $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
+      $submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
     }
     catch (\Exception  $e) {
       $this->messenger()
@@ -139,7 +149,7 @@ class WebformNavigationController extends ControllerBase {
       $this->wfNaviHelper->deleteSubmissionLogs($submission);
 
       try {
-        $document = $this->applicationHandler->getAtvDocument($submission_id);
+        $document = $this->applicationGetterService->getAtvDocument($submission_id);
 
         if ($this->atvService->deleteDocument($document)) {
           $submission->delete();

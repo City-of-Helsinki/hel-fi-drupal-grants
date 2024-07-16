@@ -52,6 +52,7 @@ class ResendApplicationsForm extends AtvFormBase {
     MessageService $messageService
   ) {
     $this->atvService = $atvService;
+    $this->messageService = $messageService;
   }
 
   /**

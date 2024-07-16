@@ -7,8 +7,10 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
+use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\grants_handler\ApplicationUploaderService;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\helfi_atv\AtvService;
@@ -69,6 +71,20 @@ class GrantsAttachmentsController extends ControllerBase {
   protected ApplicationDataService $applicationDataService;
 
   /**
+   * Application getter service.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
+
+  /**
+   * Application uploader service.
+   *
+   * @var \Drupal\grants_handler\ApplicationUploaderService
+   */
+  protected ApplicationUploaderService $applicationUploaderService;
+
+  /**
    * The controller constructor.
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
@@ -79,6 +95,14 @@ class GrantsAttachmentsController extends ControllerBase {
    *   Drupal requests.
    * @param \Drupal\grants_handler\EventsService $eventsService
    *   Use submission events productively.
+   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   *   Application status service.
+   * @param \Drupal\grants_metadata\ApplicationDataService $applicationDataService
+   *   Application data service.
+   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   *   Application getter service.
+   * @param \Drupal\grants_handler\ApplicationUploaderService $applicationUploaderService
+   *   Application uploader service.
    */
   public function __construct(
     AtvService $helfi_atv,
@@ -86,7 +110,9 @@ class GrantsAttachmentsController extends ControllerBase {
     RequestStack $requestStack,
     EventsService $eventsService,
     ApplicationStatusService $applicationStatusService,
-    ApplicationDataService $applicationDataService
+    ApplicationDataService $applicationDataService,
+    ApplicationGetterService $applicationGetterService,
+    ApplicationUploaderService $applicationUploaderService
   ) {
     $this->helfiAtv = $helfi_atv;
     $this->applicationHandler = $applicationHandler;
@@ -95,7 +121,8 @@ class GrantsAttachmentsController extends ControllerBase {
     $this->eventsService = $eventsService;
     $this->applicationStatusService = $applicationStatusService;
     $this->applicationDataService = $applicationDataService;
-
+    $this->applicationGetterService = $applicationGetterService;
+    $this->applicationUploaderService = $applicationUploaderService;
   }
 
   /**
@@ -108,7 +135,9 @@ class GrantsAttachmentsController extends ControllerBase {
       $container->get('request_stack'),
       $container->get('grants_handler.events_service'),
       $container->get('grants_handler.application_status_service'),
-      $container->get('grants_metadata.application_data_service')
+      $container->get('grants_metadata.application_data_service'),
+      $container->get('grants_handler.application_getter_service'),
+      $container->get('grants_handler.application_uploader_service')
     );
   }
 
@@ -133,9 +162,11 @@ class GrantsAttachmentsController extends ControllerBase {
 
     // Load submission & data.
     try {
-      $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
+      $submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
     }
     catch (\Exception $e) {
+      $this->messenger()->addError($e->getMessage());
+      return new RedirectResponse($this->request->getMainRequest()->get('destination'));
     }
     $submissionData = $submission->getData();
     // Rebuild integration id from url.
@@ -187,7 +218,7 @@ class GrantsAttachmentsController extends ControllerBase {
           $submissionData);
 
         // Update in ATV.
-        $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
+        $applicationUploadStatus = $this->applicationUploaderService->handleApplicationUploadToAtv(
           $applicationData,
           $submission_id,
           $submissionData,

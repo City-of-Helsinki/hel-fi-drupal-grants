@@ -8,18 +8,25 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\TempStore\TempStoreException;
+use Drupal\grants_handler\ApplicationAccessHandler;
+use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
+use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\InputmaskHandler;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvFailedToConnectException;
+use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformRequestInterface;
@@ -121,6 +128,20 @@ class ApplicationController extends ControllerBase {
   protected ApplicationInitService $applicationInitService;
 
   /**
+   * Access handler for applications.
+   *
+   * @var \Drupal\grants_handler\ApplicationAccessHandler
+   */
+  protected ApplicationAccessHandler $applicationAccessHandler;
+
+  /**
+   * Getter service for applications.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): ApplicationController {
@@ -137,6 +158,8 @@ class ApplicationController extends ControllerBase {
     $instance->applicationDataService = $container->get('grants_metadata.application_data_service');
     $instance->applicationStatusService = $container->get('grants_handler.application_status_service');
     $instance->applicationInitService = $container->get('grants_handler.application_init_service');
+    $instance->applicationAccessHandler = $container->get('grants_handler.application_access_handler');
+    $instance->applicationGetterService = $container->get('grants_handler.application_getter_service');
 
     return $instance;
   }
@@ -166,7 +189,7 @@ class ApplicationController extends ControllerBase {
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->applicationHandler->singleSubmissionAccess(
+      $this->applicationAccessHandler->singleSubmissionAccess(
         $webform_submissionObject
       ));
   }
@@ -185,9 +208,23 @@ class ApplicationController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function accessByApplicationNumber(AccountInterface $account, string $submission_id): AccessResultInterface {
-    $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
+    try {
+      $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
+    }
+    catch (InvalidPluginDefinitionException |
+    PluginNotFoundException |
+    EntityStorageException |
+    TempStoreException |
+    CompanySelectException |
+    AtvDocumentNotFoundException |
+    AtvFailedToConnectException |
+    TokenExpiredException |
+    GuzzleException $e) {
+      return AccessResult::forbidden('Submission gettting failed');
+    }
 
     if ($webform_submission == NULL) {
       return AccessResult::forbidden('No submission found');
@@ -202,7 +239,7 @@ class ApplicationController extends ControllerBase {
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->applicationHandler->singleSubmissionAccess(
+      $this->applicationAccessHandler->singleSubmissionAccess(
         $webform_submission
       ));
   }
@@ -213,7 +250,7 @@ class ApplicationController extends ControllerBase {
    * @param string $status
    *   Status string from method.
    */
-  public function showMessageForDataStatus(string $status) {
+  public function showMessageForDataStatus(string $status): void {
     $message = NULL;
     $tOpts = ['context' => 'grants_handler'];
 
@@ -258,7 +295,7 @@ class ApplicationController extends ControllerBase {
     $view_mode = 'default';
 
     try {
-      $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
+      $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
 
       if ($webform_submission != NULL) {
         $webform = $webform_submission->getWebform();
@@ -385,14 +422,17 @@ class ApplicationController extends ControllerBase {
       $newSubmission = $this->applicationInitService->initApplication($webform->id());
     }
     catch (\Exception $e) {
-      $d = 'asdf';
+      $newSubmission = NULL;
+      $this->getLogger('ApplicatoinController')->error('Error: %error', [
+        '%error' => $e->getMessage(),
+      ]);
     }
 
     return $this->redirect(
       'grants_handler.edit_application',
       [
         'webform' => $webform->id(),
-        'webform_submission' => $newSubmission->id(),
+        'webform_submission' => $newSubmission?->id(),
       ]
     );
   }

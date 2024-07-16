@@ -22,8 +22,10 @@ services:
         '@messenger',
         '@grants_profile.profile_connector',
         '@logger.factory',
-        '@grants_profile.cache',
+        '@grants_profile.cache'
     ]
+    calls:
+      - [setApplicationGetterService, ['@grants_handler.application_getter_service']]
 
   grants_profile.municipality_service:
     class: Drupal\grants_profile\MunicipalityService

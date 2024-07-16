@@ -114,7 +114,8 @@ class EventsService {
   /**
    * Get event types.
    *
-   * @return string[]
+   * @return array|string[]
+   *   Event types.
    */
   public function getEventTypes(): array {
     return $this->eventTypes;

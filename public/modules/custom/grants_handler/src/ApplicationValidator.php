@@ -8,6 +8,7 @@ use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\webform\Entity\WebformSubmission;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -21,6 +22,7 @@ final class ApplicationValidator {
 
   use AutowireTrait;
   use DebuggableTrait;
+  use StringTranslationTrait;
 
   /**
    * Log errors.
@@ -62,11 +64,18 @@ final class ApplicationValidator {
   }
 
   /**
+   * Validate application.
+   *
    * @param \Drupal\Core\TypedData\ComplexDataInterface $applicationData
+   *   Application data.
    * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
    * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
+   *   Webform submission.
    *
    * @return \Symfony\Component\Validator\ConstraintViolationListInterface
+   *   Violations.
+   *
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   public function validateApplication(
@@ -92,12 +101,17 @@ final class ApplicationValidator {
   }
 
   /**
-   * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
-   * @param \Drupal\Core\TypedData\ComplexDataInterface $applicationData
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
+   * Handle violations.
    *
-   * @return void
+   * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
+   *   Violations.
+   * @param \Drupal\Core\TypedData\ComplexDataInterface $applicationData
+   *   Application data.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param \Drupal\webform\Entity\WebformSubmission $webform_submission
+   *   Webform submission.
+   *
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   private function handleViolations(
@@ -129,7 +143,20 @@ final class ApplicationValidator {
   }
 
   /**
+   * Process violation.
    *
+   * @param \Symfony\Component\Validator\ConstraintViolationInterface $violation
+   *   Violation.
+   * @param array $appProps
+   *   Application properties.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $formElementsDecodedAndFlattened
+   *   Form elements.
+   * @param array $erroredItems
+   *   Errored items.
+   * @param array $violationPrints
+   *   Violation prints.
    */
   public function processViolation(
     ConstraintViolationInterface $violation,
@@ -143,14 +170,20 @@ final class ApplicationValidator {
   }
 
   /**
-   * @param \Symfony\Component\Validator\ConstraintViolationInterface $violation
-   * @param array $appProps
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   * @param array $formElementsDecodedAndFlattened
-   * @param array $erroredItems
-   * @param array $violationPrints
+   * Handle violation.
    *
-   * @return void
+   * @param \Symfony\Component\Validator\ConstraintViolationInterface $violation
+   *   Violation.
+   * @param array $appProps
+   *   Application properties.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $formElementsDecodedAndFlattened
+   *   Form elements.
+   * @param array $erroredItems
+   *   Errored items.
+   * @param array $violationPrints
+   *   Violation prints.
    */
   private function handleViolation(
     ConstraintViolationInterface $violation,
@@ -184,14 +217,20 @@ final class ApplicationValidator {
   }
 
   /**
-   * @param \Symfony\Component\Validator\ConstraintViolationInterface $violation
-   * @param string $propertyPath
-   * @param array $thisDefinitionSettings
-   * @param string $label
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   * @param array $erroredItems
+   * Handle form element violation.
    *
-   * @return void
+   * @param \Symfony\Component\Validator\ConstraintViolationInterface $violation
+   *   Violation.
+   * @param string $propertyPath
+   *   Property path.
+   * @param array $thisDefinitionSettings
+   *   Definition settings.
+   * @param string $label
+   *   Label.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $erroredItems
+   *   Errored items.
    */
   private function handleFormElementViolation(
     ConstraintViolationInterface $violation,
@@ -212,14 +251,20 @@ final class ApplicationValidator {
   }
 
   /**
-   * @param \Symfony\Component\Validator\ConstraintViolationInterface $violation
-   * @param string $propertyPath
-   * @param array $propertyPathArray
-   * @param array $formElementsDecodedAndFlattened
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   * @param array $erroredItems
+   * Handle other violation.
    *
-   * @return void
+   * @param \Symfony\Component\Validator\ConstraintViolationInterface $violation
+   *   Violation.
+   * @param string $propertyPath
+   *   Property path.
+   * @param array $propertyPathArray
+   *   Property path array.
+   * @param array $formElementsDecodedAndFlattened
+   *   Form elements.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $erroredItems
+   *   Errored items.
    */
   private function handleOtherViolation(
     ConstraintViolationInterface $violation,

@@ -381,11 +381,11 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
-    /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
-    $applicationHandler = \Drupal::service('grants_handler.application_handler');
+    /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+    $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
 
     try {
-      $applicationDocument = $applicationHandler->getAtvDocument($applicationNumber);
+      $applicationDocument = $applicationGetterService->getAtvDocument($applicationNumber);
 
       /** @var \Drupal\file\Entity\File $file */
       foreach ($element["#files"] as $file) {

@@ -66,6 +66,13 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
   protected array $data;
 
   /**
+   * Message service.
+   *
+   * @var \Drupal\grants_handler\MessageService
+   */
+  protected MessageService $messageService;
+
+  /**
    * {@inheritdoc}
    */
   public static function createInstance(
@@ -94,6 +101,10 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
     /** @var \Drupal\grants_metadata\ApplicationDataService $applicationDataService */
     $applicationDataService = \Drupal::service('grants_metadata.application_data_service');
     $instance->applicationDataService = $applicationDataService;
+
+    /** @var \Drupal\grants_handler\MessageService $messageService */
+    $messageService = \Drupal::service('grants_handler.message_service');
+    $instance->messageService = $messageService;
 
     $instance->data = [];
 
@@ -185,10 +196,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       $document->getMetadata()
     );
 
-    /** @var \Drupal\grants_handler\MessageService $messageService */
-    $messageService = \Drupal::service('grants_handler.message_service');
-
-    $sData['messages'] = $messageService->parseMessages($sData);
+    $sData['messages'] = $this->messageService->parseMessages($sData);
 
     $submission->setData($sData);
     return $sData;

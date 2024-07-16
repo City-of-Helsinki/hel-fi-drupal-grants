@@ -5,8 +5,10 @@ namespace Drupal\grants_attachments\Plugin\WebformElement;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\Element\GrantsAttachments as ElementGrantsAttachments;
+use Drupal\grants_handler\EventsService;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a 'grants_attachments' element.
@@ -27,7 +29,7 @@ use Drupal\webform\WebformSubmissionInterface;
  * @see \Drupal\webform\Plugin\WebformElementInterface
  * @see \Drupal\webform\Annotation\WebformElement
  */
-class GrantsAttachments extends WebformCompositeBase {
+final class GrantsAttachments extends WebformCompositeBase {
 
   /**
    * Avustus2 file types.
@@ -73,6 +75,51 @@ class GrantsAttachments extends WebformCompositeBase {
     44 => 'Hakemusliite',
     45 => 'Pankkitilivahvistus',
   ];
+
+  /**
+   * Events service.
+   *
+   * @var \Drupal\grants_handler\EventsService
+   */
+  protected EventsService $eventsService;
+
+  /**
+   * Constructs a new GrantsAttachments element.
+   *
+   * @param array $configuration
+   *   The configuration.
+   * @param string $plugin_id
+   *   The plugin ID.
+   * @param mixed $plugin_definition
+   *   The plugin definition.
+   * @param \Drupal\grants_handler\EventsService $eventsService
+   *   The events service.
+   */
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EventsService $eventsService
+  ) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->eventsService = $eventsService;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition): static {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('grants_handler.events_service')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -204,8 +251,7 @@ class GrantsAttachments extends WebformCompositeBase {
     $tOpts = ['context' => 'grants_attachments'];
 
     $submissionData = $webform_submission->getData();
-    $eventsService = \Drupal::service('grants_handler.events_service');
-    $attachmentEvents = $eventsService->filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
+    $attachmentEvents = $this->eventsService->filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
 
     if (!is_array($value)) {
       return [];

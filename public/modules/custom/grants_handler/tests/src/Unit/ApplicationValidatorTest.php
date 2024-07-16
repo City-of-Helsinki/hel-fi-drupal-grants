@@ -38,7 +38,7 @@ class ApplicationValidatorTest extends UnitTestCase {
   protected array $testData;
 
   /**
-   *
+   * {@inheritdoc}
    */
   public static function getModules(): array {
     return ['grants_handler', 'grants_metadata'];
@@ -62,10 +62,9 @@ class ApplicationValidatorTest extends UnitTestCase {
 
     try {
       $this->testData = $this->testDataRetriever->loadTestData();
-      $d = 'asdf';
     }
     catch (\Exception $e) {
-      $ed = 'asdf';
+      $this->fail('Failed to load test data');
     }
   }
 

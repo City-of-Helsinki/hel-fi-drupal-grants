@@ -6,10 +6,15 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 
 /**
- *
+ * Helper functions for grants handler.
  */
 class Helpers {
 
+  /**
+   * Application environment.
+   *
+   * @var string
+   */
   private static string $appEnv;
 
   /**

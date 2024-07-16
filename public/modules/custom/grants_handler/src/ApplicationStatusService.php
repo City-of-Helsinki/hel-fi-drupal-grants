@@ -4,15 +4,16 @@ namespace Drupal\grants_handler;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformSubmissionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- *
+ * Service to handle application statuses.
  */
-class ApplicationStatusService implements ContainerInjectionInterface {
+final class ApplicationStatusService implements ContainerInjectionInterface {
 
   use DebuggableTrait;
 
@@ -22,6 +23,13 @@ class ApplicationStatusService implements ContainerInjectionInterface {
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected ConfigFactoryInterface $configFactory;
+
+  /**
+   * Log errors.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   */
+  protected LoggerChannelInterface $logger;
 
   /**
    * The application statuses.
@@ -42,17 +50,21 @@ class ApplicationStatusService implements ContainerInjectionInterface {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
+   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
+   *   Log errors.
    */
-  public function __construct(ConfigFactoryInterface $config_factory) {
+  public function __construct(ConfigFactoryInterface $config_factory, LoggerChannelInterface $logger) {
     $this->configFactory = $config_factory;
+    $this->logger = $logger;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('config.factory')
+    return new ApplicationStatusService(
+      $container->get('config.factory'),
+      $container->get('logger.factory')->get('ApplicationStatusService')
     );
   }
 
@@ -157,12 +169,12 @@ class ApplicationStatusService implements ContainerInjectionInterface {
       $to = new \DateTime($thirdPartySettings["applicationClose"]);
     }
     catch (\Exception $e) {
-      \Drupal::logger('application_handler')
+
+      $this->logger
         ->error('isApplicationOpen date error: @error', ['@error' => $e->getMessage()]);
       return $applicationContinuous;
     }
 
-    // @todo nää pois applicationhandlerista
     $status = $this->getWebformStatus($webform);
     $appEnv = Helpers::getAppEnv();
     $isProd = Helpers::isProduction($appEnv);

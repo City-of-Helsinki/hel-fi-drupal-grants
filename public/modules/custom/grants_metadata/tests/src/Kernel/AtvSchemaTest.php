@@ -6,6 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
 use Drupal\Core\TypedData\ComplexDataInterface;
+use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\TypedData\Definition\YleisavustusHakemusDefinition;
 use Drupal\grants_test_base\Kernel\GrantsKernelTestBase;
@@ -79,6 +80,63 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $schemaPath = __DIR__ . "/../../../../../../../conf/tietoliikennesanoma_schema.json";
     $schema->setSchema($schemaPath);
     return $schema;
+  }
+
+  /* Helper functions to prepare for testing: */
+
+  /**
+   * Load test data from data directory.
+   */
+  public static function loadSubmissionData($formName): array {
+    if (str_contains($formName, '.')) {
+      $parts = explode('.', $formName);
+      $formName = $parts[0];
+      $applicantType = $parts[1];
+
+    }
+    else {
+      $applicantType = NULL;
+    }
+
+    $filePath = __DIR__ . "/../../data/{$formName}.data.json";
+    $data = json_decode(file_get_contents($filePath), TRUE);
+
+    if ($applicantType) {
+      return $data[$applicantType];
+    }
+    return $data;
+
+  }
+
+  /**
+   * Get typed data object for webform data.
+   *
+   * This is ripped off from ApplicationHandler class.
+   *
+   * @param array $submittedFormData
+   *   Form data.
+   * @param string $formId
+   *   Webform id.
+   *
+   * @return \Drupal\Core\TypedData\TypedDataInterface
+   *   Typed data with values set.
+   *
+   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
+   */
+  public static function webformToTypedData(array $submittedFormData, string $formId): TypedDataInterface {
+    $definitionsMappings = Mappings::DEFINITIONS;
+    // Datatype plugin requires the module enablation.
+    if (!isset($definitionsMappings[$formId])) {
+      throw new \Exception('Unknown form id');
+    }
+    $dataDefinition = ($definitionsMappings[$formId]['class'])::create($definitionsMappings[$formId]['parameter']);
+
+    $typeManager = $dataDefinition->getTypedDataManager();
+    $applicationData = $typeManager->create($dataDefinition);
+
+    $applicationData->setValue($submittedFormData);
+
+    return $applicationData;
   }
 
   /**
@@ -401,7 +459,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $pages = $webform->getPages('edit');
     $this->assertNotNull($webform);
     $this->initSession('unregistered_community');
-    $submissionData = self::loadSubmissionData('kuva_projekti.unregistered');
+    $submissionData = self::loadSubmissionData('kuva_projekti.unregistered_community');
     $typedData = self::webformToTypedData($submissionData, 'kuva_projekti');
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);

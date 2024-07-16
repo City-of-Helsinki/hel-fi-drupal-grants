@@ -53,7 +53,11 @@ abstract class AtvFormBase extends FormBase {
   public static function updateSaveIdRecord(string $applicationNumber, string $saveId): void {
 
     $database = \Drupal::service('database');
-    $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber(
+
+    /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+    $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
+
+    $webform_submission = $applicationGetterService->submissionObjectFromApplicationNumber(
       $applicationNumber,
       NULL,
       FALSE,

@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
@@ -82,15 +83,31 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   protected MessageService $messageService;
 
   /**
+   * Application getter service.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
+
+  /**
    * CompanyController constructor.
    *
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   *   The request stack.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
+   *   The current user.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   The language manager.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   The grants profile service.
    * @param \Drupal\grants_handler\ApplicationHandler $grants_handler_application_handler
+   *   The application handler.
    * @param \Drupal\helfi_atv\AtvService $helfi_atv_atv_service
+   *   The ATV service.
    * @param \Drupal\grants_handler\MessageService $messageService
+   *   The message service.
+   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   *   The application getter service.
    */
   public function __construct(
     RequestStack $requestStack,
@@ -99,7 +116,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     GrantsProfileService $grantsProfileService,
     ApplicationHandler $grants_handler_application_handler,
     AtvService $helfi_atv_atv_service,
-    MessageService $messageService
+    MessageService $messageService,
+    ApplicationGetterService $applicationGetterService
   ) {
     $this->requestStack = $requestStack;
     $this->currentUser = $current_user;
@@ -109,6 +127,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     $this->applicationHandler = $grants_handler_application_handler;
     $this->helfiAtvAtvService = $helfi_atv_atv_service;
     $this->messageService = $messageService;
+    $this->applicationGetterService = $applicationGetterService;
   }
 
   /**
@@ -122,7 +141,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       $container->get('grants_profile.service'),
       $container->get('grants_handler.application_handler'),
       $container->get('helfi_atv.atv_service'),
-      $container->get('grants_handler.message_service')
+      $container->get('grants_handler.message_service'),
+      $container->get('grants_handler.application_getter_service')
     );
   }
 
@@ -184,7 +204,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
 
     try {
       // Get applications from ATV.
-      $applications = ApplicationHandler::getCompanyApplications(
+      $applications = $this->applicationGetterService->getCompanyApplications(
         $selectedCompany,
         $appEnv,
         FALSE,

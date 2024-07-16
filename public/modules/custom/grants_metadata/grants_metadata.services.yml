@@ -15,5 +15,6 @@ services:
     arguments: [
       '@logger.factory',
       '@database',
-      '@grants_handler.events_service'
+      '@grants_handler.events_service',
+      '@grants_handler.application_getter_service'
     ]
