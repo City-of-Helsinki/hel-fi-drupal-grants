@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_profile\GrantsProfileException;
@@ -26,13 +26,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class CopyApplicationForm extends FormBase {
 
   use DebuggableTrait;
-
-  /**
-   * Application handler class.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
 
   /**
    * Application init service.
@@ -59,14 +52,12 @@ class CopyApplicationForm extends FormBase {
    * Constructs a new AddressForm object.
    */
   public function __construct(
-    ApplicationHandler $applicationHandler,
     ApplicationInitService $applicationInitService,
     LoggerChannelInterface $logger,
     ApplicationGetterService $applicationGetterService
   ) {
     $this->setDebug(NULL);
 
-    $this->applicationHandler = $applicationHandler;
     $this->applicationInitService = $applicationInitService;
     $this->logger = $logger;
     $this->applicationGetterService = $applicationGetterService;
@@ -77,7 +68,6 @@ class CopyApplicationForm extends FormBase {
    */
   public static function create(ContainerInterface $container): MessageForm|static {
     return new static(
-      $container->get('grants_handler.application_handler'),
       $container->get('grants_handler.application_init_service'),
       $container->get('logger.factory')->get('copy_application_form'),
       $container->get('grants_handler.application_getter_service')

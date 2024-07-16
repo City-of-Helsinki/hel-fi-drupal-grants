@@ -5,7 +5,7 @@ namespace Drupal\grants_admin_applications\Form;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Psr\Log\LoggerInterface;
@@ -68,7 +68,7 @@ abstract class AtvFormBase extends FormBase {
       'webform_id' => ($webform_submission) ? $webform_submission->getWebform()
         ->id() : '',
       'sid' => ($webform_submission) ? $webform_submission->id() : 0,
-      'handler_id' => ApplicationHandler::HANDLER_ID,
+      'handler_id' => ApplicationHelpers::HANDLER_ID,
       'application_number' => $applicationNumber,
       'saveid' => $saveId,
       'uid' => \Drupal::currentUser()->id(),
@@ -76,7 +76,7 @@ abstract class AtvFormBase extends FormBase {
       'timestamp' => (string) \Drupal::time()->getRequestTime(),
     ];
 
-    $query = $database->insert(ApplicationHandler::TABLE, $fields);
+    $query = $database->insert(ApplicationHelpers::TABLE, $fields);
     $query->fields($fields)->execute();
 
   }

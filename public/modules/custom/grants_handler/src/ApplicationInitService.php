@@ -363,7 +363,7 @@ class ApplicationInitService {
     $this->setFormTimestamps($submissionData);
 
     $submissionObject = $this->createSubmissionObject($webform);
-    $submissionData['application_number'] = ApplicationHandler::createApplicationNumber($submissionObject);
+    $submissionData['application_number'] = ApplicationHelpers::createApplicationNumber($submissionObject);
 
     $atvDocument = $this->createAtvDocument($submissionData, $selectedCompany, $webform_id, $userData, $copy);
     $typeData = $this->applicationDataService->webformToTypedData($submissionData);

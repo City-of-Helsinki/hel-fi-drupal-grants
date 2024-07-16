@@ -7,7 +7,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
 use Drupal\grants_profile\GrantsProfileService;
@@ -43,13 +43,6 @@ class WebformNavigationController extends ControllerBase {
    * @var \Drupal\grants_profile\GrantsProfileService
    */
   protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Application handler.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
 
   /**
    * Form lock service.
@@ -88,7 +81,6 @@ class WebformNavigationController extends ControllerBase {
 
     $instance->request = $container->get('request_stack');
     $instance->grantsProfileService = $container->get('grants_profile.service');
-    $instance->applicationHandler = $container->get('grants_handler.application_handler');
     $instance->formLockService = $container->get('grants_handler.form_lock_service');
     $instance->wfNaviHelper = $container->get('grants_handler.navigation_helper');
     $instance->atvService = $container->get('helfi_atv.atv_service');

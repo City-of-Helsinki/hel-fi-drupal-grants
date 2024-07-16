@@ -7,7 +7,7 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\grants_mandate\Controller\GrantsMandateController;
@@ -62,13 +62,6 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   protected LoggerInterface $logger;
 
   /**
-   * The grants_handler.application_handler service.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
-
-  /**
    * The helfi_atv.atv_service service.
    *
    * @var \Drupal\helfi_atv\AtvService
@@ -100,8 +93,6 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    *   The language manager.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   The grants profile service.
-   * @param \Drupal\grants_handler\ApplicationHandler $grants_handler_application_handler
-   *   The application handler.
    * @param \Drupal\helfi_atv\AtvService $helfi_atv_atv_service
    *   The ATV service.
    * @param \Drupal\grants_handler\MessageService $messageService
@@ -114,7 +105,6 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     AccountProxyInterface $current_user,
     LanguageManagerInterface $language_manager,
     GrantsProfileService $grantsProfileService,
-    ApplicationHandler $grants_handler_application_handler,
     AtvService $helfi_atv_atv_service,
     MessageService $messageService,
     ApplicationGetterService $applicationGetterService
@@ -124,7 +114,6 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     $this->languageManager = $language_manager;
     $this->grantsProfileService = $grantsProfileService;
     $this->logger = $this->getLogger('grants_oma_asiointi');
-    $this->applicationHandler = $grants_handler_application_handler;
     $this->helfiAtvAtvService = $helfi_atv_atv_service;
     $this->messageService = $messageService;
     $this->applicationGetterService = $applicationGetterService;
@@ -139,7 +128,6 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       $container->get('current_user'),
       $container->get('language_manager'),
       $container->get('grants_profile.service'),
-      $container->get('grants_handler.application_handler'),
       $container->get('helfi_atv.atv_service'),
       $container->get('grants_handler.message_service'),
       $container->get('grants_handler.application_getter_service')

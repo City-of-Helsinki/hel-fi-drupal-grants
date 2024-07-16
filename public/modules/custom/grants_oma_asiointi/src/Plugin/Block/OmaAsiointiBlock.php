@@ -8,7 +8,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\grants_metadata\AtvSchema;
@@ -45,13 +45,6 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
    * @var \Drupal\grants_profile\GrantsProfileService
    */
   protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * The grants_handler.application_handler service.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
 
   /**
    * The helfi_atv.atv_service service.
@@ -108,8 +101,6 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   Helsinki profile user data.
    * @param \Drupal\grants_profile\GrantsProfileService $grants_profile_service
    *   The grants_profile.service service.
-   * @param \Drupal\grants_handler\ApplicationHandler $grants_handler_application_handler
-   *   The grants_handler.application_handler service.
    * @param \Drupal\helfi_atv\AtvService $helfi_atv_atv_service
    *   The helfi_atv.atv_service service.
    * @param \Symfony\Component\HttpFoundation\Request $request
@@ -129,7 +120,6 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     $plugin_definition,
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
     GrantsProfileService $grants_profile_service,
-    ApplicationHandler $grants_handler_application_handler,
     AtvService $helfi_atv_atv_service,
     Request $request,
     LanguageManagerInterface $languageManager,
@@ -140,7 +130,6 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->helfiHelsinkiProfiiliUserdata = $helsinkiProfiiliUserData;
     $this->grantsProfileService = $grants_profile_service;
-    $this->applicationHandler = $grants_handler_application_handler;
     $this->helfiAtvAtvService = $helfi_atv_atv_service;
     $this->request = $request;
     $this->languageManager = $languageManager;
@@ -175,7 +164,6 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       $plugin_definition,
       $container->get('helfi_helsinki_profiili.userdata'),
       $container->get('grants_profile.service'),
-      $container->get('grants_handler.application_handler'),
       $container->get('helfi_atv.atv_service'),
       $container->get('request_stack')->getCurrentRequest(),
       $container->get('language_manager'),

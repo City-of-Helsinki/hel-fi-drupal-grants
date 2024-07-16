@@ -196,7 +196,7 @@ final class ApplicationGetterService {
         try {
 
           // Convert the data.
-          $dataDefinition = ApplicationHandler::getDataDefinition($document->getType());
+          $dataDefinition = ApplicationHelpers::getDataDefinition($document->getType());
           $submissionData = DocumentContentMapper::documentContentToTypedData(
             $document->getContent(),
             $dataDefinition,
@@ -207,18 +207,18 @@ final class ApplicationGetterService {
 
           // Load the webform submission ID.
           $applicationNumber = $submissionData['application_number'];
-          $serial = ApplicationHandler::getSerialFromApplicationNumber($applicationNumber);
+          $serial = ApplicationHelpers::getSerialFromApplicationNumber($applicationNumber);
 
           $webformUuidExists = isset($metaData['form_uuid']) && !empty($metaData['form_uuid']);
           $webform = $webformUuidExists
-            ? ApplicationHandler::getWebformByUuid($metaData['form_uuid'], $applicationNumber)
-            : ApplicationHandler::getWebformFromApplicationNumber($applicationNumber);
+            ? ApplicationHelpers::getWebformByUuid($metaData['form_uuid'], $applicationNumber)
+            : ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
 
           if (!$webform || !$serial) {
             continue;
           }
 
-          $submissionId = ApplicationHandler::getSubmissionIdWithSerialAndWebformId($serial, $webform->id(), $document);
+          $submissionId = ApplicationHelpers::getSubmissionIdWithSerialAndWebformId($serial, $webform->id(), $document);
         }
         catch (\Throwable $e) {
           $this->logger->error(
@@ -319,8 +319,8 @@ final class ApplicationGetterService {
     bool $skipAccessCheck = FALSE,
   ): ?WebformSubmission {
 
-    $submissionSerial = ApplicationHandler::getSerialFromApplicationNumber($applicationNumber);
-    $webform = ApplicationHandler::getWebformFromApplicationNumber($applicationNumber, TRUE);
+    $submissionSerial = ApplicationHelpers::getSerialFromApplicationNumber($applicationNumber);
+    $webform = ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber, TRUE);
 
     if (!$webform) {
       return NULL;
@@ -364,7 +364,7 @@ final class ApplicationGetterService {
     // If there's no local submission with given serial
     // we can actually create that object on the fly and use that for editing.
     if (empty($result)) {
-      $webform = ApplicationHandler::getWebformFromApplicationNumber($applicationNumber);
+      $webform = ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
       if ($webform) {
         /** @var \Drupal\webform\Entity\WebformSubmission $submissionObject */
         $submissionObject = WebformSubmission::create(['webform_id' => $webform->id()]);
@@ -390,7 +390,7 @@ final class ApplicationGetterService {
     }
     if ($submissionObject) {
 
-      $dataDefinition = ApplicationHandler::getDataDefinition($document->getType());
+      $dataDefinition = ApplicationHelpers::getDataDefinition($document->getType());
 
       $sData = DocumentContentMapper::documentContentToTypedData(
         $document->getContent(),

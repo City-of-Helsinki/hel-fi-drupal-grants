@@ -12,7 +12,7 @@ use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_metadata\Validator\EndDateValidator;
 use Drupal\grants_metadata\Validator\YearValidator;
@@ -601,7 +601,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
         $parentType = $formParentData->getThirdPartySetting('grants_metadata', 'applicationType');
         $parentTypeId = $formParentData->getThirdPartySetting('grants_metadata', 'applicationType');
 
-        $isDuplicatable = ApplicationHandler::isApplicationWebformDuplicatable($parentTypeId);
+        $isDuplicatable = ApplicationHelpers::isApplicationWebformDuplicatable($parentTypeId);
 
         if (!$isDuplicatable) {
           $form['#disabled'] = TRUE;
@@ -725,7 +725,7 @@ from being edited, even if normal rules would otherwise permit it.
     $applicationTypeId = $bundle->getThirdPartySetting('grants_metadata', 'applicationType');
     $isDuplicatable = in_array($formStatus, ['', 'released']);
     if ($applicationTypeId && $isDuplicatable) {
-      $isDuplicatable = ApplicationHandler::isApplicationWebformDuplicatable($applicationTypeId);
+      $isDuplicatable = ApplicationHelpers::isApplicationWebformDuplicatable($applicationTypeId);
     }
 
     $route_parameters = ['webform' => $webform->id()];

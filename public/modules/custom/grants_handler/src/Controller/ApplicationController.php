@@ -15,7 +15,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TempStore\TempStoreException;
 use Drupal\grants_handler\ApplicationAccessHandler;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
@@ -100,13 +100,6 @@ class ApplicationController extends ControllerBase {
   protected GrantsProfileService $grantsProfileService;
 
   /**
-   * Application handler.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
-
-  /**
    * Application data service.
    *
    * @var \Drupal\grants_metadata\ApplicationDataService
@@ -154,7 +147,6 @@ class ApplicationController extends ControllerBase {
     $instance->renderer = $container->get('renderer');
     $instance->request = $container->get('request_stack');
     $instance->grantsProfileService = $container->get('grants_profile.service');
-    $instance->applicationHandler = $container->get('grants_handler.application_handler');
     $instance->applicationDataService = $container->get('grants_metadata.application_data_service');
     $instance->applicationStatusService = $container->get('grants_handler.application_status_service');
     $instance->applicationInitService = $container->get('grants_handler.application_init_service');
@@ -590,7 +582,7 @@ class ApplicationController extends ControllerBase {
     $subventionType = '';
     try {
       /** @var \Drupal\helfi_atv\AtvDocument $atv_document */
-      $atv_document = ApplicationHandler::atvDocumentFromApplicationNumber($submission_id);
+      $atv_document = ApplicationHelpers::atvDocumentFromApplicationNumber($submission_id);
     }
     catch (\Exception $e) {
       throw new NotFoundHttpException('Application ' . $submission_id . ' not found.');
@@ -682,7 +674,7 @@ class ApplicationController extends ControllerBase {
    * Returns a page title.
    */
   public function getTitle($submission_id): string {
-    $webform = ApplicationHandler::getWebformFromApplicationNumber($submission_id);
+    $webform = ApplicationHelpers::getWebformFromApplicationNumber($submission_id);
     return $webform->label();
   }
 

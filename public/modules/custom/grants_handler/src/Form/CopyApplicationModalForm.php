@@ -11,7 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\DebuggableTrait;
@@ -27,13 +27,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class CopyApplicationModalForm extends FormBase {
 
   use DebuggableTrait;
-
-  /**
-   * Application handler class.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
 
   /**
    * Renderer for submission details.
@@ -74,7 +67,6 @@ class CopyApplicationModalForm extends FormBase {
    * Constructs a new ModalAddressForm object.
    */
   public function __construct(
-    ApplicationHandler $applicationHandler,
     Renderer $renderer,
     EventsService $eventsService,
     ApplicationStatusService $applicationStatusService,
@@ -85,7 +77,6 @@ class CopyApplicationModalForm extends FormBase {
     // When argument is set to null, get the debug value from environment.
     $this->setDebug(NULL);
 
-    $this->applicationHandler = $applicationHandler;
     $this->renderer = $renderer;
     $this->eventsService = $eventsService;
     $this->applicationStatusService = $applicationStatusService;
@@ -100,7 +91,6 @@ class CopyApplicationModalForm extends FormBase {
 
     // Create a new form object and inject its services.
     $form = new static(
-      $container->get('grants_handler.application_handler'),
       $container->get('renderer'),
       $container->get('grants_handler.events_service'),
       $container->get('grants_handler.application_status_service'),

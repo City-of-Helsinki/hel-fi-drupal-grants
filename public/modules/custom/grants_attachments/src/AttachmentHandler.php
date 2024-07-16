@@ -14,7 +14,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TempStore\TempStoreException;
 use Drupal\file\FileStorage;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\EventException;
 use Drupal\grants_handler\EventsService;
@@ -197,7 +197,7 @@ class AttachmentHandler {
     // Load application type from webform.
     // This could probably be done just by parsing the application number,
     // however this more futureproof.
-    $webform = ApplicationHandler::getWebformFromApplicationNumber($applicationNumber);
+    $webform = ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
     if (!$webform) {
       return [];
     }

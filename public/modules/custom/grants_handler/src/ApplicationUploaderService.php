@@ -126,7 +126,7 @@ final class ApplicationUploaderService {
     $atvDocument->addMetadata('language', $language);
     try {
       $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
-      $saveId = ApplicationHandler::logSubmissionSaveid(NULL, $applicationNumber, $userData);
+      $saveId = ApplicationHelpers::logSubmissionSaveid(NULL, $applicationNumber, $userData);
       $atvDocument->addMetadata('saveid', $saveId);
     }
     catch (\Exception $e) {
@@ -225,7 +225,7 @@ final class ApplicationUploaderService {
       $headers['X-hki-applicationNumber'] = $applicationNumber;
 
       // Set new saveid and save it to db.
-      $headers['X-hki-saveId'] = ApplicationHandler::logSubmissionSaveid(
+      $headers['X-hki-saveId'] = ApplicationHelpers::logSubmissionSaveid(
         NULL,
         $applicationNumber,
         $this->helfiHelsinkiProfiiliUserdata->getUserData()

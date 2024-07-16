@@ -4,6 +4,7 @@ namespace Drupal\grants_handler;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
@@ -50,12 +51,11 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
-   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
-   *   Log errors.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
    */
-  public function __construct(ConfigFactoryInterface $config_factory, LoggerChannelInterface $logger) {
+  public function __construct(ConfigFactoryInterface $config_factory, LoggerChannelFactoryInterface $loggerChannelFactory) {
     $this->configFactory = $config_factory;
-    $this->logger = $logger;
+    $this->logger = $loggerChannelFactory->get('ApplicationStatusService');
   }
 
   /**
@@ -64,7 +64,7 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
   public static function create(ContainerInterface $container): static {
     return new ApplicationStatusService(
       $container->get('config.factory'),
-      $container->get('logger.factory')->get('ApplicationStatusService')
+      $container->get('logger.factory')
     );
   }
 

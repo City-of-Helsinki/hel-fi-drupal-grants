@@ -8,7 +8,7 @@ use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ApplicationUploaderService;
 use Drupal\grants_handler\EventsService;
@@ -33,14 +33,7 @@ class GrantsAttachmentsController extends ControllerBase {
    *
    * @var \Drupal\helfi_atv\AtvService
    */
-  protected $helfiAtv;
-
-  /**
-   * Process application data from webform to ATV.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
+  protected AtvService $helfiAtv;
 
   /**
    * Create events.
@@ -89,7 +82,7 @@ class GrantsAttachmentsController extends ControllerBase {
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
    *   The helfi_atv service.
-   * @param \Drupal\grants_handler\ApplicationHandler $applicationHandler
+   * @param \Drupal\grants_handler\ApplicationHelpers $applicationHandler
    *   Application handler.
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Drupal requests.
@@ -106,7 +99,6 @@ class GrantsAttachmentsController extends ControllerBase {
    */
   public function __construct(
     AtvService $helfi_atv,
-    ApplicationHandler $applicationHandler,
     RequestStack $requestStack,
     EventsService $eventsService,
     ApplicationStatusService $applicationStatusService,
@@ -115,7 +107,6 @@ class GrantsAttachmentsController extends ControllerBase {
     ApplicationUploaderService $applicationUploaderService
   ) {
     $this->helfiAtv = $helfi_atv;
-    $this->applicationHandler = $applicationHandler;
 
     $this->request = $requestStack;
     $this->eventsService = $eventsService;
@@ -131,7 +122,6 @@ class GrantsAttachmentsController extends ControllerBase {
   public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('helfi_atv.atv_service'),
-      $container->get('grants_handler.application_handler'),
       $container->get('request_stack'),
       $container->get('grants_handler.events_service'),
       $container->get('grants_handler.application_status_service'),

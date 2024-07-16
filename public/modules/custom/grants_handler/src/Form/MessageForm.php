@@ -16,7 +16,7 @@ use Drupal\Core\Render\Renderer;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_attachments\AttachmentRemover;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\webform\Entity\WebformSubmission;
@@ -51,13 +51,6 @@ class MessageForm extends FormBase {
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\Drupal\Core\Entity\EntityTypeManager
    */
   protected EntityTypeManagerInterface|EntityTypeManager $entityTypeManager;
-
-  /**
-   * Handle application tasks.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
 
   /**
    * Access ATV.
@@ -103,7 +96,7 @@ class MessageForm extends FormBase {
    *   Send messages.
    * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
    *   Load entities.
-   * @param \Drupal\grants_handler\ApplicationHandler $applicationHandler
+   * @param \Drupal\grants_handler\ApplicationHelpers $applicationHandler
    *   HAndle application things.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access ATV.
@@ -118,7 +111,6 @@ class MessageForm extends FormBase {
     TypedDataManager $typed_data_manager,
     MessageService $messageService,
     EntityTypeManager $entityTypeManager,
-    ApplicationHandler $applicationHandler,
     AtvService $atvService,
     AttachmentRemover $attachmentRemover,
     Renderer $renderer,
@@ -127,7 +119,6 @@ class MessageForm extends FormBase {
     $this->typedDataManager = $typed_data_manager;
     $this->messageService = $messageService;
     $this->entityTypeManager = $entityTypeManager;
-    $this->applicationHandler = $applicationHandler;
     $this->atvService = $atvService;
     $this->attachmentRemover = $attachmentRemover;
     $this->renderer = $renderer;
@@ -151,7 +142,6 @@ class MessageForm extends FormBase {
       $container->get('typed_data_manager'),
       $container->get('grants_handler.message_service'),
       $container->get('entity_type.manager'),
-      $container->get('grants_handler.application_handler'),
       $container->get('helfi_atv.atv_service'),
       $container->get('grants_attachments.attachment_remover'),
       $container->get('renderer'),

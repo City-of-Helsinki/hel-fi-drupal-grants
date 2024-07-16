@@ -15,7 +15,7 @@ use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationException;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ApplicationUploaderService;
@@ -152,13 +152,6 @@ class GrantsHandler extends WebformHandlerBase {
   protected AttachmentHandler $attachmentHandler;
 
   /**
-   * Process application data from webform to ATV.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
-
-  /**
    * Form lock service.
    *
    * @var \Drupal\grants_handler\FormLockService
@@ -286,11 +279,6 @@ class GrantsHandler extends WebformHandlerBase {
     $attachmentHandler = $container->get('grants_attachments.attachment_handler');
     $instance->attachmentHandler = $attachmentHandler;
     $instance->attachmentHandler->setDebug($instance->isDebug());
-
-    /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
-    $applicationHandler = $container->get('grants_handler.application_handler');
-    $instance->applicationHandler = $applicationHandler;
-    $instance->applicationHandler->setDebug($instance->isDebug());
 
     /** @var \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper */
     $grantsFormNavigationHelper = $container->get('grants_handler.navigation_helper');
@@ -547,7 +535,7 @@ class GrantsHandler extends WebformHandlerBase {
         if ($webform_submission->serial()) {
 
           $submissionData = $webform_submission->getData();
-          $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($webform_submission);
+          $applicationNumber = $submissionData['application_number'] ?? ApplicationHelpers::createApplicationNumber($webform_submission);
 
           $this->applicationNumber = $applicationNumber;
           $this->submittedFormData['application_number'] = $this->applicationNumber;
@@ -837,7 +825,7 @@ moment and reload the page.',
       }
 
       $webform = $webform_submission->getWebform();
-      $breakingChanges = ApplicationHandler::hasBreakingChangesInNewerVersion($webform);
+      $breakingChanges = ApplicationHelpers::hasBreakingChangesInNewerVersion($webform);
 
       if ($breakingChanges && $submissionData['status'] === 'RECEIVED') {
         $form['#disabled'] = TRUE;
@@ -1197,7 +1185,7 @@ moment and reload the page.',
     try {
       $this->submittedFormData = array_merge(
         $this->submittedFormData,
-        ApplicationHandler::parseSenderDetails());
+        ApplicationHelpers::parseSenderDetails());
     }
     catch (ApplicationException $e) {
     }
@@ -1325,7 +1313,7 @@ submit the application only after you have provided all the necessary informatio
         // But if we have saved webform earlier, we can get the application
         // number from submission serial.
         if ($webform_submission->id()) {
-          $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
+          $this->applicationNumber = ApplicationHelpers::createApplicationNumber($webform_submission);
         }
         // Hopefully we never reach here, but there should be additional checks
         // for application number to exists.
@@ -1379,11 +1367,11 @@ submit the application only after you have provided all the necessary informatio
       );
 
       if ($skipCheck === TRUE) {
-        $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
+        $this->applicationNumber = ApplicationHelpers::createApplicationNumber($webform_submission);
       }
       else {
         try {
-          $this->applicationNumber = ApplicationHandler::getAvailableApplicationNumber($webform_submission);
+          $this->applicationNumber = ApplicationHelpers::getAvailableApplicationNumber($webform_submission);
         }
         catch (\Throwable $e) {
           throw new GrantsException('Getting application number failed.');
@@ -1524,7 +1512,7 @@ submit the application only after you have provided all the necessary informatio
   public function postSaveHandleApplicationNumber(WebformSubmissionInterface $webform_submission): void {
     if (!isset($this->submittedFormData['application_number']) || $this->submittedFormData['application_number'] == '') {
       if (!isset($this->applicationNumber) || $this->applicationNumber == '') {
-        $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
+        $this->applicationNumber = ApplicationHelpers::createApplicationNumber($webform_submission);
       }
       if (isset($this->applicationTypeID) || $this->applicationTypeID == '') {
         $this->submittedFormData['application_type_id'] = $this->applicationTypeID;

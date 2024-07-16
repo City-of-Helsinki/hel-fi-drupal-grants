@@ -74,12 +74,19 @@ final class ApplicationDataService {
   public function __construct(
     LoggerChannelFactoryInterface $loggerChannelFactory,
     Connection $datababse,
-    EventsService $eventsService,
-    ApplicationGetterService $applicationGetterService
+    EventsService $eventsService
   ) {
-    $this->logger = $loggerChannelFactory->get('grants_application_handler');
+    $this->logger = $loggerChannelFactory->get('grants_application_helpers');
     $this->database = $datababse;
     $this->eventsService = $eventsService;
+  }
+
+  /**
+   * Set the getter service.
+   *
+   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   */
+  public function setApplicationGetterService(ApplicationGetterService $applicationGetterService): void {
     $this->applicationGetterService = $applicationGetterService;
   }
 

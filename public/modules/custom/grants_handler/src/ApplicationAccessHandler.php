@@ -52,7 +52,7 @@ final readonly class ApplicationAccessHandler {
     }
 
     try {
-      $atvDoc = ApplicationHandler::atvDocumentFromApplicationNumber($webformData['application_number']);
+      $atvDoc = ApplicationHelpers::atvDocumentFromApplicationNumber($webformData['application_number']);
     }
     catch (AtvDocumentNotFoundException $e) {
       return FALSE;

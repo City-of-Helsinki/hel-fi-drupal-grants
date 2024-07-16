@@ -231,7 +231,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       }
       $applicationNumber = '';
       try {
-        $applicationNumber = ApplicationHandler::createApplicationNumber($submission);
+        $applicationNumber = ApplicationHelpers::createApplicationNumber($submission);
         $results = $this->atvService->searchDocuments(
           [
             'transaction_id' => $applicationNumber,
@@ -242,7 +242,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
         $document = reset($results);
 
         if (!$document) {
-          $applicationNumber = ApplicationHandler::createApplicationNumber($submission, TRUE);
+          $applicationNumber = ApplicationHelpers::createApplicationNumber($submission, TRUE);
           $results = $this->atvService->searchDocuments(
             [
               'transaction_id' => $applicationNumber,
