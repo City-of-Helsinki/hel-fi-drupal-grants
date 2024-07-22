@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_mandate\CompanySelectException;
+use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileService;
@@ -54,6 +55,13 @@ final class ApplicationGetterService {
   protected EntityStorageInterface $storage;
 
   /**
+   * Application data service.
+   *
+   * @var \Drupal\grants_metadata\ApplicationDataService
+   */
+  protected ApplicationDataService $grantsApplicationDataService;
+
+  /**
    * Constructs an ApplicationGetterService object.
    */
   public function __construct(
@@ -80,6 +88,16 @@ final class ApplicationGetterService {
    */
   public function setGrantsProfileService(GrantsProfileService $grantsProfileService): void {
     $this->grantsProfileService = $grantsProfileService;
+  }
+
+  /**
+   * Set data access service.
+   *
+   * @param \Drupal\grants_metadata\ApplicationDataService $grantsApplicationDataService
+   *  Application data service.
+   */
+  public function setApplicationDataService(ApplicationDataService $grantsApplicationDataService): void {
+    $this->grantsApplicationDataService = $grantsApplicationDataService;
   }
 
   /**
