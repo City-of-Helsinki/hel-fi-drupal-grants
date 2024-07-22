@@ -7,7 +7,6 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_profile\GrantsProfileException;
@@ -54,7 +53,7 @@ class CopyApplicationForm extends FormBase {
   public function __construct(
     ApplicationInitService $applicationInitService,
     LoggerChannelInterface $logger,
-    ApplicationGetterService $applicationGetterService
+    ApplicationGetterService $applicationGetterService,
   ) {
     $this->setDebug(NULL);
 

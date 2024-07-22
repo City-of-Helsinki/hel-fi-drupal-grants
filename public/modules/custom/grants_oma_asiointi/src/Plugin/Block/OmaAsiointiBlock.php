@@ -8,7 +8,6 @@ use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\grants_metadata\AtvSchema;
@@ -125,7 +124,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     LanguageManagerInterface $languageManager,
     AccountInterface $currentUser,
     MessageService $messageService,
-    ApplicationGetterService $applicationGetterService
+    ApplicationGetterService $applicationGetterService,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->helfiHelsinkiProfiiliUserdata = $helsinkiProfiiliUserData;
@@ -156,7 +155,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     ContainerInterface $container,
     array $configuration,
     $plugin_id,
-    $plugin_definition
+    $plugin_definition,
   ) {
     return new static(
       $configuration,

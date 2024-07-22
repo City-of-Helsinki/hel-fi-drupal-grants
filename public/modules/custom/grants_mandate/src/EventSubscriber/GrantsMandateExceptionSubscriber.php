@@ -54,7 +54,7 @@ class GrantsMandateExceptionSubscriber implements EventSubscriberInterface {
   public function __construct(
     MessengerInterface $messenger,
     LoggerChannelFactoryInterface $loggerFactory,
-    AuditLogService $auditLogService
+    AuditLogService $auditLogService,
   ) {
     $this->messenger = $messenger;
     $this->logger = $loggerFactory->get('grants_mandate');

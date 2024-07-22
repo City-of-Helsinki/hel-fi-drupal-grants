@@ -81,7 +81,7 @@ final class ApplicationValidator {
   public function validateApplication(
     ComplexDataInterface $applicationData,
     FormStateInterface &$formState,
-    WebformSubmission $webform_submission
+    WebformSubmission $webform_submission,
   ): ConstraintViolationListInterface {
 
     $violations = $applicationData->validate();
@@ -118,7 +118,7 @@ final class ApplicationValidator {
     ConstraintViolationListInterface $violations,
     ComplexDataInterface $applicationData,
     FormStateInterface &$formState,
-    WebformSubmission $webform_submission
+    WebformSubmission $webform_submission,
   ): void {
     $appProps = $applicationData->getProperties();
     $formElementsDecodedAndFlattened = $webform_submission->getWebform()->getElementsDecodedAndFlattened();
@@ -164,7 +164,7 @@ final class ApplicationValidator {
     FormStateInterface &$formState,
     array $formElementsDecodedAndFlattened,
     array &$erroredItems,
-    array &$violationPrints
+    array &$violationPrints,
   ): void {
     $this->handleViolation($violation, $appProps, $formState, $formElementsDecodedAndFlattened, $erroredItems, $violationPrints);
   }
@@ -191,7 +191,7 @@ final class ApplicationValidator {
     FormStateInterface &$formState,
     array $formElementsDecodedAndFlattened,
     array &$erroredItems,
-    array &$violationPrints
+    array &$violationPrints,
   ): void {
     $propertyPath = $violation->getPropertyPath();
     $propertyPathArray = explode('.', $propertyPath);
@@ -238,7 +238,7 @@ final class ApplicationValidator {
     array $thisDefinitionSettings,
     string $label,
     FormStateInterface &$formState,
-    array &$erroredItems
+    array &$erroredItems,
   ): void {
     $propertyPath = $thisDefinitionSettings['formSettings']['formElement'];
 
@@ -272,7 +272,7 @@ final class ApplicationValidator {
     array $propertyPathArray,
     array $formElementsDecodedAndFlattened,
     FormStateInterface &$formState,
-    array &$erroredItems
+    array &$erroredItems,
   ): void {
     if (($formElement = $formElementsDecodedAndFlattened[$propertyPath] ?? NULL) && isset($formElement['#parents'])) {
       $formState->setError($formElement, $violation->getMessage());

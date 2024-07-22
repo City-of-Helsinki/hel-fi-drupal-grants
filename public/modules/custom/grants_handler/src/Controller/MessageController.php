@@ -94,7 +94,7 @@ class MessageController extends ControllerBase {
     RequestStack $requestStack,
     AtvService $atvService,
     Renderer $renderer,
-    ApplicationGetterService $applicationGetterService
+    ApplicationGetterService $applicationGetterService,
   ) {
     $this->eventsService = $grants_handler_events_service;
     $this->messageService = $grants_handler_message_service;

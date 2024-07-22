@@ -52,6 +52,7 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
+   *   The logger channel factory.
    */
   public function __construct(ConfigFactoryInterface $config_factory, LoggerChannelFactoryInterface $loggerChannelFactory) {
     $this->configFactory = $config_factory;
@@ -97,7 +98,7 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
    */
   public function isSubmissionEditable(
     ?WebformSubmission $submission,
-    string $status = ''
+    string $status = '',
   ): bool {
     if (NULL === $submission) {
       $submissionStatus = $status;
@@ -133,7 +134,7 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
    *   Is submission editable?
    */
   public function isSubmissionChangesAllowed(
-    WebformSubmission $webform_submission
+    WebformSubmission $webform_submission,
   ): bool {
 
     $submissionData = $webform_submission->getData();
@@ -211,7 +212,7 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
    */
   public function canSubmissionBeSubmitted(
     ?WebformSubmission $submission,
-    ?string $status
+    ?string $status,
   ): bool {
     if (NULL === $submission) {
       $submissionStatus = $status;
@@ -281,7 +282,7 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
   public function getNewStatus(
     string $triggeringElement,
     array $submittedFormData,
-    WebformSubmissionInterface $webform_submission
+    WebformSubmissionInterface $webform_submission,
   ): string {
     $status = $submittedFormData['status'] ?? $this->applicationStatuses['DRAFT'];
 

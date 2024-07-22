@@ -145,7 +145,7 @@ class EventsService {
     string $eventType,
     string $eventDescription,
     string $eventTarget,
-    array $eventData = []
+    array $eventData = [],
   ): ?array {
 
     if (empty($eventData)) {

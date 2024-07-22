@@ -11,7 +11,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\DebuggableTrait;
@@ -71,7 +70,7 @@ class CopyApplicationModalForm extends FormBase {
     EventsService $eventsService,
     ApplicationStatusService $applicationStatusService,
     ApplicationInitService $applicationInitService,
-    ApplicationGetterService $applicationGetterService
+    ApplicationGetterService $applicationGetterService,
   ) {
 
     // When argument is set to null, get the debug value from environment.

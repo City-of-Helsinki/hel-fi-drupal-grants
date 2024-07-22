@@ -55,7 +55,7 @@ class GrantsProfileController extends ControllerBase {
   public function __construct(
     FormBuilder $form_builder,
     GrantsProfileService $grantsProfileService,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
     $this->formBuilder = $form_builder;
     $this->grantsProfileService = $grantsProfileService;

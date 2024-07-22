@@ -96,7 +96,7 @@ class GrantsProfileService {
     MessengerInterface $messenger,
     ProfileConnector $profileConnector,
     LoggerChannelFactoryInterface $loggerFactory,
-    GrantsProfileCache $grantsProfileCache
+    GrantsProfileCache $grantsProfileCache,
   ) {
     $this->atvService = $helfiAtv;
     $this->messenger = $messenger;
@@ -292,7 +292,7 @@ class GrantsProfileService {
    *   New profle.
    */
   public function createNewProfile(
-    mixed $selectedRoleData
+    mixed $selectedRoleData,
   ): bool|AtvDocument {
 
     try {
@@ -415,7 +415,7 @@ class GrantsProfileService {
    */
   public function getGrantsProfileContent(
     mixed $business,
-    bool $refetch = FALSE
+    bool $refetch = FALSE,
   ): array {
     $profileData = $this->getGrantsProfile($business, $refetch);
 
@@ -442,7 +442,7 @@ class GrantsProfileService {
    */
   public function getGrantsProfile(
     array $profileIdentifier,
-    bool $refetch = FALSE
+    bool $refetch = FALSE,
   ): AtvDocument|null {
     if ($refetch === FALSE && $this->grantsProfileCache->isCached($profileIdentifier['identifier'])) {
       return $this->grantsProfileCache->getFromCache($profileIdentifier['identifier']);

@@ -25,9 +25,9 @@ class GrantsMandateRedirectService {
    *   Route match.
    */
   public function __construct(
-   protected RequestStack $requestStack,
-   protected GrantsProfileService $grantsProfileService,
-   protected CurrentRouteMatch $routeMatch,
+    protected RequestStack $requestStack,
+    protected GrantsProfileService $grantsProfileService,
+    protected CurrentRouteMatch $routeMatch,
   ) {}
 
   /**

@@ -62,7 +62,7 @@ class ApplicationStatusCheckController extends ControllerBase {
     HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
     ConfigFactoryInterface $configFactory,
     LanguageManagerInterface $language_manager,
-    ) {
+  ) {
     $this->helfiAtv = $helfi_atv;
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
     $this->configFactory = $configFactory;

@@ -8,7 +8,6 @@ use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ApplicationUploaderService;
 use Drupal\grants_handler\EventsService;
@@ -82,8 +81,6 @@ class GrantsAttachmentsController extends ControllerBase {
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
    *   The helfi_atv service.
-   * @param \Drupal\grants_handler\ApplicationHelpers $applicationHandler
-   *   Application handler.
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Drupal requests.
    * @param \Drupal\grants_handler\EventsService $eventsService
@@ -104,7 +101,7 @@ class GrantsAttachmentsController extends ControllerBase {
     ApplicationStatusService $applicationStatusService,
     ApplicationDataService $applicationDataService,
     ApplicationGetterService $applicationGetterService,
-    ApplicationUploaderService $applicationUploaderService
+    ApplicationUploaderService $applicationUploaderService,
   ) {
     $this->helfiAtv = $helfi_atv;
 
@@ -142,9 +139,6 @@ class GrantsAttachmentsController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect back to form.
    *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function deleteAttachment(string $submission_id, string $integration_id): RedirectResponse {

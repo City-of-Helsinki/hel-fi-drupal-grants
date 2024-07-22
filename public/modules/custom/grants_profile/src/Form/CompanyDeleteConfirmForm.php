@@ -42,7 +42,8 @@ class CompanyDeleteConfirmForm extends ConfirmFormBase {
    */
   public function __construct(
     GrantsProfileService $grantsProfileService,
-    GrantsMandateService $grantsMandateService) {
+    GrantsMandateService $grantsMandateService,
+  ) {
     $this->grantsProfileService = $grantsProfileService;
     $this->grantsMandateService = $grantsMandateService;
   }

@@ -44,7 +44,7 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    GrantsProfileService $grants_profile_service
+    GrantsProfileService $grants_profile_service,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->grantsProfileService = $grants_profile_service;
@@ -68,7 +68,7 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
     ContainerInterface $container,
     array $configuration,
     $plugin_id,
-    $plugin_definition
+    $plugin_definition,
   ) {
     return new static(
       $configuration,

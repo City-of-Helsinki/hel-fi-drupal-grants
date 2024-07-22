@@ -111,7 +111,7 @@ final class ApplicationUploaderService {
   public function handleApplicationUploadToAtv(
     TypedDataInterface $applicationData,
     string $applicationNumber,
-    array $submittedFormData
+    array $submittedFormData,
   ): AtvDocument|bool|null {
     $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
     $appDocumentContent =
@@ -177,7 +177,7 @@ final class ApplicationUploaderService {
   public function handleApplicationUploadViaIntegration(
     TypedDataInterface $applicationData,
     string $applicationNumber,
-    array $submittedFormData
+    array $submittedFormData,
   ): bool {
     $tOpts = ['context' => 'grants_handler'];
 

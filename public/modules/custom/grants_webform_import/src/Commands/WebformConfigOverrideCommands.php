@@ -48,7 +48,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
    */
   public function __construct(
     ConfigFactoryInterface $configFactory,
-    EntityTypeManagerInterface $entityTypeManager
+    EntityTypeManagerInterface $entityTypeManager,
   ) {
     parent::__construct();
     $this->configFactory = $configFactory;
@@ -316,11 +316,13 @@ class WebformConfigOverrideCommands extends DrushCommands {
    * @param array $overriddenConfiguration
    *   The forms new configuration.
    */
-  private function logMessage(string $configurationName,
-                              string $applicationTypeId,
-                              array $configurationOverrides,
-                              array $originalConfiguration,
-                              array $overriddenConfiguration): void {
+  private function logMessage(
+    string $configurationName,
+    string $applicationTypeId,
+    array $configurationOverrides,
+    array $originalConfiguration,
+    array $overriddenConfiguration,
+  ): void {
     $this->output()->writeln("Importing configuration for $configurationName ($applicationTypeId):\n");
     $this->output()->writeln("ORIGINAL CONFIGURATION:");
     $this->output()->writeln(print_r($originalConfiguration, TRUE));

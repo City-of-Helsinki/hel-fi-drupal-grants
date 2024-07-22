@@ -68,13 +68,11 @@ final class ApplicationDataService {
    *   Database connection.
    * @param \Drupal\grants_handler\EventsService $eventsService
    *   Events service.
-   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
-   *   Application getter service.
    */
   public function __construct(
     LoggerChannelFactoryInterface $loggerChannelFactory,
     Connection $datababse,
-    EventsService $eventsService
+    EventsService $eventsService,
   ) {
     $this->logger = $loggerChannelFactory->get('grants_application_helpers');
     $this->database = $datababse;
@@ -85,6 +83,7 @@ final class ApplicationDataService {
    * Set the getter service.
    *
    * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   *   Application getter service.
    */
   public function setApplicationGetterService(ApplicationGetterService $applicationGetterService): void {
     $this->applicationGetterService = $applicationGetterService;
@@ -115,7 +114,8 @@ final class ApplicationDataService {
     ?WebformSubmissionInterface $webform_submission,
     ?array $submissionData,
     string $applicationNumber,
-    string $saveIdToValidate): string {
+    string $saveIdToValidate,
+  ): string {
 
     $submissionData = $this->getSubmissionData($webform_submission, $submissionData, $applicationNumber);
     if (empty($submissionData)) {
@@ -163,7 +163,7 @@ final class ApplicationDataService {
   private function getSubmissionData(
     ?WebformSubmissionInterface $webform_submission,
     ?array $submissionData,
-    string $applicationNumber
+    string $applicationNumber,
   ): ?array {
     if (empty($submissionData)) {
       if ($webform_submission == NULL) {
@@ -287,7 +287,7 @@ final class ApplicationDataService {
     string $saveIdToValidate,
     array $submissionData,
     string $applicationNumber,
-    string $latestSaveid
+    string $latestSaveid,
   ): bool {
     $applicationEvents = $this->eventsService->filterEvents($submissionData['events'] ?? [], 'INTEGRATION_INFO_APP_OK');
 
@@ -322,7 +322,7 @@ final class ApplicationDataService {
     array $submissionData,
     string $applicationNumber,
     string $latestSaveid,
-    string $saveIdToValidate
+    string $saveIdToValidate,
   ): bool {
     $attachmentEvents = $this->eventsService->filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
 
@@ -380,7 +380,7 @@ final class ApplicationDataService {
    *   Typed data with values set.
    */
   public function webformToTypedData(
-    array $submittedFormData
+    array $submittedFormData,
   ): TypedDataInterface {
 
     $dataDefinitionKeys = $this->getDataDefinitionClass($submittedFormData['application_type']);

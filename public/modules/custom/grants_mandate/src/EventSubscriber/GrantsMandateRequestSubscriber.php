@@ -33,7 +33,7 @@ class GrantsMandateRequestSubscriber implements EventSubscriberInterface {
   public function __construct(
     protected RequestStack $requestStack,
     protected AccountProxyInterface $account,
-    protected CurrentRouteMatch $routeMatch
+    protected CurrentRouteMatch $routeMatch,
   ) {
   }
 

@@ -77,7 +77,8 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
    */
   public static function createInstance(
     ContainerInterface $container,
-    EntityTypeInterface $entity_type): WebformSubmissionStorage|EntityHandlerInterface {
+    EntityTypeInterface $entity_type,
+  ): WebformSubmissionStorage|EntityHandlerInterface {
 
     /** @var self|static $instance */
     $instance = parent::createInstance($container, $entity_type);

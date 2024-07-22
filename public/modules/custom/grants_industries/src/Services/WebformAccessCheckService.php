@@ -88,7 +88,8 @@ class WebformAccessCheckService {
   public function __construct(
     EntityTypeManagerInterface $entityTypeManager,
     AccountProxyInterface $currentUser,
-    RouteMatchInterface $routeMatch) {
+    RouteMatchInterface $routeMatch,
+  ) {
     $this->entityTypeManager = $entityTypeManager;
     $this->currentUser = $currentUser;
     $this->routeMatch = $routeMatch;

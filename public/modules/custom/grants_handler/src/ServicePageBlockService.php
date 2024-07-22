@@ -49,7 +49,8 @@ class ServicePageBlockService {
   public function __construct(
     EntityTypeManager $entityTypeManager,
     CurrentRouteMatch $routeMatch,
-    GrantsProfileService $grantsProfileService) {
+    GrantsProfileService $grantsProfileService,
+  ) {
     $this->entityTypeManager = $entityTypeManager;
     $this->routeMatch = $routeMatch;
     $this->grantsProfileService = $grantsProfileService;

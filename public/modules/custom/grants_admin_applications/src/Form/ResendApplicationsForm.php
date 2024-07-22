@@ -49,7 +49,7 @@ class ResendApplicationsForm extends AtvFormBase {
    */
   public function __construct(
     AtvService $atvService,
-    MessageService $messageService
+    MessageService $messageService,
   ) {
     $this->atvService = $atvService;
     $this->messageService = $messageService;

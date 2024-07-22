@@ -7,7 +7,6 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\grants_handler\ApplicationGetterService;
-use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\grants_mandate\Controller\GrantsMandateController;
@@ -107,7 +106,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     GrantsProfileService $grantsProfileService,
     AtvService $helfi_atv_atv_service,
     MessageService $messageService,
-    ApplicationGetterService $applicationGetterService
+    ApplicationGetterService $applicationGetterService,
   ) {
     $this->requestStack = $requestStack;
     $this->currentUser = $current_user;

@@ -36,8 +36,10 @@ class UserRedirect implements UserRedirectInterface {
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   The current active user.
    */
-  public function __construct(RequestStack $request_stack,
-                              AccountProxyInterface $current_user) {
+  public function __construct(
+    RequestStack $request_stack,
+    AccountProxyInterface $current_user,
+  ) {
     $this->currentRequest = $request_stack->getCurrentRequest();
     $this->currentUser = $current_user;
   }

@@ -27,7 +27,7 @@ class MunicipalitySettingsForm extends ConfigFormBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
-    private MunicipalityService $municipalityService
+    private MunicipalityService $municipalityService,
   ) {
     parent::__construct($config_factory);
   }

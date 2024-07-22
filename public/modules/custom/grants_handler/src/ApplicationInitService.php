@@ -127,7 +127,7 @@ class ApplicationInitService {
     LoggerChannelFactoryInterface $loggerChannelFactory,
     ConfigFactoryInterface $configFactory,
     AtvSchema $atvSchema,
-    AtvService $atvService
+    AtvService $atvService,
   ) {
     $this->helfiHelsinkiProfiiliUserdata = $helfiHelsinkiProfiiliUserdata;
     $this->grantsProfileService = $grantsProfileService;
@@ -268,7 +268,7 @@ class ApplicationInitService {
   protected function handleBankAccountCopying(
     AtvDocument $newDocument,
     WebformSubmission $submissionObject,
-    array $submissionData
+    array $submissionData,
   ): AtvDocument {
     $newDocumentId = $newDocument->getId();
     $applicationNumber = $newDocument->getTransactionId();
@@ -406,7 +406,7 @@ class ApplicationInitService {
     array $companyData,
     array $userData,
     array $userProfileData,
-    array $submissionData
+    array $submissionData,
   ): array {
     $submissionData['application_type_id'] = $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID');
     $submissionData['application_type'] = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
@@ -594,7 +594,7 @@ class ApplicationInitService {
     array $selectedCompany,
     string $webform_id,
     array $userData,
-    bool $copy
+    bool $copy,
   ): AtvDocument {
     $webform = Webform::load($webform_id);
 

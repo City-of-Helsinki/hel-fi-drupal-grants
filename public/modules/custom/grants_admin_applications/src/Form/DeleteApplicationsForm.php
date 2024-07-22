@@ -67,7 +67,7 @@ final class DeleteApplicationsForm extends FormBase {
     AtvService $atvService,
     HandleDocumentsBatchService $handleDocumentsBatchService,
     LoggerChannelFactoryInterface $loggerFactory,
-    ConfigFactory $configFactory
+    ConfigFactory $configFactory,
   ) {
     $this->atvService = $atvService;
     $this->handleDocumentsBatchService = $handleDocumentsBatchService;
@@ -373,7 +373,7 @@ final class DeleteApplicationsForm extends FormBase {
     mixed $type,
     mixed $status,
     FormStateInterface $form_state,
-    array &$form
+    array &$form,
   ): void {
     try {
       $searchParams = $this->assembleSearchParams($uuid, $businessId, $appEnv, $type, $status);

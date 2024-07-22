@@ -27,9 +27,9 @@ class DocumentContentMapper {
    *   Mapped data from document.
    */
   public static function documentContentToTypedData(
-      array $documentData,
-      ComplexDataDefinitionInterface $typedDataDefinition,
-      ?array $metadata = []
+    array $documentData,
+    ComplexDataDefinitionInterface $typedDataDefinition,
+    ?array $metadata = [],
   ): array {
     $documentContent = self::extractDocumentContent($documentData);
     $propertyDefinitions = $typedDataDefinition->getPropertyDefinitions();
@@ -254,7 +254,7 @@ class DocumentContentMapper {
     array $fullItemValueCallback,
     array $content,
     DataDefinitionInterface $definition,
-    array $arguments
+    array $arguments,
   ): mixed {
     $fieldValues = [];
     if (isset($fullItemValueCallback['service'])) {

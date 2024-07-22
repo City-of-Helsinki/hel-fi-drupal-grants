@@ -70,7 +70,7 @@ final class ApplicationGetterService {
     private readonly ApplicationStatusService $grantsHandlerApplicationStatusService,
     private readonly MessageService $grantsHandlerMessageService,
     private readonly LoggerChannelFactoryInterface $loggerChannelFactory,
-    private readonly EntityTypeManagerInterface $entityTypeManager
+    private readonly EntityTypeManagerInterface $entityTypeManager,
   ) {
     $this->logger = $loggerChannelFactory->get('application_getter_service');
     try {
@@ -94,7 +94,7 @@ final class ApplicationGetterService {
    * Set data access service.
    *
    * @param \Drupal\grants_metadata\ApplicationDataService $grantsApplicationDataService
-   *  Application data service.
+   *   Application data service.
    */
   public function setApplicationDataService(ApplicationDataService $grantsApplicationDataService): void {
     $this->grantsApplicationDataService = $grantsApplicationDataService;
@@ -157,7 +157,8 @@ final class ApplicationGetterService {
     string $appEnv,
     bool $sortByFinished = FALSE,
     bool $sortByStatus = FALSE,
-    string $themeHook = ''): array {
+    string $themeHook = '',
+  ): array {
 
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
 

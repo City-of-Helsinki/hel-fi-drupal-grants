@@ -69,7 +69,8 @@ class HandleDocumentsBatchService {
     AtvService $atvService,
     MessengerInterface $messenger,
     LoggerChannelFactoryInterface $loggerFactory,
-    ModuleExtensionList $moduleExtensionList) {
+    ModuleExtensionList $moduleExtensionList,
+  ) {
     $this->atvService = $atvService;
     $this->messenger = $messenger;
     $this->logger = $loggerFactory;

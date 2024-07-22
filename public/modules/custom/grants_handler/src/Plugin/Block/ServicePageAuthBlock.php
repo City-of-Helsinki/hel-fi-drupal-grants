@@ -98,7 +98,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     CurrentRouteMatch $routeMatch,
     AccountProxy $user,
     ServicePageBlockService $servicePageBlockService,
-    ApplicationStatusService $applicationStatusService
+    ApplicationStatusService $applicationStatusService,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
     $this->helfiHelsinkiProfiili = $helfiHelsinkiProfiili;

@@ -16,7 +16,6 @@ use Drupal\Core\Render\Renderer;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_attachments\AttachmentRemover;
-use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\webform\Entity\WebformSubmission;
@@ -96,8 +95,6 @@ class MessageForm extends FormBase {
    *   Send messages.
    * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
    *   Load entities.
-   * @param \Drupal\grants_handler\ApplicationHelpers $applicationHandler
-   *   HAndle application things.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access ATV.
    * @param \Drupal\grants_attachments\AttachmentRemover $attachmentRemover
@@ -114,7 +111,7 @@ class MessageForm extends FormBase {
     AtvService $atvService,
     AttachmentRemover $attachmentRemover,
     Renderer $renderer,
-    Session $session
+    Session $session,
   ) {
     $this->typedDataManager = $typed_data_manager;
     $this->messageService = $messageService;
@@ -354,7 +351,7 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
   public static function validateUpload(
     array &$element,
     FormStateInterface $formState,
-    array &$form
+    array &$form,
   ): void {
 
     $triggeringElement = $formState->getTriggeringElement();

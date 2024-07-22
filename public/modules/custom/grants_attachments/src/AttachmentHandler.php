@@ -162,7 +162,7 @@ class AttachmentHandler {
     EventsService $eventService,
     AuditLogService $auditLogService,
     EntityTypeManagerInterface $entityTypeManager,
-    ApplicationDataService $applicationDataService
+    ApplicationDataService $applicationDataService,
   ) {
 
     $this->attachmentRemover = $grants_attachments_attachment_remover;
@@ -349,7 +349,8 @@ class AttachmentHandler {
   public function parseAttachments(
     array $form,
     array &$submittedFormData,
-    string $applicationNumber): void {
+    string $applicationNumber,
+  ): void {
 
     $attachmentHeaders = GrantsAttachments::$fileTypes;
     $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
@@ -478,7 +479,8 @@ class AttachmentHandler {
     string $accountNumber,
     string $applicationNumber,
     array &$submittedFormData,
-    bool $copyingProcess = FALSE): void {
+    bool $copyingProcess = FALSE,
+  ): void {
     if (empty($accountNumber) || empty($applicationNumber)) {
       return;
     }
@@ -621,7 +623,8 @@ class AttachmentHandler {
     array $selectedAccountConfirmation,
     array &$submittedFormData,
     string $accountNumber,
-    string $applicationNumber): array {
+    string $applicationNumber,
+  ): array {
     try {
       $file = $this->atvService->getAttachment($selectedAccountConfirmation['href']);
       $uploadResult = $this->atvService->uploadAttachment(
@@ -688,7 +691,8 @@ class AttachmentHandler {
   protected function hasExistingBankAccountConfirmation(
     array $submittedFormData,
     array $selectedAccountConfirmation,
-    array $attachmentsInAtv): bool {
+    array $attachmentsInAtv,
+  ): bool {
 
     $allFormAttachments = [];
     if (isset($submittedFormData['attachments'])) {
@@ -728,7 +732,8 @@ class AttachmentHandler {
    */
   protected function hasBankAccountConfirmationInFormData(
     array $attachmentData,
-    array $accountConfirmation): array|bool {
+    array $accountConfirmation,
+  ): array|bool {
     foreach ($attachmentData as $attachment) {
       if (!is_array($attachment)) {
         continue;
@@ -873,7 +878,8 @@ class AttachmentHandler {
   protected function deletePreviousAccountConfirmation(
     array $applicationData,
     AtvDocument $atvDocument,
-    string $existingAccountNumber): AtvDocument {
+    string $existingAccountNumber,
+  ): AtvDocument {
     $bankAccountAttachment = array_filter($applicationData['muu_liite'], fn($item) => $item['fileType'] === '45');
     $bankAccountAttachment = reset($bankAccountAttachment);
 
@@ -928,7 +934,7 @@ class AttachmentHandler {
     array $field,
     string $fieldDescription,
     string $fileType,
-    string $applicationNumber
+    string $applicationNumber,
   ): array {
 
     $event = NULL;

@@ -99,7 +99,7 @@ final class GrantsAttachments extends WebformCompositeBase {
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    EventsService $eventsService
+    EventsService $eventsService,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->eventsService = $eventsService;
@@ -112,7 +112,8 @@ final class GrantsAttachments extends WebformCompositeBase {
     ContainerInterface $container,
     array $configuration,
     $plugin_id,
-    $plugin_definition): static {
+    $plugin_definition,
+  ): static {
     return new static(
       $configuration,
       $plugin_id,

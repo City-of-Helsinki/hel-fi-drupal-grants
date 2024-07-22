@@ -47,8 +47,10 @@ class GrantsWebformPrintController extends ControllerBase {
    * @param \Drupal\webform\WebformTranslationManager $translationManager
    *   Translation manager.
    */
-  public function __construct(LanguageManagerInterface $languageManager,
-                              WebformTranslationManager $translationManager) {
+  public function __construct(
+    LanguageManagerInterface $languageManager,
+    WebformTranslationManager $translationManager,
+  ) {
     $this->languageManager = $languageManager;
     $this->translationManager = $translationManager;
 

@@ -51,7 +51,8 @@ class GrantsMetadataCommands extends DrushCommands {
    * @aliases duda
    */
   public function deleteUserDocs(
-    array $users) {
+    array $users,
+  ) {
 
     $this->logger()->success(dt(print_r($users, 1)));
   }

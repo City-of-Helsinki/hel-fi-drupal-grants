@@ -119,7 +119,7 @@ class MessageService {
     EventsService $eventsService,
     AtvService $atvService,
     AccountProxyInterface $currentUser,
-    ApplicationStatusService $applicationStatusService
+    ApplicationStatusService $applicationStatusService,
   ) {
     $this->helfiHelsinkiProfiiliUserdata = $helfi_helsinki_profiili_userdata;
     $this->httpClient = $http_client;
@@ -371,7 +371,7 @@ class MessageService {
     array &$message,
     array $resentMessages,
     array $avus2ReceivedIds,
-    bool $showHiddenMessages
+    bool $showHiddenMessages,
   ): void {
     if (in_array($message['messageId'], $resentMessages) && $showHiddenMessages) {
       $message['resent'] = TRUE;

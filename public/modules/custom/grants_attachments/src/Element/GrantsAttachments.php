@@ -464,7 +464,8 @@ class GrantsAttachments extends WebformCompositeBase {
   public static function validateUpload(
     array &$element,
     FormStateInterface $form_state,
-    array &$form): bool|null {
+    array &$form,
+  ): bool|null {
     $webformKey = $element["#parents"][0];
     $triggeringElement = $form_state->getTriggeringElement();
     $isRemoveAction = str_contains($triggeringElement["#name"], 'attachment_remove_button');
@@ -624,7 +625,8 @@ class GrantsAttachments extends WebformCompositeBase {
     string $applicationNumber,
     bool $multiValueField,
     int $index,
-    string $formFiletype): bool {
+    string $formFiletype,
+  ): bool {
     try {
 
       /** @var \Drupal\helfi_atv\AtvService $atvService */
@@ -747,7 +749,8 @@ class GrantsAttachments extends WebformCompositeBase {
     array &$element,
     FormStateInterface $formState,
     $webformDataElement,
-    $fid) {
+    $fid,
+  ) {
     try {
       // Delete attachment via integration id.
       $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($webformDataElement["integrationID"]);
@@ -820,7 +823,8 @@ class GrantsAttachments extends WebformCompositeBase {
   public static function validateDeliveredLaterCheckbox(
     array &$element,
     FormStateInterface $form_state,
-    array &$complete_form) {
+    array &$complete_form,
+  ) {
     $tOpts = ['context' => 'grants_attachments'];
 
     $file = $form_state->getValue([
@@ -854,7 +858,8 @@ class GrantsAttachments extends WebformCompositeBase {
   public static function validateIncludedOtherFileCheckbox(
     array &$element,
     FormStateInterface $form_state,
-    array &$complete_form) {
+    array &$complete_form,
+  ) {
     $tOpts = ['context' => 'grants_attachments'];
 
     $file = $form_state->getValue([
@@ -890,7 +895,7 @@ class GrantsAttachments extends WebformCompositeBase {
   public static function validateElements(
     array &$element,
     FormStateInterface $form_state,
-    array &$complete_form
+    array &$complete_form,
   ) {
     $tOpts = ['context' => 'grants_attachments'];
 

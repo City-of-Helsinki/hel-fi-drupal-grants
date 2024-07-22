@@ -60,7 +60,7 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     TypedDataManager $typed_data_manager,
     GrantsProfileService $grantsProfileService,
     Session $session,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
     parent::__construct($typed_data_manager, $grantsProfileService, $session);
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;

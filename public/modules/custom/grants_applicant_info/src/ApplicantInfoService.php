@@ -422,9 +422,11 @@ class ApplicantInfoService {
    * @return array
    *   Array that has the earlier path and the final key.
    */
-  private static function getPathFromInnerNumericArray(array $haystack,
-                                                       mixed $needle,
-                                                       array $earlierPath) {
+  private static function getPathFromInnerNumericArray(
+    array $haystack,
+    mixed $needle,
+    array $earlierPath,
+  ) {
     $numerickeys = array_filter(array_keys($haystack), 'is_int');
     if (!empty($numerickeys)) {
       foreach ($haystack as $key3 => $item) {

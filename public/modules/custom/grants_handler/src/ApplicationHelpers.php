@@ -328,7 +328,7 @@ abstract class ApplicationHelpers {
    */
   public static function atvDocumentFromApplicationNumber(
     string $applicationNumber,
-    bool $refetch = FALSE
+    bool $refetch = FALSE,
   ): array|AtvDocument {
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
@@ -440,7 +440,8 @@ abstract class ApplicationHelpers {
   public static function getSubmissionIdWithSerialAndWebformId(
     string $serial,
     string $webformId,
-    AtvDocument $document): string {
+    AtvDocument $document,
+  ): string {
     $database = Database::getConnection();
     $query = $database->select('webform_submission', 'ws')
       ->fields('ws', ['sid'])
@@ -478,7 +479,8 @@ abstract class ApplicationHelpers {
    */
   protected static function createWebformSubmissionWithSerialAndWebformId(
     string $serial,
-    AtvDocument $document): WebformSubmission {
+    AtvDocument $document,
+  ): WebformSubmission {
 
     $metaData = $document->getMetadata();
     $webformUuidExists = isset($metaData['form_uuid']) && !empty($metaData['form_uuid']);
@@ -537,7 +539,7 @@ abstract class ApplicationHelpers {
     ?WebformSubmissionInterface $webform_submission,
     string $applicationNumber,
     array $userData,
-    string $saveId = ''
+    string $saveId = '',
   ): string {
     if (!$userData) {
       throw new \Exception('User data is required');

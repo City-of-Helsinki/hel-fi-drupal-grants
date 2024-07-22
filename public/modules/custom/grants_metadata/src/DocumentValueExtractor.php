@@ -31,7 +31,7 @@ class DocumentValueExtractor {
     array $content,
     array $pathArray,
     string $elementName,
-    ?DataDefinitionInterface $definition
+    ?DataDefinitionInterface $definition,
   ): mixed {
     $newKey = array_shift($pathArray);
 
@@ -67,7 +67,7 @@ class DocumentValueExtractor {
     array $content,
     array $pathArray,
     string $elementName,
-    ?DataDefinitionInterface $definition
+    ?DataDefinitionInterface $definition,
   ): mixed {
     return self::getValueFromDocument($content, $pathArray, $elementName, $definition);
   }
@@ -88,7 +88,7 @@ class DocumentValueExtractor {
   protected static function processRootElement(
     array $content,
     string $elementName,
-    ?DataDefinitionInterface $definition
+    ?DataDefinitionInterface $definition,
   ): mixed {
     $thisElement = $content[$elementName];
     $itemPropertyDefinitions = self::getItemPropertyDefinitions($definition);
@@ -114,9 +114,9 @@ class DocumentValueExtractor {
    *   The parsed typed data structure for the array element.
    */
   protected static function processArrayElement(
-  array $content,
-  string $elementName,
-  ?array $itemPropertyDefinitions
+    array $content,
+    string $elementName,
+    ?array $itemPropertyDefinitions,
   ): array {
     $retval = [];
 
@@ -144,11 +144,11 @@ class DocumentValueExtractor {
    *   The array to store the processed value.
    */
   protected static function getArrayElementItemValue(
-  $v,
-  $key,
-  $key2,
-  ?array $itemPropertyDefinitions,
-  array &$retval
+    $v,
+    $key,
+    $key2,
+    ?array $itemPropertyDefinitions,
+    array &$retval,
   ) {
     $itemValue = NULL;
     if (is_array($v)) {
@@ -204,7 +204,7 @@ class DocumentValueExtractor {
    */
   protected static function extractItemValue(
     array $item,
-    DataDefinitionInterface $itemPropertyDefinition
+    DataDefinitionInterface $itemPropertyDefinition,
   ): ?string {
     $valueExtractorConfig = $itemPropertyDefinition->getSetting('webformValueExtracter');
     if ($valueExtractorConfig) {
@@ -231,7 +231,7 @@ class DocumentValueExtractor {
   protected static function extractSimpleItemValue(
     $item,
     ?array $itemPropertyDefinitions,
-    $key
+    $key,
   ): ?string {
     if (is_array($itemPropertyDefinitions) && isset($itemPropertyDefinitions[$key])) {
       $itemPropertyDefinition = $itemPropertyDefinitions[$key];
@@ -261,7 +261,7 @@ class DocumentValueExtractor {
   protected static function processNumericKeys(
     array $content,
     string $elementName,
-    ?DataDefinitionInterface $definition
+    ?DataDefinitionInterface $definition,
   ): mixed {
     foreach ($content as $value) {
       if (!is_array($value)) {
@@ -289,7 +289,7 @@ class DocumentValueExtractor {
    */
   protected static function parseElementValue(
     array $value,
-    ?DataDefinitionInterface $definition
+    ?DataDefinitionInterface $definition,
   ): mixed {
     $parseValue = is_string($value['value']) ? $value['value'] : '';
     $meta = isset($value['meta']) ? json_decode($value['meta'], TRUE) : NULL;
@@ -340,7 +340,7 @@ class DocumentValueExtractor {
    *   The property definitions for the item, or NULL if none exist.
    */
   protected static function getItemPropertyDefinitions(
-    ?DataDefinitionInterface $definition
+    ?DataDefinitionInterface $definition,
   ): ?array {
     if (method_exists($definition, 'getItemDefinition')) {
       $itemDefinition = $definition->getItemDefinition();

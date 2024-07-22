@@ -42,8 +42,8 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
   public function __construct(
     AccountProxyInterface $accountProxy,
     RequestStack $requestStack,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
-    ) {
+    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+  ) {
     $this->currentUser = $accountProxy;
     $this->request = $requestStack->getCurrentRequest();
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;

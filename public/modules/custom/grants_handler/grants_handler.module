@@ -570,7 +570,7 @@ function _grants_handler_add_checkmark_to_text(string|array $textValue): array {
 function _grants_handler_imported_handler(
   mixed &$array,
   mixed $value,
-  bool $show_checkmark = TRUE
+  bool $show_checkmark = TRUE,
 ) {
   if (!is_array($array)) {
     return;
@@ -603,7 +603,7 @@ function _grants_handler_missing_data(
   ?array &$element,
   string $str1 = 'Field is missing.',
   string $str2 = 'Go to grants profile',
-  string $str3 = 'to fill out missing data.'
+  string $str3 = 'to fill out missing data.',
 ): void {
   if (is_null($element)) {
     return;

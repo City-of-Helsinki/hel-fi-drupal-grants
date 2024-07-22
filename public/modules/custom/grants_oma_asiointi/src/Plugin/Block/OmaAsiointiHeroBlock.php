@@ -43,7 +43,7 @@ class OmaAsiointiHeroBlock extends BlockBase implements ContainerFactoryPluginIn
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    GrantsProfileService $grants_profile_service
+    GrantsProfileService $grants_profile_service,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->grantsProfileService = $grants_profile_service;
@@ -67,7 +67,7 @@ class OmaAsiointiHeroBlock extends BlockBase implements ContainerFactoryPluginIn
     ContainerInterface $container,
     array $configuration,
     $plugin_id,
-    $plugin_definition
+    $plugin_definition,
   ) {
     return new static(
       $configuration,

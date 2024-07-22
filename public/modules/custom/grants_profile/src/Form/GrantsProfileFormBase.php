@@ -67,9 +67,11 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param \Symfony\Component\HttpFoundation\Session\Session $session
    *   Session data.
    */
-  public function __construct(TypedDataManager $typed_data_manager,
-                              GrantsProfileService $grantsProfileService,
-                              Session $session) {
+  public function __construct(
+    TypedDataManager $typed_data_manager,
+    GrantsProfileService $grantsProfileService,
+    Session $session,
+  ) {
     $this->typedDataManager = $typed_data_manager;
     $this->grantsProfileService = $grantsProfileService;
     $this->session = $session;
@@ -1113,7 +1115,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     array $form,
     array $addressArrayKeys,
     array $officialArrayKeys,
-    array $bankAccountArrayKeys
+    array $bankAccountArrayKeys,
   ) {
     // Create data object.
     $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);

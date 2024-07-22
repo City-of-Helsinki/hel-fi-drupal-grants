@@ -85,8 +85,8 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     CurrentRouteMatch $routeMatch,
     AccountProxy $user,
     ServicePageBlockService $servicePageBlockService,
-    ApplicationStatusService $applicationStatusService
-    ) {
+    ApplicationStatusService $applicationStatusService,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatch = $routeMatch;
     $this->currentUser = $user;

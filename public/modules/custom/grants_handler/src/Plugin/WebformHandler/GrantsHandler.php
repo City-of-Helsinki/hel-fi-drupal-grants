@@ -256,7 +256,8 @@ class GrantsHandler extends WebformHandlerBase {
     ContainerInterface $container,
     array $configuration,
     $plugin_id,
-    $plugin_definition): WebformHandlerBase| GrantsHandler| ContainerFactoryPluginInterface {
+    $plugin_definition,
+  ): WebformHandlerBase| GrantsHandler| ContainerFactoryPluginInterface {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
 
     /** @var \Drupal\Core\Session\AccountProxyInterface $currentUser */
@@ -1138,7 +1139,8 @@ moment and reload the page.',
   public function validate(
     WebformSubmissionInterface $webform_submission,
     FormStateInterface $form_state,
-    array &$form): ?array {
+    array &$form,
+  ): ?array {
     try {
       // Validate form.
       parent::validateForm($form, $form_state, $webform_submission);
@@ -1161,7 +1163,7 @@ moment and reload the page.',
   public function validateForm(
     array &$form,
     FormStateInterface $form_state,
-    WebformSubmissionInterface $webform_submission
+    WebformSubmissionInterface $webform_submission,
   ): void {
 
     $tOpts = ['context' => 'grants_handler'];
@@ -1571,7 +1573,7 @@ submit the application only after you have provided all the necessary informatio
   public function confirmForm(
     array &$form,
     FormStateInterface $form_state,
-    WebformSubmissionInterface $webform_submission
+    WebformSubmissionInterface $webform_submission,
   ): void {
 
     try {
