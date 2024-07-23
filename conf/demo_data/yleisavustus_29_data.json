@@ -1,0 +1,1214 @@
+{
+  "id": "4d2f3959-66ac-43b3-8f7b-73482270cf5e",
+  "created_at": "2024-07-23T12:33:20.128989+03:00",
+  "updated_at": "2024-07-23T12:39:59.956709+03:00",
+  "status": {
+    "value": "RECEIVED",
+    "status_display_values": {},
+    "timestamp": "2024-07-23T12:39:19.342992+03:00",
+    "activities": []
+  },
+  "status_histories": [
+    {
+      "value": "RECEIVED",
+      "status_display_values": {},
+      "timestamp": "2024-07-23T12:39:19.342992+03:00",
+      "activities": []
+    },
+    {
+      "value": "SUBMITTED",
+      "status_display_values": {},
+      "timestamp": "2024-07-23T12:38:47.226607+03:00",
+      "activities": []
+    },
+    {
+      "value": "DRAFT",
+      "status_display_values": {},
+      "timestamp": "2024-07-23T12:33:20.139083+03:00",
+      "activities": []
+    }
+  ],
+  "type": "ECONOMICGRANTAPPLICATION",
+  "human_readable_type": {
+    "en": "City Board, general grant application",
+    "fi": "Kaupunginhallitus, yleisavustushakemus",
+    "sv": "Stadsstyrelsen, allmän bidragsansökan"
+  },
+  "service": "AvustushakemusIntegraatio",
+  "user_id": "76268b22-7b30-4458-af89-82eae130bd8c",
+  "transaction_id": "LOCALPLAY-029-0015105",
+  "business_id": "7007869-8",
+  "tos_function_id": "f917d43aab76420bb2ec53f6684da7f7",
+  "tos_record_id": "89837a682b5d410e861f8f3688154163",
+  "metadata": {
+    "appenv": "LOCALPLAY",
+    "saveid": "a5723491-bdfa-4442-9fd9-ca9504b46d20",
+    "language": "fi",
+    "form_uuid": "2c6da593-88ba-471f-a46e-8a13b6143431",
+    "applicant_id": "7007869-8",
+    "applicant_type": "registered_community",
+    "applicationnumber": "LOCALPLAY-029-0015105"
+  },
+  "content": {
+    "compensation": {
+      "applicationInfoArray": [
+        {
+          "ID": "applicationType",
+          "value": "ECONOMICGRANTAPPLICATION",
+          "valueType": "string",
+          "meta": "[]"
+        },
+        {
+          "ID": "applicationTypeID",
+          "value": "29",
+          "valueType": "string",
+          "meta": "[]"
+        },
+        {
+          "ID": "formTimeStamp",
+          "value": "2024-07-23T12:37:25",
+          "valueType": "string",
+          "meta": "[]"
+        },
+        {
+          "ID": "createdFormTimeStamp",
+          "value": "2024-07-23T12:31:58",
+          "valueType": "string",
+          "meta": "[]"
+        },
+        {
+          "ID": "submittedFormTimeStamp",
+          "value": "2024-07-23T12:37:25",
+          "valueType": "string",
+          "meta": "[]"
+        },
+        {
+          "ID": "applicationNumber",
+          "label": "Hakemusnumero",
+          "value": "LOCALPLAY-029-0015105",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"application_number\",\"weight\":3,\"label\":\"Hakemusnumero\"},\"element\":{\"weight\":3,\"label\":\"Hakemusnumero\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "status",
+          "label": "Hakemuksen tila",
+          "value": "RECEIVED",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"status\",\"weight\":4,\"label\":\"Hakemuksen tila\"},\"element\":{\"weight\":4,\"label\":\"Hakemuksen tila\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "actingYear",
+          "label": "Vuosi, jolle haen avustusta",
+          "value": "2025",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"avustuksen_tiedot\",\"weight\":21,\"label\":\"Avustuksen tiedot\"},\"element\":{\"weight\":22,\"label\":\"Vuosi, jolle haen avustusta\",\"hidden\":false}}",
+
+        }
+      ],
+      "currentAddressInfoArray": [
+        {
+          "ID": "contactPerson",
+          "label": "Yhteyshenkilö",
+          "value": "Testi Testi",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"contact_person_section\",\"weight\":11,\"label\":\"Hakemuksen yhteyshenkilö\"},\"element\":{\"weight\":12,\"label\":\"Yhteyshenkilö\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "phoneNumber",
+          "label": "Puhelinnumero",
+          "value": "235423452345",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"contact_person_section\",\"weight\":11,\"label\":\"Hakemuksen yhteyshenkilö\"},\"element\":{\"weight\":13,\"label\":\"Puhelinnumero\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "street",
+          "label": "Lähiosoite",
+          "value": "Gunillantie 7 A 3",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"osoite\",\"weight\":14,\"label\":\"Osoite\"},\"element\":{\"weight\":15,\"label\":\"Lähiosoite\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "city",
+          "label": "Kaupunki",
+          "value": "Helsinki",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"osoite\",\"weight\":14,\"label\":\"Osoite\"},\"element\":{\"weight\":15,\"label\":\"Kaupunki\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "postCode",
+          "label": "Postinumero",
+          "value": "00870",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"osoite\",\"weight\":14,\"label\":\"Osoite\"},\"element\":{\"weight\":15,\"label\":\"Postinumero\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "country",
+          "label": "Maa",
+          "value": "Suomi",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"osoite\",\"weight\":14,\"label\":\"Osoite\"},\"element\":{\"weight\":15,\"label\":\"Maa\",\"hidden\":false}}",
+
+        }
+      ],
+      "applicantInfoArray": [
+        {
+          "ID": "applicantType",
+          "value": "2",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"yhteiso_jolle_haetaan_avustusta\",\"weight\":5,\"label\":\"Yhteisö, jolle haetaan avustusta\"},\"element\":{\"weight\":0,\"label\":\"Element\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "companyNumber",
+          "value": "7007869-8",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"yhteiso_jolle_haetaan_avustusta\",\"weight\":5,\"label\":\"Yhteisö, jolle haetaan avustusta\"},\"element\":{\"weight\":1,\"label\":\"Y-tunnus\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "registrationDate",
+          "value": "06.09.2018",
+          "valueType": "datetime",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"yhteiso_jolle_haetaan_avustusta\",\"weight\":5,\"label\":\"Yhteisö, jolle haetaan avustusta\"},\"element\":{\"weight\":2,\"label\":\"Rekisteröitymispäivä\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "foundingYear",
+          "value": "1998",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"yhteiso_jolle_haetaan_avustusta\",\"weight\":5,\"label\":\"Yhteisö, jolle haetaan avustusta\"},\"element\":{\"weight\":3,\"label\":\"Perustamisvuosi\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "home",
+          "value": "HELSINKI",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"yhteiso_jolle_haetaan_avustusta\",\"weight\":5,\"label\":\"Yhteisö, jolle haetaan avustusta\"},\"element\":{\"weight\":4,\"label\":\"Kotipaikka\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "homePage",
+          "value": "https://yle.fi",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"yhteiso_jolle_haetaan_avustusta\",\"weight\":5,\"label\":\"Yhteisö, jolle haetaan avustusta\"},\"element\":{\"weight\":5,\"label\":\"Verkkosivujen osoite\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "communityOfficialName",
+          "value": "Htenmristen Testifirma OY",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"yhteiso_jolle_haetaan_avustusta\",\"weight\":5,\"label\":\"Yhteisö, jolle haetaan avustusta\"},\"element\":{\"weight\":6,\"label\":\"Yhteisön nimi\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "communityOfficialNameShort",
+          "value": "ASDF",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"yhteiso_jolle_haetaan_avustusta\",\"weight\":5,\"label\":\"Yhteisö, jolle haetaan avustusta\"},\"element\":{\"weight\":7,\"label\":\"Yhteisön lyhenne\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "email",
+          "label": "Sähköpostiosoite",
+          "value": "testi@testi.fi",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"contact_person_email_section\",\"weight\":8,\"label\":\"Sähköposti\"},\"element\":{\"weight\":10,\"label\":\"Sähköpostiosoite\",\"hidden\":false}}",
+
+        }
+      ],
+      "applicantOfficialsArray": [
+        [
+          {
+            "ID": "name",
+            "label": "Nimi",
+            "value": "asdf asdf",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"toiminnasta_vastaavat_henkilot\",\"weight\":18,\"label\":\"Toiminnasta vastaavat henkilöt\"},\"element\":{\"weight\":19,\"label\":\"Nimi\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "role",
+            "label": "Rooli",
+            "value": "11",
+            "valueType": "int",
+            "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"toiminnasta_vastaavat_henkilot\",\"weight\":18,\"label\":\"Toiminnasta vastaavat henkilöt\"},\"element\":{\"weight\":19,\"label\":\"Rooli\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "email",
+            "label": "Sähköposti",
+            "value": "asdfasdf@asdf.fi",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"toiminnasta_vastaavat_henkilot\",\"weight\":18,\"label\":\"Toiminnasta vastaavat henkilöt\"},\"element\":{\"weight\":19,\"label\":\"Sähköposti\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "phone",
+            "label": "Puhelinnumero",
+            "value": "36245345624562456",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"toiminnasta_vastaavat_henkilot\",\"weight\":18,\"label\":\"Toiminnasta vastaavat henkilöt\"},\"element\":{\"weight\":19,\"label\":\"Puhelinnumero\",\"hidden\":false}}",
+
+          }
+        ]
+      ],
+      "bankAccountArray": [
+        {
+          "ID": "accountNumber",
+          "label": "Tilinumero",
+          "value": "FI2878974912867418",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"1_hakijan_tiedot\",\"number\":1,\"label\":\"1. Hakijan tiedot\"},\"section\":{\"id\":\"tilinumero\",\"weight\":16,\"label\":\"Tilinumero\"},\"element\":{\"weight\":17,\"label\":\"Tilinumero\",\"hidden\":false}}",
+
+        }
+      ],
+      "compensationInfo": {
+        "generalInfoArray": [
+          {
+            "ID": "purpose",
+            "label": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista",
+            "value": "Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"kayttotarkoitus\",\"weight\":25,\"label\":\"Käyttötarkoitus\"},\"element\":{\"weight\":26,\"label\":\"Lyhyt kuvaus haettavan \/ haettavien avustusten käyttötarkoituksista\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "compensationPreviousYear",
+            "label": "Käyttöselvitys edellisenä vuonna saamastani avustuksesta",
+            "value": "true",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"edellisen_avustuksen_kayttoselvitys\",\"weight\":41,\"label\":\"Edellisen avustuksen käyttöselvitys\"},\"element\":{\"weight\":43,\"label\":\"Käyttöselvitys edellisenä vuonna saamastani avustuksesta\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "totalAmount",
+            "value": "346",
+            "valueType": "float",
+            "meta": "[]"
+          },
+          {
+            "ID": "explanation",
+            "label": "Selvitys avustuksen käytöstä",
+            "value": "Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"edellisen_avustuksen_kayttoselvitys\",\"weight\":41,\"label\":\"Edellisen avustuksen käyttöselvitys\"},\"element\":{\"weight\":45,\"label\":\"Selvitys avustuksen käytöstä\",\"hidden\":false}}",
+
+          }
+        ],
+        "compensationArray": [
+          [
+            {
+              "ID": "subventionType",
+              "label": "Avustuslajin koodi",
+              "value": "6",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"avustuslajit\",\"weight\":23,\"label\":\"Avustuslajit\"},\"element\":{\"weight\":24,\"label\":\"Avustuslajin koodi\",\"hidden\":false}}",
+
+            },
+            {
+              "ID": "amount",
+              "label": "Avustussumma",
+              "value": "432",
+              "valueType": "float",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"avustuslajit\",\"weight\":23,\"label\":\"Avustuslajit\"},\"element\":{\"weight\":24,\"label\":\"Avustussumma\",\"hidden\":false,\"input_mask\":{\"alias\":\"currency\",\"prefix\":\"\",\"suffix\":\"€\",\"groupSeparator\":\" \",\"radixPoint\":\",\"}}}",
+
+            }
+          ]
+        ],
+        "previousYearTotalAmount": 0.0
+      },
+      "otherCompensationsInfo": {
+        "otherCompensationsArray": [
+          [
+            {
+              "ID": "issuer",
+              "label": "Avustuksen myöntäjä",
+              "value": "4",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_myonnetyt_avustukset\",\"weight\":27,\"label\":\"Muut samaan tarkoitukseen myönnetyt avustukset\"},\"element\":{\"weight\":30,\"label\":\"Avustuksen myöntäjä\",\"hidden\":false}}",
+
+            },
+            {
+              "ID": "issuerName",
+              "label": "Myöntäjän nimi",
+              "value": "Testi Testi Testi Testi Testi",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_myonnetyt_avustukset\",\"weight\":27,\"label\":\"Muut samaan tarkoitukseen myönnetyt avustukset\"},\"element\":{\"weight\":30,\"label\":\"Myöntäjän nimi\",\"hidden\":false}}",
+
+            },
+            {
+              "ID": "year",
+              "label": "Vuosi",
+              "value": "1998",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_myonnetyt_avustukset\",\"weight\":27,\"label\":\"Muut samaan tarkoitukseen myönnetyt avustukset\"},\"element\":{\"weight\":30,\"label\":\"Vuosi\",\"hidden\":false}}",
+
+            },
+            {
+              "ID": "amount",
+              "label": "Myönnetyn avustuksen summa",
+              "value": "24535",
+              "valueType": "float",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_myonnetyt_avustukset\",\"weight\":27,\"label\":\"Muut samaan tarkoitukseen myönnetyt avustukset\"},\"element\":{\"weight\":30,\"label\":\"Myönnetyn avustuksen summa\",\"hidden\":false,\"input_mask\":{\"alias\":\"currency\",\"prefix\":\"\",\"suffix\":\"€\",\"groupSeparator\":\" \",\"radixPoint\":\",\"}}}",
+
+            },
+            {
+              "ID": "purpose",
+              "label": "Kuvaus käyttötarkoituksesta",
+              "value": "Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi ",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_myonnetyt_avustukset\",\"weight\":27,\"label\":\"Muut samaan tarkoitukseen myönnetyt avustukset\"},\"element\":{\"weight\":30,\"label\":\"Kuvaus käyttötarkoituksesta\",\"hidden\":false}}",
+
+            }
+          ],
+          [
+            {
+              "ID": "issuer",
+              "label": "Avustuksen myöntäjä",
+              "value": "6",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_myonnetyt_avustukset\",\"weight\":27,\"label\":\"Muut samaan tarkoitukseen myönnetyt avustukset\"},\"element\":{\"weight\":30,\"label\":\"Avustuksen myöntäjä\",\"hidden\":false}}",
+
+            },
+            {
+              "ID": "issuerName",
+              "label": "Myöntäjän nimi",
+              "value": "Testi Testi Testi Testi Testi Testi",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_myonnetyt_avustukset\",\"weight\":27,\"label\":\"Muut samaan tarkoitukseen myönnetyt avustukset\"},\"element\":{\"weight\":30,\"label\":\"Myöntäjän nimi\",\"hidden\":false}}",
+
+            },
+            {
+              "ID": "year",
+              "label": "Vuosi",
+              "value": "2022",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_myonnetyt_avustukset\",\"weight\":27,\"label\":\"Muut samaan tarkoitukseen myönnetyt avustukset\"},\"element\":{\"weight\":30,\"label\":\"Vuosi\",\"hidden\":false}}",
+
+            },
+            {
+              "ID": "amount",
+              "label": "Myönnetyn avustuksen summa",
+              "value": "34563",
+              "valueType": "float",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_myonnetyt_avustukset\",\"weight\":27,\"label\":\"Muut samaan tarkoitukseen myönnetyt avustukset\"},\"element\":{\"weight\":30,\"label\":\"Myönnetyn avustuksen summa\",\"hidden\":false,\"input_mask\":{\"alias\":\"currency\",\"prefix\":\"\",\"suffix\":\"€\",\"groupSeparator\":\" \",\"radixPoint\":\",\"}}}",
+
+            },
+            {
+              "ID": "purpose",
+              "label": "Kuvaus käyttötarkoituksesta",
+              "value": "Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_myonnetyt_avustukset\",\"weight\":27,\"label\":\"Muut samaan tarkoitukseen myönnetyt avustukset\"},\"element\":{\"weight\":30,\"label\":\"Kuvaus käyttötarkoituksesta\",\"hidden\":false}}",
+
+            }
+          ]
+        ],
+        "otherAppliedCompensationsArray": [
+          [
+            {
+              "ID": "issuer",
+              "label": "Avustuksen myöntäjä",
+              "value": "5",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_haetut_avustukset\",\"weight\":31,\"label\":\"Muut samaan tarkoitukseen haetut avustukset\"},\"element\":{\"weight\":34,\"label\":\"Avustuksen myöntäjä\",\"hidden\":false}}",
+
+            },
+            {
+              "ID": "issuerName",
+              "label": "Myöntäjän nimi",
+              "value": "Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_haetut_avustukset\",\"weight\":31,\"label\":\"Muut samaan tarkoitukseen haetut avustukset\"},\"element\":{\"weight\":34,\"label\":\"Myöntäjän nimi\",\"hidden\":false}}",
+
+            },
+            {
+              "ID": "year",
+              "label": "Vuosi",
+              "value": "2021",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_haetut_avustukset\",\"weight\":31,\"label\":\"Muut samaan tarkoitukseen haetut avustukset\"},\"element\":{\"weight\":34,\"label\":\"Vuosi\",\"hidden\":false}}",
+
+            },
+            {
+              "ID": "amount",
+              "label": "Haetun avustuksen summa",
+              "value": "346",
+              "valueType": "float",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_haetut_avustukset\",\"weight\":31,\"label\":\"Muut samaan tarkoitukseen haetut avustukset\"},\"element\":{\"weight\":34,\"label\":\"Haetun avustuksen summa\",\"hidden\":false,\"input_mask\":{\"alias\":\"currency\",\"prefix\":\"\",\"suffix\":\"€\",\"groupSeparator\":\" \",\"radixPoint\":\",\"}}}",
+
+            },
+            {
+              "ID": "purpose",
+              "label": "Kuvaus käyttötarkoituksesta",
+              "value": "Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi",
+              "valueType": "string",
+              "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"muut_samaan_tarkoitukseen_haetut_avustukset\",\"weight\":31,\"label\":\"Muut samaan tarkoitukseen haetut avustukset\"},\"element\":{\"weight\":34,\"label\":\"Kuvaus käyttötarkoituksesta\",\"hidden\":false}}",
+
+            }
+          ]
+        ],
+        "otherCompensationsInfoArray": [
+          {
+            "ID": "otherCompensationsTotal",
+            "value": "59098",
+            "valueType": "double",
+            "meta": "[]"
+          },
+          {
+            "ID": "otherAppliedCompensationsTotal",
+            "value": "346",
+            "valueType": "double",
+            "meta": "[]"
+          }
+        ],
+        "otherCompensationsTotal": 0.0
+      },
+      "benefitsInfoArray": [
+        {
+          "ID": "loans",
+          "label": "Kuvaus lainoista ja takauksista",
+          "value": "Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"kaupungilta_saadut_lainat_ja_takaukset\",\"weight\":35,\"label\":\"Kaupungilta saadut lainat ja takaukset\"},\"element\":{\"weight\":37,\"label\":\"Kuvaus lainoista ja takauksista\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "premises",
+          "label": "Kuvaus tiloihin liittyvästä tuesta",
+          "value": "Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"2_avustustiedot\",\"number\":2,\"label\":\"2. Avustustiedot\"},\"section\":{\"id\":\"kaupungilta_saatu_tiloihin_liittyva_tuki\",\"weight\":38,\"label\":\"Kaupungilta saatu tiloihin liittyvä tuki\"},\"element\":{\"weight\":40,\"label\":\"Kuvaus tiloihin liittyvästä tuesta\",\"hidden\":false}}",
+
+        }
+      ],
+      "activitiesInfoArray": [
+        {
+          "ID": "businessPurpose",
+          "label": "Toiminnan kuvaus",
+          "value": "aösldkfh öasdkfh aösjdfh alkjsdfh lkasjfh akljshf",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"3_yhteison_tiedot\",\"number\":3,\"label\":\"3. Yhteisön toiminta\"},\"section\":{\"id\":\"business_info\",\"weight\":47,\"label\":\"Toiminnan kuvaus\"},\"element\":{\"weight\":48,\"label\":\"Toiminnan kuvaus\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "communityPracticesBusiness",
+          "label": "Harjoittaako yhteisö liiketoimintaa",
+          "value": "false",
+          "valueType": "bool",
+          "meta": "{\"page\":{\"id\":\"3_yhteison_tiedot\",\"number\":3,\"label\":\"3. Yhteisön toiminta\"},\"section\":{\"id\":\"business_info\",\"weight\":47,\"label\":\"Toiminnan kuvaus\"},\"element\":{\"weight\":49,\"label\":\"Harjoittaako yhteisö liiketoimintaa\",\"hidden\":false}}",
+
+        },
+        {
+          "ID": "membersApplicantPersonLocal",
+          "label": "Helsinkiläisiä henkilöjäseniä yhteensä",
+          "value": "435",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"3_yhteison_tiedot\",\"number\":3,\"label\":\"3. Yhteisön toiminta\"},\"section\":{\"id\":\"jasenmaara\",\"weight\":53,\"label\":\"Jäsenmäärä\"},\"element\":{\"weight\":56,\"label\":\"Jäsenmäärä: Helsinkiläisiä henkilöjäseniä yhteensä\",\"hidden\":false,\"input_mask\":{\"alias\":\"numeric\",\"groupSeparator\":\" \",\"digits\":\"0\"}}}",
+
+        },
+        {
+          "ID": "membersApplicantPersonGlobal",
+          "label": "Henkilöjäseniä yhteensä",
+          "value": "435",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"3_yhteison_tiedot\",\"number\":3,\"label\":\"3. Yhteisön toiminta\"},\"section\":{\"id\":\"jasenmaara\",\"weight\":53,\"label\":\"Jäsenmäärä\"},\"element\":{\"weight\":55,\"label\":\"Jäsenmäärä: Henkilöjäseniä yhteensä\",\"hidden\":false,\"input_mask\":{\"alias\":\"numeric\",\"groupSeparator\":\" \",\"digits\":\"0\"}}}",
+
+        },
+        {
+          "ID": "membersApplicantCommunityLocal",
+          "label": "Helsinkiläisiä yhteisöjäseniä yhteensä",
+          "value": "435",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"3_yhteison_tiedot\",\"number\":3,\"label\":\"3. Yhteisön toiminta\"},\"section\":{\"id\":\"jasenmaara\",\"weight\":53,\"label\":\"Jäsenmäärä\"},\"element\":{\"weight\":58,\"label\":\"Jäsenmäärä: Helsinkiläisiä yhteisöjäseniä yhteensä\",\"hidden\":false,\"input_mask\":{\"alias\":\"numeric\",\"groupSeparator\":\" \",\"digits\":\"0\"}}}",
+
+        },
+        {
+          "ID": "membersApplicantCommunityGlobal",
+          "label": "Yhteisöjäseniä",
+          "value": "345",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"3_yhteison_tiedot\",\"number\":3,\"label\":\"3. Yhteisön toiminta\"},\"section\":{\"id\":\"jasenmaara\",\"weight\":53,\"label\":\"Jäsenmäärä\"},\"element\":{\"weight\":57,\"label\":\"Jäsenmäärä: Yhteisöjäseniä\",\"hidden\":false,\"input_mask\":{\"alias\":\"numeric\",\"groupSeparator\":\" \",\"digits\":\"0\"}}}",
+
+        },
+        {
+          "ID": "feePerson",
+          "label": "Henkilöjäsenen jäsenmaksu (€ / vuosi)",
+          "value": "345",
+          "valueType": "float",
+          "meta": "{\"page\":{\"id\":\"3_yhteison_tiedot\",\"number\":3,\"label\":\"3. Yhteisön toiminta\"},\"section\":{\"id\":\"ensimmainen_otsikko\",\"weight\":50,\"label\":\"Jäsenmaksut\"},\"element\":{\"weight\":51,\"label\":\"Henkilöjäsenen jäsenmaksu (€ \/ vuosi)\",\"hidden\":false,\"input_mask\":{\"alias\":\"currency\",\"prefix\":\"\",\"suffix\":\"€\",\"groupSeparator\":\" \",\"radixPoint\":\",\"}}}",
+
+        },
+        {
+          "ID": "feeCommunity",
+          "label": "Yhteisöjäsen (€ / vuosi)",
+          "value": "4535",
+          "valueType": "float",
+          "meta": "{\"page\":{\"id\":\"3_yhteison_tiedot\",\"number\":3,\"label\":\"3. Yhteisön toiminta\"},\"section\":{\"id\":\"ensimmainen_otsikko\",\"weight\":50,\"label\":\"Jäsenmaksut\"},\"element\":{\"weight\":52,\"label\":\"Yhteisöjäsen (€ \/ vuosi)\",\"hidden\":false,\"input_mask\":{\"alias\":\"currency\",\"prefix\":\"\",\"suffix\":\"€\",\"groupSeparator\":\" \",\"radixPoint\":\",\"}}}",
+
+        }
+      ],
+      "additionalInformation": "Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi",
+      "senderInfoArray": [
+        {
+          "ID": "firstname",
+          "value": "Ellen",
+          "valueType": "string",
+          "meta": "[]"
+        },
+        {
+          "ID": "lastname",
+          "value": "Grillsson",
+          "valueType": "string",
+          "meta": "[]"
+        },
+        {
+          "ID": "personID",
+          "value": "100384-998R",
+          "valueType": "string",
+          "meta": "[]"
+        },
+        {
+          "ID": "userID",
+          "value": "76268b22-7b30-4458-af89-82eae130bd8c",
+          "valueType": "string",
+          "meta": "[]"
+        },
+        {
+          "ID": "email",
+          "value": "tilit429+ellen_lokaali@gmail.com",
+          "valueType": "string",
+          "meta": "[]"
+        }
+      ]
+    },
+    "attachmentsInfo": {
+      "attachmentsArray": [
+        [
+          {
+            "ID": "description",
+            "label": "Liitteen kuvaus",
+            "value": "Yhteisön säännöt",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liitteen kuvaus\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileType",
+            "value": "7",
+            "valueType": "int",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "isDeliveredLater",
+            "label": "Liite toimitetaan myöhemmin",
+            "value": "true",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite toimitetaan myöhemmin\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "isIncludedInOtherFile",
+            "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\",\"hidden\":false}}",
+
+          }
+        ],
+        [
+          {
+            "ID": "description",
+            "label": "Liitteen kuvaus",
+            "value": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liitteen kuvaus\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileType",
+            "value": "43",
+            "valueType": "int",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "isDeliveredLater",
+            "label": "Liite toimitetaan myöhemmin",
+            "value": "true",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite toimitetaan myöhemmin\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "isIncludedInOtherFile",
+            "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\",\"hidden\":false}}",
+
+          }
+        ],
+        [
+          {
+            "ID": "description",
+            "label": "Liitteen kuvaus",
+            "value": "Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liitteen kuvaus\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileName",
+            "label": "Tiedostonimi",
+            "value": "03_vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paattyneelta_tilikaudelta.pdf",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Tiedostonimi\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileType",
+            "value": "4",
+            "valueType": "int",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "integrationID",
+            "value": "/LOCALPLAY/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114635/",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "isDeliveredLater",
+            "label": "Liite toimitetaan myöhemmin",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite toimitetaan myöhemmin\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "isIncludedInOtherFile",
+            "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\",\"hidden\":false}}",
+
+          }
+        ],
+        [
+          {
+            "ID": "description",
+            "label": "Liitteen kuvaus",
+            "value": "Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liitteen kuvaus\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileName",
+            "label": "Tiedostonimi",
+            "value": "05_toimintasuunnitelma_sille_vuodelle_jolle_haet_avustusta.pdf",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Tiedostonimi\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileType",
+            "value": "5",
+            "valueType": "int",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "integrationID",
+            "value": "/LOCALPLAY/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114636/",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "isDeliveredLater",
+            "label": "Liite toimitetaan myöhemmin",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite toimitetaan myöhemmin\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "isIncludedInOtherFile",
+            "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\",\"hidden\":false}}",
+
+          }
+        ],
+        [
+          {
+            "ID": "description",
+            "label": "Liitteen kuvaus",
+            "value": "Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liitteen kuvaus\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileName",
+            "label": "Tiedostonimi",
+            "value": "01_vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta.pdf",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Tiedostonimi\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileType",
+            "value": "8",
+            "valueType": "int",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "integrationID",
+            "value": "/LOCALPLAY/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114637/",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "isDeliveredLater",
+            "label": "Liite toimitetaan myöhemmin",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite toimitetaan myöhemmin\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "isIncludedInOtherFile",
+            "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\",\"hidden\":false}}",
+
+          }
+        ],
+        [
+          {
+            "ID": "description",
+            "label": "Liitteen kuvaus",
+            "value": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liitteen kuvaus\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileType",
+            "value": "1",
+            "valueType": "int",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "isDeliveredLater",
+            "label": "Liite toimitetaan myöhemmin",
+            "value": "true",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite toimitetaan myöhemmin\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "isIncludedInOtherFile",
+            "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\",\"hidden\":false}}",
+
+          }
+        ],
+        [
+          {
+            "ID": "description",
+            "label": "Liitteen kuvaus",
+            "value": "Talousarvio (sille vuodelle jolle haet avustusta)",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liitteen kuvaus\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileType",
+            "value": "2",
+            "valueType": "int",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "isDeliveredLater",
+            "label": "Liite toimitetaan myöhemmin",
+            "value": "true",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite toimitetaan myöhemmin\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "isIncludedInOtherFile",
+            "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\",\"hidden\":false}}",
+
+          }
+        ],
+        [
+          {
+            "ID": "description",
+            "label": "Liitteen kuvaus",
+            "value": "Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liitteen kuvaus\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileName",
+            "label": "Tiedostonimi",
+            "value": "07_muu_liite.pdf",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Tiedostonimi\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileType",
+            "value": "0",
+            "valueType": "int",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "integrationID",
+            "value": "/LOCALPLAY/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114638/",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "isDeliveredLater",
+            "label": "Liite toimitetaan myöhemmin",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite toimitetaan myöhemmin\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "isIncludedInOtherFile",
+            "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\",\"hidden\":false}}",
+
+          }
+        ],
+        [
+          {
+            "ID": "description",
+            "label": "Liitteen kuvaus",
+            "value": "Varmistus tilinumerolle FI2878974912867418",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liitteen kuvaus\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileName",
+            "label": "Tiedostonimi",
+            "value": "dummy_0.pdf",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Tiedostonimi\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "fileType",
+            "value": "45",
+            "valueType": "int",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "integrationID",
+            "value": "/LOCALPLAY/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114639/",
+            "valueType": "string",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":null,\"hidden\":true}}",
+
+          },
+          {
+            "ID": "isDeliveredLater",
+            "label": "Liite toimitetaan myöhemmin",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite toimitetaan myöhemmin\",\"hidden\":false}}",
+
+          },
+          {
+            "ID": "isIncludedInOtherFile",
+            "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä",
+            "value": "false",
+            "valueType": "bool",
+            "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä\",\"hidden\":false}}",
+
+          }
+        ]
+      ],
+      "generalInfoArray": [
+        {
+          "ID": "extraInfo",
+          "label": "Lisäselvitys liitteistä",
+          "value": "Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi Testi",
+          "valueType": "string",
+          "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":4,\"label\":\"4. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":62,\"label\":\"Liitteet\"},\"element\":{\"weight\":72,\"label\":\"Lisäselvitys liitteistä\",\"hidden\":false}}",
+
+        }
+      ]
+    },
+    "formUpdate": false,
+    "statusUpdates": [
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "citizenCaseStatus": "RECEIVED",
+        "eventType": "STATUS_UPDATE",
+        "eventCode": 0,
+        "eventSource": "Avustusten kasittelyjarjestelma",
+        "timeCreated": "2024-07-23T12:39:04"
+      }
+    ],
+    "events": [
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "HANDLER_ATT_OK",
+        "eventCode": 0,
+        "eventSource": "GrantsApplications",
+        "timeUpdated": "2024-07-23T12:36:48",
+        "timeCreated": "2024-07-23T12:36:48",
+        "eventDescription": "Attachment uploaded to the field: Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta).",
+        "eventID": "9e83425e-9c1b-4100-940f-d2f32e3eef9c",
+        "eventTarget": "03_vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paattyneelta_tilikaudelta.pdf",
+
+      },
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "HANDLER_ATT_OK",
+        "eventCode": 0,
+        "eventSource": "GrantsApplications",
+        "timeUpdated": "2024-07-23T12:36:48",
+        "timeCreated": "2024-07-23T12:36:48",
+        "eventDescription": "Attachment uploaded to the field: Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta).",
+        "eventID": "54e61c12-65c2-45de-bff9-aea254ac7f3f",
+        "eventTarget": "05_toimintasuunnitelma_sille_vuodelle_jolle_haet_avustusta.pdf",
+
+      },
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "HANDLER_ATT_OK",
+        "eventCode": 0,
+        "eventSource": "GrantsApplications",
+        "timeUpdated": "2024-07-23T12:36:48",
+        "timeCreated": "2024-07-23T12:36:48",
+        "eventDescription": "Attachment uploaded to the field: Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös.",
+        "eventID": "032cba01-820a-4f6f-aa39-16d9adec5b14",
+        "eventTarget": "01_vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta.pdf",
+
+      },
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "HANDLER_ATT_OK",
+        "eventCode": 0,
+        "eventSource": "GrantsApplications",
+        "timeUpdated": "2024-07-23T12:36:48",
+        "timeCreated": "2024-07-23T12:36:48",
+        "eventDescription": "Attachment uploaded to the field: Muu liite.",
+        "eventID": "d1ff7663-5cac-46d9-bd96-3bb1ae9203bf",
+        "eventTarget": "07_muu_liite.pdf"
+      },
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "HANDLER_ATT_OK",
+        "eventCode": 0,
+        "eventSource": "GrantsApplications",
+        "timeUpdated": "2024-07-23T12:36:48",
+        "timeCreated": "2024-07-23T12:36:48",
+        "eventDescription": "Attachment uploaded for the IBAN: FI2878974912867418.",
+        "eventID": "f54a9a49-f929-4b03-9315-1d3922d173f3",
+        "eventTarget": "dummy_0.pdf"
+      },
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "AVUSTUS2_ATT_OK",
+        "eventCode": 0,
+        "eventSource": "Avustusten kasittelyjarjestelma",
+        "timeUpdated": "2024-07-23T12:38:59",
+        "timeCreated": "2024-07-23T12:38:59",
+        "eventDescription": "Attachment added to application successfully.",
+        "eventID": "13863759-4086-47d5-91ce-2291a299a596",
+        "eventTarget": "03_vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paattyneelta_tilikaudelta.pdf",
+
+      },
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "AVUSTUS2_ATT_OK",
+        "eventCode": 0,
+        "eventSource": "Avustusten kasittelyjarjestelma",
+        "timeUpdated": "2024-07-23T12:39:00",
+        "timeCreated": "2024-07-23T12:39:00",
+        "eventDescription": "Attachment added to application successfully.",
+        "eventID": "d0be6f0f-c38c-419f-83b7-3c2146afaadd",
+        "eventTarget": "05_toimintasuunnitelma_sille_vuodelle_jolle_haet_avustusta.pdf",
+
+      },
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "AVUSTUS2_ATT_OK",
+        "eventCode": 0,
+        "eventSource": "Avustusten kasittelyjarjestelma",
+        "timeUpdated": "2024-07-23T12:39:01",
+        "timeCreated": "2024-07-23T12:39:01",
+        "eventDescription": "Attachment added to application successfully.",
+        "eventID": "790cae85-9ad4-4ecf-a04d-d98bf0fbb4c8",
+        "eventTarget": "01_vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta.pdf",
+
+      },
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "AVUSTUS2_ATT_OK",
+        "eventCode": 0,
+        "eventSource": "Avustusten kasittelyjarjestelma",
+        "timeUpdated": "2024-07-23T12:39:02",
+        "timeCreated": "2024-07-23T12:39:02",
+        "eventDescription": "Attachment added to application successfully.",
+        "eventID": "081d966a-de1b-47a4-a70d-383f5dc809bb",
+        "eventTarget": "07_muu_liite.pdf"
+      },
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "AVUSTUS2_ATT_OK",
+        "eventCode": 0,
+        "eventSource": "Avustusten kasittelyjarjestelma",
+        "timeUpdated": "2024-07-23T12:39:02",
+        "timeCreated": "2024-07-23T12:39:02",
+        "eventDescription": "Attachment added to application successfully.",
+        "eventID": "94c63aef-3a02-4446-b5b5-701e2e48fe64",
+        "eventTarget": "dummy_0.pdf"
+      },
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "INTEGRATION_INFO_APP_OK",
+        "eventCode": 0,
+        "eventSource": "Avustus integration",
+        "timeUpdated": "2024-07-23T09:39:04.145556",
+        "timeCreated": "2024-07-23T09:39:04.145556",
+        "eventDescription": "Application sent Avustus2",
+        "eventID": "4a6dda86-13c2-454e-ac86-aea67b4e0afa",
+        "eventTarget": "a5723491-bdfa-4442-9fd9-ca9504b46d20"
+      },
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "eventType": "STATUS_UPDATE",
+        "eventCode": 0,
+        "eventSource": "Avustustenkasittelyjarjestelma",
+        "timeUpdated": "2024-07-23T09:39:19.400174",
+        "timeCreated": "2024-07-23T09:39:19.400174",
+        "eventDescription": "RECEIVED",
+        "eventID": "6f58d05d-220e-4c1a-bd85-a13f5b410287"
+      }
+    ],
+    "messages": [
+      {
+        "caseId": "LOCALPLAY-029-0015105",
+        "messageId": "72799c12-2c5a-4a3d-b114-863678b453d6",
+        "body": "Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti",
+        "sentBy": "Ellen Grillsson",
+        "sendDateTime": "2024-07-23T12:38:34",
+        "attachments": [
+          {
+            "description": "Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti Testiviesti ",
+            "fileName": "00_yhteison_saannot.pdf",
+            "integrationID": "/LOCALPLAY/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114640/",
+
+          }
+        ]
+      }
+    ]
+  },
+  "draft": false,
+  "locked_after": null,
+  "deletable": false,
+  "delete_after": null,
+  "document_language": null,
+  "content_schema_url": null,
+  "attachments": [
+    {
+      "id": 114635,
+      "created_at": "2024-07-23T12:37:43.707188+03:00",
+      "updated_at": "2024-07-23T12:37:43.707203+03:00",
+      "filename": "03_vahvistettu_tilin_tai_toiminnantarkastuskertomus_edelliselta_paattyneelta_tilikaudelta.pdf",
+      "media_type": "application/octet-stream",
+      "size": 26779,
+      "href": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114635/",
+
+    },
+    {
+      "id": 114636,
+      "created_at": "2024-07-23T12:37:51.330885+03:00",
+      "updated_at": "2024-07-23T12:37:51.330899+03:00",
+      "filename": "05_toimintasuunnitelma_sille_vuodelle_jolle_haet_avustusta.pdf",
+      "media_type": "application/octet-stream",
+      "size": 26481,
+      "href": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114636/",
+
+    },
+    {
+      "id": 114637,
+      "created_at": "2024-07-23T12:37:56.733080+03:00",
+      "updated_at": "2024-07-23T12:37:56.733095+03:00",
+      "filename": "01_vahvistettu_tilinpaatos_edelliselta_paattyneelta_tilikaudelta.pdf",
+      "media_type": "application/octet-stream",
+      "size": 26752,
+      "href": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114637/",
+
+    },
+    {
+      "id": 114638,
+      "created_at": "2024-07-23T12:38:05.502891+03:00",
+      "updated_at": "2024-07-23T12:38:05.502907+03:00",
+      "filename": "07_muu_liite.pdf",
+      "media_type": "application/octet-stream",
+      "size": 26354,
+      "href": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114638/",
+
+    },
+    {
+      "id": 114639,
+      "created_at": "2024-07-23T12:38:10.089529+03:00",
+      "updated_at": "2024-07-23T12:38:10.089543+03:00",
+      "filename": "dummy_0.pdf",
+      "media_type": "application/octet-stream",
+      "size": 13264,
+      "href": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114639/",
+
+    },
+    {
+      "id": 114640,
+      "created_at": "2024-07-23T12:39:51.706337+03:00",
+      "updated_at": "2024-07-23T12:39:51.706351+03:00",
+      "filename": "00_yhteison_saannot.pdf",
+      "media_type": "application/octet-stream",
+      "size": 32721,
+      "href": "https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/4d2f3959-66ac-43b3-8f7b-73482270cf5e/attachments/114640/",
+
+    }
+  ]
+}
