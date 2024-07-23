@@ -44,7 +44,11 @@ class ProfileConnector {
    * @param \Drupal\helfi_yjdh\YjdhClient $yjdhClient
    *   Access to yjdh data.
    */
-  public function __construct(HelsinkiProfiiliUserData $helsinkiProfile, MunicipalityService $municipalityService, YjdhClient $yjdhClient) {
+  public function __construct(
+    HelsinkiProfiiliUserData $helsinkiProfile,
+    MunicipalityService $municipalityService,
+    YjdhClient $yjdhClient,
+  ) {
     $this->helsinkiProfiili = $helsinkiProfile;
     $this->municipalityService = $municipalityService;
     $this->yjdhClient = $yjdhClient;

@@ -15,6 +15,8 @@ use Ramsey\Uuid\Uuid;
  */
 class EventsService {
 
+  use DebuggableTrait;
+
   /**
    * The HTTP client.
    *
@@ -75,13 +77,6 @@ class EventsService {
   ];
 
   /**
-   * Debug on?
-   *
-   * @var bool
-   */
-  protected bool $debug;
-
-  /**
    * Constructs a MessageService object.
    *
    * @param \GuzzleHttp\Client $http_client
@@ -100,14 +95,7 @@ class EventsService {
     $this->username = getenv('AVUSTUS2_USERNAME');
     $this->password = getenv('AVUSTUS2_PASSWORD');
 
-    $debug = getenv('debug');
-
-    if ($debug == 'true') {
-      $this->debug = TRUE;
-    }
-    else {
-      $this->debug = FALSE;
-    }
+    $this->setDebug(NULL);
 
   }
 

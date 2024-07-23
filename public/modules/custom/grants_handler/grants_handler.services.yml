@@ -144,7 +144,6 @@ services:
     ]
     calls:
       - [ setGrantsProfileService, [ '@?grants_profile.service' ] ]
-      - [ setApplicationDataService, [ '@?grants_metadata.application_data_service' ] ]
 
   grants_handler.application_uploader_service:
     class: Drupal\grants_handler\ApplicationUploaderService

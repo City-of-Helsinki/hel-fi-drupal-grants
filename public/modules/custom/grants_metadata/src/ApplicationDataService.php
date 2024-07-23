@@ -7,12 +7,9 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
-use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Helpers;
-use Drupal\webform\WebformSubmissionInterface;
-use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Application data service.
@@ -25,11 +22,6 @@ final class ApplicationDataService {
    * Name of the table where log entries are stored.
    */
   const TABLE = 'grants_handler_saveids';
-
-  /**
-   * Name of the navigation handler.
-   */
-  const HANDLER_ID = 'application_handler';
 
   /**
    * Logger.
@@ -53,40 +45,29 @@ final class ApplicationDataService {
   protected EventsService $eventsService;
 
   /**
-   * Application getter service.
-   *
-   * @var \Drupal\grants_handler\ApplicationGetterService
-   */
-  protected ApplicationGetterService $applicationGetterService;
-
-  /**
    * Constructor.
    *
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
    *   Logger channel factory.
    * @param \Drupal\Core\Database\Connection $datababse
    *   Database connection.
-   * @param \Drupal\grants_handler\EventsService $eventsService
-   *   Events service.
    */
   public function __construct(
     LoggerChannelFactoryInterface $loggerChannelFactory,
     Connection $datababse,
-    EventsService $eventsService,
   ) {
     $this->logger = $loggerChannelFactory->get('grants_application_helpers');
     $this->database = $datababse;
-    $this->eventsService = $eventsService;
   }
 
   /**
    * Set the getter service.
    *
-   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
-   *   Application getter service.
+   * @param \Drupal\grants_handler\EventsService $eventsService
+   *   Events service.
    */
-  public function setApplicationGetterService(ApplicationGetterService $applicationGetterService): void {
-    $this->applicationGetterService = $applicationGetterService;
+  public function setEventsService(EventsService $eventsService): void {
+    $this->eventsService = $eventsService;
   }
 
   /**
@@ -95,9 +76,9 @@ final class ApplicationDataService {
    * Validates file uploads as well, we can't allow other updates to data
    * before all attachment related things are done properly with integration.
    *
-   * @param \Drupal\webform\WebformSubmissionInterface|null $webform_submission
    *   Webform submission object, if known. If this is not set,
    *   submission data must be provided.
+   *
    * @param array|null $submissionData
    *   Submission data. If no submission object, this is required.
    * @param string $applicationNumber
@@ -111,13 +92,11 @@ final class ApplicationDataService {
    * @throws \Exception
    */
   public function validateDataIntegrity(
-    ?WebformSubmissionInterface $webform_submission,
     ?array $submissionData,
     string $applicationNumber,
     string $saveIdToValidate,
   ): string {
 
-    $submissionData = $this->getSubmissionData($webform_submission, $submissionData, $applicationNumber);
     if (empty($submissionData)) {
       $this->logNoSubmissionData($applicationNumber, $saveIdToValidate);
       return 'NO_SUBMISSION_DATA';
@@ -145,37 +124,6 @@ final class ApplicationDataService {
     }
 
     return 'OK';
-  }
-
-  /**
-   * Get submission data.
-   *
-   * @param \Drupal\webform\WebformSubmissionInterface|null $webform_submission
-   *   Webform submission object.
-   * @param array|null $submissionData
-   *   Submission data.
-   * @param string $applicationNumber
-   *   Application number.
-   *
-   * @return array|null
-   *   Submission data.
-   */
-  private function getSubmissionData(
-    ?WebformSubmissionInterface $webform_submission,
-    ?array $submissionData,
-    string $applicationNumber,
-  ): ?array {
-    if (empty($submissionData)) {
-      if ($webform_submission == NULL) {
-        try {
-          $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
-        }
-        catch (\Exception | GuzzleException $e) {
-        }
-      }
-      return $webform_submission->getData();
-    }
-    return $submissionData;
   }
 
   /**

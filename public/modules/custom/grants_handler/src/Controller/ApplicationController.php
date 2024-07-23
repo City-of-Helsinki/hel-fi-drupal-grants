@@ -294,8 +294,7 @@ class ApplicationController extends ControllerBase {
         $submissionData = $webform_submission->getData();
 
         $saveIdValidates = $this->applicationDataService->validateDataIntegrity(
-          $webform_submission,
-          NULL,
+          $submissionData,
           $submissionData['application_number'],
           $submissionData['metadata']['saveid'] ?? '');
 

@@ -810,7 +810,6 @@ class GrantsHandler extends WebformHandlerBase {
 
     if ($this->applicationNumber) {
       $dataIntegrityStatus = $this->applicationDataService->validateDataIntegrity(
-        NULL,
         $submissionData,
         $this->applicationNumber,
         $submissionData['metadata']['saveid'] ?? '');

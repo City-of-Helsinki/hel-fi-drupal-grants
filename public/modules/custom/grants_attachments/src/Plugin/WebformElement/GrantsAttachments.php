@@ -84,28 +84,6 @@ final class GrantsAttachments extends WebformCompositeBase {
   protected EventsService $eventsService;
 
   /**
-   * Constructs a new GrantsAttachments element.
-   *
-   * @param array $configuration
-   *   The configuration.
-   * @param string $plugin_id
-   *   The plugin ID.
-   * @param mixed $plugin_definition
-   *   The plugin definition.
-   * @param \Drupal\grants_handler\EventsService $eventsService
-   *   The events service.
-   */
-  public function __construct(
-    array $configuration,
-    $plugin_id,
-    $plugin_definition,
-    EventsService $eventsService,
-  ) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->eventsService = $eventsService;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(
@@ -113,13 +91,10 @@ final class GrantsAttachments extends WebformCompositeBase {
     array $configuration,
     $plugin_id,
     $plugin_definition,
-  ): static {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('grants_handler.events_service')
-    );
+  ): GrantsAttachments {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->eventsService = $container->get('grants_handler.events_service');
+    return $instance;
   }
 
   /**
@@ -174,7 +149,6 @@ final class GrantsAttachments extends WebformCompositeBase {
    * {@inheritDoc}
    */
   public function getValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
-
     if (!isset($element['#webform_key']) && isset($element['#value'])) {
       return $element['#value'];
     }
@@ -198,7 +172,6 @@ final class GrantsAttachments extends WebformCompositeBase {
         if (in_array($fieldName, $element["#webform_parents"])) {
           $value = $fieldData;
         }
-
       }
     }
 
@@ -209,7 +182,6 @@ final class GrantsAttachments extends WebformCompositeBase {
 
     $this->handleMultiDeltaValue($value, $options);
     return $value;
-
   }
 
   /**
@@ -314,7 +286,6 @@ final class GrantsAttachments extends WebformCompositeBase {
       else {
         $lines[] = $element["#webform_composite_elements"]["isDeliveredLater"]["#title"]->render();
       }
-
     }
     if (isset($value["isIncludedInOtherFile"]) && ($value["isIncludedInOtherFile"] === 'true' ||
         $value["isIncludedInOtherFile"] === '1')) {

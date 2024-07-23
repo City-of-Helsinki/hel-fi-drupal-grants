@@ -78,11 +78,13 @@ final class ApplicationUploaderService {
 
     $this->logger = $this->loggerChannelFactory->get('application_uploader_service');
 
-    $this->helfiAtvAtvSchema->setSchema(getenv('ATV_SCHEMA_PATH'));
+    if ($schema = getenv('ATV_SCHEMA_PATH')) {
+      $this->helfiAtvAtvSchema->setSchema($schema);
+    }
 
-    $this->endpoint = getenv('AVUSTUS2_ENDPOINT');
-    $this->username = getenv('AVUSTUS2_USERNAME');
-    $this->password = getenv('AVUSTUS2_PASSWORD');
+    $this->endpoint = getenv('AVUSTUS2_ENDPOINT') ?: '';
+    $this->username = getenv('AVUSTUS2_USERNAME') ?: '';
+    $this->password = getenv('AVUSTUS2_PASSWORD') ?: '';
 
   }
 

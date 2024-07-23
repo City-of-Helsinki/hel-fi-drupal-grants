@@ -109,11 +109,13 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
 
     }
 
+    $statuses = $this->getApplicationStatuses();
+
     if (in_array($submissionStatus, [
-      $this->applicationStatuses['DRAFT'],
-      $this->applicationStatuses['SUBMITTED'],
-      $this->applicationStatuses['RECEIVED'],
-      $this->applicationStatuses['PREPARING'],
+      $statuses['DRAFT'],
+      $statuses['SUBMITTED'],
+      $statuses['RECEIVED'],
+      $statuses['PREPARING'],
     ])) {
       return TRUE;
     }

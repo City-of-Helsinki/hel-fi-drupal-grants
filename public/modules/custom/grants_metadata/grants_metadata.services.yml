@@ -14,8 +14,7 @@ services:
     class: Drupal\grants_metadata\ApplicationDataService
     arguments: [
       '@logger.factory',
-      '@database',
-      '@grants_handler.events_service'
+      '@database'
     ]
     calls:
-      - [ setApplicationGetterService, [ '@?grants_handler.application_getter_service' ] ]
+      - [ setEventsService, [ '@?grants_handler.events_service' ] ]

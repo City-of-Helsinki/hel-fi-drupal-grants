@@ -15,6 +15,7 @@ use Drupal\file\Element\ManagedFile;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
+use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -321,7 +322,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param array $form
    *   The form.
    */
-  public static function validateUpload(array &$element, FormStateInterface $formState, array &$form) {
+  public static function validateUpload(array &$element, FormStateInterface $formState, array &$form): void {
 
     $storage = $formState->getStorage();
     $grantsProfileDocument = $storage['profileDocument'];
@@ -348,7 +349,7 @@ abstract class GrantsProfileFormBase extends FormBase {
           $storage['confirmationFiles'][$valueParents[1]] = $attachmentResponse;
 
         }
-        catch (GrantsProfileException $e) {
+        catch (GuzzleException | GrantsProfileException $e) {
           // Set error to form.
           $formState->setError($element, 'File upload failed, error has been logged.');
           // Log error.
@@ -606,7 +607,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param array $bankAccount
    *   Bank account data array.
    */
-  private function ensureBankAccountIdExists(array &$bankAccount) {
+  private function ensureBankAccountIdExists(array &$bankAccount): void {
     // Make sure we have proper UUID as address id.
     if (!isset($bankAccount['bank_account_id']) ||
       !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])
@@ -799,7 +800,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    * @return \Drupal\helfi_atv\AtvDocument|bool
    *   The ATV Document
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   protected function getGrantsProfileDocument() : AtvDocument|bool {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
