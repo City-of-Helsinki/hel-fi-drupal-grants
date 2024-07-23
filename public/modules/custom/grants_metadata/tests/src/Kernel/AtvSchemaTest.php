@@ -159,14 +159,21 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
   /**
    * Helper function to make test assertions for a field in document.
    */
-  protected function assertDocumentFieldArray(array $fieldData, string $fieldName, $value, $skipMetaChecks = FALSE) {
+  protected function assertDocumentFieldArray(array $fieldData, string $fieldName, $value, $skipMetaChecks = FALSE): void {
     $this->assertArrayHasKey('ID', $fieldData);
     $this->assertArrayHasKey('value', $fieldData);
     $this->assertArrayHasKey('valueType', $fieldData);
     $this->assertArrayHasKey('label', $fieldData);
 
     $this->assertEquals($fieldName, $fieldData['ID']);
+
+    if($value !== $fieldData['value']) {
+      var_dump($fieldData);
+    }
+
     $this->assertEquals($value, $fieldData['value']);
+
+
     if ($skipMetaChecks) {
       return;
     }
@@ -488,6 +495,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
    * Test kuvaprojekti with registered community and subventions over 5000.
    *
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
    */
   public function testKuvaProjektiHakemusRegistered() : void {
     $schema = self::createSchema();
@@ -495,7 +503,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $pages = $webform->getPages('edit');
     $this->assertNotNull($webform);
     $this->initSession();
-    $submissionData = self::loadSubmissionData('kuva_projekti');
+    $submissionData = self::loadSubmissionData('kuva_projekti.registered_community');
     $typedData = self::webformToTypedData($submissionData, 'kuva_projekti');
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
