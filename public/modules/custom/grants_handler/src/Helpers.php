@@ -181,8 +181,7 @@ class Helpers {
    */
   public static function isGrantAdmin(AccountInterface $account): bool {
     $currentRoles = $account->getRoles();
-    $isAdmin = in_array('grants_admin', $currentRoles) || $account->id() === '1';
-    return $isAdmin;
+    return in_array('grants_admin', $currentRoles) || $account->id() === '1';
   }
 
 }
