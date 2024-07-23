@@ -167,12 +167,11 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
 
     $this->assertEquals($fieldName, $fieldData['ID']);
 
-    if($value !== $fieldData['value']) {
+    if ($value !== $fieldData['value']) {
       var_dump($fieldData);
     }
 
     $this->assertEquals($value, $fieldData['value']);
-
 
     if ($skipMetaChecks) {
       return;
@@ -495,6 +494,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
    * Test kuvaprojekti with registered community and subventions over 5000.
    *
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   *
    * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
    */
   public function testKuvaProjektiHakemusRegistered() : void {
