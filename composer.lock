@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09fb3d9c7658ed1b73d97906630d7fb5",
+    "content-hash": "26df828204bda550064c18a741b42116",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5565,16 +5565,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "4.4.5",
+            "version": "dev-UHF-10339",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "b61591dc50af5b9112b3709ec7251f52138d0a40"
+                "reference": "a5c35b48fdcf76941a12a5130b802b2818563dfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/b61591dc50af5b9112b3709ec7251f52138d0a40",
-                "reference": "b61591dc50af5b9112b3709ec7251f52138d0a40",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/a5c35b48fdcf76941a12a5130b802b2818563dfa",
+                "reference": "a5c35b48fdcf76941a12a5130b802b2818563dfa",
                 "shasum": ""
             },
             "require": {
@@ -5688,10 +5688,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.4.5",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/UHF-10339",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2024-07-19T11:20:53+00:00"
+            "time": "2024-07-24T07:12:10+00:00"
         },
         {
             "name": "drupal/helfi_proxy",
@@ -22803,6 +22803,7 @@
         "drupal/block_field": 5,
         "drupal/helfi_drupal_tools": 20,
         "drupal/helfi_formtool_embed": 20,
+        "drupal/helfi_platform_config": 20,
         "drupal/multivalue_form_element": 10,
         "drupal/session_limit": 10
     },
