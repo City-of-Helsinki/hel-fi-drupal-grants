@@ -1,4 +1,4 @@
-FROM node:20
+FROM registry.access.redhat.com/ubi8/nodejs-20
 
 ENV PLAYWRIGHT_BROWSERS_PATH=0
 
