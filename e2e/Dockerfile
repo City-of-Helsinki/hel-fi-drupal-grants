@@ -8,6 +8,7 @@ WORKDIR app
 COPY tests/ tests/
 COPY utils/ utils/
 COPY playwright.config.ts .
+COPY package.json .
 COPY package-lock.json .
 COPY tsconfig.json .
 
