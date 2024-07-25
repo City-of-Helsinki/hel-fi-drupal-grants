@@ -1,4 +1,4 @@
-FROM node:20
+FROM ghcr.io/city-of-helsinki/node:latest
 
 ENV PLAYWRIGHT_BROWSERS_PATH=0
 
