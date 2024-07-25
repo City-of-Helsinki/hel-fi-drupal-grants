@@ -812,32 +812,40 @@ display:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
                   is_secondary: false
+                  collapsible_disable_automatic_open: false
               field_avustuslaji:
                 plugin_id: default
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
                   is_secondary: false
+                  collapsible_disable_automatic_open: false
               field_hakijatyyppi:
                 plugin_id: default
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
                   is_secondary: false
+                  collapsible_disable_automatic_open: false
               search_api_fulltext:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
                   is_secondary: false
+                  collapsible_disable_automatic_open: false
       access:
         type: perm
         options:
