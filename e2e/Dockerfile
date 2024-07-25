@@ -1,4 +1,4 @@
-FROM ghcr.io/city-of-helsinki/node:latest
+FROM registry.access.redhat.com/ubi8/nodejs-20
 
 ENV PLAYWRIGHT_BROWSERS_PATH=0
 
@@ -8,6 +8,7 @@ WORKDIR app
 COPY tests/ tests/
 COPY utils/ utils/
 COPY playwright.config.ts .
+COPY package.json .
 COPY package-lock.json .
 COPY tsconfig.json .
 
