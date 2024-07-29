@@ -612,13 +612,18 @@ class AtvSchema {
   /**
    * Converts a value to its boolean string representation.
    *
+   * This is due to strange behavior in Avus where boolean values are sometimes
+   * needed to be strings and sometimes as booleans.
+   * This must return value as is since in some cases the value is
+   * null and we need to keep it that way.
+   *
    * @param mixed $itemValue
    *   The item value to be converted.
    *
-   * @return string
+   * @return mixed
    *   The converted boolean string representation of the item value.
    */
-  private static function convertToBooleanString(mixed $itemValue): string {
+  private static function convertToBooleanString(mixed $itemValue): mixed {
     $falseValues = [FALSE, '0', 0, 'No'];
     $trueValues = [TRUE, '1', 1, 'Yes'];
 
