@@ -440,8 +440,6 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
         ->setSetting('fieldsForApplication', [
           'premiseName',
           'premiseType',
-          'isOthersUse',
-          'isOwnedByApplicant',
           'postCode',
           'isOwnedByCity',
           'citySection',
