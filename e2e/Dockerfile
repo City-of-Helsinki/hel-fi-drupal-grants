@@ -1,4 +1,6 @@
-FROM registry.access.redhat.com/ubi8/nodejs-20
+FROM ghcr.io/city-of-helsinki/node:latest
+
+USER root
 
 ENV PLAYWRIGHT_BROWSERS_PATH=0
 
