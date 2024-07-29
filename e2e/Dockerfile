@@ -21,7 +21,3 @@ RUN npx playwright install --with-deps
 
 # Set permissions for the /app directory
 RUN chmod -R 777 /app
-
-# Openshift starts the container process with group zero and random ID
-# we mimic that here with nobody and group zero
-USER nobody:0
