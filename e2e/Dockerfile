@@ -1,7 +1,5 @@
 FROM ghcr.io/city-of-helsinki/node:latest
 
-USER root
-
 ENV PLAYWRIGHT_BROWSERS_PATH=0
 
 WORKDIR app
