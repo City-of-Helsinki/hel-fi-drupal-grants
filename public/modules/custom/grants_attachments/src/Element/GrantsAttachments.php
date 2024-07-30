@@ -459,6 +459,7 @@ class GrantsAttachments extends WebformCompositeBase {
    * @return bool|null
    *   Success or not.
    *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public static function validateUpload(
