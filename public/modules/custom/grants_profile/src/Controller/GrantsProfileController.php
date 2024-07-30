@@ -52,6 +52,7 @@ class GrantsProfileController extends ControllerBase {
    *
    * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
    *   Data to render
+   *
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function viewProfile(): array|RedirectResponse {
