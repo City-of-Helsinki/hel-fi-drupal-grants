@@ -8,10 +8,9 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_handler\EventException;
 use Drupal\grants_handler\Helpers;
-use Drupal\grants_handler\MessageService;
-use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_atv\AtvDocument;
+use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -29,41 +28,6 @@ class ResendApplicationsForm extends AtvFormBase {
   protected static $tOpts = [
     'context' => 'grants_admin_applications',
   ];
-
-  /**
-   * Access to ATV.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * Message service.
-   *
-   * @var \Drupal\grants_handler\MessageService
-   */
-  protected MessageService $messageService;
-
-  /**
-   * Constructs a new GrantsProfileForm object.
-   */
-  public function __construct(
-    AtvService $atvService,
-    MessageService $messageService,
-  ) {
-    $this->atvService = $atvService;
-    $this->messageService = $messageService;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): ResendApplicationsForm|static {
-    return new static(
-      $container->get('helfi_atv.atv_service'),
-      $container->get('grants_handler.message_service')
-    );
-  }
 
   /**
    * {@inheritdoc}
@@ -211,24 +175,37 @@ class ResendApplicationsForm extends AtvFormBase {
 
   /**
    * Searches and returns ATV document with given id.
+   *
+   * @param string $applicationId
+   *   The application id.
+   *
+   * @return \Drupal\helfi_atv\AtvDocument|false
+   *   The document or false if not found.
    */
-  private static function getDocument($applicationId) {
+  private function getDocument(string $applicationId):AtvDocument|false {
     $sParams = [
       'transaction_id' => $applicationId,
       'lookfor' => 'appenv:' . Helpers::getAppEnv(),
     ];
 
-    $res = \Drupal::service('helfi_atv.atv_service')->searchDocuments($sParams);
+    try {
+      $res = $this->atvService->searchDocuments($sParams);
+    }
+    catch (GuzzleException | \Exception $e) {
+      $this->logger(self::LOGGER_CHANNEL)->error('Error: @error', ['@error' => $e->getMessage()]);
+      return FALSE;
+    }
     return reset($res);
   }
 
   /**
    * Resend messages submit handler.
+   *
+   * @throws \Drupal\grants_handler\EventException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public static function resendMessages(array $form, FormStateInterface $formState): void {
+  public function resendMessages(array $form, FormStateInterface $formState): void {
     $values = $formState->getValues();
-    $eventService = \Drupal::service('grants_handler.events_service');
-    $messenger = \Drupal::service('messenger');
 
     if (isset($values['messageList']) && is_array($values['messageList'])) {
       $messagesToBeResent = array_filter($values['messageList'], function ($message) {
@@ -243,7 +220,7 @@ class ResendApplicationsForm extends AtvFormBase {
         return;
       }
 
-      $atvDoc = self::getDocument($values['applicationId']);
+      $atvDoc = $this->getDocument($values['applicationId']);
       $documentContent = $atvDoc->getContent();
       $atvMessages = $documentContent['messages'];
       $filteredAtvMessages = array_filter($atvMessages, function ($message) use ($messagesToBeResent) {
@@ -255,10 +232,10 @@ class ResendApplicationsForm extends AtvFormBase {
 
       foreach ($filteredAtvMessages as $message) {
         // Resend events - old ids.
-        $eventService->logEvent(
+        $this->eventsService->logEvent(
           $values['applicationId'],
           'MESSAGE_RESEND',
-          t('Message resent: @messageId.',
+          $this->t('Message resent: @messageId.',
             [
               '@messageId' => $message['messageId'],
             ],
@@ -272,11 +249,11 @@ class ResendApplicationsForm extends AtvFormBase {
         // will override the message due timestamp index.
         $dt->add(\DateInterval::createFromDateString('1 second'));
         $message['sendDateTime'] = $dt->format('Y-m-d\TH:i:s');
-        self::resendMessage($message, $values['applicationId']);
+        $this->resendMessage($message, $values['applicationId']);
       }
     }
 
-    $messenger->addStatus(t(
+    $this->messenger()->addStatus($this->t(
       'Selected messages has been resent, processing the messages might take a few moments',
      [], self::$tOpts));
     $formState->setRebuild();
@@ -289,36 +266,34 @@ class ResendApplicationsForm extends AtvFormBase {
    *   The message data.
    * @param string $applicationNumber
    *   The application number.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  private static function resendMessage(array $messageData, string $applicationNumber): void {
-
-    $httpClient = \Drupal::service('http_client');
-    $eventService = \Drupal::service('grants_handler.events_service');
-    $logger = self::getLoggerChannel();
+  private function resendMessage(array $messageData, string $applicationNumber): void {
 
     $endpoint = getenv('AVUSTUS2_MESSAGE_ENDPOINT');
     $username = getenv('AVUSTUS2_USERNAME');
     $password = getenv('AVUSTUS2_PASSWORD');
     $messageDataJson = Json::encode($messageData);
 
-    $res = $httpClient->post($endpoint, [
+    $res = $this->httpClient->post($endpoint, [
       'auth' => [$username, $password, "Basic"],
       'body' => $messageDataJson,
     ]);
 
     if ($res->getStatusCode() == 200) {
       try {
-        $event = $eventService->logEvent(
+        $event = $this->eventsService->logEvent(
           $applicationNumber,
           'MESSAGE_APP',
-          t('New message for @applicationNumber.',
+          $this->t('New message for @applicationNumber.',
             ['@applicationNumber' => $applicationNumber],
             ['context' => 'grants_handler']
           ),
           $messageData['messageId']
         );
 
-        $logger->info(
+        $this->logger(self::LOGGER_CHANNEL)->info(
           'MSG id: %nextId, message sent. Event logged: %eventId',
           [
             '%nextId' => $messageData['messageId'],
@@ -328,39 +303,39 @@ class ResendApplicationsForm extends AtvFormBase {
       }
       catch (EventException $e) {
         // Log event error.
-        $logger->error('%error', ['%error' => $e->getMessage()]);
+        $this->logger(self::LOGGER_CHANNEL)->error('%error', ['%error' => $e->getMessage()]);
       }
     }
 
   }
 
   /**
-   * GetStatus submit handler.
+   * Get status submit handler.
+   *
+   * @param array $form
+   *   The form object.
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   The form state object.
    */
-  public static function getStatus(array $form, FormStateInterface $formState): void {
-    $messenger = \Drupal::service('messenger');
-    $logger = self::getLoggerChannel();
-
-    /** @var \Drupal\grants_handler\MessageService $messageService */
-    $messageService = \Drupal::service('grants_handler.message_service');
+  public function getStatus(array $form, FormStateInterface $formState): void {
 
     try {
       $applicationId = $formState->getValue('applicationId');
       $placeholders = ['@applicationId' => $applicationId];
-      $logger->info('Status check init for: @applicationId', $placeholders);
+      $this->logger(self::LOGGER_CHANNEL)->info('Status check init for: @applicationId', $placeholders);
 
       /** @var \Drupal\helfi_atv\AtvDocument $atvDoc */
-      $atvDoc = self::getDocument($applicationId);
+      $atvDoc = $this->getDocument($applicationId);
 
       if (!$atvDoc) {
-        $messenger->addWarning(t('No application found for id: @applicationId', $placeholders));
-        $logger->warning('No application found for id: @applicationId', $placeholders);
+        $this->messenger()->addWarning($this->t('No application found for id: @applicationId', $placeholders));
+        $this->logger(self::LOGGER_CHANNEL)->warning('No application found for id: @applicationId', $placeholders);
         return;
       }
 
-      $messages = $messageService->parseMessages($atvDoc->getContent(), FALSE, TRUE);
+      $messages = $this->messageService->parseMessages($atvDoc->getContent(), FALSE, TRUE);
 
-      $messenger->addStatus(t('Application found: @applicationId', $placeholders));
+      $this->messenger()->addStatus($this->t('Application found: @applicationId', $placeholders));
       $statusArray = $atvDoc->getStatusArray();
 
       if (!empty($statusArray)) {
@@ -371,8 +346,8 @@ class ResendApplicationsForm extends AtvFormBase {
       }
     }
     catch (\Exception $e) {
-      $messenger->addError($e->getMessage());
-      $logger->error(
+      $this->messenger()->addError($e->getMessage());
+      $this->logger(self::LOGGER_CHANNEL)->error(
         'Error: status check: @error',
         ['@error' => $e->getMessage()]
       );
@@ -382,33 +357,30 @@ class ResendApplicationsForm extends AtvFormBase {
   /**
    * Resend application callback submit handler.
    */
-  public static function resendApplicationCallback(array $form, FormStateInterface $formState): void {
-    $logger = self::getLoggerChannel();
-    $messenger = \Drupal::service('messenger');
-
+  public function resendApplicationCallback(array $form, FormStateInterface $formState): void {
     $formState->setValue('status', NULL);
 
     try {
       $applicationId = trim($formState->getValue('applicationId'));
       $placeholders = ['@applicationId' => $applicationId];
-      $logger->info('Application resend init for: @applicationId', $placeholders);
-      $atvDoc = self::getDocument($applicationId);
+      $this->logger(self::LOGGER_CHANNEL)->info('Application resend init for: @applicationId', $placeholders);
+      $atvDoc = $this->getDocument($applicationId);
 
       if (!$atvDoc) {
-        $messenger->addWarning(t('No application found for id: @applicationId', $placeholders));
-        $logger->warning('No application found for id: @applicationId', $placeholders);
+        $this->messenger()->addWarning($this->t('No application found for id: @applicationId', $placeholders));
+        $this->logger(self::LOGGER_CHANNEL)->warning('No application found for id: @applicationId', $placeholders);
 
         $formState->setRebuild();
         return;
       }
 
-      $messenger->addStatus(t('Application found: @applicationId', $placeholders));
-      self::sendApplicationToIntegrations($atvDoc, $applicationId);
+      $this->messenger()->addStatus($this->t('Application found: @applicationId', $placeholders));
+      $this->sendApplicationToIntegrations($atvDoc, $applicationId);
       $formState->setRebuild();
     }
-    catch (\Exception $e) {
-      $messenger->addError($e->getMessage());
-      $logger->error(
+    catch (GuzzleException | \Exception $e) {
+      $this->messenger()->addError($e->getMessage());
+      $this->logger(self::LOGGER_CHANNEL)->error(
         'Error: Admin application forms - Resend error: @error',
         ['@error' => $e->getMessage()]
       );

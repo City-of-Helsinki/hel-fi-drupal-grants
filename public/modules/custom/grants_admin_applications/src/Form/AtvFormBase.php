@@ -2,35 +2,143 @@
 
 namespace Drupal\grants_admin_applications\Form;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Config\ImmutableConfig;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHelpers;
+use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Helpers;
+use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvDocument;
-use Psr\Log\LoggerInterface;
+use Drupal\helfi_atv\AtvService;
+use GuzzleHttp\Client;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Base form class with some ATV methods.
  */
 abstract class AtvFormBase extends FormBase {
 
+  const LOGGER_CHANNEL = 'grants_admin_applications';
+
+  /**
+   * The database connection.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected Connection $database;
+
+  /**
+   * The application getter service.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
+
+  /**
+   * The http client.
+   *
+   * @var \GuzzleHttp\Client
+   */
+  protected Client $httpClient;
+
+  /**
+   * The events service.
+   *
+   * @var \Drupal\grants_handler\EventsService
+   */
+  protected EventsService $eventsService;
+
+  /**
+   * Access to ATV.
+   *
+   * @var \Drupal\helfi_atv\AtvService
+   */
+  protected AtvService $atvService;
+
+  /**
+   * Immutable Config.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected ImmutableConfig $config;
+
+  /**
+   * Message service.
+   *
+   * @var \Drupal\grants_handler\MessageService
+   */
+  protected MessageService $messageService;
+
+  /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected AccountProxyInterface $currentUser;
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected TimeInterface $time;
+
+  /**
+   * Constructs a new AtvFormBase.
+   */
+  public function __construct(
+    Connection $database,
+    ApplicationGetterService $applicationGetterService,
+    Client $httpClient,
+    EventsService $eventsService,
+    AtvService $atvService,
+    ConfigFactory $config,
+    MessageService $messageService,
+    AccountProxyInterface $current_user,
+    TimeInterface $time,
+  ) {
+    $this->database = $database;
+    $this->applicationGetterService = $applicationGetterService;
+    $this->httpClient = $httpClient;
+    $this->eventsService = $eventsService;
+    $this->atvService = $atvService;
+    $this->config = $config->get('grants_metadata.settings');
+    $this->messageService = $messageService;
+    $this->currentUser = $current_user;
+    $this->time = $time;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    // Late static binding.
+    $class = static::class;
+    return new $class(
+      $container->get('database'),
+      $container->get('grants_handler.application_getter_service'),
+      $container->get('http_client'),
+      $container->get('grants_handler.events_service'),
+      $container->get('helfi_atv.atv_service'),
+      $container->get('config.factory'),
+      $container->get('grants_handler.message_service'),
+      $container->get('current_user'),
+      $container->get('datetime.time')
+    );
+  }
+
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {}
-
-  /**
-   * Gets the logger channel.
-   *
-   * @return \Psr\Log\LoggerInterface
-   *   The logger for the given channel.
-   */
-  public static function getLoggerChannel(): LoggerInterface {
-    $loggerFactory = \Drupal::service('logger.factory');
-    return $loggerFactory->get('grants_admin_applications');
-  }
 
   /**
    * Update resent application save id to database.
@@ -49,15 +157,10 @@ abstract class AtvFormBase extends FormBase {
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Exception
    */
-  public static function updateSaveIdRecord(string $applicationNumber, string $saveId): void {
-
-    $database = \Drupal::service('database');
-
-    /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
-    $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
-
-    $webform_submission = $applicationGetterService->submissionObjectFromApplicationNumber(
+  public function updateSaveIdRecord(string $applicationNumber, string $saveId): void {
+    $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber(
       $applicationNumber,
       NULL,
       FALSE,
@@ -71,14 +174,13 @@ abstract class AtvFormBase extends FormBase {
       'handler_id' => ApplicationHelpers::HANDLER_ID,
       'application_number' => $applicationNumber,
       'saveid' => $saveId,
-      'uid' => \Drupal::currentUser()->id(),
+      'uid' => $this->currentUser->id(),
       'user_uuid' => '',
-      'timestamp' => (string) \Drupal::time()->getRequestTime(),
+      'timestamp' => (string) $this->time->getRequestTime(),
     ];
 
-    $query = $database->insert(ApplicationHelpers::TABLE, $fields);
+    $query = $this->database->insert(ApplicationHelpers::TABLE, $fields);
     $query->fields($fields)->execute();
-
   }
 
   /**
@@ -88,12 +190,10 @@ abstract class AtvFormBase extends FormBase {
    *   The document to be resent.
    * @param string $applicationId
    *   Application id.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public static function sendApplicationToIntegrations(AtvDocument $atvDoc, string $applicationId) {
-    $httpClient = \Drupal::service('http_client');
-    $messenger = \Drupal::service('messenger');
-    $logger = self::getLoggerChannel();
-
+  public function sendApplicationToIntegrations(AtvDocument $atvDoc, string $applicationId): void {
     $headers = [];
     $saveId = Uuid::uuid4()->toString();
     // Current environment as a header to be added to meta -fields.
@@ -120,9 +220,9 @@ abstract class AtvFormBase extends FormBase {
 
     try {
       $headers['X-hki-saveId'] = $saveId;
-      self::updateSaveIdRecord($applicationId, $saveId);
+      $this->updateSaveIdRecord($applicationId, $saveId);
 
-      $res = $httpClient->post($endpoint, [
+      $res = $this->httpClient->post($endpoint, [
         'auth' => [
           $username,
           $password,
@@ -134,21 +234,20 @@ abstract class AtvFormBase extends FormBase {
 
       $status = $res->getStatusCode();
 
-      $messenger->addStatus('Integration status code: ' . $status);
+      $this->messenger()->addStatus('Integration status code: ' . $status);
 
       $body = $res->getBody()->getContents();
-      $messenger->addStatus('Integration response: ' . $body);
-      $messenger->addStatus('Updated saveId to: ' . $saveId);
+      $this->messenger()->addStatus('Integration response: ' . $body);
+      $this->messenger()->addStatus('Updated saveId to: ' . $saveId);
 
-      $eventService = \Drupal::service('grants_handler.events_service');
-      $eventService->logEvent(
+      $this->eventsService->logEvent(
         $applicationId,
         'HANDLER_RESEND_APP',
-        t('Application resent from Drupal Admin UI', [], ['context' => 'grants_handler']),
+        $this->t('Application resent from Drupal Admin UI', [], ['context' => 'grants_handler']),
         $applicationId
       );
 
-      $logger->info(
+      $this->logger(self::LOGGER_CHANNEL)->info(
         'Application resend - Integration status: @status - Response: @response',
         [
           '@status' => $status,
@@ -157,8 +256,10 @@ abstract class AtvFormBase extends FormBase {
       );
     }
     catch (\Exception $e) {
-      $logger->error('Application resending failed: @error', ['@error' => $e->getMessage()]);
-      $messenger->addError(t('Application resending failed: @error', ['@error' => $e->getMessage()]));
+      $this->logger(self::LOGGER_CHANNEL)
+        ->error('Application resending failed: @error', ['@error' => $e->getMessage()]);
+      $this->messenger()
+        ->addError($this->t('Application resending failed: @error', ['@error' => $e->getMessage()]));
     }
   }
 
