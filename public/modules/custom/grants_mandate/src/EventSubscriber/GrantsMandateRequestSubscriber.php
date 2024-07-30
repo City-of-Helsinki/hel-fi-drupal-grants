@@ -43,7 +43,7 @@ class GrantsMandateRequestSubscriber implements EventSubscriberInterface {
    * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The event to process.
    */
-  public function onRequest(RequestEvent $event) {
+  public function onRequest(RequestEvent $event): void {
     $isAuthenticated = $this->account->isAuthenticated();
     $routeName = $this->routeMatch->getRouteName();
 

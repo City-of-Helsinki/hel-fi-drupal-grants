@@ -4,8 +4,7 @@ namespace Drupal\grants_admin_applications\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Config\ConfigFactory;
-use Drupal\Core\Config\ImmutableConfig;
+use Drupal\Core\Config\Config;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -29,91 +28,26 @@ abstract class AtvFormBase extends FormBase {
   const LOGGER_CHANNEL = 'grants_admin_applications';
 
   /**
-   * The database connection.
+   * The config object.
    *
-   * @var \Drupal\Core\Database\Connection
+   * @var \Drupal\Core\Config\Config
    */
-  protected Connection $database;
-
-  /**
-   * The application getter service.
-   *
-   * @var \Drupal\grants_handler\ApplicationGetterService
-   */
-  protected ApplicationGetterService $applicationGetterService;
-
-  /**
-   * The http client.
-   *
-   * @var \GuzzleHttp\Client
-   */
-  protected Client $httpClient;
-
-  /**
-   * The events service.
-   *
-   * @var \Drupal\grants_handler\EventsService
-   */
-  protected EventsService $eventsService;
-
-  /**
-   * Access to ATV.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * Immutable Config.
-   *
-   * @var \Drupal\Core\Config\ImmutableConfig
-   */
-  protected ImmutableConfig $config;
-
-  /**
-   * Message service.
-   *
-   * @var \Drupal\grants_handler\MessageService
-   */
-  protected MessageService $messageService;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected AccountProxyInterface $currentUser;
-
-  /**
-   * The time service.
-   *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected TimeInterface $time;
+  protected Config $config;
 
   /**
    * Constructs a new AtvFormBase.
    */
   public function __construct(
-    Connection $database,
-    ApplicationGetterService $applicationGetterService,
-    Client $httpClient,
-    EventsService $eventsService,
-    AtvService $atvService,
-    ConfigFactory $config,
-    MessageService $messageService,
-    AccountProxyInterface $current_user,
-    TimeInterface $time,
+    protected Connection $database,
+    protected ApplicationGetterService $applicationGetterService,
+    protected Client $httpClient,
+    protected EventsService $eventsService,
+    protected AtvService $atvService,
+    protected MessageService $messageService,
+    protected AccountProxyInterface $current_user,
+    protected TimeInterface $time,
   ) {
-    $this->database = $database;
-    $this->applicationGetterService = $applicationGetterService;
-    $this->httpClient = $httpClient;
-    $this->eventsService = $eventsService;
-    $this->atvService = $atvService;
-    $this->config = $config->get('grants_metadata.settings');
-    $this->messageService = $messageService;
-    $this->currentUser = $current_user;
-    $this->time = $time;
+    $this->config = $this->configFactory->get('grants_metadata.settings');
   }
 
   /**
@@ -174,7 +108,7 @@ abstract class AtvFormBase extends FormBase {
       'handler_id' => ApplicationHelpers::HANDLER_ID,
       'application_number' => $applicationNumber,
       'saveid' => $saveId,
-      'uid' => $this->currentUser->id(),
+      'uid' => $this->current_user->id(),
       'user_uuid' => '',
       'timestamp' => (string) $this->time->getRequestTime(),
     ];

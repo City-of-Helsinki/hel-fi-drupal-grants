@@ -6,6 +6,7 @@ use Drupal\Core\Batch\BatchBuilder;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -26,32 +27,11 @@ class HandleDocumentsBatchService {
   use StringTranslationTrait;
 
   /**
-   * ATV service.
+   * The logger.
    *
-   * @var \Drupal\helfi_atv\AtvService
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected AtvService $atvService;
-
-  /**
-   * The messenger.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected MessengerInterface $messenger;
-
-  /**
-   * Logger.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
-   */
-  protected LoggerChannelFactoryInterface $logger;
-
-  /**
-   * Module extension list.
-   *
-   * @var \Drupal\Core\Extension\ModuleExtensionList
-   */
-  protected ModuleExtensionList $moduleExtensionList;
+  protected LoggerChannelInterface $logger;
 
   /**
    * Class constructor.
@@ -66,15 +46,12 @@ class HandleDocumentsBatchService {
    *   The ModuleExtensionList.
    */
   public function __construct(
-    AtvService $atvService,
-    MessengerInterface $messenger,
+    protected AtvService $atvService,
+    protected MessengerInterface $messenger,
     LoggerChannelFactoryInterface $loggerFactory,
-    ModuleExtensionList $moduleExtensionList,
+    protected ModuleExtensionList $moduleExtensionList,
   ) {
-    $this->atvService = $atvService;
-    $this->messenger = $messenger;
-    $this->logger = $loggerFactory;
-    $this->moduleExtensionList = $moduleExtensionList;
+    $this->logger = $loggerFactory->get('handle_documents_batch_service');
   }
 
   /**
@@ -159,7 +136,7 @@ class HandleDocumentsBatchService {
         $context['results']['failed_transaction_ids'][] = $transactionId;
         $context['results']['failed']++;
         $this->messenger->addError($e->getMessage());
-        $this->logger->get('grants_admin_applications')->error($e->getMessage());
+        $this->logger->error($e->getMessage());
       }
     }
   }
@@ -200,7 +177,7 @@ class HandleDocumentsBatchService {
           '@elapsed' => $elapsed,
         ]);
       $this->messenger->addMessage($processMessage);
-      $this->logger->get('grants_admin_applications')->info($processMessage);
+      $this->logger->info($processMessage);
     }
 
     // Log a message about successful deletions.
@@ -211,7 +188,7 @@ class HandleDocumentsBatchService {
         ]
       );
       $this->messenger->addMessage($deletedDocumentsMessage);
-      $this->logger->get('grants_admin_applications')->info($deletedDocumentsMessage);
+      $this->logger->info($deletedDocumentsMessage);
     }
 
     // Log a warning about deletions that failed.
@@ -222,7 +199,7 @@ class HandleDocumentsBatchService {
         ]
       );
       $this->messenger->addError($failedDeletionMessage);
-      $this->logger->get('grants_admin_applications')->info($failedDeletionMessage);
+      $this->logger->info($failedDeletionMessage);
     }
   }
 

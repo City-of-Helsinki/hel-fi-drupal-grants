@@ -19,13 +19,6 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
   use DebuggableTrait;
 
   /**
-   * The config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected ConfigFactoryInterface $configFactory;
-
-  /**
    * Log errors.
    *
    * @var \Drupal\Core\Logger\LoggerChannelInterface
@@ -49,13 +42,15 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
   /**
    * Constructs a new ApplicationStatusService object.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The config factory.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
    *   The logger channel factory.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, LoggerChannelFactoryInterface $loggerChannelFactory) {
-    $this->configFactory = $config_factory;
+  public function __construct(
+    protected ConfigFactoryInterface $configFactory,
+    LoggerChannelFactoryInterface $loggerChannelFactory,
+  ) {
     $this->logger = $loggerChannelFactory->get('ApplicationStatusService');
   }
 
@@ -63,7 +58,7 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): self {
-    return new static(
+    return new self(
       $container->get('config.factory'),
       $container->get('logger.factory')
     );

@@ -55,27 +55,6 @@ class WebformAccessCheckService {
   ];
 
   /**
-   * The EntityTypeManagerInterface.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected EntityTypeManagerInterface $entityTypeManager;
-
-  /**
-   * The AccountProxyInterface.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected AccountProxyInterface $currentUser;
-
-  /**
-   * The RouteMatchInterface.
-   *
-   * @var \Drupal\Core\Routing\RouteMatchInterface
-   */
-  protected RouteMatchInterface $routeMatch;
-
-  /**
    * Class constructor.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
@@ -86,14 +65,10 @@ class WebformAccessCheckService {
    *   The RouteMatchInterface.
    */
   public function __construct(
-    EntityTypeManagerInterface $entityTypeManager,
-    AccountProxyInterface $currentUser,
-    RouteMatchInterface $routeMatch,
-  ) {
-    $this->entityTypeManager = $entityTypeManager;
-    $this->currentUser = $currentUser;
-    $this->routeMatch = $routeMatch;
-  }
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected AccountProxyInterface $currentUser,
+    protected RouteMatchInterface $routeMatch,
+  ) {}
 
   /**
    * The checkAdminRouteAccess method.

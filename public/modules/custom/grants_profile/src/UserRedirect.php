@@ -22,32 +22,24 @@ class UserRedirect implements UserRedirectInterface {
   protected Request $currentRequest;
 
   /**
-   * The current active user.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected AccountProxyInterface $currentUser;
-
-  /**
    * Constructs a new Login And Logout Redirect Per Role service object.
    *
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   The request stack.
-   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
-   *   The current active user.
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
+   *   The current user.
    */
   public function __construct(
-    RequestStack $request_stack,
-    AccountProxyInterface $current_user,
+    protected RequestStack $request_stack,
+    protected AccountProxyInterface $currentUser,
   ) {
     $this->currentRequest = $request_stack->getCurrentRequest();
-    $this->currentUser = $current_user;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setLoginRedirection(string $url, AccountInterface $account = NULL) {
+  public function setLoginRedirection(string $url, AccountInterface $account = NULL): void {
     $this->prepareDestination($url);
   }
 

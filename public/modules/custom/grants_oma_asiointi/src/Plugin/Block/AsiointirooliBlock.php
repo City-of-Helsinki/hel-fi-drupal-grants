@@ -22,13 +22,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The grants_profile.service service.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
    * Construct block object.
    *
    * @param array $configuration
@@ -37,17 +30,16 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
    *   Plugin.
    * @param mixed $plugin_definition
    *   Plugin def.
-   * @param \Drupal\grants_profile\GrantsProfileService $grants_profile_service
-   *   The grants_profile.service service.
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   The grants profile service.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    GrantsProfileService $grants_profile_service,
+    protected GrantsProfileService $grantsProfileService,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->grantsProfileService = $grants_profile_service;
   }
 
   /**
@@ -69,8 +61,8 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
     array $configuration,
     $plugin_id,
     $plugin_definition,
-  ) {
-    return new static(
+  ): static {
+    return new self(
       $configuration,
       $plugin_id,
       $plugin_definition,
@@ -81,7 +73,7 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build(): array {
 
     $companyName = NULL;
     $currentRole = NULL;
@@ -119,7 +111,7 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
   /**
    * Disable cache.
    */
-  public function getCacheMaxAge() {
+  public function getCacheMaxAge(): int {
     return 0;
   }
 

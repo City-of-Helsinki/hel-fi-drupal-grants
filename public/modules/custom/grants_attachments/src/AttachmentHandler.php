@@ -9,10 +9,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\Messenger;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TempStore\TempStoreException;
-use Drupal\file\FileStorage;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\DebuggableTrait;
@@ -42,13 +40,6 @@ class AttachmentHandler {
   use DebuggableTrait;
 
   /**
-   * The grants_attachments.attachment_remover service.
-   *
-   * @var \Drupal\grants_attachments\AttachmentRemover
-   */
-  protected AttachmentRemover $attachmentRemover;
-
-  /**
    * Field names for attachments.
    *
    * @var string[]
@@ -58,58 +49,9 @@ class AttachmentHandler {
   /**
    * Logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
   protected LoggerChannelInterface $logger;
-
-  /**
-   * Show messages messages.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected MessengerInterface $messenger;
-
-  /**
-   * ATV access.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * Grants profile access.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Atv schema service.
-   *
-   * @var \Drupal\grants_metadata\AtvSchema
-   */
-  protected AtvSchema $atvSchema;
-
-  /**
-   * Atv schema service.
-   *
-   * @var \Drupal\grants_handler\EventsService
-   */
-  protected EventsService $eventService;
-
-  /**
-   * Audit logger.
-   *
-   * @var \Drupal\helfi_audit_log\AuditLogService
-   */
-  protected AuditLogService $auditLogService;
-
-  /**
-   * The storage handler class for files.
-   *
-   * @var \Drupal\file\FileStorage
-   */
-  private FileStorage|EntityStorageInterface $fileStorage;
 
   /**
    * Attached file id's.
@@ -119,11 +61,11 @@ class AttachmentHandler {
   protected array $attachmentFileIds;
 
   /**
-   * Application data service.
+   * File storage.
    *
-   * @var \Drupal\grants_metadata\ApplicationDataService
+   * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected ApplicationDataService $applicationDataService;
+  protected EntityStorageInterface $fileStorage;
 
   /**
    * Constructs an AttachmentHandler object.
@@ -153,34 +95,21 @@ class AttachmentHandler {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function __construct(
-    AttachmentRemover $grants_attachments_attachment_remover,
-    Messenger $messenger,
+    protected AttachmentRemover $grants_attachments_attachment_remover,
+    protected Messenger $messenger,
     LoggerChannelFactoryInterface $loggerChannelFactory,
-    AtvService $atvService,
-    GrantsProfileService $grantsProfileService,
-    AtvSchema $atvSchema,
-    EventsService $eventService,
-    AuditLogService $auditLogService,
+    protected AtvService $atvService,
+    protected GrantsProfileService $grantsProfileService,
+    protected AtvSchema $atvSchema,
+    protected EventsService $eventService,
+    protected AuditLogService $auditLogService,
     EntityTypeManagerInterface $entityTypeManager,
-    ApplicationDataService $applicationDataService,
+    protected ApplicationDataService $applicationDataService,
   ) {
 
-    $this->attachmentRemover = $grants_attachments_attachment_remover;
-
-    $this->messenger = $messenger;
     $this->logger = $loggerChannelFactory->get('grants_attachments_handler');
-
-    $this->atvService = $atvService;
-    $this->grantsProfileService = $grantsProfileService;
-
     $this->attachmentFileIds = [];
-
-    $this->atvSchema = $atvSchema;
-    $this->eventService = $eventService;
-    $this->auditLogService = $auditLogService;
     $this->fileStorage = $entityTypeManager->getStorage('file');
-
-    $this->applicationDataService = $applicationDataService;
 
     $this->setDebug(NULL);
 
@@ -946,6 +875,7 @@ class AttachmentHandler {
     // We have uploaded file. THIS time. Not previously.
     if (!empty($field['attachment'])) {
 
+      /** @var \Drupal\file\FileInterface $file */
       $file = $this->fileStorage->load($field['attachment']);
       if ($file) {
         // Add file id for easier usage in future.

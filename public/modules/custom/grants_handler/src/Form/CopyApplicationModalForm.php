@@ -28,59 +28,17 @@ class CopyApplicationModalForm extends FormBase {
   use DebuggableTrait;
 
   /**
-   * Renderer for submission details.
-   *
-   * @var \Drupal\Core\Render\Renderer
-   */
-  protected Renderer $renderer;
-
-  /**
-   * Events service class.
-   *
-   * @var \Drupal\grants_handler\EventsService
-   */
-  protected EventsService $eventsService;
-
-  /**
-   * Application status service.
-   *
-   * @var \Drupal\grants_handler\ApplicationStatusService
-   */
-  protected ApplicationStatusService $applicationStatusService;
-
-  /**
-   * Application init service.
-   *
-   * @var \Drupal\grants_handler\ApplicationInitService
-   */
-  protected ApplicationInitService $applicationInitService;
-
-  /**
-   * Application getter service.
-   *
-   * @var \Drupal\grants_handler\ApplicationGetterService
-   */
-  protected ApplicationGetterService $applicationGetterService;
-
-  /**
    * Constructs a new ModalAddressForm object.
    */
   public function __construct(
-    Renderer $renderer,
-    EventsService $eventsService,
-    ApplicationStatusService $applicationStatusService,
-    ApplicationInitService $applicationInitService,
-    ApplicationGetterService $applicationGetterService,
+    protected Renderer $renderer,
+    protected EventsService $eventsService,
+    protected ApplicationStatusService $applicationStatusService,
+    protected ApplicationInitService $applicationInitService,
+    protected ApplicationGetterService $applicationGetterService,
   ) {
-
     // When argument is set to null, get the debug value from environment.
     $this->setDebug(NULL);
-
-    $this->renderer = $renderer;
-    $this->eventsService = $eventsService;
-    $this->applicationStatusService = $applicationStatusService;
-    $this->applicationInitService = $applicationInitService;
-    $this->applicationGetterService = $applicationGetterService;
   }
 
   /**

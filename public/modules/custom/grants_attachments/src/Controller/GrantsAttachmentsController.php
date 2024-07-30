@@ -28,55 +28,6 @@ class GrantsAttachmentsController extends ControllerBase {
   use StringTranslationTrait;
 
   /**
-   * The helfi_atv service.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $helfiAtv;
-
-  /**
-   * Create events.
-   *
-   * @var \Drupal\grants_handler\EventsService
-   */
-  protected EventsService $eventsService;
-
-  /**
-   * Requeststack.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected RequestStack $request;
-
-  /**
-   * Application status service.
-   *
-   * @var \Drupal\grants_handler\ApplicationStatusService
-   */
-  protected ApplicationStatusService $applicationStatusService;
-
-  /**
-   * Application data service.
-   *
-   * @var \Drupal\grants_metadata\ApplicationDataService
-   */
-  protected ApplicationDataService $applicationDataService;
-
-  /**
-   * Application getter service.
-   *
-   * @var \Drupal\grants_handler\ApplicationGetterService
-   */
-  protected ApplicationGetterService $applicationGetterService;
-
-  /**
-   * Application uploader service.
-   *
-   * @var \Drupal\grants_handler\ApplicationUploaderService
-   */
-  protected ApplicationUploaderService $applicationUploaderService;
-
-  /**
    * The controller constructor.
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
@@ -95,23 +46,14 @@ class GrantsAttachmentsController extends ControllerBase {
    *   Application uploader service.
    */
   public function __construct(
-    AtvService $helfi_atv,
-    RequestStack $requestStack,
-    EventsService $eventsService,
-    ApplicationStatusService $applicationStatusService,
-    ApplicationDataService $applicationDataService,
-    ApplicationGetterService $applicationGetterService,
-    ApplicationUploaderService $applicationUploaderService,
-  ) {
-    $this->helfiAtv = $helfi_atv;
-
-    $this->request = $requestStack;
-    $this->eventsService = $eventsService;
-    $this->applicationStatusService = $applicationStatusService;
-    $this->applicationDataService = $applicationDataService;
-    $this->applicationGetterService = $applicationGetterService;
-    $this->applicationUploaderService = $applicationUploaderService;
-  }
+    protected AtvService $helfi_atv,
+    protected RequestStack $requestStack,
+    protected EventsService $eventsService,
+    protected ApplicationStatusService $applicationStatusService,
+    protected ApplicationDataService $applicationDataService,
+    protected ApplicationGetterService $applicationGetterService,
+    protected ApplicationUploaderService $applicationUploaderService,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -150,12 +92,12 @@ class GrantsAttachmentsController extends ControllerBase {
     }
     catch (\Exception $e) {
       $this->messenger()->addError($e->getMessage());
-      return new RedirectResponse($this->request->getMainRequest()->get('destination'));
+      return new RedirectResponse($this->requestStack->getMainRequest()->get('destination'));
     }
     $submissionData = $submission->getData();
     // Rebuild integration id from url.
     $integrationId = str_replace('_', '/', $integration_id);
-    $destination = $this->request->getMainRequest()->get('destination');
+    $destination = $this->requestStack->getMainRequest()->get('destination');
 
     if ($submissionData['status'] != $this->applicationStatusService->getApplicationStatuses()['DRAFT']) {
       throw new AccessException('Only application in DRAFT status allows attachments to be deleted.');
@@ -163,7 +105,7 @@ class GrantsAttachmentsController extends ControllerBase {
 
     try {
       // Try to delete attachment directly.
-      $attachmentDeleteResult = $this->helfiAtv->deleteAttachmentViaIntegrationId($integrationId);
+      $attachmentDeleteResult = $this->helfi_atv->deleteAttachmentViaIntegrationId($integrationId);
       // If attachment got deleted.
       if ($attachmentDeleteResult) {
         $this->messenger()

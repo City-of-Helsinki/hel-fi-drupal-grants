@@ -5,7 +5,6 @@ namespace Drupal\grants_handler\Form;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\DebuggableTrait;
@@ -26,40 +25,16 @@ class CopyApplicationForm extends FormBase {
 
   use DebuggableTrait;
 
-  /**
-   * Application init service.
-   *
-   * @var \Drupal\grants_handler\ApplicationInitService
-   */
-  protected ApplicationInitService $applicationInitService;
-
-  /**
-   * Logger.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelInterface
-   */
-  protected LoggerChannelInterface $logger;
-
-  /**
-   * Application getter service.
-   *
-   * @var \Drupal\grants_handler\ApplicationGetterService
-   */
-  protected ApplicationGetterService $applicationGetterService;
+  const LOGGER_CHANNEL = 'copy_application_form';
 
   /**
    * Constructs a new AddressForm object.
    */
   public function __construct(
-    ApplicationInitService $applicationInitService,
-    LoggerChannelInterface $logger,
-    ApplicationGetterService $applicationGetterService,
+    protected ApplicationInitService $applicationInitService,
+    protected ApplicationGetterService $applicationGetterService,
   ) {
     $this->setDebug(NULL);
-
-    $this->applicationInitService = $applicationInitService;
-    $this->logger = $logger;
-    $this->applicationGetterService = $applicationGetterService;
   }
 
   /**
@@ -68,7 +43,6 @@ class CopyApplicationForm extends FormBase {
   public static function create(ContainerInterface $container): MessageForm|static {
     return new static(
       $container->get('grants_handler.application_init_service'),
-      $container->get('logger.factory')->get('copy_application_form'),
       $container->get('grants_handler.application_getter_service')
     );
   }
@@ -94,7 +68,7 @@ class CopyApplicationForm extends FormBase {
       }
     }
     catch (\Exception | GuzzleException $e) {
-      $this->getLogger('copy_application_form')->error('Failed to load submission: @error', ['@error' => $e->getMessage()]);
+      $this->logger(self::LOGGER_CHANNEL)->error('Failed to load submission: @error', ['@error' => $e->getMessage()]);
     }
     $form['copyFrom'] = [
       '#type' => 'markup',

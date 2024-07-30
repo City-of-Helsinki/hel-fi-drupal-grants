@@ -31,56 +31,14 @@ class MessageController extends ControllerBase {
   use DebuggableTrait;
 
   /**
-   * The grants_handler.events_service service.
-   *
-   * @var \Drupal\grants_handler\EventsService
-   */
-  protected EventsService $eventsService;
-
-  /**
-   * The grants_handler.message_service service.
-   *
-   * @var \Drupal\grants_handler\MessageService
-   */
-  protected MessageService $messageService;
-
-  /**
-   * The request service.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected RequestStack $request;
-
-  /**
-   * Atv access.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * Renderer service.
-   *
-   * @var \Drupal\Core\Render\Renderer
-   */
-  protected Renderer $renderer;
-
-  /**
-   * Application getter service.
-   *
-   * @var \Drupal\grants_handler\ApplicationGetterService
-   */
-  protected ApplicationGetterService $applicationGetterService;
-
-  /**
    * The controller constructor.
    *
-   * @param \Drupal\grants_handler\EventsService $grants_handler_events_service
-   *   The grants_handler.events_service service.
-   * @param \Drupal\grants_handler\MessageService $grants_handler_message_service
-   *   The grants_handler.message_service service.
-   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-   *   Request stuff.
+   * @param \Drupal\grants_handler\EventsService $eventsService
+   *   Use submission events productively.
+   * @param \Drupal\grants_handler\MessageService $messageService
+   *   Use messages productively.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request
+   *   Drupal requests.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access to ATV backend.
    * @param \Drupal\Core\Render\Renderer $renderer
@@ -89,20 +47,13 @@ class MessageController extends ControllerBase {
    *   Access to ATV backend.
    */
   public function __construct(
-    EventsService $grants_handler_events_service,
-    MessageService $grants_handler_message_service,
-    RequestStack $requestStack,
-    AtvService $atvService,
-    Renderer $renderer,
-    ApplicationGetterService $applicationGetterService,
+    protected EventsService $eventsService,
+    protected MessageService $messageService,
+    protected RequestStack $request,
+    protected AtvService $atvService,
+    protected Renderer $renderer,
+    protected ApplicationGetterService $applicationGetterService,
   ) {
-    $this->eventsService = $grants_handler_events_service;
-    $this->messageService = $grants_handler_message_service;
-    $this->request = $requestStack;
-    $this->atvService = $atvService;
-    $this->renderer = $renderer;
-    $this->applicationGetterService = $applicationGetterService;
-
     $this->setDebug(NULL);
   }
 

@@ -30,34 +30,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * Get route parameters.
-   *
-   * @var \Drupal\Core\Routing\CurrentRouteMatch
-   */
-  protected CurrentRouteMatch $routeMatch;
-
-  /**
-   * Get current user.
-   *
-   * @var \Drupal\Core\Session\AccountProxy
-   */
-  protected AccountProxy $currentUser;
-
-  /**
-   * The service page block service.
-   *
-   * @var \Drupal\grants_handler\ServicePageBlockService
-   */
-  protected ServicePageBlockService $servicePageBlockService;
-
-  /**
-   * The application status service.
-   *
-   * @var \Drupal\grants_handler\ApplicationStatusService
-   */
-  protected ApplicationStatusService $applicationStatusService;
-
-  /**
    * Constructs a new ServicePageBlock instance.
    *
    * @param array $configuration
@@ -71,7 +43,7 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The plugin implementation definition.
    * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
    *   Get route params.
-   * @param \Drupal\Core\Session\AccountProxy $user
+   * @param \Drupal\Core\Session\AccountProxy $currentUser
    *   Current user.
    * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
    *   The service page block service.
@@ -82,16 +54,12 @@ class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPluginIn
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    CurrentRouteMatch $routeMatch,
-    AccountProxy $user,
-    ServicePageBlockService $servicePageBlockService,
-    ApplicationStatusService $applicationStatusService,
+    protected CurrentRouteMatch $routeMatch,
+    protected AccountProxy $currentUser,
+    protected ServicePageBlockService $servicePageBlockService,
+    protected ApplicationStatusService $applicationStatusService,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->routeMatch = $routeMatch;
-    $this->currentUser = $user;
-    $this->servicePageBlockService = $servicePageBlockService;
-    $this->applicationStatusService = $applicationStatusService;
   }
 
   /**

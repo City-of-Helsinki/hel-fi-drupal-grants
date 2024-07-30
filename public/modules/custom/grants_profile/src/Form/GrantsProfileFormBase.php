@@ -31,27 +31,6 @@ abstract class GrantsProfileFormBase extends FormBase {
   use StringTranslationTrait;
 
   /**
-   * Drupal\Core\TypedData\TypedDataManager definition.
-   *
-   * @var \Drupal\Core\TypedData\TypedDataManager
-   */
-  protected TypedDataManager $typedDataManager;
-
-  /**
-   * Get session.
-   *
-   * @var \Symfony\Component\HttpFoundation\Session\Session
-   */
-  protected Session $session;
-
-  /**
-   * Access to grants profile services.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
    * Variable for translation context.
    *
    * @var array|string[] Translation context for class
@@ -61,27 +40,23 @@ abstract class GrantsProfileFormBase extends FormBase {
   /**
    * Constructs a new GrantsProfileForm object.
    *
-   * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
-   *   Data manager.
+   * @param \Drupal\Core\TypedData\TypedDataManager $typedDataManager
+   *   Typed data manager.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile.
    * @param \Symfony\Component\HttpFoundation\Session\Session $session
    *   Session data.
    */
   public function __construct(
-    TypedDataManager $typed_data_manager,
-    GrantsProfileService $grantsProfileService,
-    Session $session,
-  ) {
-    $this->typedDataManager = $typed_data_manager;
-    $this->grantsProfileService = $grantsProfileService;
-    $this->session = $session;
-  }
+    protected TypedDataManager $typedDataManager,
+    protected GrantsProfileService $grantsProfileService,
+    protected Session $session,
+  ) {}
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),
@@ -797,12 +772,12 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   /**
    * Returns the user's grants profile document from ATV.
    *
-   * @return \Drupal\helfi_atv\AtvDocument|bool
+   * @return \Drupal\helfi_atv\AtvDocument
    *   The ATV Document
    *
    * @throws \Drupal\grants_profile\GrantsProfileException
    */
-  protected function getGrantsProfileDocument() : AtvDocument|bool {
+  protected function getGrantsProfileDocument() : AtvDocument {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
     // Load grants profile.

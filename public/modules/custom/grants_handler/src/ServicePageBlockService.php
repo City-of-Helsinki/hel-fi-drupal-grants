@@ -5,7 +5,6 @@ namespace Drupal\grants_handler;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityTypeManager;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\webform\Entity\Webform;
@@ -14,27 +13,6 @@ use Drupal\webform\Entity\Webform;
  * Provides the ServicePageBlockService service.
  */
 class ServicePageBlockService {
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected EntityTypeManagerInterface $entityTypeManager;
-
-  /**
-   * The current route match.
-   *
-   * @var \Drupal\Core\Routing\CurrentRouteMatch
-   */
-  protected CurrentRouteMatch $routeMatch;
-
-  /**
-   * Get profile data.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
 
   /**
    * Constructs a new WebformLoader.
@@ -47,14 +25,10 @@ class ServicePageBlockService {
    *   The grants profile service.
    */
   public function __construct(
-    EntityTypeManager $entityTypeManager,
-    CurrentRouteMatch $routeMatch,
-    GrantsProfileService $grantsProfileService,
-  ) {
-    $this->entityTypeManager = $entityTypeManager;
-    $this->routeMatch = $routeMatch;
-    $this->grantsProfileService = $grantsProfileService;
-  }
+    protected EntityTypeManager $entityTypeManager,
+    protected CurrentRouteMatch $routeMatch,
+    protected GrantsProfileService $grantsProfileService,
+  ) {}
 
   /**
    * The loadServicePageWebform function.

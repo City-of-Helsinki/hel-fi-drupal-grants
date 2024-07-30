@@ -33,41 +33,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The helfi_helsinki_profiili service.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helfiHelsinkiProfiili;
-
-  /**
-   * Get route parameters.
-   *
-   * @var \Drupal\Core\Routing\CurrentRouteMatch
-   */
-  protected CurrentRouteMatch $routeMatch;
-
-  /**
-   * Get current user.
-   *
-   * @var \Drupal\Core\Session\AccountProxy
-   */
-  protected AccountProxy $currentUser;
-
-  /**
-   * The service page block service.
-   *
-   * @var \Drupal\grants_handler\ServicePageBlockService
-   */
-  protected ServicePageBlockService $servicePageBlockService;
-
-  /**
-   * The application status service.
-   *
-   * @var \Drupal\grants_handler\ApplicationStatusService
-   */
-  protected ApplicationStatusService $applicationStatusService;
-
-  /**
    * Constructs a new ServicePageBlock instance.
    *
    * @param array $configuration
@@ -83,7 +48,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The helfi_helsinki_profiili service.
    * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
    *   Get route params.
-   * @param \Drupal\Core\Session\AccountProxy $user
+   * @param \Drupal\Core\Session\AccountProxy $currentUser
    *   Current user.
    * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
    *   The service page block service.
@@ -94,28 +59,23 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     array $configuration,
     $pluginId,
     $pluginDefinition,
-    HelsinkiProfiiliUserData $helfiHelsinkiProfiili,
-    CurrentRouteMatch $routeMatch,
-    AccountProxy $user,
-    ServicePageBlockService $servicePageBlockService,
-    ApplicationStatusService $applicationStatusService,
+    protected HelsinkiProfiiliUserData $helfiHelsinkiProfiili,
+    protected CurrentRouteMatch $routeMatch,
+    protected AccountProxy $currentUser,
+    protected ServicePageBlockService $servicePageBlockService,
+    protected ApplicationStatusService $applicationStatusService,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
-    $this->helfiHelsinkiProfiili = $helfiHelsinkiProfiili;
-    $this->routeMatch = $routeMatch;
-    $this->currentUser = $user;
-    $this->servicePageBlockService = $servicePageBlockService;
-    $this->applicationStatusService = $applicationStatusService;
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $pluginId, $pluginDefinition) {
-    return new static(
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
+    return new self(
       $configuration,
-      $pluginId,
-      $pluginDefinition,
+      $plugin_id,
+      $plugin_definition,
       $container->get('helfi_helsinki_profiili.userdata'),
       $container->get('current_route_match'),
       $container->get('current_user'),

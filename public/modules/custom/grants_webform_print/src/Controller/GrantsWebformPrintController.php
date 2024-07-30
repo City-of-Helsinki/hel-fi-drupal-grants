@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\grants_webform_print\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\grants_budget_components\Element\GrantsBudgetCostStatic;
 use Drupal\grants_budget_components\Element\GrantsBudgetIncomeStatic;
 use Drupal\grants_club_section\Element\ClubSectionComposite;
@@ -26,35 +25,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class GrantsWebformPrintController extends ControllerBase {
 
   /**
-   * The string translation service.
-   *
-   * @var \Drupal\webform\WebformTranslationManager
-   */
-  protected $translationManager;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
    * The constructor.
    *
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
-   *   Language manager.
    * @param \Drupal\webform\WebformTranslationManager $translationManager
    *   Translation manager.
    */
   public function __construct(
-    LanguageManagerInterface $languageManager,
-    WebformTranslationManager $translationManager,
-  ) {
-    $this->languageManager = $languageManager;
-    $this->translationManager = $translationManager;
-
-  }
+    protected WebformTranslationManager $translationManager,
+  ) {}
 
   /**
    * Static factory method.
@@ -67,7 +45,6 @@ class GrantsWebformPrintController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('language_manager'),
       $container->get('webform.translation_manager'),
     );
   }

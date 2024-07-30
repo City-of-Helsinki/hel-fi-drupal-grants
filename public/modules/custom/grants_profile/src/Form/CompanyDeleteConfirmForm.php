@@ -21,54 +21,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class CompanyDeleteConfirmForm extends ConfirmFormBase {
 
   /**
-   * Variable for translation context.
-   *
-   * @var array|string[] Translation context for class
-   */
-  private array $tOpts = ['context' => 'grants_profile'];
-
-  /**
-   * Grants Mandate Service.
-   *
-   * @var \Drupal\grants_mandate\GrantsMandateService
-   */
-  protected GrantsMandateService $grantsMandateService;
-
-  /**
-   * Grants Profile Service.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Application Getter Service.
-   *
-   * @var \Drupal\grants_handler\ApplicationGetterService
-   */
-  protected ApplicationGetterService $applicationGetterService;
-
-  /**
-   * ATV Service.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
    * Class constructor.
    */
   public function __construct(
-    GrantsProfileService $grantsProfileService,
-    GrantsMandateService $grantsMandateService,
-    ApplicationGetterService $applicationGetterService,
-    AtvService $atvService,
-  ) {
-    $this->grantsProfileService = $grantsProfileService;
-    $this->grantsMandateService = $grantsMandateService;
-    $this->applicationGetterService = $applicationGetterService;
-    $this->atvService = $atvService;
-  }
+    protected GrantsProfileService $grantsProfileService,
+    protected GrantsMandateService $grantsMandateService,
+    protected ApplicationGetterService $applicationGetterService,
+    protected AtvService $atvService,
+  ) {}
 
   /**
    * {@inheritdoc}
