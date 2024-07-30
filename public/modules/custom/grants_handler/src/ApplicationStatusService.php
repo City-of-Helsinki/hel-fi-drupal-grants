@@ -62,8 +62,8 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): static {
-    return new ApplicationStatusService(
+  public static function create(ContainerInterface $container): self {
+    return new static(
       $container->get('config.factory'),
       $container->get('logger.factory')
     );
