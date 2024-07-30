@@ -72,7 +72,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): GrantsProfileFormUnregisteredCommunity|static {
+  public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),

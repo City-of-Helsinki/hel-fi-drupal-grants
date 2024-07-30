@@ -72,7 +72,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
-    return new self(
+    return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,

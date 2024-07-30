@@ -21,6 +21,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class CompanyDeleteConfirmForm extends ConfirmFormBase {
 
   /**
+   * Variable for translation context.
+   *
+   * @var array|string[] Translation context for class
+   */
+  private array $tOpts = ['context' => 'grants_profile'];
+
+  /**
    * Class constructor.
    */
   public function __construct(

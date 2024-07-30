@@ -42,7 +42,7 @@ class ApplicationStatusCheckController extends ControllerBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container):static {
-    return new self(
+    return new static(
       $container->get('helfi_atv.atv_service'),
       $container->get('helfi_helsinki_profiili.userdata'),
     );

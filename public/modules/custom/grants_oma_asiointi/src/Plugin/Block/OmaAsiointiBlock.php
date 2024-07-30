@@ -94,7 +94,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     $plugin_id,
     $plugin_definition,
   ): static {
-    return new self(
+    return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,

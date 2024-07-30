@@ -62,7 +62,7 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
     $plugin_id,
     $plugin_definition,
   ): static {
-    return new self(
+    return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
