@@ -52,6 +52,7 @@ class GrantsProfileController extends ControllerBase {
    *
    * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
    *   Data to render
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function viewProfile(): array|RedirectResponse {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
@@ -164,15 +165,15 @@ you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
     $formObject = NULL;
 
     if ($selectedRoleData['type'] == 'private_person') {
-      $formObject = $this->formBuilder->getForm('\Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson');
+      $formObject = $this->formBuilder()->getForm('\Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson');
     }
 
     if ($selectedRoleData['type'] == 'registered_community') {
-      $formObject = $this->formBuilder->getForm('\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity');
+      $formObject = $this->formBuilder()->getForm('\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity');
     }
 
     if ($selectedRoleData['type'] == 'unregistered_community') {
-      $formObject = $this->formBuilder->getForm('\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity');
+      $formObject = $this->formBuilder()->getForm('\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity');
     }
 
     $build['#profileForm'] = $formObject;
