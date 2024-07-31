@@ -5,7 +5,6 @@ namespace Drupal\grants_attachments\Controller;
 use Drupal\Core\Access\AccessException;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Messenger\MessengerTrait;
-use Drupal\Core\Routing\RedirectDestination;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationGetterService;
@@ -53,7 +52,7 @@ class GrantsAttachmentsController extends ControllerBase {
     protected ApplicationStatusService $applicationStatusService,
     protected ApplicationDataService $applicationDataService,
     protected ApplicationGetterService $applicationGetterService,
-    protected ApplicationUploaderService $applicationUploaderService
+    protected ApplicationUploaderService $applicationUploaderService,
   ) {}
 
   /**
