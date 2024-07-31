@@ -5,6 +5,7 @@ namespace Drupal\grants_attachments\Controller;
 use Drupal\Core\Access\AccessException;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Messenger\MessengerTrait;
+use Drupal\Core\Routing\RedirectDestination;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_handler\ApplicationGetterService;
@@ -52,7 +53,7 @@ class GrantsAttachmentsController extends ControllerBase {
     protected ApplicationStatusService $applicationStatusService,
     protected ApplicationDataService $applicationDataService,
     protected ApplicationGetterService $applicationGetterService,
-    protected ApplicationUploaderService $applicationUploaderService,
+    protected ApplicationUploaderService $applicationUploaderService
   ) {}
 
   /**
@@ -86,18 +87,19 @@ class GrantsAttachmentsController extends ControllerBase {
   public function deleteAttachment(string $submission_id, string $integration_id): RedirectResponse {
     $tOpts = ['context' => 'grants_attachments'];
 
+    $destination = $this->redirectDestination->get();
+
     // Load submission & data.
     try {
       $submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
     }
     catch (\Exception $e) {
       $this->messenger()->addError($e->getMessage());
-      return new RedirectResponse($this->requestStack->getMainRequest()->get('destination'));
+      return new RedirectResponse($destination);
     }
     $submissionData = $submission->getData();
     // Rebuild integration id from url.
     $integrationId = str_replace('_', '/', $integration_id);
-    $destination = $this->requestStack->getMainRequest()->get('destination');
 
     if ($submissionData['status'] != $this->applicationStatusService->getApplicationStatuses()['DRAFT']) {
       throw new AccessException('Only application in DRAFT status allows attachments to be deleted.');

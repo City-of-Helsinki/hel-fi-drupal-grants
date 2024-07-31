@@ -135,7 +135,12 @@ class HandleDocumentsBatchService {
       catch (AtvDocumentNotFoundException | AtvFailedToConnectException | TokenExpiredException | GuzzleException $e) {
         $context['results']['failed_transaction_ids'][] = $transactionId;
         $context['results']['failed']++;
-        $this->messenger->addError($e->getMessage());
+
+        $deletedDocumentsErrorMessage = $this->t(
+          'Document deleting failed. Error has been logged.'
+        );
+
+        $this->messenger->addError($deletedDocumentsErrorMessage);
         $this->logger->error($e->getMessage());
       }
     }
