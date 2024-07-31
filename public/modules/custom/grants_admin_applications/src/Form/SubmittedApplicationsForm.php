@@ -9,6 +9,7 @@ use Drupal\Core\Url;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use GuzzleHttp\Exception\GuzzleException;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -193,10 +194,11 @@ class SubmittedApplicationsForm extends AtvFormBase {
       $this->sendApplicationToIntegrations($atvDoc, $transactionId);
     }
     catch (GuzzleException | \Exception $e) {
-      $this->messenger()->addError($e->getMessage());
+      $uuid = Uuid::uuid4()->toString();
+      $this->messenger()->addError('Error has occured and has been logged. ID: @uuid', ['@uuid' => $uuid]);
       $this->logger(self::LOGGER_CHANNEL)->error(
-        'Error: Admin application forms - Resend error: @error',
-        ['@error' => $e->getMessage()]
+        'Error: Admin application forms - Resend error: @error, ID: @uuid',
+        ['@error' => $e->getMessage(), '@uuid' => $uuid]
       );
     }
   }
@@ -287,11 +289,12 @@ class SubmittedApplicationsForm extends AtvFormBase {
       $formState->setRebuild();
     }
     catch (\Exception $e) {
-      $this->messenger()->addError($e->getMessage());
+      $uuid = Uuid::uuid4()->toString();
+      $this->messenger()->addError('Error has occured and has been logged. ID: @uuid', ['@uuid' => $uuid]);
       $this->logger(self::LOGGER_CHANNEL)->error(
-          'Error: status check: @error',
-          ['@error' => $e->getMessage()]
-            );
+        'Error: status check: @error, ID: @uuid',
+        ['@error' => $e->getMessage(), '@uuid' => $uuid]
+      );
     }
     catch (GuzzleException $e) {
     }
