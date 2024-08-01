@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_metadata\Controller;
 
+use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\helfi_atv\AtvService;
@@ -19,9 +20,9 @@ class ApplicationStatusCheckController extends ControllerBase {
   /**
    * The config.
    *
-   * @var \Drupal\Core\Config\ImmutableConfig
+   * @var \Drupal\Core\Config\Config
    */
-  protected ImmutableConfig $config;
+  protected Config $config;
 
   /**
    * The controller constructor.
@@ -35,7 +36,7 @@ class ApplicationStatusCheckController extends ControllerBase {
     protected AtvService $helfiAtv,
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
-    $this->config = $this->configFactory->get('grants_handler.settings');
+    $this->config = $this->config('grants_handler.settings');
   }
 
   /**
