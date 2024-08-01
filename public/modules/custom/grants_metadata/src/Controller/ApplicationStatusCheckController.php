@@ -3,7 +3,6 @@
 namespace Drupal\grants_metadata\Controller;
 
 use Drupal\Core\Config\Config;
-use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
