@@ -111,7 +111,7 @@ class ApplicationStatusCheckController extends ControllerBase {
     }
 
     $statusStrings = $this->config->get('statusStrings');
-    $langCode = $this->languageManager->getCurrentLanguage()->getId();
+    $langCode = $this->languageManager()->getCurrentLanguage()->getId();
     $statusArray['statusStringHumanReadable'] = $statusStrings[$langCode][$statusArray['value']];
 
     return $statusArray;
