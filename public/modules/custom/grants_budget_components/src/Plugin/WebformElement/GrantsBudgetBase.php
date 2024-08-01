@@ -73,7 +73,7 @@ class GrantsBudgetBase extends WebformCompositeBase {
   protected function formatHtmlItemValue(
     array $element,
     WebformSubmissionInterface $webform_submission,
-    array $options = []
+    array $options = [],
   ): array|string {
     $format = $this->getItemFormat($element);
     $items = [];

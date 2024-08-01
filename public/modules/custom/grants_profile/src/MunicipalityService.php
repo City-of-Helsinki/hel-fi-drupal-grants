@@ -37,7 +37,7 @@ class MunicipalityService {
     private readonly ClientInterface $httpClient,
     private readonly KeyValueDatabaseFactory $databaseFactory,
     LoggerChannelFactoryInterface $loggerFactory,
-    ) {
+  ) {
     $this->loggerChannel = $loggerFactory->get('grants_profile');
   }
 

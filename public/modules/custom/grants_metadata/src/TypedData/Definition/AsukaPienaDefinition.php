@@ -41,7 +41,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['members_applicant_person_global'] = DataDefinition::create('string')
-        ->setSetting('defaultValue', "")
         ->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',
@@ -83,6 +82,7 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['purpose'] = DataDefinition::create('string')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'compensationInfo',
@@ -113,6 +113,7 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['fee_person'] = DataDefinition::create('float')
+        ->setSetting('defaultValue', '0')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -128,6 +129,7 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['fee_community'] = DataDefinition::create('float')
+        ->setSetting('defaultValue', '')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',

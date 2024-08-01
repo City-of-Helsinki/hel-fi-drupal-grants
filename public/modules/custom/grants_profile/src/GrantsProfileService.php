@@ -8,7 +8,7 @@ use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\file\Entity\File;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
@@ -139,7 +139,7 @@ class GrantsProfileService {
     $newProfileData['metadata'] = [
       'profile_type' => $selectedCompanyArray['type'],
       'profile_id' => $selectedCompany,
-      'appenv' => ApplicationHandler::getAppEnv(),
+      'appenv' => Helpers::getAppEnv(),
       'notification_shown' => (string) time(),
     ];
 
@@ -181,10 +181,16 @@ class GrantsProfileService {
   /**
    * Format data from tempstore & save document back to ATV.
    *
+   * @param array $documentContent
+   *   Document content.
+   * @param array $updatedMetadata
+   *   Updated metadata.
+   *
    * @return bool|AtvDocument
    *   Did save succeed?
    *
    * @throws \Drupal\grants_profile\GrantsProfileException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function saveGrantsProfile(array $documentContent, array $updatedMetadata = []): bool|AtvDocument {
     // Get selected company.
@@ -274,7 +280,7 @@ class GrantsProfileService {
    *   New profle.
    */
   public function createNewProfile(
-    mixed $selectedRoleData
+    mixed $selectedRoleData,
   ): bool|AtvDocument {
 
     try {
@@ -304,83 +310,6 @@ class GrantsProfileService {
   }
 
   /**
-   * Remove unregistered community.
-   *
-   * @param array $companyData
-   *   Company to remove.
-   *
-   * @return array
-   *   Was the removal successful
-   */
-  public function removeProfile(array $companyData): array {
-    if ($companyData['type'] !== 'unregistered_community') {
-      return [
-        'reason' => $this->t('You can not remove this profile', [], $this->tOpts),
-        'success' => FALSE,
-      ];
-    }
-    /** @var \Drupal\helfi_atv\AtvDocument $atvDocument */
-    $atvDocument = $this->getGrantsProfile($companyData);
-    if (!$atvDocument->isDeletable()) {
-      return [
-        'reason' => $this->t('You can not remove this profile', [], $this->tOpts),
-        'success' => FALSE,
-      ];
-    }
-
-    $appEnv = ApplicationHandler::getAppEnv();
-
-    try {
-      // Get applications from ATV.
-      $applications = ApplicationHandler::getCompanyApplications(
-        $companyData,
-        $appEnv,
-        FALSE,
-        TRUE,
-        'application_list_item'
-      );
-      $drafts = [];
-      if (isset($applications['DRAFT'])) {
-        $drafts = $applications['DRAFT'];
-        unset($applications['DRAFT']);
-      }
-      if (!empty($applications)) {
-        return [
-          'reason' => $this->t('Community has applications in progress.', [], $this->tOpts),
-          'success' => FALSE,
-        ];
-      }
-    }
-    catch (\Throwable $e) {
-      $this->logger->error('Error fetching data from ATV: @e', ['@e' => $e->getMessage()]);
-      return [
-        'reason' => $this->t('Connection error', [], $this->tOpts),
-        'success' => FALSE,
-      ];
-    }
-    try {
-      foreach ($drafts as $draft) {
-        $this->atvService->deleteDocument($draft['#document']);
-      }
-      $this->atvService->deleteDocument($atvDocument);
-    }
-    catch (\Throwable $e) {
-      $id = $atvDocument->getId();
-      $this->logger->error('Error removing profile (id: @id) from ATV: @e',
-        ['@e' => $e->getMessage(), '@id' => $id],
-      );
-      return [
-        'reason' => $this->t('Connection error', [], $this->tOpts),
-        'success' => FALSE,
-      ];
-    }
-    return [
-      'reason' => '',
-      'success' => TRUE,
-    ];
-  }
-
-  /**
    * Get "content" array from document in ATV.
    *
    * @param mixed $business
@@ -395,7 +324,7 @@ class GrantsProfileService {
    */
   public function getGrantsProfileContent(
     mixed $business,
-    bool $refetch = FALSE
+    bool $refetch = FALSE,
   ): array {
     $profileData = $this->getGrantsProfile($business, $refetch);
 
@@ -422,7 +351,7 @@ class GrantsProfileService {
    */
   public function getGrantsProfile(
     array $profileIdentifier,
-    bool $refetch = FALSE
+    bool $refetch = FALSE,
   ): AtvDocument|null {
     if ($refetch === FALSE && $this->grantsProfileCache->isCached($profileIdentifier['identifier'])) {
       return $this->grantsProfileCache->getFromCache($profileIdentifier['identifier']);
@@ -462,16 +391,15 @@ class GrantsProfileService {
    *   File data or success.
    *
    * @throws \Drupal\grants_profile\GrantsProfileException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function uploadAttachment(string $id, string $fileName, File $file) {
-
+  public function uploadAttachment(string $id, string $fileName, File $file): mixed {
     try {
-      $attachmentResponse = $this->atvService->uploadAttachment(
+      return $this->atvService->uploadAttachment(
         $id,
         $fileName,
         $file
       );
-      return $attachmentResponse;
     }
     catch (\Exception $e) {
       throw new GrantsProfileException('ATV connection error');
@@ -498,14 +426,14 @@ class GrantsProfileService {
       $searchParams = [
         'type' => 'grants_profile',
         'business_id' => $profileIdentifier['identifier'],
-        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+        'lookfor' => 'appenv:' . Helpers::getAppEnv(),
       ];
     }
     else {
       // Others, cannot.
       $searchParams = [
         'type' => 'grants_profile',
-        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv() .
+        'lookfor' => 'appenv:' . Helpers::getAppEnv() .
         ',profile_id:' . $profileIdentifier['identifier'] .
         ',profile_type:' . $profileIdentifier['type'],
       ];
@@ -602,7 +530,7 @@ class GrantsProfileService {
     $searchParams = [
       'type' => 'grants_profile',
       'user_id' => $userId,
-      'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv() . ',profile_type:' . $profileType,
+      'lookfor' => 'appenv:' . Helpers::getAppEnv() . ',profile_type:' . $profileType,
     ];
 
     try {
@@ -668,8 +596,10 @@ class GrantsProfileService {
    *
    * @return int|false
    *   Timestamp of last updated at.
+   *
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
-  public function getUpdatedAt() {
+  public function getUpdatedAt(): false|int {
     // Get selected company.
     $selectedCompany = $this->getSelectedRoleData();
     // Get grants profile.
@@ -686,30 +616,37 @@ class GrantsProfileService {
    * This method returns timestamp of the time
    * a notification was shown.
    *
-   * @return string
+   * @return int|string
    *   Timestamp of last time notification was shown.
+   *
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
-  public function getNotificationShown() {
+  public function getNotificationShown(): int|string {
     // Get selected company.
     $selectedCompany = $this->getSelectedRoleData();
     // Get grants profile.
     $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
 
     $profileMetadata = $grantsProfileDocument?->getMetadata();
-    $notification_shown = $profileMetadata['notification_shown'] ?? 0;
-    return $notification_shown;
+    return $profileMetadata['notification_shown'] ?? 0;
   }
 
   /**
    * The setNotificationShown method.
    *
    * This method sets a timestamp of the time
-   * a notification was shown.
+   * a notification was shown.*
+   *
+   * @param int $timestamp
+   *   Timestamp of last time notification was shown.
    *
    * @return bool|AtvDocument
-   *   Timestamp of last time notification was shown.
+   *   Was the notification shown?
+   *
+   * @throws \Drupal\grants_profile\GrantsProfileException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function setNotificationShown($timestamp): bool|AtvDocument {
+  public function setNotificationShown(int $timestamp): bool|AtvDocument {
     $profileMetadata['notification_shown'] = $timestamp;
 
     return $this->saveGrantsProfile([], $profileMetadata);

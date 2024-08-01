@@ -80,7 +80,8 @@ class ApplicantInfoComposite extends GrantsCompositeBase {
   protected function formatHtmlItemValue(
     array $element,
     WebformSubmissionInterface $webform_submission,
-    array $options = []): array|string {
+    array $options = [],
+  ): array|string {
     return $this->formatTextItemValue($element, $webform_submission, $options);
   }
 

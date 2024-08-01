@@ -93,10 +93,12 @@ class BankAccountDeleteConfirmForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form,
-                            FormStateInterface $form_state,
-                            string $bank_account_id = '',
-                            string $nojs = ''): array {
+  public function buildForm(
+    array $form,
+    FormStateInterface $form_state,
+    string $bank_account_id = '',
+    string $nojs = '',
+  ): array {
 
     // Add the core AJAX library.
     $form['#attached']['library'][] = 'core/drupal.ajax';

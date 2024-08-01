@@ -50,7 +50,7 @@ class RedirectService {
     RequestStack $request_stack,
     LanguageManagerInterface $language_manager,
     ModuleHandlerInterface $module_handler,
-    ) {
+  ) {
     $this->requestStack = $request_stack;
     $this->languageManager = $language_manager;
     $this->moduleHandler = $module_handler;

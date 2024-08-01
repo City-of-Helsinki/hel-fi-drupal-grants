@@ -72,7 +72,7 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): GrantsProfileFormUnregisteredCommunity|static {
+  public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),
@@ -369,7 +369,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
     array &$form,
     FormStateInterface $formState,
     array $addresses,
-    ?string $newItem
+    ?string $newItem,
   ) {
 
     $form['addressWrapper'] = [
@@ -506,7 +506,7 @@ One address is mandatory information in your personal information and on the app
     array &$form,
     FormStateInterface $formState,
     ?array $officials,
-    ?string $newItem
+    ?string $newItem,
   ) {
 
     $form['officialWrapper'] = [

@@ -140,7 +140,7 @@ class AtvSchema {
   public function typedDataToDocumentContent(
     TypedDataInterface $typedData,
     WebformSubmission $webformSubmission,
-    array $submittedFormData
+    array $submittedFormData,
   ): array {
     $webform = $webformSubmission->getWebform();
     $pages = $webform->getPages('edit', $webformSubmission);
@@ -171,7 +171,7 @@ class AtvSchema {
     TypedDataInterface $typedData,
     Webform $webform,
     array $pages,
-    array $submittedFormData
+    array $submittedFormData,
   ): array {
     return TypedDataToDocumentContentWithWebform::getTypedDataToDocumentContentWithWebform(
       $typedData,

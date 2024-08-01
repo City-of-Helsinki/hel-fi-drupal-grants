@@ -9,7 +9,7 @@ use Drupal\Core\Breadcrumb\BreadcrumbBuilderInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 
@@ -69,7 +69,8 @@ class GrantsHandlerWebformBreadcrumbsBuilder implements BreadcrumbBuilderInterfa
     $webform_submission = $route_match->getParameters()->get('webform_submission');
 
     $submissionData = $webform_submission->getData();
-    $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($submission);
+    $applicationNumber = $submissionData['application_number'] ??
+      ApplicationHelpers::createApplicationNumber($webform_submission);
 
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
 

@@ -46,7 +46,7 @@ class GrantsLogger extends DbLog {
   public function __construct(
     Connection $connection,
     LogMessageParserInterface $parser,
-    HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata
+    HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata,
   ) {
     $this->connection = $connection;
     $this->parser = $parser;

@@ -16,43 +16,18 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
   const AUDIT_LOG_PROVIDER_ORIGIN = 'HELFI-GRANTS';
 
   /**
-   * The current-user service.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected $currentUser;
-
-  /**
-   * The currently active request object.
-   *
-   * @var \Symfony\Component\HttpFoundation\Request
-   */
-  protected $request;
-
-  /**
-   * Profiili data access.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
-
-  /**
    * Constrictor for thee class.
    */
   public function __construct(
-    AccountProxyInterface $accountProxy,
-    RequestStack $requestStack,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
-    ) {
-    $this->currentUser = $accountProxy;
-    $this->request = $requestStack->getCurrentRequest();
-    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
-  }
+    protected AccountProxyInterface $currentUser,
+    protected RequestStack $requestStack,
+    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+  ) {}
 
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     $events[AuditLogEvent::LOG][] = ['validate', 0];
     $events[AuditLogEvent::LOG][] = ['addUser', -10];
 
@@ -65,7 +40,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
    * @param \Drupal\helfi_audit_log\Event\AuditLogEvent $event
    *   Event to validate.
    */
-  public function validate(AuditLogEvent $event) {
+  public function validate(AuditLogEvent $event): void {
     if (!$event->isValid()) {
       // Event is invalid based on previous handlers.
       return;
@@ -87,7 +62,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
    * @param \Drupal\helfi_audit_log\Event\AuditLogEvent $event
    *   Event to handle.
    */
-  public function addUser(AuditLogEvent $event) {
+  public function addUser(AuditLogEvent $event): void {
     // Determine user role based on if user has admin role.
     $role = in_array("admin", $this->currentUser->getRoles()) ? "ADMIN" : "USER";
     $userId = $this->currentUser->id();
@@ -105,7 +80,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
     $message["actor"] = [
       "role" => $role,
       "user_id" => $userId,
-      "ip_address" => $this->request->getClientIp(),
+      "ip_address" => $this->requestStack->getCurrentRequest()->getClientIp(),
     ];
     $event->setMessage($message);
   }

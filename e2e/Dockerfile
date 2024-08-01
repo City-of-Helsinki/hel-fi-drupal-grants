@@ -12,7 +12,6 @@ COPY package.json .
 COPY package-lock.json .
 COPY tsconfig.json .
 
-
 # Install dependencies
 RUN npm ci --ignore-scripts
 

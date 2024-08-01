@@ -37,6 +37,7 @@ class ApplicantInfoComposite extends WebformCompositeBase {
    * {@inheritdoc}
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_profile\GrantsProfileException|\Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public static function getCompositeElements(array $element): array {
     $tOpts = ['context' => 'grants_handler'];
@@ -82,8 +83,12 @@ class ApplicantInfoComposite extends WebformCompositeBase {
       // Save the session so things like messages get saved.
       $request->getSession()->save();
       $response->prepare($request);
+
       // Make sure to trigger kernel events.
-      \Drupal::service('kernel')->terminate($request, $response);
+      /** @var \Drupal\Core\DrupalKernel $kernelService */
+      $kernelService = \Drupal::service('kernel');
+      $kernelService->terminate($request, $response);
+
       $response->send();
       return [];
     }

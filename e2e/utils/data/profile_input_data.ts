@@ -34,7 +34,7 @@ const PROFILE_INPUT_DATA: ProfileInputData = {
   city: 'Kuopio',
   communityOfficial: 'Marko Niemi',
   role: 'Vastuuhenkilö',
-  email: 'marko.niemi78@gmail.com',
+  email: 'marko.niemi78@ggmmaaiill.com',
   phone: '0401234567'
 }
 
