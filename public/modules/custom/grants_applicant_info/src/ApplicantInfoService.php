@@ -233,10 +233,10 @@ class ApplicantInfoService {
   private function adjustRegisteredCommunityApplicantType(array &$retval) {
     // Hack NOT to set address things here and set them via normal address UI.
     unset($retval["compensation"]["currentAddressInfoArray"]);
-    self::removeItemById($retval, 'email');
-    self::removeItemById($retval, 'firstname');
-    self::removeItemById($retval, 'lastname');
-    self::removeItemById($retval, 'socialSecurityNumber');
+    $this->removeItemById($retval, 'email');
+    $this->removeItemById($retval, 'firstname');
+    $this->removeItemById($retval, 'lastname');
+    $this->removeItemById($retval, 'socialSecurityNumber');
   }
 
   /**
@@ -250,19 +250,19 @@ class ApplicantInfoService {
    *
    * @throws \Drupal\grants_profile\GrantsProfileException
    */
-  private function adjustUnregisteredCommunityApplicantType(array &$retval) {
+  private function adjustUnregisteredCommunityApplicantType(array &$retval): void {
     // Hack NOT to set address things here and set them via normal address UI.
     unset($retval["compensation"]["currentAddressInfoArray"]);
-    self::removeItemById($retval, 'email');
-    self::removeItemById($retval, 'firstname');
-    self::removeItemById($retval, 'lastname');
-    self::removeItemById($retval, 'socialSecurityNumber');
-    self::removeItemById($retval, 'companyNumber');
-    self::removeItemById($retval, 'registrationDate');
-    self::removeItemById($retval, 'foundingYear');
-    self::removeItemById($retval, 'home');
-    self::removeItemById($retval, 'homePage');
-    self::removeItemById($retval, 'communityOfficialNameShort');
+    $this->removeItemById($retval, 'email');
+    $this->removeItemById($retval, 'firstname');
+    $this->removeItemById($retval, 'lastname');
+    $this->removeItemById($retval, 'socialSecurityNumber');
+    $this->removeItemById($retval, 'companyNumber');
+    $this->removeItemById($retval, 'registrationDate');
+    $this->removeItemById($retval, 'foundingYear');
+    $this->removeItemById($retval, 'home');
+    $this->removeItemById($retval, 'homePage');
+    $this->removeItemById($retval, 'communityOfficialNameShort');
     /*
      * We need to bring address details from applicant info details, since
      * address information needs to be automatically filled.
@@ -288,16 +288,16 @@ class ApplicantInfoService {
    *
    * @throws \Drupal\grants_profile\GrantsProfileException
    */
-  private function adjustPrivatePersonApplicantType(array &$retval) {
+  private function adjustPrivatePersonApplicantType(array &$retval): void {
     unset($retval["compensation"]["currentAddressInfoArray"]);
-    self::removeItemById($retval, 'email');
-    self::removeItemById($retval, 'companyNumber');
-    self::removeItemById($retval, 'communityOfficialName');
-    self::removeItemById($retval, 'communityOfficialNameShort');
-    self::removeItemById($retval, 'registrationDate');
-    self::removeItemById($retval, 'foundingYear');
-    self::removeItemById($retval, 'home');
-    self::removeItemById($retval, 'homePage');
+    $this->removeItemById($retval, 'email');
+    $this->removeItemById($retval, 'companyNumber');
+    $this->removeItemById($retval, 'communityOfficialName');
+    $this->removeItemById($retval, 'communityOfficialNameShort');
+    $this->removeItemById($retval, 'registrationDate');
+    $this->removeItemById($retval, 'foundingYear');
+    $this->removeItemById($retval, 'home');
+    $this->removeItemById($retval, 'homePage');
 
     /*
      * We need to bring address details from applicant info details, since
@@ -390,13 +390,13 @@ class ApplicantInfoService {
    * @param string $itemID
    *   Item id.
    */
-  public static function removeItemById(array &$data, $itemID): void {
+  public function removeItemById(array &$data, $itemID): void {
     $path = [];
     foreach ($data as $key => $value) {
       $numerickeys = array_filter(array_keys($value), 'is_int');
       if (empty($numerickeys)) {
         foreach ($value as $key2 => $value2) {
-          $path = self::getPathFromInnerNumericArray(
+          $path = $this->getPathFromInnerNumericArray(
             $value2,
             $itemID,
             [$key, $key2]
@@ -422,9 +422,11 @@ class ApplicantInfoService {
    * @return array
    *   Array that has the earlier path and the final key.
    */
-  private static function getPathFromInnerNumericArray(array $haystack,
-                                                       mixed $needle,
-                                                       array $earlierPath) {
+  private function getPathFromInnerNumericArray(
+    array $haystack,
+    mixed $needle,
+    array $earlierPath,
+  ): array {
     $numerickeys = array_filter(array_keys($haystack), 'is_int');
     if (!empty($numerickeys)) {
       foreach ($haystack as $key3 => $item) {
@@ -438,7 +440,7 @@ class ApplicantInfoService {
   }
 
   /**
-   * Extact data.
+   * Extract data.
    *
    * @param \Drupal\grants_applicant_info\TypedData\Definition\ApplicantInfoDefinition $property
    *   Property.

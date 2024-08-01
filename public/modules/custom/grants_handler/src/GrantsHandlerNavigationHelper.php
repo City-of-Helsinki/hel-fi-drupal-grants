@@ -167,7 +167,8 @@ class GrantsHandlerNavigationHelper {
    */
   public function getErrors(
     WebformSubmissionInterface $webformSubmission,
-    string $page = NULL): array {
+    string $page = NULL,
+  ): array {
 
     if (empty($webformSubmission->id())) {
       return [];
@@ -398,7 +399,7 @@ class GrantsHandlerNavigationHelper {
   public function deleteSubmissionLogs(
     WebformSubmissionInterface $webformSubmission,
     string $operation = '',
-    string $page = ''
+    string $page = '',
   ): int {
     // Get outta here if the submission hasn't been saved yet.
     if (empty($webformSubmission->id())) {

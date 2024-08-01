@@ -88,12 +88,30 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     return $schema;
   }
 
+  /* Helper functions to prepare for testing: */
+
   /**
    * Load test data from data directory.
    */
   public static function loadSubmissionData($formName): array {
+    if (str_contains($formName, '.')) {
+      $parts = explode('.', $formName);
+      $formName = $parts[0];
+      $applicantType = $parts[1];
+
+    }
+    else {
+      $applicantType = NULL;
+    }
+
     $filePath = __DIR__ . "/../../data/{$formName}.data.json";
-    return json_decode(file_get_contents($filePath), TRUE);
+    $data = json_decode(file_get_contents($filePath), TRUE);
+
+    if ($applicantType) {
+      return $data[$applicantType];
+    }
+    return $data;
+
   }
 
   /**
@@ -141,14 +159,20 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
   /**
    * Helper function to make test assertions for a field in document.
    */
-  protected function assertDocumentFieldArray(array $fieldData, string $fieldName, $value, $skipMetaChecks = FALSE) {
+  protected function assertDocumentFieldArray(array $fieldData, string $fieldName, $value, $skipMetaChecks = FALSE): void {
     $this->assertArrayHasKey('ID', $fieldData);
     $this->assertArrayHasKey('value', $fieldData);
     $this->assertArrayHasKey('valueType', $fieldData);
     $this->assertArrayHasKey('label', $fieldData);
 
     $this->assertEquals($fieldName, $fieldData['ID']);
+
+    if ($value !== $fieldData['value']) {
+      var_dump($fieldData);
+    }
+
     $this->assertEquals($value, $fieldData['value']);
+
     if ($skipMetaChecks) {
       return;
     }
@@ -470,6 +494,8 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
    * Test kuvaprojekti with registered community and subventions over 5000.
    *
    * @covers \Drupal\grants_metadata\AtvSchema::typedDataToDocumentContentWithWebform
+   *
+   * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
    */
   public function testKuvaProjektiHakemusRegistered() : void {
     $schema = self::createSchema();
@@ -477,7 +503,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $pages = $webform->getPages('edit');
     $this->assertNotNull($webform);
     $this->initSession();
-    $submissionData = self::loadSubmissionData('kuva_projekti');
+    $submissionData = self::loadSubmissionData('kuva_projekti.registered_community');
     $typedData = self::webformToTypedData($submissionData, 'kuva_projekti');
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);
@@ -512,7 +538,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $pages = $webform->getPages('edit');
     $this->assertNotNull($webform);
     $this->initSession('unregistered_community');
-    $submissionData = self::loadSubmissionData('kuva_projekti.unregistered');
+    $submissionData = self::loadSubmissionData('kuva_projekti.unregistered_community');
     $typedData = self::webformToTypedData($submissionData, 'kuva_projekti');
     // Run the actual data conversion.
     $document = $schema->typedDataToDocumentContentWithWebform($typedData, $webform, $pages, $submissionData);

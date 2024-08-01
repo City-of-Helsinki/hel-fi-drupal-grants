@@ -7,7 +7,7 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Site\Settings;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Yaml\Parser;
@@ -48,7 +48,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
    */
   public function __construct(
     ConfigFactoryInterface $configFactory,
-    EntityTypeManagerInterface $entityTypeManager
+    EntityTypeManagerInterface $entityTypeManager,
   ) {
     parent::__construct();
     $this->configFactory = $configFactory;
@@ -100,7 +100,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
    */
   private function isEnvironmentAllowed(): bool {
     // Get current env from handler method.
-    $appEnv = ApplicationHandler::getAppEnv();
+    $appEnv = Helpers::getAppEnv();
 
     // If current env is in allowed, return true.
     if (in_array($appEnv, self::ALLOWED_ENVIRONMENTS)) {
@@ -316,11 +316,13 @@ class WebformConfigOverrideCommands extends DrushCommands {
    * @param array $overriddenConfiguration
    *   The forms new configuration.
    */
-  private function logMessage(string $configurationName,
-                              string $applicationTypeId,
-                              array $configurationOverrides,
-                              array $originalConfiguration,
-                              array $overriddenConfiguration): void {
+  private function logMessage(
+    string $configurationName,
+    string $applicationTypeId,
+    array $configurationOverrides,
+    array $originalConfiguration,
+    array $overriddenConfiguration,
+  ): void {
     $this->output()->writeln("Importing configuration for $configurationName ($applicationTypeId):\n");
     $this->output()->writeln("ORIGINAL CONFIGURATION:");
     $this->output()->writeln(print_r($originalConfiguration, TRUE));

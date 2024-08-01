@@ -12,50 +12,29 @@ use Ramsey\Uuid\Uuid;
  * Helper service to handle connections for Yjdh and HelsinkiProfiili.
  */
 class ProfileConnector {
-  /**
-   * Helsinki profiili.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helsinkiProfiili;
-
-  /**
-   * Municipality service.
-   *
-   * @var \Drupal\grants_profile\MunicipalityService
-   */
-
-  protected MunicipalityService $municipalityService;
-
-  /**
-   * Access to YTJ / Yrtti.
-   *
-   * @var \Drupal\helfi_yjdh\YjdhClient
-   */
-  protected YjdhClient $yjdhClient;
 
   /**
    * Constructs a ProfileConnector object.
    *
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfile
-   *   Access to Helsinki profiili data.
+   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiili
+   *   Helsinki profiili service.
    * @param \Drupal\grants_profile\MunicipalityService $municipalityService
    *   Municipality service.
    * @param \Drupal\helfi_yjdh\YjdhClient $yjdhClient
    *   Access to yjdh data.
    */
-  public function __construct(HelsinkiProfiiliUserData $helsinkiProfile, MunicipalityService $municipalityService, YjdhClient $yjdhClient) {
-    $this->helsinkiProfiili = $helsinkiProfile;
-    $this->municipalityService = $municipalityService;
-    $this->yjdhClient = $yjdhClient;
-  }
+  public function __construct(
+    protected HelsinkiProfiiliUserData $helsinkiProfiili,
+    protected MunicipalityService $municipalityService,
+    protected YjdhClient $yjdhClient,
+  ) {}
 
   /**
    * Initialize grants profile.
    *
    * @param string $profileType
    *   Profile type.
-   * @param array $companyData
+   * @param array|null $companyData
    *   Company data.
    *
    * @return array

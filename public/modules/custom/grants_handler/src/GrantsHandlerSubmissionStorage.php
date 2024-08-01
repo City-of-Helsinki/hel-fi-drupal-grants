@@ -5,6 +5,7 @@ namespace Drupal\grants_handler;
 use Drupal\Core\Entity\EntityHandlerInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\helfi_atv\AtvDocument;
@@ -51,6 +52,13 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
   protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
 
   /**
+   * Application data service.
+   *
+   * @var \Drupal\grants_metadata\ApplicationDataService
+   */
+  protected ApplicationDataService $applicationDataService;
+
+  /**
    * If same data is requested multiple times, it's cached here.
    *
    * @var array
@@ -58,11 +66,19 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
   protected array $data;
 
   /**
+   * Message service.
+   *
+   * @var \Drupal\grants_handler\MessageService
+   */
+  protected MessageService $messageService;
+
+  /**
    * {@inheritdoc}
    */
   public static function createInstance(
     ContainerInterface $container,
-    EntityTypeInterface $entity_type): WebformSubmissionStorage|EntityHandlerInterface {
+    EntityTypeInterface $entity_type,
+  ): WebformSubmissionStorage|EntityHandlerInterface {
 
     /** @var self|static $instance */
     $instance = parent::createInstance($container, $entity_type);
@@ -82,6 +98,14 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
     /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData */
     $helsinkiProfiiliUserData = \Drupal::service('helfi_helsinki_profiili.userdata');
     $instance->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
+
+    /** @var \Drupal\grants_metadata\ApplicationDataService $applicationDataService */
+    $applicationDataService = \Drupal::service('grants_metadata.application_data_service');
+    $instance->applicationDataService = $applicationDataService;
+
+    /** @var \Drupal\grants_handler\MessageService $messageService */
+    $messageService = \Drupal::service('grants_handler.message_service');
+    $instance->messageService = $messageService;
 
     $instance->data = [];
 
@@ -137,7 +161,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       if (!isset($id['applicationNumber']) || empty($id['applicationNumber'])) {
         throw new \Exception('ATV Document does not contain application number.');
       }
-      $appData = self::setAtvDataToSubmission($document, $submission);
+      $appData = $this->setAtvDataToSubmission($document, $submission);
       $this->data[$submission->id()] = $appData;
     }
     catch (\Exception $exception) {
@@ -164,8 +188,8 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
    * @return array
    *   Data that was set to submission.
    */
-  public static function setAtvDataToSubmission(AtvDocument $document, WebformSubmissionInterface $submission): array {
-    $dataDefinition = ApplicationHandler::getDataDefinition($document->getType());
+  public function setAtvDataToSubmission(AtvDocument $document, WebformSubmissionInterface $submission): array {
+    $dataDefinition = $this->applicationDataService->getDataDefinition($document->getType());
 
     $sData = DocumentContentMapper::documentContentToTypedData(
       $document->getContent(),
@@ -173,7 +197,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       $document->getMetadata()
     );
 
-    $sData['messages'] = ApplicationHandler::parseMessages($sData);
+    $sData['messages'] = $this->messageService->parseMessages($sData);
 
     $submission->setData($sData);
     return $sData;
@@ -187,7 +211,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  protected function loadData(array &$webform_submissions) {
+  protected function loadData(array &$webform_submissions): void {
     parent::loadData($webform_submissions);
     $userRoles = $this->account->getRoles();
 
@@ -208,22 +232,22 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
       }
       $applicationNumber = '';
       try {
-        $applicationNumber = ApplicationHandler::createApplicationNumber($submission);
+        $applicationNumber = ApplicationHelpers::createApplicationNumber($submission);
         $results = $this->atvService->searchDocuments(
           [
             'transaction_id' => $applicationNumber,
-            'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+            'lookfor' => 'appenv:' . Helpers::getAppEnv(),
           ]
         );
         /** @var \Drupal\helfi_atv\AtvDocument $document */
         $document = reset($results);
 
         if (!$document) {
-          $applicationNumber = ApplicationHandler::createApplicationNumber($submission, TRUE);
+          $applicationNumber = ApplicationHelpers::createApplicationNumber($submission, TRUE);
           $results = $this->atvService->searchDocuments(
             [
               'transaction_id' => $applicationNumber,
-              'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+              'lookfor' => 'appenv:' . Helpers::getAppEnv(),
             ]
           );
           /** @var \Drupal\helfi_atv\AtvDocument $document */
@@ -243,7 +267,7 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
           continue;
         }
 
-        $appData = self::setAtvDataToSubmission($document, $submission);
+        $appData = $this->setAtvDataToSubmission($document, $submission);
         $this->data[$submission->id()] = $appData;
 
       }

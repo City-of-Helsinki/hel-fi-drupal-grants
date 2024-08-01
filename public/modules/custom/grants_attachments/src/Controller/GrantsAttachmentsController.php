@@ -7,8 +7,11 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationGetterService;
+use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\grants_handler\ApplicationUploaderService;
 use Drupal\grants_handler\EventsService;
+use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,68 +28,45 @@ class GrantsAttachmentsController extends ControllerBase {
   use StringTranslationTrait;
 
   /**
-   * The helfi_atv service.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected $helfiAtv;
-
-  /**
-   * Process application data from webform to ATV.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
-
-  /**
-   * Create events.
-   *
-   * @var \Drupal\grants_handler\EventsService
-   */
-  protected EventsService $eventsService;
-
-  /**
-   * Requeststack.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected RequestStack $request;
-
-  /**
    * The controller constructor.
    *
    * @param \Drupal\helfi_atv\AtvService $helfi_atv
    *   The helfi_atv service.
-   * @param \Drupal\grants_handler\ApplicationHandler $applicationHandler
-   *   Application handler.
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Drupal requests.
    * @param \Drupal\grants_handler\EventsService $eventsService
    *   Use submission events productively.
+   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   *   Application status service.
+   * @param \Drupal\grants_metadata\ApplicationDataService $applicationDataService
+   *   Application data service.
+   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   *   Application getter service.
+   * @param \Drupal\grants_handler\ApplicationUploaderService $applicationUploaderService
+   *   Application uploader service.
    */
   public function __construct(
-    AtvService $helfi_atv,
-    ApplicationHandler $applicationHandler,
-    RequestStack $requestStack,
-    EventsService $eventsService
-  ) {
-    $this->helfiAtv = $helfi_atv;
-    $this->applicationHandler = $applicationHandler;
-
-    $this->request = $requestStack;
-    $this->eventsService = $eventsService;
-
-  }
+    protected AtvService $helfi_atv,
+    protected RequestStack $requestStack,
+    protected EventsService $eventsService,
+    protected ApplicationStatusService $applicationStatusService,
+    protected ApplicationDataService $applicationDataService,
+    protected ApplicationGetterService $applicationGetterService,
+    protected ApplicationUploaderService $applicationUploaderService,
+  ) {}
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('helfi_atv.atv_service'),
-      $container->get('grants_handler.application_handler'),
       $container->get('request_stack'),
       $container->get('grants_handler.events_service'),
+      $container->get('grants_handler.application_status_service'),
+      $container->get('grants_metadata.application_data_service'),
+      $container->get('grants_handler.application_getter_service'),
+      $container->get('grants_handler.application_uploader_service')
     );
   }
 
@@ -101,28 +81,32 @@ class GrantsAttachmentsController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect back to form.
    *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function deleteAttachment(string $submission_id, string $integration_id) {
+  public function deleteAttachment(string $submission_id, string $integration_id): RedirectResponse {
     $tOpts = ['context' => 'grants_attachments'];
 
+    $destination = $this->redirectDestination->get();
+
     // Load submission & data.
-    $submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
+    try {
+      $submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
+    }
+    catch (\Exception $e) {
+      $this->messenger()->addError($e->getMessage());
+      return new RedirectResponse($destination);
+    }
     $submissionData = $submission->getData();
     // Rebuild integration id from url.
     $integrationId = str_replace('_', '/', $integration_id);
-    $destination = $this->request->getMainRequest()->get('destination');
 
-    if ($submissionData['status'] != ApplicationHandler::getApplicationStatuses()['DRAFT']) {
+    if ($submissionData['status'] != $this->applicationStatusService->getApplicationStatuses()['DRAFT']) {
       throw new AccessException('Only application in DRAFT status allows attachments to be deleted.');
     }
 
     try {
       // Try to delete attachment directly.
-      $attachmentDeleteResult = $this->helfiAtv->deleteAttachmentViaIntegrationId($integrationId);
+      $attachmentDeleteResult = $this->helfi_atv->deleteAttachmentViaIntegrationId($integrationId);
       // If attachment got deleted.
       if ($attachmentDeleteResult) {
         $this->messenger()
@@ -143,7 +127,7 @@ class GrantsAttachmentsController extends ControllerBase {
         }
 
         // Create event for deletion.
-        $event = EventsService::getEventData(
+        $event = $this->eventsService->getEventData(
           'HANDLER_ATT_DELETED',
           $submission_id,
           $this->t('Attachment deleted from the field: @field.',
@@ -157,11 +141,11 @@ class GrantsAttachmentsController extends ControllerBase {
 
         // Build data -> should validate ok, since we're
         // only deleting attachments & adding events..
-        $applicationData = $this->applicationHandler->webformToTypedData(
+        $applicationData = $this->applicationDataService->webformToTypedData(
           $submissionData);
 
         // Update in ATV.
-        $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
+        $applicationUploadStatus = $this->applicationUploaderService->handleApplicationUploadToAtv(
           $applicationData,
           $submission_id,
           $submissionData,

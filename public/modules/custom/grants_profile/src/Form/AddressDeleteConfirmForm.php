@@ -92,10 +92,12 @@ class AddressDeleteConfirmForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form,
-  FormStateInterface $form_state,
-                            string $address_id = '',
-  string $nojs = ''): array {
+  public function buildForm(
+    array $form,
+    FormStateInterface $form_state,
+    string $address_id = '',
+    string $nojs = '',
+  ): array {
 
     // Add the core AJAX library.
     $form['#attached']['library'][] = 'core/drupal.ajax';

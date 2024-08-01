@@ -15,6 +15,7 @@ use Drupal\file\Element\ManagedFile;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
+use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -30,27 +31,6 @@ abstract class GrantsProfileFormBase extends FormBase {
   use StringTranslationTrait;
 
   /**
-   * Drupal\Core\TypedData\TypedDataManager definition.
-   *
-   * @var \Drupal\Core\TypedData\TypedDataManager
-   */
-  protected TypedDataManager $typedDataManager;
-
-  /**
-   * Get session.
-   *
-   * @var \Symfony\Component\HttpFoundation\Session\Session
-   */
-  protected Session $session;
-
-  /**
-   * Access to grants profile services.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
    * Variable for translation context.
    *
    * @var array|string[] Translation context for class
@@ -60,25 +40,23 @@ abstract class GrantsProfileFormBase extends FormBase {
   /**
    * Constructs a new GrantsProfileForm object.
    *
-   * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
-   *   Data manager.
+   * @param \Drupal\Core\TypedData\TypedDataManager $typedDataManager
+   *   Typed data manager.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile.
    * @param \Symfony\Component\HttpFoundation\Session\Session $session
    *   Session data.
    */
-  public function __construct(TypedDataManager $typed_data_manager,
-                              GrantsProfileService $grantsProfileService,
-                              Session $session) {
-    $this->typedDataManager = $typed_data_manager;
-    $this->grantsProfileService = $grantsProfileService;
-    $this->session = $session;
-  }
+  public function __construct(
+    protected TypedDataManager $typedDataManager,
+    protected GrantsProfileService $grantsProfileService,
+    protected Session $session,
+  ) {}
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),
@@ -319,7 +297,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param array $form
    *   The form.
    */
-  public static function validateUpload(array &$element, FormStateInterface $formState, array &$form) {
+  public static function validateUpload(array &$element, FormStateInterface $formState, array &$form): void {
 
     $storage = $formState->getStorage();
     $grantsProfileDocument = $storage['profileDocument'];
@@ -346,7 +324,7 @@ abstract class GrantsProfileFormBase extends FormBase {
           $storage['confirmationFiles'][$valueParents[1]] = $attachmentResponse;
 
         }
-        catch (GrantsProfileException $e) {
+        catch (GuzzleException | GrantsProfileException $e) {
           // Set error to form.
           $formState->setError($element, 'File upload failed, error has been logged.');
           // Log error.
@@ -604,7 +582,7 @@ abstract class GrantsProfileFormBase extends FormBase {
    * @param array $bankAccount
    *   Bank account data array.
    */
-  private function ensureBankAccountIdExists(array &$bankAccount) {
+  private function ensureBankAccountIdExists(array &$bankAccount): void {
     // Make sure we have proper UUID as address id.
     if (!isset($bankAccount['bank_account_id']) ||
       !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])
@@ -794,12 +772,12 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   /**
    * Returns the user's grants profile document from ATV.
    *
-   * @return \Drupal\helfi_atv\AtvDocument|bool
+   * @return \Drupal\helfi_atv\AtvDocument
    *   The ATV Document
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
-  protected function getGrantsProfileDocument() : AtvDocument|bool {
+  protected function getGrantsProfileDocument() : AtvDocument {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
     // Load grants profile.
@@ -1113,7 +1091,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     array $form,
     array $addressArrayKeys,
     array $officialArrayKeys,
-    array $bankAccountArrayKeys
+    array $bankAccountArrayKeys,
   ) {
     // Create data object.
     $grantsProfileData = $this->typedDataManager->create($grantsProfileDefinition);

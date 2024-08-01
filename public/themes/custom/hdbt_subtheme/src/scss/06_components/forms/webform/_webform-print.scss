@@ -25,7 +25,8 @@
     position: relative;
   }
 
-  .webform-section-flex-wrapper h3+*>*:first-child>*:first-child, .webform-section-flex-wrapper h3+*>*:first-child>*:first-child label:first-of-type {
+  .webform-section-flex-wrapper h3+*>*:first-child>*:first-child,
+  .webform-section-flex-wrapper h3+*>*:first-child>*:first-child label:first-of-type {
     line-height: normal;
   }
 
@@ -60,6 +61,12 @@
     border: 2px var(--color-black) solid;
     height: var(--spacing-layout-2-xl);
     width: 100%;
+  }
+
+  .webform-section-wrapper {
+    .hds-notification  {
+      margin-top: var(--spacing-s);
+    }
   }
 
   .webform-print-page-body h2 {
@@ -418,6 +425,24 @@
 
     > br {
       display:none;
+    }
+  }
+}
+
+.webform-print-page-html .webform-section-wrapper {
+  // Reduce top-margin from all print-label elements and immediate h4 elements.
+  > h4,
+  .print-label {
+    margin-top: var(--spacing-2-xs);
+    line-height: 1.5;
+  }
+
+  fieldset {
+    padding: var(--spacing-s);
+
+    @include breakpoint($breakpoint-m) {
+      min-width: 400px;
+      padding: var(--spacing-s) var(--spacing-m);
     }
   }
 }

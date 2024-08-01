@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Drupal\grants_webform_print\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\grants_budget_components\Element\GrantsBudgetCostStatic;
 use Drupal\grants_budget_components\Element\GrantsBudgetIncomeStatic;
+use Drupal\grants_club_section\Element\ClubSectionComposite;
 use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
+use Drupal\grants_members\Element\MembersComposite;
+use Drupal\grants_orienteering_map\Element\OrienteeringMapComposite;
+use Drupal\grants_place_of_operation\Element\PlaceOfOperationComposite;
+use Drupal\grants_premises\Element\PremisesComposite;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformTranslationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -21,33 +25,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class GrantsWebformPrintController extends ControllerBase {
 
   /**
-   * The string translation service.
-   *
-   * @var \Drupal\webform\WebformTranslationManager
-   */
-  protected $translationManager;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
    * The constructor.
    *
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
-   *   Language manager.
    * @param \Drupal\webform\WebformTranslationManager $translationManager
    *   Translation manager.
    */
-  public function __construct(LanguageManagerInterface $languageManager,
-                              WebformTranslationManager $translationManager) {
-    $this->languageManager = $languageManager;
-    $this->translationManager = $translationManager;
-
-  }
+  public function __construct(
+    protected WebformTranslationManager $translationManager,
+  ) {}
 
   /**
    * Static factory method.
@@ -60,7 +45,6 @@ class GrantsWebformPrintController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('language_manager'),
       $container->get('webform.translation_manager'),
     );
   }
@@ -87,9 +71,9 @@ class GrantsWebformPrintController extends ControllerBase {
     // Pass decoded array & translations to traversing.
     $webformArray = $this->traverseWebform($webformArray, $elementTranslations);
     // Handle acting_year options.
-    if (isset($webformArray["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"])) {
+    if (isset($webformArray['2_avustustiedot']['avustuksen_tiedot']['acting_year']['#options'])) {
       $actingYears = GrantsHandler::getApplicationActingYears($webform);
-      $webformArray["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $actingYears;
+      $webformArray['2_avustustiedot']['avustuksen_tiedot']['acting_year']['#options'] = $actingYears;
     }
 
     unset($webformArray['actions']);
@@ -126,11 +110,11 @@ class GrantsWebformPrintController extends ControllerBase {
    *   If there is translated value for given field, they're here.
    */
   private function traverseWebform(array $webformArray, array $elementTranslations): array {
-    $transfromed = [];
+    $transformed = [];
     foreach ($webformArray as $key => $item) {
-      $transfromed[$key] = $this->fixWebformElement($item, $key, $elementTranslations);
+      $transformed[$key] = $this->fixWebformElement($item, $key, $elementTranslations);
     }
-    return $transfromed;
+    return $transformed;
   }
 
   /**
@@ -146,9 +130,10 @@ class GrantsWebformPrintController extends ControllerBase {
   private function fixWebformElement(array $element, string $key, array $translatedFields): array {
 
     // Remove states from printing.
-    unset($element["#states"]);
-    // In case of custom component, the element parts are in #element
-    // so we need to spread those out for printing.
+    unset($element['#states']);
+
+    // In case of custom component, the element parts are in #element,
+    // and we need to spread those out for printing.
     if (isset($element['#element'])) {
       $elements = $element['#element'];
       unset($element['#element']);
@@ -170,18 +155,13 @@ class GrantsWebformPrintController extends ControllerBase {
 
     // Apply translations to the element itself.
     if (!empty($translatedFields[$key])) {
-      // Unset type since we do not want to override that from trans.
-      unset($translatedFields[$key]['#type']);
-      $element['#description'] = preg_replace('/^(<br>)*/',
-          '',
-          ($translatedFields[$key]['#attachment_desription'] ?? '') . '<br>' .
-          ($translatedFields[$key]['#description'] ?? '') . '<br>' .
-          ($translatedFields[$key]['#help'] ?? ''));
-      unset($translatedFields[$key]['#attachment_desription']);
-      unset($translatedFields[$key]['#description']);
-      unset($translatedFields[$key]['#help']);
+      $element['#description'] = $this->handleHelpText(
+        $translatedFields[$key],
+        ['#type', '#attachment_desription', '#description', '#help']
+      );
+
       foreach ($translatedFields[$key] as $fieldName => $translatedValue) {
-        // Replace with translated text. only if it's an string.
+        // Replace with translated text. only if it's a string.
         if (isset($element[$fieldName]) && !is_array($translatedValue)) {
           $element[$fieldName] = $translatedValue;
         }
@@ -189,14 +169,10 @@ class GrantsWebformPrintController extends ControllerBase {
     }
     // If there are no translations, just manipulate description.
     else {
-      $element['#description'] = preg_replace('/^(<br>)*/',
-          '',
-        ($element["#attachment__description"] ?? '') . '<br>' .
-        ($element['#description'] ?? '') . '<br>' .
-        ($element['#help'] ?? ''));
+      $element['#description'] = $this->handleHelpText($element);
     }
     unset($element['#help']);
-    // If no id for the field, we get warnigns.
+    // Add ID for the field as otherwise a warning will appear.
     $element['#id'] = $key;
 
     // Force description display after element.
@@ -207,18 +183,37 @@ class GrantsWebformPrintController extends ControllerBase {
     $element['#title'] = $element['#title'] ?? '';
     $element['#description'] = $element['#description'] ?? '';
 
+    return $this->alterFieldTemplates($element, $translatedFields);
+  }
+
+  /**
+   * Alter field render arrays based on their types.
+   *
+   * @param array $element
+   *   Element to alter.
+   * @param array $translatedFields
+   *   If there is translated value for given field, they're here.
+   *
+   * @return array
+   *   Returns the altered element.
+   */
+  private function alterFieldTemplates(array $element, array $translatedFields) : array {
+
+    // Add ID for the field as otherwise a warning will appear.
     switch ($element['#type'] ?? '') {
       case 'webform_wizard_page':
         $element['#type'] = 'container';
         unset($element['#attributes']['readonly']);
         break;
 
-      case 'premises_composite':
-        $element['#theme'] = 'premises_composite_print';
-        break;
-
       case 'rented_premise_composite':
-        $element['#theme'] = 'rented_premises_composite_print';
+      case 'premises_composite':
+      case 'members_composite':
+      case 'club_section_composite':
+      case 'orienteering_map_composite':
+      case 'place_of_operation_composite':
+        $element['#theme'] = 'composite_print';
+        $element['#composite_inputs'] = $this->getCompositeInputFields($element, $translatedFields);
         break;
 
       case 'community_address_composite':
@@ -246,6 +241,7 @@ class GrantsWebformPrintController extends ControllerBase {
         break;
 
       case 'hidden':
+      case 'applicant_info':
         $element['#type'] = 'markup';
         break;
 
@@ -338,6 +334,11 @@ class GrantsWebformPrintController extends ControllerBase {
           '#type' => 'textfield',
           '#theme' => 'textfield_print',
         ];
+        // Handle the help text for each field.
+        if ($element['#' . $name . '__help'] ?? FALSE) {
+          $markup[$name]['#help'] = $element['#' . $name . '__help'];
+          $markup[$name]['#help'] = $this->handleHelpText($markup[$name]);
+        }
       }
     }
     return $markup;
@@ -364,6 +365,73 @@ class GrantsWebformPrintController extends ControllerBase {
       }
     }
     return $element['#options'];
+  }
+
+  /**
+   * Get composite input field sets.
+   *
+   * @param array $element
+   *   Element to handle.
+   * @param array $translatedFields
+   *   Translated fields.
+   *
+   * @return array
+   *   Composite fields render array.
+   */
+  public function getCompositeInputFields(array $element, array $translatedFields): array {
+    $composite_inputs = match ($element['#type']) {
+      'rented_premise_composite', 'premises_composite' => PremisesComposite::getCompositeElements($element),
+      'members_composite' => MembersComposite::getCompositeElements($element),
+      'club_section_composite' => ClubSectionComposite::getCompositeElements($element),
+      'orienteering_map_composite' => OrienteeringMapComposite::getCompositeElements($element),
+      'place_of_operation_composite' => PlaceOfOperationComposite::getCompositeElements($element),
+      'default' => [],
+    };
+
+    foreach ($composite_inputs as $id => &$input) {
+      if (!isset($input['#type'])) {
+        continue;
+      }
+      $input['#id'] = $id;
+      $input = $this->alterFieldTemplates($input, $translatedFields);
+    }
+    return $composite_inputs;
+  }
+
+  /**
+   * Handle help text and attachment descriptions.
+   *
+   * @param array $element
+   *   Element to handle.
+   * @param array $keys_to_unset
+   *   Keys to unset from element.
+   *
+   * @return array|string
+   *   Returns a render array for the help text or an empty string.
+   */
+  private function handleHelpText(array &$element, array $keys_to_unset = []): array|string {
+    $render = '';
+
+    if (
+      !empty($element['#help']) ||
+      !empty($element['#attachment_desription']) ||
+      !empty($element['#description'])
+    ) {
+      $render = [
+        '#theme' => 'element_help_print',
+        '#attachment_description' => $element['#attachment_desription'] ?? '',
+        '#description' => $element['#description'] ?? '',
+        '#help' => $element['#help'] ?? '',
+      ];
+    }
+
+    if (!empty($keys_to_unset)) {
+      foreach ($keys_to_unset as $key) {
+        unset($element[$key]);
+      }
+    }
+
+    return $render;
   }
 
 }

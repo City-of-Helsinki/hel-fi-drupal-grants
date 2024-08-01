@@ -91,18 +91,22 @@ class PlaceOfOperationComposite extends GrantsCompositeBase {
   /**
    * {@inheritdoc}
    */
-  protected function formatHtmlItemValue(array $element,
-                                         WebformSubmissionInterface $webform_submission,
-                                         array $options = []): array|string {
+  protected function formatHtmlItemValue(
+    array $element,
+    WebformSubmissionInterface $webform_submission,
+    array $options = [],
+  ): array|string {
     return $this->formatTextItemValue($element, $webform_submission, $options);
   }
 
   /**
    * {@inheritdoc}
    */
-  protected function formatTextItemValue(array $element,
-                                         WebformSubmissionInterface $webform_submission,
-                                         array $options = []): array {
+  protected function formatTextItemValue(
+    array $element,
+    WebformSubmissionInterface $webform_submission,
+    array $options = [],
+  ): array {
     $value = $this->getValue($element, $webform_submission, $options);
     $lines = ['<dl>'];
 

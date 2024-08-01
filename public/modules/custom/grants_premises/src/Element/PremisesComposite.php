@@ -190,8 +190,8 @@ class PremisesComposite extends WebformCompositeBase {
       '#title' => t('How well premises suit for the action?', [], $tOpts),
     ];
 
-    /* Remove all elements from elements that are not explicitly selected
-    for this form. Hopefully this fixes issues with data fields. */
+    // Remove all elements from elements that are not explicitly selected
+    // for this form. Hopefully this fixes issues with data fields.
     foreach ($element as $fieldName => $value) {
       if (str_contains($fieldName, '__access')) {
         $fName = str_replace('__access', '', $fieldName);
