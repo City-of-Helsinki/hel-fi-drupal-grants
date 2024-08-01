@@ -1,6 +1,28 @@
 # CHANGELOG
 
 ## 2024.11
+- 5a690fe28 fix: AU-2522: Refactor ApplicationHandler (#1456)
+- 2e743481c UHF-10370: Remove breaking module (#1473)
+- 37cc72acd Update configuration (#1472)
+- d54e722a1 fix: UHF-10344: update e2e node image to custom one (#1471)
+- c04be04b4 Revert change in dockerfile
+- 4c12b95e5 Add Openshift User
+- 458260f4a UHF-10357: Update convert method to allow null returns.
+- f9ce765f6 UHF-10357: Remove fields that break Avus2.
+- 1b9f5cc93 Add package.json
+- 4975c3e0d Update configuration (#1469)
+- e8089727f Autologout fix
+- a4cf0c639 Update configuration (#1467)
+- 637238be2 Update configuration (#1466)
+- 2cf828ce5 fix: UHF-10202: Webform previews (#1465)
+- 9e96b9185 Update configuration (#1464)
+- bea0e26a0 Update configuration (#1461)
+- d9f78fcb4 test: AU-2128: Rest of form unit tests (#1463)
+- f411d8a94 docs: AU-2545: Added documentation to the used interfaces and types. (#1462)
+- 679075961 fix: UHF-9946: Fix icons on applicant role selection page (#1458)
+- 0b7d2ef31 fix: AU-2220: Add spacing for the role selector block (#1460)
+- 25368662d feat: AU-2548: Added new AD-group <-> Drupal role mappings. (#1459)
+- 7b9ced44f Automatic update (#1457)
 - b5a5d25a feat: AU-1744: refactor document content to typed data (#1452)
 - 2c112734 feat: AU-2544: Added new ad-group <-> drupal-role mappings. (#1455)
 - 4b3daea4 fix: AU-2317: Show data of kuvaproj application in print view (#1454)
