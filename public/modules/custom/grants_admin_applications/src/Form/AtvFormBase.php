@@ -47,7 +47,7 @@ abstract class AtvFormBase extends FormBase {
     protected AccountProxyInterface $current_user,
     protected TimeInterface $time,
   ) {
-    $this->config = $this->configFactory->get('grants_metadata.settings');
+    $this->config = $this->configFactory()->get('grants_metadata.settings');
   }
 
   /**
@@ -62,7 +62,6 @@ abstract class AtvFormBase extends FormBase {
       $container->get('http_client'),
       $container->get('grants_handler.events_service'),
       $container->get('helfi_atv.atv_service'),
-      $container->get('config.factory'),
       $container->get('grants_handler.message_service'),
       $container->get('current_user'),
       $container->get('datetime.time')
