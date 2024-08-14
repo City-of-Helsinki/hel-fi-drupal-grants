@@ -64,7 +64,7 @@ class GrantsWebformPrintController extends ControllerBase {
     $wftm = $this->translationManager;
 
     // Load all translations for this webform.
-    $currentLanguage = $this->languageManager->getCurrentLanguage();
+    $currentLanguage = $this->languageManager()->getCurrentLanguage();
     $elementTranslations = $wftm->getElements($webform, $currentLanguage->getId());
 
     $webformArray = $webform->getElementsDecoded();
