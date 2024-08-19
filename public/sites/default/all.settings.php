@@ -18,6 +18,7 @@ $settings['error_page']['template_dir'] = '../error_templates';
 
 // AD roles <-> Drupal roles mapping.
 $config['openid_connect.client.tunnistamoadmin']['settings']['ad_roles'] = [
+  // Old mappings.
   [
     'ad_role' => 'sl_avustustest_paakayttajat',
     'roles' => ['ad_user', 'grants_admin'],
@@ -81,5 +82,42 @@ $config['openid_connect.client.tunnistamoadmin']['settings']['ad_roles'] = [
   [
     'ad_role' => 'sg_kanslia_kayttajat',
     'roles' => ['ad_user', 'content_producer_industry'],
+  ],
+  // New mappings.
+  [
+    'ad_role' => 'Drupal_Helfi_kaupunkitaso_paakayttajat',
+    'roles' => ['ad_user', 'grants_admin'],
+  ],
+  [
+    'ad_role' => 'Drupal_Helfi_Avustukset_paakayttajat',
+    'roles' => ['ad_user', 'grants_admin'],
+  ],
+  [
+    'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_suppea',
+    'roles' => ['ad_user', 'content_producer'],
+  ],
+  [
+    'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kanslia',
+    'roles' => ['ad_user', 'content_producer', 'grants_producer_industry'],
+  ],
+  [
+    'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kanslia',
+    'roles' => ['ad_user', 'content_producer'],
+  ],
+  [
+    'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kasko',
+    'roles' => ['ad_user', 'content_producer', 'grants_producer_industry'],
+  ],
+  [
+    'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kasko',
+    'roles' => ['ad_user', 'content_producer'],
+  ],
+  [
+    'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kuva',
+    'roles' => ['ad_user', 'content_producer', 'grants_producer_industry'],
+  ],
+  [
+    'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kuva',
+    'roles' => ['ad_user', 'content_producer'],
   ],
 ];
