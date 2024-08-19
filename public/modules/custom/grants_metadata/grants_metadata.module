@@ -75,6 +75,9 @@ function grants_metadata__validate_third_party_settings(array &$form, FormStateI
     ];
   }
 
+  $avus2BreakingChange = $formValues["third_party_settings"]["grants_metadata"]["avus2BreakingChange"];
+  $formValues['avus2BreakingChange'] = $avus2BreakingChange;
+
   // Set values back to form state.
   $form_state->setValues($formValues);
 }
@@ -173,7 +176,7 @@ function _grants_metadata_handle_versions_status(Webform $entity): void {
     $formParentData->save();
     \Drupal::messenger()->addStatus(t('Form @id status updated to @status',
       [
-        '@id' => $formParentData->id(),
+        '@id' => $entity->id(),
         '@status' => $status,
       ]));
     \Drupal::messenger()->addStatus(t('Parent form @id archived.', ['@id' => $formParentData->id()]));
@@ -652,6 +655,9 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       }
     }
 
+    $currentUser = Drupal::currentUser();
+    $isSuperUser = $currentUser->id() == 1;
+
     $form['third_party_settings']['grants_metadata']['status'] = [
       '#type' => 'radios',
       '#title' => t('Status'),
@@ -662,24 +668,39 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       ],
       '#required' => TRUE,
       '#default_value' => $formStatus ?? 'development',
-      '#disabled' => $isDuplicateForm,
+      '#disabled' => ($isDuplicateForm || !$isSuperUser),
       '#description' => t('
 <p>In production: Changing the webform elements is not allowed.</p>
 <p>In development: Webform elements can be edited. Form can be filled up in non-production environments.</p>
 <p>Archived: Older version of the form which cannot be filled anymore.</p>
+<strong>Only admins/developers should change this, if required.</strong>
       ', [], $tOpts),
     ];
 
     $form['third_party_settings']['grants_metadata']['parent'] = [
       '#type' => 'select',
       '#title' => t('Parent'),
-      '#description' => t('Parent form, if this webform was duplicated or replaces existing form.', [], $tOpts),
+      '#description' => t('Parent form, if this webform was duplicated or replaces existing form.
+<strong>Only admins/developers should change this, if required.</strong>', [], $tOpts),
       '#options' => $parentOptions,
       '#default_value' => $formParent,
       '#disabled' => TRUE,
       '#required' => $isDuplicateForm,
       '#empty_option' => t('- None -'),
       '#empty_value' => '',
+    ];
+
+    $breakingChange = $bundle->getThirdPartySetting('grants_metadata', 'avus2BreakingChange') ?? FALSE;
+
+    $form['third_party_settings']['grants_metadata']['avus2BreakingChange'] = [
+      '#type' => 'checkbox',
+      '#default_value' => $breakingChange,
+      '#title' => t('This webform version has breaking changes with Avus2', [], $tOpts),
+      '#description' => t('Mark this version with a breaking changes flag.
+This will prevent applications created with an older webform version, which are in draft or received status,
+from being edited, even if normal rules would otherwise permit it.
+<strong>Only admins/developers should change this, if required.</strong>', [], $tOpts),
+      '#disabled' => !$isSuperUser,
     ];
   }
 
@@ -752,12 +773,9 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
   $routeParam = \Drupal::routeMatch()->getParameter('webform');
   $formStatus = $routeParam->getThirdPartySetting('grants_metadata', 'status');
 
-  $currentUser = Drupal::currentUser();
-  $isAdmin = ApplicationHandler::isGrantAdmin($currentUser);
-
   $released = $formStatus === 'released';
   $archived = $formStatus === 'archived';
-  $editingRestricted = ($released || $archived) && !$isAdmin;
+  $editingRestricted = ($released || $archived);
   $restrictionMsg = $released ?
   t('Form is published for production use, only limited editing is allowed.') :
   t('Form is archived and editing is not allowed.');
@@ -775,9 +793,7 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
 
       $showStatusMessage = TRUE;
 
-      if ($editingRestricted && !$isAdmin) {
-        $form['#disabled'] = TRUE;
-
+      if ($editingRestricted) {
         \Drupal::messenger()
           ->addWarning($restrictionMsg);
 
