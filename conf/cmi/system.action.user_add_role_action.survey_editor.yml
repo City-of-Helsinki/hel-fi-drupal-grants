@@ -1,0 +1,14 @@
+uuid: 9e51cb84-155d-4739-af91-209a455a5108
+langcode: fi
+status: true
+dependencies:
+  config:
+    - user.role.survey_editor
+  module:
+    - user
+id: user_add_role_action.survey_editor
+label: 'Add the Survey editor role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: survey_editor
