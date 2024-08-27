@@ -334,6 +334,11 @@ if (
 
 $settings['is_azure'] = FALSE;
 
+if ($tfa_key = getenv('TFA_ENCRYPTION_KEY')) {
+  $config['key.key.tfa']['key_provider_settings']['key_value'] = $tfa_key;
+  $config['key.key.tfa']['key_provider_settings']['base64_encoded'] = TRUE;
+}
+
 /**
  * Deployment preflight checks.
  *
@@ -345,6 +350,7 @@ $preflight_checks = [
     'DRUPAL_DB_NAME',
     'DRUPAL_DB_PASS',
     'DRUPAL_DB_HOST',
+    'TFA_ENCRYPTION_KEY',
   ],
   'additionalFiles' => [],
 ];
@@ -388,4 +394,3 @@ if ($env = getenv('APP_ENV')) {
 if (empty($settings['deployment_identifier'])) {
   $settings['deployment_identifier'] = filemtime(__DIR__ . '/../../../composer.lock');
 }
-

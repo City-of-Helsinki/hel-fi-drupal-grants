@@ -12,6 +12,8 @@ import {
   viewPageFormatLowerCase,
   viewPageFormatNumber
 } from "../../view_page_formatters";
+import {getFakeEmailAddress} from "../../field_helpers";
+
 
 const baseForm_49: FormData = {
   title: 'Save as draft.',
@@ -27,7 +29,7 @@ const baseForm_49: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-email',
           },
-          value: faker.internet.email(),
+          value: getFakeEmailAddress(),
           viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
