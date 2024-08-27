@@ -10,7 +10,7 @@ import {getFakeEmailAddress} from "../field_helpers";
  * a profiles data on an applications
  * "View" page.
  */
-interface ProfileInputData  {
+interface ProfileInputData {
   iban: string;
   iban2: string;
   address: string;
@@ -36,7 +36,7 @@ const PROFILE_INPUT_DATA: ProfileInputData = {
   city: 'Kuopio',
   communityOfficial: 'Marko Niemi',
   role: 'Vastuuhenkilö',
-  email: getFakeEmailAddress(),
+  email: getFakeEmailAddress({firstName: 'Marko', lastName: 'Niemi'}),
   phone: '0401234567'
 }
 
