@@ -3,6 +3,7 @@ import {FormData, FormDataWithRemoveOptionalProps,} from "./test_data";
 import {PROFILE_INPUT_DATA} from "./profile_input_data";
 import {ATTACHMENTS} from "./attachment_data";
 import {createFormData} from "../form_data_helpers";
+import {getFakeEmailAddress} from "../field_helpers";
 
 const profileDataBase: FormData = {
   title: 'Save profile data',
@@ -224,7 +225,7 @@ const profileDataBase: FormData = {
                       name: 'data-drupal-selector',
                       value: 'edit-officialwrapper-[INDEX]-official-email',
                     },
-                    value: faker.internet.email().toLowerCase(),
+                    value: getFakeEmailAddress().toLowerCase(),
                     viewPageSelector: '.grants-profile',
                   },
                   {

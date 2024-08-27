@@ -11,6 +11,7 @@ import {
   viewPageFormatCurrency,
   viewPageFormatNumber,
 } from "../../view_page_formatters";
+import {getFakeEmailAddress} from "../../field_helpers";
 
 /**
  * Basic form data for successful submit to Avus2

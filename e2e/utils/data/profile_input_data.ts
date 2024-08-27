@@ -1,3 +1,5 @@
+import {getFakeEmailAddress} from "../field_helpers";
+
 /**
  * The ProfileInputData interface.
  *
@@ -34,7 +36,7 @@ const PROFILE_INPUT_DATA: ProfileInputData = {
   city: 'Kuopio',
   communityOfficial: 'Marko Niemi',
   role: 'Vastuuhenkilö',
-  email: 'marko.niemi78@ggmmaaiill.com',
+  email: getFakeEmailAddress(),
   phone: '0401234567'
 }
 
