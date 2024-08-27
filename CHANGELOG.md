@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 2024.11
+## 2024.12
 - 5a690fe28 fix: AU-2522: Refactor ApplicationHandler (#1456)
 - 2e743481c UHF-10370: Remove breaking module (#1473)
 - 37cc72acd Update configuration (#1472)
@@ -39,6 +39,24 @@
 - 82cc3776 conf: Update configuration (#1432)
 - 8f16f14e feat: AU-448: Breakin change flag and logic to determine if newer versions have a breaking change. Disable versioning fields for non superusers. Translate closed webform text (#1439)
 - b7031e4d feat: AU-2216, E2E: Inline form error validation (#1430)
+- 035521308 fix: UHF-10362: Fix faker created testing emails to use example.com domain (#1477)
+- 5437161c3 Automatic update (#1474)
+- cb6ec51ce Fixed language manager call (#1476)
+- 2bdf8c734 Fixed constructor params (#1475)
+- d7692c643 docs: CHANGELOG
+- 30d49dfe5 Merge branch 'develop' into release/2024.11
+- 5a690fe28 fix: AU-2522: Refactor ApplicationHandler (#1456)
+- 2e743481c UHF-10370: Remove breaking module (#1473)
+- a1f51332e Merge branch 'hotfix/UHF-10357' into develop
+- 37cc72acd Update configuration (#1472)
+- d54e722a1 fix: UHF-10344: update e2e node image to custom one (#1471)
+- c04be04b4 Revert change in dockerfile
+- 4c12b95e5 Add Openshift User
+- 458260f4a (hotfix/UHF-10357) UHF-10357: Update convert method to allow null returns.
+
+## 2024.11 / Hotfix
+- 458260f4a (hotfix/UHF-10357) UHF-10357: Update convert method to allow null returns.
+- f9ce765f6 UHF-10357: Remove fields that break Avus2.
 
 ## 2024.10
 - f0b6aafc fix: AU-2508: add missing filter to content editor (#1443)
