@@ -12,7 +12,8 @@ use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_metadata\Validator\EndDateValidator;
 use Drupal\grants_metadata\Validator\YearValidator;
 use Drupal\helfi_platform_config\DTO\ParagraphTypeCollection;
@@ -74,6 +75,9 @@ function grants_metadata__validate_third_party_settings(array &$form, FormStateI
       $categories[$applicationStatus],
     ];
   }
+
+  $avus2BreakingChange = $formValues["third_party_settings"]["grants_metadata"]["avus2BreakingChange"];
+  $formValues['avus2BreakingChange'] = $avus2BreakingChange;
 
   // Set values back to form state.
   $form_state->setValues($formValues);
@@ -173,7 +177,7 @@ function _grants_metadata_handle_versions_status(Webform $entity): void {
     $formParentData->save();
     \Drupal::messenger()->addStatus(t('Form @id status updated to @status',
       [
-        '@id' => $formParentData->id(),
+        '@id' => $entity->id(),
         '@status' => $status,
       ]));
     \Drupal::messenger()->addStatus(t('Parent form @id archived.', ['@id' => $formParentData->id()]));
@@ -597,7 +601,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
         $parentType = $formParentData->getThirdPartySetting('grants_metadata', 'applicationType');
         $parentTypeId = $formParentData->getThirdPartySetting('grants_metadata', 'applicationType');
 
-        $isDuplicatable = ApplicationHandler::isApplicationWebformDuplicatable($parentTypeId);
+        $isDuplicatable = ApplicationHelpers::isApplicationWebformDuplicatable($parentTypeId);
 
         if (!$isDuplicatable) {
           $form['#disabled'] = TRUE;
@@ -652,6 +656,9 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       }
     }
 
+    $currentUser = Drupal::currentUser();
+    $isSuperUser = $currentUser->id() == 1;
+
     $form['third_party_settings']['grants_metadata']['status'] = [
       '#type' => 'radios',
       '#title' => t('Status'),
@@ -662,24 +669,39 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       ],
       '#required' => TRUE,
       '#default_value' => $formStatus ?? 'development',
-      '#disabled' => $isDuplicateForm,
+      '#disabled' => ($isDuplicateForm || !$isSuperUser),
       '#description' => t('
 <p>In production: Changing the webform elements is not allowed.</p>
 <p>In development: Webform elements can be edited. Form can be filled up in non-production environments.</p>
 <p>Archived: Older version of the form which cannot be filled anymore.</p>
+<strong>Only admins/developers should change this, if required.</strong>
       ', [], $tOpts),
     ];
 
     $form['third_party_settings']['grants_metadata']['parent'] = [
       '#type' => 'select',
       '#title' => t('Parent'),
-      '#description' => t('Parent form, if this webform was duplicated or replaces existing form.', [], $tOpts),
+      '#description' => t('Parent form, if this webform was duplicated or replaces existing form.
+<strong>Only admins/developers should change this, if required.</strong>', [], $tOpts),
       '#options' => $parentOptions,
       '#default_value' => $formParent,
       '#disabled' => TRUE,
       '#required' => $isDuplicateForm,
       '#empty_option' => t('- None -'),
       '#empty_value' => '',
+    ];
+
+    $breakingChange = $bundle->getThirdPartySetting('grants_metadata', 'avus2BreakingChange') ?? FALSE;
+
+    $form['third_party_settings']['grants_metadata']['avus2BreakingChange'] = [
+      '#type' => 'checkbox',
+      '#default_value' => $breakingChange,
+      '#title' => t('This webform version has breaking changes with Avus2', [], $tOpts),
+      '#description' => t('Mark this version with a breaking changes flag.
+This will prevent applications created with an older webform version, which are in draft or received status,
+from being edited, even if normal rules would otherwise permit it.
+<strong>Only admins/developers should change this, if required.</strong>', [], $tOpts),
+      '#disabled' => !$isSuperUser,
     ];
   }
 
@@ -703,7 +725,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     $applicationTypeId = $bundle->getThirdPartySetting('grants_metadata', 'applicationType');
     $isDuplicatable = in_array($formStatus, ['', 'released']);
     if ($applicationTypeId && $isDuplicatable) {
-      $isDuplicatable = ApplicationHandler::isApplicationWebformDuplicatable($applicationTypeId);
+      $isDuplicatable = ApplicationHelpers::isApplicationWebformDuplicatable($applicationTypeId);
     }
 
     $route_parameters = ['webform' => $webform->id()];
@@ -753,7 +775,7 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
   $formStatus = $routeParam->getThirdPartySetting('grants_metadata', 'status');
 
   $currentUser = Drupal::currentUser();
-  $isAdmin = ApplicationHandler::isGrantAdmin($currentUser);
+  $isAdmin = Helpers::isGrantAdmin($currentUser);
 
   $released = $formStatus === 'released';
   $archived = $formStatus === 'archived';
@@ -775,9 +797,7 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
 
       $showStatusMessage = TRUE;
 
-      if ($editingRestricted && !$isAdmin) {
-        $form['#disabled'] = TRUE;
-
+      if ($editingRestricted) {
         \Drupal::messenger()
           ->addWarning($restrictionMsg);
 
@@ -962,7 +982,7 @@ function grants_metadata_preprocess_block(&$variables): void {
  * Implements hook_webform_access().
  */
 function grants_metadata_webform_access(Webform $entity, string $operation, AccountInterface $account) {
-  $isAdmin = ApplicationHandler::isGrantAdmin($account);
+  $isAdmin = Helpers::isGrantAdmin($account);
   $restrictedOps = ['duplicate', 'delete', 'test'];
 
   if (in_array($operation, $restrictedOps) && !$isAdmin) {

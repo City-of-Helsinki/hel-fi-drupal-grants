@@ -22,7 +22,7 @@ services:
         '@messenger',
         '@grants_profile.profile_connector',
         '@logger.factory',
-        '@grants_profile.cache',
+        '@grants_profile.cache'
     ]
 
   grants_profile.municipality_service:

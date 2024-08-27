@@ -1,0 +1,32 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a form element label.
+ *
+ * Available variables:
+ * - title: The label's text.
+ * - title_display: Elements title_display setting.
+ * - required: An indicator for whether the associated form element is required.
+ * - attributes: A list of HTML attributes for the label.
+ *
+ * @see template_preprocess_form_element_label()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+  title_display == 'after' ? 'option',
+  title_display == 'invisible' ? 'visually-hidden',
+  required ? 'js-form-required',
+  required ? 'form-required',
+  element['#element_type'] ? element['#element_type'],
+]
+%}
+{% if title is not empty or required -%}
+  {% if view_application_page %}
+    <dt{{ attributes.addClass(classes) }}>{{ title }}</dt>
+  {% else %}
+    <label{{ attributes.addClass(classes) }}>{{ title }}</label>
+  {% endif %}
+{%- endif %}

@@ -4,14 +4,12 @@ namespace Drupal\grants_admin_applications\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Config\ConfigFactory;
-use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
-use Drupal\helfi_atv\AtvService;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use GuzzleHttp\Exception\GuzzleException;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,38 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  * @phpstan-consistent-constructor
  */
 class SubmittedApplicationsForm extends AtvFormBase {
-
-  /**
-   * Access to ATV.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * Immutable Config.
-   *
-   * @var \Drupal\Core\Config\ImmutableConfig
-   */
-  protected ImmutableConfig $config;
-
-  /**
-   * Constructs a new GrantsProfileForm object.
-   */
-  public function __construct(AtvService $atvService, ConfigFactory $config) {
-    $this->atvService = $atvService;
-    $this->config = $config->get('grants_metadata.settings');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): SubmittedApplicationsForm|static {
-    return new static(
-      $container->get('helfi_atv.atv_service'),
-      $container->get('config.factory')
-    );
-  }
 
   /**
    * {@inheritdoc}
@@ -207,9 +173,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
   /**
    * Resend application callback submit handler.
    */
-  public static function resendApplicationCallback(array $form, FormStateInterface $formState): void {
-    $logger = self::getLoggerChannel();
-    $messenger = \Drupal::service('messenger');
+  public function resendApplicationCallback(array $form, FormStateInterface $formState): void {
     $triggeringElement = $formState->getTriggeringElement();
     try {
 
@@ -217,23 +181,24 @@ class SubmittedApplicationsForm extends AtvFormBase {
 
       $sParams = [
         'transaction_id' => $transactionId,
-        'lookfor' => 'appenv:' . ApplicationHandler::getAppEnv(),
+        'lookfor' => 'appenv:' . Helpers::getAppEnv(),
       ];
 
-      $res = \Drupal::service('helfi_atv.atv_service')->searchDocuments($sParams);
+      $res = $this->atvService->searchDocuments($sParams);
       $atvDoc = reset($res);
 
       if (!$atvDoc) {
         return;
       }
 
-      self::sendApplicationToIntegrations($atvDoc, $transactionId);
+      $this->sendApplicationToIntegrations($atvDoc, $transactionId);
     }
-    catch (\Exception $e) {
-      $messenger->addError($e->getMessage());
-      $logger->error(
-        'Error: Admin application forms - Resend error: @error',
-        ['@error' => $e->getMessage()]
+    catch (GuzzleException | \Exception $e) {
+      $uuid = Uuid::uuid4()->toString();
+      $this->messenger()->addError('Error has occured and has been logged. ID: @uuid', ['@uuid' => $uuid]);
+      $this->logger(self::LOGGER_CHANNEL)->error(
+        'Error: Admin application forms - Resend error: @error, ID: @uuid',
+        ['@error' => $e->getMessage(), '@uuid' => $uuid]
       );
     }
   }
@@ -269,9 +234,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
   /**
    * GetStatus submit handler.
    */
-  public static function getStatus(array $form, FormStateInterface $formState): void {
-    $messenger = \Drupal::service('messenger');
-    $logger = self::getLoggerChannel();
+  public function getStatus(array $form, FormStateInterface $formState): void {
 
     $options = [];
 
@@ -299,8 +262,7 @@ class SubmittedApplicationsForm extends AtvFormBase {
     }
 
     try {
-      /** @var \Drupal\helfi_atv\AtvDocument[] $docs */
-      $docs = self::getDocuments($options);
+      $docs = $this->getDocuments($options);
 
       // Filter out grants profiles from documents.
       $documents = array_filter(
@@ -320,18 +282,21 @@ class SubmittedApplicationsForm extends AtvFormBase {
       );
 
       if (empty($documents)) {
-        $messenger->addWarning(t('No documents found.'));
+        $this->messenger()->addWarning($this->t('No documents found.'));
       }
 
       $formState->set('documents', $documents);
       $formState->setRebuild();
     }
     catch (\Exception $e) {
-      $messenger->addError($e->getMessage());
-      $logger->error(
-          'Error: status check: @error',
-          ['@error' => $e->getMessage()]
-            );
+      $uuid = Uuid::uuid4()->toString();
+      $this->messenger()->addError('Error has occured and has been logged. ID: @uuid', ['@uuid' => $uuid]);
+      $this->logger(self::LOGGER_CHANNEL)->error(
+        'Error: status check: @error, ID: @uuid',
+        ['@error' => $e->getMessage(), '@uuid' => $uuid]
+      );
+    }
+    catch (GuzzleException $e) {
     }
   }
 
@@ -358,8 +323,18 @@ class SubmittedApplicationsForm extends AtvFormBase {
 
   /**
    * Searches and returns ATV document with given id.
+   *
+   * @param array $options
+   *   Options for the search.
+   *
+   * @return array
+   *   Array of documents.
+   *
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  private static function getDocuments($options = []) {
+  private function getDocuments(array $options = []): array {
 
     $defaultOptions = [
       'status' => 'SUBMITTED',
@@ -368,11 +343,11 @@ class SubmittedApplicationsForm extends AtvFormBase {
     $activeOptions = array_merge($defaultOptions, $options);
 
     $sParams = [
-      ...['lookfor' => 'appenv:' . ApplicationHandler::getAppEnv()],
+      ...['lookfor' => 'appenv:' . Helpers::getAppEnv()],
       ...$activeOptions,
     ];
 
-    return \Drupal::service('helfi_atv.atv_service')->searchDocuments($sParams);
+    return $this->atvService->searchDocuments($sParams);
   }
 
 }

@@ -23,7 +23,7 @@ class PRHUpdaterService {
   public function __construct(
     private YjdhClient $yjdhClient,
     private ProfileConnector $profileConnector,
-    private GrantsProfileService $profileService
+    private GrantsProfileService $profileService,
   ) {}
 
   /**

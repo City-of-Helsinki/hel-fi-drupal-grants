@@ -15,6 +15,8 @@ use Ramsey\Uuid\Uuid;
  */
 class EventsService {
 
+  use DebuggableTrait;
+
   /**
    * The HTTP client.
    *
@@ -55,7 +57,7 @@ class EventsService {
    *
    * @var array|string[]
    */
-  public static array $eventTypes = [
+  public array $eventTypes = [
     'AVUSTUS2_MSG_OK' => 'AVUSTUS2_MSG_OK',
     'STATUS_UPDATE' => 'STATUS_UPDATE',
     'MESSAGE_AVUS2' => 'MESSAGE_AVUS2',
@@ -73,13 +75,6 @@ class EventsService {
     'INTEGRATION_ERROR_AVUS2' => 'INTEGRATION_ERROR_AVUS2',
     'INTEGRATION_ERROR_ATV_ATT' => 'INTEGRATION_ERROR_ATV_ATT',
   ];
-
-  /**
-   * Debug on?
-   *
-   * @var bool
-   */
-  protected bool $debug;
 
   /**
    * Constructs a MessageService object.
@@ -100,15 +95,18 @@ class EventsService {
     $this->username = getenv('AVUSTUS2_USERNAME');
     $this->password = getenv('AVUSTUS2_PASSWORD');
 
-    $debug = getenv('debug');
+    $this->setDebug(NULL);
 
-    if ($debug == 'true') {
-      $this->debug = TRUE;
-    }
-    else {
-      $this->debug = FALSE;
-    }
+  }
 
+  /**
+   * Get event types.
+   *
+   * @return array|string[]
+   *   Event types.
+   */
+  public function getEventTypes(): array {
+    return $this->eventTypes;
   }
 
   /**
@@ -135,7 +133,7 @@ class EventsService {
     string $eventType,
     string $eventDescription,
     string $eventTarget,
-    array $eventData = []
+    array $eventData = [],
   ): ?array {
 
     if (empty($eventData)) {
@@ -187,9 +185,9 @@ class EventsService {
    * @return array
    *   Filtered events.
    */
-  public static function filterEvents(array $events, string $typeKey): array {
+  public function filterEvents(array $events, string $typeKey): array {
     $messageEvents = array_filter($events, function ($event) use ($typeKey) {
-      if ($event['eventType'] == self::$eventTypes[$typeKey]) {
+      if ($event['eventType'] == $this->eventTypes[$typeKey]) {
         return TRUE;
       }
       return FALSE;
@@ -219,10 +217,10 @@ class EventsService {
    *
    * @throws \Drupal\grants_handler\EventException
    */
-  public static function getEventData(string $eventType, string $applicationNumber, string $eventDescription, string $eventTarget): array {
+  public function getEventData(string $eventType, string $applicationNumber, string $eventDescription, string $eventTarget): array {
     $eventData = [];
 
-    if (!in_array($eventType, self::$eventTypes)) {
+    if (!in_array($eventType, $this->eventTypes)) {
       throw new EventException('Not valid event type: ' . $eventType);
     }
     else {

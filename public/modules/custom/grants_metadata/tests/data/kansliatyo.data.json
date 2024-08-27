@@ -1,0 +1,158 @@
+{
+	"applicant_type": "registered_community",
+	"avustukset_summa": "13",
+	"application_number": "LOCALPAK-054-0000274",
+	"status": "DRAFT",
+	"hakijan_tiedot": {
+        "applicantType": "registered_community",
+        "applicant_type": "registered_community",
+        "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
+        "companyNumber": "2036583-2",
+        "registrationDate": "10.05.2006",
+        "home": "VOIKKAA",
+        "communityOfficialNameShort": "AE",
+        "foundingYear": "1337",
+        "homePage": "arieerola.example.com"
+    },
+	"email": "ari.eerola@example.com",
+	"contact_person": "Testi Testaaja",
+	"contact_person_phone_number": "0401234567",
+	"community_officials": [
+		{
+			"name": "Testeeje",
+			"role": "2",
+			"email": "pp@example.com",
+			"phone": "1234567",
+			"community_officials_select": "0",
+			"roletext": ""
+		}
+	],
+	"acting_year": "2025",
+	"subventions": [
+		{
+			"subventionTypeTitle": "Operating grant",
+			"subventionType": "1",
+			"amount": "0"
+		},
+		{
+			"subventionTypeTitle": "Grant for operations development",
+			"subventionType": "17",
+			"amount": "13,00\u20ac"
+		}
+	],
+	"compensation_purpose": "Kuvaus",
+	"olemme_saaneet_muita_avustuksia": 0,
+	"myonnetty_avustus": [
+
+	],
+	"olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta": 0,
+	"haettu_avustus_tieto": [
+
+	],
+	"benefits_loans": "Kuvaus lainat",
+	"benefits_premises": "Facilities",
+	"compensation_boolean": "0",
+	"compensation_explanation": "",
+	"business_purpose": "Description of activities",
+	"community_practices_business": 0,
+	"fee_person": "12,00\u20ac",
+	"fee_community": "120,00\u20ac",
+	"members_applicant_person_global": "120",
+	"members_applicant_person_local": "120",
+	"members_applicant_community_global": "12",
+	"members_applicant_community_local": "12",
+	"additional_information": "Lis\u00e4tiedot",
+	"yhteison_saannot": null,
+	"vahvistettu_tilinpaatos": null,
+	"vahvistettu_toimintakertomus": null,
+	"vahvistettu_tilin_tai_toiminnantarkastuskertomus": null,
+	"vuosikokouksen_poytakirja": null,
+	"toimintasuunnitelma": null,
+	"talousarvio": null,
+	"extra_info": "",
+	"muu_liite": [
+		{
+			"attachmentName": "truck_clipart_15144_4.jpg",
+			"description": "Confirmation for account FI7544197469984736",
+			"fileStatus": "uploaded",
+			"fileType": "45",
+			"integrationID": "\/LOCALPAK\/v1\/documents\/584c38f8-72dd-480b-9df5-0b18cc2b9d0a\/attachments\/104362\/",
+			"isAttachmentNew": "",
+			"attachment": null,
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false
+		},
+		{
+			"attachment": null,
+			"attachmentName": "",
+			"description": "",
+			"fileStatus": "",
+			"fileType": "",
+			"integrationID": "",
+			"isAttachmentNew": "",
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false
+		}
+	],
+	"application_type": "KANSLIATYO",
+	"application_type_id": "54",
+	"form_timestamp": "2024-06-28T15:33:50",
+	"form_timestamp_created": "2024-06-28T15:31:26",
+	"form_timestamp_submitted": null,
+	"account_number": "FI7544197469984736",
+	"myonnetty_avustus_total": 0,
+	"haettu_avustus_tieto_total": 0,
+	"sender_firstname": "Nordea",
+	"sender_lastname": "Demo",
+	"sender_person_id": "210281-9988",
+	"sender_user_id": "280f75c5-6a20-4091-b22d-dfcdce7fef60",
+	"sender_email": "profiilitesti@mailinator.com",
+	"attachments": {
+		"1": {
+			"description": "Confirmation for account FI7544197469984736",
+			"fileType": 45,
+			"fileName": "truck_clipart_15144_4.jpg",
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false,
+			"isNewAttachment": false,
+			"integrationID": "\/LOCALPAK\/v1\/documents\/584c38f8-72dd-480b-9df5-0b18cc2b9d0a\/attachments\/104362\/"
+		}
+	},
+	"form_update": false,
+	"status_updates": [
+
+	],
+	"events": [
+		{
+			"eventType": "HANDLER_ATT_OK",
+			"eventID": "ce413c92-99a4-477e-8122-16b365f6fd7d",
+			"caseId": "LOCALPAK-054-0000274",
+			"eventDescription": "Attachment uploaded for the IBAN: FI7544197469984736.",
+			"eventTarget": "truck_clipart_15144_4.jpg",
+			"eventSource": "GrantsApplications",
+			"timeUpdated": "2024-06-28T15:33:01",
+			"timeCreated": "2024-06-28T15:33:01"
+		}
+	],
+	"messages": [
+
+	],
+	"compensation_total_amount": 0,
+	"metadata": {
+		"appenv": "LOCALPAK",
+		"saveid": "12df1c52-a231-4efc-aa8c-e4a4bd9054f6",
+		"language": "en",
+		"form_uuid": "3fc73ec9-fcd5-425a-9f31-316b888767ad",
+		"applicant_id": "7769480-5",
+		"applicant_type": "registered_community",
+		"applicationnumber": "LOCALPAK-054-0000274"
+	},
+	"community_street": "dfvg",
+	"community_city": "vfdsg",
+	"community_post_code": "12345",
+	"community_country": "Suomi",
+	"budgetInfo": [
+
+	],
+	"registration_date": "2020-12-08T00:00:00"
+}

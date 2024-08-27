@@ -73,7 +73,7 @@ class GrantsBudgetBase extends WebformCompositeBase {
   protected function formatHtmlItemValue(
     array $element,
     WebformSubmissionInterface $webform_submission,
-    array $options = []
+    array $options = [],
   ): array|string {
     $format = $this->getItemFormat($element);
     $items = [];
@@ -100,7 +100,7 @@ class GrantsBudgetBase extends WebformCompositeBase {
 
       $items[$composite_key] = [
         '#type' => 'inline_template',
-        '#template' => '<b>{{ title }}:</b> {{ value }}',
+        '#template' => '<dt>{{ title }}:</dt><dd>{{ value }}</dd>',
         '#context' => [
           'title' => $composite_title,
           'value' => $composite_value,

@@ -24,31 +24,10 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
   use StringTranslationTrait;
 
   /**
-   * Drupal\Core\TypedData\TypedDataManager definition.
-   *
-   * @var \Drupal\Core\TypedData\TypedDataManager
-   */
-  protected TypedDataManager $typedDataManager;
-
-  /**
-   * Access to grants profile services.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Helsinki profile service.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
-
-  /**
    * Constructs a new GrantsProfileForm object.
    *
-   * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
-   *   Data manager.
+   * @param \Drupal\Core\TypedData\TypedDataManager $typedDataManager
+   *   Typed data manager.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile service.
    * @param \Symfony\Component\HttpFoundation\Session\Session $session
@@ -57,19 +36,18 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
    *   Data for Helsinki Profile.
    */
   public function __construct(
-    TypedDataManager $typed_data_manager,
-    GrantsProfileService $grantsProfileService,
-    Session $session,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+    protected TypedDataManager $typedDataManager,
+    protected GrantsProfileService $grantsProfileService,
+    protected Session $session,
+    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
-    parent::__construct($typed_data_manager, $grantsProfileService, $session);
-    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
+    parent::__construct($typedDataManager, $grantsProfileService, $session);
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): GrantsProfileFormPrivatePerson|static {
+  public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),
@@ -88,7 +66,16 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
   /**
    * {@inheritdoc}
    *
+   * @param array $form
+   *   Form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   *
+   * @return array
+   *   Form
+   *
    * @throws \Drupal\grants_profile\GrantsProfileException
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);

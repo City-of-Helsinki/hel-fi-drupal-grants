@@ -1,4 +1,4 @@
-FROM node:20
+FROM ghcr.io/city-of-helsinki/node:latest
 
 ENV PLAYWRIGHT_BROWSERS_PATH=0
 
@@ -8,9 +8,9 @@ WORKDIR app
 COPY tests/ tests/
 COPY utils/ utils/
 COPY playwright.config.ts .
+COPY package.json .
 COPY package-lock.json .
 COPY tsconfig.json .
-
 
 # Install dependencies
 RUN npm ci --ignore-scripts

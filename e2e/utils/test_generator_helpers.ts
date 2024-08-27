@@ -9,6 +9,7 @@ import {swapFieldValues} from "./field_swap_helpers";
 import {validatePrintPage, validateSubmission} from "./validation_helpers";
 import {deleteDraftApplication} from "./deletion_helpers";
 import {verifyDraftButton} from "./verify_draft_button_helpers";
+import {validateTooltips} from "./tooltip_validation_helpers";
 
 /**
  * The generateTests function.
@@ -64,6 +65,17 @@ const generateTests = (
         testFunction: async (page: Page) => {
           const storedata = getObjectFromEnv(profileType, formId);
           await swapFieldValues(key, page, obj, storedata);
+        }
+      });
+    }
+
+    // Tooltip validation test.
+    if (obj.validateTooltips) {
+      tests.push({
+        testName: `Validate tooltips: ${obj.title}`,
+        testFunction: async (page: Page) => {
+          const storedata = getObjectFromEnv(profileType, formId);
+          await validateTooltips(key, page, obj, storedata);
         }
       });
     }

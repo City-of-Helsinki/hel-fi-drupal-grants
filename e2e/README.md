@@ -18,9 +18,12 @@ It's designed to test applications across all modern web browsers by running tes
 #### The following functionality is tested:
 - Filling in an application from start to finnish.
 - Verifying the content of a submitted application.
-- Filling an application with missing/wrong data and verifying the printed error messages.
+- Verifying the "save as draft" button is present on an active application.
+- Filling an application with missing/wrong data and verifying the printed error messages (both inline form errors and general error messages printed at the top of the page can be tested).
 - Swapping field values on an application and verifying that the values get swapped.
 - Copying an application and verifying that its content gets copied.
+- Printing an application and verifying that the printed content is correct.
+- Verifying that the tooltips on the application fields work.
 - Deleting draft applications.
 
 ### User role tests
@@ -61,6 +64,8 @@ The file should be located in the `/e2e` directory.
 - **ENABLED_FORM_VARIANTS**: Can be used to explicitly run specific form variants. Others are skipped.
 - **DISABLED_FORM_VARIANTS**: Can be used to disable form variants (types of form tests).
 - **CREATE_PROFILE**: Boolean indicating if new profiles should be created on each test run.
+- **WAIT_FOR_TEXT_TIMEOUT**: The time to wait for text in MS (defaults to 60000, 1 minute). Used by the waitForTextWithInterval() function.
+- **WAIT_FOR_TEXT_INTERVAL**: How often to query text in MS (defaults to 5000, 5 seconds). Used by the waitForTextWithInterval() function.
 
 Example `.env` file:
 ```
@@ -91,6 +96,14 @@ ENABLED_FORM_VARIANTS="copy"
 # If you set this to "FALSE", a new profile will only be created once every hour,
 # leading to faster tests.
 CREATE_PROFILE="FALSE"
+
+# Wait for text timeout (how long to wait) in MS (defaults to 60000, 1 minute).
+# Used by the waitForTextWithInterval() function. This is mainly used when verifying applications sent to Avus2.
+WAIT_FOR_TEXT_TIMEOUT="10000"
+
+# Wait for text interval (how often to query) in MS (defaults to 5000, 5 second).
+# Used by the waitForTextWithInterval() function. This is mainly used when verifying applications sent to Avus2.
+WAIT_FOR_TEXT_INTERVAL="5000"
 
 # A flag indicating if the "debugging mode" should be turned on.
 # Messages will be printed during test runs if set to "TRUE".

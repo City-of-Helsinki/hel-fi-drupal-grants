@@ -1,0 +1,83 @@
+fieldset.grants-fieldset {
+  padding: var(--spacing-s);
+
+  @include breakpoint($breakpoint-m) {
+    min-width: 400px;
+    padding: var(--spacing-s) var(--spacing-m);
+  }
+
+  .fieldset-wrapper {
+    align-items: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--spacing-layout-2-xs);
+
+    .form-item--error-message {
+      grid-column: 1;
+    }
+  }
+
+  &-short {
+    max-width: var(--webform-element-width--input-large);
+  }
+
+  &-medium {
+    .fieldset-wrapper {
+      justify-content: center;
+    }
+    max-width: var(--webform-element-width--fieldset);
+  }
+}
+
+fieldset.premises-composite--wrapper.fieldgroup,
+fieldset.rented-premise-composite--wrapper.fieldgroup,
+.community_officials_wrapper fieldset.fieldgroup,
+fieldset.grants-budget-other-cost--wrapper.fieldgroup,
+fieldset.grants-budget-other-income--wrapper.fieldgroup,
+fieldset.place-of-operation-composite--wrapper.fieldgroup,
+fieldset.rent-income-composite--wrapper.fieldgroup,
+fieldset.rent-cost-composite--wrapper.fieldgroup,
+fieldset.club-section-composite--wrapper.fieldgroup,
+fieldset.members-composite--wrapper.fieldgroup,
+fieldset.orienteering-map-composite--wrapper,
+.form-item-muu-liite fieldset.grants-attachments--wrapper.fieldgroup {
+  border-width: 2px;
+  margin-top: var(--spacing-layout-2-xs);
+  max-width: 100%;
+  padding: var(--spacing-s);
+  width: 100%;
+
+  @include breakpoint($breakpoint-m) {
+    min-width: 400px;
+    padding: var(--spacing-s) var(--spacing-m);
+  }
+
+  legend > span.visually-hidden {
+    background: white;
+    clip-path: initial;
+    clip: initial;
+    height: auto;
+    margin-left: calc(var(--spacing-2-xs) * -1);
+    left: auto;
+    overflow: visible;
+    padding: 0 var(--spacing-2-xs);
+    top: -12px;
+    width: max-content;
+
+    &:has(button.webform-element-help) {
+      padding-right: var(--spacing-xl);
+    }
+
+    @include breakpoint($breakpoint-m) {
+      left: auto;
+    }
+  }
+}
+
+.form-item-muu-liite fieldset.grants-attachments--wrapper {
+  margin-bottom: 0;
+}
+
+fieldset.webform-composite-hidden-title .fieldset-wrapper > .form-item:last-child {
+  margin-bottom: var(--spacing-layout-xs);
+}

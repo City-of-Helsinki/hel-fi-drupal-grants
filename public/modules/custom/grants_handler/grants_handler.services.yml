@@ -13,31 +13,9 @@ services:
         '@logger.factory',
         '@grants_handler.events_service',
         '@helfi_atv.atv_service',
-        '@current_user'
-    ]
-
-  grants_handler.application_handler:
-    class: Drupal\grants_handler\ApplicationHandler
-    arguments: [
-        '@http_client',
-        '@helfi_helsinki_profiili.userdata',
-        '@helfi_atv.atv_service',
-        '@grants_metadata.atv_schema',
-        '@grants_profile.service',
-        '@logger.factory',
-        '@messenger',
-        '@grants_handler.events_service',
-        '@database',
-        '@language_manager',
-        '@grants_handler.navigation_helper',
-        '@config.factory',
         '@current_user',
-        '@datetime.time',
-        '@current_user',
-        '@datetime.time'
+        '@grants_handler.application_status_service'
     ]
-    calls:
-      - [setAttachmentHandler, ['@?grants_attachments.attachment_handler']]
 
   grants_handler.navigation_helper:
     class: Drupal\grants_handler\GrantsHandlerNavigationHelper
@@ -123,3 +101,65 @@ services:
   grants_handler.service_page_block_service:
     class: Drupal\grants_handler\ServicePageBlockService
     arguments: ['@entity_type.manager', '@current_route_match', '@grants_profile.service']
+
+  grants_handler.application_validator:
+    class: Drupal\grants_handler\ApplicationValidator
+    arguments: [
+      '@grants_handler.navigation_helper',
+      '@logger.factory'
+    ]
+
+  grants_handler.application_status_service:
+    class: Drupal\grants_handler\ApplicationStatusService
+    arguments: [
+      '@config.factory',
+      '@logger.factory'
+    ]
+
+  grants_handler.application_init_service:
+    class: Drupal\grants_handler\ApplicationInitService
+    arguments: [
+      '@helfi_helsinki_profiili.userdata',
+      '@grants_profile.service',
+      '@language_manager',
+      '@grants_metadata.application_data_service',
+      '@grants_handler.application_status_service',
+      '@logger.factory',
+      '@config.factory',
+      '@grants_metadata.atv_schema',
+      '@helfi_atv.atv_service',
+    ]
+    calls:
+      - [ setAttachmentHandler, [ '@?grants_attachments.attachment_handler' ] ]
+
+  grants_handler.application_getter_service:
+    class: Drupal\grants_handler\ApplicationGetterService
+    arguments: [
+      '@helfi_atv.atv_service',
+      '@helfi_helsinki_profiili.userdata',
+      '@grants_handler.application_status_service',
+      '@grants_handler.message_service',
+      '@logger.factory',
+      '@entity_type.manager'
+    ]
+    calls:
+      - [ setGrantsProfileService, [ '@?grants_profile.service' ] ]
+
+  grants_handler.application_uploader_service:
+    class: Drupal\grants_handler\ApplicationUploaderService
+    arguments: [
+      '@helfi_atv.atv_service',
+      '@grants_metadata.atv_schema',
+      '@grants_handler.application_status_service',
+      '@grants_handler.message_service',
+      '@http_client',
+      '@logger.factory',
+      '@language_manager',
+      '@messenger',
+      '@grants_handler.application_getter_service',
+      '@helfi_helsinki_profiili.userdata'
+    ]
+
+  grants_handler.application_access_handler:
+    class: Drupal\grants_handler\ApplicationAccessHandler
+    arguments: ['@grants_profile.service']

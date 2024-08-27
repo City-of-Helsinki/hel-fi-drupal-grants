@@ -14,7 +14,7 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -33,34 +33,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The helfi_helsinki_profiili service.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helfiHelsinkiProfiili;
-
-  /**
-   * Get route parameters.
-   *
-   * @var \Drupal\Core\Routing\CurrentRouteMatch
-   */
-  protected CurrentRouteMatch $routeMatch;
-
-  /**
-   * Get current user.
-   *
-   * @var \Drupal\Core\Session\AccountProxy
-   */
-  protected AccountProxy $currentUser;
-
-  /**
-   * The service page block service.
-   *
-   * @var \Drupal\grants_handler\ServicePageBlockService
-   */
-  protected ServicePageBlockService $servicePageBlockService;
-
-  /**
    * Constructs a new ServicePageBlock instance.
    *
    * @param array $configuration
@@ -76,39 +48,39 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The helfi_helsinki_profiili service.
    * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
    *   Get route params.
-   * @param \Drupal\Core\Session\AccountProxy $user
+   * @param \Drupal\Core\Session\AccountProxy $currentUser
    *   Current user.
    * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
    *   The service page block service.
+   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   *   The application status service.
    */
   public function __construct(
     array $configuration,
     $pluginId,
     $pluginDefinition,
-    HelsinkiProfiiliUserData $helfiHelsinkiProfiili,
-    CurrentRouteMatch $routeMatch,
-    AccountProxy $user,
-    ServicePageBlockService $servicePageBlockService
+    protected HelsinkiProfiiliUserData $helfiHelsinkiProfiili,
+    protected CurrentRouteMatch $routeMatch,
+    protected AccountProxy $currentUser,
+    protected ServicePageBlockService $servicePageBlockService,
+    protected ApplicationStatusService $applicationStatusService,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
-    $this->helfiHelsinkiProfiili = $helfiHelsinkiProfiili;
-    $this->routeMatch = $routeMatch;
-    $this->currentUser = $user;
-    $this->servicePageBlockService = $servicePageBlockService;
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $pluginId, $pluginDefinition) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     return new static(
       $configuration,
-      $pluginId,
-      $pluginDefinition,
+      $plugin_id,
+      $plugin_definition,
       $container->get('helfi_helsinki_profiili.userdata'),
       $container->get('current_route_match'),
       $container->get('current_user'),
       $container->get('grants_handler.service_page_block_service'),
+      $container->get('grants_handler.application_status_service')
     );
   }
 
@@ -141,7 +113,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     $webformId = $webform->id();
 
     // If the application isn't open, just display a message.
-    if (!ApplicationHandler::isApplicationOpen($webform)) {
+    if (!$this->applicationStatusService->isApplicationOpen($webform)) {
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
         '#text' => $this->t('This application is not open', [], $tOpts),
@@ -171,7 +143,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
 
     $applicationLink = Link::fromTextAndUrl($applicationLinkText, $applicationLinkUrl);
     $descrtiption = $this->t('Please familiarize yourself with the instructions
-    on this page before proceeding to the application.', [], $tOpts);
+on this page before proceeding to the application.', [], $tOpts);
 
     $webformLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webformId]);
 

@@ -1,5 +1,54 @@
 # CHANGELOG
 
+## 2024.10
+- f0b6aafc fix: AU-2508: add missing filter to content editor (#1443)
+- bea2cc2c AU-448: Change correct status to production check (#1442)
+- a93a38c6 feat: AU-2533: Implemented the possibility to set custom timout for WaitForTextWithInterval in the .env file. (#1438)
+- 5c36a74f feat: AU-2535: Confirm that the tests reach the correct profile form and bug fixing (#1434)
+- afc38ab5 fix: AU-2529: fix translation in service page auth block (#1435)
+- 38c2217c fix: AU-2388: add paginator to drafts (#1436)
+- 8e73f5c9 fix: AU-2537: change error text when sending application with empty fields (#1437)
+- 8b73fb69 fix. AU-2283, AU-2284: /katso page hierarchies and custom component prints (#1416)
+- e4404512 feat: AU-1740, AU-1742:  Refactor methods and add tests (#1429)
+- 927abb66 fix: AU-2451: fix accessibility concern in webform actions buttons (#1427)
+- daac80f0 fix: AU-2518: Profile form fixes (#1426)
+- 99ee6f26 fix: AU-2443: make hero img not focusable (#1421)
+- 17e57227 feat: AU-2357: Attempting to fix AD-role Drupal role mapping. (#1428)
+- 6325034f feat: AU-2036: E2E, Refactor form tests (#1420)
+- 6b219e4b Revert "fix:  AU-2518: Profile form fixes (#1419)" (#1425)
+- 54b046c6 fix:  AU-2518: Profile form fixes (#1419)
+- 843544fa fix: AU-2520: fix Basic arts subvention name (#1423)
+- 2fe77f9a feat: AU-2357: Fixed a AD role mapping typo. (#1424)
+- 1ddaae32 fix: AU-2531: Remove hyphenopoly override, fix styles for h1:s (#1422)
+- 2de4f3e5 feat: AU-2528: E2E, Added a isApplicationClosed check (#1417)
+- 2e7dbbbd Feature: AU-448 webform status (#637)
+- 3f4f1d08 feat: AU-2357: Set connect_existing_users to TRUE in openId. (#1418)
+- 3e95c674 Restore working atv version
+- 93d46460 Merge branch 'release/2024.10' into develop
+- 6d93bd33 Update ATV version
+- 7bf37978 Add core/ajax to info.yml
+- adcbfafb Remove hyphenopoly
+- 020ef5bd Add core/ajax to info.yml
+- a0c7067f Remove hyphenopoly
+- ae8a098f Testing 123
+- ec17db8e Update theme + rebuilt styles
+- 5f56ec02 Remove preprocessing
+- 62459009 Add custom tests to phpunit testsuites
+- d6d2b05c fix: UHF-9942: Minor frontend fixes for templates, styles and javascripts (#1412)
+- 5f9010bf config: Update configuration (#1413)
+- 1f3b560b config: Add preprocessing to staging js/css (#1411)
+- 01bd968e AU-2503: Update gdpr api module update (#1409)
+- 35b37fa0 feat: AU-1892: Update helsinki profile to dev version & AD role mapping (#1395)
+- 138cf013 feat: AU-2508: add content editor to content listing (#1407)
+- d1371cda fix: AU-2256: Edit kasko toiminta contents (#1248)
+- acaf8d9e feat: AU-2049: E2E, Application print content test (#1402)
+- b3d67574 fix  AU-2523: auto update changes
+- 55e1e4c7 fix: AU-2435: Modify sent application list search behaviour
+- 02a16db9 fix: UHF-9945: Fix phpcs errors (#1401)
+- 33ed3f9c fix: AU-2422: add form names to links (#1354)
+- 09860fdd fix: AU-2520: fix subvention type names (#1400)
+- 9ed49392 fix: PHPCS
+
 ## 2024.9
 - 66fa090f fix: AU-2478: Add block cache for 10mins. (#1393)
 - dcdc3990 fix: AU-2434: remove extra label (#1392)

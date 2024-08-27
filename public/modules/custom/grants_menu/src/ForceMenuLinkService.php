@@ -85,7 +85,8 @@ class ForceMenuLinkService {
     MenuLinkManagerInterface $menuLinkManager,
     LanguageManagerInterface $languageManager,
     LoggerChannelFactoryInterface $loggerFactory,
-    MessengerInterface $messenger) {
+    MessengerInterface $messenger,
+  ) {
     $this->entityTypeManager = $entityTypeManager;
     $this->menuLinkManager = $menuLinkManager;
     $this->languageManager = $languageManager;
@@ -179,10 +180,12 @@ class ForceMenuLinkService {
    * @param mixed $exception
    *   An exception on failure.
    */
-  protected function logMessage(string $messageType,
+  protected function logMessage(
+    string $messageType,
     NodeInterface $node = NULL,
     MenuLinkContentInterface $menuLink = NULL,
-    mixed $exception = NULL): void {
+    mixed $exception = NULL,
+  ): void {
     $message = match ($messageType) {
       'CREATED' => $this->t('Created the following menu item:'),
       'CREATE_FAILED' => $this->t('Failed to create the following menu item:'),

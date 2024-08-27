@@ -42,7 +42,8 @@ class TypedDataToDocumentContentWithWebform {
     Webform $webform,
     array $pages,
     array $submittedFormData,
-    array $structure): array {
+    array $structure,
+  ): array {
 
     $elements = $webform->getElementsDecodedAndFlattened();
     $documentStructure = [];
@@ -309,7 +310,8 @@ class TypedDataToDocumentContentWithWebform {
     array $webformMainElement,
     mixed $defaultValue,
     array $hiddenFields,
-    array $metaData): void {
+    array $metaData,
+  ): void {
     if (is_iterable($property)) {
       foreach ($property as $itemIndex => $item) {
         $reference[$elementName][$itemIndex] = self::getFieldValuesFromPropertyItem(
@@ -347,7 +349,8 @@ class TypedDataToDocumentContentWithWebform {
     string $elementName,
     array $fullItemValueCallback,
     TypedDataInterface $property,
-    mixed $requiredInJson): void {
+    mixed $requiredInJson,
+  ): void {
     $fieldValues = self::getFieldValuesFromFullItemCallback($fullItemValueCallback, $property);
     if ($fieldValues || $requiredInJson) {
       $reference[$elementName] = $fieldValues;
@@ -539,7 +542,8 @@ class TypedDataToDocumentContentWithWebform {
     string $propertyType,
     mixed $itemValue,
     mixed $defaultValue,
-    ?bool $skipZeroValue): bool {
+    ?bool $skipZeroValue,
+  ): bool {
     $numericTypes = ['integer', 'double', 'float'];
     if (in_array($propertyType, $numericTypes) &&
        ($itemValue === '0' && $defaultValue === NULL && $skipZeroValue)) {
@@ -610,7 +614,8 @@ class TypedDataToDocumentContentWithWebform {
     mixed $itemValue,
     string $jsonType,
     mixed $label,
-    array $metaData): array {
+    array $metaData,
+  ): array {
     return [
       'ID' => $elementName,
       'value' => $itemValue,
@@ -640,7 +645,8 @@ class TypedDataToDocumentContentWithWebform {
   protected static function extractLabel(
     DataDefinitionInterface $definition,
     array $webformMainElement,
-    string $itemName): string|null {
+    string $itemName,
+  ): string|null {
 
     if ($itemName == 'issuerName') {
       $itemName = 'issuer_name';
@@ -688,7 +694,8 @@ class TypedDataToDocumentContentWithWebform {
     array $webformMainElement,
     mixed $defaultValue,
     array $hiddenFields,
-    array $metaData): array {
+    array $metaData,
+  ): array {
     $fieldValues = [];
     $propertyItem = $item->getValue();
     $itemDataDefinition = $item->getDataDefinition();
@@ -752,7 +759,8 @@ class TypedDataToDocumentContentWithWebform {
     mixed $webformMainElement,
     array $pages,
     array $elements,
-    array $hiddenFields): array {
+    array $hiddenFields,
+  ): array {
     $structureArray = self::getFieldValuesFromFullItemCallback(
       $propertyStructureCallback,
       $property
@@ -840,7 +848,8 @@ class TypedDataToDocumentContentWithWebform {
     array $webformMainElement,
     array $webformLabelElement,
     array $pages,
-    array $elements): array {
+    array $elements,
+  ): array {
     $pageKeys = array_keys($pages);
     $elementKeys = array_keys($elements);
 
@@ -898,7 +907,8 @@ class TypedDataToDocumentContentWithWebform {
   protected static function getConditionStatus(
     array $conditionArray,
     array $content,
-    DataDefinitionInterface $definition): bool {
+    DataDefinitionInterface $definition,
+  ): bool {
 
     if (isset($conditionArray['service'])) {
       $conditionService = \Drupal::service($conditionArray['service']);
@@ -954,7 +964,8 @@ class TypedDataToDocumentContentWithWebform {
    */
   protected static function getFieldValuesFromFullItemCallback(
     array $fullItemValueCallback,
-    TypedDataInterface $property): mixed {
+    TypedDataInterface $property,
+  ): mixed {
     $fieldValues = [];
     if (isset($fullItemValueCallback['service'])) {
       $fullItemValueService = \Drupal::service($fullItemValueCallback['service']);
@@ -1007,7 +1018,7 @@ class TypedDataToDocumentContentWithWebform {
   protected static function handlePossibleEmptyArray(
     array &$documentStructure,
     array $reference,
-    array $jsonPath
+    array $jsonPath,
   ) {
     if (is_array($reference) && empty($reference)) {
       NestedArray::unsetValue($documentStructure, $jsonPath);

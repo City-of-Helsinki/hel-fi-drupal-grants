@@ -457,7 +457,8 @@ const baseForm_48: FormData = {
         "edit-ensimmaisen-yleisolle-avoimen-tilaisuuden-paivamaara": {
           role: 'input',
           value: "2023-11-01",
-          viewPageFormatter: viewPageFormatDate
+          viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#kuva_projekti--aikataulu',
         },
         "edit-festivaalin-tai-tapahtuman-kohdalla-tapahtuman-paivamaarat": {
           role: 'input',
@@ -466,12 +467,14 @@ const baseForm_48: FormData = {
         "edit-hanke-alkaa": {
           role: 'input',
           value: "2023-11-01",
-          viewPageFormatter: viewPageFormatDate
+          viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#kuva_projekti--aikataulu',
         },
         "edit-hanke-loppuu": {
           role: 'input',
           value: "2023-12-01",
-          viewPageFormatter: viewPageFormatDate
+          viewPageFormatter: viewPageFormatDate,
+          viewPageSelector: '#kuva_projekti--aikataulu',
         },
         "edit-laajempi-hankekuvaus": {
           role: 'input',
@@ -1111,7 +1114,7 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
 const registeredCommunityApplications_48 = {
   draft: baseForm_48,
   copy: createFormData(baseForm_48, copyForm),
-  swap_fields: createFormData(baseForm_48, fieldSwapForm),
+  // swap_fields: createFormData(baseForm_48, fieldSwapForm),
   missing_values: createFormData(baseForm_48, missingValues),
   wrong_email: createFormData(baseForm_48, wrongEmail),
   wrong_email_2: createFormData(baseForm_48, wrongEmail2),

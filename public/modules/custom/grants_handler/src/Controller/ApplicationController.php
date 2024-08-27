@@ -8,15 +8,25 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\Core\TempStore\TempStoreException;
+use Drupal\grants_handler\ApplicationAccessHandler;
+use Drupal\grants_handler\ApplicationGetterService;
+use Drupal\grants_handler\ApplicationHelpers;
+use Drupal\grants_handler\ApplicationInitService;
+use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
+use Drupal\grants_mandate\CompanySelectException;
+use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\InputmaskHandler;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvFailedToConnectException;
+use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\WebformRequestInterface;
@@ -90,11 +100,39 @@ class ApplicationController extends ControllerBase {
   protected GrantsProfileService $grantsProfileService;
 
   /**
-   * Application handler.
+   * Application data service.
    *
-   * @var \Drupal\grants_handler\ApplicationHandler
+   * @var \Drupal\grants_metadata\ApplicationDataService
    */
-  protected ApplicationHandler $applicationHandler;
+  protected ApplicationDataService $applicationDataService;
+
+  /**
+   * Application status service.
+   *
+   * @var \Drupal\grants_handler\ApplicationStatusService
+   */
+  protected ApplicationStatusService $applicationStatusService;
+
+  /**
+   * Application init service.
+   *
+   * @var \Drupal\grants_handler\ApplicationInitService
+   */
+  protected ApplicationInitService $applicationInitService;
+
+  /**
+   * Access handler for applications.
+   *
+   * @var \Drupal\grants_handler\ApplicationAccessHandler
+   */
+  protected ApplicationAccessHandler $applicationAccessHandler;
+
+  /**
+   * Getter service for applications.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
 
   /**
    * {@inheritdoc}
@@ -109,7 +147,12 @@ class ApplicationController extends ControllerBase {
     $instance->renderer = $container->get('renderer');
     $instance->request = $container->get('request_stack');
     $instance->grantsProfileService = $container->get('grants_profile.service');
-    $instance->applicationHandler = $container->get('grants_handler.application_handler');
+    $instance->applicationDataService = $container->get('grants_metadata.application_data_service');
+    $instance->applicationStatusService = $container->get('grants_handler.application_status_service');
+    $instance->applicationInitService = $container->get('grants_handler.application_init_service');
+    $instance->applicationAccessHandler = $container->get('grants_handler.application_access_handler');
+    $instance->applicationGetterService = $container->get('grants_handler.application_getter_service');
+
     return $instance;
   }
 
@@ -125,6 +168,8 @@ class ApplicationController extends ControllerBase {
    *
    * @return \Drupal\Core\Access\AccessResultInterface
    *   The access result.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function access(AccountInterface $account, string $webform, string $webform_submission): AccessResultInterface {
     $webformObject = Webform::load($webform);
@@ -136,7 +181,7 @@ class ApplicationController extends ControllerBase {
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->applicationHandler->singleSubmissionAccess(
+      $this->applicationAccessHandler->singleSubmissionAccess(
         $webform_submissionObject
       ));
   }
@@ -155,9 +200,23 @@ class ApplicationController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function accessByApplicationNumber(AccountInterface $account, string $submission_id): AccessResultInterface {
-    $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
+    try {
+      $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
+    }
+    catch (InvalidPluginDefinitionException |
+    PluginNotFoundException |
+    EntityStorageException |
+    TempStoreException |
+    CompanySelectException |
+    AtvDocumentNotFoundException |
+    AtvFailedToConnectException |
+    TokenExpiredException |
+    GuzzleException $e) {
+      return AccessResult::forbidden('Submission gettting failed');
+    }
 
     if ($webform_submission == NULL) {
       return AccessResult::forbidden('No submission found');
@@ -172,7 +231,7 @@ class ApplicationController extends ControllerBase {
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->applicationHandler->singleSubmissionAccess(
+      $this->applicationAccessHandler->singleSubmissionAccess(
         $webform_submission
       ));
   }
@@ -183,7 +242,7 @@ class ApplicationController extends ControllerBase {
    * @param string $status
    *   Status string from method.
    */
-  public function showMessageForDataStatus(string $status) {
+  public function showMessageForDataStatus(string $status): void {
     $message = NULL;
     $tOpts = ['context' => 'grants_handler'];
 
@@ -228,15 +287,14 @@ class ApplicationController extends ControllerBase {
     $view_mode = 'default';
 
     try {
-      $webform_submission = ApplicationHandler::submissionObjectFromApplicationNumber($submission_id);
+      $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
 
       if ($webform_submission != NULL) {
         $webform = $webform_submission->getWebform();
         $submissionData = $webform_submission->getData();
 
-        $saveIdValidates = $this->applicationHandler->validateDataIntegrity(
-          $webform_submission,
-          NULL,
+        $saveIdValidates = $this->applicationDataService->validateDataIntegrity(
+          $submissionData,
           $submissionData['application_number'],
           $submissionData['metadata']['saveid'] ?? '');
 
@@ -303,17 +361,15 @@ class ApplicationController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect to edit form.
    *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \Drupal\helfi_helsinki_profiili\ProfileDataException
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function newApplication(string $webform_id): RedirectResponse {
 
     $webform = Webform::load($webform_id);
 
-    if (!ApplicationHandler::isApplicationOpen($webform)) {
+    if (!$this->applicationStatusService->isApplicationOpen($webform)) {
       // Add message if application is not open.
       $tOpts = ['context' => 'grants_handler'];
       $this->messenger()->addError($this->t('This application is not open', [], $tOpts), TRUE);
@@ -350,17 +406,24 @@ class ApplicationController extends ControllerBase {
     $acceptableApplicantTypes = array_values($thirdPartySettings['applicantTypes']);
 
     if (!in_array($currentRole['type'], $acceptableApplicantTypes)) {
-      // @todo maybe mandate selection route and message.
       return $this->redirect('<front>');
     }
 
-    $newSubmission = $this->applicationHandler->initApplication($webform->id());
+    try {
+      $newSubmission = $this->applicationInitService->initApplication($webform->id());
+    }
+    catch (\Exception $e) {
+      $newSubmission = NULL;
+      $this->getLogger('ApplicatoinController')->error('Error: %error', [
+        '%error' => $e->getMessage(),
+      ]);
+    }
 
     return $this->redirect(
       'grants_handler.edit_application',
       [
         'webform' => $webform->id(),
-        'webform_submission' => $newSubmission->id(),
+        'webform_submission' => $newSubmission?->id(),
       ]
     );
   }
@@ -518,7 +581,7 @@ class ApplicationController extends ControllerBase {
     $subventionType = '';
     try {
       /** @var \Drupal\helfi_atv\AtvDocument $atv_document */
-      $atv_document = ApplicationHandler::atvDocumentFromApplicationNumber($submission_id);
+      $atv_document = ApplicationHelpers::atvDocumentFromApplicationNumber($submission_id);
     }
     catch (\Exception $e) {
       throw new NotFoundHttpException('Application ' . $submission_id . ' not found.');
@@ -610,7 +673,7 @@ class ApplicationController extends ControllerBase {
    * Returns a page title.
    */
   public function getTitle($submission_id): string {
-    $webform = ApplicationHandler::getWebformFromApplicationNumber($submission_id);
+    $webform = ApplicationHelpers::getWebformFromApplicationNumber($submission_id);
     return $webform->label();
   }
 

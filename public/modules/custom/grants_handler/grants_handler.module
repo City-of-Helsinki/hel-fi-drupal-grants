@@ -18,11 +18,11 @@ use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\Event\UserLogoutEvent;
-use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Form\CopyApplicationModalForm;
 use Drupal\grants_handler\GrantsErrorStorage;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\webform\Entity\Webform;
@@ -364,9 +364,12 @@ function _grants_handler_handle_compensation_element(&$element) {
  * @see \Drupal\webform\WebformSubmissionForm::prepareElements()
  * @see hook_webform_element_ELEMENT_TYPE_alter()
  */
-function grants_handler_webform_element_alter(array &$element, FormStateInterface $form_state, array $context) {
+function grants_handler_webform_element_alter(array &$element, FormStateInterface $form_state, array $context): void {
   $user = Drupal::currentUser();
   $roles = $user->getRoles();
+
+  /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
+  $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
 
   if (!in_array('helsinkiprofiili', $roles)) {
     return;
@@ -440,7 +443,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
 
     if (
       isset($webformData['status']) &&
-      !ApplicationHandler::isSubmissionEditable(NULL, $webformData['status']) &&
+      !$applicationStatusService->isSubmissionEditable(NULL, $webformData['status']) &&
       $element['#type'] != 'webform_actions') {
       $element['#disabled'] = TRUE;
     }
@@ -567,7 +570,7 @@ function _grants_handler_add_checkmark_to_text(string|array $textValue): array {
 function _grants_handler_imported_handler(
   mixed &$array,
   mixed $value,
-  bool $show_checkmark = TRUE
+  bool $show_checkmark = TRUE,
 ) {
   if (!is_array($array)) {
     return;
@@ -600,7 +603,7 @@ function _grants_handler_missing_data(
   ?array &$element,
   string $str1 = 'Field is missing.',
   string $str2 = 'Go to grants profile',
-  string $str3 = 'to fill out missing data.'
+  string $str3 = 'to fill out missing data.',
 ): void {
   if (is_null($element)) {
     return;
@@ -646,6 +649,9 @@ function _grants_handler_alter_number_fields(&$element): void {
  */
 function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
   $tOpts = ['context' => 'grants_handler'];
+
+  /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
+  $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
 
   $user = \Drupal::currentUser();
   $roles = $user->getRoles();
@@ -711,7 +717,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   if ($selectedCompany != NULL) {
     if (
       isset($form["elements"]["1_hakijan_tiedot"]["status"]["#default_value"]) &&
-      !ApplicationHandler::isSubmissionEditable(NULL, $form["elements"]["1_hakijan_tiedot"]["status"]["#default_value"])
+      !$applicationStatusService->isSubmissionEditable(NULL, $form["elements"]["1_hakijan_tiedot"]["status"]["#default_value"])
     ) {
       $form["actions"]["submit"]['#disabled'] = TRUE;
     }
@@ -932,6 +938,10 @@ function grants_handler_preprocess_webform_submission(&$variables) {
   // Get submission object.
   /** @var \Drupal\webform\Entity\WebformSubmission $submission */
   $submission = $variables['webform_submission'];
+
+  /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
+  $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
+
   $webform = $submission->getWebform();
   $data = $submission->getData();
   if (isset($data["application_number"])) {
@@ -961,7 +971,7 @@ function grants_handler_preprocess_webform_submission(&$variables) {
     '#theme' => 'webform_submission_status_history',
     '#submission' => $submission,
   ];
-  if (ApplicationHandler::isSubmissionEditable($submission)) {
+  if ($applicationStatusService->isSubmissionEditable($submission)) {
     $urlCustom = Url::fromRoute(
       'grants_handler.edit_application',
       [
@@ -1037,9 +1047,12 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
   $submission = $variables['submission'];
   $submissionData = $submission->getData();
 
+  /** @var \Drupal\grants_handler\MessageService $messageService */
+  $messageService = \Drupal::service('grants_handler.message_service');
+
   $messages = [];
   if (isset($submissionData['messages']) && is_array($submissionData['messages'])) {
-    $submissionMessages = ApplicationHandler::parseMessages($submissionData);
+    $submissionMessages = $messageService->parseMessages($submissionData);
     foreach ($submissionMessages as $message) {
       $messages[] = [
         '#theme' => 'message_list_item',
@@ -1071,7 +1084,7 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
   }
 
   // If submission is ok for messaging.
-  if (ApplicationHandler::isSubmissionMessageable($submission, NULL)) {
+  if ($messageService->isSubmissionMessageable($submission, NULL)) {
     // Add message form.
     // @phpstan-ignore-next-line
     $variables['message_form'] = \Drupal::formBuilder()
@@ -1272,8 +1285,11 @@ function grants_handler_preprocess_webform_submission_handler_details(&$variable
   $submission = $variables['submission'];
   $submissionData = $submission->getData();
 
-  $handlerEvents = array_filter($submissionData['events'], function ($event) {
-    if ($event['eventType'] == EventsService::$eventTypes['EVENT_INFO']) {
+  /** @var \Drupal\grants_handler\EventsService $eventService */
+  $eventService = \Drupal::service('grants_handler.events_service');
+
+  $handlerEvents = array_filter($submissionData['events'], function ($event) use ($eventService) {
+    if ($event['eventType'] == $eventService->getEventTypes()['EVENT_INFO']) {
       return TRUE;
     }
     return FALSE;
@@ -1294,7 +1310,8 @@ function grants_handler_preprocess_webform_submission_attachment_list(&$variable
   $submissionData = $submission->getData();
 
   // Get submission events.
-  $attachmentEventsHandler = EventsService::filterEvents($submissionData['events'], 'HANDLER_ATT_OK');
+  $eventService = \Drupal::service('grants_handler.events_service');
+  $attachmentEventsHandler = $eventService->filterEvents($submissionData['events'], 'HANDLER_ATT_OK');
 
   $attachments = [];
 
@@ -1339,9 +1356,14 @@ function grants_handler_preprocess_application_list(&$variables) {
 /**
  * Implements hook_preprocess_HOOK().
  */
-function grants_handler_preprocess_application_list_item(&$variables) {
+function grants_handler_preprocess_application_list_item(&$variables): void {
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $tOpts = ['context' => 'grants_handler'];
+
+  // Get status service and get listed statuses.
+  /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
+  $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
+  $applicationStatuses = $applicationStatusService->getApplicationStatuses();
 
   $submissionData = $variables['submission'];
   $submissionId = $variables['submission_id'];
@@ -1351,7 +1373,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     return;
   }
 
-  $applicationTypes = ApplicationHandler::getApplicationTypes();
+  $applicationTypes = Helpers::getApplicationTypes();
 
   $variables['applicationFormName'] = $applicationTypes[$submissionData["application_type"]][$language];
 
@@ -1436,8 +1458,6 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     '#submission_data' => $submissionData,
   ];
 
-  $applicationStatuses = ApplicationHandler::getApplicationStatuses();
-
   $variables['classes'] = [
     strtolower($applicationStatuses[$submissionData["status"]]),
     strtolower($submissionData["application_number"]),
@@ -1477,7 +1497,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
       ->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
   }
 
-  $status = ApplicationHandler::getWebformStatus($webform);
+  $status = $applicationStatusService->getWebformStatus($webform);
 
   $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
   $variables['openEndDate'] = strtotime($thirdPartySettings['applicationClose']);
@@ -1489,7 +1509,7 @@ function grants_handler_preprocess_application_list_item(&$variables) {
     $variables['errorType'] = 'ARCHIVED';
   }
   try {
-    if (array_key_exists($submissionData["status"], ApplicationHandler::getApplicationStatuses())) {
+    if (array_key_exists($submissionData["status"], $applicationStatuses)) {
       $variables['statusString'] = $submissionData['status'];
     }
     else {
@@ -1510,6 +1530,16 @@ function grants_handler_preprocess_application_list_item(&$variables) {
  * @throws \GuzzleHttp\Exception\GuzzleException
  */
 function grants_handler_preprocess_application_status_tag(&$variables): void {
+
+  /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+  $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
+
+  /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
+  $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
+
+  // Get status service and get listed statuses.
+  $applicationStatuses = $applicationStatusService->getApplicationStatuses();
+
   try {
     $submissionData = [];
 
@@ -1517,10 +1547,10 @@ function grants_handler_preprocess_application_status_tag(&$variables): void {
       $submissionData = $variables['submission_data'];
     }
     elseif ($variables['submission']) {
-      $submissionObject = ApplicationHandler::submissionObjectFromApplicationNumber($variables['applicationID']);
+      $submissionObject = $applicationGetterService->submissionObjectFromApplicationNumber($variables['applicationID']);
       $submissionData = $submissionObject->getData();
     }
-    if (array_key_exists($submissionData["status"], ApplicationHandler::getApplicationStatuses())) {
+    if (array_key_exists($submissionData["status"], $applicationStatuses)) {
       $config = \Drupal::config('grants_handler.settings');
       $statusStrings = $config->get('statusStrings');
       if (!isset($variables['langcode'])) {
@@ -1689,6 +1719,9 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $submission = $variables["webform_submission"];
   $submissionData = $submission->getData();
 
+  /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
+  $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
+
   $webform = $submission->getWebForm();
   $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
 
@@ -1731,7 +1764,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     ]
   );
 
-  if (ApplicationHandler::isSubmissionEditable($submission)) {
+  if ($applicationStatusService->isSubmissionEditable($submission)) {
     $editApplicationLinkText = [
       '#theme' => 'edit-label-with-icon',
       '#icon' => 'pen-line',
@@ -1741,7 +1774,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     $variables['editApplicationLink'] = $editApplicationLink;
   }
 
-  $isApplicationOpen = ApplicationHandler::isApplicationOpen($webform);
+  $isApplicationOpen = $applicationStatusService->isApplicationOpen($webform);
 
   if (!isset($thirdPartySettings["status"])) {
     // Use TRUE if not set so we disallow copying if status is not set.
@@ -1787,10 +1820,10 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $variables['copyLink'] = '';
 
   $submissionData = $submission->getData();
-  $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($submission);
+  $applicationNumber = $submissionData['application_number'] ?? ApplicationHelpers::createApplicationNumber($submission);
 
   $variables['applicationNumber'] = $applicationNumber;
-  $variables['isEditable'] = ApplicationHandler::isSubmissionEditable($submission);
+  $variables['isEditable'] = $applicationStatusService->isSubmissionEditable($submission);
   $variables['isEditPage'] = 'grants_handler.edit_application' === \Drupal::routeMatch()
     ->getRouteName();
 
@@ -2035,7 +2068,7 @@ function grants_handler_options_list_alter(array &$options, array $context): voi
   if ($field_definition->getName() === 'field_webform') {
 
     $webforms = Webform::loadMultiple(array_keys($options));
-    $env = ApplicationHandler::getAppEnv();
+    $env = Helpers::getAppEnv();
 
     foreach ($webforms as $key => $webform) {
       $status = $webform->getThirdPartySetting('grants_metadata', 'status');
