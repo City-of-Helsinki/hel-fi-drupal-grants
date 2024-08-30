@@ -13,7 +13,7 @@ id: paragraph.content_cards.field_content_cards_content
 field_name: field_content_cards_content
 entity_type: paragraph
 bundle: content_cards
-label: Content
+label: Sisältö
 description: 'Add here the content that you want to appear as cards to the block.'
 required: true
 translatable: false
