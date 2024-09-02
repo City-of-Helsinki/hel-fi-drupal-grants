@@ -1032,7 +1032,7 @@ display:
         context: '0'
       tab_options:
         type: normal
-        title: Sisältö
+        title: Content
         description: 'Find and manage scheduled content'
         weight: -10
         menu_name: admin
@@ -1126,7 +1126,7 @@ display:
         context: '0'
       tab_options:
         type: normal
-        title: Sisältö
+        title: Content
         description: 'Find and manage scheduled content'
         weight: -10
         menu_name: admin
