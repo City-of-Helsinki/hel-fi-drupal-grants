@@ -9,7 +9,7 @@ dependencies:
 _core:
   default_config_hash: 0hlcjVvL7vdLtkyp8OVSiK8ue6rkEHayXkv5S316yTY
 id: locked_units
-label: 'Lukitut toimipisteet'
+label: 'Locked units'
 module: views
 description: ''
 tag: ''
@@ -22,7 +22,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Lukitut toimipisteet'
+      title: 'Locked units'
       fields:
         tpr_unit_bulk_form:
           id: tpr_unit_bulk_form
@@ -153,7 +153,7 @@ display:
           entity_type: user
           entity_field: name
           plugin_id: field
-          label: 'Lukituksen tekijä'
+          label: 'Lock owner'
           exclude: false
           alter:
             alter_text: false
@@ -216,7 +216,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: date
-          label: 'Lukituksen ajankohta'
+          label: 'Lock Date/Time'
           exclude: false
           alter:
             alter_text: false
@@ -270,7 +270,7 @@ display:
           entity_type: tpr_unit
           entity_field: langcode
           plugin_id: field
-          label: 'Sisällön kieli'
+          label: 'Content language'
           exclude: false
           alter:
             alter_text: false
@@ -381,7 +381,6 @@ display:
         type: full
         options:
           offset: 0
-          pagination_heading_level: h4
           items_per_page: 50
           total_pages: null
           id: 0
@@ -399,6 +398,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -426,7 +426,7 @@ display:
           admin_label: ''
           plugin_id: text_custom
           empty: true
-          content: 'Lukittuja toimipisteitä ei ole.'
+          content: 'There is no currently locked units.'
           tokenize: false
       sorts: {  }
       arguments: {  }
