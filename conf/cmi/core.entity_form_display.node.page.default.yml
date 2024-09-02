@@ -39,7 +39,7 @@ content:
     region: content
     settings:
       title: Paragraph
-      title_plural: Lohkot
+      title_plural: Paragraphs
       edit_mode: open
       closed_mode: summary
       autocollapse: none
@@ -65,7 +65,7 @@ content:
     region: content
     settings:
       title: Paragraph
-      title_plural: Lohkot
+      title_plural: Paragraphs
       edit_mode: closed_expand_nested
       closed_mode: summary
       autocollapse: none
@@ -101,7 +101,7 @@ content:
     region: content
     settings:
       title: Paragraph
-      title_plural: Lohkot
+      title_plural: Paragraphs
       edit_mode: open
       closed_mode: summary
       autocollapse: none
@@ -128,7 +128,7 @@ content:
     region: content
     settings:
       title: Paragraph
-      title_plural: Lohkot
+      title_plural: Paragraphs
       edit_mode: open
       closed_mode: summary
       autocollapse: none

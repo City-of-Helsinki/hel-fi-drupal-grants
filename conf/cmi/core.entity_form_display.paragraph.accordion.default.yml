@@ -47,7 +47,7 @@ content:
     region: content
     settings:
       title: Paragraph
-      title_plural: Lohkot
+      title_plural: Paragraphs
       edit_mode: closed_expand_nested
       closed_mode: summary
       autocollapse: none
