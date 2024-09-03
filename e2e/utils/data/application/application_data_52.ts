@@ -1332,7 +1332,7 @@ const registeredCommunityApplications_52 = {
   draft: baseFormRegisteredCommunity_52,
   missing_values: createFormData(baseFormRegisteredCommunity_52, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_52, wrongValues),
-  swap_fields: createFormData(baseFormRegisteredCommunity_52, fieldSwapForm),
+  // swap_fields: createFormData(baseFormRegisteredCommunity_52, fieldSwapForm),
   success: createFormData(baseFormRegisteredCommunity_52, sendApplication),
 }
 

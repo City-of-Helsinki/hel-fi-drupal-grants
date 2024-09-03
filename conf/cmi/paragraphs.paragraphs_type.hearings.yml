@@ -2,6 +2,8 @@ uuid: 99c68c06-96b7-4359-9adc-182bf5e851c5
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: 1Y5grZGclVeEvoqN3lAOaqxqlRYX4G7J5qzvyBxLL1Y
 id: hearings
 label: Hearings
 icon_uuid: null
