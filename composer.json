@@ -38,7 +38,7 @@
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_formtool_embed": "dev-develop",
         "drupal/helfi_gdpr_api": "^0.9",
-        "drupal/helfi_helsinki_profiili": "dev-UHF-10132-admin-ad-login as 0.9.28",
+        "drupal/helfi_helsinki_profiili": "dev-UHF-10132-admin-ad-login",
         "drupal/helfi_platform_config": "^4.4",
         "drupal/helfi_proxy": "^3.0",
         "drupal/helfi_tpr": "^2.1",
