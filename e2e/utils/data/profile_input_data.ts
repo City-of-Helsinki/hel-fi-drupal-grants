@@ -36,7 +36,7 @@ const PROFILE_INPUT_DATA: ProfileInputData = {
   city: 'Kuopio',
   communityOfficial: 'Marko Niemi',
   role: 'Vastuuhenkilö',
-  email: getFakeEmailAddress({firstName: 'Marko', lastName: 'Niemi'}),
+  email: 'marko.niemi987@example.com',
   phone: '0401234567'
 }
 
