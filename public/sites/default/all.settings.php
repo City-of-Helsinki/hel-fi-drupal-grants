@@ -16,108 +16,122 @@ $config['openid_connect.client.tunnistamoadmin']['settings']['client_scopes'] = 
 
 $settings['error_page']['template_dir'] = '../error_templates';
 
+// Level of Assurance <-> Drupal roles mapping.
+$config['openid_connect.client.tunnistamo']['settings']['loa_roles'] = [
+  [
+    'loa' => 'substantial',
+    'roles' => ['helsinkiprofiili'],
+  ],
+];
+
+$config['openid_connect.client.tunnistamoadmin']['settings']['client_roles'] = ['ad_user'];
+
 // AD roles <-> Drupal roles mapping.
 $config['openid_connect.client.tunnistamoadmin']['settings']['ad_roles'] = [
   // Old mappings.
   [
     'ad_role' => 'sl_avustustest_paakayttajat',
-    'roles' => ['ad_user', 'grants_admin'],
+    'roles' => ['grants_admin'],
   ],
   [
     'ad_role' => 'sl_avustustest_pk_kanslia_kayttajat',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_avustustest_ta_kasko_kayttajat',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_avustustest_pk_pel_kayttajat',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_avustustest_ta_kymp_kayttajat',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_avustustest_ta_kuva_kayttajat',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_avustustest_ta_sote_kayttajat',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_avustus_kanslia_paakayttajat',
-    'roles' => ['ad_user', 'grants_admin'],
+    'roles' => ['grants_admin'],
   ],
   [
     'ad_role' => 'sl_avustus_pk_kanslia',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_avustus_ta_kasko',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_avustus_ta_kymp',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_avustus_pk_pel',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_avustus_ta_kuva',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_avustus_ta_sote',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sl_kanslia_owakayttajat',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   [
     'ad_role' => 'sg_kanslia_kayttajat',
-    'roles' => ['ad_user', 'content_producer_industry'],
+    'roles' => ['content_producer_industry'],
   ],
   // New mappings.
   [
+    'ad_role' => '947058f4-697e-41bb-baf5-f69b49e5579a',
+    'roles' => ['super_administrator'],
+  ],
+  [
     'ad_role' => 'Drupal_Helfi_kaupunkitaso_paakayttajat',
-    'roles' => ['ad_user', 'grants_admin'],
+    'roles' => ['grants_admin'],
   ],
   [
     'ad_role' => 'Drupal_Helfi_Avustukset_paakayttajat',
-    'roles' => ['ad_user', 'grants_admin'],
+    'roles' => ['grants_admin'],
   ],
   [
     'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_suppea',
-    'roles' => ['ad_user', 'content_producer'],
+    'roles' => ['content_producer'],
   ],
   [
     'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kanslia',
-    'roles' => ['ad_user', 'content_producer', 'grants_producer_industry'],
+    'roles' => ['content_producer', 'grants_producer_industry'],
   ],
   [
     'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kanslia',
-    'roles' => ['ad_user', 'content_producer'],
+    'roles' => ['content_producer'],
   ],
   [
     'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kasko',
-    'roles' => ['ad_user', 'content_producer', 'grants_producer_industry'],
+    'roles' => ['content_producer', 'grants_producer_industry'],
   ],
   [
     'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kasko',
-    'roles' => ['ad_user', 'content_producer'],
+    'roles' => ['content_producer'],
   ],
   [
     'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kuva',
-    'roles' => ['ad_user', 'content_producer', 'grants_producer_industry'],
+    'roles' => ['content_producer', 'grants_producer_industry'],
   ],
   [
     'ad_role' => 'Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kuva',
-    'roles' => ['ad_user', 'content_producer'],
+    'roles' => ['content_producer'],
   ],
 ];
