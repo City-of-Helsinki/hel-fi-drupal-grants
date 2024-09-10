@@ -947,6 +947,48 @@
             }
           }
 		},
+        "customQuestionsInfo": {
+          "description": "Made for 'Tarkemmat tiedot' but tried to be named generic enough so could be used in other places same as activityBasisInfo but that naming is too specific",
+          "type": "object",
+          "properties": {
+            "customQuestionsArray": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "description": "Identifies the data of the array item.",
+                    "type": "string"
+                  },
+                  "label": {
+                    "description": "Field's name in the UI",
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "valueType": {
+                    "type": "string",
+                    "enum": [
+                      "string",
+                      "int",
+                      "bool",
+                      "datetime",
+                      "float",
+                      "double"
+                    ]
+                  }
+                },
+                "required": [
+                  "ID",
+                  "label",
+                  "value",
+                  "valueType"
+                ]
+              }
+            }
+          }
+		},
         "eventInfoArray": {
           "description": "'Tapahtuman tiedot' and 'Kustannukset' (which is actually events info in application type 33) section of the application",
           "type": "array",
