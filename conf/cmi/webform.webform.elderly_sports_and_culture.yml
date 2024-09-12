@@ -54,6 +54,12 @@ elements: |-
     yhteiso_jolle_haetaan_avustusta:
       '#type': webform_section
       '#title': 'Yhteisö, jolle haetaan avustusta'
+      '#attributes':
+        class:
+          - grants-profile--imported-section
+      markup:
+        '#type': webform_markup
+        '#markup': '<p>Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</p>'
       hakijan_tiedot:
         '#type': applicant_info
         '#title': Hakija
