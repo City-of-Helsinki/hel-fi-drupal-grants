@@ -25,7 +25,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
     }
-    return $info;
+    return $this->propertyDefinitions;
   }
 
 }
