@@ -51,9 +51,12 @@ elements: |-
     status:
       '#type': hidden
       '#title': 'Hakemuksen tila'
-  hakijan_tiedot:
-    '#type': applicant_info
-    '#title': Hakija
+    yhteiso_jolle_haetaan_avustusta:
+      '#type': webform_section
+      '#title': 'Yhteisö, jolle haetaan avustusta'
+      hakijan_tiedot:
+        '#type': applicant_info
+        '#title': Hakija
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
@@ -171,7 +174,7 @@ elements: |-
               class:
                 - webform--small
             '#title': 'Myönnetyn avustuksen summa'
-            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
+            '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
           purpose:
             '#type': textarea
             '#title': 'Kuvaus käyttötarkoituksesta'
@@ -260,7 +263,7 @@ elements: |-
               class:
                 - webform--small
             '#title': 'Haetun avustuksen summa'
-            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
+            '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
           purpose:
             '#type': textarea
             '#title': 'Kuvaus käyttötarkoituksesta'
