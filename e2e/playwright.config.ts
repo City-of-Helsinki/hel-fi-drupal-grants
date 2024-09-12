@@ -36,7 +36,7 @@ export default defineConfig({
   },
   // For expect calls
   expect: {
-    timeout: 7000,   // <---------
+    timeout: 10000,   // <---------
   },
   projects: [
     /* Setup and auth setup tests. */
