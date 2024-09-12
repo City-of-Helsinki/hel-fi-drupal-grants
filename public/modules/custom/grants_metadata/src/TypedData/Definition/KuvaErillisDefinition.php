@@ -11,11 +11,21 @@ use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinit
  */
 class KuvaErillisDefinition extends ComplexDataDefinitionBase {
 
+  use ApplicationDefinitionTrait;
+
   /**
    * @inheritDoc
    */
   public function getPropertyDefinitions() {
-    // TODO: Implement getPropertyDefinitions() method.
+    if (!isset($this->propertyDefinitions)) {
+
+      $info = &$this->propertyDefinitions;
+
+      foreach ($this->getBaseProperties() as $key => $property) {
+        $info[$key] = $property;
+      }
+    }
+    return $info;
   }
 
 }
