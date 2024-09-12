@@ -1,7 +1,6 @@
 import {defineConfig} from '@playwright/test';
 import 'dotenv/config';
 
-
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
