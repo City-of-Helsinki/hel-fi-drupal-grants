@@ -1,0 +1,8 @@
+.webform-element-description {
+  --helper-color-default: var(--color-black-60);
+  color: var(--helper-color-default);
+  display: block;
+  font-size: var(--fontsize-body-m);
+  line-height: var(--lineheight-l);
+  margin-top: var(--spacing-s);
+}

@@ -12,7 +12,6 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
-use Drupal\grants_handler\ApplicationHandler;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\webform\Entity\Webform;
 
@@ -214,7 +213,10 @@ function hdbt_subtheme_preprocess_grants_handler_print_atv_document(&$vars): voi
   ksort($vars['pages']);
   $vars['date'] = date_format(date_create($vars['atv_document']['updated_at']), 'd.m.Y H:i');
 
-  $submissionObject = ApplicationHandler::submissionObjectFromApplicationNumber($vars['atv_document']['transaction_id']);
+  /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+  $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
+
+  $submissionObject = $applicationGetterService->submissionObjectFromApplicationNumber($vars['atv_document']['transaction_id']);
 
   $vars['statusTag'] = [
     '#theme' => 'application_status_tag',

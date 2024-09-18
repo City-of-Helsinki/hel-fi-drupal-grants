@@ -3,7 +3,6 @@
 namespace Drupal\grants_profile\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Form\FormBuilder;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
@@ -20,47 +19,18 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class GrantsProfileController extends ControllerBase {
 
-
-  /**
-   * The form builder.
-   *
-   * @var \Drupal\Core\Form\FormBuilder
-   */
-  protected $formBuilder;
-
-  /**
-   * Grants profile service.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Helsinki profile service.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
-
   /**
    * ModalFormContactController constructor.
    *
-   * @param \Drupal\Core\Form\FormBuilder $form_builder
-   *   The form builder.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Grants profile service.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
    *   Data for Helsinki Profile.
    */
   public function __construct(
-    FormBuilder $form_builder,
-    GrantsProfileService $grantsProfileService,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData
-  ) {
-    $this->formBuilder = $form_builder;
-    $this->grantsProfileService = $grantsProfileService;
-    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
-  }
+    protected GrantsProfileService $grantsProfileService,
+    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -72,7 +42,6 @@ class GrantsProfileController extends ControllerBase {
    */
   public static function create(ContainerInterface $container): static {
     return new static(
-      $container->get('form_builder'),
       $container->get('grants_profile.service'),
       $container->get('helfi_helsinki_profiili.userdata')
     );
@@ -83,6 +52,8 @@ class GrantsProfileController extends ControllerBase {
    *
    * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
    *   Data to render
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function viewProfile(): array|RedirectResponse {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
@@ -195,15 +166,15 @@ you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
     $formObject = NULL;
 
     if ($selectedRoleData['type'] == 'private_person') {
-      $formObject = $this->formBuilder->getForm('\Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson');
+      $formObject = $this->formBuilder()->getForm('\Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson');
     }
 
     if ($selectedRoleData['type'] == 'registered_community') {
-      $formObject = $this->formBuilder->getForm('\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity');
+      $formObject = $this->formBuilder()->getForm('\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity');
     }
 
     if ($selectedRoleData['type'] == 'unregistered_community') {
-      $formObject = $this->formBuilder->getForm('\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity');
+      $formObject = $this->formBuilder()->getForm('\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity');
     }
 
     $build['#profileForm'] = $formObject;

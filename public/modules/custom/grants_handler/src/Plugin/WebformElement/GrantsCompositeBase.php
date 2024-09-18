@@ -63,18 +63,22 @@ class GrantsCompositeBase extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
-  protected function formatHtmlItemValue(array $element,
-                                         WebformSubmissionInterface $webform_submission,
-                                         array $options = []): array|string {
+  protected function formatHtmlItemValue(
+    array $element,
+    WebformSubmissionInterface $webform_submission,
+    array $options = [],
+  ): array|string {
     return $this->formatTextItemValue($element, $webform_submission, $options);
   }
 
   /**
    * {@inheritdoc}
    */
-  protected function formatTextItemValue(array $element,
-                                         WebformSubmissionInterface $webform_submission,
-                                         array $options = []): array {
+  protected function formatTextItemValue(
+    array $element,
+    WebformSubmissionInterface $webform_submission,
+    array $options = [],
+  ): array {
     $value = $this->getValue($element, $webform_submission, $options);
     $lines = ['<dl>'];
 
@@ -104,18 +108,23 @@ class GrantsCompositeBase extends WebformCompositeBase {
    *   Webform Element.
    * @param string $fieldName
    *   Field name in question.
-   * @param string $fieldValue
+   * @param mixed $fieldValue
    *   Value of the Field.
    * @param array $dateFieldNamesArray
    *   Array of Date Fields names.
    *
-   * @return string
+   * @return mixed
    *   The formatted Field Value.
    */
-  public function formatFieldValue(array $webformElement,
-                                    string $fieldName,
-                                    string $fieldValue,
-                                    $dateFieldNamesArray = ['dateBegin', 'dateEnd']) {
+  public function formatFieldValue(
+    array $webformElement,
+    string $fieldName,
+    mixed $fieldValue,
+    array $dateFieldNamesArray = ['dateBegin', 'dateEnd'],
+  ): mixed {
+    if ($fieldValue === NULL) {
+      return NULL;
+    }
     if (in_array($fieldName, $dateFieldNamesArray) && $fieldValue) {
       return date("d.m.Y", strtotime($fieldValue));
     }

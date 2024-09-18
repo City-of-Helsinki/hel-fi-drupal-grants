@@ -1,0 +1,158 @@
+{
+	"applicant_type": "registered_community",
+	"avustukset_summa": "4500",
+	"application_number": "LOCALPAK-065-0000593",
+	"status": "DRAFT",
+	"hakijan_tiedot": {
+    "applicantType": "registered_community",
+    "applicant_type": "registered_community",
+    "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
+    "companyNumber": "2036583-2",
+    "registrationDate": "10.05.2006",
+    "home": "VOIKKAA",
+    "communityOfficialNameShort": "AE",
+    "foundingYear": "1337",
+    "homePage": "arieerola.example.com"
+  },
+  "email": "ari.eerola@example.com",
+	"contact_person": "Testaaja",
+	"contact_person_phone_number": "1234567",
+	"community_officials": [
+		{
+			"community_officials_select": "0",
+			"name": "Testeeje",
+			"role": "2",
+			"roletext": "Contact person",
+			"email": "pp@example.com",
+			"phone": "1234567"
+		}
+	],
+	"acting_year": "2025",
+	"subventions": [
+		{
+			"subventionTypeTitle": "Camp grant",
+			"subventionType": "12",
+			"amount": "4 500,00\u20ac"
+		}
+	],
+	"tulo": [
+		{
+			"label": "Tulot",
+			"value": "1 000",
+			"incomeGroupName": "general"
+		}
+	],
+	"meno": [
+		{
+			"label": "Menot",
+			"value": "2 000",
+			"costGroupName": "general"
+		}
+	],
+	"additional_information": "Lis\u00e4tiedot",
+	"yhteison_saannot": null,
+	"leiri_excel": null,
+	"toimintasuunnitelma": null,
+	"talousarvio": null,
+	"extra_info": "",
+	"muu_liite": [
+		{
+			"attachment": null,
+			"attachmentName": "",
+			"description": "",
+			"fileStatus": "",
+			"fileType": "",
+			"integrationID": "",
+			"isAttachmentNew": "",
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false
+		}
+	],
+	"application_type": "NUORLOMALEIR",
+	"application_type_id": "65",
+	"form_timestamp": "2024-06-28T16:55:28",
+	"form_timestamp_created": "2024-06-28T16:54:12",
+	"form_timestamp_submitted": null,
+	"account_number": "FI5756615161454182",
+	"myonnetty_avustus": [
+
+	],
+	"olemme_saaneet_muita_avustuksia": 0,
+	"haettu_avustus_tieto": null,
+	"olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta": 0,
+	"myonnetty_avustus_total": 0,
+	"haettu_avustus_tieto_total": "0",
+	"benefits_loans": "",
+	"benefits_premises": "",
+	"business_purpose": "fbvd zb ",
+	"community_practices_business": null,
+	"sender_firstname": "Nordea",
+	"sender_lastname": "Demo",
+	"sender_person_id": "210281-9988",
+	"sender_user_id": "280f75c5-6a20-4091-b22d-dfcdce7fef60",
+	"sender_email": "profiilitesti@mailinator.com",
+	"attachments": [
+		{
+			"description": "Confirmation for account FI5756615161454182",
+			"fileName": "truck_clipart_15144.jpg",
+			"isNewAttachment": true,
+			"fileType": 45,
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false,
+			"integrationID": "\/LOCALPAK\/v1\/documents\/c7eae006-c340-4576-881d-e2848019ead4\/attachments\/104369\/"
+		}
+	],
+	"form_update": false,
+	"status_updates": [
+
+	],
+	"events": [
+		{
+			"eventType": "HANDLER_ATT_OK",
+			"eventID": "b0c1e736-3c69-4259-a29e-370cb25bc904",
+			"caseId": "LOCALPAK-065-0000593",
+			"eventDescription": "Attachment uploaded for the IBAN: FI5756615161454182.",
+			"eventTarget": "truck_clipart_15144.jpg",
+			"eventSource": "GrantsApplications",
+			"timeUpdated": "2024-06-28T16:55:29",
+			"timeCreated": "2024-06-28T16:55:29"
+		}
+	],
+	"messages": [
+
+	],
+	"lisakysymys_1": null,
+	"metadata": {
+		"appenv": "LOCALPAK",
+		"saveid": "initialSave",
+		"language": "en",
+		"form_uuid": "2b6116cc-01bd-41d1-ac3d-014896a6f095",
+		"applicant_id": "7769480-5",
+		"applicant_type": "registered_community",
+		"applicationnumber": "LOCALPAK-065-0000593"
+	},
+	"community_street": "dfvg",
+	"community_city": "vfdsg",
+	"community_post_code": "12345",
+	"community_country": "Suomi",
+	"incomeGroupName": "general",
+	"costGroupName": "general",
+	"budgetInfo": {
+		"tulo": [
+			{
+				"label": "Tulot",
+				"value": "1 000",
+				"incomeGroupName": "general"
+			}
+		],
+		"meno": [
+			{
+				"label": "Menot",
+				"value": "2 000",
+				"costGroupName": "general"
+			}
+		]
+	},
+	"compensation_total_amount": 0,
+	"registration_date": "2020-12-08T00:00:00"
+}

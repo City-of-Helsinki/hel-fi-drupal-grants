@@ -1,5 +1,81 @@
 # CHANGELOG
 
+## 2024.12
+- 5a690fe28 fix: AU-2522: Refactor ApplicationHandler (#1456)
+- 2e743481c UHF-10370: Remove breaking module (#1473)
+- 37cc72acd Update configuration (#1472)
+- d54e722a1 fix: UHF-10344: update e2e node image to custom one (#1471)
+- c04be04b4 Revert change in dockerfile
+- 4c12b95e5 Add Openshift User
+- 458260f4a UHF-10357: Update convert method to allow null returns.
+- f9ce765f6 UHF-10357: Remove fields that break Avus2.
+- 1b9f5cc93 Add package.json
+- 4975c3e0d Update configuration (#1469)
+- e8089727f Autologout fix
+- a4cf0c639 Update configuration (#1467)
+- 637238be2 Update configuration (#1466)
+- 2cf828ce5 fix: UHF-10202: Webform previews (#1465)
+- 9e96b9185 Update configuration (#1464)
+- bea0e26a0 Update configuration (#1461)
+- d9f78fcb4 test: AU-2128: Rest of form unit tests (#1463)
+- f411d8a94 docs: AU-2545: Added documentation to the used interfaces and types. (#1462)
+- 679075961 fix: UHF-9946: Fix icons on applicant role selection page (#1458)
+- 0b7d2ef31 fix: AU-2220: Add spacing for the role selector block (#1460)
+- 25368662d feat: AU-2548: Added new AD-group <-> Drupal role mappings. (#1459)
+- 7b9ced44f Automatic update (#1457)
+- b5a5d25a feat: AU-1744: refactor document content to typed data (#1452)
+- 2c112734 feat: AU-2544: Added new ad-group <-> drupal-role mappings. (#1455)
+- 4b3daea4 fix: AU-2317: Show data of kuvaproj application in print view (#1454)
+- a51a826f fix: AU-2542: Attempting to fix inline form error validation. (#1453)
+- da3ff075 Update configuration (#1451)
+- 2e87485b UHF-9946: hdbt_subtheme refactoring and updating (#1441)
+- f51d2404 conf: Update configuration (#1448)
+- 59ae3b28 fix: AU-2342: Hide attachments with only a description in preview page (#1450)
+- 627f2856 feat: AU-2329, E2E: Test tooltip functionality (#1446)
+- b654a641 feat: AU-1743: Refactor getValueFromDocument method to it's own class (#1449)
+- eb28b8c0 docs: Add missing 67 example json.
+- d681469a conf: Update configuration (#1447)
+- 136cf7c6 fix: AU-2541: Fixed a bug in GrantsCompositeBase.php. (#1445)
+- 82cc3776 conf: Update configuration (#1432)
+- 8f16f14e feat: AU-448: Breakin change flag and logic to determine if newer versions have a breaking change. Disable versioning fields for non superusers. Translate closed webform text (#1439)
+- b7031e4d feat: AU-2216, E2E: Inline form error validation (#1430)
+- 035521308 fix: UHF-10362: Fix faker created testing emails to use example.com domain (#1477)
+- 5437161c3 Automatic update (#1474)
+- cb6ec51ce Fixed language manager call (#1476)
+- 2bdf8c734 Fixed constructor params (#1475)
+- d7692c643 docs: CHANGELOG
+- 30d49dfe5 Merge branch 'develop' into release/2024.11
+- 5a690fe28 fix: AU-2522: Refactor ApplicationHandler (#1456)
+- 2e743481c UHF-10370: Remove breaking module (#1473)
+- a1f51332e Merge branch 'hotfix/UHF-10357' into develop
+- 37cc72acd Update configuration (#1472)
+- d54e722a1 fix: UHF-10344: update e2e node image to custom one (#1471)
+- c04be04b4 Revert change in dockerfile
+- 4c12b95e5 Add Openshift User
+- 458260f4a (hotfix/UHF-10357) UHF-10357: Update convert method to allow null returns.
+- dd09b027d (HEAD -> release/2024.12, origin/release/2024.12) Product config import
+- 3a10c8695 Merge branch 'develop' into release/2024.12
+- 6cc588f67 (origin/develop, origin/HEAD, develop) Automatic update (#1485)
+- b0777d933 Try to trigger Sonar with an change
+- 4dabd318f Remove unused variables.
+- 3511e5b25 Merge branch 'main' into release/2024.12
+- 1ed74d98a Remove apparently unnecessary awaits from test runs
+- 6d4b4156d Set expect timeout to 10s in playwright config.
+- 6826662fe Set expect timeout to 7s in playwright config.
+- f28d138ed Automatic update (#1481)
+- cd28b665c Automatic update (#1480)
+- 9a210ba14 feat: UHF-10132: Add tunnistamo mappings (#1479)
+- 69bc1ff0e Fix phasing item translation..
+- 5ad7b0696 We cannot use generated email in profile.
+- 6e9aa9515 Merge branch 'develop' into release/2024.12
+- f601b59cd Automatic update (#1478)
+- b578a213f Fix Lohkot word
+- 1908170d9 Remove field swap tests until ticket UHF-10345 is resolved.
+
+## 2024.11 / Hotfix
+- 458260f4a (hotfix/UHF-10357) UHF-10357: Update convert method to allow null returns.
+- f9ce765f6 UHF-10357: Remove fields that break Avus2.
+
 ## 2024.10
 - f0b6aafc fix: AU-2508: add missing filter to content editor (#1443)
 - bea2cc2c AU-448: Change correct status to production check (#1442)

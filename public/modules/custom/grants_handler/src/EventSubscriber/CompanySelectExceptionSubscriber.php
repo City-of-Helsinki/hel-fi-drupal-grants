@@ -43,7 +43,7 @@ class CompanySelectExceptionSubscriber implements EventSubscriberInterface {
   public function __construct(
     MessengerInterface $messenger,
     GrantsMandateRedirectService $redirectService,
-    ) {
+  ) {
     $this->messenger = $messenger;
     $this->redirectService = $redirectService;
   }

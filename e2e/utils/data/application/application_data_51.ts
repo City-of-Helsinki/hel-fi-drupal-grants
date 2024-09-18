@@ -11,6 +11,7 @@ import {
   viewPageFormatCurrency,
   viewPageFormatNumber
 } from "../../view_page_formatters";
+import {getFakeEmailAddress} from "../../field_helpers";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -23,7 +24,7 @@ const baseFormRegisteredCommunity_51: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: faker.internet.email(),
+          value: getFakeEmailAddress(),
           viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
@@ -457,6 +458,13 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-contact-person-phone-number',
         'edit-community-address-community-address-select'
       ],
+      expectedInlineErrors: [
+        { selector: '.form-item-bank-account-account-number-select', errorMessage: 'Valitse tilinumero kenttä on pakollinen.' },
+        { selector: '.form-item-email', errorMessage: 'Sähköpostiosoite kenttä on pakollinen.' },
+        { selector: '.form-item-contact-person', errorMessage: 'Yhteyshenkilö kenttä on pakollinen.' },
+        { selector: '.form-item-contact-person-phone-number', errorMessage: 'Puhelinnumero kenttä on pakollinen.' },
+        { selector: '.webform-type-community-address-composite', errorMessage: 'Yhteisön osoite kenttä on pakollinen.' },
+      ],
     },
     '2_avustustiedot': {
       items: {},
@@ -523,6 +531,9 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
         },
       },
       itemsToRemove: [],
+      expectedInlineErrors: [
+        { selector: '.form-item-email', errorMessage: 'ääkkösiävaa ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com.' },
+      ],
     },
   },
   expectedErrors: {

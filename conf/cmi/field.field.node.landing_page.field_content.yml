@@ -13,7 +13,6 @@ dependencies:
     - paragraphs.paragraphs_type.event_list
     - paragraphs.paragraphs_type.from_library
     - paragraphs.paragraphs_type.front_banner
-    - paragraphs.paragraphs_type.front_page_latest_news
     - paragraphs.paragraphs_type.hearings
     - paragraphs.paragraphs_type.liftup_with_image
     - paragraphs.paragraphs_type.list_of_links
@@ -26,6 +25,7 @@ dependencies:
     - paragraphs.paragraphs_type.service_list
     - paragraphs.paragraphs_type.service_list_search
     - paragraphs.paragraphs_type.target_group_links
+    - paragraphs.paragraphs_type.unit_contact_card
     - paragraphs.paragraphs_type.unit_search
   module:
     - entity_reference_revisions
@@ -46,7 +46,6 @@ settings:
   handler_settings:
     target_bundles:
       front_banner: front_banner
-      front_page_latest_news: front_page_latest_news
       oma_asiointi: oma_asiointi
       list_of_links: list_of_links
       content_cards: content_cards
@@ -67,6 +66,7 @@ settings:
       service_list: service_list
       service_list_search: service_list_search
       unit_search: unit_search
+      unit_contact_card: unit_contact_card
     negate: 0
     target_bundles_drag_drop:
       banner:
@@ -91,9 +91,6 @@ settings:
         weight: 5
         enabled: true
       front_banner:
-        weight: 0
-        enabled: true
-      front_page_latest_news:
         weight: 0
         enabled: true
       hearings:
@@ -131,6 +128,9 @@ settings:
         enabled: true
       target_group_links:
         weight: 12
+        enabled: true
+      unit_contact_card:
+        weight: 18
         enabled: true
       unit_search:
         weight: 17

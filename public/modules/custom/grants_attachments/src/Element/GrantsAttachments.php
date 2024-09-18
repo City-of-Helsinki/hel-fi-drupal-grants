@@ -10,9 +10,10 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\file\Entity\File;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
-use Drupal\grants_handler\ApplicationHandler;
 use Drupal\grants_handler\GrantsErrorStorage;
+use Drupal\grants_handler\Helpers;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Utility\WebformElementHelper;
 
@@ -458,12 +459,14 @@ class GrantsAttachments extends WebformCompositeBase {
    * @return bool|null
    *   Success or not.
    *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public static function validateUpload(
     array &$element,
     FormStateInterface $form_state,
-    array &$form): bool|null {
+    array &$form,
+  ): bool|null {
     $webformKey = $element["#parents"][0];
     $triggeringElement = $form_state->getTriggeringElement();
     $isRemoveAction = str_contains($triggeringElement["#name"], 'attachment_remove_button');
@@ -591,23 +594,50 @@ class GrantsAttachments extends WebformCompositeBase {
 
   /**
    * Upload file.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $formState
+   *   Form state.
+   * @param array $element
+   *   Element.
+   * @param \Drupal\file\Entity\File $file
+   *   File.
+   * @param array $valueParents
+   *   Value parents.
+   * @param string $applicationNumber
+   *   Application number.
+   * @param bool $multiValueField
+   *   Multi value field.
+   * @param int $index
+   *   Index.
+   * @param string $formFiletype
+   *   Form filetype.
+   *
+   * @return bool
+   *   Success or not.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   protected static function uploadFile(
-    $formState,
-    $element,
-    $file,
-    $valueParents,
-    $applicationNumber,
-    $multiValueField,
-    $index,
-    $formFiletype): bool {
+    FormStateInterface $formState,
+    array $element,
+    File $file,
+    array $valueParents,
+    string $applicationNumber,
+    bool $multiValueField,
+    int $index,
+    string $formFiletype,
+  ): bool {
     try {
-      /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
-      $applicationHandler = \Drupal::service('grants_handler.application_handler');
+
       /** @var \Drupal\helfi_atv\AtvService $atvService */
       $atvService = \Drupal::service('helfi_atv.atv_service');
+
+      /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+      $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
+
       // Get Document for this application.
-      $atvDocument = $applicationHandler->getAtvDocument($applicationNumber);
+      $atvDocument = $applicationGetterService->getAtvDocument($applicationNumber);
 
       // Upload attachment to document.
       $attachmentResponse = $atvService->uploadAttachment($atvDocument->getId(), $file->getFilename(), $file);
@@ -621,7 +651,7 @@ class GrantsAttachments extends WebformCompositeBase {
       $integrationId = str_replace($baseUrl, '', $attachmentResponse['href']);
       $integrationId = str_replace($baseUrlApps, '', $integrationId);
 
-      $appParam = ApplicationHandler::getAppEnv();
+      $appParam = Helpers::getAppEnv();
       if ($appParam !== 'PROD') {
         $integrationId = '/' . $appParam . $integrationId;
       }
@@ -720,7 +750,8 @@ class GrantsAttachments extends WebformCompositeBase {
     array &$element,
     FormStateInterface $formState,
     $webformDataElement,
-    $fid) {
+    $fid,
+  ) {
     try {
       // Delete attachment via integration id.
       $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId($webformDataElement["integrationID"]);
@@ -793,7 +824,8 @@ class GrantsAttachments extends WebformCompositeBase {
   public static function validateDeliveredLaterCheckbox(
     array &$element,
     FormStateInterface $form_state,
-    array &$complete_form) {
+    array &$complete_form,
+  ) {
     $tOpts = ['context' => 'grants_attachments'];
 
     $file = $form_state->getValue([
@@ -827,7 +859,8 @@ class GrantsAttachments extends WebformCompositeBase {
   public static function validateIncludedOtherFileCheckbox(
     array &$element,
     FormStateInterface $form_state,
-    array &$complete_form) {
+    array &$complete_form,
+  ) {
     $tOpts = ['context' => 'grants_attachments'];
 
     $file = $form_state->getValue([
@@ -863,7 +896,7 @@ class GrantsAttachments extends WebformCompositeBase {
   public static function validateElements(
     array &$element,
     FormStateInterface $form_state,
-    array &$complete_form
+    array &$complete_form,
   ) {
     $tOpts = ['context' => 'grants_attachments'];
 

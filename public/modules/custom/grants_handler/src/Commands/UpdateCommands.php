@@ -5,7 +5,7 @@ namespace Drupal\grants_handler\Commands;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationHelpers;
 use Drush\Commands\DrushCommands;
 
 /**
@@ -113,7 +113,7 @@ class UpdateCommands extends DrushCommands {
       $currentWebformObj = $this->entityTypeManager->getStorage('webform')->load($currentWebform['target_id']);
       $applicationType = $currentWebformObj->getThirdPartySetting('grants_metadata', 'applicationType');
 
-      $latestVersion = ApplicationHandler::getLatestApplicationForm($applicationType);
+      $latestVersion = ApplicationHelpers::getLatestApplicationForm($applicationType);
       $thirdPartySettings = $latestVersion->getThirdPartySettings('grants_metadata');
 
       if ($latestVersion === NULL) {

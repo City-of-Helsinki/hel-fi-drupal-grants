@@ -7,19 +7,26 @@ use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\DrupalKernel;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\TempStore\TempStoreException;
 use Drupal\Core\TypedData\Exception\ReadOnlyException;
 use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_handler\ApplicationException;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationGetterService;
+use Drupal\grants_handler\ApplicationHelpers;
+use Drupal\grants_handler\ApplicationInitService;
+use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\grants_handler\ApplicationUploaderService;
+use Drupal\grants_handler\ApplicationValidator;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\GrantsException;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
 use Drupal\grants_handler\WebformSubmissionNotesHelper;
 use Drupal\grants_mandate\CompanySelectException;
+use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -32,6 +39,7 @@ use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Main handler for Grants forms.
@@ -144,13 +152,6 @@ class GrantsHandler extends WebformHandlerBase {
   protected AttachmentHandler $attachmentHandler;
 
   /**
-   * Process application data from webform to ATV.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
-
-  /**
    * Form lock service.
    *
    * @var \Drupal\grants_handler\FormLockService
@@ -204,12 +205,59 @@ class GrantsHandler extends WebformHandlerBase {
    *
    * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  protected $requestStack;
+  protected RequestStack $requestStack;
+
+  /**
+   * Application validator.
+   *
+   * @var \Drupal\grants_handler\ApplicationValidator
+   */
+  protected ApplicationValidator $applicationValidator;
+
+  /**
+   * Status service.
+   *
+   * @var \Drupal\grants_handler\ApplicationStatusService
+   */
+  protected ApplicationStatusService $applicationStatusService;
+
+  /**
+   * Application data service.
+   *
+   * @var \Drupal\grants_metadata\ApplicationDataService
+   */
+  protected ApplicationDataService $applicationDataService;
+
+  /**
+   * Init application data.
+   *
+   * @var \Drupal\grants_handler\ApplicationInitService
+   */
+  protected ApplicationInitService $applicationInitService;
+
+  /**
+   * Uploader class.
+   *
+   * @var \Drupal\grants_handler\ApplicationUploaderService
+   */
+  protected ApplicationUploaderService $applicationUploaderService;
+
+  /**
+   * Access to application data.
+   *
+   * @var \Drupal\grants_handler\ApplicationGetterService
+   */
+  protected ApplicationGetterService $applicationGetterService;
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+  ): WebformHandlerBase| GrantsHandler| ContainerFactoryPluginInterface {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
 
     /** @var \Drupal\Core\Session\AccountProxyInterface $currentUser */
@@ -233,14 +281,19 @@ class GrantsHandler extends WebformHandlerBase {
     $instance->attachmentHandler = $attachmentHandler;
     $instance->attachmentHandler->setDebug($instance->isDebug());
 
-    /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
-    $applicationHandler = $container->get('grants_handler.application_handler');
-    $instance->applicationHandler = $applicationHandler;
-    $instance->applicationHandler->setDebug($instance->isDebug());
-
     /** @var \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper */
     $grantsFormNavigationHelper = $container->get('grants_handler.navigation_helper');
     $instance->grantsFormNavigationHelper = $grantsFormNavigationHelper;
+
+    /** @var \Drupal\grants_handler\ApplicationValidator $applicationValidator */
+    $applicationValidator = $container->get('grants_handler.application_validator');
+    $instance->applicationValidator = $applicationValidator;
+    $instance->applicationValidator->setDebug($instance->isDebug());
+
+    /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
+    $applicationStatusService = $container->get('grants_handler.application_status_service');
+    $instance->applicationStatusService = $applicationStatusService;
+    $instance->applicationStatusService->setDebug($instance->isDebug());
 
     /** @var \Drupal\grants_handler\FormLockService $formLockService */
     $formLockService = $container->get('grants_handler.form_lock_service');
@@ -253,6 +306,22 @@ class GrantsHandler extends WebformHandlerBase {
     /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
     $requestStack = $container->get('request_stack');
     $instance->requestStack = $requestStack;
+
+    /** @var \Drupal\grants_metadata\ApplicationDataService $applicationDataService */
+    $applicationDataService = $container->get('grants_metadata.application_data_service');
+    $instance->applicationDataService = $applicationDataService;
+
+    /** @var \Drupal\grants_handler\ApplicationInitService $applicationInitService */
+    $applicationInitService = $container->get('grants_handler.application_init_service');
+    $instance->applicationInitService = $applicationInitService;
+
+    /** @var \Drupal\grants_handler\ApplicationUploaderService $applicationUploaderService */
+    $applicationUploaderService = $container->get('grants_handler.application_uploader_service');
+    $instance->applicationUploaderService = $applicationUploaderService;
+
+    /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+    $applicationGetterService = $container->get('grants_handler.application_getter_service');
+    $instance->applicationGetterService = $applicationGetterService;
 
     $instance->triggeringElement = '';
     $instance->applicationNumber = '';
@@ -467,7 +536,7 @@ class GrantsHandler extends WebformHandlerBase {
         if ($webform_submission->serial()) {
 
           $submissionData = $webform_submission->getData();
-          $applicationNumber = $submissionData['application_number'] ?? ApplicationHandler::createApplicationNumber($webform_submission);
+          $applicationNumber = $submissionData['application_number'] ?? ApplicationHelpers::createApplicationNumber($webform_submission);
 
           $this->applicationNumber = $applicationNumber;
           $this->submittedFormData['application_number'] = $this->applicationNumber;
@@ -740,8 +809,7 @@ class GrantsHandler extends WebformHandlerBase {
     $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $this->applicationActingYears;
 
     if ($this->applicationNumber) {
-      $dataIntegrityStatus = $this->applicationHandler->validateDataIntegrity(
-        NULL,
+      $dataIntegrityStatus = $this->applicationDataService->validateDataIntegrity(
         $submissionData,
         $this->applicationNumber,
         $submissionData['metadata']['saveid'] ?? '');
@@ -754,6 +822,18 @@ information in your application has been updated yet. Please wait a
 moment and reload the page.',
             [],
             $tOpts));
+      }
+
+      $webform = $webform_submission->getWebform();
+      $breakingChanges = ApplicationHelpers::hasBreakingChangesInNewerVersion($webform);
+
+      if ($breakingChanges && $submissionData['status'] === 'RECEIVED') {
+        $form['#disabled'] = TRUE;
+        $this->messenger()
+          ->addWarning(
+            $this->t('Application form has changed. You cannot do any further edits.',
+              [],
+              $tOpts));
       }
 
       $locked = $this->formLockService->isApplicationFormLocked($this->applicationNumber);
@@ -784,9 +864,9 @@ moment and reload the page.',
     // eg: editing draft ouside application period is ok, unless the underlying
     // webform has changed.
     //
-    if (!ApplicationHandler::isSubmissionChangesAllowed($webform_submission)) {
+    if (!$this->applicationStatusService->isSubmissionChangesAllowed($webform_submission)) {
 
-      $status = ApplicationHandler::getWebformStatus($webform_submission->getWebform());
+      $status = $this->applicationStatusService->getWebformStatus($webform_submission->getWebform());
 
       switch ($status) {
         case 'archived':
@@ -1000,7 +1080,7 @@ moment and reload the page.',
     if ($applicationNumber != '') {
       // Get document from ATV.
       try {
-        $document = $this->applicationHandler->getAtvDocument($applicationNumber);
+        $document = $this->applicationGetterService->getAtvDocument($applicationNumber);
         $oldStatus = $document->getStatus();
       }
       catch (TempStoreException | AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
@@ -1009,7 +1089,7 @@ moment and reload the page.',
 
     }
 
-    $applicationStatuses = ApplicationHandler::getApplicationStatuses();
+    $applicationStatuses = $this->applicationStatusService->getApplicationStatuses();
 
     // If new status is submitted, ie save to Avus2..
     if ($newStatus == $applicationStatuses['SUBMITTED']) {
@@ -1055,7 +1135,11 @@ moment and reload the page.',
    * @return array|null
    *   All current errors.
    */
-  public function validate(WebformSubmissionInterface $webform_submission, FormStateInterface $form_state, array &$form): ?array {
+  public function validate(
+    WebformSubmissionInterface $webform_submission,
+    FormStateInterface $form_state,
+    array &$form,
+  ): ?array {
     try {
       // Validate form.
       parent::validateForm($form, $form_state, $webform_submission);
@@ -1073,12 +1157,13 @@ moment and reload the page.',
    *
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   public function validateForm(
     array &$form,
     FormStateInterface $form_state,
-    WebformSubmissionInterface $webform_submission
-  ) {
+    WebformSubmissionInterface $webform_submission,
+  ): void {
 
     $tOpts = ['context' => 'grants_handler'];
 
@@ -1101,7 +1186,7 @@ moment and reload the page.',
     try {
       $this->submittedFormData = array_merge(
         $this->submittedFormData,
-        $this->applicationHandler->parseSenderDetails());
+        ApplicationHelpers::parseSenderDetails());
     }
     catch (ApplicationException $e) {
     }
@@ -1154,7 +1239,7 @@ moment and reload the page.',
     $this->setFromThirdPartySettings($webform_submission->getWebform());
 
     // Figure out status for this application.
-    $this->newStatus = $this->applicationHandler->getNewStatus(
+    $this->newStatus = $this->applicationStatusService->getNewStatus(
       $triggeringElement,
       $this->submittedFormData,
       $webform_submission
@@ -1163,17 +1248,17 @@ moment and reload the page.',
     $this->submittedFormData['status'] = $this->newStatus;
 
     // Application submitted.
-    if ($this->applicationHandler->getNewStatusHeader() == ApplicationHandler::getApplicationStatuses()['SUBMITTED']) {
+    if ($this->applicationStatusService->getNewStatusHeader() == $this->applicationStatusService->getApplicationStatuses()['SUBMITTED']) {
       $this->submittedFormData['form_timestamp_submitted'] = $dt->format('Y-m-d\TH:i:s');
     }
     $this->validate($webform_submission, $form_state, $form);
     $all_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
     if ($triggeringElement == '::submit' && ($all_errors === NULL || self::emptyRecursive($all_errors))) {
-      $applicationData = $this->applicationHandler->webformToTypedData(
+      $applicationData = $this->applicationDataService->webformToTypedData(
           $this->submittedFormData);
 
-      $violations = $this->applicationHandler->validateApplication(
+      $violations = $this->applicationValidator->validateApplication(
           $applicationData,
           $form_state,
           $webform_submission
@@ -1229,7 +1314,7 @@ submit the application only after you have provided all the necessary informatio
         // But if we have saved webform earlier, we can get the application
         // number from submission serial.
         if ($webform_submission->id()) {
-          $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
+          $this->applicationNumber = ApplicationHelpers::createApplicationNumber($webform_submission);
         }
         // Hopefully we never reach here, but there should be additional checks
         // for application number to exists.
@@ -1283,11 +1368,11 @@ submit the application only after you have provided all the necessary informatio
       );
 
       if ($skipCheck === TRUE) {
-        $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
+        $this->applicationNumber = ApplicationHelpers::createApplicationNumber($webform_submission);
       }
       else {
         try {
-          $this->applicationNumber = ApplicationHandler::getAvailableApplicationNumber($webform_submission);
+          $this->applicationNumber = ApplicationHelpers::getAvailableApplicationNumber($webform_submission);
         }
         catch (\Throwable $e) {
           throw new GrantsException('Getting application number failed.');
@@ -1320,8 +1405,8 @@ submit the application only after you have provided all the necessary informatio
     }
 
     // Try to update status only if it's allowed.
-    if (ApplicationHandler::canSubmissionBeSubmitted($webform_submission, NULL)) {
-      $this->submittedFormData['status'] = ApplicationHandler::getApplicationStatuses()['SUBMITTED'];
+    if ($this->applicationStatusService->canSubmissionBeSubmitted($webform_submission, NULL)) {
+      $this->submittedFormData['status'] = $this->applicationStatusService->getApplicationStatuses()['SUBMITTED'];
     }
   }
 
@@ -1343,7 +1428,7 @@ submit the application only after you have provided all the necessary informatio
     catch (\Throwable $e) {
     }
     try {
-      $applicationData = $this->applicationHandler->webformToTypedData(
+      $applicationData = $this->applicationDataService->webformToTypedData(
         $this->submittedFormData);
     }
     catch (ReadOnlyException $e) {
@@ -1358,7 +1443,7 @@ submit the application only after you have provided all the necessary informatio
         ]
       );
     try {
-      $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadToAtv(
+      $applicationUploadStatus = $this->applicationUploaderService->handleApplicationUploadToAtv(
         $applicationData,
         $this->applicationNumber,
         $this->submittedFormData
@@ -1412,7 +1497,9 @@ submit the application only after you have provided all the necessary informatio
     $this->formLockService->releaseApplicationLock($this->applicationNumber);
 
     $redirectResponse = new RedirectResponse($redirectUrl->toString());
-    $this->applicationHandler->clearCache($this->applicationNumber);
+
+    $this->applicationUploaderService->clearCache($this->applicationNumber);
+
     $redirectResponse->send();
 
   }
@@ -1426,7 +1513,7 @@ submit the application only after you have provided all the necessary informatio
   public function postSaveHandleApplicationNumber(WebformSubmissionInterface $webform_submission): void {
     if (!isset($this->submittedFormData['application_number']) || $this->submittedFormData['application_number'] == '') {
       if (!isset($this->applicationNumber) || $this->applicationNumber == '') {
-        $this->applicationNumber = ApplicationHandler::createApplicationNumber($webform_submission);
+        $this->applicationNumber = ApplicationHelpers::createApplicationNumber($webform_submission);
       }
       if (isset($this->applicationTypeID) || $this->applicationTypeID == '') {
         $this->submittedFormData['application_type_id'] = $this->applicationTypeID;
@@ -1485,23 +1572,23 @@ submit the application only after you have provided all the necessary informatio
   public function confirmForm(
     array &$form,
     FormStateInterface $form_state,
-    WebformSubmissionInterface $webform_submission
+    WebformSubmissionInterface $webform_submission,
   ): void {
 
     try {
       // Get new status from method that figures that out.
-      $this->submittedFormData['status'] = $this->applicationHandler->getNewStatus(
+      $this->submittedFormData['status'] = $this->applicationStatusService->getNewStatus(
         $this->triggeringElement,
         $this->submittedFormData,
         $webform_submission
       );
 
       // Build application data for sending to Avus2.
-      $applicationData = $this->applicationHandler->webformToTypedData(
+      $applicationData = $this->applicationDataService->webformToTypedData(
         $this->submittedFormData);
 
       // Upload application via integration.
-      $applicationUploadStatus = $this->applicationHandler->handleApplicationUploadViaIntegration(
+      $applicationUploadStatus = $this->applicationUploaderService->handleApplicationUploadViaIntegration(
         $applicationData,
         $this->applicationNumber,
         $this->submittedFormData

@@ -154,7 +154,7 @@ class AttachmentRemover {
     array $uploadResults,
     string $applicationNumber,
     bool $debug,
-    int $webFormSubmissionId
+    int $webFormSubmissionId,
   ): bool {
     $this->setDebug($debug);
     $retval = FALSE;

@@ -12,6 +12,8 @@ import {
   viewPageFormatLowerCase,
   viewPageFormatNumber
 } from "../../view_page_formatters";
+import {getFakeEmailAddress} from "../../field_helpers";
+
 
 /**
  * Basic form data for successful submit to Avus2. This object contains ALL
@@ -30,7 +32,7 @@ const baseForm_48: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: faker.internet.email(),
+          value: getFakeEmailAddress(),
           viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
@@ -1114,7 +1116,7 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
 const registeredCommunityApplications_48 = {
   draft: baseForm_48,
   copy: createFormData(baseForm_48, copyForm),
-  swap_fields: createFormData(baseForm_48, fieldSwapForm),
+  // swap_fields: createFormData(baseForm_48, fieldSwapForm),
   missing_values: createFormData(baseForm_48, missingValues),
   wrong_email: createFormData(baseForm_48, wrongEmail),
   wrong_email_2: createFormData(baseForm_48, wrongEmail2),

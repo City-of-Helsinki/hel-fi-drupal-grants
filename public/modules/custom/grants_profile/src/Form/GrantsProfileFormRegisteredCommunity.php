@@ -54,8 +54,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
-
+  public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('typed_data_manager'),
       $container->get('grants_profile.service'),
@@ -414,7 +413,7 @@ later when completing the grant application.',
     array &$form,
     FormStateInterface $formState,
     array $addresses,
-    ?string $newItem
+    ?string $newItem,
   ) {
 
     $form['addressWrapper'] = [
@@ -582,7 +581,7 @@ later when completing the grant application.',
     array &$form,
     FormStateInterface $formState,
     array $officials,
-    ?string $newItem
+    ?string $newItem,
   ) {
 
     $form['officialWrapper'] = [

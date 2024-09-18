@@ -28,5 +28,6 @@ services:
       '@grants_metadata.atv_schema',
       '@grants_handler.events_service',
       '@helfi_audit_log.audit_log',
-      '@entity_type.manager'
+      '@entity_type.manager',
+      '@grants_metadata.application_data_service'
     ]

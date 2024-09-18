@@ -1,7 +1,6 @@
 import {defineConfig} from '@playwright/test';
 import 'dotenv/config';
 
-
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -34,8 +33,10 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
-
-
+  // For expect calls
+  expect: {
+    timeout: 10000,   // <---------
+  },
   projects: [
     /* Setup and auth setup tests. */
     {
@@ -127,6 +128,21 @@ export default defineConfig({
       testMatch: '/forms/registered_community_48.ts',
       dependencies: ['profile-registered_community']
     },
+    /* Form 49 tests. */
+    {
+      name: 'forms-49',
+      testMatch: '/forms/registered_community_49.ts',
+      dependencies: ['profile-registered_community']
+    },
+    /* Form 50 tests.
+
+    Tests missing.
+
+    {
+      name: 'forms-50',
+      testMatch: '/forms/registered_community_50.ts',
+      dependencies: ['profile-registered_community']
+    },*/
     /* Form 51 tests. */
     {
       name: 'forms-51',

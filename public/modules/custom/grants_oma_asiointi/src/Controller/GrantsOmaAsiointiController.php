@@ -4,12 +4,14 @@ namespace Drupal\grants_oma_asiointi\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Session\AccountProxyInterface;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\ApplicationGetterService;
+use Drupal\grants_handler\Helpers;
+use Drupal\grants_handler\MessageService;
 use Drupal\grants_mandate\Controller\GrantsMandateController;
+use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,34 +26,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class GrantsOmaAsiointiController extends ControllerBase implements ContainerInjectionInterface {
 
   /**
-   * The request stack used to access request globals.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected $requestStack;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected $currentUser;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
-   * Access to profile data.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
    * Logger access.
    *
    * @var \Psr\Log\LoggerInterface
@@ -59,37 +33,27 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   protected LoggerInterface $logger;
 
   /**
-   * The grants_handler.application_handler service.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
-
-  /**
-   * The helfi_atv.atv_service service.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $helfiAtvAtvService;
-
-  /**
    * CompanyController constructor.
+   *
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   *   The request stack.
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   The grants profile service.
+   * @param \Drupal\helfi_atv\AtvService $helfiAtvAtvService
+   *   The ATV service.
+   * @param \Drupal\grants_handler\MessageService $messageService
+   *   The message service.
+   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   *   The application getter service.
    */
   public function __construct(
-    RequestStack $requestStack,
-    AccountProxyInterface $current_user,
-    LanguageManagerInterface $language_manager,
-    GrantsProfileService $grantsProfileService,
-    ApplicationHandler $grants_handler_application_handler,
-    AtvService $helfi_atv_atv_service,
+    protected RequestStack $requestStack,
+    protected GrantsProfileService $grantsProfileService,
+    protected AtvService $helfiAtvAtvService,
+    protected MessageService $messageService,
+    protected ApplicationGetterService $applicationGetterService,
   ) {
-    $this->requestStack = $requestStack;
-    $this->currentUser = $current_user;
-    $this->languageManager = $language_manager;
-    $this->grantsProfileService = $grantsProfileService;
     $this->logger = $this->getLogger('grants_oma_asiointi');
-    $this->applicationHandler = $grants_handler_application_handler;
-    $this->helfiAtvAtvService = $helfi_atv_atv_service;
   }
 
   /**
@@ -98,21 +62,26 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   public static function create(ContainerInterface $container): GrantsMandateController|static {
     return new static(
       $container->get('request_stack'),
-      $container->get('current_user'),
-      $container->get('language_manager'),
       $container->get('grants_profile.service'),
-      $container->get('grants_handler.application_handler'),
       $container->get('helfi_atv.atv_service'),
+      $container->get('grants_handler.message_service'),
+      $container->get('grants_handler.application_getter_service')
     );
   }
 
   /**
    * Controller for setting time for closing a notification.
    */
-  public function logCloseTime() {
+  public function logCloseTime(): JsonResponse {
     $dateTime = new \DateTime();
     $timeStamp = $dateTime->getTimestamp();
-    $this->grantsProfileService->setNotificationShown($timeStamp);
+    try {
+      $this->grantsProfileService->setNotificationShown($timeStamp);
+    }
+    catch (GrantsProfileException | GuzzleException $e) {
+      $this->logger->error('Failed to set notification close time: @error', ['@error' => $e->getMessage()]);
+      return new JsonResponse(['error' => 'Failed to set notification close time'], 500);
+    }
 
     // Return a JSON response with the logged close time.
     return new JsonResponse(['closeTime' => $timeStamp]);
@@ -123,6 +92,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    *
    * @return array
    *   Render array
+   *
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function build(): array {
 
@@ -158,11 +129,11 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       $showNotification = TRUE;
     }
 
-    $appEnv = ApplicationHandler::getAppEnv();
+    $appEnv = Helpers::getAppEnv();
 
     try {
       // Get applications from ATV.
-      $applications = ApplicationHandler::getCompanyApplications(
+      $applications = $this->applicationGetterService->getCompanyApplications(
         $selectedCompany,
         $appEnv,
         FALSE,
@@ -209,15 +180,21 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
 
   /**
    * Parse messages from applications.
+   *
+   * @param array $applications
+   *   Applications.
+   *
+   * @return array
+   *   Parsed messages.
    */
-  protected function parseMessages(array $applications) {
+  protected function parseMessages(array $applications): array {
     $other = [];
     $unreadMsg = [];
 
     foreach ($applications as $values) {
       $other = array_merge($other, $values);
       foreach ($values as $application) {
-        $appMessages = ApplicationHandler::parseMessages($application['#submission']);
+        $appMessages = $this->messageService->parseMessages($application['#submission']);
         foreach ($appMessages as $msg) {
           if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
             $unreadMsg[] = [
