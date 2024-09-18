@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2024.13
+
+
 ## 2024.12
 - 5a690fe28 fix: AU-2522: Refactor ApplicationHandler (#1456)
 - 2e743481c UHF-10370: Remove breaking module (#1473)
