@@ -24,7 +24,7 @@ third_party_settings:
     applicationIndustry: KUVA
     applicationActingYears: {  }
     applicationActingYearsType: current_and_next_x_years
-    applicationActingYearsNextCount: '0'
+    applicationActingYearsNextCount: '1'
     status: released
     parent: ''
 weight: 0

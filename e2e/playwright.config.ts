@@ -1,7 +1,6 @@
 import {defineConfig} from '@playwright/test';
 import 'dotenv/config';
 
-
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -34,8 +33,10 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
-
-
+  // For expect calls
+  expect: {
+    timeout: 10000,   // <---------
+  },
   projects: [
     /* Setup and auth setup tests. */
     {
