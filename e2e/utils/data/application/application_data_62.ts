@@ -11,6 +11,7 @@ import {
   viewPageFormatNumber,
   viewPageFormatDate
 } from "../../view_page_formatters";
+import {getFakeEmailAddress} from "../../field_helpers";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -23,7 +24,7 @@ const baseFormRegisteredCommunity_62: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: faker.internet.email(),
+          value: getFakeEmailAddress(),
           viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {
@@ -868,6 +869,10 @@ const wrongValues: FormDataWithRemoveOptionalProps = {
         'edit-budget-other-income-items-0-item-value',
         'edit-budget-other-cost-items-0-item-label'
       ],
+      expectedInlineErrors: [
+        { selector: '.webform-type-grants-budget-other-income', errorMessage: 'Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon' },
+        { selector: '.webform-type-grants-budget-other-cost', errorMessage: 'Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon' },
+      ],
     },
     'webform_preview': {
       items: {
@@ -905,6 +910,10 @@ const wrongValuesUnregistered: FormDataWithRemoveOptionalProps = {
       itemsToRemove: [
         'edit-budget-other-income-items-0-item-value',
         'edit-budget-other-cost-items-0-item-label'
+      ],
+      expectedInlineErrors: [
+        { selector: '.webform-type-grants-budget-other-income', errorMessage: 'Määrä (€) ei voi olla tyhjä, kun Kuvaus sisältää arvon' },
+        { selector: '.webform-type-grants-budget-other-cost', errorMessage: 'Kuvaus menosta ei voi olla tyhjä, kun Määrä (€) sisältää arvon' },
       ],
     },
     'webform_preview': {

@@ -1,5 +1,6 @@
 _core:
   default_config_hash: pYO-DH32fm7GYMJrNx5syvfx2n-5s88kvuddFKXC758
+langcode: en
 enabled: true
 timeout: 1800
 max_timeout: 172800
@@ -9,6 +10,7 @@ no_individual_logout_threshold: true
 role_logout: false
 role_logout_max: false
 redirect_url: /
+include_destination: true
 no_dialog: false
 message: 'You are about to be logged out due to inactivity.'
 inactivity_message: 'You have been logged out due to inactivity.'
@@ -28,4 +30,3 @@ cookie_secure: true
 cookie_httponly: true
 cookie_samesite: Lax
 cookie_lifetime: 31536000
-include_destination: true

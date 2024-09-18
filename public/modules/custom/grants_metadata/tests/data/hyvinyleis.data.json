@@ -1,0 +1,276 @@
+{
+	"applicant_type": "registered_community",
+	"avustukset_summa": "123",
+	"application_number": "LOCALTEST-068-0000028",
+	"status": "DRAFT",
+	"hakijan_tiedot": {
+        "applicantType": "registered_community",
+        "applicant_type": "registered_community",
+        "communityOfficialName": "Maanrakennus Ari Eerola T:mi",
+        "companyNumber": "2036583-2",
+        "registrationDate": "10.05.2006",
+        "home": "VOIKKAA",
+        "communityOfficialNameShort": "AE",
+        "foundingYear": "1337",
+        "homePage": "arieerola.example.com"
+    },
+	"email": "ari.eerola@example.com",
+	"contact_person": "Ari Eerola",
+    "contact_person_phone_number": "0401234567",
+	"community_officials": [
+		{
+			"name": "Testeeje",
+			"role": "2",
+			"email": "pp@example.com",
+			"phone": "1234567",
+			"community_officials_select": "0",
+			"roletext": ""
+		}
+	],
+	"acting_year": "2025",
+	"subventions": [
+		{
+			"subventionTypeTitle": "Yleisavustus",
+			"subventionType": "6",
+			"amount": "123,00\u20ac"
+		}
+	],
+	"compensation_purpose": "Juhlat",
+	"olemme_saaneet_muita_avustuksia": 0,
+	"myonnetty_avustus": [
+
+	],
+	"compensation_boolean": "1",
+	"compensation_explanation": "Selvityst\u00e4 ja lis\u00e4\u00e4 selvityst\u00e4",
+	"business_purpose": "Kuvaus toiminnasta",
+	"community_practices_business": 0,
+	"fee_person": "11,00\u20ac",
+	"fee_community": "111,00\u20ac",
+	"members_applicant_person_global": "100",
+	"members_applicant_person_local": "50",
+	"members_applicant_community_global": "10",
+	"members_applicant_community_local": "5",
+	"additional_information": "Lis\u00e4tietoja!",
+	"yhteison_saannot": {
+		"attachment": null,
+		"attachmentName": "",
+		"isDeliveredLater": "1",
+		"fileStatus": "deliveredLater",
+		"fileType": "7",
+		"integrationID": "",
+		"isAttachmentNew": "",
+		"description": "",
+		"isIncludedInOtherFile": ""
+	},
+	"vahvistettu_tilinpaatos": {
+		"attachment": null,
+		"attachmentName": "",
+		"isDeliveredLater": "1",
+		"fileStatus": "deliveredLater",
+		"fileType": "43",
+		"integrationID": "",
+		"isAttachmentNew": "",
+		"description": "",
+		"isIncludedInOtherFile": ""
+	},
+	"vahvistettu_toimintakertomus": {
+		"attachment": null,
+		"attachmentName": "",
+		"isDeliveredLater": "1",
+		"fileStatus": "deliveredLater",
+		"fileType": "4",
+		"integrationID": "",
+		"isAttachmentNew": "",
+		"description": "",
+		"isIncludedInOtherFile": ""
+	},
+	"vahvistettu_tilin_tai_toiminnantarkastuskertomus": {
+		"attachment": null,
+		"attachmentName": "",
+		"isDeliveredLater": "1",
+		"fileStatus": "deliveredLater",
+		"fileType": "5",
+		"integrationID": "",
+		"isAttachmentNew": "",
+		"description": "",
+		"isIncludedInOtherFile": ""
+	},
+	"vuosikokouksen_poytakirja": {
+		"attachment": null,
+		"attachmentName": "",
+		"isDeliveredLater": "1",
+		"fileStatus": "deliveredLater",
+		"fileType": "8",
+		"integrationID": "",
+		"isAttachmentNew": "",
+		"description": "",
+		"isIncludedInOtherFile": ""
+	},
+	"toimintasuunnitelma": {
+		"attachment": null,
+		"attachmentName": "",
+		"isDeliveredLater": "1",
+		"fileStatus": "deliveredLater",
+		"fileType": "1",
+		"integrationID": "",
+		"isAttachmentNew": "",
+		"description": "",
+		"isIncludedInOtherFile": ""
+	},
+	"talousarvio": {
+		"attachment": null,
+		"attachmentName": "",
+		"isDeliveredLater": "1",
+		"fileStatus": "deliveredLater",
+		"fileType": "22",
+		"integrationID": "",
+		"isAttachmentNew": "",
+		"description": "",
+		"isIncludedInOtherFile": ""
+	},
+	"extra_info": "Lis\u00e4selvityst\u00e4!",
+	"muu_liite": [
+		{
+			"attachmentName": "truck_clipart_15144_4.jpg",
+			"description": "Varmistus tilinumerolle FI7544197469984736",
+			"fileStatus": "uploaded",
+			"fileType": "45",
+			"integrationID": "\/LOCALPAK\/v1\/documents\/0744681f-3bef-4696-b17d-6c2ad9bd2ad9\/attachments\/63424\/",
+			"isAttachmentNew": "",
+			"attachment": null,
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false
+		},
+		{
+			"attachment": null,
+			"attachmentName": "",
+			"description": "",
+			"fileStatus": "",
+			"fileType": "",
+			"integrationID": "",
+			"isAttachmentNew": "",
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false
+		}
+	],
+	"application_type": "HYVINYLEIS",
+	"application_type_id": "68",
+	"form_timestamp": "2024-05-03T14:57:04",
+	"form_timestamp_created": "2024-05-03T14:54:26",
+	"form_timestamp_submitted": null,
+	"account_number": "FI7544197469984736",
+	"haettu_avustus_tieto": null,
+	"olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta": 0,
+	"myonnetty_avustus_total": 0,
+	"haettu_avustus_tieto_total": "0",
+	"benefits_loans": null,
+	"benefits_premises": null,
+	"sender_firstname": "Nordea",
+	"sender_lastname": "Demo",
+	"sender_person_id": "210281-9988",
+	"sender_user_id": "280f75c5-6a20-4091-b22d-dfcdce7fef60",
+	"sender_email": "miika.korpisalo@hel.fi",
+	"attachments": {
+		"0": {
+			"description": "Yhteis\u00f6n s\u00e4\u00e4nn\u00f6t",
+			"fileType": 7,
+			"fileName": "",
+			"isDeliveredLater": true,
+			"isIncludedInOtherFile": false,
+			"isNewAttachment": false
+		},
+		"1": {
+			"description": "Vahvistettu tilinp\u00e4\u00e4t\u00f6s (edelliselt\u00e4 p\u00e4\u00e4ttyneelt\u00e4 tilikaudelta)",
+			"fileType": 43,
+			"fileName": "",
+			"isDeliveredLater": true,
+			"isIncludedInOtherFile": false,
+			"isNewAttachment": false
+		},
+		"2": {
+			"description": "Vahvistettu toimintakertomus (edelliselt\u00e4 p\u00e4\u00e4ttyneelt\u00e4 tilikaudelta)",
+			"fileType": 4,
+			"fileName": "",
+			"isDeliveredLater": true,
+			"isIncludedInOtherFile": false,
+			"isNewAttachment": false
+		},
+		"3": {
+			"description": "Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliselt\u00e4 p\u00e4\u00e4ttyneelt\u00e4 tilikaudelta)",
+			"fileType": 5,
+			"fileName": "",
+			"isDeliveredLater": true,
+			"isIncludedInOtherFile": false,
+			"isNewAttachment": false
+		},
+		"4": {
+			"description": "Vuosikokouksen p\u00f6yt\u00e4kirja, jossa on vahvistettu edellisen p\u00e4\u00e4ttyneen tilikauden tilinp\u00e4\u00e4t\u00f6s",
+			"fileType": 8,
+			"fileName": "",
+			"isDeliveredLater": true,
+			"isIncludedInOtherFile": false,
+			"isNewAttachment": false
+		},
+		"5": {
+			"description": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)",
+			"fileType": 1,
+			"fileName": "",
+			"isDeliveredLater": true,
+			"isIncludedInOtherFile": false,
+			"isNewAttachment": false
+		},
+		"6": {
+			"description": "Talousarvio (sille vuodelle jolle haet avustusta)",
+			"fileType": 22,
+			"fileName": "",
+			"isDeliveredLater": true,
+			"isIncludedInOtherFile": false,
+			"isNewAttachment": false
+		},
+		"8": {
+			"description": "Varmistus tilinumerolle FI7544197469984736",
+			"fileType": 45,
+			"fileName": "truck_clipart_15144_4.jpg",
+			"isDeliveredLater": false,
+			"isIncludedInOtherFile": false,
+			"isNewAttachment": false,
+			"integrationID": "\/LOCALPAK\/v1\/documents\/0744681f-3bef-4696-b17d-6c2ad9bd2ad9\/attachments\/63424\/"
+		}
+	},
+	"form_update": false,
+	"status_updates": [
+
+	],
+	"events": [
+		{
+			"eventType": "HANDLER_ATT_OK",
+			"eventID": "29716c48-57c2-472a-a8c9-07427333bf9b",
+			"caseId": "LOCALPAK-068-0000028",
+			"eventDescription": "Attachment uploaded for the IBAN: FI7544197469984736.",
+			"eventTarget": "truck_clipart_15144_4.jpg",
+			"eventSource": "GrantsApplications",
+			"timeUpdated": "2024-05-03T14:56:27",
+			"timeCreated": "2024-05-03T14:56:27"
+		}
+	],
+	"messages": [
+
+	],
+	"compensation_total_amount": 0,
+	"metadata": {
+		"appenv": "LOCALPAK",
+		"saveid": "61fb7539-df8f-4520-b906-8a994f543a4b",
+		"language": "fi",
+		"applicant_id": "7769480-5",
+		"applicant_type": "registered_community",
+		"applicationnumber": "LOCALPAK-068-0000028"
+	},
+	"community_street": "dfvg",
+	"community_city": "vfdsg",
+	"community_post_code": "12345",
+	"community_country": "Suomi",
+	"budgetInfo": [
+
+	],
+	"registration_date": "2020-12-08T00:00:00"
+}

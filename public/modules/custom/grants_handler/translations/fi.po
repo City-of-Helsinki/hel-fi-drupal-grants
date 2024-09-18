@@ -359,6 +359,10 @@ msgctxt "grants_handler"
 msgid "Application form expired"
 msgstr "Hakemuspohja vanhentunut"
 
+msgctxt "grants_handler"
+msgid "Application form has changed. You cannot do any further edits."
+msgstr "Hakemuspohja on muuttunut. Et voi enää tehdä muutoksia tähän hakemukseen."
+
 msgid "Application period ended"
 msgstr "Hakuaika päättynyt"
 

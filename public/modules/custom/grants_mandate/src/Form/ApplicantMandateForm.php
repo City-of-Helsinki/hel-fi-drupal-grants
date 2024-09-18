@@ -271,7 +271,8 @@ organization or association', [], $tOpts),
   public function handleUnregisteredCommunity(
     FormStateInterface $form_state,
     array $selectedProfileData,
-    array $tOpts): RedirectResponse {
+    array $tOpts,
+  ): RedirectResponse {
     $storage = $form_state->getStorage();
     $userCommunities = $storage['userCommunities'];
 

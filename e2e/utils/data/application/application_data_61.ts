@@ -10,6 +10,7 @@ import {
   viewPageFormatCurrency,
   viewPageFormatNumber
 } from "../../view_page_formatters";
+import {getFakeEmailAddress} from "../../field_helpers";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -22,7 +23,7 @@ const baseFormRegisteredCommunity_61: FormData = {
     "1_hakijan_tiedot": {
       items: {
         "edit-email": {
-          value: faker.internet.email(),
+          value: getFakeEmailAddress(),
           viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {

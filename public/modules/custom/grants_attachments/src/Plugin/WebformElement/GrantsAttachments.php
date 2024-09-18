@@ -8,6 +8,7 @@ use Drupal\grants_attachments\Element\GrantsAttachments as ElementGrantsAttachme
 use Drupal\grants_handler\EventsService;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a 'grants_attachments' element.
@@ -28,7 +29,7 @@ use Drupal\webform\WebformSubmissionInterface;
  * @see \Drupal\webform\Plugin\WebformElementInterface
  * @see \Drupal\webform\Annotation\WebformElement
  */
-class GrantsAttachments extends WebformCompositeBase {
+final class GrantsAttachments extends WebformCompositeBase {
 
   /**
    * Avustus2 file types.
@@ -74,6 +75,27 @@ class GrantsAttachments extends WebformCompositeBase {
     44 => 'Hakemusliite',
     45 => 'Pankkitilivahvistus',
   ];
+
+  /**
+   * Events service.
+   *
+   * @var \Drupal\grants_handler\EventsService
+   */
+  protected EventsService $eventsService;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+  ): GrantsAttachments {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->eventsService = $container->get('grants_handler.events_service');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -127,7 +149,6 @@ class GrantsAttachments extends WebformCompositeBase {
    * {@inheritDoc}
    */
   public function getValue(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
-
     if (!isset($element['#webform_key']) && isset($element['#value'])) {
       return $element['#value'];
     }
@@ -151,7 +172,6 @@ class GrantsAttachments extends WebformCompositeBase {
         if (in_array($fieldName, $element["#webform_parents"])) {
           $value = $fieldData;
         }
-
       }
     }
 
@@ -162,7 +182,6 @@ class GrantsAttachments extends WebformCompositeBase {
 
     $this->handleMultiDeltaValue($value, $options);
     return $value;
-
   }
 
   /**
@@ -205,7 +224,7 @@ class GrantsAttachments extends WebformCompositeBase {
     $tOpts = ['context' => 'grants_attachments'];
 
     $submissionData = $webform_submission->getData();
-    $attachmentEvents = EventsService::filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
+    $attachmentEvents = $this->eventsService->filterEvents($submissionData['events'] ?? [], 'HANDLER_ATT_OK');
 
     if (!is_array($value)) {
       return [];
@@ -221,6 +240,17 @@ class GrantsAttachments extends WebformCompositeBase {
         !str_contains($description, $accountNumber)) {
         return [];
       }
+    }
+
+    // Hide value, if only description field is filled.
+    // We filter all attachment fields without an attachment
+    // during ATV save.
+    if (
+      (isset($value['description']) && !empty($value['description'])) &&
+      (!isset($value['attachmentName']) || empty($value['attachmentName'])) &&
+      $value['fileType'] == '0'
+    ) {
+      return [];
     }
 
     // This notes that we have uploaded file in process.
@@ -256,7 +286,6 @@ class GrantsAttachments extends WebformCompositeBase {
       else {
         $lines[] = $element["#webform_composite_elements"]["isDeliveredLater"]["#title"]->render();
       }
-
     }
     if (isset($value["isIncludedInOtherFile"]) && ($value["isIncludedInOtherFile"] === 'true' ||
         $value["isIncludedInOtherFile"] === '1')) {

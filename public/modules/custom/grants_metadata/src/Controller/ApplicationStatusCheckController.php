@@ -2,9 +2,8 @@
 
 namespace Drupal\grants_metadata\Controller;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\Config;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -18,76 +17,51 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ApplicationStatusCheckController extends ControllerBase {
 
   /**
-   * The helfi_atv service.
+   * The config.
    *
-   * @var \Drupal\helfi_atv\AtvService
+   * @var \Drupal\Core\Config\Config
    */
-  protected AtvService $helfiAtv;
-
-  /**
-   * Helsinkiprofiili service.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
-   * The config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
+  protected Config $config;
 
   /**
    * The controller constructor.
    *
-   * @param \Drupal\helfi_atv\AtvService $helfi_atv
+   * @param \Drupal\helfi_atv\AtvService $helfiAtv
    *   The helfi_atv service.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
    *   The helfi_atv service.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Config factory.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
-   *   Language manager.
    */
   public function __construct(
-    AtvService $helfi_atv,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-    ConfigFactoryInterface $configFactory,
-    LanguageManagerInterface $language_manager,
-    ) {
-    $this->helfiAtv = $helfi_atv;
-    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
-    $this->configFactory = $configFactory;
-    $this->languageManager = $language_manager;
+    protected AtvService $helfiAtv,
+    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+  ) {
+    $this->config = $this->config('grants_handler.settings');
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container):static {
     return new static(
       $container->get('helfi_atv.atv_service'),
       $container->get('helfi_helsinki_profiili.userdata'),
-      $container->get('config.factory'),
-      $container->get('language_manager'),
     );
   }
 
   /**
    * Builds the response.
    *
+   * @param string $submission_id
+   *   The submission id.
+   *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   Json representation of data.
+   *
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function build($submission_id = '') {
+  public function build(string $submission_id = ''): JsonResponse {
     return new JsonResponse([
       'data' => $this->getData($submission_id),
       'method' => 'GET',
@@ -103,8 +77,12 @@ class ApplicationStatusCheckController extends ControllerBase {
    *
    * @return array
    *   Data from ATV.
+   *
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function getData($submission_id) {
+  public function getData(string $submission_id): array {
 
     $userData = $this->helsinkiProfiiliUserData->getUserData();
 
@@ -131,9 +109,8 @@ class ApplicationStatusCheckController extends ControllerBase {
       return [];
     }
 
-    $config = $this->configFactory->get('grants_handler.settings');
-    $statusStrings = $config->get('statusStrings');
-    $langCode = $this->languageManager->getCurrentLanguage()->getId();
+    $statusStrings = $this->config->get('statusStrings');
+    $langCode = $this->languageManager()->getCurrentLanguage()->getId();
     $statusArray['statusStringHumanReadable'] = $statusStrings[$langCode][$statusArray['value']];
 
     return $statusArray;

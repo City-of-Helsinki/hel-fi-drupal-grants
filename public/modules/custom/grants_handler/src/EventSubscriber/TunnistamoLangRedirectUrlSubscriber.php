@@ -25,7 +25,7 @@ class TunnistamoLangRedirectUrlSubscriber implements EventSubscriberInterface {
    *   The language manager.
    */
   public function __construct(
-    private LanguageManagerInterface $languageManager
+    private LanguageManagerInterface $languageManager,
   ) {
   }
 

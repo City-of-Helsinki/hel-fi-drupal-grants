@@ -8,7 +8,6 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AppendCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Entity\EntityTypeManager;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -16,7 +15,7 @@ use Drupal\Core\Render\Renderer;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_attachments\AttachmentRemover;
-use Drupal\grants_handler\ApplicationHandler;
+use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\webform\Entity\WebformSubmission;
@@ -31,80 +30,17 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class MessageForm extends FormBase {
 
-  /**
-   * Drupal\Core\TypedData\TypedDataManager definition.
-   *
-   * @var \Drupal\Core\TypedData\TypedDataManager
-   */
-  protected TypedDataManager $typedDataManager;
-
-  /**
-   * Communicate messages to integration.
-   *
-   * @var \Drupal\grants_handler\MessageService
-   */
-  protected MessageService $messageService;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\Drupal\Core\Entity\EntityTypeManager
-   */
-  protected EntityTypeManagerInterface|EntityTypeManager $entityTypeManager;
-
-  /**
-   * Handle application tasks.
-   *
-   * @var \Drupal\grants_handler\ApplicationHandler
-   */
-  protected ApplicationHandler $applicationHandler;
-
-  /**
-   * Access ATV.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * Remove attachment files.
-   *
-   * @var \Drupal\grants_attachments\AttachmentRemover
-   */
-  protected AttachmentRemover $attachmentRemover;
-
-  /**
-   * Print / log debug things.
-   *
-   * @var bool
-   */
-  protected bool $debug;
-
-  /**
-   * Renderer service.
-   *
-   * @var \Drupal\Core\Render\Renderer
-   */
-  protected Renderer $renderer;
-
-  /**
-   * Get session.
-   *
-   * @var \Symfony\Component\HttpFoundation\Session\Session
-   */
-  protected Session $session;
+  use DebuggableTrait;
 
   /**
    * Constructs a new AddressForm object.
    *
-   * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
-   *   Typed data access.
+   * @param \Drupal\Core\TypedData\TypedDataManager $typedDataManager
+   *   Typed data manager.
    * @param \Drupal\grants_handler\MessageService $messageService
    *   Send messages.
    * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
    *   Load entities.
-   * @param \Drupal\grants_handler\ApplicationHandler $applicationHandler
-   *   HAndle application things.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access ATV.
    * @param \Drupal\grants_attachments\AttachmentRemover $attachmentRemover
@@ -115,32 +51,15 @@ class MessageForm extends FormBase {
    *   Session data.
    */
   public function __construct(
-    TypedDataManager $typed_data_manager,
-    MessageService $messageService,
-    EntityTypeManager $entityTypeManager,
-    ApplicationHandler $applicationHandler,
-    AtvService $atvService,
-    AttachmentRemover $attachmentRemover,
-    Renderer $renderer,
-    Session $session
+    protected TypedDataManager $typedDataManager,
+    protected MessageService $messageService,
+    protected EntityTypeManager $entityTypeManager,
+    protected AtvService $atvService,
+    protected AttachmentRemover $attachmentRemover,
+    protected Renderer $renderer,
+    protected Session $session,
   ) {
-    $this->typedDataManager = $typed_data_manager;
-    $this->messageService = $messageService;
-    $this->entityTypeManager = $entityTypeManager;
-    $this->applicationHandler = $applicationHandler;
-    $this->atvService = $atvService;
-    $this->attachmentRemover = $attachmentRemover;
-    $this->renderer = $renderer;
-    $this->session = $session;
-
-    $debug = getenv('debug');
-
-    if ($debug == 'true') {
-      $this->debug = TRUE;
-    }
-    else {
-      $this->debug = FALSE;
-    }
+    $this->setDebug(NULL);
   }
 
   /**
@@ -151,7 +70,6 @@ class MessageForm extends FormBase {
       $container->get('typed_data_manager'),
       $container->get('grants_handler.message_service'),
       $container->get('entity_type.manager'),
-      $container->get('grants_handler.application_handler'),
       $container->get('helfi_atv.atv_service'),
       $container->get('grants_attachments.attachment_remover'),
       $container->get('renderer'),
@@ -364,7 +282,7 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
   public static function validateUpload(
     array &$element,
     FormStateInterface $formState,
-    array &$form
+    array &$form,
   ): void {
 
     $triggeringElement = $formState->getTriggeringElement();
@@ -381,11 +299,11 @@ rtf, txt, xls, xlsx, zip.', [], $tOpts),
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
 
-    /** @var \Drupal\grants_handler\ApplicationHandler $applicationHandler */
-    $applicationHandler = \Drupal::service('grants_handler.application_handler');
+    /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+    $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
 
     try {
-      $applicationDocument = $applicationHandler->getAtvDocument($applicationNumber);
+      $applicationDocument = $applicationGetterService->getAtvDocument($applicationNumber);
 
       /** @var \Drupal\file\Entity\File $file */
       foreach ($element["#files"] as $file) {

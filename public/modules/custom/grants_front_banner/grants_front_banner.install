@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Contains installation tasks for grants_front_banner module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_update().
+ */
+function grants_front_banner_update_9001() : void {
+  // Remove front_page_latest_news paragraph as it has been removed from
+  // the site already.
+  $paragraphs = \Drupal::entityTypeManager()
+    ->getStorage('paragraph')
+    ->loadByProperties(['type' => 'front_page_latest_news']);
+
+  if (empty($paragraphs)) {
+    return;
+  }
+
+  foreach ($paragraphs as $paragraph) {
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    $paragraph->delete();
+  }
+}

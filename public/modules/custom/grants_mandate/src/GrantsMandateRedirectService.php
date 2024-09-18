@@ -15,20 +15,34 @@ class GrantsMandateRedirectService {
   const SESSION_KEY = 'roleselection_redirect';
 
   /**
+   * The grants profile service.
+   *
+   * @var \Drupal\grants_profile\GrantsProfileService
+   */
+  private GrantsProfileService $grantsProfileService;
+
+  /**
    * Construct the service class.
    *
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Request Stack.
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   Grants profile service.
    * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
    *   Route match.
    */
   public function __construct(
-   protected RequestStack $requestStack,
-   protected GrantsProfileService $grantsProfileService,
-   protected CurrentRouteMatch $routeMatch,
+    protected RequestStack $requestStack,
+    protected CurrentRouteMatch $routeMatch,
   ) {}
+
+  /**
+   * Set the grants profile service.
+   *
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   Grants profile service.
+   */
+  public function setGrantsProfileService(GrantsProfileService $grantsProfileService): void {
+    $this->grantsProfileService = $grantsProfileService;
+  }
 
   /**
    * Get the session.

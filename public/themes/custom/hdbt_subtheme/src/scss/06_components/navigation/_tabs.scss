@@ -1,0 +1,91 @@
+.tabs {
+  --tablist-border-color: var(--color-black-20);
+  --tablist-border-size: 1px;
+  --tab-color: var(--color-black);
+  --tab-font-size: var(--fontsize-body-m);
+  --tab-height: 48px;
+  --tab-min-width: 148px;
+  --tab-spacing: var(--spacing-s);
+  --tab-active-border-size: 5px;
+  --tab-active-border-color: var(--color-black);
+  --tab-focus-outline-size: 2px;
+  --tab-focus-outline-color: var(--color-coat-of-arms);
+  display: flex;
+  flex-flow: row wrap;
+
+  &--tablist {
+    box-sizing: border-box;
+    flex-grow: 1;
+    margin-bottom: -1px;
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  &--content-wrapper {
+    width: 100%;
+
+    .container {
+      padding-top: 1px;
+    }
+  }
+
+  [role="tablist"] {
+    box-sizing: border-box;
+    list-style: none;
+    margin: 0;
+    padding: var(--tab-focus-outline-size) 0;
+    white-space: nowrap;
+  }
+
+  [role="tab"] {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0;
+    outline: none;
+    padding: 0;
+
+    span {
+      align-items: center;
+      box-sizing: border-box;
+      color: var(--tab-color);
+      display: flex;
+      font-size: var(--tab-font-size);
+      height: var(--tab-height);
+      justify-content: center;
+      margin: 0;
+      min-width: var(--tab-min-width);
+      padding: 0 var(--tab-spacing);
+      pointer-events: none;
+      position: relative;
+
+      &::before {
+        background: var(--tablist-border-color);
+        bottom: 0;
+        content: "";
+        height: var(--tablist-border-size);
+        position: absolute;
+        width: 100%;
+        z-index: 100;
+      }
+    }
+  }
+
+  [role="tab"] span:hover::before,
+  [role="tab"] span:focus::before,
+  [role="tab"][aria-selected="true"] span::before {
+    background-color: var(--tab-active-border-color);
+    bottom: 0;
+    content: "";
+    height: var(--tab-active-border-size);
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+  }
+
+  [role="tabpanel"].is-hidden {
+    display: none;
+  }
+}

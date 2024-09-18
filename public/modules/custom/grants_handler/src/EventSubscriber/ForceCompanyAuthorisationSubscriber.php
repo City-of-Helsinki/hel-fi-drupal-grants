@@ -52,7 +52,7 @@ class ForceCompanyAuthorisationSubscriber implements EventSubscriberInterface {
   public function __construct(
     MessengerInterface $messenger,
     GrantsProfileService $grantsProfileService,
-    AccountProxyInterface $currentUser
+    AccountProxyInterface $currentUser,
   ) {
     $this->messenger = $messenger;
     $this->grantsProfileService = $grantsProfileService;

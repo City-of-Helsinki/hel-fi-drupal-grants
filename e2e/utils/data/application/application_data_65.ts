@@ -10,6 +10,7 @@ import {
   viewPageFormatCurrency,
   viewPageFormatNumber
 } from "../../view_page_formatters";
+import {getFakeEmailAddress} from "../../field_helpers";
 
 /**
  * Basic form data for successful submit to Avus2
@@ -28,7 +29,7 @@ const baseForm_65: FormData = {
             name: 'data-drupal-selector',
             value: 'edit-email',
           },
-          value: faker.internet.email(),
+          value: getFakeEmailAddress(),
           viewPageFormatter: viewPageFormatLowerCase,
         },
         "edit-contact-person": {

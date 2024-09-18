@@ -13,7 +13,7 @@ id: paragraph.popular_service_item.field_service_links
 field_name: field_service_links
 entity_type: paragraph
 bundle: popular_service_item
-label: Links
+label: Linkit
 description: ''
 required: true
 translatable: false

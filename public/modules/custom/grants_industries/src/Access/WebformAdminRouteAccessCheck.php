@@ -46,7 +46,8 @@ class WebformAdminRouteAccessCheck implements AccessInterface {
    */
   public function __construct(
     WebformAccessCheckService $webformAccessCheckService,
-    LoggerChannelFactoryInterface $loggerFactory) {
+    LoggerChannelFactoryInterface $loggerFactory,
+  ) {
     $this->webformAccessCheckService = $webformAccessCheckService;
     $this->logger = $loggerFactory->get('grants_industries');
   }

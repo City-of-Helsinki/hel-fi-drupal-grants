@@ -70,9 +70,6 @@ settings:
       front_banner:
         weight: 53
         enabled: false
-      front_page_latest_news:
-        weight: 50
-        enabled: false
       hero:
         weight: 53
         enabled: false

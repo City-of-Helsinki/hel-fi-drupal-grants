@@ -1,6 +1,5 @@
 _core:
   default_config_hash: E99p-j2YC4tVqQ7Gz4-I4cALOq2a8XHkvlQnxoV5EWY
-langcode: en
 session_limit_max: 1
 session_limit_masquerade_ignore: false
 session_limit_behaviour: 1
@@ -16,3 +15,5 @@ session_limit_roles:
   ad_user: 0
   grants_admin: -1
   admin: -1
+session_limit_logged_out_display_message: 'You have been automatically logged out. Someone else has logged in with your username and password and the maximum number of @number simultaneous session(s) was exceeded. This may indicate that your account has been compromised or that account sharing is not allowed on this site. Please contact the site administrator if you suspect your account has been compromised.'
+session_limit_log_events: false

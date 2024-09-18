@@ -1,0 +1,25 @@
+.webform-submission {
+  &__application_id {
+    border-bottom: 1px var(--color-black-20) solid;
+    padding-bottom: var(--spacing-xl);
+
+    &--header {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+
+  &__title-wrapper {
+    padding-top: var(--spacing-2-xl);
+
+    h1 {
+      max-width: 100%;
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin-top: 0;
+    padding-left: 0;
+  }
+}
