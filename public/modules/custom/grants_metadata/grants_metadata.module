@@ -774,12 +774,9 @@ function _grants_metadata_handle_admin_webform_alter(&$form, FormStateInterface 
   $routeParam = \Drupal::routeMatch()->getParameter('webform');
   $formStatus = $routeParam->getThirdPartySetting('grants_metadata', 'status');
 
-  $currentUser = Drupal::currentUser();
-  $isAdmin = Helpers::isGrantAdmin($currentUser);
-
   $released = $formStatus === 'released';
   $archived = $formStatus === 'archived';
-  $editingRestricted = ($released || $archived) && !$isAdmin;
+  $editingRestricted = ($released || $archived);
   $restrictionMsg = $released ?
   t('Form is published for production use, only limited editing is allowed.') :
   t('Form is archived and editing is not allowed.');

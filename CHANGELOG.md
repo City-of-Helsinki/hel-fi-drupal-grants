@@ -53,6 +53,24 @@
 - c04be04b4 Revert change in dockerfile
 - 4c12b95e5 Add Openshift User
 - 458260f4a (hotfix/UHF-10357) UHF-10357: Update convert method to allow null returns.
+- dd09b027d (HEAD -> release/2024.12, origin/release/2024.12) Product config import
+- 3a10c8695 Merge branch 'develop' into release/2024.12
+- 6cc588f67 (origin/develop, origin/HEAD, develop) Automatic update (#1485)
+- b0777d933 Try to trigger Sonar with an change
+- 4dabd318f Remove unused variables.
+- 3511e5b25 Merge branch 'main' into release/2024.12
+- 1ed74d98a Remove apparently unnecessary awaits from test runs
+- 6d4b4156d Set expect timeout to 10s in playwright config.
+- 6826662fe Set expect timeout to 7s in playwright config.
+- f28d138ed Automatic update (#1481)
+- cd28b665c Automatic update (#1480)
+- 9a210ba14 feat: UHF-10132: Add tunnistamo mappings (#1479)
+- 69bc1ff0e Fix phasing item translation..
+- 5ad7b0696 We cannot use generated email in profile.
+- 6e9aa9515 Merge branch 'develop' into release/2024.12
+- f601b59cd Automatic update (#1478)
+- b578a213f Fix Lohkot word
+- 1908170d9 Remove field swap tests until ticket UHF-10345 is resolved.
 
 ## 2024.11 / Hotfix
 - 458260f4a (hotfix/UHF-10357) UHF-10357: Update convert method to allow null returns.
