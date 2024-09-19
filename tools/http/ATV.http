@@ -1,0 +1,28 @@
+# Get single document by transaction_id
+GET {{atvUrl}}/v1/documents/?
+  transaction_id={{transaction_id}}
+Accept-Encoding: utf8
+X-Api-Key: {{atvApiKey}}
+
+###
+
+# Get all documents for given lookfor query
+GET https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi/v1/documents/?
+  lookfor={{lookfor}}
+Accept-Encoding: utf8
+X-Api-Key: {{atvApiKey}}
+
+###
+
+# Get all documents for given lookfor query
+GET {{atvUrl}}/v1/documents/?
+  user_id={{user_id}}&
+  type={{type}}&
+  service_name=AvustushakemusIntegraatio&
+  transaction_id={{transaction_id}}
+Accept-Encoding: utf8
+X-Api-Key: {{atvApiKey}}
+
+###
+
+
