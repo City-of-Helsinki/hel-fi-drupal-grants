@@ -25,4 +25,24 @@ X-Api-Key: {{atvApiKey}}
 
 ###
 
+# Get sinlg document by document_id
+GET {{atvUrl}}/v1/documents/{{document_id}}
+X-Api-Key: {{atvApiKey}}
+
+###
+
+# Delete document by document_id
+DELETE {{atvUrl}}/v1/documents/{{document_id_delete}}/
+X-Api-Key: {{atvApiKey}}
+
+###
+# Delete file attachment by attachment_id
+DELETE {{atvUrl}}/v1/documents/{{attachemnt_document_id}}/attachments/{{attachment_id_delete}}/
+X-Api-Key: {{atvApiKey}}
+
+###
+
+
+
+
 
