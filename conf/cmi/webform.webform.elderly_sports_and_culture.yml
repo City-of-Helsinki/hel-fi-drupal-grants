@@ -479,6 +479,117 @@ elements: |-
                 - webform--large
             '#counter_maximum': 1000
             '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+  3_tarkemmat_tiedot:
+    '#type': webform_wizard_page
+    '#title': '3. Tarkemmat tiedot'
+    tarkemmat_tiedot:
+      '#type': webform_section
+      '#title': 'Avustuksen tiedot'
+  4_talousarvio:
+    '#type': webform_wizard_page
+    '#title': '4. Talousarvio'
+    tulot_section:
+      '#type': webform_section
+      '#title': Tulot
+      tulot:
+        '#type': grants_budget_income_static
+        '#title': Tulot
+        '#multiple': false
+        '#incomeGroup': general
+        '#plannedStateOperativeSubvention__access': false
+        '#otherCompensationFromCity__access': false
+        '#stateOperativeSubvention__access': false
+        '#plannedOtherCompensations__access': false
+        '#sponsorships__access': false
+        '#entryFees__access': false
+        '#sales__access': false
+        '#financialFundingAndInterests__access': false
+        '#compensationFromCulturalAffairs__access': false
+        '#otherCompensationType__access': false
+        '#incomeWithoutCompensations__access': false
+        '#ownFunding__access': false
+        '#plannedTotalIncome__access': false
+        '#otherCompensations__access': false
+        '#plannedTotalIncomeWithoutSubventions__access': false
+        '#plannedShareOfIncomeWithoutSubventions__access': false
+        '#shareOfIncomeWithoutSubventions__access': false
+        '#totalIncomeWithoutSubventions__access': false
+        '#totalIncome__access': false
+        '#incomeGroupName__access': false
+      talous_tulon_tyyppi:
+        '#type': grants_budget_other_income
+        '#title': 'Tulon tyyppi'
+        '#multiple': true
+        '#incomeGroup': general
+        '#help': 'Kerro tässä minkälainen tulo on kyseessä. Toiminnan tuloja voivat olla esimerkiksi muut avustukset ja pääsy- tai osallistumismaksut. Kirjaa tähän kohtaan myös omarahoitusosuus, jos hankkeen alijäämä kuitataan muusta taloudestanne.'
+        '#required': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi tulo'
+        '#multiple__item_label': 'tulo'
+    menot_section:
+      '#type': webform_section
+      '#title': Menot
+      talous_menon_tyyppi:
+        '#type': grants_budget_other_cost
+        '#title': Meno
+        '#multiple': true
+        '#incomeGroup': general
+        '#help': 'Kerro tässä minkälainen meno on kyseessä. Toiminnan menoja voivat olla esimerkiksi tilavuokrat ja henkilöstökulut.'
+        '#required': true
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
+  5_lisatiedot_ja_liitteet:
+    '#type': webform_wizard_page
+    '#title': '5. Lisätiedot ja liitteet'
+    liitteet_markup_1:
+      '#type': webform_section
+      '#markup': 'Lisätietoja hakemukseen liittyen'
+      additional_information:
+        '#type': textarea
+        '#title': 'Lisätiedot'
+        '#help': 'Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen.'
+        '#maxlength': 5000
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+    liitteet_markup_2:
+      '#type': webform_section
+      '#markup': 'Liitteet'
+      attachments_info:
+        '#type': webform_markup
+        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki hakuilmoituksessa luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p> <p>Helsingin kaupungille aiemmin toimitetut liitteet:</p>  <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>'
+      notification_attachments:
+        '#type': webform_markup
+        '#markup': '<p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p> <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p>'
+      extra_info:
+        '#type': textarea
+        '#title': 'Lisäselvitys liitteistä'
+        '#help': 'Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen.'
+        '#maxlength': 5000
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+      muu_liite:
+        '#type': grants_attachments
+        '#title': 'Muu liite'
+        '#multiple': 10
+        '#filetype': '0'
+        '#title_display': before
+        '#multiple__item_label': liite
+        '#multiple__sorting': false
+        '#multiple__add': false
+        '#multiple__remove': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi liite'
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
   actions:
     '#type': webform_actions
     '#title': 'Submit button(s)'
