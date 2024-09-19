@@ -59,6 +59,7 @@ class EventsService {
    */
   public array $eventTypes = [
     'AVUSTUS2_MSG_OK' => 'AVUSTUS2_MSG_OK',
+    'AVUSTUS2_ATT_OK' => 'AVUSTUS2_ATT_OK',
     'STATUS_UPDATE' => 'STATUS_UPDATE',
     'MESSAGE_AVUS2' => 'MESSAGE_AVUS2',
     'MESSAGE_APP' => 'MESSAGE_APP',
