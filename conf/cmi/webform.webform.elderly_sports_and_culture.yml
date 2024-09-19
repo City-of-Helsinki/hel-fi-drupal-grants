@@ -482,15 +482,96 @@ elements: |-
   3_tarkemmat_tiedot:
     '#type': webform_wizard_page
     '#title': '3. Tarkemmat tiedot'
-    tarkemmat_tiedot:
+    hankesuunnitelma_radios:
+      '#type': webform_markup
+      '#markup': 'this is actually GrantsOpenQuestions / Radios'
+    Hankesuunnitelma:
       '#type': webform_section
-      '#title': 'Avustuksen tiedot'
+      '#title': '3.1 Hankesuunnitelma'
+      hankesuunnitelma_jatkohakemus:
+        '#type': webform_markup
+        '#markup': 'Onko haettava avustus käynnissä olevan hankkeen jatkohakemus?'
+      hankkeen_tarkoitus_tavoitteet:
+        '#type': webform_markup
+        '#markup': 'Hankkeen tarkoitus ja tavoitteet'
+      hankkeen_toimenpiteet_aikataulu:
+        '#type': webform_markup
+        '#markup': 'Mitkä ovat hankkeen konkreettiset toimenpiteet ja niiden toteutusaikataulu?'
+      hankkeen_toimenpiteet_toteutus:
+        '#type': webform_markup
+        '#markup': 'Hankkeen konkreettiset toimenpiteet on tarkoitus toteuttaa välillä'
+      hankkeen_toimenpiteet_alkupvm:
+        '#type': webform_markup
+        '#markup': 'Alkupäivämäärä'
+      hankkeen_toimenpiteet_loppupvm:
+        '#type': webform_markup
+        '#markup': 'Loppupäivämäärä'
+      hankkeen_keskeisimmat_kumppanit:
+        '#type': webform_markup
+        '#markup': 'Nimeä hankkeen keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa'
+    haun_painopisteet_section:
+      '#type': webform_section
+      '#title': '3.2 Haun painopisteet'
+      haun_painopisteet_ohje:
+        '#type': webform_markup
+        '#markup': 'Mihin seuraavista iäkkäiden liikkumisen ja kulttuuritoiminnan edistämisen avustuksen painopisteistä hanke vastaa?'
+      haun_painopisteet_liikkumis_kehitys:
+        '#type': webform_markup
+        '#markup': 'Kehitetäänkö hankkeessa liikkumismahdollisuuksia tai taide- ja kulttuuritoimintaa lähiympäristössä / alueellisesti? Miten?'
+      haun_painopisteet_digi_kehitys:
+        '#type': webform_markup
+        '#markup': 'Kehitetäänkö hankkeessa digitaalisesti / etänä toteutettavia kulttuuritoimintoja tai liikkumiseen aktivoivaa toimintaa? Miten?'
+      haun_painopisteet_vertais_kehitys:
+        '#type': webform_markup
+        '#markup': 'Kehitetäänkö hankkeessa vapaaehtois- / vertaistoimintaa? Miten?'
+      haun_painopisteet_kulttuuri_kehitys:
+        '#type': webform_markup
+        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
+    hankkeen_kohderyhmat_section:
+      '#type': webform_section
+      '#title': '3.3 Hankkeen kohderyhmät'
+      hankkeen_kohderyhmat_kenelle:
+        '#type': webform_markup
+        '#markup': 'Kenelle hankkeen toiminta on pääasiallisesti suunnattu?'
+      hankkeen_kohderyhmat_erityisryhmat:
+        '#type': webform_markup
+        '#markup': 'Kohdennetaanko hankkeessa toimintaa jollekin erityisryhmälle?'
+      hankkeen_kohderyhmat_tavoitus:
+        '#type': webform_markup
+        '#markup': 'Kuinka hankkeen kohderyhmät aiotaan tavoittaa?'
+      hankkeen_kohderyhmat_konkretia:
+        '#type': webform_markup
+        '#markup': 'Miten hankkeessa edistetään konkreettisin toimenpitein valitun kohderyhmän toimintakykyä ja hyvinvointia?'
+      hankkeen_kohderyhmat_osallisuus:
+        '#type': webform_markup
+        '#markup': 'Millä tavoin hankkeessa edistetään osallisuutta? Mikä ikäihmisten rooli hankkeessa on?'
+      hankkeen_kohderyhmat_osaaminen:
+        '#type': webform_markup
+        '#markup': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
+      hankkeen_kohderyhmat_postinrot:
+        '#type': webform_markup
+        '#markup': 'Millä postinumeroalueella tai -alueilla Helsingissä hanke toteutetaan?'
+      hankkeen_kohderyhmat_miksi_alue:
+        '#type': webform_markup
+        '#markup': 'Miksi juuri kyseinen alue / alueet on valittu?'
+    hankkeen_riskit_section:
+      '#type': webform_section
+      '#title': '3.4 Riskit & analyysi'
+      hankkeen_riskit_keskeisimmat:
+        '#type': webform_markup
+        '#markup': 'Mitkä ovat hankkeen toteuttamisen näkökulmasta keskeisimmät riskit?'
+      hankkeen_riskit_seuranta:
+        '#type': webform_markup
+        '#markup': 'Miten hankkeessa aiotaan toteuttaa seurantaa ja arviointia?'
+      hankkeen_riskit_vakiinnuttaminen:
+        '#type': webform_markup
+        '#markup': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
   4_talousarvio:
     '#type': webform_wizard_page
     '#title': '4. Talousarvio'
     tulot_section:
       '#type': webform_section
-      '#title': Tulot
+      '#title': '4.1 Tulot'
       tulot:
         '#type': grants_budget_income_static
         '#title': Tulot
@@ -530,7 +611,7 @@ elements: |-
         '#multiple__item_label': 'tulo'
     menot_section:
       '#type': webform_section
-      '#title': Menot
+      '#title': '4.2 Menot'
       talous_menon_tyyppi:
         '#type': grants_budget_other_cost
         '#title': Meno
