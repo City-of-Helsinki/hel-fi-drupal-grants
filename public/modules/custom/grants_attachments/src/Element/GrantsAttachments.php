@@ -612,6 +612,12 @@ class GrantsAttachments extends WebformCompositeBase {
       // If not, then brute force value from form.
       if (empty($formFiletype) && $formFiletype !== '0') {
         foreach (self::recursiveFind($form, $webformKey) as $value) {
+          // If user has removed file and then readded it to element, there's
+          // one empty element in the value array, and that resulted in missing
+          // integrationID in document json. So we need to check if the
+          // #filetype actually exists and use it only in the case it does.
+          // But since this is always the same file element, the filetype is
+          // same in every iteration of the fields' values.
           if ($value != NULL && $value['#filetype'] != '') {
             $formFiletype = $value['#filetype'];
           }
