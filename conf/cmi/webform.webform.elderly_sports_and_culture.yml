@@ -482,10 +482,13 @@ elements: |-
   3_tarkemmat_tiedot:
     '#type': webform_wizard_page
     '#title': '3. Tarkemmat tiedot'
-    hankesuunnitelma_radios:
-      '#type': webform_markup
-      '#markup': 'this is actually GrantsOpenQuestions / Radios'
-    Hankesuunnitelma:
+    tarkemmat_tiedot_section:
+      '#type': webform_section
+      '#title': '3.0 Tarkemmat tiedot'
+      hankesuunnitelma_radios:
+        '#type': webform_markup
+        '#markup': 'Haetaanko nyt vuonna 2024 myönnetyn kaksivuotisen avustuksen 2. osaa?'
+    hankesuunnitelma_section:
       '#type': webform_section
       '#title': '3.1 Hankesuunnitelma'
       hankesuunnitelma_jatkohakemus:
