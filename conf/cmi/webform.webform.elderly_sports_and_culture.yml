@@ -3,6 +3,7 @@ langcode: en
 status: open
 dependencies:
   module:
+    - grants_handler
     - grants_metadata
 third_party_settings:
   grants_metadata:
@@ -122,8 +123,8 @@ elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
-    '#prev_button_label': 'Edellinen'
-    '#next_button_label': 'Seuraava'
+    '#prev_button_label': Edellinen
+    '#next_button_label': Seuraava
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
@@ -486,89 +487,232 @@ elements: |-
       '#type': webform_section
       '#title': '3.0 Tarkemmat tiedot'
       hankesuunnitelma_radios:
-        '#type': webform_markup
-        '#markup': 'Haetaanko nyt vuonna 2024 myönnetyn kaksivuotisen avustuksen 2. osaa?'
+        '#type': radios
+        '#title': 'Haetaanko nyt vuonna 2024 myönnetyn kaksivuotisen avustuksen 2. osaa?'
+        '#description_display': before
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#default_value': '0'
     hankesuunnitelma_section:
       '#type': webform_section
       '#title': '3.1 Hankesuunnitelma'
+      '#states':
+        visible:
+          ':input[name="hankesuunnitelma_radios"]':
+            value: '0'
       hankesuunnitelma_jatkohakemus:
-        '#type': webform_markup
-        '#markup': 'Onko haettava avustus käynnissä olevan hankkeen jatkohakemus?'
+        '#type': radios
+        '#title': 'Onko haettava avustus käynnissä olevan hankkeen jatkohakemus?'
+        '#description_display': before
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#default_value': '0'
       hankkeen_tarkoitus_tavoitteet:
-        '#type': webform_markup
-        '#markup': 'Hankkeen tarkoitus ja tavoitteet'
+        '#type': textarea
+        '#title': 'Hankkeen tarkoitus ja tavoitteet'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
       hankkeen_toimenpiteet_aikataulu:
-        '#type': webform_markup
-        '#markup': 'Mitkä ovat hankkeen konkreettiset toimenpiteet ja niiden toteutusaikataulu?'
+        '#type': textarea
+        '#title': 'Mitkä ovat hankkeen konkreettiset toimenpiteet ja niiden toteutusaikataulu?'
+        '#maxlength': 4000
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 4000
+        '#counter_maximum_message': '%d/4000 merkkiä jäljellä'
+
       hankkeen_toimenpiteet_toteutus:
         '#type': webform_markup
         '#markup': 'Hankkeen konkreettiset toimenpiteet on tarkoitus toteuttaa välillä'
+        '#WTF_IS_FIELDSET'
+
       hankkeen_toimenpiteet_alkupvm:
-        '#type': webform_markup
-        '#markup': 'Alkupäivämäärä'
+        '#type': date
+        '#title': 'Alkupäivämäärä'
+        '#required': true
       hankkeen_toimenpiteet_loppupvm:
-        '#type': webform_markup
-        '#markup': 'Loppupäivämäärä'
+        '#type': date
+        '#title': 'Loppupäivämäärä'
+        '#required': true
       hankkeen_keskeisimmat_kumppanit:
-        '#type': webform_markup
-        '#markup': 'Nimeä hankkeen keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa'
+        '#type': textarea
+        '#title': 'Nimeä hankkeen keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
     haun_painopisteet_section:
       '#type': webform_section
       '#title': '3.2 Haun painopisteet'
+      '#states':
+        visible:
+          ':input[name="hankesuunnitelma_radios"]':
+            value: '0'
       haun_painopisteet_ohje:
         '#type': webform_markup
-        '#markup': 'Mihin seuraavista iäkkäiden liikkumisen ja kulttuuritoiminnan edistämisen avustuksen painopisteistä hanke vastaa?'
+        '#markup': 'Hankkeessa tulee toteuttaa yhtä tai useampaa painopistettä. HUOM! Valitse vain ne painopisteet, joita edistätte hankkeessa konkreettisella tavalla. Jos hanke ei toteuta jotakin painopistettä, jätä tekstikenttä tyhjäksi.'
       haun_painopisteet_liikkumis_kehitys:
-        '#type': webform_markup
-        '#markup': 'Kehitetäänkö hankkeessa liikkumismahdollisuuksia tai taide- ja kulttuuritoimintaa lähiympäristössä / alueellisesti? Miten?'
+        '#type': textarea
+        '#title': 'Kehitetäänkö hankkeessa liikkumismahdollisuuksia tai taide- ja kulttuuritoimintaa lähiympäristössä / alueellisesti? Miten?'
+        '#maxlength': 1250
+        '#required': false
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       haun_painopisteet_digi_kehitys:
-        '#type': webform_markup
-        '#markup': 'Kehitetäänkö hankkeessa digitaalisesti / etänä toteutettavia kulttuuritoimintoja tai liikkumiseen aktivoivaa toimintaa? Miten?'
+        '#type': textarea
+        '#title': 'Kehitetäänkö hankkeessa digitaalisesti / etänä toteutettavia kulttuuritoimintoja tai liikkumiseen aktivoivaa toimintaa? Miten?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       haun_painopisteet_vertais_kehitys:
-        '#type': webform_markup
-        '#markup': 'Kehitetäänkö hankkeessa vapaaehtois- / vertaistoimintaa? Miten?'
+        '#type': textarea
+        '#title': 'Kehitetäänkö hankkeessa vapaaehtois- / vertaistoimintaa? Miten?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       haun_painopisteet_kulttuuri_kehitys:
-        '#type': webform_markup
+        '#type': textarea
         '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
     hankkeen_kohderyhmat_section:
       '#type': webform_section
       '#title': '3.3 Hankkeen kohderyhmät'
+      '#states':
+        visible:
+          ':input[name="hankesuunnitelma_radios"]':
+            value: '0'
       hankkeen_kohderyhmat_kenelle:
-        '#type': webform_markup
-        '#markup': 'Kenelle hankkeen toiminta on pääasiallisesti suunnattu?'
+        '#type': textarea
+        '#title': 'Kenelle hankkeen toiminta on pääasiallisesti suunnattu?'
+        '#type': textarea
+        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       hankkeen_kohderyhmat_erityisryhmat:
-        '#type': webform_markup
-        '#markup': 'Kohdennetaanko hankkeessa toimintaa jollekin erityisryhmälle?'
+        '#type': textarea
+        '#title': 'Kohdennetaanko hankkeessa toimintaa jollekin erityisryhmälle?'
+        '#type': textarea
+        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       hankkeen_kohderyhmat_tavoitus:
-        '#type': webform_markup
-        '#markup': 'Kuinka hankkeen kohderyhmät aiotaan tavoittaa?'
+        '#type': textarea
+        '#title': 'Kuinka hankkeen kohderyhmät aiotaan tavoittaa?'
+        '#type': textarea
+        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       hankkeen_kohderyhmat_konkretia:
-        '#type': webform_markup
-        '#markup': 'Miten hankkeessa edistetään konkreettisin toimenpitein valitun kohderyhmän toimintakykyä ja hyvinvointia?'
+        '#type': textarea
+        '#label': 'Miten hankkeessa edistetään konkreettisin toimenpitein valitun kohderyhmän toimintakykyä ja hyvinvointia?'
+        '#type': textarea
+        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       hankkeen_kohderyhmat_osallisuus:
-        '#type': webform_markup
-        '#markup': 'Millä tavoin hankkeessa edistetään osallisuutta? Mikä ikäihmisten rooli hankkeessa on?'
+        '#type': textarea
+        '#label': 'Millä tavoin hankkeessa edistetään osallisuutta? Mikä ikäihmisten rooli hankkeessa on?'
+        '#type': textarea
+        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       hankkeen_kohderyhmat_osaaminen:
-        '#type': webform_markup
-        '#markup': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
+        '#type': textarea
+        '#label': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
+        '#type': textarea
+        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       hankkeen_kohderyhmat_postinrot:
-        '#type': webform_markup
-        '#markup': 'Millä postinumeroalueella tai -alueilla Helsingissä hanke toteutetaan?'
+        '#type': textfield
+        '#title': 'Millä postinumeroalueella tai -alueilla Helsingissä hanke toteutetaan?'
+        '#required': true
+        '#autocomplete': 'off'
+        '#attributes':
+          class:
+            - webform--medium
+        '#size': 32
       hankkeen_kohderyhmat_miksi_alue:
-        '#type': webform_markup
-        '#markup': 'Miksi juuri kyseinen alue / alueet on valittu?'
+        '#type': textarea
+        '#title': 'Miksi juuri kyseinen alue / alueet on valittu?'
+        '#type': textarea
+        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
     hankkeen_riskit_section:
       '#type': webform_section
       '#title': '3.4 Riskit & analyysi'
+      '#states':
+        visible:
+          ':input[name="hankesuunnitelma_radios"]':
+            value: '0'
       hankkeen_riskit_keskeisimmat:
-        '#type': webform_markup
-        '#markup': 'Mitkä ovat hankkeen toteuttamisen näkökulmasta keskeisimmät riskit?'
+        '#type': textarea
+        '#title': 'Mitkä ovat hankkeen toteuttamisen näkökulmasta keskeisimmät riskit?'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       hankkeen_riskit_seuranta:
-        '#type': webform_markup
-        '#markup': 'Miten hankkeessa aiotaan toteuttaa seurantaa ja arviointia?'
+        '#type': textarea
+        '#title': 'Miten hankkeessa aiotaan toteuttaa seurantaa ja arviointia?'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       hankkeen_riskit_vakiinnuttaminen:
-        '#type': webform_markup
+        '#type': textarea
         '#markup': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+    unknown_for_now:
+      '#type': webform_section
+      '#title': '3.5 Tätä ei oo vielä määritetty tms'
+      '#states':
+        visible:
+          ':input[name="hankesuunnitelma_radios"]':
+            value: '1'
   4_talousarvio:
     '#type': webform_wizard_page
     '#title': '4. Talousarvio'
@@ -611,7 +755,7 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää uusi tulo'
-        '#multiple__item_label': 'tulo'
+        '#multiple__item_label': tulo
     menot_section:
       '#type': webform_section
       '#title': '4.2 Menot'
@@ -626,7 +770,7 @@ elements: |-
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää uusi meno'
-        '#multiple__item_label': 'meno'
+        '#multiple__item_label': meno
   5_lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '5. Lisätiedot ja liitteet'
@@ -635,7 +779,7 @@ elements: |-
       '#markup': 'Lisätietoja hakemukseen liittyen'
       additional_information:
         '#type': textarea
-        '#title': 'Lisätiedot'
+        '#title': Lisätiedot
         '#help': 'Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen.'
         '#maxlength': 5000
         '#required': true
@@ -644,7 +788,7 @@ elements: |-
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
     liitteet_markup_2:
       '#type': webform_section
-      '#markup': 'Liitteet'
+      '#markup': Liitteet
       attachments_info:
         '#type': webform_markup
         '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki hakuilmoituksessa luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p> <p>Helsingin kaupungille aiemmin toimitetut liitteet:</p>  <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>'
@@ -783,8 +927,8 @@ settings:
   preview_label: '8. Vahvista, esikatsele ja lähetä'
   preview_title: 'Vahvista, esikatsele ja lähetä'
   preview_message: ''
-  preview_attributes: { }
-  preview_excluded_elements: { }
+  preview_attributes: {  }
+  preview_excluded_elements: {  }
   preview_exclude_empty: false
   preview_exclude_empty_checkbox: false
   draft: all
@@ -798,10 +942,10 @@ settings:
   confirmation_url: ''
   confirmation_title: ''
   confirmation_message: ''
-  confirmation_attributes: { }
+  confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
-  confirmation_back_attributes: { }
+  confirmation_back_attributes: {  }
   confirmation_exclude_query: true
   confirmation_exclude_token: true
   confirmation_update: false
