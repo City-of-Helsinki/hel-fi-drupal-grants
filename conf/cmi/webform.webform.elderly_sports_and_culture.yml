@@ -525,20 +525,20 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 4000
         '#counter_maximum_message': '%d/4000 merkkiä jäljellä'
-
       hankkeen_toimenpiteet_toteutus:
-        '#type': webform_markup
-        '#markup': 'Hankkeen konkreettiset toimenpiteet on tarkoitus toteuttaa välillä'
-        '#WTF_IS_FIELDSET'
-
-      hankkeen_toimenpiteet_alkupvm:
-        '#type': date
-        '#title': 'Alkupäivämäärä'
-        '#required': true
-      hankkeen_toimenpiteet_loppupvm:
-        '#type': date
-        '#title': 'Loppupäivämäärä'
-        '#required': true
+        '#type': fieldset
+        '#title': 'Hankkeen konkreettiset toimenpiteet on tarkoitus toteuttaa välillä'
+        '#attributes':
+          class:
+            - grants-fieldset
+        hankkeen_toimenpiteet_alkupvm:
+          '#type': date
+          '#title': 'Alkupäivämäärä'
+          '#required': true
+        hankkeen_toimenpiteet_loppupvm:
+          '#type': date
+          '#title': 'Loppupäivämäärä'
+          '#required': true
       hankkeen_keskeisimmat_kumppanit:
         '#type': textarea
         '#title': 'Nimeä hankkeen keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa'
@@ -599,8 +599,6 @@ elements: |-
       hankkeen_kohderyhmat_kenelle:
         '#type': textarea
         '#title': 'Kenelle hankkeen toiminta on pääasiallisesti suunnattu?'
-        '#type': textarea
-        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
@@ -609,8 +607,6 @@ elements: |-
       hankkeen_kohderyhmat_erityisryhmat:
         '#type': textarea
         '#title': 'Kohdennetaanko hankkeessa toimintaa jollekin erityisryhmälle?'
-        '#type': textarea
-        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
@@ -619,8 +615,6 @@ elements: |-
       hankkeen_kohderyhmat_tavoitus:
         '#type': textarea
         '#title': 'Kuinka hankkeen kohderyhmät aiotaan tavoittaa?'
-        '#type': textarea
-        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
@@ -629,8 +623,6 @@ elements: |-
       hankkeen_kohderyhmat_konkretia:
         '#type': textarea
         '#label': 'Miten hankkeessa edistetään konkreettisin toimenpitein valitun kohderyhmän toimintakykyä ja hyvinvointia?'
-        '#type': textarea
-        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
@@ -639,8 +631,6 @@ elements: |-
       hankkeen_kohderyhmat_osallisuus:
         '#type': textarea
         '#label': 'Millä tavoin hankkeessa edistetään osallisuutta? Mikä ikäihmisten rooli hankkeessa on?'
-        '#type': textarea
-        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
@@ -649,8 +639,6 @@ elements: |-
       hankkeen_kohderyhmat_osaaminen:
         '#type': textarea
         '#label': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
-        '#type': textarea
-        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
@@ -668,8 +656,6 @@ elements: |-
       hankkeen_kohderyhmat_miksi_alue:
         '#type': textarea
         '#title': 'Miksi juuri kyseinen alue / alueet on valittu?'
-        '#type': textarea
-        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
