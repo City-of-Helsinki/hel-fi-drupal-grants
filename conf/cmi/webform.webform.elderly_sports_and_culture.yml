@@ -489,6 +489,7 @@ elements: |-
       hankesuunnitelma_radios:
         '#type': radios
         '#title': 'Haetaanko nyt vuonna 2024 myönnetyn kaksivuotisen avustuksen 2. osaa?'
+        '#help': 'Vastaa tähän kysymykseen "kyllä" vain siinä tapauksessa, jos yhteisölläsi on jo käynnissä oleva, samasta avustuksesta rahoitettu hanke ja haet sille jatkorahoitusta.'
         '#description_display': before
         '#options':
           1: Kyllä
