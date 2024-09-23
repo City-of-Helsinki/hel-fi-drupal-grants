@@ -145,7 +145,7 @@ class ResendApplicationsForm extends AtvFormBase {
         '#type' => 'table',
         '#caption' => $this->t('Attachments'),
         '#header' => [
-          $this->t('ID'),
+          $this->t('Field'),
           $this->t('Created'),
           $this->t('Filename'),
           $this->t('IntegrationID'),
@@ -493,18 +493,32 @@ class ResendApplicationsForm extends AtvFormBase {
    *   Void.
    */
   private function updateIntegrationIdForAttachment(array $attachment, array &$attachmentInfo, string $appEnv): void {
-    $intID = $appEnv . '/' . AttachmentHandlerHelper::cleanIntegrationId($attachment['href']);
+    $intID = '/' . $appEnv . AttachmentHandlerHelper::cleanIntegrationId($attachment['href']);
 
     foreach ($attachmentInfo as &$innerArray) {
       $fileNameMatched = FALSE;
+      $integrationIdUpdated = FALSE;
 
       foreach ($innerArray as &$item) {
         if ($item['ID'] === 'fileName' && $item['value'] === $attachment['filename']) {
           $fileNameMatched = TRUE;
         }
         if ($fileNameMatched && $item['ID'] === 'integrationID') {
+          // update integrationID in place
           $item['value'] = $intID;
+          // set the value to control adding new integrationID
+          $integrationIdUpdated = true;
+          break;
         }
+      }
+      // If filename matched but no integrationID was found, add it
+      if ($fileNameMatched && !$integrationIdUpdated) {
+        $innerArray[] = [
+          'ID' => 'integrationID',
+          'value' => $intID,
+          'valueType' => 'string',
+          'meta' => "[]"
+        ];
       }
     }
   }
@@ -622,9 +636,13 @@ class ResendApplicationsForm extends AtvFormBase {
     foreach ($attachments as $attachment) {
       $attOk = $this->areAttachmentsOk($events, $attachment, $attachmentInfo, $appEnv);
 
+      $fieldInfo = $this->findByFilename($attachment, $attachmentInfo);
+      $fieldLabel = $this->extractFieldValue($fieldInfo, 'description');
+
+
       $rowElement = [
-        'id' => [
-          '#markup' => $attachment['id'],
+        'field' => [
+          '#markup' => $fieldLabel,
         ],
         'created' => [
           '#markup' => $attachment['created_at'],
@@ -656,6 +674,29 @@ class ResendApplicationsForm extends AtvFormBase {
     }
   }
 
+  private function extractFieldValue(array $attachmentInfo, string $fieldId): ?string {
+    foreach ($attachmentInfo as $innerArray) {
+      foreach ($innerArray as $item) {
+        if ($item === $fieldId) {
+          return $innerArray['value'];
+        }
+      }
+    }
+    return null; // Return null if no match is found
+  }
+
+  private function findByFilename(array $attachment, array $attachmentInfo): ?array {
+    foreach ($attachmentInfo as $innerArray) {
+      foreach ($innerArray as $item) {
+        if ($item['ID'] === 'fileName' && $item['value'] === $attachment['filename']) {
+          return $innerArray;
+        }
+      }
+    }
+    return null; // Return null if no match is found
+  }
+
+
   /**
    * Try to figure our if attachments are ok.
    *
@@ -674,12 +715,14 @@ class ResendApplicationsForm extends AtvFormBase {
   public function areAttachmentsOk(mixed $events, mixed $attachment, mixed $attachmentInfo, mixed $appEnv): array {
     $handlerOk = $this->filterEventsByTypeAndFilename($events, 'HANDLER_ATT_OK', $attachment['filename']);
     $avus2Ok = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_OK', $attachment['filename']);
+    $avus2Error = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_ERROR', $attachment['filename']);
 
     $formOk = $this->checkAttachmentInfo($attachmentInfo, $attachment, $appEnv);
 
     return [
       'handler' => !empty($handlerOk),
       'avus2' => !empty($avus2Ok),
+      'avus2Errors' => $avus2Error,
       'form' => !empty($formOk),
     ];
   }
