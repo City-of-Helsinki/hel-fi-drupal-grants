@@ -809,6 +809,8 @@ elements: |-
         '#entryFees__access': false
         '#sales__access': false
         '#financialFundingAndInterests__access': false
+        '#customerFees__access': false
+        '#donations__access': false
         '#compensationFromCulturalAffairs__access': false
         '#otherCompensationType__access': false
         '#incomeWithoutCompensations__access': false
