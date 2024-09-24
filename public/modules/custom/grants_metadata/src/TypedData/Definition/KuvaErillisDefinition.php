@@ -237,7 +237,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         'hankkeen_riskit_vakiinnuttaminen',
       ]);
 
-    $info['talous_tulon_tyyppi'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
+    $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
       ->setSetting('propertyStructureCallback', [
         'service' => 'grants_budget_components.service',
         'method' => 'processBudgetInfo',
@@ -248,16 +248,16 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         'method' => 'extractToWebformData',
         'mergeResults' => TRUE,
       ])
-      ->setSetting('jsonPath', ['compensation', 'talous_tulon_tyyppi'])
+      ->setSetting('jsonPath', ['compensation', 'budgetInfo'])
       ->setPropertyDefinition(
-        'budget_static_income',
+        'tulot',
         GrantsBudgetInfoDefinition::getStaticIncomeDefinition()
           ->setSetting('fieldsForApplication', [
             'compensation',
           ])
       )
       ->setPropertyDefinition(
-        'tulot',
+        'talous_tulon_tyyppi',
         GrantsBudgetInfoDefinition::getOtherIncomeDefinition()
       )
       ->setPropertyDefinition(
@@ -282,6 +282,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('jsonPath', ['attachmentsInfo', 'generalInfoArray', 'extraInfo'])
       ->setSetting('defaultValue', "");
 
+    // muu_liite is not supposed to be mapped at all
     // $info['muu_liite'] = DataDefinition::create('string')
 
     return $this->propertyDefinitions;
