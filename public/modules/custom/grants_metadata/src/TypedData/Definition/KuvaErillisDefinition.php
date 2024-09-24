@@ -4,6 +4,7 @@ namespace Drupal\grants_metadata\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\DataDefinition;
+use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition;
 
 /**
  * Define KuvaErillisDefinition data.
@@ -236,19 +237,33 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         'hankkeen_riskit_vakiinnuttaminen',
       ]);
 
-    // Osio 4
-
-    /*
-    // staattinen tulokenttä
-    // tulon tyyppi
-    $info['tulot'] = DataDefinition::create();
-
-    $info['talous_tulon_tyyppi'] = DataDefinition::create();
-    // menon tyyppi
-    $info['talous_menon_tyyppi'] = DataDefinition::create();
-    */
-
-    // Osio 5
+    $info['talous_tulon_tyyppi'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
+      ->setSetting('propertyStructureCallback', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'processBudgetInfo',
+        'webform' => TRUE,
+      ])
+      ->setSetting('webformDataExtracter', [
+        'service' => 'grants_budget_components.service',
+        'method' => 'extractToWebformData',
+        'mergeResults' => TRUE,
+      ])
+      ->setSetting('jsonPath', ['compensation', 'budgetInfo'])
+      ->setPropertyDefinition(
+        'budget_static_income',
+        GrantsBudgetInfoDefinition::getStaticIncomeDefinition()
+          ->setSetting('fieldsForApplication', [
+            'compensation',
+          ])
+      )
+      ->setPropertyDefinition(
+        'tulot',
+        GrantsBudgetInfoDefinition::getOtherIncomeDefinition()
+      )
+      ->setPropertyDefinition(
+        'talous_menon_tyyppi',
+        GrantsBudgetInfoDefinition::getOtherCostDefinition()
+      );
 
     $info['additional_information'] = DataDefinition::create('string')
       ->setSetting('jsonPath', ['compensation', 'additionalInformation'])
