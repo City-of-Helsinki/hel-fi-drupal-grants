@@ -248,7 +248,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         'method' => 'extractToWebformData',
         'mergeResults' => TRUE,
       ])
-      ->setSetting('jsonPath', ['compensation', 'budgetInfo'])
+      ->setSetting('jsonPath', ['compensation', 'talous_tulon_tyyppi'])
       ->setPropertyDefinition(
         'budget_static_income',
         GrantsBudgetInfoDefinition::getStaticIncomeDefinition()
