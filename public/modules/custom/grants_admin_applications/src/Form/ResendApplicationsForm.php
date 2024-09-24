@@ -504,20 +504,20 @@ class ResendApplicationsForm extends AtvFormBase {
           $fileNameMatched = TRUE;
         }
         if ($fileNameMatched && $item['ID'] === 'integrationID') {
-          // update integrationID in place
+          // Update integrationID in place.
           $item['value'] = $intID;
-          // set the value to control adding new integrationID
-          $integrationIdUpdated = true;
+          // Set the value to control adding new integrationID.
+          $integrationIdUpdated = TRUE;
           break;
         }
       }
-      // If filename matched but no integrationID was found, add it
+      // If filename matched but no integrationID was found, add it.
       if ($fileNameMatched && !$integrationIdUpdated) {
         $innerArray[] = [
           'ID' => 'integrationID',
           'value' => $intID,
           'valueType' => 'string',
-          'meta' => "[]"
+          'meta' => "[]",
         ];
       }
     }
@@ -639,7 +639,6 @@ class ResendApplicationsForm extends AtvFormBase {
       $fieldInfo = $this->findByFilename($attachment, $attachmentInfo);
       $fieldLabel = $this->extractFieldValue($fieldInfo, 'description');
 
-
       $rowElement = [
         'field' => [
           '#markup' => $fieldLabel,
@@ -674,6 +673,17 @@ class ResendApplicationsForm extends AtvFormBase {
     }
   }
 
+  /**
+   * Extract field value from array.
+   *
+   * @param array $attachmentInfo
+   *   Attachment info.
+   * @param string $fieldId
+   *   Field id.
+   *
+   * @return string|null
+   *   String or null.
+   */
   private function extractFieldValue(array $attachmentInfo, string $fieldId): ?string {
     foreach ($attachmentInfo as $innerArray) {
       foreach ($innerArray as $item) {
@@ -682,9 +692,21 @@ class ResendApplicationsForm extends AtvFormBase {
         }
       }
     }
-    return null; // Return null if no match is found
+    // Return null if no match is found.
+    return NULL;
   }
 
+  /**
+   * Find by filename.
+   *
+   * @param array $attachment
+   *   Attachment.
+   * @param array $attachmentInfo
+   *   Attachment info.
+   *
+   * @return array|null
+   *   Array or null.
+   */
   private function findByFilename(array $attachment, array $attachmentInfo): ?array {
     foreach ($attachmentInfo as $innerArray) {
       foreach ($innerArray as $item) {
@@ -693,9 +715,9 @@ class ResendApplicationsForm extends AtvFormBase {
         }
       }
     }
-    return null; // Return null if no match is found
+    // Return null if no match is found.
+    return NULL;
   }
-
 
   /**
    * Try to figure our if attachments are ok.
