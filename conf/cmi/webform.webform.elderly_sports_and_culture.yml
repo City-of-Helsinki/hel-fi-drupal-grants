@@ -509,7 +509,7 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-        '#default_value': 0
+        '#default_value': '0'
       hankkeen_tarkoitus_tavoitteet:
         '#type': textarea
         '#title': 'Hankkeen tarkoitus ja tavoitteet'
@@ -595,6 +595,7 @@ elements: |-
           visible:
             ':input[name="hankesuunnitelma_jatkohakemus"]':
               value: '0'
+        '#required': true
       haun_painopisteet_digi_kehitys:
         '#type': textarea
         '#title': 'Kehitetäänkö hankkeessa digitaalisesti / etänä toteutettavia kulttuuritoimintoja tai liikkumiseen aktivoivaa toimintaa? Miten?'
@@ -826,7 +827,6 @@ elements: |-
         '#multiple': true
         '#incomeGroup': general
         '#help': 'Kerro tässä minkälainen tulo on kyseessä. Toiminnan tuloja voivat olla esimerkiksi muut avustukset ja pääsy- tai osallistumismaksut. Kirjaa tähän kohtaan myös omarahoitusosuus, jos hankkeen alijäämä kuitataan muusta taloudestanne.'
-        '#required': true
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
@@ -841,7 +841,6 @@ elements: |-
         '#multiple': true
         '#incomeGroup': general
         '#help': 'Kerro tässä minkälainen meno on kyseessä. Toiminnan menoja voivat olla esimerkiksi tilavuokrat ja henkilöstökulut.'
-        '#required': true
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
@@ -876,7 +875,6 @@ elements: |-
         '#title': 'Lisäselvitys liitteistä'
         '#help': 'Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen.'
         '#maxlength': 5000
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
