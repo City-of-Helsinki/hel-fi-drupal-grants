@@ -14,8 +14,11 @@ use Drupal\file\Entity\File;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\Helpers;
+use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\webform\Element\WebformCompositeBase;
 use Drupal\webform\Utility\WebformElementHelper;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Provides a 'grants_attachments'.
@@ -257,6 +260,7 @@ class GrantsAttachments extends WebformCompositeBase {
       '#element_validate' => [
         '\Drupal\grants_attachments\Element\GrantsAttachments::validateUpload',
         [self::class, 'validateAttachmentRequired'],
+        [self::class, 'validateAttachmentRemoval'],
       ],
     ];
 
@@ -447,6 +451,59 @@ class GrantsAttachments extends WebformCompositeBase {
   }
 
   /**
+   * Delete file attachment from ATV when removing it from form.
+   *
+   * @param array $element
+   *   Element to be validated.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   * @param array $form
+   *   The form.
+   */
+  public static function validateAttachmentRemoval(array &$element, FormStateInterface $form_state, array &$form): void {
+    $triggeringElement = $form_state->getTriggeringElement();
+
+    // Check if the triggering element is the "Remove" button.
+    if (str_contains($triggeringElement['#name'], '_attachment_remove_button')) {
+      $ename = $element['#name'];
+      $ename_exp = explode('[', $ename);
+      $file_fid = $form_state->getValue($ename_exp[0])['attachment'];
+
+      if ($file_fid) {
+        // Get stored files.
+        $storage = $form_state->getStorage();
+
+        // Check if we have stored information about this file.
+        if (isset($storage['fids_info'][$file_fid])) {
+          // Get integrationID from stored information.
+          $integrationID = $storage['fids_info'][$file_fid]['integrationID'];
+          // Clean integrationID for deletion.
+          $cleanIntegrationId = AttachmentHandlerHelper::cleanIntegrationId(
+            $integrationID
+          );
+
+          /** @var \Drupal\helfi_atv\AtvService $atvService */
+          $atvService = \Drupal::service('helfi_atv.atv_service');
+          $logger = \Drupal::logger('grants_attachments');
+          try {
+            // Try to remove attachment from ATV.
+            $atvService->deleteAttachmentViaIntegrationId($cleanIntegrationId);
+          }
+          catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
+            // Log error.
+            $logger
+              ->error('Deletion failed for integrationID: @integrationID, @error',
+              [
+                '@integrationID' => $cleanIntegrationId,
+                '@error' => $e->getMessage(),
+              ]);
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * Validate & upload file attachment.
    *
    * @param array $element
@@ -555,7 +612,13 @@ class GrantsAttachments extends WebformCompositeBase {
       // If not, then brute force value from form.
       if (empty($formFiletype) && $formFiletype !== '0') {
         foreach (self::recursiveFind($form, $webformKey) as $value) {
-          if ($value != NULL) {
+          // If user has removed file and then readded it to element, there's
+          // one empty element in the value array, and that resulted in missing
+          // integrationID in document json. So we need to check if the
+          // #filetype actually exists and use it only in the case it does.
+          // But since this is always the same file element, the filetype is
+          // same in every iteration of the fields' values.
+          if ($value != NULL && $value['#filetype'] != '') {
             $formFiletype = $value['#filetype'];
           }
         }
