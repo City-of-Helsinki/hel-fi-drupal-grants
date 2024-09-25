@@ -26,6 +26,14 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       }
     }
 
+    $info['compensation_purpose'] = DataDefinition::create('string')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'generalInfoArray',
+        'purpose',
+      ]);
+
     $info['hankesuunnitelma_jatkohakemus'] = DataDefinition::create('string')
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
@@ -269,18 +277,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('jsonPath', ['compensation', 'additionalInformation'])
       ->setSetting('defaultValue', "");
 
-    $info['attachments_info'] = DataDefinition::create('string')
-      ->setSetting('defaultValue', '')
-      ->setSetting('jsonPath', [
-        'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
-        'hankkeen_riskit_vakiinnuttaminen',
-      ]);
 
-    $info['extra_info'] = DataDefinition::create('string')
-      ->setSetting('jsonPath', ['attachmentsInfo', 'generalInfoArray', 'extraInfo'])
-      ->setSetting('defaultValue', "");
 
     // muu_liite is not supposed to be mapped at all
     // $info['muu_liite'] = DataDefinition::create('string')

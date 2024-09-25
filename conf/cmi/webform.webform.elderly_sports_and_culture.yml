@@ -622,7 +622,7 @@ elements: |-
               value: '0'
       haun_painopisteet_kulttuuri_kehitys:
         '#type': textarea
-        '#markup': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
+        '#title': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
@@ -679,6 +679,7 @@ elements: |-
               value: '0'
       hankkeen_kohderyhmat_konkretia:
         '#type': textarea
+        '#title': 'Miten hankkeessa edistetään konkreettisin toimenpitein valitun kohderyhmän toimintakykyä ja hyvinvointia?'
         '#label': 'Miten hankkeessa edistetään konkreettisin toimenpitein valitun kohderyhmän toimintakykyä ja hyvinvointia?'
         '#maxlength': 1250
         '#required': true
@@ -691,7 +692,7 @@ elements: |-
               value: '0'
       hankkeen_kohderyhmat_osallisuus:
         '#type': textarea
-        '#label': 'Millä tavoin hankkeessa edistetään osallisuutta? Mikä ikäihmisten rooli hankkeessa on?'
+        '#title': 'Millä tavoin hankkeessa edistetään osallisuutta? Mikä ikäihmisten rooli hankkeessa on?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
@@ -703,6 +704,7 @@ elements: |-
               value: '0'
       hankkeen_kohderyhmat_osaaminen:
         '#type': textarea
+        '#title': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
         '#label': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
         '#maxlength': 1250
         '#required': true
@@ -773,7 +775,8 @@ elements: |-
               value: '0'
       hankkeen_riskit_vakiinnuttaminen:
         '#type': textarea
-        '#markup': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
+        '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen?'
+        '#help': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
         '#maxlength': 2500
         '#required': true
         '#counter_type': character
@@ -848,38 +851,53 @@ elements: |-
         '#multiple__add_more_input': false
         '#multiple__add_more_button_label': 'Lisää uusi meno'
         '#multiple__item_label': meno
-  5_lisatiedot_ja_liitteet:
+  lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '5. Lisätiedot ja liitteet'
-    liitteet_markup_1:
+    lisatietoja_hakemukseen_liittyen:
       '#type': webform_section
-      '#markup': 'Lisätietoja hakemukseen liittyen'
+      '#title': 'Lisätietoja hakemukseen liittyen'
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen.'
-        '#maxlength': 5000
-        '#required': true
+        '#attributes':
+          class:
+            - webform--large
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
         '#counter_type': character
+        '#maxlength': 5000
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
-    liitteet_markup_2:
+        '#cols': 63
+    liitteet:
       '#type': webform_section
-      '#markup': Liitteet
+      '#title': Liitteet
       attachments_info:
         '#type': webform_markup
-        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki hakuilmoituksessa luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p> <p>Helsingin kaupungille aiemmin toimitetut liitteet:</p>  <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>'
+        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki hakuilmoituksessa luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4><p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>'
       notification_attachments:
         '#type': webform_markup
-        '#markup': '<p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p> <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p>'
+        '#markup': |
+          <div class="hds-notification hds-notification--info">
+          <div class="hds-notification__content">
+          <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
+
+          <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
+          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          </div>
+          </div>
+        '#format': full_html
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
-        '#help': 'Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen.'
         '#maxlength': 5000
         '#counter_type': character
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
+        '#cols': 63
       muu_liite:
         '#type': grants_attachments
         '#title': 'Muu liite'
@@ -891,7 +909,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__remove': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää uusi liite'
+        '#multiple__add_more_button_label': 'Lisää liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:
