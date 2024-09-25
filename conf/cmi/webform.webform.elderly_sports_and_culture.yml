@@ -680,7 +680,6 @@ elements: |-
       hankkeen_kohderyhmat_konkretia:
         '#type': textarea
         '#title': 'Miten hankkeessa edistetään konkreettisin toimenpitein valitun kohderyhmän toimintakykyä ja hyvinvointia?'
-        '#label': 'Miten hankkeessa edistetään konkreettisin toimenpitein valitun kohderyhmän toimintakykyä ja hyvinvointia?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
@@ -705,7 +704,6 @@ elements: |-
       hankkeen_kohderyhmat_osaaminen:
         '#type': textarea
         '#title': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
-        '#label': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
@@ -776,7 +774,7 @@ elements: |-
       hankkeen_riskit_vakiinnuttaminen:
         '#type': textarea
         '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen?'
-        '#help': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
+        '#help': 'Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
         '#maxlength': 2500
         '#required': true
         '#counter_type': character
@@ -788,7 +786,7 @@ elements: |-
               value: '0'
     unknown_for_now:
       '#type': webform_section
-      '#title': '3.5 Tätä ei oo vielä määritetty tms'
+      '#title': '3.5 puuttuva määritys'
       '#states':
         visible:
           ':input[name="hankesuunnitelma_radios"]':
@@ -1005,7 +1003,7 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: '9. Valmis'
+  wizard_confirmation_label: '7. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
@@ -1018,7 +1016,7 @@ settings:
   wizard_page_type: container
   wizard_page_title_tag: h2
   preview: 2
-  preview_label: '8. Vahvista, esikatsele ja lähetä'
+  preview_label: '6. Vahvista, esikatsele ja lähetä'
   preview_title: 'Vahvista, esikatsele ja lähetä'
   preview_message: ''
   preview_attributes: {  }
