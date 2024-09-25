@@ -277,8 +277,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('jsonPath', ['compensation', 'additionalInformation'])
       ->setSetting('defaultValue', "");
 
-    // Muu_liite is not supposed to be mapped at all.
-
     return $this->propertyDefinitions;
   }
 
