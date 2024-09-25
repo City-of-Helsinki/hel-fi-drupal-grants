@@ -417,7 +417,7 @@ function grants_handler_webform_element_alter(array &$element, FormStateInterfac
         $itemFound = 'notfound';
         // If this item is not already been added to user input array.
         foreach ($inputItems as $sKey => $sItem) {
-          if(!is_array($sItem)) {
+          if (!is_array($sItem)) {
             continue;
           }
           if ($sItem['subventionType'] == (string) $id) {

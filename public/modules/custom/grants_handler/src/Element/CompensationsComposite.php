@@ -156,7 +156,7 @@ class CompensationsComposite extends WebformCompositeBase {
     unset($values['subventions']['items']);
     $valueMap = [];
     foreach ($values['subventions'] as $item) {
-      if(!is_array($item)) {
+      if (!is_array($item)) {
         continue;
       }
       $valueMap[$item['subventionType']] = $item['amount'] ?? NULL;

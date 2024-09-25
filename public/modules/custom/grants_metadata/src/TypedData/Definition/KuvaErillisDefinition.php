@@ -14,7 +14,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
   use ApplicationDefinitionTrait;
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
   public function getPropertyDefinitions() {
     if (!isset($this->propertyDefinitions)) {
@@ -277,10 +277,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('jsonPath', ['compensation', 'additionalInformation'])
       ->setSetting('defaultValue', "");
 
-
-
-    // muu_liite is not supposed to be mapped at all
-    // $info['muu_liite'] = DataDefinition::create('string')
+    // Muu_liite is not supposed to be mapped at all.
 
     return $this->propertyDefinitions;
   }

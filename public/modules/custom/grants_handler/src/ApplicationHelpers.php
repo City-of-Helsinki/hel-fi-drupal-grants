@@ -199,7 +199,7 @@ abstract class ApplicationHelpers {
     $latestApplicationForm = self::getLatestApplicationForm($applicationType);
 
     // If no latest form, then no breaking changes.
-    if(!$latestApplicationForm) {
+    if (!$latestApplicationForm) {
       return FALSE;
     }
 
