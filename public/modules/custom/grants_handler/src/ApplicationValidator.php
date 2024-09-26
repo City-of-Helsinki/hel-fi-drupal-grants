@@ -236,7 +236,7 @@ final class ApplicationValidator {
     ConstraintViolationInterface $violation,
     string $propertyPath,
     array $thisDefinitionSettings,
-    string $label,
+    ?string $label,
     FormStateInterface &$formState,
     array &$erroredItems,
   ): void {
@@ -244,7 +244,7 @@ final class ApplicationValidator {
 
     if (!in_array($propertyPath, $erroredItems)) {
       $errorMsg = $thisDefinitionSettings['formSettings']['formError'] ?? $violation->getMessage();
-      $message = $this->t('@label: @msg', ['@label' => $label, '@msg' => $errorMsg]);
+      $message = $this->t('@label: @msg', ['@label' => $label ?? '', '@msg' => $errorMsg]);
       $formState->setErrorByName($propertyPath, $message);
       $erroredItems[] = $propertyPath;
     }
