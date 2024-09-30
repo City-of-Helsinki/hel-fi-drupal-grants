@@ -145,6 +145,10 @@
         '.webform-button--draft',
         '.webform-button--preview',
         '.webform-button--previous',
+        '.form-file',
+        '.form-submit',
+        '.grants-stepper__text',
+        '.menu__link',
       ];
 
       $(document).ajaxStart(function () {
