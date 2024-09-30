@@ -1,6 +1,14 @@
 # CHANGELOG
 
 ## 2024.13
+- 9465ef688 Update configuration (#1492)
+- 9a2032b95 Fix error with missing label.
+- e738fcaf8 Fix error with missing label.
+- 1cd074561 fix: UHF-10550: Fix missing integrationID in some cases & fix in resending. (#1491)
+- 3371874d4 Update configuration (#1490)
+- 4c05828dc Update configuration (#1489)
+- c28d73a43 Automatic update (#1486)
+- b7fb2832b docs: Changelog & version bump
 
 
 ## 2024.12
