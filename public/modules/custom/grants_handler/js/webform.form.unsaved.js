@@ -52,8 +52,7 @@
       // @see \Drupal\webform\WebformSubmissionForm::buildForm
       if ($(once('data-webform-unsaved', '.js-webform-unsaved[data-webform-unsaved]')).length) {
         unsaved = true;
-      }
-      else {
+      } else {
         $(once('webform-unsaved', $('.js-webform-unsaved :input:not(:button, :submit, :reset, [type="hidden"])'))).on('change keypress', function (event, param1) {
           // Ignore events triggered when #states API is changed,
           // which passes 'webform.states' as param1.
@@ -97,19 +96,17 @@
           });
         });
       }
-    }
+    },
   };
   $('a').on('click', function (event) {
     let containingElement = document.querySelector('form');
-    if (unsaved && !containingElement.contains( event.target ) && !event.target.getAttribute('href').startsWith('#')) {
+    if (unsaved && !containingElement.contains(event.target) && !event.target.getAttribute('href').startsWith('#')) {
       event.preventDefault();
-      const $previewDialog = $(
-        `<div></div>`,
-      ).appendTo('body');
+      const $previewDialog = $('<div></div>').appendTo('body');
       Drupal.dialog($previewDialog, {
         title: Drupal.t('Are you sure you want to leave? Leave without saving.'),
         width: '33%',
-        closeText: Drupal.t('Close', {}, {context: 'grants_handler'}),
+        closeText: Drupal.t('Close', {}, { context: 'grants_handler' }),
         buttons: [
           {
             text: Drupal.t('Leave the application'),
@@ -130,9 +127,50 @@
         ],
       }).showModal();
     }
-  })
+  });
+
+  // Prevent page refresh via keyboard or browser button when unsaved changes are present
+  $(window).on('beforeunload', function (event) {
+    if (unsaved) {
+      // Show a confirmation dialog when the user tries to refresh or leave the page
+      const message = Drupal.t('You have unsaved changes. Are you sure you want to leave?');
+      event.preventDefault();
+      event.returnValue = message; // For most browsers
+      return message; // For older browsers
+    }
+  });
+
+  // Also prevent refresh from keyboard shortcuts (F5, Ctrl+R, Cmd+R)
+  $(document).on('keydown', function (e) {
+    if (unsaved && (e.which === 116 || (e.which === 82 && (e.ctrlKey || e.metaKey)))) {
+      e.preventDefault(); // Prevent F5 and Ctrl+R / Cmd+R refresh
+      const $previewDialog = $('<div></div>').appendTo('body');
+      Drupal.dialog($previewDialog, {
+        title: Drupal.t('You have unsaved changes. Are you sure you want to refresh?'),
+        width: '33%',
+        closeText: Drupal.t('Close', {}, { context: 'grants_handler' }),
+        buttons: [
+          {
+            text: Drupal.t('Refresh the page'),
+            click() {
+              unsaved = false;
+              $(this).dialog('close');
+              location.reload(); // Perform the refresh
+            },
+          },
+          {
+            text: Drupal.t('Back to application'), 
+            buttonType: 'secondary',
+            click() {
+              $(this).dialog('close');
+            },
+          },
+        ],
+      }).showModal();
+    }
+  });
   // Add an event listener for autologout.
-  document.addEventListener("autologout", function() {
+  document.addEventListener('autologout', function () {
     autologout = true;
   });
   $(window).on('beforeunload', function () {
@@ -181,8 +219,7 @@
         var target = a.attr('target');
         if (target) {
           window.open(href, target);
-        }
-        else {
+        } else {
           window.location.href = href;
         }
         return false;
