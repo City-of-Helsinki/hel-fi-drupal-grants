@@ -47,6 +47,7 @@
       unsaved = value;
     },
     attach: function (context) {
+      // Detect general unsaved changes.
       // Look for the 'data-webform-unsaved' attribute which indicates that
       // a multi-step webform has unsaved data.
       // @see \Drupal\webform\WebformSubmissionForm::buildForm
@@ -63,6 +64,16 @@
         });
       }
 
+      // Detect file uploads.
+      $(once('webform-file-upload', '.js-form-managed-file input[type="file"]', context)).on('change', function () {
+        unsaved = true;
+      });
+
+      // Detect when a file is uploaded via Ajax (when the file appears in the DOM).
+      $(once('webform-file-ajax', '.file--mime-application-pdf, .file--mime-application-doc', context)).each(function () {
+        unsaved = true;
+      });
+
       $(once('webform-unsaved', $('.js-webform-unsaved button, .js-webform-unsaved input[type="submit"]', context))).not('[data-webform-unsaved-ignore]')
         .on('click', function (event) {
           // For reset button we must confirm unsaved changes before the
@@ -72,10 +83,10 @@
               return false;
             }
           }
-
           unsaved = false;
         });
 
+      // Ensure file changes reset unsaved state after an Ajax submit.
       // Add submit handler to form.beforeSend.
       // Update Drupal.Ajax.prototype.beforeSend only once.
       if (typeof Drupal.Ajax !== 'undefined' && typeof Drupal.Ajax.prototype.beforeSubmitWebformUnsavedOriginal === 'undefined') {
@@ -96,7 +107,7 @@
           });
         });
       }
-    },
+    }
   };
   $('a').on('click', function (event) {
     let containingElement = document.querySelector('form');
