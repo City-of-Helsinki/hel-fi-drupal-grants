@@ -9,6 +9,7 @@
 - 4c05828dc Update configuration (#1489)
 - c28d73a43 Automatic update (#1486)
 - b7fb2832b docs: Changelog & version bump
+- 13f64ff8b fix: UHF-10550 (part 2): Disable all clickable elements on page when ajax in ajax call (#1493)
 
 
 ## 2024.12
