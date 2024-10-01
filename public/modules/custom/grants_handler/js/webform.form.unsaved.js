@@ -159,7 +159,7 @@
             },
           },
           {
-            text: Drupal.t('Back to application'), 
+            text: Drupal.t('Back to application'),
             buttonType: 'secondary',
             click() {
               $(this).dialog('close');
