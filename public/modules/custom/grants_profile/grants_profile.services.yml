@@ -9,6 +9,8 @@ services:
       '@helfi_helsinki_profiili.userdata',
       '@grants_profile.municipality_service',
       '@helfi_yjdh.client',
+      '@messenger',
+      '@logger.factory',
     ]
 
   grants_profile.cache:
