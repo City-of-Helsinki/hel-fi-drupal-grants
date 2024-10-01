@@ -146,9 +146,9 @@
         'button', // All buttons
         '[role="link"]', // Custom elements acting as links
         'a', // All anchor links (newly added ones too)
-        '.webform-button--draft',
-        '.webform-button--preview',
-        '.webform-button--previous',
+        '.webform-button--draft', // Webform draft
+        '.webform-button--preview', // Webform preview
+        '.webform-button--previous', // Webform previous
       ];
 
       // Function to disable elements
@@ -197,7 +197,7 @@
       $(document).ajaxComplete(function () {
         // Disable newly added links after AJAX completes
         disableElements();
-        // Enable elements once AJAX is done (if you want to re-enable them after processing)
+        // Enable elements once AJAX is done
         enableElements();
         // Remove the ajax-loading class
         $('body').removeClass('ajax-loading');
