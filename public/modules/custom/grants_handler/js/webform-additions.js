@@ -149,6 +149,7 @@
         '.form-submit',
         '.grants-stepper__text',
         '.menu__link',
+        '.grants-stepper__step',
       ];
 
       $(document).ajaxStart(function () {
