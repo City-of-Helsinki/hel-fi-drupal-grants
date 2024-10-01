@@ -38,8 +38,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankesuunnitelma_jatkohakemus',
       ]);
 
@@ -47,8 +47,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_tarkoitus_tavoitteet',
       ]);
 
@@ -56,8 +56,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_toimenpiteet_aikataulu',
       ]);
 
@@ -65,8 +65,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_toimenpiteet_alkupvm',
       ])
       ->setSetting('typeOverride', [
@@ -85,8 +85,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_toimenpiteet_loppupvm',
       ])
       ->setSetting('typeOverride', [
@@ -105,8 +105,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_keskeisimmat_kumppanit',
       ]);
 
@@ -114,8 +114,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'haun_painopisteet_liikkumis_kehitys',
       ]);
 
@@ -123,8 +123,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'haun_painopisteet_digi_kehitys',
       ]);
 
@@ -132,8 +132,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'haun_painopisteet_vertais_kehitys',
       ]);
 
@@ -141,8 +141,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'haun_painopisteet_kulttuuri_kehitys',
       ]);
 
@@ -150,8 +150,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_kohderyhmat_kenelle',
       ]);
 
@@ -159,8 +159,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_kohderyhmat_erityisryhmat',
       ]);
 
@@ -168,8 +168,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_kohderyhmat_tavoitus',
       ]);
 
@@ -177,8 +177,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_kohderyhmat_konkretia',
       ]);
 
@@ -186,8 +186,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_kohderyhmat_osallisuus',
       ]);
 
@@ -195,8 +195,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_kohderyhmat_osaaminen',
       ]);
 
@@ -204,8 +204,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_kohderyhmat_postinrot',
       ]);
 
@@ -213,8 +213,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_kohderyhmat_miksi_alue',
       ]);
 
@@ -222,8 +222,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_riskit_keskeisimmat',
       ]);
 
@@ -231,8 +231,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_riskit_seuranta',
       ]);
 
@@ -240,8 +240,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ->setSetting('defaultValue', '')
       ->setSetting('jsonPath', [
         'compensation',
-        'activityBasisInfo',
-        'activityBasisArray',
+        'customQuestionsInfo',
+        'customQuestionsArray',
         'hankkeen_riskit_vakiinnuttaminen',
       ]);
 
