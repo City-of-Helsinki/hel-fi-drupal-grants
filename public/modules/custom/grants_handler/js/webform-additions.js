@@ -141,21 +141,68 @@
         }
       });
 
-      const fieldsToDisable = [
+      // Target buttons, custom link-like elements, and dynamically added links
+      const elementsToDisable = [
+        'button', // All buttons
+        '[role="link"]', // Custom elements acting as links
+        'a', // All anchor links (newly added ones too)
         '.webform-button--draft',
         '.webform-button--preview',
         '.webform-button--previous',
       ];
 
+      // Function to disable elements
+      function disableElements() {
+        $(elementsToDisable.join(',')).each(function() {
+          const $el = $(this);
+          if ($el.is('button, input')) {
+            $el.prop('disabled', true);
+          }
+          if ($el.is('[role="link"]')) {
+            $el.addClass('disabled-link').attr('tabindex', '-1').on('click.disable', function(e) {
+              e.preventDefault(); // Disable click behavior
+            });
+          }
+          if ($el.is('a')) {
+            $el.addClass('disabled-link').on('click.disable', function(e) {
+              e.preventDefault(); // Disable anchor link clicks
+            });
+          }
+        });
+      }
+
+      // Function to re-enable elements
+      function enableElements() {
+        $(elementsToDisable.join(',')).each(function() {
+          const $el = $(this);
+          if ($el.is('button, input')) {
+            $el.prop('disabled', false);
+          }
+          if ($el.is('[role="link"]')) {
+            $el.removeClass('disabled-link').attr('tabindex', '0').off('click.disable'); // Re-enable click and tabbing
+          }
+          if ($el.is('a')) {
+            $el.removeClass('disabled-link').off('click.disable'); // Re-enable anchor link clicks
+          }
+        });
+      }
+
       $(document).ajaxStart(function () {
-        // Disable buttons or perform any other actions before the request.
-        $(fieldsToDisable.join(',')).prop('disabled', true);
+        // Disable elements when AJAX starts
+        disableElements();
+        // Optionally, add a class to the body to show the page is busy
+        $('body').addClass('ajax-loading');
       });
 
       $(document).ajaxComplete(function () {
-        // Enable buttons or perform any other actions after the request.
-        $(fieldsToDisable.join(',')).prop('disabled', false);
+        // Disable newly added links after AJAX completes
+        disableElements();
+        // Enable elements once AJAX is done (if you want to re-enable them after processing)
+        enableElements();
+        // Remove the ajax-loading class
+        $('body').removeClass('ajax-loading');
       });
+
     }
   };
 })(jQuery, Drupal, drupalSettings, once);
