@@ -67,7 +67,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
         ]);
 
       $info['compensation_boolean'] = DataDefinition::create('boolean')
-        ->setSetting('defaultValue', FALSE)
+        ->setRequired(TRUE)
         ->setSetting('typeOverride', [
           'dataType' => 'string',
           'jsonType' => 'bool',
