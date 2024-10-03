@@ -184,4 +184,50 @@ class Helpers {
     return in_array('grants_admin', $currentRoles) || $account->id() === '1';
   }
 
+  /**
+   * Extract field value from array.
+   *
+   * @param array $attachmentInfo
+   *   Attachment info.
+   * @param string $fieldId
+   *   Field id.
+   *
+   * @return string|null
+   *   String or null.
+   */
+  public static function extractFieldValue(array $attachmentInfo, string $fieldId): ?string {
+    foreach ($attachmentInfo as $innerArray) {
+      foreach ($innerArray as $item) {
+        if ($item === $fieldId) {
+          return $innerArray['value'];
+        }
+      }
+    }
+    // Return null if no match is found.
+    return NULL;
+  }
+
+  /**
+   * Find by filename from attachments.
+   *
+   * @param array $attachment
+   *   Attachment.
+   * @param array $attachmentInfo
+   *   Attachment info.
+   *
+   * @return array|null
+   *   Array or null.
+   */
+  public static function findByFilename(array $attachment, array $attachmentInfo): ?array {
+    foreach ($attachmentInfo as $innerArray) {
+      foreach ($innerArray as $item) {
+        if ($item['ID'] === 'fileName' && $item['value'] === $attachment['filename']) {
+          return $innerArray;
+        }
+      }
+    }
+    // Return null if no match is found.
+    return NULL;
+  }
+
 }

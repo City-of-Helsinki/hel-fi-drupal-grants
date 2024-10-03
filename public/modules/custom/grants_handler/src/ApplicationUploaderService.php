@@ -122,6 +122,7 @@ final class ApplicationUploaderService {
         $webform_submission,
         $submittedFormData);
 
+    // Make sure we have most recent version of the document.
     $atvDocument = $this->applicationGetterService->getAtvDocument($applicationNumber, TRUE);
     // Set language for the application.
     $language = $this->languageManager->getCurrentLanguage()->getId();

@@ -1412,8 +1412,10 @@ submit the application only after you have provided all the necessary informatio
 
   /**
    * PostSave handling when submit trigger is ::submitForm.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function postsaveSubmitForm(): void {
+  public function postSaveSubmitForm(): void {
     $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
     $applicationData = NULL;
     // submitForm is triggering element when saving as draft.
@@ -1550,10 +1552,24 @@ submit the application only after you have provided all the necessary informatio
     // If triggering element is either draft save or proper one,
     // we want to parse attachments from form.
     if ($this->triggeringElement == '::submitForm') {
-      $this->postsaveSubmitForm();
+      try {
+        $this->postSaveSubmitForm();
+      }
+      catch (GuzzleException $e) {
+        $this->messenger->addError($this->t('Error saving application. please contact support.'));
+        $this->getLogger('grants_handler')
+          ->error('Error saving application: @error', ['@error' => $e->getMessage()]);
+      }
     }
     if ($this->triggeringElement == '::submit') {
-      $this->postsaveSubmit($webform_submission);
+      try {
+        $this->postSaveSubmit($webform_submission);
+      }
+      catch (GuzzleException $e) {
+        $this->messenger->addError($this->t('Error saving application. please contact support.'));
+        $this->getLogger('grants_handler')
+          ->error('Error saving application: @error', ['@error' => $e->getMessage()]);
+      }
     }
   }
 

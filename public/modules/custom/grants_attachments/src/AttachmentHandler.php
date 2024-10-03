@@ -106,13 +106,11 @@ class AttachmentHandler {
     EntityTypeManagerInterface $entityTypeManager,
     protected ApplicationDataService $applicationDataService,
   ) {
-
     $this->logger = $loggerChannelFactory->get('grants_attachments_handler');
     $this->attachmentFileIds = [];
     $this->fileStorage = $entityTypeManager->getStorage('file');
 
     $this->setDebug(NULL);
-
   }
 
   /**
@@ -122,7 +120,6 @@ class AttachmentHandler {
    *   Attachment fields.
    */
   public static function getAttachmentFieldNames(string $applicationNumber, $preventKeys = FALSE): array {
-
     // Load application type from webform.
     // This could probably be done just by parsing the application number,
     // however this more futureproof.
@@ -188,7 +185,6 @@ class AttachmentHandler {
     }
     // Loop records and delete them from ATV.
     foreach ($storage['deleted_attachments'] as $deletedAttachment) {
-
       if (empty($deletedAttachment['integrationID'])) {
         continue;
       }
@@ -198,7 +194,6 @@ class AttachmentHandler {
       );
 
       try {
-
         $this->atvService->deleteAttachmentViaIntegrationId(
           $cleanIntegrationId
         );
@@ -230,7 +225,6 @@ class AttachmentHandler {
           ],
         ];
         $auditLogService->dispatchEvent($message);
-
       }
       catch (AtvDocumentNotFoundException $e) {
         $this->logger->error('Tried to delete an attachment which was not in ATV (id: %id document: $doc): %msg', [
@@ -280,7 +274,6 @@ class AttachmentHandler {
     array &$submittedFormData,
     string $applicationNumber,
   ): void {
-
     $attachmentHeaders = GrantsAttachments::$fileTypes;
     $attachmentFields = self::getAttachmentFieldNames($submittedFormData["application_number"], TRUE);
     foreach ($attachmentFields as $attachmentFieldName => $descriptionKey) {
@@ -439,6 +432,7 @@ class AttachmentHandler {
 
     // Load the ATV document.
     $applicationDocument = $this->getAtvDocument($applicationNumber);
+
     if (!$applicationDocument) {
       return;
     }
@@ -501,17 +495,21 @@ class AttachmentHandler {
    *
    * @param string $applicationNumber
    *   The application number.
+   * @param bool $refetch
+   *  Do we bypass caching and fetch a new document.
    *
    * @return \Drupal\helfi_atv\AtvDocument|bool
    *   An application document if one is found,
    *   FALSE otherwise.
    */
-  protected function getAtvDocument(string $applicationNumber): AtvDocument|bool {
+  protected function getAtvDocument(string $applicationNumber, bool $refetch = FALSE): AtvDocument|bool {
     try {
       $applicationDocumentResults = $this->atvService->searchDocuments([
         'transaction_id' => $applicationNumber,
         'lookfor' => 'appenv:' . Helpers::getAppEnv(),
-      ]);
+      ],
+        $refetch
+      );
       return reset($applicationDocumentResults);
     }
     catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
@@ -574,7 +572,8 @@ class AttachmentHandler {
 
         return [
           'description' => $this->t('Confirmation for account @accountNumber',
-            ['@accountNumber' => $selectedAccount["bankAccount"]], ['context' => 'grants_attachments'])->render(),
+            ['@accountNumber' => $selectedAccount["bankAccount"]], ['context' => 'grants_attachments'])
+            ->render(),
           'fileName' => $selectedAccountConfirmation["filename"],
           'isNewAttachment' => TRUE,
           'fileType' => 45,
@@ -622,7 +621,6 @@ class AttachmentHandler {
     array $selectedAccountConfirmation,
     array $attachmentsInAtv,
   ): bool {
-
     $allFormAttachments = [];
     if (isset($submittedFormData['attachments'])) {
       $allFormAttachments[] = $submittedFormData['attachments'];
@@ -865,7 +863,6 @@ class AttachmentHandler {
     string $fileType,
     string $applicationNumber,
   ): array {
-
     $event = NULL;
     $issetDescription = isset($field['description']) && $field['description'] !== "";
     $retval = [
@@ -874,7 +871,6 @@ class AttachmentHandler {
     $retval['fileType'] = (int) $fileType;
     // We have uploaded file. THIS time. Not previously.
     if (!empty($field['attachment'])) {
-
       /** @var \Drupal\file\FileInterface $file */
       $file = $this->fileStorage->load($field['attachment']);
       if ($file) {
@@ -902,7 +898,6 @@ class AttachmentHandler {
 
         // Delete file entity from Drupal.
         $file->delete();
-
       }
       return [
         'attachment' => $retval,

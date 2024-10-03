@@ -31,3 +31,9 @@ services:
       '@entity_type.manager',
       '@grants_metadata.application_data_service'
     ]
+
+  grants_attachments.attachment_fixer_service:
+    class: Drupal\grants_attachments\AttachmentFixerService
+    arguments: [
+      '@messenger'
+    ]
