@@ -218,7 +218,7 @@ class DocumentContentMapper {
    *   Typed data values.
    */
   private static function processBusinessPractice(array &$typedDataValues): void {
-    if (isset($typedDataValues['community_practices_business'])) {
+    if (isset($typedDataValues['community_practices_business']) && $typedDataValues['community_practices_business'] !== null) {
       $typedDataValues['community_practices_business'] = $typedDataValues['community_practices_business'] === 'true' ? 1 : 0;
     }
   }

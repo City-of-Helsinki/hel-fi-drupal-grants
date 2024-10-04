@@ -197,6 +197,11 @@ abstract class ApplicationHelpers {
     $applicationType = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
 
     $latestApplicationForm = self::getLatestApplicationForm($applicationType);
+
+    if (!$latestApplicationForm) {
+      return FALSE;
+    }
+
     $parent = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'parent');
     $hasBreakingChanges = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'avus2BreakingChange');
 
