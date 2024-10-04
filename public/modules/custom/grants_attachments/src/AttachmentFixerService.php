@@ -27,17 +27,15 @@ final class AttachmentFixerService {
    *
    * Possibly check other things missing as well.
    *
-   * @todo Add more checks if needed.
-   *
    * @param \Drupal\helfi_atv\AtvDocument $atvDoc
    *   The ATV document.
-   * @param string $applicationId
-   *   Application ID.
    *
-   * @return void
+   * @return \Drupal\helfi_atv\AtvDocument
    *   Void.
+   *
+   * @todo Add more checks if needed.
    */
-  public function fixAttachmentsOnApplication(AtvDocument $atvDoc, string $applicationId): void {
+  public function fixAttachmentsOnApplication(AtvDocument $atvDoc): AtvDocument {
     // Load attachments from the document.
     $attachments = $atvDoc->getAttachments();
     // Get the application environment.
@@ -56,8 +54,19 @@ final class AttachmentFixerService {
       }
     }
 
+    // Make sure we have labels for all fields.
+    foreach ($attachmentInfo as $key => $info) {
+      foreach ($info as $key2 => $item) {
+        if (!isset($item['label'])) {
+          // If not, use the ID as label.
+          $attachmentInfo[$key][$key2]['label'] = $attachmentInfo[$key][$key2]['ID'];
+        }
+      }
+    }
+
     $content['attachmentsInfo']['attachmentsArray'] = $attachmentInfo;
     $atvDoc->setContent($content);
+    return $atvDoc;
   }
 
   /**
@@ -98,6 +107,7 @@ final class AttachmentFixerService {
       if ($fileNameMatched && !$integrationIdUpdated) {
         $innerArray[] = [
           'ID' => 'integrationID',
+          'label' => 'Integration ID',
           'value' => $intID,
           'valueType' => 'string',
           'meta' => "[]",
@@ -108,6 +118,10 @@ final class AttachmentFixerService {
 
   /**
    * Try to figure our if attachments are ok.
+   *
+   * This is a helper function for fixAttachmentsOnApplication that goes through
+   * the events and attachment info to see if the attachments are added properly
+   * to the document.
    *
    * @param mixed $events
    *   Events.
@@ -125,12 +139,15 @@ final class AttachmentFixerService {
     mixed $events,
     mixed $attachment,
     mixed $attachmentInfo,
-    mixed $appEnv
+    mixed $appEnv,
   ): array {
+    // Look for events from us, the handler.
     $handlerOk = $this->filterEventsByTypeAndFilename($events, 'HANDLER_ATT_OK', $attachment['filename']);
+    // Look for events from AVUSTUS2.
     $avus2Ok = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_OK', $attachment['filename']);
+    // Look for errors from AVUSTUS2.
     $avus2Error = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_ERROR', $attachment['filename']);
-
+    // Are attachments added properly to form data.
     $formOk = $this->checkAttachmentInfo($attachmentInfo, $attachment, $appEnv);
 
     return [
@@ -174,19 +191,22 @@ final class AttachmentFixerService {
    *   True if found, false otherwise.
    */
   private function checkAttachmentInfo(mixed $attachmentInfo, mixed $attachment, mixed $appEnv): bool {
+    // If no attachments, nothing to check.
     if (!is_array($attachmentInfo)) {
       return FALSE;
     }
 
+    // Loop attachment info and check if we have the attachment added.
     foreach ($attachmentInfo as $info) {
+      // Check if filename and integrationID are found.
       $filenameFound = $this->findValueById($info, 'fileName', $attachment['filename']);
       $intFound = $this->findIntegrationId($info, $attachment, $appEnv);
-
+      // Return true if both are found.
       if ($filenameFound && $intFound) {
         return TRUE;
       }
     }
-
+    // If not found, return false.
     return FALSE;
   }
 

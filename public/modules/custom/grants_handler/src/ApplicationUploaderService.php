@@ -11,6 +11,7 @@ use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataInterface;
+use Drupal\grants_attachments\AttachmentFixerService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
@@ -74,8 +75,8 @@ final class ApplicationUploaderService {
     private readonly MessengerInterface $messenger,
     private readonly ApplicationGetterService $applicationGetterService,
     private readonly HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata,
+    private readonly AttachmentFixerService $attachmentFixerService,
   ) {
-
     $this->logger = $this->loggerChannelFactory->get('application_uploader_service');
 
     if ($schema = getenv('ATV_SCHEMA_PATH')) {
@@ -85,7 +86,6 @@ final class ApplicationUploaderService {
     $this->endpoint = getenv('AVUSTUS2_ENDPOINT') ?: '';
     $this->username = getenv('AVUSTUS2_USERNAME') ?: '';
     $this->password = getenv('AVUSTUS2_PASSWORD') ?: '';
-
   }
 
   /**
@@ -137,6 +137,9 @@ final class ApplicationUploaderService {
 
     $atvDocument->setContent($appDocumentContent);
 
+    // Try to fix all possibly missing items in attachments.
+    $atvDocument = $this->attachmentFixerService->fixAttachmentsOnApplication($atvDocument);
+
     $newHeader = $this->grantsHandlerApplicationStatusService->getNewStatusHeader();
 
     if ($newHeader && $newHeader != '') {
@@ -151,7 +154,6 @@ final class ApplicationUploaderService {
     $this->atvDocument = $updatedDocument;
 
     return $updatedDocument;
-
   }
 
   /**
@@ -185,22 +187,15 @@ final class ApplicationUploaderService {
     $tOpts = ['context' => 'grants_handler'];
 
     /*
-     * Save application data once more as a DRAFT to ATV to make sure we have
+     * Save application data once more to ATV to make sure we have
      * the most recent version available even if integration fails
      * for some reason.
      */
-    $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+    $updatedDocumentFromAtv = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+    $myJSON = Json::encode($updatedDocumentFromAtv->getContent());
 
-    /*
-     * I'm not sure we need to do anything else, but I'll leave this comment
-     * here when we come debugging weird behavior
-     */
-
-    $webformSubmission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
-    $appDocument = $this->helfiAtvAtvSchema->typedDataToDocumentContent($applicationData, $webformSubmission, $submittedFormData);
-    $myJSON = Json::encode($appDocument);
-
-    if ($this->isDebug()) {
+    // No matter what the debug value is, we do NOT log json in PROD.
+    if ($this->isDebug() && Helpers::getAppEnv() !== 'PROD') {
       $t_args = [
         '%endpoint' => $this->endpoint,
       ];
@@ -210,17 +205,15 @@ final class ApplicationUploaderService {
       $t_args = [
         '%myJSON' => $myJSON,
       ];
-      if (Helpers::getAppEnv() !== 'PROD') {
-        $this->logger
-          ->debug('DEBUG: Sent JSON: %myJSON', $t_args);
-      }
+
+      $this->logger
+        ->debug('DEBUG: Sent JSON: %myJSON', $t_args);
     }
 
     try {
-
       $headers = [];
 
-      $headers['X-Case-Status'] = $this->grantsHandlerApplicationStatusService->getNewStatusHeader();
+      $headers['X-Case-Status'] = $updatedDocumentFromAtv->getStatus();
 
       // Current environment as a header to be added to meta -fields.
       $headers['X-hki-appEnv'] = Helpers::getAppEnv();

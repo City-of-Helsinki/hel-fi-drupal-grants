@@ -192,7 +192,7 @@ class Helpers {
    * @param string $fieldId
    *   Field id.
    *
-   * @return string|null
+   * @return array|null
    *   String or null.
    */
   public static function extractFieldValue(array $attachmentInfo, string $fieldId): ?string {
@@ -226,8 +226,25 @@ class Helpers {
         }
       }
     }
-    // Return null if no match is found.
-    return NULL;
+    // Return empty if no match is found.
+    return [];
+  }
+
+  /**
+   * Is recursive array empty.
+   *
+   * @param array $value
+   *   Array to check.
+   *
+   * @return bool
+   *   Empty or not?
+   */
+  public static function emptyRecursive(array $value): bool {
+    $empty = TRUE;
+    array_walk_recursive($value, function ($item) use (&$empty) {
+      $empty = $empty && empty($item);
+    });
+    return $empty;
   }
 
 }

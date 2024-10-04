@@ -359,6 +359,7 @@ class AttachmentHandler {
       // as those are processed separately.
       $itemFileType = $item['fileType'] ?? '';
       $isFileTypeEqual = $itemFileType && $itemFileType == $attachmentFileType;
+
       if ($isIntegrationIdEqual || $isFileTypeEqual) {
         $submittedFormData['attachments'][$key] = $attachment['attachment'];
         $attachmentExistsAlready = TRUE;
@@ -496,7 +497,7 @@ class AttachmentHandler {
    * @param string $applicationNumber
    *   The application number.
    * @param bool $refetch
-   *  Do we bypass caching and fetch a new document.
+   *   Do we bypass caching and fetch a new document.
    *
    * @return \Drupal\helfi_atv\AtvDocument|bool
    *   An application document if one is found,
@@ -782,6 +783,12 @@ class AttachmentHandler {
     if (isset($fileArray['integrationID'])) {
       $fileArray['integrationID'] = AttachmentHandlerHelper::addEnvToIntegrationId($fileArray['integrationID']);
     }
+
+    // If no label is set, use description.
+    if (!isset($fileArray['label']) || $fileArray['label'] === "") {
+      $fileArray['label'] = $fileArray['description'];
+    }
+
     $submittedFormData['attachments'][] = $fileArray;
     $submittedFormData['attachments'] = array_values($submittedFormData['attachments']);
   }

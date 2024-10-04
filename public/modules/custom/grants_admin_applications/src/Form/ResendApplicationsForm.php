@@ -406,7 +406,7 @@ class ResendApplicationsForm extends AtvFormBase {
         return;
       }
 
-      $this->attachmentFixerService->fixAttachmentsOnApplication($atvDoc, $applicationId);
+      $this->attachmentFixerService->fixAttachmentsOnApplication($atvDoc);
       $this->sendApplicationToIntegrations($atvDoc, $applicationId);
       $formState->setRebuild();
     }
