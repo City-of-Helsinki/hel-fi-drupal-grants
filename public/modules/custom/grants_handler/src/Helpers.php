@@ -192,7 +192,7 @@ class Helpers {
    * @param string $fieldId
    *   Field id.
    *
-   * @return array|null
+   * @return string|null
    *   String or null.
    */
   public static function extractFieldValue(array $attachmentInfo, string $fieldId): ?string {
