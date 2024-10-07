@@ -637,13 +637,7 @@ class ResendApplicationsForm extends AtvFormBase {
       $attOk = $this->areAttachmentsOk($events, $attachment, $attachmentInfo, $appEnv);
 
       $fieldInfo = $this->findByFilename($attachment, $attachmentInfo);
-
-      // Sometimes fieldInfo is null so we need to check for that so the next method won't fail.
-      if (is_array($fieldInfo)) {
-        $fieldLabel = $this->extractFieldValue($fieldInfo, 'description');
-      } else {
-        $fieldLabel = '';
-      }
+      $fieldLabel = (string)$this->extractFieldValue($fieldInfo, 'description');
 
       $rowElement = [
         'field' => [
@@ -722,7 +716,7 @@ class ResendApplicationsForm extends AtvFormBase {
       }
     }
     // Return null if no match is found.
-    return NULL;
+    return [];
   }
 
   /**
