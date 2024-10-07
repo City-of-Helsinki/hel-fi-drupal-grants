@@ -32,8 +32,6 @@ final class AttachmentFixerService {
    *
    * @return \Drupal\helfi_atv\AtvDocument
    *   Void.
-   *
-   * @todo Add more checks if needed.
    */
   public function fixAttachmentsOnApplication(AtvDocument $atvDoc): AtvDocument {
     // Load attachments from the document.
