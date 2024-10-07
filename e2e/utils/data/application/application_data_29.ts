@@ -364,7 +364,7 @@ const baseForm_29: FormData = {
         "edit-benefits-premises": {
           value: faker.lorem.sentences(4),
         },
-        "edit-compensation-boolean-1": {
+        "edit-compensation-boolean": {
           role: 'radio',
           selector: {
             type: 'dom-id-label',
