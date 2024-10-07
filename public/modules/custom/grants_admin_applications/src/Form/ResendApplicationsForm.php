@@ -637,7 +637,13 @@ class ResendApplicationsForm extends AtvFormBase {
       $attOk = $this->areAttachmentsOk($events, $attachment, $attachmentInfo, $appEnv);
 
       $fieldInfo = $this->findByFilename($attachment, $attachmentInfo);
-      $fieldLabel = $this->extractFieldValue($fieldInfo, 'description');
+
+      // Sometimes fieldInfo is null so we need to check for that so the next method won't fail.
+      if (is_array($fieldInfo)) {
+        $fieldLabel = $this->extractFieldValue($fieldInfo, 'description');
+      } else {
+        $fieldLabel = '';
+      }
 
       $rowElement = [
         'field' => [
