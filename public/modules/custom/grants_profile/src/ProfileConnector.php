@@ -4,7 +4,6 @@ namespace Drupal\grants_profile;
 
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
-use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
@@ -25,7 +24,6 @@ class ProfileConnector {
    */
   protected LoggerChannelInterface $logger;
 
-
   /**
    * Constructs a ProfileConnector object.
    *
@@ -35,13 +33,17 @@ class ProfileConnector {
    *   Municipality service.
    * @param \Drupal\helfi_yjdh\YjdhClient $yjdhClient
    *   Access to yjdh data.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   Messenger service.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
+   *   Logger channel factory.
    */
   public function __construct(
     protected HelsinkiProfiiliUserData $helsinkiProfiili,
     protected MunicipalityService $municipalityService,
     protected YjdhClient $yjdhClient,
     protected MessengerInterface $messenger,
-    protected LoggerChannelFactoryInterface $loggerChannelFactory
+    protected LoggerChannelFactoryInterface $loggerChannelFactory,
   ) {
     $this->logger = $loggerChannelFactory->get('ProfileConnector');
   }
