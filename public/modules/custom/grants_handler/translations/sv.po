@@ -558,6 +558,9 @@ msgstr "Avsluta från ansökningshandling"
 msgid "Back to application"
 msgstr "Tillbaka till ansökningshandling"
 
+msgid "Refresh the page"
+msgstr "Uppdatera sidan"
+
 msgctxt "grants_handler"
 msgid "View application"
 msgstr "Visa ansökning"

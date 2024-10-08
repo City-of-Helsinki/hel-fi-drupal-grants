@@ -649,3 +649,7 @@ msgstr "%mail ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite 
 
 msgid "Remove @item @number"
 msgstr "Poista @item @number"
+
+msgctxt "grants_handler"
+msgid "Refresh the page"
+msgstr "Lataa sivu uudelleen"

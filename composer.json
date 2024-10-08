@@ -6,7 +6,7 @@
     "homepage": "https://github.com/City-of-Helsinki/drupal-helfi-platform",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "2024.12",
+    "version": "2024.13",
     "require": {
         "ext-json": "*",
         "composer/installers": "^1.9",
@@ -106,7 +106,8 @@
             "php-http/discovery": true
         },
         "audit": {
-            "abandoned": "report"
+            "abandoned": "report",
+            "ignore": ["GHSA-mg8j-w93w-xjgc"]
         }
     },
     "extra": {
