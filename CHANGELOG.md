@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 2024.14
+- 15cac2065 feat: UHF-10630: Update autologout (#1498)
+- bcb5965cf fix: UHF-10639: If hometown is not properly set, use - and log errors. (#1494)
+- e563549f0 Update configuration (#1497)
+- e40c9e132 Hotfix UHF-10750 - 2024.13.1
+- ac7621f99 UHF-10750: Add check for missing label text
+- b5538eb75 Update configuration (#1495)
+
+
 ## 2024.13
 - 9465ef688 Update configuration (#1492)
 - 9a2032b95 Fix error with missing label.
