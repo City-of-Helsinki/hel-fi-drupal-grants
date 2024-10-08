@@ -34,6 +34,4 @@ services:
 
   grants_attachments.attachment_fixer_service:
     class: Drupal\grants_attachments\AttachmentFixerService
-    arguments: [
-      '@messenger'
-    ]
+    arguments: []

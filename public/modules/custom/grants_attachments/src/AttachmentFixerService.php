@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\grants_attachments;
 
-use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\helfi_atv\AtvDocument;
 
@@ -18,9 +17,7 @@ final class AttachmentFixerService {
   /**
    * Constructs an AttachmentFixerService object.
    */
-  public function __construct(
-    private readonly Messenger $messenger,
-  ) {}
+  public function __construct() {}
 
   /**
    * Fix attachments on applications that has missing integration IDs.
@@ -80,7 +77,11 @@ final class AttachmentFixerService {
    * @return void
    *   Void.
    */
-  private function updateIntegrationIdForAttachment(array $attachment, array &$attachmentInfo, string $appEnv): void {
+  private function updateIntegrationIdForAttachment(
+    array $attachment,
+    array &$attachmentInfo,
+    string $appEnv,
+  ): void {
     // Clean file href to integrationID format so that it'll work with ATV.
     $intID = '/' . $appEnv . AttachmentHandlerHelper::cleanIntegrationId($attachment['href']);
 
@@ -121,23 +122,23 @@ final class AttachmentFixerService {
    * the events and attachment info to see if the attachments are added properly
    * to the document.
    *
-   * @param mixed $events
+   * @param array $events
    *   Events.
-   * @param mixed $attachment
+   * @param array $attachment
    *   Attachment.
-   * @param mixed $attachmentInfo
+   * @param array $attachmentInfo
    *   Attachment info.
-   * @param mixed $appEnv
+   * @param string $appEnv
    *   Application environment.
    *
    * @return array
    *   Array of booleans.
    */
   public function areAttachmentsOk(
-    mixed $events,
-    mixed $attachment,
-    mixed $attachmentInfo,
-    mixed $appEnv,
+    array $events,
+    array $attachment,
+    array $attachmentInfo,
+    string $appEnv,
   ): array {
     // Look for events from us, the handler.
     $handlerOk = $this->filterEventsByTypeAndFilename($events, 'HANDLER_ATT_OK', $attachment['filename']);
@@ -169,7 +170,11 @@ final class AttachmentFixerService {
    * @return array
    *   Filtered events.
    */
-  private function filterEventsByTypeAndFilename(array $events, string $eventType, string $filename): array {
+  private function filterEventsByTypeAndFilename(
+    array $events,
+    string $eventType,
+    string $filename,
+  ): array {
     return array_filter($events, function ($event) use ($eventType, $filename) {
       return $event['eventType'] === $eventType && $event['eventTarget'] === $filename;
     });
@@ -178,19 +183,23 @@ final class AttachmentFixerService {
   /**
    * Check attachment info for existing intergation ID.
    *
-   * @param mixed $attachmentInfo
+   * @param array $attachmentInfo
    *   Attachment info.
-   * @param mixed $attachment
+   * @param array $attachment
    *   Attachment.
-   * @param mixed $appEnv
+   * @param string $appEnv
    *   Application environment.
    *
    * @return bool
    *   True if found, false otherwise.
    */
-  private function checkAttachmentInfo(mixed $attachmentInfo, mixed $attachment, mixed $appEnv): bool {
+  private function checkAttachmentInfo(
+    array $attachmentInfo,
+    array $attachment,
+    string $appEnv,
+  ): bool {
     // If no attachments, nothing to check.
-    if (!is_array($attachmentInfo)) {
+    if (empty($attachmentInfo)) {
       return FALSE;
     }
 
@@ -221,7 +230,11 @@ final class AttachmentFixerService {
    * @return bool
    *   True if found, false otherwise.
    */
-  private function findValueById(array $info, string $id, string $value): bool {
+  private function findValueById(
+    array $info,
+    string $id,
+    string $value,
+  ): bool {
     foreach ($info as $item) {
       if ($item['ID'] === $id && $item['value'] === $value) {
         return TRUE;
@@ -235,15 +248,19 @@ final class AttachmentFixerService {
    *
    * @param array $info
    *   Info.
-   * @param mixed $attachment
+   * @param array $attachment
    *   Attachment.
-   * @param mixed $appEnv
+   * @param string $appEnv
    *   Application environment.
    *
    * @return bool
    *   True if found, false otherwise.
    */
-  private function findIntegrationId(array $info, mixed $attachment, mixed $appEnv): bool {
+  private function findIntegrationId(
+    array $info,
+    array $attachment,
+    string $appEnv,
+  ): bool {
     $targetId = '/' . $appEnv . AttachmentHandlerHelper::cleanIntegrationId($attachment['href']);
     return $this->findValueById($info, 'integrationID', $targetId);
   }

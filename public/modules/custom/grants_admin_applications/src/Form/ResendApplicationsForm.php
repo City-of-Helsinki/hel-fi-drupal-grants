@@ -565,7 +565,7 @@ class ResendApplicationsForm extends AtvFormBase {
       // Get field info.
       $fieldInfo = Helpers::findByFilename($attachment, $attachmentInfo);
       // Get label for form, use "description" or empty string.
-      $fieldLabel = (string)Helpers::extractFieldValue($fieldInfo, 'description');
+      $fieldLabel = (string) Helpers::extractFieldValue($fieldInfo, 'description');
 
       $rowElement = [
         'field' => [
