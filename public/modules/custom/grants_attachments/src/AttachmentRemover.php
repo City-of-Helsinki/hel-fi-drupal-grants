@@ -334,6 +334,10 @@ class AttachmentRemover {
    *   A path to a session directory.
    */
   public function removeSessionDirectory(string $sessionDirectoryPath): void {
+    // If directory doesn't exist, return.
+    if(!is_dir($sessionDirectoryPath)) {
+      return;
+    }
     $directoryContent = scandir($sessionDirectoryPath);
 
     if ($directoryContent) {
