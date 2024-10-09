@@ -943,4 +943,14 @@ class AttachmentHandler {
     ];
   }
 
+  /**
+   * Get attachment file ids.
+   *
+   * @return array
+   *   File ids.
+   */
+  public function getAttachmentFileIds(): array {
+    return $this->attachmentFileIds;
+  }
+
 }
