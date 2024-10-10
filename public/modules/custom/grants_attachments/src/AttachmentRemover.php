@@ -177,7 +177,7 @@ class AttachmentRemover {
       }
 
       if ($uploadResults[$fileId]['upload'] === TRUE) {
-        $retval = $this->deleteFile($file, $applicationNumber, $webFormSubmissionId) || $retval;
+        $retval = $this->deleteFile($file) || $retval;
       }
       else {
         $this->saveFailedUpload($file, $applicationNumber, $webFormSubmissionId);
@@ -195,6 +195,7 @@ class AttachmentRemover {
    *
    * @return bool
    *   TRUE if the file was deleted, FALSE otherwise.
+   *
    * @throws \Exception
    */
   private function deleteFile(File $file): bool {
@@ -234,7 +235,7 @@ class AttachmentRemover {
   private function saveFailedUpload(
     File $file,
     string $applicationNumber,
-    int $webFormSubmissionId
+    int $webFormSubmissionId,
   ): void {
     try {
       $this->connection->insert('grants_attachments')
@@ -335,7 +336,7 @@ class AttachmentRemover {
    */
   public function removeSessionDirectory(string $sessionDirectoryPath): void {
     // If directory doesn't exist, return.
-    if(!is_dir($sessionDirectoryPath)) {
+    if (!is_dir($sessionDirectoryPath)) {
       return;
     }
     $directoryContent = scandir($sessionDirectoryPath);
