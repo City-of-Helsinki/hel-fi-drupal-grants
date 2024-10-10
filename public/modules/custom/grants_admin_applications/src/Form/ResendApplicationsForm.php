@@ -557,15 +557,15 @@ class ResendApplicationsForm extends AtvFormBase {
     $appEnv = $atvDocument->getMetadata()['appenv'];
     $content = $atvDocument->getContent();
     $events = $content['events'];
-    $attachmentInfo = $content['attachmentsInfo']['attachmentsArray'];
+    $attachmentInfo = $content['attachmentsInfo']['attachmentsArray'] ?? [];
 
     foreach ($attachments as $attachment) {
       $attOk = $this->attachmentFixerService->areAttachmentsOk($events, $attachment, $attachmentInfo, $appEnv);
 
       // Get field info.
-      $fieldInfo = Helpers::findByFilename($attachment, $attachmentInfo);
+      $fieldInfo = $this->findAttachmentByFilename($attachment, $attachmentInfo);
       // Get label for form, use "description" or empty string.
-      $fieldLabel = (string) Helpers::extractFieldValue($fieldInfo, 'description');
+      $fieldLabel = (string) $this->extractAttachmentFieldValue($fieldInfo, 'description');
 
       $rowElement = [
         'field' => [
@@ -599,6 +599,52 @@ class ResendApplicationsForm extends AtvFormBase {
 
       $form['status']['attachmentList'][] = $rowElement;
     }
+  }
+
+  /**
+   * Extract field value from array.
+   *
+   * @param array $attachmentInfo
+   *   Attachment info.
+   * @param string $fieldId
+   *   Field id.
+   *
+   * @return string|null
+   *   String or null.
+   */
+  private function extractAttachmentFieldValue(array $attachmentInfo, string $fieldId): ?string {
+    foreach ($attachmentInfo as $innerArray) {
+      foreach ($innerArray as $item) {
+        if ($item === $fieldId) {
+          return $innerArray['value'];
+        }
+      }
+    }
+    // Return null if no match is found.
+    return NULL;
+  }
+
+  /**
+   * Find by filename from attachments.
+   *
+   * @param array $attachment
+   *   Attachment.
+   * @param array $attachmentInfo
+   *   Attachment info.
+   *
+   * @return array|null
+   *   Array or null.
+   */
+  private function findAttachmentByFilename(array $attachment, array $attachmentInfo): ?array {
+    foreach ($attachmentInfo as $innerArray) {
+      foreach ($innerArray as $item) {
+        if ($item['ID'] === 'fileName' && $item['value'] === $attachment['filename']) {
+          return $innerArray;
+        }
+      }
+    }
+    // Return empty if no match is found.
+    return [];
   }
 
 }
