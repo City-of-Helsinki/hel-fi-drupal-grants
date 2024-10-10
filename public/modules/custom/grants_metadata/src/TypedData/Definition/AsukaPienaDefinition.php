@@ -90,28 +90,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
           'purpose',
         ]);
 
-      $info['compensation_boolean'] = DataDefinition::create('boolean')
-        ->setRequired(TRUE)
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
-        ])
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'generalInfoArray',
-          'compensationPreviousYear',
-        ]);
-
-      $info['compensation_explanation'] = DataDefinition::create('string')
-        ->setSetting('defaultValue', "")
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'generalInfoArray',
-          'explanation',
-        ]);
-
       $info['fee_person'] = DataDefinition::create('float')
         ->setSetting('defaultValue', '0')
         ->setSetting('jsonPath', [
