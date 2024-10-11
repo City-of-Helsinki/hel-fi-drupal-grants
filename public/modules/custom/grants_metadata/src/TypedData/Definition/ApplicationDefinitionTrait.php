@@ -341,7 +341,8 @@ trait ApplicationDefinitionTrait {
       ->setSetting('typeOverride', [
         'dataType' => 'string',
         'jsonType' => 'bool',
-      ]);
+      ])
+      ->addConstraint('NotBlank');
 
     $info['additional_information'] = DataDefinition::create('string')
       ->setSetting('jsonPath', ['compensation', 'additionalInformation'])
