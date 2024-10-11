@@ -469,6 +469,14 @@ class GrantsAttachments extends WebformCompositeBase {
     if (str_contains($triggeringElement['#name'], '_attachment_remove_button')) {
       $ename = $element['#name'];
       $ename_exp = explode('[', $ename);
+
+      // Ok validation functions are run for every fileupload field on the form
+      // so we need to make sure that we are actually currently trying to delete
+      // a field which triggered the action.
+      if (!str_contains($triggeringElement['#name'], $ename_exp[0])) {
+        return;
+      }
+
       $file_fid = $form_state->getValue($ename_exp[0])['attachment'];
 
       if ($file_fid) {
