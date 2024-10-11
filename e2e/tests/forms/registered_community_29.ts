@@ -56,6 +56,7 @@ const formPages: PageHandlers = {
       await page.locator('#edit-compensation-explanation')
         .fill(items['edit-compensation-explanation'].value ?? '');
     }
+
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 

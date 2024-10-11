@@ -25,6 +25,7 @@ use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\GrantsException;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
+use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\WebformSubmissionNotesHelper;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\ApplicationDataService;
@@ -1032,7 +1033,7 @@ moment and reload the page.',
 
       // If there's errors on the form (any page), disable form submit.
       $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
-      if (is_array($all_current_errors) && !GrantsHandler::emptyRecursive($all_current_errors)) {
+      if (is_array($all_current_errors) && !Helpers::emptyRecursive($all_current_errors)) {
         $form["actions"]["submit"]['#disabled'] = TRUE;
       }
     }
@@ -1250,7 +1251,7 @@ moment and reload the page.',
     $this->validate($webform_submission, $form_state, $form);
     $all_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
-    if ($triggeringElement == '::submit' && ($all_errors === NULL || self::emptyRecursive($all_errors))) {
+    if ($triggeringElement == '::submit' && ($all_errors === NULL || Helpers::emptyRecursive($all_errors))) {
       $applicationData = $this->applicationDataService->webformToTypedData(
         $this->submittedFormData);
 
@@ -1274,23 +1275,6 @@ at least those questions and fields that are marked with an asterisk (*). You ca
 submit the application only after you have provided all the necessary information.', [], $tOpts));
       }
     }
-  }
-
-  /**
-   * Is recursive array empty.
-   *
-   * @param array $value
-   *   Array to check.
-   *
-   * @return bool
-   *   Empty or not?
-   */
-  public static function emptyRecursive(array $value): bool {
-    $empty = TRUE;
-    array_walk_recursive($value, function ($item) use (&$empty) {
-      $empty = $empty && empty($item);
-    });
-    return $empty;
   }
 
   /**
@@ -1405,8 +1389,11 @@ submit the application only after you have provided all the necessary informatio
 
   /**
    * PostSave handling when submit trigger is ::submitForm.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function postsaveSubmitForm(): void {
+  public function postSaveSubmitForm(): void {
+    $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
     $applicationData = NULL;
     // submitForm is triggering element when saving as draft.
     // Parse attachments to data structure.
@@ -1557,10 +1544,24 @@ submit the application only after you have provided all the necessary informatio
     // If triggering element is either draft save or proper one,
     // we want to parse attachments from form.
     if ($this->triggeringElement == '::submitForm') {
-      $this->postsaveSubmitForm();
+      try {
+        $this->postSaveSubmitForm();
+      }
+      catch (GuzzleException $e) {
+        $this->messenger->addError($this->t('Error saving application. please contact support.'));
+        $this->getLogger('grants_handler')
+          ->error('Error saving application: @error', ['@error' => $e->getMessage()]);
+      }
     }
     if ($this->triggeringElement == '::submit') {
-      $this->postsaveSubmit($webform_submission);
+      try {
+        $this->postSaveSubmit($webform_submission);
+      }
+      catch (GuzzleException $e) {
+        $this->messenger->addError($this->t('Error saving application. please contact support.'));
+        $this->getLogger('grants_handler')
+          ->error('Error saving application: @error', ['@error' => $e->getMessage()]);
+      }
     }
   }
 

@@ -21,7 +21,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
    */
   public function getPropertyDefinitions(): array {
     if (!isset($this->propertyDefinitions)) {
-
       $info = &$this->propertyDefinitions;
 
       foreach ($this->getBaseProperties() as $key => $property) {
@@ -121,7 +120,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'float',
         ]);
-
     }
 
     return $this->propertyDefinitions;

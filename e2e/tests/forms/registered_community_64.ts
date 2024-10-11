@@ -36,6 +36,7 @@ const formPages: PageHandlers = {
       await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta', {exact: true})
         .fill(items['edit-benefits-premises'].value ?? '');
     }
+    await page.pause();
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
@@ -121,6 +122,7 @@ const formPages: PageHandlers = {
         'edit-members-applicant-community-local'
       );
     }
+    await page.pause();
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
 
@@ -137,7 +139,7 @@ const formPages: PageHandlers = {
     if (items['edit-muu-liite']) {
       await fillFormField(page, items['edit-muu-liite'], 'edit-muu-liite')
     }
-
+    await page.pause();
   },
   'webform_preview': async (page: Page, {items}: FormPage) => {
     // Check data on confirmation page
