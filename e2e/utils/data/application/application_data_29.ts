@@ -364,6 +364,18 @@ const baseForm_29: FormData = {
         "edit-benefits-premises": {
           value: faker.lorem.sentences(4),
         },
+        "edit-compensation-boolean": {
+          role: 'radio',
+          selector: {
+            type: 'dom-id-label',
+            name: 'data-drupal-selector',
+            value: 'edit-compensation-boolean-1',
+          },
+          value: "Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
+        },
+        "edit-compensation-explanation": {
+          value: faker.lorem.sentences(4),
+        },
         "nextbutton": {
           role: 'button',
           selector: {

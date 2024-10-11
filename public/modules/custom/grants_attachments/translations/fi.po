@@ -110,3 +110,6 @@ msgstr "Sallitut tiedostomuodot"
 msgctxt "grants_attachments"
 msgid "Comma separated list of allowed filetypes."
 msgstr "Pilkkueroteltu lista sallituista tiedostomuodoista."
+
+msgid "Your upload has been renamed to %filename."
+msgstr "Tiedostosi on nimetty uudelleen: %filename."
