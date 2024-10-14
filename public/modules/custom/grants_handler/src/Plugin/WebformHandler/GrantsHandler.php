@@ -809,6 +809,8 @@ class GrantsHandler extends WebformHandlerBase {
 
     $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $this->applicationActingYears;
 
+    $dataIntegrityStatus = '';
+
     if ($this->applicationNumber) {
       $dataIntegrityStatus = $this->applicationDataService->validateDataIntegrity(
         $submissionData,
@@ -868,7 +870,7 @@ moment and reload the page.',
     if (!$this->applicationStatusService->isSubmissionChangesAllowed($webform_submission)) {
 
       $status = $this->applicationStatusService->getWebformStatus($webform_submission->getWebform());
-
+      $errorMsg = '';
       switch ($status) {
         case 'archived':
           $errorMsg = $this->t('The application form has changed, make a new application.');
@@ -876,13 +878,19 @@ moment and reload the page.',
           break;
 
         default:
-          $errorMsg = $this->t('Application period is closed. You can edit the draft, but not submit it.');
+          // We show integrity error earlier, so suppress error here.
+          if ($dataIntegrityStatus == 'OK') {
+            $errorMsg = $this->t('Application period is closed. You can edit the draft, but not submit it.');
+          }
+
           $form['actions']['submit']['#disabled'] = TRUE;
           break;
       }
 
-      $this->messenger()
-        ->addError($errorMsg);
+      if ($errorMsg != '') {
+        $this->messenger()
+          ->addError($errorMsg);
+      }
     }
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
