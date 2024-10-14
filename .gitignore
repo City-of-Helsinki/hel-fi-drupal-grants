@@ -28,4 +28,11 @@ public/sites/default/local.services.yml
 !*.gitkeep
 !*.keepme
 .phpunit.*
+
+# Ignore the private env files for HTTP requests
 /tools/http/http-client.private.env.json
+
+
+## testing results
+public/modules/custom/grants_handler/clover-coverage.xml
+public/modules/custom/grants_handler/html-coverage/

@@ -21,7 +21,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
    */
   public function getPropertyDefinitions(): array {
     if (!isset($this->propertyDefinitions)) {
-
       $info = &$this->propertyDefinitions;
 
       foreach ($this->getBaseProperties() as $key => $property) {
@@ -90,28 +89,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
           'purpose',
         ]);
 
-      $info['compensation_boolean'] = DataDefinition::create('boolean')
-        ->setRequired(TRUE)
-        ->setSetting('typeOverride', [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
-        ])
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'generalInfoArray',
-          'compensationPreviousYear',
-        ]);
-
-      $info['compensation_explanation'] = DataDefinition::create('string')
-        ->setSetting('defaultValue', "")
-        ->setSetting('jsonPath', [
-          'compensation',
-          'compensationInfo',
-          'generalInfoArray',
-          'explanation',
-        ]);
-
       $info['fee_person'] = DataDefinition::create('float')
         ->setSetting('defaultValue', '0')
         ->setSetting('jsonPath', [
@@ -143,7 +120,6 @@ class AsukaPienaDefinition extends ComplexDataDefinitionBase {
           'dataType' => 'string',
           'jsonType' => 'float',
         ]);
-
     }
 
     return $this->propertyDefinitions;

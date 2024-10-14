@@ -464,8 +464,9 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertDocumentField($document, ['applicationInfoArray', 1], 'status', 'DRAFT');
     $this->assertDocumentField($document, ['applicationInfoArray', 2], 'actingYear', '2023');
     // compensationInfo.
-    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'compensationPreviousYear', '');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'compensationPreviousYear', "true");
     $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'totalAmount', '0', TRUE);
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 2], 'explanation', 'seliseli', TRUE);
     // Handle subventions.
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '0');
@@ -971,8 +972,9 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     $this->assertDocumentField($document, ['applicationInfoArray', 1], 'status', 'DRAFT');
     $this->assertDocumentField($document, ['applicationInfoArray', 2], 'actingYear', '2023');
     // compensationInfo.
-    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'compensationPreviousYear', '');
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 0], 'compensationPreviousYear', "true");
     $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 1], 'totalAmount', '0', TRUE);
+    $this->assertDocumentField($document, ['compensationInfo', 'generalInfoArray', 2], 'explanation', 'seliseli', TRUE);
     // Handle subventions.
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 0], 'subventionType', '1');
     $this->assertDocumentField($document, ['compensationInfo', 'compensationArray', 0, 1], 'amount', '0');
