@@ -6,6 +6,7 @@
  */
 
 use Drupal\block_content\Entity\BlockContent;
+use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Asset\AttachedAssetsInterface;
@@ -1877,13 +1878,27 @@ function grants_handler_preprocess_submission_for_modal_form(&$variables) {
 /**
  * Implements hook_user_logout().
  */
-function grants_handler_user_logout(AccountInterface $account) {
+function grants_handler_user_logout(AccountInterface $account): void {
   // Instantiate our event.
   $event = new UserLogoutEvent($account);
 
   // Get the event_dispatcher service and dispatch the event.
   $event_dispatcher = \Drupal::service('event_dispatcher');
   $event_dispatcher->dispatch($event, UserLogoutEvent::EVENT_NAME);
+
+  $sessionHash = Crypt::hashBase64(\Drupal::service('session')->getId());
+  $uploadLocations = [
+    'private://grants_attachments/' . $sessionHash,
+    'private://grants_messages/' . $sessionHash,
+    'private://grants_profile/' . $sessionHash,
+  ];
+
+  /** @var \Drupal\grants_attachments\AttachmentRemover $attachmentRemover */
+  $attachmentRemover = \Drupal::service('grants_attachments.attachment_remover');
+  foreach ($uploadLocations as $uploadLocation) {
+    $attachmentRemover->removeSessionDirectory($uploadLocation);
+  }
+
 }
 
 /**
