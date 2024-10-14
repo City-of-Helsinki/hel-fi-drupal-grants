@@ -136,6 +136,11 @@ abstract class AtvFormBase extends FormBase {
     $headers['X-hki-appEnv'] = Helpers::getAppEnv();
     $headers['X-hki-applicationNumber'] = $applicationId;
 
+    // We set the data source for integration to be used in controlling
+    // application testing in problematic cases.
+    $headers['X-hki-UpdateSource'] = 'RESEND';
+
+
     $content = $atvDoc->getContent();
     $status = $atvDoc->getStatus();
     $content['formUpdate'] = TRUE;
