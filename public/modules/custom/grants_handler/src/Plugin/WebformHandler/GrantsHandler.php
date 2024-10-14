@@ -13,6 +13,7 @@ use Drupal\Core\TempStore\TempStoreException;
 use Drupal\Core\TypedData\Exception\ReadOnlyException;
 use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\AttachmentRemover;
 use Drupal\grants_handler\ApplicationException;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHelpers;
@@ -251,6 +252,13 @@ class GrantsHandler extends WebformHandlerBase {
   protected ApplicationGetterService $applicationGetterService;
 
   /**
+   * Attachment remover.
+   *
+   * @var \Drupal\grants_attachments\AttachmentRemover
+   */
+  protected AttachmentRemover $attachmentRemover;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(
@@ -258,7 +266,7 @@ class GrantsHandler extends WebformHandlerBase {
     array $configuration,
     $plugin_id,
     $plugin_definition,
-  ): WebformHandlerBase| GrantsHandler| ContainerFactoryPluginInterface {
+  ): WebformHandlerBase|GrantsHandler|ContainerFactoryPluginInterface {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
 
     /** @var \Drupal\Core\Session\AccountProxyInterface $currentUser */
@@ -323,6 +331,10 @@ class GrantsHandler extends WebformHandlerBase {
     /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
     $applicationGetterService = $container->get('grants_handler.application_getter_service');
     $instance->applicationGetterService = $applicationGetterService;
+
+    /** @var \Drupal\grants_attachments\AttachmentRemover $attachmentRemover */
+    $attachmentRemover = $container->get('grants_attachments.attachment_remover');
+    $instance->attachmentRemover = $attachmentRemover;
 
     $instance->triggeringElement = '';
     $instance->applicationNumber = '';
@@ -465,7 +477,6 @@ class GrantsHandler extends WebformHandlerBase {
     }
 
     if (isset($values['community_address']) && $values['community_address'] !== NULL) {
-
       unset($values['community_address']);
       unset($values['community_address_select']);
 
@@ -480,7 +491,6 @@ class GrantsHandler extends WebformHandlerBase {
         $values["community_post_code"] = $formValues["community_address"]["community_post_code"];
       }
       $values["community_country"] = 'Suomi';
-
     }
 
     if (isset($values['bank_account']) && $values['bank_account'] !== NULL) {
@@ -497,7 +507,6 @@ class GrantsHandler extends WebformHandlerBase {
     }
 
     $budgetFields = NestedArray::filter($values, function ($i) {
-
       if (is_array($i) && (isset($i['costGroupName']) || isset($i['incomeGroupName']))) {
         return TRUE;
       }
@@ -535,7 +544,6 @@ class GrantsHandler extends WebformHandlerBase {
         // But if we have saved webform earlier, we can get the application
         // number from submission serial.
         if ($webform_submission->serial()) {
-
           $submissionData = $webform_submission->getData();
           $applicationNumber = $submissionData['application_number'] ?? ApplicationHelpers::createApplicationNumber($webform_submission);
 
@@ -557,11 +565,9 @@ class GrantsHandler extends WebformHandlerBase {
    * {@inheritdoc}
    */
   public function preCreate(array &$values) {
-
     $currentUserRoles = $this->currentUser->getRoles();
 
     if (in_array('helsinkiprofiili', $currentUserRoles)) {
-
       // These both are required to be selected.
       // probably will change when we have proper company selection process.
       $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
@@ -573,7 +579,6 @@ class GrantsHandler extends WebformHandlerBase {
       $webform = Webform::load($values['webform_id']);
       $this->setFromThirdPartySettings($webform);
     }
-
   }
 
   /**
@@ -777,7 +782,6 @@ class GrantsHandler extends WebformHandlerBase {
 
     // Process summation fields.
     foreach ($form['elements'] as $element) {
-
       if (!isset($element['#type'])) {
         continue;
       }
@@ -804,10 +808,11 @@ class GrantsHandler extends WebformHandlerBase {
 
       $form["elements"][$elementKey]["#default_value"] = $elementTotal;
       $form_state->setValue($elementKey, $elementTotal);
-
     }
 
     $form["elements"]["2_avustustiedot"]["avustuksen_tiedot"]["acting_year"]["#options"] = $this->applicationActingYears;
+
+    $dataIntegrityStatus = '';
 
     if ($this->applicationNumber) {
       $dataIntegrityStatus = $this->applicationDataService->validateDataIntegrity(
@@ -866,9 +871,8 @@ moment and reload the page.',
     // webform has changed.
     //
     if (!$this->applicationStatusService->isSubmissionChangesAllowed($webform_submission)) {
-
       $status = $this->applicationStatusService->getWebformStatus($webform_submission->getWebform());
-
+      $errorMsg = '';
       switch ($status) {
         case 'archived':
           $errorMsg = $this->t('The application form has changed, make a new application.');
@@ -876,13 +880,19 @@ moment and reload the page.',
           break;
 
         default:
-          $errorMsg = $this->t('Application period is closed. You can edit the draft, but not submit it.');
+          // We show integrity error earlier, so suppress error here.
+          if ($dataIntegrityStatus == 'OK') {
+            $errorMsg = $this->t('Application period is closed. You can edit the draft, but not submit it.');
+          }
+
           $form['actions']['submit']['#disabled'] = TRUE;
           break;
       }
 
-      $this->messenger()
-        ->addError($errorMsg);
+      if ($errorMsg != '') {
+        $this->messenger()
+          ->addError($errorMsg);
+      }
     }
 
     $all_current_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
@@ -930,7 +940,6 @@ moment and reload the page.',
               else {
                 // Check if there is field sets with given field.
                 foreach ($form['elements'][$pageName] as $pageElementValue) {
-
                   if (!is_array($pageElementValue)) {
                     continue;
                   }
@@ -976,7 +985,6 @@ moment and reload the page.',
     }
 
     GrantsErrorStorage::setErrors($errors);
-
   }
 
   /**
@@ -1001,7 +1009,7 @@ moment and reload the page.',
       $validations = [
         '::validateForm',
         '::noValidate',
-       // '::draft',
+        // '::draft',
       ];
       // Allow forward access to all but the confirmation page.
       foreach ($form_state->get('pages') as $page_key => $page) {
@@ -1036,7 +1044,6 @@ moment and reload the page.',
       if (is_array($all_current_errors) && !Helpers::emptyRecursive($all_current_errors)) {
         $form["actions"]["submit"]['#disabled'] = TRUE;
       }
-
     }
   }
 
@@ -1073,7 +1080,6 @@ moment and reload the page.',
    *   Set form update value either TRUE / FALSE
    */
   private function getFormUpdate(): bool {
-
     $applicationNumber = !empty($this->applicationNumber) ? $this->applicationNumber : $this->submittedFormData["application_number"] ?? '';
     $newStatus = $this->submittedFormData["status"];
     $oldStatus = '';
@@ -1087,7 +1093,6 @@ moment and reload the page.',
       catch (TempStoreException | AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
         // If block has comment, sonarcloud likes it?
       }
-
     }
 
     $applicationStatuses = $this->applicationStatusService->getApplicationStatuses();
@@ -1165,7 +1170,6 @@ moment and reload the page.',
     FormStateInterface $form_state,
     WebformSubmissionInterface $webform_submission,
   ): void {
-
     $tOpts = ['context' => 'grants_handler'];
 
     // These need to be set here to the handler object, bc we do the saving to
@@ -1257,13 +1261,13 @@ moment and reload the page.',
 
     if ($triggeringElement == '::submit' && ($all_errors === NULL || Helpers::emptyRecursive($all_errors))) {
       $applicationData = $this->applicationDataService->webformToTypedData(
-          $this->submittedFormData);
+        $this->submittedFormData);
 
       $violations = $this->applicationValidator->validateApplication(
-          $applicationData,
-          $form_state,
-          $webform_submission
-        );
+        $applicationData,
+        $form_state,
+        $webform_submission
+      );
 
       if ($violations->count() === 0) {
         // If we have no violations clear all errors.
@@ -1271,7 +1275,6 @@ moment and reload the page.',
         $this->grantsFormNavigationHelper->deleteSubmissionLogs($webform_submission, GrantsHandlerNavigationHelper::ERROR_OPERATION);
       }
       else {
-
         // If we HAVE errors, then refresh them from the.
         $this->messenger()
           ->addError($this->t('The application cannot be submitted because not all
@@ -1286,7 +1289,6 @@ submit the application only after you have provided all the necessary informatio
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission): void {
-
     // If for some reason we don't have application number at this point.
     if (!isset($this->applicationNumber)) {
       // But if one is coming from form (hidden field)
@@ -1330,7 +1332,6 @@ submit the application only after you have provided all the necessary informatio
       // Submission data is not saved in storage controller,
       // so save data here for later usage.
       $this->submittedFormData = $this->massageFormValuesFromWebform($webform_submission);
-
     }
 
     // If for some reason applicant type is not present, make sure it gets
@@ -1373,7 +1374,7 @@ submit the application only after you have provided all the necessary informatio
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function postSaveSubmit(WebformSubmissionInterface $webform_submission):void {
+  public function postSaveSubmit(WebformSubmissionInterface $webform_submission): void {
     // Submit is trigger when exiting from confirmation page.
     // Parse attachments to data structure.
     try {
@@ -1405,10 +1406,27 @@ submit the application only after you have provided all the necessary informatio
     // submitForm is triggering element when saving as draft.
     // Parse attachments to data structure.
     try {
+      $this->attachmentHandler->deleteRemovedAttachmentsFromAtv($this->formStateTemp, $this->submittedFormData);
       $this->attachmentHandler->parseAttachments(
         $this->formTemp,
         $this->submittedFormData,
         $this->applicationNumber
+      );
+      $fileIds = $this->attachmentHandler->getAttachmentFileIds();
+
+      $fileIdsArray = [];
+      foreach ($fileIds as $fileId) {
+        $fileIdsArray[$fileId] = ['upload' => TRUE];
+      }
+
+      // While files should be removed in the parsing process,
+      // let's make sure no file entities get left behind.
+      $this->attachmentRemover->removeGrantAttachments(
+        $fileIds,
+        $fileIdsArray,
+        $this->applicationNumber,
+        $this->isDebug(),
+        0
       );
     }
     catch (\Throwable $e) {
@@ -1421,13 +1439,13 @@ submit the application only after you have provided all the necessary informatio
       // Fix here: https://helsinkisolutionoffice.atlassian.net/browse/AU-545
     }
     $redirectUrl = Url::fromRoute(
-        '<front>',
-        [
-          'attributes' => [
-            'data-drupal-selector' => 'application-saving-failed-link',
-          ],
-        ]
-      );
+      '<front>',
+      [
+        'attributes' => [
+          'data-drupal-selector' => 'application-saving-failed-link',
+        ],
+      ]
+    );
     try {
       $applicationUploadStatus = $this->applicationUploaderService->handleApplicationUploadToAtv(
         $applicationData,
@@ -1437,11 +1455,11 @@ submit the application only after you have provided all the necessary informatio
       if ($applicationUploadStatus) {
         $this->messenger()
           ->addStatus(
-          $this->t(
-            'Grant application (<span id="saved-application-number">@number</span>) saved as DRAFT',
-            [
-              '@number' => $this->applicationNumber,
-            ]
+            $this->t(
+              'Grant application (<span id="saved-application-number">@number</span>) saved as DRAFT',
+              [
+                '@number' => $this->applicationNumber,
+              ]
             )
           );
 
@@ -1451,23 +1469,23 @@ submit the application only after you have provided all the necessary informatio
       }
       else {
         $redirectUrl = Url::fromRoute(
-        '<front>',
-        [
-          'attributes' => [
-            'data-drupal-selector' => 'application-saving-failed-link',
-          ],
-        ]
+          '<front>',
+          [
+            'attributes' => [
+              'data-drupal-selector' => 'application-saving-failed-link',
+            ],
+          ]
         );
 
         $this->messenger()
           ->addError(
-          $this->t(
-            'Grant application (<span id="saved-application-number">@number</span>) saving failed. Please contact support.',
-            [
-              '@number' => $this->applicationNumber,
-            ]
+            $this->t(
+              'Grant application (<span id="saved-application-number">@number</span>) saving failed. Please contact support.',
+              [
+                '@number' => $this->applicationNumber,
+              ]
             ),
-          TRUE
+            TRUE
           );
       }
     }
@@ -1487,7 +1505,6 @@ submit the application only after you have provided all the necessary informatio
     $this->applicationUploaderService->clearCache($this->applicationNumber);
 
     $redirectResponse->send();
-
   }
 
   /**
@@ -1520,7 +1537,6 @@ submit the application only after you have provided all the necessary informatio
    * {@inheritdoc}
    */
   public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE): void {
-
     // Invalidate cache for this submission.
     $this->entityTypeManager->getViewBuilder($webform_submission->getWebform()
       ->getEntityTypeId())->resetCache([
@@ -1574,7 +1590,6 @@ submit the application only after you have provided all the necessary informatio
     FormStateInterface $form_state,
     WebformSubmissionInterface $webform_submission,
   ): void {
-
     try {
       // Get new status from method that figures that out.
       $this->submittedFormData['status'] = $this->applicationStatusService->getNewStatus(
@@ -1643,7 +1658,7 @@ submit the application only after you have provided all the necessary informatio
               '@number' => $this->applicationNumber,
             ]
           )
-            );
+        );
     }
   }
 

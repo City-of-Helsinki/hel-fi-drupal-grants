@@ -242,7 +242,6 @@ abstract class ApplicationHelpers {
    *   Webform object.
    */
   public static function getWebformFromApplicationNumber(string $applicationNumber, $all = FALSE): bool|Webform|array {
-
     $isOldFormat = FALSE;
     if (strpos($applicationNumber, 'GRANTS') !== FALSE) {
       $isOldFormat = TRUE;
@@ -596,6 +595,7 @@ abstract class ApplicationHelpers {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public static function getLatestApplicationForm($id): Webform|NULL {
+
     $webforms = \Drupal::entityTypeManager()
       ->getStorage('webform')
       ->loadByProperties([
