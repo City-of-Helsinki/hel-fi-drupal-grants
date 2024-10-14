@@ -1,90 +1,83 @@
-.ui-widget-overlay {
-  z-index: 99;
+.dialog-wrapper {
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  overflow: auto;
+  overscroll-behavior: none;
+  position: fixed;
+  touch-action: none;
+
+  // This high value is necessary because the cookie-consent banner has a z-index of 99999. The survey must appear
+  // above it, as it is a modal with a focus trap that requires user interaction before proceeding with the site.
+  z-index: 100000;
 }
 
-.ui-dialog {
-  .ui-button:hover {
-    border-width: 2px;
-  }
+.dialog__overlay {
+  background-color: rgba($color-black, 0.3);
+  inset: 0;
+  position: fixed;
+  z-index: 100;
+}
 
-  .ui-dialog-titlebar-close {
-    top: var(--spacing-s);
-    z-index: 1001;
-  }
+.dialog {
+  --survey-border-color: var(--color-bus);
+  --survey-width: 558px;
+  border-color: var(--survey-border-color);
+  border-width: $spacing-half 0 0 0;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100% - $spacing-double);
+  padding: $spacing-and-half $spacing;
+  position: relative;
+  width: var(--survey-width);
+  z-index: 101;
 
-  .ui-dialog-buttonpane .ui-dialog-buttonset {
-    float: left;
-  }
-
-  .ui-dialog-buttonpane {
-    padding: var(--spacing-2-xs) var(--spacing-m);
-
-    button {
-      margin: 0 var(--spacing-xs) 0 0;
-    }
-  }
-
-  .ui-dialog-content {
-    padding: 0 1em 1em;
-    position: initial;
-  }
-
-  div.ui-dialog-titlebar {
-    padding: 0;
-  }
-
-  &-titlebar {
-    background: transparent;
-    border: 0;
-
-    &-close {
-      background: none;
-      border: none;
-    }
-
-    .ui-dialog-title {
-      display: block;
-      font-size: var(--fontsize-heading-s);
-      overflow: auto;
-      padding: var(--spacing-layout-2-xs) var(--spacing-layout-2-xs) var(--spacing-layout-2-xs) var(--spacing-2-xl);
-      position: relative;
-      white-space: normal;
-    }
-  }
-
-  &-title {
-    .hel-icon {
-      left: var(--spacing-m);
-      margin-right: var(--spacing-2-xs);
-      position: absolute;
-      top: var(--spacing-s);
-    }
+  @include breakpoint($breakpoint-m) {
+    padding-left: $spacing-double;
+    padding-right: $spacing-double;
   }
 }
 
-.ui-widget-content {
-  border: 0 transparent solid;
+.dialog__header {
+  display: flex;
+  flex-direction: row-reverse;
+}
 
-  h3 {
-    margin-top: 0;
+.dialog__content {
+  @include font('body');
+  display: flex;
+  flex-direction: column;
+  margin-top: $spacing-and-half;
+  row-gap: $spacing;
+
+  @include breakpoint($breakpoint-m) {
+    column-gap: $spacing;
+    flex-direction: row;
   }
 }
 
-div.ui-widget.ui-widget-content {
-  border-top: var(--spacing-2-xs) solid var(--color-black);
-  max-width: 100vw;
-  min-width: 300px;
-  padding-top: 0;
+.dialog__title {
+  @include font('h3');
+  margin-top: 0;
 }
 
-.ui-widget-content span.ui-icon {
-  margin-left: -8px;
-  margin-top: -8px;
-  mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E %3Cg fill='none' fill-rule='evenodd'%3E %3Crect width='24' height='24'/%3E %3Cpolygon fill='currentColor' points='18 7.5 13.5 12 18 16.5 16.5 18 12 13.5 7.5 18 6 16.5 10.5 12 6 7.5 7.5 6 12 10.5 16.5 6'/%3E %3C/g%3E %3C/svg%3E");
-  transform: scale(1.5);
-}
+.dialog__close-button {
+  background: transparent;
+  border: 0 none;
+  cursor: pointer;
+  height: $spacing-double;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: -$spacing-half;
+  margin-top: -$spacing-half;
+  padding: 0;
+  width: $spacing-double;
 
-.submission-for-copying {
-  margin-bottom: 1em;
-  margin-top: 1em;
+  &::after {
+    --icon-size: #{$spacing-double};
+
+    @include pseudo-icon('cross');
+  }
 }

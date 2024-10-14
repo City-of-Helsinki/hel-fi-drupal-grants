@@ -20,6 +20,92 @@
 
   'use strict';
 
+  Drupal.dialogFunctions = {
+
+    /**
+     * Creates a dialog and appends it to the body.
+     *
+     * @param {string} dialogTitle - The title displayed at the top of the dialog.
+     * @param {string} actionButtonText - The text for the "leave" button.
+     * @param {string} backButtonText - The text for the "back" button.
+     * @param {string} closeButtonText - The text for the "close" button that closes the dialog.
+     * @param {Function} actionButtonCallback - The function to execute when the "action" button is clicked.
+     */
+    createDialog: (dialogTitle, actionButtonText, backButtonText, closeButtonText, actionButtonCallback) => {
+      const dialogHTML = `
+        <div class="dialog-wrapper" id="helfi-dialog__container">
+          <div class="dialog__overlay"></div>
+          <dialog class="dialog" id="helfi-dialog">
+            <div class="dialog__header">
+              <button class="dialog__close-button" id="helfi-dialog__close-button">
+                <span class="is-hidden">${closeButtonText}</span>
+              </button>
+              <h2 class="dialog__title" id="helfi-dialog__title">${dialogTitle}</h2>
+            </div>
+            <div class="dialog__content">
+              <button class="dialog__action-button" id="helfi-dialog__action-button" data-hds-component="button" data-hds-variant="primary">${actionButtonText}</button>
+              <button class="dialog__back-button" id="helfi-dialog__back-button" data-hds-component="button" data-hds-variant="secondary">${backButtonText}</button>
+            </div>
+          </dialog>
+        </div>
+      `;
+
+      // Add the dialog to the body
+      document.body.insertAdjacentHTML('beforeend', dialogHTML);
+
+      Drupal.dialogFunctions.setBodyPaddingRight(true);
+
+      Drupal.dialogFunctions.toggleNoScroll(true);
+
+      const actionButton = document.getElementById('helfi-dialog__action-button');
+      const backButton = document.getElementById('helfi-dialog__back-button');
+      const closeButton = document.getElementById('helfi-dialog__close-button');
+      const dialog = document.getElementById('helfi-dialog__container');
+
+      // Add click event listener to action button
+      actionButton.addEventListener('click', actionButtonCallback);
+
+      // Add click event listener to back button
+      backButton.addEventListener('click', () => {
+        Drupal.dialogFunctions.removeDialog(dialog);
+      });
+
+      // Add click event listener to close button
+      closeButton.addEventListener('click', () => {
+        Drupal.dialogFunctions.removeDialog(dialog);
+      });
+
+      // Add event listener to ESC button to remove the dialog
+      document.body.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          Drupal.dialogFunctions.removeDialog(dialog);
+        }
+      });
+    },
+
+    setBodyPaddingRight: (enable) => {
+      if (enable) {
+        document.body.style.paddingRight = `${
+          window.innerWidth - document.documentElement.clientWidth
+        }px`;
+      } else {
+        document.body.style.removeProperty('padding-right');
+      }
+    },
+
+    toggleNoScroll: (enable) => {
+      const root = document.documentElement;
+      root.classList.toggle('noscroll', enable);
+    },
+
+    removeDialog: (dialog) => {
+      // dialogFocusTrap.deactivate();
+      dialog.remove();
+      Drupal.dialogFunctions.toggleNoScroll(false);
+      Drupal.dialogFunctions.setBodyPaddingRight(false);
+    }
+  }
+
   var unsaved = false;
   var modal = false;
   var autologout = false;
@@ -46,6 +132,7 @@
       // Set the current unsaved flag state.
       unsaved = value;
     },
+
     attach: function (context) {
       // Detect general unsaved changes.
       // Look for the 'data-webform-unsaved' attribute which indicates that
@@ -109,34 +196,24 @@
       }
     }
   };
+
   $('a').on('click', function (event) {
     let containingElement = document.querySelector('form');
     if (unsaved && !containingElement.contains(event.target) && !event.target.getAttribute('href').startsWith('#')) {
       event.preventDefault();
-      const $previewDialog = $('<div></div>').appendTo('body');
-      Drupal.dialog($previewDialog, {
-        title: Drupal.t('Are you sure you want to leave? Leave without saving.'),
-        width: '33%',
-        closeText: Drupal.t('Close', {}, { context: 'grants_handler' }),
-        buttons: [
-          {
-            text: Drupal.t('Leave the application'),
-            click() {
-              unsaved = false;
-              $(this).dialog('close');
-              modal = true;
-              window.top.location.href = event.currentTarget.href;
-            },
-          },
-          {
-            text: Drupal.t('Back to application'),
-            buttonType: 'secondary',
-            click() {
-              $(this).dialog('close');
-            },
-          },
-        ],
-      }).showModal();
+
+      return Drupal.dialogFunctions.createDialog(
+        Drupal.t('Are you sure you want to leave? Leave without saving.'),
+        Drupal.t('Leave the application'),
+        Drupal.t('Back to application'),
+        Drupal.t('Close', {}, { context: 'grants_handler' }),
+        () => {
+          unsaved = false;
+          const dialog = document.getElementById('helfi-dialog__container');
+          Drupal.dialogFunctions.removeDialog(dialog);
+          window.top.location.href = event.currentTarget.href;
+        }
+      );
     }
   });
 
@@ -155,35 +232,27 @@
   $(document).on('keydown', function (e) {
     if (unsaved && (e.which === 116 || (e.which === 82 && (e.ctrlKey || e.metaKey)))) {
       e.preventDefault(); // Prevent F5 and Ctrl+R / Cmd+R refresh
-      const $previewDialog = $('<div></div>').appendTo('body');
-      Drupal.dialog($previewDialog, {
-        title: Drupal.t('You have unsaved changes. Are you sure you want to refresh?'),
-        width: '33%',
-        closeText: Drupal.t('Close', {}, { context: 'grants_handler' }),
-        buttons: [
-          {
-            text: Drupal.t('Refresh the page'),
-            click() {
-              unsaved = false;
-              $(this).dialog('close');
-              location.reload(); // Perform the refresh
-            },
-          },
-          {
-            text: Drupal.t('Back to application'),
-            buttonType: 'secondary',
-            click() {
-              $(this).dialog('close');
-            },
-          },
-        ],
-      }).showModal();
+
+      return Drupal.dialogFunctions.createDialog(
+        Drupal.t('You have unsaved changes. Are you sure you want to refresh?'),
+        Drupal.t('Refresh the page'),
+        Drupal.t('Back to application'),
+        Drupal.t('Close', {}, { context: 'grants_handler' }),
+        () => {
+          unsaved = false;
+          const dialog = document.getElementById('helfi-dialog__container');
+          Drupal.dialogFunctions.removeDialog(dialog);
+          location.reload();
+        }
+      );
     }
   });
+
   // Add an event listener for autologout.
   document.addEventListener('autologout', function () {
     autologout = true;
   });
+
   $(window).on('beforeunload', function () {
     if (autologout) {
       return;
