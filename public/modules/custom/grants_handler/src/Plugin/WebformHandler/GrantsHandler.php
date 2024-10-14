@@ -879,7 +879,7 @@ moment and reload the page.',
 
         default:
           // We show integrity error earlier, so suppress error here.
-          if($dataIntegrityStatus == 'OK') {
+          if ($dataIntegrityStatus == 'OK') {
             $errorMsg = $this->t('Application period is closed. You can edit the draft, but not submit it.');
           }
 

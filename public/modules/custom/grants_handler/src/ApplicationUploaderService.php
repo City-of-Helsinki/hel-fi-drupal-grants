@@ -218,7 +218,7 @@ final class ApplicationUploaderService {
       // We set the data source for integration to be used in controlling
       // application testing in problematic cases.
       $headers['X-hki-UpdateSource'] = 'USER';
-      
+
       // Current environment as a header to be added to meta -fields.
       $headers['X-hki-appEnv'] = Helpers::getAppEnv();
       // Set application number to meta as well to enable better searches.

@@ -140,7 +140,6 @@ abstract class AtvFormBase extends FormBase {
     // application testing in problematic cases.
     $headers['X-hki-UpdateSource'] = 'RESEND';
 
-
     $content = $atvDoc->getContent();
     $status = $atvDoc->getStatus();
     $content['formUpdate'] = TRUE;
