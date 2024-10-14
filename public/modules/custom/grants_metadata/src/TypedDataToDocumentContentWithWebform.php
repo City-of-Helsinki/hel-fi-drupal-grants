@@ -845,8 +845,8 @@ class TypedDataToDocumentContentWithWebform {
   protected static function extractMetadataFromWebform(
     TypedDataInterface $property,
     string $propertyName,
-    array $webformMainElement,
-    array $webformLabelElement,
+    ?array $webformMainElement,
+    ?array $webformLabelElement,
     array $pages,
     array $elements,
   ): array {

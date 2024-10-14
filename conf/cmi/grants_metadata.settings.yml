@@ -241,6 +241,16 @@ third_party_options:
         fi: 'Nuorisopalvelu, loma-aikojen leiriavustusselvitys'
         en: 'Youth service, camp grant report for holiday periods'
         sv: 'Ungdomstjänst, utredning över lägerbidrag under semestertiden'
+    70:
+      id: KUVAERILLIS
+      code: KUVAERILLIS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\KuvaErillisDefinition
+        definitionId: grants_metadata_kuvaerillis
+      labels:
+        fi: 'KuvaErillis FI'
+        en: 'KuvaErillis EN'
+        sv: 'KuvaErillis SV'
   application_statuses:
     DRAFT: DRAFT
     SUBMITTED: SUBMITTED
@@ -281,6 +291,15 @@ third_party_options:
     44: 'Development grant'
     45: 'Development grant for the Helsinki Model'
     46: 'Development grant for basic arts education'
+    47: 'Kulttuurin erityisavustus 1'
+    48: 'Kulttuurin erityisavustus 2'
+    49: 'Nuorison erityisavustus 1'
+    50: 'Nuorison erityisavustus 2'
+    51: 'Liikunnan erityisavustus 1'
+    52: 'Liikunnan erityisavustus 2'
+    53: 'Kulttuurin ja vapaa-ajan erityisavustus 1'
+    54: 'Kulttuurin ja vapaa-ajan erityisavustus 2'
+
 langcode: en
 config_import_ignore:
   - 53

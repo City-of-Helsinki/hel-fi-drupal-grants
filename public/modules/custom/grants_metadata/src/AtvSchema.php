@@ -44,6 +44,11 @@ class AtvSchema {
    */
   public function __construct(TypedDataManagerInterface $typed_data_manager) {
     $this->typedDataManager = $typed_data_manager;
+
+    if ($schema = getenv('ATV_SCHEMA_PATH')) {
+      $this->setSchema($schema);
+    }
+
   }
 
   /**

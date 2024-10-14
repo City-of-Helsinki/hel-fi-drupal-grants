@@ -336,6 +336,8 @@ final class ApplicationDataService {
     $dataDefinition = $dataDefinitionKeys['definitionClass']::create($dataDefinitionKeys['definitionId']);
 
     $typeManager = $dataDefinition->getTypedDataManager();
+
+    /** @var \Drupal\Core\TypedData\TypedDataInterface $applicationData */
     $applicationData = $typeManager->create($dataDefinition);
 
     $applicationData->setValue($submittedFormData);
