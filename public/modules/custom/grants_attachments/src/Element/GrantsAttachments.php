@@ -176,7 +176,7 @@ class GrantsAttachments extends WebformCompositeBase {
           && $applicationStatusService->isSubmissionEditable($submission)
         ) {
           // By default we allow deletion of the attachment if submission is
-          // editable AND the file type is not 45 (other file).
+          // editable AND the file type is not 45 (account confirmation).
           $showDeleteButton = TRUE;
 
           // But since the attachments currently work differently than the other
