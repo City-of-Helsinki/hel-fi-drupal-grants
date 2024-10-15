@@ -61,17 +61,25 @@
       const backButton = document.getElementById('helfi-dialog__back-button');
       const closeButton = document.getElementById('helfi-dialog__close-button');
       const dialog = document.getElementById('helfi-dialog__container');
+      const dialogFocusTrap = window.focusTrap.createFocusTrap('#helfi-dialog__container', {
+        initialFocus: () => '#helfi-dialog__title'
+      });
+
+      // Activate the focus trap so that the user needs to react to the dialog.
+      dialogFocusTrap.activate();
 
       // Add click event listener to action button
       actionButton.addEventListener('click', actionButtonCallback);
 
       // Add click event listener to back button
       backButton.addEventListener('click', () => {
+        dialogFocusTrap.deactivate();
         Drupal.dialogFunctions.removeDialog(dialog);
       });
 
       // Add click event listener to close button
       closeButton.addEventListener('click', () => {
+        dialogFocusTrap.deactivate();
         Drupal.dialogFunctions.removeDialog(dialog);
       });
 
@@ -99,7 +107,6 @@
     },
 
     removeDialog: (dialog) => {
-      // dialogFocusTrap.deactivate();
       dialog.remove();
       Drupal.dialogFunctions.toggleNoScroll(false);
       Drupal.dialogFunctions.setBodyPaddingRight(false);
