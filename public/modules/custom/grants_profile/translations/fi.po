@@ -1,15 +1,5 @@
-# Finnish translation of City of Helsinki Grants Profile module
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0\n"
-"POT-Creation-Date: 2022-02-14 11:00+0300\n"
-"PO-Revision-Date: 2022-10-12 11:00+0300\n"
-"Last-Translator: Petri Leinonen <petri.leinonen@siili.com>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "grants_profile"
 msgid "Delete bank account"
@@ -557,9 +547,11 @@ msgctxt "grants_profile"
 msgid "Connection error"
 msgstr "Yhteysvirhe"
 
+msgctxt "grants_profile"
 msgid 'You need to have a name for your unregistered community or group. Please add a name and save or cancel them.'
 msgstr 'Sinulla täytyy olla nimi rekisteröitymättömälle yhteisöllesi tai ryhmällesi. Lisää nimi ja tallenna tai peruuta ne.'
 
+msgctxt "grants_profile"
 msgid 'You have unsaved changes in your profile. Please save or cancel them.'
 msgstr 'Sinulla on tallentamattomia muutoksia profiilissasi. Ole hyvä ja tallenna tai peruuta ne.'
 
@@ -569,14 +561,20 @@ msgstr 'Sinulla on tallentamattomia muutoksia profiilissasi. Oletko varma, että
 msgid 'You have not saved your profile. Are you sure you want to leave the form?'
 msgstr 'Et ole tallentanut profiiliasi. Oletko varma, että haluat lähteä lomakkeelta?'
 
+msgctxt "grants_profile"
 msgid 'You have not saved your profile. Please save your profile before leaving the form.'
 msgstr 'Et ole tallentanut profiiliasi. Tallenna profiili ennen lomakkeelta poistumista.'
 
 msgid 'You need to have a name for your unregistered community or group. Are you sure you want to leave the form?'
 msgstr 'Sinulla täytyy olla nimi rekisteröitymättömälle yhteisöllesi tai ryhmällesi. Oletko varma, että haluat lähteä lomakkeelta?'
 
+msgctxt "grants_profile"
 msgid 'Back to profile'
 msgstr 'Takaisin profiiliin'
+
+msgctxt "grants_profile"
+msgid 'Close'
+msgstr 'Sulje'
 
 msgctxt "grants_profile"
 msgid "Fields marked with an asterisk * are required information."

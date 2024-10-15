@@ -651,3 +651,7 @@ msgstr "Sinulla on tallentamattomia muutoksia. Haluatko varmasti ladata sivun uu
 msgctxt "grants_handler"
 msgid "You have unsaved changes. Are you sure you want to leave?"
 msgstr "Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua hakemukselta?"
+
+msgctxt "grants_handler"
+msgid "Attention"
+msgstr "Huomio"
