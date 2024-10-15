@@ -203,9 +203,9 @@
       event.preventDefault();
 
       return Drupal.dialogFunctions.createDialog(
-        Drupal.t('Are you sure you want to leave? Leave without saving.'),
-        Drupal.t('Leave the application'),
-        Drupal.t('Back to application'),
+        Drupal.t('You have unsaved changes. Are you sure you want to leave?', {}, { context: 'grants_handler' }),
+        Drupal.t('Leave the application', {}, { context: 'grants_handler' }),
+        Drupal.t('Back to application', {}, { context: 'grants_handler' }),
         Drupal.t('Close', {}, { context: 'grants_handler' }),
         () => {
           unsaved = false;
@@ -221,7 +221,7 @@
   $(window).on('beforeunload', function (event) {
     if (unsaved) {
       // Show a confirmation dialog when the user tries to refresh or leave the page
-      const message = Drupal.t('You have unsaved changes. Are you sure you want to leave?');
+      const message = Drupal.t('You have unsaved changes. Are you sure you want to leave?', {}, { context: 'grants_handler' });
       event.preventDefault();
       event.returnValue = message; // For most browsers
       return message; // For older browsers
@@ -234,9 +234,9 @@
       e.preventDefault(); // Prevent F5 and Ctrl+R / Cmd+R refresh
 
       return Drupal.dialogFunctions.createDialog(
-        Drupal.t('You have unsaved changes. Are you sure you want to refresh?'),
-        Drupal.t('Refresh the page'),
-        Drupal.t('Back to application'),
+        Drupal.t('You have unsaved changes. Are you sure you want to refresh?', {}, { context: 'grants_handler' }),
+        Drupal.t('Refresh the page', {}, { context: 'grants_handler' }),
+        Drupal.t('Back to application', {}, { context: 'grants_handler' }),
         Drupal.t('Close', {}, { context: 'grants_handler' }),
         () => {
           unsaved = false;
