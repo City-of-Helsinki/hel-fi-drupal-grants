@@ -33,7 +33,7 @@
      */
     createDialog: (dialogTitle, actionButtonText, backButtonText, closeButtonText, actionButtonCallback) => {
       const dialogHTML = `
-        <div class="dialog-wrapper" id="helfi-dialog__container">
+        <div class="dialog__container" id="helfi-dialog__container">
           <div class="dialog__overlay"></div>
           <dialog class="dialog" id="helfi-dialog">
             <div class="dialog__header">
@@ -42,9 +42,9 @@
               </button>
               <h2 class="dialog__title" id="helfi-dialog__title">${dialogTitle}</h2>
             </div>
-            <div class="dialog__content">
+            <div class="dialog__actions">
               <button class="dialog__action-button" id="helfi-dialog__action-button" data-hds-component="button" data-hds-variant="primary">${actionButtonText}</button>
-              <button class="dialog__back-button" id="helfi-dialog__back-button" data-hds-component="button" data-hds-variant="secondary">${backButtonText}</button>
+              <button class="dialog__action-button" id="helfi-dialog__back-button" data-hds-component="button" data-hds-variant="secondary">${backButtonText}</button>
             </div>
           </dialog>
         </div>
