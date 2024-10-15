@@ -50,6 +50,10 @@
         </div>
       `;
 
+      // TODO: Surveys use very similar javascript dialog implementation.
+      // This and the survey implementation could possibly be merged with some
+      // refactoring.
+
       // Add the dialog to the body
       document.body.insertAdjacentHTML('beforeend', dialogHTML);
 
