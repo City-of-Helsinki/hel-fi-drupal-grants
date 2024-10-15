@@ -94,7 +94,6 @@ class GrantsAttachments extends WebformCompositeBase {
       // When user goes to previous step etc. we might lose the additional data for the just
       // uploaded elements. As we are saving these to storage - let's find
       // out the actual data the and use it.
-
       if ($dataForElement['integrationID'] && isset($storage['fids_info']) && $dataForElement) {
         foreach ($storage['fids_info'] as $finfo) {
           if ($dataForElement['integrationID'] == $finfo['integrationID']) {
@@ -168,30 +167,48 @@ class GrantsAttachments extends WebformCompositeBase {
           $element["description"]["#attributes"] = ['readonly' => 'readonly'];
         }
 
+        /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
+        $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
+
         if (
           isset($dataForElement['fileType'])
           && $dataForElement['fileType'] != '45'
-          && (isset($submissionData['status']) && $submissionData['status'] === 'DRAFT')
+          && $applicationStatusService->isSubmissionEditable($submission)
         ) {
-          $element['deleteItem'] = [
-            '#type' => 'submit',
-            '#name' => 'delete_' . $arrayKey,
-            '#value' => t('Delete attachment', [], $tOpts),
-            '#submit' => [
-              [
-                '\Drupal\grants_attachments\Element\GrantsAttachments',
-                'deleteAttachmentSubmit',
+          // By default we allow deletion of the attachment if submission is
+          // editable AND the file type is not 45 (other file).
+          $showDeleteButton = TRUE;
+
+          // But since the attachments currently work differently than the other
+          // fields regarding to editing, we need to do additional check for
+          // explicitly application status and upload status.
+          if ($submissionData['status'] === 'RECEIVED' && $uploadStatus !== 'justUploaded') {
+            // We allow deletion of the attachment only if it has been just
+            // uploaded. Just meaning this editing session.
+            $showDeleteButton = FALSE;
+          }
+
+          if ($showDeleteButton === TRUE) {
+            $element['deleteItem'] = [
+              '#type' => 'submit',
+              '#name' => 'delete_' . $arrayKey,
+              '#value' => t('Delete attachment', [], $tOpts),
+              '#submit' => [
+                [
+                  '\Drupal\grants_attachments\Element\GrantsAttachments',
+                  'deleteAttachmentSubmit',
+                ],
               ],
-            ],
-            '#limit_validation_errors' => [[$element['#webform_key']]],
-            '#ajax' => [
-              'callback' => [
-                '\Drupal\grants_attachments\Element\GrantsAttachments',
-                'deleteAttachment',
+              '#limit_validation_errors' => [[$element['#webform_key']]],
+              '#ajax' => [
+                'callback' => [
+                  '\Drupal\grants_attachments\Element\GrantsAttachments',
+                  'deleteAttachment',
+                ],
+                'wrapper' => $element["#webform_id"],
               ],
-              'wrapper' => $element["#webform_id"],
-            ],
-          ];
+            ];
+          }
         }
       }
       if (isset($dataForElement['description'])) {
