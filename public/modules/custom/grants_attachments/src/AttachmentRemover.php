@@ -10,6 +10,7 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\file\Entity\File;
 use Drupal\file\FileUsage\FileUsageInterface;
 
 /**
@@ -148,6 +149,8 @@ class AttachmentRemover {
    *
    * @return bool
    *   Return status.
+   *
+   * @throws \Exception
    */
   public function removeGrantAttachments(
     array $attachments,
@@ -157,73 +160,100 @@ class AttachmentRemover {
     int $webFormSubmissionId,
   ): bool {
     $this->setDebug($debug);
-    $retval = FALSE;
-
-    $currentUser = $this->currentUser;
 
     // If no attachments are passed, just return true.
     if (empty($attachments)) {
       return TRUE;
     }
 
+    $retval = FALSE;
+
     // Loop fileids.
     foreach ($attachments as $fileId) {
-
-      // Load file.
-      /** @var \Drupal\file\Entity\File|null $file */
       $file = $this->fileStorage->load($fileId);
 
       if ($file == NULL) {
         continue;
       }
 
-      $filename = $file->getFilename();
-
-      // Only if we have positive upload result remove file.
       if ($uploadResults[$fileId]['upload'] === TRUE) {
-        try {
-          // And delete it.
-          $file->delete();
-          $retval = TRUE;
-
-          // Make sure that no rows remain for this FID.
-          $this->connection->delete('grants_attachments')
-            ->condition('fid', $file->id())
-            ->execute();
-
-          if ($this->isDebug()) {
-            $this->loggerChannel->notice('Removed file entity & db log row: @filename', [
-              '@filename' => $filename,
-            ]);
-          }
-        }
-        catch (EntityStorageException $e) {
-          $this->messenger->addError('File deletion failed');
-        }
+        $retval = $this->deleteFile($file) || $retval;
       }
       else {
-        try {
-          // Add failed/skipped deletion to db table for later processing.
-          $this->connection->insert('grants_attachments')
-            ->fields([
-              'uid' => $currentUser->id(),
-              'webform_submission_id' => $webFormSubmissionId,
-              'grants_application_number' => $applicationNumber,
-              'fid' => $file->id(),
-            ])
-            ->execute();
-
-          $this->loggerChannel->error('Upload failed, files are saved for retry.');
-
-        }
-        catch (\Exception $e) {
-          $this->loggerChannel->error('Upload failed, removal failed, adding db row failed: @filename', [
-            '@filename' => $filename,
-          ]);
-        }
+        $this->saveFailedUpload($file, $applicationNumber, $webFormSubmissionId);
       }
     }
+
     return $retval;
+  }
+
+  /**
+   * Delete a file and log the action.
+   *
+   * @param \Drupal\file\Entity\File $file
+   *   The file entity to delete.
+   *
+   * @return bool
+   *   TRUE if the file was deleted, FALSE otherwise.
+   *
+   * @throws \Exception
+   */
+  private function deleteFile(File $file): bool {
+    try {
+      $filename = $file->getFilename();
+      $file->delete();
+
+      // Make sure that no rows remain for this FID.
+      $this->connection->delete('grants_attachments')
+        ->condition('fid', $file->id())
+        ->execute();
+
+      if ($this->isDebug()) {
+        $this->loggerChannel->notice('Removed file entity & db log row: @filename', [
+          '@filename' => $filename,
+        ]);
+      }
+
+      return TRUE;
+    }
+    catch (EntityStorageException $e) {
+      $this->messenger->addError('File deletion failed');
+      return FALSE;
+    }
+  }
+
+  /**
+   * Save a failed upload to the database for later processing.
+   *
+   * @param \Drupal\file\Entity\File $file
+   *   The file entity.
+   * @param string $applicationNumber
+   *   The application number.
+   * @param int $webFormSubmissionId
+   *   The webform submission ID.
+   */
+  private function saveFailedUpload(
+    File $file,
+    string $applicationNumber,
+    int $webFormSubmissionId,
+  ): void {
+    try {
+      $this->connection->insert('grants_attachments')
+        ->fields([
+          'uid' => $this->currentUser->id(),
+          'webform_submission_id' => $webFormSubmissionId,
+          'grants_application_number' => $applicationNumber,
+          'fid' => $file->id(),
+        ])
+        ->execute();
+
+      $this->loggerChannel->error('Upload failed, files are saved for retry.');
+    }
+    catch (\Exception $e) {
+      $this->loggerChannel->error('Upload failed, removal failed, adding db row failed: @filename', [
+        '@filename' => $file->getFilename(),
+      ]);
+    }
   }
 
   /**
@@ -256,7 +286,8 @@ class AttachmentRemover {
    *   Active session IDs.
    */
   private function fetchActiveSessions(): array {
-    $result = $this->connection->query("SELECT sid FROM {sessions}")->fetchAll();
+    $result = $this->connection->query("SELECT sid FROM {sessions}")
+      ->fetchAll();
     return array_map(fn($item) => $item->sid, $result);
   }
 
@@ -285,7 +316,6 @@ class AttachmentRemover {
 
     $sessionDirectories = array_diff($directories, ['.', '..']);
     foreach ($sessionDirectories as $sessionDirectory) {
-
       // The directories are named after hashed session IDs.
       // If a session isn't active, we remove any files associated with it.
       if (!in_array($sessionDirectory, $activeSessions)) {
@@ -304,7 +334,11 @@ class AttachmentRemover {
    * @param string $sessionDirectoryPath
    *   A path to a session directory.
    */
-  private function removeSessionDirectory(string $sessionDirectoryPath): void {
+  public function removeSessionDirectory(string $sessionDirectoryPath): void {
+    // If directory doesn't exist, return.
+    if (!is_dir($sessionDirectoryPath)) {
+      return;
+    }
     $directoryContent = scandir($sessionDirectoryPath);
 
     if ($directoryContent) {

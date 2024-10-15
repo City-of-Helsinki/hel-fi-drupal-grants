@@ -197,6 +197,12 @@ abstract class ApplicationHelpers {
     $applicationType = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
 
     $latestApplicationForm = self::getLatestApplicationForm($applicationType);
+
+    // If no latest form, then no breaking changes.
+    if (!$latestApplicationForm) {
+      return FALSE;
+    }
+
     $parent = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'parent');
     $hasBreakingChanges = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'avus2BreakingChange');
 
@@ -236,7 +242,6 @@ abstract class ApplicationHelpers {
    *   Webform object.
    */
   public static function getWebformFromApplicationNumber(string $applicationNumber, $all = FALSE): bool|Webform|array {
-
     $isOldFormat = FALSE;
     if (strpos($applicationNumber, 'GRANTS') !== FALSE) {
       $isOldFormat = TRUE;
@@ -590,6 +595,7 @@ abstract class ApplicationHelpers {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public static function getLatestApplicationForm($id): Webform|NULL {
+
     $webforms = \Drupal::entityTypeManager()
       ->getStorage('webform')
       ->loadByProperties([

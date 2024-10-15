@@ -46,6 +46,7 @@ const BASE_HEADERS = {'X-API-KEY': ATV_API_KEY};
  */
 const fetchLatestProfileByType = (userUUID: string, profileType: string) => {
   const currentUrl = `${ATV_BASE_URL}/v1/documents/?lookfor=appenv:${APP_ENV_FOR_ATV},profile_type:${profileType}&user_id=${userUUID}&type=grants_profile&sort=updated_at`;
+
   // Use then to handle the asynchronous result.
   return fetchDocumentList(currentUrl).then((documentList) => {
     if (documentList) {

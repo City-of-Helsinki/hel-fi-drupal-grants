@@ -104,7 +104,8 @@ class CompensationsComposite extends WebformCompositeBase {
     $requiredSubvention = $subventionElement['#requiredSubventionType'] ?? '';
     $singleSubventionType = $subventionElement['#onlyOneSubventionPerApplication'] ?? FALSE;
 
-    $subventionNumber = count($values['subventions']['items']);
+    $subventionNumber = isset($values['subventions']['items']) ? count($values['subventions']['items']) : 0;
+
     $zeroes = 0;
     $nonZeroes = 0;
 
@@ -155,6 +156,9 @@ class CompensationsComposite extends WebformCompositeBase {
     unset($values['subventions']['items']);
     $valueMap = [];
     foreach ($values['subventions'] as $item) {
+      if (!is_array($item)) {
+        continue;
+      }
       $valueMap[$item['subventionType']] = $item['amount'] ?? NULL;
     }
 

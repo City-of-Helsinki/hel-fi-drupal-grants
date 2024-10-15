@@ -157,7 +157,8 @@ services:
       '@language_manager',
       '@messenger',
       '@grants_handler.application_getter_service',
-      '@helfi_helsinki_profiili.userdata'
+      '@helfi_helsinki_profiili.userdata',
+      '@grants_attachments.attachment_fixer_service'
     ]
 
   grants_handler.application_access_handler:

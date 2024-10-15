@@ -1,0 +1,408 @@
+{
+  "compensation": {
+    "applicationInfoArray": [
+      {
+        "ID": "applicationType",
+        "label": "Hakemustyyppi",
+        "value": "KUVAERILLIS",
+        "valueType": "string"
+      },
+      {
+        "ID": "applicationTypeID",
+        "label": "Hakemustyypin numero",
+        "value": "70",
+        "valueType": "int"
+      },
+      {
+        "ID": "formTimeStamp",
+        "label": "Hakemuksen/sanoman lähetyshetki",
+        "value": "2024-08-29T15:50:12.000",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "applicationNumber",
+        "label": "Hakemusnumero",
+        "value": "KUVAERILLIS-T-1",
+        "valueType": "string"
+      },
+      {
+        "ID": "status",
+        "label": "Tila",
+        "value": "Vastaanotettu",
+        "valueType": "string"
+      },
+      {
+        "ID": "actingYear",
+        "label": "Hakemusvuosi",
+        "value": "2025",
+        "valueType": "int"
+      }
+    ],
+    "currentAddressInfoArray": [
+      {
+        "ID": "contactPerson",
+        "label": "Yhteyshenkilö",
+        "value": "Teemu Testaushenkilö",
+        "valueType": "string"
+      },
+      {
+        "ID": "phoneNumber",
+        "label": "Puhelinnumero",
+        "value": "+358404040404",
+        "valueType": "string"
+      },
+      {
+        "ID": "street",
+        "label": "Katuosoite",
+        "value": "Annankatu 18 Ö 905",
+        "valueType": "string"
+      },
+      {
+        "ID": "city",
+        "label": "Postitoimipaikka",
+        "value": "Helsinki",
+        "valueType": "string"
+      },
+      {
+        "ID": "postCode",
+        "label": "Postinumero",
+        "value": "00120",
+        "valueType": "string"
+      },
+      {
+        "ID": "country",
+        "label": "Maa",
+        "value": "Suomi",
+        "valueType": "string"
+      }
+    ],
+    "applicantInfoArray": [
+      {
+        "ID": "applicantType",
+        "label": "Hakijan tyyppi",
+        "value": "2",
+        "valueType": "string"
+      },
+      {
+        "ID": "companyNumber",
+        "label": "Rekisterinumero",
+        "value": "5647641-556",
+        "valueType": "string"
+      },
+      {
+        "ID": "communityOfficialName",
+        "label": "Yhteisön nimi",
+        "value": "Testi hakija",
+        "valueType": "string"
+      },
+      {
+        "ID": "communityOfficialNameShort",
+        "label": "Yhteisön lyhenne",
+        "value": "TH ry",
+        "valueType": "string"
+      },
+      {
+        "ID": "registrationDate",
+        "label": "Rekisteröimispäivä",
+        "value": "2022-01-01T00:00:00.000",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "foundingYear",
+        "label": "Perustamisvuosi",
+        "value": "2020",
+        "valueType": "int"
+      },
+      {
+        "ID": "home",
+        "label": "Kotipaikka",
+        "value": "Helsinki",
+        "valueType": "string"
+      },
+      {
+        "ID": "homePage",
+        "label": "www-sivut",
+        "value": "www.th.xxxx",
+        "valueType": "string"
+      },
+      {
+        "ID": "email",
+        "label": "Sähköpostiosoite",
+        "value": "th@noExistsno.xxxx",
+        "valueType": "string"
+      }
+    ],
+    "applicantOfficialsArray": [
+      [
+        {
+          "ID": "email",
+          "label": "Sähköposti",
+          "value": "teemu@noExistsno.xxxx",
+          "valueType": "string"
+        },
+        {
+          "ID": "role",
+          "label": "Rooli",
+          "value": "1",
+          "valueType": "string"
+        },
+        {
+          "ID": "name",
+          "label": "Nimi",
+          "value": "Teemu Testaushenkilö",
+          "valueType": "string"
+        },
+        {
+          "ID": "phone",
+          "label": "Puhelinnumero",
+          "value": "09-616527788",
+          "valueType": "string"
+        }
+      ]
+    ],
+    "bankAccountArray": [
+      {
+        "ID": "accountNumber",
+        "label": "Tilinumero",
+        "value": "FI9640231442000454",
+        "valueType": "string"
+      }
+    ],
+    "compensationInfo": {
+      "generalInfoArray": [
+        {
+          "ID": "purpose",
+          "label": "Haetun avustuksen käyttötarkoitus",
+          "value": "Käyttötarkoituksenamme on se että ... kts. liite 10.",
+          "valueType": "string"
+        }
+      ],
+      "compensationArray": [
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "50",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "1200.00",
+            "valueType": "double"
+          }
+        ],
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "48",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "2300.00",
+            "valueType": "double"
+          }
+        ]
+      ]
+    },
+	"customQuestionsInfo": {
+		"customQuestionsArray": [
+			{
+				"ID": "a",
+				"label": "Label a",
+				"value": "Value a",
+				"valueType": "string"
+			},
+			{
+				"ID": "b",
+				"label": "LABEL B",
+				"value": "Value B",
+				"valueType": "string"
+			}
+		]
+	},
+	"budgetInfo": {
+	  "incomeGroupsArrayStatic": [
+			{
+				"incomeGroupName": "general",
+				"otherIncomeRowsArrayStatic": [
+					{			
+						"ID": "a",
+						"label": "Kioskimyynti",
+						"value": "300.00",
+						"valueType": "double"
+					},
+					{			
+						"ID": "b",
+						"label": "Parkkitulot",
+						"value": "50.00",
+						"valueType": "double"
+					}
+				]
+			}
+		],
+		"costGroupsArrayStatic": [
+			{
+				"costGroupName": "general",
+				"otherCostRowsArrayStatic": [
+					{			
+						"ID": "a",
+						"label": "Kioskiostot",
+						"value": "100.00",
+						"valueType": "double"
+					},
+					{			
+						"ID": "b",
+						"label": "Jätemaksut",
+						"value": "50.00",
+						"valueType": "double"
+					}
+				]
+			}
+	  ]
+  },
+    "otherCompensationsInfo": {
+      "otherCompensationsArray": [
+        [
+          {
+            "ID": "issuer",
+            "label": "Myöntäjä",
+            "value": "5",
+            "valueType": "string"
+          },
+          {
+            "ID": "issuerName",
+            "label": "Myöntäjän nimi",
+            "value": "Joku Säätiö Sr.",
+            "valueType": "string"
+          },
+          {
+            "ID": "year",
+            "label": "Vuosi",
+            "value": "2021",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "2800",
+            "valueType": "double"
+          },
+          {
+            "ID": "purpose",
+            "label": "Tarkoitus",
+            "value": "Matkakuluihin ja muihin ylimääräisiin menoihin.",
+            "valueType": "string"
+          }
+        ]
+      ],
+	  "otherAppliedCompensationsArray": [
+        [
+          {
+            "ID": "issuer",
+            "label": "Myöntäjä",
+            "value": "5",
+            "valueType": "string"
+          },
+          {
+            "ID": "issuerName",
+            "label": "Myöntäjän nimi",
+            "value": "Joku Säätiö Sr.",
+            "valueType": "string"
+          },
+          {
+            "ID": "year",
+            "label": "Vuosi",
+            "value": "2021",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "3000.00",
+            "valueType": "double"
+          },
+          {
+            "ID": "purpose",
+            "label": "Tarkoitus",
+            "value": "Matkakuluihin ja muihin ylimääräisiin menoihin.",
+            "valueType": "string"
+          }
+        ]
+      ]
+    },
+    "additionalInformation": "Tällä kertaa ei ole muuta ilmoitettavaa tähän hakemukseen",
+    "senderInfoArray": [
+      {
+        "ID": "firstname",
+        "label": "Etunimi",
+        "value": "Testaaja",
+        "valueType": "string"
+      },
+      {
+        "ID": "lastname",
+        "label": "Sukunimi",
+        "value": "Tiina",
+        "valueType": "string"
+      },
+      {
+        "ID": "personID",
+        "label": "Henkilötunnus",
+        "value": "171756-1234",
+        "valueType": "string"
+      },
+      {
+        "ID": "userID",
+        "label": "Käyttäjätunnus",
+        "value": "testatii",
+        "valueType": "string"
+      },
+      {
+        "ID": "email",
+        "label": "Sähköposti",
+        "value": "tiina.testaaja@noEMAILno.xxxx",
+        "valueType": "string"
+      }
+    ]
+  },
+
+
+  "attachmentsInfo": {
+    "attachmentsArray": [
+      [
+        {
+          "ID": "description",
+          "value": "Muu liite",
+          "valueType": "string"
+        },
+        {
+          "ID": "fileType",
+          "value": "1",
+          "valueType": "int"
+        },
+        {
+          "ID": "isDeliveredLater",
+          "value": "true",
+          "valueType": "bool"
+        },
+        {
+          "ID": "isIncludedInOtherFile",
+          "value": "false",
+          "valueType": "bool"
+        }
+      ]
+    ],
+    "generalInfoArray": [
+      {
+        "ID": "extraInfo",
+        "label": "Lisäselvitys liitteistä",
+        "value": "Tässä voi olla joku kaikkia liitteitä yhteisesti koskeva selvitys",
+        "valueType": "string"
+      }
+    ]
+  },
+  "formUpdate": false
+}

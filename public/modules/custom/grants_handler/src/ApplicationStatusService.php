@@ -108,7 +108,6 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
 
     if (in_array($submissionStatus, [
       $statuses['DRAFT'],
-      $statuses['SUBMITTED'],
       $statuses['RECEIVED'],
       $statuses['PREPARING'],
     ])) {

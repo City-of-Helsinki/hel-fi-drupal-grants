@@ -397,17 +397,16 @@ class ResendApplicationsForm extends AtvFormBase {
 
     try {
       $applicationId = trim($formState->getValue('applicationId'));
-      $placeholders = ['@applicationId' => $applicationId];
       $this->logApplicationResendInit($applicationId);
 
       $atvDoc = $this->getDocument($applicationId);
 
       if (!$atvDoc) {
-        $this->handleApplicationNotFound($placeholders, $formState);
+        $this->handleApplicationNotFound($applicationId, $formState);
         return;
       }
 
-      $this->processAttachments($atvDoc, $placeholders);
+      $this->attachmentFixerService->fixAttachmentsOnApplication($atvDoc);
       $this->sendApplicationToIntegrations($atvDoc, $applicationId);
       $formState->setRebuild();
     }
@@ -431,100 +430,27 @@ class ResendApplicationsForm extends AtvFormBase {
   /**
    * Handle situation when application is not found.
    *
-   * @param array $placeholders
-   *   Placeholders.
+   * @param string $applicationId
+   *   Application id.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
    *
    * @return void
    *   Void.
    */
-  private function handleApplicationNotFound(array $placeholders, FormStateInterface $formState): void {
+  private function handleApplicationNotFound(string $applicationId, FormStateInterface $formState): void {
     $this->messenger()
-      ->addWarning($this->t('No application found for id: @applicationId', $placeholders));
+      ->addWarning($this->t('No application found for id: @applicationId',
+        ['applicationId' => $applicationId]));
     $this->logger(self::LOGGER_CHANNEL)
-      ->warning('No application found for id: @applicationId', $placeholders);
+      ->warning('No application found for id: @applicationId',
+        ['applicationId' => $applicationId]);
 
     $formState->setRebuild();
   }
 
   /**
-   * Process attachments for removal.
-   *
-   * @param \Drupal\helfi_atv\AtvDocument $atvDoc
-   *   The ATV document.
-   * @param array $placeholders
-   *   Placeholders.
-   *
-   * @return void
-   *   Void.
-   */
-  private function processAttachments(AtvDocument $atvDoc, array $placeholders): void {
-    $attachments = $atvDoc->getAttachments();
-    $appEnv = $atvDoc->getMetadata()['appenv'];
-    $content = $atvDoc->getContent();
-    $events = $content['events'];
-    $attachmentInfo = $content['attachmentsInfo']['attachmentsArray'];
-
-    foreach ($attachments as $attachment) {
-      if ($this->areAttachmentsOk($events, $attachment, $attachmentInfo, $appEnv)['form'] === FALSE) {
-        $this->updateIntegrationIdForAttachment($attachment, $attachmentInfo, $appEnv);
-      }
-    }
-
-    $content['attachmentsInfo']['attachmentsArray'] = $attachmentInfo;
-    $atvDoc->setContent($content);
-
-    $this->messenger()
-      ->addStatus($this->t('Application found: @applicationId', $placeholders));
-  }
-
-  /**
-   * Update integation id for attachment.
-   *
-   * @param array $attachment
-   *   The attachment.
-   * @param array $attachmentInfo
-   *   The attachment info.
-   * @param string $appEnv
-   *   The application environment for this application.
-   *
-   * @return void
-   *   Void.
-   */
-  private function updateIntegrationIdForAttachment(array $attachment, array &$attachmentInfo, string $appEnv): void {
-    $intID = '/' . $appEnv . AttachmentHandlerHelper::cleanIntegrationId($attachment['href']);
-
-    foreach ($attachmentInfo as &$innerArray) {
-      $fileNameMatched = FALSE;
-      $integrationIdUpdated = FALSE;
-
-      foreach ($innerArray as &$item) {
-        if ($item['ID'] === 'fileName' && $item['value'] === $attachment['filename']) {
-          $fileNameMatched = TRUE;
-        }
-        if ($fileNameMatched && $item['ID'] === 'integrationID') {
-          // Update integrationID in place.
-          $item['value'] = $intID;
-          // Set the value to control adding new integrationID.
-          $integrationIdUpdated = TRUE;
-          break;
-        }
-      }
-      // If filename matched but no integrationID was found, add it.
-      if ($fileNameMatched && !$integrationIdUpdated) {
-        $innerArray[] = [
-          'ID' => 'integrationID',
-          'value' => $intID,
-          'valueType' => 'string',
-          'meta' => "[]",
-        ];
-      }
-    }
-  }
-
-  /**
-   * HAndle exceptions.
+   * Handle exceptions.
    *
    * @param \Exception $e
    *   The exception.
@@ -631,13 +557,15 @@ class ResendApplicationsForm extends AtvFormBase {
     $appEnv = $atvDocument->getMetadata()['appenv'];
     $content = $atvDocument->getContent();
     $events = $content['events'];
-    $attachmentInfo = $content['attachmentsInfo']['attachmentsArray'];
+    $attachmentInfo = $content['attachmentsInfo']['attachmentsArray'] ?? [];
 
     foreach ($attachments as $attachment) {
-      $attOk = $this->areAttachmentsOk($events, $attachment, $attachmentInfo, $appEnv);
+      $attOk = $this->attachmentFixerService->areAttachmentsOk($events, $attachment, $attachmentInfo, $appEnv);
 
-      $fieldInfo = $this->findByFilename($attachment, $attachmentInfo);
-      $fieldLabel = (string)$this->extractFieldValue($fieldInfo, 'description');
+      // Get field info.
+      $fieldInfo = $this->findAttachmentByFilename($attachment, $attachmentInfo);
+      // Get label for form, use "description" or empty string.
+      $fieldLabel = (string) $this->extractAttachmentFieldValue($fieldInfo, 'description');
 
       $rowElement = [
         'field' => [
@@ -684,7 +612,7 @@ class ResendApplicationsForm extends AtvFormBase {
    * @return string|null
    *   String or null.
    */
-  private function extractFieldValue(array $attachmentInfo, string $fieldId): ?string {
+  private function extractAttachmentFieldValue(array $attachmentInfo, string $fieldId): ?string {
     foreach ($attachmentInfo as $innerArray) {
       foreach ($innerArray as $item) {
         if ($item === $fieldId) {
@@ -697,7 +625,7 @@ class ResendApplicationsForm extends AtvFormBase {
   }
 
   /**
-   * Find by filename.
+   * Find by filename from attachments.
    *
    * @param array $attachment
    *   Attachment.
@@ -707,7 +635,7 @@ class ResendApplicationsForm extends AtvFormBase {
    * @return array|null
    *   Array or null.
    */
-  private function findByFilename(array $attachment, array $attachmentInfo): ?array {
+  private function findAttachmentByFilename(array $attachment, array $attachmentInfo): ?array {
     foreach ($attachmentInfo as $innerArray) {
       foreach ($innerArray as $item) {
         if ($item['ID'] === 'fileName' && $item['value'] === $attachment['filename']) {
@@ -715,127 +643,8 @@ class ResendApplicationsForm extends AtvFormBase {
         }
       }
     }
-    // Return null if no match is found.
+    // Return empty if no match is found.
     return [];
-  }
-
-  /**
-   * Try to figure our if attachments are ok.
-   *
-   * @param mixed $events
-   *   Events.
-   * @param mixed $attachment
-   *   Attachment.
-   * @param mixed $attachmentInfo
-   *   Attachment info.
-   * @param mixed $appEnv
-   *   Application environment.
-   *
-   * @return array
-   *   Array of booleans.
-   */
-  public function areAttachmentsOk(mixed $events, mixed $attachment, mixed $attachmentInfo, mixed $appEnv): array {
-    $handlerOk = $this->filterEventsByTypeAndFilename($events, 'HANDLER_ATT_OK', $attachment['filename']);
-    $avus2Ok = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_OK', $attachment['filename']);
-    $avus2Error = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_ERROR', $attachment['filename']);
-
-    $formOk = $this->checkAttachmentInfo($attachmentInfo, $attachment, $appEnv);
-
-    return [
-      'handler' => !empty($handlerOk),
-      'avus2' => !empty($avus2Ok),
-      'avus2Errors' => $avus2Error,
-      'form' => !empty($formOk),
-    ];
-  }
-
-  /**
-   * Filter events.
-   *
-   * @param array $events
-   *   Events.
-   * @param string $eventType
-   *   Event type.
-   * @param string $filename
-   *   Filename.
-   *
-   * @return array
-   *   Filtered events.
-   */
-  private function filterEventsByTypeAndFilename(array $events, string $eventType, string $filename): array {
-    return array_filter($events, function ($event) use ($eventType, $filename) {
-      return $event['eventType'] === $eventType && $event['eventTarget'] === $filename;
-    });
-  }
-
-  /**
-   * Check attachment info for existing intergation ID.
-   *
-   * @param mixed $attachmentInfo
-   *   Attachment info.
-   * @param mixed $attachment
-   *   Attachment.
-   * @param mixed $appEnv
-   *   Application environment.
-   *
-   * @return bool
-   *   True if found, false otherwise.
-   */
-  private function checkAttachmentInfo(mixed $attachmentInfo, mixed $attachment, mixed $appEnv): bool {
-    if (!is_array($attachmentInfo)) {
-      return FALSE;
-    }
-
-    foreach ($attachmentInfo as $info) {
-      $filenameFound = $this->findValueById($info, 'fileName', $attachment['filename']);
-      $intFound = $this->findIntegrationId($info, $attachment, $appEnv);
-
-      if ($filenameFound && $intFound) {
-        return TRUE;
-      }
-    }
-
-    return FALSE;
-  }
-
-  /**
-   * Find value by id.
-   *
-   * @param array $info
-   *   Info.
-   * @param string $id
-   *   Id.
-   * @param string $value
-   *   Value.
-   *
-   * @return bool
-   *   True if found, false otherwise.
-   */
-  private function findValueById(array $info, string $id, string $value): bool {
-    foreach ($info as $item) {
-      if ($item['ID'] === $id && $item['value'] === $value) {
-        return TRUE;
-      }
-    }
-    return FALSE;
-  }
-
-  /**
-   * Find integration id.
-   *
-   * @param array $info
-   *   Info.
-   * @param mixed $attachment
-   *   Attachment.
-   * @param mixed $appEnv
-   *   Application environment.
-   *
-   * @return bool
-   *   True if found, false otherwise.
-   */
-  private function findIntegrationId(array $info, mixed $attachment, mixed $appEnv): bool {
-    $targetId = '/' . $appEnv . AttachmentHandlerHelper::cleanIntegrationId($attachment['href']);
-    return $this->findValueById($info, 'integrationID', $targetId);
   }
 
 }

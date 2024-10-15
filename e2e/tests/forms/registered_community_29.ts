@@ -47,6 +47,15 @@ const formPages: PageHandlers = {
       await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta', {exact: true})
         .fill(items['edit-benefits-premises'].value ?? '');
     }
+    if (items['edit-compensation-boolean']) {
+      await page.locator('#edit-compensation-boolean')
+        .getByText(items['edit-compensation-boolean'].value ?? '').click();
+    }
+
+    if (items['edit-compensation-explanation']) {
+      await page.locator('#edit-compensation-explanation')
+        .fill(items['edit-compensation-explanation'].value ?? '');
+    }
 
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {

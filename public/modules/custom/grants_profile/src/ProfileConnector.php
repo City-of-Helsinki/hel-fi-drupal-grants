@@ -2,6 +2,9 @@
 
 namespace Drupal\grants_profile;
 
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\helfi_yjdh\Exception\YjdhException;
@@ -13,6 +16,14 @@ use Ramsey\Uuid\Uuid;
  */
 class ProfileConnector {
 
+
+  /**
+   * Log errors.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   */
+  protected LoggerChannelInterface $logger;
+
   /**
    * Constructs a ProfileConnector object.
    *
@@ -22,12 +33,20 @@ class ProfileConnector {
    *   Municipality service.
    * @param \Drupal\helfi_yjdh\YjdhClient $yjdhClient
    *   Access to yjdh data.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   Messenger service.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
+   *   Logger channel factory.
    */
   public function __construct(
     protected HelsinkiProfiiliUserData $helsinkiProfiili,
     protected MunicipalityService $municipalityService,
     protected YjdhClient $yjdhClient,
-  ) {}
+    protected MessengerInterface $messenger,
+    protected LoggerChannelFactoryInterface $loggerChannelFactory,
+  ) {
+    $this->logger = $loggerChannelFactory->get('ProfileConnector');
+  }
 
   /**
    * Initialize grants profile.
@@ -95,6 +114,7 @@ class ProfileConnector {
    * @throws GrantsProfileException
    */
   protected function initGrantsProfileRegisteredCommunity($profileData, array $companyData): array {
+
     $profileContent = $this->getRegisteredCompanyDataFromYdjhClient($companyData['identifier']);
 
     $profileContent['foundingYear'] = $profileData['foundingYear'] ?? NULL;
@@ -116,8 +136,10 @@ class ProfileConnector {
    *
    * @param string $id
    *   Company id.
+   *
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
-  public function getRegisteredCompanyDataFromYdjhClient($id) {
+  public function getRegisteredCompanyDataFromYdjhClient(string $id): array {
 
     $profileContent = [];
     // Try to get association details.
@@ -131,8 +153,6 @@ class ProfileConnector {
       $profileContent["registrationDate"] = $assosiationDetails["RegistryDate"];
 
       $homeTown = $this->municipalityService->getMunicipalityName($assosiationDetails["Domicile"] ?? '');
-
-      $profileContent["companyHome"] = $homeTown ?: $assosiationDetails["Address"][0]["City"];
 
     }
     else {
@@ -156,14 +176,19 @@ class ProfileConnector {
       // Municipality service throws GrantsProfileExceptions.
       $homeTown = $this->municipalityService->getMunicipalityName($municipalityCode);
 
-      if ($homeTown) {
-        $profileContent["companyHome"] = $homeTown;
-      }
-      else {
-        $profileContent["companyHome"] = $companyDetails["PostalAddress"]["DomesticAddress"]["City"] ?? '-';
-      }
-
     }
+
+    // If we have home town, use it.
+    // If not, log error and set companyHome to '-'.
+    if ($homeTown) {
+      $profileContent["companyHome"] = $homeTown;
+    }
+    else {
+      $this->logger->error('Company home town not found for company: ' . $id);
+      $this->messenger->addError('Company data not accurate, hometown is missing from data. Business ID: ' . $id);
+      $profileContent["companyHome"] = '-';
+    }
+
     return $profileContent;
   }
 

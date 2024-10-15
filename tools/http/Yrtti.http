@@ -1,0 +1,36 @@
+POST https://ytj-integration-test.apps.arodevtest.hel.fi/api/BasicInfo
+Authorization: Basic avustustest {ytjApikey}
+Content-Type: application/json
+
+{
+  "BusinessId": "7769481-3"
+}
+
+###
+POST https://yrtti-integration-test.apps.arodevtest.hel.fi/api/BasicInfo
+Authorization: Basic avustustest {yrttiApikey}
+Content-Type: application/json
+
+{
+  "BusinessId": "2104974-3"
+}
+
+###
+
+POST https://yrtti-integration-test.apps.arodevtest.hel.fi/api/BasicInfo
+Authorization: Basic avustustest {yrttiApikey}
+Content-Type: application/json
+
+{
+  "BusinessId": "7769615-7"
+}
+
+###
+
+POST https://ytj-integration-test.apps.arodevtest.hel.fi/api/BasicInfo
+Authorization: Basic avustustest {yrttiApikey}
+Content-Type: application/json
+
+{
+  "BusinessId": "2104974-3"
+}
