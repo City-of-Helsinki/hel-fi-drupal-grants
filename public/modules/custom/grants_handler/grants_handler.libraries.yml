@@ -53,3 +53,11 @@ application-timeout-message:
   dependencies:
     - core/jquery
     - core/drupalSettings
+
+# Grants Dialog
+grants-dialog:
+  version: 1.0.0
+  js:
+    js/grants-dialog.js: { }
+  dependencies:
+    - core/drupal

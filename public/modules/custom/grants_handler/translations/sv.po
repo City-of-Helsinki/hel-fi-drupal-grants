@@ -1,17 +1,5 @@
-# Swedish translation of City of Helsinki Grants Handler Module
-#
-msgctxt "grants_handler"
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-18 16:58+0300\n"
-"PO-Revision-Date: 2022-10-12 08:58+0300\n"
-"Last-Translator: Petri Leinonen <ext.petri.leinonen@hel.fi>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "grants_handler"
 msgid "Print table"
@@ -549,19 +537,6 @@ msgid "Are you sure you want to leave? Leave without saving."
 msgstr "Är du säker att du vill stänga blanketten? Avsluta utan att spara."
 
 msgctxt "grants_handler"
-msgid "Close"
-msgstr "Stäng"
-
-msgid "Leave the application"
-msgstr "Avsluta från ansökningshandling"
-
-msgid "Back to application"
-msgstr "Tillbaka till ansökningshandling"
-
-msgid "Refresh the page"
-msgstr "Uppdatera sidan"
-
-msgctxt "grants_handler"
 msgid "View application"
 msgstr "Visa ansökning"
 
@@ -648,3 +623,31 @@ msgstr "%mail är inte en giltig e-postadress. Använd formen user@example.com."
 
 msgid "Remove @item @number"
 msgstr "Ta bort @item @number"
+
+msgctxt "grants_handler"
+msgid "Refresh the page"
+msgstr "Uppdatera sidan"
+
+msgctxt "grants_handler"
+msgid "Leave the application"
+msgstr "Avsluta från ansökningshandling"
+
+msgctxt "grants_handler"
+msgid "Close"
+msgstr "Stäng"
+
+msgctxt "grants_handler"
+msgid "Back to application"
+msgstr "Tillbaka till ansökningshandling"
+
+msgctxt "grants_handler"
+msgid "You have unsaved changes. Are you sure you want to refresh?"
+msgstr "Du har osparade ändringar. Är du säker på att du vill uppdatera?"
+
+msgctxt "grants_handler"
+msgid "You have unsaved changes. Are you sure you want to leave?"
+msgstr "Du har osparade ändringar. Är du säker på att du vill lämna?"
+
+msgctxt "grants_handler"
+msgid "Attention"
+msgstr "Observera"
