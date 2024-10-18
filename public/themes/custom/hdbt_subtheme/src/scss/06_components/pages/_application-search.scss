@@ -57,7 +57,7 @@
 }
 
 .application_search {
-  &--link {
+  .application_search--link {
     display: block;
     height: 100%;
     padding-bottom: var(--spacing-m);
@@ -101,7 +101,7 @@
     }
   }
 
-  &--filter-wrapper {
+  .application_search--filter-wrapper {
     background: var(--color-black-5);
 
     h2 {
@@ -149,6 +149,7 @@
       .form-actions {
         align-items: center;
         display: flex;
+        gap: $spacing;
         order: 6;
         padding-top: var(--spacing-m);
         width: 100%;
@@ -208,7 +209,7 @@
     }
   }
 
-  &--filters {
+  .application_search--filters {
     padding-bottom: var(--spacing-layout-m);
     padding-top: 0;
   }
