@@ -56,163 +56,162 @@
   }
 }
 
-.application_search {
-  .application_search--link {
+
+.application_search--link {
+  display: block;
+  height: 100%;
+  padding-bottom: var(--spacing-m);
+  position: relative;
+  text-decoration: none;
+
+  &::after {
+    --icon-size: 1.5rem;
+
+    @include pseudo-icon('arrow-right');
+    @include hover-link-arrow-transition;
+    bottom: var(--spacing-s);
+    content: '';
     display: block;
-    height: 100%;
-    padding-bottom: var(--spacing-m);
-    position: relative;
-    text-decoration: none;
+    flex-shrink: 0;
+    left: var(--spacing-m);
+    margin-left: -$spacing-quarter;
+    margin-top: $spacing-half;
+    position: absolute;
+
+    @include breakpoint($breakpoint-s) {
+      --icon-size: 3rem;
+      margin-left: -$spacing-half;
+      margin-top: $spacing;
+    }
+  }
+
+  &:focus,
+  &:hover {
+    h3 {
+      text-decoration: none;
+    }
 
     &::after {
-      --icon-size: 1.5rem;
+      transform: translateX($spacing-half);
 
-      @include pseudo-icon('arrow-right');
-      @include hover-link-arrow-transition;
-      bottom: var(--spacing-s);
-      content: '';
-      display: block;
-      flex-shrink: 0;
-      left: var(--spacing-m);
-      margin-left: -$spacing-quarter;
-      margin-top: $spacing-half;
-      position: absolute;
-
-      @include breakpoint($breakpoint-s) {
-        --icon-size: 3rem;
-        margin-left: -$spacing-half;
-        margin-top: $spacing;
-      }
-    }
-
-    &:focus,
-    &:hover {
-      h3 {
-        text-decoration: none;
-      }
-
-      &::after {
-        transform: translateX($spacing-half);
-
-        @media (prefers-reduced-motion) {
-          transform: none;
-        }
+      @media (prefers-reduced-motion) {
+        transform: none;
       }
     }
   }
+}
 
-  .application_search--filter-wrapper {
-    background: var(--color-black-5);
+.application_search--filter-wrapper {
+  background: var(--color-black-5);
 
-    h2 {
-      font-size: var(--fontsize-heading-m);
-      margin-bottom: var(--spacing-layout-s);
-      margin-top: var(--spacing-layout-s);
+  h2 {
+    font-size: var(--fontsize-heading-m);
+    margin-bottom: var(--spacing-layout-s);
+    margin-top: var(--spacing-layout-s);
+  }
+
+  form {
+    align-items: center;
+    border-bottom: 2px solid var(--color-black-20);
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--spacing-s);
+    justify-content: space-between;
+    margin-bottom: var(--spacing-layout-s);
+    padding-bottom: var(--spacing-layout-s);
+
+    .form-item {
+      margin-bottom: 0;
+      min-width: fit-content;
+      width: calc(calc(100% - var(--spacing-s) - var(--spacing-s)) / 3);
+
+      label {
+        color: var(--label-color-default);
+        font-size: var(--fontsize-body-m);
+        font-weight: 500;
+        margin-bottom: var(--spacing-3-xs);
+      }
+
+      .grant-applications--select-wrapper {
+        min-width: 100%;
+        width: 100%;
+      }
     }
 
-    form {
+    .hds-text-input:first-child {
+      max-width: none;
+      width: 100%;
+
+      input {
+        width: 100%;
+      }
+    }
+    .form-actions {
       align-items: center;
-      border-bottom: 2px solid var(--color-black-20);
       display: flex;
-      flex-flow: row wrap;
-      gap: var(--spacing-s);
-      justify-content: space-between;
-      margin-bottom: var(--spacing-layout-s);
-      padding-bottom: var(--spacing-layout-s);
+      gap: $spacing;
+      order: 6;
+      padding-top: var(--spacing-m);
+      width: 100%;
 
-      .form-item {
-        margin-bottom: 0;
-        min-width: fit-content;
-        width: calc(calc(100% - var(--spacing-s) - var(--spacing-s)) / 3);
-
-        label {
-          color: var(--label-color-default);
-          font-size: var(--fontsize-body-m);
-          font-weight: 500;
-          margin-bottom: var(--spacing-3-xs);
-        }
-
-        .grant-applications--select-wrapper {
-          min-width: 100%;
-          width: 100%;
-        }
+      @include breakpoint($breakpoint-m) {
+        width: 17%;
       }
 
-      .hds-text-input:first-child {
-        max-width: none;
+      input {
+        min-width: 250px;
         width: 100%;
-
-        input {
-          width: 100%;
-        }
-      }
-      .form-actions {
-        align-items: center;
-        display: flex;
-        gap: $spacing;
-        order: 6;
-        padding-top: var(--spacing-m);
-        width: 100%;
-
-        @include breakpoint($breakpoint-m) {
-          width: 17%;
-        }
-
-        input {
-          min-width: 250px;
-          width: 100%;
-        }
-      }
-
-      .form-item-items-per-page {
-        display: none;
-      }
-
-      .form-item-kohderyhma {
-        order: 1;
-      }
-
-      .form-item-avustuslaji {
-        order: 2;
-      }
-
-      .form-item-hakija {
-        order: 3;
-      }
-
-      .form-item-search {
-        max-width: 100%;
-        order: 4;
-        width: 50%;
-      }
-
-      .form-item-application-open {
-        break-before: left;
-        display: block;
-        margin-top: var(--spacing-m);
-        order: 5;
-        width: 30%;
-      }
-      [data-drupal-selector='edit-reset'] {
-        background-color: transparent;
-        border: 0;
-        color: var(--color-black);
       }
     }
 
-    .hds-koros svg pattern {
-      color: var(--color-black-5);
+    .form-item-items-per-page {
+      display: none;
     }
 
-    .hero .hero__container {
-      padding-bottom: var(--spacing-m);
+    .form-item-kohderyhma {
+      order: 1;
+    }
+
+    .form-item-avustuslaji {
+      order: 2;
+    }
+
+    .form-item-hakija {
+      order: 3;
+    }
+
+    .form-item-search {
+      max-width: 100%;
+      order: 4;
+      width: 50%;
+    }
+
+    .form-item-application-open {
+      break-before: left;
+      display: block;
+      margin-top: var(--spacing-m);
+      order: 5;
+      width: 30%;
+    }
+    [data-drupal-selector='edit-reset'] {
+      background-color: transparent;
+      border: 0;
+      color: var(--color-black);
     }
   }
 
-  .application_search--filters {
-    padding-bottom: var(--spacing-layout-m);
-    padding-top: 0;
+  .hds-koros svg pattern {
+    color: var(--color-black-5);
   }
+
+  .hero .hero__container {
+    padding-bottom: var(--spacing-m);
+  }
+}
+
+.application_search--filters {
+  padding-bottom: var(--spacing-layout-m);
+  padding-top: 0;
 }
 
 .application_search--rows {
