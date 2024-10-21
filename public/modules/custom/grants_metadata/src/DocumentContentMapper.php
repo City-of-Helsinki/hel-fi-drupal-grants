@@ -14,6 +14,15 @@ use Drupal\grants_attachments\AttachmentHandler;
 class DocumentContentMapper {
 
   /**
+   * Attachment file types.
+   *
+   * Saved statically to prevent too many queries.
+   *
+   * @var array
+   */
+  private static array $attachmentFileTypes = [];
+
+  /**
    * Map document structure to typed data object.
    *
    * @param array $documentData
@@ -120,7 +129,19 @@ class DocumentContentMapper {
    */
   private static function processAttachments(array &$typedDataValues): void {
     $other_attachments = [];
-    $attachmentFileTypes = AttachmentHandler::getAttachmentFieldNames($typedDataValues["application_number"], TRUE);
+
+    $applicationNumber = $typedDataValues["application_number"];
+
+    // Check if the static variable is already populated for the given application number
+    if (!isset(self::$attachmentFileTypes[$applicationNumber])) {
+      self::$attachmentFileTypes[$applicationNumber] =
+        AttachmentHandler::getAttachmentFieldNames(
+          $applicationNumber,
+          TRUE
+        );
+    }
+
+    $attachmentFileTypes = self::$attachmentFileTypes[$applicationNumber];
 
     if (!isset($typedDataValues["attachments"])) {
       $typedDataValues["attachments"] = [];
@@ -185,7 +206,12 @@ class DocumentContentMapper {
    */
   private static function processCommunityAddress(array &$typedDataValues): void {
     $community_address = [];
-    foreach (['community_street', 'community_city', 'community_post_code', 'community_country'] as $field) {
+    foreach ([
+      'community_street',
+      'community_city',
+      'community_post_code',
+      'community_country',
+    ] as $field) {
       if (isset($typedDataValues[$field])) {
         $community_address[$field] = $typedDataValues[$field];
         unset($typedDataValues[$field]);
