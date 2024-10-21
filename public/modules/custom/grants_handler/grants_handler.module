@@ -1376,6 +1376,13 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
     return;
   }
 
+  if (!isset($submissionData["metadata"]["form_uuid"])) {
+    \Drupal::logger('grants_handler')
+      ->error('No form uuid found for submission @submissionId',
+        ['@submissionId' => $submissionData["application_number"]]);
+    return;
+  }
+
   // Get webform by saved form uuid.
   $webform = ApplicationHelpers::getWebformByUuid(
     $submissionData["metadata"]["form_uuid"],
