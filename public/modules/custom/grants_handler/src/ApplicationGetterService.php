@@ -50,6 +50,11 @@ final class ApplicationGetterService {
    */
   protected EntityStorageInterface $storage;
 
+  /**
+   * Loaded submissions in array to prevent multiple loads.
+   *
+   * @var array
+   */
   protected array $submissions = [];
 
   /**
@@ -67,7 +72,7 @@ final class ApplicationGetterService {
     try {
       $this->storage = $entityTypeManager->getStorage('webform_submission');
     }
-    catch (InvalidPluginDefinitionException|PluginNotFoundException $e) {
+    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
     }
   }
 
@@ -91,7 +96,6 @@ final class ApplicationGetterService {
    *
    * @return \Drupal\helfi_atv\AtvDocument|null
    *   FEtched document.
-   *
    */
   public function getAtvDocument(string $transactionId, bool $refetch = FALSE): ?AtvDocument {
     $sParams = [
@@ -102,7 +106,7 @@ final class ApplicationGetterService {
     try {
       $result = $this->helfiAtvAtvService->searchDocuments($sParams, $refetch);
     }
-    catch (AtvDocumentNotFoundException|AtvFailedToConnectException|TokenExpiredException|GuzzleException $e) {
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | TokenExpiredException | GuzzleException $e) {
       $this->logger->error(
         'Failed to get document from ATV. Error: @error',
         ['@error' => $e->getMessage()]
@@ -163,7 +167,7 @@ final class ApplicationGetterService {
         'service' => 'AvustushakemusIntegraatio',
         'user_id' => $userData['sub'],
         'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'] .
-          ',applicant_id:' . $selectedRoleData['identifier'],
+        ',applicant_id:' . $selectedRoleData['identifier'],
       ];
     }
     else {
@@ -338,7 +342,6 @@ final class ApplicationGetterService {
     // Get serial from application number.
     $submissionSerial = ApplicationHelpers::getSerialFromApplicationNumber($applicationNumber);
 
-
     $result = $this->storage
       ->loadByProperties([
         'serial' => $submissionSerial,
@@ -398,7 +401,7 @@ final class ApplicationGetterService {
    * @param string $applicationNumber
    *   Application number.
    *
-   * @return \Drupal\webform\Entity\Webform Webform object.
+   * @return \Drupal\webform\Entity\Webform
    *   Webform object.
    */
   public function getWebformFromApplicationNumber(string $applicationNumber): Webform {

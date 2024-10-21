@@ -132,7 +132,8 @@ class DocumentContentMapper {
 
     $applicationNumber = $typedDataValues["application_number"];
 
-    // Check if the static variable is already populated for the given application number
+    // Check if the static variable is already populated
+    // for the given application number.
     if (!isset(self::$attachmentFileTypes[$applicationNumber])) {
       self::$attachmentFileTypes[$applicationNumber] =
         AttachmentHandler::getAttachmentFieldNames(

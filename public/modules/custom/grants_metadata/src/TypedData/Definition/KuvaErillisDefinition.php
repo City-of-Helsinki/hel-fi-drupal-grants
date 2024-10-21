@@ -82,7 +82,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_riskit_keskeisimmat' => [],
       'hankkeen_riskit_seuranta' => [],
       'hankkeen_riskit_vakiinnuttaminen' => [],
-      // example forms
+      // Example forms.
       'puuttuva_kentta_1' => [],
       'puuttuva_kentta_2' => [],
       'vaikka_sahkoposti' => [],
@@ -93,7 +93,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
     ];
 
     foreach ($customQuestions as $key => $value) {
-      $this->createCustomQuestionDefinitions($key, $value,$info);
+      $this->createCustomQuestionDefinitions($key, $value, $info);
     }
 
     $info['budgetInfo'] = GrantsBudgetInfoDefinition::create('grants_budget_info')
@@ -137,7 +137,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
    * @param string $key
    *   Webform element key.
    * @param array $value
-   *  Additional settings for given field.
+   *   Additional settings for given field.
    * @param array $info
    *   Data definitions.
    */
@@ -151,11 +151,11 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         $key,
       ]);
     // Add type override if set.
-    if(isset($value['typeOverride'])) {
+    if (isset($value['typeOverride'])) {
       $info[$key]->setSetting('typeOverride', $value['typeOverride']);
     }
     // Add value callback if set.
-    if(isset($value['valueCallback'])) {
+    if (isset($value['valueCallback'])) {
       $info[$key]->setSetting('valueCallback', $value['valueCallback']);
     }
     // Add default value if set or empty value.
@@ -163,8 +163,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       $info[$key]->setSetting('defaultValue', $value['defaultValue']);
     }
     // DO not add defaultValue if not set, this makes all fields inserted into
-    // data, this is not an issue, but if there's lot of fields data may get confusing.
-
+    // data, this is not an issue, but if there's lot of fields
+    // data may get confusing.
     // The negative is that if field is not set required in form, it will not
     // be added to data. If an empty field & value is wanted, the defaultValue
     // can be added to specific field in array above.
