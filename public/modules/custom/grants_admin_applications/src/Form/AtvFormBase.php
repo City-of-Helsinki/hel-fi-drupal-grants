@@ -203,4 +203,22 @@ abstract class AtvFormBase extends FormBase {
     }
   }
 
+  /**
+   * Handle exceptions.
+   *
+   * @param string $message
+   *   Log message prefix.
+   * @param \Throwable $e
+   *   The exception.
+   */
+  protected function handleException(string $message, \Throwable $e): void {
+    $uuid = Uuid::uuid4()->toString();
+    $this->messenger()
+      ->addError('Error has occurred and has been logged. ID: @uuid', ['@uuid' => $uuid]);
+    $this->logger(self::LOGGER_CHANNEL)->error(
+      "$message: @error, ID: @uuid",
+      ['@error' => $e->getMessage(), '@uuid' => $uuid]
+    );
+  }
+
 }

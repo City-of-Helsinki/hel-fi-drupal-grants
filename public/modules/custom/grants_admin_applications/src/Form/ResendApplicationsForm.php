@@ -374,13 +374,7 @@ class ResendApplicationsForm extends AtvFormBase {
       }
     }
     catch (\Exception $e) {
-      $uuid = Uuid::uuid4()->toString();
-      $this->messenger()
-        ->addError('Error has occured and has been logged. ID: @uuid', ['@uuid' => $uuid]);
-      $this->logger(self::LOGGER_CHANNEL)->error(
-        'Error: status check: @error, ID: @uuid',
-        ['@error' => $e->getMessage(), '@uuid' => $uuid]
-      );
+      $this->handleException("Error: status check", $e);
     }
   }
 
@@ -411,7 +405,7 @@ class ResendApplicationsForm extends AtvFormBase {
       $formState->setRebuild();
     }
     catch (GuzzleException | \Exception $e) {
-      $this->handleException($e);
+      $this->handleException("Error: Admin application forms - Resend error", $e);
     }
   }
 
@@ -447,25 +441,6 @@ class ResendApplicationsForm extends AtvFormBase {
         ['applicationId' => $applicationId]);
 
     $formState->setRebuild();
-  }
-
-  /**
-   * Handle exceptions.
-   *
-   * @param \Exception $e
-   *   The exception.
-   *
-   * @return void
-   *   Void.
-   */
-  private function handleException(\Exception $e): void {
-    $uuid = Uuid::uuid4()->toString();
-    $this->messenger()
-      ->addError('Error has occurred and has been logged. ID: @uuid', ['@uuid' => $uuid]);
-    $this->logger(self::LOGGER_CHANNEL)->error(
-      'Error: Admin application forms - Resend error: @error, ID: @uuid',
-      ['@error' => $e->getMessage(), '@uuid' => $uuid]
-    );
   }
 
   /**
