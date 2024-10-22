@@ -216,6 +216,8 @@ function grants_handler_schema(): array {
  *   Name of field.
  * @param int $new_length
  *   New length for field.
+ *
+ * @throws \Exception
  */
 function _module_change_text_field_max_length($entity_type_id, $field_name, $new_length) {
   $name = 'field.storage.' . $entity_type_id . "." . $field_name;
@@ -368,4 +370,12 @@ function grants_handler_update_9008(&$sandbox) {
   \Drupal::database()
     ->schema()
     ->createTable('grants_handler_locks', $schema['grants_handler_locks']);
+}
+
+/**
+ * Install grants_events module.
+ */
+function grants_handler_update_9009(&$sandbox): void {
+  // Enable the grants_attachments module.
+  \Drupal::service('module_installer')->install(['grants_events']);
 }
