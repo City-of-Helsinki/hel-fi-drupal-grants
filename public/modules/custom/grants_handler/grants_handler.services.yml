@@ -11,7 +11,7 @@ services:
         '@helfi_helsinki_profiili.userdata',
         '@http_client',
         '@logger.factory',
-        '@grants_handler.events_service',
+        '@grants_events.events_service',
         '@helfi_atv.atv_service',
         '@current_user',
         '@grants_handler.application_status_service'
@@ -28,9 +28,7 @@ services:
         '@datetime.time'
     ]
 
-  grants_handler.events_service:
-    class: Drupal\grants_handler\EventsService
-    arguments: [ '@http_client', '@logger.factory' ]
+
 
   grants_handler.form_lock_service:
     class: Drupal\grants_handler\FormLockService

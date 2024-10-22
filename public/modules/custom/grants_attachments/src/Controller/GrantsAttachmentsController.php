@@ -7,10 +7,10 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ApplicationUploaderService;
-use Drupal\grants_handler\EventsService;
 use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -34,7 +34,7 @@ class GrantsAttachmentsController extends ControllerBase {
    *   The helfi_atv service.
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   Drupal requests.
-   * @param \Drupal\grants_handler\EventsService $eventsService
+   * @param \Drupal\grants_events\EventsService $eventsService
    *   Use submission events productively.
    * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
    *   Application status service.
@@ -62,7 +62,7 @@ class GrantsAttachmentsController extends ControllerBase {
     return new static(
       $container->get('helfi_atv.atv_service'),
       $container->get('request_stack'),
-      $container->get('grants_handler.events_service'),
+      $container->get('grants_events.events_service'),
       $container->get('grants_handler.application_status_service'),
       $container->get('grants_metadata.application_data_service'),
       $container->get('grants_handler.application_getter_service'),

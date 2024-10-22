@@ -9,6 +9,7 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -47,7 +48,7 @@ class MessageService {
   /**
    * Log events via integration.
    *
-   * @var \Drupal\grants_handler\EventsService
+   * @var \Drupal\grants_events\EventsService
    */
   protected EventsService $eventsService;
 
@@ -103,7 +104,7 @@ class MessageService {
    *   Client to post data.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerFactory
    *   Log things.
-   * @param \Drupal\grants_handler\EventsService $eventsService
+   * @param \Drupal\grants_events\EventsService $eventsService
    *   Log events to atv document.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access to ATV.

@@ -49,12 +49,12 @@ module:
   flysystem: 0
   focal_point: 0
   gin_toolbar: 0
+  grants_events: 0
   grant_applications_content: 0
   grant_applications_noscript: 0
   grants_admin_applications: 0
   grants_applicant_info: 0
   grants_application_search: 0
-  grants_attachments: 0
   grants_audit_log: 0
   grants_budget_components: 0
   grants_club_section: 0
@@ -217,9 +217,10 @@ module:
   webform_translation_permissions: 0
   webform_ui: 0
   webform_views: 0
-  grants_handler: 1
+  grants_attachments: 1
   menu_admin_per_menu: 1
   pathauto: 1
+  grants_handler: 2
   content_translation: 10
   externalauth: 10
   views: 10

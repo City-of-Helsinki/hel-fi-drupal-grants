@@ -5,7 +5,7 @@ namespace Drupal\grants_attachments\Plugin\WebformElement;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_attachments\Element\GrantsAttachments as ElementGrantsAttachments;
-use Drupal\grants_handler\EventsService;
+use Drupal\grants_events\EventsService;
 use Drupal\webform\Plugin\WebformElement\WebformCompositeBase;
 use Drupal\webform\WebformSubmissionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -79,7 +79,7 @@ final class GrantsAttachments extends WebformCompositeBase {
   /**
    * Events service.
    *
-   * @var \Drupal\grants_handler\EventsService
+   * @var \Drupal\grants_events\EventsService
    */
   protected EventsService $eventsService;
 
@@ -93,7 +93,7 @@ final class GrantsAttachments extends WebformCompositeBase {
     $plugin_definition,
   ): GrantsAttachments {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
-    $instance->eventsService = $container->get('grants_handler.events_service');
+    $instance->eventsService = $container->get('grants_events.events_service');
     return $instance;
   }
 
