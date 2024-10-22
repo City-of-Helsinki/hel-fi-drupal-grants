@@ -303,8 +303,9 @@ class GrantsProfileService {
       $this->logger
         ->error('Error fetching community data. Error: %error', [
           '%error' => $e->getMessage(),
-        ]
-            );
+        ]);
+
+      \Sentry\captureException($e);
     }
     return $newProfile;
   }

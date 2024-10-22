@@ -34,7 +34,7 @@ jobs:
       #- name: Make sure configuration was exported in correct language (en or und)
       #  run: |
       #    OUTPUT=$(grep -oP '^langcode: \b(?!(?:en|und)\b)\w+' conf -R || true)
-      #
+
       #    if [ ! -z "$OUTPUT" ]; then
       #      echo "Found configuration that does not match the pattern 'langcode: (en|und)':" >> $GITHUB_STEP_SUMMARY
       #      echo "$OUTPUT" >> $GITHUB_STEP_SUMMARY
