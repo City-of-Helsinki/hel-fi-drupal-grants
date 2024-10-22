@@ -72,7 +72,7 @@ class AttachmentHandler {
    *
    * @var \Drupal\grants_events\EventsService
    */
-  protected EventsService $eventsService;
+  protected EventsService $eventService;
 
   /**
    * Constructs an AttachmentHandler object.
@@ -124,7 +124,7 @@ class AttachmentHandler {
    *   Events service.
    */
   public function setEventsService(EventsService $eventsService): void {
-    $this->eventsService = $eventsService;
+    $this->eventService = $eventsService;
   }
 
   /**

@@ -104,8 +104,6 @@ class MessageService {
    *   Client to post data.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerFactory
    *   Log things.
-   * @param \Drupal\grants_events\EventsService $eventsService
-   *   Log events to atv document.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access to ATV.
    * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
