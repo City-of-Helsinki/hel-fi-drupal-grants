@@ -265,7 +265,6 @@ final class ApplicationUploaderService {
 
       \Sentry\captureException($e);
 
-      // Re-throw?
       return FALSE;
     }
   }
