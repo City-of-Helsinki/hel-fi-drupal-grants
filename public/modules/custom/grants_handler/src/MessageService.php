@@ -117,7 +117,6 @@ class MessageService {
     HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata,
     Client $http_client,
     LoggerChannelFactoryInterface $loggerFactory,
-    EventsService $eventsService,
     AtvService $atvService,
     AccountProxyInterface $currentUser,
     ApplicationStatusService $applicationStatusService,
@@ -125,7 +124,6 @@ class MessageService {
     $this->helfiHelsinkiProfiiliUserdata = $helfi_helsinki_profiili_userdata;
     $this->httpClient = $http_client;
     $this->logger = $loggerFactory->get('grants_handler_message_service');
-    $this->eventsService = $eventsService;
     $this->atvService = $atvService;
     $this->currentUser = $currentUser;
     $this->applicationStatusService = $applicationStatusService;
@@ -135,6 +133,16 @@ class MessageService {
     $this->password = getenv('AVUSTUS2_PASSWORD');
 
     $this->setDebug(NULL);
+  }
+
+  /**
+   * Set the getter service.
+   *
+   * @param \Drupal\grants_events\EventsService $eventsService
+   *   Events service.
+   */
+  public function setEventsService(EventsService $eventsService): void {
+    $this->eventsService = $eventsService;
   }
 
   /**
