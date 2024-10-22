@@ -1559,6 +1559,8 @@ submit the application only after you have provided all the necessary informatio
       $this->messenger->addError($this->t('Error saving application. please contact support.'));
       $this->getLogger('grants_handler')
         ->error('Error saving application: @error', ['@error' => $e->getMessage()]);
+
+      \Sentry\captureException($e);
     }
   }
 
@@ -1648,6 +1650,8 @@ submit the application only after you have provided all the necessary informatio
             ]
           )
         );
+
+      \Sentry\captureException($e);
     }
   }
 

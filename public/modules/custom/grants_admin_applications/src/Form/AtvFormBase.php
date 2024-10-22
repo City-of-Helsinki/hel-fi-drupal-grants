@@ -200,6 +200,8 @@ abstract class AtvFormBase extends FormBase {
         ->error('Application resending failed: @error', ['@error' => $e->getMessage()]);
       $this->messenger()
         ->addError($this->t('Application resending failed: @error', ['@error' => $e->getMessage()]));
+
+      \Sentry\captureException($e);
     }
   }
 
