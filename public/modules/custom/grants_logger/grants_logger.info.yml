@@ -1,7 +1,9 @@
 name: 'Grants Logger'
 type: module
-description: 'Grants logger override.'
+description: 'Grants logging customization'
 package: 'helfi'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
-  - helfi_helsinki_profiili
+  - raven:raven
+  - helfi_atv:helfi_atv
+  - helfi_helsinki_profiili:helfi_helsinki_profiili
