@@ -18,6 +18,8 @@
 - a63faa9bd fix: UHF-10736: Make sure that uploaded attachments are properly set to application data. (#1496)
 - 5773c2004 Update configuration (#1501)
 - 57648e948 Version + changelog
+- 927c79293 fix: UHF-10650: Uncomment the printing script to make printing button work again (#1512)
+- e2d0d519f fix: UHF-10142: Allow "Delete" button to show on RECEIVED applications when navigating on the form. (#1510)
 
 ## 2024.13
 - 9465ef688 Update configuration (#1492)
