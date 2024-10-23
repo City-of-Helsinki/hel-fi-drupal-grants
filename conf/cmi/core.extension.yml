@@ -49,7 +49,6 @@ module:
   flysystem: 0
   focal_point: 0
   gin_toolbar: 0
-  grants_events: 0
   grant_applications_content: 0
   grant_applications_noscript: 0
   grants_admin_applications: 0
@@ -58,6 +57,7 @@ module:
   grants_audit_log: 0
   grants_budget_components: 0
   grants_club_section: 0
+  grants_events: 0
   grants_front_banner: 0
   grants_industries: 0
   grants_logger: 0
@@ -104,6 +104,7 @@ module:
   helfi_paragraphs_columns: 0
   helfi_paragraphs_contact_card_listing: 0
   helfi_paragraphs_content_cards: 0
+  helfi_paragraphs_curated_event_list: 0
   helfi_paragraphs_hearings: 0
   helfi_paragraphs_hero: 0
   helfi_paragraphs_image: 0
