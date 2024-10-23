@@ -1289,8 +1289,8 @@ function grants_handler_preprocess_webform_submission_handler_details(&$variable
   $submission = $variables['submission'];
   $submissionData = $submission->getData();
 
-  /** @var \Drupal\grants_handler\EventsService $eventService */
-  $eventService = \Drupal::service('grants_handler.events_service');
+  /** @var \Drupal\grants_events\EventsService $eventService */
+  $eventService = \Drupal::service('grants_events.events_service');
 
   $handlerEvents = array_filter($submissionData['events'], function ($event) use ($eventService) {
     if ($event['eventType'] == $eventService->getEventTypes()['EVENT_INFO']) {
@@ -1314,7 +1314,7 @@ function grants_handler_preprocess_webform_submission_attachment_list(&$variable
   $submissionData = $submission->getData();
 
   // Get submission events.
-  $eventService = \Drupal::service('grants_handler.events_service');
+  $eventService = \Drupal::service('grants_events.events_service');
   $attachmentEventsHandler = $eventService->filterEvents($submissionData['events'], 'HANDLER_ATT_OK');
 
   $attachments = [];

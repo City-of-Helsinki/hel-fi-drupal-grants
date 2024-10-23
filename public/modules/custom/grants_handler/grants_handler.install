@@ -216,6 +216,8 @@ function grants_handler_schema(): array {
  *   Name of field.
  * @param int $new_length
  *   New length for field.
+ *
+ * @throws \Exception
  */
 function _module_change_text_field_max_length($entity_type_id, $field_name, $new_length) {
   $name = 'field.storage.' . $entity_type_id . "." . $field_name;
