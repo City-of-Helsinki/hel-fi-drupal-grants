@@ -43,6 +43,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
     'helfi_yjdh',
     // Project modules.
     'grants_applicant_info',
+    'grants_events',
     'grants_attachments',
     'grants_budget_components',
     'grants_club_section',
