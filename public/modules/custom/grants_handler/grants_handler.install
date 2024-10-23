@@ -369,3 +369,18 @@ function grants_handler_update_9008(&$sandbox) {
     ->schema()
     ->createTable('grants_handler_locks', $schema['grants_handler_locks']);
 }
+
+/**
+ * Install grants_events module.
+ */
+function grants_handler_update_9009(&$sandbox): void {
+  // Enable the grants_attachments module.
+  \Drupal::service('module_installer')->install(['grants_events']);
+}
+
+/**
+ * Manually trigger locale translation.
+ */
+function grants_handler_update_9010(&$sandbox): void {
+  _locale_parse_js_file('modules/custom/grants_handler/js/webform.form.unsaved.js');
+}
