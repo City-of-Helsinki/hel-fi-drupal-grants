@@ -9,6 +9,7 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -47,7 +48,7 @@ class MessageService {
   /**
    * Log events via integration.
    *
-   * @var \Drupal\grants_handler\EventsService
+   * @var \Drupal\grants_events\EventsService
    */
   protected EventsService $eventsService;
 
@@ -103,8 +104,6 @@ class MessageService {
    *   Client to post data.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerFactory
    *   Log things.
-   * @param \Drupal\grants_handler\EventsService $eventsService
-   *   Log events to atv document.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access to ATV.
    * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
@@ -116,7 +115,6 @@ class MessageService {
     HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata,
     Client $http_client,
     LoggerChannelFactoryInterface $loggerFactory,
-    EventsService $eventsService,
     AtvService $atvService,
     AccountProxyInterface $currentUser,
     ApplicationStatusService $applicationStatusService,
@@ -124,7 +122,6 @@ class MessageService {
     $this->helfiHelsinkiProfiiliUserdata = $helfi_helsinki_profiili_userdata;
     $this->httpClient = $http_client;
     $this->logger = $loggerFactory->get('grants_handler_message_service');
-    $this->eventsService = $eventsService;
     $this->atvService = $atvService;
     $this->currentUser = $currentUser;
     $this->applicationStatusService = $applicationStatusService;
@@ -134,6 +131,16 @@ class MessageService {
     $this->password = getenv('AVUSTUS2_PASSWORD');
 
     $this->setDebug(NULL);
+  }
+
+  /**
+   * Set the getter service.
+   *
+   * @param \Drupal\grants_events\EventsService $eventsService
+   *   Events service.
+   */
+  public function setEventsService(EventsService $eventsService): void {
+    $this->eventsService = $eventsService;
   }
 
   /**

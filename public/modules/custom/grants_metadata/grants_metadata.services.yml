@@ -17,4 +17,4 @@ services:
       '@database'
     ]
     calls:
-      - [ setEventsService, [ '@?grants_handler.events_service' ] ]
+      - [ setEventsService, [ '@?grants_events.events_service' ] ]
