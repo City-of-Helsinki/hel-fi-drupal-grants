@@ -199,6 +199,7 @@ elements: |
     '#title': 'Premise name'
   postinumero:
     '#title': 'Postal code'
+    '#pattern_error': 'Please enter a valid 5-digit postal code.'
   kyseessa_on_kaupungin_omistama_tila:
     '#title': 'City owns the property'
     '#options':
