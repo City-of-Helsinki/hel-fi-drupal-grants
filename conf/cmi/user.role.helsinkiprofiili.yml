@@ -7,6 +7,7 @@ dependencies:
     - grants_mandate
     - grants_oma_asiointi
     - grants_profile
+    - raven
     - webform
 id: helsinkiprofiili
 label: HelsinkiProfiili
@@ -18,5 +19,6 @@ permissions:
   - 'delete own files'
   - 'edit own webform submission'
   - 'get mandates from dvv'
+  - 'send performance traces to sentry'
   - 'view own grants_profile'
   - 'view own webform submission'

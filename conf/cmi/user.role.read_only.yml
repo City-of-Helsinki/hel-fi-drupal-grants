@@ -11,6 +11,7 @@ dependencies:
     - helfi_tpr
     - node
     - paragraphs
+    - raven
     - view_unpublished
 id: read_only
 label: 'Vain luku'
@@ -18,6 +19,7 @@ weight: -7
 is_admin: null
 permissions:
   - 'delete own files'
+  - 'send performance traces to sentry'
   - 'view any unpublished announcement content'
   - 'view any unpublished landing_page content'
   - 'view any unpublished page content'
