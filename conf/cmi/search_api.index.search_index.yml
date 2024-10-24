@@ -177,7 +177,7 @@ field_settings:
       module:
         - node
   type:
-    label: Sisältötyyppi
+    label: 'Content type'
     datasource_id: 'entity:node'
     property_path: type
     type: string

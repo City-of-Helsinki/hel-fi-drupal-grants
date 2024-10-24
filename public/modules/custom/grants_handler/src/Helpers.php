@@ -184,4 +184,21 @@ class Helpers {
     return in_array('grants_admin', $currentRoles) || $account->id() === '1';
   }
 
+  /**
+   * Is recursive array empty.
+   *
+   * @param array $value
+   *   Array to check.
+   *
+   * @return bool
+   *   Empty or not?
+   */
+  public static function emptyRecursive(array $value): bool {
+    $empty = TRUE;
+    array_walk_recursive($value, function ($item) use (&$empty) {
+      $empty = $empty && empty($item);
+    });
+    return $empty;
+  }
+
 }

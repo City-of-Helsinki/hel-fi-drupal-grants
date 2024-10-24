@@ -73,7 +73,7 @@ class GrantsAttachments extends WebformCompositeBase {
 
     $arrayKey = $element['#webform_key'];
     if (isset($element['#parents'][1]) && $element['#parents'][1] == 'items') {
-      $arrayKey .=  '_' . $element['#parents'][2];
+      $arrayKey .= '_' . $element['#parents'][2];
     }
 
     if (isset($errors[$arrayKey])) {
@@ -94,7 +94,6 @@ class GrantsAttachments extends WebformCompositeBase {
       // When user goes to previous step etc. we might lose the additional data for the just
       // uploaded elements. As we are saving these to storage - let's find
       // out the actual data the and use it.
-
       if ($dataForElement['integrationID'] && isset($storage['fids_info']) && $dataForElement) {
         foreach ($storage['fids_info'] as $finfo) {
           if ($dataForElement['integrationID'] == $finfo['integrationID']) {
@@ -133,7 +132,7 @@ class GrantsAttachments extends WebformCompositeBase {
       }
       if (isset($dataForElement['isIncludedInOtherFile'])) {
         $value = $dataForElement['isIncludedInOtherFile'] == 'true' || $dataForElement['isIncludedInOtherFile'] == '1';
-        $element["isIncludedInOtherFile"]["#default_value"] =  $value;
+        $element["isIncludedInOtherFile"]["#default_value"] = $value;
         if ($element["isIncludedInOtherFile"]["#default_value"]) {
           $element["fileStatus"]["#value"] = 'otherFile';
         }
@@ -168,29 +167,49 @@ class GrantsAttachments extends WebformCompositeBase {
           $element["description"]["#attributes"] = ['readonly' => 'readonly'];
         }
 
+        /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
+        $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
+
         if (
           isset($dataForElement['fileType'])
           && $dataForElement['fileType'] != '45'
-          && (isset($submissionData['status']) && $submissionData['status'] === 'DRAFT')
+          && $applicationStatusService->isSubmissionEditable($submission)
         ) {
-          $element['deleteItem'] = [
-            '#type' => 'submit',
-            '#name' => 'delete_' . $arrayKey,
-            '#value' => t('Delete attachment', [], $tOpts),
-            '#submit' => [
-              ['\Drupal\grants_attachments\Element\GrantsAttachments', 'deleteAttachmentSubmit'],
-            ],
-            '#limit_validation_errors' => [[$element['#webform_key']]],
-            '#ajax' => [
-              'callback' => [
-                '\Drupal\grants_attachments\Element\GrantsAttachments',
-                'deleteAttachment',
-              ],
-              'wrapper' => $element["#webform_id"],
-            ],
-          ];
-        }
+          // By default we allow deletion of the attachment if submission is
+          // editable AND the file type is not 45 (account confirmation).
+          $showDeleteButton = TRUE;
 
+          // But since the attachments currently work differently than the other
+          // fields regarding to editing, we need to do additional check for
+          // explicitly application status and upload status.
+          if ($submissionData['status'] === 'RECEIVED' && $uploadStatus !== 'justUploaded') {
+            // We allow deletion of the attachment only if it has been just
+            // uploaded. Just meaning this editing session.
+            $showDeleteButton = FALSE;
+          }
+
+          if ($showDeleteButton === TRUE) {
+            $element['deleteItem'] = [
+              '#type' => 'submit',
+              '#name' => 'delete_' . $arrayKey,
+              '#value' => t('Delete attachment', [], $tOpts),
+              '#submit' => [
+                [
+                  '\Drupal\grants_attachments\Element\GrantsAttachments',
+                  'deleteAttachmentSubmit',
+                ],
+              ],
+              '#limit_validation_errors' => [[$element['#webform_key']]],
+              '#ajax' => [
+                'callback' => [
+                  '\Drupal\grants_attachments\Element\GrantsAttachments',
+                  'deleteAttachment',
+                ],
+                'wrapper' => $element["#webform_id"],
+              ],
+            ];
+          }
+        }
       }
       if (isset($dataForElement['description'])) {
         $element["description"]["#default_value"] = $dataForElement['description'];
@@ -201,7 +220,7 @@ class GrantsAttachments extends WebformCompositeBase {
         $dataForElement['fileType'] == '45' &&
         isset($dataForElement['attachmentName']) &&
         $dataForElement['attachmentName'] !== "") {
-          $element["fileStatus"]["#value"] = 'uploaded';
+        $element["fileStatus"]["#value"] = 'uploaded';
       }
 
       // Final override to rule them all.
@@ -445,7 +464,7 @@ class GrantsAttachments extends WebformCompositeBase {
             '@fieldname field is required',
             ['@fieldname' => $element['#title']],
             ['context' => 'grants_attachments'])
-          );
+        );
       }
     }
   }
@@ -467,6 +486,14 @@ class GrantsAttachments extends WebformCompositeBase {
     if (str_contains($triggeringElement['#name'], '_attachment_remove_button')) {
       $ename = $element['#name'];
       $ename_exp = explode('[', $ename);
+
+      // Ok validation functions are run for every fileupload field on the form
+      // so we need to make sure that we are actually currently trying to delete
+      // a field which triggered the action.
+      if (!str_contains($triggeringElement['#name'], $ename_exp[0])) {
+        return;
+      }
+
       $file_fid = $form_state->getValue($ename_exp[0])['attachment'];
 
       if ($file_fid) {
@@ -493,10 +520,10 @@ class GrantsAttachments extends WebformCompositeBase {
             // Log error.
             $logger
               ->error('Deletion failed for integrationID: @integrationID, @error',
-              [
-                '@integrationID' => $cleanIntegrationId,
-                '@error' => $e->getMessage(),
-              ]);
+                [
+                  '@integrationID' => $cleanIntegrationId,
+                  '@error' => $e->getMessage(),
+                ]);
           }
         }
       }
@@ -599,7 +626,6 @@ class GrantsAttachments extends WebformCompositeBase {
 
     // If upload button is clicked.
     if (str_contains($triggeringElement["#name"], 'attachment_upload_button')) {
-
       if ($shouldNotValidate) {
         return NULL;
       }
@@ -641,7 +667,6 @@ class GrantsAttachments extends WebformCompositeBase {
       }
     }
     elseif ($isRemoveAction && isset($fid)) {
-
       // Validate function is looping all file fields.
       // Check if we are actually currently trying to delete a
       // field which triggered the action.
@@ -692,7 +717,6 @@ class GrantsAttachments extends WebformCompositeBase {
     string $formFiletype,
   ): bool {
     try {
-
       /** @var \Drupal\helfi_atv\AtvService $atvService */
       $atvService = \Drupal::service('helfi_atv.atv_service');
 
@@ -763,7 +787,7 @@ class GrantsAttachments extends WebformCompositeBase {
       $storage = $formState->getStorage();
       $storage['fids_info'][$file->id()] = [
         'integrationID' => $integrationId,
-        'fileStatus'    => 'justUploaded',
+        'fileStatus' => 'justUploaded',
         'isDeliveredLater' => '0',
         'isIncludedInOtherFile' => '0',
         'fileName' => $file->getFileName(),
@@ -836,7 +860,6 @@ class GrantsAttachments extends WebformCompositeBase {
       \Drupal::logger('grants_attachments')
         ->error('Attachment deleting failed. Error: @error', ['@error' => $t->getMessage()]);
     }
-
   }
 
   /**
@@ -943,7 +966,6 @@ class GrantsAttachments extends WebformCompositeBase {
     if ($file !== NULL && $checkboxValue === '1' && empty($integrationID)) {
       $form_state->setError($element, t('You cannot send file and have it in another file', [], $tOpts));
     }
-
   }
 
   /**
@@ -1005,7 +1027,7 @@ class GrantsAttachments extends WebformCompositeBase {
         t('@fieldname has no file uploaded, it must be either delivered later or be included in other file.', [
           '@fieldname' => $parent['#title'],
         ],
-        $tOpts
+          $tOpts
         )
       );
     }

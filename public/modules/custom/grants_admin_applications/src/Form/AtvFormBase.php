@@ -9,6 +9,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\grants_attachments\AttachmentFixerService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\EventsService;
@@ -46,6 +47,7 @@ abstract class AtvFormBase extends FormBase {
     protected MessageService $messageService,
     protected AccountProxyInterface $current_user,
     protected TimeInterface $time,
+    protected AttachmentFixerService $attachmentFixerService,
   ) {
     $this->config = $this->configFactory()->get('grants_metadata.settings');
   }
@@ -64,7 +66,8 @@ abstract class AtvFormBase extends FormBase {
       $container->get('helfi_atv.atv_service'),
       $container->get('grants_handler.message_service'),
       $container->get('current_user'),
-      $container->get('datetime.time')
+      $container->get('datetime.time'),
+      $container->get('grants_attachments.attachment_fixer_service')
     );
   }
 
@@ -132,6 +135,10 @@ abstract class AtvFormBase extends FormBase {
     // Current environment as a header to be added to meta -fields.
     $headers['X-hki-appEnv'] = Helpers::getAppEnv();
     $headers['X-hki-applicationNumber'] = $applicationId;
+
+    // We set the data source for integration to be used in controlling
+    // application testing in problematic cases.
+    $headers['X-hki-UpdateSource'] = 'RESEND';
 
     $content = $atvDoc->getContent();
     $status = $atvDoc->getStatus();

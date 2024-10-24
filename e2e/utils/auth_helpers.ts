@@ -2,6 +2,7 @@ import {Page} from '@playwright/test';
 import {logger} from "./logger";
 import {existsSync, readFileSync} from 'fs';
 import {logCurrentUrl} from "./helpers";
+import {chmodSync} from "node:fs";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON";
 type Mode = "new" | "existing";
@@ -139,6 +140,9 @@ const loginAndSaveStorageState = async (page: Page) => {
   logger('Creating auth file...');
   await page.context().storageState({path: AUTH_FILE_PATH});
   logger('Auth file created.')
+  // Change file permissions to allow deletion
+  chmodSync(AUTH_FILE_PATH, 0o666);
+  logger('Auth file permissions updated.');
 }
 
 /**

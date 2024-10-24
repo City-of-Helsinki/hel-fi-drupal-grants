@@ -25,7 +25,9 @@ const formPages: PageHandlers = {
       await page.locator('#edit-compensation-purpose')
         .fill(items['edit-compensation-purpose'].value ?? '');
     }
-
+    if (items['edit-myonnetty-avustus']) {
+      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    }
     if (items['edit-benefits-loans']) {
       await page.locator('#edit-benefits-loans')
         .fill(items['edit-benefits-loans'].value ?? '');
@@ -35,9 +37,14 @@ const formPages: PageHandlers = {
       await page.locator('#edit-benefits-premises')
         .fill(items['edit-benefits-premises'].value ?? '');
     }
+    if (items['edit-compensation-boolean']) {
+      await page.locator('#edit-compensation-boolean')
+        .getByText(items['edit-compensation-boolean'].value ?? '').click();
+    }
 
-    if (items['edit-myonnetty-avustus']) {
-      await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
+    if (items['edit-compensation-explanation']) {
+      await page.locator('#edit-compensation-explanation')
+        .fill(items['edit-compensation-explanation'].value ?? '');
     }
 
   },
