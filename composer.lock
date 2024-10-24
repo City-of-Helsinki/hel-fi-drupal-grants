@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d3ab16ba09ab7e754afd7b71ae122b5",
+    "content-hash": "c161d4f3133fa1d78cc822560407e714",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5845,36 +5845,6 @@
                 "issues": "https://github.com/City-of-Helsinki/drupal-tools/issues"
             },
             "time": "2024-10-23T08:02:58+00:00"
-        },
-        {
-            "name": "drupal/helfi_formtool_embed",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-form-tool-embed.git",
-                "reference": "535d08eba1b7cb3ae22b4002134c41c5c9c56b14"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-form-tool-embed/zipball/535d08eba1b7cb3ae22b4002134c41c5c9c56b14",
-                "reference": "535d08eba1b7cb3ae22b4002134c41c5c9c56b14",
-                "shasum": ""
-            },
-            "type": "drupal-module",
-            "autoload": {
-                "psr-4": {
-                    "Drupal\\HelfiFormtoolEmbed\\": "src/"
-                }
-            },
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "description": "Embed form tool to Drupal",
-            "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-form-tool-embed/tree/develop",
-                "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-form-tool-embed/issues"
-            },
-            "time": "2022-10-31T06:19:43+00:00"
         },
         {
             "name": "drupal/helfi_gdpr_api",
@@ -23635,7 +23605,6 @@
     "stability-flags": {
         "drupal/block_field": 5,
         "drupal/helfi_drupal_tools": 20,
-        "drupal/helfi_formtool_embed": 20,
         "drupal/multivalue_form_element": 10,
         "drupal/session_limit": 10
     },
