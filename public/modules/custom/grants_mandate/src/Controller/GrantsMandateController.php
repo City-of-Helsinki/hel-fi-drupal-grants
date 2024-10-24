@@ -2,13 +2,9 @@
 
 namespace Drupal\grants_mandate\Controller;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Messenger\MessengerTrait;
-use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\grants_handler\Helpers;
@@ -31,49 +27,6 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
   use StringTranslationTrait;
 
   /**
-   * The request stack used to access request globals.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected RequestStack $requestStack;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected $currentUser;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
-   * Mandate service.
-   *
-   * @var \Drupal\grants_mandate\GrantsMandateService
-   */
-  protected GrantsMandateService $grantsMandateService;
-
-
-  /**
-   * Access to profile data.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Logger access.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannel|\Psr\Log\LoggerInterface
-   */
-  protected LoggerChannel|LoggerInterface $logger;
-
-  /**
    * Allowed roles.
    *
    * @var array
@@ -81,75 +34,43 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
   protected array $allowedRoles;
 
   /**
-   * The redirect service.
+   * The logger.
    *
-   * @var \Drupal\grants_mandate\GrantsMandateRedirectService
+   * @var \Psr\Log\LoggerInterface
    */
-  protected $redirectService;
+  private LoggerInterface $logger;
 
   /**
    * Grants Mandate Controller constructor.
    */
   public function __construct(
-    RequestStack $requestStack,
-    AccountProxyInterface $current_user,
-    LanguageManagerInterface $language_manager,
-    GrantsMandateService $grantsMandateService,
-    GrantsProfileService $grantsProfileService,
-    ConfigFactoryInterface $configFactory,
-    GrantsMandateRedirectService $redirectService,
+    private RequestStack $requestStack,
+    private GrantsMandateService $grantsMandateService,
+    private GrantsProfileService $grantsProfileService,
+    private GrantsMandateRedirectService $redirectService,
   ) {
-    $this->requestStack = $requestStack;
-    $this->currentUser = $current_user;
-    $this->languageManager = $language_manager;
-    $this->grantsMandateService = $grantsMandateService;
-    $this->grantsProfileService = $grantsProfileService;
-    $this->redirectService = $redirectService;
     $this->logger = $this->getLogger('grants_mandate');
+    $config = $this->configFactory->get('grants_mandate.settings');
+    $extraRoles = is_array($config->get('extra_access_roles')) ? $config->get('extra_access_roles') : [];
     $this->allowedRoles = [
       'http://valtuusrekisteri.suomi.fi/avustushakemuksen_tekeminen',
       'PJ',
       'J',
+      ...$extraRoles,
     ];
-    $config = $configFactory->get('grants_mandate.settings');
-    $extraRoles = $config->get('extra_access_roles');
-    if ($extraRoles && is_array($extraRoles)) {
-      $this->allowedRoles = array_merge($this->allowedRoles, $extraRoles);
-    }
-  }
-
-  /**
-   * Check if user has required role in their mandate.
-   *
-   * @param array $roles
-   *   Array of user's roles.
-   *
-   * @return bool
-   *   Is user allowed to use this mandate.
-   */
-  protected function hasAllowedRole(array $roles) {
-    $allowedRoles = $this->allowedRoles;
-    foreach ($roles as $role) {
-      if (in_array($role, $allowedRoles)) {
-        return TRUE;
-      }
-    }
-    return FALSE;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): GrantsMandateController|static {
-    return new static(
+    $controller = new static(
       $container->get('request_stack'),
-      $container->get('current_user'),
-      $container->get('language_manager'),
       $container->get('grants_mandate.service'),
       $container->get('grants_profile.service'),
-      $container->get('config.factory'),
       $container->get('grants_mandate_redirect.service'),
     );
+    return $controller->setLoggerFactory($container->get('logger.factory'));
   }
 
   /**
@@ -236,6 +157,25 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
     // Redirect user to grants profile page.
     $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
     return new RedirectResponse($redirectUrl->toString());
+  }
+
+  /**
+   * Check if user has required role in their mandate.
+   *
+   * @param array $roles
+   *   Array of user's roles.
+   *
+   * @return bool
+   *   Is user allowed to use this mandate.
+   */
+  protected function hasAllowedRole(array $roles) {
+    $allowedRoles = $this->allowedRoles;
+    foreach ($roles as $role) {
+      if (in_array($role, $allowedRoles)) {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
 
   /**
