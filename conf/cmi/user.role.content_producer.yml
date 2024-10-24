@@ -35,6 +35,7 @@ dependencies:
     - path
     - pathauto
     - publication_date
+    - raven
     - scheduler
     - system
     - taxonomy
@@ -125,6 +126,7 @@ permissions:
   - 'revert page revisions'
   - 'revert service revisions'
   - 'schedule publishing of nodes'
+  - 'send performance traces to sentry'
   - 'set announcement published on date'
   - 'set landing_page published on date'
   - 'set page published on date'

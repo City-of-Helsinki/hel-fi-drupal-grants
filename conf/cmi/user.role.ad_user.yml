@@ -6,6 +6,7 @@ dependencies:
     - taxonomy.vocabulary.news_tags
   module:
     - file
+    - raven
     - taxonomy
 id: ad_user
 label: 'AD User'
@@ -14,3 +15,4 @@ is_admin: null
 permissions:
   - 'delete own files'
   - 'edit terms in news_tags'
+  - 'send performance traces to sentry'
