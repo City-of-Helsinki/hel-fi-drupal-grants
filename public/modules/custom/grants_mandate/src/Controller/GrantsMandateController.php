@@ -23,9 +23,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class GrantsMandateController extends ControllerBase implements ContainerInjectionInterface {
 
-  use MessengerTrait;
-  use StringTranslationTrait;
-
   /**
    * Allowed roles.
    *
