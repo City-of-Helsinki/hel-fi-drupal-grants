@@ -164,55 +164,35 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    */
   public function mandateCallbackYpa(): RedirectResponse {
     $tOpts = ['context' => 'grants_mandate'];
-
     $code = $this->requestStack->getMainRequest()->query->get('code');
-    $state = $this->requestStack->getMainRequest()->query->get('state');
 
     $callbackUrl = Url::fromRoute('grants_mandate.callback_ypa', [], ['absolute' => TRUE])
       ->toString();
 
     $appEnv = Helpers::getAppEnv();
 
-    if (is_string($code) && $code != '') {
-      $this->grantsMandateService->changeCodeToToken($code, $callbackUrl);
-      $roles = $this->grantsMandateService->getRoles();
-      $isAllowed = FALSE;
-      if ($roles && isset($roles[0]) && $roles[0]['roles']) {
-        $rolesArray = $roles[0]['roles'];
-        $isAllowed = $this->hasAllowedRole($rolesArray);
-      }
-      if (!$isAllowed && !str_contains($appEnv, 'LOCAL')) {
-        $this->messenger()->addError($this->t('Your mandate does not allow you to use this service.', [], $tOpts));
-        // Redirect user to grants profile page.
-        $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
-        return new RedirectResponse($redirectUrl->toString());
-      }
-
-      $roles = reset($roles);
-      $roles['type'] = 'registered_community';
-      $this->grantsProfileService->setSelectedRoleData($roles);
+    // @todo What is the meaning and purpose of the "code" (returned by api).
+    if (!is_string($code) || !$code) {
+      return $this->handleNoCode($tOpts);
     }
-    else {
 
-      $error = $this->requestStack->getMainRequest()->query->get('error');
-      $error_description = $this->requestStack->getMainRequest()->query->get('error_description');
-      $error_uri = $this->requestStack->getMainRequest()->query->get('error_uri');
-
-      $msg = $this->t('Code exchange error. @error: @error_desc. State: @state, Error URI: @error_uri',
-        [
-          '@error' => $error,
-          '@error_description' => $error_description,
-          '@state' => $state,
-          '@error_uri' => $error_uri,
-        ], $tOpts);
-
-      $this->logger->error('Error: %error', ['%error' => $msg->render()]);
-
-      $this->messenger()->addError($this->t('Mandate process was interrupted or there was an error. Please try again.', [], $tOpts));
+    $this->grantsMandateService->changeCodeToToken($code, $callbackUrl);
+    $roles = $this->grantsMandateService->getRoles();
+    $isAllowed = FALSE;
+    if ($roles && isset($roles[0]) && $roles[0]['roles']) {
+      $rolesArray = $roles[0]['roles'];
+      $isAllowed = $this->hasAllowedRole($rolesArray);
+    }
+    if (!$isAllowed && !str_contains($appEnv, 'LOCAL')) {
+      $this->messenger()->addError($this->t('Your mandate does not allow you to use this service.', [], $tOpts));
       // Redirect user to grants profile page.
       $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
       return new RedirectResponse($redirectUrl->toString());
     }
+
+    $roles = reset($roles);
+    $roles['type'] = 'registered_community';
+    $this->grantsProfileService->setSelectedRoleData($roles);
 
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
@@ -227,15 +207,49 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
   }
 
   /**
+   * Api did not return a valid code.
+   *
+   * @param array $tOpts
+   *   The options.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   Redirect in case of bad code.
+   */
+  private function handleNoCode(array $tOpts): RedirectResponse {
+    $state = $this->requestStack->getMainRequest()->query->get('state');
+
+    $error = $this->requestStack->getMainRequest()->query->get('error');
+    $error_description = $this->requestStack->getMainRequest()->query->get('error_description');
+    $error_uri = $this->requestStack->getMainRequest()->query->get('error_uri');
+
+    $msg = $this->t('Code exchange error. @error: @error_desc. State: @state, Error URI: @error_uri',
+      [
+        '@error' => $error,
+        '@error_description' => $error_description,
+        '@state' => $state,
+        '@error_uri' => $error_uri,
+      ], $tOpts);
+
+    $this->logger->error('Error: %error', ['%error' => $msg->render()]);
+
+    $this->messenger()->addError($this->t('Mandate process was interrupted or there was an error. Please try again.', [], $tOpts));
+    // Redirect user to grants profile page.
+    $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
+    return new RedirectResponse($redirectUrl->toString());
+  }
+
+  /**
    * Callback for user mandates.
    */
   public function mandateCallbackHpa() {
+    throw new \Exception('Called a function which has no implementation');
   }
 
   /**
    * Callback for hpa listing.
    */
   public function mandateCallbackHpaList() {
+    throw new \Exception('Called a function which has no implementation');
   }
 
 }
