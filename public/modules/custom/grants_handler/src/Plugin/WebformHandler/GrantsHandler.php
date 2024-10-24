@@ -1489,13 +1489,9 @@ submit the application only after you have provided all the necessary informatio
           );
       }
     }
-    catch (\Exception $e) {
+    catch (\Exception | GuzzleException $e) {
       $this->getLogger('grants_handler')
-        ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
-    }
-    catch (GuzzleException $e) {
-      $this->getLogger('grants_handler')
-        ->error('Error uploadind application: @error', ['@error' => $e->getMessage()]);
+        ->error('Error uploading application: @error', ['@error' => $e->getMessage()]);
     }
 
     $this->formLockService->releaseApplicationLock($this->applicationNumber);
@@ -1549,27 +1545,22 @@ submit the application only after you have provided all the necessary informatio
 
     $this->postSaveHandleApplicationNumber($webform_submission);
 
-    // If triggering element is either draft save or proper one,
-    // we want to parse attachments from form.
-    if ($this->triggeringElement == '::submitForm') {
-      try {
+    try {
+      // If triggering element is either draft save or proper one,
+      // we want to parse attachments from form.
+      if ($this->triggeringElement == '::submitForm') {
         $this->postSaveSubmitForm();
       }
-      catch (GuzzleException $e) {
-        $this->messenger->addError($this->t('Error saving application. please contact support.'));
-        $this->getLogger('grants_handler')
-          ->error('Error saving application: @error', ['@error' => $e->getMessage()]);
-      }
-    }
-    if ($this->triggeringElement == '::submit') {
-      try {
+      if ($this->triggeringElement == '::submit') {
         $this->postSaveSubmit($webform_submission);
       }
-      catch (GuzzleException $e) {
-        $this->messenger->addError($this->t('Error saving application. please contact support.'));
-        $this->getLogger('grants_handler')
-          ->error('Error saving application: @error', ['@error' => $e->getMessage()]);
-      }
+    }
+    catch (GuzzleException $e) {
+      $this->messenger->addError($this->t('Error saving application. please contact support.'));
+      $this->getLogger('grants_handler')
+        ->error('Error saving application: @error', ['@error' => $e->getMessage()]);
+
+      \Sentry\captureException($e);
     }
   }
 
@@ -1659,6 +1650,8 @@ submit the application only after you have provided all the necessary informatio
             ]
           )
         );
+
+      \Sentry\captureException($e);
     }
   }
 

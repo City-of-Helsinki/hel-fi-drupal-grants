@@ -29,58 +29,28 @@
           let containingElement = document.querySelector('form');
           if ((unset_name) && !containingElement.contains(event.target)) {
             event.preventDefault();
-            const $previewDialog = $(
-              `<div></div>`,
-            ).appendTo('body');
-            Drupal.dialog($previewDialog, {
-              title: Drupal.t('You need to have a name for your unregistered community or group. Please add a name and save or cancel them.'),
-              width: '33%',
-              buttons: [
-                {
-                  text: Drupal.t('Back to profile'),
-                  buttonType: 'primary',
-                  click() {
-                    $(this).dialog('close');
-                  },
-                },
-              ],
-            }).showModal();
+            return Drupal.dialogFunctions.createDialog(
+              Drupal.t('You need to have a name for your unregistered community or group. Please add a name and save or cancel them.', {}, { context: 'grants_profile' }),
+              '',
+              Drupal.t('Back to profile', {}, { context: 'grants_profile' }),
+              Drupal.t('Close', {}, { context: 'grants_profile' }),
+            );
           } else if ((current_name !== initial_name) && !containingElement.contains(event.target)) {
             event.preventDefault();
-            const $previewDialog = $(
-              `<div></div>`,
-            ).appendTo('body');
-            Drupal.dialog($previewDialog, {
-              title: Drupal.t('You have unsaved changes in your profile. Please save or cancel them.'),
-              width: '33%',
-              buttons: [
-                {
-                  text: Drupal.t('Back to profile'),
-                  buttonType: 'primary',
-                  click() {
-                    $(this).dialog('close');
-                  },
-                },
-              ],
-            }).showModal();
+            return Drupal.dialogFunctions.createDialog(
+              Drupal.t('You have unsaved changes in your profile. Please save or cancel them.', {}, { context: 'grants_profile' }),
+              '',
+              Drupal.t('Back to profile', {}, { context: 'grants_profile' }),
+              Drupal.t('Close', {}, { context: 'grants_profile' }),
+            );
           } else if (($('[data-drupal-selector="edit-isnewprofile"]').val() === 'initialSave') && !containingElement.contains(event.target)) {
             event.preventDefault();
-            const $previewDialog = $(
-              `<div></div>`,
-            ).appendTo('body');
-            Drupal.dialog($previewDialog, {
-              title: Drupal.t('You have not saved your profile. Please save your profile before leaving the form.'),
-              width: '33%',
-              buttons: [
-                {
-                  text: Drupal.t('Back to profile'),
-                  buttonType: 'primary',
-                  click() {
-                    $(this).dialog('close');
-                  },
-                },
-              ],
-            }).showModal();
+            return Drupal.dialogFunctions.createDialog(
+              Drupal.t('You have not saved your profile. Please save your profile before leaving the form.', {}, { context: 'grants_profile' }),
+              '',
+              Drupal.t('Back to profile', {}, { context: 'grants_profile' }),
+              Drupal.t('Close', {}, { context: 'grants_profile' }),
+            );
           }
           is_element_click = false;
 

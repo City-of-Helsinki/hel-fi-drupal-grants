@@ -10,11 +10,11 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\Url;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\DebuggableTrait;
-use Drupal\grants_handler\EventsService;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -49,7 +49,7 @@ class CopyApplicationModalForm extends FormBase {
     // Create a new form object and inject its services.
     $form = new static(
       $container->get('renderer'),
-      $container->get('grants_handler.events_service'),
+      $container->get('grants_events.events_service'),
       $container->get('grants_handler.application_status_service'),
       $container->get('grants_handler.application_init_service'),
       $container->get('grants_handler.application_getter_service')

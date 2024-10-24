@@ -12,10 +12,10 @@ use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TempStore\TempStoreException;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\EventException;
-use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_metadata\AtvSchema;
@@ -68,6 +68,13 @@ class AttachmentHandler {
   protected EntityStorageInterface $fileStorage;
 
   /**
+   * Events service.
+   *
+   * @var \Drupal\grants_events\EventsService
+   */
+  protected EventsService $eventService;
+
+  /**
    * Constructs an AttachmentHandler object.
    *
    * @param \Drupal\grants_attachments\AttachmentRemover $grants_attachments_attachment_remover
@@ -82,8 +89,6 @@ class AttachmentHandler {
    *   Profile service.
    * @param \Drupal\grants_metadata\AtvSchema $atvSchema
    *   ATV schema.
-   * @param \Drupal\grants_handler\EventsService $eventService
-   *   Events service.
    * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
    *   Audit log mandate errors.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
@@ -101,7 +106,6 @@ class AttachmentHandler {
     protected AtvService $atvService,
     protected GrantsProfileService $grantsProfileService,
     protected AtvSchema $atvSchema,
-    protected EventsService $eventService,
     protected AuditLogService $auditLogService,
     EntityTypeManagerInterface $entityTypeManager,
     protected ApplicationDataService $applicationDataService,
@@ -111,6 +115,16 @@ class AttachmentHandler {
     $this->fileStorage = $entityTypeManager->getStorage('file');
 
     $this->setDebug(NULL);
+  }
+
+  /**
+   * Set the getter service.
+   *
+   * @param \Drupal\grants_events\EventsService $eventsService
+   *   Events service.
+   */
+  public function setEventsService(EventsService $eventsService): void {
+    $this->eventService = $eventsService;
   }
 
   /**

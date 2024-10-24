@@ -220,7 +220,6 @@ permissions:
   - 'set page published on date'
   - 'translate announcement node'
   - 'translate any webform'
-  - 'translate article node'
   - 'translate avustuslaji taxonomy_term'
   - 'translate block_content'
   - 'translate configuration'

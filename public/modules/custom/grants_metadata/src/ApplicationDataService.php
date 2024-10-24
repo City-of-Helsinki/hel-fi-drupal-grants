@@ -7,8 +7,8 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\DebuggableTrait;
-use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Helpers;
 
 /**
@@ -40,7 +40,7 @@ final class ApplicationDataService {
   /**
    * Events service.
    *
-   * @var \Drupal\grants_handler\EventsService
+   * @var \Drupal\grants_events\EventsService
    */
   protected EventsService $eventsService;
 
@@ -63,7 +63,7 @@ final class ApplicationDataService {
   /**
    * Set the getter service.
    *
-   * @param \Drupal\grants_handler\EventsService $eventsService
+   * @param \Drupal\grants_events\EventsService $eventsService
    *   Events service.
    */
   public function setEventsService(EventsService $eventsService): void {

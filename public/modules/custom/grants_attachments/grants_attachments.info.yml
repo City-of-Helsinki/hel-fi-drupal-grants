@@ -6,7 +6,7 @@ core_version_requirement: ^9 || ^10
 dependencies:
   - webform
   - grants_metadata
-  - grants_handler
+  - grants_events
 
 'interface translation project': grants_attachments
 'interface translation server pattern': modules/custom/grants_attachments/translations/%language.po

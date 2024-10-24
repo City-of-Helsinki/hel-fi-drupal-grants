@@ -1,11 +1,12 @@
 profile_dialog:
   version: 1.x
   js:
-    js/profile_dialog.js: {}
+    js/profile_dialog.js: { }
   dependencies:
     - core/drupal
     - core/jquery
     - core/once
+    - grants_handler/grants-dialog
 
 pattern_error:
   js:

@@ -46,6 +46,7 @@
       // Set the current unsaved flag state.
       unsaved = value;
     },
+
     attach: function (context) {
       // Detect general unsaved changes.
       // Look for the 'data-webform-unsaved' attribute which indicates that
@@ -109,34 +110,24 @@
       }
     }
   };
+
   $('a').on('click', function (event) {
     let containingElement = document.querySelector('form');
     if (unsaved && !containingElement.contains(event.target) && !event.target.getAttribute('href').startsWith('#')) {
       event.preventDefault();
-      const $previewDialog = $('<div></div>').appendTo('body');
-      Drupal.dialog($previewDialog, {
-        title: Drupal.t('Are you sure you want to leave? Leave without saving.'),
-        width: '33%',
-        closeText: Drupal.t('Close', {}, { context: 'grants_handler' }),
-        buttons: [
-          {
-            text: Drupal.t('Leave the application'),
-            click() {
-              unsaved = false;
-              $(this).dialog('close');
-              modal = true;
-              window.top.location.href = event.currentTarget.href;
-            },
-          },
-          {
-            text: Drupal.t('Back to application'),
-            buttonType: 'secondary',
-            click() {
-              $(this).dialog('close');
-            },
-          },
-        ],
-      }).showModal();
+
+      return Drupal.dialogFunctions.createDialog(
+        Drupal.t('You have unsaved changes. Are you sure you want to leave?', {}, { context: 'grants_handler' }),
+        Drupal.t('Leave the application', {}, { context: 'grants_handler' }),
+        Drupal.t('Back to application', {}, { context: 'grants_handler' }),
+        Drupal.t('Close', {}, { context: 'grants_handler' }),
+        () => {
+          unsaved = false;
+          const dialog = document.getElementById('helfi-dialog__container');
+          Drupal.dialogFunctions.removeDialog(dialog);
+          window.top.location.href = event.currentTarget.href;
+        }
+      );
     }
   });
 
@@ -144,7 +135,7 @@
   $(window).on('beforeunload', function (event) {
     if (unsaved) {
       // Show a confirmation dialog when the user tries to refresh or leave the page
-      const message = Drupal.t('You have unsaved changes. Are you sure you want to leave?');
+      const message = Drupal.t('You have unsaved changes. Are you sure you want to leave?', {}, { context: 'grants_handler' });
       event.preventDefault();
       event.returnValue = message; // For most browsers
       return message; // For older browsers
@@ -155,35 +146,27 @@
   $(document).on('keydown', function (e) {
     if (unsaved && (e.which === 116 || (e.which === 82 && (e.ctrlKey || e.metaKey)))) {
       e.preventDefault(); // Prevent F5 and Ctrl+R / Cmd+R refresh
-      const $previewDialog = $('<div></div>').appendTo('body');
-      Drupal.dialog($previewDialog, {
-        title: Drupal.t('You have unsaved changes. Are you sure you want to refresh?'),
-        width: '33%',
-        closeText: Drupal.t('Close', {}, { context: 'grants_handler' }),
-        buttons: [
-          {
-            text: Drupal.t('Refresh the page'),
-            click() {
-              unsaved = false;
-              $(this).dialog('close');
-              location.reload(); // Perform the refresh
-            },
-          },
-          {
-            text: Drupal.t('Back to application'),
-            buttonType: 'secondary',
-            click() {
-              $(this).dialog('close');
-            },
-          },
-        ],
-      }).showModal();
+
+      return Drupal.dialogFunctions.createDialog(
+        Drupal.t('You have unsaved changes. Are you sure you want to refresh?', {}, { context: 'grants_handler' }),
+        Drupal.t('Refresh the page', {}, { context: 'grants_handler' }),
+        Drupal.t('Back to application', {}, { context: 'grants_handler' }),
+        Drupal.t('Close', {}, { context: 'grants_handler' }),
+        () => {
+          unsaved = false;
+          const dialog = document.getElementById('helfi-dialog__container');
+          Drupal.dialogFunctions.removeDialog(dialog);
+          location.reload();
+        }
+      );
     }
   });
+
   // Add an event listener for autologout.
   document.addEventListener('autologout', function () {
     autologout = true;
   });
+
   $(window).on('beforeunload', function () {
     if (autologout) {
       return;

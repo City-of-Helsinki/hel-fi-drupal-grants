@@ -3,7 +3,7 @@
 namespace Drupal\grants_handler;
 
 /**
- * General error in applicatoin process.
+ * General error in application process.
  */
 class ApplicationException extends \Exception {
 

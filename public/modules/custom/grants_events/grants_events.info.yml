@@ -1,0 +1,5 @@
+name: 'grants_events'
+type: module
+description: 'Handle application events'
+package: helfi
+core_version_requirement: ^10 || ^11
