@@ -46,6 +46,8 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    *   The grants profile service.
    * @param \Drupal\grants_mandate\GrantsMandateRedirectService $redirectService
    *   The grants mandate redirect service.
+   * @param \Drupal\grants_profile\ProfileConnector $profileConnector
+   *   The profile connector.
    */
   public function __construct(
     private RequestStack $requestStack,
