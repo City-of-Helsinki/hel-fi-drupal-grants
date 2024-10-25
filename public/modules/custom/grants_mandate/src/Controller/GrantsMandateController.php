@@ -4,13 +4,12 @@ namespace Drupal\grants_mandate\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\Core\Messenger\MessengerTrait;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_mandate\GrantsMandateRedirectService;
 use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\grants_profile\ProfileConnector;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,7 +21,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * @phpstan-consistent-constructor
  */
 class GrantsMandateController extends ControllerBase implements ContainerInjectionInterface {
-
   /**
    * Allowed roles.
    *
@@ -39,15 +37,26 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
 
   /**
    * Grants Mandate Controller constructor.
+   *
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   *   The request stack.
+   * @param \Drupal\grants_mandate\GrantsMandateService $grantsMandateService
+   *   The grants mandate service.
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   The grants profile service.
+   * @param \Drupal\grants_mandate\GrantsMandateRedirectService $redirectService
+   *   The grants mandate redirect service.
    */
   public function __construct(
     private RequestStack $requestStack,
     private GrantsMandateService $grantsMandateService,
     private GrantsProfileService $grantsProfileService,
     private GrantsMandateRedirectService $redirectService,
+    private ProfileConnector $profileConnector,
   ) {
     $this->logger = $this->getLogger('grants_mandate');
-    $config = $this->configFactory->get('grants_mandate.settings');
+    $config = $this->config('grants_mandate.settings');
+
     $extraRoles = is_array($config->get('extra_access_roles')) ? $config->get('extra_access_roles') : [];
     $this->allowedRoles = [
       'http://valtuusrekisteri.suomi.fi/avustushakemuksen_tekeminen',
@@ -66,6 +75,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
       $container->get('grants_mandate.service'),
       $container->get('grants_profile.service'),
       $container->get('grants_mandate_redirect.service'),
+      $container->get('grants_profile.profile_connector'),
     );
     return $controller->setLoggerFactory($container->get('logger.factory'));
   }
@@ -114,8 +124,27 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
 
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
-    // Load grants profile.
+    /** @var \Drupal\helfi_atv\AtvDocument $grantsProfile */
     $grantsProfile = $this->grantsProfileService->getGrantsProfile($selectedRoleData, TRUE);
+
+    try {
+      $companyData = $this->profileConnector
+        ->getRegisteredCompanyDataFromYdjhClient($selectedRoleData['identifier']);
+
+      $grantsProfile->setBusinessId($companyData['businessId']);
+      $content = $grantsProfile->getContent();
+      $content['businessId'] = $companyData['businessId'];
+      $content['companyHome'] = $companyData['companyHome'];
+      $content['registrationDate'] = $companyData['registrationDate'];
+      $grantsProfile->setContent($content);
+
+      $this->grantsProfileService->saveGrantsProfile($grantsProfile->toArray());
+    }
+    catch (\Exception $e) {
+      // Failing at this point does not matter, the execution can continue.
+      $this->logger
+        ->error('Failed to update grants profile after getting the mandate.');
+    }
 
     // Redirect user based on if the user has a profile.
     $redirectUrl = $grantsProfile ? Url::fromRoute('grants_oma_asiointi.front') : Url::fromRoute('grants_profile.edit');
