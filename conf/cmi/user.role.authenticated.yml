@@ -32,6 +32,7 @@ permissions:
   - 'display eu cookie compliance popup'
   - 'edit own address content'
   - 'send javascript errors to sentry'
+  - 'send performance traces to sentry'
   - 'use text format full_html'
   - 'use text format minimal'
   - 'use text format webform_default'

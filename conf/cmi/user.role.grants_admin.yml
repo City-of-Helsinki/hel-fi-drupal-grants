@@ -44,6 +44,7 @@ dependencies:
     - path
     - pathauto
     - publication_date
+    - raven
     - role_delegation
     - scheduler
     - system
@@ -214,6 +215,7 @@ permissions:
   - 'revert service revisions'
   - 'schedule publishing of nodes'
   - 'select account cancellation method'
+  - 'send performance traces to sentry'
   - 'set announcement published on date'
   - 'set landing_page published on date'
   - 'set news_item published on date'
