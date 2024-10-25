@@ -10,6 +10,7 @@ use Drupal\grants_mandate\GrantsMandateRedirectService;
 use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\ProfileConnector;
+use Drupal\helfi_atv\AtvDocument;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,6 +22,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * @phpstan-consistent-constructor
  */
 class GrantsMandateController extends ControllerBase implements ContainerInjectionInterface {
+
   /**
    * Allowed roles.
    *
@@ -91,21 +93,24 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Drupal\grants_mandate\GrantsMandateException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function mandateCallbackYpa(): RedirectResponse {
     $tOpts = ['context' => 'grants_mandate'];
-    $code = $this->requestStack->getMainRequest()->query->get('code');
-
     $callbackUrl = Url::fromRoute('grants_mandate.callback_ypa', [], ['absolute' => TRUE])
       ->toString();
 
     $appEnv = Helpers::getAppEnv();
 
-    // @todo What is the meaning and purpose of the "code" (returned by api).
+    // We need to exchange the code to token that can be used to authorize
+    // the user in oAuth calls.
+    $code = $this->requestStack->getMainRequest()->query->get('code');
     if (!is_string($code) || !$code) {
+      // If code is not set, we need to handle the error and not allow
+      // user to progress.
       return $this->handleNoCode($tOpts);
     }
-
+    // If we have code, we can then exchange it to token.
     $this->grantsMandateService->changeCodeToToken($code, $callbackUrl);
     $roles = $this->grantsMandateService->getRoles();
     $isAllowed = FALSE;
@@ -114,7 +119,8 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
       $isAllowed = $this->hasAllowedRole($rolesArray);
     }
     if (!$isAllowed && !str_contains($appEnv, 'LOCAL')) {
-      $this->messenger()->addError($this->t('Your mandate does not allow you to use this service.', [], $tOpts));
+      $this->messenger()
+        ->addError($this->t('Your mandate does not allow you to use this service.', [], $tOpts));
       // Redirect user to grants profile page.
       $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
       return new RedirectResponse($redirectUrl->toString());
@@ -129,23 +135,8 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
     /** @var \Drupal\helfi_atv\AtvDocument $grantsProfile */
     $grantsProfile = $this->grantsProfileService->getGrantsProfile($selectedRoleData, TRUE);
 
-    try {
-      $companyData = $this->profileConnector
-        ->getRegisteredCompanyDataFromYdjhClient($selectedRoleData['identifier']);
-
-      $grantsProfile->setBusinessId($companyData['businessId']);
-      $content = $grantsProfile->getContent();
-      $content['businessId'] = $companyData['businessId'];
-      $content['companyHome'] = $companyData['companyHome'];
-      $content['registrationDate'] = $companyData['registrationDate'];
-      $grantsProfile->setContent($content);
-
-      $this->grantsProfileService->saveGrantsProfile($grantsProfile->toArray());
-    }
-    catch (\Exception $e) {
-      // Failing at this point does not matter, the execution can continue.
-      $this->logger
-        ->error('Failed to update grants profile after getting the mandate.');
+    if ($grantsProfile) {
+      $this->updateProfileWithRecentData($selectedRoleData['identifier'], $grantsProfile);
     }
 
     // Redirect user based on if the user has a profile.
@@ -181,7 +172,8 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
 
     $this->logger->error('Error: %error', ['%error' => $msg->render()]);
 
-    $this->messenger()->addError($this->t('Mandate process was interrupted or there was an error. Please try again.', [], $tOpts));
+    $this->messenger()
+      ->addError($this->t('Mandate process was interrupted or there was an error. Please try again.', [], $tOpts));
     // Redirect user to grants profile page.
     $redirectUrl = Url::fromRoute('grants_mandate.mandateform');
     return new RedirectResponse($redirectUrl->toString());
@@ -218,6 +210,42 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    */
   public function mandateCallbackHpaList() {
     throw new \Exception('Called a function which has no implementation');
+  }
+
+  /**
+   * Update user profile data from ytj/yrtti and save it.
+   *
+   * @param string $identifier
+   *   Business to get data for.
+   * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
+   *   Grants profile to update.
+   *
+   * @return void
+   *   No return.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public function updateProfileWithRecentData(
+    string $identifier,
+    AtvDocument $grantsProfile,
+  ): void {
+
+    $grantsProfileContent = $grantsProfile->getContent();
+    try {
+      $companyData = $this->profileConnector
+        ->getRegisteredCompanyDataFromYdjhClient($identifier);
+
+      $grantsProfileContent['businessId'] = $companyData['businessId'];
+      $grantsProfileContent['companyHome'] = $companyData['companyHome'];
+      $grantsProfileContent['registrationDate'] = $companyData['registrationDate'];
+
+      $this->grantsProfileService->saveGrantsProfile($grantsProfileContent);
+    }
+    catch (\Exception $e) {
+      // Failing at this point does not matter, the execution can continue.
+      $this->logger
+        ->error('Failed to update grants profile after getting the mandate.');
+    }
   }
 
 }
