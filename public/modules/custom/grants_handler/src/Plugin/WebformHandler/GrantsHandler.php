@@ -985,6 +985,13 @@ moment and reload the page.',
     }
 
     GrantsErrorStorage::setErrors($errors);
+
+    if (
+      $this->grantsFormNavigationHelper->getCurrentPage($webform_submission) == 'webform_preview' &&
+      count($this->grantsFormNavigationHelper->getUnvisitedPages($webform_submission)) > 0
+    ) {
+      $form['actions']['submit']['#disabled'] = TRUE;
+    }
   }
 
   /**
@@ -1269,12 +1276,19 @@ moment and reload the page.',
         $webform_submission
       );
 
-      if ($violations->count() === 0) {
+      $allPagesVisited = count(
+        $this->grantsFormNavigationHelper->getUnvisitedPages($webform_submission)
+      ) === 0;
+
+      if ($allPagesVisited && $violations->count() === 0) {
         // If we have no violations clear all errors.
         $form_state->clearErrors();
         $this->grantsFormNavigationHelper->deleteSubmissionLogs($webform_submission, GrantsHandlerNavigationHelper::ERROR_OPERATION);
       }
-      else {
+      if (!$allPagesVisited) {
+        $form_state->setErrorByName('unvisited-pages', $this->t('You must visit all pages in the form before you can submit the application.', [], $tOpts));
+      }
+      if ($violations->count() > 0) {
         // If we HAVE errors, then refresh them from the.
         $this->messenger()
           ->addError($this->t('The application cannot be submitted because not all

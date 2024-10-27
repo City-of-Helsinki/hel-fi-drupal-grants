@@ -653,3 +653,11 @@ msgstr "Poista @item @number"
 msgctxt "grants_handler"
 msgid "Refresh the page"
 msgstr "Lataa sivu uudelleen"
+
+msgctxt "grants_handler"
+msgid "You must visit all pages in the form before you can submit the application"
+msgstr "Käy kaikilla sivuilla ennen kuin lähetät hakemuksen"
+
+msgctxt "grants_handler"
+msgid "Unvisited pages:"
+msgstr "Sivut, joilla ei ole käyty:"
