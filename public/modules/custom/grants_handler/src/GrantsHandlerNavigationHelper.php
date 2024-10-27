@@ -272,11 +272,13 @@ class GrantsHandlerNavigationHelper {
    * Check if user has visited each page.
    *
    * @param \Drupal\webform\WebformSubmissionInterface $webformSubmission
+   *   The submission to check.
    *
-   * @return bool
+   * @return array
+   *   Array of unvisited pages.
    */
-  function getUnvisitedPages(WebformSubmissionInterface $webformSubmission) : array {
-    $page_visits = array_map(function($entry) {
+  public function getUnvisitedPages(WebformSubmissionInterface $webformSubmission) : array {
+    $page_visits = array_map(function ($entry) {
       return $entry->page;
     }, $this->getPageVisits($webformSubmission));
     $ignore_visits = ['webform_preview', 'webform_confirmation'];
