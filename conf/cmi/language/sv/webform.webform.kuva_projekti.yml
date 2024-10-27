@@ -202,6 +202,7 @@ elements: |
     '#title': Namn
   postinumero:
     '#title': Postnummer
+    '#pattern_error': 'Vänligen ange ett giltigt 5-siffrigt postnummer.'
   kyseessa_on_kaupungin_omistama_tila:
     '#title': 'Stadens eget utrymme'
     '#options':

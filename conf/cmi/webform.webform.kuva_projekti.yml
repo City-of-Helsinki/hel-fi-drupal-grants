@@ -682,12 +682,13 @@ elements: |-
             class:
               - webform--large
         postinumero:
-          '#type': number
+          '#type': textfield
           '#title': Postinumero
           '#attributes':
             class:
               - webform--small
-          '#input_mask': '99999'
+          '#pattern': '^[0-9]{5}$'
+          '#pattern_error': 'Syötä 5 numeroinen postinumero.'
           '#required': true
         kyseessa_on_kaupungin_omistama_tila:
           '#type': radios
