@@ -5521,16 +5521,16 @@
         },
         {
             "name": "drupal/hdbt_admin",
-            "version": "3.2.5",
+            "version": "3.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-hdbt-admin.git",
-                "reference": "f3284d00c7cb52126c727b744ccac5108195544c"
+                "reference": "911484522642d80e5a0a47cff1bd74aa578fb0b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt-admin/zipball/f3284d00c7cb52126c727b744ccac5108195544c",
-                "reference": "f3284d00c7cb52126c727b744ccac5108195544c",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt-admin/zipball/911484522642d80e5a0a47cff1bd74aa578fb0b7",
+                "reference": "911484522642d80e5a0a47cff1bd74aa578fb0b7",
                 "shasum": ""
             },
             "require": {
@@ -5543,6 +5543,13 @@
                 "drupal/helfi_platform_config": "<4.3"
             },
             "type": "drupal-theme",
+            "extra": {
+                "patches": {
+                    "drupal/gin": {
+                        "[#UHF-10892] Gin sidebar nextsibling issue. (https://www.drupal.org/i/3460390)": "https://raw.githubusercontent.com/City-of-Helsinki/drupal-hdbt-admin/d3e6cb08315b8df38696489d2c8f406a67f224b8/patches/gin-3460390-sidebar-nextsibling-innerhtml-rc11.patch"
+                    }
+                }
+            },
             "license": [
                 "GPL-2.0+"
             ],
@@ -5551,10 +5558,10 @@
                 "Drupal"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-hdbt-admin/tree/3.2.5",
+                "source": "https://github.com/City-of-Helsinki/drupal-hdbt-admin/tree/3.2.6",
                 "issues": "https://github.com/City-of-Helsinki/drupal-hdbt-admin/issues"
             },
-            "time": "2024-10-11T08:52:57+00:00"
+            "time": "2024-10-25T09:29:34+00:00"
         },
         {
             "name": "drupal/health_check",
