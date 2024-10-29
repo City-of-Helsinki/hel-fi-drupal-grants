@@ -191,8 +191,19 @@ final class ApplicationUploaderService {
      * the most recent version available even if integration fails
      * for some reason.
      */
-    $updatedDocumentFromAtv = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
-    $myJSON = Json::encode($updatedDocumentFromAtv->getContent());
+     $updatedDocumentFromAtv = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+     $myJSON = Json::encode($updatedDocumentFromAtv->getContent());
+
+    /*
+     * This is how we could send the data to the integration w/o saving it to ATV first.
+     */
+//    $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
+//    $appDocumentContent =
+//      $this->helfiAtvAtvSchema->typedDataToDocumentContent(
+//        $applicationData,
+//        $webform_submission,
+//        $submittedFormData);
+//    $myJSON = Json::encode($appDocumentContent);
 
     // No matter what the debug value is, we do NOT log json in PROD.
     if ($this->isDebug() && Helpers::getAppEnv() !== 'PROD') {
@@ -213,6 +224,10 @@ final class ApplicationUploaderService {
     try {
       $headers = [];
 
+      // Use service to get desired status if no ATV saving was done.
+      // $headers['X-Case-Status'] = $this->grantsHandlerApplicationStatusService->getNewStatusHeader();
+
+      // Get status from updated document.
       $headers['X-Case-Status'] = $updatedDocumentFromAtv->getStatus();
 
       // We set the data source for integration to be used in controlling
