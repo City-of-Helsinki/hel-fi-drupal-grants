@@ -1450,16 +1450,16 @@
         },
         {
             "name": "devizzent/cebe-php-openapi",
-            "version": "1.0.3",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DEVizzent/cebe-php-openapi.git",
-                "reference": "b5a5de835dcb1642094fe76568451bd73b8fc0ab"
+                "reference": "9ae960c072eda54d8d0eb9dc14c1e6d815167347"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DEVizzent/cebe-php-openapi/zipball/b5a5de835dcb1642094fe76568451bd73b8fc0ab",
-                "reference": "b5a5de835dcb1642094fe76568451bd73b8fc0ab",
+                "url": "https://api.github.com/repos/DEVizzent/cebe-php-openapi/zipball/9ae960c072eda54d8d0eb9dc14c1e6d815167347",
+                "reference": "9ae960c072eda54d8d0eb9dc14c1e6d815167347",
                 "shasum": ""
             },
             "require": {
@@ -1471,6 +1471,9 @@
             "conflict": {
                 "symfony/yaml": "3.4.0 - 3.4.4 || 4.0.0 - 4.4.17 || 5.0.0 - 5.1.9 || 5.2.0"
             },
+            "replace": {
+                "cebe/php-openapi": "1.7.0"
+            },
             "require-dev": {
                 "apis-guru/openapi-directory": "1.0.0",
                 "cebe/indent": "*",
@@ -1478,7 +1481,7 @@
                 "oai/openapi-specification-3.0": "3.0.3",
                 "oai/openapi-specification-3.1": "3.1.0",
                 "phpstan/phpstan": "^0.12.0",
-                "phpunit/phpunit": "^6.5 || ^7.5 || ^8.5 || ^9.4"
+                "phpunit/phpunit": "^6.5 || ^7.5 || ^8.5 || ^9.4 || ^11.4"
             },
             "bin": [
                 "bin/php-openapi"
@@ -1519,7 +1522,7 @@
                 "issues": "https://github.com/DEVizzent/cebe-php-openapi/issues",
                 "source": "https://github.com/DEVizzent/cebe-php-openapi"
             },
-            "time": "2024-01-10T11:41:55+00:00"
+            "time": "2024-10-30T05:57:15+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -5928,16 +5931,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "4.6.20",
+            "version": "4.6.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "f5451a53f0e83dcf1fc811c9ced0687f43cd4b7f"
+                "reference": "4b5281e6625b2b5f51e7f5a659d72b98ecc91853"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/f5451a53f0e83dcf1fc811c9ced0687f43cd4b7f",
-                "reference": "f5451a53f0e83dcf1fc811c9ced0687f43cd4b7f",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/4b5281e6625b2b5f51e7f5a659d72b98ecc91853",
+                "reference": "4b5281e6625b2b5f51e7f5a659d72b98ecc91853",
                 "shasum": ""
             },
             "require": {
@@ -6056,10 +6059,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.6.20",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.6.21",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2024-10-24T12:01:48+00:00"
+            "time": "2024-10-29T13:15:35+00:00"
         },
         {
             "name": "drupal/helfi_proxy",
