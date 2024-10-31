@@ -44,7 +44,7 @@ final class AttachmentFixerService {
 
     // Loop attachments and if attachment is not ok, update the integration ID.
     foreach ($attachments as $attachment) {
-      if ($this->areAttachmentsOk($events, $attachment, $attachmentInfo, $appEnv)['form'] === FALSE) {
+      if ($attachmentInfo && $this->areAttachmentsOk($events, $attachment, $attachmentInfo, $appEnv)['form'] === FALSE) {
         $this->updateIntegrationIdForAttachment($attachment, $attachmentInfo, $appEnv);
       }
     }
