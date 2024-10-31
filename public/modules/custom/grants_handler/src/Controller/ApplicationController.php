@@ -194,7 +194,7 @@ class ApplicationController extends ControllerBase {
     try {
       $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
     }
-    catch (\Exception |
+    catch (
     EntityStorageException |
     CompanySelectException $e) {
       return AccessResult::forbidden('Submission gettting failed');

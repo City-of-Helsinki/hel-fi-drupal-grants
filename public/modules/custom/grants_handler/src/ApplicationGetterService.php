@@ -306,7 +306,6 @@ final class ApplicationGetterService {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Drupal\grants_mandate\CompanySelectException
-   * @throws \Exception
    */
   public function submissionObjectFromApplicationNumber(
     string $applicationNumber,
@@ -335,7 +334,7 @@ final class ApplicationGetterService {
 
     // Should we throw an error here?
     if (!$webform) {
-      throw new \Exception('Webform not found');
+      throw new WebformException('Webform not found');
     }
     // Get serial from application number.
     $submissionSerial = ApplicationHelpers::getSerialFromApplicationNumber($applicationNumber);
