@@ -938,7 +938,8 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
 /**
  * Implements hook_preprocess_HOOK().
  */
-function grants_handler_preprocess_webform_submission(&$variables) {
+function grants_handler_preprocess_webform_submission(&$variables): void {
+
   // Get submission object.
   /** @var \Drupal\webform\Entity\WebformSubmission $submission */
   $submission = $variables['webform_submission'];
@@ -1361,7 +1362,6 @@ function grants_handler_preprocess_application_list(&$variables) {
  * Implements hook_preprocess_HOOK().
  */
 function grants_handler_preprocess_application_list_item(&$variables): void {
-  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $tOpts = ['context' => 'grants_handler'];
 
   // Get status service and get listed statuses.
@@ -1377,9 +1377,19 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
     return;
   }
 
-  $applicationTypes = Helpers::getApplicationTypes();
+  if (!isset($submissionData["metadata"]["form_uuid"])) {
+    \Drupal::logger('grants_handler')
+      ->error('No form uuid found for submission @submissionId',
+        ['@submissionId' => $submissionData["application_number"]]);
+    return;
+  }
 
-  $variables['applicationFormName'] = $applicationTypes[$submissionData["application_type"]][$language];
+  // Get webform by saved form uuid.
+  $webform = ApplicationHelpers::getWebformByUuid(
+    $submissionData["metadata"]["form_uuid"],
+    $submissionData['application_number']);
+  // Set webform title.
+  $variables['applicationFormName'] = $webform->label();
 
   $variables['applicationNumber'] = $submissionData["application_number"];
 
@@ -1503,8 +1513,8 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
 
   $status = $applicationStatusService->getWebformStatus($webform);
 
-  $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
-  $variables['openEndDate'] = strtotime($thirdPartySettings['applicationClose']);
+  $variables['openStartDate'] = $thirdPartySettings['applicationOpen'] ? strtotime($thirdPartySettings['applicationOpen']) : '';
+  $variables['openEndDate'] = $thirdPartySettings['applicationClose'] ? strtotime($thirdPartySettings['applicationClose']) : '';
   $variables['isContinuous'] = $thirdPartySettings['applicationContinuous'] != 0;
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
     $variables['errorType'] = 'NOT_OPEN';

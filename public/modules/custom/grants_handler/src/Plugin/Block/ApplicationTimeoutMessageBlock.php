@@ -44,7 +44,7 @@ class ApplicationTimeoutMessageBlock extends BlockBase {
     }
 
     $applicationCloseTime = $webform->getThirdPartySetting('grants_metadata', 'applicationClose');
-    $applicationCloseTimestamp = strtotime($applicationCloseTime);
+    $applicationCloseTimestamp = $applicationCloseTime ? strtotime($applicationCloseTime) : FALSE;
     $currentTimestamp = strtotime('now');
 
     // Do not render this message if the form is already closed.

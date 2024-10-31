@@ -212,7 +212,6 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   protected function loadData(array &$webform_submissions): void {
-//    parent::loadData($webform_submissions);
     $userRoles = $this->account->getRoles();
 
     // Check that we have required role.
