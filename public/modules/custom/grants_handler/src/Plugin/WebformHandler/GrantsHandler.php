@@ -146,6 +146,48 @@ class GrantsHandler extends WebformHandlerBase {
    */
   protected bool $isRedirect = FALSE;
 
+  /**
+   * The constructor.
+   *
+   * @param array $configuration
+   *   The configuration.
+   * @param $plugin_id
+   *   The plugin id.
+   * @param $plugin_definition
+   *   The plugin definition.
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
+   *   The account proxy.
+   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $userExternalData
+   *   The helsinki profiili user data.
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   The grants profile service.
+   * @param \Drupal\Core\Datetime\DateFormatter $dateFormatter
+   *   The date formatter.
+   * @param \Drupal\grants_attachments\AttachmentHandler $attachmentHandler
+   *   The attachment handler.
+   * @param \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper
+   *   The grants form navigation helper.
+   * @param \Drupal\grants_handler\ApplicationValidator $applicationValidator
+   *   The application validator.
+   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   *   The application status service.
+   * @param \Drupal\grants_handler\FormLockService $formLockService
+   *   The form lock service.
+   * @param \Drupal\Core\DrupalKernel $kernel
+   *   The kernel.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   *   The request stack.
+   * @param \Drupal\grants_metadata\ApplicationDataService $applicationDataService
+   *   The application data service.
+   * @param \Drupal\grants_handler\ApplicationInitService $applicationInitService
+   *   The application init service.
+   * @param \Drupal\grants_handler\ApplicationUploaderService $applicationUploaderService
+   *   The application upload service.
+   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   *   The application getter service.
+   * @param \Drupal\grants_attachments\AttachmentRemover $attachmentRemover
+   *   The attachment remover.
+   */
   public function __construct(
     array $configuration,
     $plugin_id,
@@ -178,6 +220,9 @@ class GrantsHandler extends WebformHandlerBase {
     $this->applicationStatusService->setDebug($this->isDebug());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public static function create(
     ContainerInterface $container,
     array $configuration,
