@@ -413,18 +413,18 @@ class ApplicationController extends ControllerBase {
   /**
    * Helper funtion to transform ATV data for print view.
    *
-   * @param $field
-   *  Field.
-   * @param $pages
-   *  Form pages.
-   * @param $isSubventionType
-   *  Is subvention type.
-   * @param $subventionType
-   *  Subvention type.
-   * @param $langcode
-   *  Language code.
+   * @param array $field
+   *   Field.
+   * @param array $pages
+   *   Form pages.
+   * @param bool $isSubventionType
+   *   Is subvention type.
+   * @param string $subventionType
+   *   Subvention type.
+   * @param string $langcode
+   *   Language code.
    */
-  private function transformField($field, &$pages, &$isSubventionType, &$subventionType, $langcode): void {
+  private function transformField(array $field, array &$pages, bool &$isSubventionType, string &$subventionType, string $langcode): void {
     if (isset($field['ID'])) {
       $labelData = json_decode($field['meta'], TRUE);
       if (!$labelData || $labelData['element']['hidden']) {

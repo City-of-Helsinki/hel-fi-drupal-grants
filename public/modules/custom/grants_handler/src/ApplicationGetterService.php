@@ -181,7 +181,7 @@ final class ApplicationGetterService {
 
     $applicationDocuments = $this->helfiAtvAtvService->searchDocuments($searchParams);
 
-    /**
+    /*
      * Create rows for table.
      */
     foreach ($applicationDocuments as $document) {
