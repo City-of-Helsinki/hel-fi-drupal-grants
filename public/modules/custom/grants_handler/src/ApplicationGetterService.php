@@ -22,6 +22,7 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
+use Drupal\webform\WebformException;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
@@ -136,7 +137,7 @@ final class ApplicationGetterService {
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function getCompanyApplications(
     array $selectedCompany,
@@ -182,8 +183,6 @@ final class ApplicationGetterService {
 
     /**
      * Create rows for table.
-     *
-     * @var  \Drupal\helfi_atv\AtvDocument $document
      */
     foreach ($applicationDocuments as $document) {
       // Make sure the type is acceptable one.
@@ -315,7 +314,6 @@ final class ApplicationGetterService {
     bool $refetch = FALSE,
     bool $skipAccessCheck = FALSE,
   ): ?WebformSubmission {
-
     if (isset($this->submissions[$applicationNumber])) {
       return $this->submissions[$applicationNumber];
     }
@@ -374,25 +372,31 @@ final class ApplicationGetterService {
       /** @var \Drupal\webform\Entity\WebformSubmission $submissionObject */
       $submissionObject = reset($result);
     }
-    if ($submissionObject) {
-      $dataDefinition = ApplicationHelpers::getDataDefinition($document->getType());
 
-      $sData = DocumentContentMapper::documentContentToTypedData(
-        $document->getContent(),
-        $dataDefinition,
-        $document->getMetadata()
-      );
-
-      $sData['messages'] = $this->grantsHandlerMessageService->parseMessages($sData);
-
-      // Set submission data from parsed mapper.
-      $submissionObject->setData($sData);
-
-      $this->submissions[$applicationNumber] = $submissionObject;
-
-      return $submissionObject;
+    if (!$submissionObject) {
+      throw new WebformException('Failed to load submission object with ATV data');
     }
-    return NULL;
+
+    // Load definition.
+    $dataDefinition = ApplicationHelpers::getDataDefinition($document->getType());
+
+    // Build data.
+    $sData = DocumentContentMapper::documentContentToTypedData(
+      $document->getContent(),
+      $dataDefinition,
+      $document->getMetadata()
+    );
+
+    // Parse messages separately.
+    $sData['messages'] = $this->grantsHandlerMessageService->parseMessages($sData);
+
+    // Set submission data from parsed mapper.
+    $submissionObject->setData($sData);
+
+    // Set caching, as we don't want to load this again.
+    $this->submissions[$applicationNumber] = $submissionObject;
+
+    return $submissionObject;
   }
 
   /**

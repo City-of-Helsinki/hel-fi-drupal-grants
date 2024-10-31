@@ -18,7 +18,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
    */
   public function getPropertyDefinitions() {
     if (!isset($this->propertyDefinitions)) {
-
       $info = &$this->propertyDefinitions;
 
       foreach ($this->getBaseProperties() as $key => $property) {
@@ -35,11 +34,23 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $customQuestions = [
-      'hankesuunnitelma_jatkohakemus' => [],
+      'hankesuunnitelma_radios' => [
+        'type' => 'boolean',
+        'typeOverride' => [
+          'dataType' => 'string',
+          'jsonType' => 'bool',
+        ],
+      ],
+      'hankesuunnitelma_jatkohakemus' => [
+        'type' => 'boolean',
+        'typeOverride' => [
+          'dataType' => 'string',
+          'jsonType' => 'bool',
+        ],
+      ],
       'hankkeen_tarkoitus_tavoitteet' => [],
       'hankkeen_toimenpiteet_aikataulu' => [],
       'hankkeen_toimenpiteet_alkupvm' => [
-        'defaultValue' => '',
         'typeOverride' => [
           'dataType' => 'string',
           'jsonType' => 'datetime',
@@ -53,7 +64,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         ],
       ],
       'hankkeen_toimenpiteet_loppupvm' => [
-        'defaultValue' => '',
         'typeOverride' => [
           'dataType' => 'string',
           'jsonType' => 'datetime',
@@ -143,7 +153,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
    */
   private function createCustomQuestionDefinitions(string $key, array $value, array &$info): void {
     // Create initial definition with position in JSON.
-    $info[$key] = DataDefinition::create('string')
+    $info[$key] = DataDefinition::create($value['type'] ?? 'string')
       ->setSetting('jsonPath', [
         'compensation',
         'customQuestionsInfo',

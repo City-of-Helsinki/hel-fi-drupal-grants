@@ -494,7 +494,6 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-        '#default_value': '0'
     hankesuunnitelma_section:
       '#type': webform_section
       '#title': '3.1 Hankesuunnitelma'
@@ -509,7 +508,6 @@ elements: |-
         '#options':
           1: Kyllä
           0: Ei
-        '#default_value': '0'
       hankkeen_tarkoitus_tavoitteet:
         '#type': textarea
         '#title': 'Hankkeen tarkoitus ja tavoitteet'
