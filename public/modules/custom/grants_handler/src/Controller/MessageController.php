@@ -9,10 +9,10 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\EventException;
-use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
 use GuzzleHttp\Exception\GuzzleException;
@@ -33,7 +33,7 @@ class MessageController extends ControllerBase {
   /**
    * The controller constructor.
    *
-   * @param \Drupal\grants_handler\EventsService $eventsService
+   * @param \Drupal\grants_events\EventsService $eventsService
    *   Use submission events productively.
    * @param \Drupal\grants_handler\MessageService $messageService
    *   Use messages productively.
@@ -62,7 +62,7 @@ class MessageController extends ControllerBase {
    */
   public static function create(ContainerInterface $container): MessageController|static {
     return new static(
-      $container->get('grants_handler.events_service'),
+      $container->get('grants_events.events_service'),
       $container->get('grants_handler.message_service'),
       $container->get('request_stack'),
       $container->get('helfi_atv.atv_service'),

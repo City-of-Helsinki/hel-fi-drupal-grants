@@ -262,6 +262,9 @@ final class ApplicationUploaderService {
     catch (\Exception $e) {
       $this->messenger->addError($this->t('Application saving failed, error has been logged.', [], $tOpts));
       $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
+
+      \Sentry\captureException($e);
+
       return FALSE;
     }
   }

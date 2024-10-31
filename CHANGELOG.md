@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## 2024.14
+- 15cac2065 feat: UHF-10630: Update autologout (#1498)
+- bcb5965cf fix: UHF-10639: If hometown is not properly set, use - and log errors. (#1494)
+- e563549f0 Update configuration (#1497)
+- e40c9e132 Hotfix UHF-10750 - 2024.13.1
+- ac7621f99 UHF-10750: Add check for missing label text
+- b5538eb75 Update configuration (#1495)
+- 725fe14f7 Automatic update (#1507)
+- 3cba4c25a fix: UHF-10801:  Fix tests, both unit & regression (#1502)
+- 14c5c50b6 fix: UHF-10813: Hide edit button for application if saving process is not completed (#1508)
+- 13c5ba63b feat: UHF-10537: KUVA Erillisavustushakemus (#1484)
+- 34dc39afc fix: UHF-10813: Remove SUBMITTED status from editable list. (#1505)
+- 8b405d8cf Fix file deletion
+- 18192476b Automatic update (#1504)
+- 5c684a783 Merge branch 'develop' into release/2024.14
+- a63faa9bd fix: UHF-10736: Make sure that uploaded attachments are properly set to application data. (#1496)
+- 5773c2004 Update configuration (#1501)
+- 57648e948 Version + changelog
+- 927c79293 fix: UHF-10650: Uncomment the printing script to make printing button work again (#1512)
+- e2d0d519f fix: UHF-10142: Allow "Delete" button to show on RECEIVED applications when navigating on the form. (#1510)
+
 ## 2024.13
 - 9465ef688 Update configuration (#1492)
 - 9a2032b95 Fix error with missing label.

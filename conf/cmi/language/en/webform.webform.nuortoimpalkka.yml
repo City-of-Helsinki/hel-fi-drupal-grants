@@ -66,7 +66,7 @@ elements: |
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Other grants received for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#text': "<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
   olemme_saaneet_muita_avustuksia:
     '#title': 'We have received other grants'
     '#options':
@@ -87,7 +87,7 @@ elements: |
         '#title': 'Grant issuer'
       issuer_name:
         '#title': 'Issuer''s name'
-        '#help': '<p>Which body has granted the grant (e.g. name of the ministry)</p>'
+        '#help': '<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>'
       year:
         '#title': Year
         '#pattern_error': 'Only numbers'
@@ -100,7 +100,7 @@ elements: |
   muut_samaan_tarkoitukseen_haetut_avustukset:
     '#title': 'Other grants applied for to be used for the same purpose'
   info_muut_samaan_tarkoitukseen_haettu:
-    '#text': "<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.</p>\r\n\r\n<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">An affirmative answer opens a further question</div>\r\n</div>\r\n</div>\r\n"
   olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
     '#title': 'We have applied for grants from somewhere other than the City of Helsinki'
     '#options':

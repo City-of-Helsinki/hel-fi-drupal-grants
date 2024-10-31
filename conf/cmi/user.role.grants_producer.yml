@@ -3,15 +3,29 @@ langcode: en
 status: true
 dependencies:
   config:
+    - media.type.file
+    - media.type.image
+    - media.type.remote_video
     - node.type.landing_page
     - node.type.page
     - node.type.service
+    - taxonomy.vocabulary.avustuslaji
+    - taxonomy.vocabulary.keywords
+    - taxonomy.vocabulary.news_tags
+    - taxonomy.vocabulary.target_group
+    - taxonomy.vocabulary.ukk_kategoriat
+    - taxonomy.vocabulary.unit_type
   module:
+    - block_content
+    - content_translation
     - file
     - locale
     - media
+    - menu_link_content
     - path
+    - raven
     - system
+    - taxonomy
     - toolbar
     - view_unpublished
     - webform
@@ -28,8 +42,8 @@ permissions:
   - 'delete own files'
   - 'edit any webform'
   - 'edit terms in news_tags'
+  - 'send performance traces to sentry'
   - 'translate any webform'
-  - 'translate article node'
   - 'translate avustuslaji taxonomy_term'
   - 'translate block_content'
   - 'translate editable entities'

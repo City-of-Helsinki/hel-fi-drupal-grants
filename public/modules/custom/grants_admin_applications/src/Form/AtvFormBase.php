@@ -10,9 +10,9 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\grants_attachments\AttachmentFixerService;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHelpers;
-use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvDocument;
@@ -62,7 +62,7 @@ abstract class AtvFormBase extends FormBase {
       $container->get('database'),
       $container->get('grants_handler.application_getter_service'),
       $container->get('http_client'),
-      $container->get('grants_handler.events_service'),
+      $container->get('grants_events.events_service'),
       $container->get('helfi_atv.atv_service'),
       $container->get('grants_handler.message_service'),
       $container->get('current_user'),
@@ -200,7 +200,27 @@ abstract class AtvFormBase extends FormBase {
         ->error('Application resending failed: @error', ['@error' => $e->getMessage()]);
       $this->messenger()
         ->addError($this->t('Application resending failed: @error', ['@error' => $e->getMessage()]));
+
+      \Sentry\captureException($e);
     }
+  }
+
+  /**
+   * Handle exceptions.
+   *
+   * @param string $message
+   *   Log message prefix.
+   * @param \Throwable $e
+   *   The exception.
+   */
+  protected function handleException(string $message, \Throwable $e): void {
+    $uuid = Uuid::uuid4()->toString();
+    $this->messenger()
+      ->addError('Error has occurred and has been logged. ID: @uuid', ['@uuid' => $uuid]);
+    $this->logger(self::LOGGER_CHANNEL)->error(
+      "$message: @error, ID: @uuid",
+      ['@error' => $e->getMessage(), '@uuid' => $uuid]
+    );
   }
 
 }
