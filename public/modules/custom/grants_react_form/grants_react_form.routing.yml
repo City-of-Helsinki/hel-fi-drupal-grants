@@ -1,0 +1,48 @@
+grants_react_form.grants_react_form:
+  path: '/react/{form}'
+  defaults:
+    _title_callback: '\Drupal\grants_react_form\Controller\ReactFormController::title'
+    _controller: '\Drupal\grants_react_form\Controller\ReactFormController::build'
+  options:
+    parameters:
+      form:
+        type: 'string'
+  requirements:
+    _custom_access: '\Drupal\grants_react_form\Controller\ReactFormController::access'
+
+grants_react_form.get_submission:
+  path: '/react/{webform}/{webform_submission}'
+  methods: ['GET']
+  defaults:
+    _title_callback: '\Drupal\grants_react_form\Controller\ReactFormController::title'
+    _controller: '\Drupal\grants_react_form\Controller\ReactFormController::build'
+  options:
+    parameters:
+      webform:
+        type: 'entity:webform'
+  requirements:
+     _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
+
+grants_react_form.edit_submission:
+  path: '/react/{webform}/{submission}'
+  methods: ['PATCH']
+  defaults:
+    _controller: '\Drupal\grants_react_form\Controller\ReactFormController::save'
+  options:
+    parameters:
+      webform:
+        type: 'entity:webform'
+      submission:
+        type: 'string'
+  requirements:
+    _permission: 'access grants_oma_asiointi'
+    # With proper data we could give access based on application number.
+    #_custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
+
+grants_react_form.upload_attachment:
+  path: '/react/attachments'
+  methods: ['POST']
+  defaults:
+    _controller: '\Drupal\grants_react_form\Controller\ReactFormController::uploadAttachment'
+  requirements:
+    _permission: 'access grants_oma_asiointi'

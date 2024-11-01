@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Module file grants_react_form module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function grants_react_form_theme($existing, $type, $theme, $path) {
+  return [
+    'grants_react_form' => [
+      'render element' => 'build',
+      'variables' => [
+        'application_number' => NULL,
+        'form' => NULL,
+      ],
+    ],
+  ];
+}
