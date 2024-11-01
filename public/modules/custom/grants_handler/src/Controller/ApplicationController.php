@@ -9,6 +9,7 @@ use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityStorageException;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationAccessHandler;
@@ -31,7 +32,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * Returns responses for Grants Handler routes.
  */
-class ApplicationController extends ControllerBase {
+final class ApplicationController extends ControllerBase {
 
   const ISO8601 = "/^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])" .
   "|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)" .
@@ -41,110 +42,35 @@ class ApplicationController extends ControllerBase {
 
   use StringTranslationTrait;
 
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  /**
-   * The entity repository.
-   *
-   * @var \Drupal\Core\Entity\EntityRepositoryInterface
-   */
-  protected EntityRepositoryInterface $entityRepository;
-
-  /**
-   * The webform request handler.
-   *
-   * @var \Drupal\webform\WebformRequestInterface
-   */
-  protected WebformRequestInterface $requestHandler;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The renderer service.
-   *
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected $renderer;
-
-  /**
-   * The request service.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected RequestStack $request;
-
-  /**
-   * Access to grants profile.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Application data service.
-   *
-   * @var \Drupal\grants_metadata\ApplicationDataService
-   */
-  protected ApplicationDataService $applicationDataService;
-
-  /**
-   * Application status service.
-   *
-   * @var \Drupal\grants_handler\ApplicationStatusService
-   */
-  protected ApplicationStatusService $applicationStatusService;
-
-  /**
-   * Application init service.
-   *
-   * @var \Drupal\grants_handler\ApplicationInitService
-   */
-  protected ApplicationInitService $applicationInitService;
-
-  /**
-   * Access handler for applications.
-   *
-   * @var \Drupal\grants_handler\ApplicationAccessHandler
-   */
-  protected ApplicationAccessHandler $applicationAccessHandler;
-
-  /**
-   * Getter service for applications.
-   *
-   * @var \Drupal\grants_handler\ApplicationGetterService
-   */
-  protected ApplicationGetterService $applicationGetterService;
+  public function __construct(
+    private readonly EntityRepositoryInterface $entityRepository,
+    private readonly WebformRequestInterface $requestHandler,
+    private readonly RendererInterface $renderer,
+    private readonly RequestStack $request,
+    private readonly GrantsProfileService $grantsProfileService,
+    private readonly ApplicationDataService $applicationDataService,
+    private readonly ApplicationStatusService $applicationStatusService,
+    private readonly ApplicationInitService $applicationInitService,
+    private readonly ApplicationAccessHandler $applicationAccessHandler,
+    private readonly ApplicationGetterService $applicationGetterService,
+  ) {}
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): ApplicationController {
-    $instance = parent::create($container);
-    $instance->currentUser = $container->get('current_user');
-
-    $instance->entityRepository = $container->get('entity.repository');
-    $instance->requestHandler = $container->get('webform.request');
-    $instance->entityTypeManager = $container->get('entity_type.manager');
-    $instance->renderer = $container->get('renderer');
-    $instance->request = $container->get('request_stack');
-    $instance->grantsProfileService = $container->get('grants_profile.service');
-    $instance->applicationDataService = $container->get('grants_metadata.application_data_service');
-    $instance->applicationStatusService = $container->get('grants_handler.application_status_service');
-    $instance->applicationInitService = $container->get('grants_handler.application_init_service');
-    $instance->applicationAccessHandler = $container->get('grants_handler.application_access_handler');
-    $instance->applicationGetterService = $container->get('grants_handler.application_getter_service');
-
-    return $instance;
+    return new self(
+      $container->get('entity.repository'),
+      $container->get('webform.request'),
+      $container->get('renderer'),
+      $container->get('request_stack'),
+      $container->get('grants_profile.service'),
+      $container->get('grants_metadata.application_data_service'),
+      $container->get('grants_handler.application_status_service'),
+      $container->get('grants_handler.application_init_service'),
+      $container->get('grants_handler.application_access_handler'),
+      $container->get('grants_handler.application_getter_service')
+    );
   }
 
   /**
@@ -299,7 +225,7 @@ class ApplicationController extends ControllerBase {
           '#source_entity' => $webform_submission,
         ];
 
-        $page = $this->entityTypeManager
+        $page = $this->entityTypeManager()
           ->getViewBuilder($webform_submission->getEntityTypeId())
           ->view($webform_submission, $view_mode);
 

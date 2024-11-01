@@ -7,10 +7,11 @@ namespace Drupal\grants_handler\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\grants_handler\ApplicationHelpers;
+use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\grants_metadata\InputmaskHandler;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -27,6 +28,25 @@ final class AtvPrintViewController extends ControllerBase {
   use StringTranslationTrait;
 
   /**
+   * Constructs a new AtvPrintViewController object.
+   *
+   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   *   Application getter.
+   */
+  public function __construct(
+    private readonly ApplicationGetterService $applicationGetterService,
+  ) {}
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): AtvPrintViewController {
+    return new self(
+      $container->get('grants_handler.application_getter_service')
+    );
+  }
+
+  /**
    * Builds the response.
    *
    * @param string $submission_id
@@ -40,7 +60,7 @@ final class AtvPrintViewController extends ControllerBase {
     $subventionType = '';
     try {
       /** @var \Drupal\helfi_atv\AtvDocument $atv_document */
-      $atv_document = ApplicationHelpers::atvDocumentFromApplicationNumber($submission_id);
+      $atv_document = $this->applicationGetterService->getAtvDocument($submission_id);
     }
     catch (\Exception $e) {
       throw new NotFoundHttpException('Application ' . $submission_id . ' not found.');

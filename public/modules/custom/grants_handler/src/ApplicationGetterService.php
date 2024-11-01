@@ -6,12 +6,10 @@ namespace Drupal\grants_handler;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_mandate\CompanySelectException;
-use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
@@ -45,13 +43,6 @@ final class ApplicationGetterService {
   protected LoggerChannelInterface $logger;
 
   /**
-   * Webform submission storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected EntityStorageInterface $storage;
-
-  /**
    * Loaded submissions in array to prevent multiple loads.
    *
    * @var array
@@ -70,11 +61,6 @@ final class ApplicationGetterService {
     private readonly EntityTypeManagerInterface $entityTypeManager,
   ) {
     $this->logger = $loggerChannelFactory->get('application_getter_service');
-    try {
-      $this->storage = $entityTypeManager->getStorage('webform_submission');
-    }
-    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
-    }
   }
 
   /**
@@ -185,42 +171,12 @@ final class ApplicationGetterService {
      * Create rows for table.
      */
     foreach ($applicationDocuments as $document) {
-      // Make sure the type is acceptable one.
-      $docArray = $document->toArray();
-      $id = AtvSchema::extractDataForWebForm(
-        $docArray['content'], ['applicationNumber']
-      );
 
-      if (empty($id['applicationNumber'])) {
-        continue;
-      }
+      $applicationNumber = $document->getTransactionId();
 
       if (array_key_exists($document->getType(), Helpers::getApplicationTypes())) {
         try {
-          // Convert the data.
-          $dataDefinition = ApplicationHelpers::getDataDefinition($document->getType());
-          $submissionData = DocumentContentMapper::documentContentToTypedData(
-            $document->getContent(),
-            $dataDefinition,
-            $document->getMetadata()
-          );
-
-          $metaData = $document->getMetadata();
-
-          // Load the webform submission ID.
-          $applicationNumber = $submissionData['application_number'];
-          $serial = ApplicationHelpers::getSerialFromApplicationNumber($applicationNumber);
-
-          $webformUuidExists = isset($metaData['form_uuid']) && !empty($metaData['form_uuid']);
-          $webform = $webformUuidExists
-            ? ApplicationHelpers::getWebformByUuid($metaData['form_uuid'], $applicationNumber)
-            : ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
-
-          if (!$webform || !$serial) {
-            continue;
-          }
-
-          $submissionId = ApplicationHelpers::getSubmissionIdWithSerialAndWebformId($serial, $webform->id(), $document);
+          $submission = $this->submissionObjectFromApplicationNumber($applicationNumber, $document, FALSE, TRUE);
         }
         catch (\Throwable $e) {
           $this->logger->error(
@@ -233,17 +189,15 @@ final class ApplicationGetterService {
           continue;
         }
 
-        if (!$submissionData || !$submissionId) {
-          continue;
-        }
+        $submissionData = $submission->getData();
 
         $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
         $submission = [
           '#theme' => $themeHook,
           '#submission' => $submissionData,
           '#document' => $document,
-          '#webform' => $webform,
-          '#submission_id' => $submissionId,
+          '#webform' => $submission->getWebform(),
+          '#submission_id' => $submission->id(),
         ];
 
         $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
@@ -329,8 +283,8 @@ final class ApplicationGetterService {
       $document = $this->getAtvDocument($applicationNumber, $refetch);
     }
 
-    // Get webform via uuid that is saved to document metadata.
-    $webform = ApplicationHelpers::getWebformByUuid($document->getMetadata()['form_uuid'], $applicationNumber);
+    // Get WebFrom from application number.
+    $webform = $this->getWebformFromApplicationNumber($applicationNumber);
 
     // Should we throw an error here?
     if (!$webform) {
@@ -339,11 +293,16 @@ final class ApplicationGetterService {
     // Get serial from application number.
     $submissionSerial = ApplicationHelpers::getSerialFromApplicationNumber($applicationNumber);
 
-    $result = $this->storage
-      ->loadByProperties([
-        'serial' => $submissionSerial,
-        'webform_id' => $webform->id(),
-      ]);
+    try {
+      $result = $this->entityTypeManager->getStorage('webform_submission')
+        ->loadByProperties([
+          'serial' => $submissionSerial,
+          'webform_id' => $webform->id(),
+        ]);
+    }
+    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
+      throw new WebformException('Failed to load submission object with ATV data');
+    }
 
     $submissionObject = NULL;
 
@@ -410,10 +369,28 @@ final class ApplicationGetterService {
   public function getWebformFromApplicationNumber(string $applicationNumber): Webform {
     // We need the ATV document to get the form uuid.
     $document = $this->getAtvDocument($applicationNumber);
+    $uuid = $document->getMetadata()['form_uuid'];
 
-    // Get webform via uuid that is saved to document metadata.
-    $webform = ApplicationHelpers::getWebformByUuid($document->getMetadata()['form_uuid'], $applicationNumber);
-    return $webform;
+    try {
+      // Try to load webform via UUID and return it.
+      $wids = $this->entityTypeManager->getStorage('webform')
+        ->getQuery()
+        ->condition('uuid', $uuid)
+        ->execute();
+      return Webform::load(reset($wids));
+    }
+    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
+      // Log failure.
+      $this->logger->error(
+        'Failed to load webform with uuid: @uuid. Error: @error',
+        [
+          '@uuid' => $uuid,
+          '@error' => $e->getMessage(),
+        ]
+      );
+    }
+    // And return webform loaded the old way.
+    return ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
   }
 
 }

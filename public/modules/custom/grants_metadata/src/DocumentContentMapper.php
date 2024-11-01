@@ -135,6 +135,7 @@ class DocumentContentMapper {
     // Check if the static variable is already populated
     // for the given application number.
     if (!isset(self::$attachmentFileTypes[$applicationNumber])) {
+      // If not, populate it.
       self::$attachmentFileTypes[$applicationNumber] =
         AttachmentHandler::getAttachmentFieldNames(
           $applicationNumber,
@@ -142,15 +143,14 @@ class DocumentContentMapper {
         );
     }
 
-    $attachmentFileTypes = self::$attachmentFileTypes[$applicationNumber];
-
     if (!isset($typedDataValues["attachments"])) {
       $typedDataValues["attachments"] = [];
     }
 
     foreach ($typedDataValues["attachments"] as $key => $attachment) {
       $fileType = $attachment["fileType"];
-      $fieldName = array_search($fileType, $attachmentFileTypes);
+      // Get fieldname for the attachment.
+      $fieldName = array_search($fileType, self::$attachmentFileTypes[$applicationNumber]);
       $newValues = $attachment;
 
       if (!empty($attachment["fileName"])) {

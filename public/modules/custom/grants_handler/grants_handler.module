@@ -1384,10 +1384,11 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
     return;
   }
 
-  // Get webform by saved form uuid.
-  $webform = ApplicationHelpers::getWebformByUuid(
-    $submissionData["metadata"]["form_uuid"],
-    $submissionData['application_number']);
+  /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+  $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
+
+  // Get webform.
+  $webform = $applicationGetterService->getWebformFromApplicationNumber($submissionData["application_number"]);
   // Set webform title.
   $variables['applicationFormName'] = $webform->label();
 
