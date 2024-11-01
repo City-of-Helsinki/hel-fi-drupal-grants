@@ -237,9 +237,15 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
 
       $grantsProfileContent['businessId'] = $companyData['businessId'];
       $grantsProfileContent['companyHome'] = $companyData['companyHome'];
+
+      // Uncomment to test changing company data.
+      # $grantsProfileContent['companyHome'] .= ' test-override-2';
+
       $grantsProfileContent['registrationDate'] = $companyData['registrationDate'];
 
       $this->grantsProfileService->saveGrantsProfile($grantsProfileContent);
+      $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+      $this->grantsProfileService->getGrantsProfile($selectedCompany);
     }
     catch (\Exception $e) {
       // Failing at this point does not matter, the execution can continue.
