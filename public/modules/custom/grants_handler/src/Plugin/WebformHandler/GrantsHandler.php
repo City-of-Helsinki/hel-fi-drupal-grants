@@ -6,6 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\DrupalKernel;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -155,6 +156,8 @@ final class GrantsHandler extends WebformHandlerBase {
    *   The plugin id.
    * @param mixed $plugin_definition
    *   The plugin definition.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager.
    * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    *   The account proxy.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $userExternalData
@@ -192,6 +195,7 @@ final class GrantsHandler extends WebformHandlerBase {
     array $configuration,
     $plugin_id,
     $plugin_definition,
+    EntityTypeManagerInterface $entityTypeManager,
     protected AccountProxyInterface $currentUser,
     protected HelsinkiProfiiliUserData $userExternalData,
     protected GrantsProfileService $grantsProfileService,
@@ -214,7 +218,7 @@ final class GrantsHandler extends WebformHandlerBase {
       $plugin_id,
       $plugin_definition,
     );
-
+    $this->entityTypeManager = $entityTypeManager;
     $this->attachmentHandler->setDebug($this->isDebug());
     $this->applicationValidator->setDebug($this->isDebug());
     $this->applicationStatusService->setDebug($this->isDebug());
@@ -233,6 +237,7 @@ final class GrantsHandler extends WebformHandlerBase {
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('entity_type.manager'),
       $container->get('current_user'),
       $container->get('helfi_helsinki_profiili.userdata'),
       $container->get('grants_profile.service'),
@@ -1440,10 +1445,9 @@ submit the application only after you have provided all the necessary informatio
    */
   public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE): void {
     // Invalidate cache for this submission.
-    $this->entityTypeManager->getViewBuilder($webform_submission->getWebform()
-      ->getEntityTypeId())->resetCache([
-        $webform_submission,
-      ]);
+    $this->entityTypeManager
+      ->getViewBuilder($webform_submission->getWebform()->getEntityTypeId())
+      ->resetCache([$webform_submission]);
 
     if (empty($this->submittedFormData)) {
       return;
