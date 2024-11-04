@@ -240,13 +240,14 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
 
       // Uncomment to test changing company data.
       // phpcs:ignore
-      // $grantsProfileContent['companyHome'] .= ' test-override-2';
+      // $grantsProfileContent['companyHome'] .= ' test-override-'.random_int(1, 100);
 
       $grantsProfileContent['registrationDate'] = $companyData['registrationDate'];
 
       $this->grantsProfileService->saveGrantsProfile($grantsProfileContent);
+
       $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-      $this->grantsProfileService->getGrantsProfile($selectedCompany);
+      $this->grantsProfileService->getGrantsProfile($selectedCompany, TRUE);
     }
     catch (\Exception $e) {
       // Failing at this point does not matter, the execution can continue.
