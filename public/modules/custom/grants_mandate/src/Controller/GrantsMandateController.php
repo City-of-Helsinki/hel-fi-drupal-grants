@@ -239,6 +239,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
       $grantsProfileContent['companyHome'] = $companyData['companyHome'];
 
       // Uncomment to test changing company data.
+      // phpcs:ignore
       // $grantsProfileContent['companyHome'] .= ' test-override-2';
 
       $grantsProfileContent['registrationDate'] = $companyData['registrationDate'];
