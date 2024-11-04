@@ -6,10 +6,14 @@ trigger:
   batch: true
   branches:
     include:
-    - develop
+    - dev
   paths:
     exclude:
-    - README.md
+      - '*.md'
+      - '.github/'
+      - 'azure-pipelines-dev.yml'
+      - 'azure-pipelines-staging.yml'
+      - 'azure-pipelines-prod.yml'
 
 # Pull request (PR) triggers cause a pipeline to run whenever a pull request is
 # opened with one of the specified target branches, or when updates are made to

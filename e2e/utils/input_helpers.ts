@@ -1,6 +1,8 @@
 import {expect, Locator, Page} from "@playwright/test";
 import {FormFieldWithRemove, Selector, isDynamicMultiValueField, isMultiValueField} from "./data/test_data";
 import {logger} from "./logger";
+import { promises as fs } from 'fs';
+import { join, dirname, extname, basename } from 'path';
 
 
 /**
@@ -467,7 +469,8 @@ const fillMultiValueField = async (page: Page, formField: Partial<FormFieldWithR
  * The uploadFile function.
  *
  * This function upload a file to a
- * file input field with the given parameters.
+ * file input field with the given parameters. File is renamed to fix strange
+ * behavior on uploaded files when run on Azure.
  *
  * @param page
  *   Page object from Playwright.
@@ -484,21 +487,36 @@ const uploadFile = async (
   fileLinkSelector: string,
   filePath: string | undefined,
 ) => {
-
   if (!filePath) {
     logger('No file defined in', uploadSelector);
     return;
   }
-  const fileChooserPromise = page.waitForEvent('filechooser');
-  const fileInput = await page.locator(uploadSelector);
-  await fileInput.click();
-  const fileChooser = await fileChooserPromise;
-  await fileChooser.setFiles(filePath);
-  await fileInput.waitFor({state: 'hidden'});
-  const resultLink = await page.locator(fileLinkSelector);
-  await expect(fileInput).toBeHidden();
-  await expect(resultLink).toBeVisible();
-}
+
+  // Create a new file name
+  const tempDir = dirname(filePath);
+  const fileExt = extname(filePath);
+  const fileName = basename(filePath, fileExt);
+  const newFileName = `${fileName}-${Date.now()}${fileExt}`;
+  const newFilePath = join(tempDir, newFileName);
+
+  // Rename the original file to the new file name
+  await fs.rename(filePath, newFilePath);
+
+  try {
+    const fileChooserPromise = page.waitForEvent('filechooser');
+    const fileInput = page.locator(uploadSelector);
+    await fileInput.click();
+    const fileChooser = await fileChooserPromise;
+    await fileChooser.setFiles(newFilePath);
+    await fileInput.waitFor({ state: 'hidden' });
+    const resultLink = page.locator(fileLinkSelector);
+    await expect(fileInput).toBeHidden();
+    await expect(resultLink).toBeVisible();
+  } finally {
+    // Rename the file back to its original name
+    await fs.rename(newFilePath, filePath);
+  }
+};
 
 /**
  * The clickButton function.

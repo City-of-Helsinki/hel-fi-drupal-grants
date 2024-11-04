@@ -32,6 +32,7 @@ dependencies:
     - paragraphs_library
     - path
     - publication_date
+    - raven
     - redirect
     - scheduler
     - system
@@ -132,6 +133,7 @@ permissions:
   - 'revert news_item revisions'
   - 'revert page revisions'
   - 'schedule publishing of nodes'
+  - 'send performance traces to sentry'
   - 'set announcement published on date'
   - 'set landing_page published on date'
   - 'set news_item published on date'

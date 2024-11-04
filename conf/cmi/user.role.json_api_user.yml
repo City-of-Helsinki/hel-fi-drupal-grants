@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - file
+    - raven
     - webform
 id: json_api_user
 label: 'JSON API User'
@@ -12,3 +13,4 @@ is_admin: null
 permissions:
   - 'access any webform configuration'
   - 'delete own files'
+  - 'send performance traces to sentry'

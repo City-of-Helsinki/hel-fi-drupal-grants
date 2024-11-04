@@ -6,14 +6,13 @@ This project offers citizens a way to apply for different city grants for their 
 
 ## Environments
 
-Env | Branch    | Url
------- |-----------| -----
-local   | *         | [https://hel-fi-drupal-grant-applications.docker.so/](https://hel-fi-drupal-grant-applications.docker.so/)
-development   | *         | [https://avustukset.dev.hel.ninja](https://avustukset.dev.hel.ninja)
-testing   | develop   | [https://avustukset.test.hel.ninja](https://avustukset.test.hel.ninja)
-staging   | release/* | [https://avustukset.stage.hel.ninja](https://avustukset.stage.hel.ninja)
-production   | main      | [https://avustukset.hel.fi](https://avustukset.hel.fi) (https://nginx-avustusasiointi-prod.apps.platta.hel.fi/ before release)
-
+| Env         | Branch                   | Url                                                                                                        |
+|-------------|--------------------------|------------------------------------------------------------------------------------------------------------|
+| local       | `*`                      | [https://hel-fi-drupal-grant-applications.docker.so/](https://hel-fi-drupal-grant-applications.docker.so/) |
+| development | `*`                      | [https://avustukset.dev.hel.ninja](https://avustukset.dev.hel.ninja)                                       |
+| testing     | `dev`                    | [https://avustukset.test.hel.ninja](https://avustukset.test.hel.ninja)                                     |
+| staging     | `main`                   | [https://avustukset.stage.hel.ninja](https://avustukset.stage.hel.ninja)                                   |
+| production  | `refs/tags/YYYY-MM-DD.X` | [https://avustukset.hel.fi](https://avustukset.hel.fi)                                                     |
 
 ## Requirements
 

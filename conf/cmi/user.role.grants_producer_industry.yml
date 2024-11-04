@@ -11,6 +11,7 @@ dependencies:
     - locale
     - media
     - path
+    - raven
     - system
     - toolbar
     - view_unpublished
@@ -26,6 +27,7 @@ permissions:
   - 'create url aliases'
   - 'delete own files'
   - 'edit any webform'
+  - 'send performance traces to sentry'
   - 'translate interface'
   - 'view any unpublished landing_page content'
   - 'view any unpublished page content'
