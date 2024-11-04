@@ -80,10 +80,14 @@
       <div class="hds-notification__content">
         <div class="hds-notification__label" role="heading" aria-level="2">
           <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
-          <span>{{ 'You must visit all pages in the form before you can submit the application'|trans({}, {'context:': 'grants_handler'}) }}</span>
+          <span>
+            {% trans with {'context': 'grants_theme'} %}
+              You must visit all pages in the form before you can submit the application
+            {% endtrans %}
+          </span>
         </div>
         <div class="hds-notification__body">
-          <span>{{ 'Unvisited pages:'|trans({}, {'context': 'grants_handler'}) }}</span>
+          <span>{{ 'Unvisited pages:'|trans({}, {'context': 'grants_theme'}) }}</span>
           <ul>
             {% for page in unvisited_pages %}
               <li>

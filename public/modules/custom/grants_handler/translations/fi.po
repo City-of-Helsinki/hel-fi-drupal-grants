@@ -663,3 +663,7 @@ msgstr "Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua hakemuk
 msgctxt "grants_handler"
 msgid "Attention"
 msgstr "Huomio"
+
+msgctxt "grants_handler"
+msgid "You must visit all pages in the form before you can submit the application."
+msgstr "Käy kaikilla sivuilla ennen kuin lähetät hakemuksen."

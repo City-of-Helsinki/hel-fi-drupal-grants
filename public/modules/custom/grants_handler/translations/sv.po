@@ -659,3 +659,7 @@ msgstr "Du har osparade ändringar. Är du säker på att du vill lämna?"
 msgctxt "grants_handler"
 msgid "Attention"
 msgstr "Observera"
+
+msgctxt "grants_handler"
+msgid "You must visit all pages in the form before you can submit the application."
+msgstr "Du måste besöka alla sidor i formuläret innan du kan skicka in ansökan."
