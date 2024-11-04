@@ -58,7 +58,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  *   \Drupal\webform\Plugin\WebformHandlerInterface::SUBMISSION_REQUIRED,
  * )
  */
-class GrantsHandler extends WebformHandlerBase {
+final class GrantsHandler extends WebformHandlerBase {
 
   /**
    * Form data saved because the data in saved submission is not preserved.
