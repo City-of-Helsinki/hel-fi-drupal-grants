@@ -156,6 +156,8 @@ final class GrantsHandler extends WebformHandlerBase {
    *   The plugin id.
    * @param mixed $plugin_definition
    *   The plugin definition.
+   * @param Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager.
    * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    *   The account proxy.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $userExternalData
