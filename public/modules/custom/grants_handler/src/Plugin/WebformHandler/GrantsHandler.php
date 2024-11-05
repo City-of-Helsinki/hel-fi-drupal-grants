@@ -6,6 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\DrupalKernel;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -58,7 +59,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  *   \Drupal\webform\Plugin\WebformHandlerInterface::SUBMISSION_REQUIRED,
  * )
  */
-class GrantsHandler extends WebformHandlerBase {
+final class GrantsHandler extends WebformHandlerBase {
 
   /**
    * Form data saved because the data in saved submission is not preserved.
@@ -77,7 +78,7 @@ class GrantsHandler extends WebformHandlerBase {
    *
    * @var string
    */
-  protected string $applicationType;
+  protected string $applicationType = '';
 
   /**
    * Applicant type.
@@ -86,21 +87,21 @@ class GrantsHandler extends WebformHandlerBase {
    *
    * @var string
    */
-  protected string $applicantType;
+  protected string $applicantType = '';
 
   /**
    * Application type ID.
    *
    * @var string
    */
-  protected string $applicationTypeID;
+  protected string $applicationTypeID = '';
 
   /**
    * Generated application number.
    *
    * @var string
    */
-  protected string $applicationNumber;
+  protected string $applicationNumber = '';
 
   /**
    * Application acting year options.
@@ -119,53 +120,11 @@ class GrantsHandler extends WebformHandlerBase {
   protected string $newStatus;
 
   /**
-   * Drupal\Core\Session\AccountProxyInterface definition.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected AccountProxyInterface $currentUser;
-
-  /**
-   * User data from helsinkiprofiili & auth methods.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $userExternalData;
-
-  /**
-   * Access GRants profile.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Date formatter.
-   *
-   * @var \Drupal\Core\Datetime\DateFormatter
-   */
-  protected DateFormatter $dateFormatter;
-
-  /**
-   * All attachment-related things.
-   *
-   * @var \Drupal\grants_attachments\AttachmentHandler
-   */
-  protected AttachmentHandler $attachmentHandler;
-
-  /**
-   * Form lock service.
-   *
-   * @var \Drupal\grants_handler\FormLockService
-   */
-  protected FormLockService $formLockService;
-
-  /**
    * Save form trigger for methods where form_state is not available.
    *
    * @var string
    */
-  protected string $triggeringElement;
+  protected string $triggeringElement = '';
 
   /**
    * Save form for methods where form is not available.
@@ -186,80 +145,87 @@ class GrantsHandler extends WebformHandlerBase {
    *
    * @var bool
    */
-  protected bool $isRedirect;
+  protected bool $isRedirect = FALSE;
 
   /**
-   * Help with stored errors.
+   * The constructor.
    *
-   * @var \Drupal\grants_handler\GrantsHandlerNavigationHelper
+   * @param array $configuration
+   *   The configuration.
+   * @param string $plugin_id
+   *   The plugin id.
+   * @param mixed $plugin_definition
+   *   The plugin definition.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager.
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
+   *   The account proxy.
+   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $userExternalData
+   *   The helsinki profiili user data.
+   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
+   *   The grants profile service.
+   * @param \Drupal\Core\Datetime\DateFormatter $dateFormatter
+   *   The date formatter.
+   * @param \Drupal\grants_attachments\AttachmentHandler $attachmentHandler
+   *   The attachment handler.
+   * @param \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper
+   *   The grants form navigation helper.
+   * @param \Drupal\grants_handler\ApplicationValidator $applicationValidator
+   *   The application validator.
+   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   *   The application status service.
+   * @param \Drupal\grants_handler\FormLockService $formLockService
+   *   The form lock service.
+   * @param \Drupal\Core\DrupalKernel $kernel
+   *   The kernel.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   *   The request stack.
+   * @param \Drupal\grants_metadata\ApplicationDataService $applicationDataService
+   *   The application data service.
+   * @param \Drupal\grants_handler\ApplicationInitService $applicationInitService
+   *   The application init service.
+   * @param \Drupal\grants_handler\ApplicationUploaderService $applicationUploaderService
+   *   The application upload service.
+   * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
+   *   The application getter service.
+   * @param \Drupal\grants_attachments\AttachmentRemover $attachmentRemover
+   *   The attachment remover.
    */
-  protected GrantsHandlerNavigationHelper $grantsFormNavigationHelper;
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entityTypeManager,
+    protected AccountProxyInterface $currentUser,
+    protected HelsinkiProfiiliUserData $userExternalData,
+    protected GrantsProfileService $grantsProfileService,
+    protected DateFormatter $dateFormatter,
+    protected AttachmentHandler $attachmentHandler,
+    protected GrantsHandlerNavigationHelper $grantsFormNavigationHelper,
+    protected ApplicationValidator $applicationValidator,
+    protected ApplicationStatusService $applicationStatusService,
+    protected FormLockService $formLockService,
+    protected DrupalKernel $kernel,
+    protected RequestStack $requestStack,
+    protected ApplicationDataService $applicationDataService,
+    protected ApplicationInitService $applicationInitService,
+    protected ApplicationUploaderService $applicationUploaderService,
+    protected ApplicationGetterService $applicationGetterService,
+    protected AttachmentRemover $attachmentRemover,
+  ) {
+    parent::__construct(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+    );
+    $this->entityTypeManager = $entityTypeManager;
+    $this->attachmentHandler->setDebug($this->isDebug());
+    $this->applicationValidator->setDebug($this->isDebug());
+    $this->applicationStatusService->setDebug($this->isDebug());
+  }
 
   /**
-   * The Drupal kernel.
-   *
-   * @var \Drupal\Core\DrupalKernel
-   */
-  protected DrupalKernel $kernel;
-
-  /**
-   * The request stack.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected RequestStack $requestStack;
-
-  /**
-   * Application validator.
-   *
-   * @var \Drupal\grants_handler\ApplicationValidator
-   */
-  protected ApplicationValidator $applicationValidator;
-
-  /**
-   * Status service.
-   *
-   * @var \Drupal\grants_handler\ApplicationStatusService
-   */
-  protected ApplicationStatusService $applicationStatusService;
-
-  /**
-   * Application data service.
-   *
-   * @var \Drupal\grants_metadata\ApplicationDataService
-   */
-  protected ApplicationDataService $applicationDataService;
-
-  /**
-   * Init application data.
-   *
-   * @var \Drupal\grants_handler\ApplicationInitService
-   */
-  protected ApplicationInitService $applicationInitService;
-
-  /**
-   * Uploader class.
-   *
-   * @var \Drupal\grants_handler\ApplicationUploaderService
-   */
-  protected ApplicationUploaderService $applicationUploaderService;
-
-  /**
-   * Access to application data.
-   *
-   * @var \Drupal\grants_handler\ApplicationGetterService
-   */
-  protected ApplicationGetterService $applicationGetterService;
-
-  /**
-   * Attachment remover.
-   *
-   * @var \Drupal\grants_attachments\AttachmentRemover
-   */
-  protected AttachmentRemover $attachmentRemover;
-
-  /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   public static function create(
     ContainerInterface $container,
@@ -267,83 +233,28 @@ class GrantsHandler extends WebformHandlerBase {
     $plugin_id,
     $plugin_definition,
   ): WebformHandlerBase|GrantsHandler|ContainerFactoryPluginInterface {
-    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
-
-    /** @var \Drupal\Core\Session\AccountProxyInterface $currentUser */
-    $currentUser = $container->get('current_user');
-    $instance->currentUser = $currentUser;
-
-    /** @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $userExternalData */
-    $userExternalData = $container->get('helfi_helsinki_profiili.userdata');
-    $instance->userExternalData = $userExternalData;
-
-    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $grantsProfileService = $container->get('grants_profile.service');
-    $instance->grantsProfileService = $grantsProfileService;
-
-    /** @var \Drupal\Core\Datetime\DateFormatter $dateFormatter */
-    $dateFormatter = $container->get('date.formatter');
-    $instance->dateFormatter = $dateFormatter;
-
-    /** @var \Drupal\grants_attachments\AttachmentHandler $attachmentHandler */
-    $attachmentHandler = $container->get('grants_attachments.attachment_handler');
-    $instance->attachmentHandler = $attachmentHandler;
-    $instance->attachmentHandler->setDebug($instance->isDebug());
-
-    /** @var \Drupal\grants_handler\GrantsHandlerNavigationHelper $grantsFormNavigationHelper */
-    $grantsFormNavigationHelper = $container->get('grants_handler.navigation_helper');
-    $instance->grantsFormNavigationHelper = $grantsFormNavigationHelper;
-
-    /** @var \Drupal\grants_handler\ApplicationValidator $applicationValidator */
-    $applicationValidator = $container->get('grants_handler.application_validator');
-    $instance->applicationValidator = $applicationValidator;
-    $instance->applicationValidator->setDebug($instance->isDebug());
-
-    /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
-    $applicationStatusService = $container->get('grants_handler.application_status_service');
-    $instance->applicationStatusService = $applicationStatusService;
-    $instance->applicationStatusService->setDebug($instance->isDebug());
-
-    /** @var \Drupal\grants_handler\FormLockService $formLockService */
-    $formLockService = $container->get('grants_handler.form_lock_service');
-    $instance->formLockService = $formLockService;
-
-    /** @var \Drupal\Core\DrupalKernel $kernel */
-    $kernel = $container->get('kernel');
-    $instance->kernel = $kernel;
-
-    /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
-    $requestStack = $container->get('request_stack');
-    $instance->requestStack = $requestStack;
-
-    /** @var \Drupal\grants_metadata\ApplicationDataService $applicationDataService */
-    $applicationDataService = $container->get('grants_metadata.application_data_service');
-    $instance->applicationDataService = $applicationDataService;
-
-    /** @var \Drupal\grants_handler\ApplicationInitService $applicationInitService */
-    $applicationInitService = $container->get('grants_handler.application_init_service');
-    $instance->applicationInitService = $applicationInitService;
-
-    /** @var \Drupal\grants_handler\ApplicationUploaderService $applicationUploaderService */
-    $applicationUploaderService = $container->get('grants_handler.application_uploader_service');
-    $instance->applicationUploaderService = $applicationUploaderService;
-
-    /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
-    $applicationGetterService = $container->get('grants_handler.application_getter_service');
-    $instance->applicationGetterService = $applicationGetterService;
-
-    /** @var \Drupal\grants_attachments\AttachmentRemover $attachmentRemover */
-    $attachmentRemover = $container->get('grants_attachments.attachment_remover');
-    $instance->attachmentRemover = $attachmentRemover;
-
-    $instance->triggeringElement = '';
-    $instance->applicationNumber = '';
-    $instance->applicantType = '';
-    $instance->applicationTypeID = '';
-    $instance->applicationType = '';
-    $instance->isRedirect = FALSE;
-
-    return $instance;
+    return new self(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('entity_type.manager'),
+      $container->get('current_user'),
+      $container->get('helfi_helsinki_profiili.userdata'),
+      $container->get('grants_profile.service'),
+      $container->get('date.formatter'),
+      $container->get('grants_attachments.attachment_handler'),
+      $container->get('grants_handler.navigation_helper'),
+      $container->get('grants_handler.application_validator'),
+      $container->get('grants_handler.application_status_service'),
+      $container->get('grants_handler.form_lock_service'),
+      $container->get('kernel'),
+      $container->get('request_stack'),
+      $container->get('grants_metadata.application_data_service'),
+      $container->get('grants_handler.application_init_service'),
+      $container->get('grants_handler.application_uploader_service'),
+      $container->get('grants_handler.application_getter_service'),
+      $container->get('grants_attachments.attachment_remover'),
+    );
   }
 
   /**
@@ -1548,10 +1459,9 @@ submit the application only after you have provided all the necessary informatio
    */
   public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE): void {
     // Invalidate cache for this submission.
-    $this->entityTypeManager->getViewBuilder($webform_submission->getWebform()
-      ->getEntityTypeId())->resetCache([
-        $webform_submission,
-      ]);
+    $this->entityTypeManager
+      ->getViewBuilder($webform_submission->getWebform()->getEntityTypeId())
+      ->resetCache([$webform_submission]);
 
     if (empty($this->submittedFormData)) {
       return;
