@@ -1109,7 +1109,7 @@ moment and reload the page.',
     try {
       $this->submittedFormData = array_merge(
         $this->submittedFormData,
-        ApplicationHelpers::parseSenderDetails());
+        $this->applicationDataService->parseSenderDetails());
     }
     catch (ApplicationException $e) {
     }

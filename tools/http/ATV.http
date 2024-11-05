@@ -5,7 +5,7 @@ X-Api-Key: {{atvApiKey}}
 
 #### Get single document by transaction_id
 GET {{atvUrl}}/v1/documents/?
-  transaction_id={{transaction_id}}
+  transaction_id={{transactionId}}
 Accept-Encoding: utf8
 X-Api-Key: {{atvApiKey}}
 
@@ -24,7 +24,7 @@ GET {{atvUrl}}/v1/documents/?
   user_id={{user_id}}&
   type={{type}}&
   service_name=AvustushakemusIntegraatio&
-  transaction_id={{transaction_id}}
+  transaction_id={{transactionId}}
 Accept-Encoding: utf8
 X-Api-Key: {{atvApiKey}}
 
