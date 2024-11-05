@@ -208,62 +208,62 @@
         ]
       ]
     },
-	"customQuestionsInfo": {
-		"customQuestionsArray": [
-			{
-				"ID": "a",
-				"label": "Label a",
-				"value": "Value a",
-				"valueType": "string"
-			},
-			{
-				"ID": "b",
-				"label": "LABEL B",
-				"value": "Value B",
-				"valueType": "string"
-			}
-		]
-	},
-	"budgetInfo": {
-	  "incomeGroupsArrayStatic": [
-			{
-				"incomeGroupName": "general",
-				"otherIncomeRowsArrayStatic": [
-					{			
-						"ID": "a",
-						"label": "Kioskimyynti",
-						"value": "300.00",
-						"valueType": "double"
-					},
-					{			
-						"ID": "b",
-						"label": "Parkkitulot",
-						"value": "50.00",
-						"valueType": "double"
-					}
-				]
-			}
-		],
-		"costGroupsArrayStatic": [
-			{
-				"costGroupName": "general",
-				"otherCostRowsArrayStatic": [
-					{			
-						"ID": "a",
-						"label": "Kioskiostot",
-						"value": "100.00",
-						"valueType": "double"
-					},
-					{			
-						"ID": "b",
-						"label": "Jätemaksut",
-						"value": "50.00",
-						"valueType": "double"
-					}
-				]
-			}
-	  ]
-  },
+    "customQuestionsInfo": {
+      "customQuestionsArray": [
+        {
+          "ID": "a",
+          "label": "Label a",
+          "value": "Value a",
+          "valueType": "string"
+        },
+        {
+          "ID": "b",
+          "label": "LABEL B",
+          "value": "Value B",
+          "valueType": "string"
+        }
+      ]
+    },
+    "budgetInfo": {
+      "incomeGroupsArrayStatic": [
+        {
+          "incomeGroupName": "general",
+          "otherIncomeRowsArrayStatic": [
+            {
+              "ID": "a",
+              "label": "Kioskimyynti",
+              "value": "300.00",
+              "valueType": "double"
+            },
+            {
+              "ID": "b",
+              "label": "Parkkitulot",
+              "value": "50.00",
+              "valueType": "double"
+            }
+          ]
+        }
+      ],
+      "costGroupsArrayStatic": [
+        {
+          "costGroupName": "general",
+          "otherCostRowsArrayStatic": [
+            {
+              "ID": "a",
+              "label": "Kioskiostot",
+              "value": "100.00",
+              "valueType": "double"
+            },
+            {
+              "ID": "b",
+              "label": "Jätemaksut",
+              "value": "50.00",
+              "valueType": "double"
+            }
+          ]
+        }
+      ]
+    },
     "otherCompensationsInfo": {
       "otherCompensationsArray": [
         [
@@ -299,7 +299,7 @@
           }
         ]
       ],
-	  "otherAppliedCompensationsArray": [
+      "otherAppliedCompensationsArray": [
         [
           {
             "ID": "issuer",
@@ -368,8 +368,6 @@
       }
     ]
   },
-
-
   "attachmentsInfo": {
     "attachmentsArray": [
       [

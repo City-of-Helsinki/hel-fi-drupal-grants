@@ -1,0 +1,50 @@
+### Create Event via integration API
+POST {{integraatioUrl}}/createEvent
+Authorization: Basic {{integraatioBasicToken}}
+Content-Type: application/json
+
+{
+  "caseId": "{{transactionId}}",
+  "eventType": "EVENT_INFO",
+  "eventCode": 0,
+  "eventSource": "Avustusten kasittelyjarjestelma",
+  "eventDescription": "Puhakka Tero;09 310 36070;tero.puhakka@hel.fi",
+  "eventDescription_SV": null,
+  "eventDescription_EN": null,
+  "timeUpdated": null,
+  "timeCreated": "{{$isoTimestamp}}",
+  "eventTarget": null,
+  "eventID": "{{$random.uuid}}"
+}
+
+### Create Status Update via integration API
+POST {{integraatioUrl}}/updateCitizenCaseStatus
+Authorization: Basic {{integraatioBasicToken}}
+Content-Type: application/json
+
+{
+  "caseId": "{{transactionId}}",
+  "citizenCaseStatus" : "PROCESSING",
+  "eventType" : "STATUS_UPDATE",
+  "eventCode" : 0,
+  "eventSource" : "Avustusten kasittelyjarjestelma",
+  "timeUpdated" : null,
+  "timeCreated": "{{$isoTimestamp}}"
+}
+
+### Create Message via integration API
+POST {{integraatioUrl}}/createConversationMessage
+Authorization: Basic {{integraatioBasicToken}}
+Content-Type: application/json
+
+{
+"caseId": "{{transactionId}}",
+"messageId" : "{{$random.uuid}}",
+"body" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+"sentBy" : "Avustusten kasittelyjarjestelma",
+"sendDateTime" :"{{$isoTimestamp}}"
+}
+
+###
+
+

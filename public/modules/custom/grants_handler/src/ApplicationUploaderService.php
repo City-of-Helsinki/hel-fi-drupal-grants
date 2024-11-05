@@ -213,6 +213,7 @@ final class ApplicationUploaderService {
     try {
       $headers = [];
 
+      // Get status from updated document.
       $headers['X-Case-Status'] = $updatedDocumentFromAtv->getStatus();
 
       // We set the data source for integration to be used in controlling
