@@ -46,7 +46,6 @@ abstract class ApplicationHelpers {
     }
 
     return self::getApplicationNumberInEnvFormat($appParam, $applicationTypeId, $serial);
-
   }
 
   /**
@@ -65,7 +64,6 @@ abstract class ApplicationHelpers {
    * @throws \Drupal\helfi_atv\AtvUnexpectedResponseException
    */
   public static function getAvailableApplicationNumber(WebformSubmission &$submission): string {
-
     $appParam = Helpers::getAppEnv();
     $serial = $submission->serial();
     $webform_id = $submission->getWebform()->id();
@@ -200,7 +198,6 @@ abstract class ApplicationHelpers {
     $hasBreakingChanges = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'avus2BreakingChange');
 
     while (!empty($parent)) {
-
       $map[$parent] = $hasBreakingChanges;
 
       $loaded_webform = \Drupal::entityTypeManager()
@@ -220,7 +217,6 @@ abstract class ApplicationHelpers {
     }
 
     return $map[$uuid] ?? FALSE;
-
   }
 
   /**
@@ -257,7 +253,6 @@ abstract class ApplicationHelpers {
 
     // Look for for application type and return if found.
     $webform = array_filter($webforms, function ($wf) use ($webformTypeId, $applicationTypes, $fieldToCheck) {
-
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
       $thisApplicationTypeConfig = array_filter($applicationTypes, function ($appType) use ($thirdPartySettings) {
         if (isset($thirdPartySettings["applicationTypeID"]) &&
@@ -309,8 +304,7 @@ abstract class ApplicationHelpers {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function getLatestApplicationForm($id): Webform|NULL {
-
+  public static function getLatestApplicationForm($id): Webform|null {
     $webforms = \Drupal::entityTypeManager()
       ->getStorage('webform')
       ->loadByProperties([
@@ -330,8 +324,10 @@ abstract class ApplicationHelpers {
   /**
    * Get all Webform objects for given application id.
    *
-   * @param string $id
+   * @param string $applicationTypeId
    *   Application ID.
+   * @param null $formId
+   *   Webform ID.
    *
    * @return array
    *   Active webforms.
@@ -339,13 +335,23 @@ abstract class ApplicationHelpers {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function getActiveApplicationWebforms(string $id): array {
+  public static function getActiveApplicationWebforms(string $applicationTypeId, $formId = NULL): array {
+    $properties = [
+      'third_party_settings.grants_metadata.applicationType' => $applicationTypeId,
+      'archive' => FALSE,
+    ];
+
+    // If we've given form id, we want to load only that form.
+    if ($formId) {
+      // Effectevely this limits results to single form.
+      // But since we now can have multiple forms with same application type,
+      // we need to check that the form id is correct.
+      $properties['id'] = $formId;
+    }
+
     $webforms = \Drupal::entityTypeManager()
       ->getStorage('webform')
-      ->loadByProperties([
-        'third_party_settings.grants_metadata.applicationType' => $id,
-        'archive' => FALSE,
-      ]);
+      ->loadByProperties($properties);
 
     $result = [
       'released' => [],
@@ -371,12 +377,17 @@ abstract class ApplicationHelpers {
    *
    * @param string $id
    *   Application ID.
+   * @param string|null $formId
+   *   Webform ID. Or null if all is wanted.
    *
    * @return bool
    *   Can the webform be duplicated.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function isApplicationWebformDuplicatable(string $id) {
-    $applicationForms = self::getActiveApplicationWebforms($id);
+  public static function isApplicationWebformDuplicatable(string $id, string $formId = NULL): bool {
+    $applicationForms = self::getActiveApplicationWebforms($id, $formId);
     return count($applicationForms['released']) <= 1 && count($applicationForms['development']) === 0;
   }
 

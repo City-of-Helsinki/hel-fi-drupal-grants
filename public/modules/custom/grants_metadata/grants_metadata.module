@@ -724,8 +724,9 @@ from being edited, even if normal rules would otherwise permit it.
     $bundle = $formObject->getEntity();
     $applicationTypeId = $bundle->getThirdPartySetting('grants_metadata', 'applicationType');
     $isDuplicatable = in_array($formStatus, ['', 'released']);
+
     if ($applicationTypeId && $isDuplicatable) {
-      $isDuplicatable = ApplicationHelpers::isApplicationWebformDuplicatable($applicationTypeId);
+      $isDuplicatable = ApplicationHelpers::isApplicationWebformDuplicatable($applicationTypeId, $webform->id());
     }
 
     $route_parameters = ['webform' => $webform->id()];
