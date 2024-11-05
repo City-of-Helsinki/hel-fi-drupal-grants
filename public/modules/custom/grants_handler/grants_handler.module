@@ -1279,6 +1279,11 @@ function grants_handler_preprocess_webform_submission_form(&$variables) {
   $navigationHelper = \Drupal::service('grants_handler.navigation_helper');
   // Get errors for printing.
   $variables['errors'] = $navigationHelper->getAllErrors($webform_submission);
+
+  $variables['unvisited_pages'] = $navigationHelper->getUnvisitedPages($webform_submission);
+  $variables['display_visit_all_pages_warning'] =
+    $navigationHelper->getCurrentPage($webform_submission) === 'webform_preview' &&
+    count($variables['unvisited_pages']) > 0;
 }
 
 /**

@@ -52,27 +52,52 @@
   {% endfor %}
 
   {% if has_errors is same as true %}
-  <section aria-label="Notification" class="hds-notification hds-notification--error">
-    <div class="hds-notification__content">
-      <div class="hds-notification__label" role="heading" aria-level="2">
-        <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
-        <span>{{ 'Missing or incomplete information'|t }}</span>
-      </div>
-      <div class="hds-notification__body">
-        <ul>
-          {% for page in errors %}
-            {% for name,element in page %}
-              {% if name is not same as 'title' %}
-                <li>
-                  {{ 'Error in page'|t }} {{ page['title'] }}: {{ element }}
-                </li>
-              {% endif %}
+    <section aria-label="Notification" class="hds-notification hds-notification--error">
+      <div class="hds-notification__content">
+        <div class="hds-notification__label" role="heading" aria-level="2">
+          <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+          <span>{{ 'Missing or incomplete information'|t }}</span>
+        </div>
+        <div class="hds-notification__body">
+          <ul>
+            {% for page in errors %}
+              {% for name,element in page %}
+                {% if name is not same as 'title' %}
+                  <li>
+                    {{ 'Error in page'|t }} {{ page['title'] }}: {{ element }}
+                  </li>
+                {% endif %}
+              {% endfor %}
             {% endfor %}
-          {% endfor %}
-        </ul>
+          </ul>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  {% endif %}
+
+  {% if display_visit_all_pages_warning  %}
+    <section aria-label="Notification" class="hds-notification hds-notification--error">
+      <div class="hds-notification__content">
+        <div class="hds-notification__label" role="heading" aria-level="2">
+          <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+          <span>
+            {% trans with {'context': 'grants_theme'} %}
+              You must visit all pages in the form before you can submit the application
+            {% endtrans %}
+          </span>
+        </div>
+        <div class="hds-notification__body">
+          <span>{{ 'Unvisited pages:'|trans({}, {'context': 'grants_theme'}) }}</span>
+          <ul>
+            {% for page in unvisited_pages %}
+              <li>
+                {{ page['#title'] }}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </section>
   {% endif %}
 
   {{ form }}

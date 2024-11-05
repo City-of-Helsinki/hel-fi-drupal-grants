@@ -466,3 +466,11 @@ msgstr "kpl sivulla"
 msgctxt "grants_theme"
 msgid "Items per page"
 msgstr "Merkintöjä sivua kohti"
+
+msgctxt "grants_theme"
+msgid "You must visit all pages in the form before you can submit the application"
+msgstr "Käy kaikilla sivuilla ennen kuin lähetät hakemuksen"
+
+msgctxt "grants_theme"
+msgid "Unvisited pages:"
+msgstr "Sivut, joilla ei ole käyty:"

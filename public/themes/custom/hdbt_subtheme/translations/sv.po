@@ -416,3 +416,11 @@ msgstr "per sida"
 msgctxt "grants_theme"
 msgid "Items per page"
 msgstr "Inlägg per sida"
+
+msgctxt "grants_theme"
+msgid "You must visit all pages in the form before you can submit the application"
+msgstr "Du måste besöka alla sidor i formuläret innan du kan skicka in ansökan"
+
+msgctxt "grants_theme"
+msgid "Unvisited pages:"
+msgstr "Obesökta sidor:"
