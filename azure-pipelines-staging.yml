@@ -3,14 +3,17 @@
 # Continuous integration (CI) triggers cause a pipeline to run whenever you push
 # an update to the specified branches or you push specified tags.
 trigger:
+  batch: true
   branches:
     include:
-      - release/*
-    exclude:
-      - release/old*
+      - main
   paths:
     exclude:
-    - README.md
+      - '*.md'
+      - '.github/'
+      - 'azure-pipelines-dev.yml'
+      - 'azure-pipelines-test.yml'
+      - 'azure-pipelines-prod.yml'
 
 # Pull request (PR) triggers cause a pipeline to run whenever a pull request is
 # opened with one of the specified target branches, or when updates are made to
