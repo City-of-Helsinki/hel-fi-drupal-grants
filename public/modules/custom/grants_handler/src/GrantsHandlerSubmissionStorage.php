@@ -212,7 +212,6 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   protected function loadData(array &$webform_submissions): void {
-    parent::loadData($webform_submissions);
     $userRoles = $this->account->getRoles();
 
     // Check that we have required role.
@@ -241,18 +240,6 @@ class GrantsHandlerSubmissionStorage extends WebformSubmissionStorage {
         );
         /** @var \Drupal\helfi_atv\AtvDocument $document */
         $document = reset($results);
-
-        if (!$document) {
-          $applicationNumber = ApplicationHelpers::createApplicationNumber($submission, TRUE);
-          $results = $this->atvService->searchDocuments(
-            [
-              'transaction_id' => $applicationNumber,
-              'lookfor' => 'appenv:' . Helpers::getAppEnv(),
-            ]
-          );
-          /** @var \Drupal\helfi_atv\AtvDocument $document */
-          $document = reset($results);
-        }
 
         if (!$document) {
           throw new \Exception('Submission data load failed.');
