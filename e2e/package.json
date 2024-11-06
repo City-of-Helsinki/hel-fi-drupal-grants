@@ -16,7 +16,7 @@
     "@playwright/test": "^1.41.2",
     "@types/lodash.clonedeep": "^4.5.9",
     "@types/node": "^20.11.7",
-    "dotenv": "^16.4.1",
+    "dotenv": "^16.4.5",
     "lodash.clonedeep": "^4.5.0"
   }
 }
