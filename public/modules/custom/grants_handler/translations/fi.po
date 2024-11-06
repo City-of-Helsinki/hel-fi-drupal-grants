@@ -633,6 +633,14 @@ msgid "Refresh the page"
 msgstr "Lataa sivu uudelleen"
 
 msgctxt "grants_handler"
+msgid "You must visit all pages in the form before you can submit the application"
+msgstr "Käy kaikilla sivuilla ennen kuin lähetät hakemuksen"
+
+msgctxt "grants_handler"
+msgid "Unvisited pages:"
+msgstr "Sivut, joilla ei ole käyty:"
+
+msgctxt "grants_handler"
 msgid "Leave the application"
 msgstr "Poistu hakemukselta"
 
@@ -655,3 +663,7 @@ msgstr "Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua hakemuk
 msgctxt "grants_handler"
 msgid "Attention"
 msgstr "Huomio"
+
+msgctxt "grants_handler"
+msgid "You must visit all pages in the form before you can submit the application."
+msgstr "Käy kaikilla sivuilla ennen kuin lähetät hakemuksen."
