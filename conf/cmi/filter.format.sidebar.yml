@@ -1,9 +1,7 @@
 uuid: 08dc13c1-c3be-4f15-abde-e23e88f4e4c5
 langcode: en
 status: true
-dependencies:
-  module:
-    - helfi_api_base
+dependencies: {  }
 name: Sidebar
 format: sidebar
 weight: 0
@@ -28,10 +26,4 @@ filters:
     provider: filter
     status: true
     weight: 10
-    settings: {  }
-  helfi_link_converter:
-    id: helfi_link_converter
-    provider: helfi_api_base
-    status: true
-    weight: -10
     settings: {  }
