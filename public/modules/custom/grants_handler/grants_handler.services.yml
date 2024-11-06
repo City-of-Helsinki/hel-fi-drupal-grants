@@ -155,9 +155,14 @@ services:
       '@messenger',
       '@grants_handler.application_getter_service',
       '@helfi_helsinki_profiili.userdata',
-      '@grants_attachments.attachment_fixer_service'
+      '@grants_attachments.attachment_fixer_service',
+      '@current_user',
+      '@database'
     ]
 
   grants_handler.application_access_handler:
     class: Drupal\grants_handler\ApplicationAccessHandler
-    arguments: ['@grants_profile.service']
+    arguments: [
+      '@grants_profile.service',
+      '@grants_handler.application_getter_service'
+    ]

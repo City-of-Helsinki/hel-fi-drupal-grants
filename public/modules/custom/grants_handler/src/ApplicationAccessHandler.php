@@ -6,7 +6,6 @@ namespace Drupal\grants_handler;
 
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_profile\GrantsProfileService;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\webform\Entity\WebformSubmission;
 
 /**
@@ -19,6 +18,7 @@ final readonly class ApplicationAccessHandler {
    */
   public function __construct(
     private GrantsProfileService $grantsProfileService,
+    private ApplicationGetterService $applicationGetterService,
   ) {}
 
   /**
@@ -30,7 +30,8 @@ final readonly class ApplicationAccessHandler {
    * @return bool
    *   Access status
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_profile\GrantsProfileException
+   * @throws \Drupal\grants_mandate\CompanySelectException
    */
   public function singleSubmissionAccess(WebformSubmission $webform_submission): bool {
 
@@ -51,12 +52,12 @@ final readonly class ApplicationAccessHandler {
       return FALSE;
     }
 
-    try {
-      $atvDoc = ApplicationHelpers::atvDocumentFromApplicationNumber($webformData['application_number']);
-    }
-    catch (AtvDocumentNotFoundException $e) {
+    $atvDoc = $this->applicationGetterService->getAtvDocument($webformData['application_number']);
+
+    if (!$atvDoc) {
       return FALSE;
     }
+
     $atvMetadata = $atvDoc->getMetadata();
     // Mismatch between profile and application applicant type.
     if ($companyType !== $webformData['hakijan_tiedot']['applicantType']) {
