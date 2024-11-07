@@ -754,7 +754,7 @@ elements: |-
         '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#states':
           visible:
             ':input[name="hankesuunnitelma_jatkohakemus"]':
@@ -766,7 +766,7 @@ elements: |-
         '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#states':
           visible:
             ':input[name="hankesuunnitelma_jatkohakemus"]':
@@ -779,18 +779,109 @@ elements: |-
         '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#states':
           visible:
             ':input[name="hankesuunnitelma_jatkohakemus"]':
               value: '0'
-    unknown_for_now:
+    hankkeen_valiarviointi_section:
       '#type': webform_section
-      '#title': '3.5 puuttuva määritys'
+      '#title': '3.5 2-vuotisten hankkeiden väliarviointi'
       '#states':
         visible:
           ':input[name="hankesuunnitelma_radios"]':
             value: '1'
+      arviointi_markup:
+        '#type': webform_markup
+        '#markup': 'Arvioi tässä osiossa hankkeen tähänastista toimintaa seuraavien kysymysten avulla. Avustuksen 2. osaa hakevien tulee liittää hakemukselle Muu liite-kohtaan niin ikään kustannuspaikkaraportti ajanjaksolta 1.6.-31.12.2024'
+      arviointi_toteuma:
+        '#type': textarea
+        '#title': 'Onko hanke edennyt suunnitelman mukaisesti? Arvioikaa hankkeen toteumaa tähän asti asteikolla 1-100% ja perustelkaa vastauksenne.'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+      arviointi_muutokset_markup:
+        '#type': webform_markup
+        '#markup': 'Onko hankkeessa tapahtunut merkittäviä muutoksia?'
+      arviointi_muutokset_talous:
+        '#type': textarea
+        '#title': 'Talouteen liittyen; mitä?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+      arviointi_muutokset_toiminta:
+        '#type': textarea
+        '#title': 'Toimintaan liittyen; mitä?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+      arviointi_muutokset_aikataulu:
+        '#type': textarea
+        '#title': 'Aikatauluun liittyen; mitä?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+      arviointi_haasteet:
+        '#type': textarea
+        '#title': 'Onko hanke kohdannut toimintaan vaikuttaneita haasteita? Jos, niin millaisia?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+      arviointi_saavutettavuus:
+        '#type': textarea
+        '#title': 'Miten toiminta on tavoittanut osallistujia suhteessa tavoitteisiin?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+      arviointi_avustus_kaytto:
+        '#type': textarea
+        '#help': 'Avustusehdot, kohta 10e: "Myönnetty avustus on palautettava Helsingin kaupungille, jos avustusta ei ole käytetty sinä aikana, jona se on avustuspäätöksen mukaan tullut käyttää.'
+        '#title': 'Tuleeko ensimmäiselle hankekaudelle myönnetty avustus käytettyä näillä näkymin määräaikaan (31.5.2025) mennessä? Jos ei, niin avatkaa tähän johtaneita syitä.'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
   4_talousarvio:
     '#type': webform_wizard_page
     '#title': '4. Talousarvio'
