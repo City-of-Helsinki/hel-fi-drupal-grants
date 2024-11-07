@@ -59,7 +59,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
           'service' => 'grants_metadata.converter',
           'method' => 'convertDates',
           'arguments' => [
-            'dateFormat' => 'c',
+            'dateFormat' => 'Y-m-d',
           ],
         ],
       ],
@@ -72,7 +72,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
           'service' => 'grants_metadata.converter',
           'method' => 'convertDates',
           'arguments' => [
-            'dateFormat' => 'c',
+            'dateFormat' => 'Y-m-d',
           ],
         ],
       ],
