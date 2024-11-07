@@ -485,7 +485,7 @@ elements: |-
     '#title': '3. Tarkemmat tiedot'
     tarkemmat_tiedot_section:
       '#type': webform_section
-      '#title': '3.0 Tarkemmat tiedot'
+      '#title': ' '
       hankesuunnitelma_radios:
         '#type': radios
         '#title': 'Haetaanko nyt vuonna 2024 myönnetyn kaksivuotisen avustuksen 2. osaa?'
