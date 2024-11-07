@@ -93,13 +93,13 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_riskit_seuranta' => [],
       'hankkeen_riskit_vakiinnuttaminen' => [],
       // Example forms.
-      'puuttuva_kentta_1' => [],
-      'puuttuva_kentta_2' => [],
-      'vaikka_sahkoposti' => [],
-      'checkboksiki_onnistuu' => [],
-      'tekstialue' => [],
-      'tekstikentta' => [],
-      'paivamaara' => [],
+      'arviointi_toteuma' => [],
+      'arviointi_muutokset_talous' => [],
+      'arviointi_muutokset_toiminta' => [],
+      'arviointi_muutokset_aikataulu' => [],
+      'arviointi_haasteet' => [],
+      'arviointi_saavutettavuus' => [],
+      'arviointi_avustus_kaytto' => [],
     ];
 
     foreach ($customQuestions as $key => $value) {
