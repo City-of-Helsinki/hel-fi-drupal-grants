@@ -90,7 +90,7 @@ elements: |
         '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'
-        '#help': '<p>Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.</p>'
+        '#help': '<p>Vilket organ har beviljat bidraget (t.ex. namnet på departementet).</p>'
       year:
         '#title': År
         '#pattern_error': 'Bara siffror'

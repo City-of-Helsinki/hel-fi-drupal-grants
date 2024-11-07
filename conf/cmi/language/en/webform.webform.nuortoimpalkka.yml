@@ -87,7 +87,7 @@ elements: |
         '#title': 'Grant issuer'
       issuer_name:
         '#title': 'Issuer''s name'
-        '#help': '<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p>'
+        '#help': '<p>Which body has granted the grant (e.g. name of the ministry).</p>'
       year:
         '#title': Year
         '#pattern_error': 'Only numbers'
