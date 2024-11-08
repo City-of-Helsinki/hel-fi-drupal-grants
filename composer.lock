@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a3aa686902754cc000efad66a1cc666d",
+    "content-hash": "ce4104284d63679dfc9b04271c9f9c5a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5604,23 +5604,23 @@
         },
         {
             "name": "drupal/helfi_api_base",
-            "version": "2.7.9",
+            "version": "2.7.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base.git",
-                "reference": "189161e8d674072f0a345c45b93dd4c42896b52b"
+                "reference": "d149db10862c62980427c0ad124d0e54c7b97902"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-api-base/zipball/189161e8d674072f0a345c45b93dd4c42896b52b",
-                "reference": "189161e8d674072f0a345c45b93dd4c42896b52b",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-api-base/zipball/d149db10862c62980427c0ad124d0e54c7b97902",
+                "reference": "d149db10862c62980427c0ad124d0e54c7b97902",
                 "shasum": ""
             },
             "require": {
                 "drupal/entity": "^1.0",
                 "drupal/health_check": "^3.0",
                 "drupal/monolog": "^3.0",
-                "drupal/raven": "^4.0 || ^5.0",
+                "drupal/raven": "^5.0 || ^6.0",
                 "ext-curl": "*",
                 "firebase/php-jwt": "^6.5",
                 "php": "^8.1",
@@ -5643,10 +5643,10 @@
             ],
             "description": "Helfi - API Base",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/tree/2.7.9",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/tree/2.7.14",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/issues"
             },
-            "time": "2024-10-10T08:24:13+00:00"
+            "time": "2024-11-07T10:23:06+00:00"
         },
         {
             "name": "drupal/helfi_atv",
