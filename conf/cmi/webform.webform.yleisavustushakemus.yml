@@ -14,7 +14,7 @@ third_party_settings:
     applicationTypeTerms:
       49: '49'
     applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-07-30T11:19:00'
+    applicationClose: '2029-07-30T11:19:00'
     applicationContinuous: 1
     applicationTargetGroup: '20'
     disableCopying: 0
@@ -23,8 +23,9 @@ third_party_settings:
     applicationActingYears: {  }
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '2'
-    status: released
+    status: development
     parent: ''
+    avus2BreakingChange: 0
 weight: 0
 open: null
 close: null
@@ -35,7 +36,7 @@ id: yleisavustushakemus
 title: 'Kaupunginhallitus, yleisavustushakemus'
 description: '<p>ECONOMICGRANTAPPLICATION</p>'
 categories:
-  - Tuotannossa
+  - Kehityksessä
 elements: |-
   applicant_type:
     '#type': hidden
@@ -91,8 +92,8 @@ elements: |-
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
-    '#prev_button_label': 'Edellinen'
-    '#next_button_label': 'Seuraava'
+    '#prev_button_label': Edellinen
+    '#next_button_label': Seuraava
     application_number:
       '#type': hidden
       '#title': Hakemusnumero
@@ -206,8 +207,8 @@ elements: |-
   2_avustustiedot:
     '#type': webform_wizard_page
     '#title': '2. Avustustiedot'
-    '#prev_button_label': 'Edellinen'
-    '#next_button_label': 'Seuraava'
+    '#prev_button_label': Edellinen
+    '#next_button_label': Seuraava
     avustuksen_tiedot:
       '#type': webform_section
       '#title': 'Avustuksen tiedot'
@@ -296,7 +297,7 @@ elements: |-
               value: '1'
         '#multiple__header': false
         '#multiple__item_label': 'myönnetty avustus'
-        '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi my&ouml;nnetty avustus alta.'
+        '#multiple__no_items_message': '<p>Ei syötettyjä arvoja. Lisää uusi myönnetty avustus alta.</p>'
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__sorting': false
@@ -311,17 +312,16 @@ elements: |-
               3: EU
               4: Muu
               5: Säätiö
-              6: STEA
             '#required': true
             '#title': 'Avustuksen myöntäjä'
           issuer_name:
             '#type': textfield
             '#required': true
             '#title': 'Myöntäjän nimi'
+            '#help': 'Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)'
             '#attributes':
               class:
                 - webform--large
-            '#help': 'Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)'
           year:
             '#type': textfield
             '#required': true
@@ -335,11 +335,11 @@ elements: |-
           amount:
             '#type': textfield
             '#required': true
+            '#title': 'Myönnetyn avustuksen summa'
             '#attributes':
               class:
                 - webform--small
-            '#title': 'Myönnetyn avustuksen summa'
-            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
+            '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
           purpose:
             '#type': textarea
             '#title': 'Kuvaus käyttötarkoituksesta'
@@ -400,7 +400,6 @@ elements: |-
               3: EU
               4: Muu
               5: Säätiö
-              6: STEA
             '#required': true
             '#title': 'Avustuksen myöntäjä'
           issuer_name:
@@ -428,7 +427,7 @@ elements: |-
               class:
                 - webform--small
             '#title': 'Haetun avustuksen summa'
-            '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
+            '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
           purpose:
             '#type': textarea
             '#title': 'Kuvaus käyttötarkoituksesta'
@@ -524,8 +523,8 @@ elements: |-
   3_yhteison_tiedot:
     '#type': webform_wizard_page
     '#title': '3. Yhteisön toiminta'
-    '#prev_button_label': 'Edellinen'
-    '#next_button_label': 'Seuraava'
+    '#prev_button_label': Edellinen
+    '#next_button_label': Seuraava
     business_info:
       '#type': webform_section
       '#title': 'Toiminnan kuvaus'
@@ -556,7 +555,7 @@ elements: |-
           class:
             - webform--sall
         '#maxlength': 50
-        '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
+        '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#size': 16
       fee_community:
         '#type': textfield
@@ -565,7 +564,7 @@ elements: |-
           class:
             - webform--small
         '#maxlength': 50
-        '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
+        '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#size': 16
     jasenmaara:
       '#type': webform_section
@@ -583,7 +582,7 @@ elements: |-
           '#title': 'Henkilöjäseniä yhteensä'
           '#help': 'Kuinka monta j&auml;senmaksun maksanutta henkil&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;?'
           '#maxlength': 9
-          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
@@ -595,7 +594,7 @@ elements: |-
           '#title': 'Helsinkiläisiä henkilöjäseniä yhteensä'
           '#help': 'Kuinka monta j&auml;senmaksun maksanutta helsinkil&auml;ist&auml; henkil&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;?'
           '#maxlength': 9
-          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
@@ -607,7 +606,7 @@ elements: |-
           '#title': Yhteisöjäseniä
           '#help': 'Kuinka monta j&auml;senmaksun maksanutta yhteis&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;? Yhteis&ouml;j&auml;seni&auml; ovat muut kuin henkil&ouml;j&auml;senet, esimerkiksi yhdistykset, s&auml;&auml;ti&ouml;t, yritykset tai kunnat.'
           '#maxlength': 9
-          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
@@ -619,7 +618,7 @@ elements: |-
           '#title': 'Helsinkiläisiä yhteisöjäseniä yhteensä'
           '#help': 'Kuinka monta j&auml;senmaksun maksanutta helsinkil&auml;ist&auml; yhteis&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;? Yhteis&ouml;j&auml;seni&auml; ovat muut kuin henkil&ouml;j&auml;senet, esimerkiksi yhdistykset, s&auml;&auml;ti&ouml;t, yritykset tai kunnat.'
           '#maxlength': 9
-          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
           '#size': 16
@@ -761,10 +760,10 @@ elements: |-
     '#title': 'Submit button(s)'
     '#submit__label': Lähetä
     '#draft__label': 'Tallenna keskeneräisenä'
-    '#wizard_prev__label': 'Edellinen'
-    '#wizard_next__label': 'Seuraava'
-    '#preview_prev__label': 'Edellinen'
-    '#preview_next__label': 'Esikatseluun'
+    '#wizard_prev__label': Edellinen
+    '#wizard_next__label': Seuraava
+    '#preview_prev__label': Edellinen
+    '#preview_next__label': Esikatseluun
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -958,12 +957,28 @@ access:
 handlers:
   grants_handler:
     id: grants_handler
-    handler_id: grants_handler
+    handler_id: null
     label: 'Grants Handler'
     notes: ''
     status: true
     conditions: {  }
-    weight: 0
+    weight: null
     settings:
-      debug: true
+      id: grants_handler
+      handler_id: null
+      label: 'Grants Handler'
+      notes: ''
+      status: true
+      conditions: {  }
+      weight: null
+      settings:
+        id: grants_handler
+        handler_id: grants_handler
+        label: 'Grants Handler'
+        notes: ''
+        status: true
+        conditions: {  }
+        weight: 0
+        settings:
+          debug: true
 variants: {  }
