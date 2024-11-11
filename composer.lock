@@ -4106,17 +4106,17 @@
         },
         {
             "name": "drupal/editoria11y",
-            "version": "2.1.19",
+            "version": "2.1.20",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/editoria11y.git",
-                "reference": "2.1.19"
+                "reference": "2.1.20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/editoria11y-2.1.19.zip",
-                "reference": "2.1.19",
-                "shasum": "0ccf651071837e1ee6fcfb8fbb1c279d2fc1bc27"
+                "url": "https://ftp.drupal.org/files/projects/editoria11y-2.1.20.zip",
+                "reference": "2.1.20",
+                "shasum": "67f8e2eb17ed3d3db6cd93782ed1faa88c206640"
             },
             "require": {
                 "drupal/core": "^9 || ^10 || ^11"
@@ -4127,8 +4127,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.1.19",
-                    "datestamp": "1726514804",
+                    "version": "2.1.20",
+                    "datestamp": "1731097435",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -5933,16 +5933,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "4.7.0",
+            "version": "4.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "1706882d4ccbeacf33175a30157a9495f891af39"
+                "reference": "680984849f6f204b63af73efb0ae531ba121ff58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/1706882d4ccbeacf33175a30157a9495f891af39",
-                "reference": "1706882d4ccbeacf33175a30157a9495f891af39",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/680984849f6f204b63af73efb0ae531ba121ff58",
+                "reference": "680984849f6f204b63af73efb0ae531ba121ff58",
                 "shasum": ""
             },
             "require": {
@@ -6057,6 +6057,9 @@
                     },
                     "drupal/view_unpublished": {
                         "[#UHF-9256] Fix missing dynamic permission dependencies.": "https://raw.githubusercontent.com/City-of-Helsinki/drupal-helfi-platform-config/cbb944ae79643ba7ed895db3fac7f3b3d90ac850/patches/view_unpublished_permissions_missing_dependencies.patch"
+                    },
+                    "drupal/elasticsearch_connector": {
+                        "https://drupal.org/i/3486375": "https://raw.githubusercontent.com/City-of-Helsinki/drupal-helfi-platform-config/be8a1fba1a5ea2422154caf4fb7183dfc3917599/patches/3486375.patch"
                     }
                 }
             },
@@ -6065,10 +6068,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.7.0",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.7.1",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2024-11-08T08:46:24+00:00"
+            "time": "2024-11-11T07:44:23+00:00"
         },
         {
             "name": "drupal/helfi_proxy",
@@ -7766,7 +7769,7 @@
             ],
             "authors": [
                 {
-                    "name": "Berdir",
+                    "name": "berdir",
                     "homepage": "https://www.drupal.org/user/214652"
                 },
                 {
@@ -7786,7 +7789,7 @@
                     "homepage": "https://www.drupal.org/user/227761"
                 },
                 {
-                    "name": "Primsi",
+                    "name": "primsi",
                     "homepage": "https://www.drupal.org/user/282629"
                 }
             ],
@@ -11894,16 +11897,16 @@
         },
         {
             "name": "league/container",
-            "version": "4.2.3",
+            "version": "4.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/container.git",
-                "reference": "72f9bebe7bd623007782a40f5ec305661ab706d8"
+                "reference": "7ea728b013b9a156c409c6f0fc3624071b742dec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/container/zipball/72f9bebe7bd623007782a40f5ec305661ab706d8",
-                "reference": "72f9bebe7bd623007782a40f5ec305661ab706d8",
+                "url": "https://api.github.com/repos/thephpleague/container/zipball/7ea728b013b9a156c409c6f0fc3624071b742dec",
+                "reference": "7ea728b013b9a156c409c6f0fc3624071b742dec",
                 "shasum": ""
             },
             "require": {
@@ -11964,7 +11967,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/container/issues",
-                "source": "https://github.com/thephpleague/container/tree/4.2.3"
+                "source": "https://github.com/thephpleague/container/tree/4.2.4"
             },
             "funding": [
                 {
@@ -11972,7 +11975,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-23T12:06:58+00:00"
+            "time": "2024-11-10T12:42:13+00:00"
         },
         {
             "name": "league/flysystem",
@@ -20701,23 +20704,23 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.9.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "1fb5ba8d045f5dd984ebded5b1cc66f29459422d"
+                "reference": "679e3ce485b99e84c775d28e2e96fade9a7fb50a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/1fb5ba8d045f5dd984ebded5b1cc66f29459422d",
-                "reference": "1fb5ba8d045f5dd984ebded5b1cc66f29459422d",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/679e3ce485b99e84c775d28e2e96fade9a7fb50a",
+                "reference": "679e3ce485b99e84c775d28e2e96fade9a7fb50a",
                 "shasum": ""
             },
             "require": {
                 "doctrine/deprecations": "^1.0",
                 "php": "^7.3 || ^8.0",
                 "phpdocumentor/reflection-common": "^2.0",
-                "phpstan/phpdoc-parser": "^1.18"
+                "phpstan/phpdoc-parser": "^1.18|^2.0"
             },
             "require-dev": {
                 "ext-tokenizer": "*",
@@ -20753,9 +20756,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.9.0"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.10.0"
             },
-            "time": "2024-11-03T20:11:34+00:00"
+            "time": "2024-11-09T15:12:26+00:00"
         },
         {
             "name": "phpspec/prophecy",
