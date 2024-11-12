@@ -120,6 +120,123 @@ elements: |-
   applicant_type:
     '#type': hidden
     '#title': 'Hakijan tyyppi'
+  kulttuuri1_summa:
+    '#type': grants_webform_summation_field
+    '#title': Kulttuuri1-summa
+    '#collect_field':
+      subventions%%amount: subventions%%amount
+      applicant_type: 0
+      application_number: 0
+      status: 0
+      hakijan_tiedot: 0
+      email: 0
+      contact_person: 0
+      contact_person_phone_number: 0
+      community_address: 0
+      bank_account: 0
+      community_officials: 0
+      acting_year: 0
+      compensation_purpose: 0
+      olemme_saaneet_muita_avustuksia: 0
+      myonnetty_avustus: 0
+      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      haettu_avustus_tieto: 0
+      hankesuunnitelma_radios: 0
+      hankesuunnitelma_jatkohakemus: 0
+      hankkeen_tarkoitus_tavoitteet: 0
+      hankkeen_toimenpiteet_aikataulu: 0
+      hankkeen_toimenpiteet_alkupvm: 0
+      hankkeen_toimenpiteet_loppupvm: 0
+      hankkeen_keskeisimmat_kumppanit: 0
+      haun_painopisteet_liikkumis_kehitys: 0
+      haun_painopisteet_digi_kehitys: 0
+      haun_painopisteet_vertais_kehitys: 0
+      haun_painopisteet_kulttuuri_kehitys: 0
+      hankkeen_kohderyhmat_kenelle: 0
+      hankkeen_kohderyhmat_erityisryhmat: 0
+      hankkeen_kohderyhmat_tavoitus: 0
+      hankkeen_kohderyhmat_konkretia: 0
+      hankkeen_kohderyhmat_osallisuus: 0
+      hankkeen_kohderyhmat_osaaminen: 0
+      hankkeen_kohderyhmat_postinrot: 0
+      hankkeen_kohderyhmat_miksi_alue: 0
+      hankkeen_riskit_keskeisimmat: 0
+      hankkeen_riskit_seuranta: 0
+      hankkeen_riskit_vakiinnuttaminen: 0
+      arviointi_toteuma: 0
+      arviointi_muutokset_talous: 0
+      arviointi_muutokset_toiminta: 0
+      arviointi_muutokset_aikataulu: 0
+      arviointi_haasteet: 0
+      arviointi_saavutettavuus: 0
+      arviointi_avustus_kaytto: 0
+      tulot: 0
+      talous_tulon_tyyppi: 0
+      talous_menon_tyyppi: 0
+      additional_information: 0
+      extra_info: 0
+      muu_liite: 0
+    '#subvention_type': '47'
+    '#form_item': hidden
+  kulttuuri2_summa:
+    '#type': grants_webform_summation_field
+    '#title': Kulttuuri2-summa
+    '#collect_field':
+      subventions%%amount: subventions%%amount
+      applicant_type: 0
+      application_number: 0
+      status: 0
+      hakijan_tiedot: 0
+      email: 0
+      contact_person: 0
+      contact_person_phone_number: 0
+      community_address: 0
+      bank_account: 0
+      community_officials: 0
+      acting_year: 0
+      compensation_purpose: 0
+      olemme_saaneet_muita_avustuksia: 0
+      myonnetty_avustus: 0
+      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      haettu_avustus_tieto: 0
+      hankesuunnitelma_radios: 0
+      hankesuunnitelma_jatkohakemus: 0
+      hankkeen_tarkoitus_tavoitteet: 0
+      hankkeen_toimenpiteet_aikataulu: 0
+      hankkeen_toimenpiteet_alkupvm: 0
+      hankkeen_toimenpiteet_loppupvm: 0
+      hankkeen_keskeisimmat_kumppanit: 0
+      haun_painopisteet_liikkumis_kehitys: 0
+      haun_painopisteet_digi_kehitys: 0
+      haun_painopisteet_vertais_kehitys: 0
+      haun_painopisteet_kulttuuri_kehitys: 0
+      hankkeen_kohderyhmat_kenelle: 0
+      hankkeen_kohderyhmat_erityisryhmat: 0
+      hankkeen_kohderyhmat_tavoitus: 0
+      hankkeen_kohderyhmat_konkretia: 0
+      hankkeen_kohderyhmat_osallisuus: 0
+      hankkeen_kohderyhmat_osaaminen: 0
+      hankkeen_kohderyhmat_postinrot: 0
+      hankkeen_kohderyhmat_miksi_alue: 0
+      hankkeen_riskit_keskeisimmat: 0
+      hankkeen_riskit_seuranta: 0
+      hankkeen_riskit_vakiinnuttaminen: 0
+      arviointi_toteuma: 0
+      arviointi_muutokset_talous: 0
+      arviointi_muutokset_toiminta: 0
+      arviointi_muutokset_aikataulu: 0
+      arviointi_haasteet: 0
+      arviointi_saavutettavuus: 0
+      arviointi_avustus_kaytto: 0
+      tulot: 0
+      talous_tulon_tyyppi: 0
+      talous_menon_tyyppi: 0
+      additional_information: 0
+      extra_info: 0
+      muu_liite: 0
+    '#subvention_type': '48'
+    '#data_type': euro
+    '#form_item': hidden
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
@@ -630,8 +747,13 @@ elements: |-
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
         '#states':
           visible:
-            ':input[name="hankesuunnitelma_jatkohakemus"]':
-              value: '0'
+            - ':input[name="kulttuuri1_summa"]':
+                value:
+                  greater: '0'
+            - or
+            - ':input[name="kulttuuri2_summa"]':
+                value:
+                  greater: '0'
     hankkeen_kohderyhmat_section:
       '#type': webform_section
       '#title': '3.3 Hankkeen kohderyhmät'
@@ -1203,12 +1325,85 @@ access:
 handlers:
   grants_handler:
     id: grants_handler
-    handler_id: grants_handler
+    handler_id: null
     label: 'Grants Handler'
     notes: ''
     status: true
     conditions: {  }
-    weight: 0
+    weight: null
     settings:
-      debug: false
+      id: grants_handler
+      handler_id: null
+      label: 'Grants Handler'
+      notes: ''
+      status: true
+      conditions: {  }
+      weight: null
+      settings:
+        id: grants_handler
+        label: 'Grants Handler'
+        notes: ''
+        handler_id: null
+        status: 1
+        conditions: {  }
+        weight: ''
+        settings:
+          id: grants_handler
+          handler_id: null
+          label: 'Grants Handler'
+          notes: ''
+          status: true
+          conditions: {  }
+          weight: null
+          settings:
+            id: grants_handler
+            handler_id: null
+            label: 'Grants Handler'
+            notes: ''
+            status: true
+            conditions: {  }
+            weight: null
+            settings:
+              id: grants_handler
+              handler_id: null
+              label: 'Grants Handler'
+              notes: ''
+              status: true
+              conditions: {  }
+              weight: null
+              settings:
+                id: grants_handler
+                handler_id: null
+                label: 'Grants Handler'
+                notes: ''
+                status: true
+                conditions: {  }
+                weight: null
+                settings:
+                  id: grants_handler
+                  handler_id: null
+                  label: 'Grants Handler'
+                  notes: ''
+                  status: true
+                  conditions: {  }
+                  weight: null
+                  settings:
+                    id: grants_handler
+                    handler_id: null
+                    label: 'Grants Handler'
+                    notes: ''
+                    status: true
+                    conditions: {  }
+                    weight: null
+                    settings:
+                      id: grants_handler
+                      handler_id: grants_handler
+                      label: 'Grants Handler'
+                      notes: ''
+                      status: true
+                      conditions: {  }
+                      weight: 0
+                      settings:
+                        debug: false
+          debug: false
 variants: {  }
