@@ -1,4 +1,3 @@
-uuid: 6b799d6a-d01b-4f56-9075-59e76476952c
 langcode: fi
 status: open
 dependencies:
@@ -296,6 +295,7 @@ elements: |-
       compensation_purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
+        '#help': 'Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet. Kerro my&ouml;s mit&auml; avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.'
         '#maxlength': 5000
         '#required': true
         '#counter_type': character
@@ -595,7 +595,6 @@ elements: |-
           visible:
             ':input[name="hankesuunnitelma_jatkohakemus"]':
               value: '0'
-        '#required': true
       haun_painopisteet_digi_kehitys:
         '#type': textarea
         '#title': 'Kehitetäänkö hankkeessa digitaalisesti / etänä toteutettavia kulttuuritoimintoja tai liikkumiseen aktivoivaa toimintaa? Miten?'
