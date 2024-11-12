@@ -249,6 +249,7 @@ elements: |
   talous_tulon_tyyppi:
     '#title': 'Typ av inkomst '
     '#help': '<p>Skriv ner vilken typ av inkomst det gäller. Inkomster kan till exempel vara andra understöd och inträdes- eller<br>deltagaravgifter. Självfinansiering måste uppges som en inkomst även<br>om den självfinansierade delen finansieras med sökandes övrig &nbsp;erksamhet.</p>'
+    '#multiple__add_more_button_label': 'Lisää uusi tulo'
   menot_section:
     '#title': '4.2 Utgifter'
   talous_menon_tyyppi:
