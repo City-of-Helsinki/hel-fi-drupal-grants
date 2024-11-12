@@ -336,7 +336,7 @@ final class ApplicationGetterService {
     }
 
     // Load definition.
-    $dataDefinition = ApplicationHelpers::getDataDefinition($document->getType());
+    $dataDefinition = $this->getDataDefinition($document->getType());
 
     // Build data.
     $sData = DocumentContentMapper::documentContentToTypedData(
@@ -355,6 +355,18 @@ final class ApplicationGetterService {
     $this->submissions[$applicationNumber] = $submissionObject;
 
     return $submissionObject;
+  }
+
+  /**
+   * Get data definition class from application type.
+   *
+   * @param string $type
+   *   Type of the application.
+   */
+  public function getDataDefinition(string $type) {
+    $defClass = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionClass'];
+    $defId = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionId'];
+    return $defClass::create($defId);
   }
 
   /**

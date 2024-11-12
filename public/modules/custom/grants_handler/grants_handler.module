@@ -652,11 +652,12 @@ function _grants_handler_alter_number_fields(&$element): void {
  * Function to update custom component dropdown value rather than via config.
  *
  * @param array $form
- *  The form.
+ *   The form.
  *
  * @return void
+ *   No return?
  */
-function _update_issuer_dropdown(array &$form): void {
+function grants_handler__update_issuer_dropdown(array &$form): void {
 
   $tOpts = ['context' => 'Grant Issuers'];
 
@@ -664,16 +665,12 @@ function _update_issuer_dropdown(array &$form): void {
     1 => t('State', [], $tOpts),
     3 => t('EU', [], $tOpts),
     4 => t('Other', [], $tOpts),
-    5 => t('Foundation',[], $tOpts),
+    5 => t('Foundation', [], $tOpts),
   ];
 
-  if(isset($form["elements"]["2_avustustiedot"]["muut_samaan_tarkoitukseen_myonnetyt_avustukset"]["myonnetty_avustus"])) {
-    $form["elements"]["2_avustustiedot"]["muut_samaan_tarkoitukseen_myonnetyt_avustukset"]["myonnetty_avustus"]["#element"]["issuer"]["#options"] = $newOptions;
-  }
-
-  if(isset($form["elements"]["2_avustustiedot"]["muut_samaan_tarkoitukseen_haetut_avustukset"]["haettu_avustus_tieto"])) {
-    $form["elements"]["2_avustustiedot"]["muut_samaan_tarkoitukseen_haetut_avustukset"]["haettu_avustus_tieto"]["#element"]["issuer"]["#options"] = $newOptions;
-  }
+  // Call the method with multiple field names.
+  ApplicationHelpers::updateFieldOptions($form, $newOptions, ['myonnetty_avustus', 'issuer']);
+  ApplicationHelpers::updateFieldOptions($form, $newOptions, ['haettu_avustus_tieto', 'issuer']);
 }
 
 /**
@@ -695,7 +692,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   $form['actions']['wizard_next']['#validate'][] = '::noValidate';
 
   _grants_handler_alter_number_fields($form);
-  _update_issuer_dropdown($form);
+  grants_handler__update_issuer_dropdown($form);
 
   $grants_formnavigation_helper = \Drupal::service('grants_handler.navigation_helper');
   $all_errors = [];
