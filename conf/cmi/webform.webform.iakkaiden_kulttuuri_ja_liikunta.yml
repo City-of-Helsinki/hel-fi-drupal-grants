@@ -1,5 +1,5 @@
-uuid: 6b799d6a-d01b-4f56-9075-59e76476952c
-langcode: en
+uuid: d6a6681d-87e8-4a48-aa5a-cb1c12bd160f
+langcode: fi
 status: open
 dependencies:
   module:
@@ -35,8 +35,8 @@ close: null
 uid: 1
 template: false
 archive: false
-id: elderly_sports_and_culture
-title: 'Kuva: Grant for elderly sports and culture'
+id: iakkaiden_kulttuuri_ja_liikunta
+title: 'Kulttuurin avustukset iäkkäiden ihmisten kulttuuritoiminnan edistämiseksi'
 description: '<p>Kulttuurin ja vapaa-ajan erillisavustushakemus: Ikääntyneiden liikkumisen ja kulttuuritoiminnan avustus</p>'
 categories:
   - Kehityksessä
