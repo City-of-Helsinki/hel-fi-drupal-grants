@@ -64,7 +64,7 @@ elements: |
   other_grants_for_same_purpose:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#markup': '<p>Ange här endast de understöd<br>som beviljats från annanstans<br>än Helsingfors stad under det<br>innevarande beskattningsåret<br>eller de föregående två<br>beskattningsåren.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Ett jakande svar öppnar ytterligare en fråga</span></div></div></div>'
+    '#markup': '<p>Ange här endast de understöd som beviljats från annanstans<br>än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Ett jakande svar öppnar ytterligare en fråga</span></div></div></div>'
   olemme_saaneet_muita_avustuksia:
     '#title': 'Vi har fått andra understöd'
     '#options':
@@ -158,7 +158,7 @@ elements: |
   haun_painopisteet_section:
     '#title': '3.2 Tyngdpunkter för ansökan'
   haun_painopisteet_ohje:
-    '#markup': '<p>Projektet ska arbeta för en eller<br>flera tyngdpunkter. OBS! Välj<br>bara de tyngdpunkter som ni<br>kommer att bidra till på ett<br>konkret sätt genom projektet.</p>'
+    '#markup': '<p>Projektet ska arbeta för en eller flera tyngdpunkter. OBS! Välj bara de tyngdpunkter som ni kommer att bidra till på ett konkret sätt genom projektet.</p>'
   haun_painopisteet_liikkumis_kehitys:
     '#title': 'Bidrar projektet till att utveckla möjligheter till idrott eller konst- och kulturverksamhet i närområdet/regionalt? På vilket sätt?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
