@@ -129,7 +129,7 @@ elements: |
     '#title': '3. Mer detaljerad information'
   hankesuunnitelma_radios:
     '#title': 'Ansöker du nu om den andra delen av ett tvåårigt understöd som beviljades 2024?'
-    '#help': '<p>Svara bara ”ja” på den här<br>frågan om din sammanslutning<br>redan har ett pågående projekt<br>som finansieras med samma<br>understöd och du ansöker om<br>fortsatt finansiering.</p>'
+    '#help': '<p>Svara bara ”ja” på den här frågan om din sammanslutning redan har ett pågående projekt som finansieras med samma understöd och du ansöker om fortsatt finansiering.</p>'
     '#options':
       1: Ja
       0: Nej
@@ -254,7 +254,7 @@ elements: |
     '#title': '4.2 Utgifter'
   talous_menon_tyyppi:
     '#title': utgifter
-    '#help': '<p>Skriv ner vilken typ av utgift<br>det gäller. Utgifter kan till<br>exempel vara andra lokalhyror<br>och personalkostnader.</p>'
+    '#help': '<p>Skriv ner vilken typ av utgift det gäller. Utgifter kan till exempel vara andra lokalhyror och personalkostnader.</p>'
     '#multiple__add_more_button_label': 'Lägg till en utgift'
   lisatiedot_ja_liitteet:
     '#title': '5. Ytterligare information och bilagor'
@@ -262,12 +262,12 @@ elements: |
     '#title': 'Ytterligare information för ansökan'
   additional_information:
     '#title': 'Ytterligare information'
-    '#help': '<p>Här kan du vid behov skriva<br>ytterligare information eller<br>andra motiveringar som rör<br>ansökan eller meddela om<br>ändringar i basuppgifterna.</p>'
+    '#help': '<p>Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan eller meddela om ändringar i basuppgifterna.</p>'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': '<p>Alla bilagor som anges i utlysningen måste lämnas in för behandling av ansökan om understöd. Ansökan om<br>understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.</p><h4>Bilagor som tidigare lämnats in till Helsingfors stad</h4><p>Om de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets<br>fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i<br>detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan<br>ansökan”.</p>'
+    '#markup': '<p>Alla bilagor som anges i utlysningen måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.</p><h4>Bilagor som tidigare lämnats in till Helsingfors stad</h4><p>Om de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>'
   notification_attachments:
     '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div><div class="hds-notification__body"><p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p><p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p></div></div></div>'
   extra_info:
