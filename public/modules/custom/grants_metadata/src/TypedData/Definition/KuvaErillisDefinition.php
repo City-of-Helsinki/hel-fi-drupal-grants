@@ -92,7 +92,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_riskit_keskeisimmat' => [],
       'hankkeen_riskit_seuranta' => [],
       'hankkeen_riskit_vakiinnuttaminen' => [],
-      // Example forms.
       'arviointi_toteuma' => [],
       'arviointi_muutokset_talous' => [],
       'arviointi_muutokset_toiminta' => [],
