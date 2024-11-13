@@ -148,7 +148,7 @@ class GrantsConverterService {
    *
    * This will be called when converting Kyllä/Ei values to webform accepted
    * booleanish values. They are stings with 1 or 0 as value.
-   * So not boolean per se, but this method can be made to support integer values
+   * So not boolean per se, but this method can be made to support int values
    * as well.
    *
    * @param string $value
