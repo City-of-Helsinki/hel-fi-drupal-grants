@@ -177,6 +177,7 @@ elements: |-
       extra_info: 0
       muu_liite: 0
     '#subvention_type': '47'
+    '#data_type': euro
     '#form_item': hidden
   kulttuuri2_summa:
     '#type': grants_webform_summation_field
@@ -898,7 +899,6 @@ elements: |-
         '#type': textarea
         '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
         '#maxlength': 2500
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
