@@ -133,6 +133,22 @@ elements: |
     '#options':
       1: Ja
       0: Nej
+  ensisijainen_taiteen_ala:
+    '#title': 'Huvudsaklig konstart '
+    '#help': '<p>Välj det alternativ, som bäst motsvarar er verksamhet.</p>'
+    '#options':
+      'Design ja käsityö': 'Design och hantverk'
+      'Elokuva, valokuva ja media': 'Film, fotokonst och media'
+      Kaupunkikulttuuri: Stadskultur
+      Kirjallisuus: Litteratur
+      'Kuvataide ja sarjakuva': 'Bildkonst och seriekonst'
+      Monitaide: 'Tvärkonstnärlig verksamhet'
+      Museo: Museum
+      Musiikki: Musik
+      Muu: Annat
+      Sirkus: Cirkus
+      Tanssi: Dans
+      Teatteri: Teater
   hankesuunnitelma_section:
     '#title': '3.1 Projektplan'
   hankesuunnitelma_jatkohakemus:

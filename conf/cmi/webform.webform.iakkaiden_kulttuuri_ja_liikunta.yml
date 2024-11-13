@@ -614,6 +614,35 @@ elements: |-
           1: Kyllä
           0: Ei
         '#default_value': '0'
+      ensisijainen_taiteen_ala:
+        '#type': select
+        '#title': 'Ensisijainen taiteenala'
+        '#help': 'Valitse pudotusvalikosta toimintaa parhaiten kuvaava vaihtoehto.'
+        '#options':
+          'Design ja käsityö': 'Design ja käsityö'
+          'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
+          Kaupunkikulttuuri: Kaupunkikulttuuri
+          Kirjallisuus: Kirjallisuus
+          'Kuvataide ja sarjakuva': 'Kuvataide ja sarjakuva'
+          Monitaide: Monitaide
+          Museo: Museo
+          Musiikki: Musiikki
+          Muu: Muu
+          Sirkus: Sirkus
+          Tanssi: Tanssi
+          Teatteri: Teatteri
+        '#wrapper_attributes':
+          class:
+            - webform-element-help--wrapper-short
+        '#states':
+          visible:
+            - ':input[name="kulttuuri1_summa"]':
+                value:
+                  greater: '0'
+            - or
+            - ':input[name="kulttuuri2_summa"]':
+                value:
+                  greater: '0'
     hankesuunnitelma_section:
       '#type': webform_section
       '#title': '3.1 Hankesuunnitelma'

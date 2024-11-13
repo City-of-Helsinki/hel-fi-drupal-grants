@@ -133,6 +133,22 @@ elements: |
     '#options':
       1: 'Yes'
       0: 'No'
+  ensisijainen_taiteen_ala:
+    '#title': 'Primary field of art'
+    '#help': '<p>Choose the option that best describes your activities.</p>'
+    '#options':
+      'Design ja käsityö': 'Design and crafts'
+      'Elokuva, valokuva ja media': 'Film, photography and media'
+      Kaupunkikulttuuri: 'Urban art and culture'
+      Kirjallisuus: Literature
+      'Kuvataide ja sarjakuva': 'Visual arts and comics'
+      Monitaide: 'Multidisciplinary art'
+      Museo: Museum
+      Musiikki: Music
+      Muu: Other
+      Sirkus: Circus
+      Tanssi: Dance
+      Teatteri: Theatre
   hankesuunnitelma_section:
     '#title': '3.1 Project plan'
   hankesuunnitelma_jatkohakemus:

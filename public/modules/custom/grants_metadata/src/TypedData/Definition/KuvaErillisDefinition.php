@@ -45,6 +45,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
           'method' => 'extractBooleanYesNoValue',
         ],
       ],
+      'ensisijainen_taiteen_ala' => [],
       'hankesuunnitelma_jatkohakemus' => [
         'type' => 'string',
         'valueCallback' => [
