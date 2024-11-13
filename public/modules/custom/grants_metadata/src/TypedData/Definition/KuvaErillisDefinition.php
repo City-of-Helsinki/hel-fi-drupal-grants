@@ -35,17 +35,25 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
 
     $customQuestions = [
       'hankesuunnitelma_radios' => [
-        'type' => 'boolean',
-        'typeOverride' => [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertBooleanToYesNo',
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractBooleanYesNoValue',
         ],
       ],
       'hankesuunnitelma_jatkohakemus' => [
-        'type' => 'boolean',
-        'typeOverride' => [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertBooleanToYesNo',
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractBooleanYesNoValue',
         ],
       ],
       'hankkeen_tarkoitus_tavoitteet' => [],
@@ -166,6 +174,10 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
     // Add value callback if set.
     if (isset($value['valueCallback'])) {
       $info[$key]->setSetting('valueCallback', $value['valueCallback']);
+    }
+    // Add value extractor qq if set.
+    if (isset($value['webformValueExtracter'])) {
+      $info[$key]->setSetting('webformValueExtracter', $value['webformValueExtracter']);
     }
     // Add default value if set or empty value.
     if (isset($value['defaultValue'])) {

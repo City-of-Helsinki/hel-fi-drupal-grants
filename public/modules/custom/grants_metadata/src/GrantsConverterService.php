@@ -143,4 +143,44 @@ class GrantsConverterService {
     return str_replace(['€', '.', ' '], ['', ',', ''], $fieldValue);
   }
 
+  /**
+   * Converts a boolean value represented as a string to a Kyllä/Ei string.
+   *
+   * This will be called when converting Kyllä/Ei values to webform accepted
+   * booleanish values. They are stings with 1 or 0 as value.
+   * So not boolean per se, but this method can be made to support integer values
+   * as well.
+   *
+   * @param string $value
+   *   The boolean value as a string ('1', '0', 'Kyllä', 'Ei').
+   *
+   * @return string
+   *   The hard coded 'Yes' ('Kyllä') or 'No' ('Ei') string.
+   */
+  public function convertBooleanToYesNo(string $value): string {
+    return match ($value) {
+      'Kyllä', 'Ei' => $value,
+      '1' => 'Kyllä',
+      default => 'Ei',
+    };
+  }
+
+  /**
+   * Converts a string value back to a boolean integer.
+   *
+   * This method is used to convert the 'Kyllä' or 'Ei' strings to booleanish
+   * values for Webform to consume. While we return an integer, it is not a
+   * boolean per se, but a value that Webform uses to represent a boolean value.
+   *
+   * @param string $value
+   *   The localized 'Yes' ('Kyllä') or 'No' ('Ei') string.
+   *
+   * @return int
+   *   The boolean value as an integer (1 for 'Kyllä', 0 for 'Ei').
+   */
+  public function extractBooleanYesNoValue(string $value): int {
+    // Return 1 if the value is 'Kyllä', otherwise return 0.
+    return $value === 'Kyllä' ? 1 : 0;
+  }
+
 }
