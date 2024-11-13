@@ -15,8 +15,8 @@ elements: |
   contact_markup:
     '#markup': 'Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.'
   email:
-   '#title': 'Email address'
-   '#help': 'Provide the email address to which you want the messages and notifications related to this application to be sent and which is actively read.'
+    '#title': 'Email address'
+    '#help': 'Provide the email address to which you want the messages and notifications related to this application to be sent and which is actively read.'
   contact_person_section:
     '#title': 'Contact person for the application'
   contact_person:
@@ -129,7 +129,7 @@ elements: |
     '#title': '3. Information in more detail'
   hankesuunnitelma_radios:
     '#title': 'Is the 2nd part of the grant awarded in 2024 now being applied for?'
-    '#help': '<p>Svara bara ”ja” på den här<br>frågan om din sammanslutning<br>redan har ett pågående projekt<br>som finansieras med samma<br>understöd och du ansöker om<br>fortsatt finansiering.</p>'
+    '#help': 'Only answer “yes” to this question if your community already has an ongoing project funded by the same grant and you are applying for additional funding for it.'
     '#options':
       1: 'Yes'
       0: 'No'
@@ -149,9 +149,9 @@ elements: |
   hankkeen_toimenpiteet_toteutus:
     '#title': 'The concrete measures of the project are to be implemented between'
   hankkeen_toimenpiteet_alkupvm:
-    '#title': Startdatum
+    '#title': 'Start date'
   hankkeen_toimenpiteet_loppupvm:
-    '#title': Slutdatum
+    '#title': 'End date'
   hankkeen_keskeisimmat_kumppanit:
     '#title': 'Specify the main partners of the project and their role in the project'
     '#counter_maximum_message': '%d/2500 characters remaining'
