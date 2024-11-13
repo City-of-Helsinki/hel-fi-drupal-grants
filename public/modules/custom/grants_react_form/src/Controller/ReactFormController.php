@@ -9,8 +9,10 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformTranslationManager;
+use GuzzleHttp\Psr7\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 
 /**
  * Returns responses for Webform Printify routes.
@@ -92,6 +94,17 @@ class ReactFormController extends ControllerBase {
           ],
       ],
     ];
+  }
+
+  /**
+   * @todo implement
+   */
+  public function submit(HttpFoundationRequest $request): JsonResponse {
+    $data = $request->request->all();
+
+    return new JsonResponse([
+      'data_you_sent' => $data
+    ]);
   }
 
   /**

@@ -23,6 +23,14 @@ grants_react_form.get_submission:
   requirements:
      _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
 
+grants_react_form.submit:
+  path: '/react/submit'
+  methods: ['POST']
+  defaults:
+    _controller: '\Drupal\grants_react_form\Controller\ReactFormController::submit'
+  requirements:
+    _custom_access: '\Drupal\grants_react_form\Controller\ReactFormController::access'
+
 grants_react_form.edit_submission:
   path: '/react/{webform}/{submission}'
   methods: ['PATCH']
