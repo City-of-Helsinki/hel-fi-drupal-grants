@@ -175,7 +175,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
     if (isset($value['valueCallback'])) {
       $info[$key]->setSetting('valueCallback', $value['valueCallback']);
     }
-    // Add value extractor qq if set.
+    // Add value extractor if set.
     if (isset($value['webformValueExtracter'])) {
       $info[$key]->setSetting('webformValueExtracter', $value['webformValueExtracter']);
     }
