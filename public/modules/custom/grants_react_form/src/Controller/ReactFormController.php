@@ -129,7 +129,7 @@ class ReactFormController extends ControllerBase {
    */
   public function title() {
     // @toodo implement
-    return 'Placeholder title';
+    return 'Liikunta, suunnistuskartta-avustushakemus';
   }
 
   /**
