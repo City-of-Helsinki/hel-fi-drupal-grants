@@ -11,11 +11,12 @@ services:
         '@helfi_helsinki_profiili.userdata',
         '@http_client',
         '@logger.factory',
-        '@grants_handler.events_service',
         '@helfi_atv.atv_service',
         '@current_user',
         '@grants_handler.application_status_service'
     ]
+    calls:
+      - [ setEventsService, [ '@?grants_events.events_service' ] ]
 
   grants_handler.navigation_helper:
     class: Drupal\grants_handler\GrantsHandlerNavigationHelper
@@ -27,10 +28,6 @@ services:
         '@helfi_helsinki_profiili.userdata',
         '@datetime.time'
     ]
-
-  grants_handler.events_service:
-    class: Drupal\grants_handler\EventsService
-    arguments: [ '@http_client', '@logger.factory' ]
 
   grants_handler.form_lock_service:
     class: Drupal\grants_handler\FormLockService
@@ -158,9 +155,14 @@ services:
       '@messenger',
       '@grants_handler.application_getter_service',
       '@helfi_helsinki_profiili.userdata',
-      '@grants_attachments.attachment_fixer_service'
+      '@grants_attachments.attachment_fixer_service',
+      '@current_user',
+      '@database'
     ]
 
   grants_handler.application_access_handler:
     class: Drupal\grants_handler\ApplicationAccessHandler
-    arguments: ['@grants_profile.service']
+    arguments: [
+      '@grants_profile.service',
+      '@grants_handler.application_getter_service'
+    ]

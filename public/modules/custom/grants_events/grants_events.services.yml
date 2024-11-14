@@ -1,0 +1,4 @@
+services:
+  grants_events.events_service:
+    class: Drupal\grants_events\EventsService
+    arguments: [ '@http_client', '@logger.factory' ]

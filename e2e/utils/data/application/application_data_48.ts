@@ -179,7 +179,7 @@ const baseForm_48: FormData = {
                     value: faker.number.float({
                       min: 1000,
                       max: 10000,
-                      precision: 2
+                      multipleOf: 2
                     }).toString(),
                     viewPageFormatter: viewPageFormatCurrency,
                   },
@@ -231,7 +231,7 @@ const baseForm_48: FormData = {
                     value: faker.number.float({
                       min: 1000,
                       max: 10000,
-                      precision: 2
+                      multipleOf: 2
                     }).toString(),
                     viewPageFormatter: viewPageFormatCurrency,
                   },
@@ -287,7 +287,7 @@ const baseForm_48: FormData = {
           value: faker.number.float({
             min: 1,
             max: 100,
-            precision: 2
+            multipleOf: 2
           }).toString(),
         },
         "edit-osa-aikainen-henkilosto": {
@@ -299,7 +299,7 @@ const baseForm_48: FormData = {
           value: faker.number.float({
             min: 1,
             max: 100,
-            precision: 2
+            multipleOf: 2
           }).toString(),
         },
         "edit-vapaaehtoinen-henkilosto": {

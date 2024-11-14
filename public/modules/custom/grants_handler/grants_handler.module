@@ -938,7 +938,8 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
 /**
  * Implements hook_preprocess_HOOK().
  */
-function grants_handler_preprocess_webform_submission(&$variables) {
+function grants_handler_preprocess_webform_submission(&$variables): void {
+
   // Get submission object.
   /** @var \Drupal\webform\Entity\WebformSubmission $submission */
   $submission = $variables['webform_submission'];
@@ -1294,8 +1295,8 @@ function grants_handler_preprocess_webform_submission_handler_details(&$variable
   $submission = $variables['submission'];
   $submissionData = $submission->getData();
 
-  /** @var \Drupal\grants_handler\EventsService $eventService */
-  $eventService = \Drupal::service('grants_handler.events_service');
+  /** @var \Drupal\grants_events\EventsService $eventService */
+  $eventService = \Drupal::service('grants_events.events_service');
 
   $handlerEvents = array_filter($submissionData['events'], function ($event) use ($eventService) {
     if ($event['eventType'] == $eventService->getEventTypes()['EVENT_INFO']) {
@@ -1319,7 +1320,7 @@ function grants_handler_preprocess_webform_submission_attachment_list(&$variable
   $submissionData = $submission->getData();
 
   // Get submission events.
-  $eventService = \Drupal::service('grants_handler.events_service');
+  $eventService = \Drupal::service('grants_events.events_service');
   $attachmentEventsHandler = $eventService->filterEvents($submissionData['events'], 'HANDLER_ATT_OK');
 
   $attachments = [];
@@ -1366,7 +1367,6 @@ function grants_handler_preprocess_application_list(&$variables) {
  * Implements hook_preprocess_HOOK().
  */
 function grants_handler_preprocess_application_list_item(&$variables): void {
-  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $tOpts = ['context' => 'grants_handler'];
 
   // Get status service and get listed statuses.
@@ -1382,9 +1382,20 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
     return;
   }
 
-  $applicationTypes = Helpers::getApplicationTypes();
+  if (!isset($submissionData["metadata"]["form_uuid"])) {
+    \Drupal::logger('grants_handler')
+      ->error('No form uuid found for submission @submissionId',
+        ['@submissionId' => $submissionData["application_number"]]);
+    return;
+  }
 
-  $variables['applicationFormName'] = $applicationTypes[$submissionData["application_type"]][$language];
+  /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+  $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
+
+  // Get webform.
+  $webform = $applicationGetterService->getWebformFromApplicationNumber($submissionData["application_number"]);
+  // Set webform title.
+  $variables['applicationFormName'] = $webform->label();
 
   $variables['applicationNumber'] = $submissionData["application_number"];
 
@@ -1508,8 +1519,8 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
 
   $status = $applicationStatusService->getWebformStatus($webform);
 
-  $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
-  $variables['openEndDate'] = strtotime($thirdPartySettings['applicationClose']);
+  $variables['openStartDate'] = $thirdPartySettings['applicationOpen'] ? strtotime($thirdPartySettings['applicationOpen']) : '';
+  $variables['openEndDate'] = $thirdPartySettings['applicationClose'] ? strtotime($thirdPartySettings['applicationClose']) : '';
   $variables['isContinuous'] = $thirdPartySettings['applicationContinuous'] != 0;
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
     $variables['errorType'] = 'NOT_OPEN';
@@ -2104,4 +2115,12 @@ function grants_handler_options_list_alter(array &$options, array $context): voi
       }
     }
   }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function grants_handler_preprocess_webform(array &$variables) {
+  $variables['#attached']['library'][] = 'grants_handler/grants-dialog';
+  $variables['#attached']['library'][] = 'hdbt/focus-trap';
 }

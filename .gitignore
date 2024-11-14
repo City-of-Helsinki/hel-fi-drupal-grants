@@ -36,3 +36,6 @@ public/sites/default/local.services.yml
 ## testing results
 *coverage.xml
 html-coverage
+
+# Ignore the folder created by Visual Studio Code
+*:Zone.Identifier*

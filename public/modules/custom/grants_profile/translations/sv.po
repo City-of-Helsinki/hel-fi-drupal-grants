@@ -1,15 +1,5 @@
-# Swedish translation of City of Helsinki Grants Profile module
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0\n"
-"POT-Creation-Date: 2022-02-14 11:00+0300\n"
-"PO-Revision-Date: 2022-10-12 11:00+0300\n"
-"Last-Translator: Petri Leinonen <petri.leinonen@siili.com>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "grants_profile"
 msgid "Delete bank account"
@@ -514,9 +504,11 @@ msgctxt "grants_profile"
 msgid "Connection error"
 msgstr "Anslutningsfel"
 
+msgctxt "grants_profile"
 msgid 'You need to have a name for your unregistered community or group. Please add a name and save or cancel them.'
 msgstr 'Du måste ha ett namn för din icke-registrerad förening eller verksamhetsgrupp. Vänligen lägg till ett namn och spara eller avbryt dem.'
 
+msgctxt "grants_profile"
 msgid 'You have unsaved changes in your profile. Please save or cancel them.'
 msgstr 'Du har osparade ändringar i din profil. Spara eller avbryt dem.'
 
@@ -526,14 +518,20 @@ msgstr 'Du har osparade ändringar i din profil. Är du säker på att du vill l
 msgid 'You have not saved your profile. Are you sure you want to leave the form?'
 msgstr 'Du har inte sparat din profil. Är du säker på att du vill lämna formuläret?'
 
+msgctxt "grants_profile"
 msgid 'You have not saved your profile. Please save your profile before leaving the form.'
 msgstr 'Du har inte sparat din profil. Spara din profil innan du lämnar formuläret.'
 
 msgid 'You need to have a name for your unregistered community or group. Are you sure you want to leave the form?'
 msgstr 'Du måste ha ett namn för din icke-registrerad förening eller verksamhetsgrupp. Är du säker på att du vill lämna formuläret?'
 
+msgctxt "grants_profile"
 msgid 'Back to profile'
 msgstr 'Tillbaka till profilen'
+
+msgctxt "grants_profile"
+msgid 'Close'
+msgstr "Stäng"
 
 msgctxt "grants_profile"
 msgid "Fields marked with an asterisk * are required information."

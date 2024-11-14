@@ -7,9 +7,11 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_events\EventsService;
+use Drupal\grants_handler\ApplicationException;
 use Drupal\grants_handler\DebuggableTrait;
-use Drupal\grants_handler\EventsService;
 use Drupal\grants_handler\Helpers;
+use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 
 /**
  * Application data service.
@@ -31,16 +33,9 @@ final class ApplicationDataService {
   protected LoggerChannelInterface $logger;
 
   /**
-   * The database service.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected Connection $database;
-
-  /**
    * Events service.
    *
-   * @var \Drupal\grants_handler\EventsService
+   * @var \Drupal\grants_events\EventsService
    */
   protected EventsService $eventsService;
 
@@ -49,25 +44,64 @@ final class ApplicationDataService {
    *
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
    *   Logger channel factory.
-   * @param \Drupal\Core\Database\Connection $datababse
+   * @param \Drupal\Core\Database\Connection $database
    *   Database connection.
+   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
+   *   Helsinki profiili user data.
    */
   public function __construct(
     LoggerChannelFactoryInterface $loggerChannelFactory,
-    Connection $datababse,
+    private readonly Connection $database,
+    private readonly HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
     $this->logger = $loggerChannelFactory->get('grants_application_helpers');
-    $this->database = $datababse;
   }
 
   /**
    * Set the getter service.
    *
-   * @param \Drupal\grants_handler\EventsService $eventsService
+   * @param \Drupal\grants_events\EventsService $eventsService
    *   Events service.
    */
   public function setEventsService(EventsService $eventsService): void {
     $this->eventsService = $eventsService;
+  }
+
+  /**
+   * Set up sender details from helsinkiprofiili data.
+   *
+   * @return array
+   *   Sender details.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * @throws \Drupal\grants_handler\ApplicationException
+   */
+  public function parseSenderDetails(): array {
+    // Set sender information after save so no accidental saving of data.
+    $userProfileData = $this->helsinkiProfiiliUserData->getUserProfileData();
+    $userData = $this->helsinkiProfiiliUserData->getUserData();
+
+    // If no userprofile data, we cannot proceed.
+    if (!$userProfileData || !$userData) {
+      throw new ApplicationException('No profile data found for user.');
+    }
+
+    $senderDetails = [];
+
+    if (isset($userProfileData["myProfile"])) {
+      $data = $userProfileData["myProfile"];
+    }
+    else {
+      $data = $userProfileData;
+    }
+
+    $senderDetails['sender_firstname'] = $data["verifiedPersonalInformation"]["firstName"];
+    $senderDetails['sender_lastname'] = $data["verifiedPersonalInformation"]["lastName"];
+    $senderDetails['sender_person_id'] = $data["verifiedPersonalInformation"]["nationalIdentificationNumber"];
+    $senderDetails['sender_user_id'] = $userData["sub"];
+    $senderDetails['sender_email'] = $data["primaryEmail"]["email"];
+
+    return $senderDetails;
   }
 
   /**
@@ -167,7 +201,7 @@ final class ApplicationDataService {
    *
    * @throws \Exception
    */
-  private function getLatestSaveid(string $applicationNumber): string {
+  protected function getLatestSaveid(string $applicationNumber): string {
     $query = $this->database->select(self::TABLE, 'l');
     $query->condition('application_number', $applicationNumber);
     $query->fields('l', ['lid', 'saveid']);
