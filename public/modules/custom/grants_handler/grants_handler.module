@@ -1875,6 +1875,11 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     '#theme' => 'webform_submission_attachment_list',
     '#submission' => $submission,
   ];
+
+  // Attach the JavaScript file
+  $variables['#attached']['library'][] = 'grants_handler/grants-dialog';
+  $variables['#attached']['library'][] = 'grants_handler/application-copy-dialog';
+
 }
 
 /**

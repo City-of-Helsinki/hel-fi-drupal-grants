@@ -61,3 +61,11 @@ grants-dialog:
     js/grants-dialog.js: { }
   dependencies:
     - core/drupal
+
+application-copy-dialog:
+  js:
+    js/application-copy-dialog.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
