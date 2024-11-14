@@ -21,7 +21,6 @@ use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\Event\UserLogoutEvent;
-use Drupal\grants_handler\Form\CopyApplicationModalForm;
 use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
@@ -1745,6 +1744,8 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $webform = $submission->getWebForm();
   $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
 
+  $applicationNumber = $submissionData['application_number'] ?? ApplicationHelpers::createApplicationNumber($submission);
+
   $printApplicationUrl = Url::fromRoute(
     'grants_webform_print.submission_print',
     [
@@ -1810,37 +1811,35 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     !$isApplicationArchived &&
     $isApplicationOpen
   ) {
+
     $copyApplicationUrl = Url::fromRoute(
-      'grants_handler.copy_application_modal',
+      'grants_handler.copy_application',
       [
         'submission_id' => $submissionData['application_number'],
-        'nojs' => 'ajax',
-      ],
-      [
-        'attributes' => [
-          'class' => ['use-ajax', 'hds-button', 'hds-button--supplementary'],
-          'data-dialog-type' => 'modal',
-          'data-dialog-options' => json_encode(CopyApplicationModalForm::getDataDialogOptions()),
-          // Add this id so that we can test this form.
-          'id' => 'copy-application-modal-form-link',
-        ],
       ]
     );
-    $copyApplicationLinkText = [
-      '#theme' => 'edit-label-with-icon',
-      '#icon' => 'copy',
-      '#text_label' => t('Copy application', [], $tOpts),
+
+    // Attach the JavaScript file.
+    $variables['#attached']['library'][] = 'grants_handler/grants-dialog';
+    $variables['#attached']['library'][] = 'grants_handler/application-copy-dialog';
+
+    // Render a Twig template.
+    $html_content = \Drupal::service('twig')->render('themes/custom/hdbt_subtheme/templates/webform/application-copy-dialog-content.html.twig', [
+      'applicationNumber' => $applicationNumber,
+      'webformTitle' => $webform->label(),
+    ]);
+
+    // Define the settings you want to pass.
+    $variables['#attached']['drupalSettings']['grants_handler'] = [
+      'copyUrl' => $copyApplicationUrl->toString(),
+      'htmlContent' => $html_content,
     ];
-    $copyApplicationLink = Link::fromTextAndUrl($copyApplicationLinkText, $copyApplicationUrl);
-    $variables['copyApplicationLink'] = $copyApplicationLink;
+    $variables['copyText'] = t('Copy application', [], $tOpts);
   }
 
   $variables['formTitle'] = $webform->label();
   $variables['printLink'] = '';
   $variables['copyLink'] = '';
-
-  $submissionData = $submission->getData();
-  $applicationNumber = $submissionData['application_number'] ?? ApplicationHelpers::createApplicationNumber($submission);
 
   $variables['applicationNumber'] = $applicationNumber;
   $variables['isEditable'] = $applicationStatusService->isSubmissionEditable($submission);
@@ -1875,10 +1874,6 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     '#theme' => 'webform_submission_attachment_list',
     '#submission' => $submission,
   ];
-
-  // Attach the JavaScript file
-  $variables['#attached']['library'][] = 'grants_handler/grants-dialog';
-  $variables['#attached']['library'][] = 'grants_handler/application-copy-dialog';
 
 }
 

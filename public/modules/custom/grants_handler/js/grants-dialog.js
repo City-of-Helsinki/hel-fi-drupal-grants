@@ -12,9 +12,11 @@
      *   closes the dialog.
      * @param {Function} actionButtonCallback - The function to execute when
      *   the "action" button is clicked.
+     * @param dialogTitleArg
+     *  The title of the dialog. If omitted, "Attention" is used as the default.
      */
-    createDialog: (dialogContent, actionButtonText, backButtonText, closeButtonText, actionButtonCallback = null) => {
-      const dialogTitle = Drupal.t('Attention', {}, { context: 'grants_handler' });
+    createDialog: (dialogContent, actionButtonText, backButtonText, closeButtonText, actionButtonCallback = null, dialogTitleArg = null) => {
+      const dialogTitle = dialogTitleArg ?? Drupal.t('Attention', {}, { context: 'grants_handler' });
       const actionButtonHTML = actionButtonText && `<button class="dialog__action-button" id="helfi-dialog__action-button" data-hds-component="button" data-hds-variant="primary">${actionButtonText}</button>`;
       const backButtonHTML = backButtonText && `<button class="dialog__action-button" id="helfi-dialog__back-button" data-hds-component="button" data-hds-variant="secondary">${backButtonText}</button>`;
       const closeButtonHTML = closeButtonText && `<button class="dialog__close-button" id="helfi-dialog__close-button"><span class="is-hidden">${closeButtonText}</span></button>`;

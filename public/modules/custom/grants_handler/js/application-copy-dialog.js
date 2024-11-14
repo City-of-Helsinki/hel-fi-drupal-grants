@@ -5,34 +5,30 @@
 
       triggerButton.addEventListener('click', function (event) {
 
-        console.log('testi123');
-
         event.preventDefault();
 
-        // https://hel-fi-drupal-grant-applications.docker.so/fi/hakemus/LOCALYRTTI12-063-0000867/kopioi/ajax
+        const htmlContent = drupalSettings.grants_handler.htmlContent;
+        const copyUrl = drupalSettings.grants_handler.copyUrl;
 
-        fetch('/fi/hakemus/LOCALYRTTI12-063-0000867/kopioi/ajax')
-          .then(response => response.text())
-          .then(dialogContent => {
-            console.log('DIALOG CONTENT:', dialogContent);
-            Drupal.dialogFunctions.createDialog(
-              dialogContent,
-              Drupal.t('Copy Application'),
-              Drupal.t('Cancel'),
-              Drupal.t('Close'),
-              function () {
-                const form = document.getElementById('copy-application-form');
-                if (form.checkValidity()) {
-                  form.submit(); // Submit the form like a normal form submission
-                } else {
-                  form.reportValidity();
-                }
-              },
-            );
-          })
-          .catch(error => {
-            console.error('Error fetching form:', error);
-          });
+        Drupal.dialogFunctions.createDialog(
+          htmlContent,
+          Drupal.t('Copy application', [], { context: 'grants_handler' }),
+          Drupal.t('Cancel'),
+          Drupal.t('Close'),
+          function () {
+            // Redirect to a new URL
+            window.location.href = copyUrl;
+            /*
+            We probably should handle the whole copy process here, but for
+            now we just redirect to the copy URL.
+
+            Much better UX would be to show spinner here while copying
+            application and then redirect when it's ready
+
+             */
+          },
+          Drupal.t('Copy application', [], { context: 'grants_handler' })
+        )
       });
     },
   };
