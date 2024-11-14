@@ -70,6 +70,11 @@ class ApplicationValidatorTest extends UnitTestCase {
 
   /**
    * Test for validateApplication.
+   *
+   * @covers \Drupal\grants_handler\ApplicationValidator::processViolation
+   * @covers \Drupal\grants_handler\ApplicationValidator::__construct
+   * @covers \Drupal\grants_handler\ApplicationValidator::handleOtherViolation
+   * @covers \Drupal\grants_handler\ApplicationValidator::handleViolation
    */
   public function testProcessViolation(): void {
     $violation = $this->createMock(ConstraintViolationInterface::class);
