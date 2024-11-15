@@ -3,7 +3,7 @@
 namespace Drupal\grants_react_form;
 
 /**
- * Class to map react data fields to
+ * Class to map react data fields to.
  */
 class ReactDataMapper {
 
@@ -12,10 +12,12 @@ class ReactDataMapper {
    *
    * @param string $id
    *   The field id to map to avustus2 document.
-   * @param arrray $value
+   * @param array $value
    *   The value to add to the array.
+   * @param array $data_array
+   *   The avus2 document.
    */
-  public function mapReactFieldToAvusDocument(string $id, array $value, &$data_array): void {
+  public function mapReactFieldToAvusDocument(string $id, array $value, array &$data_array): void {
     $path = $this->getJsonPath($id);
     $this->arraySet($data_array, $path, $value);
   }
@@ -45,16 +47,16 @@ class ReactDataMapper {
   /**
    * Set the value in correct place in multidimensional data array.
    *
-   * @param array $array
-   *   The array to alter
+   * @param array $data_arr
+   *   The array to alter.
    * @param array $path
    *   The path you want to set the value to.
-   * @param array $value
-   *   The actual value
+   * @param array $data
+   *   The actual value.
    */
   private function arraySet(array &$data_arr, array $path, array $data): void {
     $current = &$data_arr;
-    foreach ($path as $key){
+    foreach ($path as $key) {
       $current = &$current[$key];
     }
 
@@ -64,7 +66,7 @@ class ReactDataMapper {
   /**
    * Return an array that should be acceepted by avus2.
    *
-   * In theory, this could contain all of the data arrays of all of the forms.
+   * In theory, this could contain all the data arrays of all the forms.
    * This could also be filled dynamically based on the fields sent from react.
    *
    * @return array
