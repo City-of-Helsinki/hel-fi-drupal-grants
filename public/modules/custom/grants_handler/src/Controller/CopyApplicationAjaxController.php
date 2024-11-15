@@ -68,7 +68,7 @@ final class CopyApplicationAjaxController extends ControllerBase {
     try {
       $webform_submission = $this->getWebformSubmission($submission_id);
       $webform = $webform_submission->getWebForm();
-      $this->validateApplication($webform);
+      $this->makeSureCopyingIsEnabled($webform);
 
       $newSubmission = $this->initNewApplication($webform->id(), $webform_submission->getData());
       $this->logEvent($newSubmission, $webform_submission->getData());
@@ -126,7 +126,7 @@ final class CopyApplicationAjaxController extends ControllerBase {
    * @throws \RuntimeException
    *   If the application cannot be copied.
    */
-  private function validateApplication(WebformInterface $webform): void {
+  private function makeSureCopyingIsEnabled(WebformInterface $webform): void {
     $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
     $isApplicationArchived = $thirdPartySettings["status"] === 'archived' ?? TRUE;
     $isApplicationOpen = $this->applicationStatusService->isApplicationOpen($webform);

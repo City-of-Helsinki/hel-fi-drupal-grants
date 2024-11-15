@@ -114,7 +114,8 @@ final class ApplicationController extends ControllerBase {
    * @return \Drupal\Core\Access\AccessResultInterface
    *   The access result.
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_mandate\CompanySelectException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function accessByApplicationNumber(AccountInterface $account, string $submission_id): AccessResultInterface {
     try {
@@ -139,7 +140,7 @@ final class ApplicationController extends ControllerBase {
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->applicationAccessHandler->singleSubmissionAccess(
+      $this->applicationAccessHandler->singleSubm issionAccess(
         $webform_submission
       ));
   }
