@@ -35,17 +35,26 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
 
     $customQuestions = [
       'hankesuunnitelma_radios' => [
-        'type' => 'boolean',
-        'typeOverride' => [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertBooleanToYesNo',
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractBooleanYesNoValue',
         ],
       ],
+      'ensisijainen_taiteen_ala' => [],
       'hankesuunnitelma_jatkohakemus' => [
-        'type' => 'boolean',
-        'typeOverride' => [
-          'dataType' => 'string',
-          'jsonType' => 'bool',
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertBooleanToYesNo',
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractBooleanYesNoValue',
         ],
       ],
       'hankkeen_tarkoitus_tavoitteet' => [],
@@ -59,7 +68,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
           'service' => 'grants_metadata.converter',
           'method' => 'convertDates',
           'arguments' => [
-            'dateFormat' => 'c',
+            'dateFormat' => 'Y-m-d',
           ],
         ],
       ],
@@ -72,7 +81,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
           'service' => 'grants_metadata.converter',
           'method' => 'convertDates',
           'arguments' => [
-            'dateFormat' => 'c',
+            'dateFormat' => 'Y-m-d',
           ],
         ],
       ],
@@ -92,14 +101,13 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_riskit_keskeisimmat' => [],
       'hankkeen_riskit_seuranta' => [],
       'hankkeen_riskit_vakiinnuttaminen' => [],
-      // Example forms.
-      'puuttuva_kentta_1' => [],
-      'puuttuva_kentta_2' => [],
-      'vaikka_sahkoposti' => [],
-      'checkboksiki_onnistuu' => [],
-      'tekstialue' => [],
-      'tekstikentta' => [],
-      'paivamaara' => [],
+      'arviointi_toteuma' => [],
+      'arviointi_muutokset_talous' => [],
+      'arviointi_muutokset_toiminta' => [],
+      'arviointi_muutokset_aikataulu' => [],
+      'arviointi_haasteet' => [],
+      'arviointi_saavutettavuus' => [],
+      'arviointi_avustus_kaytto' => [],
     ];
 
     foreach ($customQuestions as $key => $value) {
@@ -167,6 +175,10 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
     // Add value callback if set.
     if (isset($value['valueCallback'])) {
       $info[$key]->setSetting('valueCallback', $value['valueCallback']);
+    }
+    // Add value extractor if set.
+    if (isset($value['webformValueExtracter'])) {
+      $info[$key]->setSetting('webformValueExtracter', $value['webformValueExtracter']);
     }
     // Add default value if set or empty value.
     if (isset($value['defaultValue'])) {

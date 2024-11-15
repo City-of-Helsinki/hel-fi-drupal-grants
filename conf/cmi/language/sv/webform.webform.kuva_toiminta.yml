@@ -121,7 +121,6 @@ elements: |
           3: EU
           4: Övrig
           5: Fundament
-          6: STEA
         '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'

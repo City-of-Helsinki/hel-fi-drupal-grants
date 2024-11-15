@@ -648,6 +648,31 @@ function _grants_handler_alter_number_fields(&$element): void {
 }
 
 /**
+ * Function to update custom component dropdown value rather than via config.
+ *
+ * @param array $form
+ *   The form.
+ *
+ * @return void
+ *   No return?
+ */
+function grants_handler__update_issuer_dropdown(array &$form): void {
+
+  $tOpts = ['context' => 'Grant Issuers'];
+
+  $newOptions = [
+    1 => t('State', [], $tOpts),
+    3 => t('EU', [], $tOpts),
+    4 => t('Other', [], $tOpts),
+    5 => t('Foundation', [], $tOpts),
+  ];
+
+  // Call the method with multiple field names.
+  ApplicationHelpers::updateFieldOptions($form, $newOptions, ['myonnetty_avustus', 'issuer']);
+  ApplicationHelpers::updateFieldOptions($form, $newOptions, ['haettu_avustus_tieto', 'issuer']);
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
@@ -666,6 +691,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   $form['actions']['wizard_next']['#validate'][] = '::noValidate';
 
   _grants_handler_alter_number_fields($form);
+  grants_handler__update_issuer_dropdown($form);
 
   $grants_formnavigation_helper = \Drupal::service('grants_handler.navigation_helper');
   $all_errors = [];

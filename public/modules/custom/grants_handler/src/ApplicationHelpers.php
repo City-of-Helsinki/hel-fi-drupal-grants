@@ -35,11 +35,12 @@ abstract class ApplicationHelpers {
     $appParam = Helpers::getAppEnv();
 
     $serial = $submission->serial();
-    $applicationType = $submission->getWebform()
-      ->getThirdPartySetting('grants_metadata', 'applicationType');
 
-    $applicationTypeId = $submission->getWebform()
-      ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
+    $webform = $submission->getWebform();
+    $third_party_settings = $webform->getThirdPartySettings('grants_metadata');
+
+    $applicationType = $third_party_settings['applicationType'] ?? NULL;
+    $applicationTypeId = $third_party_settings['applicationTypeID'] ?? NULL;
 
     if ($useOldFormat) {
       return self::getApplicationNumberInEnvFormatOldFormat($appParam, $applicationType, $serial);
@@ -67,8 +68,10 @@ abstract class ApplicationHelpers {
     $appParam = Helpers::getAppEnv();
     $serial = $submission->serial();
     $webform_id = $submission->getWebform()->id();
-    $applicationTypeId = $submission->getWebform()
-      ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
+
+    $thirdPartySettings = $submission->getWebform()->getThirdPartySettings('grants_metadata');
+
+    $applicationTypeId = $thirdPartySettings['applicationTypeID'] ?? NULL;
 
     $lastSerialKey = $applicationTypeId . '_' . $appParam;
     $kvService = \Drupal::service('keyvalue.database');
@@ -120,7 +123,7 @@ abstract class ApplicationHelpers {
   /**
    * Format application number based by the enviroment.
    */
-  private static function getApplicationNumberInEnvFormat($appParam, $typeId, $serial): string {
+  protected static function getApplicationNumberInEnvFormat($appParam, $typeId, $serial): string {
     $applicationNumber = $appParam . '-' .
       str_pad($typeId, 3, '0', STR_PAD_LEFT) . '-' .
       str_pad($serial, 7, '0', STR_PAD_LEFT);
@@ -136,7 +139,7 @@ abstract class ApplicationHelpers {
   /**
    * Format application number based by the enviroment in old format.
    */
-  private static function getApplicationNumberInEnvFormatOldFormat($appParam, $typeId, $serial): string {
+  protected static function getApplicationNumberInEnvFormatOldFormat($appParam, $typeId, $serial): string {
     $applicationNumber = 'GRANTS-' . $appParam . '-' . $typeId . '-' . sprintf('%08d', $serial);
 
     if ($appParam == 'PROD') {
@@ -185,7 +188,9 @@ abstract class ApplicationHelpers {
       return $map[$uuid];
     }
 
-    $applicationType = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
+    $thirdPartySettingsWebform = $webform->getThirdPartySettings('grants_metadata');
+
+    $applicationType = $thirdPartySettingsWebform['applicationType'] ?? NULL;
 
     $latestApplicationForm = self::getLatestApplicationForm($applicationType);
 
@@ -194,8 +199,9 @@ abstract class ApplicationHelpers {
       return FALSE;
     }
 
-    $parent = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'parent');
-    $hasBreakingChanges = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'avus2BreakingChange');
+    $thirdPartySettingsLatest = $webform->getThirdPartySettings('grants_metadata');
+    $parent = $thirdPartySettingsLatest['parent'] ?? NULL;
+    $hasBreakingChanges = $thirdPartySettingsLatest['avus2BreakingChange'] ?? NULL;
 
     while (!empty($parent)) {
       $map[$parent] = $hasBreakingChanges;
@@ -207,12 +213,14 @@ abstract class ApplicationHelpers {
         ]);
 
       $wf = reset($loaded_webform);
-      $parent = $wf->getThirdPartySetting('grants_metadata', 'parent');
+
+      $thirdPartySettingsLatest = $wf->getThirdPartySettings('grants_metadata');
+      $parent = $thirdPartySettingsLatest['parent'] ?? NULL;
 
       // No need to check the flag,
       // if we already have a newer version with breaking changes.
       if (!$hasBreakingChanges) {
-        $hasBreakingChanges = $wf->getThirdPartySetting('grants_metadata', 'avus2BreakingChange');
+        $hasBreakingChanges = $thirdPartySettingsLatest['avus2BreakingChange'] ?? NULL;
       }
     }
 
@@ -278,18 +286,6 @@ abstract class ApplicationHelpers {
     }
 
     return reset($webform);
-  }
-
-  /**
-   * Get data definition class from application type.
-   *
-   * @param string $type
-   *   Type of the application.
-   */
-  public static function getDataDefinition(string $type) {
-    $defClass = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionClass'];
-    $defId = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionId'];
-    return $defClass::create($defId);
   }
 
   /**
@@ -389,6 +385,46 @@ abstract class ApplicationHelpers {
   public static function isApplicationWebformDuplicatable(string $id, string $formId = NULL): bool {
     $applicationForms = self::getActiveApplicationWebforms($id, $formId);
     return count($applicationForms['released']) <= 1 && count($applicationForms['development']) === 0;
+  }
+
+  /**
+   * Update field options in a form array.
+   *
+   * This method is used to update the options of a field in a form array.
+   *
+   * @param array $form
+   *   The form array.
+   * @param array $newOptions
+   *   The new options to set.
+   * @param array $fieldStructure
+   *   The structure of the field.
+   */
+  public static function updateFieldOptions(array &$form, array $newOptions, array $fieldStructure): void {
+    $currentField = &$form;
+
+    // Traverse the form array based on the field structure.
+    foreach ($fieldStructure as $fieldName) {
+      if (isset($currentField[$fieldName])) {
+        $currentField = &$currentField[$fieldName];
+      }
+      elseif (isset($currentField['#element'][$fieldName])) {
+        $currentField = &$currentField['#element'][$fieldName];
+      }
+      else {
+        // If the field is not found, continue searching recursively.
+        foreach ($currentField as &$subField) {
+          if (is_array($subField)) {
+            self::updateFieldOptions($subField, $newOptions, $fieldStructure);
+          }
+        }
+        return;
+      }
+    }
+
+    // Update the #options if the field with '#options' is found.
+    if (isset($currentField['#options'])) {
+      $currentField['#options'] = $newOptions;
+    }
   }
 
 }

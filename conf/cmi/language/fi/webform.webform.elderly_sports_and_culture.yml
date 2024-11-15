@@ -1,0 +1,58 @@
+elements: |
+  prh_markup:
+    '#markup': '<p>Tiedot on haettu hakuprofiilistasi.</p>'
+  contact_markup:
+    '#markup': '<p>Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.</p>'
+  email:
+    '#help': '<p>Ilmoita sähköpostiosoite, johon tähän hakemukseen liittyvät viestit sekä herätteet osoitetaan ja jota luetaan aktiivisesti</p>'
+  community_address:
+    '#help': '<p>Jos haluat lisätä, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään osoitetietoa omiin tietoihin.</p>'
+  bank_account:
+    '#help': '<p>Jos haluat lisätä, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään tilinumerotietoa omiin tietoihin.</p>'
+    '#account_number__title': ''
+  community_officials:
+    '#help': '<p>Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.</p>'
+  info_muut_samaan_tarkoitukseen_myonnetty:
+    '#markup': '<p>Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisenä verovuotena.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div></div></div>'
+  myonnetty_avustus:
+    '#multiple__no_items_message': '<p>Ei syötettyjä arvoja. Lisää uusi myönnetty avustus alta.</p>'
+    '#element':
+      issuer_name:
+        '#help': '<p>Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)</p>'
+      purpose:
+        '#help': '<p>Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?</p>'
+  info_muut_samaan_tarkoitukseen_haettu:
+    '#markup': '<p>Ilmoita tähän ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eikä päätöstä ole vielä tehty.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div></div></div>'
+  haettu_avustus_tieto:
+    '#multiple__no_items_message': '<p>Ei syötettyjä arvoja. Lisää uusi haettu avustus alta.</p>'
+    '#element':
+      issuer_name:
+        '#help': '<p>Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)</p>'
+      purpose:
+        '#help': '<p>Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?</p>'
+  hankesuunnitelma_radios:
+    '#help': '<p>Vastaa tähän kysymykseen "kyllä" vain siinä tapauksessa, jos yhteisölläsi on jo käynnissä oleva, samasta avustuksesta rahoitettu hanke ja haet sille jatkorahoitusta.</p>'
+  haun_painopisteet_ohje:
+    '#markup': '<p>Hankkeessa tulee toteuttaa yhtä tai useampaa painopistettä. HUOM! Valitse vain ne painopisteet, joita edistätte hankkeessa konkreettisella tavalla. Jos hanke ei toteuta jotakin painopistettä, jätä tekstikenttä tyhjäksi.</p>'
+  hankkeen_riskit_vakiinnuttaminen:
+    '#help': '<p>Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.</p>'
+  arviointi_markup:
+    '#markup': '<p>Arvioi tässä osiossa hankkeen tähänastista toimintaa seuraavien kysymysten avulla. Avustuksen 2. osaa hakevien tulee liittää hakemukselle Muu liite-kohtaan niin ikään kustannuspaikkaraportti ajanjaksolta 1.6.-31.12.2024</p>'
+  arviointi_muutokset_markup:
+    '#markup': '<p>Onko hankkeessa tapahtunut merkittäviä muutoksia?</p>'
+  arviointi_avustus_kaytto:
+    '#help': '<p>Avustusehdot, kohta 10e: "Myönnetty avustus on palautettava Helsingin kaupungille, jos avustusta ei ole käytetty sinä aikana, jona se on avustuspäätöksen mukaan tullut käyttää.</p>'
+  talous_tulon_tyyppi:
+    '#help': '<p>Kerro tässä minkälainen tulo on kyseessä. Toiminnan tuloja voivat olla esimerkiksi muut avustukset ja pääsy- tai osallistumismaksut. Kirjaa tähän kohtaan myös omarahoitusosuus, jos hankkeen alijäämä kuitataan muusta taloudestanne.</p>'
+  talous_menon_tyyppi:
+    '#help': '<p>Kerro tässä minkälainen meno on kyseessä. Toiminnan menoja voivat olla esimerkiksi tilavuokrat ja henkilöstökulut.</p>'
+  additional_information:
+    '#help': '<p>Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;</p>'
+  notification_attachments:
+    '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div><div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p><p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div></div></div>'
+  muu_liite:
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
