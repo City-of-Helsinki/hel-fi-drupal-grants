@@ -98,57 +98,8 @@ class ReactDataMapper {
       'attachmentsInfo' => [],
     ];
 
-   // CustomQuestion pitää sisällään dynaamista dataa - ei toimi jollain yhdellä hakemuksella tjs.
- }
+   // CustomQuestion pitää sisällään dynaamista dataa -
+   // ei toimi jollain yhdellä hakemuksella tjs.
+  }
 
 }
-
-
-/**
- *  Turn data from Reactjs into something sinister.
- *
- *  This class is used for converting react data
- *  to document content data.
- * /
- * class DataToDocumentWithReact {
- *
- * public function createApplicationSubmissionData(array $the_simple_form_data): array {
- * $documentStructure = [];
- * /*
- * $documentStructure = $this->getEmptyDataArray();
- * foreach($the_simple_form_data as $name => $value) {
- * if($mapped_path = $this->getSomething($name)){
- * $documentStructure[$mapped_path] = $value;
- * }
- * else {
- * $documentStructure['compensation']['qustomQuestionInfo']['']
- * }
- * }
- * /
- * return $documentStructure;
- * }
- *
- * // mäpätään kaikki kovakoodatut fieldit tähän, että saadaan survottua Avust2 dokumentin sisään
- * private function getSomething($name) {
- * $x = [
- * 'something' => [
- * 'tähän-tulee-kai-joku-json-path'
- * ]
- * ];
- *
- * return $x[$name] ?? FALSE;
- * }
- *
- *
- *
- * // Tää on se ite dokumentti joka lähetetää avus2. Ei tehdä ihan näin.
-
- *
- * }
- * /*
- * {
- * field_name: baa
- * hankesuunnitelma_radios: TRUE,
- * }
- * /
- */
