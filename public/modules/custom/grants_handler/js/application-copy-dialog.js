@@ -27,7 +27,8 @@
 
              */
           },
-          Drupal.t('Copy application', [], { context: 'grants_handler' })
+          Drupal.t('Copy application', [], { context: 'grants_handler' }),
+          'application-copy-dialog'
         )
       });
     },

@@ -14,8 +14,10 @@
      *   the "action" button is clicked.
      * @param dialogTitleArg
      *  The title of the dialog. If omitted, "Attention" is used as the default.
+     * @param customSelector
+     *  A custom selector to be added to the dialog container.
      */
-    createDialog: (dialogContent, actionButtonText, backButtonText, closeButtonText, actionButtonCallback = null, dialogTitleArg = null) => {
+    createDialog: (dialogContent, actionButtonText, backButtonText, closeButtonText, actionButtonCallback = null, dialogTitleArg = null, customSelector = '') => {
       const dialogTitle = dialogTitleArg ?? Drupal.t('Attention', {}, { context: 'grants_handler' });
       const actionButtonHTML = actionButtonText && `<button class="dialog__action-button" id="helfi-dialog__action-button" data-hds-component="button" data-hds-variant="primary">${actionButtonText}</button>`;
       const backButtonHTML = backButtonText && `<button class="dialog__action-button" id="helfi-dialog__back-button" data-hds-component="button" data-hds-variant="secondary">${backButtonText}</button>`;
@@ -24,7 +26,7 @@
       const dialogHTML = `
         <div class="dialog__container" id="helfi-dialog__container">
           <div class="dialog__overlay"></div>
-          <dialog class="dialog" id="helfi-dialog" aria-labelledby="helfi-dialog__title" aria-modal="true">
+          <dialog class="dialog ${customSelector}" id="helfi-dialog" aria-labelledby="helfi-dialog__title" aria-modal="true">
             <div class="dialog__header">
               ${closeButtonHTML}
               <h2 class="dialog__title" id="helfi-dialog__title">${dialogTitle}</h2>
@@ -56,7 +58,7 @@
       const closeButton = document.getElementById('helfi-dialog__close-button');
       const dialog = document.getElementById('helfi-dialog__container');
       const dialogFocusTrap = window.focusTrap.createFocusTrap('#helfi-dialog__container', {
-        initialFocus: () => '#helfi-dialog__title'
+        initialFocus: () => '#helfi-dialog__title',
       });
 
       // Activate the focus trap so that the user needs to react to the dialog.
@@ -92,8 +94,7 @@
         document.body.style.paddingRight = `${
           window.innerWidth - document.documentElement.clientWidth
         }px`;
-      }
-      else {
+      } else {
         document.body.style.removeProperty('padding-right');
       }
     },
@@ -107,6 +108,6 @@
       dialog.remove();
       Drupal.dialogFunctions.toggleNoScroll(false);
       Drupal.dialogFunctions.setBodyPaddingRight(false);
-    }
-  }
+    },
+  };
 })(Drupal);
