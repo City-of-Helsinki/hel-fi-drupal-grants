@@ -10,12 +10,12 @@
         const htmlContent = drupalSettings.grants_handler.htmlContent;
         const copyUrl = drupalSettings.grants_handler.copyUrl;
 
-        Drupal.dialogFunctions.createDialog(
-          htmlContent,
-          Drupal.t('Copy application', [], { context: 'grants_handler' }),
-          Drupal.t('Cancel'),
-          Drupal.t('Close'),
-          function () {
+        Drupal.dialogFunctions.createDialog({
+          dialogContent: htmlContent,
+          actionButtonText: Drupal.t('Copy application', [], { context: 'grants_handler' }),
+          backButtonText: Drupal.t('Close', [], { context: 'grants_handler' }),
+          closeButtonText: Drupal.t('Close', [], { context: 'grants_handler' }),
+          actionButtonCallback: () => {
             // Redirect to a new URL
             window.location.href = copyUrl;
             /*
@@ -27,9 +27,9 @@
 
              */
           },
-          Drupal.t('Copy application', [], { context: 'grants_handler' }),
-          'application-copy-dialog'
-        )
+          dialogTitle: Drupal.t('Copy application', [], { context: 'grants_handler' }),
+          customSelector: 'application-copy-dialog'
+        })
       });
     },
   };

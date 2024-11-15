@@ -12,35 +12,51 @@
      *   closes the dialog.
      * @param {Function} actionButtonCallback - The function to execute when
      *   the "action" button is clicked.
-     * @param dialogTitleArg
-     *  The title of the dialog. If omitted, "Attention" is used as the default.
+     * @param dialogTitle
+     *  If we want to override the default title
+     * @param {Function} closeButtonCallback
+     *  The function to execute when the "close" button is clicked.
+     * @param {Function} backButtonCallback
+     *  The function to execute when the "back" button is clicked.
+     * @param escapeButtonCallback
+     *  The function to execute when the "escape" button is clicked.
      * @param customSelector
-     *  A custom selector to be added to the dialog container.
+     *  If we want to add a custom class to the dialog container
      */
-    createDialog: (dialogContent, actionButtonText, backButtonText, closeButtonText, actionButtonCallback = null, dialogTitleArg = null, customSelector = '') => {
-      const dialogTitle = dialogTitleArg ?? Drupal.t('Attention', {}, { context: 'grants_handler' });
+    createDialog: ({
+      dialogContent,
+      actionButtonText,
+      backButtonText,
+      closeButtonText,
+      dialogTitle = Drupal.t('Attention', {}, { context: 'grants_handler' }),
+      actionButtonCallback = null,
+      closeButtonCallback = null,
+      backButtonCallback = null,
+      escapeButtonCallback = null,
+      customSelector = '',
+    }) => {
       const actionButtonHTML = actionButtonText && `<button class="dialog__action-button" id="helfi-dialog__action-button" data-hds-component="button" data-hds-variant="primary">${actionButtonText}</button>`;
       const backButtonHTML = backButtonText && `<button class="dialog__action-button" id="helfi-dialog__back-button" data-hds-component="button" data-hds-variant="secondary">${backButtonText}</button>`;
       const closeButtonHTML = closeButtonText && `<button class="dialog__close-button" id="helfi-dialog__close-button"><span class="is-hidden">${closeButtonText}</span></button>`;
 
       const dialogHTML = `
-        <div class="dialog__container" id="helfi-dialog__container">
-          <div class="dialog__overlay"></div>
-          <dialog class="dialog ${customSelector}" id="helfi-dialog" aria-labelledby="helfi-dialog__title" aria-modal="true">
-            <div class="dialog__header">
-              ${closeButtonHTML}
-              <h2 class="dialog__title" id="helfi-dialog__title">${dialogTitle}</h2>
-            </div>
-            <div class="dialog__content">
-             ${dialogContent}
-            </div>
-            <div class="dialog__actions">
-              ${actionButtonHTML}
-              ${backButtonHTML}
-            </div>
-          </dialog>
+    <div class="dialog__container" id="helfi-dialog__container">
+      <div class="dialog__overlay"></div>
+      <dialog class="dialog ${customSelector}" id="helfi-dialog" aria-labelledby="helfi-dialog__title" aria-modal="true">
+        <div class="dialog__header">
+          ${closeButtonHTML}
+          <h2 class="dialog__title" id="helfi-dialog__title">${dialogTitle}</h2>
         </div>
-      `;
+        <div class="dialog__content">
+         ${dialogContent}
+        </div>
+        <div class="dialog__actions">
+          ${actionButtonHTML}
+          ${backButtonHTML}
+        </div>
+      </dialog>
+    </div>
+  `;
 
       // TODO: Surveys use very similar javascript dialog implementation.
       // This and the survey implementation could possibly be merged with some
@@ -72,18 +88,30 @@
       // Add click event listener to back button
       backButton.addEventListener('click', () => {
         dialogFocusTrap.deactivate();
+        // If we have a callback, execute it.
+        if (backButtonCallback) {
+          backButtonCallback();
+        }
         Drupal.dialogFunctions.removeDialog(dialog);
       });
 
       // Add click event listener to close button
       closeButton.addEventListener('click', () => {
         dialogFocusTrap.deactivate();
+        // If we have a callback, execute it.
+        if (closeButtonCallback) {
+          closeButtonCallback();
+        }
         Drupal.dialogFunctions.removeDialog(dialog);
       });
 
       // Add event listener to ESC button to remove the dialog
       document.body.addEventListener('keydown', function (event) {
         if (event.key === 'Escape') {
+          // If we have a escapeButtonCallback, execute it also when pressing escape.
+          if (escapeButtonCallback) {
+            escapeButtonCallback();
+          }
           Drupal.dialogFunctions.removeDialog(dialog);
         }
       });
