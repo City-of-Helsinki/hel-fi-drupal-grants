@@ -6,11 +6,8 @@ namespace Drupal\grants_react_form\Controller;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\grants_react_form\ReactDataMapper;
 use Drupal\webform\Entity\Webform;
-use Drupal\webform\WebformTranslationManager;
-use GuzzleHttp\Psr7\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 
@@ -19,48 +16,9 @@ use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
  */
 class ReactFormController extends ControllerBase {
 
-  /**
-   * The string translation service.
-   *
-   * @var \Drupal\Core\StringTranslation\TranslationManager
-   */
-  protected $translationManager;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
-   * The constructor.
-   *
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
-   *   Language manager.
-   * @param \Drupal\webform\Entity\WebformTranslationManager $translationManager
-   *   Translation manager.
-   */
-  public function __construct(LanguageManagerInterface $languageManager, WebformTranslationManager $translationManager) {
-    $this->languageManager = $languageManager;
-    $this->translationManager = $translationManager;
-
-  }
-
-  /**
-   * Static factory method.
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   Containers.
-   *
-   * @return ReactFormController
-   *   Controller object.
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('language_manager'),
-      $container->get('webform.translation_manager'),
-    );
+  public function __construct(
+    private readonly ReactDataMapper $reactDataMapper,
+  ) {
   }
 
   /**
@@ -89,8 +47,8 @@ class ReactFormController extends ControllerBase {
         'drupalSettings' => [
           'grants_react_form' => [
               'form' => $form,
-              'application_number' => $application_number
-            ]
+              'application_number' => $application_number,
+            ],
           ],
       ],
     ];
@@ -101,9 +59,17 @@ class ReactFormController extends ControllerBase {
    */
   public function submit(HttpFoundationRequest $request): JsonResponse {
     $data = $request->request->all();
+    $documentToSend = $this->reactDataMapper->getEmptyDataArray();
+
+    foreach($data as $key => $value) {
+      // TODO datatype needs separate mapping too.
+      // The whole data should be created elsewhere.
+      $data = ['ID' => $key, 'value' => $value, 'datatype' => 'string'];
+      $this->reactDataMapper->mapReactFieldToAvusDocument($key, $data, $documentToSend);
+    }
 
     return new JsonResponse([
-      'data_you_sent' => $data
+      'data_you_sent' => $documentToSend
     ]);
   }
 
