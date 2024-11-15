@@ -12,8 +12,8 @@
     attach: function (context) {
       const initial_name = $('#edit-companynamewrapper-companyname').val();
       let is_element_click = false;
-      $('form').submit(function() {
-        window.onbeforeunload = null
+      $('form').submit(function () {
+        window.onbeforeunload = null;
         is_element_click = true;
       });
 
@@ -21,47 +21,43 @@
         element.addEventListener('click', (event) => {
           is_element_click = true;
           const current_name = $('#edit-companynamewrapper-companyname').val();
-          let unset_name = false
+          let unset_name = false;
           if (current_name === '') {
-            unset_name = true
+            unset_name = true;
           }
 
           let containingElement = document.querySelector('form');
           if ((unset_name) && !containingElement.contains(event.target)) {
             event.preventDefault();
-            return Drupal.dialogFunctions.createDialog(
-              Drupal.t('You need to have a name for your unregistered community or group. Please add a name and save or cancel them.', {}, { context: 'grants_profile' }),
-              '',
-              Drupal.t('Back to profile', {}, { context: 'grants_profile' }),
-              Drupal.t('Close', {}, { context: 'grants_profile' }),
-            );
+            return Drupal.dialogFunctions.createDialog({
+              dialogContent: Drupal.t('You need to have a name for your unregistered community or group. Please add a name and save or cancel them.', {}, { context: 'grants_profile' }),
+              actionButtonText: '',
+              backButtonText: Drupal.t('Back to profile', {}, { context: 'grants_profile' }),
+              closeButtonText: Drupal.t('Close', {}, { context: 'grants_profile' }),
+            });
           } else if ((current_name !== initial_name) && !containingElement.contains(event.target)) {
             event.preventDefault();
-            return Drupal.dialogFunctions.createDialog(
-              Drupal.t('You have unsaved changes in your profile. Please save or cancel them.', {}, { context: 'grants_profile' }),
-              '',
-              Drupal.t('Back to profile', {}, { context: 'grants_profile' }),
-              Drupal.t('Close', {}, { context: 'grants_profile' }),
-            );
+            return Drupal.dialogFunctions.createDialog({
+              dialogContent: Drupal.t('You have unsaved changes in your profile. Please save or cancel them.', {}, { context: 'grants_profile' }),
+              actionButtonText: '',
+              backButtonText: Drupal.t('Back to profile', {}, { context: 'grants_profile' }),
+              closeButtonText: Drupal.t('Close', {}, { context: 'grants_profile' }),
+            });
           } else if (($('[data-drupal-selector="edit-isnewprofile"]').val() === 'initialSave') && !containingElement.contains(event.target)) {
             event.preventDefault();
-            return Drupal.dialogFunctions.createDialog(
-              Drupal.t('You have not saved your profile. Please save your profile before leaving the form.', {}, { context: 'grants_profile' }),
-              '',
-              Drupal.t('Back to profile', {}, { context: 'grants_profile' }),
-              Drupal.t('Close', {}, { context: 'grants_profile' }),
-            );
+            return Drupal.dialogFunctions.createDialog({
+              dialogContent: Drupal.t('You have not saved your profile. Please save your profile before leaving the form.', {}, { context: 'grants_profile' }),
+              actionButtonText: '',
+              backButtonText: Drupal.t('Back to profile', {}, { context: 'grants_profile' }),
+              closeButtonText: Drupal.t('Close', {}, { context: 'grants_profile' }),
+            });
           }
           is_element_click = false;
-
         });
       });
 
-      window.onbeforeunload = function(event) {
-        // Cancel the event as stated by the standard.
-        // Chrome requires returnValue to be set.
+      window.onbeforeunload = function (event) {
         let containingElement = document.querySelector('form');
-
         const current_name = $('#edit-companynamewrapper-companyname').val();
         let unset_name = false;
 
@@ -83,11 +79,10 @@
 
         if (message) {
           event.preventDefault();
-          // For modern browsers.
           return message;
         }
         is_element_click = false;
       };
-    }
-  }
+    },
+  };
 })(jQuery, Drupal);

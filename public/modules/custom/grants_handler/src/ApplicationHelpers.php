@@ -411,6 +411,9 @@ abstract class ApplicationHelpers {
         $currentField = &$currentField['#element'][$fieldName];
       }
       else {
+        if(!is_array($currentField)) {
+          return;
+        }
         // If the field is not found, continue searching recursively.
         foreach ($currentField as &$subField) {
           if (is_array($subField)) {
