@@ -140,7 +140,7 @@ final class ApplicationController extends ControllerBase {
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->applicationAccessHandler->singleSubm issionAccess(
+      $this->applicationAccessHandler->singleSubmissionAccess(
         $webform_submission
       ));
   }
