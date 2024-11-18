@@ -251,6 +251,16 @@ third_party_options:
         fi: 'KuvaErillis FI'
         en: 'KuvaErillis EN'
         sv: 'KuvaErillis SV'
+    72:
+      id: SOTEPEYLEIS
+      code: SOTEPEYLEIS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\SotepeyleisDefinition
+        definitionId: grants_metadata_sotepeyleis
+      labels:
+        fi: 'Sosiaali-, terveys- ja pelastustoimen yleisavustus'
+        en: 'EN Sosiaali-, terveys- ja pelastustoimen yleisavustus'
+        sv: 'SV Sosiaali-, terveys- ja pelastustoimen yleisavustus'
   application_statuses:
     DRAFT: DRAFT
     SUBMITTED: SUBMITTED
@@ -299,6 +309,7 @@ third_party_options:
     52: 'Liikunnan erityisavustus 2'
     53: 'Kulttuurin ja vapaa-ajan erityisavustus 1'
     54: 'Kulttuurin ja vapaa-ajan erityisavustus 2'
+    55: 'Sosiaali-, terveys- ja pelastustoimen yleisavustus'
 langcode: en
 config_import_ignore:
   - 53
