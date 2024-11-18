@@ -32,6 +32,9 @@ export default defineConfig({
     },
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    launchOptions: {
+      slowMo: process.env.SLOWMO ? 1_000 : 0,
+    },
   },
   // For expect calls
   expect: {
@@ -298,6 +301,12 @@ export default defineConfig({
     {
       name: 'forms-69-registered',
       testMatch: '/forms/registered_community_69.ts',
+      dependencies: ['profile-registered_community']
+    },
+    /* Form 70 tests. */
+    {
+      name: 'forms-70-registered',
+      testMatch: '/forms/registered_community_70.ts',
       dependencies: ['profile-registered_community']
     },
   ],
