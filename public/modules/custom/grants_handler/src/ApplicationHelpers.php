@@ -69,7 +69,8 @@ abstract class ApplicationHelpers {
     $serial = $submission->serial();
     $webform_id = $submission->getWebform()->id();
 
-    $thirdPartySettings = $submission->getWebform()->getThirdPartySettings('grants_metadata');
+    $thirdPartySettings = $submission->getWebform()
+      ->getThirdPartySettings('grants_metadata');
 
     $applicationTypeId = $thirdPartySettings['applicationTypeID'] ?? NULL;
 
@@ -260,9 +261,9 @@ abstract class ApplicationHelpers {
     $applicationTypes = Helpers::getApplicationTypes();
 
     // Look for for application type and return if found.
-    $webform = array_filter($webforms, function ($wf) use ($webformTypeId, $applicationTypes, $fieldToCheck) {
+    $webform = array_filter($webforms, function($wf) use ($webformTypeId, $applicationTypes, $fieldToCheck) {
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
-      $thisApplicationTypeConfig = array_filter($applicationTypes, function ($appType) use ($thirdPartySettings) {
+      $thisApplicationTypeConfig = array_filter($applicationTypes, function($appType) use ($thirdPartySettings) {
         if (isset($thirdPartySettings["applicationTypeID"]) &&
           $thirdPartySettings["applicationTypeID"] ===
           (string) $appType["applicationTypeId"]) {
@@ -411,6 +412,9 @@ abstract class ApplicationHelpers {
         $currentField = &$currentField['#element'][$fieldName];
       }
       else {
+        if (!is_iterable($currentField)) {
+          return;
+        }
         // If the field is not found, continue searching recursively.
         foreach ($currentField as &$subField) {
           if (is_array($subField)) {

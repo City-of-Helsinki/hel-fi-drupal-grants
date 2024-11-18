@@ -15,7 +15,7 @@ import {
 import {getFakeEmailAddress} from '../../field_helpers';
 
 /**
- * Basic form data for successful submit to Avus2
+ * Basic form data for successful save as a draft
  */
 const baseForm_70: FormData = {
   title: 'Save as draft.',
