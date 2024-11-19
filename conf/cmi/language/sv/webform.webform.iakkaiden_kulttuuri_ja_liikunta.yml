@@ -58,10 +58,12 @@ elements: |
     '#title': 'Typ av stöd'
   kayttotarkoitus:
     '#title': 'Användningsän damål'
-    '#help': 'Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten.'
+  grants_compensations_information:
+    '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången.</p>'
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
     '#counter_maximum_message': '%d/5000 tecken kvar'
+    '#help': 'Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten.'
   other_grants_for_same_purpose:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
