@@ -261,9 +261,9 @@ abstract class ApplicationHelpers {
     $applicationTypes = Helpers::getApplicationTypes();
 
     // Look for for application type and return if found.
-    $webform = array_filter($webforms, function($wf) use ($webformTypeId, $applicationTypes, $fieldToCheck) {
+    $webform = array_filter($webforms, function ($wf) use ($webformTypeId, $applicationTypes, $fieldToCheck) {
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
-      $thisApplicationTypeConfig = array_filter($applicationTypes, function($appType) use ($thirdPartySettings) {
+      $thisApplicationTypeConfig = array_filter($applicationTypes, function ($appType) use ($thirdPartySettings) {
         if (isset($thirdPartySettings["applicationTypeID"]) &&
           $thirdPartySettings["applicationTypeID"] ===
           (string) $appType["applicationTypeId"]) {
