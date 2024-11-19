@@ -114,7 +114,8 @@ final class ApplicationController extends ControllerBase {
    * @return \Drupal\Core\Access\AccessResultInterface
    *   The access result.
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\grants_mandate\CompanySelectException
+   * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function accessByApplicationNumber(AccountInterface $account, string $submission_id): AccessResultInterface {
     try {

@@ -412,6 +412,7 @@ abstract class ApplicationHelpers {
         $currentField = &$currentField['#element'][$fieldName];
       }
       else {
+        // If we don't have current field array, we can't update the options.
         if (!is_iterable($currentField)) {
           return;
         }
