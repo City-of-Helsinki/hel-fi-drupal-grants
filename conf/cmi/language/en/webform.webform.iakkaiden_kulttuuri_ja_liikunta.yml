@@ -195,6 +195,7 @@ elements: |
   hankkeen_kohderyhmat_erityisryhmat:
     '#title': 'Does the project target a special group?'
     '#counter_maximum_message': '%d/1250 characters remaining'
+    '#help': 'For which special group? If not implemented, leave the field blank.'
   hankkeen_kohderyhmat_tavoitus:
     '#title': 'How will the target groups of the project be reached?'
     '#counter_maximum_message': '%d/1250 characters remaining'
