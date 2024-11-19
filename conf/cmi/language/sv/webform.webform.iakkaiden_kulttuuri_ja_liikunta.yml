@@ -60,7 +60,6 @@ elements: |
     '#title': 'Användningsän damål'
   grants_compensations_information:
     '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången.</p>'
-    '#help': 'Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten.'
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
     '#counter_maximum_message': '%d/5000 tecken kvar'
