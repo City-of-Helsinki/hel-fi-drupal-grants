@@ -108,7 +108,7 @@
           });
         });
       }
-    }
+    },
   };
 
   $('a').on('click', function (event) {
@@ -116,18 +116,18 @@
     if (unsaved && !containingElement.contains(event.target) && !event.target.getAttribute('href').startsWith('#')) {
       event.preventDefault();
 
-      return Drupal.dialogFunctions.createDialog(
-        Drupal.t('You have unsaved changes. Are you sure you want to leave?', {}, { context: 'grants_handler' }),
-        Drupal.t('Leave the application', {}, { context: 'grants_handler' }),
-        Drupal.t('Back to application', {}, { context: 'grants_handler' }),
-        Drupal.t('Close', {}, { context: 'grants_handler' }),
-        () => {
+      return Drupal.dialogFunctions.createDialog({
+        dialogContent: Drupal.t('You have unsaved changes. Are you sure you want to leave?', {}, { context: 'grants_handler' }),
+        actionButtonText: Drupal.t('Leave the application', {}, { context: 'grants_handler' }),
+        backButtonText: Drupal.t('Back to application', {}, { context: 'grants_handler' }),
+        closeButtonText: Drupal.t('Close', {}, { context: 'grants_handler' }),
+        actionButtonCallback: () => {
           unsaved = false;
           const dialog = document.getElementById('helfi-dialog__container');
           Drupal.dialogFunctions.removeDialog(dialog);
           window.top.location.href = event.currentTarget.href;
-        }
-      );
+        },
+      });
     }
   });
 
@@ -147,18 +147,18 @@
     if (unsaved && (e.which === 116 || (e.which === 82 && (e.ctrlKey || e.metaKey)))) {
       e.preventDefault(); // Prevent F5 and Ctrl+R / Cmd+R refresh
 
-      return Drupal.dialogFunctions.createDialog(
-        Drupal.t('You have unsaved changes. Are you sure you want to refresh?', {}, { context: 'grants_handler' }),
-        Drupal.t('Refresh the page', {}, { context: 'grants_handler' }),
-        Drupal.t('Back to application', {}, { context: 'grants_handler' }),
-        Drupal.t('Close', {}, { context: 'grants_handler' }),
-        () => {
+      return Drupal.dialogFunctions.createDialog({
+        dialogContent: Drupal.t('You have unsaved changes. Are you sure you want to refresh?', {}, { context: 'grants_handler' }),
+        actionButtonText: Drupal.t('Refresh the page', {}, { context: 'grants_handler' }),
+        backButtonText: Drupal.t('Back to application', {}, { context: 'grants_handler' }),
+        closeButtonText: Drupal.t('Close', {}, { context: 'grants_handler' }),
+        actionButtonCallback: () => {
           unsaved = false;
           const dialog = document.getElementById('helfi-dialog__container');
           Drupal.dialogFunctions.removeDialog(dialog);
           location.reload();
-        }
-      );
+        },
+      });
     }
   });
 

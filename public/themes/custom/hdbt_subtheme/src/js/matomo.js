@@ -1,12 +1,9 @@
 // eslint-disable-next-line func-names
 (function ($, Drupal) {
-  function loadMatomoAnalytics() {
-    if (typeof Drupal.eu_cookie_compliance === "undefined") {
-      return;
-    }
 
+  const loadMatomoAnalytics = () => {
     // Load Matomo only if statistics cookies are allowed.
-    if (Drupal.eu_cookie_compliance.hasAgreed("statistics")) {
+    if (Drupal.cookieConsent.getConsentStatus(['statistics'])) {
       // Matomo Tag Manager
       // eslint-disable-next-line no-multi-assign
       const _paq = (window._paq = window._paq || []);
@@ -25,11 +22,12 @@
         s.parentNode.insertBefore(g, s);
       })();
     }
-  }
+  };
 
   // Load when cookie settings are changed.
-  $(document).on("eu_cookie_compliance.changeStatus", loadMatomoAnalytics());
-
-  // Load on page load.
-  $(document).ready(loadMatomoAnalytics);
+  if (Drupal.cookieConsent.initialized()) {
+    loadMatomoAnalytics();
+  } else {
+    Drupal.cookieConsent.loadFunction(loadMatomoAnalytics);
+  }
 })(jQuery, Drupal);
