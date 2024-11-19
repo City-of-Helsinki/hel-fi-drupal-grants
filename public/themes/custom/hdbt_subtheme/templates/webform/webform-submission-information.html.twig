@@ -33,43 +33,51 @@
 <h3>{{ 'Application info'|t }}</h3>
 <p>{{ 'Summary about your application and processing details.'|t }}</p>
 <div class="webform-submission-information">
-    <div class="webform-submission-information__row webform-submission-information__row-top">
-        <h4>
-            {{ webform.text }}
-        </h4>
-        <div class="webform-submission-information__supportlinks">
-            {{ printApplicationLink }}
-            {{ copyApplicationLink }}
-        </div>
+  <div
+    class="webform-submission-information__row webform-submission-information__row-top">
+    <h4>
+      {{ webform.text }}
+    </h4>
+    <div class="webform-submission-information__supportlinks">
+      {{ printApplicationLink }}
+      <a href="#"
+         class=" hds-button hds-button--supplementary"
+         id="copy-application-button">
+        <span class="hds-button__label_wrapper">
+          <span class="hel-icon hel-icon--copy " role="img" aria-hidden="true"></span>
+          <span class="hds-button__label">{{ copyText }}</span>
+        </span>
+      </a>
     </div>
-    <div class="webform-submission-information__row webform-submission-information__row-main">
-
-        <div>
-            <h5>{{ "Application number"|t }}</h5>
-            {{ applicationNumber }}
-            <h5>{{ 'Sent date'|t }}</h5>
-            {{ applicationSent }}
-            <h5>{{ 'Handler information'|t }}</h5>
-            {{ handler }}
-        </div>
-        <div>
-            <h5>{{ "Application statuses"|t }}</h5>
-            {{ history }}
-
-        </div>
-        <div>
-            <h5>{{ "Application attachments"|t }}</h5>
-
-            {{ attachments }}
-
-        </div>
+  </div>
+  <div class="webform-submission-information__row webform-submission-information__row-main">
+    <div>
+      <h5>{{ "Application number"|t }}</h5>
+      {{ applicationNumber }}
+      <h5>{{ 'Sent date'|t }}</h5>
+      {{ applicationSent }}
+      <h5>{{ 'Handler information'|t }}</h5>
+      {{ handler }}
+    </div>
+    <div>
+      <h5>{{ "Application statuses"|t }}</h5>
+      {{ history }}
 
     </div>
-    {% if isEditable and not isEditPage %}
-        <div class="webform-submission-information__row webform-submission-information__row-edit">
-            {{ editApplicationLink }}
-        </div>
-    {% endif %}
+    <div>
+      <h5>{{ "Application attachments"|t }}</h5>
+
+      {{ attachments }}
+
+    </div>
+
+  </div>
+  {% if isEditable and not isEditPage %}
+    <div
+      class="webform-submission-information__row webform-submission-information__row-edit">
+      {{ editApplicationLink }}
+    </div>
+  {% endif %}
 
 
 </div>
