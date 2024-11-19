@@ -58,6 +58,7 @@ elements: |
     '#title': Grants
   kayttotarkoitus:
     '#title': 'Purpose of use'
+    '#help': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.'
   compensation_purpose:
     '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
     '#counter_maximum_message': '%d/5000 characters remaining'
@@ -195,6 +196,7 @@ elements: |
   hankkeen_kohderyhmat_erityisryhmat:
     '#title': 'Does the project target a special group?'
     '#counter_maximum_message': '%d/1250 characters remaining'
+    '#help': 'For which special group? If not implemented, leave the field blank.'
   hankkeen_kohderyhmat_tavoitus:
     '#title': 'How will the target groups of the project be reached?'
     '#counter_maximum_message': '%d/1250 characters remaining'
@@ -209,6 +211,7 @@ elements: |
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_kohderyhmat_postinrot:
     '#title': 'In which postal code area(s) in Helsinki will the project be implemented?'
+    '#help': 'Please enter up to three (3) postal code areas in the field and separate them with a comma (,).'
   hankkeen_kohderyhmat_miksi_alue:
     '#title': 'Why is/are that particular area(s) selected?'
     '#counter_maximum_message': '%d/1250 characters remaining'
