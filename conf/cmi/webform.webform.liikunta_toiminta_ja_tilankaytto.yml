@@ -370,7 +370,7 @@ elements: |-
       compensation_explanation:
         '#type': textarea
         '#title': 'Selvitys avustuksen käytöstä'
-        '#help': 'K&auml;ytt&ouml;selvityksess&auml; tulee kuvata lyhyesti, miten my&ouml;nnetty avustus on k&auml;ytetty. Avustuksen saajan on j&auml;rjestett&auml;v&auml; kirjanpitonsa niin, ett&auml; avustuksen k&auml;ytt&ouml;&auml; voidaan sielt&auml; seurata. Esimerkiksi jos yhteis&ouml; on saanut vuokra-avustusta, tilinp&auml;&auml;t&ouml;ksen tuloslaskelmasta tulee k&auml;yd&auml; ilmi avustuksen toteutuminen sek&auml; tuloissa ett&auml; menoissa. Lis&auml;&auml; tietoja avustuksen k&auml;yt&ouml;st&auml; voi my&ouml;s kirjoittaa erilliseen liitteeseen, jonka voi palauttaa K&auml;ytt&ouml;selvitys-liite kohdasta.'
+        '#help': '<p>Käyttöselvityksessä tulee kuvata lyhyesti, miten myönnetty avustus on käytetty. Avustuksen saajan on järjestettävä kirjanpitonsa niin, että avustuksen käyttöä voidaan sieltä seurata. Lisää tietoja avustuksen käytöstä voi myös kirjoittaa erilliseen liitteeseen, jonka voi palauttaa Käyttöselvitys-liite kohdasta.</p>'
         '#maxlength': 5000
         '#counter_type': character
         '#counter_maximum': 5000

@@ -74,7 +74,7 @@ elements: |
     '#markup': 'Provide a report on the use of the grant received from the City of Helsinki. A report on the use of the grant must be drawn up for the grant concerning the previous accounting period. A report on the use should not be drawn up for the current accounting period. Providing the report on the use is a prerequisite for receiving the next grant. If no report on the use is provided, the grant will not be awarded or paid. A grant awarded may be recovered if the use of the previous grant has not been satisfactorily reported.'
   compensation_explanation:
     '#title': 'Report on the use of the grant'
-    '#help': 'The report on the use must briefly describe how the received grant has been used. The recipient must arrange its accounting in such a way that it is possible to monitor the use of the grant. For example, if a community has received a lease grant, the profit and loss account in the financial statements must show the grant in both income and expenses. Further information on the use of the grant can also be written in a separate attachment, which can be returned under Report on the use.'
+    '#help': '<p>The report on the use must briefly describe how the received grant has been used. The recipient must arrange its accounting in such a way that it is possible to monitor the use of the grant. Further information on the use of the grant can also be written in a separate attachment, which can be returned under Report on the use.</p>'
     '#counter_maximum_message': '%d/5000 characters remaining'
   kayttotarkoitus:
     '#title': 'Purpose of use'
