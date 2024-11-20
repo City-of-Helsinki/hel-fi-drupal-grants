@@ -470,7 +470,6 @@ elements: |-
               3: EU
               4: Muu
               5: Säätiö
-              6: STEA
             '#required': true
             '#title': 'Avustuksen myöntäjä'
           issuer_name:
@@ -559,7 +558,6 @@ elements: |-
               3: EU
               4: Muu
               5: Säätiö
-              6: STEA
             '#required': true
             '#title': 'Avustuksen myöntäjä'
           issuer_name:
