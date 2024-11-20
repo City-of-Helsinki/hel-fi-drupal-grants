@@ -56,12 +56,14 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
+  grants_compensations_information:
+    '#markup': '<p>Only apply for one grant type at a time with each application.</p>'
   kayttotarkoitus:
     '#title': 'Purpose of use'
-    '#help': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.'
   compensation_purpose:
     '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
     '#counter_maximum_message': '%d/5000 characters remaining'
+    '#help': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.'
   other_grants_for_same_purpose:
     '#title': 'Other grants applied for to be used for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
