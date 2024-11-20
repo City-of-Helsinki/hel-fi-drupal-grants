@@ -157,7 +157,8 @@ services:
       '@helfi_helsinki_profiili.userdata',
       '@grants_attachments.attachment_fixer_service',
       '@current_user',
-      '@database'
+      '@database',
+      '@grants_events.events_service'
     ]
 
   grants_handler.application_access_handler:
