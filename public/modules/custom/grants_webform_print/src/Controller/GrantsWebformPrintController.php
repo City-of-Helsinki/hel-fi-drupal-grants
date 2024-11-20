@@ -13,6 +13,7 @@ use Drupal\grants_members\Element\MembersComposite;
 use Drupal\grants_orienteering_map\Element\OrienteeringMapComposite;
 use Drupal\grants_place_of_operation\Element\PlaceOfOperationComposite;
 use Drupal\grants_premises\Element\PremisesComposite;
+use Drupal\grants_premises\Element\RentIncomeComposite;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformTranslationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -209,6 +210,7 @@ class GrantsWebformPrintController extends ControllerBase {
       case 'rented_premise_composite':
       case 'premises_composite':
       case 'members_composite':
+      case 'rent_income_composite':
       case 'club_section_composite':
       case 'orienteering_map_composite':
       case 'place_of_operation_composite':
@@ -385,6 +387,7 @@ class GrantsWebformPrintController extends ControllerBase {
       'club_section_composite' => ClubSectionComposite::getCompositeElements($element),
       'orienteering_map_composite' => OrienteeringMapComposite::getCompositeElements($element),
       'place_of_operation_composite' => PlaceOfOperationComposite::getCompositeElements($element),
+      'rent_income_composite' => RentIncomeComposite::getCompositeElements($element),
       'default' => [],
     };
 
