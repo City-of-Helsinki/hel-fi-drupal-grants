@@ -15,7 +15,7 @@ third_party_settings:
       registered_community: registered_community
     applicationTypeTerms:
       62: '62'
-    applicationTargetGroup: '22'
+    applicationTargetGroup: '75'
     applicationOpen: null
     applicationClose: null
     applicationActingYearsType: fixed
