@@ -123,7 +123,7 @@ elements: |
   tilankayttoavustus:
     '#title': 'Understöd för användning av idrottslokaler'
   maksetut_vuokrat_info:
-    '#markup': "<p>Sammanställning av de hyror som föreningen har betalatför regelbundna träningsskift förutom idrottstjänstens egna lokaler under föregående kalenderår 1.1. - 31.12.3. <strong>Avsnittet Hyror för idrottsanläggningar är obligatoriskt om du ansöker om understöd för användning av idrottslokaler.</strong></p>\r\n"
+    '#markup': '<p>Sammanställning av de hyror som föreningen har betalatför regelbundna träningsskift förutom idrottstjänstens egna lokaler under föregående kalenderår 1.1. - 31.12.3. <strong>Avsnittet Hyror för idrottsanläggningar är obligatoriskt om du ansöker om understöd för användning av idrottslokaler.</strong></p>'
   liikuntatiloista_maksetut_vuokrat_fieldset:
     '#title': 'Hyror betalda för idrottslokaler'
   tuntimaara_yhteensa:
@@ -131,7 +131,8 @@ elements: |
   vuokrat_yhteensa:
     '#title': 'Totalt  / EUR'
   seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
-    '#title': 'Planerad ändring i användning av lokaler nästa år, +/- timmar och skäl'
+    '#title': 'Planerad <b>väsentlig</b> ändring i användning av lokaler nästa år, +/- timmar och skäl'
+    '#help': '<p>I beloppet av understödet för lokalanvändning kan enligt prövning beaktas väsentliga förändringar i föreningens användning av idrottslokaler rörande ansökningsåret. Med väsentliga förändringar avses: sammanslagning av föreningar, anslutning av en sektion eller sektioner till föreningen, avgång av en sektion eller sektioner från föreningen, en ny idrottslokal som hyrs av föreningen (hyresavtalet för lokalen i fråga ska bifogas ansökan) eller avstående från en idrottslokal som förvaltas eller ägs av föreningen.</p>'
   seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal:
     '#title': 'Föreningens hyresinkomster under föregående kalenderår 1.1. –31.12.'
     '#description': 'Om f&ouml;reningen f&aring;r hyresinkomster f&ouml;r sina lokaler, anges de h&auml;r.'

@@ -118,7 +118,7 @@ elements: |
   tilankayttoavustus:
     '#title': 'Sports facility usage grant'
   maksetut_vuokrat_info:
-    '#markup': "<p>Summary of rent paid by the club/association for regular training slots elsewhere than in Sports Services’ own facilities, in the previous calendar year between 1 January and 31 December. <strong>The Rents paid for sports facilities section is mandatory if you are applying for a facility use grant.</strong></p>\r\n"
+    '#markup': '<p>Summary of rent paid by the club/association for regular training slots elsewhere than in Sports Services’ own facilities, in the previous calendar year between 1 January and 31 December. <strong>The Rents paid for sports facilities section is mandatory if you are applying for a facility use grant.</strong></p>'
   liikuntatiloista_maksetut_vuokrat_fieldset:
     '#title': 'Rent paid for sports facilities'
   tuntimaara_yhteensa:
@@ -126,7 +126,8 @@ elements: |
   vuokrat_yhteensa:
     '#title': 'Total / EUR'
   seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
-    '#title': 'Change in the use of facilities planned for the next year, +/- hours and reason'
+    '#title': '<b>Significant</b> change in the use of facilities planned for the next year, +/- hours and reason'
+    '#help': '<p>It is possible to include significant changes in the club’s use of sports facilities over the application period for consideration in the amount of the facility usage grant at our discretion. The following are considered significant changes: club mergers, a section(s) joining the club or leaving the club, renting or purchasing a new sports facility (attach the rental agreement to the application) or relinquishing control over or selling a sports facility.</p>'
   seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal:
     '#title': 'Rent received by the club/association in the previous calendar year between 1 January and 31 December'
     '#description': 'If the club/association receives rental income for its premises, report it here'

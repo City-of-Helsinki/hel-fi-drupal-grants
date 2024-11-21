@@ -496,8 +496,7 @@ elements: |-
       '#title': Tilankäyttöavustus
       maksetut_vuokrat_info:
         '#type': webform_markup
-        '#markup': |
-          <p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta. <strong>Liikuntatiloista maksetut vuokrat -kohta on pakollinen täyttää, mikäli haet tilankäyttöavustusta.</strong></p>
+        '#markup': '<p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta. <strong data-renderer-mark="true">Liikuntatiloista maksetut vuokrat -kohta on pakollinen täyttää, mikäli haet tilankäyttöavustusta.</strong></p>'
       liikuntatiloista_maksetut_vuokrat_fieldset:
         '#type': fieldset
         '#title': 'Liikuntatiloista maksetut vuokrat'
@@ -538,7 +537,8 @@ elements: |-
               - webform--small
         seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
           '#type': textfield
-          '#title': 'Seuraavalle vuodelle suunniteltu muutos tilojen käytössä +/- tunnit ja syy'
+          '#title': 'Seuraavalle vuodelle suunniteltu <b>merkittävä</b> muutos tilojen käytössä +/- tunnit ja vuokrasumma sekä syy muutokseen.'
+          '#help': '<p>Tilankäyttöavustuksen määrässä voidaan harkinnanvaraisesti huomioida hakuvuotta koskevat merkittävät muutokset seuran liikuntatilojen käytössä. Merkittäviksi muutoksiksi katsotaan: seurojen yhteenliittyminen, jaoston tai jaostojen liittyminen seuraan tai irtautuminen seurasta, seuran vuokraama tai omistama uusi liikuntatila (kyseisen tilan vuokrasopimus tulee liittää hakemukseen) tai seuran hallinnoimasta tai omistamasta liikuntatilasta luopuminen.</p>'
           '#states':
             required:
               ':input[name="tilankayttosumma"]':
