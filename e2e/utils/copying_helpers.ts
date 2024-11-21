@@ -117,13 +117,13 @@ const makeApplicationCopy = async (
   logger(`Navigated to: ${viewPageURL}.`);
 
   // Make sure we get there.
-  const applicationIdContainer = await page.locator('.webform-submission__application_id');
+  const applicationIdContainer = page.locator('.webform-submission__application_id');
   const applicationIdContainerText = await applicationIdContainer.textContent();
   expect(applicationIdContainerText).toContain(originalApplicationId);
 
   // Make sure the application can be copied. If not, skip this test.
-  const isCopyApplicationButtonVisible = await page.locator('#copy-application-modal-form-link').isVisible();
-  if (!isCopyApplicationButtonVisible) {
+  const copyApplicationDialogButton = page.locator('#copy-application-button');
+  if (!await copyApplicationDialogButton.isVisible()) {
     logger(`Copying disabled for application: ${originalApplicationId}. Skipping test.`);
     test.skip(true, 'Skip copy test');
   }
@@ -131,8 +131,23 @@ const makeApplicationCopy = async (
   // Copy the original application.
   logger(`Copying application: ${originalApplicationId}...`);
 
-  await page.locator('#copy-application-modal-form-link').click();
-  await page.locator('#copy-application-modal-form-submit').click();
+  // click the copy button
+  await copyApplicationDialogButton.click();
+
+  const dialogSelector = '.dialog.application-copy-dialog';
+  const actionButtonSelector = '#helfi-dialog__action-button';
+
+  // Wait for the dialog to appear
+  await page.waitForSelector(dialogSelector);
+
+  // Check if the dialog is visible
+  const isDialogVisible = await page.locator(dialogSelector).isVisible();
+
+  // Assert that the dialog is visible
+  expect(isDialogVisible).toBe(true);
+
+  // Click the action button within the specific dialog
+  await page.locator(`${dialogSelector} ${actionButtonSelector}`).click();
 
   // Wait for a redirect to the new application and store the new application ID and submission URL.
   await logCurrentUrl(page);

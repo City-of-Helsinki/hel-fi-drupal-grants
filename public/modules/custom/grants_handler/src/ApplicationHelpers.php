@@ -69,7 +69,8 @@ abstract class ApplicationHelpers {
     $serial = $submission->serial();
     $webform_id = $submission->getWebform()->id();
 
-    $thirdPartySettings = $submission->getWebform()->getThirdPartySettings('grants_metadata');
+    $thirdPartySettings = $submission->getWebform()
+      ->getThirdPartySettings('grants_metadata');
 
     $applicationTypeId = $thirdPartySettings['applicationTypeID'] ?? NULL;
 
@@ -411,6 +412,10 @@ abstract class ApplicationHelpers {
         $currentField = &$currentField['#element'][$fieldName];
       }
       else {
+        // If we don't have current field array, we can't update the options.
+        if (!is_iterable($currentField)) {
+          return;
+        }
         // If the field is not found, continue searching recursively.
         foreach ($currentField as &$subField) {
           if (is_array($subField)) {

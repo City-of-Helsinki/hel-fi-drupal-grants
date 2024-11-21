@@ -187,6 +187,11 @@ To run all tests in headed mode (displays a browser):
 npx playwright test --headed
 ```
 
+To exit on first error:
+```
+npx playwright test -x
+```
+
 To run a specific set of tests. Available sets (projects) can be found in `playwright.config.ts`:
 ```
 npx playwright test --project {NAME_OF_PROJECT}
@@ -206,8 +211,12 @@ Example 1: npx playwright test --project forms-48 --headed
 
 Example 2: npx playwright test --project forms-48-registered --headed
 
-
 Example 3: npx playwright test --project forms-all --headed
+```
+
+To run a specific set of tests in headed mode with a slow-motion feature that pauses for one second before entering data:
+```
+SLOWMO=true npx playwright test --project {NAME_OF_PROJECT} --headed
 ```
 
 Other command line options that can be utilized when running the test on your local machine can be found [here](https://playwright.dev/docs/test-cli).
