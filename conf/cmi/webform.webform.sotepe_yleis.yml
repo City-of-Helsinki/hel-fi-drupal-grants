@@ -1,5 +1,5 @@
 uuid: a8d4d2d7-30bf-4091-a86f-978b99358957
-langcode: en
+langcode: fi
 status: open
 dependencies:
   module:
@@ -260,9 +260,10 @@ elements: |-
           class:
             - webform--large
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
-      ketka_toiminnastanne_erityisesti_hyotyvat:
+      who_benefits:
         '#type': textarea
         '#title': 'Ketkä toiminnastanne erityisesti hyötyvät?'
+        '#help': 'Kuvaa keitä kohderyhmäänne kuuluu ja mahdollisesti myös kuinka paljon kohderyhmään kuuluvia toiminta-alueellanne on. Kohderyhmän kuvauksessa on tärkeää, että siitä käy ilmi minkälaisia ihmisiä juuri te haluatte ja osaatte kohdata, tai millaisessa tilanteessa olevat hyötyvät toiminnastanne eniten.'
         '#counter_type': character
         '#maxlength': 5000
         '#counter_maximum': 5000
@@ -280,9 +281,10 @@ elements: |-
             ':input[name="avustukset_summa"]':
               value:
                 greater_equal: '10000'
-      minkalaisia_muutoksia_tapahtuu_jos_onnistutte:
+      changes_on_success:
         '#type': textarea
         '#title': 'Minkälaisia muutoksia tapahtuu, jos onnistutte?'
+        '#help': 'Toiminnallanne voi olla monia tavoitteita. Kuvatkaa ja arvioikaa tässä keskeiset muutokset, joita tavoittelette esimerkiksi kohderyhmänne toimintakyvyssä, arjessa, ihmissuhteissa tai muussa hyvinvointiin ja terveyteen tai osallisuuteen liittyvässä asiassa. Mikä siis muuttuu, jos olette onnistuneet tai minkälaisia ilmiöitä toimintanne ennaltaehkäisee?'
         '#counter_type': character
         '#maxlength': 5000
         '#counter_maximum': 5000
@@ -300,9 +302,10 @@ elements: |-
             ':input[name="avustukset_summa"]':
               value:
                 greater_equal: '10000'
-      minkalaisia_hyotyjä_avustettavan_toiminnan_seurauksena_syntyy:
+      results_of_activities:
         '#type': textarea
         '#title': 'Minkälaisia hyötyjä avustettavan toiminnan seurauksena syntyy?'
+        '#help': 'Kuvaa lyhyesti, mitä vaikutuksia toiminnalla saadaan aikaan ja millä tavoin ne syntyvät. Voit kuvata vaikutukset niiden tapahtumisjärjestyksessä: mitä vaikutuksia syntyy ensin, ja mitä vähän pidemmän ajan kuluttua. Keskity kuitenkin toiminnan välittömiin vaikutuksiin.<br>Voit myös kertoa, mikä toiminnassanne on erityistä tai mistä (laatu)tekijöistä on erityisesti huolehdittava, että tavoiteltavia vaikutuksia saavutetaan. Voit myös kuvata, miten jokin tekemänne yhteistyö edistää vaikutusten saavuttamista.'
         '#counter_type': character
         '#maxlength': 5000
         '#counter_maximum': 5000

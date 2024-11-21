@@ -114,6 +114,30 @@ class SotepeyleisDefinition extends ComplexDataDefinitionBase {
         'explanation',
       ]);
 
+    $info['who_benefits'] = DataDefinition::create('string')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'generalInfoArray',
+        'whoBenefits',
+      ]);
+
+    $info['changes_on_success'] = DataDefinition::create('string')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'generalInfoArray',
+        'changesOnSuccess',
+      ]);
+
+    $info['results_of_activities'] = DataDefinition::create('string')
+      ->setSetting('jsonPath', [
+        'compensation',
+        'compensationInfo',
+        'generalInfoArray',
+        'resultsOfActivities',
+      ]);
+
     $info['fee_person'] = DataDefinition::create('float')
       ->setSetting('jsonPath', [
         'compensation',
