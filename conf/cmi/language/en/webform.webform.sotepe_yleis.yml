@@ -1,4 +1,4 @@
-title: 'General grants for welfare and health promotion, social welfare and health care and rescue services'
+title: 'Sosiaali-, terveys- ja pelastustoimen yleisavustus'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Applicant details'
@@ -67,7 +67,7 @@ elements: |
     '#help': 'Describe who belong to your target group and possibly also how many target group members there are in your operational area. It is important that the target group description shows what kind of people you want and can reach or what kind of people and in what situation will benefit most from your activities.'
   changes_on_success:
     '#title': 'What kind of changes will take place if you succeed?'
-    '#help': 'Your activities may have many goals. Describe and assess the key changes you are seeking to achieve in your target group\'s functioning and in their everyday life, relationships or other aspects related to well-being and health or involvement, for example. So what will change if you have succeeded or what kind of phenomena do your activities prevent?'
+    '#help': 'Your activities may have many goals. Describe and assess the key changes you are seeking to achieve in your target group&#39;s functioning and in their everyday life, relationships or other aspects related to well-being and health or involvement, for example. So what will change if you have succeeded or what kind of phenomena do your activities prevent?'
   results_of_activities:
     '#title': 'What are the benefits of the activities to be supported?'
     '#help': 'Briefly describe the effects of the activities and how they are achieved. You can describe the effects in the order in which they occur: which effects occur first and which after a little longer time. However, focus on the immediate effects of the activities.<br>You can indicate what is special about your activities or what (quality) factors need to be taken care of in order to achieve the desired effects. You can also describe how any cooperation you have pursued will contribute to achieving the effects.'

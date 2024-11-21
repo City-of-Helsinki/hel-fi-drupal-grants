@@ -1,4 +1,4 @@
-title: 'Allmänt understöd inom främjandet av välfärd och hälsa och social- och hälsovården samt räddningsväsendet '
+title: 'Sosiaali-, terveys- ja pelastustoimen yleisavustus'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
@@ -67,13 +67,13 @@ elements: |
     '#counter_maximum_message': '%d/5000 tecken kvar'
   who_benefits:
     '#title': 'Who are the main beneficiaries of your activities?'
-    '#help': 'Describe who belong to your target group and possibly also how many target group members there are in your operational area. It is important that the target group description shows what kind of people you want and can reach or what kind of people and in what situation will benefit most from your activities.'
+    '#help': 'Beskriv vem som hör till er målgrupp och eventuellt också hur många av dem som hör till er målgrupp det finns i ert verksamhetsområde. I beskrivningen av målgruppen är det viktigt att det framgår vilka slags människor just ni önskar och kan bemöta, eller de situationer i vilka människor får den största nyttan av er verksamhet.'
   changes_on_success:
     '#title': 'What kind of changes will take place if you succeed?'
-    '#help': 'Your activities may have many goals. Describe and assess the key changes you are seeking to achieve in your target group\'s functioning and in their everyday life, relationships or other aspects related to well-being and health or involvement, for example. So what will change if you have succeeded or what kind of phenomena do your activities prevent?'
+    '#help': 'Er verksamhet kan ha flera mål. Beskriv och bedöm här de centrala förändringar som ni eftersträvar exempelvis i er målgrupps funktionsförmåga, vardag, människorelationer eller andra aspekter som anknyter till välfärd och hälsa eller delaktighet. Vilka slags förändringar kommer det alltså att ske om ni lyckas eller vilka slags fenomen förebygger er verksamhet?'
   results_of_activities:
     '#title': 'What are the benefits of the activities to be supported?'
-    '#help': 'Briefly describe the effects of the activities and how they are achieved. You can describe the effects in the order in which they occur: which effects occur first and which after a little longer time. However, focus on the immediate effects of the activities.<br>You can indicate what is special about your activities or what (quality) factors need to be taken care of in order to achieve the desired effects. You can also describe how any cooperation you have pursued will contribute to achieving the effects.'
+    '#help': 'Beskriv kort vilka effekter som uppnås genom verksamheten och på vilket sätt de uppstår. Du kan beskriva effekterna i den ordning de sker: vilka effekter uppstår först och vilka efter en längre tid. Koncentrera dig dock på verksamhetens omedelbara effekter.<br>Du kan även berätta vad som är speciellt med er verksamhet eller vilka (kvalitets)faktorer som bör beaktas särskilt för att de effekter som eftersträvas ska uppnås. Du kan även beskriva hur något samarbete ni har främjar uppnåendet av effekterna.'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
