@@ -102,7 +102,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
-      '#title' => t('Men (20-63 years)', [], $tOpts),
+      '#title' => t('Men from Helsinki (20-63 years)', [], $tOpts),
       '#prefix' => '<div class="club-section__participants">',
       '#element_validate' => [
         [FieldValueValidator::class, 'validate'],
@@ -111,7 +111,7 @@ class ClubSectionComposite extends WebformCompositeBase {
 
     $elements['women'] = [
       '#type' => 'textfield',
-      '#title' => t('Women (20-63 years)', [], $tOpts),
+      '#title' => t('Women from Helsinki (20-63 years)', [], $tOpts),
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
       '#element_validate' => [
@@ -123,18 +123,21 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
-      '#title' => t('Others (20-63 years)', [], $tOpts),
+      '#title' => t('Others from Helsinki (20-63 years)', [], $tOpts),
       '#suffix' => '</div>',
       '#element_validate' => [
         [FieldValueValidator::class, 'validate'],
       ],
     ];
 
+    $hoursHelp = t('<p>In the practice hours section, do not report the training output of individual actives, but the actual practice hours organized for Helsinki residents belonging to the age group.<p><p>If the actual number of training hours for an age group cannot be ascertained (e.g. many mixed groups), can the share of that age group be calculated from the total number of hours based on the share of the number of active members from Helsinki in the age group out of the total number of active members from Helsinki. E.g. the total number of hours in the division (all mixed groups) is 100 hours, where 10 adults and 20 under 20-year-olds are active: the number of hours for adults is 33 hours and for under 20-year-olds 67 hours. However, the actual number of hours realized for the age group should be used primarily.</p>', [], $tOpts);
+
     $elements['adultHours'] = [
       '#type' => 'textfield',
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
       '#title' => t('Practice hours of adults (20-63 years)', [], $tOpts),
+      '#help' => $hoursHelp,
       '#prefix' => '<div class="club-section__totalhours">',
       '#suffix' => '</div>',
       '#element_validate' => [
@@ -146,7 +149,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
-      '#title' => t('Men (64 years and over)', [], $tOpts),
+      '#title' => t('Men from Helsinki (64 years and over)', [], $tOpts),
       '#prefix' => '<div class="club-section__participants">',
       '#element_validate' => [
         [FieldValueValidator::class, 'validate'],
@@ -157,7 +160,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
-      '#title' => t('Women (64 years and over)', [], $tOpts),
+      '#title' => t('Women from Helsinki (64 years and over)', [], $tOpts),
       '#element_validate' => [
         [FieldValueValidator::class, 'validate'],
       ],
@@ -167,7 +170,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
-      '#title' => t('Others (64 years and over)', [], $tOpts),
+      '#title' => t('Others from Helsinki (64 years and over)', [], $tOpts),
       '#suffix' => '</div>',
       '#element_validate' => [
         [FieldValueValidator::class, 'validate'],
@@ -179,6 +182,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
       '#title' => t('Practice hours of adults (64 years and over)', [], $tOpts),
+      '#help' => $hoursHelp,
       '#prefix' => '<div class="club-section__totalhours">',
       '#suffix' => '</div>',
       '#element_validate' => [
@@ -190,7 +194,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
-      '#title' => t('Boys (under 20 years of age)', [], $tOpts),
+      '#title' => t('Boys from Helsinki (under 20 years of age)', [], $tOpts),
       '#prefix' => '<div class="club-section__participants">',
       '#element_validate' => [
         [FieldValueValidator::class, 'validate'],
@@ -201,7 +205,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
-      '#title' => t('Girls (under 20 years of age)', [], $tOpts),
+      '#title' => t('Girls from Helsinki (under 20 years of age)', [], $tOpts),
       '#element_validate' => [
         [FieldValueValidator::class, 'validate'],
       ],
@@ -211,7 +215,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#type' => 'textfield',
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
-      '#title' => t('Others (under 20 years of age)', [], $tOpts),
+      '#title' => t('Others from Helsinki (under 20 years of age)', [], $tOpts),
       '#suffix' => '</div>',
       '#element_validate' => [
         [FieldValueValidator::class, 'validate'],
@@ -223,6 +227,7 @@ class ClubSectionComposite extends WebformCompositeBase {
       '#input_mask' => "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'",
       '#pattern' => '^[0-9 ]*$',
       '#title' => t('Practice hours of children/young people (under 20 years of age)', [], $tOpts),
+      '#help' => $hoursHelp,
       '#prefix' => '<div class="club-section__totalhours">',
       '#suffix' => '</div>',
       '#element_validate' => [
