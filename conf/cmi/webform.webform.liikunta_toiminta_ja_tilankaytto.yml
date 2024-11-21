@@ -817,8 +817,7 @@ elements: |-
       '#title': 'Lajijaostot helsinkiläisille aktiiviharrastajille'
       lajijaostot_info:
         '#type': webform_markup
-        '#markup': |
-          <p>Seuran/yhdistyksen järjestämä säännöllinen ohjattu liikuntatoiminta lajeittain. Ilmoita tähän lajeittain edellisen vuoden helsinkiläisten aktiiviharrastajien määrät sekä heidän toteutuneet harjoitustunnit.</p>
+        '#markup': '<p>Seuran/yhdistyksen järjestämä säännöllinen ohjattu liikuntatoiminta lajeittain. Ilmoita tähän lajeittain edellisen vuoden <strong data-renderer-mark="true">helsinkiläisten aktiiviharrastajien määrät </strong>sekä heidän toteutuneet harjoitustunnit ikäryhmittäin.</p>'
       club_section:
         '#type': club_section_composite
         '#title': '<empty>'

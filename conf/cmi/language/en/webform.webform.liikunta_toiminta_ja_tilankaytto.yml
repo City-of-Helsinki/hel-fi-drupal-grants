@@ -226,7 +226,7 @@ elements: |
   lajijaostot_helsinkilaisille_aktiiviharrastajille:
     '#title': 'Operating sport divisions for Helsinki residents'
   lajijaostot_info:
-    '#markup': "<p>List the regular guided sports activities organised by the club/association by sport. Enter here the number of active members from Helsinki in the previous year, by sport, as well as their realized training hours.</p>\r\n"
+    '#markup': '<p>List the regular guided sports activities organised by the club/association by sport. Enter here <strong>the number of active members from Helsinki</strong> in the previous year, by sport, as well as their realized training hours by age group.</p>'
   club_section:
     '#multiple__add_more_button_label': 'Add new sport'
     '#multiple__item_label': 'sport'

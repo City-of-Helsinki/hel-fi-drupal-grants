@@ -231,7 +231,7 @@ elements: |
   lajijaostot_helsinkilaisille_aktiiviharrastajille:
     '#title': 'Aktiva grengsektioner för helsingforsare'
   lajijaostot_info:
-    '#markup': "<p>Regelbunden handledd idrottsverksamhet som ordnas av föreningen, enligt gren. Ange här antalet aktiva idrottsutövare från Helsingfors under föregående år, per sport, samt deras realiserade träningstimmar.</p>\r\n"
+    '#markup': '<p>Regelbunden handledd idrottsverksamhet som ordnas av föreningen, enligt gren. Ange här antalet aktiva <strong>idrottsutövare från Helsingfors</strong> under föregående år, per sport, samt deras realiserade träningstimmar per åldersgrupp.</p>'
   club_section:
     '#multiple__add_more_button_label': 'Lägg till en sport'
     '#multiple__item_label': 'sport'
