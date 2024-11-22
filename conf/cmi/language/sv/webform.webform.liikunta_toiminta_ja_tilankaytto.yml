@@ -230,6 +230,7 @@ elements: |
     '#help': 'Ut&ouml;ver de VOK 1-utbildningar som ordnas av regionala idrottsorganisationer beaktas i ber&auml;kningen antalet handledare och tr&auml;nare som har genomg&aring;tt en utbildning f&ouml;r tr&auml;nare och handledare som ordnas av ett grenf&ouml;rbund p&aring; minst motsvarande niv&aring; och med motsvarande inneh&aring;ll eller som har avlagt grundexamen i idrott, idrottsinstrukt&ouml;r (YH) eller magisterexamen i idrottsvetenskaper (idrottspedagogik eller motionsbiologi).'
   lajijaostot_helsinkilaisille_aktiiviharrastajille:
     '#title': 'Aktiva grengsektioner för helsingforsare'
+    '#help': '<p>I detta avsnitt kan en enskild aktiv idrottsutövare rapporteras mer än en gång, om den utövaren uppfyller definitionen av aktiv utövare i flera olika grensektioner.</p>'
   lajijaostot_info:
     '#markup': '<p>Regelbunden handledd idrottsverksamhet som ordnas av föreningen, enligt gren. Ange här antalet aktiva <strong>idrottsutövare från Helsingfors</strong> under föregående år, per sport, samt deras realiserade träningstimmar per åldersgrupp.</p>'
   club_section:

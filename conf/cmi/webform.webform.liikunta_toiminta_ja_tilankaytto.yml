@@ -815,6 +815,7 @@ elements: |-
     lajijaostot_helsinkilaisille_aktiiviharrastajille:
       '#type': webform_section
       '#title': 'Lajijaostot helsinkiläisille aktiiviharrastajille'
+      '#help': '<p>Tässä kohdassa yksittäinen aktiiviharrastaja voi tulla ilmoitetuksi useamman kerran, mikäli aktiivi täyttää aktiiviharrastajan määritelmän useammassa eri lajijaostossa.</p>'
       lajijaostot_info:
         '#type': webform_markup
         '#markup': '<p>Seuran/yhdistyksen järjestämä säännöllinen ohjattu liikuntatoiminta lajeittain. Ilmoita tähän lajeittain edellisen vuoden <strong data-renderer-mark="true">helsinkiläisten aktiiviharrastajien määrät </strong>sekä heidän toteutuneet harjoitustunnit ikäryhmittäin.</p>'

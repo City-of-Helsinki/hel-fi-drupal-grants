@@ -225,6 +225,7 @@ elements: |
     '#help': 'In addition to the VOK 1 training arranged by regional sports organisations, the calculation accounts for the number of instructors and coaches who have completed a sports federation&rsquo;s coach and instructor training that are at least equal in terms of level and content, or who have completed a basic qualification in sports instruction (vocational college), a degree in sports instruction (university of applied sciences) or a master&rsquo;s degree in sports sciences (sports pedagogy or sports biology).'
   lajijaostot_helsinkilaisille_aktiiviharrastajille:
     '#title': 'Operating sport divisions for Helsinki residents'
+    '#help': '<p>In this section, a single active member can be reported more than once, if the member meets the definition of an active member in several different sport divisions.</p>'
   lajijaostot_info:
     '#markup': '<p>List the regular guided sports activities organised by the club/association by sport. Enter here <strong>the number of active members from Helsinki</strong> in the previous year, by sport, as well as their realized training hours by age group.</p>'
   club_section:
