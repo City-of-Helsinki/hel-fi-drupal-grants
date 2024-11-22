@@ -15,7 +15,7 @@ third_party_settings:
       registered_community: registered_community
     applicationTypeTerms:
       62: '62'
-    applicationTargetGroup: '22'
+    applicationTargetGroup: '75'
     applicationOpen: null
     applicationClose: null
     applicationActingYearsType: fixed
@@ -36,8 +36,8 @@ uid: 1
 template: false
 archive: false
 id: iakkaiden_kulttuuri_ja_liikunta
-title: 'Kulttuurin avustukset iäkkäiden ihmisten kulttuuritoiminnan edistämiseksi'
-description: '<p>Kulttuurin ja vapaa-ajan erillisavustushakemus: Ikääntyneiden liikkumisen ja kulttuuritoiminnan avustus</p>'
+title: 'KUVA: avustushakemus iäkkäiden ihmisten liikkumisen ja kulttuuritoiminnan edistämiseksi'
+description: '<p>KUVAERILLIS</p>'
 categories:
   - Kehityksessä
 elements: |-
@@ -603,6 +603,9 @@ elements: |-
     tarkemmat_tiedot_section:
       '#type': webform_section
       '#title': ' '
+      markup:
+        '#type': webform_markup
+        '#markup': '<p data-renderer-start-pos="6773">Vuoden 2024 avustuspäätökset:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="6806">Liikuntajaosto: 11.4.2024 §10</p></li><li><p data-renderer-start-pos="6839">Kulttuuri- ja kirjastojaosto: 16.4.2024 §15</p></li></ul>'
       hankesuunnitelma_radios:
         '#type': radios
         '#title': 'Haetaanko nyt vuonna 2024 myönnetyn kaksivuotisen avustuksen 2. osaa?'
@@ -1359,78 +1362,5 @@ handlers:
     conditions: {  }
     weight: null
     settings:
-      id: grants_handler
-      handler_id: null
-      label: 'Grants Handler'
-      notes: ''
-      status: true
-      conditions: {  }
-      weight: null
-      settings:
-        id: grants_handler
-        label: 'Grants Handler'
-        notes: ''
-        handler_id: null
-        status: 1
-        conditions: {  }
-        weight: ''
-        settings:
-          id: grants_handler
-          handler_id: null
-          label: 'Grants Handler'
-          notes: ''
-          status: true
-          conditions: {  }
-          weight: null
-          settings:
-            id: grants_handler
-            handler_id: null
-            label: 'Grants Handler'
-            notes: ''
-            status: true
-            conditions: {  }
-            weight: null
-            settings:
-              id: grants_handler
-              handler_id: null
-              label: 'Grants Handler'
-              notes: ''
-              status: true
-              conditions: {  }
-              weight: null
-              settings:
-                id: grants_handler
-                handler_id: null
-                label: 'Grants Handler'
-                notes: ''
-                status: true
-                conditions: {  }
-                weight: null
-                settings:
-                  id: grants_handler
-                  handler_id: null
-                  label: 'Grants Handler'
-                  notes: ''
-                  status: true
-                  conditions: {  }
-                  weight: null
-                  settings:
-                    id: grants_handler
-                    handler_id: null
-                    label: 'Grants Handler'
-                    notes: ''
-                    status: true
-                    conditions: {  }
-                    weight: null
-                    settings:
-                      id: grants_handler
-                      handler_id: grants_handler
-                      label: 'Grants Handler'
-                      notes: ''
-                      status: true
-                      conditions: {  }
-                      weight: 0
-                      settings:
-                        debug: false
-          debug: false
+      debug: false
 variants: {  }

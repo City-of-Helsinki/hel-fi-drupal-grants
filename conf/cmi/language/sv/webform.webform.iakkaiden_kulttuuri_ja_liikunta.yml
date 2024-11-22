@@ -56,14 +56,14 @@ elements: |
     '#title': Understöd
   subventions:
     '#title': 'Typ av stöd'
-  kayttotarkoitus:
-    '#title': 'Användningsän damål'
   grants_compensations_information:
     '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången.</p>'
+  kayttotarkoitus:
+    '#title': 'Användningsän damål'
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
+    '#help': '<p>Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten.</p>'
     '#counter_maximum_message': '%d/5000 tecken kvar'
-    '#help': 'Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten.'
   other_grants_for_same_purpose:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
@@ -130,6 +130,8 @@ elements: |
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_tarkemmat_tiedot:
     '#title': '3. Mer detaljerad information'
+  markup:
+    '#markup': '<p data-renderer-start-pos="7036">Beslut om understöd för 2024:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="7069">Idrottssektionen: 11.4.2024 §10</p></li><li><p data-renderer-start-pos="7104">Kultur- och bibliotekssektionen: 16.4.2024 §15</p></li></ul>'
   hankesuunnitelma_radios:
     '#title': 'Ansöker du nu om den andra delen av ett tvåårigt understöd som beviljades 2024?'
     '#help': '<p>Svara bara ”ja” på den här frågan om din sammanslutning redan har ett pågående projekt som finansieras med samma understöd och du ansöker om fortsatt finansiering.</p>'
@@ -177,7 +179,7 @@ elements: |
   haun_painopisteet_section:
     '#title': '3.2 Tyngdpunkter för ansökan'
   haun_painopisteet_ohje:
-    '#markup': '<p>Projektet ska arbeta för en eller flera tyngdpunkter. OBS! Välj bara de tyngdpunkter som ni kommer att bidra till på ett konkret sätt genom projektet.</p>'
+    '#markup': '<p data-renderer-start-pos="16591"><strong data-renderer-mark="true">Vilken av följande tyngdpunkter för understödet för främjande av idrott hos äldre är projektet inriktat på?</strong></p><p data-renderer-start-pos="16700">Projektet ska arbeta för en eller flera tyngdpunkter. OBS! Välj bara de tyngdpunkter som ni kommer att bidra till på ett konkret sätt genom projektet.</p>'
   haun_painopisteet_liikkumis_kehitys:
     '#title': 'Bidrar projektet till att utveckla möjligheter till idrott eller konst- och kulturverksamhet i närområdet/regionalt? På vilket sätt?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
@@ -197,8 +199,8 @@ elements: |
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_erityisryhmat:
     '#title': 'Riktar sig projektet till någon särskild grupp?'
+    '#help': '<p>Till vilken särskild grupp? Om svaret är ”nej”, lämna tomt.</p>'
     '#counter_maximum_message': '%d/1250 tecken kvar'
-    '#help': 'Till vilken särskild grupp? Om svaret är ”nej”, lämna tomt.'
   hankkeen_kohderyhmat_tavoitus:
     '#title': 'Hur ska ni nå ut med projektet till målgrupperna?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
@@ -213,7 +215,7 @@ elements: |
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_postinrot:
     '#title': 'Inom vilket/vilka postnummerområden i Helsingfors kommer projektet att genomföras?'
-    '#help': 'Ange upp till tre (3) postnummerområden och separera dem med kommatecken (,).'
+    '#help': '<p>Ange upp till tre (3) postnummerområden och separera dem med kommatecken (,).</p>'
   hankkeen_kohderyhmat_miksi_alue:
     '#title': 'Varför har ni valt just det/de områdena?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
@@ -227,7 +229,6 @@ elements: |
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_riskit_vakiinnuttaminen:
     '#title': 'Är den planerade verksamheten för projektet avsedd att bli en permanent del av den grundläggande verksamheten hos den sökande/en annan aktör efter projektet?'
-    '#help': '<p>Om ja, beskriv i textrutan hur det här kommer att ske, lämna annars tomt.</p>'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_valiarviointi_section:
     '#title': '3.5 Mellanutvärderin g av tvååriga projekt'
