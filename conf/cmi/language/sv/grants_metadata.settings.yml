@@ -69,4 +69,12 @@ third_party_options:
     44: Utvecklingsunderstöd
     45: 'Utvecklingsunderstöd för Helsingforsmodellen'
     46: 'Utvecklingsunderstöd för grundläggande konstundervisning'
+    47: 'Specialunderstöd för kultur 1'
+    48: 'Specialunderstöd för kultur 2'
+    49: 'Specialunderstöd för ungdomsverksamhet 1'
+    50: 'Specialunderstöd för ungdomsverksamhet 2'
+    51: 'Specialunderstöd för idrott 1'
+    52: 'Specialunderstöd för idrott 2'
+    53: 'Specialunderstöd för kultur och fritid 1'
+    54: 'Specialunderstöd för kultur och fritid 2'
 langcode: sv
