@@ -15,6 +15,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentFixerService;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
@@ -83,6 +84,7 @@ final class ApplicationUploaderService {
     private readonly AttachmentFixerService $attachmentFixerService,
     private readonly AccountInterface $currentUser,
     private readonly Connection $database,
+    private readonly EventsService $eventsService,
   ) {
     $this->logger = $this->loggerChannelFactory->get('application_uploader_service');
 
@@ -185,6 +187,7 @@ final class ApplicationUploaderService {
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * @throws \Drupal\grants_events\EventException
    */
   public function handleApplicationUploadViaIntegration(
     TypedDataInterface $applicationData,
@@ -199,6 +202,25 @@ final class ApplicationUploaderService {
      * for some reason.
      */
     $updatedDocumentFromAtv = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+
+    // Create new saveid before sending data to integration,
+    // so we can add it to event data.
+    $newSaveId = $this->logSubmissionSaveid(
+      NULL,
+      $applicationNumber,
+      $this->helfiHelsinkiProfiiliUserdata->getUserData()
+    );
+
+    // Add new event for sending it to integration.
+    $this->eventsService->addNewEventForApplication(
+      $updatedDocumentFromAtv,
+      $this->eventsService->getEventData(
+        $this->eventsService->getEventTypes()['HANDLER_SEND_INTEGRATION'],
+        $applicationNumber,
+        'Send application to integration.',
+        $newSaveId
+      ));
+
     $myJSON = Json::encode($updatedDocumentFromAtv->getContent());
 
     // No matter what the debug value is, we do NOT log json in PROD.
@@ -232,12 +254,8 @@ final class ApplicationUploaderService {
       // Set application number to meta as well to enable better searches.
       $headers['X-hki-applicationNumber'] = $applicationNumber;
 
-      // Set new saveid and save it to db.
-      $headers['X-hki-saveId'] = $this->logSubmissionSaveid(
-        NULL,
-        $applicationNumber,
-        $this->helfiHelsinkiProfiiliUserdata->getUserData()
-      );
+      // Set new saveid to header.
+      $headers['X-hki-saveId'] = $newSaveId;
 
       $res = $this->httpClient->post($this->endpoint, [
         'auth' => [
@@ -335,14 +353,13 @@ final class ApplicationUploaderService {
       'saveid' => $saveId,
       'uid' => $this->currentUser->id(),
       'user_uuid' => $userData['sub'] ?? '',
-      'timestamp' => (string) (new Time)->getRequestTime(),
+      'timestamp' => (string) (new Time())->getRequestTime(),
     ];
 
     $query = $this->database->insert(ApplicationHelpers::TABLE, $fields);
     $query->fields($fields)->execute();
 
     return $saveId;
-
   }
 
 }
