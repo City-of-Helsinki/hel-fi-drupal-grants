@@ -7,6 +7,7 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\helfi_atv\AtvDocument;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
@@ -67,6 +68,7 @@ class EventsService {
     'MESSAGE_READ' => 'MESSAGE_READ',
     'MESSAGE_RESEND' => 'MESSAGE_RESEND',
     'HANDLER_ATT_OK' => 'HANDLER_ATT_OK',
+    'HANDLER_SEND_INTEGRATION' => 'HANDLER_SEND_INTEGRATION',
     'HANDLER_ATT_DELETE' => 'HANDLER_ATT_DELETE',
     'HANDLER_RESEND_APP' => 'HANDLER_RESEND_APP',
     'HANDLER_APP_COPIED' => 'HANDLER_APP_COPIED',
@@ -139,7 +141,7 @@ class EventsService {
   ): ?array {
 
     if (empty($eventData)) {
-      $eventData = self::getEventData($eventType, $applicationNumber, $eventDescription, $eventTarget);
+      $eventData = $this->getEventData($eventType, $applicationNumber, $eventDescription, $eventTarget);
     }
 
     $eventDataJson = Json::encode($eventData);
@@ -212,7 +214,7 @@ class EventsService {
    * @param string $eventDescription
    *   Event description.
    * @param string $eventTarget
-   *   Eent target.
+   *   Event target.
    *
    * @return array
    *   Event data in array.
@@ -243,6 +245,24 @@ class EventsService {
 
     $eventData['timeCreated'] = $eventData['timeUpdated'] = $dt->format('Y-m-d\TH:i:s');
     return $eventData;
+  }
+
+  /**
+   * Add new event to application document.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $document
+   *   Document to be updated.
+   * @param array $eventData
+   *   Event data to be added.
+   */
+  public function addNewEventForApplication(AtvDocument &$document, array $eventData): void {
+    $documentContent = $document->getContent();
+    $documentEvents = $documentContent['events'] ?? [];
+    $documentEvents[] = $eventData;
+    $documentContent['events'] = $documentEvents;
+
+    $document->setContent($documentContent);
+
   }
 
 }

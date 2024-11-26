@@ -92,7 +92,6 @@ class GrantsBudgetCostStatic extends GrantsBudgetStaticBase {
     $tOpts = ['context' => 'grants_budget_components'];
     return [
       "salaries" => t("Salaries (€)", [], $tOpts),
-      "personnelSideCosts" => t("Personnel costs from salaries and fees (approx. 30%) (€)", [], $tOpts),
       "personnelSocialSecurityCosts" => t("personnelSocialSecurityCosts (€)", [], $tOpts),
       "rentSum" => t("Rents (€)", [], $tOpts),
       "materials" => t("Materials (€)", [], $tOpts),
@@ -119,6 +118,7 @@ class GrantsBudgetCostStatic extends GrantsBudgetStaticBase {
       "netCosts" => t("netCosts (€)", [], $tOpts),
       "performerFees" => t("Salaries and fees for performers and artists (€)", [], $tOpts),
       "otherFees" => t("Other salaries and fees (production, technology, etc.) (€)", [], $tOpts),
+      "personnelSideCosts" => t("Personnel costs from salaries and fees (approx. 30%) (€)", [], $tOpts),
       "generalCosts" => t("generalCosts (€)", [], $tOpts),
       "permits" => t("permits (€)", [], $tOpts),
       "setsAndCostumes" => t("setsAndCostumes (€)", [], $tOpts),

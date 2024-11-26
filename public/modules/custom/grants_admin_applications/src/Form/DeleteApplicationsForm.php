@@ -189,7 +189,12 @@ final class DeleteApplicationsForm extends FormBase {
 
     // Build the application listing form elements.
     if ($uuid || $businessId) {
-      $this->buildApplicationList($uuid, $businessId, $appEnv, $type, $status, $form_state, $form);
+      try {
+        $this->buildApplicationList($uuid, $businessId, $appEnv, $type, $status, $form_state, $form);
+      }
+      catch (\Throwable $e) {
+        $this->messenger()->addError($e->getMessage());
+      }
     }
 
     $form['actions']['delete_selected'] = [
@@ -365,6 +370,8 @@ final class DeleteApplicationsForm extends FormBase {
    *   The form state.
    * @param array $form
    *   The form.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   private function buildApplicationList(
     mixed $uuid,
@@ -383,6 +390,13 @@ final class DeleteApplicationsForm extends FormBase {
         $this->handleNoDocumentsFound($form, $searchParams);
         return;
       }
+
+      // Extract the transaction_id values and join them into a string.
+      $transactionIds = array_map(function ($document) {
+        return $document->getTransactionId();
+      }, $documents);
+
+      $applicationNumberList = implode(',', $transactionIds);
 
       $form_state->setStorage(['documents' => $documents]);
       $documentsByType = $this->sortDocuments($documents);
@@ -413,6 +427,15 @@ final class DeleteApplicationsForm extends FormBase {
           ];
         }
       }
+
+      // Add the application numbers list to a form element.
+      $form['appData']['application_numbers'] = [
+        '#type' => 'textarea',
+        '#title' => $this->t('Application numbers in copyable list.'),
+        '#value' => $applicationNumberList,
+        '#description' => $this->t('Total number of results: @count', ['@count' => count($transactionIds)]),
+        '#disabled' => TRUE,
+      ];
     }
     catch (AtvDocumentNotFoundException | AtvFailedToConnectException | GuzzleException $e) {
       $this->messenger()->addError('Failed fetching applications.');
