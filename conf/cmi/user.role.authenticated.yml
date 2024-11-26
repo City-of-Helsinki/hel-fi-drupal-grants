@@ -16,11 +16,13 @@ dependencies:
     - helfi_tpr
     - media
     - node
+    - paragraphs
+    - raven
     - system
 _core:
   default_config_hash: 83Nuup-6oYkkdAsvg3nrR2pBOgtTXEV1JrzpCCLkYLM
 id: authenticated
-label: 'Sisäänkirjautunut käyttäjä'
+label: 'Authenticated user'
 weight: -9
 is_admin: false
 permissions:
@@ -29,6 +31,8 @@ permissions:
   - 'delete own files'
   - 'display eu cookie compliance popup'
   - 'edit own address content'
+  - 'send javascript errors to sentry'
+  - 'send performance traces to sentry'
   - 'use text format full_html'
   - 'use text format minimal'
   - 'use text format webform_default'
@@ -42,3 +46,4 @@ permissions:
   - 'view remote entities'
   - 'view tpr_service'
   - 'view tpr_unit'
+  - 'view unpublished paragraphs'

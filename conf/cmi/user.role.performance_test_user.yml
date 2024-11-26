@@ -4,9 +4,11 @@ status: true
 dependencies:
   module:
     - file
+    - raven
 id: performance_test_user
 label: 'Performance test user'
 weight: 8
 is_admin: null
 permissions:
   - 'delete own files'
+  - 'send performance traces to sentry'

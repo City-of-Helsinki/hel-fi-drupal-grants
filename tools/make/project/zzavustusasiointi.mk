@@ -60,9 +60,11 @@ drush-sync-db: ## Sync database
 ifeq ($(DUMP_SQL_EXISTS),yes)
 	$(call step,Import local SQL dump...)
 	$(call drush,sql-query --file=${DOCKER_PROJECT_ROOT}/$(DUMP_SQL_FILENAME) && echo 'SQL dump imported')
+	$(call drush,cr -y)
 else
 	$(call step,Sync database from @$(DRUPAL_SYNC_SOURCE)...)
 	$(call drush,sql-sync -y --structure-tables-key=common,key_value_expire @$(DRUPAL_SYNC_SOURCE) @self)
+	$(call drush,cr -y)
 endif
 
 PHONY += drush-create-dump
