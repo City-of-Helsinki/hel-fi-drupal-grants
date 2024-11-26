@@ -603,14 +603,12 @@ elements: |-
     tarkemmat_tiedot_section:
       '#type': webform_section
       '#title': ' '
-      markup:
-        '#type': webform_markup
-        '#markup': '<p data-renderer-start-pos="6773">Vuoden 2024 avustuspäätökset:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="6806">Liikuntajaosto: 11.4.2024 §10</p></li><li><p data-renderer-start-pos="6839">Kulttuuri- ja kirjastojaosto: 16.4.2024 §15</p></li></ul>'
       hankesuunnitelma_radios:
         '#type': radios
         '#required': true
         '#title': 'Haetaanko nyt vuonna 2024 myönnetyn kaksivuotisen avustuksen 2. osaa?'
-        '#description_display': before
+        '#description': '<p data-renderer-start-pos="6773">Vuoden 2024 avustuspäätökset:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="6806">Liikuntajaosto: 11.4.2024 §10</p></li><li><p data-renderer-start-pos="6839">Kulttuuri- ja kirjastojaosto: 16.4.2024 §15</p></li></ul>'
+        '#description_display': after
         '#options':
           1: Kyllä
           0: Ei
@@ -754,8 +752,7 @@ elements: |-
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       hankkeen_kohderyhmat_erityisryhmat:
         '#type': textarea
-        '#title': 'Kohdennetaanko hankkeessa toimintaa jollekin erityisryhmälle?'
-        '#description': 'Mille erityisryhmälle? Jos ei toteuteta, niin jätetään tyhjäksi.'
+        '#title': 'Kohdennetaanko hankkeessa toimintaa jollekin erityisryhmälle? Mille erityisryhmälle? Jos ei toteuteta, niin jätetään tyhjäksi.'
         '#description_display': after
         '#maxlength': 1250
         '#counter_type': character
@@ -795,8 +792,7 @@ elements: |-
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       hankkeen_kohderyhmat_postinrot:
         '#type': textfield
-        '#title': 'Millä postinumeroalueella tai -alueilla Helsingissä hanke toteutetaan?'
-        '#description': 'Kirjaa kenttään enintään kolme (3) postinumeroaluetta ja erottele ne toisistaan pilkulla (,)'
+        '#title': 'Millä postinumeroalueella tai -alueilla Helsingissä hanke toteutetaan? Kirjaa kenttään enintään kolme (3) postinumeroaluetta ja erottele ne toisistaan pilkulla (,)'
         '#description_display': after
         '#required': true
         '#autocomplete': 'off'

@@ -130,10 +130,9 @@ elements: |
         '#counter_maximum_message': '%d/1000 characters remaining'
   3_tarkemmat_tiedot:
     '#title': '3. Information in more detail'
-  markup:
-    '#markup': '<p data-renderer-start-pos="6888">Grant decisions for 2024:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="6917">Sports Sub-committee: 11 April 2024 Section 10</p></li><li><p data-renderer-start-pos="6969">Culture and Libraries Sub-committee: 16 April 2024 Section 15</p></li></ul>'
   hankesuunnitelma_radios:
     '#title': 'Is the 2nd part of the grant awarded in 2024 now being applied for?'
+    '#description': '<p data-renderer-start-pos="6888">Grant decisions for 2024:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="6917">Sports Sub-committee: 11 April 2024 Section 10</p></li><li><p data-renderer-start-pos="6969">Culture and Libraries Sub-committee: 16 April 2024 Section 15</p></li></ul>'
     '#options':
       1: 'Yes'
       0: 'No'
@@ -198,8 +197,7 @@ elements: |
     '#title': 'Who is the project primarily aimed at?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_kohderyhmat_erityisryhmat:
-    '#title': 'Does the project target a special group?'
-    '#description': '<p>For which special group? If not implemented, leave the field blank.</p>'
+    '#title': 'Does the project target a special group? For which special group? If not implemented, leave the field blank.'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_kohderyhmat_tavoitus:
     '#title': 'How will the target groups of the project be reached?'
@@ -214,8 +212,7 @@ elements: |
     '#title': 'What kind of expertise do the project operators already have in working with the target group(s) in question?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_kohderyhmat_postinrot:
-    '#title': 'In which postal code area(s) in Helsinki will the project be implemented?'
-    '#description': '<p>Please enter up to three (3) postal code areas in the field and separate them with a comma (,).</p>'
+    '#title': 'In which postal code area(s) in Helsinki will the project be implemented? Please enter up to three (3) postal code areas in the field and separate them with a comma (,).'
   hankkeen_kohderyhmat_miksi_alue:
     '#title': 'Why is/are that particular area(s) selected?'
     '#counter_maximum_message': '%d/1250 characters remaining'
