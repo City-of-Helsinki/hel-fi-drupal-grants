@@ -65,7 +65,7 @@ elements: |
     '#help': '<p>Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten.</p>'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   other_grants_for_same_purpose:
-    '#title': 'Övriga understöd som ansökts för samma ändamål'
+    '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
     '#markup': '<p>Ange här endast de understöd som beviljats från annanstans<br>än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Ett jakande svar öppnar ytterligare en fråga</span></div></div></div>'
   olemme_saaneet_muita_avustuksia:
@@ -97,7 +97,7 @@ elements: |
         '#help': '<p>Ge en kort beskrivning, i vilket syfte har bidraget beviljats?</p>'
         '#counter_maximum_message': '%d/1000 tecken kvar'
   muut_samaan_tarkoitukseen_haetut_avustukset:
-    '#title': 'Övriga understöd som beviljats för samma ändamål'
+    '#title': 'Övriga understöd som ansökts för samma ändamål'
   info_muut_samaan_tarkoitukseen_haettu:
     '#markup': '<p>Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div></div></div>'
   olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
