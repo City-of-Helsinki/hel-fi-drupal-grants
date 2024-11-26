@@ -84,7 +84,7 @@ class SotepeyleisDefinition extends ComplexDataDefinitionBase {
         'compensationArray',
       ]);
 
-    $info['purpose'] = DataDefinition::create('string')
+    $info['compensation_purpose'] = DataDefinition::create('string')
       ->setSetting('jsonPath', [
         'compensation',
         'compensationInfo',
