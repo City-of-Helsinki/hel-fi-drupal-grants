@@ -642,6 +642,14 @@ elements: |-
             - ':input[name="kulttuuri2_summa"]':
                 value:
                   greater: '0'
+          required:
+            - ':input[name="kulttuuri1_summa"]':
+                value:
+                  greater: '0'
+            - or
+            - ':input[name="kulttuuri2_summa"]':
+                value:
+                  greater: '0'
     hankesuunnitelma_section:
       '#type': webform_section
       '#title': '3.1 Hankesuunnitelma'
@@ -658,50 +666,99 @@ elements: |-
           1: Kyllä
           0: Ei
         '#default_value': '0'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_tarkoitus_tavoitteet:
         '#type': textarea
         '#title': 'Hankkeen tarkoitus ja tavoitteet'
         '#maxlength': 2500
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+            visible:
+              ':input[name="hankesuunnitelma_radios"]':
+                value: '0'
+            required:
+              ':input[name="hankesuunnitelma_radios"]':
+                value: '0'
       hankkeen_toimenpiteet_aikataulu:
         '#type': textarea
         '#title': 'Mitkä ovat hankkeen konkreettiset toimenpiteet ja niiden toteutusaikataulu?'
         '#maxlength': 4000
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 4000
         '#counter_maximum_message': '%d/4000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_toimenpiteet_toteutus:
         '#type': fieldset
         '#title': 'Hankkeen konkreettiset toimenpiteet on tarkoitus toteuttaa välillä'
         '#attributes':
           class:
             - grants-fieldset
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
         hankkeen_toimenpiteet_alkupvm:
           '#type': date
           '#title': Alkupäivämäärä
-          '#required': true
+          '#states':
+            visible:
+              ':input[name="hankesuunnitelma_radios"]':
+                value: '0'
+            required:
+              ':input[name="hankesuunnitelma_radios"]':
+                value: '0'
         hankkeen_toimenpiteet_loppupvm:
           '#type': date
           '#title': Loppupäivämäärä
-          '#required': true
+          '#states':
+            visible:
+              ':input[name="hankesuunnitelma_radios"]':
+                value: '0'
+            required:
+              ':input[name="hankesuunnitelma_radios"]':
+                value: '0'
       hankkeen_keskeisimmat_kumppanit:
         '#type': textarea
         '#title': 'Nimeä hankkeen keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa'
         '#maxlength': 2500
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
     haun_painopisteet_section:
       '#type': webform_section
       '#title': '3.2 Haun painopisteet'
+      '#states':
+        visible:
+          ':input[name="hankesuunnitelma_radios"]':
+            value: '0'
       haun_painopisteet_ohje:
         '#type': webform_markup
         '#markup': '<b>Mihin seuraavista iäkkäiden liikkumisen ja kulttuuritoiminnan edistämisen avustuksen painopisteistä hanke vastaa?</b><p>Hankkeessa tulee toteuttaa yhtä tai useampaa painopistettä. HUOM! Valitse vain ne painopisteet, joita edistätte hankkeessa konkreettisella tavalla. Jos hanke ei toteuta jotakin painopistettä, jätä tekstikenttä tyhjäksi.</p>'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       haun_painopisteet_liikkumis_kehitys:
         '#type': textarea
         '#title': 'Kehitetäänkö hankkeessa liikkumismahdollisuuksia tai taide- ja kulttuuritoimintaa lähiympäristössä / alueellisesti? Miten?'
@@ -709,6 +766,10 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       haun_painopisteet_digi_kehitys:
         '#type': textarea
         '#title': 'Kehitetäänkö hankkeessa digitaalisesti / etänä toteutettavia kulttuuritoimintoja tai liikkumiseen aktivoivaa toimintaa? Miten?'
@@ -716,6 +777,10 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       haun_painopisteet_vertais_kehitys:
         '#type': textarea
         '#title': 'Kehitetäänkö hankkeessa vapaaehtois- / vertaistoimintaa? Miten?'
@@ -723,6 +788,10 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       haun_painopisteet_kulttuuri_kehitys:
         '#type': textarea
         '#title': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
@@ -739,17 +808,29 @@ elements: |-
             - ':input[name="kulttuuri2_summa"]':
                 value:
                   greater: '0'
+            - ':input[name="hankesuunnitelma_radios"]':
+                value: '0'
     hankkeen_kohderyhmat_section:
       '#type': webform_section
       '#title': '3.3 Hankkeen kohderyhmät'
+      '#states':
+        visible:
+          ':input[name="hankesuunnitelma_radios"]':
+            value: '0'
       hankkeen_kohderyhmat_kenelle:
         '#type': textarea
         '#title': 'Kenelle hankkeen toiminta on pääasiallisesti suunnattu?'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_kohderyhmat_erityisryhmat:
         '#type': textarea
         '#title': 'Kohdennetaanko hankkeessa toimintaa jollekin erityisryhmälle? Mille erityisryhmälle? Jos ei toteuteta, niin jätetään tyhjäksi.'
@@ -758,75 +839,131 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_kohderyhmat_tavoitus:
         '#type': textarea
         '#title': 'Kuinka hankkeen kohderyhmät aiotaan tavoittaa?'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_kohderyhmat_konkretia:
         '#type': textarea
         '#title': 'Miten hankkeessa edistetään konkreettisin toimenpitein valitun kohderyhmän toimintakykyä ja hyvinvointia?'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_kohderyhmat_osallisuus:
         '#type': textarea
         '#title': 'Millä tavoin hankkeessa edistetään osallisuutta? Mikä ikäihmisten rooli hankkeessa on?'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_kohderyhmat_osaaminen:
         '#type': textarea
         '#title': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_kohderyhmat_postinrot:
         '#type': textfield
         '#title': 'Millä postinumeroalueella tai -alueilla Helsingissä hanke toteutetaan? Kirjaa kenttään enintään kolme (3) postinumeroaluetta ja erottele ne toisistaan pilkulla (,)'
         '#description_display': after
-        '#required': true
         '#autocomplete': 'off'
         '#attributes':
           class:
             - webform--medium
         '#size': 32
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_kohderyhmat_miksi_alue:
         '#type': textarea
         '#title': 'Miksi juuri kyseinen alue / alueet on valittu?'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
     hankkeen_riskit_section:
       '#type': webform_section
       '#title': '3.4 Riskit & analyysi'
+      '#states':
+        visible:
+          ':input[name="hankesuunnitelma_radios"]':
+            value: '0'
       hankkeen_riskit_keskeisimmat:
         '#type': textarea
         '#title': 'Mitkä ovat hankkeen toteuttamisen näkökulmasta keskeisimmät riskit?'
         '#maxlength': 2500
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_riskit_seuranta:
         '#type': textarea
         '#title': 'Miten hankkeessa aiotaan toteuttaa seurantaa ja arviointia?'
         '#maxlength': 2500
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_riskit_vakiinnuttaminen:
         '#type': textarea
         '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
@@ -834,6 +971,13 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
     hankkeen_valiarviointi_section:
       '#type': webform_section
       '#title': '3.5 2-vuotisten hankkeiden väliarviointi'
@@ -844,61 +988,72 @@ elements: |-
       arviointi_markup:
         '#type': webform_markup
         '#markup': 'Arvioi tässä osiossa hankkeen tähänastista toimintaa seuraavien kysymysten avulla. Avustuksen 2. osaa hakevien tulee liittää hakemukselle Muu liite-kohtaan niin ikään kustannuspaikkaraportti ajanjaksolta 1.6.-31.12.2024'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
       arviointi_toteuma:
         '#type': textarea
         '#title': 'Onko hanke edennyt suunnitelman mukaisesti? Arvioikaa hankkeen toteumaa tähän asti asteikolla 1-100% ja perustelkaa vastauksenne.'
         '#description': 'Onko hankkeessa tapahtunut merkittäviä muutoksia?'
         '#description_display': after
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
         '#states':
           visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+          required:
             ':input[name="hankesuunnitelma_radios"]':
               value: '1'
       arviointi_muutokset_talous:
         '#type': textarea
         '#title': 'Talouteen liittyen; mitä?'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
         '#states':
           visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+          required:
             ':input[name="hankesuunnitelma_radios"]':
               value: '1'
       arviointi_muutokset_toiminta:
         '#type': textarea
         '#title': 'Toimintaan liittyen; mitä?'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
         '#states':
           visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+          required:
             ':input[name="hankesuunnitelma_radios"]':
               value: '1'
       arviointi_muutokset_aikataulu:
         '#type': textarea
         '#title': 'Aikatauluun liittyen; mitä?'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
         '#states':
           visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+          required:
             ':input[name="hankesuunnitelma_radios"]':
               value: '1'
       arviointi_haasteet:
         '#type': textarea
         '#title': 'Onko hanke kohdannut toimintaan vaikuttaneita haasteita? Jos, niin millaisia?'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
@@ -906,16 +1061,21 @@ elements: |-
           visible:
             ':input[name="hankesuunnitelma_radios"]':
               value: '1'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
       arviointi_saavutettavuus:
         '#type': textarea
         '#title': 'Miten toiminta on tavoittanut osallistujia suhteessa tavoitteisiin?'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
         '#states':
           visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+          required:
             ':input[name="hankesuunnitelma_radios"]':
               value: '1'
       arviointi_avustus_kaytto:
@@ -923,12 +1083,14 @@ elements: |-
         '#help': 'Avustusehdot, kohta 10e: "Myönnetty avustus on palautettava Helsingin kaupungille, jos avustusta ei ole käytetty sinä aikana, jona se on avustuspäätöksen mukaan tullut käyttää.'
         '#title': 'Tuleeko ensimmäiselle hankekaudelle myönnetty avustus käytettyä näillä näkymin määräaikaan (31.5.2025) mennessä? Jos ei, niin avatkaa tähän johtaneita syitä.'
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
         '#states':
           visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '1'
+          required:
             ':input[name="hankesuunnitelma_radios"]':
               value: '1'
   4_talousarvio:
