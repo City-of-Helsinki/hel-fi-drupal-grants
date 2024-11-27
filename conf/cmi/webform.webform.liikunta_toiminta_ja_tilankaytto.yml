@@ -370,7 +370,7 @@ elements: |-
       compensation_explanation:
         '#type': textarea
         '#title': 'Selvitys avustuksen käytöstä'
-        '#help': 'K&auml;ytt&ouml;selvityksess&auml; tulee kuvata lyhyesti, miten my&ouml;nnetty avustus on k&auml;ytetty. Avustuksen saajan on j&auml;rjestett&auml;v&auml; kirjanpitonsa niin, ett&auml; avustuksen k&auml;ytt&ouml;&auml; voidaan sielt&auml; seurata. Esimerkiksi jos yhteis&ouml; on saanut vuokra-avustusta, tilinp&auml;&auml;t&ouml;ksen tuloslaskelmasta tulee k&auml;yd&auml; ilmi avustuksen toteutuminen sek&auml; tuloissa ett&auml; menoissa. Lis&auml;&auml; tietoja avustuksen k&auml;yt&ouml;st&auml; voi my&ouml;s kirjoittaa erilliseen liitteeseen, jonka voi palauttaa K&auml;ytt&ouml;selvitys-liite kohdasta.'
+        '#help': '<p>Käyttöselvityksessä tulee kuvata lyhyesti, miten myönnetty avustus on käytetty. Avustuksen saajan on järjestettävä kirjanpitonsa niin, että avustuksen käyttöä voidaan sieltä seurata. Lisää tietoja avustuksen käytöstä voi myös kirjoittaa erilliseen liitteeseen, jonka voi palauttaa Käyttöselvitys-liite kohdasta.</p>'
         '#maxlength': 5000
         '#counter_type': character
         '#counter_maximum': 5000
@@ -496,8 +496,7 @@ elements: |-
       '#title': Tilankäyttöavustus
       maksetut_vuokrat_info:
         '#type': webform_markup
-        '#markup': |
-          <p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta. <strong>Liikuntatiloista maksetut vuokrat -kohta on pakollinen täyttää, mikäli haet tilankäyttöavustusta.</strong></p>
+        '#markup': '<p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta. <strong data-renderer-mark="true">Liikuntatiloista maksetut vuokrat -kohta on pakollinen täyttää, mikäli haet tilankäyttöavustusta.</strong></p>'
       liikuntatiloista_maksetut_vuokrat_fieldset:
         '#type': fieldset
         '#title': 'Liikuntatiloista maksetut vuokrat'
@@ -538,7 +537,8 @@ elements: |-
               - webform--small
         seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
           '#type': textfield
-          '#title': 'Seuraavalle vuodelle suunniteltu muutos tilojen käytössä +/- tunnit ja syy'
+          '#title': 'Seuraavalle vuodelle suunniteltu <b>merkittävä</b> muutos tilojen käytössä +/- tunnit ja vuokrasumma sekä syy muutokseen.'
+          '#help': '<p>Tilankäyttöavustuksen määrässä voidaan harkinnanvaraisesti huomioida hakuvuotta koskevat merkittävät muutokset seuran liikuntatilojen käytössä. Merkittäviksi muutoksiksi katsotaan: seurojen yhteenliittyminen, jaoston tai jaostojen liittyminen seuraan tai irtautuminen seurasta, seuran vuokraama tai omistama uusi liikuntatila (kyseisen tilan vuokrasopimus tulee liittää hakemukseen) tai seuran hallinnoimasta tai omistamasta liikuntatilasta luopuminen.</p>'
           '#states':
             required:
               ':input[name="tilankayttosumma"]':
@@ -815,10 +815,10 @@ elements: |-
     lajijaostot_helsinkilaisille_aktiiviharrastajille:
       '#type': webform_section
       '#title': 'Lajijaostot helsinkiläisille aktiiviharrastajille'
+      '#help': '<p>Tässä kohdassa yksittäinen aktiiviharrastaja voi tulla ilmoitetuksi useamman kerran, mikäli aktiivi täyttää aktiiviharrastajan määritelmän useammassa eri lajijaostossa.</p>'
       lajijaostot_info:
         '#type': webform_markup
-        '#markup': |
-          <p>Seuran/yhdistyksen järjestämä säännöllinen ohjattu liikuntatoiminta lajeittain. Ilmoita tähän lajeittain edellisen vuoden helsinkiläisten aktiiviharrastajien määrät sekä heidän toteutuneet harjoitustunnit.</p>
+        '#markup': '<p>Seuran/yhdistyksen järjestämä säännöllinen ohjattu liikuntatoiminta lajeittain. Ilmoita tähän lajeittain edellisen vuoden <strong data-renderer-mark="true">helsinkiläisten aktiiviharrastajien määrät </strong>sekä heidän toteutuneet harjoitustunnit ikäryhmittäin.</p>'
       club_section:
         '#type': club_section_composite
         '#title': '<empty>'
