@@ -271,7 +271,7 @@ elements: |
   menot_section:
     '#title': '4.2 Utgifter'
   talous_menon_tyyppi:
-    '#title': 'Typ av utgifter'
+    '#title': 'Typ av utgift'
     '#help': '<p>Skriv ner vilken typ av utgift det gäller. Utgifter kan till exempel vara andra lokalhyror och personalkostnader.</p>'
     '#multiple__add_more_button_label': 'Lägg till en utgift'
   lisatiedot_ja_liitteet:
