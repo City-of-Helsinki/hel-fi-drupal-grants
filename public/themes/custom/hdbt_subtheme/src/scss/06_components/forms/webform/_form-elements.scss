@@ -470,6 +470,10 @@ input[type='radio'] + label.form-required::after {
   }
 }
 
+.club-section__participants label {
+  text-wrap: balance;
+}
+
 .hel-icon--size {
   &-xs {
     --icon-size: var(--spacing-layout-2-xs);
