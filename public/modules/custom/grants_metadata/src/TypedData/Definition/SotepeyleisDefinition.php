@@ -184,4 +184,5 @@ class SotepeyleisDefinition extends ComplexDataDefinitionBase {
     $retval = parent::getPropertyDefinition($name);
     return $retval;
   }
+
 }
