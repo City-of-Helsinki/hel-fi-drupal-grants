@@ -681,12 +681,12 @@ elements: |-
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#states':
-            visible:
-              ':input[name="hankesuunnitelma_radios"]':
-                value: '0'
-            required:
-              ':input[name="hankesuunnitelma_radios"]':
-                value: '0'
+          visible:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
+          required:
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
       hankkeen_toimenpiteet_aikataulu:
         '#type': textarea
         '#title': 'Mitkä ovat hankkeen konkreettiset toimenpiteet ja niiden toteutusaikataulu?'
@@ -801,15 +801,11 @@ elements: |-
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
         '#states':
           visible:
-            - ':input[name="kulttuuri1_summa"]':
-                value:
-                  greater: '0'
-            - or
-            - ':input[name="kulttuuri2_summa"]':
-                value:
-                  greater: '0'
-            - ':input[name="hankesuunnitelma_radios"]':
-                value: '0'
+            ':input[name="kulttuuri1_summa"]':
+              value:
+                greater: '0'
+            ':input[name="hankesuunnitelma_radios"]':
+              value: '0'
     hankkeen_kohderyhmat_section:
       '#type': webform_section
       '#title': '3.3 Hankkeen kohderyhmät'
