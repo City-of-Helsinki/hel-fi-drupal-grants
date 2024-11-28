@@ -22,6 +22,10 @@ $config['openid_connect.client.tunnistamo']['settings']['loa_roles'] = [
     'loa' => 'substantial',
     'roles' => ['helsinkiprofiili'],
   ],
+  [
+    'loa' => 'high',
+    'roles' => ['helsinkiprofiili'],
+  ],
 ];
 
 $config['openid_connect.client.tunnistamoadmin']['settings']['client_roles'] = ['ad_user'];
