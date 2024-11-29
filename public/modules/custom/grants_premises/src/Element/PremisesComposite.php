@@ -31,7 +31,7 @@ class PremisesComposite extends WebformCompositeBase {
   }
 
   /**
-   * Different field set for premise composite and rented premise composite.
+   * {@inheritdoc}
    */
   public static function getCompositeElements(array $element): array {
     $elements = [];
