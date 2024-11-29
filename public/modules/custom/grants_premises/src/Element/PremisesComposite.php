@@ -249,6 +249,7 @@ class PremisesComposite extends WebformCompositeBase {
       '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
       '#pattern' => '^[0-9 ]*$',
       '#title' => t('Rent', [], $tOpts),
+      '#help' => t('EUR per month')
     ];
 
     $elements['lessorName'] = [
