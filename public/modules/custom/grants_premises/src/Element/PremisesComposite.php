@@ -33,7 +33,7 @@ class PremisesComposite extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
-  public static function getCompositeElements(array $element) {
+  public static function getCompositeElements(array $element): array {
     if (!in_array($element['#type'], ['premise_composite', 'rented_premise_composite'])) {
       return self::getPremiseCompositeElements($element);
     }
