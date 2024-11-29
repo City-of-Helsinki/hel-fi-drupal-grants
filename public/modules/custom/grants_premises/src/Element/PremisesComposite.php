@@ -44,7 +44,7 @@ class PremisesComposite extends WebformCompositeBase {
   }
 
   /**
-   * We need different field set for premise composite and rented premise composite.
+   * Different field set for premise composite and rented premise composite.
    */
   public static function getPremiseCompositeElements(array $element): array {
     $elements = [];
@@ -219,7 +219,7 @@ class PremisesComposite extends WebformCompositeBase {
   }
 
   /**
-   * We need different field set for premise composite and rented premise composite.
+   * Different field set for premise composite and rented premise composite.
    */
   public static function getRentedPremiseCompositeElements(array $element): array {
     $elements = [];
@@ -249,7 +249,7 @@ class PremisesComposite extends WebformCompositeBase {
       '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
       '#pattern' => '^[0-9 ]*$',
       '#title' => t('Rent', [], $tOpts),
-      '#help' => t('EUR per month')
+      '#help' => t('EUR per month'),
     ];
 
     $elements['lessorName'] = [
