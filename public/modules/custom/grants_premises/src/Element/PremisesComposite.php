@@ -31,22 +31,9 @@ class PremisesComposite extends WebformCompositeBase {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public static function getCompositeElements(array $element): array {
-    if (!in_array($element['#type'], ['premise_composite', 'rented_premise_composite'])) {
-      return self::getPremiseCompositeElements($element);
-    }
-
-    return $element['#type'] === 'premise_composite' ?
-      self::getPremiseCompositeElements($element) :
-      self::getRentedPremiseCompositeElements($element);
-  }
-
-  /**
    * Different field set for premise composite and rented premise composite.
    */
-  public static function getPremiseCompositeElements(array $element): array {
+  public static function getCompositeElements(array $element): array {
     $elements = [];
     $tOpts = ['context' => 'grants_premises'];
 
@@ -201,86 +188,6 @@ class PremisesComposite extends WebformCompositeBase {
         'Huonosti' => t('Poorly', [], $tOpts),
       ],
       '#title' => t('How well premises suit for the action?', [], $tOpts),
-    ];
-
-    // Remove all elements from elements that are not explicitly selected
-    // for this form. Hopefully this fixes issues with data fields.
-    foreach ($element as $fieldName => $value) {
-      if (str_contains($fieldName, '__access')) {
-        $fName = str_replace('__access', '', $fieldName);
-        $fName = str_replace('#', '', $fName);
-        if ($value === FALSE && isset($elements[$fName])) {
-          unset($elements[$fName]);
-        }
-      }
-    }
-
-    return $elements;
-  }
-
-  /**
-   * Different field set for premise composite and rented premise composite.
-   */
-  public static function getRentedPremiseCompositeElements(array $element): array {
-    $elements = [];
-    $tOpts = ['context' => 'grants_premises'];
-
-    $elements['streetAddress'] = [
-      '#type' => 'textfield',
-      '#title' => t('Street Address', [], $tOpts),
-    ];
-
-    $elements['postCode'] = [
-      '#type' => 'textfield',
-      '#title' => t('Postal code', [], $tOpts),
-      '#size' => 10,
-      '#maxlength' => 8,
-      '#pattern' => ValidPostalCodeValidator::$postalCodePattern,
-      '#pattern_error' => t('Use the format FI-XXXXX or enter a five-digit postcode.', [], $tOpts),
-    ];
-
-    $elements['postOffice'] = [
-      '#type' => 'textfield',
-      '#title' => t('City', [], $tOpts),
-    ];
-
-    $elements['totalRent'] = [
-      '#type' => 'textfield',
-      '#input_mask' => "'alias': 'decimal', 'groupSeparator': ' ', 'digits': '2', 'radixPoint': ',', 'substituteRadixPoint': 'true'",
-      '#pattern' => '^[0-9 ]*$',
-      '#title' => t('Rent', [], $tOpts),
-      '#help' => t('EUR per month'),
-    ];
-
-    $elements['lessorName'] = [
-      '#type' => 'textfield',
-      '#title' => t("Lessor's name", [], $tOpts),
-    ];
-
-    $elements['lessorPhoneOrEmail'] = [
-      '#type' => 'textfield',
-      '#title' => t("Lessor's contact information", [], $tOpts),
-      '#help' => t('Email and/or telephone number', [], $tOpts),
-    ];
-
-    $elements['usage'] = [
-      '#type' => 'textfield',
-      '#title' => t('Purpose of use', [], $tOpts),
-      '#help' => t('For example, an office, storage, gathering or clubs', [], $tOpts),
-    ];
-
-    $elements['daysPerWeek'] = [
-      '#type' => 'number',
-      '#title' => t('How many days per week is the facility used?', [], $tOpts),
-      '#min' => 0,
-      '#max' => 7,
-    ];
-
-    $elements['hoursPerDay'] = [
-      '#type' => 'number',
-      '#title' => t('How many hours per day is the facility used?', [], $tOpts),
-      '#min' => 0,
-      '#max' => 24,
     ];
 
     // Remove all elements from elements that are not explicitly selected
