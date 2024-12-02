@@ -345,15 +345,15 @@ msgstr "Sport"
 
 msgctxt "grants_club_section"
 msgid "Women from Helsinki (20-63 years)"
-msgstr "Kvinnor (20-63 år)"
+msgstr "Kvinnor från Helsingfors (20-63 år)"
 
 msgctxt "grants_club_section"
 msgid "Men from Helsinki (20-63 years)"
-msgstr "Män (20-63 år)"
+msgstr "Män från Helsingfors (20-63 år)"
 
 msgctxt "grants_club_section"
 msgid "Others from Helsinki (20-63 years)"
-msgstr "Övriga (20-63 år)"
+msgstr "Övriga från Helsingfors (20-63 år)"
 
 msgctxt "grants_club_section"
 msgid "Practice hours of adults (20-63 years)"
@@ -365,15 +365,15 @@ msgstr "<p>I avsnittet träningstimmar, rapportera inte enskilda idrottsutövarn
 
 msgctxt "grants_club_section"
 msgid "Men from Helsinki (64 years and over)"
-msgstr "Män (64 år och äldre)"
+msgstr "Män från Helsingfors (64 år och äldre)"
 
 msgctxt "grants_club_section"
 msgid "Women from Helsinki (64 years and over)"
-msgstr "Kvinnor (64 år och äldre)"
+msgstr "Kvinnor från Helsingfors (64 år och äldre)"
 
 msgctxt "grants_club_section"
 msgid "Others from Helsinki (64 years and over)"
-msgstr "Övriga (64 år och äldre)"
+msgstr "Övriga från Helsingfors (64 år och äldre)"
 
 msgctxt "grants_club_section"
 msgid "Practice hours of adults (64 years and over)"
@@ -381,15 +381,15 @@ msgstr "Träningstimmar för vuxna (64 år och äldre)"
 
 msgctxt "grants_club_section"
 msgid "Boys from Helsinki (under 20 years of age)"
-msgstr "Pojkar (under 20 år)"
+msgstr "Pojkar från Helsingfors (under 20 år)"
 
 msgctxt "grants_club_section"
 msgid "Girls from Helsinki (under 20 years of age)"
-msgstr "Flickor (under 20 år)"
+msgstr "Flickor från Helsingfors (under 20 år)"
 
 msgctxt "grants_club_section"
 msgid "Others from Helsinki (under 20 years of age)"
-msgstr "Övriga (under 20 år)"
+msgstr "Övriga från Helsingfors (under 20 år)"
 
 msgctxt "grants_club_section"
 msgid "Practice hours of children/young people (under 20 years of age)"
