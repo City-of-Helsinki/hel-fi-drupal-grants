@@ -3,7 +3,7 @@ import {logger} from "./logger";
 import {FormField, FormData, FormFieldWithRemove} from "./data/test_data"
 import {viewPageBuildSelectorForItem} from "./view_page_helpers";
 import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
-import {logCurrentUrl} from "./helpers";
+import {getFulfilledResponse, logCurrentUrl} from "./helpers";
 
 /**
  *  The pageType type.
@@ -48,6 +48,10 @@ const validateSubmission = async (
     logger(`Validating draft application with application ID: ${thisStoreData.applicationId}...`);
     await navigateAndValidateViewPage(page, thisStoreData);
     await validateFormData(page, 'viewPage', formDetails);
+  }
+  if (thisStoreData.status === 'RECEIVED') {
+    logger(`Validating messaging for sent application with application ID: ${thisStoreData.applicationId}...`);
+    await validateMessaging(page, thisStoreData);
   }
 }
 
@@ -422,6 +426,70 @@ const navigateAndValidateViewPage = async (
   const applicationIdContainerText = await applicationIdContainer.textContent();
   expect(applicationIdContainerText).toContain(applicationId);
   logger('Draft validation on page:', viewPageURL);
+}
+
+/**
+ * The validateMessaging function.
+ *
+ * This function validates messaging after
+ * form submitting works as intended.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param thisStoreData
+ *   The env form data.
+ */
+const validateMessaging = async (
+  page: Page,
+  thisStoreData: any
+) => {
+  const { applicationId } = thisStoreData;
+  const viewPageUrl = `/fi/hakemus/${applicationId}/katso`;
+
+  await page.goto(viewPageUrl);
+  await logCurrentUrl(page);
+  await page.waitForURL('**/katso');
+
+  const submitButton = page.locator('form.grants-handler-message button.form-submit:not([name="messageAttachment_upload_button"])');
+  const textArea = page.locator('textarea[name="message"]');
+
+  // Validate error on empty message.
+  await submitButton.click();
+  await page.waitForSelector('form.grants-handler-message .hds-notification--error');
+  expect(await page.locator('form.grants-handler-message .hds-notification--error')).toBeVisible();
+  expect(await page.locator('form.grants-handler-message .hds-notification--error .hds-notification__body')).toHaveText('1 virhe löytyi: Viesti');
+
+  // Validate sending message works.
+  await textArea.fill('Test message');
+
+  await submitButton.click();
+  const responseBody = await getFulfilledResponse(page);
+  expect(responseBody.length).toBe(4);
+
+  await page.waitForSelector('form.grants-handler-message .hds-notification--info');
+  expect(await page.locator('form.grants-handler-message .hds-notification--info')).toBeVisible();
+  expect(await page.locator('form.grants-handler-message .hds-notification--info .hds-notification__body')).toContainText('Viestisi on lähetetty.');
+
+  const newMessageButton = await page.locator('form.grants-handler-message button[name="op"]');
+  expect(newMessageButton).toHaveText('Uusi viesti');
+
+  // Reload page to see message list.
+  await page.reload();
+  await page.waitForSelector('ul.webform-submission-messages__messages-list');
+
+  // Validate sending additional messages.
+  await textArea.fill('Test message 2');
+  await submitButton.click();
+  const secondSubmitBody = await getFulfilledResponse(page);
+  expect(secondSubmitBody.length).toBe(4);
+  await page.waitForSelector('ul.webform-submission-messages__messages-list > h5');
+
+  const messages = await page.locator('.webform-submission-messages__messages-list .webform-submission-messages__message-body').all();
+  expect(messages.length).toEqual(2);
+  expect(messages[0]).toContainText('Test message');
+  expect(messages[1]).toContainText('Test message 2');
+
+  logger('Message validation successful!');
 }
 
 /**
