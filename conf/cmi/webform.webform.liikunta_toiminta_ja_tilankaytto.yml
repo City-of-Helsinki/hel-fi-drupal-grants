@@ -496,7 +496,7 @@ elements: |-
       '#title': Tilankäyttöavustus
       maksetut_vuokrat_info:
         '#type': webform_markup
-        '#markup': '<p>Yhteenveto seuran/yhdistyksen maksamista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta, edellisen kalenterivuoden 1.1. - 31.12. ajalta. <strong data-renderer-mark="true">Liikuntatiloista maksetut vuokrat -kohta on pakollinen täyttää, mikäli haet tilankäyttöavustusta.</strong></p>'
+        '#markup': '<p>Yhteenveto seuran/yhdistyksen maksamista toteutuneista säännöllisten harjoitusvuorojen vuokrista, muiden kuin liikuntapalvelun omien tilojen osalta. Ilmoita toteutuneet vuokrat ja tuntimäärä edellisen kalenterivuoden 1.1. - 31.12. ajalta tilankäyttöliitteen mukaisesti. <strong data-renderer-mark="true">Liikuntatiloista maksetut vuokrat -kohta on pakollinen täyttää, mikäli haet tilankäyttöavustusta.</strong></p>'
       liikuntatiloista_maksetut_vuokrat_fieldset:
         '#type': fieldset
         '#title': 'Liikuntatiloista maksetut vuokrat'
@@ -815,7 +815,7 @@ elements: |-
     lajijaostot_helsinkilaisille_aktiiviharrastajille:
       '#type': webform_section
       '#title': 'Lajijaostot helsinkiläisille aktiiviharrastajille'
-      '#help': '<p>Tässä kohdassa yksittäinen aktiiviharrastaja voi tulla ilmoitetuksi useamman kerran, mikäli aktiivi täyttää aktiiviharrastajan määritelmän useammassa eri lajijaostossa.</p>'
+      '#help': '<p>Älä ilmoita harjoitustunnit-kohdassa yksittäisten harrastajien toteutuneita liikuntasuoritteita tunteina, vaan ikäryhmään kuuluville helsinkiläisille järjestetyt toteutuneet harjoitustunnit.</p><p>Mikäli ikäryhmän todellinen harjoitustuntimäärä ei ole selvitettävissä (esim. paljon sekaryhmiä), voit laskea kokonaistuntimäärästä kyseisen ikäryhmän osuuden perustuen ikäryhmän helsinkiläisten aktiiviharrastajien määrän osuuteen helsinkiläisten aktiiviharrastajien kokonaismäärästä. Esim. Jaoston kokonaistuntimäärä (kaikki sekaryhmiä) on 100 tuntia, jossa liikkuu aktiivisesti 10 aikuista ja 20 alle 20-vuotiasta: aikuisten tuntimäärä 33 tuntia ja alle 20-vuotiaiden tuntimäärä 67 tuntia. Ensisijaisesti tulee kuitenkin käyttää ikäryhmän osalta todellista toteutunutta tuntimäärää.</p>'
       lajijaostot_info:
         '#type': webform_markup
         '#markup': '<p>Seuran/yhdistyksen järjestämä säännöllinen ohjattu liikuntatoiminta lajeittain. Ilmoita tähän lajeittain edellisen vuoden <strong data-renderer-mark="true">helsinkiläisten aktiiviharrastajien määrät </strong>sekä heidän toteutuneet harjoitustunnit ikäryhmittäin.</p>'

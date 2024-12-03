@@ -118,7 +118,7 @@ elements: |
   tilankayttoavustus:
     '#title': 'Sports facility usage grant'
   maksetut_vuokrat_info:
-    '#markup': '<p>Summary of rent paid by the club/association for regular training slots elsewhere than in Sports Services’ own facilities, in the previous calendar year between 1 January and 31 December. <strong>The Rents paid for sports facilities section is mandatory if you are applying for a facility use grant.</strong></p>'
+    '#markup': '<p>Summary of rent paid by the club/association for regular training slots elsewhere than in Sports Services’ own facilities. Declare the realized paid rent sum and total hours in the previous calendar year between 1 January and 31 December according to the facility use appendix. <strong>The Rents paid for sports facilities section is mandatory if you are applying for a facility use grant.</strong></p>'
   liikuntatiloista_maksetut_vuokrat_fieldset:
     '#title': 'Rent paid for sports facilities'
   tuntimaara_yhteensa:
@@ -225,7 +225,7 @@ elements: |
     '#help': 'In addition to the VOK 1 training arranged by regional sports organisations, the calculation accounts for the number of instructors and coaches who have completed a sports federation&rsquo;s coach and instructor training that are at least equal in terms of level and content, or who have completed a basic qualification in sports instruction (vocational college), a degree in sports instruction (university of applied sciences) or a master&rsquo;s degree in sports sciences (sports pedagogy or sports biology).'
   lajijaostot_helsinkilaisille_aktiiviharrastajille:
     '#title': 'Operating sport divisions for Helsinki residents'
-    '#help': '<p>In this section, a single active member can be reported more than once, if the member meets the definition of an active member in several different sport divisions.</p>'
+    '#help': '<p>In the practice hours section, do not report the training output of individual actives, but the actual practice hours organized for Helsinki residents belonging to the age group.</p><p>If the actual number of training hours for an age group cannot be ascertained (e.g. many mixed groups), can the share of that age group be calculated from the total number of hours based on the share of the number of active members from Helsinki in the age group out of the total number of active members from Helsinki. E.g. the total number of hours in the division (all mixed groups) is 100 hours, where 10 adults and 20 under 20-year-olds are active: the number of hours for adults is 33 hours and for under 20-year-olds 67 hours. However, the actual number of hours realized for the age group should be used primarily.</p>'
   lajijaostot_info:
     '#markup': '<p>List the regular guided sports activities organised by the club/association by sport. Enter here <strong>the number of active members from Helsinki</strong> in the previous year, by sport, as well as their realized training hours by age group.</p>'
   club_section:

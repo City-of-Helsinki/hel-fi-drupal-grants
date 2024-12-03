@@ -123,7 +123,7 @@ elements: |
   tilankayttoavustus:
     '#title': 'Understöd för användning av idrottslokaler'
   maksetut_vuokrat_info:
-    '#markup': '<p>Sammanställning av de hyror som föreningen har betalatför regelbundna träningsskift förutom idrottstjänstens egna lokaler under föregående kalenderår 1.1. - 31.12.3. <strong>Avsnittet Hyror för idrottsanläggningar är obligatoriskt om du ansöker om understöd för användning av idrottslokaler.</strong></p>'
+    '#markup': '<p>Sammanställning av de hyror som föreningen har betalat för regelbundna träningsskift förutom idrottstjänstens egna lokaler. Uppge de realiserade hyrorna och antalet timmar under föregående kalenderår 1.1. - 31.12. i enlighet med lokalanvändningsbilaga. <strong>Avsnittet Hyror betalda för idrottslokaler är obligatoriskt om du ansöker om understöd för användning av idrottslokaler.</strong></p>'
   liikuntatiloista_maksetut_vuokrat_fieldset:
     '#title': 'Hyror betalda för idrottslokaler'
   tuntimaara_yhteensa:
@@ -230,7 +230,7 @@ elements: |
     '#help': 'Ut&ouml;ver de VOK 1-utbildningar som ordnas av regionala idrottsorganisationer beaktas i ber&auml;kningen antalet handledare och tr&auml;nare som har genomg&aring;tt en utbildning f&ouml;r tr&auml;nare och handledare som ordnas av ett grenf&ouml;rbund p&aring; minst motsvarande niv&aring; och med motsvarande inneh&aring;ll eller som har avlagt grundexamen i idrott, idrottsinstrukt&ouml;r (YH) eller magisterexamen i idrottsvetenskaper (idrottspedagogik eller motionsbiologi).'
   lajijaostot_helsinkilaisille_aktiiviharrastajille:
     '#title': 'Aktiva grengsektioner för helsingforsare'
-    '#help': '<p>I detta avsnitt kan en enskild aktiv idrottsutövare rapporteras mer än en gång, om den utövaren uppfyller definitionen av aktiv utövare i flera olika grensektioner.</p>'
+    '#help': '<p>I avsnittet träningstimmar, rapportera inte enskilda idrottsutövarnas träningsprestationer i timmar, utan de faktiska träningstimmar som organiserats för helsingforsare som tillhör åldersgruppen.</p><p>Om det faktiska antalet träningstimmar för en åldersgrupp inte kan fastställas (t. ex.  många blandade träningsgrupper), kan andelen av den åldersgruppen beräknas från det totala antalet timmar baserat på andelen av antalet aktiva idrottsutövare från Helsingfors i åldersgruppen av det totala antalet aktiva idrottsutövare från Helsingfors. T. ex. totala antalet timmar i grensektionen (alla blandade grupper) är 100 timmar, där 10 vuxna och 20 under 20-åringar är aktiva: antalet timmar för vuxna är 33 timmar och för under 20-åringar 67 timmar. Det faktiska antalet realiserade timmar för åldersgruppen bör dock i första hand användas.</p>'
   lajijaostot_info:
     '#markup': '<p>Regelbunden handledd idrottsverksamhet som ordnas av föreningen, enligt gren. Ange här antalet aktiva <strong>idrottsutövare från Helsingfors</strong> under föregående år, per sport, samt deras realiserade träningstimmar per åldersgrupp.</p>'
   club_section:
