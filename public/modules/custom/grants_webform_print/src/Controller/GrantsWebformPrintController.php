@@ -185,6 +185,14 @@ class GrantsWebformPrintController extends ControllerBase {
     $element['#title'] = $element['#title'] ?? '';
     $element['#description'] = $element['#description'] ?? '';
 
+    // Remove visibility texts from nuortoimpalkk print form.
+    if ($key === 'vuokra_avustushakemuksen_tiedot') {
+      unset($element['markup_01']);
+    }
+    if ($key === '4_palkkaustiedot') {
+      unset($element['markup_02']);
+    }
+
     return $this->alterFieldTemplates($element, $translatedFields);
   }
 
