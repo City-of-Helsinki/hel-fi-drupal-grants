@@ -59,8 +59,8 @@ elements: |
   kayttotarkoitus:
     '#title': 'Purpose of use'
   compensation_purpose:
-    '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
-    '#help': 'Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.'
+    '#title': 'For what purpose will the grant be used?'
+    '#help': 'Provide a short description of the scope and nature of the activities to be carried out with the grant e.g. as follows:<br>How much or how often will you organise groups, events or other activities during the period of the grant? How many target group representatives do you expect to reach? In what areas of Helsinki will the activities be arranged? What kind of cooperation do you pursue with other operators in Helsinki?'
     '#counter_maximum_message': '%d/5000 characters remaining'
   who_benefits:
     '#title': 'Who are the main beneficiaries of your activities?'

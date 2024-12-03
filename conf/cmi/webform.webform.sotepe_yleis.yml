@@ -246,11 +246,11 @@ elements: |-
         '#subvention_amount__title': 'Avustuksen summa'
     kayttotarkoitus:
       '#type': webform_section
-      '#title': 'Mihin avustus käytetään?'
+      '#title': 'Käyttötarkoitus'
       compensation_purpose:
         '#type': textarea
-        '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
-        '#help': 'Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet. Kerro my&ouml;s mit&auml; avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.'
+        '#title': 'Mihin avustus käytetään?'
+        '#help': 'Kuvaa tiiviisti avustuksella toteutettavaa toimintaa ja toiminnan laajuutta esimerkiksi seuraavilla tavoilla:<br>Kuinka paljon tai kuinka usein järjestätte ryhmiä, tapahtumia tai muuta toimintaa avustettavan ajanjakson aikana? Kuinka paljon kohderyhmän edustajia arvioitte tavoittavanne? Missä Helsingin alueilla toimintaa järjestetään? Minkälaista yhteistyötä teette Helsingissä muiden toimijoiden kanssa?'
         '#required': true
         '#counter_type': character
         '#maxlength': 5000
@@ -318,11 +318,11 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '10000'
+                greater_equal: '50000'
           required:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '10000'
+                greater_equal: '50000'
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'

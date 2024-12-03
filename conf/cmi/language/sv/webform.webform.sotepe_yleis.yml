@@ -62,8 +62,8 @@ elements: |
   kayttotarkoitus:
     '#title': 'Användningsända&shy;mål'
   compensation_purpose:
-    '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
-    '#help': 'Ange f&ouml;r vilket &auml;ndam&aring;l underst&ouml;det ans&ouml;ks och vid behov specificera de olika &auml;ndam&aring;len. Ange ocks&aring; vad underst&ouml;det &auml;r avsett f&ouml;r och vilka m&aring;l som &auml;r relaterade till den underst&ouml;dda verksamheten.'
+    '#title': 'Vad kommer understödet att användas till?'
+    '#help': 'Beskriv den verksamhet som ska genomföras med hjälp av understödet och verksamhetens omfattning i korthet exempelvis på följande sätt:<br>Hur mycket eller ofta ordnar ni grupper, evenemang eller annan verksamhet under den understödda perioden? Hur många representanter för målgruppen kommer ni att nå enligt er uppskattning? Inom vilka områden i Helsingfors kommer verksamheten att ordnas? På vilka sätt samarbetar ni med andra aktörer i Helsingfors?'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   who_benefits:
     '#title': 'Who are the main beneficiaries of your activities?'
