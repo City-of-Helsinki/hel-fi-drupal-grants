@@ -185,6 +185,10 @@ class GrantsWebformPrintController extends ControllerBase {
     $element['#title'] = $element['#title'] ?? '';
     $element['#description'] = $element['#description'] ?? '';
 
+    if ($key === 'vuokra_avustushakemuksen_tiedot') {
+      unset($element['markup_01']);
+    }
+
     return $this->alterFieldTemplates($element, $translatedFields);
   }
 
