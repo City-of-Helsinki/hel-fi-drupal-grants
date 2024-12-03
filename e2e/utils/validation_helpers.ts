@@ -4,6 +4,8 @@ import {FormField, FormData, FormFieldWithRemove} from "./data/test_data"
 import {viewPageBuildSelectorForItem} from "./view_page_helpers";
 import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
 import {getFulfilledResponse, logCurrentUrl} from "./helpers";
+import { uploadFile } from './input_helpers';
+import { ATTACHMENTS } from './data/attachment_data';
 
 /**
  *  The pageType type.
@@ -450,28 +452,27 @@ const validateMessaging = async (
   await logCurrentUrl(page);
   await page.waitForURL('**/katso');
 
-  const submitButton = page.locator('form.grants-handler-message button.form-submit:not([name="messageAttachment_upload_button"])');
+  const formActionButton = page.locator('form.grants-handler-message button.form-submit[name="op"]');
   const textArea = page.locator('textarea[name="message"]');
 
   // Validate error on empty message.
-  await submitButton.click();
+  await formActionButton.click();
   await page.waitForSelector('form.grants-handler-message .hds-notification--error');
-  expect(await page.locator('form.grants-handler-message .hds-notification--error')).toBeVisible();
-  expect(await page.locator('form.grants-handler-message .hds-notification--error .hds-notification__body')).toHaveText('1 virhe löytyi: Viesti');
+  await expect(page.locator('form.grants-handler-message .hds-notification--error')).toBeVisible();
+  await expect(page.locator('form.grants-handler-message .hds-notification--error .hds-notification__body')).toHaveText('1 virhe löytyi: Viesti');
 
   // Validate sending message works.
   await textArea.fill('Test message');
 
-  await submitButton.click();
+  await formActionButton.click();
   const responseBody = await getFulfilledResponse(page);
-  expect(responseBody.length).toBe(4);
+  await expect(responseBody.length).toBe(4);
 
   await page.waitForSelector('form.grants-handler-message .hds-notification--info');
-  expect(await page.locator('form.grants-handler-message .hds-notification--info')).toBeVisible();
-  expect(await page.locator('form.grants-handler-message .hds-notification--info .hds-notification__body')).toContainText('Viestisi on lähetetty.');
-
-  const newMessageButton = await page.locator('form.grants-handler-message button[name="op"]');
-  expect(newMessageButton).toHaveText('Uusi viesti');
+  const infoMessage = page.locator('form.grants-handler-message .hds-notification--info');
+  await expect(infoMessage).toBeVisible();
+  await expect(page.locator('form.grants-handler-message .hds-notification--info .hds-notification__body')).toContainText('Viestisi on lähetetty.');
+  await expect(formActionButton).toHaveText('Uusi viesti');
 
   // Reload page to see message list.
   await page.reload();
@@ -479,15 +480,30 @@ const validateMessaging = async (
 
   // Validate sending additional messages.
   await textArea.fill('Test message 2');
-  await submitButton.click();
+  await formActionButton.click();
   const secondSubmitBody = await getFulfilledResponse(page);
-  expect(secondSubmitBody.length).toBe(4);
+  await expect(secondSubmitBody.length).toBe(4);
   await page.waitForSelector('ul.webform-submission-messages__messages-list > h5');
 
   const messages = await page.locator('.webform-submission-messages__messages-list .webform-submission-messages__message-body').all();
   expect(messages.length).toEqual(2);
-  expect(messages[0]).toContainText('Test message');
-  expect(messages[1]).toContainText('Test message 2');
+  await expect(messages[0]).toContainText('Test message');
+  await expect(messages[1]).toContainText('Test message 2');
+
+  // Test adding attachment.
+  await newMessageButton.click();
+  await textArea.fill('Attachment test message');
+  await uploadFile(
+    page,
+    'form.grants-handler-message .form-file',
+    'form.grants-handler-message .form-managed-file a',
+    ATTACHMENTS.MUU_LIITE,
+  );
+  await page.locator('input[name="attachmentDescription"]').fill('Attachment test description');
+  await formActionButton.click();
+
+  await expect(infoMessage).toBeVisible();
+  await expect(page.locator('form.grants-handler-message .hds-notification--info .hds-notification__body')).toContainText('Viestisi on lähetetty.');
 
   logger('Message validation successful!');
 }
