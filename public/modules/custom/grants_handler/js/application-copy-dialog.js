@@ -12,9 +12,9 @@
 
         Drupal.dialogFunctions.createDialog({
           dialogContent: htmlContent,
-          actionButtonText: Drupal.t('Copy application', [], { context: 'grants_handler' }),
-          backButtonText: Drupal.t('Close', [], { context: 'grants_handler' }),
-          closeButtonText: Drupal.t('Close', [], { context: 'grants_handler' }),
+          actionButtonText: Drupal.t('Copy application'),
+          backButtonText: Drupal.t('Close', {}, { context: 'grants_handler' }),
+          closeButtonText: Drupal.t('Close', {}, { context: 'grants_handler' }),
           actionButtonCallback: () => {
             // Redirect to a new URL
             window.location.href = copyUrl;
@@ -27,7 +27,7 @@
 
              */
           },
-          dialogTitle: Drupal.t('Copy application', [], { context: 'grants_handler' }),
+          dialogTitle: Drupal.t('Copy application'),
           customSelector: 'application-copy-dialog'
         })
       });

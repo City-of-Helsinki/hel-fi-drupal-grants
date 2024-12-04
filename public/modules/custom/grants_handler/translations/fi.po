@@ -667,3 +667,11 @@ msgstr "Huomio"
 msgctxt "grants_handler"
 msgid "You must visit all pages in the form before you can submit the application."
 msgstr "Käy kaikilla sivuilla ennen kuin lähetät hakemuksen."
+
+msgctxt "grants_handler"
+msgid "Application to copy"
+msgstr "Kopioitava hakemus"
+
+msgctxt "grants_handler"
+msgid "Application to copy"
+msgstr "Kopioitava hakemus"
