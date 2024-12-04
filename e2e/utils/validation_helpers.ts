@@ -491,7 +491,7 @@ const validateMessaging = async (
   await expect(messages[1]).toContainText('Test message 2');
 
   // Test adding attachment.
-  await newMessageButton.click();
+  await formActionButton.click();
   await textArea.fill('Attachment test message');
   await uploadFile(
     page,
