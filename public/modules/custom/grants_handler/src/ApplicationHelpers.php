@@ -2,15 +2,8 @@
 
 namespace Drupal\grants_handler;
 
-use Drupal\Component\Datetime\Time;
-use Drupal\Core\Database\Database;
-use Drupal\grants_mandate\CompanySelectException;
-use Drupal\helfi_atv\AtvDocument;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
-use Drupal\webform\WebformSubmissionInterface;
-use Ramsey\Uuid\Uuid;
 
 /**
  * Handle all things related to applications & submission objects themselves.
@@ -42,18 +35,18 @@ abstract class ApplicationHelpers {
     $appParam = Helpers::getAppEnv();
 
     $serial = $submission->serial();
-    $applicationType = $submission->getWebform()
-      ->getThirdPartySetting('grants_metadata', 'applicationType');
 
-    $applicationTypeId = $submission->getWebform()
-      ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
+    $webform = $submission->getWebform();
+    $third_party_settings = $webform->getThirdPartySettings('grants_metadata');
+
+    $applicationType = $third_party_settings['applicationType'] ?? NULL;
+    $applicationTypeId = $third_party_settings['applicationTypeID'] ?? NULL;
 
     if ($useOldFormat) {
       return self::getApplicationNumberInEnvFormatOldFormat($appParam, $applicationType, $serial);
     }
 
     return self::getApplicationNumberInEnvFormat($appParam, $applicationTypeId, $serial);
-
   }
 
   /**
@@ -72,12 +65,14 @@ abstract class ApplicationHelpers {
    * @throws \Drupal\helfi_atv\AtvUnexpectedResponseException
    */
   public static function getAvailableApplicationNumber(WebformSubmission &$submission): string {
-
     $appParam = Helpers::getAppEnv();
     $serial = $submission->serial();
     $webform_id = $submission->getWebform()->id();
-    $applicationTypeId = $submission->getWebform()
-      ->getThirdPartySetting('grants_metadata', 'applicationTypeID');
+
+    $thirdPartySettings = $submission->getWebform()
+      ->getThirdPartySettings('grants_metadata');
+
+    $applicationTypeId = $thirdPartySettings['applicationTypeID'] ?? NULL;
 
     $lastSerialKey = $applicationTypeId . '_' . $appParam;
     $kvService = \Drupal::service('keyvalue.database');
@@ -129,7 +124,7 @@ abstract class ApplicationHelpers {
   /**
    * Format application number based by the enviroment.
    */
-  private static function getApplicationNumberInEnvFormat($appParam, $typeId, $serial): string {
+  protected static function getApplicationNumberInEnvFormat($appParam, $typeId, $serial): string {
     $applicationNumber = $appParam . '-' .
       str_pad($typeId, 3, '0', STR_PAD_LEFT) . '-' .
       str_pad($serial, 7, '0', STR_PAD_LEFT);
@@ -145,7 +140,7 @@ abstract class ApplicationHelpers {
   /**
    * Format application number based by the enviroment in old format.
    */
-  private static function getApplicationNumberInEnvFormatOldFormat($appParam, $typeId, $serial): string {
+  protected static function getApplicationNumberInEnvFormatOldFormat($appParam, $typeId, $serial): string {
     $applicationNumber = 'GRANTS-' . $appParam . '-' . $typeId . '-' . sprintf('%08d', $serial);
 
     if ($appParam == 'PROD') {
@@ -194,7 +189,9 @@ abstract class ApplicationHelpers {
       return $map[$uuid];
     }
 
-    $applicationType = $webform->getThirdPartySetting('grants_metadata', 'applicationType');
+    $thirdPartySettingsWebform = $webform->getThirdPartySettings('grants_metadata');
+
+    $applicationType = $thirdPartySettingsWebform['applicationType'] ?? NULL;
 
     $latestApplicationForm = self::getLatestApplicationForm($applicationType);
 
@@ -203,11 +200,11 @@ abstract class ApplicationHelpers {
       return FALSE;
     }
 
-    $parent = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'parent');
-    $hasBreakingChanges = $latestApplicationForm->getThirdPartySetting('grants_metadata', 'avus2BreakingChange');
+    $thirdPartySettingsLatest = $webform->getThirdPartySettings('grants_metadata');
+    $parent = $thirdPartySettingsLatest['parent'] ?? NULL;
+    $hasBreakingChanges = $thirdPartySettingsLatest['avus2BreakingChange'] ?? NULL;
 
     while (!empty($parent)) {
-
       $map[$parent] = $hasBreakingChanges;
 
       $loaded_webform = \Drupal::entityTypeManager()
@@ -217,17 +214,18 @@ abstract class ApplicationHelpers {
         ]);
 
       $wf = reset($loaded_webform);
-      $parent = $wf->getThirdPartySetting('grants_metadata', 'parent');
+
+      $thirdPartySettingsLatest = $wf->getThirdPartySettings('grants_metadata');
+      $parent = $thirdPartySettingsLatest['parent'] ?? NULL;
 
       // No need to check the flag,
       // if we already have a newer version with breaking changes.
       if (!$hasBreakingChanges) {
-        $hasBreakingChanges = $wf->getThirdPartySetting('grants_metadata', 'avus2BreakingChange');
+        $hasBreakingChanges = $thirdPartySettingsLatest['avus2BreakingChange'] ?? NULL;
       }
     }
 
     return $map[$uuid] ?? FALSE;
-
   }
 
   /**
@@ -264,7 +262,6 @@ abstract class ApplicationHelpers {
 
     // Look for for application type and return if found.
     $webform = array_filter($webforms, function ($wf) use ($webformTypeId, $applicationTypes, $fieldToCheck) {
-
       $thirdPartySettings = $wf->getThirdPartySettings('grants_metadata');
       $thisApplicationTypeConfig = array_filter($applicationTypes, function ($appType) use ($thirdPartySettings) {
         if (isset($thirdPartySettings["applicationTypeID"]) &&
@@ -293,296 +290,6 @@ abstract class ApplicationHelpers {
   }
 
   /**
-   * Get Webform object by UUID.
-   *
-   * @param string $uuid
-   *   Uuid of the webform.
-   * @param string $application_number
-   *   The application number.
-   *
-   * @return \Drupal\webform\Entity\Webform
-   *   Webform object.
-   */
-  public static function getWebformByUuid(string $uuid, string $application_number): Webform|bool|array {
-
-    $wids = \Drupal::entityQuery('webform')
-      ->condition('uuid', $uuid)
-      ->execute();
-
-    // Fallback to original method, if webform for some reason is not found.
-    if (empty($wids)) {
-      return self::getWebformFromApplicationNumber($application_number);
-    }
-
-    return Webform::load(reset($wids));
-  }
-
-  /**
-   * Extract serial numbor from application number string.
-   *
-   * @param string $applicationNumber
-   *   Application number.
-   * @param bool $refetch
-   *   Force refetch from ATV.
-   *
-   * @return array|\Drupal\helfi_atv\AtvDocument
-   *   ATV Document
-   *
-   * @throws \Drupal\grants_mandate\CompanySelectException
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   */
-  public static function atvDocumentFromApplicationNumber(
-    string $applicationNumber,
-    bool $refetch = FALSE,
-  ): array|AtvDocument {
-
-    /** @var \Drupal\helfi_atv\AtvService $atvService */
-    $atvService = \Drupal::service('helfi_atv.atv_service');
-
-    $grantsProfileService = \Drupal::service('grants_profile.service');
-    $selectedCompany = $grantsProfileService->getSelectedRoleData();
-
-    // If no company selected, no mandates no access.
-    if ($selectedCompany == NULL) {
-      throw new CompanySelectException('User not authorised');
-    }
-    try {
-      $sParams = [
-        'transaction_id' => $applicationNumber,
-        'lookfor' => 'appenv:' . Helpers::getAppEnv(),
-      ];
-
-      /** @var \Drupal\helfi_atv\AtvDocument[] $document */
-      $document = $atvService->searchDocuments(
-        $sParams,
-        $refetch
-      );
-    }
-    catch (\Throwable $e) {
-    }
-
-    if (empty($document)) {
-      throw new AtvDocumentNotFoundException('Document not found');
-    }
-    $document = reset($document);
-    return $document;
-  }
-
-  /**
-   * Set up sender details from helsinkiprofiili data.
-   *
-   * @return array
-   *   Sender details.
-   *
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
-   * @throws \Drupal\grants_handler\ApplicationException
-   */
-  public static function parseSenderDetails(): array {
-
-    $helfiHelsinkiProfiiliUserdata = \Drupal::service('helfi_helsinki_profiili.userdata');
-
-    // Set sender information after save so no accidental saving of data.
-    $userProfileData = $helfiHelsinkiProfiiliUserdata->getUserProfileData();
-    $userData = $helfiHelsinkiProfiiliUserdata->getUserData();
-
-    $senderDetails = [];
-
-    if (isset($userProfileData["myProfile"])) {
-      $data = $userProfileData["myProfile"];
-    }
-    else {
-      $data = $userProfileData;
-    }
-
-    // If no userprofile data, we need to hardcode these values.
-    if ($userProfileData == NULL || $userData == NULL) {
-      throw new ApplicationException('No profile data found for user.');
-    }
-    else {
-      $senderDetails['sender_firstname'] = $data["verifiedPersonalInformation"]["firstName"];
-      $senderDetails['sender_lastname'] = $data["verifiedPersonalInformation"]["lastName"];
-      $senderDetails['sender_person_id'] = $data["verifiedPersonalInformation"]["nationalIdentificationNumber"];
-      $senderDetails['sender_user_id'] = $userData["sub"];
-      $senderDetails['sender_email'] = $data["primaryEmail"]["email"];
-    }
-
-    return $senderDetails;
-  }
-
-  /**
-   * Get data definition class from application type.
-   *
-   * @param string $type
-   *   Type of the application.
-   */
-  public static function getDataDefinition(string $type) {
-    $defClass = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionClass'];
-    $defId = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionId'];
-    return $defClass::create($defId);
-  }
-
-  /**
-   * The getSubmissionIdWithSerialAndWebformId method.
-   *
-   * This method queries the database in an attempt to
-   * find a webform submission ID with the help of a
-   * submission serial and a webform ID. If one is not
-   * found, then we create a submission.
-   *
-   * @param string $serial
-   *   A webform submission serial.
-   * @param string $webformId
-   *   A webform ID.
-   * @param \Drupal\helfi_atv\AtvDocument $document
-   *   An ATV document.
-   *
-   * @return string
-   *   A webform submission ID.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   *   Exception on EntityStorageException.
-   */
-  public static function getSubmissionIdWithSerialAndWebformId(
-    string $serial,
-    string $webformId,
-    AtvDocument $document,
-  ): string {
-    $database = Database::getConnection();
-    $query = $database->select('webform_submission', 'ws')
-      ->fields('ws', ['sid'])
-      ->condition('ws.serial', $serial)
-      ->condition('ws.webform_id', $webformId);
-    $result = $query->execute();
-    $sid = $result->fetchField();
-
-    // If a submission ID is found, return it.
-    if ($sid) {
-      return $sid;
-    }
-
-    // If we can't find a submission, then create one.
-    $webformSubmission = self::createWebformSubmissionWithSerialAndWebformId($serial, $document);
-    return $webformSubmission->id();
-  }
-
-  /**
-   * The createWebformSubmissionWithSerialAndWebformId method.
-   *
-   * This method creates a webform submission and sets the
-   * webform ID, serial and draft state if needed.
-   *
-   * @param string $serial
-   *   A webform submission serial.
-   * @param \Drupal\helfi_atv\AtvDocument $document
-   *   An ATV document.
-   *
-   * @return \Drupal\webform\Entity\WebformSubmission
-   *   A webform submission.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   *   Exception on EntityStorageException.
-   */
-  protected static function createWebformSubmissionWithSerialAndWebformId(
-    string $serial,
-    AtvDocument $document,
-  ): WebformSubmission {
-
-    $metaData = $document->getMetadata();
-    $webformUuidExists = isset($metaData['form_uuid']) && !empty($metaData['form_uuid']);
-
-    $webform = $webformUuidExists
-    ? self::getWebformByUuid($metaData['form_uuid'], $document->getTransactionId())
-    : self::getWebformFromApplicationNumber($document->getTransactionId());
-
-    $webformId = $webform->id();
-
-    $submissionObject = WebformSubmission::create(['webform_id' => $webformId]);
-    $submissionObject->set('serial', $serial);
-
-    // Mark that we don't want to generate new application
-    // number, as we just assigned the serial from ATV application id.
-    // Check GrantsHandler@preSave.
-    WebformSubmissionNotesHelper::setValue(
-      $submissionObject,
-      'skip_available_number_check',
-      TRUE
-    );
-    if ($document->getStatus() == 'DRAFT') {
-      $submissionObject->set('in_draft', TRUE);
-    }
-    $submissionObject->save();
-    return $submissionObject;
-  }
-
-  /**
-   * Logs the current submission page.
-   *
-   * @param \Drupal\webform\WebformSubmissionInterface|null $webform_submission
-   *   A webform submission entity.
-   * @param string $applicationNumber
-   *   The page to log.
-   * @param array $userData
-   *   User data.
-   * @param string $saveId
-   *   Submission save id.
-   *
-   * @return string
-   *   The save ID.
-   *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   * @throws \Drupal\Core\TempStore\TempStoreException
-   * @throws \Drupal\grants_mandate\CompanySelectException
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
-   * @throws \GuzzleHttp\Exception\GuzzleException
-   * @throws \Exception
-   */
-  public static function logSubmissionSaveid(
-    ?WebformSubmissionInterface $webform_submission,
-    string $applicationNumber,
-    array $userData,
-    string $saveId = '',
-  ): string {
-    if (!$userData) {
-      throw new \Exception('User data is required');
-    }
-
-    if (empty($saveId)) {
-      $saveId = Uuid::uuid4()->toString();
-    }
-
-    if ($webform_submission == NULL) {
-      /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
-      $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
-      $webform_submission = $applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
-    }
-
-    $currentUser = \Drupal::currentUser();
-    $database = \Drupal::database();
-
-    $fields = [
-      'webform_id' => ($webform_submission) ? $webform_submission->getWebform()
-        ->id() : '',
-      'sid' => ($webform_submission) ? $webform_submission->id() : 0,
-      'handler_id' => self::HANDLER_ID,
-      'application_number' => $applicationNumber,
-      'saveid' => $saveId,
-      'uid' => $currentUser->id(),
-      'user_uuid' => $userData['sub'] ?? '',
-      'timestamp' => (string) (new Time)->getRequestTime(),
-    ];
-
-    $query = $database->insert(self::TABLE, $fields);
-    $query->fields($fields)->execute();
-
-    return $saveId;
-
-  }
-
-  /**
    * Tries to find latest webform for given application ID.
    *
    * @param mixed $id
@@ -594,8 +301,7 @@ abstract class ApplicationHelpers {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function getLatestApplicationForm($id): Webform|NULL {
-
+  public static function getLatestApplicationForm($id): Webform|null {
     $webforms = \Drupal::entityTypeManager()
       ->getStorage('webform')
       ->loadByProperties([
@@ -615,16 +321,34 @@ abstract class ApplicationHelpers {
   /**
    * Get all Webform objects for given application id.
    *
-   * @param string $id
+   * @param string $applicationTypeId
    *   Application ID.
+   * @param null $formId
+   *   Webform ID.
+   *
+   * @return array
+   *   Active webforms.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function getActiveApplicationWebforms(string $id): array {
+  public static function getActiveApplicationWebforms(string $applicationTypeId, $formId = NULL): array {
+    $properties = [
+      'third_party_settings.grants_metadata.applicationType' => $applicationTypeId,
+      'archive' => FALSE,
+    ];
+
+    // If we've given form id, we want to load only that form.
+    if ($formId) {
+      // Effectevely this limits results to single form.
+      // But since we now can have multiple forms with same application type,
+      // we need to check that the form id is correct.
+      $properties['id'] = $formId;
+    }
+
     $webforms = \Drupal::entityTypeManager()
       ->getStorage('webform')
-      ->loadByProperties([
-        'third_party_settings.grants_metadata.applicationType' => $id,
-        'archive' => FALSE,
-      ]);
+      ->loadByProperties($properties);
 
     $result = [
       'released' => [],
@@ -650,13 +374,62 @@ abstract class ApplicationHelpers {
    *
    * @param string $id
    *   Application ID.
+   * @param string|null $formId
+   *   Webform ID. Or null if all is wanted.
    *
    * @return bool
    *   Can the webform be duplicated.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function isApplicationWebformDuplicatable(string $id) {
-    $applicationForms = self::getActiveApplicationWebforms($id);
+  public static function isApplicationWebformDuplicatable(string $id, string $formId = NULL): bool {
+    $applicationForms = self::getActiveApplicationWebforms($id, $formId);
     return count($applicationForms['released']) <= 1 && count($applicationForms['development']) === 0;
+  }
+
+  /**
+   * Update field options in a form array.
+   *
+   * This method is used to update the options of a field in a form array.
+   *
+   * @param array $form
+   *   The form array.
+   * @param array $newOptions
+   *   The new options to set.
+   * @param array $fieldStructure
+   *   The structure of the field.
+   */
+  public static function updateFieldOptions(array &$form, array $newOptions, array $fieldStructure): void {
+    $currentField = &$form;
+
+    // Traverse the form array based on the field structure.
+    foreach ($fieldStructure as $fieldName) {
+      if (isset($currentField[$fieldName])) {
+        $currentField = &$currentField[$fieldName];
+      }
+      elseif (isset($currentField['#element'][$fieldName])) {
+        $currentField = &$currentField['#element'][$fieldName];
+      }
+      else {
+        // If we don't have current field array, we can't update the options.
+        if (!is_iterable($currentField)) {
+          return;
+        }
+        // If the field is not found, continue searching recursively.
+        foreach ($currentField as &$subField) {
+          if (is_array($subField)) {
+            self::updateFieldOptions($subField, $newOptions, $fieldStructure);
+          }
+        }
+        return;
+      }
+    }
+
+    // Update the #options if the field with '#options' is found.
+    if (isset($currentField['#options'])) {
+      $currentField['#options'] = $newOptions;
+    }
   }
 
 }

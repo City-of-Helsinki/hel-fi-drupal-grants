@@ -4,19 +4,25 @@ declare(strict_types=1);
 
 namespace Drupal\grants_handler;
 
+use Drupal\Component\Datetime\Time;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentFixerService;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\Client as HttpClient;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class to handle application uploads.
@@ -76,6 +82,9 @@ final class ApplicationUploaderService {
     private readonly ApplicationGetterService $applicationGetterService,
     private readonly HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata,
     private readonly AttachmentFixerService $attachmentFixerService,
+    private readonly AccountInterface $currentUser,
+    private readonly Connection $database,
+    private readonly EventsService $eventsService,
   ) {
     $this->logger = $this->loggerChannelFactory->get('application_uploader_service');
 
@@ -129,7 +138,7 @@ final class ApplicationUploaderService {
     $atvDocument->addMetadata('language', $language);
     try {
       $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
-      $saveId = ApplicationHelpers::logSubmissionSaveid(NULL, $applicationNumber, $userData);
+      $saveId = $this->logSubmissionSaveid(NULL, $applicationNumber, $userData);
       $atvDocument->addMetadata('saveid', $saveId);
     }
     catch (\Exception $e) {
@@ -178,6 +187,7 @@ final class ApplicationUploaderService {
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * @throws \Drupal\grants_events\EventException
    */
   public function handleApplicationUploadViaIntegration(
     TypedDataInterface $applicationData,
@@ -192,6 +202,25 @@ final class ApplicationUploaderService {
      * for some reason.
      */
     $updatedDocumentFromAtv = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+
+    // Create new saveid before sending data to integration,
+    // so we can add it to event data.
+    $newSaveId = $this->logSubmissionSaveid(
+      NULL,
+      $applicationNumber,
+      $this->helfiHelsinkiProfiiliUserdata->getUserData()
+    );
+
+    // Add new event for sending it to integration.
+    $this->eventsService->addNewEventForApplication(
+      $updatedDocumentFromAtv,
+      $this->eventsService->getEventData(
+        $this->eventsService->getEventTypes()['HANDLER_SEND_INTEGRATION'],
+        $applicationNumber,
+        'Send application to integration.',
+        $newSaveId
+      ));
+
     $myJSON = Json::encode($updatedDocumentFromAtv->getContent());
 
     // No matter what the debug value is, we do NOT log json in PROD.
@@ -213,6 +242,7 @@ final class ApplicationUploaderService {
     try {
       $headers = [];
 
+      // Get status from updated document.
       $headers['X-Case-Status'] = $updatedDocumentFromAtv->getStatus();
 
       // We set the data source for integration to be used in controlling
@@ -224,12 +254,8 @@ final class ApplicationUploaderService {
       // Set application number to meta as well to enable better searches.
       $headers['X-hki-applicationNumber'] = $applicationNumber;
 
-      // Set new saveid and save it to db.
-      $headers['X-hki-saveId'] = ApplicationHelpers::logSubmissionSaveid(
-        NULL,
-        $applicationNumber,
-        $this->helfiHelsinkiProfiiliUserdata->getUserData()
-      );
+      // Set new saveid to header.
+      $headers['X-hki-saveId'] = $newSaveId;
 
       $res = $this->httpClient->post($this->endpoint, [
         'auth' => [
@@ -277,6 +303,63 @@ final class ApplicationUploaderService {
    */
   public function clearCache(string $applicationNumber): void {
     $this->helfiAtvAtvService->clearCache($applicationNumber);
+  }
+
+  /**
+   * Logs the current submission page.
+   *
+   * @param \Drupal\webform\WebformSubmissionInterface|null $webform_submission
+   *   A webform submission entity.
+   * @param string $applicationNumber
+   *   The page to log.
+   * @param array $userData
+   *   User data.
+   * @param string $saveId
+   *   Submission save id.
+   *
+   * @return string
+   *   The save ID.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\grants_mandate\CompanySelectException
+   * @throws \Exception
+   */
+  public function logSubmissionSaveid(
+    ?WebformSubmissionInterface $webform_submission,
+    string $applicationNumber,
+    array $userData,
+    string $saveId = '',
+  ): string {
+    if (!$userData) {
+      throw new \Exception('User data is required');
+    }
+
+    if (empty($saveId)) {
+      $saveId = Uuid::uuid4()->toString();
+    }
+
+    if ($webform_submission == NULL) {
+      $webform_submission =
+        $this->applicationGetterService
+          ->submissionObjectFromApplicationNumber($applicationNumber);
+    }
+
+    $fields = [
+      'webform_id' => ($webform_submission) ? $webform_submission->getWebform()
+        ->id() : '',
+      'sid' => ($webform_submission) ? $webform_submission->id() : 0,
+      'handler_id' => ApplicationHelpers::HANDLER_ID,
+      'application_number' => $applicationNumber,
+      'saveid' => $saveId,
+      'uid' => $this->currentUser->id(),
+      'user_uuid' => $userData['sub'] ?? '',
+      'timestamp' => (string) (new Time())->getRequestTime(),
+    ];
+
+    $query = $this->database->insert(ApplicationHelpers::TABLE, $fields);
+    $query->fields($fields)->execute();
+
+    return $saveId;
   }
 
 }

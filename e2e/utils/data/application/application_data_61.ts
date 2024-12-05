@@ -138,7 +138,7 @@ const baseFormRegisteredCommunity_61: FormData = {
                     value: faker.number.float({
                       min: 1000,
                       max: 10000,
-                      precision: 2
+                      multipleOf: 2
                     }).toString(),
                     viewPageFormatter: viewPageFormatCurrency,
                   },
@@ -190,7 +190,7 @@ const baseFormRegisteredCommunity_61: FormData = {
                     value: faker.number.float({
                       min: 1000,
                       max: 10000,
-                      precision: 2
+                      multipleOf: 2
                     }).toString(),
                     viewPageFormatter: viewPageFormatCurrency,
                   },
@@ -256,7 +256,7 @@ const baseFormRegisteredCommunity_61: FormData = {
           value: faker.number.float({
             min: 100,
             max: 1000,
-            precision: 2
+            multipleOf: 2
           }).toString(),
           viewPageFormatter: viewPageFormatCurrency,
         },
@@ -264,7 +264,7 @@ const baseFormRegisteredCommunity_61: FormData = {
           value: faker.number.float({
             min: 100,
             max: 1000,
-            precision: 2
+            multipleOf: 2
           }).toString(),
           viewPageFormatter: viewPageFormatCurrency,
         },

@@ -118,6 +118,7 @@ class GrantsHandlerNavigationHelper {
   public function getCurrentPage(WebformSubmissionInterface $webformSubmission): string {
     $pages = $webformSubmission->getWebform()
       ->getPages('edit', $webformSubmission);
+
     return empty($webformSubmission->getCurrentPage()) ? array_keys($pages)[0] : $webformSubmission->getCurrentPage();
   }
 
@@ -265,6 +266,29 @@ class GrantsHandlerNavigationHelper {
     }
 
     return $submission_log;
+  }
+
+  /**
+   * Check if user has visited each page.
+   *
+   * @param \Drupal\webform\WebformSubmissionInterface $webformSubmission
+   *   The submission to check.
+   *
+   * @return array
+   *   Array of unvisited pages.
+   */
+  public function getUnvisitedPages(WebformSubmissionInterface $webformSubmission) : array {
+    $page_visits = array_map(function ($entry) {
+      return $entry->page;
+    }, $this->getPageVisits($webformSubmission));
+    $ignore_visits = ['webform_preview', 'webform_confirmation'];
+    return array_filter(
+      $webformSubmission->getWebform()->getPages('edit', $webformSubmission),
+      function ($name) use ($ignore_visits, $page_visits) {
+        return !in_array($name, $ignore_visits, TRUE) && !in_array($name, $page_visits, TRUE);
+      },
+      ARRAY_FILTER_USE_KEY
+    );
   }
 
   /**

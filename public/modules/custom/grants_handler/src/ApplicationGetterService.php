@@ -6,19 +6,22 @@ namespace Drupal\grants_handler;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_mandate\CompanySelectException;
-use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
+use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Drupal\helfi_helsinki_profiili\TokenExpiredException;
+use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
+use Drupal\webform\WebformException;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Class to get things related to applications.
@@ -33,13 +36,6 @@ final class ApplicationGetterService {
   protected GrantsProfileService $grantsProfileService;
 
   /**
-   * Atv document holding this application.
-   *
-   * @var \Drupal\helfi_atv\AtvDocument
-   */
-  protected AtvDocument $atvDocument;
-
-  /**
    * Log errors.
    *
    * @var \Drupal\Core\Logger\LoggerChannelInterface
@@ -47,11 +43,11 @@ final class ApplicationGetterService {
   protected LoggerChannelInterface $logger;
 
   /**
-   * Webform submission storage.
+   * Loaded submissions in array to prevent multiple loads.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var array
    */
-  protected EntityStorageInterface $storage;
+  protected array $submissions = [];
 
   /**
    * Constructs an ApplicationGetterService object.
@@ -65,11 +61,6 @@ final class ApplicationGetterService {
     private readonly EntityTypeManagerInterface $entityTypeManager,
   ) {
     $this->logger = $loggerChannelFactory->get('application_getter_service');
-    try {
-      $this->storage = $entityTypeManager->getStorage('webform_submission');
-    }
-    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
-    }
   }
 
   /**
@@ -90,26 +81,26 @@ final class ApplicationGetterService {
    * @param bool $refetch
    *   Force atv document fetch.
    *
-   * @return \Drupal\helfi_atv\AtvDocument
+   * @return \Drupal\helfi_atv\AtvDocument|null
    *   FEtched document.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function getAtvDocument(string $transactionId, bool $refetch = FALSE): AtvDocument {
+  public function getAtvDocument(string $transactionId, bool $refetch = FALSE): ?AtvDocument {
+    $sParams = [
+      'transaction_id' => $transactionId,
+      'lookfor' => 'appenv:' . Helpers::getAppEnv(),
+    ];
 
-    if (!isset($this->atvDocument) || $refetch === TRUE) {
-      $sParams = [
-        'transaction_id' => $transactionId,
-        'lookfor' => 'appenv:' . Helpers::getAppEnv(),
-      ];
-
-      $res = $this->helfiAtvAtvService->searchDocuments($sParams);
-      $this->atvDocument = reset($res);
+    try {
+      $result = $this->helfiAtvAtvService->searchDocuments($sParams, $refetch);
     }
-
-    return $this->atvDocument;
+    catch (AtvDocumentNotFoundException | AtvFailedToConnectException | TokenExpiredException | GuzzleException $e) {
+      $this->logger->error(
+        'Failed to get document from ATV. Error: @error',
+        ['@error' => $e->getMessage()]
+      );
+      return NULL;
+    }
+    return reset($result);
   }
 
   /**
@@ -132,7 +123,7 @@ final class ApplicationGetterService {
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function getCompanyApplications(
     array $selectedCompany,
@@ -141,7 +132,6 @@ final class ApplicationGetterService {
     bool $sortByStatus = FALSE,
     string $themeHook = '',
   ): array {
-
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
 
     $applications = [];
@@ -177,72 +167,37 @@ final class ApplicationGetterService {
 
     $applicationDocuments = $this->helfiAtvAtvService->searchDocuments($searchParams);
 
-    /**
+    /*
      * Create rows for table.
-     *
-     * @var  \Drupal\helfi_atv\AtvDocument $document
      */
     foreach ($applicationDocuments as $document) {
-      // Make sure the type is acceptable one.
-      $docArray = $document->toArray();
-      $id = AtvSchema::extractDataForWebForm(
-        $docArray['content'], ['applicationNumber']
-      );
 
-      if (empty($id['applicationNumber'])) {
-        continue;
-      }
+      $applicationNumber = $document->getTransactionId();
 
       if (array_key_exists($document->getType(), Helpers::getApplicationTypes())) {
         try {
-
-          // Convert the data.
-          $dataDefinition = ApplicationHelpers::getDataDefinition($document->getType());
-          $submissionData = DocumentContentMapper::documentContentToTypedData(
-            $document->getContent(),
-            $dataDefinition,
-            $document->getMetadata()
-          );
-
-          $metaData = $document->getMetadata();
-
-          // Load the webform submission ID.
-          $applicationNumber = $submissionData['application_number'];
-          $serial = ApplicationHelpers::getSerialFromApplicationNumber($applicationNumber);
-
-          $webformUuidExists = isset($metaData['form_uuid']) && !empty($metaData['form_uuid']);
-          $webform = $webformUuidExists
-            ? ApplicationHelpers::getWebformByUuid($metaData['form_uuid'], $applicationNumber)
-            : ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
-
-          if (!$webform || !$serial) {
-            continue;
-          }
-
-          $submissionId = ApplicationHelpers::getSubmissionIdWithSerialAndWebformId($serial, $webform->id(), $document);
+          $submission = $this->submissionObjectFromApplicationNumber($applicationNumber, $document, FALSE, TRUE);
         }
         catch (\Throwable $e) {
           $this->logger->error(
             'Failed to get submission object from application number. Submission skipped in application listing. ID: @id Error: @error',
             [
               '@error' => $e->getMessage(),
-              '@id'    => $document->getTransactionId(),
+              '@id' => $document->getTransactionId(),
             ]
           );
           continue;
         }
 
-        if (!$submissionData || !$submissionId) {
-          continue;
-        }
+        $submissionData = $submission->getData();
 
         $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
         $submission = [
           '#theme' => $themeHook,
           '#submission' => $submissionData,
           '#document' => $document,
-          '#webform' => $webform,
-          '#submission_id' => $submissionId,
+          '#webform' => $submission->getWebform(),
+          '#submission_id' => $submission->id(),
         ];
 
         $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
@@ -303,15 +258,8 @@ final class ApplicationGetterService {
    * @return \Drupal\webform\Entity\WebformSubmission|null
    *   Webform submission.
    *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
-   * @throws \Drupal\Core\TempStore\TempStoreException
    * @throws \Drupal\grants_mandate\CompanySelectException
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
    */
   public function submissionObjectFromApplicationNumber(
     string $applicationNumber,
@@ -319,23 +267,9 @@ final class ApplicationGetterService {
     bool $refetch = FALSE,
     bool $skipAccessCheck = FALSE,
   ): ?WebformSubmission {
-
-    $submissionSerial = ApplicationHelpers::getSerialFromApplicationNumber($applicationNumber);
-    $webform = ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber, TRUE);
-
-    if (!$webform) {
-      return NULL;
+    if (isset($this->submissions[$applicationNumber])) {
+      return $this->submissions[$applicationNumber];
     }
-
-    $webformIds = array_map(function ($element) {
-      return $element->id();
-    }, $webform);
-
-    $result = $this->storage
-      ->loadByProperties([
-        'serial' => $submissionSerial,
-        'webform_id' => $webformIds,
-      ]);
 
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
 
@@ -344,20 +278,30 @@ final class ApplicationGetterService {
       throw new CompanySelectException('User not authorised');
     }
 
+    // We need the ATV document to get the form uuid.
     if ($document == NULL) {
-      $sParams = [
-        'transaction_id' => $applicationNumber,
-        'lookfor' => 'appenv:' . Helpers::getAppEnv(),
-      ];
+      $document = $this->getAtvDocument($applicationNumber, $refetch);
+    }
 
-      $document = $this->helfiAtvAtvService->searchDocuments(
-        $sParams,
-        $refetch
-      );
-      if (empty($document)) {
-        throw new AtvDocumentNotFoundException('Document not found');
-      }
-      $document = reset($document);
+    // Get WebFrom from application number.
+    $webform = $this->getWebformFromApplicationNumber($applicationNumber);
+
+    // Should we throw an error here?
+    if (!$webform) {
+      throw new WebformException('Webform not found');
+    }
+    // Get serial from application number.
+    $submissionSerial = ApplicationHelpers::getSerialFromApplicationNumber($applicationNumber);
+
+    try {
+      $result = $this->entityTypeManager->getStorage('webform_submission')
+        ->loadByProperties([
+          'serial' => $submissionSerial,
+          'webform_id' => $webform->id(),
+        ]);
+    }
+    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
+      throw new WebformException('Failed to load submission object with ATV data');
     }
 
     $submissionObject = NULL;
@@ -365,48 +309,100 @@ final class ApplicationGetterService {
     // If there's no local submission with given serial
     // we can actually create that object on the fly and use that for editing.
     if (empty($result)) {
-      $webform = ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
-      if ($webform) {
-        /** @var \Drupal\webform\Entity\WebformSubmission $submissionObject */
-        $submissionObject = WebformSubmission::create(['webform_id' => $webform->id()]);
-        $submissionObject->set('serial', $submissionSerial);
+      /** @var \Drupal\webform\Entity\WebformSubmission $submissionObject */
+      $submissionObject = WebformSubmission::create(['webform_id' => $webform->id()]);
+      $submissionObject->set('serial', $submissionSerial);
 
-        // Lets mark that we don't want to generate new application
-        // number, as we just assigned the serial from ATV application id.
-        // check GrantsHandler@preSave.
-        WebformSubmissionNotesHelper::setValue(
-          $submissionObject,
-          'skip_available_number_check',
-          TRUE
-        );
-        if ($document->getStatus() == 'DRAFT') {
-          $submissionObject->set('in_draft', TRUE);
-        }
-        $submissionObject->save();
+      // Lets mark that we don't want to generate new application
+      // number, as we just assigned the serial from ATV application id.
+      // check GrantsHandler@preSave.
+      WebformSubmissionNotesHelper::setValue(
+        $submissionObject,
+        'skip_available_number_check',
+        TRUE
+      );
+      if ($document->getStatus() == 'DRAFT') {
+        $submissionObject->set('in_draft', TRUE);
       }
+      $submissionObject->save();
     }
     else {
       /** @var \Drupal\webform\Entity\WebformSubmission $submissionObject */
       $submissionObject = reset($result);
     }
-    if ($submissionObject) {
 
-      $dataDefinition = ApplicationHelpers::getDataDefinition($document->getType());
-
-      $sData = DocumentContentMapper::documentContentToTypedData(
-        $document->getContent(),
-        $dataDefinition,
-        $document->getMetadata()
-      );
-
-      $sData['messages'] = $this->grantsHandlerMessageService->parseMessages($sData);
-
-      // Set submission data from parsed mapper.
-      $submissionObject->setData($sData);
-
-      return $submissionObject;
+    if (!$submissionObject) {
+      throw new WebformException('Failed to load submission object with ATV data');
     }
-    return NULL;
+
+    // Load definition.
+    $dataDefinition = $this->getDataDefinition($document->getType());
+
+    // Build data.
+    $sData = DocumentContentMapper::documentContentToTypedData(
+      $document->getContent(),
+      $dataDefinition,
+      $document->getMetadata()
+    );
+
+    // Parse messages separately.
+    $sData['messages'] = $this->grantsHandlerMessageService->parseMessages($sData);
+
+    // Set submission data from parsed mapper.
+    $submissionObject->setData($sData);
+
+    // Set caching, as we don't want to load this again.
+    $this->submissions[$applicationNumber] = $submissionObject;
+
+    return $submissionObject;
+  }
+
+  /**
+   * Get data definition class from application type.
+   *
+   * @param string $type
+   *   Type of the application.
+   */
+  public function getDataDefinition(string $type) {
+    $defClass = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionClass'];
+    $defId = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionId'];
+    return $defClass::create($defId);
+  }
+
+  /**
+   * Extract webform id from application number string.
+   *
+   * @param string $applicationNumber
+   *   Application number.
+   *
+   * @return \Drupal\webform\Entity\Webform
+   *   Webform object.
+   */
+  public function getWebformFromApplicationNumber(string $applicationNumber): Webform {
+    // We need the ATV document to get the form uuid.
+    $document = $this->getAtvDocument($applicationNumber);
+    $uuid = $document->getMetadata()['form_uuid'];
+
+    try {
+      // Try to load webform via UUID and return it.
+      $wids = $this->entityTypeManager->getStorage('webform')
+        ->getQuery()
+        ->condition('uuid', $uuid)
+        ->execute();
+      return Webform::load(reset($wids));
+    }
+    catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
+      // Log failure.
+      $this->logger->error(
+        'Failed to load webform with uuid: @uuid. Error: @error',
+        [
+          '@uuid' => $uuid,
+          '@error' => $e->getMessage(),
+        ]
+      );
+    }
+    // And return webform loaded the old way.
+    return ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
   }
 
 }

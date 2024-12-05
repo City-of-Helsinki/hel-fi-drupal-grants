@@ -13,6 +13,8 @@ use Drupal\grants_members\Element\MembersComposite;
 use Drupal\grants_orienteering_map\Element\OrienteeringMapComposite;
 use Drupal\grants_place_of_operation\Element\PlaceOfOperationComposite;
 use Drupal\grants_premises\Element\PremisesComposite;
+use Drupal\grants_premises\Element\RentedPremiseComposite;
+use Drupal\grants_premises\Element\RentIncomeComposite;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformTranslationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -183,6 +185,14 @@ class GrantsWebformPrintController extends ControllerBase {
     $element['#title'] = $element['#title'] ?? '';
     $element['#description'] = $element['#description'] ?? '';
 
+    // Remove visibility texts from nuortoimpalkk print form.
+    if ($key === 'vuokra_avustushakemuksen_tiedot') {
+      unset($element['markup_01']);
+    }
+    if ($key === '4_palkkaustiedot') {
+      unset($element['markup_02']);
+    }
+
     return $this->alterFieldTemplates($element, $translatedFields);
   }
 
@@ -209,6 +219,7 @@ class GrantsWebformPrintController extends ControllerBase {
       case 'rented_premise_composite':
       case 'premises_composite':
       case 'members_composite':
+      case 'rent_income_composite':
       case 'club_section_composite':
       case 'orienteering_map_composite':
       case 'place_of_operation_composite':
@@ -380,11 +391,13 @@ class GrantsWebformPrintController extends ControllerBase {
    */
   public function getCompositeInputFields(array $element, array $translatedFields): array {
     $composite_inputs = match ($element['#type']) {
-      'rented_premise_composite', 'premises_composite' => PremisesComposite::getCompositeElements($element),
+      'rented_premise_composite' => RentedPremiseComposite::getCompositeElements($element),
+      'premises_composite' => PremisesComposite::getCompositeElements($element),
       'members_composite' => MembersComposite::getCompositeElements($element),
       'club_section_composite' => ClubSectionComposite::getCompositeElements($element),
       'orienteering_map_composite' => OrienteeringMapComposite::getCompositeElements($element),
       'place_of_operation_composite' => PlaceOfOperationComposite::getCompositeElements($element),
+      'rent_income_composite' => RentIncomeComposite::getCompositeElements($element),
       'default' => [],
     };
 

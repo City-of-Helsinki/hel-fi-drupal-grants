@@ -14,7 +14,8 @@ services:
     class: Drupal\grants_metadata\ApplicationDataService
     arguments: [
       '@logger.factory',
-      '@database'
+      '@database',
+      '@helfi_helsinki_profiili.userdata'
     ]
     calls:
       - [ setEventsService, [ '@?grants_events.events_service' ] ]

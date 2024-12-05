@@ -79,7 +79,7 @@ elements: |
     '#markup': 'Ge en redovisning om underst&ouml;det som f&aring;tts fr&aring;n Helsingfors stad. Redovisningen g&ouml;rs om underst&ouml;det som beviljats f&ouml;r den senaste avslutade r&auml;kenskapsperioden. Redovisning g&ouml;rs inte om den innevarande r&auml;kenskapsperioden. Redovisningen kr&auml;vs f&ouml;r att f&aring; ett nytt underst&ouml;d. Om en redovisning inte g&ouml;rs, kommer ett underst&ouml;d inte att beviljas eller betalas ut. Det beviljade underst&ouml;det kan &aring;terkr&auml;vas om anv&auml;ndningen av det tidigare underst&ouml;det inte har redogjorts f&ouml;r p&aring; ett tillfredsst&auml;llande s&auml;tt.'
   compensation_explanation:
     '#title': 'Redovisning om användningen av understödet'
-    '#help': 'I redovisningen ska det kortfattat anges hur det beviljade underst&ouml;det har anv&auml;nts. Underst&ouml;dstagaren ska ordna sin bokf&ouml;ring s&aring; att anv&auml;ndningen av underst&ouml;det kan f&ouml;ljas d&auml;r. Om samfundet till exempel har f&aring;tt hyresunderst&ouml;d ska det av resultatr&auml;kningen i bokslutet framg&aring; b&aring;de int&auml;kter och utgifter vad g&auml;ller underst&ouml;det. Mer information om anv&auml;ndningen av underst&ouml;det kan ocks&aring; skrivas i en separat bilaga som kan l&auml;mnas som Redovisning-bilaga.'
+    '#help': '<p>I redovisningen ska det kortfattat anges hur det beviljade understödet har använts. Understödstagaren ska ordna sin bokföring så att användningen av understödet kan följas där. Mer information om användningen av understödet kan också skrivas i en separat bilaga som kan lämnas som Redovisning-bilaga.</p>'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   kayttotarkoitus:
     '#title': 'Användningsända&shy;mål'
@@ -107,7 +107,6 @@ elements: |
           3: EU
           4: Övrig
           5: Fundament
-          6: STEA
         '#title': Bidragsgivare
       issuer_name:
         '#title': 'Emittentens namn'
@@ -124,7 +123,7 @@ elements: |
   tilankayttoavustus:
     '#title': 'Understöd för användning av idrottslokaler'
   maksetut_vuokrat_info:
-    '#markup': "<p>Sammanställning av de hyror som föreningen har betalatför regelbundna träningsskift förutom idrottstjänstens egna lokaler under föregående kalenderår 1.1. - 31.12.3. <strong>Avsnittet Hyror för idrottsanläggningar är obligatoriskt om du ansöker om understöd för användning av idrottslokaler.</strong></p>\r\n"
+    '#markup': '<p>Sammanställning av de hyror som föreningen har betalat för regelbundna träningsskift förutom idrottstjänstens egna lokaler. Uppge de realiserade hyrorna och antalet timmar under föregående kalenderår 1.1. - 31.12. i enlighet med lokalanvändningsbilaga. <strong>Avsnittet Hyror betalda för idrottslokaler är obligatoriskt om du ansöker om understöd för användning av idrottslokaler.</strong></p>'
   liikuntatiloista_maksetut_vuokrat_fieldset:
     '#title': 'Hyror betalda för idrottslokaler'
   tuntimaara_yhteensa:
@@ -132,7 +131,8 @@ elements: |
   vuokrat_yhteensa:
     '#title': 'Totalt  / EUR'
   seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
-    '#title': 'Planerad ändring i användning av lokaler nästa år, +/- timmar och skäl'
+    '#title': 'Planerad <b>väsentlig</b> ändring i användning av lokaler nästa år, +/- timmar och skäl'
+    '#help': '<p>I beloppet av understödet för lokalanvändning kan enligt prövning beaktas väsentliga förändringar i föreningens användning av idrottslokaler rörande ansökningsåret. Med väsentliga förändringar avses: sammanslagning av föreningar, anslutning av en sektion eller sektioner till föreningen, avgång av en sektion eller sektioner från föreningen, en ny idrottslokal som hyrs av föreningen (hyresavtalet för lokalen i fråga ska bifogas ansökan) eller avstående från en idrottslokal som förvaltas eller ägs av föreningen.</p>'
   seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal:
     '#title': 'Föreningens hyresinkomster under föregående kalenderår 1.1. –31.12.'
     '#description': 'Om f&ouml;reningen f&aring;r hyresinkomster f&ouml;r sina lokaler, anges de h&auml;r.'
@@ -230,8 +230,9 @@ elements: |
     '#help': 'Ut&ouml;ver de VOK 1-utbildningar som ordnas av regionala idrottsorganisationer beaktas i ber&auml;kningen antalet handledare och tr&auml;nare som har genomg&aring;tt en utbildning f&ouml;r tr&auml;nare och handledare som ordnas av ett grenf&ouml;rbund p&aring; minst motsvarande niv&aring; och med motsvarande inneh&aring;ll eller som har avlagt grundexamen i idrott, idrottsinstrukt&ouml;r (YH) eller magisterexamen i idrottsvetenskaper (idrottspedagogik eller motionsbiologi).'
   lajijaostot_helsinkilaisille_aktiiviharrastajille:
     '#title': 'Aktiva grengsektioner för helsingforsare'
+    '#help': '<p>I avsnittet träningstimmar, rapportera inte enskilda idrottsutövarnas träningsprestationer i timmar, utan de faktiska träningstimmar som organiserats för helsingforsare som tillhör åldersgruppen.</p><p>Om det faktiska antalet träningstimmar för en åldersgrupp inte kan fastställas (t. ex.  många blandade träningsgrupper), kan andelen av den åldersgruppen beräknas från det totala antalet timmar baserat på andelen av antalet aktiva idrottsutövare från Helsingfors i åldersgruppen av det totala antalet aktiva idrottsutövare från Helsingfors. T. ex. totala antalet timmar i grensektionen (alla blandade grupper) är 100 timmar, där 10 vuxna och 20 under 20-åringar är aktiva: antalet timmar för vuxna är 33 timmar och för under 20-åringar 67 timmar. Det faktiska antalet realiserade timmar för åldersgruppen bör dock i första hand användas.</p>'
   lajijaostot_info:
-    '#markup': "<p>Regelbunden handledd idrottsverksamhet som ordnas av föreningen, enligt gren. Ange här antalet aktiva idrottsutövare från Helsingfors under föregående år, per sport, samt deras realiserade träningstimmar.</p>\r\n"
+    '#markup': '<p>Regelbunden handledd idrottsverksamhet som ordnas av föreningen, enligt gren. Ange här antalet aktiva <strong>idrottsutövare från Helsingfors</strong> under föregående år, per sport, samt deras realiserade träningstimmar per åldersgrupp.</p>'
   club_section:
     '#multiple__add_more_button_label': 'Lägg till en sport'
     '#multiple__item_label': 'sport'

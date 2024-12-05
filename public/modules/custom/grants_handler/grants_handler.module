@@ -21,7 +21,6 @@ use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\Event\UserLogoutEvent;
-use Drupal\grants_handler\Form\CopyApplicationModalForm;
 use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
@@ -649,6 +648,31 @@ function _grants_handler_alter_number_fields(&$element): void {
 }
 
 /**
+ * Function to update custom component dropdown value rather than via config.
+ *
+ * @param array $form
+ *   The form.
+ *
+ * @return void
+ *   No return?
+ */
+function grants_handler__update_issuer_dropdown(array &$form): void {
+
+  $tOpts = ['context' => 'Grant Issuers'];
+
+  $newOptions = [
+    1 => t('State', [], $tOpts),
+    3 => t('EU', [], $tOpts),
+    4 => t('Other', [], $tOpts),
+    5 => t('Foundation', [], $tOpts),
+  ];
+
+  // Call the method with multiple field names.
+  ApplicationHelpers::updateFieldOptions($form, $newOptions, ['myonnetty_avustus', 'issuer']);
+  ApplicationHelpers::updateFieldOptions($form, $newOptions, ['haettu_avustus_tieto', 'issuer']);
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function grants_handler_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
@@ -667,6 +691,7 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
   $form['actions']['wizard_next']['#validate'][] = '::noValidate';
 
   _grants_handler_alter_number_fields($form);
+  grants_handler__update_issuer_dropdown($form);
 
   $grants_formnavigation_helper = \Drupal::service('grants_handler.navigation_helper');
   $all_errors = [];
@@ -938,7 +963,8 @@ function grants_handler_preprocess_webform_submission_data(&$variables) {
 /**
  * Implements hook_preprocess_HOOK().
  */
-function grants_handler_preprocess_webform_submission(&$variables) {
+function grants_handler_preprocess_webform_submission(&$variables): void {
+
   // Get submission object.
   /** @var \Drupal\webform\Entity\WebformSubmission $submission */
   $submission = $variables['webform_submission'];
@@ -1279,6 +1305,11 @@ function grants_handler_preprocess_webform_submission_form(&$variables) {
   $navigationHelper = \Drupal::service('grants_handler.navigation_helper');
   // Get errors for printing.
   $variables['errors'] = $navigationHelper->getAllErrors($webform_submission);
+
+  $variables['unvisited_pages'] = $navigationHelper->getUnvisitedPages($webform_submission);
+  $variables['display_visit_all_pages_warning'] =
+    $navigationHelper->getCurrentPage($webform_submission) === 'webform_preview' &&
+    count($variables['unvisited_pages']) > 0;
 }
 
 /**
@@ -1361,7 +1392,6 @@ function grants_handler_preprocess_application_list(&$variables) {
  * Implements hook_preprocess_HOOK().
  */
 function grants_handler_preprocess_application_list_item(&$variables): void {
-  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $tOpts = ['context' => 'grants_handler'];
 
   // Get status service and get listed statuses.
@@ -1377,9 +1407,20 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
     return;
   }
 
-  $applicationTypes = Helpers::getApplicationTypes();
+  if (!isset($submissionData["metadata"]["form_uuid"])) {
+    \Drupal::logger('grants_handler')
+      ->error('No form uuid found for submission @submissionId',
+        ['@submissionId' => $submissionData["application_number"]]);
+    return;
+  }
 
-  $variables['applicationFormName'] = $applicationTypes[$submissionData["application_type"]][$language];
+  /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+  $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
+
+  // Get webform.
+  $webform = $applicationGetterService->getWebformFromApplicationNumber($submissionData["application_number"]);
+  // Set webform title.
+  $variables['applicationFormName'] = $webform->label();
 
   $variables['applicationNumber'] = $submissionData["application_number"];
 
@@ -1503,8 +1544,8 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
 
   $status = $applicationStatusService->getWebformStatus($webform);
 
-  $variables['openStartDate'] = strtotime($thirdPartySettings['applicationOpen']);
-  $variables['openEndDate'] = strtotime($thirdPartySettings['applicationClose']);
+  $variables['openStartDate'] = $thirdPartySettings['applicationOpen'] ? strtotime($thirdPartySettings['applicationOpen']) : '';
+  $variables['openEndDate'] = $thirdPartySettings['applicationClose'] ? strtotime($thirdPartySettings['applicationClose']) : '';
   $variables['isContinuous'] = $thirdPartySettings['applicationContinuous'] != 0;
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
     $variables['errorType'] = 'NOT_OPEN';
@@ -1729,6 +1770,8 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $webform = $submission->getWebForm();
   $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
 
+  $applicationNumber = $submissionData['application_number'] ?? ApplicationHelpers::createApplicationNumber($submission);
+
   $printApplicationUrl = Url::fromRoute(
     'grants_webform_print.submission_print',
     [
@@ -1794,37 +1837,35 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     !$isApplicationArchived &&
     $isApplicationOpen
   ) {
+
     $copyApplicationUrl = Url::fromRoute(
-      'grants_handler.copy_application_modal',
+      'grants_handler.copy_application',
       [
         'submission_id' => $submissionData['application_number'],
-        'nojs' => 'ajax',
-      ],
-      [
-        'attributes' => [
-          'class' => ['use-ajax', 'hds-button', 'hds-button--supplementary'],
-          'data-dialog-type' => 'modal',
-          'data-dialog-options' => json_encode(CopyApplicationModalForm::getDataDialogOptions()),
-          // Add this id so that we can test this form.
-          'id' => 'copy-application-modal-form-link',
-        ],
       ]
     );
-    $copyApplicationLinkText = [
-      '#theme' => 'edit-label-with-icon',
-      '#icon' => 'copy',
-      '#text_label' => t('Copy application', [], $tOpts),
+
+    // Attach the JavaScript file.
+    $variables['#attached']['library'][] = 'grants_handler/grants-dialog';
+    $variables['#attached']['library'][] = 'grants_handler/application-copy-dialog';
+
+    // Render a Twig template.
+    $html_content = \Drupal::service('twig')->render('themes/custom/hdbt_subtheme/templates/webform/application-copy-dialog-content.html.twig', [
+      'applicationNumber' => $applicationNumber,
+      'webformTitle' => $webform->label(),
+    ]);
+
+    // Define the settings you want to pass.
+    $variables['#attached']['drupalSettings']['grants_handler'] = [
+      'copyUrl' => $copyApplicationUrl->toString(),
+      'htmlContent' => $html_content,
     ];
-    $copyApplicationLink = Link::fromTextAndUrl($copyApplicationLinkText, $copyApplicationUrl);
-    $variables['copyApplicationLink'] = $copyApplicationLink;
+    $variables['copyText'] = t('Copy application', [], $tOpts);
   }
 
   $variables['formTitle'] = $webform->label();
   $variables['printLink'] = '';
   $variables['copyLink'] = '';
-
-  $submissionData = $submission->getData();
-  $applicationNumber = $submissionData['application_number'] ?? ApplicationHelpers::createApplicationNumber($submission);
 
   $variables['applicationNumber'] = $applicationNumber;
   $variables['isEditable'] = $applicationStatusService->isSubmissionEditable($submission);
@@ -1859,6 +1900,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     '#theme' => 'webform_submission_attachment_list',
     '#submission' => $submission,
   ];
+
 }
 
 /**

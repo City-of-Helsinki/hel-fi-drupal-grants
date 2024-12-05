@@ -160,6 +160,10 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
     $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
     $applicationContinuous = $thirdPartySettings["applicationContinuous"] == 1;
 
+    if (!$thirdPartySettings["applicationOpen"] && !$thirdPartySettings["applicationClose"]) {
+      return $applicationContinuous;
+    }
+
     try {
       $now = new \DateTime();
       $from = new \DateTime($thirdPartySettings["applicationOpen"]);

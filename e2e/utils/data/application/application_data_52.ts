@@ -140,7 +140,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: faker.number.float({
                       min: 1000,
                       max: 10000,
-                      precision: 2
+                      multipleOf: 2
                     }).toString(),
                     viewPageFormatter: viewPageFormatCurrency,
                   },
@@ -192,7 +192,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                     value: faker.number.float({
                       min: 1000,
                       max: 10000,
-                      precision: 2
+                      multipleOf: 2
                     }).toString(),
                     viewPageFormatter: viewPageFormatCurrency,
                   },
@@ -363,7 +363,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                   value: faker.number.float({
                     min: 100,
                     max: 1000,
-                    precision: 2
+                    multipleOf: 2
                   }).toString(),
                   viewPageFormatter: viewPageFormatCurrency
                 },
@@ -1332,7 +1332,7 @@ const registeredCommunityApplications_52 = {
   draft: baseFormRegisteredCommunity_52,
   missing_values: createFormData(baseFormRegisteredCommunity_52, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_52, wrongValues),
-  // swap_fields: createFormData(baseFormRegisteredCommunity_52, fieldSwapForm),
+  swap_fields: createFormData(baseFormRegisteredCommunity_52, fieldSwapForm),
   success: createFormData(baseFormRegisteredCommunity_52, sendApplication),
 }
 

@@ -22,6 +22,14 @@ grants_handler.view_application:
   requirements:
     _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
 
+grants_handler.copy_application:
+  path: '/hakemus/{submission_id}/kopioi'
+  defaults:
+    _title_callback: '\Drupal\grants_handler\Controller\ApplicationController::getTitle'
+    _controller: '\Drupal\grants_handler\Controller\CopyApplicationAjaxController'
+  requirements:
+    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
+
 grants_handler.edit_application:
   path: '/hakemus/{webform}/{webform_submission}/muokkaa'
   defaults:
@@ -45,26 +53,10 @@ grants_handler.message_read:
   requirements:
     _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
 
-grants_handler.copy_application:
-  path: '/hakemus/{submission_id}/kopioi'
-  defaults:
-    _title: 'Copy application'
-    _form: 'Drupal\grants_handler\Form\CopyApplicationForm'
-  requirements:
-    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
-
-grants_handler.copy_application_modal:
-  path: '/hakemus/{submission_id}/kopioi/{nojs}'
-  defaults:
-    _title: 'You are copying an application'
-    _form: 'Drupal\grants_handler\Form\CopyApplicationModalForm'
-  requirements:
-    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
-
-grants_handler.print_application_atv:
+grants_handler.atv_print_view:
   path: '/hakemus/{submission_id}/tulosta'
   defaults:
     _title_callback: '\Drupal\grants_handler\Controller\ApplicationController::getTitle'
-    _controller: '\Drupal\grants_handler\Controller\ApplicationController::printViewAtv'
+    _controller: '\Drupal\grants_handler\Controller\AtvPrintViewController'
   requirements:
     _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'

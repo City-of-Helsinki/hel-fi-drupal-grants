@@ -138,6 +138,7 @@ class AttachmentHandler {
     // This could probably be done just by parsing the application number,
     // however this more futureproof.
     $webform = ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
+
     if (!$webform) {
       return [];
     }
