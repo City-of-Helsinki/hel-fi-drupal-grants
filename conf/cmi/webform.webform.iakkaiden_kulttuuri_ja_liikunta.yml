@@ -971,9 +971,6 @@ elements: |-
           visible:
             ':input[name="hankesuunnitelma_radios"]':
               value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
     hankkeen_valiarviointi_section:
       '#type': webform_section
       '#title': '3.5 2-vuotisten hankkeiden väliarviointi'
