@@ -97,11 +97,11 @@ elements: |
         '#help': '<p>Ge en kort beskrivning, i vilket syfte har bidraget beviljats?</p>'
         '#counter_maximum_message': '%d/1000 tecken kvar'
   muut_samaan_tarkoitukseen_haetut_avustukset:
-    '#title': 'Övriga understöd som beviljats för samma ändamål'
+    '#title': 'Övriga understöd som ansökts för samma ändamål'
   info_muut_samaan_tarkoitukseen_haettu:
-    '#markup': '<p>Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Myöntävä vastaus avaa lisäkysymyksen</span></div></div></div>'
+    '#markup': '<p>Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, men beslut har ännu inte fattats.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Ett jakande svar öppnar ytterligare en fråga</span></div></div></div>'
   olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
-    '#title': 'Vi har fått andra understöd Lisää myönnetty avustus Custom composite Add received grant Lägg till understöd som beviljats'
+    '#title': 'Vi har ansökt om understöd från annanstans än Helsingfors Stad'
     '#options':
       1: Ja
       0: Nej
@@ -130,11 +130,9 @@ elements: |
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_tarkemmat_tiedot:
     '#title': '3. Mer detaljerad information'
-  markup:
-    '#markup': '<p data-renderer-start-pos="7036">Beslut om understöd för 2024:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="7069">Idrottssektionen: 11.4.2024 §10</p></li><li><p data-renderer-start-pos="7104">Kultur- och bibliotekssektionen: 16.4.2024 §15</p></li></ul>'
   hankesuunnitelma_radios:
     '#title': 'Ansöker du nu om den andra delen av ett tvåårigt understöd som beviljades 2024?'
-    '#help': '<p>Svara bara ”ja” på den här frågan om din sammanslutning redan har ett pågående projekt som finansieras med samma understöd och du ansöker om fortsatt finansiering.</p>'
+    '#description': '<p data-renderer-start-pos="7036">Beslut om understöd för 2024:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="7069">Idrottssektionen: 11.4.2024 §10</p></li><li><p data-renderer-start-pos="7104">Kultur- och bibliotekssektionen: 16.4.2024 §15</p></li></ul>'
     '#options':
       1: Ja
       0: Nej
@@ -158,6 +156,7 @@ elements: |
     '#title': '3.1 Projektplan'
   hankesuunnitelma_jatkohakemus:
     '#title': 'Är understödet du ansöker om en förlängning av ett pågående projekt?'
+    '#description': '<p>Svara bara ”ja” på den här frågan om din sammanslutning redan har ett pågående projekt som finansieras med samma understöd och du ansöker om fortsatt finansiering.</p>'
     '#options':
       1: Ja
       0: Nej
@@ -190,7 +189,7 @@ elements: |
     '#title': 'Bidrar projektet till att utveckla frivillig- /kamratverksamhet? På vilket sätt?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   haun_painopisteet_kulttuuri_kehitys:
-    '#title': 'Bidrar projektet till att utveckla frivillig- /kamratverksamhet? På vilket sätt?'
+    '#title': 'Bidrar projektet till att utveckla kompetensen hos konst- och kulturaktörer eller skapa nya arbetssätt/strukturer? På vilket sätt?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_section:
     '#title': '3.3 Projektets målgrupper'
@@ -198,8 +197,7 @@ elements: |
     '#title': 'Vem är den huvudsakliga målgruppen för projektet?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_erityisryhmat:
-    '#title': 'Riktar sig projektet till någon särskild grupp?'
-    '#help': '<p>Till vilken särskild grupp? Om svaret är ”nej”, lämna tomt.</p>'
+    '#title': 'Riktar sig projektet till någon särskild grupp? Till vilken särskild grupp? Om svaret är ”nej”, lämna tomt.'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_tavoitus:
     '#title': 'Hur ska ni nå ut med projektet till målgrupperna?'
@@ -214,8 +212,7 @@ elements: |
     '#title': 'Vilken kompetens har aktörerna i projektet i förväg att arbeta med målgruppen/- grupperna?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_postinrot:
-    '#title': 'Inom vilket/vilka postnummerområden i Helsingfors kommer projektet att genomföras?'
-    '#help': '<p>Ange upp till tre (3) postnummerområden och separera dem med kommatecken (,).</p>'
+    '#title': 'Inom vilket/vilka postnummerområden i Helsingfors kommer projektet att genomföras? Ange upp till tre (3) postnummerområden och separera dem med kommatecken (,).'
   hankkeen_kohderyhmat_miksi_alue:
     '#title': 'Varför har ni valt just det/de områdena?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
@@ -228,7 +225,7 @@ elements: |
     '#title': 'Hur kommer ni att följa upp och utvärdera projektet?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_riskit_vakiinnuttaminen:
-    '#title': 'Är den planerade verksamheten för projektet avsedd att bli en permanent del av den grundläggande verksamheten hos den sökande/en annan aktör efter projektet?'
+    '#title': 'Är den planerade verksamheten för projektet avsedd att bli en permanent del av den grundläggande verksamheten hos den sökande/en annan aktör efter projektet? Om ja, beskriv i textrutan hur det här kommer att ske, lämna annars tomt.'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_valiarviointi_section:
     '#title': '3.5 Mellanutvärderin g av tvååriga projekt'
@@ -237,8 +234,7 @@ elements: |
   arviointi_toteuma:
     '#title': 'Har projektet framskridit enligt planen? Bedöm projektets resultat hittills på en skala 1–100 procent och motivera ditt svar.'
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  arviointi_muutokset_markup:
-    '#markup': '<p>Har det skett några väsentliga förändringar i projektet?</p>'
+    '#description': 'Har det skett några väsentliga förändringar i projektet?'
   arviointi_muutokset_talous:
     '#title': 'Gällande ekonomin; vilka?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
@@ -264,7 +260,7 @@ elements: |
     '#title': '4.1 Inkomster'
   tulot:
     '#title': Inkomster
-    '#compensation__title': 'Ansökt projektstöd (€)'
+    '#compensation__title': 'Ansökt stöd (€)'
     '#plannedOtherCompensations__title': 'Övriga understöd (€)'
     '#sales__title': 'Övriga egna inkomster (€)'
     '#ownFunding__title': 'Egenfinansiering (€)'
@@ -275,7 +271,7 @@ elements: |
   menot_section:
     '#title': '4.2 Utgifter'
   talous_menon_tyyppi:
-    '#title': utgifter
+    '#title': 'Typ av utgift'
     '#help': '<p>Skriv ner vilken typ av utgift det gäller. Utgifter kan till exempel vara andra lokalhyror och personalkostnader.</p>'
     '#multiple__add_more_button_label': 'Lägg till en utgift'
   lisatiedot_ja_liitteet:

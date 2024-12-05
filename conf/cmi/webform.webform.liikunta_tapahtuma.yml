@@ -18,13 +18,15 @@ third_party_settings:
     applicationTargetGroup: '26'
     applicationOpen: '2024-01-01T00:00:00'
     applicationClose: '2024-12-08T23:59:59'
-    applicationActingYearsType: current_and_next_x_years
-    applicationActingYears: {  }
-    applicationActingYearsNextCount: '1'
+    applicationActingYearsType: fixed
+    applicationActingYears:
+      2024: '2024'
+    applicationActingYearsNextCount: '0'
     applicationContinuous: 0
     disableCopying: 1
     status: released
     parent: ''
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null
@@ -616,9 +618,9 @@ settings:
   form_prepopulate_source_entity: false
   form_prepopulate_source_entity_required: false
   form_prepopulate_source_entity_type: ''
-  form_unsaved: false
+  form_unsaved: true
   form_disable_back: false
-  form_submit_back: false
+  form_submit_back: true
   form_disable_autocomplete: false
   form_novalidate: false
   form_disable_inline_errors: false

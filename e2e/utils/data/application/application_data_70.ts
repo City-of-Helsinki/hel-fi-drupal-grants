@@ -1054,14 +1054,12 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-hankkeen-toimenpiteet-alkupvm': 'Virhe sivulla 3. Tarkemmat tiedot: Alkupäivämäärä kenttä on pakollinen.',
     'edit-hankkeen-toimenpiteet-loppupvm': 'Virhe sivulla 3. Tarkemmat tiedot: Loppupäivämäärä kenttä on pakollinen.',
     'edit-hankkeen-keskeisimmat-kumppanit': 'Virhe sivulla 3. Tarkemmat tiedot: Nimeä hankkeen keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa kenttä on pakollinen.',
-    'edit-haun-painopisteet-digi-kehitys': 'Virhe sivulla 3. Tarkemmat tiedot: Kehitetäänkö hankkeessa digitaalisesti / etänä toteutettavia kulttuuritoimintoja tai liikkumiseen aktivoivaa toimintaa? Miten? kenttä on pakollinen.',
-    'edit-haun-painopisteet-vertais-kehitys': 'Virhe sivulla 3. Tarkemmat tiedot: Kehitetäänkö hankkeessa vapaaehtois- / vertaistoimintaa? Miten? kenttä on pakollinen.',
     'edit-hankkeen-kohderyhmat-kenelle': 'Virhe sivulla 3. Tarkemmat tiedot: Kenelle hankkeen toiminta on pääasiallisesti suunnattu? kenttä on pakollinen.',
     'edit-hankkeen-kohderyhmat-tavoitus': 'Virhe sivulla 3. Tarkemmat tiedot: Kuinka hankkeen kohderyhmät aiotaan tavoittaa? kenttä on pakollinen.',
     'edit-hankkeen-kohderyhmat-konkretia': 'Virhe sivulla 3. Tarkemmat tiedot: Miten hankkeessa edistetään konkreettisin toimenpitein valitun kohderyhmän toimintakykyä ja hyvinvointia? kenttä on pakollinen.',
     'edit-hankkeen-kohderyhmat-osallisuus': 'Virhe sivulla 3. Tarkemmat tiedot: Millä tavoin hankkeessa edistetään osallisuutta? Mikä ikäihmisten rooli hankkeessa on? kenttä on pakollinen.',
     'edit-hankkeen-kohderyhmat-osaaminen': 'Virhe sivulla 3. Tarkemmat tiedot: Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään? kenttä on pakollinen.',
-    'edit-hankkeen-kohderyhmat-postinrot': 'Virhe sivulla 3. Tarkemmat tiedot: Millä postinumeroalueella tai -alueilla Helsingissä hanke toteutetaan? kenttä on pakollinen.',
+    'edit-hankkeen-kohderyhmat-postinrot': 'Virhe sivulla 3. Tarkemmat tiedot: Millä postinumeroalueella tai -alueilla Helsingissä hanke toteutetaan? Kirjaa kenttään enintään kolme (3) postinumeroaluetta ja erottele ne toisistaan pilkulla (,) kenttä on pakollinen.',
     'edit-hankkeen-kohderyhmat-miksi-alue': 'Virhe sivulla 3. Tarkemmat tiedot: Miksi juuri kyseinen alue / alueet on valittu? kenttä on pakollinen.',
     'edit-hankkeen-riskit-keskeisimmat': 'Virhe sivulla 3. Tarkemmat tiedot: Mitkä ovat hankkeen toteuttamisen näkökulmasta keskeisimmät riskit? kenttä on pakollinen.',
     'edit-hankkeen-riskit-seuranta': 'Virhe sivulla 3. Tarkemmat tiedot: Miten hankkeessa aiotaan toteuttaa seurantaa ja arviointia? kenttä on pakollinen.',
@@ -1134,10 +1132,10 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
  */
 const registeredCommunityApplications_70 = {
   draft: baseForm_70,
-  visibilityByState: createFormData(baseForm_70, visibilityByState),
-  visibilityByStateSection3Estimates: createFormData(baseForm_70, visibilityByStateSection3Estimates),
-  missingValues: createFormData(baseForm_70, missingValues),
-  wrongValues: createFormData(baseForm_70, wrongValues),
+  visibility_by_state: createFormData(baseForm_70, visibilityByState),
+  visibility_by_state_section3_estimates: createFormData(baseForm_70, visibilityByStateSection3Estimates),
+  missing_values: createFormData(baseForm_70, missingValues),
+  wrong_values: createFormData(baseForm_70, wrongValues),
   success: createFormData(baseForm_70, sendApplication),
 }
 
