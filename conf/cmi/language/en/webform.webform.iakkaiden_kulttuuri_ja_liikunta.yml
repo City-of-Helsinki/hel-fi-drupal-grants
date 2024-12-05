@@ -272,7 +272,7 @@ elements: |
     '#title': '4.2 Expenses'
   talous_menon_tyyppi:
     '#title': 'Type of expense'
-    '#help': '<p>Write down the type of expense in question. Expenses can be, for example, rents and personnel costs..</p>'
+    '#help': '<p>Write down the type of expense in question. Expenses can be, for example, rents and personnel costs.</p>'
     '#multiple__add_more_button_label': 'Add new expense'
   lisatiedot_ja_liitteet:
     '#title': '5. Additional information and appendices'
