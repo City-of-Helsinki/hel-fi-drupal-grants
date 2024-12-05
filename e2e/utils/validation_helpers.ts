@@ -482,7 +482,7 @@ const validateMessaging = async (
   await textArea.fill('Test message 2');
   await formActionButton.click();
   const secondSubmitBody = await getFulfilledResponse(page);
-  await expect(secondSubmitBody.length).toBe(4);
+  expect(secondSubmitBody.length).toBe(4);
   await page.waitForSelector('ul.webform-submission-messages__messages-list > h5');
 
   const messages = await page.locator('.webform-submission-messages__messages-list .webform-submission-messages__message-body').all();
