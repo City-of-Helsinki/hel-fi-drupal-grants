@@ -212,7 +212,7 @@ class DocumentValueExtractor {
     if ($valueExtractorConfig) {
       $valueExtractorService = self::getDynamicService($valueExtractorConfig['service']);
       $method = $valueExtractorConfig['method'];
-      return $valueExtractorService->$method($item);
+      return htmlspecialchars_decode($valueExtractorService->$method($item));
     }
     return NULL;
   }
@@ -241,7 +241,7 @@ class DocumentValueExtractor {
       if ($valueExtractorConfig) {
         $valueExtractorService = self::getDynamicService($valueExtractorConfig['service']);
         $method = $valueExtractorConfig['method'];
-        return $valueExtractorService->$method($item);
+        return htmlspecialchars_decode($valueExtractorService->$method($item));
       }
     }
     return NULL;
