@@ -77,7 +77,7 @@ class ForceCompanyAuthorisationSubscriber implements EventSubscriberInterface {
       return FALSE;
     }
     $requestUri = $event->getRequest()->getRequestUri();
-    $urlObject = Url::fromUserInput($requestUri);
+    $urlObject = Url::fromUserInput(trim(rawurldecode($requestUri)));
     if ($urlObject->access(User::getAnonymousUser()) === FALSE) {
       return TRUE;
     }
@@ -107,7 +107,8 @@ class ForceCompanyAuthorisationSubscriber implements EventSubscriberInterface {
     if ($selectedCompany !== NULL) {
       return FALSE;
     }
-    $urlObject = Url::fromUserInput($event->getRequest()->getRequestUri());
+    $requestUri = $event->getRequest()->getRequestUri();
+    $urlObject = Url::fromUserInput(trim(rawurldecode($requestUri)));
     $routeName = $urlObject->getRouteName();
 
     $nodeType = '';
