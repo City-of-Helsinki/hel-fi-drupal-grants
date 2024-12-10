@@ -89,7 +89,12 @@ final class AtvPrintViewController extends ControllerBase {
       }
     }
 
-    // Sort the fields based on weight.
+    // Sort the sections inside a page based on section weight.
+    foreach ($newPages as $pageKey => $page) {
+      usort($newPages[$pageKey]['sections'], fn($a, $b) => $a['weight'] > $b['weight']);
+    }
+
+    // Sort the fields inside the sections based on weight.
     foreach ($newPages as $pageKey => $page) {
       foreach ($page['sections'] as $sectionKey => $section) {
         usort($newPages[$pageKey]['sections'][$sectionKey]['fields'], function ($fieldA, $fieldB) {
@@ -122,14 +127,6 @@ final class AtvPrintViewController extends ControllerBase {
         'id' => 'additionalInformationPage',
         'sections' => $sections,
       ];
-    }
-
-    // Reorder the first section of the form in weight order.
-    if (isset($newPages[1]['sections'])) {
-      usort(
-        $newPages[1]['sections'],
-        fn($a, $b) => $a['weight'] > $b['weight']
-      );
     }
 
     // Set correct template.
