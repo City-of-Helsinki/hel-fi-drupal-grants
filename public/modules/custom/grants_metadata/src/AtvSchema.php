@@ -371,12 +371,14 @@ class AtvSchema {
       if (in_array($key, $keys) && !in_array($key, $values)) {
         $values[$key] = $item;
       }
-      if (is_numeric($key) &&
-          !AtvSchema::numericKeys($item) &&
-          isset($item['ID']) &&
-          in_array($item['ID'], $keys) &&
-          !in_array($item['ID'], $values)) {
-        $values[$item['ID']] = $item['value'];
+      if (
+        is_numeric($key) &&
+        !AtvSchema::numericKeys($item) &&
+        isset($item['ID']) &&
+        in_array($item['ID'], $keys) &&
+        !in_array($item['ID'], $values)
+      ) {
+        $values[$item['ID']] = htmlspecialchars_decode($item['value']);
       }
     }
   }

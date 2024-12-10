@@ -155,10 +155,12 @@ class DocumentValueExtractor {
       $itemValue = self::processNestedArrayItem($v, $itemPropertyDefinitions);
       if (array_key_exists('value', $v)) {
         $meta = isset($v['meta']) ? json_decode($v['meta'], TRUE) : NULL;
-        $retval[$key][$v['ID']] = InputmaskHandler::convertPossibleInputmaskValue(
-        $itemValue ?? $v['value'],
-        $meta ?? []
+        $value = InputmaskHandler::convertPossibleInputmaskValue(
+          $itemValue ?? $v['value'],
+          $meta ?? []
         );
+
+        $retval[$key][$v['ID']] = htmlspecialchars_decode($value);
       }
       else {
         $retval[$key][$key2] = $itemValue ?? $v;
@@ -210,7 +212,7 @@ class DocumentValueExtractor {
     if ($valueExtractorConfig) {
       $valueExtractorService = self::getDynamicService($valueExtractorConfig['service']);
       $method = $valueExtractorConfig['method'];
-      return $valueExtractorService->$method($item);
+      return htmlspecialchars_decode($valueExtractorService->$method($item));
     }
     return NULL;
   }
@@ -239,7 +241,7 @@ class DocumentValueExtractor {
       if ($valueExtractorConfig) {
         $valueExtractorService = self::getDynamicService($valueExtractorConfig['service']);
         $method = $valueExtractorConfig['method'];
-        return $valueExtractorService->$method($item);
+        return htmlspecialchars_decode($valueExtractorService->$method($item));
       }
     }
     return NULL;

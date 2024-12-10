@@ -195,7 +195,7 @@ class GrantsPremisesService {
             $value2value = 0;
           }
         }
-        $temp[$value2['ID']] = $value2value;
+        $temp[$value2['ID']] = htmlspecialchars_decode($value2value);
       }
       $returnValueArray[$key] = $temp;
     }
