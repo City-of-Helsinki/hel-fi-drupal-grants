@@ -124,6 +124,14 @@ final class AtvPrintViewController extends ControllerBase {
       ];
     }
 
+    // Reorder the first section of the form in weight order.
+    if (isset($newPages[1]['sections'])) {
+      usort(
+        $newPages[1]['sections'],
+        fn($a, $b) => $a['weight'] > $b['weight']
+      );
+    }
+
     // Set correct template.
     return [
       '#theme' => 'grants_handler_print_atv_document',
