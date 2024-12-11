@@ -190,13 +190,22 @@ final class ApplicationGetterService {
         }
 
         $submissionData = $submission->getData();
+        $webform = $submission->getWebform();
+
+        // There's old applications w/o form_uuid, let's add it here
+        // Since we've already loaded webform for submission object the old way,
+        // we should have it here anyways. Just make sure it's in the metadata
+        // as well.
+        if (!isset($submissionData["metadata"]["form_uuid"])) {
+          $submissionData["metadata"]["form_uuid"] = $webform->uuid();
+        }
 
         $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
         $submission = [
           '#theme' => $themeHook,
           '#submission' => $submissionData,
           '#document' => $document,
-          '#webform' => $submission->getWebform(),
+          '#webform' => $webform,
           '#submission_id' => $submission->id(),
         ];
 
@@ -390,7 +399,7 @@ final class ApplicationGetterService {
       throw new AtvDocumentNotFoundException('Document not found');
     }
 
-    $uuid = $document->getMetadata()['form_uuid'];
+    $uuid = $document->getMetadata()['form_uuid'] ?? NULL;
 
     if (!$uuid) {
       // And return webform loaded the old way.
