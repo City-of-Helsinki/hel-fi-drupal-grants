@@ -260,6 +260,7 @@ final class ApplicationGetterService {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Drupal\grants_mandate\CompanySelectException
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    */
   public function submissionObjectFromApplicationNumber(
     string $applicationNumber,
@@ -377,11 +378,24 @@ final class ApplicationGetterService {
    *
    * @return \Drupal\webform\Entity\Webform
    *   Webform object.
+   *
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    */
   public function getWebformFromApplicationNumber(string $applicationNumber): Webform {
     // We need the ATV document to get the form uuid.
     $document = $this->getAtvDocument($applicationNumber);
+
+    if (!$document) {
+      // No document, throw error.
+      throw new AtvDocumentNotFoundException('Document not found');
+    }
+
     $uuid = $document->getMetadata()['form_uuid'];
+
+    if (!$uuid) {
+      // And return webform loaded the old way.
+      return ApplicationHelpers::getWebformFromApplicationNumber($applicationNumber);
+    }
 
     try {
       // Try to load webform via UUID and return it.
