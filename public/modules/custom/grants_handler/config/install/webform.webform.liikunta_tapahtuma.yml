@@ -10,22 +10,23 @@ third_party_settings:
     applicationTypeSelect: '59'
     applicationType: LIIKUNTATAPAHTUMA
     applicationTypeID: '59'
-    applicationIndustry: KASKO
+    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
       65: '65'
     applicationTargetGroup: '26'
-    applicationOpen: '2023-02-18T09:28:04'
-    applicationClose: '2023-11-24T09:28:11'
+    applicationOpen: '2024-12-09T00:00:00'
+    applicationClose: '2025-12-07T23:59:59'
     applicationActingYearsType: fixed
     applicationActingYears:
-      2023: '2023'
-      2024: '2024'
       2025: '2025'
-    applicationActingYearsNextCount: ''
+    applicationActingYearsNextCount: '0'
     applicationContinuous: 0
-    disableCopying: 0
+    disableCopying: 1
+    status: released
+    parent: ''
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null
@@ -33,9 +34,10 @@ uid: 1
 template: false
 archive: false
 id: liikunta_tapahtuma
-title: 'Liikunta: Tapahtuma-avustushakemus'
-description: LIIKUNTATAPAHTUMA
-category: ''
+title: 'Liikunta, tapahtuma-avustushakemus'
+description: '<p>LIIKUNTATAPAHTUMA</p>'
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden
@@ -83,7 +85,7 @@ elements: |-
         '#markup': 'Tiedot on haettu Patentti- ja rekisterihallinnon rekisterist&auml; (PRH), eik&auml; niit&auml; voi t&auml;m&auml;n takia muokata.'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': 'Hakija'
+        '#title': Hakija
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -96,6 +98,7 @@ elements: |-
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyv&auml;t viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
         '#size': 63
         '#autocomplete': 'off'
+        '#pattern': '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
         '#required': true
     contact_person_section:
       '#type': webform_section
@@ -121,7 +124,7 @@ elements: |-
       '#states':
         visible:
           ':input[name="applicant_type"]':
-            'value': registered_community
+            value: registered_community
       community_address:
         '#type': community_address_composite
         '#title': 'Yhteisön osoite'
@@ -133,7 +136,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="applicant_type"]':
-              'value': registered_community
+              value: registered_community
     tilinumero:
       '#type': webform_section
       '#title': Tilinumero
@@ -185,6 +188,7 @@ elements: |-
           2022: '2022'
           2023: '2023'
           2024: '2024'
+        '#help': 'Huomioithan, että avustusten kriteerit saattavat muuttua vuosittain.'
         '#required': true
     avustuslajit:
       '#type': webform_section
@@ -195,6 +199,7 @@ elements: |-
         '#multiple': true
         '#subventionType':
           37: '37'
+        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -211,94 +216,20 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup_01:
-        '#type': webform_markup
-        '#markup': 'Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.'
-    osallistujat:
-      '#type': webform_section
-      '#title': Osallistujat
-      markup_02:
-        '#type': webform_markup
-        '#markup': 'Arvioiduissa osallistujam&auml;&auml;riss&auml; tulee huomioida ne osallistujat, joita tapahtuma liikuttaa. Arvioiduissa m&auml;&auml;riss&auml; ei siis huomioida esimerkiksi tapahtumaan osallistuvan yleis&ouml;n tai vapaaehtoisten m&auml;&auml;r&auml;&auml;.'
-      20_age_participants:
-        '#type': fieldset
-        '#title': 'Yli 20-vuotiaat osallistujat'
-        '#attributes':
-          class:
-            - grants-fieldset
-            - grants-fieldset-medium
-        20_men:
-          '#type': number
-          '#title': Miehet
-          '#size': '32'
-          '#autocomplete': 'off'
-          '#required': true
-          '#attributes':
-            class:
-              - webform--small
-        20_women:
-          '#type': number
-          '#title': Naiset
-          '#size': '32'
-          '#autocomplete': 'off'
-          '#required': true
-          '#attributes':
-            class:
-              - webform--small
-        20_other:
-          '#type': number
-          '#title': Muut
-          '#size': '32'
-          '#autocomplete': 'off'
-          '#required': true
-          '#attributes':
-            class:
-              - webform--small
-      under_20_age_participants:
-        '#type': fieldset
-        '#title': 'Alle 20-vuotiaat osallistujat'
-        '#attributes':
-          class:
-            - grants-fieldset
-            - grants-fieldset-medium
-        under_20_men:
-          '#type': number
-          '#title': Pojat
-          '#size': '32'
-          '#autocomplete': 'off'
-          '#required': true
-          '#attributes':
-            class:
-              - webform--small
-        under_20_women:
-          '#type': number
-          '#title': Tytöt
-          '#size': '32'
-          '#autocomplete': 'off'
-          '#required': true
-          '#attributes':
-            class:
-              - webform--small
-        under_20_other:
-          '#type': number
-          '#title': Muut
-          '#size': '32'
-          '#autocomplete': 'off'
-          '#required': true
-          '#attributes':
-            class:
-              - webform--small
     tapahtuman_tiedot:
       '#type': webform_section
       '#title': 'Tapahtuman tiedot'
       event_for_applied_grant:
-        '#type': textarea
+        '#type': textfield
         '#title': 'Tapahtuma, johon avustusta haetaan'
         '#autocomplete': 'off'
         '#required': true
         '#counter_type': character
-        '#counter_maximum': 1000
-        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
+        '#counter_maximum': 150
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/150 merkkiä jäljellä'
       event_target_group:
         '#type': textarea
         '#title': 'Tapahtuman kohderyhmä'
@@ -323,14 +254,27 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 3000
         '#counter_maximum_message': '%d/3000 merkkiä jäljellä'
+      info_kysymykset:
+        '#type': webform_markup
+        '#markup': |
+          <div class="hds-notification hds-notification--info">
+            <div class="hds-notification__content">
+              <div class="hds-notification__label" role="heading" aria-level="2">
+                <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+                <span>Myöntävä vastaus seuraavissa avaa lisäkysymyksen</span>
+              </div>
+            </div>
+          </div>
       equality_radios:
         '#type': radios
         '#title': 'Tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
         '#options_display': side_by_side
       equality_how:
         '#type': textarea
-        '#title': 'Miten?'
+        '#title': 'Miten tapahtuma edistää yhdenvertaisuutta ja tasa-arvoa?'
         '#size': 32
         '#autocomplete': 'off'
         '#required': true
@@ -340,15 +284,20 @@ elements: |-
         '#states':
           visible:
             ':input[name="equality_radios"]':
-              value: 'Yes'
+              value: 1
+          required:
+            ':input[name="equality_radios"]':
+              value: 1
       inclusion_radios:
         '#type': radios
         '#title': 'Tapahtuma edistää osallisuutta ja yhteisöllisyyttä'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
         '#options_display': side_by_side
       inclusion_how:
         '#type': textarea
-        '#title': 'Miten?'
+        '#title': 'Miten tapahtuma edistää osallisuutta ja yhteisöllisyyttä?'
         '#size': 32
         '#autocomplete': 'off'
         '#required': true
@@ -358,15 +307,20 @@ elements: |-
         '#states':
           visible:
             ':input[name="inclusion_radios"]':
-              value: 'Yes'
+              value: 1
+          require:
+            ':input[name="inclusion_radios"]':
+              value: 1
       environment_radios:
         '#type': radios
         '#title': 'Tapahtumassa on huomioitu ympäristöasiat'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
         '#options_display': side_by_side
       environment_how:
         '#type': textarea
-        '#title': 'Miten?'
+        '#title': 'Miten tapahtumassa on huomioitu ympäristöasiat?'
         '#autocomplete': 'off'
         '#required': true
         '#counter_type': character
@@ -375,15 +329,20 @@ elements: |-
         '#states':
           visible:
             ':input[name="environment_radios"]':
-              value: 'Yes'
+              value: 1
+          require:
+            ':input[name="environment_radios"]':
+              value: 1
       exercise_radios:
         '#type': radios
         '#title': 'Tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
         '#options_display': side_by_side
       exercise_how:
         '#type': textarea
-        '#title': 'Miten?'
+        '#title': 'Miten tapahtuma innostaa uusia harrastajia omatoimisen tai ohjatun liikunnan pariin?'
         '#autocomplete': 'off'
         '#required': true
         '#counter_type': character
@@ -392,15 +351,20 @@ elements: |-
         '#states':
           visible:
             ':input[name="exercise_radios"]':
-              value: 'Yes'
+              value: 1
+          required:
+            ':input[name="exercise_radios"]':
+              value: 1
       activity_radios:
         '#type': radios
         '#title': 'Tapahtuma innostaa ihmisiä arkiaktiivisuuteen'
-        '#options': yes_no
+        '#options':
+          1: Kyllä
+          0: Ei
         '#options_display': side_by_side
       activity_how:
         '#type': textarea
-        '#title': 'Miten?'
+        '#title': 'Miten tapahtuma innostaa ihmisiä arkiaktiivisuuteen?'
         '#autocomplete': 'off'
         '#required': true
         '#counter_type': character
@@ -409,7 +373,102 @@ elements: |-
         '#states':
           visible:
             ':input[name="activity_radios"]':
-              value: 'Yes'
+              value: 1
+          required:
+            ':input[name="activity_radios"]':
+              value: 1
+    osallistujat:
+      '#type': webform_section
+      '#title': Osallistujat
+      markup_02:
+        '#type': webform_markup
+        '#markup': 'Arvioiduissa osallistujam&auml;&auml;riss&auml; tulee huomioida ne osallistujat, joita tapahtuma liikuttaa. Arvioiduissa m&auml;&auml;riss&auml; ei siis huomioida esimerkiksi tapahtumaan osallistuvan yleis&ouml;n tai vapaaehtoisten m&auml;&auml;r&auml;&auml;.'
+      20_age_participants:
+        '#type': fieldset
+        '#title': '20 vuotta täyttäneet osallistujat'
+        '#attributes':
+          class:
+            - grants-fieldset
+            - grants-fieldset-medium
+        20_men:
+          '#type': textfield
+          '#title': Miehet
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+        20_women:
+          '#type': textfield
+          '#title': Naiset
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+        20_other:
+          '#type': textfield
+          '#title': Muut
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+      under_20_age_participants:
+        '#type': fieldset
+        '#title': 'Alle 20-vuotiaat osallistujat'
+        '#attributes':
+          class:
+            - grants-fieldset
+            - grants-fieldset-medium
+        under_20_men:
+          '#type': textfield
+          '#title': Pojat
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+        under_20_women:
+          '#type': textfield
+          '#title': Tytöt
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+        under_20_other:
+          '#type': textfield
+          '#title': Muut
+          '#size': '32'
+          '#maxlength': 9
+          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
+          '#pattern': '^[0-9 ]*$'
+          '#autocomplete': 'off'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
     tapahtuma_ajankohta:
       '#type': webform_section
       '#title': Tapahtuma-ajankohta
@@ -417,12 +476,10 @@ elements: |-
         '#type': date
         '#title': Alkaa
         '#required': true
-        '#datepicker': true
       paattyy:
         '#type': date
         '#title': Päättyy
         '#required': true
-        '#datepicker': true
   tapahtuman_talousarvio:
     '#type': webform_wizard_page
     '#title': '3. Tapahtuman talousarvio'
@@ -431,7 +488,7 @@ elements: |-
       '#title': 'Tapahtuman tulot'
       markup_03:
         '#type': webform_markup
-        '#markup': 'Erittele tapahtuman tulot tulotyypeitt&auml;in. Kirjaa tuloihin erikseen my&ouml;s tapahtumalle my&ouml;nnetyt muut avustukset sek&auml; niiden my&ouml;nt&auml;j&auml;taho.&nbsp;'
+        '#markup': 'Erittele tapahtuman tulot tulotyypeitt&auml;in. Kirjaa tuloihin erikseen my&ouml;s tapahtumalle my&ouml;nnetyt muut avustukset sek&auml; niiden my&ouml;nt&auml;j&auml;taho.'
       budget_other_income:
         '#type': grants_budget_other_income
         '#title': Tulo
@@ -443,6 +500,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi tulo'
+        '#multiple__item_label': 'tulo'
     itemise_cost:
       '#type': webform_section
       '#title': 'Tapahtuman menot'
@@ -460,6 +519,8 @@ elements: |-
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
     '#title': '4. Lisätiedot ja liitteet'
@@ -469,7 +530,7 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen.'
         '#maxlength': 5000
         '#autocomplete': 'off'
         '#counter_type': character
@@ -480,35 +541,13 @@ elements: |-
       '#title': Liitteet
       attachments_info:
         '#type': webform_markup
-        '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          Vaaditut liitteet:<br />
-          Vapaamuotoinen tapahtumasuunnitelma (laajempi kuvaus tapahtumasta, sen j&auml;rjestelyist&auml; ja kohderyhm&auml;st&auml;)<br />
-          Tapahtumabudjetti (mik&auml;li se ei tule riitt&auml;v&auml;ll&auml; tavalla ilmi hakemuslomakkeella)<br />
-          <br />
-          Mik&auml;li hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteen&auml; tulee toimittaa my&ouml;s seuraavat liitteet:&nbsp;<br />
-          Yhteis&ouml;n s&auml;&auml;nn&ouml;t<br />
-          Pankin ilmoitus tilinomistajasta tai tiliotekopio (hakijalla tulee olla oma suomalainen pankkitili, jolle avustus maksetaan)&nbsp;<br />
-          Ote yhteis&ouml;muotoa koskevasta rekisterist&auml;<br />
-          <br />
-          Usean liitteen toimittaminen yhten&auml; tiedostona<br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.
+        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet</h4>
+          <ul><li>Vapaamuotoinen tapahtumasuunnitelma (laajempi kuvaus tapahtumasta, sen järjestelyistä ja kohderyhmästä)</li><li>Tapahtumabudjetti (mikäli se ei tule riittävällä tavalla ilmi hakemuslomakkeella)</li></ul>
+          <p>Mikäli hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteenä tulee toimittaa myös ote yhteisömuotoa koskevasta rekisteristä.</p>'
       notification_attachments:
         '#type': webform_markup
-        '#markup': |
-          <div class="hds-notification hds-notification--info">
-          <div class="hds-notification__content">
-          <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
-
-          <div class="hds-notification__body">
-          <p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p>
-          </div>
-          </div>
-          </div>
-        '#format': full_html
+        '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div><div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p><p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div></div></div>'
       tapahtumasuunnitelma:
         '#type': grants_attachments
         '#title': Tapahtumasuunnitelma
@@ -534,7 +573,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__remove': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää liite'
+        '#multiple__add_more_button_label': 'Lisää uusi liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:
@@ -544,6 +583,8 @@ elements: |-
     '#draft__label': 'Tallenna keskeneräisenä'
     '#wizard_prev__label': 'Edellinen'
     '#wizard_next__label': 'Seuraava'
+    '#preview_prev__label': 'Edellinen'
+    '#preview_next__label': 'Esikatseluun'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -577,9 +618,9 @@ settings:
   form_prepopulate_source_entity: false
   form_prepopulate_source_entity_required: false
   form_prepopulate_source_entity_type: ''
-  form_unsaved: false
+  form_unsaved: true
   form_disable_back: false
-  form_submit_back: false
+  form_submit_back: true
   form_disable_autocomplete: false
   form_novalidate: false
   form_disable_inline_errors: false
@@ -628,13 +669,13 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '6. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: 'Edellinen'
-  wizard_next_button_label: 'Seuraava'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: false
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
