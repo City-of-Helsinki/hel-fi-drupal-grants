@@ -122,9 +122,6 @@
             "drupal/autologout": {
                 "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch"
             },
-            "drupal/search_api": {
-                "Primary key fix": "patches/search_api_primary_key.patch"
-            },
             "drupal/crop": {
                 "Fix encoded paths for files": "patches/AU-2225-fix-encoded-paths.patch"
             }
