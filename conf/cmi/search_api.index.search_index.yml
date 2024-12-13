@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.full
     - field.storage.node.field_application_continuous
     - field.storage.node.field_application_period
     - field.storage.node.field_avustuslaji
@@ -14,10 +15,9 @@ dependencies:
     - field.storage.node.field_sidebar_content
     - field.storage.node.field_target_group
     - search_api.server.default_server
-    - core.entity_view_mode.node.full
   module:
+    - helfi_react_search
     - node
-    - search_api
 id: search_index
 name: 'Search index'
 description: ''
