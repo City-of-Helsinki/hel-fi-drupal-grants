@@ -1559,7 +1559,7 @@ function grants_handler_preprocess_application_list_item(&$variables): void {
     }
     else {
       \Drupal::logger('grants_handler')
-        ->error('Application status not in valid statuses: %number', [
+        ->info('Application status not in valid statuses: %number', [
           '%number' => $submissionData["application_number"],
         ]);
     }
@@ -1611,7 +1611,7 @@ function grants_handler_preprocess_application_status_tag(&$variables): void {
     }
     else {
       \Drupal::logger('grants_handler')
-        ->error('Application status not in valid statuses: %appno', [
+        ->info('Application status not in valid statuses: %appno', [
           '%appno' => $submissionData["application_number"],
         ]);
     }
