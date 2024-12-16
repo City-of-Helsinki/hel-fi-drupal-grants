@@ -510,8 +510,6 @@ input[type='radio'] + label.form-required::after {
   }
 }
 
-.grants-attachments--fields-wrapper {
-  .button--delete-attachment {
-    margin-top: var(--spacing-layout-xs);
-  }
+.grants-attachments--fields-wrapper .button--delete-attachment{
+  margin-top: var(--spacing-layout-xs);
 }
