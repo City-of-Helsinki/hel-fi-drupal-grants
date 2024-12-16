@@ -97,7 +97,7 @@ class ApplicantInfoComposite extends GrantsCompositeBase {
         $webformElement = $element["#webform_composite_elements"][$fieldName];
         if ($webformElement && isset($webformElement['#title'])) {
           $lines[] = '<dt>' . $webformElement['#title']->render() . '</dt>';
-          $lines[] = '<dd>' . $fieldValue . '</dd>';
+          $lines[] = '<dd>' . htmlspecialchars_decode($fieldValue) . '</dd>';
         }
       }
     }
