@@ -33,7 +33,7 @@ class LinkModifierService implements InboundPathProcessorInterface {
   /**
    * {@inheritdoc}
    */
-  public function processInbound($path, Request $request = NULL) {
+  public function processInbound($path, ?Request $request = NULL) {
     if (str_starts_with($path, '/yleisavustushakemus/')) {
       $sid = str_replace('/yleisavustushakemus/', '', $path);
       $path = "/admin/structure/webform/manage/yleisavustushakemus/submission/" . $sid;

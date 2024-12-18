@@ -182,8 +182,8 @@ class ForceMenuLinkService {
    */
   protected function logMessage(
     string $messageType,
-    NodeInterface $node = NULL,
-    MenuLinkContentInterface $menuLink = NULL,
+    ?NodeInterface $node = NULL,
+    ?MenuLinkContentInterface $menuLink = NULL,
     mixed $exception = NULL,
   ): void {
     $message = match ($messageType) {

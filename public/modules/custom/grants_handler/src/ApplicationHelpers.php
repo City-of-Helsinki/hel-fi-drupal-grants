@@ -383,7 +383,7 @@ abstract class ApplicationHelpers {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function isApplicationWebformDuplicatable(string $id, string $formId = NULL): bool {
+  public static function isApplicationWebformDuplicatable(string $id, ?string $formId = NULL): bool {
     $applicationForms = self::getActiveApplicationWebforms($id, $formId);
     return count($applicationForms['released']) <= 1 && count($applicationForms['development']) === 0;
   }
