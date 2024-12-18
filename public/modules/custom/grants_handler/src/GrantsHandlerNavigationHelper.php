@@ -168,7 +168,7 @@ class GrantsHandlerNavigationHelper {
    */
   public function getErrors(
     WebformSubmissionInterface $webformSubmission,
-    string $page = NULL,
+    ?string $page = NULL,
   ): array {
 
     if (empty($webformSubmission->id())) {

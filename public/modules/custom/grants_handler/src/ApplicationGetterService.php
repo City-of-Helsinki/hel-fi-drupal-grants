@@ -273,7 +273,7 @@ final class ApplicationGetterService {
    */
   public function submissionObjectFromApplicationNumber(
     string $applicationNumber,
-    AtvDocument $document = NULL,
+    ?AtvDocument $document = NULL,
     bool $refetch = FALSE,
     bool $skipAccessCheck = FALSE,
   ): ?WebformSubmission {

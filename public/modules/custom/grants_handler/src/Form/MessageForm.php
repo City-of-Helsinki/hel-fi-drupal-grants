@@ -88,7 +88,7 @@ class MessageForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, WebformSubmission $webform_submission = NULL): array {
+  public function buildForm(array $form, FormStateInterface $form_state, ?WebformSubmission $webform_submission = NULL): array {
     $tOpts = ['context' => 'grants_handler'];
 
     $storage = $form_state->getStorage();
