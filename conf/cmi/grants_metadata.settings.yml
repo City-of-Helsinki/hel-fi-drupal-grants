@@ -491,6 +491,12 @@ overridden_configuration:
         applicationClose: '2029-07-30T11:19:00'
         disableCopying: 0
   -
+    70:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  -
     71:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
