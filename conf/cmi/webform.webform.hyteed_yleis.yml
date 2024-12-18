@@ -23,8 +23,8 @@ third_party_settings:
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
-    status: development
-    parent: d8472e68-d6bd-4de2-a409-f0a177bf9e94
+    status: released
+    parent: ''
     avus2BreakingChange: 0
 weight: 0
 open: null
