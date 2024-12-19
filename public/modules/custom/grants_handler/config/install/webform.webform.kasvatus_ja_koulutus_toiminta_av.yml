@@ -1,4 +1,4 @@
-uuid: 3840ed64-4e5e-4a8d-ab38-b3556354a7e6
+uuid: 69b652bb-1226-47c3-bddd-317e9365965d
 langcode: fi
 status: open
 dependencies:
@@ -7,38 +7,33 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '51'
-    applicationType: KASKOYLEIS
-    applicationTypeID: '51'
+    applicationTypeSelect: '52'
+    applicationType: KASKOIPTOIM
+    applicationTypeID: '52'
     applicationIndustry: KASKO
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      64: '64'
       45: '45'
-      48: '48'
     applicationTargetGroup: '21'
-    applicationOpen: '2024-04-02T00:00:00'
-    applicationClose: '2024-10-23T16:00:00'
+    applicationOpen: '2024-01-02T00:00:00'
+    applicationClose: '2024-01-31T16:00:00'
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '0'
     applicationContinuous: 0
     disableCopying: 0
-    applicationActingYears:
-      2024: '2024'
-      2025: '2025'
-    applicationActingYearsType: fixed
-    applicationActingYearsNextCount: ''
     status: released
     parent: ''
-    avus2BreakingChange: false
 weight: 0
 open: null
 close: null
 uid: 1
 template: false
 archive: false
-id: kasvatus_ja_koulutus_yleisavustu
-title: 'Kasvatus ja koulutus, yleisavustushakemus'
-description: KASKOYLEIS
+id: kasvatus_ja_koulutus_toiminta_av
+title: 'Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille'
+description: '<p>KASKOIPTOIM</p>'
 categories:
   - Tuotannossa
 elements: |-
@@ -53,6 +48,7 @@ elements: |-
     '#collect_field':
       subventions%%amount: subventions%%amount
       application_number: 0
+      applicant_type: 0
       status: 0
       hakijan_tiedot: 0
       email: 0
@@ -67,6 +63,8 @@ elements: |-
       compensation_purpose: 0
       olemme_saaneet_muita_avustuksia: 0
       myonnetty_avustus: 0
+      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      haettu_avustus_tieto: 0
       benefits_loans: 0
       benefits_premises: 0
       compensation_boolean: 0
@@ -80,7 +78,6 @@ elements: |-
       members_applicant_community_local: 0
       members_applicant_community_global: 0
       additional_information: 0
-      yhteison_saannot: 0
       vahvistettu_tilinpaatos: 0
       vahvistettu_toimintakertomus: 0
       vahvistettu_tilin_tai_toiminnantarkastuskertomus: 0
@@ -115,7 +112,7 @@ elements: |-
         '#markup': '<div class="grants-profile-prh-info">Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.</div>'
       hakijan_tiedot:
         '#type': applicant_info
-        '#title': Hakija
+        '#title': 'Hakijan tiedot'
     contact_person_email_section:
       '#type': webform_section
       '#title': Sähköposti
@@ -125,29 +122,29 @@ elements: |-
       email:
         '#type': email
         '#title': Sähköpostiosoite
-        '#required': true
-        '#autocomplete': 'off'
-        '#pattern': '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
-        '#size': 63
         '#help': 'Ilmoita s&auml;hk&ouml;postiosoite, johon t&auml;h&auml;n hakemukseen liittyvät viestit sek&auml; her&auml;tteet osoitetaan ja jota luetaan aktiivisesti'
+        '#size': 63
+        '#pattern': '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
+        '#autocomplete': 'off'
+        '#required': true
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
       contact_person:
         '#type': textfield
         '#title': Yhteyshenkilö
+        '#autocomplete': 'off'
         '#attributes':
           class:
             - webform--large
-        '#autocomplete': 'off'
         '#required': true
         '#size': 63
       contact_person_phone_number:
         '#type': textfield
-        '#title': Puhelinnumero
         '#attributes':
           class:
             - webform--medium
+        '#title': Puhelinnumero
         '#required': true
         '#autocomplete': 'off'
         '#size': 32
@@ -186,16 +183,19 @@ elements: |-
       '#title': 'Toiminnasta vastaavat henkilöt'
       '#states':
         visible:
-          ':input[name="applicant_type"]':
-            '!value': private_person
+          - ':input[name="applicant_type"]':
+              value: registered_community
+          - or
+          - ':input[name="applicant_type"]':
+              value: unregistered_community
       community_officials:
         '#type': community_officials_composite
         '#help': 'Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.'
         '#title': 'Valitse toiminnasta vastaavat henkilöt'
         '#multiple': true
         '#multiple__item_label': henkilö
-        '#multiple__min_items': 1
-        '#multiple__empty_items': 0
+        '#multiple__min_items': 0
+        '#multiple__empty_items': 1
         '#multiple__sorting': false
         '#multiple__add': false
         '#multiple__add_more_input': false
@@ -231,9 +231,6 @@ elements: |-
         '#multiple': true
         '#subventionType':
           1: '1'
-          5: '5'
-          36: '36'
-        '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
         '#multiple__empty_items': 0
@@ -250,9 +247,6 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup_01:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
@@ -264,10 +258,10 @@ elements: |-
         '#counter_type': character
         '#maxlength': 5000
         '#counter_maximum': 5000
-        '#cols': 63
         '#attributes':
           class:
             - webform--large
+        '#cols': 63
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
@@ -332,19 +326,19 @@ elements: |-
           year:
             '#type': textfield
             '#required': true
+            '#title': Vuosi
             '#attributes':
               class:
                 - webform--small
-            '#title': Vuosi
             '#maxlength': 4
             '#pattern': ^(19\d\d|20\d\d|2100)$
             '#pattern_error': 'Syötä vuosiluku väliltä 1900 - 2100'
           amount:
             '#type': textfield
+            '#required': true
             '#attributes':
               class:
                 - webform--small
-            '#required': true
             '#title': 'Myönnetyn avustuksen summa'
             '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
           purpose:
@@ -383,12 +377,12 @@ elements: |-
         '#markup': 'Tilat, jotka kaupunki on antanut korvauksetta tai vuokrannut hakijan k&auml;ytt&ouml;&ouml;n (tilan nimi tai osoite, vuokran m&auml;&auml;r&auml; &euro;/kk)'
       benefits_premises:
         '#type': textarea
-        '#attributes':
-          class:
-            - webform--large
         '#title': 'Kuvaus tiloihin liittyvästä tuesta'
         '#maxlength': 5000
         '#counter_type': character
+        '#attributes':
+          class:
+            - webform--large
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#cols': 63
@@ -418,7 +412,7 @@ elements: |-
         '#states':
           visible:
             ':input[name="compensation_boolean"]':
-              value: 'true'
+              value: '1'
         '#markup': 'Anna k&auml;ytt&ouml;selvitys Helsingin kaupungilta saadusta avustuksesta. Avustuksen k&auml;ytt&ouml;selvitys tehd&auml;&auml;n avustuksesta, joka koskee viimeisint&auml; p&auml;&auml;ttynytt&auml; tilikautta. K&auml;ytt&ouml;selvityst&auml; ei tehd&auml; k&auml;ynniss&auml; olevalta tilikaudelta. K&auml;ytt&ouml;selvityksen antaminen on seuraavan avustuksen saamisen ehtona. Mik&auml;li k&auml;ytt&ouml;selvityst&auml; ei tehd&auml;, avustusta ei my&ouml;nnet&auml; eik&auml; makseta. My&ouml;nnetty avustus voidaan peri&auml; takaisin, jos edellisen avustuksen k&auml;ytt&ouml;&auml; ei ole hyv&auml;ksytt&auml;v&auml;sti selvitetty.'
       compensation_explanation:
         '#type': textarea
@@ -427,9 +421,6 @@ elements: |-
         '#maxlength': 5000
         '#counter_type': character
         '#counter_maximum': 5000
-        '#attributes':
-          class:
-            - webform--large
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#states':
           visible:
@@ -438,6 +429,9 @@ elements: |-
           required:
             ':input[name="compensation_boolean"]':
               value: '1'
+        '#attributes':
+          class:
+            - webform--large
         '#cols': 63
   3_yhteison_tiedot:
     '#type': webform_wizard_page
@@ -464,100 +458,401 @@ elements: |-
         '#options_display': side_by_side
         '#options_description_display': help
         '#required': true
-    ensimmainen_otsikko:
+    toimintapaikkojen_perustiedot:
       '#type': webform_section
-      '#title': Jäsenmaksut
-      fee_person:
-        '#type': textfield
-        '#title': 'Henkilöjäsenen jäsenmaksu (€ / vuosi)'
-        '#attributes':
-          class:
-            - webform--small
-        '#maxlength': 50
-        '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
-        '#size': 16
-      fee_community:
-        '#type': textfield
-        '#title': 'Yhteisöjäsen (€ / vuosi)'
-        '#attributes':
-          class:
-            - webform--small
-        '#maxlength': 50
-        '#input_mask': '''alias'': ''currency'', ''prefix'': '''', ''suffix'': ''€'',''groupSeparator'': '' '',''radixPoint'':'','''
-        '#size': 16
-    jasenmaara:
+      '#title': 'Toimintapaikkojen perustiedot'
+      toimintapaikka:
+        '#type': place_of_operation_composite
+        '#title': Toimintapaikka
+        '#multiple': true
+        '#description': '<p>Ilmoita tässä kohdassa eri osoitteissa toimivien toimintapaikkojen yhteystiedot ja ryhmärakennetiedot. Lomake laskee ilmoitetut tiedot yhteensä.</p>'
+        '#description_display': before
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
+        '#premiseName__access': false
+        '#premiseAddress__access': false
+        '#address__access': false
+        '#multiple__add_more_button_label': 'Lisää toimintapaikka'
+        '#multiple__item_label': 'toimintapaikka'
+  4_talous:
+    '#type': webform_wizard_page
+    '#title': '4. Talous'
+    talousarvio_osio:
       '#type': webform_section
-      '#title': Jäsenmäärä
-      jasenmaara_fieldset:
-        '#type': fieldset
-        '#title': Jäsenmäärä
-        '#help': 'Jos yhteisöllä on jäseniä, merkitse ne tähän.'
-        '#attributes':
-          class:
-            - grants-fieldset
-            - grants-fieldset-short
-        members_applicant_person_global:
-          '#type': textfield
-          '#title': 'Henkilöjäseniä yhteensä'
-          '#help': 'Kuinka monta j&auml;senmaksun maksanutta henkil&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;?'
-          '#maxlength': 9
-          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
-          '#pattern': '^[0-9 ]*$'
-          '#pattern_error': 'Vain numeroita'
-          '#size': 16
-          '#attributes':
-            class:
-              - webform--small
-        members_applicant_person_local:
-          '#type': textfield
-          '#title': 'Helsinkiläisiä henkilöjäseniä yhteensä'
-          '#help': 'Kuinka monta j&auml;senmaksun maksanutta helsinkil&auml;ist&auml; henkil&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;?'
-          '#maxlength': 9
-          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
-          '#pattern': '^[0-9 ]*$'
-          '#pattern_error': 'Vain numeroita'
-          '#size': 16
-          '#attributes':
-            class:
-              - webform--small
-        members_applicant_community_global:
-          '#type': textfield
-          '#title': Yhteisöjäseniä
-          '#help': 'Kuinka monta j&auml;senmaksun maksanutta yhteis&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;? Yhteis&ouml;j&auml;seni&auml; ovat muut kuin henkil&ouml;j&auml;senet, esimerkiksi yhdistykset, s&auml;&auml;ti&ouml;t, yritykset tai kunnat.'
-          '#maxlength': 9
-          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
-          '#pattern': '^[0-9 ]*$'
-          '#pattern_error': 'Vain numeroita'
-          '#size': 16
-          '#attributes':
-            class:
-              - webform--small
-        members_applicant_community_local:
-          '#type': textfield
-          '#title': 'Helsinkiläisiä yhteisöjäseniä yhteensä'
-          '#help': 'Kuinka monta j&auml;senmaksun maksanutta helsinkil&auml;ist&auml; yhteis&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;? Yhteis&ouml;j&auml;seni&auml; ovat muut kuin henkil&ouml;j&auml;senet, esimerkiksi yhdistykset, s&auml;&auml;ti&ouml;t, yritykset tai kunnat.'
-          '#maxlength': 9
-          '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
-          '#pattern': '^[0-9 ]*$'
-          '#pattern_error': 'Vain numeroita'
-          '#size': 16
-          '#attributes':
-            class:
-              - webform--small
+      '#title': Talousarvio
+      markup_01:
+        '#type': webform_markup
+        '#markup': 'Iltap&auml;iv&auml;toiminnan talousarvio sis&auml;lt&auml;&auml; tulot ja menot. Tulot eritell&auml;&auml;n haettavaan avustukseen, asiakasmaksuihin ja mahdollisiin lahjoituksiin. Menot eritell&auml;&auml;n avustuksen ja asiakasmaksujen k&auml;yt&ouml;n osalta erikseen. Mahdolliset lahjoitukset sy&ouml;tet&auml;&auml;n asiakasmaksujen menoihin.'
+    tulot_osio:
+      '#type': webform_section
+      '#title': Tulot
+      tulot:
+        '#type': grants_budget_income_static
+        '#title': Tulot
+        '#multiple': false
+        '#incomeGroup': general
+        '#plannedStateOperativeSubvention__access': false
+        '#otherCompensationFromCity__access': false
+        '#stateOperativeSubvention__access': false
+        '#plannedOtherCompensations__access': false
+        '#sponsorships__access': false
+        '#entryFees__access': false
+        '#sales__access': false
+        '#financialFundingAndInterests__access': false
+        '#compensationFromCulturalAffairs__access': false
+        '#otherCompensationType__access': false
+        '#incomeWithoutCompensations__access': false
+        '#ownFunding__access': false
+        '#plannedTotalIncome__access': false
+        '#otherCompensations__access': false
+        '#plannedTotalIncomeWithoutSubventions__access': false
+        '#plannedShareOfIncomeWithoutSubventions__access': false
+        '#shareOfIncomeWithoutSubventions__access': false
+        '#totalIncomeWithoutSubventions__access': false
+        '#totalIncome__access': false
+        '#incomeGroupName__access': false
+    muut_avustukset:
+      '#type': webform_section
+      '#title': 'Muut avustukset'
+      muut_avustukset_field:
+        '#type': grants_budget_other_income
+        '#title': 'Muut avustukset'
+        '#multiple': true
+        '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi avustus'
+        '#multiple__item_label': 'avustus'
+    menot_osio:
+      '#type': webform_section
+      '#title': Menot
+      henkilostomenot_ja_vuokrat:
+        '#type': grants_budget_cost_static
+        '#title': 'Avustuksen käyttö/Henkilöstömenot ja vuokrat eriteltyinä'
+        '#multiple': false
+        '#incomeGroup': general
+        '#description': '<p>Avustuksen käyttö/Henkilöstömenot ja vuokrat eriteltyinä</p>'
+        '#personnelSocialSecurityCosts__access': false
+        '#materials__access': false
+        '#transport__access': false
+        '#food__access': false
+        '#pr__access': false
+        '#insurance__access': false
+        '#snacks__access': false
+        '#cleaning__access': false
+        '#premisesService__access': false
+        '#travel__access': false
+        '#heating__access': false
+        '#servicesTotal__access': false
+        '#water__access': false
+        '#electricity__access': false
+        '#suppliesTotal__access': false
+        '#admin__access': false
+        '#accounting__access': false
+        '#health__access': false
+        '#otherCostsTotal__access': false
+        '#services__access': false
+        '#supplies__access': false
+        '#useOfCustomerFeesTotal__access': false
+        '#netCosts__access': false
+        '#performerFees__access': false
+        '#otherFees__access': false
+        '#generalCosts__access': false
+        '#permits__access': false
+        '#setsAndCostumes__access': false
+        '#security__access': false
+        '#costsWithoutDeferredItems__access': false
+        '#generalCostsTotal__access': false
+        '#showCosts__access': false
+        '#travelCosts__access': false
+        '#transportCosts__access': false
+        '#equipment__access': false
+        '#premises__access': false
+        '#marketing__access': false
+        '#totalCosts__access': false
+        '#allCostsTotal__access': false
+        '#plannedTotalCosts__access': false
+        '#costGroupName__access': false
+    muut_menot:
+      '#type': webform_section
+      '#title': 'Muut menot'
+      muut_menot_4:
+        '#type': grants_budget_other_cost
+        '#title': 'Muut menot'
+        '#multiple': true
+        '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
+    avustuksen_kaytto_palveluiden_ostot_eriteltyina:
+      '#type': webform_section
+      '#title': 'Avustuksen käyttö/Palveluiden ostot eriteltyinä'
+      avustuksen_kaytto_palveluiden_ostot_eriteltyina_2:
+        '#type': grants_budget_cost_static
+        '#title': 'Avustuksen käyttö/Palveluiden ostot eriteltyinä'
+        '#multiple': false
+        '#incomeGroup': general
+        '#salaries__access': false
+        '#personnelSocialSecurityCosts__access': false
+        '#rentSum__access': false
+        '#materials__access': false
+        '#transport__access': false
+        '#food__access': false
+        '#pr__access': false
+        '#insurance__access': false
+        '#travel__access': false
+        '#heating__access': false
+        '#servicesTotal__access': false
+        '#water__access': false
+        '#electricity__access': false
+        '#suppliesTotal__access': false
+        '#admin__access': false
+        '#accounting__access': false
+        '#health__access': false
+        '#otherCostsTotal__access': false
+        '#services__access': false
+        '#supplies__access': false
+        '#useOfCustomerFeesTotal__access': false
+        '#netCosts__access': false
+        '#performerFees__access': false
+        '#otherFees__access': false
+        '#personnelSideCosts__access': false
+        '#generalCosts__access': false
+        '#permits__access': false
+        '#setsAndCostumes__access': false
+        '#security__access': false
+        '#costsWithoutDeferredItems__access': false
+        '#generalCostsTotal__access': false
+        '#showCosts__access': false
+        '#transportCosts__access': false
+        '#equipment__access': false
+        '#premises__access': false
+        '#marketing__access': false
+        '#totalCosts__access': false
+        '#allCostsTotal__access': false
+        '#plannedTotalCosts__access': false
+        '#costGroupName__access': false
+    muut_palveluiden_ostot:
+      '#type': webform_section
+      '#title': 'Muut palveluiden ostot'
+      muut_palveluiden_ostot_2:
+        '#type': grants_budget_other_cost
+        '#title': 'Muut kulut'
+        '#multiple': true
+        '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi kulu'
+        '#multiple__item_label': 'kulu'
+    muut_aineet_tarvikkeet_ja_tavarat:
+      '#type': webform_section
+      '#title': 'Muut aineet, tarvikkeet ja tavarat'
+      muut_aineet_tarvikkeet_ja_tavarat_2:
+        '#type': grants_budget_cost_static
+        '#title': 'Muut aineet, tarvikkeet ja tavarat'
+        '#multiple': false
+        '#incomeGroup': general
+        '#salaries__access': false
+        '#personnelSocialSecurityCosts__access': false
+        '#rentSum__access': false
+        '#materials__access': false
+        '#transport__access': false
+        '#food__access': false
+        '#pr__access': false
+        '#insurance__access': false
+        '#cleaning__access': false
+        '#premisesService__access': false
+        '#travel__access': false
+        '#servicesTotal__access': false
+        '#suppliesTotal__access': false
+        '#admin__access': false
+        '#accounting__access': false
+        '#health__access': false
+        '#otherCostsTotal__access': false
+        '#services__access': false
+        '#useOfCustomerFeesTotal__access': false
+        '#netCosts__access': false
+        '#performerFees__access': false
+        '#otherFees__access': false
+        '#personnelSideCosts__access': false
+        '#generalCosts__access': false
+        '#permits__access': false
+        '#setsAndCostumes__access': false
+        '#security__access': false
+        '#costsWithoutDeferredItems__access': false
+        '#generalCostsTotal__access': false
+        '#showCosts__access': false
+        '#travelCosts__access': false
+        '#transportCosts__access': false
+        '#equipment__access': false
+        '#premises__access': false
+        '#marketing__access': false
+        '#totalCosts__access': false
+        '#allCostsTotal__access': false
+        '#plannedTotalCosts__access': false
+        '#costGroupName__access': false
+    muut_aineet_tarvikkeet_ja_tavarat_muut:
+      '#type': webform_section
+      '#title': 'Muut aineet, tarvikkeet ja tavarat'
+      muut_menot_tarvikkeet:
+        '#type': grants_budget_other_cost
+        '#title': 'Muut menot'
+        '#multiple': true
+        '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
+    avustuksen_kaytto_muut_kulut_eriteltyina:
+      '#type': webform_section
+      '#title': 'Avustuksen käyttö/Muut kulut eriteltyinä'
+      avustuksen_kaytto_muut_kulut_eriteltyina_2:
+        '#type': grants_budget_cost_static
+        '#title': 'Avustuksen käyttö/Muut kulut eriteltyinä'
+        '#multiple': false
+        '#incomeGroup': general
+        '#salaries__access': false
+        '#personnelSocialSecurityCosts__access': false
+        '#rentSum__access': false
+        '#materials__access': false
+        '#transport__access': false
+        '#food__access': false
+        '#pr__access': false
+        '#insurance__access': false
+        '#snacks__access': false
+        '#cleaning__access': false
+        '#premisesService__access': false
+        '#travel__access': false
+        '#heating__access': false
+        '#servicesTotal__access': false
+        '#water__access': false
+        '#electricity__access': false
+        '#suppliesTotal__access': false
+        '#otherCostsTotal__access': false
+        '#services__access': false
+        '#supplies__access': false
+        '#useOfCustomerFeesTotal__access': false
+        '#netCosts__access': false
+        '#performerFees__access': false
+        '#otherFees__access': false
+        '#personnelSideCosts__access': false
+        '#generalCosts__access': false
+        '#permits__access': false
+        '#setsAndCostumes__access': false
+        '#security__access': false
+        '#costsWithoutDeferredItems__access': false
+        '#generalCostsTotal__access': false
+        '#showCosts__access': false
+        '#travelCosts__access': false
+        '#transportCosts__access': false
+        '#equipment__access': false
+        '#premises__access': false
+        '#marketing__access': false
+        '#totalCosts__access': false
+        '#allCostsTotal__access': false
+        '#plannedTotalCosts__access': false
+        '#costGroupName__access': false
+    muut_kulut:
+      '#type': webform_section
+      '#title': 'Muut kulut'
+      muut_menot_2:
+        '#type': grants_budget_other_cost
+        '#title': 'Muut menot'
+        '#multiple': true
+        '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
+    asiakasmaksutulojen_kaytto_ja_mahdolliset_lahjoitukset_:
+      '#type': webform_section
+      '#title': 'Asiakasmaksutulojen käyttö (ja mahdolliset lahjoitukset)'
+      asiakasmaksutulojen_kaytto_ja_mahdolliset_lahjoitukset_2:
+        '#type': grants_budget_cost_static
+        '#title': 'Asiakasmaksutulojen käyttö (ja mahdolliset lahjoitukset)'
+        '#multiple': false
+        '#incomeGroup': general
+        '#description': '<p>Arvio iltapäivätoiminnan asiakasmaksutulojen käytöstä (erittely käyttötarkoituksen mukaan)</p>'
+        '#personnelSocialSecurityCosts__access': false
+        '#transport__access': false
+        '#food__access': false
+        '#pr__access': false
+        '#insurance__access': false
+        '#snacks__access': false
+        '#cleaning__access': false
+        '#premisesService__access': false
+        '#travel__access': false
+        '#heating__access': false
+        '#servicesTotal__access': false
+        '#water__access': false
+        '#electricity__access': false
+        '#suppliesTotal__access': false
+        '#admin__access': false
+        '#accounting__access': false
+        '#health__access': false
+        '#otherCostsTotal__access': false
+        '#supplies__access': false
+        '#useOfCustomerFeesTotal__access': false
+        '#netCosts__access': false
+        '#performerFees__access': false
+        '#otherFees__access': false
+        '#generalCosts__access': false
+        '#permits__access': false
+        '#setsAndCostumes__access': false
+        '#security__access': false
+        '#costsWithoutDeferredItems__access': false
+        '#generalCostsTotal__access': false
+        '#showCosts__access': false
+        '#travelCosts__access': false
+        '#transportCosts__access': false
+        '#equipment__access': false
+        '#premises__access': false
+        '#marketing__access': false
+        '#totalCosts__access': false
+        '#allCostsTotal__access': false
+        '#plannedTotalCosts__access': false
+        '#costGroupName__access': false
+    muut_kulut_2:
+      '#type': webform_section
+      '#title': 'Muut kulut'
+      muut_menot_3:
+        '#type': grants_budget_other_cost
+        '#title': 'Muut menot'
+        '#multiple': true
+        '#incomeGroup': general
+        '#multiple__min_items': 1
+        '#multiple__empty_items': 0
+        '#multiple__sorting': false
+        '#multiple__add_more_input': false
+        '#multiple__add_more_button_label': 'Lisää uusi meno'
+        '#multiple__item_label': 'meno'
   lisatiedot_ja_liitteet:
     '#type': webform_wizard_page
-    '#title': '4. Lisätiedot ja liitteet'
+    '#title': '5. Lisätiedot ja liitteet'
     lisatietoja_hakemukseen_liittyen:
       '#type': webform_section
       '#title': 'Lisätietoja hakemukseen liittyen'
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen.'
+        '#counter_type': character
         '#attributes':
           class:
             - webform--large
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen.'
-        '#counter_type': character
         '#maxlength': 5000
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
@@ -570,8 +865,7 @@ elements: |-
         '#markup': |-
           <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
           </p><h4>Vaaditut liitteet</h4>
-          <p>Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilikaudelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilikautta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä vuosikokouksen pöytäkirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.
-          </p><h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
+          <p>Avustushakemuksen k&auml;sittely&auml; varten tarvitaan vahvistettuja, yhteis&ouml;n kokouksessaan hyv&auml;ksymi&auml; ja allekirjoittamia, liitteit&auml; edelliselt&auml; p&auml;&auml;ttyneelt&auml; tilikaudelta sek&auml; liitteit&auml; sille toimintavuodelle, jolle avustusta haetaan. Edellist&auml; tilikautta koskevat liitteet ovat: tilinp&auml;&auml;t&ouml;s, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sek&auml; vuosikokouksen p&ouml;yt&auml;kirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.</p><h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
           <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.
           </p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
           <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
@@ -581,8 +875,9 @@ elements: |-
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
+
           <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
       yhteison_saannot:
@@ -590,8 +885,8 @@ elements: |-
         '#title': 'Yhteisön säännöt'
         '#multiple': false
         '#filetype': '7'
-        '#help': 'Uusi hakija tai säännöt muuttuneet.'
-        '#title_display': before
+        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet'
+        '#title_display': ''
         '#description__access': false
       vahvistettu_tilinpaatos:
         '#type': grants_attachments
@@ -624,14 +919,6 @@ elements: |-
           <p>Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteis&ouml;nne tilinp&auml;&auml;t&ouml;st&auml; ja liitit sen jo lomakkeelle tilinp&auml;&auml;t&ouml;ksen kohdalla, valitse t&auml;ss&auml; kohdassa &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.</p>
         '#title_display': before
         '#description__access': false
-      vuosikokouksen_poytakirja:
-        '#type': grants_attachments
-        '#title': 'Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös'
-        '#multiple': false
-        '#filetype': '8'
-        '#help': 'Liit&auml; t&auml;h&auml;n yhteis&ouml;n kokouksen p&ouml;yt&auml;kirja, jossa edellisen p&auml;&auml;ttyneen tilikauden tilinp&auml;&auml;t&ouml;s on vahvistettu ja vastuuvapaus my&ouml;nnetty. Yhdistyksill&auml; tilinp&auml;&auml;t&ouml;s vahvistetaan aina yhdistyksen j&auml;senkokouksessa. Mik&auml;li yhteis&ouml;lt&auml; ei edellytet&auml; vuosikokousta tai muuta yhteis&ouml;n kokousta, jossa tilinp&auml;&auml;t&ouml;s tulisi vahvistaa ja vastuuvapaus my&ouml;nt&auml;&auml;, ei t&auml;t&auml; liitett&auml; tarvitse toimittaa.'
-        '#title_display': before
-        '#description__access': false
       toimintasuunnitelma:
         '#type': grants_attachments
         '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
@@ -640,24 +927,32 @@ elements: |-
         '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. '
         '#title_display': before
         '#description__access': false
+      vuokrasopimus_haettaessa_vuokra_avustusta_:
+        '#type': grants_attachments
+        '#title': 'Vuokrasopimus (haettaessa vuokra-avustusta)'
+        '#multiple': false
+        '#filetype': '10'
+        '#help': 'Liit&auml; vuokrasopimus, jos haet vuokra-avustusta'
+        '#title_display': before
+        '#description__access': false
       talousarvio:
         '#type': grants_attachments
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#multiple': false
-        '#filetype': '22'
+        '#filetype': '2'
         '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.'
         '#title_display': before
         '#description__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
-        '#maxlength': 5000
         '#counter_type': character
-        '#counter_maximum': 5000
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
+        '#maxlength': 5000
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#cols': 63
       muu_liite:
         '#type': grants_attachments
@@ -766,7 +1061,7 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: '6. Valmis'
+  wizard_confirmation_label: '7. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
@@ -779,7 +1074,7 @@ settings:
   wizard_page_type: container
   wizard_page_title_tag: h2
   preview: 2
-  preview_label: '5. Vahvista, esikatsele ja lähetä'
+  preview_label: '6. Vahvista, esikatsele ja lähetä'
   preview_title: 'Vahvista, esikatsele ja lähetä'
   preview_message: ''
   preview_attributes: {  }

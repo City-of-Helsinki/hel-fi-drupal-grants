@@ -10,7 +10,7 @@ third_party_settings:
     applicationTypeSelect: '56'
     applicationType: LIIKUNTAYLEIS
     applicationTypeID: '56'
-    applicationIndustry: KASKO
+    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
@@ -18,13 +18,15 @@ third_party_settings:
       60: '60'
       71: '71'
     applicationTargetGroup: '26'
-    applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2023-07-30T11:19:00'
+    applicationOpen: '2024-01-01T00:00:00'
+    applicationClose: '2024-12-08T23:59:59'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYears: {  }
-    applicationActingYearsNextCount: '1'
-    applicationContinuous: 0
-    disableCopying: 0
+    applicationActingYearsNextCount: '0'
+    applicationContinuous: 1
+    disableCopying: 1
+    status: released
+    parent: ''
 weight: 0
 open: null
 close: null
@@ -33,8 +35,9 @@ template: false
 archive: false
 id: liikunta_yleisavustushakemus
 title: 'Liikunta, yleisavustushakemus'
-description: LIIKUNTAYLEIS
-category: ''
+description: '<p>LIIKUNTAYLEIS</p>'
+categories:
+  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden
@@ -125,6 +128,7 @@ elements: |-
         '#size': 63
         '#autocomplete': 'off'
         '#required': true
+        '#pattern': '(?:[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
     contact_person_section:
       '#type': webform_section
       '#title': 'Hakemuksen yhteyshenkilö'
@@ -246,6 +250,9 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
+      markup_subventions:
+        '#type': webform_markup
+        '#markup': 'Tällä lomakkeella haetaan vain yhtä avustusta kerrallaan. Hakiessasi starttiavustusta, avustussumma (500€) tulee valmiina kenttään, eikä summaa voi muuttaa, koska avustussumma on kiinteä. Muissa avustuslajeissa haettava summa tulee lisätä kenttään.'
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
@@ -254,6 +261,7 @@ elements: |-
         '#title': 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksista'
         '#description': 'Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet.'
         '#help': 'Kohdeavustuksen osalta tarkemmat tiedot kysyt&auml;&auml;n Webropol-lomakkeella (pakollinen liite)'
+        '#description_display': before
         '#maxlength': 5000
         '#required': true
         '#counter_type': character
@@ -272,7 +280,7 @@ elements: |-
       additional_information:
         '#type': textarea
         '#title': Lisätiedot
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen.'
         '#counter_type': character
         '#attributes':
           class:
@@ -287,22 +295,13 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          Avustushakemuksen k&auml;sittely&auml; varten tulee toimittaa alla luetellut liitteet. Avustushakemus voidaan hyl&auml;t&auml;, jos liitteit&auml; ei ole toimitettu. Mik&auml;li joku liitteist&auml; puuttuu, kerro siit&auml; hakemuksen Lis&auml;selvitys liitteist&auml; -kohdassa.<br />
-          <br />
-          <strong>Vaaditut liitteet avustuslajeittain</strong><br />
-          <em>Kohdeavustus:</em> erillinen hakemusliite (webropol-lomake), joka l&ouml;ytyy liikunnan avustusten verkkosivuilta.<br />
-          Jos kyseess&auml; on uusi yhdistys (ensimm&auml;ist&auml; kertaa avustusta hakevat), toimitetaan erillisen hakemusliitteen lis&auml;ksi: yhdistyksen s&auml;&auml;nn&ouml;t, pankin ilmoitus tilinomistajasta tai tiliotekopio (yhdistyksell&auml; tulee olla oma suomalainen pankkitili, jolle avustus maksetaan) sek&auml; ote yhdistysrekisterist&auml;.<br />
-          Mik&auml;li hakija ei ole toimittanut Helsingin kaupungille hakuvuonna seuraavia liitteit&auml; muiden avustushakujen yhteydess&auml;, niin edell&auml; mainittujen lis&auml;ksi tulee liitt&auml;&auml; my&ouml;s: hakuvuotta koskeva toimintasuunnitelma, hakuvuotta koskeva talousarvio, tilinp&auml;&auml;t&ouml;s (viimeisin vahvistettu), j&auml;ljenn&ouml;s tilin- tai toiminnantarkastuskertomuksesta (viimeisin vahvistettu) sek&auml; toimintakertomus (viimeisin vahvistettu).<br />
-          <br />
-          <em>Starttiavustus:</em> ote yhdistysrekisterist&auml;, yhdistyksen s&auml;&auml;nn&ouml;t, talousarvio, toimintasuunnitelma sek&auml; pankin ilmoitus tilinomistajasta tai tiliotekopio (yhdistyksell&auml; tulee olla oma suomalainen pankkitili, jolle avustus maksetaan).<br />
-          <br />
-          <em>Muu:</em> mahdollisten erillishakujen pakollisista liitteist&auml; tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.<br />
-          <br />
-          Mik&auml;li haettavaan avustukseen ei tarvitse jotain liitett&auml; toimittaa, valitse t&auml;ss&auml; tapauksessa kyseisen liitteen kohdalla vaihtoehto &quot;liite toimitetaan my&ouml;hemmin&quot;.<br />
-          <br />
-          <strong>Usean liitteen toimittaminen yhten&auml; tiedostona</strong><br />
-          Voit halutessasi toimittaa useampia liitteit&auml; yhten&auml; tiedostona Tilinp&auml;&auml;t&ouml;s tai talousarvio -liitekohdassa. Merkitse t&auml;ll&ouml;in muiden liiteotsikoiden kohdalla &rdquo;Liite on toimitettu yhten&auml; tiedostona tai toisen hakemuksen yhteydess&auml;&rdquo;.<br />
-          &nbsp;
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
+          </p><h4>Vaaditut liitteet avustuslajeittain</h4>
+          <p>Kohdeavustus: erillinen hakemusliite (webropol-lomake), joka löytyy liikunnan avustusten verkkosivuilta. Jos kyseessä on uusi yhdistys (ensimmäistä kertaa avustusta hakevat), toimitetaan erillisen hakemusliitteen lisäksi: yhdistyksen säännöt, sekä ote yhdistysrekisteristä. Mikäli hakija ei ole toimittanut Helsingin kaupungille hakuvuonna seuraavia liitteitä muiden avustushakujen yhteydessä, niin edellä mainittujen lisäksi tulee liittää myös: hakuvuotta koskeva toimintasuunnitelma, hakuvuotta koskeva talousarvio, tilinpäätös (viimeisin vahvistettu), jäljennös tilin- tai toiminnantarkastuskertomuksesta (viimeisin vahvistettu) sekä toimintakertomus (viimeisin vahvistettu).</p>
+          <p>Starttiavustus: ote yhdistysrekisteristä, yhdistyksen säännöt, talousarvio ja toimintasuunnitelma.</p>
+          <p>Muu: mahdollisten erillishakujen pakollisista liitteistä tiedotetaan liikunnan avustusten verkkosivuilla tapauskohtaisesti.</p>
+          <h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
+          <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>
       notification_attachments:
         '#type': webform_markup
         '#markup': |
@@ -311,51 +310,19 @@ elements: |-
           <div class="hds-notification__label"><span>Liitteiden sisältöä ei voi tarkastella jälkikäteen</span></div>
 
           <div class="hds-notification__body"><p>Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.</p>
-          <p>Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
+          <p>Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.</p></div>
           </div>
           </div>
-        '#format': full_html
-      yhteison_saannot:
-        '#type': grants_attachments
-        '#title': 'Yhteisön säännöt'
-        '#multiple': false
-        '#filetype': '7'
-        '#help': 'Uusi hakija tai s&auml;&auml;nn&ouml;t muuttuneet.'
-        '#title_display': ''
-        '#description__access': false
-      ote_yhdistysrekisterista_uudet_seurat_:
-        '#type': grants_attachments
-        '#title': 'Ote yhdistysrekisteristä (uudet seurat)'
-        '#multiple': false
-        '#filetype': '13'
-        '#title_display': ''
-        '#description__access': false
-      toimintasuunnitelma:
-        '#type': grants_attachments
-        '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta)'
-        '#multiple': false
-        '#filetype': '1'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. </span></span></span>'
-        '#title_display': before
-        '#description__access': false
-      talousarvio:
-        '#type': grants_attachments
-        '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
-        '#multiple': false
-        '#filetype': '2'
-        '#help': '<span style="font-size:11.0pt"><span style="line-height:107%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.</span></span></span>'
-        '#title_display': before
-        '#description__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
+        '#maxlength': 5000
         '#counter_type': character
+        '#counter_maximum': 5000
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#counter_maximum_message': 'Max 5000 characters.'
         '#cols': 63
       muu_liite:
         '#type': grants_attachments
@@ -368,7 +335,7 @@ elements: |-
         '#multiple__add': false
         '#multiple__remove': false
         '#multiple__add_more_input': false
-        '#multiple__add_more_button_label': 'Lisää liite'
+        '#multiple__add_more_button_label': 'Lisää uusi liite'
         '#isDeliveredLater__access': false
         '#isIncludedInOtherFile__access': false
   actions:
@@ -379,7 +346,7 @@ elements: |-
     '#wizard_prev__label': 'Edellinen'
     '#wizard_next__label': 'Seuraava'
     '#preview_prev__label': 'Edellinen'
-    '#preview_next__label': 'Esikatseluun >'
+    '#preview_next__label': 'Esikatseluun'
     '#delete_hide': false
     '#delete__label': 'Poista keskeneräinen'
     '#delete__attributes':
@@ -464,13 +431,13 @@ settings:
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
-  wizard_confirmation_label: ''
+  wizard_confirmation_label: '5. Valmis'
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
   wizard_keyboard: true
   wizard_track: ''
-  wizard_prev_button_label: 'Edellinen'
-  wizard_next_button_label: 'Seuraava'
+  wizard_prev_button_label: Edellinen
+  wizard_next_button_label: Seuraava
   wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
