@@ -364,6 +364,7 @@ elements: |
     '#markup': '<h4>Other notable input</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': 'Is there some other form of valuable input or trade involved in carrying out the activities that is not listed in the budget?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
   toteutuneet_tulot_ja_menot:
     '#title': 'Realized incomes and expenses'
   markup_02:

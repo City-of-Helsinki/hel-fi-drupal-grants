@@ -270,6 +270,7 @@ elements: |
     '#markup': '<h4>Other notable input</h4>'
   sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
     '#title': 'Is there some other form of valuable input or trade involved in carrying out the activities that is not listed in the budget?'
+    '#counter_maximum_message': '%d/1000 characters remaining'
   lisatiedot_ja_liitteet:
     '#title': '7. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
