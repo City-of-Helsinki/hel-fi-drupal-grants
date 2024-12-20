@@ -509,3 +509,7 @@ input[type='radio'] + label.form-required::after {
     width: calc(100% - var(--spacing-2-xs));
   }
 }
+
+.grants-attachments--fields-wrapper .button--delete-attachment{
+  margin-top: var(--spacing-layout-xs);
+}

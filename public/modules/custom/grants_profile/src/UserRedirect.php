@@ -39,14 +39,14 @@ class UserRedirect implements UserRedirectInterface {
   /**
    * {@inheritdoc}
    */
-  public function setLoginRedirection(string $url, AccountInterface $account = NULL): void {
+  public function setLoginRedirection(string $url, ?AccountInterface $account = NULL): void {
     $this->prepareDestination($url);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setLogoutRedirection(string $url, AccountInterface $account = NULL) {
+  public function setLogoutRedirection(string $url, ?AccountInterface $account = NULL): void {
     $this->prepareDestination($url);
   }
 

@@ -61,7 +61,7 @@ class GrantsBudgetInfoDefinition extends MapDataDefinition {
    *
    * @return $this
    */
-  public function setPropertyDefinition($name, DataDefinitionInterface $definition = NULL) {
+  public function setPropertyDefinition($name, ?DataDefinitionInterface $definition = NULL) {
 
     $this->getPropertyDefinitions();
 

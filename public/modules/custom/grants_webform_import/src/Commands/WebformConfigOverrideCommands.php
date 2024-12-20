@@ -259,7 +259,7 @@ class WebformConfigOverrideCommands extends DrushCommands {
 
     // Get an array of all the items with a "parent".
     $itemsWithParent = array_filter($mapping, function ($item) {
-      return isset($item['parent']);
+      return isset($item['parent']) && $item['parent'] !== "";
     });
 
     // Get the parent UUIDs.
