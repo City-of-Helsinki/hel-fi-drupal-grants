@@ -6,4 +6,5 @@ name: CI
 jobs:
   tests:
     uses: city-of-helsinki/drupal-gh-actions/.github/workflows/project-tests.yml@main
-    check_config_language: false
+    with:
+      check_config_language: false
