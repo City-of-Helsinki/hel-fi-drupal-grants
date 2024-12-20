@@ -1,4 +1,4 @@
-uuid: 3840ed64-4e5e-4a8d-ab38-b3556354a7e6
+uuid: a8d4d2d7-30bf-4091-a86f-978b99358957
 langcode: fi
 status: open
 dependencies:
@@ -7,40 +7,36 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '51'
-    applicationType: KASKOYLEIS
-    applicationTypeID: '51'
-    applicationIndustry: KASKO
+    applicationTypeSelect: '72'
+    applicationType: SOTEPEYLEIS
+    applicationTypeID: '72'
+    applicationIndustry: KANSLIA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      64: '64'
-      45: '45'
-      48: '48'
-    applicationTargetGroup: '21'
-    applicationOpen: '2024-04-02T00:00:00'
-    applicationClose: '2024-10-23T16:00:00'
+      49: '49'
+    applicationTargetGroup: '30'
+    applicationOpen: '2022-10-03T11:08:26'
+    applicationClose: '2029-07-30T11:19:00'
+    applicationActingYearsType: next_x_years
+    applicationActingYears: {  }
+    applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
-    applicationActingYears:
-      2024: '2024'
-      2025: '2025'
-    applicationActingYearsType: fixed
-    applicationActingYearsNextCount: ''
-    status: released
-    parent: ''
-    avus2BreakingChange: false
+    status: development
+    parent: d8472e68-d6bd-4de2-a409-f0a177bf9e94
+    avus2BreakingChange: 0
 weight: 0
 open: null
 close: null
 uid: 1
 template: false
 archive: false
-id: kasvatus_ja_koulutus_yleisavustu
-title: 'Kasvatus ja koulutus, yleisavustushakemus'
-description: KASKOYLEIS
+id: sotepe_yleis
+title: 'Sosiaali-, terveys- ja pelastustoimen yleisavustus'
+description: '<p>SOTEPEYLEIS</p>'
 categories:
-  - Tuotannossa
+  - Kehityksessä
 elements: |-
   applicant_type:
     '#type': hidden
@@ -230,9 +226,7 @@ elements: |-
         '#title': Avustukset
         '#multiple': true
         '#subventionType':
-          1: '1'
-          5: '5'
-          36: '36'
+          6: '6'
         '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
@@ -250,16 +244,13 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      markup_01:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdell&auml; hakemuksella aina vain yht&auml; avustuslajia kerrallaan.</p>'
     kayttotarkoitus:
       '#type': webform_section
-      '#title': Käyttötarkoitus
+      '#title': 'Käyttötarkoitus'
       compensation_purpose:
         '#type': textarea
-        '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
-        '#help': 'Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet. Kerro my&ouml;s mit&auml; avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.'
+        '#title': 'Mihin avustus käytetään?'
+        '#help': 'Kuvaa tiiviisti avustuksella toteutettavaa toimintaa ja toiminnan laajuutta esimerkiksi seuraavilla tavoilla:<br>Kuinka paljon tai kuinka usein järjestätte ryhmiä, tapahtumia tai muuta toimintaa avustettavan ajanjakson aikana? Kuinka paljon kohderyhmän edustajia arvioitte tavoittavanne? Missä Helsingin alueilla toimintaa järjestetään? Minkälaista yhteistyötä teette Helsingissä muiden toimijoiden kanssa?'
         '#required': true
         '#counter_type': character
         '#maxlength': 5000
@@ -269,6 +260,69 @@ elements: |-
           class:
             - webform--large
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+      who_benefits:
+        '#type': textarea
+        '#title': 'Ketkä toiminnastanne erityisesti hyötyvät?'
+        '#help': 'Kuvaa keitä kohderyhmäänne kuuluu ja mahdollisesti myös kuinka paljon kohderyhmään kuuluvia toiminta-alueellanne on. Kohderyhmän kuvauksessa on tärkeää, että siitä käy ilmi minkälaisia ihmisiä juuri te haluatte ja osaatte kohdata, tai millaisessa tilanteessa olevat hyötyvät toiminnastanne eniten.'
+        '#counter_type': character
+        '#maxlength': 5000
+        '#counter_maximum': 5000
+        '#cols': 63
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '10000'
+          required:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '10000'
+      changes_on_success:
+        '#type': textarea
+        '#title': 'Minkälaisia muutoksia tapahtuu, jos onnistutte?'
+        '#help': 'Toiminnallanne voi olla monia tavoitteita. Kuvatkaa ja arvioikaa tässä keskeiset muutokset, joita tavoittelette esimerkiksi kohderyhmänne toimintakyvyssä, arjessa, ihmissuhteissa tai muussa hyvinvointiin ja terveyteen tai osallisuuteen liittyvässä asiassa. Mikä siis muuttuu, jos olette onnistuneet tai minkälaisia ilmiöitä toimintanne ennaltaehkäisee?'
+        '#counter_type': character
+        '#maxlength': 5000
+        '#counter_maximum': 5000
+        '#cols': 63
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '10000'
+          required:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '10000'
+      results_of_activities:
+        '#type': textarea
+        '#title': 'Minkälaisia hyötyjä avustettavan toiminnan seurauksena syntyy?'
+        '#help': 'Kuvaa lyhyesti, mitä vaikutuksia toiminnalla saadaan aikaan ja millä tavoin ne syntyvät. Voit kuvata vaikutukset niiden tapahtumisjärjestyksessä: mitä vaikutuksia syntyy ensin, ja mitä vähän pidemmän ajan kuluttua. Keskity kuitenkin toiminnan välittömiin vaikutuksiin.<br>Voit myös kertoa, mikä toiminnassanne on erityistä tai mistä (laatu)tekijöistä on erityisesti huolehdittava, että tavoiteltavia vaikutuksia saavutetaan. Voit myös kuvata, miten jokin tekemänne yhteistyö edistää vaikutusten saavuttamista.'
+        '#counter_type': character
+        '#maxlength': 5000
+        '#counter_maximum': 5000
+        '#cols': 63
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '50000'
+          required:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '50000'
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
@@ -358,40 +412,6 @@ elements: |-
                 - webform--large
             '#counter_maximum': 1000
             '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
-    kaupungilta_saadut_lainat_ja_takaukset:
-      '#type': webform_section
-      '#title': 'Kaupungilta saadut lainat ja takaukset'
-      kaupungilta_saadut_1:
-        '#type': webform_markup
-        '#markup': 'Kaupungilta saaduista lainoista on mainittava alkuperäinen lainamäärä, jäljellä oleva lainamäärä, laina-aika, korkoprosentti ja mihin tarkoitukseen laina on myönnetty. Takauksista ilmoitetaan niiden raha-arvo ja tarkoitus.'
-      benefits_loans:
-        '#type': textarea
-        '#title': 'Kuvaus lainoista ja takauksista'
-        '#maxlength': 5000
-        '#counter_type': character
-        '#counter_maximum': 5000
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
-        '#cols': 63
-    kaupungilta_saatu_tiloihin_liittyva_tuki:
-      '#type': webform_section
-      '#title': 'Kaupungilta saatu tiloihin liittyvä tuki'
-      tilate_1:
-        '#type': webform_markup
-        '#markup': 'Tilat, jotka kaupunki on antanut korvauksetta tai vuokrannut hakijan k&auml;ytt&ouml;&ouml;n (tilan nimi tai osoite, vuokran m&auml;&auml;r&auml; &euro;/kk)'
-      benefits_premises:
-        '#type': textarea
-        '#attributes':
-          class:
-            - webform--large
-        '#title': 'Kuvaus tiloihin liittyvästä tuesta'
-        '#maxlength': 5000
-        '#counter_type': character
-        '#counter_maximum': 5000
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
-        '#cols': 63
     edellisen_avustuksen_kayttoselvitys:
       '#type': webform_section
       '#title': 'Edellisen avustuksen käyttöselvitys'
@@ -418,18 +438,15 @@ elements: |-
         '#states':
           visible:
             ':input[name="compensation_boolean"]':
-              value: 'true'
+              value: '1'
         '#markup': 'Anna k&auml;ytt&ouml;selvitys Helsingin kaupungilta saadusta avustuksesta. Avustuksen k&auml;ytt&ouml;selvitys tehd&auml;&auml;n avustuksesta, joka koskee viimeisint&auml; p&auml;&auml;ttynytt&auml; tilikautta. K&auml;ytt&ouml;selvityst&auml; ei tehd&auml; k&auml;ynniss&auml; olevalta tilikaudelta. K&auml;ytt&ouml;selvityksen antaminen on seuraavan avustuksen saamisen ehtona. Mik&auml;li k&auml;ytt&ouml;selvityst&auml; ei tehd&auml;, avustusta ei my&ouml;nnet&auml; eik&auml; makseta. My&ouml;nnetty avustus voidaan peri&auml; takaisin, jos edellisen avustuksen k&auml;ytt&ouml;&auml; ei ole hyv&auml;ksytt&auml;v&auml;sti selvitetty.'
       compensation_explanation:
         '#type': textarea
         '#title': 'Selvitys avustuksen käytöstä'
-        '#help': 'K&auml;ytt&ouml;selvityksess&auml; tulee kuvata lyhyesti, miten my&ouml;nnetty avustus on k&auml;ytetty. Avustuksen saajan on j&auml;rjestett&auml;v&auml; kirjanpitonsa niin, ett&auml; avustuksen k&auml;ytt&ouml;&auml; voidaan sielt&auml; seurata. Esimerkiksi jos yhteis&ouml; on saanut vuokra-avustusta, tilinp&auml;&auml;t&ouml;ksen tuloslaskelmasta tulee k&auml;yd&auml; ilmi avustuksen toteutuminen sek&auml; tuloissa ett&auml; menoissa. Lis&auml;&auml; tietoja avustuksen k&auml;yt&ouml;st&auml; voi my&ouml;s kirjoittaa erilliseen liitteeseen, jonka voi palauttaa K&auml;ytt&ouml;selvitys-liite kohdasta.'
+        '#help': 'K&auml;ytt&ouml;selvityksess&auml; tulee kuvata lyhyesti, miten my&ouml;nnetty avustus on k&auml;ytetty. Avustuksen saajan on j&auml;rjestett&auml;v&auml; kirjanpitonsa niin, ett&auml; avustuksen k&auml;ytt&ouml;&auml; voidaan sielt&auml; seurata. Esimerkiksi jos yhteis&ouml; on saanut vuokra-avustusta, tilinp&auml;&auml;t&ouml;ksen tuloslaskelmasta tulee k&auml;yd&auml; ilmi avustuksen toteutuminen sek&auml; tuloissa ett&auml; menoissa. Lis&auml;&auml; tietoja avustuksen k&auml;yt&ouml;st&auml; voi my&ouml;s kirjoittaa erilliseen liitteeseen, jonka voi ladata ja l&auml;hett&auml;&auml; Muu-liitteen&auml;.'
         '#maxlength': 5000
         '#counter_type': character
         '#counter_maximum': 5000
-        '#attributes':
-          class:
-            - webform--large
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#states':
           visible:
@@ -438,6 +455,9 @@ elements: |-
           required:
             ':input[name="compensation_boolean"]':
               value: '1'
+        '#attributes':
+          class:
+            - webform--large
         '#cols': 63
   3_yhteison_tiedot:
     '#type': webform_wizard_page
@@ -522,13 +542,13 @@ elements: |-
               - webform--small
         members_applicant_community_global:
           '#type': textfield
-          '#title': Yhteisöjäseniä
+          '#title': 'Yhteisöjäseniä yhteensä'
           '#help': 'Kuinka monta j&auml;senmaksun maksanutta yhteis&ouml;j&auml;sent&auml; yhteis&ouml;ll&auml; on t&auml;ll&auml; hetkell&auml;? Yhteis&ouml;j&auml;seni&auml; ovat muut kuin henkil&ouml;j&auml;senet, esimerkiksi yhdistykset, s&auml;&auml;ti&ouml;t, yritykset tai kunnat.'
           '#maxlength': 9
+          '#size': 16
           '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
           '#pattern': '^[0-9 ]*$'
           '#pattern_error': 'Vain numeroita'
-          '#size': 16
           '#attributes':
             class:
               - webform--small
@@ -645,7 +665,7 @@ elements: |-
         '#title': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#multiple': false
         '#filetype': '22'
-        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n talousarvio.'
+        '#help': 'Talousarvio (sille vuodelle jolle haet avustusta)'
         '#title_display': before
         '#description__access': false
       extra_info:
@@ -828,12 +848,12 @@ settings:
 access:
   create:
     roles:
+      - anonymous
       - authenticated
     users: {  }
     permissions: {  }
   view_any:
-    roles:
-      - admin
+    roles: {  }
     users: {  }
     permissions: {  }
   update_any:
@@ -882,5 +902,5 @@ handlers:
     conditions: {  }
     weight: 0
     settings:
-      debug: true
+      debug: false
 variants: {  }
