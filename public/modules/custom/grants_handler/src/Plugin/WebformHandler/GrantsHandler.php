@@ -1577,30 +1577,6 @@ submit the application only after you have provided all the necessary informatio
   }
 
   /**
-   * Cleans up non-array values from array structure.
-   *
-   * This is due to some configuration error with messages/statuses/events
-   * that I'm not able to find.
-   *
-   * @param array|null $value
-   *   Array we need to flatten.
-   *
-   * @return array
-   *   Fixed array
-   */
-  public static function cleanUpArrayValues(mixed $value): array {
-    $retval = [];
-    if (is_array($value)) {
-      foreach ($value as $v) {
-        if (is_array($v)) {
-          $retval[] = $v;
-        }
-      }
-    }
-    return $retval;
-  }
-
-  /**
    * Parse things from form 3rd party settings to this application.
    *
    * @param \Drupal\webform\Entity\Webform $webform
