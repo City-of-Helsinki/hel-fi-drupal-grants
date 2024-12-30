@@ -6,7 +6,7 @@
  */
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
+use Drupal\grants_metadata\ConvertHelper;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
@@ -54,7 +54,7 @@ function grants_webform_summation_field_webform_submission_view_alter(
 
   foreach ($subventionsElementData as $subventionData) {
     if (isset($subventionData['amount'])) {
-      $subventionsTotalAmount += GrantsHandler::convertToFloat($subventionData['amount']);
+      $subventionsTotalAmount += ConvertHelper::convertToFloat($subventionData['amount']);
     }
   }
 
@@ -97,7 +97,7 @@ function grants_webform_summation_field_process_custom_summation_fields(
     // Find linked subvention type from subvention data.
     foreach ($subventionsElementData as $subventionData) {
       if (isset($subventionData['amount']) && $subventionData['subventionType'] == $subventionType) {
-        $elementTotal = GrantsHandler::convertToFloat($subventionData['amount']);
+        $elementTotal = ConvertHelper::convertToFloat($subventionData['amount']);
       }
     }
 

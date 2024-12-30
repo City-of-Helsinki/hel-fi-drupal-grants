@@ -31,7 +31,7 @@ class AsukasYleisToimDefinition extends ComplexDataDefinitionBase {
     $info['members_applicant_person_local'] = DataDefinition::create('integer')
       ->setSetting('defaultValue', "")
       ->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToInt',
       ])
       ->setSetting('typeOverride', [
@@ -47,7 +47,7 @@ class AsukasYleisToimDefinition extends ComplexDataDefinitionBase {
     $info['members_applicant_person_global'] = DataDefinition::create('integer')
       ->setSetting('defaultValue', "")
       ->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToInt',
       ])
       ->setSetting('jsonPath', [
@@ -59,7 +59,7 @@ class AsukasYleisToimDefinition extends ComplexDataDefinitionBase {
     $info['members_applicant_community_local'] = DataDefinition::create('integer')
       ->setSetting('defaultValue', "")
       ->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToInt',
       ])
       ->setSetting('jsonPath', [
@@ -70,7 +70,7 @@ class AsukasYleisToimDefinition extends ComplexDataDefinitionBase {
 
     $info['members_applicant_community_global'] = DataDefinition::create('integer')
       ->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToInt',
       ])
       ->setSetting('jsonPath', [
@@ -123,7 +123,7 @@ class AsukasYleisToimDefinition extends ComplexDataDefinitionBase {
         'feePerson',
       ])
       ->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToFloat',
       ])
       ->setSetting('typeOverride', [
@@ -138,7 +138,7 @@ class AsukasYleisToimDefinition extends ComplexDataDefinitionBase {
         'feeCommunity',
       ])
       ->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToFloat',
       ])
       ->setSetting('typeOverride', [

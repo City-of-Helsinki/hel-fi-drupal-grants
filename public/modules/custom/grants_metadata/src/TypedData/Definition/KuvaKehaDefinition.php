@@ -60,7 +60,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffPeopleFulltime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -75,7 +75,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffPeopleParttime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -90,7 +90,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffPeopleVoluntary',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -105,7 +105,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffManyearsFulltime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [
@@ -124,7 +124,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffManyearsParttime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [
@@ -374,7 +374,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         'generalCommunityInfoArray',
         'membersPersonGlobal',
       ])->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToInt',
       ])
       ->setSetting('typeOverride', [
@@ -389,7 +389,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         'generalCommunityInfoArray',
         'membersPersonLocal',
       ])->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToInt',
       ])
       ->setSetting('typeOverride', [
@@ -404,7 +404,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         'generalCommunityInfoArray',
         'membersCommunityGlobal',
       ])->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToInt',
       ])
       ->setSetting('typeOverride', [
@@ -419,7 +419,7 @@ class KuvaKehaDefinition extends ComplexDataDefinitionBase {
         'generalCommunityInfoArray',
         'membersCommunityLocal',
       ])->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToInt',
       ])
       ->setSetting('typeOverride', [

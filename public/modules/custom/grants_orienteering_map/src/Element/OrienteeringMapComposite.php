@@ -3,7 +3,7 @@
 namespace Drupal\grants_orienteering_map\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
+use Drupal\grants_metadata\ConvertHelper;
 use Drupal\webform\Element\WebformCompositeBase;
 
 /**
@@ -116,9 +116,9 @@ class OrienteeringMapComposite extends WebformCompositeBase {
     $otherCompensations = $elementValues['otherCompensations'] ?? 0;
 
     // Float conversion, just to be sure.
-    $voluntaryHours = GrantsHandler::convertToFloat($voluntaryHours);
-    $cost = GrantsHandler::convertToFloat($cost);
-    $otherCompensation = GrantsHandler::convertToFloat($otherCompensations);
+    $voluntaryHours = ConvertHelper::convertToFloat($voluntaryHours);
+    $cost = ConvertHelper::convertToFloat($cost);
+    $otherCompensation = ConvertHelper::convertToFloat($otherCompensations);
 
     // Hours + Cost cannot be lower than otherCompensation.
     $hoursAndCostSum = $voluntaryHours + $cost;

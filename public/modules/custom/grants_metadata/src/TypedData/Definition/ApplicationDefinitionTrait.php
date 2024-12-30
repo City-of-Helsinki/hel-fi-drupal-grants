@@ -280,7 +280,7 @@ trait ApplicationDefinitionTrait {
         'jsonType' => 'double',
       ])
       ->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToFloat',
       ])
       ->setSetting('jsonPath', [
@@ -304,7 +304,7 @@ trait ApplicationDefinitionTrait {
         'otherAppliedCompensationsTotal',
       ])
       ->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToFloat',
       ])
       ->addConstraint('NotBlank');
@@ -406,7 +406,7 @@ trait ApplicationDefinitionTrait {
 
     $info['status_updates'] = MapDataDefinition::create()
       ->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'cleanUpArrayValues',
       ])
       ->setPropertyDefinition(
@@ -450,7 +450,7 @@ trait ApplicationDefinitionTrait {
 
     $info['events'] = MapDataDefinition::create()
       ->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'cleanUpArrayValues',
       ])
       ->setPropertyDefinition(
@@ -488,7 +488,7 @@ trait ApplicationDefinitionTrait {
 
     $info['messages'] = MapDataDefinition::create()
       ->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'cleanUpArrayValues',
       ])
       ->setPropertyDefinition(

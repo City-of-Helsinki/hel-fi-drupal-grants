@@ -42,7 +42,7 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
           'participantsArray',
           'adultsMale',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -56,7 +56,7 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
           'participantsArray',
           'adultsFemale',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -70,7 +70,7 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
           'participantsArray',
           'adultsOther',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -84,7 +84,7 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
           'participantsArray',
           'juniorsMale',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -98,7 +98,7 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
           'participantsArray',
           'juniorsFemale',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -112,7 +112,7 @@ class LiikuntaTapahtumaDefinition extends ComplexDataDefinitionBase {
           'participantsArray',
           'juniorsOther',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [

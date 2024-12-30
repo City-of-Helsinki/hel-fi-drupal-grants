@@ -4,7 +4,6 @@ namespace Drupal\grants_metadata;
 
 use Drupal\Core\TypedData\ListDataDefinition;
 use Drupal\Core\TypedData\ListInterface;
-use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
 
 /**
  * Service for getting & setting data values from & to JSON structure.
@@ -75,7 +74,7 @@ class CompensationService {
           'ID' => 'amount',
           'label' => 'Euroa',
           'valueType' => 'double',
-          'value' => (string) GrantsHandler::convertToFloat($toimintaAvustus),
+          'value' => (string) ConvertHelper::convertToFloat($toimintaAvustus),
         ];
 
         $this->processFieldMeta($elementArray, $elements['yhdistyksen_kuluvan_vuoden_toiminta_avustus'], $page, $section);
@@ -86,7 +85,7 @@ class CompensationService {
           'ID' => 'usedAmount',
           'label' => 'Euroa',
           'valueType' => 'double',
-          'value' => (string) GrantsHandler::convertToFloat($usedToimintaAvustus),
+          'value' => (string) ConvertHelper::convertToFloat($usedToimintaAvustus),
         ];
 
         $this->processFieldMeta($elementArray, $elements['yhdistyksen_kuluvan_vuoden_toiminta_avustus'], $page, $section);
@@ -132,7 +131,7 @@ class CompensationService {
           'ID' => 'amount',
           'label' => 'Euroa',
           'valueType' => 'double',
-          'value' => (string) GrantsHandler::convertToFloat($palkkausAvustus),
+          'value' => (string) ConvertHelper::convertToFloat($palkkausAvustus),
         ];
 
         $this->processFieldMeta($elementArray, $elements['yhdistyksen_kuluvan_vuoden_palkkausavustus_'], $page, $section);
@@ -143,7 +142,7 @@ class CompensationService {
           'ID' => 'usedAmount',
           'label' => 'Euroa',
           'valueType' => 'double',
-          'value' => (string) GrantsHandler::convertToFloat($usedPalkkausAvustus),
+          'value' => (string) ConvertHelper::convertToFloat($usedPalkkausAvustus),
         ];
 
         $this->processFieldMeta($elementArray, $elements['selvitys_kuluvan_vuoden_palkkausavustuksen_kaytosta'], $page, $section);

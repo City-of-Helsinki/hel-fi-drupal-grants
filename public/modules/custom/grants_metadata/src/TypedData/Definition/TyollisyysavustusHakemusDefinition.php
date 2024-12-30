@@ -109,7 +109,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
           'feePerson',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('typeOverride', [
@@ -124,7 +124,7 @@ class TyollisyysavustusHakemusDefinition extends ComplexDataDefinitionBase {
           'feeCommunity',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('typeOverride', [

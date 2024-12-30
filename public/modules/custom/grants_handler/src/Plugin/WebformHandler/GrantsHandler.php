@@ -30,6 +30,7 @@ use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\WebformSubmissionNotesHelper;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\ApplicationDataService;
+use Drupal\grants_metadata\ConvertHelper;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -298,7 +299,7 @@ final class GrantsHandler extends WebformHandlerBase {
       is_array($this->submittedFormData['myonnetty_avustus'])) {
       $tempTotal = 0;
       foreach ($this->submittedFormData['myonnetty_avustus'] as $item) {
-        $amount = self::convertToFloat($item['amount']);
+        $amount = ConvertHelper::convertToFloat($item['amount']);
         $tempTotal += $amount;
       }
       $this->submittedFormData['myonnetty_avustus_total'] = $tempTotal;
@@ -308,7 +309,7 @@ final class GrantsHandler extends WebformHandlerBase {
       is_array($this->submittedFormData['haettu_avustus_tieto'])) {
       $tempTotal = 0;
       foreach ($this->submittedFormData['haettu_avustus_tieto'] as $item) {
-        $amount = self::convertToFloat($item['amount']);
+        $amount = ConvertHelper::convertToFloat($item['amount']);
         $tempTotal += $amount;
       }
       $this->submittedFormData['haettu_avustus_tieto_total'] = $tempTotal;
@@ -634,7 +635,7 @@ final class GrantsHandler extends WebformHandlerBase {
       $subventionsTotalAmount = 0;
       if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
         foreach ($submissionData["subventions"] as $sub) {
-          $subventionsTotalAmount += self::convertToFloat($sub['amount']);
+          $subventionsTotalAmount += ConvertHelper::convertToFloat($sub['amount']);
         }
       }
 
@@ -666,7 +667,7 @@ final class GrantsHandler extends WebformHandlerBase {
       if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
         foreach ($submissionData["subventions"] as $sub) {
           if ($sub['subventionType'] == $subventionType) {
-            $elementTotal = self::convertToFloat($sub['amount']);
+            $elementTotal = ConvertHelper::convertToFloat($sub['amount']);
             break;
           }
         }

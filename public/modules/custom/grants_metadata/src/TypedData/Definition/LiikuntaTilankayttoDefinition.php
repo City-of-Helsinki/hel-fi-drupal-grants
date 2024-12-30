@@ -78,7 +78,7 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('jsonPath', [
@@ -95,7 +95,7 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'double',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [
@@ -184,7 +184,7 @@ class LiikuntaTilankayttoDefinition extends ComplexDataDefinitionBase {
         'membersInfoArray',
         $jsonPath,
       ])->setSetting('valueCallback', [
-        '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+        '\Drupal\grants_metadata\ConvertHelper',
         'convertToInt',
       ])
       ->setSetting('typeOverride', [
