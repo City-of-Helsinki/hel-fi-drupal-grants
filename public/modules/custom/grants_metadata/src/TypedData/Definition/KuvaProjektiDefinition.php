@@ -7,6 +7,7 @@ use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\ListDataDefinition;
 use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition;
+use Drupal\grants_metadata\ConvertHelper;
 
 /**
  * Define Yleisavustushakemus data.
