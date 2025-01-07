@@ -1165,9 +1165,13 @@ elements: |-
       sisaltyyko_toiminnan_toteuttamiseen_jotain_muuta_rahanarvoista_p:
         '#type': textarea
         '#title': 'Sisältyykö toiminnan toteuttamiseen jotain muuta rahanarvoista panosta tai vaihtokauppaa, joka ei käy ilmi budjetista?'
+        '#maxlength': 1000
         '#attributes':
           class:
             - webform--large
+        '#counter_type': character
+        '#counter_maximum': 1000
+        '#counter_maximum_message': '%d/1000 merkkiä jäljellä'
     toteutuneet_tulot_ja_menot:
       '#type': webform_section
       '#title': 'Toteutuneet tulot ja menot'
