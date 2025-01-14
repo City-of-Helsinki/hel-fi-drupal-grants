@@ -24,7 +24,7 @@ third_party_settings:
     applicationContinuous: 0
     disableCopying: 0
     status: released
-    parent: ""
+    parent: ''
     avus2BreakingChange: 0
 weight: 0
 open: null
