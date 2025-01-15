@@ -207,6 +207,9 @@ class GrantsAttachments extends WebformCompositeBase {
                 ],
                 'wrapper' => $element["#webform_id"],
               ],
+              '#attributes' => [
+                'class' => ['button--delete-attachment'],
+              ],
             ];
           }
         }

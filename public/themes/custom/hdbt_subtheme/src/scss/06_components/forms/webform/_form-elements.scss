@@ -50,6 +50,10 @@
     width: 100%;
     will-change: transform,box-shadow;
   }
+
+  .description {
+    color: $color-black-60;
+  }
 }
 
 .webform-section {
@@ -504,4 +508,8 @@ input[type='radio'] + label.form-required::after {
   input[readonly] {
     width: calc(100% - var(--spacing-2-xs));
   }
+}
+
+.grants-attachments--fields-wrapper .button--delete-attachment{
+  margin-top: var(--spacing-layout-xs);
 }

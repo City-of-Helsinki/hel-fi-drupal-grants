@@ -70,7 +70,7 @@ The file should be located in the `/e2e` directory.
 Example `.env` file:
 ```
 # =======================
-# ENVIRONEMNT VARIABLES
+# ENVIRONMENT VARIABLES
 #
 # Copy this file to create a .env file and make necessary changes.
 # NOTE! Copy the relevant values from local.settings.php to these environment variables.

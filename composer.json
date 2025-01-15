@@ -76,16 +76,11 @@
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+        "dg/bypass-finals": "^1.5",
         "donatj/mock-webserver": "^2.4",
-        "drupal/coder": "^8.3",
-        "drupal/core-dev": "^10.2.4",
+        "drupal/core-dev": "^10",
         "jangregor/phpstan-prophecy": "^1.0",
-        "mglaman/phpstan-drupal": "^1.2",
-        "phpspec/prophecy-phpunit": "^2",
-        "phpstan/extension-installer": "^1.3",
-        "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-deprecation-rules": "^1.1",
-        "phpunit/phpunit": "^9.5",
         "weitzman/drupal-test-traits": "^2.0"
     },
     "conflict": {
@@ -95,13 +90,14 @@
         "optimize-autoloader": true,
         "sort-packages": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
             "composer/installers": true,
             "cweagans/composer-patches": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/core-composer-scaffold": true,
-            "phpstan/extension-installer": true,
             "oomphinc/composer-installers-extender": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "phpstan/extension-installer": true,
+            "tbachert/spi": false
         },
         "audit": {
             "abandoned": "report",
@@ -121,9 +117,6 @@
             },
             "drupal/autologout": {
                 "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch"
-            },
-            "drupal/search_api": {
-                "Primary key fix": "patches/search_api_primary_key.patch"
             },
             "drupal/crop": {
                 "Fix encoded paths for files": "patches/AU-2225-fix-encoded-paths.patch"

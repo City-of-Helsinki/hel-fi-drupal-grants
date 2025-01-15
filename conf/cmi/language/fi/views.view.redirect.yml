@@ -54,8 +54,15 @@ display:
                 title: '305 Käytä proxyä'
               7:
                 title: '307 Tilapäinen uudelleenohjaus'
-      title: Redirect
+            label: Tilakoodi
+          expose:
+            label: Tilakoodi
+      title: Uudelleenohjaukset
+      empty:
+        area_text_custom:
+          content: 'Ei ole vielä uudelleenohjaksia.'
     display_title: Oletus
   page_1:
     display_title: Sivu
-label: Redirect
+label: Uudelleenohjaukset
+description: Uudelleenohjaukset

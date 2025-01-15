@@ -251,6 +251,16 @@ third_party_options:
         fi: 'KuvaErillis FI'
         en: 'KuvaErillis EN'
         sv: 'KuvaErillis SV'
+    71:
+      id: HYTEEDYLEIS
+      code: HYTEEDYLEIS
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\HyteedyleisDefinition
+        definitionId: grants_metadata_hyteedyleis
+      labels:
+        fi: 'Hyvinvoinnin ja terveyden edistämisen yleisavustus'
+        en: 'General grants for welfare and health promotion'
+        sv: 'Allmänt understöd inom främjandet av välfärd och hälsa'
     72:
       id: SOTEPEYLEIS
       code: SOTEPEYLEIS
@@ -472,6 +482,24 @@ overridden_configuration:
     67:
       grants_metadata:
         applicationOpen: '2024-01-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  -
+    68:
+      grants_metadata:
+        applicationOpen: '2024-01-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  -
+    70:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  -
+    71:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
         disableCopying: 0
   -

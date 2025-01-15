@@ -157,6 +157,22 @@ const waitForTextWithInterval = async (
 }
 
 /**
+ * The getFulfilledResponse function.
+ *
+ * Wait for a fulfilled response from a request.
+ *
+ * @param page
+ *  Playwright page object
+ */
+async function getFulfilledResponse(page: Page) {
+  const response = await page.waitForResponse(async (response) => {
+    return response.ok();
+  });
+
+  return response.json();
+}
+
+/**
  * The logCurrentUrl function.
  *
  * This functions logs the current URL of the page.
@@ -169,11 +185,12 @@ const logCurrentUrl = async (page: Page) => {
 }
 
 export {
-  slowLocator,
   extractPath,
-  hideSlidePopup,
   getApplicationNumberFromBreadCrumb,
-  waitForTextWithInterval,
+  getFulfilledResponse,
+  hideSlidePopup,
   logCurrentUrl,
+  slowLocator,
+  waitForTextWithInterval,
 };
 

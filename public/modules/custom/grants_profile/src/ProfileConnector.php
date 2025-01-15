@@ -61,7 +61,7 @@ class ProfileConnector {
    *
    * @throws \Drupal\grants_profile\GrantsProfileException
    */
-  public function initGrantsProfile(string $profileType, array $companyData = NULL): array {
+  public function initGrantsProfile(string $profileType, ?array $companyData = NULL): array {
     // Try to load Helsinki profile data.
     try {
       $profileData = $this->helsinkiProfiili->getUserProfileData();
