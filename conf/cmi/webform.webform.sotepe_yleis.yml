@@ -17,14 +17,14 @@ third_party_settings:
       49: '49'
     applicationTargetGroup: '30'
     applicationOpen: '2022-10-03T11:08:26'
-    applicationClose: '2024-07-30T11:19:00'
+    applicationClose: '2029-07-30T11:19:00'
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
-    status: released
-    parent: ''
+    status: development
+    parent: d8472e68-d6bd-4de2-a409-f0a177bf9e94
     avus2BreakingChange: 0
 weight: 0
 open: null
