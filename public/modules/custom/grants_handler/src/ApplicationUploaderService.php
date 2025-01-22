@@ -152,6 +152,7 @@ final class ApplicationUploaderService {
 
     // Make sure the form submission won't override ATV-messages or events.
     if ($preventOverride) {
+      // @phpstan-ignore-next-line
       $atvDocument->mergeWebformContent($appDocumentContent);
     }
     else {
