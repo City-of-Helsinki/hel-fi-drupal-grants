@@ -22,11 +22,13 @@ third_party_settings:
     disableCopying: 1
     applicationTypeSelect: '48'
     applicationIndustry: KUVA
-    applicationActingYears: {  }
-    applicationActingYearsType: current_and_next_x_years
+    applicationActingYears:
+      2025: '2025'
+    applicationActingYearsType: fixed
     applicationActingYearsNextCount: '1'
     status: released
     parent: ''
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null
