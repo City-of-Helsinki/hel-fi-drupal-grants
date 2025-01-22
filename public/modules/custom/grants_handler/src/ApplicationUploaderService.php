@@ -148,6 +148,7 @@ final class ApplicationUploaderService {
     catch (\Exception $e) {
     }
 
+    // Make sure the form submission won't override ATV-messages or events.
     if ($preventOverride) {
       $atvDocument->mergeWebformContent($appDocumentContent);
     }
