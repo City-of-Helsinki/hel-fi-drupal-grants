@@ -136,7 +136,9 @@ final class ApplicationUploaderService {
     );
 
     // Make sure we have most recent version of the document.
+    /** @var \Drupal\helfi_atv\AtvDocument $atvDocument */
     $atvDocument = $this->applicationGetterService->getAtvDocument($applicationNumber, TRUE);
+
     // Set language for the application.
     $language = $this->languageManager->getCurrentLanguage()->getId();
     $atvDocument->addMetadata('language', $language);
