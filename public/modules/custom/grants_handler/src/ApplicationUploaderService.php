@@ -106,6 +106,8 @@ final class ApplicationUploaderService {
    *   Application number.
    * @param array $submittedFormData
    *   Actual form data from submission.
+   * @param bool $preventOverride
+   *   Prevent overriding certain data while editing received document.
    *
    * @return \Drupal\helfi_atv\AtvDocument|bool|null
    *   Result of the upload.
@@ -123,13 +125,15 @@ final class ApplicationUploaderService {
     TypedDataInterface $applicationData,
     string $applicationNumber,
     array $submittedFormData,
+    bool $preventOverride = FALSE,
   ): AtvDocument|bool|null {
     $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
-    $appDocumentContent =
-      $this->helfiAtvAtvSchema->typedDataToDocumentContent(
+
+    $appDocumentContent = $this->helfiAtvAtvSchema->typedDataToDocumentContent(
         $applicationData,
         $webform_submission,
-        $submittedFormData);
+        $submittedFormData
+    );
 
     // Make sure we have most recent version of the document.
     $atvDocument = $this->applicationGetterService->getAtvDocument($applicationNumber, TRUE);
@@ -144,7 +148,12 @@ final class ApplicationUploaderService {
     catch (\Exception $e) {
     }
 
-    $atvDocument->setContent($appDocumentContent);
+    if ($preventOverride) {
+      $atvDocument->mergeWebformContent($appDocumentContent);
+    }
+    else {
+      $atvDocument->setContent($appDocumentContent);
+    }
 
     // Try to fix all possibly missing items in attachments.
     $atvDocument = $this->attachmentFixerService->fixAttachmentsOnApplication($atvDocument);
@@ -194,14 +203,17 @@ final class ApplicationUploaderService {
     string $applicationNumber,
     array $submittedFormData,
   ): bool {
-    $tOpts = ['context' => 'grants_handler'];
-
     /*
      * Save application data once more to ATV to make sure we have
      * the most recent version available even if integration fails
      * for some reason.
      */
-    $updatedDocumentFromAtv = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+    $updatedDocumentFromAtv = $this->handleApplicationUploadToAtv(
+      $applicationData,
+      $applicationNumber,
+      $submittedFormData,
+      TRUE
+    );
 
     // Create new saveid before sending data to integration,
     // so we can add it to event data.
@@ -286,6 +298,7 @@ final class ApplicationUploaderService {
       }
     }
     catch (\Exception $e) {
+      $tOpts = ['context' => 'grants_handler'];
       $this->messenger->addError($this->t('Application saving failed, error has been logged.', [], $tOpts));
       $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
 
