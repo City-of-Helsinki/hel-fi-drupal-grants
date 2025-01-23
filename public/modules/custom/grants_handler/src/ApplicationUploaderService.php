@@ -310,9 +310,7 @@ final class ApplicationUploaderService {
         [],
         ['context' => 'grants_handler']),
       );
-      
       $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
-
       \Sentry\captureException($e);
 
       return FALSE;
