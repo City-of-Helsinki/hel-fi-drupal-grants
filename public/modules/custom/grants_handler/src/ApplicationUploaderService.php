@@ -130,9 +130,9 @@ final class ApplicationUploaderService {
     $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
 
     $appDocumentContent = $this->helfiAtvAtvSchema->typedDataToDocumentContent(
-        $applicationData,
-        $webform_submission,
-        $submittedFormData
+      $applicationData,
+      $webform_submission,
+      $submittedFormData,
     );
 
     // Make sure we have most recent version of the document.
@@ -151,13 +151,16 @@ final class ApplicationUploaderService {
     }
 
     // Make sure the form submission won't override ATV-messages or events.
-    if ($preventOverride) {
-      // @phpstan-ignore-next-line
-      $atvDocument->mergeWebformContent($appDocumentContent);
+    if (
+      $preventOverride &&
+      isset($appDocumentContent['messages']) &&
+      isset($appDocumentContent['events'])
+    ) {
+      $appDocumentContent['messages'] = $atvDocument->getContent()['messages'];
+      $appDocumentContent['events'] = $atvDocument->getContent()['events'];
     }
-    else {
-      $atvDocument->setContent($appDocumentContent);
-    }
+
+    $atvDocument->setContent($appDocumentContent);
 
     // Try to fix all possibly missing items in attachments.
     $atvDocument = $this->attachmentFixerService->fixAttachmentsOnApplication($atvDocument);
