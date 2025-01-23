@@ -1515,7 +1515,8 @@ submit the application only after you have provided all the necessary informatio
 
       // Build application data for sending to Avus2.
       $applicationData = $this->applicationDataService->webformToTypedData(
-        $this->submittedFormData);
+        $this->submittedFormData
+      );
 
       // Upload application via integration.
       $applicationUploadStatus = $this->applicationUploaderService->handleApplicationUploadViaIntegration(
