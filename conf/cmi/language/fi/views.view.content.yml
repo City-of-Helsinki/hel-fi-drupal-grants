@@ -21,8 +21,6 @@ display:
           label: Päivitetty
         operations:
           label: Toimenpiteet
-        revision_uid:
-          label: 'Viimeisin muokkaaja'
       title: Sisältö
       pager:
         options:
@@ -61,9 +59,6 @@ display:
         langcode:
           expose:
             label: Kieli
-        revision_uid:
-          expose:
-            label: 'Viimeisin muokkaaja'
     display_title: Oletus
   page_1:
     display_title: Sivu
