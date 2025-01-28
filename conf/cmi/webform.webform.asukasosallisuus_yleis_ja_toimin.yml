@@ -194,24 +194,30 @@ elements: |-
             - subventions
     kayttotarkoitus:
       '#type': webform_section
-      '#title': Käyttötarkoitus
+      '#title': 'Mihin avustus käytetään?'
       purpose_intro_text:
         '#type': webform_markup
         '#markup': |-
+          <p>Kuvaa tiiviisti avustuksella toteutettavaa toimintaa ja toiminnan laajuutta esimerkiksi seuraavilla tavoilla:</p>
+
+          <ul>
+            <li>Kuinka paljon tai kuinka usein järjestätte ryhmiä, tapahtumia tai muuta toimintaa avustettavan ajanjakson aikana?</li>
+            <li>Kuinka paljon kohderyhmän edustajia arvioitte tavoittavanne?</li>
+            <li>Missä Helsingin alueilla toimintaa järjestetään?</li>
+            <li>Minkälaista yhteistyötä teette Helsingissä muiden toimijoiden kanssa?</li>
+          </ul>
+
           <p>Asukasosallisuuden yleisavustus:</p>
-
-          <p>Kuvaa haetun avustuksen kaikille aivoimen ja maksuttoman toiminnan k&auml;ytt&ouml;tarkoitus ja erittele tarvittaessa haettava yleisavustus kululajeittain.</p>
-
+          <p>Kuvaa haetun avustuksen kaikille aivoimen ja maksuttoman toiminnan käyttötarkoitus ja erittele tarvittaessa haettava yleisavustus kululajeittain.</p>
           <ol>
           	<li>Haettava avustus asukastilan koordinoinnin palkkakustannuksiin</li>
           	<li>Haettava avustus asukastilan vuokraan</li>
-          	<li>Haettava avustus asukastilan yll&auml;pitokustannuksiin eriteltyn&auml; (esim. s&auml;hk&ouml;, vesi, verkkoyhteydet, vakuutus, siivous)</li>
-          	<li>Haettava avustus asukastilan yll&auml;pidosta ja koordinoinnista aiheutuviin muihin kustannuksiin</li>
+          	<li>Haettava avustus asukastilan ylläpitokustannuksiin eriteltynä (esim. sähkö, vesi, verkkoyhteydet, vakuutus, siivous)</li>
+          	<li>Haettava avustus asukastilan ylläpidosta ja koordinoinnista aiheutuviin muihin kustannuksiin</li>
           </ol>
 
           <p>Asukasosallisuuden toiminta-avustus:</p>
-
-          <p>Kuvaus kaikille avoimesta maksuttomasta toiminnasta, johon avusta haetaan sek&auml; talousarvio kustannusten kohdentumisesta.</p>
+          <p>Kuvaus kaikille avoimesta maksuttomasta toiminnasta, johon avusta haetaan sekä talousarvio kustannusten kohdentumisesta.</p>
       purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
