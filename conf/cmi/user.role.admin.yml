@@ -33,7 +33,6 @@ dependencies:
     - content_translation
     - easy_breadcrumb
     - entity_usage
-    - eu_cookie_compliance
     - field_ui
     - file
     - filter
@@ -106,8 +105,6 @@ permissions:
   - 'administer content types'
   - 'administer display modes'
   - 'administer easy breadcrumb'
-  - 'administer eu cookie compliance categories'
-  - 'administer eu cookie compliance popup'
   - 'administer grants_attachments configuration'
   - 'administer grants_industries configuration'
   - 'administer grants_oma_asiointi configuration'

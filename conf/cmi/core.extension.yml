@@ -85,7 +85,6 @@ module:
   helfi_base_content: 0
   helfi_ckeditor: 0
   helfi_etusivu_entities: 0
-  helfi_eu_cookie_compliance: 0
   helfi_gdpr_api: 0
   helfi_helsinki_profiili: 0
   helfi_helsinki_profiili_audit_logging: 0
@@ -226,7 +225,6 @@ module:
   content_translation: 10
   externalauth: 10
   views: 10
-  eu_cookie_compliance: 11
   grants_user_fields: 11
   grants_webform_print: 11
   grants_webform_summation_field: 11
