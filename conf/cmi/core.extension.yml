@@ -76,6 +76,7 @@ module:
   grants_webform_multiple: 0
   hal: 0
   hdbt_admin_tools: 0
+  hdbt_cookie_banner: 0
   health_check: 0
   helfi_api_base: 0
   helfi_atv: 0

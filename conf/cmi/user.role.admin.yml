@@ -40,6 +40,7 @@ dependencies:
     - grants_industries
     - grants_oma_asiointi
     - grants_profile
+    - hdbt_cookie_banner
     - helfi_api_base
     - helfi_tpr
     - language
@@ -109,6 +110,7 @@ permissions:
   - 'administer grants_industries configuration'
   - 'administer grants_oma_asiointi configuration'
   - 'administer grants_profile configuration'
+  - 'administer hdbt_cookie_banner'
   - 'administer languages'
   - 'administer linkit profiles'
   - 'administer media'
