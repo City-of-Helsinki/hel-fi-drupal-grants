@@ -667,3 +667,6 @@ msgstr "Du måste besöka alla sidor i formuläret innan du kan skicka in ansök
 msgctxt "grants_handler"
 msgid "Application to copy"
 msgstr "Ansökan om att kopiera"
+
+msgid "The application is being processed. The application cannot be edited or submitted."
+msgstr "Ansökan är under behandling. Ansökan kan inte redigeras eller skickas."

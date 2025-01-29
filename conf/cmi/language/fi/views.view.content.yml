@@ -4,6 +4,7 @@ display:
       fields:
         langcode:
           label: Kieli
+          separator: ', '
         title:
           label: Otsikko
         type:
@@ -20,8 +21,6 @@ display:
           label: Päivitetty
         operations:
           label: Toimenpiteet
-        revision_uid:
-          label: 'Viimeisin muokkaaja'
       title: Sisältö
       pager:
         options:
@@ -53,14 +52,13 @@ display:
           group_info:
             label: Julkaisutila
             group_items:
-              1:
+              -
                 title: Julkaistu
+              -
+                title: Julkaisematon
         langcode:
           expose:
             label: Kieli
-        revision_uid:
-          expose:
-            label: 'Viimeisin muokkaaja'
     display_title: Oletus
   page_1:
     display_title: Sivu

@@ -106,6 +106,8 @@ final class ApplicationUploaderService {
    *   Application number.
    * @param array $submittedFormData
    *   Actual form data from submission.
+   * @param bool $preventOverride
+   *   Prevent overriding certain data while editing received document.
    *
    * @return \Drupal\helfi_atv\AtvDocument|bool|null
    *   Result of the upload.
@@ -123,16 +125,20 @@ final class ApplicationUploaderService {
     TypedDataInterface $applicationData,
     string $applicationNumber,
     array $submittedFormData,
+    bool $preventOverride = FALSE,
   ): AtvDocument|bool|null {
     $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
-    $appDocumentContent =
-      $this->helfiAtvAtvSchema->typedDataToDocumentContent(
-        $applicationData,
-        $webform_submission,
-        $submittedFormData);
+
+    $appDocumentContent = $this->helfiAtvAtvSchema->typedDataToDocumentContent(
+      $applicationData,
+      $webform_submission,
+      $submittedFormData,
+    );
 
     // Make sure we have most recent version of the document.
+    /** @var \Drupal\helfi_atv\AtvDocument $atvDocument */
     $atvDocument = $this->applicationGetterService->getAtvDocument($applicationNumber, TRUE);
+
     // Set language for the application.
     $language = $this->languageManager->getCurrentLanguage()->getId();
     $atvDocument->addMetadata('language', $language);
@@ -142,6 +148,16 @@ final class ApplicationUploaderService {
       $atvDocument->addMetadata('saveid', $saveId);
     }
     catch (\Exception $e) {
+    }
+
+    // Make sure the form submission won't override ATV-messages or events.
+    if (
+      $preventOverride &&
+      isset($appDocumentContent['messages']) &&
+      isset($appDocumentContent['events'])
+    ) {
+      $appDocumentContent['messages'] = $atvDocument->getContent()['messages'];
+      $appDocumentContent['events'] = $atvDocument->getContent()['events'];
     }
 
     $atvDocument->setContent($appDocumentContent);
@@ -194,14 +210,17 @@ final class ApplicationUploaderService {
     string $applicationNumber,
     array $submittedFormData,
   ): bool {
-    $tOpts = ['context' => 'grants_handler'];
-
     /*
      * Save application data once more to ATV to make sure we have
      * the most recent version available even if integration fails
      * for some reason.
      */
-    $updatedDocumentFromAtv = $this->handleApplicationUploadToAtv($applicationData, $applicationNumber, $submittedFormData);
+    $updatedDocumentFromAtv = $this->handleApplicationUploadToAtv(
+      $applicationData,
+      $applicationNumber,
+      $submittedFormData,
+      TRUE
+    );
 
     // Create new saveid before sending data to integration,
     // so we can add it to event data.
@@ -286,9 +305,12 @@ final class ApplicationUploaderService {
       }
     }
     catch (\Exception $e) {
-      $this->messenger->addError($this->t('Application saving failed, error has been logged.', [], $tOpts));
+      $this->messenger->addError(
+        $this->t('Application saving failed, error has been logged.',
+        [],
+        ['context' => 'grants_handler']),
+      );
       $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
-
       \Sentry\captureException($e);
 
       return FALSE;

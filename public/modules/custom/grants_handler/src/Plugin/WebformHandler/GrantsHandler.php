@@ -793,7 +793,7 @@ moment and reload the page.',
         default:
           // We show integrity error earlier, so suppress error here.
           if ($dataIntegrityStatus == 'OK') {
-            $errorMsg = $this->t('Application period is closed. You can edit the draft, but not submit it.');
+            $errorMsg = $this->t('The application is being processed. The application cannot be edited or submitted.');
           }
 
           $form['actions']['submit']['#disabled'] = TRUE;
@@ -1515,7 +1515,8 @@ submit the application only after you have provided all the necessary informatio
 
       // Build application data for sending to Avus2.
       $applicationData = $this->applicationDataService->webformToTypedData(
-        $this->submittedFormData);
+        $this->submittedFormData
+      );
 
       // Upload application via integration.
       $applicationUploadStatus = $this->applicationUploaderService->handleApplicationUploadViaIntegration(
