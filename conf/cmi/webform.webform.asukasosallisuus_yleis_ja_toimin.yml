@@ -37,6 +37,52 @@ description: ASUKASYLEISTOIM
 categories:
   - Tuotannossa
 elements: |-
+  avustukset_summa:
+    '#type': grants_webform_summation_field
+    '#title': 'Avustukset summa'
+    '#title_display': none
+    '#description_display': invisible
+    '#collect_field':
+      subventions%%amount: subventions%%amount
+      application_number: 0
+      status: 0
+      hakijan_tiedot: 0
+      email: 0
+      contact_person: 0
+      contact_person_phone_number: 0
+      community_address: 0
+      bank_account: 0
+      community_officials: 0
+      acting_year: 0
+      subventions%%subventionTypeTitle: 0
+      subventions%%subventionType: 0
+      compensation_purpose: 0
+      olemme_saaneet_muita_avustuksia: 0
+      myonnetty_avustus: 0
+      benefits_loans: 0
+      benefits_premises: 0
+      compensation_boolean: 0
+      compensation_explanation: 0
+      business_purpose: 0
+      community_practices_business: 0
+      fee_person: 0
+      fee_community: 0
+      members_applicant_person_local: 0
+      members_applicant_person_global: 0
+      members_applicant_community_local: 0
+      members_applicant_community_global: 0
+      additional_information: 0
+      yhteison_saannot: 0
+      vahvistettu_tilinpaatos: 0
+      vahvistettu_toimintakertomus: 0
+      vahvistettu_tilin_tai_toiminnantarkastuskertomus: 0
+      vuosikokouksen_poytakirja: 0
+      toimintasuunnitelma: 0
+      talousarvio: 0
+      extra_info: 0
+      muu_liite: 0
+    '#data_type': euro
+    '#form_item': hidden
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
