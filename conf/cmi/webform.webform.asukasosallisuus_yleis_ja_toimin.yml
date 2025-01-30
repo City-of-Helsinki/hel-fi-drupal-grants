@@ -331,7 +331,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '10000'
+                greater_equal: '50000'
           required:
             ':input[name="avustukset_summa"]':
               value:
