@@ -4,12 +4,10 @@ display:
       fields:
         langcode:
           label: Kieli
-          separator: ', '
         title:
           label: Otsikko
         type:
           label: Sisältötyyppi
-          separator: ', '
         name:
           label: Kirjoittaja
         status:
@@ -25,10 +23,10 @@ display:
       pager:
         options:
           tags:
-            next: 'Seuraava ›'
-            previous: '‹ Edellinen'
-            first: '« Ensimmäinen'
-            last: 'Viimeinen »'
+            next: Seuraava
+            previous: Edellinen
+            first: Ensimmäinen
+            last: Viimeinen
       exposed_form:
         options:
           submit_button: Suodata
@@ -52,9 +50,9 @@ display:
           group_info:
             label: Julkaisutila
             group_items:
-              -
+              1:
                 title: Julkaistu
-              -
+              2:
                 title: Julkaisematon
         langcode:
           expose:
