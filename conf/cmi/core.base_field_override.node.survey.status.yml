@@ -10,7 +10,7 @@ id: node.survey.status
 field_name: status
 entity_type: node
 bundle: survey
-label: Published
+label: Unpublished
 description: ''
 required: false
 translatable: true

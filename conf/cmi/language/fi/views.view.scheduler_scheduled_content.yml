@@ -1,20 +1,8 @@
+label: 'Ajastettu sisältö'
+description: 'Etsi ja ylläpidä ajastettua sisältöä.'
 display:
   default:
     display_options:
-      exposed_form:
-        options:
-          submit_button: Suodata
-          reset_button_label: Palauta
-          exposed_sorts_label: Lajittele
-          sort_asc_label: Nousevasti
-          sort_desc_label: Laskevasti
-      pager:
-        options:
-          tags:
-            previous: '‹ edellinen'
-            next: 'seuraava ›'
-            first: '« ensimmäinen'
-            last: 'viimeinen »'
       fields:
         node_bulk_form:
           action_title: Toiminto
@@ -22,8 +10,8 @@ display:
           label: Otsikko
           separator: ', '
         type:
-          separator: ', '
           label: Sisältötyyppi
+          separator: ', '
         name:
           label: Kirjoittaja
           separator: ', '
@@ -34,11 +22,11 @@ display:
             format_custom_false: Julkaisematon
           separator: ', '
         publish_on:
+          label: Julkaisuaika
           separator: ', '
-          label: Julkaisupäivämäärä
         unpublish_on:
+          label: 'Ajastettu piilottaminen'
           separator: ', '
-          label: 'Julkaisun peruutuspäivämäärä'
         operations:
           label: Toimenpiteet
       filters:
@@ -61,20 +49,44 @@ display:
         langcode:
           expose:
             label: Kieli
+      pager:
+        options:
+          tags:
+            previous: Edellinen
+            next: Seuraava
+            first: Ensimmäinen
+            last: Viimeinen
+      title: 'Ajastettu sisältö'
+      empty:
+        area_text_custom:
+          content: 'Ei vielä ajastettua sisältöä.'
+      exposed_form:
+        options:
+          submit_button: Suodata
+          reset_button_label: Palauta
+          exposed_sorts_label: Lajittele
+          sort_asc_label: Nousevasti
+          sort_desc_label: Laskevasti
     display_title: Oletus
   overview:
     display_options:
-      tab_options:
-        title: Sisältö
       menu:
         title: Ajastettu
+      tab_options:
+        title: Sisältö
+      display_description: 'Yleiskatsaus koko ajoitetusta sisällöstä.'
+    display_title: Sisältö
   user_page:
     display_options:
+      menu:
+        title: Ajastettu
       tab_options:
         title: Sisältö
       arguments:
         uid:
           exception:
             title: Kaikki
-      menu:
-        title: Ajastettu
+      empty:
+        area_text_custom:
+          content: '{{ arguments.uid }} käyttäjä ei ole ajastanut sisältöä.'
+    display_title: Käyttäjäprofiili
