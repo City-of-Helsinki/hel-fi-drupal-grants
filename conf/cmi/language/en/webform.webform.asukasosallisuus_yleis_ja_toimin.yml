@@ -54,9 +54,41 @@ elements: |
   subventions:
     '#title': Grants
   kayttotarkoitus:
-    '#title': 'Purpose of use'
+    '#title': 'For what purpose will the grant be used?'
   purpose_intro_text:
-    '#markup': '<p>Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.</p>'
+    '#markup': |-
+      <p>Provide a short description of the scope and nature of the activities to be carried out with the grant e.g. as follows:</p>
+
+      <ul>
+        <li>How much or how often will you organise groups, events or other activities during the period of the grant?</li>
+        <li>How many target group representatives do you expect to reach?</li>
+        <li>In what areas of Helsinki will the activities be arranged?</li>
+        <li>What kind of cooperation do you pursue with other operators in Helsinki?</li>
+      </ul>
+
+      <p>General grant for resident participation:</p>
+      <p>Describe the intended use of the free-of-charge activities open to all for which the grant is sought and, if necessary, specify the general grant sought by type of expense.</p>
+      <ol>
+        <li>Grant sought for the salary costs of coordinating resident facilities</li>
+        <li>Grant sought for the rent of resident facilities</li>
+        <li>Grant sought for the maintenance costs of resident facilities, specified (e.g. electricity, water, network connections, insurance, cleaning)</li>
+        <li>Grant sought for other costs related to the maintenance and coordination of resident facilities</li>
+      </ol>
+
+      <p>Operating grant for resident participation:</p>
+      <p>A description of the free-of-charge activities open to all for which the grant is being sought and a budget for the allocation of costs.</p>
+  who_benefits:
+    '#title': 'Who are the main beneficiaries of your activities?'
+    '#help': 'Describe who belong to your target group and possibly also how many target group members there are in your operational area. It is important that the target group description shows what kind of people you want and can reach or what kind of people and in what situation will benefit most from your activities.'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  changes_on_success:
+    '#title': 'What kind of changes will take place if you succeed?'
+    '#help': 'Your activities may have many goals. Describe and assess the key changes you are seeking to achieve in your target group’s functioning and in their everyday life, relationships or other aspects related to well-being and health or involvement, for example. So what will change if you have succeeded or what kind of phenomena do your activities prevent?'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  results_of_activities:
+    '#title': 'What are the benefits of the activities to be supported?'
+    '#help': 'Briefly describe the effects of the activities and how they are achieved. You can describe the effects in the order in which they occur: which effects occur first and which after a little longer time. However, focus on the immediate effects of the activities.<br>You can indicate what is special about your activities or what (quality) factors need to be taken care of in order to achieve the desired effects. You can also describe how any cooperation you have pursued will contribute to achieving the effects.'
+    '#counter_maximum_message': '%d/5000 characters remaining'
   purpose:
     '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
     '#help': '<p>Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.</p>'
