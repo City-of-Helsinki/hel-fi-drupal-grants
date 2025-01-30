@@ -234,7 +234,7 @@ display:
           entity_type: redirect
           entity_field: status
           plugin_id: field
-          label: Published
+          label: Unpublished
           exclude: false
           alter:
             alter_text: false
@@ -698,7 +698,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: Published
+            label: Unpublished
             description: ''
             use_operator: false
             operator: status_op
