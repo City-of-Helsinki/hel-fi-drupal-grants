@@ -37,6 +37,52 @@ description: ASUKASYLEISTOIM
 categories:
   - Tuotannossa
 elements: |-
+  avustukset_summa:
+    '#type': grants_webform_summation_field
+    '#title': 'Avustukset summa'
+    '#title_display': none
+    '#description_display': invisible
+    '#collect_field':
+      subventions%%amount: subventions%%amount
+      application_number: 0
+      status: 0
+      hakijan_tiedot: 0
+      email: 0
+      contact_person: 0
+      contact_person_phone_number: 0
+      community_address: 0
+      bank_account: 0
+      community_officials: 0
+      acting_year: 0
+      subventions%%subventionTypeTitle: 0
+      subventions%%subventionType: 0
+      compensation_purpose: 0
+      olemme_saaneet_muita_avustuksia: 0
+      myonnetty_avustus: 0
+      benefits_loans: 0
+      benefits_premises: 0
+      compensation_boolean: 0
+      compensation_explanation: 0
+      business_purpose: 0
+      community_practices_business: 0
+      fee_person: 0
+      fee_community: 0
+      members_applicant_person_local: 0
+      members_applicant_person_global: 0
+      members_applicant_community_local: 0
+      members_applicant_community_global: 0
+      additional_information: 0
+      yhteison_saannot: 0
+      vahvistettu_tilinpaatos: 0
+      vahvistettu_toimintakertomus: 0
+      vahvistettu_tilin_tai_toiminnantarkastuskertomus: 0
+      vuosikokouksen_poytakirja: 0
+      toimintasuunnitelma: 0
+      talousarvio: 0
+      extra_info: 0
+      muu_liite: 0
+    '#data_type': euro
+    '#form_item': hidden
   1_hakijan_tiedot:
     '#type': webform_wizard_page
     '#title': '1. Hakijan tiedot'
@@ -194,24 +240,30 @@ elements: |-
             - subventions
     kayttotarkoitus:
       '#type': webform_section
-      '#title': Käyttötarkoitus
+      '#title': 'Mihin avustus käytetään?'
       purpose_intro_text:
         '#type': webform_markup
         '#markup': |-
+          <p>Kuvaa tiiviisti avustuksella toteutettavaa toimintaa ja toiminnan laajuutta esimerkiksi seuraavilla tavoilla:</p>
+
+          <ul>
+            <li>Kuinka paljon tai kuinka usein järjestätte ryhmiä, tapahtumia tai muuta toimintaa avustettavan ajanjakson aikana?</li>
+            <li>Kuinka paljon kohderyhmän edustajia arvioitte tavoittavanne?</li>
+            <li>Missä Helsingin alueilla toimintaa järjestetään?</li>
+            <li>Minkälaista yhteistyötä teette Helsingissä muiden toimijoiden kanssa?</li>
+          </ul>
+
           <p>Asukasosallisuuden yleisavustus:</p>
-
-          <p>Kuvaa haetun avustuksen kaikille aivoimen ja maksuttoman toiminnan k&auml;ytt&ouml;tarkoitus ja erittele tarvittaessa haettava yleisavustus kululajeittain.</p>
-
+          <p>Kuvaa haetun avustuksen kaikille aivoimen ja maksuttoman toiminnan käyttötarkoitus ja erittele tarvittaessa haettava yleisavustus kululajeittain.</p>
           <ol>
           	<li>Haettava avustus asukastilan koordinoinnin palkkakustannuksiin</li>
           	<li>Haettava avustus asukastilan vuokraan</li>
-          	<li>Haettava avustus asukastilan yll&auml;pitokustannuksiin eriteltyn&auml; (esim. s&auml;hk&ouml;, vesi, verkkoyhteydet, vakuutus, siivous)</li>
-          	<li>Haettava avustus asukastilan yll&auml;pidosta ja koordinoinnista aiheutuviin muihin kustannuksiin</li>
+          	<li>Haettava avustus asukastilan ylläpitokustannuksiin eriteltynä (esim. sähkö, vesi, verkkoyhteydet, vakuutus, siivous)</li>
+          	<li>Haettava avustus asukastilan ylläpidosta ja koordinoinnista aiheutuviin muihin kustannuksiin</li>
           </ol>
 
           <p>Asukasosallisuuden toiminta-avustus:</p>
-
-          <p>Kuvaus kaikille avoimesta maksuttomasta toiminnasta, johon avusta haetaan sek&auml; talousarvio kustannusten kohdentumisesta.</p>
+          <p>Kuvaus kaikille avoimesta maksuttomasta toiminnasta, johon avusta haetaan sekä talousarvio kustannusten kohdentumisesta.</p>
       purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
@@ -221,6 +273,69 @@ elements: |-
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#cols': 63
+      who_benefits:
+        '#type': textarea
+        '#title': 'Ketkä toiminnastanne erityisesti hyötyvät?'
+        '#help': 'Kuvaa keitä kohderyhmäänne kuuluu ja mahdollisesti myös kuinka paljon kohderyhmään kuuluvia toiminta-alueellanne on. Kohderyhmän kuvauksessa on tärkeää, että siitä käy ilmi minkälaisia ihmisiä juuri te haluatte ja osaatte kohdata, tai millaisessa tilanteessa olevat hyötyvät toiminnastanne eniten.'
+        '#counter_type': character
+        '#maxlength': 5000
+        '#counter_maximum': 5000
+        '#cols': 63
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '10000'
+          required:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '10000'
+      changes_on_success:
+        '#type': textarea
+        '#title': 'Minkälaisia muutoksia tapahtuu, jos onnistutte?'
+        '#help': 'Toiminnallanne voi olla monia tavoitteita. Kuvatkaa ja arvioikaa tässä keskeiset muutokset, joita tavoittelette esimerkiksi kohderyhmänne toimintakyvyssä, arjessa, ihmissuhteissa tai muussa hyvinvointiin ja terveyteen tai osallisuuteen liittyvässä asiassa. Mikä siis muuttuu, jos olette onnistuneet tai minkälaisia ilmiöitä toimintanne ennaltaehkäisee?'
+        '#counter_type': character
+        '#maxlength': 5000
+        '#counter_maximum': 5000
+        '#cols': 63
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '10000'
+          required:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '10000'
+      results_of_activities:
+        '#type': textarea
+        '#title': 'Minkälaisia hyötyjä avustettavan toiminnan seurauksena syntyy?'
+        '#help': 'Kuvaa lyhyesti, mitä vaikutuksia toiminnalla saadaan aikaan ja millä tavoin ne syntyvät. Voit kuvata vaikutukset niiden tapahtumisjärjestyksessä: mitä vaikutuksia syntyy ensin, ja mitä vähän pidemmän ajan kuluttua. Keskity kuitenkin toiminnan välittömiin vaikutuksiin.<br>Voit myös kertoa, mikä toiminnassanne on erityistä tai mistä (laatu)tekijöistä on erityisesti huolehdittava, että tavoiteltavia vaikutuksia saavutetaan. Voit myös kuvata, miten jokin tekemänne yhteistyö edistää vaikutusten saavuttamista.'
+        '#counter_type': character
+        '#maxlength': 5000
+        '#counter_maximum': 5000
+        '#cols': 63
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '50000'
+          required:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '50000'
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'

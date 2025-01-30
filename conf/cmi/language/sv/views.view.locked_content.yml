@@ -1,4 +1,3 @@
-label: 'TPR units'
 display:
   default:
     display_title: Förvald
@@ -13,45 +12,47 @@ display:
       pager:
         options:
           tags:
-            first: Första
-            last: Sista
             previous: Föregående
             next: Nästa
+            first: Första
+            last: Sista
           expose:
             items_per_page_label: 'Inlägg per sida'
             items_per_page_options_all_label: '- Alla -'
             offset_label: Kompensera
       fields:
+        node_bulk_form:
+          action_title: Åtgärd
+        title:
+          label: Titel
+          separator: ', '
+        type:
+          label: Innehållstyp
+          separator: ', '
         name:
-          label: Namn
-          separator: ', '
-        langcode:
-          label: Språk
-          separator: ', '
-        content_translation_status:
-          settings:
-            format_custom_true: Publicerad
-            format_custom_false: 'Ej publicerad'
-          label: Status
-          separator: ', '
-        content_translation_changed:
-          label: Uppdaterad
+          label: 'Lås ägare'
           separator: ', '
         operations:
           label: Funktioner
-        id:
-          label: ID
-          separator: ', '
       filters:
-        combine:
+        status:
           expose:
-            label: Sök
-        langcode:
+            label: 'Status för publicering'
+          group_info:
+            label: 'Status för publicering'
+            group_items:
+              1:
+                title: Publicerad
+        title:
           expose:
-            label: Språk
-      title: 'TPR units'
-      header:
-        result:
-          content: 'Visar @start - @end av @total'
+            label: Titel
+        type:
+          expose:
+            label: Innehållstyp
+      title: 'Låst innehåll'
   page_1:
     display_title: Sida
+    display_options:
+      menu:
+        title: 'Låst innehåll'
+label: 'Låst innehåll'
