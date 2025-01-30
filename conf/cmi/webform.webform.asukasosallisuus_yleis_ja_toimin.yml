@@ -335,7 +335,7 @@ elements: |-
           required:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '10000'
+                greater_equal: '50000'
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
