@@ -264,69 +264,6 @@ elements: |-
 
           <p>Asukasosallisuuden toiminta-avustus:</p>
           <p>Kuvaus kaikille avoimesta maksuttomasta toiminnasta, johon avusta haetaan sekä talousarvio kustannusten kohdentumisesta.</p>
-      who_benefits:
-        '#type': textarea
-        '#title': 'Ketkä toiminnastanne erityisesti hyötyvät?'
-        '#help': 'Kuvaa keitä kohderyhmäänne kuuluu ja mahdollisesti myös kuinka paljon kohderyhmään kuuluvia toiminta-alueellanne on. Kohderyhmän kuvauksessa on tärkeää, että siitä käy ilmi minkälaisia ihmisiä juuri te haluatte ja osaatte kohdata, tai millaisessa tilanteessa olevat hyötyvät toiminnastanne eniten.'
-        '#counter_type': character
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#cols': 63
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="avustukset_summa"]':
-              value:
-                greater_equal: '10000'
-          required:
-            ':input[name="avustukset_summa"]':
-              value:
-                greater_equal: '10000'
-      changes_on_success:
-        '#type': textarea
-        '#title': 'Minkälaisia muutoksia tapahtuu, jos onnistutte?'
-        '#help': 'Toiminnallanne voi olla monia tavoitteita. Kuvatkaa ja arvioikaa tässä keskeiset muutokset, joita tavoittelette esimerkiksi kohderyhmänne toimintakyvyssä, arjessa, ihmissuhteissa tai muussa hyvinvointiin ja terveyteen tai osallisuuteen liittyvässä asiassa. Mikä siis muuttuu, jos olette onnistuneet tai minkälaisia ilmiöitä toimintanne ennaltaehkäisee?'
-        '#counter_type': character
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#cols': 63
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="avustukset_summa"]':
-              value:
-                greater_equal: '10000'
-          required:
-            ':input[name="avustukset_summa"]':
-              value:
-                greater_equal: '10000'
-      results_of_activities:
-        '#type': textarea
-        '#title': 'Minkälaisia hyötyjä avustettavan toiminnan seurauksena syntyy?'
-        '#help': 'Kuvaa lyhyesti, mitä vaikutuksia toiminnalla saadaan aikaan ja millä tavoin ne syntyvät. Voit kuvata vaikutukset niiden tapahtumisjärjestyksessä: mitä vaikutuksia syntyy ensin, ja mitä vähän pidemmän ajan kuluttua. Keskity kuitenkin toiminnan välittömiin vaikutuksiin.<br>Voit myös kertoa, mikä toiminnassanne on erityistä tai mistä (laatu)tekijöistä on erityisesti huolehdittava, että tavoiteltavia vaikutuksia saavutetaan. Voit myös kuvata, miten jokin tekemänne yhteistyö edistää vaikutusten saavuttamista.'
-        '#counter_type': character
-        '#maxlength': 5000
-        '#counter_maximum': 5000
-        '#cols': 63
-        '#attributes':
-          class:
-            - webform--large
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="avustukset_summa"]':
-              value:
-                greater_equal: '10000'
-          required:
-            ':input[name="avustukset_summa"]':
-              value:
-                greater_equal: '10000'
       purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
@@ -336,6 +273,69 @@ elements: |-
         '#counter_maximum': 5000
         '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
         '#cols': 63
+      who_benefits:
+          '#type': textarea
+          '#title': 'Ketkä toiminnastanne erityisesti hyötyvät?'
+          '#help': 'Kuvaa keitä kohderyhmäänne kuuluu ja mahdollisesti myös kuinka paljon kohderyhmään kuuluvia toiminta-alueellanne on. Kohderyhmän kuvauksessa on tärkeää, että siitä käy ilmi minkälaisia ihmisiä juuri te haluatte ja osaatte kohdata, tai millaisessa tilanteessa olevat hyötyvät toiminnastanne eniten.'
+          '#counter_type': character
+          '#maxlength': 5000
+          '#counter_maximum': 5000
+          '#cols': 63
+          '#attributes':
+            class:
+              - webform--large
+          '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+          '#states':
+            visible:
+              ':input[name="avustukset_summa"]':
+                value:
+                  greater_equal: '10000'
+            required:
+              ':input[name="avustukset_summa"]':
+                value:
+                  greater_equal: '10000'
+        changes_on_success:
+          '#type': textarea
+          '#title': 'Minkälaisia muutoksia tapahtuu, jos onnistutte?'
+          '#help': 'Toiminnallanne voi olla monia tavoitteita. Kuvatkaa ja arvioikaa tässä keskeiset muutokset, joita tavoittelette esimerkiksi kohderyhmänne toimintakyvyssä, arjessa, ihmissuhteissa tai muussa hyvinvointiin ja terveyteen tai osallisuuteen liittyvässä asiassa. Mikä siis muuttuu, jos olette onnistuneet tai minkälaisia ilmiöitä toimintanne ennaltaehkäisee?'
+          '#counter_type': character
+          '#maxlength': 5000
+          '#counter_maximum': 5000
+          '#cols': 63
+          '#attributes':
+            class:
+              - webform--large
+          '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+          '#states':
+            visible:
+              ':input[name="avustukset_summa"]':
+                value:
+                  greater_equal: '10000'
+            required:
+              ':input[name="avustukset_summa"]':
+                value:
+                  greater_equal: '10000'
+        results_of_activities:
+          '#type': textarea
+          '#title': 'Minkälaisia hyötyjä avustettavan toiminnan seurauksena syntyy?'
+          '#help': 'Kuvaa lyhyesti, mitä vaikutuksia toiminnalla saadaan aikaan ja millä tavoin ne syntyvät. Voit kuvata vaikutukset niiden tapahtumisjärjestyksessä: mitä vaikutuksia syntyy ensin, ja mitä vähän pidemmän ajan kuluttua. Keskity kuitenkin toiminnan välittömiin vaikutuksiin.<br>Voit myös kertoa, mikä toiminnassanne on erityistä tai mistä (laatu)tekijöistä on erityisesti huolehdittava, että tavoiteltavia vaikutuksia saavutetaan. Voit myös kuvata, miten jokin tekemänne yhteistyö edistää vaikutusten saavuttamista.'
+          '#counter_type': character
+          '#maxlength': 5000
+          '#counter_maximum': 5000
+          '#cols': 63
+          '#attributes':
+            class:
+              - webform--large
+          '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+          '#states':
+            visible:
+              ':input[name="avustukset_summa"]':
+                value:
+                  greater_equal: '10000'
+            required:
+              ':input[name="avustukset_summa"]':
+                value:
+                  greater_equal: '10000'
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
