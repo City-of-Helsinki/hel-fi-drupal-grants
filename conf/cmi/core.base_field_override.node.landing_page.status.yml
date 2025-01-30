@@ -10,7 +10,7 @@ id: node.landing_page.status
 field_name: status
 entity_type: node
 bundle: landing_page
-label: Unpublished
+label: Published
 description: ''
 required: false
 translatable: true
