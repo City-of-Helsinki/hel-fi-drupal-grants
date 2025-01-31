@@ -60,7 +60,7 @@
 
   &--basicinfo {
     --line-height: 1.5;
-    background-color: var(--color-silver-light);
+    background-color: var(--color-black-5);
     border-bottom: 8px solid var(--color-engel-dark);
     padding-bottom: var(--spacing-2-xs);
     padding-top: var(--spacing-l);
@@ -81,7 +81,7 @@
     }
 
     fieldset.form-wrapper {
-      background-color: var(--color-silver-light);
+      background-color: var(--color-black-5);
       border: 0;
       padding: var(--spacing-l);
     }
@@ -278,7 +278,7 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
 }
 
 .grants-profile--imported-section .webform-section-flex-wrapper {
-  background-color: var(--color-silver-light);
+  background-color: var(--color-black-5);
   border-bottom: 8px solid var(--color-engel-dark);
   display: block;
   padding-bottom: var(--spacing-2-xs);
