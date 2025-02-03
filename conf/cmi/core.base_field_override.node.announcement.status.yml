@@ -10,7 +10,7 @@ id: node.announcement.status
 field_name: status
 entity_type: node
 bundle: announcement
-label: Published
+label: Unpublished
 description: ''
 required: false
 translatable: true
