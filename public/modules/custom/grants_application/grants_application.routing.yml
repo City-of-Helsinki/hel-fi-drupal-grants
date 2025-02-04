@@ -1,0 +1,33 @@
+helfi_grants.application:
+  path: '/application/{id}'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::application'
+    _title: ''
+  requirements:
+    _role: 'authenticated'
+
+helfi_grants.application_preview:
+  path: '/application/{id}/preview'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::preview'
+    _title: ''
+  requirements:
+    _access: 'TRUE'
+
+helfi_grants.submit_draft:
+  path: '/application/{id}'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::submitApplication'
+    _title: ''
+  requirements:
+    methods: 'POST'
+    _role: 'authenticated'
+
+helfi_grants.submit_application:
+  path: '/application/{id}'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::submitApplication'
+    _title: ''
+  requirements:
+    methods: 'POST'
+    _role: 'authenticated'
