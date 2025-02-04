@@ -4,6 +4,8 @@
   "application_type": "LIIKUNTASUUNNISTUS",
   "application_type_id": 58,
   "application_industry": "KUVA",
+  "application_open": "2025-01-10T00:00:00",
+  "application_close": "2025-02-15T23:59:59",
   "applicant_types": [
     "registered_community"
   ],
