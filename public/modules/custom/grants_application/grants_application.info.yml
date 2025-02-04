@@ -1,0 +1,5 @@
+name: 'Grants application'
+type: module
+description: 'Provides the improved form implementation'
+package: 'helfi'
+core_version_requirement: ^10 || ^11
