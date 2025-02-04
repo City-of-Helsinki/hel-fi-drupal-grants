@@ -17,7 +17,7 @@ helfi_grants.application_preview:
 helfi_grants.submit_draft:
   path: '/application/{id}'
   defaults:
-    _controller: '\Drupal\grants_application\Controller\ApplicationController::submitApplication'
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::submitDraftApplication'
     _title: ''
   requirements:
     methods: 'POST'

@@ -17,11 +17,11 @@ class ApplicationSettingsService {
   /**
    * Get the application settings.
    *
-   * @param int $id
+   * @param string $id
    *   The id of the application.
    *
    * @return ApplicationSettings
-   *   Contains json-schema, third party settings and translations.
+   *   Contains json-schema, third party settings and translations etc.
    */
   public function getApplicationSettings(string $id): ApplicationSettings {
     if (!isset($this->applications[$id])) {

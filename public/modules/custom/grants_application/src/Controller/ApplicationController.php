@@ -25,6 +25,7 @@ final class ApplicationController extends ControllerBase {
    * Start filling new application.
    */
   public function application(string $id): JsonResponse {
+    // @todo Uuid logic.
     $settings = $this->applicationSettingsService->getApplicationSettings($id)->toArray();
     return new JsonResponse($settings);
   }
@@ -55,6 +56,7 @@ final class ApplicationController extends ControllerBase {
    * Send the application to ATV.
    */
   public function submitDraftApplication(): void {
+    // Placeholder for saving a draft.
     // Redirect somewhere when 200 received from ATV.
   }
 
@@ -62,6 +64,7 @@ final class ApplicationController extends ControllerBase {
    * Submit application to Avus2.
    */
   public function submitApplication(): void {
+    // Placeholder for submitting the application.
     // Redirect somewhere when 200 received from integration.
   }
 

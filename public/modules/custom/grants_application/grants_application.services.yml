@@ -3,6 +3,4 @@ services:
     autowire: true
     autoconfigure: true
 
-  Drupal\grants_application\ApplicationController: ~
-
   Drupal\grants_application\ApplicationSettingsService: ~
