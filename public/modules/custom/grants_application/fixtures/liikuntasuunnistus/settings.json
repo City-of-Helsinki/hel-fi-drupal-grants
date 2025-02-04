@@ -1,0 +1,25 @@
+{
+  "title": "Liikunta, suunnistuskartta-avustushakemus" ,
+  "description": "LIIKUNTASUUNNISTUS",
+  "application_type": "LIIKUNTASUUNNISTUS",
+  "application_type_id": 58,
+  "application_industry": "KUVA",
+  "applicant_types": [
+    "registered_community"
+  ],
+  "application_type_terms": [
+    57
+  ],
+  "subvention_type": [
+    57
+  ],
+  "taa_siis_on_avustuslaji_suomeksi": [
+    57
+  ],
+  "target_group": 26,
+  "acting_years": [
+    2025
+  ],
+  "continuous": false,
+  "disable_copy": false
+}
