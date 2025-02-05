@@ -66,7 +66,7 @@ final class ApplicationController extends ControllerBase {
    */
   public function preview(string $id): JsonResponse {
     return new JsonResponse(
-      $this->formSettingsService->getApplicationSettings($id)->toArray()
+      $this->formSettingsService->getFormSettings($id)->toArray()
     );
   }
 
@@ -74,7 +74,7 @@ final class ApplicationController extends ControllerBase {
    * Edit existing draft or submitted application.
    */
   public function editApplication(string $id, string $uuid): JsonResponse {
-    $settings = $this->formSettingsService->getApplicationSettings($id);
+    $settings = $this->formSettingsService->getFormSettings($id);
 
     // Get data from ATV.
     $atv_form_data = '{"firstname": "matti"}';
