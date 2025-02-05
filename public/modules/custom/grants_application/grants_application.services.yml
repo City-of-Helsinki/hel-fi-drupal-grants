@@ -3,4 +3,12 @@ services:
     autowire: true
     autoconfigure: true
 
-  Drupal\grants_application\ApplicationSettingsService: ~
+  Drupal\grants_profile\GrantsProfileService:
+    alias: 'grants_profile.service'
+
+  Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData:
+    alias: 'helfi_helsinki_profiili.userdata'
+
+  Drupal\grants_application\FormSettingsService: ~
+
+  Drupal\grants_application\UserInformationService: ~

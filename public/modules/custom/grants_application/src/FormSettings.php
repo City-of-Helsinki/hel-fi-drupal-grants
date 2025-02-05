@@ -100,13 +100,13 @@ final class FormSettings {
    *   Application is open.
    */
   public function isApplicationOpen(): bool {
-    if (isset($this->formData['continuous']) && $this->formData['continuous']) {
+    if (isset($this->settings['continuous']) && $this->settings['continuous']) {
       return TRUE;
     }
 
     try {
-      $open = new \DateTime($this->formData['application_open']);
-      $closed = new \DateTime($this->formData['application_close']);
+      $open = new \DateTime($this->settings['application_open']);
+      $closed = new \DateTime($this->settings['application_close']);
       $now = new \DateTime();
     }
     catch (\Exception $e) {

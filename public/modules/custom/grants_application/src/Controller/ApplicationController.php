@@ -7,8 +7,6 @@ namespace Drupal\grants_application\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\grants_application\FormSettingsService;
 use Drupal\grants_application\UserInformationService;
-use Drupal\helfi_atv\AtvDocument;
-use Drupal\helfi_atv\AtvService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,7 +21,6 @@ final class ApplicationController extends ControllerBase {
   public function __construct(
     private FormSettingsService $formSettingsService,
     private UserInformationService $userInformationService,
-    private AtvService $atvService,
   ) {
   }
 
@@ -91,12 +88,12 @@ final class ApplicationController extends ControllerBase {
     $content = json_decode($request->getContent(), TRUE);
     [$form_data] = $content;
 
+    if (!$form_data) {
+      $form_data = [];
+    }
+
     try {
-      // @todo Check initApplication() to see how to create a document.
-      // Might need a rewrite or some kind of decorator.
-      /** @var \Drupal\helfi_atv\AtvDocument $document */
-      $document = AtvDocument::create($form_data);
-      $this->atvService->postDocument($document);
+      // @todo Check around initApplication how to create and send a document.
     }
     catch (\Exception $e) {
       // @todo Log and proper response

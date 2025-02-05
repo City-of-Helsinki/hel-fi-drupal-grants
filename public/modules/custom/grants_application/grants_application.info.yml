@@ -5,3 +5,5 @@ package: 'helfi'
 core_version_requirement: ^10 || ^11
 dependencies:
   - helfi_atv
+  - grants_profile
+  - helfi_helsinki_profiili
