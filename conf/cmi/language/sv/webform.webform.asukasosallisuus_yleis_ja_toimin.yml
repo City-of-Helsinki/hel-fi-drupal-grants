@@ -70,9 +70,41 @@ elements: |
     '#subventionType__title': Subventionstyp
     '#amount__title': Subventionsbelopp
   kayttotarkoitus:
-    '#title': Användningsområde
+    '#title': 'Vad kommer understödet att användas till?'
   purpose_intro_text:
-    '#markup': '<p>Ange f&ouml;r vilket &auml;ndam&aring;l underst&ouml;det ans&ouml;ks och vid behov specificera de olika &auml;ndam&aring;len. Ange ocks&aring; vad underst&ouml;det &auml;r avsett f&ouml;r och vilka m&aring;l som &auml;r relaterade till den underst&ouml;dda verksamheten.</p>'
+    '#markup': |-
+      <p>Beskriv den verksamhet som ska genomföras med hjälp av understödet och verksamhetens omfattning i korthet exempelvis på följande sätt:</p>
+
+      <ul>
+        <li>Hur mycket eller ofta ordnar ni grupper, evenemang eller annan verksamhet under den understödda perioden?</li>
+        <li>Hur många representanter för målgruppen kommer ni att nå enligt er uppskattning?</li>
+        <li>Inom vilka områden i Helsingfors kommer verksamheten att ordnas?</li>
+        <li>På vilka sätt samarbetar ni med andra aktörer i Helsingfors?</li>
+      </ul>
+
+      <p>Allmänt understöd för invånardelaktighet:</p>
+      <p>Beskriv användningsändamålet för understödet för verksamhet som är öppen för alla och kostnadsfri och specificera vid behov det allmänna understöd som ansöks per kostnadsslag.</p>
+      <ol>
+        <li>Understöd som ansöks för lönekostnaderna för samordning av invånarlokalen</li>
+        <li>Understöd som ansöks för hyran av invånarlokalen</li>
+        <li>Understöd som ansöks för underhållskostnaderna för invånarlokalen specificerat (t.ex. el, vatten, nätuppkoppling, försäkring, städning)</li>
+        <li>Understöd som ansöks för de övriga kostnader som orsakas av upprätthållandet och samordningen av invånarlokalen</li>
+      </ol>
+
+      <p>Verksamhetsunderstöd för invånardelaktighet:</p>
+      <p>Beskrivning av verksamhet som är öppen för alla och kostnadsfri och för vilket understöd ansöks samt budgeten för allokering av kostnaderna.</p>
+  who_benefits:
+    '#title': 'Vilka får särskild nytta av er verksamhet?'
+    '#help': 'Beskriv vem som hör till er målgrupp och eventuellt också hur många av dem som hör till er målgrupp det finns i ert verksamhetsområde. I beskrivningen av målgruppen är det viktigt att det framgår vilka slags människor just ni önskar och kan bemöta, eller de situationer i vilka människor får den största nyttan av er verksamhet.'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  changes_on_success:
+    '#title': 'Vilka slags förändringar sker om ni lyckas?'
+    '#help': 'Er verksamhet kan ha flera mål. Beskriv och bedöm här de centrala förändringar som ni eftersträvar exempelvis i er målgrupps funktionsförmåga, vardag, människorelationer eller andra aspekter som anknyter till välfärd och hälsa eller delaktighet. Vilka slags förändringar kommer det alltså att ske om ni lyckas eller vilka slags fenomen förebygger er verksamhet?'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  results_of_activities:
+    '#title': 'Vilken nytta uppstår till följd av den verksamhet som understöds?'
+    '#help': 'Beskriv kort vilka effekter som uppnås genom verksamheten och på vilket sätt de uppstår. Du kan beskriva effekterna i den ordning de sker: vilka effekter uppstår först och vilka efter en längre tid. Koncentrera dig dock på verksamhetens omedelbara effekter. <br> Du kan även berätta vad som är speciellt med er verksamhet eller vilka (kvalitets)faktorer som bör beaktas särskilt för att de effekter som eftersträvas ska uppnås. Du kan även beskriva hur något samarbete ni har främjar uppnåendet av effekterna.'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
     '#help': '<p>Ber&auml;tta f&ouml;r vilket syfte bidraget s&ouml;ks, vid behov, specificera de olika anv&auml;ndningsomr&aring;dena. Ber&auml;tta ocks&aring; vad assistansen &auml;r avsedd att uppn&aring; och vilka m&aring;l som &auml;r relaterade till den verksamhet som ska assisteras.</p>'
