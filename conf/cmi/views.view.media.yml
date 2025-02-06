@@ -13,7 +13,7 @@ _core:
 id: media
 label: Media
 module: views
-description: 'Etsi ja ylläpidä mediatiedostoja.'
+description: 'Find and manage media.'
 tag: ''
 base_table: media_field_data
 base_field: mid
@@ -89,7 +89,7 @@ display:
           entity_type: media
           entity_field: thumbnail
           plugin_id: field
-          label: Pienoiskuva
+          label: Thumbnail
           exclude: false
           alter:
             alter_text: false
@@ -157,7 +157,7 @@ display:
           entity_type: media
           entity_field: media
           plugin_id: field
-          label: 'Mediatiedoston nimi'
+          label: 'Media name'
           exclude: false
           alter:
             alter_text: false
@@ -380,7 +380,7 @@ display:
           settings:
             format: custom
             format_custom_false: Unpublished
-            format_custom_true: Unpublished
+            format_custom_true: Published
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -567,7 +567,7 @@ display:
           admin_label: ''
           plugin_id: text_custom
           empty: true
-          content: 'Ei mediatiedostoja saatavilla.'
+          content: 'No media available.'
           tokenize: false
       sorts:
         created:
@@ -604,7 +604,7 @@ display:
           exposed: true
           expose:
             operator_id: name_op
-            label: 'Mediatiedoston nimi'
+            label: 'Media name'
             description: ''
             use_operator: false
             operator: name_op
@@ -689,7 +689,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: Tosi
+            label: 'True'
             description: null
             use_operator: false
             operator: status_op
@@ -714,7 +714,7 @@ display:
             default_group_multiple: {  }
             group_items:
               1:
-                title: Unpublished
+                title: Published
                 operator: '='
                 value: '1'
               2:
