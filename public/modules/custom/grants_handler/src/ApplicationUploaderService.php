@@ -150,7 +150,7 @@ final class ApplicationUploaderService {
     catch (\Exception $e) {
     }
 
-    // Make sure the form submission won't override ATV-messages or events.'
+    // Make sure the form submission won't override ATV-messages or events.
     // Preventing message override here causes the events to lose
     // handle_att_ok -event which breaks everything.
     /*
