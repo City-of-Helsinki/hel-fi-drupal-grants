@@ -35,7 +35,7 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'membersApplicantPersonLocal',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ]);
 
@@ -47,7 +47,7 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'membersApplicantPersonGlobal',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ]);
 
@@ -59,7 +59,7 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'membersApplicantCommunityLocal',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ]);
 
@@ -70,7 +70,7 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'membersApplicantCommunityGlobal',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ]);
 
@@ -125,7 +125,7 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'feePerson',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('typeOverride', [
@@ -140,7 +140,7 @@ class YmparistoYleisDefinition extends ComplexDataDefinitionBase {
           'feeCommunity',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('typeOverride', [
