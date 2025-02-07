@@ -1,0 +1,35 @@
+{
+  "fi": {
+    "suunnistus.title": "Suunnistuslomake",
+    "suunnistus.description": "Tämä on suunnistuslomake",
+    "firstname": "Etunimi",
+    "firstname.description": "Annathan oikean etunimesi",
+    "firstname.default": "Jaska",
+    "lastname": "Sukunimi",
+    "age": "Ikä",
+    "bio": "Kuvaus",
+    "suunnistus.telephone": "Suunnistusavustus-puhelin"
+  },
+  "en": {
+    "suunnistus.title": "Orienteering form",
+    "suunnistus.description": "This is orienteering",
+    "firstname": "First name",
+    "firstname.description": "Your real first name if you may",
+    "firstname.default": "Chuck",
+    "lastname": "Last name",
+    "age": "Age",
+    "bio": "Description",
+    "suunnistus.telephone": "Orienteering phone number"
+  },
+  "sv": {
+    "suunnistus.title": "placeholder",
+    "suunnistus.description": "placeholder",
+    "firstname": "Svenska",
+    "firstname.description": "svennnska",
+    "firstname.default": "Sven",
+    "lastname": "Svenska",
+    "age": "Svenska",
+    "bio": "Svenska",
+    "suunnistus.telephone": "SvenskaSvenska"
+  }
+}
