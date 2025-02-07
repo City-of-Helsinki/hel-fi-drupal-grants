@@ -151,14 +151,16 @@ final class ApplicationUploaderService {
     }
 
     // Make sure the form submission won't override ATV-messages or events.
+    /*
     if (
-      $preventOverride &&
-      isset($appDocumentContent['messages']) &&
-      isset($appDocumentContent['events'])
+    $preventOverride &&
+    isset($appDocumentContent['messages']) &&
+    isset($appDocumentContent['events'])
     ) {
-      $appDocumentContent['messages'] = $atvDocument->getContent()['messages'];
-      $appDocumentContent['events'] = $atvDocument->getContent()['events'];
+    $appDocumentContent['messages'] = $atvDocument->getContent()['messages'];
+    $appDocumentContent['events'] = $atvDocument->getContent()['events'];
     }
+     */
 
     $atvDocument->setContent($appDocumentContent);
 
