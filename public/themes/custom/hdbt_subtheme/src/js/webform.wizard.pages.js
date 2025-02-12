@@ -3,8 +3,8 @@
  * JavaScript behaviors for webform wizard pages.
  */
 
-(function ($, Drupal, once) {
-  'use strict';
+(($, Drupal, once) => {
+
 
   /**
    * Link the wizard's previous pages.
@@ -15,24 +15,26 @@
    *   Links the wizard's previous pages.
    */
   Drupal.behaviors.webformWizardPagesLink = {
-    attach: function (context) {
-      $(once('webform-wizard-pages-links', '.js-webform-wizard-pages-links', context)).each(function () {
-        var $pages = $(this);
-        var $form = $pages.closest('form');
+    attach(context) {
+      $(once('webform-wizard-pages-links', '.js-webform-wizard-pages-links', context)).each(() => {
+        const $pages = $(this);
+        const $form = $pages.closest('form');
 
-        var hasProgressLink = $pages.data('wizard-progress-link');
-        var hasPreviewLink = $pages.data('wizard-preview-link');
-        var index = 0;
-        $pages.find('.js-webform-wizard-pages-link').each(function () {
-          var $button = $(this);
+        const hasProgressLink = $pages.data('wizard-progress-link');
+        const hasPreviewLink = $pages.data('wizard-preview-link');
+        let index = 0;
+        $pages.find('.js-webform-wizard-pages-link').each(() => {
+          const $button = $(this);
+          // @todo fix this to abide by linter rules if react rework gets canceled
+          // eslint-disable-next-line no-plusplus
           index++;
 
-          var page = $button.data('webform-page');
-          var title = index + '/' + ($('.js-webform-wizard-pages-links .js-webform-wizard-pages-link').length + 1 )+ ': ' + $button.attr('title');
+          const page = $button.data('webform-page');
+          const title = `${index  }/${  $('.js-webform-wizard-pages-links .js-webform-wizard-pages-link').length + 1 }: ${  $button.attr('title')}`;
 
           // Link progress marker and title.
           if (hasProgressLink) {
-            var $progress = $form.find('.webform-progress [data-webform-page="' + page + '"]');
+            const $progress = $form.find(`.webform-progress [data-webform-page="${  page  }"]`);
             $progress.find('.progress-marker, .progress-title, .webform-progress-bar__page-title')
               .attr({
                 'role': 'link',
@@ -40,10 +42,10 @@
                 'aria-label': title,
                 'tabindex': '0'
               })
-              .on('click', function () {
+              .on('click', () => {
                 $button.trigger('click');
               })
-              .on('keydown', function (event) {
+              .on('keydown', (event) => {
                 if (event.which === 13) {
                   $button.trigger('click');
                 }
@@ -56,7 +58,7 @@
           // @see \Drupal\webform\Plugin\WebformElement\WebformWizardPage::formatHtmlItem
           if (hasPreviewLink) {
             $form
-              .find('.webform-preview [data-webform-page="' + page + '"]')
+              .find(`.webform-preview [data-webform-page="${  page  }"]`)
               .append($button)
               .show();
           }
