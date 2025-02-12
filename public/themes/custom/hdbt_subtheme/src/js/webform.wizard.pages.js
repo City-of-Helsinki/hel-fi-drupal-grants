@@ -16,14 +16,14 @@
    */
   Drupal.behaviors.webformWizardPagesLink = {
     attach(context) {
-      $(once('webform-wizard-pages-links', '.js-webform-wizard-pages-links', context)).each(() => {
+      $(once('webform-wizard-pages-links', '.js-webform-wizard-pages-links', context)).each(function fn() {
         const $pages = $(this);
         const $form = $pages.closest('form');
 
         const hasProgressLink = $pages.data('wizard-progress-link');
         const hasPreviewLink = $pages.data('wizard-preview-link');
         let index = 0;
-        $pages.find('.js-webform-wizard-pages-link').each(() => {
+        $pages.find('.js-webform-wizard-pages-link').each(function modifyButtons() {
           const $button = $(this);
           // @todo fix this to abide by linter rules if react rework gets canceled
           // eslint-disable-next-line no-plusplus

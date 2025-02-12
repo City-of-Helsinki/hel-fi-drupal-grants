@@ -20,7 +20,9 @@
    */
   Drupal.behaviors.webformElementHelpIcon = {
     attach(context) {
-      if (!window.tippy) {
+      const { tippy } = window;
+
+      if (!tippy) {
         return;
       }
 
@@ -52,8 +54,7 @@
         },
       };
 
-      $(once('webform-element-help', '.js-webform-element-help', context)).each(
-        () => {
+      $(once('webform-element-help', '.js-webform-element-help', context)).each(function fn() {
           const $link = $(this);
 
           $link.on('click', (event) => {
@@ -73,7 +74,7 @@
             Drupal.webform.elementHelpIcon.options,
           );
 
-          window.tippy(this, options);
+          tippy(this, options);
         });
     },
   };

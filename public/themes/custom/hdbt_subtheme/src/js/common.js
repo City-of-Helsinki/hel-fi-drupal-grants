@@ -3,7 +3,7 @@
   Drupal.behaviors.themeCommon = {
     attach: function attach() {
       $(document).ready(() => {
-        $('input:not([type="file"]):not(.js-webform-input-mask), textarea').on('change', () => {
+        $('input:not([type="file"]):not(.js-webform-input-mask), textarea').on('change', function fn() {
           this.value = $.trim($(this).val());
         });
 
@@ -36,7 +36,7 @@
           }
         }
 
-        $('button.reset-search').on('click', () => {
+        $('button.reset-search').on('click', function fn() {
           const datafieldRaw = $(this).attr('data-field');
           const datafield = datafieldRaw.replaceAll('_', '-');
           $(`#${datafield}`).val('All');
