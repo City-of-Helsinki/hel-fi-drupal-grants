@@ -1,0 +1,33 @@
+{
+  "title": "suunnistus.title",
+  "description": "suunnistus.description",
+  "type": "object",
+  "required": [
+    "firstName",
+    "lastName"
+  ],
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "title": "firstname",
+      "default": ""
+    },
+    "lastName": {
+      "type": "string",
+      "title": "lastname"
+    },
+    "age": {
+      "type": "integer",
+      "title": "age"
+    },
+    "bio": {
+      "type": "string",
+      "title": "bio"
+    },
+    "telephone": {
+      "type": "string",
+      "title": "suunnistus.telephone",
+      "minLength": 10
+    }
+  }
+}
