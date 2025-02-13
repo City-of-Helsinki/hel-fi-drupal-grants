@@ -73,15 +73,6 @@ elements: |
     '#title': 'Vad kommer understödet att användas till?'
   purpose_intro_text:
     '#markup': |-
-      <p>Beskriv den verksamhet som ska genomföras med hjälp av understödet och verksamhetens omfattning i korthet exempelvis på följande sätt:</p>
-
-      <ul>
-        <li>Hur mycket eller ofta ordnar ni grupper, evenemang eller annan verksamhet under den understödda perioden?</li>
-        <li>Hur många representanter för målgruppen kommer ni att nå enligt er uppskattning?</li>
-        <li>Inom vilka områden i Helsingfors kommer verksamheten att ordnas?</li>
-        <li>På vilka sätt samarbetar ni med andra aktörer i Helsingfors?</li>
-      </ul>
-
       <p>Allmänt understöd för invånardelaktighet:</p>
       <p>Beskriv användningsändamålet för understödet för verksamhet som är öppen för alla och kostnadsfri och specificera vid behov det allmänna understöd som ansöks per kostnadsslag.</p>
       <ol>
@@ -93,6 +84,17 @@ elements: |
 
       <p>Verksamhetsunderstöd för invånardelaktighet:</p>
       <p>Beskrivning av verksamhet som är öppen för alla och kostnadsfri och för vilket understöd ansöks samt budgeten för allokering av kostnaderna.</p>
+  purpose:
+    '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
+    '#help': |-
+      <p>Beskriv den verksamhet som ska genomföras med hjälp av understödet och verksamhetens omfattning i korthet exempelvis på följande sätt:</p>
+      <ul>
+        <li>Hur mycket eller ofta ordnar ni grupper, evenemang eller annan verksamhet under den understödda perioden?</li>
+        <li>Hur många representanter för målgruppen kommer ni att nå enligt er uppskattning?</li>
+        <li>Inom vilka områden i Helsingfors kommer verksamheten att ordnas?</li>
+        <li>På vilka sätt samarbetar ni med andra aktörer i Helsingfors?</li>
+      </ul>
+    '#counter_maximum_message': '%d/5000 tecken kvar'
   who_benefits:
     '#title': 'Vilka får särskild nytta av er verksamhet?'
     '#help': 'Beskriv vem som hör till er målgrupp och eventuellt också hur många av dem som hör till er målgrupp det finns i ert verksamhetsområde. I beskrivningen av målgruppen är det viktigt att det framgår vilka slags människor just ni önskar och kan bemöta, eller de situationer i vilka människor får den största nyttan av er verksamhet.'
@@ -104,10 +106,6 @@ elements: |
   results_of_activities:
     '#title': 'Vilken nytta uppstår till följd av den verksamhet som understöds?'
     '#help': 'Beskriv kort vilka effekter som uppnås genom verksamheten och på vilket sätt de uppstår. Du kan beskriva effekterna i den ordning de sker: vilka effekter uppstår först och vilka efter en längre tid. Koncentrera dig dock på verksamhetens omedelbara effekter. <br> Du kan även berätta vad som är speciellt med er verksamhet eller vilka (kvalitets)faktorer som bör beaktas särskilt för att de effekter som eftersträvas ska uppnås. Du kan även beskriva hur något samarbete ni har främjar uppnåendet av effekterna.'
-    '#counter_maximum_message': '%d/5000 tecken kvar'
-  purpose:
-    '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
-    '#help': '<p>Ber&auml;tta f&ouml;r vilket syfte bidraget s&ouml;ks, vid behov, specificera de olika anv&auml;ndningsomr&aring;dena. Ber&auml;tta ocks&aring; vad assistansen &auml;r avsedd att uppn&aring; och vilka m&aring;l som &auml;r relaterade till den verksamhet som ska assisteras.</p>'
     '#counter_maximum_message': '%d/5000 tecken kvar'
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Andra bidrag som beviljas för samma ändamål'
