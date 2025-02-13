@@ -244,15 +244,6 @@ elements: |-
       purpose_intro_text:
         '#type': webform_markup
         '#markup': |-
-          <p>Kuvaa tiiviisti avustuksella toteutettavaa toimintaa ja toiminnan laajuutta esimerkiksi seuraavilla tavoilla:</p>
-
-          <ul>
-            <li>Kuinka paljon tai kuinka usein järjestätte ryhmiä, tapahtumia tai muuta toimintaa avustettavan ajanjakson aikana?</li>
-            <li>Kuinka paljon kohderyhmän edustajia arvioitte tavoittavanne?</li>
-            <li>Missä Helsingin alueilla toimintaa järjestetään?</li>
-            <li>Minkälaista yhteistyötä teette Helsingissä muiden toimijoiden kanssa?</li>
-          </ul>
-
           <p>Asukasosallisuuden yleisavustus:</p>
           <p>Kuvaa haetun avustuksen kaikille aivoimen ja maksuttoman toiminnan käyttötarkoitus ja erittele tarvittaessa haettava yleisavustus kululajeittain.</p>
           <ol>
@@ -261,13 +252,19 @@ elements: |-
           	<li>Haettava avustus asukastilan ylläpitokustannuksiin eriteltynä (esim. sähkö, vesi, verkkoyhteydet, vakuutus, siivous)</li>
           	<li>Haettava avustus asukastilan ylläpidosta ja koordinoinnista aiheutuviin muihin kustannuksiin</li>
           </ol>
-
           <p>Asukasosallisuuden toiminta-avustus:</p>
           <p>Kuvaus kaikille avoimesta maksuttomasta toiminnasta, johon avusta haetaan sekä talousarvio kustannusten kohdentumisesta.</p>
       purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
-        '#help': '<p>Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet. Kerro my&ouml;s mit&auml; avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.</p>'
+        '#help': |-
+          <p>Kuvaa tiiviisti avustuksella toteutettavaa toimintaa ja toiminnan laajuutta esimerkiksi seuraavilla tavoilla:</p>
+          <ul>
+            <li>Kuinka paljon tai kuinka usein järjestätte ryhmiä, tapahtumia tai muuta toimintaa avustettavan ajanjakson aikana?</li>
+            <li>Kuinka paljon kohderyhmän edustajia arvioitte tavoittavanne?</li>
+            <li>Missä Helsingin alueilla toimintaa järjestetään?</li>
+            <li>Minkälaista yhteistyötä teette Helsingissä muiden toimijoiden kanssa?</li>
+          </ul>
         '#required': true
         '#counter_type': character
         '#counter_maximum': 5000
