@@ -111,7 +111,7 @@
       "type": "string"
     },
     "extra_info": {
-      "title": "Lisäselvitys",
+      "title": "Lisäselvitys liitteistä",
       "type": "string"
     },
     "muu_liite": {
