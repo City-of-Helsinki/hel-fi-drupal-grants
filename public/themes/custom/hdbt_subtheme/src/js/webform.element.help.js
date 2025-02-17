@@ -3,9 +3,9 @@
  * JavaScript behaviors for element help text (tooltip).
  */
 
-(function ($, Drupal, once) {
+(($, Drupal, once) => {
 
-  'use strict';
+
 
   // @see https://atomiks.github.io/tippyjs/v5/all-props/
   // @see https://atomiks.github.io/tippyjs/v6/all-props/
@@ -20,7 +20,9 @@
    */
   Drupal.behaviors.webformElementHelpIcon = {
     attach(context) {
-      if (!window.tippy) {
+      const { tippy } = window;
+
+      if (!tippy) {
         return;
       }
 
@@ -43,20 +45,19 @@
 
           return {
             onShow: function onShow() {
-              document.addEventListener("keydown", onKeyDown);
+              document.addEventListener('keydown', onKeyDown);
             },
             onHide: function onHide() {
-              document.removeEventListener("keydown", onKeyDown);
+              document.removeEventListener('keydown', onKeyDown);
             },
           };
         },
       };
 
-      $(once('webform-element-help', '.js-webform-element-help', context)).each(
-        function () {
+      $(once('webform-element-help', '.js-webform-element-help', context)).each(function fn() {
           const $link = $(this);
 
-          $link.on('click', function (event) {
+          $link.on('click', (event) => {
             // Prevent click from toggling <label>s wrapped around help.
             event.preventDefault();
           });
