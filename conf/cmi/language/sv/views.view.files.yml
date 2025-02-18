@@ -4,7 +4,22 @@ display:
   default:
     display_title: Förvald
     display_options:
-      title: Filer
+      exposed_form:
+        options:
+          submit_button: Filtrera
+          reset_button_label: Återställ
+          exposed_sorts_label: 'Sortera efter'
+          sort_asc_label: Stigande
+          sort_desc_label: Fallande
+      pager:
+        options:
+          tags:
+            previous: Föregående
+            next: Nästa
+          expose:
+            items_per_page_label: 'Inlägg per sida'
+            items_per_page_options_all_label: '- Alla -'
+            offset_label: Kompensera
       fields:
         fid:
           label: Fid
@@ -29,25 +44,6 @@ display:
           alter:
             path: 'admin/content/files/usage/{{ fid }}'
           format_plural_string: !!binary MSBwbGFjZQNAY291bnQgcGxhY2Vz
-      pager:
-        options:
-          tags:
-            next: Nästa
-            previous: Föregående
-          expose:
-            items_per_page_label: 'Inlägg per sida'
-            items_per_page_options_all_label: '- Alla -'
-            offset_label: Kompensera
-      exposed_form:
-        options:
-          submit_button: Filtrera
-          reset_button_label: Återställ
-          exposed_sorts_label: 'Sortera efter'
-          sort_asc_label: Stigande
-          sort_desc_label: Fallande
-      empty:
-        area_text_custom:
-          content: 'Inga filer tillgängliga.'
       filters:
         filename:
           expose:
@@ -58,6 +54,10 @@ display:
         status:
           expose:
             label: Status
+      title: Filer
+      empty:
+        area_text_custom:
+          content: 'Inga filer tillgängliga.'
   page_1:
     display_title: 'Översikt av filer'
     display_options:
@@ -66,7 +66,15 @@ display:
   page_2:
     display_title: Filanvändning
     display_options:
-      title: Filanvändning
+      pager:
+        options:
+          tags:
+            previous: Föregående
+            next: Nästa
+          expose:
+            items_per_page_label: 'Inlägg per sida'
+            items_per_page_options_all_label: '- Alla -'
+            offset_label: Kompensera
       fields:
         entity_label:
           label: Objekt
@@ -77,15 +85,7 @@ display:
         count:
           label: 'Antal använd'
           format_plural_string: !!binary MQNAY291bnQ=
-      pager:
-        options:
-          tags:
-            next: Nästa
-            previous: Föregående
-          expose:
-            items_per_page_label: 'Inlägg per sida'
-            items_per_page_options_all_label: '- Alla -'
-            offset_label: Kompensera
+      title: Filanvändning
       arguments:
         fid:
           exception:

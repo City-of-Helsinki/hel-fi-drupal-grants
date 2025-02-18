@@ -248,7 +248,7 @@ display:
       path: tietoa-avustuksista/ukk
       menu:
         type: normal
-        title: 'Usein kysytyt kysymykset'
+        title: 'Frequently asked questions'
         description: ''
         weight: -48
         enabled: false

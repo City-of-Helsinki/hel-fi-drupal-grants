@@ -1,42 +1,7 @@
 display:
   default:
     display_options:
-      exposed_form:
-        options:
-          submit_button: Suodata
-          reset_button_label: Palauta
-          exposed_sorts_label: Lajittele
-          sort_asc_label: Nousevasti
-          sort_desc_label: Laskevasti
-      pager:
-        options:
-          tags:
-            previous: Edellinen
-            next: Seuraava
-            first: Ensimmäinen
-            last: Viimeinen
-          expose:
-            items_per_page_label: 'Merkintöjä sivua kohti'
-            items_per_page_options_all_label: '- Kaikki -'
-            offset_label: Offset
-      fields:
-        redirect_source__path:
-          label: Lähettäjä
-          separator: ', '
-        created:
-          label: Luotu
-        redirect_bulk_form:
-          action_title: Valinnalla
       filters:
-        redirect_source__path:
-          expose:
-            label: Lähettäjä
-        redirect_redirect__uri:
-          expose:
-            label: Osoitteeseen
-        language:
-          expose:
-            label: 'Alkuperäinen kieli'
         status_code:
           group_info:
             group_items:
@@ -57,6 +22,41 @@ display:
             label: Tilakoodi
           expose:
             label: Tilakoodi
+        redirect_source__path:
+          expose:
+            label: Lähettäjä
+        redirect_redirect__uri:
+          expose:
+            label: Osoitteeseen
+        language:
+          expose:
+            label: 'Alkuperäinen kieli'
+      exposed_form:
+        options:
+          submit_button: Suodata
+          reset_button_label: Palauta
+          exposed_sorts_label: Lajittele
+          sort_asc_label: Nousevasti
+          sort_desc_label: Laskevasti
+      pager:
+        options:
+          tags:
+            previous: Edellinen
+            next: Seuraava
+            first: Ensimmäinen
+            last: Viimeinen
+          expose:
+            items_per_page_label: 'Merkintöjä sivua kohti'
+            items_per_page_options_all_label: '- Kaikki -'
+            offset_label: Offset
+      fields:
+        redirect_bulk_form:
+          action_title: Valinnalla
+        redirect_source__path:
+          label: Lähettäjä
+          separator: ', '
+        created:
+          label: Luotu
       title: Uudelleenohjaukset
       empty:
         area_text_custom:
