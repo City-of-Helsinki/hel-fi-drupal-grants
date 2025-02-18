@@ -263,7 +263,10 @@ class AtvSchema {
 
     // Support new value callback format to use either service or class.
     if ($valueCallback) {
-      if (isset($valueCallback['service'])) {
+      if ($valueCallback instanceof \Closure) {
+        $itemValue = call_user_func($valueCallback, $itemValue);
+      }
+      else if (isset($valueCallback['service'])) {
         $fullItemValueService = \Drupal::service($valueCallback['service']);
         $funcName = $valueCallback['method'];
         $itemValue = $fullItemValueService->$funcName($itemValue, $valueCallback['arguments'] ?? []);

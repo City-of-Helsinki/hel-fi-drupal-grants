@@ -34,6 +34,22 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $customQuestions = [
+      'hankesuunnitelma_avustuksen_kesto' => [
+        // This valueCallback implemets default values.
+        //
+        // Default values don't actually do anything useful? Default values
+        // are only used when value is NULL, but NULL values are sanitized
+        // to empty string before that. Default values in Webform config do
+        // nothing, since the fields are always initialized from typed data,
+        // when the form is opened.
+        //
+        // @see \Drupal\grants_metadata\AtvSchema::getItemValue.
+        'valueCallback' => static fn (mixed $value) => match($value) {
+          "" => '1',
+          default => $value
+        },
+        'defaultValue' => '1',
+      ],
       'hankesuunnitelma_radios' => [
         'type' => 'string',
         'valueCallback' => [
