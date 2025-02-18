@@ -25,7 +25,7 @@
         }
       }
     },
-    "liite": {
+    "attachment": {
       "type": "object",
       "properties": {
         "file": {
@@ -93,7 +93,7 @@
     },
     "acting_year": {
       "title": "vuosi, jolle haet avustusta",
-      "type": "string",
+      "type": "integer",
       "enum": [
         2025
       ]
@@ -108,17 +108,19 @@
     },
     "additional_information": {
       "title": "Lisätietoa",
-      "type": "string"
+      "type": "string",
+      "maxLength": 5000
     },
     "extra_info": {
       "title": "Lisäselvitys liitteistä",
-      "type": "string"
+      "type": "string",
+      "maxLength": 5000
     },
     "muu_liite": {
       "title": "Muu liite",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/liite"
+        "$ref": "#/definitions/attachment"
       }
     }
   }

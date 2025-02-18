@@ -11,8 +11,17 @@
     "ui:widget": "textarea"
   },
   "muu_liite": {
-    "ui:options": {
-      "accept": ".pdf"
+    "items": {
+      "description": {
+        "ui:widget": "textarea"
+      }
+    }
+  },
+  "orienteering_maps": {
+    "items": {
+      "mapName": {
+        "ui:widget": "textarea"
+      }
     }
   }
 }
