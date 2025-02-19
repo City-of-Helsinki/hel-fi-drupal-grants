@@ -749,7 +749,7 @@ const baseFormRegisteredCommunity_50: FormData = {
   },
   expectedErrors: {},
   expectedDestination: '/fi/hakemus/taide_ja_kulttuuriavustukset_tai/',
-}
+};
 
 const sendApplication: FormDataWithRemoveOptionalProps = {
   title: 'Send to AVUS2',
@@ -771,10 +771,105 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
     },
   },
   expectedErrors: {},
-}
+};
+
+const missingValues: FormDataWithRemoveOptionalProps = {
+  title: 'Missing values',
+  viewPageSkipValidation: true,
+  formPages: {
+    '1_hakijan_tiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-bank-account-account-number-select',
+        'edit-email',
+        'edit-contact-person',
+        'edit-contact-person-phone-number',
+      ],
+      expectedInlineErrors: [
+        {selector: '.form-item-bank-account-account-number-select', errorMessage: 'Valitse tilinumero kenttä on pakollinen.'},
+        {selector: '.form-item-email', errorMessage: 'Hakemusta koskeva sähköposti kenttä on pakollinen.'},
+        {selector: '.form-item-contact-person', errorMessage: 'Yhteyshenkilö kenttä on pakollinen.'},
+        {selector: '.form-item-contact-person-phone-number', errorMessage: 'Puhelinnumero kenttä on pakollinen.'},
+      ],
+    },
+    '2_avustustiedot': {
+      items: {},
+      itemsToRemove: [
+        'edit-acting-year',
+        'edit-subventions-items-0-amount',
+        'edit-ensisijainen-taiteen-ala',
+        'edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti',
+      ],
+      expectedInlineErrors: [
+        {selector: '.form-item-acting-year', errorMessage: 'Vuosi, jolle haen avustusta kenttä on pakollinen.'},
+        {selector: '.form-item-subventions', errorMessage: 'Sinun on syötettävä vähintään yhdelle avustuslajille summa'},
+        {selector: '.form-item-ensisijainen-taiteen-ala', errorMessage: 'Ensisijainen taiteenala kenttä on pakollinen.'},
+        {selector: '.form-item-hankkeen-tai-toiminnan-lyhyt-esittelyteksti', errorMessage: 'Hankkeen tai toiminnan lyhyt esittelyteksti kenttä on pakollinen.'},
+      ],
+    },
+    '6_talous': {
+      items: {},
+      itemsToRemove: [
+        'edit-budget-static-income-plannedstateoperativesubvention',
+        'edit-budget-static-income-plannedothercompensations',
+        'edit-budget-static-income-sponsorships',
+        'edit-budget-static-income-entryfees',
+        'edit-budget-static-income-sales',
+        'edit-budget-static-income-financialfundingandinterests',
+        'edit-suunnitellut-menot-plannedtotalcosts',
+        'edit-toteutuneet-tulot-data-othercompensationfromcity',
+        'edit-toteutuneet-tulot-data-stateoperativesubvention',
+        'edit-toteutuneet-tulot-data-othercompensations',
+        'edit-toteutuneet-tulot-data-totalincome',
+        'edit-menot-yhteensa-totalcosts',
+      ],
+      expectedInlineErrors: [
+        {selector: '.form-item-budget-static-income-plannedstateoperativesubvention', errorMessage: 'Valtion toiminta-avustus (€) kenttä on pakollinen.'},
+        {selector: '.form-item-budget-static-income-plannedothercompensations', errorMessage: 'Muut avustukset (€) kenttä on pakollinen.'},
+        {selector: '.form-item-budget-static-income-sponsorships', errorMessage: 'Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€) kenttä on pakollinen.'},
+        {selector: '.form-item-budget-static-income-entryfees', errorMessage: 'Pääsy- ja osallistumismaksut (€) kenttä on pakollinen.'},
+        {selector: '.form-item-budget-static-income-sales', errorMessage: 'Muut oman toiminnan tulot (€) kenttä on pakollinen.'},
+        {selector: '.form-item-budget-static-income-financialfundingandinterests', errorMessage: 'Rahoitus- ja korkotulot (€) kenttä on pakollinen.'},
+        {selector: '.form-item-suunnitellut-menot-plannedtotalcosts', errorMessage: 'Menot yhteensä (€) kenttä on pakollinen.'},
+        {selector: '.form-item-toteutuneet-tulot-data-othercompensationfromcity', errorMessage: 'Helsingin kaupungin kulttuuripalveluiden toiminta-avustus (€) kenttä on pakollinen.'},
+        {selector: '.form-item-toteutuneet-tulot-data-stateoperativesubvention', errorMessage: 'Valtion toiminta-avustus (€) kenttä on pakollinen. '},
+        {selector: '.form-item-toteutuneet-tulot-data-othercompensations', errorMessage: 'Muut avustukset (€) kenttä on pakollinen. '},
+        {selector: '.form-item-toteutuneet-tulot-data-totalincome', errorMessage: 'Tulot yhteensä (€) kenttä on pakollinen. '},
+        {selector: '.form-item-menot-yhteensa-totalcosts', errorMessage: 'Menot yhteensä (€) kenttä on pakollinen. '},
+      ],
+    },
+  },
+  expectedErrors: {
+    'edit-bank-account-account-number-select': 'Virhe sivulla 1. Hakijan tiedot: Hakemusta koskeva sähköposti kenttä on pakollinen.',
+    'edit-email': 'Virhe sivulla 1. Hakijan tiedot: Hakemusta koskeva sähköposti kenttä on pakollinen.',
+    'edit-contact-person': 'Virhe sivulla 1. Hakijan tiedot: Yhteyshenkilö kenttä on pakollinen.',
+    'edit-contact-person-phone-number': 'Virhe sivulla 1. Hakijan tiedot: Puhelinnumero kenttä on pakollinen.',
+    'edit-community-address': 'Virhe sivulla 1. Hakijan tiedot: Valitse tilinumero kenttä on pakollinen.',
+    'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
+    'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
+    'edit-ensisijainen-taiteen-ala': 'Virhe sivulla 2. Avustustiedot: Ensisijainen taiteenala kenttä on pakollinen.',
+    'edit-hankkeen-tai-toiminnan-lyhyt-esittelyteksti': 'Virhe sivulla 2. Avustustiedot: Hankkeen tai toiminnan lyhyt esittelyteksti kenttä on pakollinen.',
+    'edit-budget-static-income-plannedstateoperativesubvention': 'Virhe sivulla 6. Talous: Valtion toiminta-avustus (€) kenttä on pakollinen.',
+    'edit-budget-static-income-plannedothercompensations': 'Virhe sivulla 6. Talous: Muut avustukset (€) kenttä on pakollinen.',
+    'edit-budget-static-income-sponsorships': 'Virhe sivulla 6. Talous: Yksityinen rahoitus (esim. sponsorointi, yritysyhteistyö,lahjoitukset) (€) kenttä on pakollinen.',
+    'edit-budget-static-income-entryfees': 'Virhe sivulla 6. Talous: Pääsy- ja osallistumismaksut (€) kenttä on pakollinen.',
+    'edit-budget-static-income-sales': 'Virhe sivulla 6. Talous: Muut oman toiminnan tulot (€) kenttä on pakollinen.',
+    'edit-budget-static-income-financialfundingandinterests': 'Virhe sivulla 6. Talous: Rahoitus- ja korkotulot (€) kenttä on pakollinen.',
+    'edit-suunnitellut-menot-plannedtotalcosts': 'Virhe sivulla 6. Talous: Menot yhteensä (€) kenttä on pakollinen.',
+    'edit-toteutuneet-tulot-data-othercompensationfromcity': 'Virhe sivulla 6. Talous: Helsingin kaupungin kulttuuripalveluiden toiminta-avustus (€) kenttä on pakollinen.',
+    'edit-toteutuneet-tulot-data-stateoperativesubvention': 'Virhe sivulla 6. Talous: Valtion toiminta-avustus (€) kenttä on pakollinen.',
+    'edit-toteutuneet-tulot-data-othercompensations': 'Virhe sivulla 6. Talous: Muut avustukset (€) kenttä on pakollinen.',
+    'edit-toteutuneet-tulot-data-totalincome': 'Virhe sivulla 6. Talous: Tulot yhteensä (€) kenttä on pakollinen.',
+    'edit-menot-yhteensa-totalcosts': 'Virhe sivulla 6. Talous: Menot yhteensä (€) kenttä on pakollinen.',
+  },
+};
 
 const registeredCommunityApplications_50 = {
   draft: baseFormRegisteredCommunity_50,
+  missing_values: createFormData(baseFormRegisteredCommunity_50, missingValues),
+  /**
+   * @todo enable when sending to avus2 works.
+   */
   // success: createFormData(baseFormRegisteredCommunity_50, sendApplication),
 };
 
