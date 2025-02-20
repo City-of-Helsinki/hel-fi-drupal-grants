@@ -372,9 +372,7 @@ elements: |-
         '#type': select
         '#title': 'Vuosi, jolle haen avustusta'
         '#options':
-          2024: '2024'
           2025: '2025'
-          2026: '2026'
         '#required': true
     avustuslajit:
       '#type': webform_section
@@ -669,7 +667,7 @@ elements: |-
                 value: '3'
     hankesuunnitelma_section:
       '#type': webform_section
-      '#title': 'Hankesuunnitelma ja tavoitteet'
+      '#title': 'Hankesuunnitelma ja hankkeen tavoitteet'
       hankkeen_nimi:
         '#type': textarea
         '#title': 'Hankkeen nimi'
@@ -682,10 +680,10 @@ elements: |-
         '#type': textarea
         '#title': 'Hankkeen tarkoitus ja tavoitteet'
         '#maxlength': 2500
-        '#counter_type': character
-        '#counter_maximum': 2500
-        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#required': true
+        '#counter_type': character
+        '#counter_maximum': 3000
+        '#counter_maximum_message': '%d/3000 merkkiä jäljellä'
       hankkeen_monivuotisuuden_tarve:
         '#type': textarea
         '#title': 'Perustele monivuotisuuden tarve hankkeen tavoitteiden saavuttamisen näkökulmasta.'
@@ -831,6 +829,7 @@ elements: |-
       hankkeen_kohderyhmat_hinta:
         '#type': textfield
         '#title': 'Kuinka paljon yhden harrastuskerran on suunniteltu maksavan osallistujalle (€/h)?'
+        '#help': '<p>Arvioi, kuinka paljon osallistuja maksaa yhdestä harrastuskerrasta. Anna arvio muodossa €/tunti.</p>'
         '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
         '#required': true
         '#pattern': '^[0-9 ]*$'
@@ -855,16 +854,15 @@ elements: |-
     hankkeen_menetelmat_section:
       '#type': webform_section
       '#title': 'Hankkeen menetelmät'
-      '#required': true
       hankkeen_kohderyhmat_tavoitus:
         '#type': textarea
         '#title': 'Miten kohderyhmät tavoitetaan ja tunnistetaan?'
-        '#more': '<p data-prosemirror-content-type="node" data-prosemirror-node-name="paragraph" data-prosemirror-node-block="true" data-pm-slice="1 1 [&quot;expand&quot;,{&quot;title&quot;:&quot;Tekstit&quot;,&quot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;default&quot;,&quot;localId&quot;:&quot;47fc735f-fc89-4be3-abcb-ae50d081a06d&quot;,&quot;width&quot;:760,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;colwidth&quot;:[230],&quot;background&quot;:null}]">Kerro, miten toiminnan kohderyhmät tunnistetaan, esim. vähän harrastavat tai syrjäytymisriskissä olevat lapset ja nuoret.</p>'
+        '#help': '<p><span class="TextRun SCXW126052502 BCX2 NormalTextRun" style="font-family:WordVisi_MSFontService, Calibri, &quot;Calibri_EmbeddedFont&quot;, &quot;Calibri_MSFontService&quot;, sans-serif;font-size:11pt;line-height:15px;" data-contrast="auto" xml:lang="EN-US" lang="EN-US">Kerro, miten toiminnan kohderyhmät tunnistetaan, esim. vähän harrastavat tai syrjäytymisriskissä olevat lapset ja nuoret.</span></p>'
         '#maxlength': 1250
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#required': true
       hankkeen_kohderyhmat_osallisuus:
         '#type': textarea
         '#title': 'Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?'
@@ -875,12 +873,12 @@ elements: |-
         '#required': true
       hankkeen_keskeisimmat_kumppanit:
         '#type': textarea
-        '#title': 'Nimeä hankkeen keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa'
+        '#title': 'Nimeä keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla oleva tahot.'
         '#maxlength': 2500
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#required': true
       hankkeen_uudet_kumppanit:
         '#type': textarea
         '#title': 'Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?'
@@ -912,21 +910,19 @@ elements: |-
       hankkeen_riskit_vakiinnuttaminen:
         '#type': textarea
         '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
-        '#description': '<p data-prosemirror-content-type="node" data-prosemirror-node-name="paragraph" data-prosemirror-node-block="true" data-pm-slice="1 1 [&quot;expand&quot;,{&quot;title&quot;:&quot;Tekstit&quot;,&quot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;default&quot;,&quot;localId&quot;:&quot;a0f6f470-376a-4747-9d1d-6a08059ac88f&quot;,&quot;width&quot;:760,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;colwidth&quot;:[230],&quot;background&quot;:null}]">Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos on, niin kuvaa tekstikenttään, miten ja millä rahoituksella vakiinnuttaminen aiotaan tehdä?</p>'
         '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#required': true
   4_talousarvio:
     '#type': webform_wizard_page
     '#title': '4. Talousarvio'
-    markup_01:
-      '#type': webform_markup
-      '#markup': '<p data-prosemirror-content-type="node" data-prosemirror-node-name="paragraph" data-prosemirror-node-block="true" data-pm-slice="1 1 [&quot;expand&quot;,{&quot;title&quot;:&quot;Tekstit&quot;,&quot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;default&quot;,&quot;localId&quot;:&quot;cf543429-6a36-4e4f-85b9-84c73d93f509&quot;,&quot;width&quot;:760,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;colwidth&quot;:[230],&quot;background&quot;:null}]">Monivuotisen hankkeen osalta tässä kohdassa tulee ilmoittaa ensimmäisen hankevuoden talousarvio. Lisäksi hakemuksen liitteenä tulee toimittaa koko hankeajan talousarvio, josta käy ilmi tulojen ja menojen jakautuminen eri hankevuosille.</p>'
     tulot_section:
       '#type': webform_section
-      '#title': '4.1 Tulot'
+      '#title': Tulot
+      markup_01:
+        '#type': webform_markup
+        '#markup': '<p data-prosemirror-content-type="node" data-prosemirror-node-name="paragraph" data-prosemirror-node-block="true" data-pm-slice="1 1 [&quot;expand&quot;,{&quot;title&quot;:&quot;Tekstit&quot;,&quot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;default&quot;,&quot;localId&quot;:&quot;cf543429-6a36-4e4f-85b9-84c73d93f509&quot;,&quot;width&quot;:760,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;colwidth&quot;:[230],&quot;background&quot;:null}]">Monivuotisen hankkeen osalta tässä kohdassa tulee ilmoittaa ensimmäisen hankevuoden talousarvio. Lisäksi hakemuksen liitteenä tulee toimittaa koko hankeajan talousarvio, josta käy ilmi tulojen ja menojen jakautuminen eri hankevuosille.</p>'
       tulot:
         '#type': grants_budget_income_static
         '#title': Tulot
@@ -967,7 +963,7 @@ elements: |-
         '#multiple__item_label': tulo
     menot_section:
       '#type': webform_section
-      '#title': '4.2 Menot'
+      '#title': Menot
       talous_menon_tyyppi:
         '#type': grants_budget_other_cost
         '#title': Meno

@@ -1,0 +1,302 @@
+title: 'Understöd för att stödja regionala idrottsaktiviteter'
+elements: |
+  1_hakijan_tiedot:
+    '#title': '1. Sökandens uppgifter'
+    '#prev_button_label': Tidigare
+    '#next_button_label': Nästa
+  hakemusprofiili:
+    '#title': 'Hämtade uppgifter'
+  prh_markup:
+    '#markup': '<div class="grants-profile-prh-info"><span>Informationen har hämtats från din profil.</span></div>'
+  hakijan_tiedot:
+    '#title': Sökande
+  contact_person_email_section:
+    '#title': E-post
+  contact_markup:
+    '#markup': '<p>Ange här samfundets e-postadress som läses aktivt. Till e-postadressen skickas kontaktförfrågningar som är relaterade till ansökan om understöd, såsom begäranden om tilläggsutredning och komplettering</p>'
+  email:
+    '#title': E-postadress
+    '#help': '<p>Ange en e-postadress dit meddelandena och begärandena relaterade till denna ansökan kommer att skickas och som läses aktivt.</p>'
+  contact_person_section:
+    '#title': 'Kontaktperson för ansökan'
+  contact_person:
+    '#title': Kontaktperson
+  contact_person_phone_number:
+    '#title': Telefonnummer
+  osoite:
+    '#title': Adress
+  community_address:
+    '#title': Adress
+    '#help': '<p>Om du vill lägga till, ta bort eller ändra adressuppgifter, spara ansökan som ett utkast och gå till att behålla adressuppgifterna i dina egna uppgifter.</p>'
+    '#community_address_select__title': 'Välj en adress'
+  tilinumero:
+    '#title': Kontonummer
+  bank_account:
+    '#title': Kontonummer
+    '#help': '<p>Om du vill lägga till, radera eller ändra kontonummerinformation, spara applikationen som ett utkast och gå till att behålla kontonummerinformationen i din egen data.</p>'
+    '#account_number_select__title': 'Välj ett kontonummer'
+    '#account_number__title': ''
+  toiminnasta_vastaavat_henkilot:
+    '#title': 'Personer som ansvarar för verksamheten'
+  community_officials:
+    '#help': '<p>Om du vill lägga till, ta bort eller ändra personer, spara applikationen som ett utkast och gå till att underhålla personernas information i din egen data.</p>'
+    '#title': 'Personer som ansvarar för verksamheten'
+    '#multiple__add_more_button_label': 'Lägg till en person'
+    '#community_officials_select__title': 'Välj motsvarande person'
+    '#role__title': Roll
+    '#email__title': E-post
+    '#phone__title': Telefonnummer
+  2_avustustiedot:
+    '#title': '2. Uppgifter om understödet'
+  avustuksen_tiedot:
+    '#title': 'Uppgifter om understödet'
+  acting_year:
+    '#title': 'År för vilket jag ansöker om understöd'
+  avustuslajit:
+    '#title': Understöd
+  grants_compensations_information:
+    '#markup': '<p data-renderer-start-pos="4527">Ange det understödsbelopp som ansöks för år 2025 i fältet. Understödsbeloppen för de följande åren av ett flerårigt projekt anges på nästa sida.</p>'
+  subventions:
+    '#title': 'Typ av stöd'
+  kayttotarkoitus:
+    '#title': 'Användningsän damål'
+  compensation_purpose:
+    '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
+    '#help': '<p>Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten.</p>'
+    '#counter_maximum_message': '%d/1250 tecken kvar'
+  other_grants_for_same_purpose:
+    '#title': 'Övriga understöd som beviljats för samma ändamål'
+  info_muut_samaan_tarkoitukseen_myonnetty:
+    '#markup': '<p>Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Ett jakande svar öppnar ytterligare en fråga</span></div></div></div>'
+  olemme_saaneet_muita_avustuksia:
+    '#title': 'Vi har fått andra understöd'
+    '#options':
+      1: Ja
+      0: Nej
+  myonnetty_avustus:
+    '#title': 'Bidrag beviljat'
+    '#multiple__no_items_message': '<p>Inga värden har angetts. Lägg till det nya beviljade bidraget nedan.</p>'
+    '#multiple__add_more_button_label': 'Lägg till understöd som beviljats'
+    '#element':
+      issuer:
+        '#options':
+          1: Stat
+          4: Övrig
+          5: Fundament
+        '#title': Bidragsgivare
+      issuer_name:
+        '#title': 'Emittentens namn'
+        '#help': '<p>Vilket organ har beviljat bidraget (t.ex. namnet på departementet)</p>'
+      year:
+        '#title': År
+        '#pattern_error': 'Ange ett årtal'
+      amount:
+        '#title': 'Beviljat bidragsbelopp'
+      purpose:
+        '#title': 'Beskrivning av avsedd användning'
+        '#help': '<p>Ge en kort beskrivning, i vilket syfte har bidraget beviljats?</p>'
+        '#counter_maximum_message': '%d/1000 tecken kvar'
+  muut_samaan_tarkoitukseen_haetut_avustukset:
+    '#title': 'Övriga understöd som ansökts för samma ändamål'
+  info_muut_samaan_tarkoitukseen_haettu:
+    '#markup': '<p>Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, men beslut har ännu inte fattats.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Ett jakande svar öppnar ytterligare en fråga</span></div></div></div>'
+  olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
+    '#title': 'Vi har ansökt om understöd från annanstans än Helsingfors Stad'
+    '#options':
+      1: Ja
+      0: Nej
+  haettu_avustus_tieto:
+    '#title': 'Lägg till nytt understöd som ansökts'
+    '#multiple__no_items_message': '<p>Inga värden har angetts. Lägg till ett nytt ansökt bidrag nedan.</p>'
+    '#multiple__add_more_button_label': 'Lägg till nytt understöd som ansökts'
+    '#element':
+      issuer:
+        '#options':
+          1: Stat
+          4: Övrig
+          5: Fundament
+        '#title': Bidragsgivare
+      issuer_name:
+        '#title': 'Emittentens namn'
+        '#help': '<p>Vilket organ har beviljat bidraget (t.ex. namnet på departementet)</p>'
+      year:
+        '#title': År
+        '#pattern_error': 'Ange ett årtal'
+      amount:
+        '#title': 'Beviljat bidragsbelopp'
+      purpose:
+        '#title': 'Beskrivning av avsedd användning'
+        '#help': '<p>Ge en kort beskrivning, i vilket syfte har bidraget beviljats?</p>'
+        '#counter_maximum_message': '%d/1000 tecken kvar'
+  3_tarkemmat_tiedot:
+    '#title': '3. Mer detaljerad information'
+  tarkemmat_tiedot_section:
+    '#title': 'Mer detaljerad information'
+  hankesuunnitelma_avustuksen_kesto:
+    '#title': 'Ansöker du om understöd för ett, två eller tre år? Ange de understödsbelopp som ska sökas för projektets kommande år i de öppna fälten.'
+    '#options':
+      1: 'Jag ansöker om understöd för ett år'
+      2: 'Jag ansöker om understöd för två år'
+      3: 'Jag ansöker om understöd för tre år'
+  haettava_avustussumma:
+    '#title': 'Understödsbelopp som ansöks'
+  haettava_avustussumma_2025:
+    '#title': '2025 (euro)'
+    '#compensation__title': '2025 (euro)'
+  haettava_avustussumma_2026:
+    '#title': '2026 (euro)'
+  haettava_avustussumma_2027:
+    '#title': '2027 (euro)'
+  hankesuunnitelma_section:
+    '#title': 'Projektplan och mål'
+  hankkeen_nimi:
+    '#title': 'Projektets namn'
+    '#counter_maximum_message': '%d/300 tecken kvar'
+  hankkeen_tarkoitus_tavoitteet:
+    '#title': 'Syfte och mål med projektet'
+    '#counter_maximum_message': '%d/3000 tecken kvar'
+  hankkeen_monivuotisuuden_tarve:
+    '#title': 'Motivera behovet av flera år ur synpunkten för att uppnå målen med projektet.'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_toimenpiteet_toteutus:
+    '#title': 'Vilka är de konkreta åtgärderna i projektet för att främja regionala idrottsaktiviteter med låg tröskel för 9–18-åriga barn och ungdomar i Helsingfors? Vilken är tidtabellen för genomförande av åtgärderna?'
+  hankkeen_toimenpiteet_aikataulu:
+    '#title': 'Konkreta åtgärder och deras tidtabellen för 2025'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_toimenpiteet_aikataulu_2026:
+    '#title': 'Konkreta åtgärder och deras tidtabellen för 2026'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_toimenpiteet_aikataulu_2027:
+    '#title': 'Konkreta åtgärder och deras tidtabellen för 2027'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_toiminnan_laajuus:
+    '#title': 'I vilken omfattning har verksamheten planerats ordnas (h/vecka)?'
+    '#help': '<p data-renderer-start-pos="15624">Anteckna det genomsnittliga antalet veckotimmar för verksamheten i fältet.</p>'
+    '#counter_maximum_message': '%d/1250 tecken kvar'
+  hankkeen_kohtaamiset:
+    '#title': 'Ökas positiva möten mellan befolkningsgrupper eller förebyggs marginalisering genom projektet? På vilket sätt?'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_kohderyhmat_section:
+    '#title': 'Projektets målgrupper'
+  hankkeen_kohderyhmat_kenelle:
+    '#title': 'Vilken/vilka är projektets målgrupp/er?'
+    '#counter_maximum_message': '%d/1250 tecken kvar'
+  hankkeen_kohderyhmat_erityisryhmat:
+    '#title': 'Har målgruppen/-grupperna specialbehov? Hur beaktas dessa behov?'
+    '#counter_maximum_message': '%d/1250 tecken kvar'
+  hankkeen_kohderyhmat_osaaminen:
+    '#title': 'Vilken existerande kompetens har aktörerna i projektet att arbeta med målgruppen/-grupperna?'
+    '#counter_maximum_message': '%d/1250 tecken kvar'
+  hankkeen_kohderyhmat_lapset:
+    '#title': 'Bedöm hur många barn och unga som nås genom verksamheten.'
+  markup:
+    '#markup': '<p>Bedöm det totala antalet barn och unga som nås under hela projektet. Om projektet inte når den aktuella åldersgruppen, markera "0" i fältet.</p>'
+  hankkeen_kohderyhmat_lapset_9_12:
+    '#title': '9–12-åriga helsingforsare'
+  hankkeen_kohderyhmat_lapset_13_15:
+    '#title': '13–15-åriga helsingforsare'
+  hankkeen_kohderyhmat_lapset_16_18:
+    '#title': '16–18-åriga helsingforsare'
+  hankkeen_kohderyhmat_uudet_fieldset:
+    '#title': 'Hur många av dessa är nya, det vill säga har inte deltagit i verksamhet som tidigare ordnats av aktören?'
+  hankkeen_kohderyhmat_uudet:
+    '#title': '9–18-åriga helsingforsare'
+  hankkeen_kohderyhmat_saavutettavuus:
+    '#title': 'Hur har verksamhetens tillgänglighet beaktats? Vilken egen utrustning och kunskapsnivå krävs av deltagarna för verksamheten?'
+    '#help': '<p>Berätta hur de olika delområdena inom tillgänglighet beaktas i verksamheten, till exempel tillgänglighet för kommunikationen, fysisk, psykisk, social, kulturell och ekonomisk tillgänglighet.</p>'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_kohderyhmat_hinta:
+    '#title': 'Hur mycket har en gång av hobbyn planerats kosta för deltagaren (€/h)?'
+    '#help': '<p>Bedöm hur mycket deltagaren betalar för en gång av hobbyn. Ge bedömningen i formatet €/timme.</p>'
+  hankkeen_kohderyhmat_konkretia:
+    '#title': 'Hur önskar man att verksamheten ska påverka deltagarnas liv?'
+    '#counter_maximum_message': '%d/1250 tecken kvar'
+  hankkeen_kohderyhmat_postinrot:
+    '#title': 'Inom vilket/vilka område genomförs verksamheten? Ange alla postnummerområden (endast postnummer) där verksamheten planeras att arrangeras. Separera postnummerområdena med ett kommatecken.'
+    '#help': '<p>Ange inget annat än postnummer i fältet. Separera postnumren med ett kommatecken (, ).</p>'
+    '#counter_maximum_message': '%d/100 tecken kvar'
+  hankkeen_menetelmat_section:
+    '#title': 'Metoder för projektet '
+  hankkeen_kohderyhmat_tavoitus:
+    '#title': 'Hur nås och identifieras målgrupperna?'
+    '#help': '<p>Berätta hur målgrupperna för verksamheten identifieras, till exempel barn och unga som har få hobbyer eller som löper risk för att marginaliseras.</p>'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_kohderyhmat_osallisuus:
+    '#title': 'Hur deltar barn och unga i planeringen av och beslutsfattandet om verksamheten?'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_keskeisimmat_kumppanit:
+    '#title': 'Namnge de viktigaste samarbetspartnerna och deras roll i projektet. Namnge separat de samarbetsparter som redan överenskommits och de parter som ännu planeras.'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_uudet_kumppanit:
+    '#title': 'Prövas nya former av partnerskap eller utvecklas nya verksamhetsmodeller i projektet? Vilka?'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_riskit_section:
+    '#title': 'Risker och analys'
+  hankkeen_riskit_keskeisimmat:
+    '#title': 'Vilka är de största riskerna när det gäller genomförande av projektet?'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_riskit_seuranta:
+    '#title': 'Hur ämnar man i projektet följa upp genomförandet av målen och bedöma effekterna?'
+    '#help': '<p>Beskriv dokumenteringen av och bedömningen av effekterna för projektet, exempelvis genom vilka metoder effekten bedöms och hurudan uppföljning man ämnar genomföra vad gäller projektet.</p>'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_riskit_vakiinnuttaminen:
+    '#title': 'Är den planerade verksamheten för projektet avsedd att bli en permanent del av den grundläggande verksamheten hos den sökande/en annan aktör efter projektet? Om tillämpligt, beskriv i textfältet hur och med vilken finansiering man ämnar etablera verksamheten?'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  4_talousarvio:
+    '#title': '4. Budget'
+  tulot_section:
+    '#title': Inkomster
+  markup_01:
+    '#markup': '<p data-prosemirror-content-type="node" data-prosemirror-node-name="paragraph" data-prosemirror-node-block="true" data-pm-slice="1 1 [&quot;expand&quot;,{&quot;title&quot;:&quot;Tekstit&quot;,&quot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;default&quot;,&quot;localId&quot;:&quot;cf543429-6a36-4e4f-85b9-84c73d93f509&quot;,&quot;width&quot;:760,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;colwidth&quot;:[230],&quot;background&quot;:null}]">För ett flerårigt projekt ska budgeten för det första projektåret anges i detta avsnitt. Dessutom ska en budget för hela projektperioden bifogas ansökan, där intäkter och kostnader fördelas på de olika projektåren.</p>'
+  tulot:
+    '#title': Inkomster
+    '#compensation__title': 'Ansökt stöd (€)'
+  talous_tulon_tyyppi:
+    '#title': 'Typ av inkomst'
+    '#help': '<p>Skriv ner vilken typ av inkomst det gäller. Inkomster kan till exempel vara andra understöd och inträdes- eller deltagaravgifter. Självfinansiering måste uppges som en inkomst även&lt;br&gt;om den självfinansierade delen finansieras med sökandes övrig verksamhet.</p>'
+    '#multiple__add_more_button_label': 'Lägg till en intäkt'
+  menot_section:
+    '#title': Utgifter
+  talous_menon_tyyppi:
+    '#title': 'Typ av utgift'
+    '#help': '<p>Skriv ner vilken typ av utgift det gäller. Utgifter kan till exempel vara andra lokalhyror och personalkostnader.</p>'
+    '#multiple__add_more_button_label': 'Lägg till en utgift'
+  lisatiedot_ja_liitteet:
+    '#title': '5. Ytterligare information och bilagor'
+  lisatietoja_hakemukseen_liittyen:
+    '#title': 'Ytterligare information för ansökan'
+  additional_information:
+    '#title': 'Ytterligare information'
+    '#help': '<p>Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan eller meddela om ändringar i basuppgifterna.</p>'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  liitteet:
+    '#title': Bilagor
+  attachments_info:
+    '#markup': '<p>Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.</p><p><strong>Erforderliga bilagor</strong></p><p>Ett flerårigt projekt ska bifoga en budget specificerad per projektår för hela projektperioden till ansökan.</p><p>För behandling av ansökan om understöd behövs styrkta bilagor från den föregående räkenskapsperioden som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från den föregående räkenskapsperioden är: bokslut, verksamhetsberättelse, revisionsberättelse och protokoll från årsstämman. Bilagorna för det år för vilket understödet ansöks är: budget och verksamhetsplan. Dessutom måste sökanden lämna in föreningens stadgar och bankens meddelande om kontoägaren eller en kopia av kontoutdraget.</p><p><strong data-renderer-mark="true">Inlämning av flera bilagor i en fil</strong></p><p>Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p><p><strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong></p><p>Om de obligatoriska bilagorna redan har lämnats in som bilagor till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”. Men samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara sinsemellan olika i bilagor till de olika ansökningarna.</p>'
+  notification_attachments:
+    '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div><div class="hds-notification__body"><p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p><p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p></div></div></div>'
+  extra_info:
+    '#title': 'Ytterligare information om bilagorna'
+    '#counter_maximum_message': '%d/5000 tecken kvar'
+  muu_liite:
+    '#title': 'Annan bilaga'
+    '#multiple__add_more_button_label': 'Lägg till en bilaga'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Skicka
+    '#draft__label': 'Spara som oavslutad'
+    '#wizard_prev__label': Tidigare
+    '#wizard_next__label': Nästa
+    '#preview_prev__label': Tidigare
+    '#preview_next__label': 'För förhandsvisning'
+    '#delete__label': 'Radera oavslutat'
+settings:
+  wizard_prev_button_label: Tidigare
+  wizard_next_button_label: Nästa
+  preview_label: '6. Bekräfta, förhandsgranska och skicka'
+  preview_title: 'Bekräfta, förhandsgranska och skicka'
+  wizard_confirmation_label: '7. Slutförd'
