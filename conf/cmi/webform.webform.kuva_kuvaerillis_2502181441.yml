@@ -655,6 +655,7 @@ elements: |-
               - or
               - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
                   value: '3'
+          '#required': true
         haettava_avustussumma_2027:
           '#type': textfield
           '#title': '2027 (euroa)'
