@@ -648,6 +648,9 @@ elements: |-
           '#title': '2026 (euroa)'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#pattern': '^[0-9 ]*$'
+          '#attributes':
+            class:
+              - webform--large
           '#states':
             visible:
               - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
@@ -662,6 +665,9 @@ elements: |-
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#required': true
           '#pattern': '^[0-9 ]*$'
+          '#attributes':
+            class:
+              - webform--large
           '#states':
             visible:
               ':input[name="hankesuunnitelma_avustuksen_kesto"]':
@@ -675,6 +681,9 @@ elements: |-
         '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 300
+        '#attributes':
+          class:
+            - webform--large
         '#counter_maximum_message': '%d/300 merkkiä jäljellä'
         '#required': true
       hankkeen_tarkoitus_tavoitteet:
@@ -684,6 +693,9 @@ elements: |-
         '#required': true
         '#counter_type': character
         '#counter_maximum': 3000
+        '#attributes':
+          class:
+            - webform--large
         '#counter_maximum_message': '%d/3000 merkkiä jäljellä'
       hankkeen_monivuotisuuden_tarve:
         '#type': textarea
@@ -692,6 +704,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
         '#states':
           visible:
             - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
@@ -713,6 +728,9 @@ elements: |-
           '#counter_type': character
           '#counter_maximum': 2500
           '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+          '#attributes':
+            class:
+              - webform--large
           '#required': true
         hankkeen_toimenpiteet_aikataulu_2026:
           '#type': textarea
@@ -722,6 +740,9 @@ elements: |-
           '#counter_type': character
           '#counter_maximum': 2500
           '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+          '#attributes':
+            class:
+              - webform--large
           '#states':
             visible:
               ':input[name="hankesuunnitelma_avustuksen_kesto"]':
@@ -734,6 +755,9 @@ elements: |-
           '#counter_type': character
           '#counter_maximum': 2500
           '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+          '#attributes':
+            class:
+              - webform--large
           '#states':
             visible:
               ':input[name="hankesuunnitelma_avustuksen_kesto"]':
@@ -746,6 +770,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
         '#required': true
       hankkeen_kohtaamiset:
         '#type': textarea
@@ -755,6 +782,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
     hankkeen_kohderyhmat_section:
       '#type': webform_section
       '#title': 'Hankkeen kohderyhmä'
@@ -765,6 +795,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
         '#required': true
       hankkeen_kohderyhmat_erityisryhmat:
         '#type': textarea
@@ -775,6 +808,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
       hankkeen_kohderyhmat_osaaminen:
         '#type': textarea
         '#title': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
@@ -783,6 +819,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
       hankkeen_kohderyhmat_lapset:
         '#type': fieldset
         '#title': 'Arvioi, montako lasta ja nuorta toiminnalla tavoitetaan.'
@@ -794,18 +833,27 @@ elements: |-
           '#type': textfield
           '#title': '9–12-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#attributes':
+            class:
+              - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
         hankkeen_kohderyhmat_lapset_13_15:
           '#type': textfield
           '#title': '13–15-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#attributes':
+            class:
+              - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
         hankkeen_kohderyhmat_lapset_16_18:
           '#type': textfield
           '#title': '16–18-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#attributes':
+            class:
+              - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
       hankkeen_kohderyhmat_uudet_fieldset:
@@ -816,6 +864,9 @@ elements: |-
           '#type': textfield
           '#title': '9–18-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#attributes':
+            class:
+              - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
       hankkeen_kohderyhmat_saavutettavuus:
@@ -827,11 +878,17 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
       hankkeen_kohderyhmat_hinta:
         '#type': textfield
         '#title': 'Kuinka paljon yhden harrastuskerran on suunniteltu maksavan osallistujalle (€/h)?'
         '#help': '<p>Arvioi, kuinka paljon osallistuja maksaa yhdestä harrastuskerrasta. Anna arvio muodossa €/tunti.</p>'
         '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+        '#attributes':
+          class:
+            - webform--large
         '#required': true
         '#pattern': '^[0-9 ]*$'
       hankkeen_kohderyhmat_konkretia:
@@ -841,6 +898,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
         '#required': true
       hankkeen_kohderyhmat_postinrot:
         '#type': textarea
@@ -852,6 +912,9 @@ elements: |-
         '#maxlength': 100
         '#counter_maximum': 100
         '#counter_maximum_message': '%d/100 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
     hankkeen_menetelmat_section:
       '#type': webform_section
       '#title': 'Hankkeen menetelmät'
@@ -864,6 +927,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
       hankkeen_kohderyhmat_osallisuus:
         '#type': textarea
         '#title': 'Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?'
@@ -871,6 +937,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
         '#required': true
       hankkeen_keskeisimmat_kumppanit:
         '#type': textarea
@@ -880,6 +949,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
       hankkeen_uudet_kumppanit:
         '#type': textarea
         '#title': 'Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?'
@@ -888,6 +960,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
     hankkeen_riskit_section:
       '#type': webform_section
       '#title': 'Riskit & analyysi'
@@ -899,6 +974,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
       hankkeen_riskit_seuranta:
         '#type': textarea
         '#title': 'Miten hankkeessa aiotaan seurata tavoitteiden toteutumista ja toteuttaa vaikuttavuudenarviointia?'
@@ -908,6 +986,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
       hankkeen_riskit_vakiinnuttaminen:
         '#type': textarea
         '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
@@ -915,6 +996,9 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
   4_talousarvio:
     '#type': webform_wizard_page
     '#title': '4. Talousarvio'
