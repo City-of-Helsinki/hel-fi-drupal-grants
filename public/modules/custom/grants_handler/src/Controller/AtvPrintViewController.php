@@ -159,7 +159,8 @@ final class AtvPrintViewController extends ControllerBase {
    */
   private function transformField(mixed $field, array &$pages, bool &$isSubventionType, string &$subventionType, string $langcode): void {
     if (isset($field['ID'])) {
-      $labelData = json_decode($field['meta'], TRUE);
+      $meta = $field['meta'] ?? '';
+      $labelData = json_decode($meta, TRUE);
       if (!$labelData || $labelData['element']['hidden']) {
         return;
       }

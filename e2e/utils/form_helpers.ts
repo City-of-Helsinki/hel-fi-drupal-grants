@@ -368,7 +368,7 @@ const isApplicationClosed = async (page: Page) => {
  */
 async function fillHakijanTiedotRegisteredCommunity(formItems: any, page: Page) {
   if (formItems['edit-email']) {
-    await page.getByRole('textbox', {name: 'Sähköpostiosoite'}).fill(formItems['edit-email'].value);
+    await page.locator('#edit-email').fill(formItems['edit-email'].value);
   }
   if (formItems['edit-contact-person']) {
     await page.getByLabel('Yhteyshenkilö').fill(formItems['edit-contact-person'].value);
