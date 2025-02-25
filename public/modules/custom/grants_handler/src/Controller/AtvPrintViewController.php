@@ -9,6 +9,9 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
+use Drupal\grants_metadata\ApplicationDataService;
+use Drupal\grants_metadata\AtvSchema;
+use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_metadata\InputmaskHandler;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -35,6 +38,8 @@ final class AtvPrintViewController extends ControllerBase {
    */
   public function __construct(
     private readonly ApplicationGetterService $applicationGetterService,
+    protected AtvSchema $atvSchema,
+    protected ApplicationDataService $applicationDataService,
   ) {}
 
   /**
@@ -42,7 +47,9 @@ final class AtvPrintViewController extends ControllerBase {
    */
   public static function create(ContainerInterface $container): AtvPrintViewController {
     return new self(
-      $container->get('grants_handler.application_getter_service')
+      $container->get('grants_handler.application_getter_service'),
+      $container->get('grants_metadata.atv_schema'),
+      $container->get('grants_metadata.application_data_service'),
     );
   }
 
@@ -68,8 +75,32 @@ final class AtvPrintViewController extends ControllerBase {
     $langcode = $atv_document->getMetadata()['language'];
 
     $newPages = [];
-    // Iterate over regular fields.
-    $compensation = $atv_document->jsonSerialize()['content']['compensation'];
+
+    // Application submission with the old style applicationnumber(GRANTS-...)
+    // won't contain the field metadata for some reason and printing breaks.
+    $application_number = $atv_document->getMetadata()['applicationnumber'];
+    if (str_contains($application_number, 'GRANTS-')) {
+      $dataDefinition = $this->applicationGetterService->getDataDefinition($atv_document->getType());
+
+      $sData = DocumentContentMapper::documentContentToTypedData(
+        $atv_document->getContent(),
+        $dataDefinition,
+        $atv_document->getMetadata()
+      );
+
+      $typeData = $this->applicationDataService->webformToTypedData($sData);
+      $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($application_number);
+
+      $appDocumentContent = $this->atvSchema->typedDataToDocumentContent(
+        $typeData,
+        $webform_submission,
+        $sData,
+      );
+      $compensation = $appDocumentContent['compensation'];
+    }
+    else {
+      $compensation = $atv_document->jsonSerialize()['content']['compensation'];
+    }
 
     foreach ($compensation as $page) {
       if (!is_array($page)) {
@@ -159,7 +190,7 @@ final class AtvPrintViewController extends ControllerBase {
    */
   private function transformField(mixed $field, array &$pages, bool &$isSubventionType, string &$subventionType, string $langcode): void {
     if (isset($field['ID'])) {
-      $meta = $field['meta'] ?? '';
+      $meta = $field['meta'] ?? '{}';
       $labelData = json_decode($meta, TRUE);
       if (!$labelData || $labelData['element']['hidden']) {
         return;
