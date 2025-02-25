@@ -7,9 +7,9 @@ dependencies:
 _core:
   default_config_hash: t9qu6R6PnnbZNOft0SpIMxwCg6VCfaX3aW2W-NjeFyc
 id: who_s_online
-label: 'Kuka on paikalla -lohko'
+label: "Who's online block"
 module: user
-description: 'Näyttää viimeksi aktiivisina olleiden käyttäjien käyttäjätunnukset ja aktiivisten käyttäjien kokonaismäärän.'
+description: 'Shows the user names of the most recently active users, and the total number of active users.'
 tag: default
 base_table: users_field_data
 base_field: uid
@@ -20,7 +20,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Paikalla olevat käyttäjät'
+      title: "Who's online"
       fields:
         name:
           id: name
@@ -88,7 +88,7 @@ display:
           admin_label: ''
           plugin_id: text_custom
           empty: true
-          content: 'Tällä hetkellä 0 käyttäjää on online.'
+          content: 'There are currently 0 users online.'
           tokenize: false
       sorts:
         access:
@@ -143,7 +143,7 @@ display:
           expose:
             operator_id: access_op
             label: 'Last access'
-            description: 'Sen jäkeen kun käyttäjä viimeksi latasi sivun, hänen katsotaan olevan paikalla vielä näin kauan'
+            description: 'A user is considered online for this long after they have last viewed a page.'
             use_operator: false
             operator: access_op
             operator_limit_selection: false
@@ -198,7 +198,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: 'Tällä hetkellä @total käyttäjää on online.'
+          content: 'There are currently @total users online.'
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -210,13 +210,13 @@ display:
       tags: {  }
   who_s_online_block:
     id: who_s_online_block
-    display_title: 'Paikalla olevat käyttäjät'
+    display_title: "Who's online"
     display_plugin: block
     position: 1
     display_options:
-      display_description: 'Lista käyttäjistä jotka ovat online.'
+      display_description: 'A list of users that are currently logged in.'
       display_extenders: {  }
-      block_description: 'Paikalla olevat käyttäjät'
+      block_description: "Who's online"
     cache_metadata:
       max-age: -1
       contexts:

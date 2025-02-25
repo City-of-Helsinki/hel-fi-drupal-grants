@@ -1,9 +1,9 @@
-label: FAQ
+label: UKK
 display:
   default:
     display_options:
-      title: FAQ
+      title: UKK
   page_1:
     display_options:
       menu:
-        title: 'Frequently asked questions'
+        title: 'Usein kysytyt kysymykset'
