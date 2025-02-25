@@ -278,6 +278,7 @@ final class GrantsHandler extends WebformHandlerBase {
     $instance->applicationValidator = $container->get('grants_handler.application_validator');
     $instance->applicationStatusService = $container->get('grants_handler.application_status_service');
     $instance->formLockService = $container->get('grants_handler.form_lock_service');
+    assert($container->get('kernel') instanceof DrupalKernel);
     $instance->kernel = $container->get('kernel');
     $instance->requestStack = $container->get('request_stack');
     $instance->applicationDataService = $container->get('grants_metadata.application_data_service');
