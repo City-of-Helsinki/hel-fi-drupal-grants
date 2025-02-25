@@ -121,4 +121,20 @@ final class ApplicationController extends ControllerBase {
     return new JsonResponse([], 200);
   }
 
+  /**
+   * Render the forms react app.
+   */
+  public function formsApp(string $id): array {
+    return [
+      '#theme' => 'forms_app',
+      '#attached' => [
+        'drupalSettings' => [
+          'grants_react_form' => [
+            'application_number' => $id
+          ],
+        ],
+      ],
+    ];
+  }
+
 }

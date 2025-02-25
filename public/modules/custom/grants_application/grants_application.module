@@ -4,3 +4,16 @@
  * @file
  * Module hooks.
  */
+
+ /**
+  * Implements hook_theme().
+  */
+ function grants_application_theme(): array {
+   return [
+    'forms_app' => [
+      'variables' => [
+        'application_number' => NULL,
+      ],
+    ],
+   ];
+ }

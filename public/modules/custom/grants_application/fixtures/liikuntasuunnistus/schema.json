@@ -1,5 +1,81 @@
 {
   "definitions": {
+    "applicant_info": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "title": "Sähköpostiosoite",
+          "description": "Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.",
+          "type": "object",
+          "properties": {
+            "email": {
+              "title": "Sähköpostiosoite",
+              "type": "string",
+              "format": "email",
+              "default": ""
+            }
+          },
+          "required": [
+            "email"
+          ]
+        },
+        "contact_person": {
+          "title": "Hakemuksen yhteyshenkilö",
+          "type": "object",
+          "properties": {
+            "contact_person": {
+              "title": "Yhteyshenkilö",
+              "type": "string",
+              "default": ""
+            },
+            "contact_person_phone_number": {
+              "title": "Puhelinnumero",
+              "type": "string",
+              "default": ""
+            }
+          }
+        },
+        "community_address": {
+          "title": "Osoite",
+          "type": "object",
+          "properties": {
+            "community_address": {
+              "title": "Valitse osoite",
+              "type": "string",
+              "enum": [
+                "Mannerheimintie 1, 00100, Helsinki (tää tulee sieltä käyttäjän tiedoista)"
+              ]
+            }
+          }
+        },
+        "bank_account": {
+          "title": "Tilinumero",
+          "type": "object",
+          "properties": {
+            "bank_account": {
+              "title": "Valitse tilinumero",
+              "type": "string",
+              "enum": [
+                "FI4950009420028730 (käyttäjän tietoja)"
+              ]
+            }
+          }
+        },
+        "community_officials": {
+          "title": "Toiminnasta vastaavat henkilöt",
+          "type": "object",
+          "properties": {
+            "community_officials": {
+              "title": "Valitse toiminnasta vastaava henkilö",
+              "type": "string",
+              "enum": [
+                "Teppo Testaaja (Yhteyshenkilö) (käyttäjän tietoja)"
+              ]
+            }
+          }
+        }
+      }
+    },
     "orienteering_map": {
       "type": "object",
       "properties": {
@@ -43,85 +119,17 @@
   "title": "Liikunta, suunnistuskartta-avustushakemus",
   "description": "",
   "type": "object",
-  "required": [
-    "email",
-    "contact_person",
-    "contact_person_phone_number",
-    "community_address",
-    "bank_account"
-  ],
   "properties": {
-    "email": {
-      "title": "Sähköpostiosoite",
-      "type": "string",
-      "format": "email",
-      "default": ""
-    },
-    "contact_person": {
-      "title": "Yhteyshenkilö",
-      "type": "string",
-      "default": ""
-    },
-    "contact_person_phone_number": {
-      "title": "Puhelinnumero",
-      "type": "string",
-      "default": ""
-    },
-    "community_address": {
-      "title": "Valitse osoite",
-      "type": "string",
-      "enum": [
-        "Mannerheimintie 1, 00100, Helsinki (tää tulee sieltä käyttäjän tiedoista)"
-      ]
-    },
-    "bank_account": {
-      "title": "Valitse tilinumero",
-      "type": "string",
-      "enum": [
-        "FI4950009420028730 (käyttäjän tietoja)"
-      ]
-    },
-    "community_officials": {
-      "title": "Valitse toiminnasta vastaava henkilö",
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "Teppo Testaaja (Yhteyshenkilö) (käyttäjän tietoja)"
-        ]
-      }
-    },
-    "acting_year": {
-      "title": "vuosi, jolle haet avustusta",
-      "type": "integer",
-      "enum": [
-        2025
-      ]
+    "applicant_info": {
+      "title": "Yhteisö, jolle haetaan avustusta",
+      "description": "Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.",
+      "type": "object",
+      "$ref": "#/definitions/applicant_info"
     },
     "orienteering_maps": {
       "title": "Kartta",
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "$ref": "#/definitions/orienteering_map"
-      }
-    },
-    "additional_information": {
-      "title": "Lisätietoa",
-      "type": "string",
-      "maxLength": 5000
-    },
-    "extra_info": {
-      "title": "Lisäselvitys liitteistä",
-      "type": "string",
-      "maxLength": 5000
-    },
-    "muu_liite": {
-      "title": "Muu liite",
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/attachment"
-      }
+      "type": "object",
+      "$ref": "#/definitions/orienteering_map"
     }
   }
 }
