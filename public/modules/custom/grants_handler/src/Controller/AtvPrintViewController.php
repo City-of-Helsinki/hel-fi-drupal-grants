@@ -14,8 +14,6 @@ use Drupal\grants_metadata\AtvSchema;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_metadata\InputmaskHandler;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
-use Drupal\webform\Entity\Webform;
-use Drupal\webform\WebformTranslationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -41,7 +39,7 @@ final class AtvPrintViewController extends ControllerBase {
   public function __construct(
     private readonly ApplicationGetterService $applicationGetterService,
     protected AtvSchema $atvSchema,
-    protected ApplicationDataService $applicationDataService
+    protected ApplicationDataService $applicationDataService,
   ) {}
 
   /**
@@ -51,7 +49,7 @@ final class AtvPrintViewController extends ControllerBase {
     return new self(
       $container->get('grants_handler.application_getter_service'),
       $container->get('grants_metadata.atv_schema'),
-      $container->get('grants_metadata.application_data_service')
+      $container->get('grants_metadata.application_data_service'),
     );
   }
 
