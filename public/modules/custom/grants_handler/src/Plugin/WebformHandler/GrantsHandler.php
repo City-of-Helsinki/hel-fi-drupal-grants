@@ -196,7 +196,7 @@ final class GrantsHandler extends WebformHandlerBase {
   protected ApplicationValidator $applicationValidator;
 
   /**
-   * the application status service.
+   * The application status service.
    *
    * @var \Drupal\grants_handler\ApplicationStatusService
    */
