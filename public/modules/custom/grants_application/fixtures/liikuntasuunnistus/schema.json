@@ -1,33 +1,127 @@
 {
-  "title": "suunnistus.title",
-  "description": "suunnistus.description",
+  "definitions": {
+    "orienteering_map": {
+      "type": "object",
+      "properties": {
+        "mapName": {
+          "title": "Kartan nimi, sijainti ja karttatyyppi",
+          "type": "string"
+        },
+        "size": {
+          "title": "Koko km2",
+          "type": "integer"
+        },
+        "voluntaryHours": {
+          "title": "Talkootyö tuntia",
+          "type": "string"
+        },
+        "cost": {
+          "title": "Kustannukset euroa",
+          "type": "integer"
+        },
+        "otherCompensations": {
+          "title": "Muilta saadut avustukset euroa",
+          "type": "integer"
+        }
+      }
+    },
+    "attachment": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "title": "Liitetiedosto",
+          "type": "string",
+          "format": "data-url"
+        },
+        "description": {
+          "title": "Liitteen kuvaus",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "title": "Liikunta, suunnistuskartta-avustushakemus",
+  "description": "",
   "type": "object",
   "required": [
-    "firstName",
-    "lastName"
+    "email",
+    "contact_person",
+    "contact_person_phone_number",
+    "community_address",
+    "bank_account"
   ],
   "properties": {
-    "firstName": {
+    "email": {
+      "title": "Sähköpostiosoite",
       "type": "string",
-      "title": "firstname",
+      "format": "email",
       "default": ""
     },
-    "lastName": {
+    "contact_person": {
+      "title": "Yhteyshenkilö",
       "type": "string",
-      "title": "lastname"
+      "default": ""
     },
-    "age": {
+    "contact_person_phone_number": {
+      "title": "Puhelinnumero",
+      "type": "string",
+      "default": ""
+    },
+    "community_address": {
+      "title": "Valitse osoite",
+      "type": "string",
+      "enum": [
+        "Mannerheimintie 1, 00100, Helsinki (tää tulee sieltä käyttäjän tiedoista)"
+      ]
+    },
+    "bank_account": {
+      "title": "Valitse tilinumero",
+      "type": "string",
+      "enum": [
+        "FI4950009420028730 (käyttäjän tietoja)"
+      ]
+    },
+    "community_officials": {
+      "title": "Valitse toiminnasta vastaava henkilö",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Teppo Testaaja (Yhteyshenkilö) (käyttäjän tietoja)"
+        ]
+      }
+    },
+    "acting_year": {
+      "title": "vuosi, jolle haet avustusta",
       "type": "integer",
-      "title": "age"
+      "enum": [
+        2025
+      ]
     },
-    "bio": {
-      "type": "string",
-      "title": "bio"
+    "orienteering_maps": {
+      "title": "Kartta",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/orienteering_map"
+      }
     },
-    "telephone": {
+    "additional_information": {
+      "title": "Lisätietoa",
       "type": "string",
-      "title": "suunnistus.telephone",
-      "minLength": 10
+      "maxLength": 5000
+    },
+    "extra_info": {
+      "title": "Lisäselvitys liitteistä",
+      "type": "string",
+      "maxLength": 5000
+    },
+    "muu_liite": {
+      "title": "Muu liite",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/attachment"
+      }
     }
   }
 }
