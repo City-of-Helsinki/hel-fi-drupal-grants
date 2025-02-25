@@ -13,6 +13,8 @@ services:
     volumes:
       - .:/app
       - /tmp/.X11-unix:/tmp/.X11-unix
+    profiles:
+      - testing
   app:
     environment:
       XDEBUG_CONFIG: "log_level=0"
