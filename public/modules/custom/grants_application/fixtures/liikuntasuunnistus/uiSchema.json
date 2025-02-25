@@ -1,28 +1,27 @@
 {
-  "firstName": {
-    "ui:autofocus": true,
-    "ui:emptyValue": "",
-    "ui:placeholder": "ui:emptyValue causes this field to always be valid despite being required",
-    "ui:autocomplete": "family-name",
-    "ui:enableMarkdownInDescription": true,
-    "ui:description": "firstname.description"
+  "bank_account": {
+    "items": {
+      "ui:emptyValue": "-Valitse tilinumero-"
+    }
   },
-  "lastName": {
-    "ui:autocomplete": "given-name",
-    "ui:enableMarkdownInDescription": true,
-    "ui:description": "Make things **bold** or *italic*. Embed snippets of `code`. <small>And this is a small texts.</small> "
-  },
-  "age": {
-    "ui:widget": "updown",
-    "ui:title": "Age of person",
-    "ui:description": "(earth year)"
-  },
-  "bio": {
+  "additional_information": {
     "ui:widget": "textarea"
   },
-  "telephone": {
-    "ui:options": {
-      "inputType": "tel"
+  "extra_info": {
+    "ui:widget": "textarea"
+  },
+  "muu_liite": {
+    "items": {
+      "description": {
+        "ui:widget": "textarea"
+      }
+    }
+  },
+  "orienteering_maps": {
+    "items": {
+      "mapName": {
+        "ui:widget": "textarea"
+      }
     }
   }
 }
