@@ -439,10 +439,10 @@ display:
           total_pages: null
           id: 0
           tags:
-            next: ››
-            previous: ‹‹
-            first: '« First'
-            last: 'Last »'
+            next: Next
+            previous: Previous
+            first: First
+            last: Last
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -587,7 +587,7 @@ display:
                 operator: '='
                 value: '1'
               -
-                title: Published
+                title: Unpublished
                 operator: '='
                 value: '0'
         type:
