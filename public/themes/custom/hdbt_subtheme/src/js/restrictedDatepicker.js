@@ -1,4 +1,4 @@
-(function ($, Drupal) {
+(($, Drupal) => {
   /**
    * The restrictedDatepicker behavior.
    *
@@ -17,24 +17,24 @@
        */
       const applicationTypeDateFieldMap = {
         LIIKUNTATAPAHTUMA: {
-          start_date_field: "edit-alkaa",
-          end_date_field: "edit-paattyy",
+          start_date_field: 'edit-alkaa',
+          end_date_field: 'edit-paattyy',
         },
         NUORPROJ: {
-          start_date_field: "edit-projekti-alkaa",
-          end_date_field: "edit-projekti-loppuu",
+          start_date_field: 'edit-projekti-alkaa',
+          end_date_field: 'edit-projekti-loppuu',
         },
         KASKOIPLISA: {
-          start_date_field: "edit-alkaen",
-          end_date_field: "edit-paattyy",
+          start_date_field: 'edit-alkaen',
+          end_date_field: 'edit-paattyy',
         },
         KUVAPROJ: {
-          start_date_field: "edit-hanke-alkaa",
-          end_date_field: "edit-hanke-loppuu",
+          start_date_field: 'edit-hanke-alkaa',
+          end_date_field: 'edit-hanke-loppuu',
         },
         KUVAKEHA: {
-          start_date_field: "edit-hanke-alkaa",
-          end_date_field: "edit-hanke-loppuu",
+          start_date_field: 'edit-hanke-alkaa',
+          end_date_field: 'edit-hanke-loppuu',
         },
       };
 
@@ -55,7 +55,7 @@
       );
 
       if (startDateInput && endDateInput) {
-        startDateInput.addEventListener("change", function () {
+        startDateInput.addEventListener('change', () => {
           // Set the minimum value for the end date.
           endDateInput.min = startDateInput.value;
 
