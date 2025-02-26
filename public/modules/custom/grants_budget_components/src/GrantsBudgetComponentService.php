@@ -3,7 +3,7 @@
 namespace Drupal\grants_budget_components;
 
 use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
+use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\ListInterface;
 use Drupal\Core\TypedData\Plugin\DataType\Map;
 use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
@@ -291,7 +291,7 @@ class GrantsBudgetComponentService {
     }
 
     // Extracts requested grant if property definition is simple.
-    if (!$definition instanceof ComplexDataDefinitionInterface) {
+    if ($definition instanceof DataDefinition && $definition->getDataType() === 'string') {
       return $dataFromDocument['incomeRowsArrayStatic']['general'][0]['compensation'] ?? '0';
     }
 
