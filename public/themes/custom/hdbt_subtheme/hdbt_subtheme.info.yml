@@ -41,3 +41,5 @@ libraries-override:
   webform/webform.wizard.pages:
     js:
       js/webform.wizard.pages.js: dist/js/webform.wizard.pages.min.js
+  hdbt/hyphenopoly-loader: false
+  hdbt/hyphenopoly: false
