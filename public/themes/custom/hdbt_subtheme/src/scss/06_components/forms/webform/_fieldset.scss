@@ -23,6 +23,7 @@ fieldset.grants-fieldset {
 
   &-medium {
     max-width: var(--webform-element-width--fieldset);
+
     .fieldset-wrapper {
       justify-content: center;
     }
@@ -53,9 +54,9 @@ fieldset.orienteering-map-composite--wrapper,
   }
 
   legend > span.visually-hidden {
-    background: white;
-    clip-path: initial;
+    background: $color-white;
     clip: initial;
+    clip-path: initial;
     height: auto;
     left: auto;
     margin-left: calc(var(--spacing-2-xs) * -1);

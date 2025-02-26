@@ -76,6 +76,10 @@
 .hds-text-input {
   max-width: fit-content;
   width: 100%;
+
+  &.js-form-type-textarea {
+    max-width: var(--webform-element-width--input-large);
+  }
 }
 
 .webform-section-grid-wrapper {
@@ -257,8 +261,10 @@ fieldset input[type="button"] {
     font-weight: normal;
   }
 
-  .js-form-type-textarea .hds-text-input__input-wrapper {
-    display: block;
+  .js-form-type-textarea {
+    .hds-text-input__input-wrapper {
+      display: block;
+    }
   }
 
   .has-error,
