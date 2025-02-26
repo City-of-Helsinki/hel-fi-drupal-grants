@@ -33,7 +33,7 @@ close: null
 uid: 1
 template: false
 archive: false
-id: kuva_alueellisen_liikuntaharrastamisen_tukemisen_avustus
+id: liikuntaharrastamisen_avustus
 title: 'Alueellisen liikuntaharrastamisen tukemisen avustus'
 description: '<p>KUVAERILLIS</p>'
 categories:
