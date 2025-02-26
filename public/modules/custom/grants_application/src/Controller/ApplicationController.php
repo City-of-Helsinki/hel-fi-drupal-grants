@@ -37,9 +37,9 @@ final class ApplicationController extends ControllerBase {
       return new JsonResponse([], 500);
     }
 
-    if (!$settings->isApplicationOpen()) {
-      return new JsonResponse([], 403);
-    }
+    // if (!$settings->isApplicationOpen()) {
+    //   return new JsonResponse([], 403);
+    // }
 
     try {
       $settings->setGrantsProfileData(

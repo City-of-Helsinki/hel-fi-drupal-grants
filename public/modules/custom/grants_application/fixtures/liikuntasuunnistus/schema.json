@@ -3,7 +3,7 @@
     "applicant_info": {
       "type": "object",
       "properties": {
-        "email": {
+        "applicant_email": {
           "title": "Sähköpostiosoite",
           "description": "Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.",
           "type": "object",
@@ -12,7 +12,7 @@
               "title": "Sähköpostiosoite",
               "type": "string",
               "format": "email",
-              "default": ""
+              "minLength": 1
             }
           },
           "required": [
@@ -74,14 +74,18 @@
             }
           }
         }
-      }
+      },
+      "required": [
+        "applicant_email"
+      ]
     },
     "orienteering_map": {
       "type": "object",
       "properties": {
         "mapName": {
           "title": "Kartan nimi, sijainti ja karttatyyppi",
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "size": {
           "title": "Koko km2",
@@ -99,7 +103,10 @@
           "title": "Muilta saadut avustukset euroa",
           "type": "integer"
         }
-      }
+      },
+      "required": [
+        "mapName"
+      ]
     },
     "attachment": {
       "type": "object",
@@ -122,7 +129,6 @@
   "properties": {
     "applicant_info": {
       "title": "Yhteisö, jolle haetaan avustusta",
-      "description": "Tiedot on haettu Patentti- ja rekisterihallinnon rekisteristä (PRH), eikä niitä voi tämän takia muokata.",
       "type": "object",
       "$ref": "#/definitions/applicant_info"
     },

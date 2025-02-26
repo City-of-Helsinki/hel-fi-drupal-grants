@@ -1,12 +1,13 @@
 import useSWRImmutable from 'swr/immutable'
 import { useSetAtom } from 'jotai';
 import { ADDITIONAL_PROPERTIES_KEY } from '@rjsf/utils';
-import RJSFFormContainer from './RSJFFormContainer';
+import { RJSFFormContainer } from './RJSFFormContainer';
 import { initializeFormAtom } from '../store';
 import { Stepper } from '../components/Stepper';
+import { IChangeEvent } from '@rjsf/core';
 
 const fetchFormData = async(id: string) => {
-  const response = await fetch(`/en/application/${id}/preview`);
+  const response = await fetch(`/en/application/${id}`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch form data');
@@ -66,14 +67,19 @@ const FormWrapper = ({
   initializeForm(data);
   const transformedSchema = transformSchema(data);
 
+  const submitData = async (data: IChangeEvent) => {
+    const submitResult = await fetch(`/en/application/${applicationNumber}`, {
+      method: 'POST',
+      body: JSON.stringify(data.formData),
+    });
+  };
+
   return (
-    <>
-      <Stepper />
-      <RJSFFormContainer
-        schema={transformedSchema}
-        uiSchema={data.ui_schema}
-      />
-    </>
+    <RJSFFormContainer
+      schema={transformedSchema}
+      submitData={submitData}
+      uiSchema={data.ui_schema}
+    />
   );
 };
 

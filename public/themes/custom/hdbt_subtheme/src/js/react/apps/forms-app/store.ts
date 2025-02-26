@@ -1,3 +1,4 @@
+import { RJSFSchema, UiSchema } from '@rjsf/utils';
 import { atom } from 'jotai';
 
 export type FormStep = {
@@ -5,20 +6,52 @@ export type FormStep = {
   label: string;
 };
 
+type GrantsProfile = {
+  companyNameShort: string;
+  companyName: string;
+  companyHome: string;
+  companyHomePage: string;
+  companyStatus: string;
+  companyStatusSpecial: string;
+  businessPurpose: string;
+  foundingYear: string;
+  registrationDate: string;
+  officials: Array<any>;
+  addresses: Array<{
+    address_id: string;
+    street: string;
+    postCode: string;
+    city: string;
+    country: string;
+  }>;
+  bankAccounts: Array<{
+      bankAccount: string;
+      confirmationFile: string;
+      bank_account_id: string;
+      ownerName?: string;
+      ownerSsn?: string;
+  }>,
+  businessId: string;
+};
+
 type FormState = {
   currentStep: [number, FormStep];
 }
 
 type FormConfig = {
-  definitions: any;
-  description: string;
-  properties: any;
-  title: string;
+  grantsProfile: GrantsProfile,
+  schema: RJSFSchema;
+  uiSchema: UiSchema;
   translations: {
     [key in 'fi'|'sv'|'en']: {
       [key: string]: string;
     };
   };
+};
+
+type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema'> & {
+  grants_profile: GrantsProfile;
+  ui_schema: UiSchema;
 };
 
 const buildFormSteps = ({
@@ -52,13 +85,27 @@ const buildFormSteps = ({
 export const formConfigAtom = atom<FormConfig|undefined>();
 export const formStateAtom = atom<FormState|undefined>();
 export const formStepsAtom = atom<Map<number, FormStep>|undefined>();
-export const initializeFormAtom = atom(null, (_get, _set, formConfig: FormConfig) => {
+export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData) => {
+  const { grants_profile: grantsProfile, ui_schema: uiSchema, ...rest } = formConfig;
   const steps = buildFormSteps(formConfig);
   _set(formStepsAtom, state => steps);
-  _set(formConfigAtom, (state) => formConfig);
+  _set(formConfigAtom, (state) => ({
+    grantsProfile,
+    uiSchema,
+    ...rest,
+  }));
   _set(formStateAtom, (state) => ({
       currentStep: [0, steps.get(0)],
     }));
+});
+export const getFormConfigAtom  = atom(_get => {
+  const config = _get(formConfigAtom);
+
+  if (!config) {
+    throw new Error('Trying to read form config before initialization.');
+  }
+
+  return config;
 });
 export const getCurrentStepAtom = atom(_get => {
   const currentState = _get(formStateAtom);

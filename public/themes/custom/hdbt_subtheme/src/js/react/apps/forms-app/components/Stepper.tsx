@@ -1,25 +1,62 @@
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Stepper as HDSStepper, StepState } from 'hds-react';
-import { useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 import { FormStep, formStepsAtom, getCurrentStepAtom, setStepAtom } from '../store';
+import { RJSFValidationError } from '@rjsf/utils';
+import Form from '@rjsf/core';
 
-const transformSteps = (steps: Map<number, FormStep>|undefined) => {
+const transformSteps = (
+  steps: Map<number, FormStep>|undefined,
+  errorIndices: number[] = [],
+) => {
   if (!steps) {
     return [];
   }
 
   return Array.from(steps).map(([index, step]) => ({
     label: step.label,
-    state: StepState.available,
+    state: errorIndices.includes(index) ? StepState.attention : StepState.available,
   }));
 }
 
-export const Stepper = () => {
+const getIndicesWithErrors = (
+  errors: RJSFValidationError[]|undefined,
+  steps?: Map<number, FormStep>,
+) => {
+  if (!steps || !errors || !errors?.length) {
+    return [];
+  }
+
+  const errorIndices: number[] = [];
+  const propertyParentKeys: string[] = [];
+  const regex = new RegExp('^\.([^\.]+)');
+  errors.forEach(error => {
+    let match = error?.property?.match(regex)?.[0];
+
+    if (match) {
+      propertyParentKeys.push(match.split('.')[1]);
+    }
+  });
+  Array.from(steps).forEach(([index, step]) => {
+    if (propertyParentKeys.includes(step.id)) {
+      errorIndices.push(index);
+    }
+  });
+
+  return errorIndices;
+};
+
+export const Stepper = ({
+  formRef,
+}: {
+  formRef: RefObject<Form>
+}) => {
   const divRef = useRef<HTMLDivElement|null>(null);
   const [currentIndex] = useAtomValue(getCurrentStepAtom);
   const steps = useAtomValue(formStepsAtom);
   const setStep = useSetAtom(setStepAtom);
-  const transformedSteps = transformSteps(steps);
+  const errors = formRef.current?.state.errors;
+  const transformedSteps = transformSteps(steps, getIndicesWithErrors(errors, steps));
 
   useEffect(() => {
     if (divRef.current) {

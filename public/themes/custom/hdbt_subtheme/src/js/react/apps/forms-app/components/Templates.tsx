@@ -1,7 +1,8 @@
 import { ArrayFieldTemplateProps, ObjectFieldTemplateProps } from '@rjsf/utils'
 import { Fieldset } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { getCurrentStepAtom } from '../store';
+import { getCurrentStepAtom, getFormConfigAtom } from '../store';
+import { ApplicantInfo } from './ApplicantInfo';
 
 export const FieldsetWidget = () => (
     <Fieldset
@@ -25,7 +26,7 @@ export const ObjectFieldTemplate = ({
   uiSchema,
 }: ObjectFieldTemplateProps) => {
   const { additionalProperties, title, description } = schema;
-  const [step, { id: stepId }] = useAtomValue(getCurrentStepAtom);
+  const { id: stepId } = useAtomValue(getCurrentStepAtom)[1];
 
   if (idSchema.$id === 'root') {
     return (
@@ -53,18 +54,27 @@ export const ObjectFieldTemplate = ({
   ) {
     return (
       <>
-        <section className='grants-profile--imported-section webform-section'>
-          <div className='webform-section-flex-wrapper '>
-            {title && <h2>{title}</h2>}
-            <div className='webform-section-wrapper'>
-              {description &&
-                <div className='form-item form-item-prh-markup'>
-                  {description}
+        {title && <h2 className='grants__page-header'>{title}</h2>}
+        {
+          stepId === 'applicant_info' &&
+          <section className='grants-profile--imported-section webform-section'>
+            <div className='webform-section-flex-wrapper'>
+              <div className='form-item-prh-markup'>
+                <div className='grants-profile-prh-info'>
+                  {Drupal.t('The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.')}
                 </div>
-              }
+              </div>
+              <ApplicantInfo />
             </div>
-          </div>
-        </section>
+          </section>
+        }
+        <div className='webform-section-wrapper'>
+          {description &&
+            <div className='form-item form-item-prh-markup'>
+              {description}
+            </div>
+          }
+        </div>
         {properties.map(field => field.content)}
       </>
     )

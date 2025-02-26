@@ -5,7 +5,6 @@ import React from 'react';
 import { getCurrentStepAtom, setStepAtom } from '../store';
 
 export const TextInput = ({
-  defaultValue,
   id,
   label,
   name,
@@ -15,11 +14,8 @@ export const TextInput = ({
   required,
   value,
 }: WidgetProps) => {
-  const compatibleDefault = typeof defaultValue === 'string' ? defaultValue : undefined;
-
   return (
     <HDSTextInput
-      defaultValue={compatibleDefault}
       errorText={rawErrors?.toString()}
       hideLabel={false}
       id={id}
@@ -31,13 +27,12 @@ export const TextInput = ({
       onFocus={() => null}
       readOnly={readonly}
       required={required}
-      value={value}
+      value={value ?? ''}
     />
   );
 };
 
 export const TextArea = ({
-  defaultValue,
   id,
   label,
   name,
@@ -47,11 +42,8 @@ export const TextArea = ({
   required,
   value,
 }: WidgetProps) => {
-  const compatibleDefault = typeof defaultValue === 'string' ? defaultValue : undefined;
-
   return (
     <HDSTextArea
-      defaultValue={compatibleDefault}
       hideLabel={false}
       id={id}
       invalid={Boolean(rawErrors?.length)}
@@ -62,13 +54,12 @@ export const TextArea = ({
       onFocus={() => null}
       readOnly={readonly}
       required={required}
-      value={value}
+      value={value ?? ''}
     />
   );
 };
 
 export const SelectWidget = ({
-  defaultValue,
   id,
   label,
   name,
@@ -88,63 +79,3 @@ export const SelectWidget = ({
       value={value}
     />
   );
-
-export const SubmitButton = (props: SubmitButtonProps) => {
-  const [currentStepIndex, { id: currentStepId }] = useAtomValue(getCurrentStepAtom);
-  const setStep = useSetAtom(setStepAtom);
-
-  return (
-    <div className='form-actions form-wrapper'>
-      <div className='actions'>
-        <Button
-          iconStart={<IconTrash />}
-          theme={ButtonPresetTheme.Black}
-          type='button'
-          variant={ButtonVariant.Supplementary}
-        >
-          {Drupal.t('Delete draft')}
-        </Button>
-        <Button
-          iconStart={<IconDownloadCloud />}
-          theme={ButtonPresetTheme.Black}
-          type='button'
-          variant={ButtonVariant.Supplementary}
-        >
-          {Drupal.t('Save as draft')}
-        </Button>
-        {
-          (currentStepIndex > 0 && currentStepId !== 'ready') &&
-          <Button
-            onClick={() => setStep(currentStepIndex - 1)}
-            theme={ButtonPresetTheme.Black}
-            type='button'
-            variant={ButtonVariant.Primary}
-          >
-            {Drupal.t('Previous')}
-          </Button>
-        }
-        {
-          currentStepId !== 'ready' &&
-            (
-              currentStepId === 'preview' ?
-              <Button
-                theme={ButtonPresetTheme.Black}
-                type='submit'
-                variant={ButtonVariant.Primary}
-              >
-                {Drupal.t('Submit')}
-              </Button> :
-              <Button
-                onClick={() => setStep(currentStepIndex + 1)}
-                theme={ButtonPresetTheme.Black}
-                type='button'
-                variant={ButtonVariant.Primary}
-              >
-                {Drupal.t('Next')}
-              </Button>
-            )
-        }
-      </div>
-    </div>
-  );
-};
