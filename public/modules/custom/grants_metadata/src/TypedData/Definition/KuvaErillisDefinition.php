@@ -81,6 +81,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       // at that point. This can be removed if computed fields have better
       // support in the future.
       'haettava_avustussumma_2025' => [
+        'valueCallback' => static fn (mixed $value) => $value['compensation'] ?? $value,
         'webformDataExtracter' => [
           'service' => 'grants_budget_components.service',
           'method' => 'extractToWebformData',
