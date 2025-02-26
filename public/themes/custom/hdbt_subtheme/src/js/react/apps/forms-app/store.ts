@@ -1,5 +1,4 @@
 import { atom } from 'jotai';
-import { StepState } from 'hds-react';
 
 export type FormStep = {
   id: string;
@@ -57,11 +56,9 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: FormConfig
   const steps = buildFormSteps(formConfig);
   _set(formStepsAtom, state => steps);
   _set(formConfigAtom, (state) => formConfig);
-  _set(formStateAtom, (state) => {
-    return {
+  _set(formStateAtom, (state) => ({
       currentStep: [0, steps.get(0)],
-    };
-  });
+    }));
 });
 export const getCurrentStepAtom = atom(_get => {
   const currentState = _get(formStateAtom);
@@ -80,10 +77,8 @@ export const setStepAtom = atom(null, (_get, _set, index: number) => {
     throw new Error(`Index ${index} does not exist in defined steps for the form.`);
   }
 
-  _set(formStateAtom, state => {
-    return state ? {
+  _set(formStateAtom, state => state ? {
       ...state,
       currentStep: [index, step],
-    } : state;
-  });
+    } : state);
 });

@@ -1,3 +1,5 @@
+
+// @eslint-disable-nextline
 declare namespace Drupal {
   const cookieConsent: {
     initialized: () => boolean;

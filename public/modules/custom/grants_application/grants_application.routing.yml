@@ -38,4 +38,4 @@ helfi_grants.forms_app:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
     _title: ''
   requirements:
-    _role: admin
+    _role: helsinkiprofiili

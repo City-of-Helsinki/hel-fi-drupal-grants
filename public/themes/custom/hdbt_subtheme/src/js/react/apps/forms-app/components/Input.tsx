@@ -77,19 +77,17 @@ export const SelectWidget = ({
   readonly,
   required,
   value,
-}: WidgetProps) => {
-  return (
+}: WidgetProps) => (
     <Select
       id={id}
       onBlur={() => null}
-      onChange={options => onChange(options)}
+      onChange={newValue => onChange(newValue)}
       options={options?.enumOptions ?? []}
       onFocus={() => null}
       required={required}
       value={value}
     />
-  )
-};
+  );
 
 export const SubmitButton = (props: SubmitButtonProps) => {
   const [currentStepIndex, { id: currentStepId }] = useAtomValue(getCurrentStepAtom);

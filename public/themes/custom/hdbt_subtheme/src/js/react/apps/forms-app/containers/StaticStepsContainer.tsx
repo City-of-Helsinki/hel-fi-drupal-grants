@@ -1,6 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { formStateAtom, getCurrentStepAtom } from '../store';
-import { Button } from 'hds-react';
+import { getCurrentStepAtom } from '../store';
 
 export const StaticStepsContainer = ({
   formRef

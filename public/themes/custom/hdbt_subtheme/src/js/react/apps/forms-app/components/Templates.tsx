@@ -1,26 +1,22 @@
-import { ArrayFieldTemplateProps, BaseInputTemplateProps, ObjectFieldTemplateProps } from '@rjsf/utils'
+import { ArrayFieldTemplateProps, ObjectFieldTemplateProps } from '@rjsf/utils'
 import { Fieldset } from 'hds-react';
 import { useAtomValue } from 'jotai';
 import { getCurrentStepAtom } from '../store';
 
-export const FieldsetWidget = () => {
-  return (
+export const FieldsetWidget = () => (
     <Fieldset
       border
-      heading={''}
+      heading=""
     >
 
     </Fieldset>
-  )
-};
+  );
 
 export const ArrayFieldTemplate = ({
   idSchema,
   schema,
   uiSchema,
-}: ArrayFieldTemplateProps) => {
-  return null;
-}
+}: ArrayFieldTemplateProps) => null
 
 export const ObjectFieldTemplate = ({
   idSchema,
@@ -28,11 +24,7 @@ export const ObjectFieldTemplate = ({
   schema,
   uiSchema,
 }: ObjectFieldTemplateProps) => {
-  const { title, description } = schema;
-  // @ts-ignore
-  const additionalProperties: {
-    step?: string,
-  } = schema.additionalProperties;
+  const { additionalProperties, title, description } = schema;
   const [step, { id: stepId }] = useAtomValue(getCurrentStepAtom);
 
   if (idSchema.$id === 'root') {
@@ -43,15 +35,20 @@ export const ObjectFieldTemplate = ({
     )
   }
 
+  // @todo fix type errors with additionalProperties
   if (
+    // @ts-expect-error
     additionalProperties?.step &&
+    // @ts-expect-error
     additionalProperties.step !== stepId
   ) {
     return null;
   }
 
   if (
+    // @ts-expect-error
     additionalProperties?.step &&
+    // @ts-expect-error
     additionalProperties.step === stepId
   ) {
     return (

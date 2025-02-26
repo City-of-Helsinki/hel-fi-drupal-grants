@@ -1,7 +1,7 @@
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Stepper as HDSStepper, StepState } from 'hds-react';
+import { useEffect, useRef } from 'react';
 import { FormStep, formStepsAtom, getCurrentStepAtom, setStepAtom } from '../store';
-import { createRef, useEffect, useRef } from 'react';
 
 const transformSteps = (steps: Map<number, FormStep>|undefined) => {
   if (!steps) {
@@ -16,7 +16,7 @@ const transformSteps = (steps: Map<number, FormStep>|undefined) => {
 
 export const Stepper = () => {
   const divRef = useRef<HTMLDivElement|null>(null);
-  const [currentIndex, currentTitle] = useAtomValue(getCurrentStepAtom);
+  const [currentIndex] = useAtomValue(getCurrentStepAtom);
   const steps = useAtomValue(formStepsAtom);
   const setStep = useSetAtom(setStepAtom);
   const transformedSteps = transformSteps(steps);

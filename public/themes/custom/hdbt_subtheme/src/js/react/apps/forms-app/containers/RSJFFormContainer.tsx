@@ -1,22 +1,10 @@
 import Form from '@rjsf/core';
-import { RJSFSchema, RegistryFieldsType, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
+import { RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
-import React, { createRef, useEffect } from 'react';
+import React, { createRef } from 'react';
 import { TextArea, TextInput, SubmitButton, SelectWidget } from '../components/Input';
 import { ArrayFieldTemplate, FieldsetWidget, ObjectFieldTemplate } from '../components/Templates';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { formConfigAtom, formStateAtom, getCurrentStepAtom } from '../store';
 import { StaticStepsContainer } from './StaticStepsContainer';
-
-const fetchFormData = async(id: string) => {
-  const response = await fetch(`/en/application/${id}/preview`);
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch form data');
-  }
-
-  return response.json();
-};
 
 const widgets: RegistryWidgetsType = {
   EmailWidget: TextInput,
@@ -44,7 +32,7 @@ const RJSFFormContainer = ({
         className='grants-react-form webform-submission-form'
         method='POST'
         noHtml5Validate
-        onError={errors => console.log(errors)}
+        onError={errors => null}
         onSubmit={(data, event: React.FormEvent<HTMLFormElement>) => {
           event.preventDefault();
 
@@ -52,10 +40,9 @@ const RJSFFormContainer = ({
             formRef.current?.validateForm();
           }
           catch (e) {
-            return;
+            console.error(e);
+            
           }
-
-          console.log(data);
         }}
         ref={formRef}
         schema={schema}

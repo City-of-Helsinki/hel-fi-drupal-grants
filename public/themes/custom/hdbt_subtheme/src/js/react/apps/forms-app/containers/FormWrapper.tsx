@@ -1,8 +1,8 @@
 import useSWRImmutable from 'swr/immutable'
-import RJSFFormContainer from './RSJFFormContainer';
 import { useSetAtom } from 'jotai';
-import { initializeFormAtom } from '../store';
 import { ADDITIONAL_PROPERTIES_KEY } from '@rjsf/utils';
+import RJSFFormContainer from './RSJFFormContainer';
+import { initializeFormAtom } from '../store';
 import { Stepper } from '../components/Stepper';
 
 const fetchFormData = async(id: string) => {
@@ -21,10 +21,9 @@ const transformSchema = (data: any) => {
     schema: {
       properties,
     },
-    translations,
   } = data;
 
-  let transformedProperties: any = {};
+  const transformedProperties: any = {};
 
   Object.entries(properties).forEach((property: any, index: number) => {
     const [key, value] = property;
