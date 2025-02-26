@@ -34,7 +34,11 @@ final class AtvPrintViewController extends ControllerBase {
    * Constructs a new AtvPrintViewController object.
    *
    * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
-   *   Application getter.
+   *   The application getter service.
+   * @param \Drupal\grants_metadata\AtvSchema $atvSchema
+   *   The atv schema.
+   * @param \Drupal\grants_metadata\ApplicationDataService $applicationDataService
+   *   The application data service.
    */
   public function __construct(
     private readonly ApplicationGetterService $applicationGetterService,
