@@ -57,6 +57,9 @@ display:
         langcode:
           expose:
             label: Kieli
+        revision_uid:
+          expose:
+            label: 'Version kirjoittaja'
     display_title: Oletus
   page_1:
     display_title: Sivu

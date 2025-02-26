@@ -2,7 +2,7 @@ _core:
   default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI
 langcode: en
 uuid: c7259448-db95-43bf-9851-b51cf95b0159
-name: Avustusasiointi
+name: 'Grants service'
 mail: noreply@hel.fi
 slogan: ''
 page:

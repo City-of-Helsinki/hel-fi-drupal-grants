@@ -101,13 +101,16 @@ const fillFormField = async (
  *   Item key used in data definition.
  * @param clearBefore
  *   A boolean indicating if the field value should be cleared before filling.
+ * @param simulateTyping
+ *   A boolean indicating wether to simulate pressing characters one by one.
  */
 async function fillInputField(
   value: string,
   selector: Selector | undefined,
   page: Page,
   itemKey: string,
-  clearBefore: boolean = false
+  clearBefore: boolean = false,
+  simulateTyping: boolean = false,
 ) {
   if (!selector) {
     return;
@@ -121,7 +124,13 @@ async function fillInputField(
       if (clearBefore) {
         await page.locator(customSelector).fill('');
       }
-      await page.locator(customSelector).fill(value);
+
+      if (simulateTyping) {
+        await page.locator(customSelector).pressSequentially(value);
+      }
+      else {
+        await page.locator(customSelector).fill(value);
+      }
       break;
 
     // Press sequentially with data-drupal-selector.

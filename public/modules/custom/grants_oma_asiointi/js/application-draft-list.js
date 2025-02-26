@@ -58,7 +58,7 @@
         pagination: true,
         page: 10,
       };
-      new List('oma-asiointi__drafts', draftsListOptions);
+      const draftsList = new List('oma-asiointi__drafts', draftsListOptions);
     }
   }
 };

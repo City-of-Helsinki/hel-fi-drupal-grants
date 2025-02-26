@@ -121,8 +121,8 @@ fieldset input[type="button"] {
 }
 
 .grants__page-header {
-  margin-bottom: var(--spacing-layout-l);
   font-size: 2rem;
+  margin-bottom: var(--spacing-layout-l);
 
   @include breakpoint($breakpoint-m) {
     font-size: 3rem;
@@ -132,8 +132,8 @@ fieldset input[type="button"] {
 .webform-section-flex-wrapper {
   display: flex;
   flex-flow: row wrap;
-  width: 100%;
   justify-content: left;
+  width: 100%;
 
   @include breakpoint($breakpoint-m) {
     flex-flow: row nowrap;
@@ -216,9 +216,9 @@ fieldset input[type="button"] {
 
   // Set the default values for legend position in a fieldset.
   legend {
-    padding: 0 var(--spacing-2-xs);
-    margin-left: calc(var(--spacing-2-xs) * -1);
     left: auto;
+    margin-left: calc(var(--spacing-2-xs) * -1);
+    padding: 0 var(--spacing-2-xs);
   }
 
   // Set the default right padding for the fieldset legend and label,

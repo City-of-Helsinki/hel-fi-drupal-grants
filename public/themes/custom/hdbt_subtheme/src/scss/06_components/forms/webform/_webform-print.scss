@@ -433,8 +433,8 @@
   // Reduce top-margin from all print-label elements and immediate h4 elements.
   > h4,
   .print-label {
-    margin-top: var(--spacing-2-xs);
     line-height: 1.5;
+    margin-top: var(--spacing-2-xs);
   }
 
   fieldset {
