@@ -4,6 +4,7 @@ namespace Drupal\grants_metadata\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\DataDefinition;
+use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetIncomeStaticDefinition;
 use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition;
 
 /**
@@ -74,7 +75,18 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         ],
       ],
       'hankkeen_nimi' => [],
-      'haettava_avustussumma_2025' => [],
+      // This field is read only / fully computed. However, the field must
+      // be sent to ATV / avust2 or else the preview feature breaks. Field
+      // values are saved/loaded from ATV when draft is saved/opened, and
+      // the underlying component does not know how to recalculate its values
+      // at that point. This can be removed if computed fields have better
+      // support in the future.
+      'haettava_avustussumma_2025' => [
+        'webformDataExtracter' => [
+          'service' => 'grants_budget_components.service',
+          'method' => 'extractToWebformData',
+        ],
+      ],
       'haettava_avustussumma_2026' => [],
       'haettava_avustussumma_2027' => [],
       'hankkeen_monivuotisuuden_tarve' => [],
@@ -211,6 +223,9 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
     // Add value extractor if set.
     if (isset($value['webformValueExtracter'])) {
       $info[$key]->setSetting('webformValueExtracter', $value['webformValueExtracter']);
+    }
+    if (isset($value['webformDataExtracter'])) {
+      $info[$key]->setSetting('webformDataExtracter', $value['webformDataExtracter']);
     }
     // Add default value if set or empty value.
     if (isset($value['defaultValue'])) {
