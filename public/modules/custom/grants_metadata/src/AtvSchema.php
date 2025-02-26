@@ -266,7 +266,7 @@ class AtvSchema {
       if ($valueCallback instanceof \Closure) {
         $itemValue = call_user_func($valueCallback, $itemValue);
       }
-      else if (isset($valueCallback['service'])) {
+      elseif (isset($valueCallback['service'])) {
         $fullItemValueService = \Drupal::service($valueCallback['service']);
         $funcName = $valueCallback['method'];
         $itemValue = $fullItemValueService->$funcName($itemValue, $valueCallback['arguments'] ?? []);
