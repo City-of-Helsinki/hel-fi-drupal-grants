@@ -142,7 +142,7 @@ const validateTextContent = async (page: Page, containerClass: string, selector:
 const validatePageTitle = async (page: Page) => {
   logger(`Validating page title...`);
   const title = await page.title();
-  const titlePattern = /.*\| Helsingin kaupunki$/;
+  const titlePattern = /[^|]+\| Helsingin kaupunki$/;
   await expect(title, `The page title '${title}' does not end with '| Helsingin kaupunki'.`).toMatch(titlePattern);
   logger('Page title validated.');
 };

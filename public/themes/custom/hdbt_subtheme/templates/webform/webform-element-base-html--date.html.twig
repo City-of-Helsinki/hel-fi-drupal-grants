@@ -13,19 +13,19 @@
  *   - email: Flag to determine if element is for an email.
  */
 #}
-{% set formItemClass =  'form-item-' ~ item['#name']|clean_class  %}
+{% set form_item_class =  'form-item-' ~ item['#name']|clean_class  %}
 {% if options.email %}
   {% if title %}<b>{{ title }}</b><br />{% endif %}{{ value }}<br /><br />
 {% else %}
   {% if view_application_page %}
-    {% if title %}<dt>{{ title }}</dt>{% endif %}
-    <dd>{{ item.value['#plain_text']|date('d.m.Y') }}</dd>
+    <dl>
+      {% if title %}<dt>{{ title }}</dt>{% endif %}
+      <dd>{{ item.value['#plain_text']|date('d.m.Y') }}</dd>
+    </dl>
   {% else %}
-<div class="webform-element webform-element-type-textfield js-form-item form-item {{ formItemClass}} js-form-type-item">
-  {% if title %}<label>{{ title }}</label>{% endif %}
-  {{ item.value['#plain_text']|date('d.m.Y') }}
-</div>
-
+    <div class="webform-element webform-element-type-textfield js-form-item form-item {{ form_item_class}} js-form-type-item">
+      {% if title %}<label>{{ title }}</label>{% endif %}
+      {{ item.value['#plain_text']|date('d.m.Y') }}
+    </div>
   {% endif %}
 {% endif %}
-
