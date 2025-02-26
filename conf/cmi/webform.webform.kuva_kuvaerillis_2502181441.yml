@@ -619,7 +619,7 @@ elements: |-
           '#incomeGroup': general
           '#required': true
           '#compensation__title': '2025 (euroa)'
-          '#compensation__title_display': before
+          '#compensation__title_display': none
           '#plannedStateOperativeSubvention__access': false
           '#otherCompensationFromCity__access': false
           '#stateOperativeSubvention__access': false
@@ -1328,4 +1328,28 @@ handlers:
     status: true
     conditions: {  }
     weight: null
+    settings:
+      id: grants_handler
+      handler_id: null
+      label: 'Grants Handler'
+      notes: ''
+      status: true
+      conditions: {  }
+      weight: null
+      settings:
+        id: grants_handler
+        handler_id: null
+        label: 'Grants Handler'
+        notes: ''
+        status: true
+        conditions: {  }
+        weight: null
+        settings:
+          id: grants_handler
+          handler_id: null
+          label: 'Grants Handler'
+          notes: ''
+          status: true
+          conditions: {  }
+          weight: null
 variants: {  }
