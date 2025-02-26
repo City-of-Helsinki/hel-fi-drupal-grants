@@ -74,6 +74,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         ],
       ],
       'hankkeen_nimi' => [],
+      'haettava_avustussumma_2025' => [],
       'haettava_avustussumma_2026' => [],
       'haettava_avustussumma_2027' => [],
       'hankkeen_monivuotisuuden_tarve' => [],

@@ -618,7 +618,6 @@ elements: |-
           '#multiple': false
           '#incomeGroup': general
           '#required': true
-          '#admin_notes': '<p>This field is delibarately not mapped with Drupal\grants_metadata\TypedData\Definition\KuvaErillisDefinition. The same information is collected in subventions field.</p>'
           '#compensation__title': '2025 (euroa)'
           '#compensation__title_display': before
           '#plannedStateOperativeSubvention__access': false
