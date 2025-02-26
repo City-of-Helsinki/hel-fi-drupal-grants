@@ -112,7 +112,7 @@ final class ApplicationController extends ControllerBase {
     [$form_data] = $content;
 
     // @todo original implementation is in ApplicationUploaderService.
-    // It requires a lot modification.
+    // It requires a lot of modification.
     if (!$form_data) {
       return new JsonResponse([], 500);
     }

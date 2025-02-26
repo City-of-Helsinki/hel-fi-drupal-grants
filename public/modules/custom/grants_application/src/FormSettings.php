@@ -26,12 +26,21 @@ final class FormSettings {
 
   /**
    * The constructor.
+   *
+   * @param array $settings
+   *   The metadata related to the form, check fixtures settings.json.
+   * @param array $schema
+   *   The form RJSF-schema.
+   * @param array $uiSchema
+   *   The form RJSF-ui-schema.
+   * @param array $translation
+   *   The form translations.
    */
   public function __construct(
-    private array $settings,
-    private array $schema,
-    private array $uiSchema,
-    private array $translation,
+    private readonly array $settings,
+    private readonly array $schema,
+    private readonly array $uiSchema,
+    private readonly array $translation,
   ) {
   }
 

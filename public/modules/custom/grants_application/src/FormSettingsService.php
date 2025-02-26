@@ -30,6 +30,7 @@ class FormSettingsService {
 
     $form_name = $this->forms[$id];
 
+    // Load all the required settings from fixtures.
     $settings = [];
     foreach ($this->getSettingsFiles() as $suffix) {
       $path_to_file = sprintf(__DIR__ . '/../fixtures/%s/%s.json',
