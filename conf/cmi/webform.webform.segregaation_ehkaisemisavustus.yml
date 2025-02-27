@@ -240,7 +240,7 @@ elements: |-
       additional_information: 0
       extra_info: 0
       muu_liite: 0
-    '#subvention_type': '48'
+    '#subvention_type': '49'
     '#data_type': euro
     '#form_item': hidden
   1_hakijan_tiedot:
@@ -380,6 +380,7 @@ elements: |-
         '#title': 'Vuosi, jolle haen avustusta'
         '#options':
           2025: '2025'
+          2026: '2026'
         '#required': true
     avustuslajit:
       '#type': webform_section
@@ -389,7 +390,7 @@ elements: |-
         '#title': Avustukset
         '#multiple': true
         '#subventionType':
-          52: '52'
+          49: '49'
         '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
@@ -691,6 +692,9 @@ elements: |-
           '#type': textfield
           '#title': '9–12-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#wrapper_attributes':
+            class:
+              - text-field--inside-fieldset
           '#attributes':
             class:
               - webform--large
@@ -700,6 +704,9 @@ elements: |-
           '#type': textfield
           '#title': '18-24-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#wrapper_attributes':
+            class:
+              - text-field--inside-fieldset
           '#attributes':
             class:
               - webform--large
@@ -710,6 +717,9 @@ elements: |-
           '#title': 'Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?'
           '#help': '<p>Arvioi tähän uusien 9-12 ja 18-24 vuotiaiden helsinkiläisten osallistujien lukumäärä yhteensä.</p>'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#wrapper_attributes':
+            class:
+              - text-field--inside-fieldset
           '#attributes':
             class:
               - webform--large
