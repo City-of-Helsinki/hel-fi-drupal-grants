@@ -136,55 +136,55 @@ elements: |
   avustuksen_kohde_tiivistelma:
     '#title': 'Berätta kortfattat om er förening/ungdomsgrupp. Svara kort på åtminstone följande frågor: Vilket är ert verksamhetsområde i Helsingfors? Vilka deltar i er verksamhet? Vilka förutsättningar har ni för att genomföra detta projekt (t.ex. resurser/erfarenhet)?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  projektin_aika_kohde_toiminta_section:
+  hankkeen_aika_kohde_toiminta_section:
     '#title': 'Projektets tidsplan, målgrupp och verksamhetsområde'
-  projektin_nimi:
+  hankkeen_nimi:
     '#title': 'Projekts namn'
     '#counter_maximum_message': '%d/300 tecken kvar'
-  projektin_aikataulu:
+  hankkeen_toimenpiteet:
     '#title': 'Vad är projektets tidsplan?'
     '#help': '<p>Vänligen ange projektets planerade startdatum och slutdatum här.</p>'
-  projektin_aikataulu_alkupvm:
+  hankkeen_toimenpiteet_alkupvm:
     '#title': Startdatum
-  projektin_aikataulu_loppupvm:
+  hankkeen_toimenpiteet_loppupvm:
     '#title': Slutdatum
-  projektin_kohderyhma:
+  hankkeen_kohderyhmat_kenelle:
     '#title': 'Vilken/vilka är projektets målgrupp/er?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  projektin_tavoittavuus:
+  hankkeen_kohderyhmat_tavoittavuus:
     '#title': 'Bedöm hur många barn och unga som nås genom verksamheten.  Bedöm det totala antalet barn och unga som nås under hela projektet.'
     '#help': '<p>Om projektet inte når den aktuella åldersgruppen, markera "0" i fältet.</p>'
-  projektin_tavoittavuus_lapset_9_12:
+  hankkeen_kohderyhmat_lapset_9_12:
     '#title': '9–12-åriga helsingforsare'
-  projektin_tavoittavuus_nuoret_18_24:
+  hankkeen_kohderyhmat_nuoret_18_24:
     '#title': '18–24-åriga helsingforsare'
-  projektin_tavoittavuus_uudet:
+  hankkeen_kohderyhmat_uudet:
     '#title': 'Hur många av dessa är nya, det vill säga har inte deltagit i verksamhet som tidigare ordnats av aktören?'
     '#help': '<p>Uppskatta antalet nya deltagare från Helsingfors i åldrarna 9-12 och 18-24 år sammanlagt.</p>'
-  projektin_alue:
+  hankkeen_kohderyhmat_postinrot:
     '#title': 'I vilka områden genomförs verksamheten? Ange alla lokalers namn/verksamhetsplatser och postnummer, separerade med kommatecken.'
     '#counter_maximum_message': '%d/500 tecken kvar'
-  projektin_alueen_tarve:
+  hankkeen_kohderyhmat_tarve:
     '#title': 'Vilket behov i området svarar verksamheten på?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  projektin_menetelmat_section:
+  hankkeen_menetelmat_section:
     '#title': 'Metoder för projektet'
-  kohderyhman_tavoitus_tunnistus:
+  hankkeen_kohderyhmat_tavoitus:
     '#title': 'Hur nås och identifieras målgrupperna?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  toiminnan_vaikutus:
+  hankkeen_kohderyhmat_konkretia:
     '#title': 'Hur önskar man att verksamheten ska påverka deltagarnas liv?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  toimintaan_osallistuminen:
+  hankkeen_kohderyhmat_osallisuus:
     '#title': 'Hur deltar barn och unga i planeringen av och beslutsfattandet om verksamheten?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  yhteistyokumppanit:
+  hankkeen_keskeisimmat_kumppanit:
     '#title': 'Med vilka samarbetar ni i projektet? Nämn de viktigaste samarbetspartnerna och deras roller i projektet. Nämn separat de redan överenskomna samarbetspartnerna och de som fortfarande planeras.'
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  uudet_kumppanit_toimintamallit:
+  hankkeen_uudet_kumppanit:
     '#title': 'Prövas nya former av partnerskap eller utvecklas nya verksamhetsmodeller i projektet? Vilka?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  toimintamallien_vakiinnuttaminen:
+  hankkeen_riskit_vakiinnuttaminen:
     '#title': 'Är den planerade verksamheten för projektet avsedd att bli en permanent del av den grundläggande verksamheten hos den sökande/en annan aktör efter projektet? Om tillämpligt, beskriv i textfältet hur och med vilken finansiering man ämnar etablera verksamheten?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   4_talousarvio:

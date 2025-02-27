@@ -136,55 +136,55 @@ elements: |
   avustuksen_kohde_tiivistelma:
     '#title': 'A brief description of your association/youth activity group? Answer briefly to at least the following questions: What is your area of operation in Helsinki? Who are the participants in your activities? What are your capabilities to carry out this project (e.g. resources/experience)?'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  projektin_aika_kohde_toiminta_section:
+  hankkeen_aika_kohde_toiminta_section:
     '#title': 'Project schedule, target group and area of operation'
-  projektin_nimi:
+  hankkeen_nimi:
     '#title': 'Project's name'
     '#counter_maximum_message': '%d/300 characters remaining'
-  projektin_aikataulu:
+  hankkeen_toimenpiteet:
     '#title': 'What is the project schedule?'
     '#help': '<p>Please mark the planned start date and end date of the project here.</p>'
-  projektin_aikataulu_alkupvm:
+  hankkeen_toimenpiteet_alkupvm:
     '#title': 'Start date'
-  projektin_aikataulu_loppupvm:
+  hankkeen_toimenpiteet_loppupvm:
     '#title': 'End date'
-  projektin_kohderyhma:
+  hankkeen_kohderyhmat_kenelle:
     '#title': 'What is the project target group(s)?'
     '#counter_maximum_message': '%d/1250 characters remaining'
-  projektin_tavoittavuus:
+  hankkeen_kohderyhmat_tavoittavuus:
     '#title': 'Estimate how many children and young people are reached through the activities.  Estimate the total number of children and young people reached during the whole project.'
     '#help': '<p>If the project does not reach the specified age group, enter "0" in the field.</p>'
-  projektin_tavoittavuus_lapset_9_12:
+  hankkeen_kohderyhmat_lapset_9_12:
     '#title': 'Helsinki residents aged 9 to 12 years'
-  projektin_tavoittavuus_nuoret_18_24:
+  hankkeen_kohderyhmat_nuoret_18_24:
     '#title': 'Helsinki residents aged 18 to 24 years'
-  projektin_tavoittavuus_uudet:
+  hankkeen_kohderyhmat_uudet:
     '#title': 'How many of them are new, i.e. have not participated in activities organised by the operator before?'
     '#help': '<p>Estimate the total number of  new participants aged 9-12 and 18-24 Helsinki residents.</p>'
-  projektin_alue:
+  hankkeen_kohderyhmat_postinrot:
     '#title': 'On what areas are you operating? List all the names and postalcodes of the spaces you operate and separate them with a comma.'
     '#counter_maximum_message': '%d/500 characters remaining'
-  projektin_alueen_tarve:
+  hankkeen_kohderyhmat_tarve:
     '#title': 'What local need does the project address?'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  projektin_menetelmat_section:
+  hankkeen_menetelmat_section:
     '#title': 'Project methods'
-  kohderyhman_tavoitus_tunnistus:
+  hankkeen_kohderyhmat_tavoitus:
     '#title': 'How are target group(s) reached and identified?'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  toiminnan_vaikutus:
+  hankkeen_kohderyhmat_konkretia:
     '#title': 'What impact do you hope the activities will have on the lives of the participants?'
     '#counter_maximum_message': '%d/1250 characters remaining'
-  toimintaan_osallistuminen:
+  hankkeen_kohderyhmat_osallisuus:
     '#title': 'How are children and young people involved in planning and decision-making?'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  yhteistyokumppanit:
+  hankkeen_keskeisimmat_kumppanit:
     '#title': 'Who are the partners in the project? Name the key partners and their roles. Specify the partners that have already been agreed upon and those that are still being planned.'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  uudet_kumppanit_toimintamallit:
+  hankkeen_uudet_kumppanit:
     '#title': 'Will new types of partnerships or operating models be tested during the project? Please specify what kind?'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  toimintamallien_vakiinnuttaminen:
+  hankkeen_riskit_vakiinnuttaminen:
     '#title': 'Will the intended project activity be established as part of the basic activity of the applicant/other operator after the project? If so, indicate in the text field how and through what funding will the project be established.'
     '#counter_maximum_message': '%d/2500 characters remaining'
   4_talousarvio:
