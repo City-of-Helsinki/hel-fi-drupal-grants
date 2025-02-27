@@ -138,6 +138,8 @@ elements: |-
       olemme_saaneet_muita_avustuksia: 0
       myonnetty_avustus: 0
       olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      avustuksen_kohde_yhdistys_toimintaryhma: 0
+      avustuksen_kohde_tiivistelma: 0
       haettu_avustus_tieto: 0
       hankesuunnitelma_radios: 0
       hankesuunnitelma_jatkohakemus: 0
@@ -152,11 +154,13 @@ elements: |-
       haun_painopisteet_kulttuuri_kehitys: 0
       hankkeen_kohderyhmat_kenelle: 0
       hankkeen_kohderyhmat_erityisryhmat: 0
+      hankkeen_kohderyhmat_tavoittavuus: 0
       hankkeen_kohderyhmat_tavoitus: 0
       hankkeen_kohderyhmat_konkretia: 0
       hankkeen_kohderyhmat_osallisuus: 0
       hankkeen_kohderyhmat_osaaminen: 0
       hankkeen_kohderyhmat_postinrot: 0
+      hankkeen_kohderyhmat_tarve: 0
       hankkeen_kohderyhmat_miksi_alue: 0
       hankkeen_riskit_keskeisimmat: 0
       hankkeen_riskit_seuranta: 0
@@ -197,6 +201,8 @@ elements: |-
       olemme_saaneet_muita_avustuksia: 0
       myonnetty_avustus: 0
       olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      avustuksen_kohde_yhdistys_toimintaryhma: 0
+      avustuksen_kohde_tiivistelma: 0
       haettu_avustus_tieto: 0
       hankesuunnitelma_radios: 0
       hankesuunnitelma_jatkohakemus: 0
@@ -211,11 +217,13 @@ elements: |-
       haun_painopisteet_kulttuuri_kehitys: 0
       hankkeen_kohderyhmat_kenelle: 0
       hankkeen_kohderyhmat_erityisryhmat: 0
+      hankkeen_kohderyhmat_tavoittavuus: 0
       hankkeen_kohderyhmat_tavoitus: 0
       hankkeen_kohderyhmat_konkretia: 0
       hankkeen_kohderyhmat_osallisuus: 0
       hankkeen_kohderyhmat_osaaminen: 0
       hankkeen_kohderyhmat_postinrot: 0
+      hankkeen_kohderyhmat_tarve: 0
       hankkeen_kohderyhmat_miksi_alue: 0
       hankkeen_riskit_keskeisimmat: 0
       hankkeen_riskit_seuranta: 0
@@ -621,10 +629,10 @@ elements: |-
             - webform--large
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#required': true
-    projektin_aika_kohde_toiminta_section:
+    hankkeen_aika_kohde_toiminta_section:
       '#type': webform_section
       '#title': 'Projektin aikataulu, kohderyhmä ja toiminta-alue'
-      projektin_nimi:
+      hankkeen_nimi:
         '#type': textarea
         '#title': 'Projektin nimi'
         '#maxlength': 300
@@ -635,7 +643,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      projektin_aikataulu:
+      hankkeen_toimenpiteet:
         '#type': fieldset
         '#title': 'Mikä on projektin aikataulu?'
         '#help': '<p>Merkitse tähän projektin suunniteltu alkamispäivä ja loppumispäivä.</p>'
@@ -644,29 +652,29 @@ elements: |-
             - grants-fieldset
         '#states':
           visible:
-            ':input[name="projektin_aikataulu_radios"]':
+            ':input[name="hankkeen_aikataulu_radios"]':
               value: '0'
-        projektin_aikataulu_alkupvm:
+        hankkeen_toimenpiteet_alkupvm:
           '#type': date
           '#title': Alkupäivämäärä
           '#states':
             visible:
-              ':input[name="projektin_aikataulu_radios"]':
+              ':input[name="hankkeen_aikataulu_radios"]':
                 value: '0'
             required:
-              ':input[name="projektin_aikataulu_radios"]':
+              ':input[name="hankkeen_aikataulu_radios"]':
                 value: '0'
-        projektin_aikataulu_loppupvm:
+        hankkeen_toimenpiteet_loppupvm:
           '#type': date
           '#title': Loppupäivämäärä
           '#states':
             visible:
-              ':input[name="projektin_aikataulu_radios"]':
+              ':input[name="hankkeen_aikataulu_radios"]':
                 value: '0'
             required:
-              ':input[name="projektin_aikataulu_radios"]':
+              ':input[name="hankkeen_aikataulu_radios"]':
                 value: '0'
-      projektin_kohderyhma:
+      hankkeen_kohderyhmat_kenelle:
         '#type': textarea
         '#title': 'Mikä on projektin kohderyhmä/kohderyhmät?'
         '#description_display': after
@@ -678,12 +686,12 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      projektin_tavoittavuus:
+      hankkeen_kohderyhmat_tavoittavuus:
         '#type': fieldset
         '#title': 'Arvioi, montako lasta ja nuorta toiminnalla tavoitetaan. Arvioi tavoitettujen lasten ja nuorten määrä yhteensä koko hankkeen aikana.'
         '#help': '<p>Mikäli hankkeessa ei tavoiteta kyseistä ikäryhmää, niin merkitse kenttään "0".</p>'
         '#required': true
-        projektin_tavoittavuus_lapset_9_12:
+        hankkeen_kohderyhmat_lapset_9_12:
           '#type': textfield
           '#title': '9–12-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
@@ -692,7 +700,7 @@ elements: |-
               - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
-        projektin_tavoittavuus_nuoret_18_24:
+        hankkeen_kohderyhmat_nuoret_18_24:
           '#type': textfield
           '#title': '18-24-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
@@ -701,7 +709,7 @@ elements: |-
               - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
-        projektin_tavoittavuus_uudet:
+        hankkeen_kohderyhmat_uudet:
           '#type': textfield
           '#title': 'Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?'
           '#help': '<p>Arvioi tähän uusien 9-12 ja 18-24 vuotiaiden helsinkiläisten osallistujien lukumäärä yhteensä.</p>'
@@ -711,7 +719,7 @@ elements: |-
               - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
-      projektin_alue:
+      hankkeen_kohderyhmat_postinrot:
         '#type': textarea
         '#title': 'Millä alueilla toiminta toteutetaan? Kirjaa tekstikenttään kaikki tilojen nimet/toimintapaikat ja postinumerot pilkulla eroteltuna.'
         '#maxlength': 500
@@ -722,7 +730,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      projektin_alueen_tarve:
+      hankkeen_kohderyhmat_tarve:
         '#type': textarea
         '#title': 'Mihin alueen tarpeeseen toiminnassa vastataan?'
         '#maxlength': 2500
@@ -733,10 +741,10 @@ elements: |-
           class:
             - webform--large
         '#required': true
-    projektin_menetelmat_section:
+    hankkeen_menetelmat_section:
       '#type': webform_section
       '#title': 'Projektin menetelmät'
-      kohderyhman_tavoitus_tunnistus:
+      hankkeen_kohderyhmat_tavoitus:
         '#type': textarea
         '#title': 'Miten kohderyhmät tavoitetaan ja tunnistetaan?'
         '#description_display': after
@@ -748,7 +756,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      toiminnan_vaikutus:
+      hankkeen_kohderyhmat_konkretia:
         '#type': textarea
         '#title': 'Miten toiminnan toivotaan vaikuttavan osallistujien elämään?'
         '#description_display': after
@@ -760,7 +768,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      toimintaan_osallistuminen:
+      hankkeen_kohderyhmat_osallisuus:
         '#type': textarea
         '#title': 'Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?'
         '#description_display': after
@@ -772,7 +780,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      yhteistyokumppanit:
+      hankkeen_keskeisimmat_kumppanit:
         '#type': textarea
         '#title': 'Kenen kanssa hankkeessa tehdään yhteistyötä? Nimeä keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla oleva tahot.'
         '#description_display': after
@@ -784,7 +792,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      uudet_kumppanit_toimintamallit:
+      hankkeen_uudet_kumppanit:
         '#type': textarea
         '#title': 'Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?'
         '#description_display': after
@@ -796,7 +804,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      toimintamallien_vakiinnuttaminen:
+      hankkeen_riskit_vakiinnuttaminen:
         '#type': textarea
         '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos on, niin kuvaa tekstikenttään, miten ja millä rahoituksella vakiinnuttaminen aiotaan tehdä?'
         '#description_display': after
