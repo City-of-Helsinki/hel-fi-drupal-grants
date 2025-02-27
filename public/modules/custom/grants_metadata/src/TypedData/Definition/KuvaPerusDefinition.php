@@ -53,7 +53,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersPersonGlobal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -68,7 +68,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersPersonLocal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -83,7 +83,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersCommunityGlobal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -98,7 +98,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersCommunityLocal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -150,7 +150,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'pupilsChildhoodAll',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -165,7 +165,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'wideBasicStudiesAll',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -180,7 +180,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'wideAdvancedStudiesAll',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -195,7 +195,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'generalStudiesAll',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -210,7 +210,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'pupilsChildhoodGirls',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -225,7 +225,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'wideBasicStudiesGirls',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -240,7 +240,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'wideAdvancedStudiesGirls',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -255,7 +255,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'generalStudiesGirls',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -270,7 +270,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'pupilsChildhoodBoys',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -285,7 +285,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'wideBasicStudiesBoys',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -300,7 +300,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'wideAdvancedStudiesBoys',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -315,7 +315,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'generalStudiesBoys',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -330,7 +330,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'teachingPersonnel',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -369,7 +369,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'lessonsChildhood',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -384,7 +384,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'lessonsWideBasicStudies',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -399,7 +399,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'lessonsWideAdvancedStudies',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -414,7 +414,7 @@ class KuvaPerusDefinition extends ComplexDataDefinitionBase {
           'realizedActivityInfoArray',
           'lessonsGeneralStudies',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
