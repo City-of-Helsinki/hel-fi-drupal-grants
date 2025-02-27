@@ -139,7 +139,7 @@ elements: |
   hankkeen_aika_kohde_toiminta_section:
     '#title': 'Project schedule, target group and area of operation'
   hankkeen_nimi:
-    '#title': 'Project's name'
+    '#title': "Project's name"
     '#counter_maximum_message': '%d/300 characters remaining'
   hankkeen_toimenpiteet:
     '#title': 'What is the project schedule?'
