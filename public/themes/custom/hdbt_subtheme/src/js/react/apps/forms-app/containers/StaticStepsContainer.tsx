@@ -6,6 +6,10 @@ export const StaticStepsContainer = ({
 }: any) => {
   const [currentStepIndex, currentStep] = useAtomValue(getCurrentStepAtom);
 
+  if (!formRef.current) {
+    return null;
+  }
+
   switch(currentStep.id) {
     case 'preview':
       return (

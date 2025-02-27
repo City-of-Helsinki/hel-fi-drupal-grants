@@ -25,7 +25,7 @@ export const ObjectFieldTemplate = ({
   schema,
   uiSchema,
 }: ObjectFieldTemplateProps) => {
-  const { additionalProperties, title, description } = schema;
+  const { additionalProperties, title, description, _step } = schema;
   const { id: stepId } = useAtomValue(getCurrentStepAtom)[1];
 
   if (idSchema.$id === 'root') {
@@ -35,23 +35,12 @@ export const ObjectFieldTemplate = ({
       </div>
     )
   }
-
   // @todo fix type errors with additionalProperties
-  if (
-    // @ts-expect-error
-    additionalProperties?.step &&
-    // @ts-expect-error
-    additionalProperties.step !== stepId
-  ) {
+  if (_step && _step !== stepId) {
     return null;
   }
 
-  if (
-    // @ts-expect-error
-    additionalProperties?.step &&
-    // @ts-expect-error
-    additionalProperties.step === stepId
-  ) {
+  if (_step && _step === stepId) {
     return (
       <>
         {title && <h2 className='grants__page-header'>{title}</h2>}

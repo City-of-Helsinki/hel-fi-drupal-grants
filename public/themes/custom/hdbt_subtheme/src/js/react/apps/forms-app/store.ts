@@ -1,4 +1,4 @@
-import { RJSFSchema, UiSchema } from '@rjsf/utils';
+import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { atom } from 'jotai';
 
 export type FormStep = {
@@ -36,6 +36,8 @@ type GrantsProfile = {
 
 type FormState = {
   currentStep: [number, FormStep];
+  errorPageIndices: number[];
+  errors: RJSFValidationError[];
 }
 
 type FormConfig = {
@@ -52,6 +54,33 @@ type FormConfig = {
 type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema'> & {
   grants_profile: GrantsProfile;
   ui_schema: UiSchema;
+};
+
+const getIndicesWithErrors = (
+  errors: RJSFValidationError[]|undefined,
+  steps?: Map<number, FormStep>,
+) => {
+  if (!steps || !errors || !errors?.length) {
+    return [];
+  }
+
+  const errorIndices: number[] = [];
+  const propertyParentKeys: string[] = [];
+  const regex = new RegExp('^\.([^\.]+)');
+  errors.forEach(error => {
+    let match = error?.property?.match(regex)?.[0];
+
+    if (match) {
+      propertyParentKeys.push(match.split('.')[1]);
+    }
+  });
+  Array.from(steps).forEach(([index, step]) => {
+    if (propertyParentKeys.includes(step.id)) {
+      errorIndices.push(index);
+    }
+  });
+
+  return errorIndices;
 };
 
 const buildFormSteps = ({
@@ -96,6 +125,8 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
   }));
   _set(formStateAtom, (state) => ({
       currentStep: [0, steps.get(0)],
+      errorPageIndices: [],
+      errors: [],
     }));
 });
 export const getFormConfigAtom  = atom(_get => {
@@ -106,6 +137,15 @@ export const getFormConfigAtom  = atom(_get => {
   }
 
   return config;
+});
+const getFormStateAtom  = atom(_get => {
+  const state = _get(formStateAtom);
+
+  if (!state) {
+    throw new Error('Trying to read form state before initialization.');
+  }
+
+  return state;
 });
 export const getCurrentStepAtom = atom(_get => {
   const currentState = _get(formStateAtom);
@@ -128,4 +168,22 @@ export const setStepAtom = atom(null, (_get, _set, index: number) => {
       ...state,
       currentStep: [index, step],
     } : state);
+});
+export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError[]) => {
+  const steps = _get(formStepsAtom);
+  const currentState = _get(getFormStateAtom);
+
+  _set(formStateAtom, state => ({
+    ...currentState,
+    errorPageIndices: getIndicesWithErrors(errors, steps),
+    errors,
+  }));
+});
+export const getErrorsAtom = atom(_get => {
+  const {errors, errorPageIndices} = _get(getFormStateAtom);
+
+  return {
+    errors,
+    errorPageIndices,
+  };
 });
