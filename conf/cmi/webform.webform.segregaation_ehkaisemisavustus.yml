@@ -178,7 +178,7 @@ elements: |-
       additional_information: 0
       extra_info: 0
       muu_liite: 0
-    '#subvention_type': '47'
+    '#subvention_type': '49'
     '#data_type': euro
     '#form_item': hidden
   kulttuuri2_summa:
