@@ -190,7 +190,7 @@ elements: |
   tulot_section:
     '#title': Inkomster
   markup_01:
-    '#markup': '<p>För ett flerårigt projekt ska budgeten för det första projektåret anges i detta avsnitt. Dessutom ska en budget för hela projektperioden bifogas ansökan, där intäkter och kostnader fördelas på de olika projektåren.</p>'
+    '#markup': 'Fyll i projektets budget för den planerade perioden.'
   tulot:
     '#title': Inkomster
     '#compensation__title': 'Ansökt stöd (€)'
