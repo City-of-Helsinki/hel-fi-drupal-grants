@@ -28,14 +28,11 @@ elements: |
   community_address:
     '#title': Adress
     '#help': '<p>Om du vill lägga till, ta bort eller ändra adressuppgifter, spara ansökan som ett utkast och gå till att behålla adressuppgifterna i dina egna uppgifter.</p>'
-    '#community_address_select__title': 'Välj en adress'
   tilinumero:
     '#title': Kontonummer
   bank_account:
     '#title': Kontonummer
     '#help': '<p>Om du vill lägga till, radera eller ändra kontonummerinformation, spara applikationen som ett utkast och gå till att behålla kontonummerinformationen i din egen data.</p>'
-    '#account_number_select__title': 'Välj ett kontonummer'
-    '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Personer som ansvarar för verksamheten'
   community_officials:
