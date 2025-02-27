@@ -82,3 +82,7 @@ fieldset.orienteering-map-composite--wrapper,
 fieldset.webform-composite-hidden-title .fieldset-wrapper > .form-item:last-child {
   margin-bottom: var(--spacing-layout-xs);
 }
+
+.form-item.text-field--inside-fieldset {
+  max-width: var(--webform-element-width--input-large);
+}
