@@ -144,7 +144,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_kohderyhmat_uudet' => [],
       'hankkeen_kohderyhmat_saavutettavuus' => [],
       'hankkeen_kohderyhmat_hinta' => [],
-      'hankkeen_kohderyhmat_tavoittavuus' => [],
       'hankkeen_riskit_keskeisimmat' => [],
       'hankkeen_riskit_seuranta' => [],
       'hankkeen_riskit_vakiinnuttaminen' => [],
