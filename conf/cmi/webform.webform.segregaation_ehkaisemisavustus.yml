@@ -386,9 +386,6 @@ elements: |-
     avustuslajit:
       '#type': webform_section
       '#title': Avustuslajit
-      grants_compensations_information:
-        '#type': webform_markup
-        '#markup': '<p>Syötä kenttään vuodelle 2025 haettava avustussumma. Monivuotisen hankkeen jatkokausien avustussummat syötetään seuraavalla sivulle.</p>'
       subventions:
         '#type': grants_compensations
         '#title': Avustukset
