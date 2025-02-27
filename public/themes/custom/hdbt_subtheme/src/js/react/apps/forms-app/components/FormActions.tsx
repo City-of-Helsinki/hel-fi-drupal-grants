@@ -5,26 +5,22 @@ import { RefObject } from 'react';
 import Form from '@rjsf/core';
 
 export const FormActions = ({
-  formRef,
+  validatePartialForm,
 }: {
-  formRef: RefObject<Form>
+  validatePartialForm: () => boolean|undefined;
 }) => {
   const [currentStepIndex, { id: currentStepId }] = useAtomValue(getCurrentStepAtom);
   const setStep = useSetAtom(setStepAtom);
 
   const nextPageAction = () => {
-    const data = formRef.current?.state.formData;
-    if (!data[currentStepId]) {
-      data[currentStepId] = {};
-    }
+    const passes = validatePartialForm();
 
-    const passes = formRef.current?.validateFormWithFormData(data);
     if (passes) {
       setStep(currentStepIndex + 1);
     }
   };
 
-  const errors = formRef.current?.state.errors;
+  const errors = [];
 
   return (
     <div className='form-actions form-wrapper'>

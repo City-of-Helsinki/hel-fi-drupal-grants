@@ -33,10 +33,7 @@ const transformSchema = (data: any) => {
 
     transformedProperties[key] = {
       ...value,
-      [ADDITIONAL_PROPERTIES_KEY]: {
-        ...additionalProperties,
-        step: key,
-      },
+      _step: key,
     };
   });
 
