@@ -190,7 +190,7 @@ elements: |
   tulot_section:
     '#title': Incomes
   markup_01:
-    '#markup': '<p>For a multi-year project, the budget for the first project year must be provided in this section. Additionally, a budget for the entire project period, showing the distribution of income and expenses across the different project years, must be attached to the application.</p>'
+    '#markup': 'Fill in the project´s budget from the planned period here.'
   tulot:
     '#title': Incomes
     '#compensation__title': 'The applied grant (€)'

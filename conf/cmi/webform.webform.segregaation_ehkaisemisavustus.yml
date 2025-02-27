@@ -819,7 +819,7 @@ elements: |-
       '#title': Tulot
       markup_01:
         '#type': webform_markup
-        '#markup': '<p>Monivuotisen hankkeen osalta tässä kohdassa tulee ilmoittaa ensimmäisen hankevuoden talousarvio. Lisäksi hakemuksen liitteenä tulee toimittaa koko hankeajan talousarvio, josta käy ilmi tulojen ja menojen jakautuminen eri hankevuosille.</p>'
+        '#markup': 'Täytä tähän projektin talousarvio suunnitellulta kaudelta.'
       tulot:
         '#type': grants_budget_income_static
         '#title': Tulot
