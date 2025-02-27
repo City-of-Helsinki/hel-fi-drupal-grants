@@ -51,8 +51,6 @@ elements: |
     '#title': 'År för vilket jag ansöker om understöd'
   avustuslajit:
     '#title': Understöd
-  grants_compensations_information:
-    '#markup': '<p>Ange det understödsbelopp som ansöks för år 2025 i fältet. Understödsbeloppen för de följande åren av ett flerårigt projekt anges på nästa sida.</p>'
   subventions:
     '#title': 'Typ av stöd'
   kayttotarkoitus:

@@ -51,8 +51,6 @@ elements: |
     '#title': 'Year for which I am applying for a grant'
   avustuslajit:
     '#title': 'Types of grant'
-  grants_compensations_information:
-    '#markup': '<p>Please enter the grant amount requested for the year 2025 in the field. The grant amounts for the subsequent years of a multi-year project are entered on the next page.</p>'
   subventions:
     '#title': Grants
   kayttotarkoitus:
