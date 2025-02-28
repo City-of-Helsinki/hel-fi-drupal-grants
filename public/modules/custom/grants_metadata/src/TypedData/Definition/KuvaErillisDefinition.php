@@ -34,6 +34,22 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $customQuestions = [
+      'hankesuunnitelma_avustuksen_kesto' => [
+        // This valueCallback implemets default values.
+        //
+        // Default values don't actually do anything useful? Default values
+        // are only used when value is NULL, but NULL values are sanitized
+        // to empty string before that. Default values in Webform config do
+        // nothing, since the fields are always initialized from typed data,
+        // when the form is opened.
+        //
+        // @see \Drupal\grants_metadata\AtvSchema::getItemValue.
+        'valueCallback' => static fn (mixed $value) => match($value) {
+          "" => '1',
+          default => $value
+        },
+        'defaultValue' => '1',
+      ],
       'hankesuunnitelma_radios' => [
         'type' => 'string',
         'valueCallback' => [
@@ -57,8 +73,27 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
           'method' => 'extractBooleanYesNoValue',
         ],
       ],
+      'hankkeen_nimi' => [],
+      // This field is read only / fully computed. However, the field must
+      // be sent to ATV / avust2 or else the preview feature breaks. Field
+      // values are saved/loaded from ATV when draft is saved/opened, and
+      // the underlying component does not know how to recalculate its values
+      // at that point. This can be removed if computed fields have better
+      // support in the future.
+      'haettava_avustussumma_2025' => [
+        'valueCallback' => static fn (mixed $value) => $value['compensation'] ?? $value,
+        'webformDataExtracter' => [
+          'service' => 'grants_budget_components.service',
+          'method' => 'extractToWebformData',
+        ],
+      ],
+      'haettava_avustussumma_2026' => [],
+      'haettava_avustussumma_2027' => [],
+      'hankkeen_monivuotisuuden_tarve' => [],
       'hankkeen_tarkoitus_tavoitteet' => [],
       'hankkeen_toimenpiteet_aikataulu' => [],
+      'hankkeen_toimenpiteet_aikataulu_2026' => [],
+      'hankkeen_toimenpiteet_aikataulu_2027' => [],
       'hankkeen_toimenpiteet_alkupvm' => [
         'typeOverride' => [
           'dataType' => 'string',
@@ -85,7 +120,10 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
           ],
         ],
       ],
+      'hankkeen_toiminnan_laajuus' => [],
+      'hankkeen_kohtaamiset' => [],
       'hankkeen_keskeisimmat_kumppanit' => [],
+      'hankkeen_uudet_kumppanit' => [],
       'haun_painopisteet_liikkumis_kehitys' => [],
       'haun_painopisteet_digi_kehitys' => [],
       'haun_painopisteet_vertais_kehitys' => [],
@@ -98,6 +136,14 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_kohderyhmat_osaaminen' => [],
       'hankkeen_kohderyhmat_postinrot' => [],
       'hankkeen_kohderyhmat_miksi_alue' => [],
+      'hankkeen_kohderyhmat_tarve' => [],
+      'hankkeen_kohderyhmat_lapset_9_12' => [],
+      'hankkeen_kohderyhmat_lapset_13_15' => [],
+      'hankkeen_kohderyhmat_lapset_16_18' => [],
+      'hankkeen_kohderyhmat_nuoret_18_24' => [],
+      'hankkeen_kohderyhmat_uudet' => [],
+      'hankkeen_kohderyhmat_saavutettavuus' => [],
+      'hankkeen_kohderyhmat_hinta' => [],
       'hankkeen_riskit_keskeisimmat' => [],
       'hankkeen_riskit_seuranta' => [],
       'hankkeen_riskit_vakiinnuttaminen' => [],
@@ -108,6 +154,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'arviointi_haasteet' => [],
       'arviointi_saavutettavuus' => [],
       'arviointi_avustus_kaytto' => [],
+      'avustuksen_kohde_yhdistys_toimintaryhma' => [],
+      'avustuksen_kohde_tiivistelma' => [],
     ];
 
     foreach ($customQuestions as $key => $value) {
@@ -179,6 +227,9 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
     // Add value extractor if set.
     if (isset($value['webformValueExtracter'])) {
       $info[$key]->setSetting('webformValueExtracter', $value['webformValueExtracter']);
+    }
+    if (isset($value['webformDataExtracter'])) {
+      $info[$key]->setSetting('webformDataExtracter', $value['webformDataExtracter']);
     }
     // Add default value if set or empty value.
     if (isset($value['defaultValue'])) {
