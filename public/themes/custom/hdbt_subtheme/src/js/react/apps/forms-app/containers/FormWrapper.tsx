@@ -20,6 +20,7 @@ const transformSchema = (data: any) => {
   const {
     schema,
     schema: {
+      definitions,
       properties,
     },
   } = data;
@@ -28,14 +29,17 @@ const transformSchema = (data: any) => {
 
   Object.entries(properties).forEach((property: any, index: number) => {
     const [key, value] = property;
-
-    const additionalProperties = value?.additionalProperties || {};
-
     transformedProperties[key] = {
       ...value,
       _step: key,
     };
   });
+
+  for(const definition in definitions) {
+    for(const subProperty in definitions[definition].properties) {
+      definitions[definition].properties[subProperty]._isSection = true;
+    }
+  }
 
   return {
     ...schema,

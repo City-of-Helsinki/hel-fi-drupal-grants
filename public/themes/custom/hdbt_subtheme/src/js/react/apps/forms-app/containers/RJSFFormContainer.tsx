@@ -1,19 +1,20 @@
 import Form, { IChangeEvent } from '@rjsf/core';
-import { RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
+import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
 import React, { createRef, useCallback } from 'react';
 import { TextArea, TextInput, SelectWidget } from '../components/Input';
-import { FieldsetWidget, ObjectFieldTemplate } from '../components/Templates';
+import { ObjectFieldTemplate } from '../components/Templates';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { FormActions } from '../components/FormActions';
 import { Stepper } from '../components/Stepper';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
-import { getCurrentStepAtom, setErrorsAtom } from '../store';
+import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom } from '../store';
+import { keyErrorsByStep } from '../utils';
+import { ErrorsList } from '../components/ErrorsList';
 
 const widgets: RegistryWidgetsType = {
   EmailWidget: TextInput,
-  FieldsetWidget,
   SelectWidget,
   TextareaWidget: TextArea,
   TextWidget: TextInput,
@@ -30,32 +31,47 @@ export const RJSFFormContainer = ({
   schema,
   uiSchema,
 }: RJSFFormContainerProps) => {
+  const steps = useAtomValue(getStepsAtom);
   const formRef = createRef<Form>();
   const readCurrentStep = useAtomCallback(
     useCallback(get =>  get(getCurrentStepAtom), [])
   );
+  const readReachedStep = useAtomCallback(
+    useCallback(get => get(getReachedStepAtom), [])
+  );
   const setErrors = useSetAtom(setErrorsAtom);
 
   const onError = (errors: RJSFValidationError[]) => {
-    if (errors.length) {
-      setErrors(errors);
-      formRef.current?.focusOnError(errors[0]);
+    const keyedErrors = keyErrorsByStep(errors, steps);
+    const [currentStepIndex] = readCurrentStep();
+
+    const currentPageErrors = keyedErrors.filter(([index, error]) => index == currentStepIndex);
+
+    if (currentPageErrors.length) {
+      formRef.current?.focusOnError(currentPageErrors[0][1]);
     }
   };
 
   const validatePartialForm = () => {
     const data = formRef.current?.state.formData;
-    const currentStepId = readCurrentStep()[1].id;
+    formRef.current?.validateForm();
 
-    if (!data[currentStepId]) {
-      data[currentStepId] = {};
-    }
+    return formRef.current?.validate(data);
+  };
 
-    return formRef.current?.validateFormWithFormData(data);
+  const transformErrors: ErrorTransformer = (errors) => {
+    const reachedStep = readReachedStep();
+    const keyedErrors = keyErrorsByStep(errors, steps);
+
+    const errorsToShow = keyedErrors.filter(([index]) => index <= reachedStep).map(([index, error]) => error);
+    setErrors(errorsToShow);
+
+    return errorsToShow;
   };
 
   return (
     <>
+      <ErrorsList />
       <Stepper formRef={formRef} />
       <div className='form-wrapper'>
         <StaticStepsContainer formRef={formRef} />
@@ -81,6 +97,7 @@ export const RJSFFormContainer = ({
             FieldErrorTemplate: () => null,
             ObjectFieldTemplate,
           }}
+          transformErrors={transformErrors}
           uiSchema={{
             ...uiSchema,
             'ui:globalOptions': {
