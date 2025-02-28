@@ -4,6 +4,14 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import React from 'react';
 import { getCurrentStepAtom, setStepAtom } from '../store';
 
+const formatErrors = (rawErrors: string[]|undefined) => {
+  if (!rawErrors) {
+    return undefined;
+  }
+
+  return rawErrors.join('\n');
+};
+
 export const TextInput = ({
   id,
   label,
@@ -16,7 +24,7 @@ export const TextInput = ({
 }: WidgetProps) => {
   return (
     <HDSTextInput
-      errorText={rawErrors?.toString()}
+      errorText={formatErrors(rawErrors)}
       hideLabel={false}
       id={id}
       invalid={Boolean(rawErrors?.length)}
@@ -44,6 +52,7 @@ export const TextArea = ({
 }: WidgetProps) => {
   return (
     <HDSTextArea
+      errorText={formatErrors(rawErrors)}
       hideLabel={false}
       id={id}
       invalid={Boolean(rawErrors?.length)}
@@ -62,20 +71,40 @@ export const TextArea = ({
 export const SelectWidget = ({
   id,
   label,
+  multiple,
   name,
   onChange,
   options,
+  rawErrors,
   readonly,
   required,
   value,
 }: WidgetProps) => (
     <Select
       id={id}
+      invalid={Boolean(rawErrors?.length)}
+      multiSelect={multiple}
       onBlur={() => null}
-      onChange={newValue => onChange(newValue)}
-      options={options?.enumOptions ?? []}
+      onChange={newValue => {
+        if (!newValue.length) {
+          onChange(undefined);
+          return;
+        }
+        if (multiple) {
+          onChange(newValue.map(option => option.value));
+          return;
+        }
+
+        onChange(newValue[0].value);
+      }}
       onFocus={() => null}
+      options={options?.enumOptions ?? []}
       required={required}
+      texts={
+        rawErrors ? {
+          error: formatErrors(rawErrors),
+        } : undefined
+      }
       value={value}
     />
   );

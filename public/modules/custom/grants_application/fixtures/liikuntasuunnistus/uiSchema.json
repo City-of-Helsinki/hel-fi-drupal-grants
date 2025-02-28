@@ -18,9 +18,11 @@
     }
   },
   "orienteering_maps": {
-    "items": {
-      "mapName": {
-        "ui:widget": "textarea"
+    "orienteering_subvention": {
+      "orienteering_maps": {
+        "mapName": {
+          "ui:widget": "textarea"
+        }
       }
     }
   }
