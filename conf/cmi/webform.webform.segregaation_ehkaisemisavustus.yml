@@ -648,30 +648,14 @@ elements: |-
         '#attributes':
           class:
             - grants-fieldset
-        '#states':
-          visible:
-            ':input[name="hankkeen_aikataulu_radios"]':
-              value: '0'
         hankkeen_toimenpiteet_alkupvm:
           '#type': date
           '#title': Alkupäivämäärä
-          '#states':
-            visible:
-              ':input[name="hankkeen_aikataulu_radios"]':
-                value: '0'
-            required:
-              ':input[name="hankkeen_aikataulu_radios"]':
-                value: '0'
+          '#required': true
         hankkeen_toimenpiteet_loppupvm:
           '#type': date
           '#title': Loppupäivämäärä
-          '#states':
-            visible:
-              ':input[name="hankkeen_aikataulu_radios"]':
-                value: '0'
-            required:
-              ':input[name="hankkeen_aikataulu_radios"]':
-                value: '0'
+          '#required': true
       hankkeen_kohderyhmat_kenelle:
         '#type': textarea
         '#title': 'Mikä on projektin kohderyhmä/kohderyhmät?'
