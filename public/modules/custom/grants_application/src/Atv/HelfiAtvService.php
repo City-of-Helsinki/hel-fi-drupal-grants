@@ -26,7 +26,7 @@ class HelfiAtvService {
    * @param string $application_number
    *   The application number.
    *
-   * @return Drupal\helfi_atv\AtvDocument
+   * @return \Drupal\helfi_atv\AtvDocument
    *   The atv document.
    *
    * @throws \Throwable
@@ -56,7 +56,7 @@ class HelfiAtvService {
   /**
    * Save the document to ATV for the first time.
    *
-   * @param Drupal\helfi_atv\AtvDocument $document
+   * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document.
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
@@ -70,7 +70,7 @@ class HelfiAtvService {
   /**
    * Update existing document in ATV.
    *
-   * @param Drupal\helfi_atv\AtvDocument $document
+   * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document.
    */
   public function updateExistingDocument(AtvDocument $document): void {

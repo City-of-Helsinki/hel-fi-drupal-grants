@@ -14,6 +14,7 @@ use Drupal\rest\Plugin\ResourceBase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
@@ -95,8 +96,8 @@ final class Application extends ResourceBase {
    * @param string|null $application_number
    *   The unique identifier for the application.
    *
-   * @return Symfony\Component\HttpFoundation\JsonResponse
-   *   The response containing the entity with its accessible fields.
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   The json response.
    *
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
@@ -125,6 +126,7 @@ final class Application extends ResourceBase {
     ];
 
     // Allow previewing for anonymous user.
+    // @phpstan-ignore-next-line
     if (\Drupal::currentUser()->isAnonymous()) {
       return new JsonResponse($response);
     }
@@ -165,9 +167,11 @@ final class Application extends ResourceBase {
 
   /**
    * Post request.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   The json response.
    */
-  public function post(): JsonResponse {
-    $request = \Drupal::request();
+  public function post(Request $request): JsonResponse {
     $content = json_decode($request->getContent(), TRUE);
     $env = Helper::getAppEnv();
 
@@ -242,13 +246,12 @@ final class Application extends ResourceBase {
   /**
    * Responds to entity PATCH requests.
    *
-   * @return Symfony\Component\HttpFoundation\JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The HTTP response object.
    *
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
-  public function patch(): JsonResponse {
-    $request = \Drupal::request();
+  public function patch(Request $request): JsonResponse {
     $content = json_decode($request->getContent(), TRUE);
     // @todo Access checking.
     [
