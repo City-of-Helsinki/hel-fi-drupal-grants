@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_application\Plugin\rest\resource;
 
+use Drupal\Component\Utility\Xss;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_application\Atv\HelfiAtvService;
@@ -105,6 +106,7 @@ final class Application extends ResourceBase {
     int $application_type_id,
     ?string $application_number = NULL,
   ): JsonResponse {
+    // @todo Sanitize & validate & authorize properly.
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
@@ -172,6 +174,7 @@ final class Application extends ResourceBase {
    *   The json response.
    */
   public function post(Request $request): JsonResponse {
+    // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);
     $env = Helper::getAppEnv();
 
@@ -230,7 +233,8 @@ final class Application extends ResourceBase {
       $this->userInformationService->getApplicantType(),
     );
 
-    $document->setContent($form_data);
+    // @todo Better sanitation.
+    $document->setContent(json_decode(Xss::filter(json_encode($form_data)), TRUE));
 
     try {
       $this->atvService->saveNewDocument($document);
@@ -252,8 +256,8 @@ final class Application extends ResourceBase {
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
   public function patch(Request $request): JsonResponse {
+    // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);
-    // @todo Access checking.
     [
       'application_number' => $application_number,
       'form_data' => $form_data,
@@ -278,7 +282,8 @@ final class Application extends ResourceBase {
     }
 
     try {
-      $document->setContent($form_data);
+      // @todo Better sanitation.
+      $document->setContent(json_decode(Xss::filter(json_encode($form_data)), TRUE));
       $this->atvService->updateExistingDocument($document);
     }
     catch (\Exception $e) {
