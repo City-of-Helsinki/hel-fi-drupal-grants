@@ -57,7 +57,7 @@
         "drupal/radioactivity": "^4.0",
         "drupal/redis": "^1.7",
         "drupal/remove_http_headers": "^2.0.1",
-        "drupal/restui": "^1.21",
+        "drupal/restui": "^1.22",
         "drupal/session_limit": "^2.0@beta",
         "drupal/translated_config": "^1.1",
         "drupal/tvp": "^1.0",
