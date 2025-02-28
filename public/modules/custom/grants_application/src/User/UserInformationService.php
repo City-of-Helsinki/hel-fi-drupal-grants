@@ -45,10 +45,16 @@ class UserInformationService {
     return $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
   }
 
+  /**
+   *
+   */
   public function getSelectedCompany(): array {
     return $this->grantsProfileService->getSelectedRoleData();
   }
 
+  /**
+   *
+   */
   public function getApplicantType(): ?string {
     return $this->grantsProfileService->getApplicantType();
   }
@@ -67,6 +73,9 @@ class UserInformationService {
     return $this->helfiHelsinkiProfiiliUserdata->getUserProfileData();
   }
 
+  /**
+   *
+   */
   public function getApplicantInformation(array $selectedCompany, array $companyData, array $userData, array $userProfileData): array {
     return match ($selectedCompany["type"]) {
       'registered_community' => [

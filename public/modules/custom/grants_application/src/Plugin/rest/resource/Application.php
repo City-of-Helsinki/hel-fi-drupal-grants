@@ -11,13 +11,14 @@ use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\rest\Attribute\RestResource;
 use Drupal\rest\Plugin\ResourceBase;
-use http\Client\Request;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\rest\ModifiedResourceResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\RouteCollection;
 
+/**
+ *
+ */
 #[RestResource(
   id: "application_rest_resource",
   label: new TranslatableMarkup("Application"),
@@ -54,7 +55,7 @@ final class Application extends ResourceBase {
     private HelfiAtvService $atvService,
     private UuidInterface $uuid,
     private ApplicationNumberService $applicationNumberService,
-    ) {
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
 
@@ -173,7 +174,7 @@ final class Application extends ResourceBase {
     }
 
     if (!$settings->isApplicationOpen()) {
-      // return new JsonResponse([], 403);
+      // Return new JsonResponse([], 403);.
     }
 
     // @todo Validate form data against schema maybe.
@@ -218,10 +219,9 @@ final class Application extends ResourceBase {
       $this->atvService->saveNewDocument($document);
     }
     catch (\Exception $e) {
-      // saving failed.
+      // Saving failed.
       return new JsonResponse([], 500);
     }
-
 
     return new JsonResponse($document->toArray(), 200);
   }
@@ -242,7 +242,7 @@ final class Application extends ResourceBase {
   public function patch() {
     $request = \Drupal::request();
     $content = json_decode($request->getContent(), TRUE);
-    // todo Access checking.
+    // @todo Access checking.
     [
       'application_number' => $application_number,
       'form_data' => $form_data,

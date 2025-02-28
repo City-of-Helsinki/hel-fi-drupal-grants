@@ -93,6 +93,9 @@ class HelfiAtvService {
     };
   }
 
+  /**
+   *
+   */
   public static function createAtvDocument(
     string $application_uuid,
     string $application_number,
@@ -104,13 +107,13 @@ class HelfiAtvService {
     string $company_identifier,
     bool $copy,
     array $selected_company,
-    ?string $applicant_type = null,
+    ?string $applicant_type = NULL,
   ): AtvDocument {
 
     $atvDocument = AtvDocument::create([]);
     $atvDocument->setTransactionId($application_number);
 
-    // @todo: Load this from module settings.
+    // @todo Load this from module settings.
     $atvDocument->setStatus('DRAFT');
 
     $atvDocument->setType($application_type);

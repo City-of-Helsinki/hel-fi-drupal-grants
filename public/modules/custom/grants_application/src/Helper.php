@@ -22,4 +22,5 @@ class Helper {
       default => getenv('APP_ENV'),
     };
   }
+
 }

@@ -14,7 +14,7 @@ final class ApplicationNumberService {
 
   public function __construct(
     #[Autowire(service: 'keyvalue.database')]
-    private readonly KeyValueDatabaseFactory $keyValue
+    private readonly KeyValueDatabaseFactory $keyValue,
   ) {
   }
 
