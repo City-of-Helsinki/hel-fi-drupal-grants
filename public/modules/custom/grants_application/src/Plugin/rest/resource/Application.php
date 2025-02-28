@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- *
+ * The application rest resources.
  */
 #[RestResource(
   id: "application_rest_resource",
@@ -43,6 +43,16 @@ final class Application extends ResourceBase {
    *   The available serialization formats.
    * @param \Psr\Log\LoggerInterface $logger
    *   A logger instance.
+   * @param \Drupal\grants_application\Form\FormSettingsService $formSettingsService
+   *   The form settings service.
+   * @param \Drupal\grants_application\User\UserInformationService $userInformationService
+   *   The user information service.
+   * @param \Drupal\grants_application\Atv\HelfiAtvService $atvService
+   *   The helfi atv service.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   The uuid service.
+   * @param \Drupal\grants_application\Form\ApplicationNumberService $applicationNumberService
+   *   The application number service.
    */
   public function __construct(
     array $configuration,
@@ -90,7 +100,10 @@ final class Application extends ResourceBase {
    *
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
-  public function get(int $application_type_id, ?string $application_number = NULL) {
+  public function get(
+    int $application_type_id,
+    ?string $application_number = NULL,
+  ): JsonResponse {
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
@@ -153,7 +166,7 @@ final class Application extends ResourceBase {
   /**
    * Post request.
    */
-  public function post() {
+  public function post(): JsonResponse {
     $request = \Drupal::request();
     $content = json_decode($request->getContent(), TRUE);
     $env = Helper::getAppEnv();
@@ -229,17 +242,12 @@ final class Application extends ResourceBase {
   /**
    * Responds to entity PATCH requests.
    *
-   * @param \Drupal\Core\Entity\EntityInterface $original_entity
-   *   The original entity object.
-   * @param \Drupal\Core\Entity\EntityInterface $entity
-   *   The entity.
-   *
    * @return Symfony\Component\HttpFoundation\JsonResponse
    *   The HTTP response object.
    *
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
-  public function patch() {
+  public function patch(): JsonResponse {
     $request = \Drupal::request();
     $content = json_decode($request->getContent(), TRUE);
     // @todo Access checking.

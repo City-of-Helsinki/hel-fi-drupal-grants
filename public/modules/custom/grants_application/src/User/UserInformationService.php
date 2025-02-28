@@ -35,6 +35,9 @@ class UserInformationService {
   /**
    * Get the grants profile data fetched from ATV.
    *
+   * @todo Figure out what this data actually is
+   * and document it here.
+   *
    * @return array
    *   The grants profile.
    */
@@ -46,35 +49,65 @@ class UserInformationService {
   }
 
   /**
+   * Get the selected company.
    *
+   * @todo Figure out what this actually is
+   * and document it here.
+   *
+   * @return array
+   *   Array containing selected company data.
    */
   public function getSelectedCompany(): array {
     return $this->grantsProfileService->getSelectedRoleData();
   }
 
   /**
+   * Get the applicant type.
    *
+   * @todo Figure out what applicant type actually is
+   * and document it here.
+   *
+   * @return string
+   *   The applicant type
    */
   public function getApplicantType(): ?string {
     return $this->grantsProfileService->getApplicantType();
   }
 
   /**
-   * Get user data.
+   * Get the user data.
+   *
+   * @todo Figure out what this actually is
+   * and document it here.
+   *
+   * @return array
+   *   The user data.
    */
   public function getUserData(): array {
     return $this->helfiHelsinkiProfiiliUserdata->getUserData();
   }
 
   /**
-   * Get user profile data.
+   * Get the user profile data.
+   *
+   * @todo Figure out what this actually is
+   * and document it here.
+   *
+   * @return array
+   *   The user profile data.
    */
   public function getUserProfileData(): array {
     return $this->helfiHelsinkiProfiiliUserdata->getUserProfileData();
   }
 
   /**
+   * Get the applicant information.
    *
+   * @todo Figure out what this actually is
+   * and refactor.
+   *
+   * @return array
+   *   The applicant information.
    */
   public function getApplicantInformation(array $selectedCompany, array $companyData, array $userData, array $userProfileData): array {
     return match ($selectedCompany["type"]) {

@@ -94,7 +94,33 @@ class HelfiAtvService {
   }
 
   /**
+   * Get ATV-document.
    *
+   * @param string $application_uuid
+   *   The uuid.
+   * @param string $application_number
+   *   The application number.
+   * @param string $application_name
+   *   The application name.
+   * @param string $application_type
+   *   The application type.
+   * @param string $application_title
+   *   The application title.
+   * @param string $langcode
+   *   The langcode.
+   * @param string $sub
+   *   The user sub.
+   * @param string $company_identifier
+   *   The company identifier.
+   * @param bool $copy
+   *   Is this copied.
+   * @param array $selected_company
+   *   The company data.
+   * @param string|null $applicant_type
+   *   The applicant type.
+   *
+   * @return \Drupal\helfi_atv\AtvDocument
+   *   A proper ATV-document
    */
   public static function createAtvDocument(
     string $application_uuid,
