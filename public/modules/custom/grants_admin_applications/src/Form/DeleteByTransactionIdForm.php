@@ -3,6 +3,7 @@
 namespace Drupal\grants_admin_applications\Form;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_admin_applications\Service\HandleDocumentsBatchService;
@@ -12,6 +13,7 @@ use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use GuzzleHttp\Exception\GuzzleException;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -21,36 +23,16 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class DeleteByTransactionIdForm extends FormBase {
 
-  /**
-   * Access to ATV.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * Document batch processing service.
-   *
-   * @var \Drupal\grants_admin_applications\Service\HandleDocumentsBatchService
-   */
-  protected HandleDocumentsBatchService $handleDocumentsBatchService;
+  use AutowireTrait;
 
   /**
    * Constructs a new GrantsProfileForm object.
    */
-  public function __construct(AtvService $atvService, HandleDocumentsBatchService $handleDocumentsBatchService) {
-    $this->atvService = $atvService;
-    $this->handleDocumentsBatchService = $handleDocumentsBatchService;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): DeleteByTransactionIdForm|static {
-    return new static(
-      $container->get('helfi_atv.atv_service'),
-      $container->get('grants_admin_applications.handle_documents_batch_service'),
-    );
+  public function __construct(
+    #[Autowire(service: 'helfi_atv.atv_service')]
+    private readonly AtvService $atvService,
+    private readonly HandleDocumentsBatchService $handleDocumentsBatchService,
+  ) {
   }
 
   /**
