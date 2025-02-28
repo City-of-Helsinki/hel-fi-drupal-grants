@@ -99,6 +99,7 @@ final class Application extends ResourceBase {
     }
 
     if (!$settings->isApplicationOpen()) {
+      // @todo Uncomment.
       // return new JsonResponse([], 403);
     }
 
@@ -175,78 +176,54 @@ final class Application extends ResourceBase {
       // return new JsonResponse([], 403);
     }
 
-    // @todo Validata form data against schema maybe.
-    // An application without existing draft needs a new ATV document.
-    if (!$application_number) {
-      $application_uuid = $this->uuid->generate();
+    // @todo Validate form data against schema maybe.
+    $application_uuid = $this->uuid->generate();
 
-      // @todo Application number generation must match the existing shenanigans.
-      $application_number = $this->applicationNumberService
-        ->createNewApplicationNumber($env, $application_type_id);
+    // @todo Application number generation must match the existing shenanigans.
+    $application_number = $this->applicationNumberService
+      ->createNewApplicationNumber($env, $application_type_id);
 
-      try {
-        $selected_company = $this->userInformationService->getSelectedCompany();
-        $company_data = $this->userInformationService->getGrantsProfileContent();
-
-        // Helsinkiprofiiliuserdata getuserprofiledata.
-        $user_profile_data = $this->userInformationService->getUserProfileData();
-
-        // Helsinkiprofiiliuserdata getuserdata.
-        $user_data = $this->userInformationService->getUserData();
-      }
-      catch (\Exception $e) {
-        return new JsonResponse([], 500);
-      }
-
-      $application_name = $settings->toArray()['settings']['title'];
-      $application_title = $settings->toArray()['settings']['title'];
-      $application_type = $settings->toArray()['settings']['application_type'];
-      $langcode = $langcode;
-      $sub = $user_data['sub'];
-
-      $document = $this->atvService->createAtvDocument(
-        $application_uuid,
-        $application_number,
-        $application_name,
-        $application_type,
-        $application_title,
-        $langcode,
-        $sub,
-        $selected_company['identifier'],
-        FALSE,
-        $selected_company,
-        $this->userInformationService->getApplicantType(),
-      );
-
-      $document->setContent($form_data);
-
-      try {
-        $this->atvService->saveNewDocument($document);
-      }
-      catch (\Exception $e) {
-        // saving failed.
-        return new JsonResponse([], 500);
-      }
+    try {
+      $selected_company = $this->userInformationService->getSelectedCompany();
+      // Helsinkiprofiiliuserdata getuserdata.
+      $user_data = $this->userInformationService->getUserData();
     }
-    else {
-      try {
-        $document = $this->atvService->getDocument($application_number);
-
-        if (!$document) {
-          // Unable to find the document.
-          return new JsonResponse([], 500);
-        }
-
-        $document->setContent($form_data);
-        $this->atvService->updateExistingDocument($document);
-      }
-      catch (\Throwable $e) {
-        // @todo Log and return proper response.
-        return new JsonResponse([], 500);
-      }
+    catch (\Exception $e) {
+      return new JsonResponse([], 500);
     }
 
-    return new JsonResponse([], 200);
+    $application_name = $settings->toArray()['settings']['title'];
+    $application_title = $settings->toArray()['settings']['title'];
+    $application_type = $settings->toArray()['settings']['application_type'];
+    $langcode = $langcode;
+    $sub = $user_data['sub'];
+
+    $document = $this->atvService->createAtvDocument(
+      $application_uuid,
+      $application_number,
+      $application_name,
+      $application_type,
+      $application_title,
+      $langcode,
+      $sub,
+      $selected_company['identifier'],
+      FALSE,
+      $selected_company,
+      $this->userInformationService->getApplicantType(),
+    );
+
+    $document->setContent($form_data);
+
+    try {
+      $this->atvService->saveNewDocument($document);
+    }
+    catch (\Exception $e) {
+      // saving failed.
+      return new JsonResponse([], 500);
+    }
+
+
+    return new JsonResponse($document->toArray(), 200);
   }
 
   /**
@@ -298,7 +275,7 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    return new JsonResponse([], 200);
+    return new JsonResponse($document->toArray(), 200);
   }
 
   /**
