@@ -13,6 +13,7 @@ third_party_settings:
     applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
+      unregistered_community: unregistered_community
     applicationTypeTerms:
       81: '81'
     applicationTargetGroup: '75'
