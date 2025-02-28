@@ -190,7 +190,7 @@ elements: |
   tulot_section:
     '#title': Incomes
   markup_01:
-    '#markup': 'Fill in the project´s budget from the planned period here.'
+    '#markup': "Fill in the project's budget from the planned period here."
   tulot:
     '#title': Incomes
     '#compensation__title': 'The applied grant (€)'
