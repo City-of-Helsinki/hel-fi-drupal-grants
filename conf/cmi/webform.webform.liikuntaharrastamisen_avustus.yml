@@ -23,7 +23,7 @@ third_party_settings:
       2025: '2025'
     applicationActingYearsNextCount: ''
     applicationContinuous: 0
-    disableCopying: 0
+    disableCopying: 1
     status: development
     parent: d6a6681d-87e8-4a48-aa5a-cb1c12bd160f
     avus2BreakingChange: 0
