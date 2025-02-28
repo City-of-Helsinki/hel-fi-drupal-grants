@@ -136,9 +136,11 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_kohderyhmat_osaaminen' => [],
       'hankkeen_kohderyhmat_postinrot' => [],
       'hankkeen_kohderyhmat_miksi_alue' => [],
+      'hankkeen_kohderyhmat_tarve' => [],
       'hankkeen_kohderyhmat_lapset_9_12' => [],
       'hankkeen_kohderyhmat_lapset_13_15' => [],
       'hankkeen_kohderyhmat_lapset_16_18' => [],
+      'hankkeen_kohderyhmat_nuoret_18_24' => [],
       'hankkeen_kohderyhmat_uudet' => [],
       'hankkeen_kohderyhmat_saavutettavuus' => [],
       'hankkeen_kohderyhmat_hinta' => [],
@@ -152,6 +154,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'arviointi_haasteet' => [],
       'arviointi_saavutettavuus' => [],
       'arviointi_avustus_kaytto' => [],
+      'avustuksen_kohde_yhdistys_toimintaryhma' => [],
+      'avustuksen_kohde_tiivistelma' => [],
     ];
 
     foreach ($customQuestions as $key => $value) {

@@ -33,7 +33,6 @@ elements: |
   bank_account:
     '#title': 'Account number'
     '#help': '<p>If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.</p>'
-    '#account_number__title': ''
   toiminnasta_vastaavat_henkilot:
     '#title': 'Persons responsible for operations'
   community_officials:
@@ -262,7 +261,7 @@ elements: |
   lisatiedot_ja_liitteet:
     '#title': '5. Additional information and appendices'
   lisatietoja_hakemukseen_liittyen:
-    '#title': "    '#title': 'Additional information concerning the application'"
+    '#title': 'Additional information concerning the application'
   additional_information:
     '#title': 'Additional information'
     '#help': '<p>If necessary, you can write additional information or other justifications related to the application or report changes to the basic information</p>'

@@ -1,4 +1,4 @@
-uuid: 7044f546-4004-4b3e-b4d3-abe1559d18ba
+uuid: c823d831-abb5-4786-9f40-41fb118f92e7
 langcode: fi
 status: open
 dependencies:
@@ -13,6 +13,7 @@ third_party_settings:
     applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
+      unregistered_community: unregistered_community
     applicationTypeTerms:
       81: '81'
     applicationTargetGroup: '75'
@@ -21,6 +22,7 @@ third_party_settings:
     applicationActingYearsType: fixed
     applicationActingYears:
       2025: '2025'
+      2026: '2026'
     applicationActingYearsNextCount: ''
     applicationContinuous: 0
     disableCopying: 0
@@ -33,8 +35,8 @@ close: null
 uid: 1
 template: false
 archive: false
-id: liikuntaharrastamisen_avustus
-title: 'Alueellisen liikuntaharrastamisen tukemisen avustus'
+id: segregaation_ehkaisemisavustus
+title: 'Nuorisotoiminnan erillisavustus segregaation ehkäisemiseen'
 description: '<p>KUVAERILLIS</p>'
 categories:
   - Kehityksessä
@@ -138,6 +140,8 @@ elements: |-
       olemme_saaneet_muita_avustuksia: 0
       myonnetty_avustus: 0
       olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      avustuksen_kohde_yhdistys_toimintaryhma: 0
+      avustuksen_kohde_tiivistelma: 0
       haettu_avustus_tieto: 0
       hankesuunnitelma_radios: 0
       hankesuunnitelma_jatkohakemus: 0
@@ -157,6 +161,7 @@ elements: |-
       hankkeen_kohderyhmat_osallisuus: 0
       hankkeen_kohderyhmat_osaaminen: 0
       hankkeen_kohderyhmat_postinrot: 0
+      hankkeen_kohderyhmat_tarve: 0
       hankkeen_kohderyhmat_miksi_alue: 0
       hankkeen_riskit_keskeisimmat: 0
       hankkeen_riskit_seuranta: 0
@@ -174,7 +179,7 @@ elements: |-
       additional_information: 0
       extra_info: 0
       muu_liite: 0
-    '#subvention_type': '47'
+    '#subvention_type': '49'
     '#data_type': euro
     '#form_item': hidden
   kulttuuri2_summa:
@@ -197,6 +202,8 @@ elements: |-
       olemme_saaneet_muita_avustuksia: 0
       myonnetty_avustus: 0
       olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      avustuksen_kohde_yhdistys_toimintaryhma: 0
+      avustuksen_kohde_tiivistelma: 0
       haettu_avustus_tieto: 0
       hankesuunnitelma_radios: 0
       hankesuunnitelma_jatkohakemus: 0
@@ -216,6 +223,7 @@ elements: |-
       hankkeen_kohderyhmat_osallisuus: 0
       hankkeen_kohderyhmat_osaaminen: 0
       hankkeen_kohderyhmat_postinrot: 0
+      hankkeen_kohderyhmat_tarve: 0
       hankkeen_kohderyhmat_miksi_alue: 0
       hankkeen_riskit_keskeisimmat: 0
       hankkeen_riskit_seuranta: 0
@@ -233,7 +241,7 @@ elements: |-
       additional_information: 0
       extra_info: 0
       muu_liite: 0
-    '#subvention_type': '48'
+    '#subvention_type': '49'
     '#data_type': euro
     '#form_item': hidden
   1_hakijan_tiedot:
@@ -373,19 +381,17 @@ elements: |-
         '#title': 'Vuosi, jolle haen avustusta'
         '#options':
           2025: '2025'
+          2026: '2026'
         '#required': true
     avustuslajit:
       '#type': webform_section
       '#title': Avustuslajit
-      grants_compensations_information:
-        '#type': webform_markup
-        '#markup': '<p>Syötä kenttään vuodelle 2025 haettava avustussumma. Monivuotisen hankkeen jatkokausien avustussummat syötetään seuraavalla sivulle.</p>'
       subventions:
         '#type': grants_compensations
         '#title': Avustukset
         '#multiple': true
         '#subventionType':
-          52: '52'
+          49: '49'
         '#onlyOneSubventionPerApplication': 1
         '#required': true
         '#multiple__header': true
@@ -595,304 +601,156 @@ elements: |-
   3_tarkemmat_tiedot:
     '#type': webform_wizard_page
     '#title': '3. Tarkemmat tiedot'
-    tarkemmat_tiedot_section:
+    avustuksen_kohde_section:
       '#type': webform_section
-      '#title': 'Tarkemmat tiedot '
-      hankesuunnitelma_avustuksen_kesto:
-        '#type': radios
-        '#title': 'Haetaanko yksi-, kaksi- vai kolmivuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
-        '#description_display': after
-        '#options':
-          1: 'Haen avustusta yksivuotisena'
-          2: 'Haen avustusta kaksivuotisena'
-          3: 'Haen avustusta kolmivuotisena'
+      '#title': 'Avustuksen kohde'
+      avustuksen_kohde_yhdistys_toimintaryhma:
+        '#type': textarea
+        '#title': 'Haetaanko avustusta yhdistykselle vai nuorten toimintaryhmälle?'
+        '#help': '<p>Kerro tässä kummalle olet hakemassa avustusta.</p>'
+        '#maxlength': 100
+        '#counter_type': character
+        '#counter_maximum': 100
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/100 merkkiä jäljellä'
         '#required': true
-        '#default_value': '1'
-      haettava_avustussumma:
-        '#type': fieldset
-        '#title': 'Haettava avustussumma'
+      avustuksen_kohde_tiivistelma:
+        '#type': textarea
+        '#title': 'Kerro tiivistettynä yhdistyksestänne/nuorten toimintaryhmästänne. Vastaa lyhyesti ainakin seuraaviin kysymyksiin: Mikä on toiminta-alueenne Helsingissä? Ketkä osallistuvat toimintaanne? Minkälaisia valmiuksia teillä on toteuttaa tämä projekti (esim. resurssit/ kokemus)?'
+        '#maxlength': 2500
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#required': true
-        haettava_avustussumma_2025:
-          '#type': grants_budget_income_static
-          '#title': '2025 (euroa)'
-          '#multiple': false
-          '#incomeGroup': general
-          '#required': true
-          '#compensation__title': '2025 (euroa)'
-          '#compensation__title_display': none
-          '#plannedStateOperativeSubvention__access': false
-          '#otherCompensationFromCity__access': false
-          '#stateOperativeSubvention__access': false
-          '#plannedOtherCompensations__access': false
-          '#sponsorships__access': false
-          '#entryFees__access': false
-          '#sales__access': false
-          '#financialFundingAndInterests__access': false
-          '#customerFees__access': false
-          '#donations__access': false
-          '#compensationFromCulturalAffairs__access': false
-          '#otherCompensationType__access': false
-          '#incomeWithoutCompensations__access': false
-          '#ownFunding__access': false
-          '#plannedTotalIncome__access': false
-          '#otherCompensations__access': false
-          '#plannedTotalIncomeWithoutSubventions__access': false
-          '#plannedShareOfIncomeWithoutSubventions__access': false
-          '#shareOfIncomeWithoutSubventions__access': false
-          '#totalIncomeWithoutSubventions__access': false
-          '#totalIncome__access': false
-          '#incomeGroupName__access': false
-        haettava_avustussumma_2026:
-          '#type': textfield
-          '#title': '2026 (euroa)'
-          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
-          '#pattern': '^[0-9 ]*$'
-          '#attributes':
-            class:
-              - webform--large
-          '#states':
-            visible:
-              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                  value: '2'
-              - or
-              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                  value: '3'
-          '#required': true
-        haettava_avustussumma_2027:
-          '#type': textfield
-          '#title': '2027 (euroa)'
-          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
-          '#required': true
-          '#pattern': '^[0-9 ]*$'
-          '#attributes':
-            class:
-              - webform--large
-          '#states':
-            visible:
-              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                value: '3'
-    hankesuunnitelma_section:
+    hankkeen_aika_kohde_toiminta_section:
       '#type': webform_section
-      '#title': 'Hankesuunnitelma ja hankkeen tavoitteet'
+      '#title': 'Projektin aikataulu, kohderyhmä ja toiminta-alue'
       hankkeen_nimi:
         '#type': textarea
-        '#title': 'Hankkeen nimi'
+        '#title': 'Projektin nimi'
         '#maxlength': 300
         '#counter_type': character
         '#counter_maximum': 300
-        '#attributes':
-          class:
-            - webform--large
         '#counter_maximum_message': '%d/300 merkkiä jäljellä'
-        '#required': true
-      hankkeen_tarkoitus_tavoitteet:
-        '#type': textarea
-        '#title': 'Hankkeen tarkoitus ja tavoitteet'
-        '#maxlength': 2500
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 2500
         '#attributes':
           class:
             - webform--large
-        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-      hankkeen_monivuotisuuden_tarve:
-        '#type': textarea
-        '#title': 'Perustele monivuotisuuden tarve hankkeen tavoitteiden saavuttamisen näkökulmasta.'
-        '#maxlength': 2500
-        '#counter_type': character
-        '#counter_maximum': 2500
-        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#attributes':
-          class:
-            - webform--large
-        '#states':
-          visible:
-            - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                value: '2'
-            - or
-            - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                value: '3'
         '#required': true
-      hankkeen_toimenpiteet_toteutus:
+      hankkeen_toimenpiteet:
         '#type': fieldset
-        '#title': 'Mitkä ovat hankkeen konkreettiset toimenpiteet, joilla 9–18-vuotiaiden helsinkiläisten lasten ja nuorten matalankynnyksen alueellista liikuntatoimintaa edistetään? Mikä on toimenpiteiden toteutusaikataulu?'
+        '#title': 'Mikä on projektin aikataulu?'
+        '#help': '<p>Merkitse tähän projektin suunniteltu alkamispäivä ja loppumispäivä.</p>'
         '#attributes':
           class:
             - grants-fieldset
-        hankkeen_toimenpiteet_aikataulu:
-          '#type': textarea
-          '#title': 'Toimenpiteet ja niiden aikataulu vuonna 2025'
-          '#maxlength': 2500
-          '#counter_type': character
-          '#counter_maximum': 2500
-          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-          '#attributes':
-            class:
-              - webform--large
+        hankkeen_toimenpiteet_alkupvm:
+          '#type': date
+          '#title': Alkupäivämäärä
           '#required': true
-        hankkeen_toimenpiteet_aikataulu_2026:
-          '#type': textarea
-          '#title': 'Toimenpiteet ja niiden aikataulu vuonna 2026'
-          '#maxlength': 2500
+        hankkeen_toimenpiteet_loppupvm:
+          '#type': date
+          '#title': Loppupäivämäärä
           '#required': true
-          '#counter_type': character
-          '#counter_maximum': 2500
-          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-          '#attributes':
-            class:
-              - webform--large
-          '#states':
-            visible:
-              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                '!value': '1'
-        hankkeen_toimenpiteet_aikataulu_2027:
-          '#type': textarea
-          '#title': 'Toimenpiteet ja niiden aikataulu vuonna 2027'
-          '#maxlength': 2500
-          '#required': true
-          '#counter_type': character
-          '#counter_maximum': 2500
-          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-          '#attributes':
-            class:
-              - webform--large
-          '#states':
-            visible:
-              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                value: '3'
-      hankkeen_toiminnan_laajuus:
-        '#type': textarea
-        '#title': 'Missä laajuudessa toimintaa on suunniteltu järjestettävän (h/vko)?'
-        '#help': '<p>Merkitse kenttään, kuinka monta tuntia toimintaa järjestetään keskimäärin viikoittain.</p>'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#attributes':
-          class:
-            - webform--large
-        '#required': true
-      hankkeen_kohtaamiset:
-        '#type': textarea
-        '#title': 'Lisätäänkö hankkeessa väestöryhmien välisiä myönteisiä kohtaamisia tai ehkäistään syrjäytymistä? Miten?'
-        '#maxlength': 2500
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 2500
-        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#attributes':
-          class:
-            - webform--large
-    hankkeen_kohderyhmat_section:
-      '#type': webform_section
-      '#title': 'Hankkeen kohderyhmä'
       hankkeen_kohderyhmat_kenelle:
         '#type': textarea
-        '#title': 'Mikä on hankkeen kohderyhmä/kohderyhmät?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#attributes':
-          class:
-            - webform--large
-        '#required': true
-      hankkeen_kohderyhmat_erityisryhmat:
-        '#type': textarea
-        '#title': 'Onko kohderyhmällä/-ryhmillä erityistarpeita? Miten nämä tarpeet huomioidaan?'
+        '#title': 'Mikä on projektin kohderyhmä/kohderyhmät?'
         '#description_display': after
         '#maxlength': 1250
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-      hankkeen_kohderyhmat_osaaminen:
-        '#type': textarea
-        '#title': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
-        '#maxlength': 1250
         '#required': true
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#attributes':
-          class:
-            - webform--large
-      hankkeen_kohderyhmat_lapset:
+      hankkeen_kohderyhmat_tavoittavuus:
         '#type': fieldset
-        '#title': 'Arvioi, montako lasta ja nuorta toiminnalla tavoitetaan.'
+        '#title': 'Arvioi, montako lasta ja nuorta toiminnalla tavoitetaan. Arvioi tavoitettujen lasten ja nuorten määrä yhteensä koko hankkeen aikana.'
+        '#help': '<p>Mikäli hankkeessa ei tavoiteta kyseistä ikäryhmää, niin merkitse kenttään "0".</p>'
         '#required': true
-        markup:
-          '#type': webform_markup
-          '#markup': '<p>Arvioi tavoitettujen lasten ja nuorten määrä yhteensä koko hankkeen aikana. Mikäli hankkeessa ei tavoiteta kyseistä ikäryhmää, niin merkitse kenttään "0".</p>'
         hankkeen_kohderyhmat_lapset_9_12:
           '#type': textfield
           '#title': '9–12-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#wrapper_attributes':
+            class:
+              - text-field--inside-fieldset
           '#attributes':
             class:
               - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
-        hankkeen_kohderyhmat_lapset_13_15:
+        hankkeen_kohderyhmat_nuoret_18_24:
           '#type': textfield
-          '#title': '13–15-vuotiasta helsinkiläistä'
+          '#title': '18-24-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#wrapper_attributes':
+            class:
+              - text-field--inside-fieldset
           '#attributes':
             class:
               - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
-        hankkeen_kohderyhmat_lapset_16_18:
-          '#type': textfield
-          '#title': '16–18-vuotiasta helsinkiläistä'
-          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
-          '#attributes':
-            class:
-              - webform--large
-          '#required': true
-          '#pattern': '^[0-9 ]*$'
-      hankkeen_kohderyhmat_uudet_fieldset:
-        '#type': fieldset
-        '#title': 'Kuinka monta näistä on uusia eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?'
-        '#required': true
         hankkeen_kohderyhmat_uudet:
           '#type': textfield
-          '#title': '9–18-vuotiasta helsinkiläistä'
+          '#title': 'Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?'
+          '#help': '<p>Arvioi tähän uusien 9-12 ja 18-24 vuotiaiden helsinkiläisten osallistujien lukumäärä yhteensä.</p>'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#wrapper_attributes':
+            class:
+              - text-field--inside-fieldset
           '#attributes':
             class:
               - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
-      hankkeen_kohderyhmat_saavutettavuus:
+      hankkeen_kohderyhmat_postinrot:
         '#type': textarea
-        '#title': 'Miten toiminnan saavutettavuus on otettu huomioon? Millaisia omia välineitä ja osaamistasoa toimintaan osallistujilta vaaditaan?'
-        '#help': '<p>Kerro, miten eri saavutettavuuden osa-alueet otetaan toiminnassa huomioon, esim. viestinnällinen, fyysinen, psyykkinen, sosiaalinen, kulttuurinen ja taloudellinen saavutettavuus.</p>'
-        '#maxlength': 2500
+        '#title': 'Millä alueilla toiminta toteutetaan? Kirjaa tekstikenttään kaikki tilojen nimet/toimintapaikat ja postinumerot pilkulla eroteltuna.'
+        '#maxlength': 500
+        '#counter_type': character
+        '#counter_maximum': 500
+        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
         '#required': true
+      hankkeen_kohderyhmat_tarve:
+        '#type': textarea
+        '#title': 'Mihin alueen tarpeeseen toiminnassa vastataan?'
+        '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-      hankkeen_kohderyhmat_hinta:
-        '#type': textfield
-        '#title': 'Kuinka paljon yhden harrastuskerran on suunniteltu maksavan osallistujalle (€/h)?'
-        '#help': '<p>Arvioi, kuinka paljon osallistuja maksaa yhdestä harrastuskerrasta. Anna arvio muodossa €/tunti.</p>'
-        '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+        '#required': true
+    hankkeen_menetelmat_section:
+      '#type': webform_section
+      '#title': 'Projektin menetelmät'
+      hankkeen_kohderyhmat_tavoitus:
+        '#type': textarea
+        '#title': 'Miten kohderyhmät tavoitetaan ja tunnistetaan?'
+        '#description_display': after
+        '#maxlength': 2500
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
         '#required': true
-        '#pattern': '^[0-9 ]*$'
       hankkeen_kohderyhmat_konkretia:
         '#type': textarea
         '#title': 'Miten toiminnan toivotaan vaikuttavan osallistujien elämään?'
+        '#description_display': after
         '#maxlength': 1250
         '#counter_type': character
         '#counter_maximum': 1250
@@ -901,37 +759,10 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      hankkeen_kohderyhmat_postinrot:
-        '#type': textarea
-        '#title': 'Millä alueella/alueilla toiminta toteutetaan? Kirjaa kenttään pilkulla erotettuna (, ) kaikki postinumeroalueet (vain postinumerot), joilla toimintaa suunnitellaan toteutettavan.'
-        '#help': '<p>Älä kirjaa kenttään mitään muuta kuin postinumeroita. Erottele postinumerot pilkulla (, ).</p>'
-        '#description_display': after
-        '#required': true
-        '#counter_type': character
-        '#maxlength': 100
-        '#counter_maximum': 100
-        '#counter_maximum_message': '%d/100 merkkiä jäljellä'
-        '#attributes':
-          class:
-            - webform--large
-    hankkeen_menetelmat_section:
-      '#type': webform_section
-      '#title': 'Hankkeen menetelmät'
-      hankkeen_kohderyhmat_tavoitus:
-        '#type': textarea
-        '#title': 'Miten kohderyhmät tavoitetaan ja tunnistetaan?'
-        '#help': '<p>Kerro, miten toiminnan kohderyhmät tunnistetaan, esim. vähän harrastavat tai syrjäytymisriskissä olevat lapset ja nuoret.</p>'
-        '#maxlength': 2500
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 2500
-        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#attributes':
-          class:
-            - webform--large
       hankkeen_kohderyhmat_osallisuus:
         '#type': textarea
         '#title': 'Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?'
+        '#description_display': after
         '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500
@@ -942,55 +773,32 @@ elements: |-
         '#required': true
       hankkeen_keskeisimmat_kumppanit:
         '#type': textarea
-        '#title': 'Nimeä keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla oleva tahot.'
+        '#title': 'Kenen kanssa hankkeessa tehdään yhteistyötä? Nimeä keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla oleva tahot.'
+        '#description_display': after
         '#maxlength': 2500
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
+        '#required': true
       hankkeen_uudet_kumppanit:
         '#type': textarea
         '#title': 'Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?'
+        '#description_display': after
         '#maxlength': 2500
-        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-    hankkeen_riskit_section:
-      '#type': webform_section
-      '#title': 'Riskit & analyysi'
-      hankkeen_riskit_keskeisimmat:
-        '#type': textarea
-        '#title': 'Mitkä ovat hankkeen toteuttamisen näkökulmasta keskeiset riskit?'
-        '#maxlength': 2500
         '#required': true
-        '#counter_type': character
-        '#counter_maximum': 2500
-        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#attributes':
-          class:
-            - webform--large
-      hankkeen_riskit_seuranta:
-        '#type': textarea
-        '#title': 'Miten hankkeessa aiotaan seurata tavoitteiden toteutumista ja toteuttaa vaikuttavuudenarviointia?'
-        '#help': '<p>Kuvaa hankkeen dokumentointia ja vaikutusten arviointia, kuten millä menetelmin vaikuttavuutta arvioidaan ja millaista seurantaa hankkeen osalta aiotaan toteuttaa.</p>'
-        '#maxlength': 2500
-        '#required': true
-        '#counter_type': character
-        '#counter_maximum': 2500
-        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#attributes':
-          class:
-            - webform--large
       hankkeen_riskit_vakiinnuttaminen:
         '#type': textarea
-        '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
+        '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos on, niin kuvaa tekstikenttään, miten ja millä rahoituksella vakiinnuttaminen aiotaan tehdä?'
+        '#description_display': after
         '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500
@@ -1006,7 +814,7 @@ elements: |-
       '#title': Tulot
       markup_01:
         '#type': webform_markup
-        '#markup': '<p>Monivuotisen hankkeen osalta tässä kohdassa tulee ilmoittaa ensimmäisen hankevuoden talousarvio. Lisäksi hakemuksen liitteenä tulee toimittaa koko hankeajan talousarvio, josta käy ilmi tulojen ja menojen jakautuminen eri hankevuosille.</p>'
+        '#markup': 'Täytä tähän projektin talousarvio suunnitellulta kaudelta.'
       tulot:
         '#type': grants_budget_income_static
         '#title': Tulot
@@ -1071,7 +879,7 @@ elements: |-
         '#attributes':
           class:
             - webform--large
-        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista&nbsp;'
+        '#help': 'T&auml;h&auml;n voit tarvittaessa kirjoittaa lis&auml;tietoja tai muita perusteluja hakemukseen liittyen tai ilmoittaa perustietoihin tulleista muutoksista'
         '#counter_type': character
         '#maxlength': 5000
         '#counter_maximum': 5000
@@ -1082,7 +890,7 @@ elements: |-
       '#title': Liitteet
       attachments_info:
         '#type': webform_markup
-        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p><h4>Vaaditut liitteet</h4><p>Monivuotisen hankkeen osalta tulee toimittaa hakemuksen liitteenä hankevuosittain eritelty talousarvio koko hankkeen ajalle.</p><p>Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilikaudelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilikautta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä vuosikokouksen pöytäkirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma. Lisäksi hakijan tulee toimittaa yhteisön säännöt ja pankin ilmoitus tilinomistajasta tai tiliotekopio.</p><h4>Usean liitteen toimittaminen yhtenä tiedostona</h4><p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4><p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä.</p>'
+        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p><h4>Vaaditut liitteet</h4><p>Nuorisotoiminnan erillisavustushakemuksen pakolliset liitteet ovat: yhdistyksen voimassa olevat säännöt (ei koske nuorten toimintaryhmiä), yhdistyksen toiminta- ja talousarvio sille vuodelle, jolle avustusta haetaan sekä hankkeen projektisuunnitelma ja talousarvio. Sääntöjen tulee olla Patentti ja rekisterihallituksen hyväksymät.</p><h4>Usean liitteen toimittaminen yhtenä tiedostona</h4><p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona.</p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4><p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>'
       notification_attachments:
         '#type': webform_markup
         '#markup': |
