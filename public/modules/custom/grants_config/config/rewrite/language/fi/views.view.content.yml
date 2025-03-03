@@ -1,0 +1,7 @@
+display:
+  default:
+    display_options:
+      filters:
+        revision_uid:
+          expose:
+            label: 'Version kirjoittaja'
