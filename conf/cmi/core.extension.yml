@@ -57,6 +57,7 @@ module:
   grants_audit_log: 0
   grants_budget_components: 0
   grants_club_section: 0
+  grants_config: 0
   grants_events: 0
   grants_front_banner: 0
   grants_industries: 0
