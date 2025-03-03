@@ -205,7 +205,7 @@ elements: |
   hankkeen_kohderyhmat_hinta:
     '#title': 'Hur mycket har en gång av hobbyn planerats kosta för deltagaren (€/h)?'
     '#help': '<p>Bedöm hur mycket deltagaren betalar för en gång av hobbyn. Ge bedömningen i formatet €/timme.</p>'
-  hankkeen_kohderyhmat_konkretia:
+  hankkeen_kohderyhmat_konkretia_liikunta:
     '#title': 'Hur önskar man att verksamheten ska påverka deltagarnas liv?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_postinrot:
@@ -214,17 +214,17 @@ elements: |
     '#counter_maximum_message': '%d/100 tecken kvar'
   hankkeen_menetelmat_section:
     '#title': 'Metoder för projektet '
-  hankkeen_kohderyhmat_tavoitus:
+  hankkeen_kohderyhmat_tavoitus_liikunta:
     '#title': 'Hur nås och identifieras målgrupperna?'
     '#help': '<p>Berätta hur målgrupperna för verksamheten identifieras, till exempel barn och unga som har få hobbyer eller som löper risk för att marginaliseras.</p>'
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  hankkeen_kohderyhmat_osallisuus:
+  hankkeen_kohderyhmat_osallisuus_liikunta:
     '#title': 'Hur deltar barn och unga i planeringen av och beslutsfattandet om verksamheten?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  hankkeen_keskeisimmat_kumppanit:
+  hankkeen_keskeisimmat_kumppanit_liikunta:
     '#title': 'Namnge de viktigaste samarbetspartnerna och deras roll i projektet. Namnge separat de samarbetsparter som redan överenskommits och de parter som ännu planeras.'
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  hankkeen_uudet_kumppanit:
+  hankkeen_uudet_kumppanit_liikunta:
     '#title': 'Prövas nya former av partnerskap eller utvecklas nya verksamhetsmodeller i projektet? Vilka?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_riskit_section:
