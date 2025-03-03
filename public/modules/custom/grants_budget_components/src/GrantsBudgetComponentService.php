@@ -3,6 +3,7 @@
 namespace Drupal\grants_budget_components;
 
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\ListInterface;
 use Drupal\Core\TypedData\Plugin\DataType\Map;
 use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
@@ -231,8 +232,7 @@ class GrantsBudgetComponentService {
   /**
    * Extract typed data to webform format based definition.
    *
-   * @return array
-   *
+   * @return array|string
    *   Formatted data.
    */
   public static function extractToWebformData($definition, array $documentData) {
@@ -288,6 +288,11 @@ class GrantsBudgetComponentService {
         default:
           break;
       }
+    }
+
+    // Extracts requested grant if property definition is simple.
+    if ($definition instanceof DataDefinition && $definition->getDataType() === 'string') {
+      return $dataFromDocument['incomeRowsArrayStatic']['general'][0]['compensation'] ?? '0';
     }
 
     $properties = $definition->getPropertyDefinitions();

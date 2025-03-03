@@ -22,10 +22,11 @@ fieldset.grants-fieldset {
   }
 
   &-medium {
+    max-width: var(--webform-element-width--fieldset);
+
     .fieldset-wrapper {
       justify-content: center;
     }
-    max-width: var(--webform-element-width--fieldset);
   }
 }
 
@@ -53,12 +54,12 @@ fieldset.orienteering-map-composite--wrapper,
   }
 
   legend > span.visually-hidden {
-    background: white;
-    clip-path: initial;
+    background: $color-white;
     clip: initial;
+    clip-path: initial;
     height: auto;
-    margin-left: calc(var(--spacing-2-xs) * -1);
     left: auto;
+    margin-left: calc(var(--spacing-2-xs) * -1);
     overflow: visible;
     padding: 0 var(--spacing-2-xs);
     top: -12px;
@@ -80,4 +81,8 @@ fieldset.orienteering-map-composite--wrapper,
 
 fieldset.webform-composite-hidden-title .fieldset-wrapper > .form-item:last-child {
   margin-bottom: var(--spacing-layout-xs);
+}
+
+.form-item.text-field--inside-fieldset {
+  max-width: var(--webform-element-width--input-large);
 }

@@ -1,9 +1,0 @@
-label: FAQ
-display:
-  default:
-    display_options:
-      title: FAQ
-  page_1:
-    display_options:
-      menu:
-        title: 'Frequently asked questions'

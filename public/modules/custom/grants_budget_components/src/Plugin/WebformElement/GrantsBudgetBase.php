@@ -98,14 +98,26 @@ class GrantsBudgetBase extends WebformCompositeBase {
         $composite_value = '-';
       }
 
-      $items[$composite_key] = [
-        '#type' => 'inline_template',
-        '#template' => '<dt>{{ title }}:</dt><dd>{{ value }}</dd>',
-        '#context' => [
-          'title' => $composite_title,
-          'value' => $composite_value,
-        ],
-      ];
+      $title_display = $composite_element['#title_display'] ?? NULL;
+      if ($title_display === 'none') {
+        $items[$composite_key] = [
+          '#type' => 'inline_template',
+          '#template' => '{{ value }}',
+          '#context' => [
+            'value' => $composite_value,
+          ],
+        ];
+      }
+      else {
+        $items[$composite_key] = [
+          '#type' => 'inline_template',
+          '#template' => '<dt>{{ title }}:</dt><dd>{{ value }}</dd>',
+          '#context' => [
+            'title' => $composite_title,
+            'value' => $composite_value,
+          ],
+        ];
+      }
     }
     return $items;
   }

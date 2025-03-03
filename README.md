@@ -67,14 +67,10 @@ config_import_ignore:
 ```
 This ignores forms with ID's of 53 & 51.
 
-We will ignore every production form like this, but those forms need to be be overridden sometimes. For that we have command to import only single form with it's applicationId.
+We will ignore every production form like this, but those forms need to be overridden sometimes. For that we have command to import only single form with it's applicationId.
 ```
 $ drush gwi 53
 ```
-
-
-
-
 
 ## Enable debugging
 To enable xdebug, run `export XDEBUG_ENABLE=true` before (re)starting your project. More info in [docker-composer.yml](./docker-compose.yml)
@@ -86,9 +82,9 @@ Works is done & issues tracked [on our Jira board](https://helsinkisolutionoffic
 
 ## Tests for custom modules
 
-Drupal uses `phpunit` library for tests and it is installed via `composer` as a development dependency. Tests are configured using `phpunit.xml` file in module root. Drupal documentation about tests an be found [here](https://www.drupal.org/docs/develop/automated-testing)
+Drupal uses `phpunit` library for tests, and it is installed via `composer` as a development dependency. Tests are configured using `phpunit.xml` file in module root. Drupal documentation about tests an be found [here](https://www.drupal.org/docs/develop/automated-testing)
 
-There are three kind of tests. Unit tests are for testing code without loading Drupal. Kernel tests are run always with Drupal core and during the test setup phase modules can be installed and configurations loaded. These can be used to test features that tied to Drupal fore features like services and events. Functional tests are run with whole Drupal and they can be used to test any Drupal functionality.
+There are three kind of tests. Unit tests are for testing code without loading Drupal. Kernel tests are run always with Drupal core and during the test setup phase modules can be installed and configurations loaded. These can be used to test features that tied to Drupal fore features like services and events. Functional tests are run with whole Drupal, and they can be used to test any Drupal functionality.
 
 Each kind of test case has base class that are extended to create tests.
 
@@ -107,6 +103,8 @@ E2E (End-to-End) tests ensure the whole application works as intended from a use
 
 
 ### Running E2E tests in Docker
+
+Start project using testing Docker compose profile: `COMPOSE_PROFILES=testing make up`.
 
 You can run E2E tests in a Docker container. To do this:
 
