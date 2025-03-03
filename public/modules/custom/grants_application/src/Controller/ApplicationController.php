@@ -37,10 +37,6 @@ final class ApplicationController extends ControllerBase {
       return new JsonResponse([], 500);
     }
 
-    // if (!$settings->isApplicationOpen()) {
-    //   return new JsonResponse([], 403);
-    // }
-
     try {
       $settings->setGrantsProfileData(
         $this->userInformationService->getGrantsProfileData()
@@ -130,7 +126,7 @@ final class ApplicationController extends ControllerBase {
       '#attached' => [
         'drupalSettings' => [
           'grants_react_form' => [
-            'application_number' => $id
+            'application_number' => $id,
           ],
         ],
       ],
