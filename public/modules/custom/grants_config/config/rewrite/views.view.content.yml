@@ -1,5 +1,5 @@
 config_rewrite:
-  replace: ['dependencies']
+  replace: ['dependencies', 'display.default.cache_metadata.tags', 'display.page_1.cache_metadata.tags']
 dependencies:
   config:
     - views.view.avustuslajit
@@ -292,6 +292,7 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+    cache_metadata:
       tags:
         - taxonomy_term_list
   page_1:
