@@ -1,8 +1,6 @@
-import { SubmitButtonProps, WidgetProps } from '@rjsf/utils';
-import { Button, ButtonPresetTheme, ButtonVariant, TextArea as HDSTextArea, TextInput as HDSTextInput, IconDownloadCloud, IconTrash, Select  } from 'hds-react';
-import { useAtomValue, useSetAtom } from 'jotai';
-import React from 'react';
-import { getCurrentStepAtom, setStepAtom } from '../store';
+import { WidgetProps } from '@rjsf/utils';
+import { TextArea as HDSTextArea, TextInput as HDSTextInput, Select  } from 'hds-react';
+import { ChangeEvent } from 'react';
 
 const formatErrors = (rawErrors: string[]|undefined) => {
   if (!rawErrors) {
@@ -21,8 +19,7 @@ export const TextInput = ({
   readonly,
   required,
   value,
-}: WidgetProps) => {
-  return (
+}: WidgetProps) => (
     <HDSTextInput
       errorText={formatErrors(rawErrors)}
       hideLabel={false}
@@ -31,14 +28,13 @@ export const TextInput = ({
       label={label}
       name={name}
       onBlur={() => null}
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) => onChange(event.target.value)}
+      onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value)}
       onFocus={() => null}
       readOnly={readonly}
       required={required}
       value={value ?? ''}
     />
   );
-};
 
 export const TextArea = ({
   id,
@@ -49,8 +45,7 @@ export const TextArea = ({
   readonly,
   required,
   value,
-}: WidgetProps) => {
-  return (
+}: WidgetProps) => (
     <HDSTextArea
       errorText={formatErrors(rawErrors)}
       hideLabel={false}
@@ -66,7 +61,6 @@ export const TextArea = ({
       value={value ?? ''}
     />
   );
-};
 
 export const SelectWidget = ({
   id,

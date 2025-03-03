@@ -1,9 +1,8 @@
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Stepper as HDSStepper, StepState } from 'hds-react';
 import React, { MouseEvent, RefObject, useEffect, useRef } from 'react';
-import { FormStep, formStepsAtom, getCurrentStepAtom, getErrorPageIndicesAtom, getErrorsAtom, setStepAtom } from '../store';
-import { RJSFValidationError } from '@rjsf/utils';
 import Form from '@rjsf/core';
+import { FormStep, formStepsAtom, getCurrentStepAtom, getErrorPageIndicesAtom, setStepAtom } from '../store';
 
 const transformSteps = (
   steps: Map<number, FormStep>|undefined,

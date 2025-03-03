@@ -1,14 +1,15 @@
 import { RJSFValidationError } from '@rjsf/utils';
 import { FormStep } from './store';
 
-const regex = new RegExp('^\.([^\.]+)');
+const regex = '/^.([^.]+)/';
 
 /**
  * Return index numbers for steps that have errors in them.
  *
- * @param RJSFValidationError[]|undefined errors
- * @param Map<number, FormStep> steps
- * @returns Array<number>
+ * @param {Array|undefined} errors - array of RJSValidationErrors
+ * @param {Map} steps - Steps from form config
+ *
+ * @return {Array} - Array of step indices with errors in them
  */
 export const getIndicesWithErrors = (
   errors: RJSFValidationError[]|undefined,
@@ -21,7 +22,7 @@ export const getIndicesWithErrors = (
   const errorIndices: number[] = [];
   const propertyParentKeys: string[] = [];
   errors.forEach(error => {
-    let match = error?.property?.match(regex)?.[0];
+    const match = error?.property?.match(regex)?.[0];
 
     if (match) {
       propertyParentKeys.push(match.split('.')[1]);
@@ -39,9 +40,10 @@ export const getIndicesWithErrors = (
 /**
  * Key errors by page index and return them unaltered.
  *
- * @param RJSFValidationError[]|undefined errors
- * @param Map<number, FormStep> steps
- * @returns Array<Array<number, RJSFValidationError>>
+ * @param {Array|undefined} errors - array of RJSValidationErrors
+ * @param {Map} steps - Steps from form config
+ *
+ * @return {Array} - Array of validation errors, keyed by step index
  */
 export const keyErrorsByStep = (
   errors: RJSFValidationError[]|undefined,
@@ -53,20 +55,16 @@ export const keyErrorsByStep = (
 
   const keyedErrors: Array<[number, RJSFValidationError]> = [];
 
-  for (const error of errors) {
+  errors.forEach(error => {
     const match = error?.property?.match(regex)?.[0];
 
-    if (!match) {
-      continue;
-    }
-
-    const matchedStep = Array.from(steps).find(([index, step]) => step.id === match.split('.')[1]);
+    const matchedStep = Array.from(steps).find(([index, step]) => step.id === match?.split('.')[1]);
 
     if (matchedStep) {
       const [matchedIndex] = matchedStep;
       keyedErrors.push([matchedIndex, error]);
     }
-  };
+  });
 
   return keyedErrors;
 };

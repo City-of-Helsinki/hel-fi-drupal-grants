@@ -1,10 +1,7 @@
 import { useAtomValue, useSetAtom } from 'jotai';
-import { getCurrentStepAtom, getErrorPageIndicesAtom, getErrorsAtom, getStepsAtom, setStepAtom } from '../store';
 import { Button, ButtonPresetTheme, ButtonVariant, IconDownloadCloud, IconTrash } from 'hds-react';
-import { RefObject, useCallback } from 'react';
-import Form from '@rjsf/core';
-import { useAtomCallback } from 'jotai/utils';
 import { ValidationData } from '@rjsf/utils';
+import { getCurrentStepAtom, getErrorsAtom, getStepsAtom, setStepAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
 
 export const FormActions = ({
@@ -25,8 +22,8 @@ export const FormActions = ({
       return;
     }
 
-    const { errors } = validateResult;
-    const keyedErrors = keyErrorsByStep(errors, steps);
+    const { errors: resultErrors } = validateResult;
+    const keyedErrors = keyErrorsByStep(resultErrors, steps);
     const errorPageIndices = keyedErrors.map(([index]) => index);
     if (!errorPageIndices.includes(currentStepIndex)) {
       setStep(currentStepIndex + 1);

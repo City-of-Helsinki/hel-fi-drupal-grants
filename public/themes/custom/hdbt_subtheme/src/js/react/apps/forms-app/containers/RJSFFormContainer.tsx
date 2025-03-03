@@ -2,13 +2,13 @@ import Form, { IChangeEvent } from '@rjsf/core';
 import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
 import React, { createRef, useCallback } from 'react';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomCallback } from 'jotai/utils';
 import { TextArea, TextInput, SelectWidget } from '../components/Input';
 import { ObjectFieldTemplate } from '../components/Templates';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { FormActions } from '../components/FormActions';
 import { Stepper } from '../components/Stepper';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { useAtomCallback } from 'jotai/utils';
 import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
 import { ErrorsList } from '../components/ErrorsList';
@@ -45,7 +45,7 @@ export const RJSFFormContainer = ({
     const keyedErrors = keyErrorsByStep(errors, steps);
     const [currentStepIndex] = readCurrentStep();
 
-    const currentPageErrors = keyedErrors.filter(([index, error]) => index == currentStepIndex);
+    const currentPageErrors = keyedErrors.filter(([index, error]) => index === currentStepIndex);
 
     if (currentPageErrors.length) {
       formRef.current?.focusOnError(currentPageErrors[0][1]);

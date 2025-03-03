@@ -1,7 +1,7 @@
-import { ArrayFieldTemplateProps, ObjectFieldTemplateProps } from '@rjsf/utils'
+import { ObjectFieldTemplateProps } from '@rjsf/utils'
 import { Fieldset } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { getCurrentStepAtom, getFormConfigAtom } from '../store';
+import { getCurrentStepAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
 
 export const ObjectFieldTemplate = ({
