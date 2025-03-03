@@ -145,16 +145,16 @@ elements: |-
       hankkeen_toimenpiteet_aikataulu: 0
       hankkeen_toimenpiteet_alkupvm: 0
       hankkeen_toimenpiteet_loppupvm: 0
-      hankkeen_keskeisimmat_kumppanit: 0
+      hankkeen_keskeisimmat_kumppanit_liikunta: 0
       haun_painopisteet_liikkumis_kehitys: 0
       haun_painopisteet_digi_kehitys: 0
       haun_painopisteet_vertais_kehitys: 0
       haun_painopisteet_kulttuuri_kehitys: 0
       hankkeen_kohderyhmat_kenelle: 0
       hankkeen_kohderyhmat_erityisryhmat: 0
-      hankkeen_kohderyhmat_tavoitus: 0
-      hankkeen_kohderyhmat_konkretia: 0
-      hankkeen_kohderyhmat_osallisuus: 0
+      hankkeen_kohderyhmat_tavoitus_liikunta: 0
+      hankkeen_kohderyhmat_konkretia_liikunta: 0
+      hankkeen_kohderyhmat_osallisuus_liikunta: 0
       hankkeen_kohderyhmat_osaaminen: 0
       hankkeen_kohderyhmat_postinrot: 0
       hankkeen_kohderyhmat_miksi_alue: 0
@@ -204,16 +204,16 @@ elements: |-
       hankkeen_toimenpiteet_aikataulu: 0
       hankkeen_toimenpiteet_alkupvm: 0
       hankkeen_toimenpiteet_loppupvm: 0
-      hankkeen_keskeisimmat_kumppanit: 0
+      hankkeen_keskeisimmat_kumppanit_liikunta: 0
       haun_painopisteet_liikkumis_kehitys: 0
       haun_painopisteet_digi_kehitys: 0
       haun_painopisteet_vertais_kehitys: 0
       haun_painopisteet_kulttuuri_kehitys: 0
       hankkeen_kohderyhmat_kenelle: 0
       hankkeen_kohderyhmat_erityisryhmat: 0
-      hankkeen_kohderyhmat_tavoitus: 0
-      hankkeen_kohderyhmat_konkretia: 0
-      hankkeen_kohderyhmat_osallisuus: 0
+      hankkeen_kohderyhmat_tavoitus_liikunta: 0
+      hankkeen_kohderyhmat_konkretia_liikunta: 0
+      hankkeen_kohderyhmat_osallisuus_liikunta: 0
       hankkeen_kohderyhmat_osaaminen: 0
       hankkeen_kohderyhmat_postinrot: 0
       hankkeen_kohderyhmat_miksi_alue: 0
@@ -890,7 +890,7 @@ elements: |-
             - webform--large
         '#required': true
         '#pattern': '^[0-9 ]*$'
-      hankkeen_kohderyhmat_konkretia:
+      hankkeen_kohderyhmat_konkretia_liikunta:
         '#type': textarea
         '#title': 'Miten toiminnan toivotaan vaikuttavan osallistujien elämään?'
         '#maxlength': 1250
@@ -917,7 +917,7 @@ elements: |-
     hankkeen_menetelmat_section:
       '#type': webform_section
       '#title': 'Hankkeen menetelmät'
-      hankkeen_kohderyhmat_tavoitus:
+      hankkeen_kohderyhmat_tavoitus_liikunta:
         '#type': textarea
         '#title': 'Miten kohderyhmät tavoitetaan ja tunnistetaan?'
         '#help': '<p>Kerro, miten toiminnan kohderyhmät tunnistetaan, esim. vähän harrastavat tai syrjäytymisriskissä olevat lapset ja nuoret.</p>'
@@ -929,7 +929,7 @@ elements: |-
         '#attributes':
           class:
             - webform--large
-      hankkeen_kohderyhmat_osallisuus:
+      hankkeen_kohderyhmat_osallisuus_liikunta:
         '#type': textarea
         '#title': 'Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?'
         '#maxlength': 2500
@@ -940,7 +940,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      hankkeen_keskeisimmat_kumppanit:
+      hankkeen_keskeisimmat_kumppanit_liikunta:
         '#type': textarea
         '#title': 'Nimeä keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla oleva tahot.'
         '#maxlength': 2500
@@ -951,7 +951,7 @@ elements: |-
         '#attributes':
           class:
             - webform--large
-      hankkeen_uudet_kumppanit:
+      hankkeen_uudet_kumppanit_liikunta:
         '#type': textarea
         '#title': 'Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?'
         '#maxlength': 2500
