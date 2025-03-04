@@ -88,6 +88,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
           'method' => 'extractBooleanYesNoValue',
         ],
       ],
+      'avustuksen_kohde_yhdistys_toimintaryhma' => [],
+      'avustuksen_kohde_tiivistelma' => [],
       'hankkeen_nimi' => [],
       'hankkeen_tarkoitus_tavoitteet' => [],
       'hankkeen_monivuotisuuden_tarve' => [],
@@ -134,7 +136,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_kohderyhmat_konkretia' => [],
       'hankkeen_kohderyhmat_osallisuus' => [],
       'hankkeen_kohderyhmat_osaaminen' => [],
-      'hankkeen_kohderyhmat_tarve' => [],
       'hankkeen_kohderyhmat_lapset_9_12' => [],
       'hankkeen_kohderyhmat_lapset_13_15' => [],
       'hankkeen_kohderyhmat_lapset_16_18' => [],
@@ -144,6 +145,11 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_kohderyhmat_hinta' => [],
       'hankkeen_kohderyhmat_konkretia_liikunta' => [],
       'hankkeen_kohderyhmat_postinrot' => [],
+      'hankkeen_kohderyhmat_tarve' => [],
+      'hankkeen_kohderyhmat_konkretia_seg' => [],
+      'hankkeen_kohderyhmat_osallisuus_seg' => [],
+      'hankkeen_keskeisimmat_kumppanit_seg' => [],
+      'hankkeen_uudet_kumppanit_seg' => [],
       'hankkeen_kohderyhmat_miksi_alue' => [],
       'hankkeen_kohderyhmat_tavoitus_liikunta' => [],
       'hankkeen_kohderyhmat_osallisuus_liikunta' => [],
@@ -159,8 +165,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'arviointi_haasteet' => [],
       'arviointi_saavutettavuus' => [],
       'arviointi_avustus_kaytto' => [],
-      'avustuksen_kohde_yhdistys_toimintaryhma' => [],
-      'avustuksen_kohde_tiivistelma' => [],
     ];
 
     foreach ($customQuestions as $key => $value) {

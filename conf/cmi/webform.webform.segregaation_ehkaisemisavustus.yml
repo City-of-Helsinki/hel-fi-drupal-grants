@@ -747,7 +747,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      hankkeen_kohderyhmat_konkretia:
+      hankkeen_kohderyhmat_konkretia_seg:
         '#type': textarea
         '#title': 'Miten toiminnan toivotaan vaikuttavan osallistujien elämään?'
         '#description_display': after
@@ -759,7 +759,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      hankkeen_kohderyhmat_osallisuus:
+      hankkeen_kohderyhmat_osallisuus_seg:
         '#type': textarea
         '#title': 'Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?'
         '#description_display': after
@@ -771,7 +771,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      hankkeen_keskeisimmat_kumppanit:
+      hankkeen_keskeisimmat_kumppanit_seg:
         '#type': textarea
         '#title': 'Kenen kanssa hankkeessa tehdään yhteistyötä? Nimeä keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla oleva tahot.'
         '#description_display': after
@@ -783,7 +783,7 @@ elements: |-
           class:
             - webform--large
         '#required': true
-      hankkeen_uudet_kumppanit:
+      hankkeen_uudet_kumppanit_seg:
         '#type': textarea
         '#title': 'Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?'
         '#description_display': after
