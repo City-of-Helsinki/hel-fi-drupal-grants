@@ -32,3 +32,10 @@ restricted-datepicker:
     - core/drupal
     - core/jquery
     - jquery_ui_datepicker/datepicker
+
+forms-app:
+  js:
+    dist/js/forms-app.min.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
