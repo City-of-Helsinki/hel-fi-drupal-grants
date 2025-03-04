@@ -170,16 +170,16 @@ elements: |
   hankkeen_kohderyhmat_tavoitus:
     '#title': 'How are target group(s) reached and identified?'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  hankkeen_kohderyhmat_konkretia:
+  hankkeen_kohderyhmat_konkretia_seg:
     '#title': 'What impact do you hope the activities will have on the lives of the participants?'
     '#counter_maximum_message': '%d/1250 characters remaining'
-  hankkeen_kohderyhmat_osallisuus:
+  hankkeen_kohderyhmat_osallisuus_seg:
     '#title': 'How are children and young people involved in planning and decision-making?'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  hankkeen_keskeisimmat_kumppanit:
+  hankkeen_keskeisimmat_kumppanit_seg:
     '#title': 'Who are the partners in the project? Name the key partners and their roles. Specify the partners that have already been agreed upon and those that are still being planned.'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  hankkeen_uudet_kumppanit:
+  hankkeen_uudet_kumppanit_seg:
     '#title': 'Will new types of partnerships or operating models be tested during the project? Please specify what kind?'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_riskit_vakiinnuttaminen:
