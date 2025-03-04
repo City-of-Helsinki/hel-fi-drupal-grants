@@ -58,8 +58,8 @@ elements: |
   kayttotarkoitus:
     '#title': 'Purpose of use'
   compensation_purpose:
-    '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
-    '#help': '<p>Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.</p>'
+    '#title': 'Brief description of the purpose of the grant applied for'
+    '#help': '<p>Indicate the purpose for which the grant is applied for.</p>'
     '#counter_maximum_message': '%d/1250 characters remaining'
   other_grants_for_same_purpose:
     '#title': 'Other grants received for the same purpose'
@@ -205,7 +205,7 @@ elements: |
   hankkeen_kohderyhmat_hinta:
     '#title': 'What is the planned cost of one session per participant (€/h)?'
     '#help': '<p>Estimate how much a participant pays for one session. Enter the estimate as €/hour.</p>'
-  hankkeen_kohderyhmat_konkretia:
+  hankkeen_kohderyhmat_konkretia_liikunta:
     '#title': 'What impact do you hope the activities will have on the lives of the participants?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_kohderyhmat_postinrot:
@@ -214,17 +214,17 @@ elements: |
     '#counter_maximum_message': '%d/100 characters remaining'
   hankkeen_menetelmat_section:
     '#title': 'Project methods'
-  hankkeen_kohderyhmat_tavoitus:
+  hankkeen_kohderyhmat_tavoitus_liikunta:
     '#title': 'How are target group(s) reached and identified?'
     '#help': '<p data-renderer-start-pos="27956"><span class="TextRun SCXW126052502 BCX2 NormalTextRun" style="font-family:WordVisi_MSFontService, Calibri, &quot;Calibri_EmbeddedFont&quot;, &quot;Calibri_MSFontService&quot;, sans-serif;font-size:11pt;line-height:15px;" data-contrast="auto" xml:lang="EN-US" lang="EN-US">Explain how the target groups of the activities, e.g. children and young people who are less active or at risk of marginalisation, are identified.</span></p>'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  hankkeen_kohderyhmat_osallisuus:
+  hankkeen_kohderyhmat_osallisuus_liikunta:
     '#title': 'How are children and young people involved in planning and decision-making?'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  hankkeen_keskeisimmat_kumppanit:
+  hankkeen_keskeisimmat_kumppanit_liikunta:
     '#title': 'Specify the main partners and their role in the project. Specify separately partners that have already agreed and partnerships that are in the planning phase.'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  hankkeen_uudet_kumppanit:
+  hankkeen_uudet_kumppanit_liikunta:
     '#title': 'Will new types of partnerships or operating models be tested during the project? Please specify what kind?'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_riskit_section:

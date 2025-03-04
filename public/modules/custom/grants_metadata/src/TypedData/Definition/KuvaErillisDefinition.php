@@ -50,6 +50,21 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         },
         'defaultValue' => '1',
       ],
+      // This field is read only / fully computed. However, the field must
+      // be sent to ATV / avust2 or else the preview feature breaks. Field
+      // values are saved/loaded from ATV when draft is saved/opened, and
+      // the underlying component does not know how to recalculate its values
+      // at that point. This can be removed if computed fields have better
+      // support in the future.
+      'haettava_avustussumma_2025' => [
+        'valueCallback' => static fn (mixed $value) => $value['compensation'] ?? $value,
+        'webformDataExtracter' => [
+          'service' => 'grants_budget_components.service',
+          'method' => 'extractToWebformData',
+        ],
+      ],
+      'haettava_avustussumma_2026' => [],
+      'haettava_avustussumma_2027' => [],
       'hankesuunnitelma_radios' => [
         'type' => 'string',
         'valueCallback' => [
@@ -74,23 +89,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         ],
       ],
       'hankkeen_nimi' => [],
-      // This field is read only / fully computed. However, the field must
-      // be sent to ATV / avust2 or else the preview feature breaks. Field
-      // values are saved/loaded from ATV when draft is saved/opened, and
-      // the underlying component does not know how to recalculate its values
-      // at that point. This can be removed if computed fields have better
-      // support in the future.
-      'haettava_avustussumma_2025' => [
-        'valueCallback' => static fn (mixed $value) => $value['compensation'] ?? $value,
-        'webformDataExtracter' => [
-          'service' => 'grants_budget_components.service',
-          'method' => 'extractToWebformData',
-        ],
-      ],
-      'haettava_avustussumma_2026' => [],
-      'haettava_avustussumma_2027' => [],
-      'hankkeen_monivuotisuuden_tarve' => [],
       'hankkeen_tarkoitus_tavoitteet' => [],
+      'hankkeen_monivuotisuuden_tarve' => [],
       'hankkeen_toimenpiteet_aikataulu' => [],
       'hankkeen_toimenpiteet_aikataulu_2026' => [],
       'hankkeen_toimenpiteet_aikataulu_2027' => [],
@@ -134,8 +134,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_kohderyhmat_konkretia' => [],
       'hankkeen_kohderyhmat_osallisuus' => [],
       'hankkeen_kohderyhmat_osaaminen' => [],
-      'hankkeen_kohderyhmat_postinrot' => [],
-      'hankkeen_kohderyhmat_miksi_alue' => [],
       'hankkeen_kohderyhmat_tarve' => [],
       'hankkeen_kohderyhmat_lapset_9_12' => [],
       'hankkeen_kohderyhmat_lapset_13_15' => [],
@@ -144,6 +142,13 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_kohderyhmat_uudet' => [],
       'hankkeen_kohderyhmat_saavutettavuus' => [],
       'hankkeen_kohderyhmat_hinta' => [],
+      'hankkeen_kohderyhmat_konkretia_liikunta' => [],
+      'hankkeen_kohderyhmat_postinrot' => [],
+      'hankkeen_kohderyhmat_miksi_alue' => [],
+      'hankkeen_kohderyhmat_tavoitus_liikunta' => [],
+      'hankkeen_kohderyhmat_osallisuus_liikunta' => [],
+      'hankkeen_keskeisimmat_kumppanit_liikunta' => [],
+      'hankkeen_uudet_kumppanit_liikunta' => [],
       'hankkeen_riskit_keskeisimmat' => [],
       'hankkeen_riskit_seuranta' => [],
       'hankkeen_riskit_vakiinnuttaminen' => [],
