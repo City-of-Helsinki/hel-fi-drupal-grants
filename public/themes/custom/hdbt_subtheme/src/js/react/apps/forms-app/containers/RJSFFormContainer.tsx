@@ -66,6 +66,7 @@ export const RJSFFormContainer = ({
     const errorsToShow = keyedErrors.filter(([index]) => index <= reachedStep).map(([index, error]) => error);
     setErrors(errorsToShow);
 
+    console.log({...{errorsToShow, errors, keyedErrors}});
     return errorsToShow;
   };
 

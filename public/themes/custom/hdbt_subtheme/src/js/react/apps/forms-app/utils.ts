@@ -1,7 +1,7 @@
 import { RJSFValidationError } from '@rjsf/utils';
 import { FormStep } from './store';
 
-const regex = '/^.([^.]+)/';
+const regex = /^.([^.]+)/;
 
 /**
  * Return index numbers for steps that have errors in them.
