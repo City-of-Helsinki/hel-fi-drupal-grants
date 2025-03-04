@@ -380,7 +380,7 @@ display:
           settings:
             format: custom
             format_custom_false: Unpublished
-            format_custom_true: Published
+            format_custom_true: Unpublished
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -529,8 +529,8 @@ display:
           tags:
             next: 'Next ›'
             previous: '‹ Previous'
-            first: '« First'
-            last: 'Last »'
+            first: First
+            last: Last
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -714,7 +714,7 @@ display:
             default_group_multiple: {  }
             group_items:
               1:
-                title: Published
+                title: Unpublished
                 operator: '='
                 value: '1'
               2:
