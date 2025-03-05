@@ -280,13 +280,7 @@ final class AttachmentFixerService {
    */
   private function filenameExtensionFixer(string $filename): string {
     // Check if extension has even one uppercase letter.
-    $extension = explode('.', $filename)[1];
-    if (!preg_match('/^[a-z]*[A-Z]+[a-z]*$/', $extension)) {
-      return $filename;
-    }
-
-    $file = explode('.', $filename)[0];
-    return sprintf('%s%s%s', $file, '_0.', strtolower($extension));
+    return strtolower($filename);
   }
 
 }
