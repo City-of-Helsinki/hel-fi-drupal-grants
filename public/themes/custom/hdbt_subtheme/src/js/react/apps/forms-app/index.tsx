@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ErrorBoundary } from '@sentry/react';
 
 import initSentry from '@/react/common/helpers/Sentry';
 import { FormNotFoundError } from './components/FormNotFoundError';
 import FormWrapper from './containers/FormWrapper';
+import { GeneralError } from './components/GeneralError';
 
 initSentry();
 
@@ -16,10 +18,14 @@ const showError = false;
 if (rootElement) {
   ReactDOM.render(
     <React.StrictMode>
-      {showError
-        ? <FormNotFoundError />
-        : <FormWrapper {...{applicationNumber}} />
-      }
+      <ErrorBoundary
+        fallback={<GeneralError />}
+      >
+        {showError
+          ? <FormNotFoundError />
+          : <FormWrapper {...{applicationNumber}} />
+        }
+      </ErrorBoundary>
     </React.StrictMode>,
     rootElement
   );

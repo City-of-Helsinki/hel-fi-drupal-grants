@@ -1,28 +1,60 @@
+// @ts-nocheck
 import useSWRImmutable from 'swr/immutable'
 import { useSetAtom } from 'jotai';
 import { IChangeEvent } from '@rjsf/core';
 import { RJSFFormContainer } from './RJSFFormContainer';
 import { initializeFormAtom } from '../store';
+import { LoadingSpinner } from 'hds-react';
+import { addApplicantInfoStep, isValidFormResponse } from '../utils';
+import { Suspense, useState } from 'react';
+import { getData, initDB } from '../db';
 
-const fetchFormData = async(id: string) => {
-  const response = await fetch(`/en/application/${id}`);
+/**
+ * Fetcher function for the form data.
+ * Queries form data from the server.
+ * Checks IndexedDB for existing form data.
+ *
+ * @param {string} id - The form id
+ * @returns {Promise<object>} - Form settings and existing cached form data
+ */
+async function fetchFormData(id: string) {
+  const dbInitialized = await initDB();
+  const formConfigResponse = await fetch(`/en/application/${id}`);
+  const persistedData = await getData();
 
-  if (!response.ok) {
+  if (!formConfigResponse.ok) {
     throw new Error('Failed to fetch form data');
   }
 
-  return response.json();
+  const formConfig = await formConfigResponse.json();
+
+  return {
+    ...formConfig,
+    persistedData,
+  };
 };
 
-const transformSchema = (data: any) => {
+/**
+ * Transform data from source to include:
+ * - Static applicant info form step as the first step
+ * - Add _step property to each form step
+ * - Add _isSection property to each form section
+ *
+ * @param {object} data - Raw data from server
+ * @returns {object} - Resulting data
+ */
+const transformData = (data: any) => {
   const {
-    schema,
-    schema: {
-      definitions,
-      properties,
-    },
+    schema: originalSchema,
+    grants_profile,
+    ui_schema: originalUiSchema,
   } = data;
 
+  const [schema, ui_schema] = addApplicantInfoStep(originalSchema, originalUiSchema, grants_profile)
+  const {
+    definitions,
+    properties,
+  } = schema;
   const transformedProperties: any = {};
 
   Object.entries(properties).forEach((property: any, index: number) => {
@@ -43,8 +75,12 @@ const transformSchema = (data: any) => {
   });
 
   return {
-    ...schema,
-    properties: transformedProperties,
+    ...data,
+    schema: {
+      ...schema,
+      properties: transformedProperties,
+    },
+    ui_schema,
   };
 };
 
@@ -52,22 +88,35 @@ type FormWrapperProps = {
     applicationNumber: string
 };
 
+/**
+ * The root container for the app.
+ * Queries form settings and data based on the application ID.
+ * Renders RJSF form.
+ *
+ * @typedef {object} FormWrapperProps
+ * @property {string} applicationNumber
+ *
+ * @param {FormWrapperProps} props
+ * @returns {JSX.Element}
+ */
 const FormWrapper = ({
   applicationNumber,
 }: FormWrapperProps) => {
-  const { data, isLoading, isValidating, } = useSWRImmutable(applicationNumber, fetchFormData);
+  const { data, isLoading, isValidating, error } = useSWRImmutable(applicationNumber, fetchFormData);
   const initializeForm = useSetAtom(initializeFormAtom);
 
   if (isLoading || isValidating) {
-    return <div>loading...</div>
+    return  <LoadingSpinner />
+  }
+  const [responseValid, errorMessage] = isValidFormResponse(data);
+  if (!responseValid) {
+    throw new Error(errorMessage);
   }
 
-  if (!data.schema || !data.ui_schema) {
-    return <div>wrong response...</div>
-  }
-
-  initializeForm(data);
-  const transformedSchema = transformSchema(data);
+  const transformedData = transformData(data);
+  initializeForm({
+    ...transformedData
+  });
 
   const submitData = async (formSubmitEvent: IChangeEvent) => {
     await fetch(`/en/application/${applicationNumber}`, {
@@ -77,11 +126,14 @@ const FormWrapper = ({
   };
 
   return (
-    <RJSFFormContainer
-      schema={transformedSchema}
-      submitData={submitData}
-      uiSchema={data.ui_schema}
-    />
+    <Suspense fallback={<LoadingSpinner />}>
+      <RJSFFormContainer
+        initialFormData={transformedData.persistedData}
+        schema={transformedData.schema}
+        submitData={submitData}
+        uiSchema={transformedData.ui_schema}
+      />
+    </Suspense>
   );
 };
 

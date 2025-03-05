@@ -1,5 +1,6 @@
-import { RJSFValidationError } from '@rjsf/utils';
+import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { FormStep } from './store';
+import { communitySettings, privatePersonSettings } from './formConstants';
 
 const regex = /^.([^.]+)/;
 
@@ -67,4 +68,52 @@ export const keyErrorsByStep = (
   });
 
   return keyedErrors;
+};
+
+/**
+ * Checks that server response is in valid form response format.
+ *  @todo implement actual check when server implementation is finalized.
+ *
+ * @param {Object} data - Server response
+ *
+ * @return {[boolean, string|null]} - [isValid, message]
+ */
+export const isValidFormResponse = (data: Object): [boolean, string|undefined] => {
+  return [true, undefined];
+};
+
+/**
+ * Add static applicant info step to form schema.
+ *
+ * @param {Object} schema - Form schema
+ * @param {Object} grantsProfile - Grants profile
+ *
+ * @return Array - Resulting forma and ui schemas
+ */
+export const addApplicantInfoStep = (
+  schema: RJSFSchema,
+  uiSchema: UiSchema,
+  grantsProfile: Array<undefined>|{business_id: string}
+): [RJSFSchema, UiSchema] => {
+  const { definitions, properties } = schema;
+  const [rootProperty, definition, uiSchemaAdditions] = communitySettings;
+
+  const transformedSchema: RJSFSchema = {
+    ...schema,
+    definitions: {
+      applicant_info: definition,
+      ...definitions,
+    },
+    properties: {
+      applicant_info: rootProperty,
+      ...properties,
+    },
+  };
+
+  const transformedUiSchema: UiSchema = {
+    ...uiSchema,
+    ...uiSchemaAdditions,
+  };
+
+  return [transformedSchema, transformedUiSchema];
 };
