@@ -135,18 +135,7 @@ final class AttachmentFixerService {
     array $attachmentInfo,
     string $appEnv,
   ): array {
-
-    // If file extension is uppercase, it will cause trouble.
-    // Atv document will have the filename in 2 different formats,
-    // for example .PDF and _0.pdf.
-    // That breaks the integrationID fixer.
-    $filename = $attachment['filename'];
-    $extension = explode('.', $filename)[1];
-    // Find file extensions with any number of uppercase letters.
-    if (preg_match('/^[a-z]*[A-Z]+[a-z]*$/', $extension)) {
-      $file = explode('.', $filename)[0];
-      $filename = sprintf('%s%s%s', $file, '_0.', strtolower($extension));
-    }
+    $filename = $this->filenameExtensionFixer($attachment['filename']);
 
     // Look for events from us, the handler.
     $handlerOk = $this->filterEventsByTypeAndFilename($events, 'HANDLER_ATT_OK', $filename);
@@ -211,17 +200,7 @@ final class AttachmentFixerService {
       return FALSE;
     }
 
-    // If file extension is uppercase, it will cause trouble.
-    // Atv document will have the filename in 2 different formats,
-    // for example .PDF and _0.pdf.
-    // That breaks the integrationID fixer.
-    $filename = $attachment['filename'];
-    $extension = explode('.', $filename)[1];
-    // Find file extensions with any number of uppercase letters.
-    if (preg_match('/^[a-z]*[A-Z]+[a-z]*$/', $extension)) {
-      $file = explode('.', $filename)[0];
-      $filename = sprintf('%s%s%s', $file, '_0.', strtolower($extension));
-    }
+    $filename = $this->filenameExtensionFixer($attachment['filename']);
 
     // Loop attachment info and check if we have the attachment added.
     foreach ($attachmentInfo as $info) {
@@ -283,6 +262,36 @@ final class AttachmentFixerService {
   ): bool {
     $targetId = '/' . $appEnv . AttachmentHandlerHelper::cleanIntegrationId($attachment['href']);
     return $this->findValueById($info, 'integrationID', $targetId);
+  }
+
+  /**
+   * Check if filename extension is uppercase and fix it.
+   *
+   * If file extension is uppercase, it will cause trouble.
+   * Atv document will have the filename in 2 different formats,
+   * for example .PDF and _0.pdf.
+   * That breaks the integrationID fixer.
+   *
+   * @param string $filename
+   *   The filename.
+   *
+   * @return string
+   *   A filename without uppercase extension.
+   */
+  private function filenameExtensionFixer(string $filename): string {
+    // Can't fix a string in wrong format.
+    if (!preg_match('/^[a-zA-Z]*\.[a-zA-Z]*$/', $filename)) {
+      return $filename;
+    }
+
+    // Check if extension has even one uppercase letter.
+    $extension = explode('.', $filename)[1];
+    if (!preg_match('/^[a-z]*[A-Z]+[a-z]*$/', $extension)) {
+      return $filename;
+    }
+
+    $file = explode('.', $filename)[0];
+    return sprintf('%s%s%s', $file, '_0.', strtolower($extension));
   }
 
 }
