@@ -15,11 +15,6 @@ final class AttachmentFixerService {
   use StringTranslationTrait;
 
   /**
-   * Constructs an AttachmentFixerService object.
-   */
-  public function __construct() {}
-
-  /**
    * Fix attachments on applications that has missing integration IDs.
    *
    * Possibly check other things missing as well.
@@ -140,12 +135,25 @@ final class AttachmentFixerService {
     array $attachmentInfo,
     string $appEnv,
   ): array {
+
+    // If file extension is uppercase, it will cause trouble.
+    // Atv document will have the filename in 2 different formats,
+    // for example .PDF and _0.pdf.
+    // That breaks the integrationID fixer.
+    $filename = $attachment['filename'];
+    $extension = explode('.', $filename)[1];
+    // Find file extensions with any number of uppercase letters.
+    if (preg_match('/^[a-z]*[A-Z]+[a-z]*$/', $extension)) {
+      $file = explode('.', $filename)[0];
+      $filename = sprintf('%s%s%s', $file, '_0.', strtolower($extension));
+    }
+
     // Look for events from us, the handler.
-    $handlerOk = $this->filterEventsByTypeAndFilename($events, 'HANDLER_ATT_OK', $attachment['filename']);
+    $handlerOk = $this->filterEventsByTypeAndFilename($events, 'HANDLER_ATT_OK', $filename);
     // Look for events from AVUSTUS2.
-    $avus2Ok = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_OK', $attachment['filename']);
+    $avus2Ok = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_OK', $filename);
     // Look for errors from AVUSTUS2.
-    $avus2Error = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_ERROR', $attachment['filename']);
+    $avus2Error = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_ERROR', $filename);
     // Are attachments added properly to form data.
     $formOk = $this->checkAttachmentInfo($attachmentInfo, $attachment, $appEnv);
 
@@ -203,10 +211,22 @@ final class AttachmentFixerService {
       return FALSE;
     }
 
+    // If file extension is uppercase, it will cause trouble.
+    // Atv document will have the filename in 2 different formats,
+    // for example .PDF and _0.pdf.
+    // That breaks the integrationID fixer.
+    $filename = $attachment['filename'];
+    $extension = explode('.', $filename)[1];
+    // Find file extensions with any number of uppercase letters.
+    if (preg_match('/^[a-z]*[A-Z]+[a-z]*$/', $extension)) {
+      $file = explode('.', $filename)[0];
+      $filename = sprintf('%s%s%s', $file, '_0.', strtolower($extension));
+    }
+
     // Loop attachment info and check if we have the attachment added.
     foreach ($attachmentInfo as $info) {
       // Check if filename and integrationID are found.
-      $filenameFound = $this->findValueById($info, 'fileName', $attachment['filename']);
+      $filenameFound = $this->findValueById($info, 'fileName', $filename);
       $intFound = $this->findIntegrationId($info, $attachment, $appEnv);
       // Return true if both are found.
       if ($filenameFound && $intFound) {
