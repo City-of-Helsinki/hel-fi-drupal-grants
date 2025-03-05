@@ -1,4 +1,4 @@
-declare namespace drupalSettings {
+declare namespace drupalSettings { // eslint-disable-line @typescript-eslint/no-unused-vars
   const path: {
     currentLanguage: 'fi' | 'en' | 'sv';
   };

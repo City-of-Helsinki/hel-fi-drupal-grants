@@ -11,8 +11,7 @@
             "email": {
               "title": "Sähköpostiosoite",
               "type": "string",
-              "format": "email",
-              "minLength": 1
+              "format": "email"
             }
           },
           "required": [
@@ -79,46 +78,60 @@
         "applicant_email"
       ]
     },
-    "orienteering_map": {
+    "orienteering_maps": {
       "type": "object",
       "properties": {
-        "mapName": {
-          "title": "Kartan nimi, sijainti ja karttatyyppi",
-          "type": "string",
-          "minLength": 1
+        "acting_year": {
+          "title": "Avustuksen tiedot",
+          "type": "object",
+          "description": "Tällä lomakkeella haetaan avustusta suunnistuskarttan valmistuskustannuksista. Avustusta voidaan myöntää vain Suunnistusliiton karttarekisteriin raportoiduista suunnistus- ja opetuskartoista.",
+          "properties": {
+            "acting_year": {
+              "type": "string",
+              "enum": [
+                "2025"
+              ]
+            }
+          }
         },
-        "size": {
-          "title": "Koko km2",
-          "type": "integer"
-        },
-        "voluntaryHours": {
-          "title": "Talkootyö tuntia",
-          "type": "string"
-        },
-        "cost": {
-          "title": "Kustannukset euroa",
-          "type": "integer"
-        },
-        "otherCompensations": {
-          "title": "Muilta saadut avustukset euroa",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "mapName"
-      ]
-    },
-    "attachment": {
-      "type": "object",
-      "properties": {
-        "file": {
-          "title": "Liitetiedosto",
-          "type": "string",
-          "format": "data-url"
-        },
-        "description": {
-          "title": "Liitteen kuvaus",
-          "type": "string"
+        "orienteering_subvention": {
+          "title": "Suunnistuskartta-avustus",
+          "type":"object",
+          "properties": {
+            "orienteering_maps": {
+              "type": "object",
+              "title": "Suunnistuskartta-avustus",
+              "properties": {
+                "mapName": {
+                  "title": "Kartan nimi, sijainti ja karttatyyppi",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "size": {
+                  "title": "Koko km2",
+                  "type": "integer"
+                },
+                "voluntaryHours": {
+                  "title": "Talkootyö tuntia",
+                  "type": "string"
+                },
+                "cost": {
+                  "title": "Kustannukset euroa",
+                  "type": "integer"
+                },
+                "otherCompensations": {
+                  "title": "Muilta saadut avustukset euroa",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "mapName"
+              ]
+            }
+          },
+          "required": [
+            "orienteering_maps"
+          ]
         }
       }
     }
@@ -135,7 +148,7 @@
     "orienteering_maps": {
       "title": "Kartta",
       "type": "object",
-      "$ref": "#/definitions/orienteering_map"
+      "$ref": "#/definitions/orienteering_maps"
     }
   }
 }
