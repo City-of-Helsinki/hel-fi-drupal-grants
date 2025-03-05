@@ -3,7 +3,7 @@
 namespace Drupal\grants_metadata\Plugin\DataType;
 
 use Drupal\Core\TypedData\Plugin\DataType\Map;
-use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
+use Drupal\grants_metadata\ConvertHelper;
 
 /**
  * Address DataType.
@@ -35,7 +35,7 @@ class CompensationTypeData extends Map {
     }
     // We need to make sure amount is valid float to get validation working.
     if (isset($this->values['amount'])) {
-      $this->values['amount'] = GrantsHandler::convertToFloat($this->values['amount']) ?? 0;
+      $this->values['amount'] = ConvertHelper::convertToFloat($this->values['amount']) ?? 0;
     }
 
     return $this->values;
