@@ -1,4 +1,12 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  logger.channel.grants_attachments:
+    parent: logger.channel_base
+    arguments: ['grants_attachments']
+
   grants_attachments.event_subscriber:
     class: Drupal\grants_attachments\EventSubscriber\GrantsAttachmentsSubscriber
     parent: form_ajax_subscriber
