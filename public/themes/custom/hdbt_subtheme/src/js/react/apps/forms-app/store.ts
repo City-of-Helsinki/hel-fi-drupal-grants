@@ -175,3 +175,8 @@ export const getErrorPageIndicesAtom = atom(_get => {
 
   return errors.map(([index]) => index);
 });
+export const getAddressesAtom = atom(_get => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+
+  return grantsProfile.addresses;
+});

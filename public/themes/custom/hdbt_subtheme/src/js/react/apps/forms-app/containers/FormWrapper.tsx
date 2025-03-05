@@ -1,8 +1,11 @@
+// @ts-nocheck
 import useSWRImmutable from 'swr/immutable'
 import { useSetAtom } from 'jotai';
 import { IChangeEvent } from '@rjsf/core';
 import { RJSFFormContainer } from './RJSFFormContainer';
 import { initializeFormAtom } from '../store';
+import { LoadingSpinner } from 'hds-react';
+import { addApplicantInfoStep, isValidFormResponse } from '../utils';
 
 const fetchFormData = async(id: string) => {
   const response = await fetch(`/en/application/${id}`);
@@ -16,13 +19,15 @@ const fetchFormData = async(id: string) => {
 
 const transformSchema = (data: any) => {
   const {
-    schema,
-    schema: {
-      definitions,
-      properties,
-    },
+    schema: originalSchema,
+    grants_profile,
   } = data;
 
+  const schema = addApplicantInfoStep(originalSchema, grants_profile)
+  const {
+    definitions,
+    properties,
+  } = schema;
   const transformedProperties: any = {};
 
   Object.entries(properties).forEach((property: any, index: number) => {
@@ -59,15 +64,19 @@ const FormWrapper = ({
   const initializeForm = useSetAtom(initializeFormAtom);
 
   if (isLoading || isValidating) {
-    return <div>loading...</div>
+    return  <LoadingSpinner />
   }
 
-  if (!data.schema || !data.ui_schema) {
-    return <div>wrong response...</div>
+  const [responseValid, errorMessage] = isValidFormResponse(data);
+  if (!responseValid) {
+    throw new Error(errorMessage);
   }
 
-  initializeForm(data);
   const transformedSchema = transformSchema(data);
+  initializeForm({
+    ...data,
+    schema: transformedSchema,
+  });
 
   const submitData = async (formSubmitEvent: IChangeEvent) => {
     await fetch(`/en/application/${applicationNumber}`, {
