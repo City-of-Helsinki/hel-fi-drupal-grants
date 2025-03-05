@@ -1,23 +1,8 @@
-import { ArrayFieldTemplateProps, ObjectFieldTemplateProps } from '@rjsf/utils'
+import { ObjectFieldTemplateProps } from '@rjsf/utils'
 import { Fieldset } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { getCurrentStepAtom, getFormConfigAtom } from '../store';
+import { getCurrentStepAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
-
-export const FieldsetWidget = () => (
-    <Fieldset
-      border
-      heading=""
-    >
-
-    </Fieldset>
-  );
-
-export const ArrayFieldTemplate = ({
-  idSchema,
-  schema,
-  uiSchema,
-}: ArrayFieldTemplateProps) => null
 
 export const ObjectFieldTemplate = ({
   idSchema,
@@ -25,7 +10,7 @@ export const ObjectFieldTemplate = ({
   schema,
   uiSchema,
 }: ObjectFieldTemplateProps) => {
-  const { additionalProperties, title, description, _step } = schema;
+  const { description, _isSection, title, _step } = schema;
   const { id: stepId } = useAtomValue(getCurrentStepAtom)[1];
 
   if (idSchema.$id === 'root') {
@@ -80,25 +65,29 @@ export const ObjectFieldTemplate = ({
     );
   }
 
-  if (!title) {
+  if (_isSection) {
     return (
-      <>
-        {properties.map((field) => field.content)}
-      </>
-    )
+      <section className='form-item webform-section'>
+        <div className='webform-section-flex-wrapper'>
+          <h3 className='webform-section-title'>
+            {title}
+          </h3>
+          <div className='webform-section-wrapper'>
+            {description && <div className='form-item'>{description}</div>}
+            {properties.map((field) => field.content)}
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (
-    <section className='form-item webform-section'>
-      <div className='webform-section-flex-wrapper'>
-        <h3 className='webform-section-title'>
-          {title}
-        </h3>
-        <div className='webform-section-wrapper'>
-          {description && <div className='form-item'>{description}</div>}
-          {properties.map((field) => field.content)}
-        </div>
-      </div>
-    </section>
+    <Fieldset
+      heading={title || ''}
+      border
+    >
+      {description && <div className='form-item'>{description}</div>}
+      {properties.map((field) => field.content)}
+    </Fieldset>
   );
 };
