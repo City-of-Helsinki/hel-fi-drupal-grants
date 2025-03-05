@@ -1,8 +1,9 @@
-import { ObjectFieldTemplateProps } from '@rjsf/utils'
-import { Fieldset } from 'hds-react';
+import { IconButtonProps, ObjectFieldTemplateProps } from '@rjsf/utils'
+import { Button, ButtonPresetTheme, ButtonVariant, Fieldset } from 'hds-react';
 import { useAtomValue } from 'jotai';
 import { getCurrentStepAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
+import { Children, ReactNode } from 'react';
 
 export const ObjectFieldTemplate = ({
   idSchema,
@@ -90,4 +91,44 @@ export const ObjectFieldTemplate = ({
       {properties.map((field) => field.content)}
     </Fieldset>
   );
+};
+
+export const ButtonTemplate = ({
+  icon,
+  children,
+  registry,
+  uiSchema,
+  ...props
+}: IconButtonProps) => {
+  return (
+    <Button
+      {...props}
+      theme={ButtonPresetTheme.Black}
+      variant={ButtonVariant.Primary}
+    >
+      {children as ReactNode & string}
+    </Button>
+  )
+}
+
+export const AddButtonTemplate = (props: IconButtonProps) => {
+  const addText = props.uiSchema && props.uiSchema['ui:options'] && props.uiSchema['ui:options'].addText || null; // @ts-ignore{uiSchema: {'ui:options': {}}} = props;
+  return (
+    <ButtonTemplate
+      {...props}
+    >
+      {addText ? addText : Drupal.t('Add')}
+    </ButtonTemplate>
+  )
+};
+
+export const RemoveButtonTemplate = (props: IconButtonProps) => {
+  const removeText = props.uiSchema && props.uiSchema['ui:options'] && props.uiSchema['ui:options'].removeText || null; // @ts-ignore{uiSchema: {'ui:options': {}}} = props;
+  return (
+    <ButtonTemplate
+      {...props}
+    >
+      {removeText ? removeText : Drupal.t('Remove')}
+    </ButtonTemplate>
+  )
 };
