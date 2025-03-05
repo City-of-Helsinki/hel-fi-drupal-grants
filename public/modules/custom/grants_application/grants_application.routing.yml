@@ -1,0 +1,7 @@
+helfi_grants.forms_app:
+  path: '/application/{id}/render'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
+    _title: ''
+  requirements:
+    _role: helsinkiprofiili

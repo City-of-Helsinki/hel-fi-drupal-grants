@@ -1,0 +1,7 @@
+name: 'Grants Config'
+type: module
+description: 'Configuration overrides for Grants'
+package: Custom
+core_version_requirement: ^10 || ^11
+dependencies:
+  - helfi_platform_config:helfi_platform_config

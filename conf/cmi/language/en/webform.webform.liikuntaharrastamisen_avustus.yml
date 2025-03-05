@@ -1,0 +1,299 @@
+title: 'Grant to support regional sports activities'
+elements: |
+  1_hakijan_tiedot:
+    '#title': '1. Applicant details'
+    '#prev_button_label': Previous
+    '#next_button_label': Next
+  hakemusprofiili:
+    '#title': 'Retrieved information'
+  prh_markup:
+    '#markup': '<p><span class="blob-code-inner blob-code-marker pl-s" data-code-marker="+">The information has been retrieved from your own profile.</span></p>'
+  hakijan_tiedot:
+    '#title': Applicant
+  contact_person_email_section:
+    '#title': Email
+  contact_markup:
+    '#markup': '<p><span class="blob-code-inner blob-code-marker pl-s" data-code-marker="+">Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.</span></p>'
+  email:
+    '#title': 'Email address'
+    '#help': '<p>Provide the email address to which you want the messages and notifications related to this application to be sent and which is actively read.</p>'
+  contact_person_section:
+    '#title': 'Contact person for the application'
+  contact_person:
+    '#title': 'Contact person'
+  contact_person_phone_number:
+    '#title': 'Phone number'
+  osoite:
+    '#title': Address
+  community_address:
+    '#title': Address
+    '#help': '<p>If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.</p>'
+  tilinumero:
+    '#title': 'Account number'
+  bank_account:
+    '#title': 'Account number'
+    '#help': '<p>If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.</p>'
+  toiminnasta_vastaavat_henkilot:
+    '#title': 'Persons responsible for operations'
+  community_officials:
+    '#help': "<p>If you want to add, delete or change people, save the application as a draft and go to maintain the people's information in your own data.</p>"
+    '#title': 'Persons responsible for operations'
+    '#multiple__add_more_button_label': 'Add person'
+    '#community_officials_select__title': 'Select official'
+    '#role__title': Role
+    '#email__title': 'Email address'
+    '#phone__title': 'Phone number'
+  2_avustustiedot:
+    '#title': '2. Grant details'
+  avustuksen_tiedot:
+    '#title': 'Grant details'
+  acting_year:
+    '#title': 'Year for which I am applying for a grant'
+  avustuslajit:
+    '#title': 'Types of grant'
+  grants_compensations_information:
+    '#markup': '<p data-renderer-start-pos="4356">Pease enter the grant amount requested for the year 2025 in the field. The grant amounts for the subsequent years of a multi-year project are entered on the next page.</p>'
+  subventions:
+    '#title': Grants
+  kayttotarkoitus:
+    '#title': 'Purpose of use'
+  compensation_purpose:
+    '#title': 'Brief description of the purpose of the grant applied for'
+    '#help': '<p>Indicate the purpose for which the grant is applied for.</p>'
+    '#counter_maximum_message': '%d/1250 characters remaining'
+  other_grants_for_same_purpose:
+    '#title': 'Other grants received for the same purpose'
+  info_muut_samaan_tarkoitukseen_myonnetty:
+    '#markup': '<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>An affirmative answer opens a further question</span></div></div></div>'
+  olemme_saaneet_muita_avustuksia:
+    '#title': 'We have received other grants'
+    '#options':
+      1: 'Yes'
+      0: 'No'
+  myonnetty_avustus:
+    '#title': 'Received grant'
+    '#multiple__no_items_message': '<p>No values entered. Add the new grant granted below.</p>'
+    '#multiple__add_more_button_label': 'Add new received grant'
+    '#element':
+      issuer:
+        '#options':
+          1: State
+          4: Other
+          5: Foundation
+        '#title': 'Grant issuer'
+      issuer_name:
+        '#title': "Issuer's name"
+        '#help': '<p>Which body has granted the grant (e.g. name of the ministry)</p>'
+      year:
+        '#title': Year
+        '#pattern_error': 'Enter a year between 1900 - 2100'
+      amount:
+        '#title': 'Amount of grant granted'
+      purpose:
+        '#title': 'Description of intended use'
+        '#help': '<p>Give a brief description, for what purpose has the grant been granted?</p>'
+        '#counter_maximum_message': '%d/1000 characters remaining'
+  muut_samaan_tarkoitukseen_haetut_avustukset:
+    '#title': 'Other grants applied for to be used for the same purpose'
+  info_muut_samaan_tarkoitukseen_haettu:
+    '#markup': '<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>An affirmative answer opens a further question</span></div></div></div>'
+  olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
+    '#title': 'We have applied for grants from somewhere other than the City of Helsinki'
+    '#options':
+      1: 'Yes'
+      0: 'No'
+  haettu_avustus_tieto:
+    '#title': 'Add new grant applied for'
+    '#multiple__no_items_message': '<p><span class="blob-code-inner blob-code-marker pl-s" data-code-marker="+">No values entered. Add a new applied for grant below.</span></p>'
+    '#multiple__add_more_button_label': 'Add new grant applied for'
+    '#element':
+      issuer:
+        '#options':
+          1: State
+          4: Other
+          5: Foundation
+        '#title': 'Grant issuer'
+      issuer_name:
+        '#title': "Issuer's name"
+        '#help': '<p><span class="blob-code-inner blob-code-marker pl-s" data-code-marker="+">Which entity has granted the grant (e.g. name of the ministry)</span></p>'
+      year:
+        '#title': Year
+        '#pattern_error': 'Enter a year between 1900 - 2100'
+      amount:
+        '#title': 'The amount of the grant applied for'
+      purpose:
+        '#title': 'Description of intended use'
+        '#help': '<p><span class="blob-code-inner blob-code-marker pl-s" data-code-marker="+">Give a brief description, for what purpose has the grant been granted?</span></p>'
+        '#counter_maximum_message': '%d/1000 characters remaining'
+  3_tarkemmat_tiedot:
+    '#title': '3. Information in more detail'
+  tarkemmat_tiedot_section:
+    '#title': 'Information in more detail'
+  hankesuunnitelma_avustuksen_kesto:
+    '#title': 'Are you applying for a one, two or three year project grant? Enter the grant amounts to be applied for in the subsequent years of the project into the corresponding fields.'
+    '#options':
+      1: 'I am applying for a one-year grant'
+      2: 'I am applying for a two-year grant'
+      3: 'I am applying for a three-year grant'
+  haettava_avustussumma:
+    '#title': 'Grant amount requested'
+  haettava_avustussumma_2025:
+    '#title': '2025 (euros)'
+    '#compensation__title': '2025 (euros)'
+  haettava_avustussumma_2026:
+    '#title': '2026 (euros)'
+  haettava_avustussumma_2027:
+    '#title': '2027 (euros)'
+  hankesuunnitelma_section:
+    '#title': 'Project plan and goals'
+  hankkeen_nimi:
+    '#title': 'Project name'
+    '#counter_maximum_message': '%d/300 characters remaining'
+  hankkeen_tarkoitus_tavoitteet:
+    '#title': 'Purpose and goals of the project'
+    '#counter_maximum_message': '%d/3000 characters remaining'
+  hankkeen_monivuotisuuden_tarve:
+    '#title': 'Please justify the need for a multi-year grant for achieving the goals of the project.'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_toimenpiteet_toteutus:
+    '#title': 'What are the concrete measures of the project to promote low-threshold regional physical activities for children and young people aged 9–18 years in Helsinki? What is the timetable for implementing the measures?'
+  hankkeen_toimenpiteet_aikataulu:
+    '#title': 'The concrete measures of the project and their timetable in 2025'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_toimenpiteet_aikataulu_2026:
+    '#title': 'The concrete measures of the project and their timetable in 2026'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_toimenpiteet_aikataulu_2027:
+    '#title': 'The concrete measures of the project and their timetable in 2027'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_toiminnan_laajuus:
+    '#title': 'What is the planned volume of the activities to be arranged (h/week)?'
+    '#help': '<p data-renderer-start-pos="15537">Please indicate how many hours of activities will be organised on average per week.</p>'
+    '#counter_maximum_message': '%d/1250 characters remaining'
+  hankkeen_kohtaamiset:
+    '#title': 'Will the project increase positive encounters between population groups or prevent marginalisation? How?'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_kohderyhmat_section:
+    '#title': 'Project target groups'
+  hankkeen_kohderyhmat_kenelle:
+    '#title': 'What is the project target group(s)?'
+    '#counter_maximum_message': '%d/1250 characters remaining'
+  hankkeen_kohderyhmat_erityisryhmat:
+    '#title': 'Does the project group(s) have special needs? How are the needs taken into consideration?'
+    '#counter_maximum_message': '%d/1250 characters remaining'
+  hankkeen_kohderyhmat_osaaminen:
+    '#title': 'What kind of expertise do the project operators already have in working with the target group(s) in question?'
+    '#counter_maximum_message': '%d/1250 characters remaining'
+  hankkeen_kohderyhmat_lapset:
+    '#title': 'Estimate how many children and young people are reached through the activities.'
+  markup:
+    '#markup': '<p data-renderer-start-pos="19563">Estimate the total number of children and young people reached during the whole project. If the project does not reach the specified age group, enter "0" in the field.</p>'
+  hankkeen_kohderyhmat_lapset_9_12:
+    '#title': 'Helsinki residents aged 9 to 12 years'
+  hankkeen_kohderyhmat_lapset_13_15:
+    '#title': 'Helsinki residents aged 13 to 15 years'
+  hankkeen_kohderyhmat_lapset_16_18:
+    '#title': 'Helsinki residents aged 16 to 18 years'
+  hankkeen_kohderyhmat_uudet_fieldset:
+    '#title': 'How many of them are new, i.e. have not participated in activities organised by the operator before?'
+  hankkeen_kohderyhmat_uudet:
+    '#title': 'Helsinki residents aged 9 to 18 years'
+  hankkeen_kohderyhmat_saavutettavuus:
+    '#title': 'How has accessibility been taken into account? What kind of equipment and level of skills are required from participants?'
+    '#help': '<p data-renderer-start-pos="23571">Explain how different aspects of accessibility are taken into account, e.g. communicative, physical, psychological, social, cultural and economic accessibility.</p>'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_kohderyhmat_hinta:
+    '#title': 'What is the planned cost of one session per participant (€/h)?'
+    '#help': '<p>Estimate how much a participant pays for one session. Enter the estimate as €/hour.</p>'
+  hankkeen_kohderyhmat_konkretia_liikunta:
+    '#title': 'What impact do you hope the activities will have on the lives of the participants?'
+    '#counter_maximum_message': '%d/1250 characters remaining'
+  hankkeen_kohderyhmat_postinrot:
+    '#title': 'In what area(s) will the activities be arranged? Please enter all postal code areas (only postal codes) where the activities are planned to be arranged. Separate the postal code areas with a comma.'
+    '#help': '<p data-renderer-start-pos="26884">Please do not enter anything other than postal codes in the field. Separate the postal codes with a comma (, ).</p>'
+    '#counter_maximum_message': '%d/100 characters remaining'
+  hankkeen_menetelmat_section:
+    '#title': 'Project methods'
+  hankkeen_kohderyhmat_tavoitus_liikunta:
+    '#title': 'How are target group(s) reached and identified?'
+    '#help': '<p data-renderer-start-pos="27956"><span class="TextRun SCXW126052502 BCX2 NormalTextRun" style="font-family:WordVisi_MSFontService, Calibri, &quot;Calibri_EmbeddedFont&quot;, &quot;Calibri_MSFontService&quot;, sans-serif;font-size:11pt;line-height:15px;" data-contrast="auto" xml:lang="EN-US" lang="EN-US">Explain how the target groups of the activities, e.g. children and young people who are less active or at risk of marginalisation, are identified.</span></p>'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_kohderyhmat_osallisuus_liikunta:
+    '#title': 'How are children and young people involved in planning and decision-making?'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_keskeisimmat_kumppanit_liikunta:
+    '#title': 'Specify the main partners and their role in the project. Specify separately partners that have already agreed and partnerships that are in the planning phase.'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_uudet_kumppanit_liikunta:
+    '#title': 'Will new types of partnerships or operating models be tested during the project? Please specify what kind?'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_riskit_section:
+    '#title': 'Risks and analysis'
+  hankkeen_riskit_keskeisimmat:
+    '#title': 'What are the main risks from the point of view of project implementation?'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_riskit_seuranta:
+    '#title': 'How will the project monitor the achievement of its goals and carry out an impact assessment?'
+    '#help': '<p data-renderer-start-pos="32546">Describe the documentation and impact assessment of the project, such as the methods used to assess impact and the type of monitoring that will be carried out for the project.</p>'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_riskit_vakiinnuttaminen:
+    '#title': 'Will the intended project activity be established as part of the basic activity of the applicant/other operator after the project? If so, indicate in the text field how and through what funding will the project be established.'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  4_talousarvio:
+    '#title': '4. Planned budget'
+  tulot_section:
+    '#title': Incomes
+  markup_01:
+    '#markup': '<p data-renderer-start-pos="34732">For a multi-year project, the budget for the first project year must be provided in this section. Additionally, a budget for the entire project period, showing the distribution of income and expenses across the different project years, must be attached to the application.</p>'
+  tulot:
+    '#title': Incomes
+    '#compensation__title': 'The applied grant (€)'
+  talous_tulon_tyyppi:
+    '#title': 'Type of income'
+    '#help': '<p>Write down the type of income in question. Incomes can be, for example, other grants and admission or participation fees. Self financing has to be written down as an income even if the required self financing share is to be funded from the organisations overall operations.</p>'
+    '#multiple__add_more_button_label': 'Add new income'
+  menot_section:
+    '#title': Expenses
+  talous_menon_tyyppi:
+    '#title': 'Type of expense'
+    '#help': '<p><span class="blob-code-inner blob-code-marker pl-s" data-code-marker="+">Write down the type of expense in question. Expenses can be, for example, rents and personnel costs.</span></p>'
+    '#multiple__add_more_button_label': 'Add new expense'
+  lisatiedot_ja_liitteet:
+    '#title': '5. Additional information and appendices'
+  lisatietoja_hakemukseen_liittyen:
+    '#title': 'Additional information concerning the application'
+  additional_information:
+    '#title': 'Additional information'
+    '#help': '<p>If necessary, you can write additional information or other justifications related to the application or report changes to the basic information</p>'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  liitteet:
+    '#title': Appendices
+  attachments_info:
+    '#markup': '<p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.</p><h4>Required attachments</h4><p>For multi-year projects, a budget itemized by project year for the entire duration of the project must be appended to the application.</p><p>For the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan. Additionally, the applicant must the provide rules of association and a confirmation of the account holder from the bank or a copy of the bank statement.</p><h4>Submission of several attachments as a single file</h4><p>If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”</p><h4>Attachments previously submitted to the City of Helsinki</h4><p>If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application”. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another.</p>'
+  notification_attachments:
+    '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>The contents of the attachments cannot be viewed afterwards</span></div><div class="hds-notification__body"><p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p><p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p></div></div></div>'
+  extra_info:
+    '#title': 'Further clarification on attachments'
+    '#counter_maximum_message': '%d/5000 characters remaining'
+  muu_liite:
+    '#title': 'Other attachment'
+    '#multiple__add_more_button_label': 'Add attachment'
+    '#attachmentName__title': ''
+    '#fileStatus__title': ''
+    '#fileType__title': ''
+    '#integrationID__title': ''
+    '#isAttachmentNew__title': ''
+  actions:
+    '#submit__label': Submit
+    '#draft__label': 'Save as draft'
+    '#wizard_prev__label': Previous
+    '#wizard_next__label': Next
+    '#preview_prev__label': Previous
+    '#preview_next__label': Preview
+    '#delete__label': 'Delete unfinished'
+settings:
+  wizard_prev_button_label: Previous
+  wizard_next_button_label: Next
+  wizard_confirmation_label: '7. Complete'
+  preview_label: '6. Confirm, preview, and submit'
+  preview_title: 'Confirm, preview, and submit'
