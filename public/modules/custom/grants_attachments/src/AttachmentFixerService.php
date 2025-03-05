@@ -279,11 +279,6 @@ final class AttachmentFixerService {
    *   A filename without uppercase extension.
    */
   private function filenameExtensionFixer(string $filename): string {
-    // Can't fix a string in wrong format.
-    if (!preg_match('/^[a-zA-Z]*\.[a-zA-Z]*$/', $filename)) {
-      return $filename;
-    }
-
     // Check if extension has even one uppercase letter.
     $extension = explode('.', $filename)[1];
     if (!preg_match('/^[a-z]*[A-Z]+[a-z]*$/', $extension)) {
