@@ -6,6 +6,8 @@ namespace Drupal\grants_attachments;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\helfi_atv\AtvDocument;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Service for fixing attachments.
@@ -13,6 +15,15 @@ use Drupal\helfi_atv\AtvDocument;
 final class AttachmentFixerService {
 
   use StringTranslationTrait;
+
+  /**
+   * Constructs a new instance.
+   */
+  public function __construct(
+    #[Autowire(service: 'logger.channel.grants_attachments')]
+    private LoggerInterface $logger,
+  ) {
+  }
 
   /**
    * Fix attachments on applications that has missing integration IDs.
@@ -265,22 +276,21 @@ final class AttachmentFixerService {
   }
 
   /**
-   * Check if filename extension is uppercase and fix it.
+   * Convert filename to lowercase.
    *
-   * If file extension is uppercase, it will cause trouble.
-   * Atv document will have the filename in 2 different formats,
-   * for example .PDF and _0.pdf.
+   * ATV, avustus2, or some other service converts all filenames to lowercase.
    * That breaks the integrationID fixer.
    *
    * @param string $filename
    *   The filename.
    *
    * @return string
-   *   A filename without uppercase extension.
+   *   A lowercase filename.
    */
   private function filenameExtensionFixer(string $filename): string {
-    // Check if extension has even one uppercase letter.
-    return strtolower($filename);
+    $newFilename = strtolower($filename);
+    $this->logger->info("Converting filename $filename to $newFilename");
+    return $newFilename;
   }
 
 }
