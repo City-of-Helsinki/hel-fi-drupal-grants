@@ -7,7 +7,6 @@ namespace Drupal\grants_admin_applications\Form;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\grants_admin_applications\Service\ApplicationCleaner;
 use Drupal\grants_admin_applications\Service\HandleDocumentsBatchService;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
@@ -34,14 +33,11 @@ final class DeleteApplicationsForm extends FormBase {
    *   The AtvService service.
    * @param \Drupal\grants_admin_applications\Service\HandleDocumentsBatchService $handleDocumentsBatchService
    *   The HandleDocumentsBatchService.
-   * @param \Drupal\grants_admin_applications\Service\ApplicationCleaner $applicationCleaner
-   *   The application cleaner.
    */
   public function __construct(
     #[Autowire(service: 'helfi_atv.atv_service')]
     private readonly AtvService $atvService,
     private readonly HandleDocumentsBatchService $handleDocumentsBatchService,
-    private readonly ApplicationCleaner $applicationCleaner,
   ) {
   }
 

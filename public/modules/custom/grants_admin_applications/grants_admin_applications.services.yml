@@ -3,7 +3,6 @@ services:
     autowire: true
     autoconfigure: true
 
-  Drupal\grants_admin_applications\Service\ApplicationCleaner: ~
   Drupal\grants_admin_applications\Service\HandleDocumentsBatchService: '@grants_admin_applications.handle_documents_batch_service'
 
   grants_admin_applications.handle_documents_batch_service:
