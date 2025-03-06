@@ -3,9 +3,7 @@ FROM ghcr.io/city-of-helsinki/drupal-docker-base:${DRUPAL_DOCKER_TAG}
 
 COPY / /var/www/html/
 WORKDIR /var/www/html
-RUN composer install --no-progress --profile --prefer-dist --no-interaction --no-dev --optimize-autoloader && \
-  # Compile twig caches.
-  drush twig:compile || true
+RUN composer install --no-progress --profile --prefer-dist --no-interaction --no-dev --optimize-autoloader
 
 # Copy custom entrypoints.
 # @see https://github.com/City-of-Helsinki/drupal-docker-images/tree/main/openshift/drupal

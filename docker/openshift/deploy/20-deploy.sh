@@ -14,6 +14,9 @@ echo "Starting deploy: $(date)"
 # @todo Remove this once 20-deploy.sh is removed.
 set_deploy_id $OPENSHIFT_BUILD_NAME
 
+# Compile twig caches.
+drush twig:compile || true
+# Put site into maintenance mode.
 drush state:set system.maintenance_mode 1 --input-format=integer
 # Run pre-deploy tasks.
 # @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/deploy-hooks.md
