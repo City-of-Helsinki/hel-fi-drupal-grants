@@ -146,6 +146,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_kohderyhmat_konkretia_liikunta' => [],
       'hankkeen_kohderyhmat_postinrot' => [],
       'hankkeen_kohderyhmat_tarve' => [],
+      'hankkeen_kohderyhmat_tavoitus_seg' => [],
       'hankkeen_kohderyhmat_konkretia_seg' => [],
       'hankkeen_kohderyhmat_osallisuus_seg' => [],
       'hankkeen_keskeisimmat_kumppanit_seg' => [],

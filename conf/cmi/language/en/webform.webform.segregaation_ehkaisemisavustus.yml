@@ -167,7 +167,7 @@ elements: |
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_menetelmat_section:
     '#title': 'Project methods'
-  hankkeen_kohderyhmat_tavoitus:
+  hankkeen_kohderyhmat_tavoitus_seg:
     '#title': 'How are target group(s) reached and identified?'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_kohderyhmat_konkretia_seg:
