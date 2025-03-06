@@ -44,10 +44,13 @@
               closeButtonText: Drupal.t('Close', {}, { context: 'grants_profile' }),
             });
           } else if (($('[data-drupal-selector="edit-isnewprofile"]').val() === 'initialSave') && !containingElement.contains(event.target)) {
+            // Hakuprofiili.
             event.preventDefault();
             return Drupal.dialogFunctions.createDialog({
               dialogContent: Drupal.t('You have not saved your profile. Please save your profile before leaving the form.', {}, { context: 'grants_profile' }),
               actionButtonText: '',
+              switchRoleButtonText: Drupal.t('Switch role', {}, { context: 'grants_profile' }),
+              switchRoleButtonCallback: () => { window.location = Drupal.url('asiointirooli-valtuutus') },
               backButtonText: Drupal.t('Back to profile', {}, { context: 'grants_profile' }),
               closeButtonText: Drupal.t('Close', {}, { context: 'grants_profile' }),
             });
