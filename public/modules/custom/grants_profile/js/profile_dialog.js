@@ -49,7 +49,7 @@
             return Drupal.dialogFunctions.createDialog({
               dialogContent: Drupal.t('You have not saved your profile. Please save your profile before leaving the form.', {}, { context: 'grants_profile' }),
               actionButtonText: '',
-              switchRoleButtonText: Drupal.t('Switch role', {}, { context: 'grants_profile' }),
+              switchRoleButtonText: Drupal.t('Switch role'),
               switchRoleButtonCallback: () => { window.location = Drupal.url('asiointirooli-valtuutus') },
               backButtonText: Drupal.t('Back to profile', {}, { context: 'grants_profile' }),
               closeButtonText: Drupal.t('Close', {}, { context: 'grants_profile' }),
