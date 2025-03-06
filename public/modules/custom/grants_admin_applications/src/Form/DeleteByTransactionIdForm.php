@@ -14,7 +14,6 @@ use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a grants_admin_applications form.
