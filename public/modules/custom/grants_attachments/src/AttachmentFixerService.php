@@ -6,6 +6,8 @@ namespace Drupal\grants_attachments;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\helfi_atv\AtvDocument;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Service for fixing attachments.
@@ -15,9 +17,13 @@ final class AttachmentFixerService {
   use StringTranslationTrait;
 
   /**
-   * Constructs an AttachmentFixerService object.
+   * Constructs a new instance.
    */
-  public function __construct() {}
+  public function __construct(
+    #[Autowire(service: 'logger.channel.grants_attachments')]
+    private LoggerInterface $logger,
+  ) {
+  }
 
   /**
    * Fix attachments on applications that has missing integration IDs.
@@ -140,12 +146,14 @@ final class AttachmentFixerService {
     array $attachmentInfo,
     string $appEnv,
   ): array {
+    $filename = $this->filenameExtensionFixer($attachment['filename']);
+
     // Look for events from us, the handler.
-    $handlerOk = $this->filterEventsByTypeAndFilename($events, 'HANDLER_ATT_OK', $attachment['filename']);
+    $handlerOk = $this->filterEventsByTypeAndFilename($events, 'HANDLER_ATT_OK', $filename);
     // Look for events from AVUSTUS2.
-    $avus2Ok = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_OK', $attachment['filename']);
+    $avus2Ok = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_OK', $filename);
     // Look for errors from AVUSTUS2.
-    $avus2Error = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_ERROR', $attachment['filename']);
+    $avus2Error = $this->filterEventsByTypeAndFilename($events, 'AVUSTUS2_ATT_ERROR', $filename);
     // Are attachments added properly to form data.
     $formOk = $this->checkAttachmentInfo($attachmentInfo, $attachment, $appEnv);
 
@@ -203,10 +211,12 @@ final class AttachmentFixerService {
       return FALSE;
     }
 
+    $filename = $this->filenameExtensionFixer($attachment['filename']);
+
     // Loop attachment info and check if we have the attachment added.
     foreach ($attachmentInfo as $info) {
       // Check if filename and integrationID are found.
-      $filenameFound = $this->findValueById($info, 'fileName', $attachment['filename']);
+      $filenameFound = $this->findValueById($info, 'fileName', $filename);
       $intFound = $this->findIntegrationId($info, $attachment, $appEnv);
       // Return true if both are found.
       if ($filenameFound && $intFound) {
@@ -263,6 +273,24 @@ final class AttachmentFixerService {
   ): bool {
     $targetId = '/' . $appEnv . AttachmentHandlerHelper::cleanIntegrationId($attachment['href']);
     return $this->findValueById($info, 'integrationID', $targetId);
+  }
+
+  /**
+   * Convert filename to lowercase.
+   *
+   * ATV, avustus2, or some other service converts all filenames to lowercase.
+   * That breaks the integrationID fixer.
+   *
+   * @param string $filename
+   *   The filename.
+   *
+   * @return string
+   *   A lowercase filename.
+   */
+  private function filenameExtensionFixer(string $filename): string {
+    $newFilename = strtolower($filename);
+    $this->logger->info("Converting filename $filename to $newFilename");
+    return $newFilename;
   }
 
 }
