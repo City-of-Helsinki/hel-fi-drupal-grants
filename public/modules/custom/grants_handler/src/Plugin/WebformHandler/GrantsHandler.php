@@ -29,6 +29,7 @@ use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\WebformSubmissionNotesHelper;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\ApplicationDataService;
+use Drupal\grants_metadata\ConvertHelper;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -295,51 +296,6 @@ final class GrantsHandler extends WebformHandlerBase {
   }
 
   /**
-   * Convert EUR format value to float.
-   *
-   * @param string|null $value
-   *   Value to be converted.
-   *
-   * @return float|null
-   *   Floated value.
-   */
-  public static function convertToFloat(?string $value = ''): ?float {
-    if (is_null($value)) {
-      return NULL;
-    }
-
-    if ($value === '') {
-      return NULL;
-    }
-
-    $value = str_replace(['€', ',', ' '], ['', '.', ''], $value);
-    return (float) $value;
-  }
-
-  /**
-   * Convert EUR format value to "int" .
-   *
-   * @param string|null $value
-   *   Value to be converted.
-   *
-   * @return int|null
-   *   Int value.
-   */
-  public static function convertToInt(?string $value = ''): ?int {
-    if (is_null($value)) {
-      return NULL;
-    }
-
-    if ($value === '') {
-      return NULL;
-    }
-
-    $value = str_replace(['€', ',', ' ', '_'], ['', '.', '', ''], $value);
-    $value = (int) $value;
-    return $value;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function defaultConfiguration(): array {
@@ -380,7 +336,7 @@ final class GrantsHandler extends WebformHandlerBase {
       is_array($this->submittedFormData['myonnetty_avustus'])) {
       $tempTotal = 0;
       foreach ($this->submittedFormData['myonnetty_avustus'] as $item) {
-        $amount = self::convertToFloat($item['amount']);
+        $amount = ConvertHelper::convertToFloat($item['amount']);
         $tempTotal += $amount;
       }
       $this->submittedFormData['myonnetty_avustus_total'] = $tempTotal;
@@ -390,7 +346,7 @@ final class GrantsHandler extends WebformHandlerBase {
       is_array($this->submittedFormData['haettu_avustus_tieto'])) {
       $tempTotal = 0;
       foreach ($this->submittedFormData['haettu_avustus_tieto'] as $item) {
-        $amount = self::convertToFloat($item['amount']);
+        $amount = ConvertHelper::convertToFloat($item['amount']);
         $tempTotal += $amount;
       }
       $this->submittedFormData['haettu_avustus_tieto_total'] = $tempTotal;
@@ -716,7 +672,7 @@ final class GrantsHandler extends WebformHandlerBase {
       $subventionsTotalAmount = 0;
       if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
         foreach ($submissionData["subventions"] as $sub) {
-          $subventionsTotalAmount += self::convertToFloat($sub['amount']);
+          $subventionsTotalAmount += ConvertHelper::convertToFloat($sub['amount']);
         }
       }
 
@@ -748,7 +704,7 @@ final class GrantsHandler extends WebformHandlerBase {
       if (isset($submissionData["subventions"]) && is_array($submissionData["subventions"])) {
         foreach ($submissionData["subventions"] as $sub) {
           if ($sub['subventionType'] == $subventionType) {
-            $elementTotal = self::convertToFloat($sub['amount']);
+            $elementTotal = ConvertHelper::convertToFloat($sub['amount']);
             break;
           }
         }
@@ -1656,30 +1612,6 @@ submit the application only after you have provided all the necessary informatio
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     parent::submitConfigurationForm($form, $form_state);
     $this->configuration['debug'] = (bool) $form_state->getValue('debug');
-  }
-
-  /**
-   * Cleans up non-array values from array structure.
-   *
-   * This is due to some configuration error with messages/statuses/events
-   * that I'm not able to find.
-   *
-   * @param array|null $value
-   *   Array we need to flatten.
-   *
-   * @return array
-   *   Fixed array
-   */
-  public static function cleanUpArrayValues(mixed $value): array {
-    $retval = [];
-    if (is_array($value)) {
-      foreach ($value as $v) {
-        if (is_array($v)) {
-          $retval[] = $v;
-        }
-      }
-    }
-    return $retval;
   }
 
   /**
