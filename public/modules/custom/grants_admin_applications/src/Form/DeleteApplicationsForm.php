@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_admin_applications\Form;
 
-use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\grants_admin_applications\Service\HandleDocumentsBatchService;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
@@ -13,7 +14,7 @@ use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use GuzzleHttp\Exception\GuzzleException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,33 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 final class DeleteApplicationsForm extends FormBase {
 
-  /**
-   * Access to ATV.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * Document batch processing service.
-   *
-   * @var \Drupal\grants_admin_applications\Service\HandleDocumentsBatchService
-   */
-  protected HandleDocumentsBatchService $handleDocumentsBatchService;
-
-  /**
-   * Logger.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
-   */
-  protected LoggerChannelFactoryInterface $logger;
-
-  /**
-   * Configuration Factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactory
-   */
-  protected $configFactory;
+  use AutowireTrait;
 
   /**
    * Class constructor.
@@ -58,33 +33,12 @@ final class DeleteApplicationsForm extends FormBase {
    *   The AtvService service.
    * @param \Drupal\grants_admin_applications\Service\HandleDocumentsBatchService $handleDocumentsBatchService
    *   The HandleDocumentsBatchService.
-   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
-   *   The LoggerChannelFactory.
-   * @param \Drupal\Core\Config\ConfigFactory $configFactory
-   *   The config factory.
    */
   public function __construct(
-    AtvService $atvService,
-    HandleDocumentsBatchService $handleDocumentsBatchService,
-    LoggerChannelFactoryInterface $loggerFactory,
-    ConfigFactory $configFactory,
+    #[Autowire(service: 'helfi_atv.atv_service')]
+    private readonly AtvService $atvService,
+    private readonly HandleDocumentsBatchService $handleDocumentsBatchService,
   ) {
-    $this->atvService = $atvService;
-    $this->handleDocumentsBatchService = $handleDocumentsBatchService;
-    $this->logger = $loggerFactory;
-    $this->configFactory = $configFactory;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): DeleteApplicationsForm|static {
-    return new static(
-      $container->get('helfi_atv.atv_service'),
-      $container->get('grants_admin_applications.handle_documents_batch_service'),
-      $container->get('logger.factory'),
-      $container->get('config.factory')
-    );
   }
 
   /**
@@ -112,7 +66,7 @@ final class DeleteApplicationsForm extends FormBase {
     $appEnv = $input['appEnv'] ?? NULL;
 
     // Get the third party options.
-    $config = $this->configFactory->get('grants_metadata.settings');
+    $config = $this->config('grants_metadata.settings');
     $thirdPartyOptions = $config->get('third_party_options');
 
     // Build the form.
@@ -302,7 +256,7 @@ final class DeleteApplicationsForm extends FormBase {
           ]
         );
         $this->messenger()->addWarning($failedDeletionMessage);
-        $this->logger->get('grants_admin_applications')
+        $this->logger('grants_admin_applications')
           ->notice($failedDeletionMessage);
         return FALSE;
       }
@@ -343,7 +297,7 @@ final class DeleteApplicationsForm extends FormBase {
         ]
       );
       $this->messenger()->addWarning($failedDeletionMessage);
-      $this->logger->get('grants_admin_applications')
+      $this->logger('grants_admin_applications')
         ->notice($failedDeletionMessage);
     }
 
@@ -392,9 +346,7 @@ final class DeleteApplicationsForm extends FormBase {
       }
 
       // Extract the transaction_id values and join them into a string.
-      $transactionIds = array_map(function ($document) {
-        return $document->getTransactionId();
-      }, $documents);
+      $transactionIds = array_map(static fn ($document) => $document->getTransactionId(), $documents);
 
       $applicationNumberList = implode(',', $transactionIds);
 

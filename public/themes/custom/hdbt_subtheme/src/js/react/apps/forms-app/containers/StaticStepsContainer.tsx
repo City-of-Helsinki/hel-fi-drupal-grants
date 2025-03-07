@@ -4,7 +4,7 @@ import { getCurrentStepAtom } from '../store';
 export const StaticStepsContainer = ({
   formRef
 }: any) => {
-  const [currentStepIndex, currentStep] = useAtomValue(getCurrentStepAtom);
+  const currentStep = useAtomValue(getCurrentStepAtom)[1];
 
   if (!formRef.current) {
     return null;

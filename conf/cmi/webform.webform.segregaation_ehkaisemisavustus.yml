@@ -156,7 +156,7 @@ elements: |-
       haun_painopisteet_kulttuuri_kehitys: 0
       hankkeen_kohderyhmat_kenelle: 0
       hankkeen_kohderyhmat_erityisryhmat: 0
-      hankkeen_kohderyhmat_tavoitus: 0
+      hankkeen_kohderyhmat_tavoitus_seg: 0
       hankkeen_kohderyhmat_konkretia: 0
       hankkeen_kohderyhmat_osallisuus: 0
       hankkeen_kohderyhmat_osaaminen: 0
@@ -218,7 +218,7 @@ elements: |-
       haun_painopisteet_kulttuuri_kehitys: 0
       hankkeen_kohderyhmat_kenelle: 0
       hankkeen_kohderyhmat_erityisryhmat: 0
-      hankkeen_kohderyhmat_tavoitus: 0
+      hankkeen_kohderyhmat_tavoitus_seg: 0
       hankkeen_kohderyhmat_konkretia: 0
       hankkeen_kohderyhmat_osallisuus: 0
       hankkeen_kohderyhmat_osaaminen: 0
@@ -735,7 +735,7 @@ elements: |-
     hankkeen_menetelmat_section:
       '#type': webform_section
       '#title': 'Projektin menetelmät'
-      hankkeen_kohderyhmat_tavoitus:
+      hankkeen_kohderyhmat_tavoitus_seg:
         '#type': textarea
         '#title': 'Miten kohderyhmät tavoitetaan ja tunnistetaan?'
         '#description_display': after

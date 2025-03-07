@@ -1,10 +1,8 @@
 import useSWRImmutable from 'swr/immutable'
 import { useSetAtom } from 'jotai';
-import { ADDITIONAL_PROPERTIES_KEY } from '@rjsf/utils';
+import { IChangeEvent } from '@rjsf/core';
 import { RJSFFormContainer } from './RJSFFormContainer';
 import { initializeFormAtom } from '../store';
-import { Stepper } from '../components/Stepper';
-import { IChangeEvent } from '@rjsf/core';
 
 const fetchFormData = async(id: string) => {
   const response = await fetch(`/en/application/${id}`);
@@ -20,6 +18,7 @@ const transformSchema = (data: any) => {
   const {
     schema,
     schema: {
+      definitions,
       properties,
     },
   } = data;
@@ -28,13 +27,19 @@ const transformSchema = (data: any) => {
 
   Object.entries(properties).forEach((property: any, index: number) => {
     const [key, value] = property;
-
-    const additionalProperties = value?.additionalProperties || {};
-
     transformedProperties[key] = {
       ...value,
       _step: key,
     };
+  });
+
+  Object.entries(definitions).forEach((definition: any) => {
+    const [key, definitionValue] = definition;
+
+    Object.entries(definitionValue.properties).forEach((subProperty: any) => {
+      const [subKey] = subProperty;
+      definitions[key].properties[subKey]._isSection = true;
+    });
   });
 
   return {
@@ -64,10 +69,10 @@ const FormWrapper = ({
   initializeForm(data);
   const transformedSchema = transformSchema(data);
 
-  const submitData = async (data: IChangeEvent) => {
-    const submitResult = await fetch(`/en/application/${applicationNumber}`, {
+  const submitData = async (formSubmitEvent: IChangeEvent) => {
+    await fetch(`/en/application/${applicationNumber}`, {
       method: 'POST',
-      body: JSON.stringify(data.formData),
+      body: JSON.stringify(formSubmitEvent.formData),
     });
   };
 

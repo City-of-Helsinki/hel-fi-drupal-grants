@@ -587,6 +587,10 @@ display:
                 operator: '='
                 value: '1'
               -
+                title: Published
+                operator: '='
+                value: '0'
+              -
                 title: Unpublished
                 operator: '='
                 value: '0'
