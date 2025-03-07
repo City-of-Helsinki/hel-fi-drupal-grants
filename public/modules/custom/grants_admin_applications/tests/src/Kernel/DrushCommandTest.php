@@ -92,7 +92,10 @@ class DrushCommandTest extends KernelTestBase {
 
     $batch = $this->prophesize(HandleDocumentsBatchService::class);
 
+    // Replace APP_ENV.
+    $appEnv = getenv('APP_ENV');
     putenv('APP_ENV=PROD');
+
     $command = new GrantsAdminCommands($atvSevice->reveal(), $batch->reveal());
 
     $command->restoreState(
@@ -102,6 +105,9 @@ class DrushCommandTest extends KernelTestBase {
     );
 
     $this->assertEquals(DrushCommands::EXIT_FAILURE, $command->cleanTestApplications('test-uid'));
+
+    // Restore APP_ENV.
+    putenv("APP_ENV=$appEnv");
   }
 
 }
