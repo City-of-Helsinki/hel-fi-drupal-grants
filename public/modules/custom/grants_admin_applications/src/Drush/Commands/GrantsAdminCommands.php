@@ -73,7 +73,10 @@ final class GrantsAdminCommands extends DrushCommands {
     if ($documents) {
       $this->batchService->run($documents);
 
-      drush_backend_batch_process();
+      // Run the Drush batch, if applicable.
+      if (function_exists('drush_backend_batch_process')) {
+        drush_backend_batch_process();
+      }
     }
 
     return self::EXIT_SUCCESS;
