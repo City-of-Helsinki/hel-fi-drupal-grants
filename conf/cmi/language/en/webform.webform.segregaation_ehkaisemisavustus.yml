@@ -58,7 +58,7 @@ elements: |
   compensation_purpose:
     '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
     '#help': '<p>Indicate the purpose for which the grant is applied for.</p>'
-    '#counter_maximum_message': '%d/1250 characters remaining'
+    '#counter_maximum_message': '%d/2000 characters remaining'
   other_grants_for_same_purpose:
     '#title': 'Other grants received for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:

@@ -58,7 +58,7 @@ elements: |
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
     '#help': '<p>Ange för vilket ändamål understödet ansöks.</p>'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
+    '#counter_maximum_message': '%d/2000 tecken kvar'
   other_grants_for_same_purpose:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:

@@ -416,11 +416,11 @@ elements: |-
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksesta'
         '#help': '<p>Kerro mitä tarkoitusta varten avustusta haetaan.</p>'
-        '#maxlength': 5000
+        '#maxlength': 2000
         '#required': true
         '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#counter_maximum': 2000
+        '#counter_maximum_message': '%d/2000 merkkiä jäljellä'
     other_grants_for_same_purpose:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
