@@ -170,7 +170,7 @@ class ApplicationInitService {
       /** @var \Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition $budgetInfoDefinition */
       $budgetInfoDefinition = $propertyDefinitions['budgetInfo'] ?? NULL;
       if ($budgetInfoDefinition) {
-        // UHF-11018 duplicate values when copying on budget fields.
+        // UHF-11018 duplicate values when copying budget fields.
         // If this array has both budget_other_income and talous_tulon_tyyppi OR
         // budget_other_cost and talous_menon_tyyppi,
         // the copy will have duplicates.
