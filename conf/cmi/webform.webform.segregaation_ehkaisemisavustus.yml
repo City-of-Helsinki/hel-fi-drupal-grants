@@ -415,7 +415,7 @@ elements: |-
       compensation_purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksesta'
-        '#help': '<p>Kerro mitä tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri käyttökohteet. Kerro myös mitä avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.</p>'
+        '#help': '<p>Kerro mitä tarkoitusta varten avustusta haetaan.</p>'
         '#maxlength': 5000
         '#required': true
         '#counter_type': character
