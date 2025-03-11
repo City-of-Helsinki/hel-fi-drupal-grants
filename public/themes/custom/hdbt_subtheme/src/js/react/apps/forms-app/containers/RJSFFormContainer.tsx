@@ -1,20 +1,25 @@
 import Form, { IChangeEvent } from '@rjsf/core';
 import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
-import React, { createRef, useCallback } from 'react';
+import React, { createRef, useCallback, useState } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
-import { TextArea, TextInput, SelectWidget } from '../components/Input';
 import { FileInput } from '../components/FileInput';
-import { ObjectFieldTemplate } from '../components/Templates';
+import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
+import { AddButtonTemplate, ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { FormActions } from '../components/FormActions';
 import { Stepper } from '../components/Stepper';
 import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
 import { ErrorsList } from '../components/ErrorsList';
+import { addData, getData } from '../db';
+import { useDebounceCallback } from 'usehooks-ts';
 
 const widgets: RegistryWidgetsType = {
+  'address': AddressSelect,
+  'bank_account': BankAccountSelect,
+  'community_officials': CommunityOfficialsSelect,
   EmailWidget: TextInput,
   SelectWidget,
   TextareaWidget: TextArea,
@@ -23,16 +28,36 @@ const widgets: RegistryWidgetsType = {
 };
 
 type RJSFFormContainerProps = {
+  initialFormData: any,
   schema: RJSFSchema,
   submitData: (data: IChangeEvent) => void,
   uiSchema: UiSchema,
 };
 
+/**
+ * Container for the RJSF form.
+ *
+ * @typedef {object} RJSFFormContainerProps
+ * @property {object} initialFormData - The initial data for the form.
+ * @property {object} schema - The schema for the form.
+ * @property {function} submitData - The function to call when the form is submitted.
+ * @property {object} uiSchema - The uiSchema for the form.
+ *
+ * @param {RJSFFormContainerProps} props
+ * @returns {JSX.Element}
+ */
 export const RJSFFormContainer = ({
-  submitData,
+  initialFormData,
   schema,
+  submitData,
   uiSchema,
 }: RJSFFormContainerProps) => {
+  const persistFormState = useDebounceCallback(
+    (data: IChangeEvent) => {
+      addData(data.formData);
+    },
+    2000,
+  );
   const steps = useAtomValue(getStepsAtom);
   const formRef = createRef<Form>();
   const readCurrentStep = useAtomCallback(
@@ -42,6 +67,7 @@ export const RJSFFormContainer = ({
     useCallback(get => get(getReachedStepAtom), [])
   );
   const setErrors = useSetAtom(setErrorsAtom);
+
 
   const onError = (errors: RJSFValidationError[]) => {
     const keyedErrors = keyErrorsByStep(errors, steps);
@@ -70,7 +96,6 @@ export const RJSFFormContainer = ({
     const errorsToShow = keyedErrors.filter(([index]) => index <= reachedStep).map(([index, error]) => error);
     setErrors(errorsToShow);
 
-    console.log({...{errorsToShow, errors, keyedErrors}});
     return errorsToShow;
   };
 
@@ -82,8 +107,10 @@ export const RJSFFormContainer = ({
         <StaticStepsContainer formRef={formRef} />
         <Form
           className='grants-react-form webform-submission-form'
+          formData={initialFormData}
           method='POST'
           noHtml5Validate
+          onChange={persistFormState}
           onError={onError}
           onSubmit={(data, event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
@@ -98,7 +125,12 @@ export const RJSFFormContainer = ({
           schema={schema}
           showErrorList={false}
           templates={{
-            ButtonTemplates: { SubmitButton: () => null },
+            ArrayFieldTemplate,
+            ButtonTemplates: {
+              AddButton: AddButtonTemplate,
+              RemoveButton: RemoveButtonTemplate,
+              SubmitButton: () => null
+            },
             FieldErrorTemplate: () => null,
             ObjectFieldTemplate,
           }}

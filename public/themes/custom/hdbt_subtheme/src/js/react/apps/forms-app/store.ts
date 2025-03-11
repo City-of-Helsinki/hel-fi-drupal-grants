@@ -1,6 +1,8 @@
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { atom } from 'jotai';
 import { keyErrorsByStep } from './utils';
+import { resolve } from 'path';
+import { initDB } from './db';
 
 export type FormStep = {
   id: string;
@@ -88,7 +90,6 @@ const buildFormSteps = ({
 
   return steps;
 };
-
 export const formConfigAtom = atom<FormConfig|undefined>();
 export const formStateAtom = atom<FormState|undefined>();
 export const formStepsAtom = atom<Map<number, FormStep>|undefined>();
@@ -178,4 +179,19 @@ export const getErrorPageIndicesAtom = atom(_get => {
   const { errors } = _get(getFormStateAtom);
 
   return errors.map(([index]) => index);
+});
+export const getAddressesAtom = atom(_get => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+
+  return grantsProfile.addresses;
+});
+export const getAccountsAtom = atom(_get => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+
+  return grantsProfile.bankAccounts;
+});
+export const getOfficialsAtom = atom(_get => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+
+  return grantsProfile.officials;
 });

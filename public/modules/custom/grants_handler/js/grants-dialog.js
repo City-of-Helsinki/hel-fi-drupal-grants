@@ -7,13 +7,11 @@
      * @param {string} dialogContent - The title displayed at the top of the
      *   dialog.
      * @param {string} actionButtonText - The text for the "leave" button.
-     * @param {string} switchRoleButtonText - The text for the "Switch role" button.
      * @param {string} backButtonText - The text for the "back" button.
      * @param {string} closeButtonText - The text for the "close" button that
      *   closes the dialog.
      * @param {Function} actionButtonCallback - The function to execute when
      *   the "action" button is clicked.
-     * @param {Function} switchRoleButtonCallback - The function for switch role button.
      * @param dialogTitle
      *  If we want to override the default title
      * @param {Function} closeButtonCallback
@@ -28,19 +26,16 @@
     createDialog: ({
       dialogContent,
       actionButtonText,
-      switchRoleButtonText = '',
       backButtonText,
       closeButtonText,
       dialogTitle = Drupal.t('Attention', {}, { context: 'grants_handler' }),
       actionButtonCallback = null,
-      switchRoleButtonCallback = null,
       closeButtonCallback = null,
       backButtonCallback = null,
       escapeButtonCallback = null,
       customSelector = '',
     }) => {
       const actionButtonHTML = actionButtonText && `<button class="dialog__action-button" id="helfi-dialog__action-button" data-hds-component="button" data-hds-variant="primary">${actionButtonText}</button>`;
-      const switchRoleButtonHTML = switchRoleButtonText && `<button class="dialog__action-button" id="helfi-dialog__role-button" data-hds-component="button" data-hds-variant="primary">${switchRoleButtonText}</button>`;
       const backButtonHTML = backButtonText && `<button class="dialog__action-button" id="helfi-dialog__back-button" data-hds-component="button" data-hds-variant="secondary">${backButtonText}</button>`;
       const closeButtonHTML = closeButtonText && `<button class="dialog__close-button" id="helfi-dialog__close-button"><span class="is-hidden">${closeButtonText}</span></button>`;
 
@@ -58,7 +53,6 @@
         <div class="dialog__actions">
           ${actionButtonHTML}
           ${backButtonHTML}
-          ${switchRoleButtonHTML}
         </div>
       </dialog>
     </div>
@@ -76,7 +70,6 @@
       Drupal.dialogFunctions.toggleNoScroll(true);
 
       const actionButton = document.getElementById('helfi-dialog__action-button');
-      const switchRoleButton = document.getElementById('helfi-dialog__role-button');
       const backButton = document.getElementById('helfi-dialog__back-button');
       const closeButton = document.getElementById('helfi-dialog__close-button');
       const dialog = document.getElementById('helfi-dialog__container');
@@ -90,10 +83,6 @@
       // Add click event listener to action button
       if (actionButtonCallback && actionButtonText) {
         actionButton.addEventListener('click', actionButtonCallback);
-      }
-
-      if (switchRoleButtonHTML) {
-        switchRoleButton.addEventListener('click', switchRoleButtonCallback);
       }
 
       // Add click event listener to back button
