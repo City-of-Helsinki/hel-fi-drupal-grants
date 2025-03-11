@@ -459,7 +459,7 @@ const validateMessaging = async (
   await formActionButton.click();
   await page.waitForSelector('form.grants-handler-message .hds-notification--error');
   await expect(page.locator('form.grants-handler-message .hds-notification--error')).toBeVisible();
-  await expect(page.locator('form.grants-handler-message .hds-notification--error .hds-notification__body')).toHaveText('1 virhe löytyi: Viesti');
+  await expect(page.locator('form.grants-handler-message .hds-notification--error .hds-notification__body')).toHaveText('Viesti');
 
   // Validate sending message works.
   await textArea.fill('Test message');
