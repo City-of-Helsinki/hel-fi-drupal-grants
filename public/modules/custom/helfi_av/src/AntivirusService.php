@@ -17,8 +17,8 @@ class AntivirusService {
    * Constructs a new instance.
    */
   public function __construct(
-    private ClientInterface $client,
-    private ConfigFactoryInterface $configFactory,
+    private readonly ClientInterface $client,
+    private readonly ConfigFactoryInterface $configFactory,
   ) {
   }
 
@@ -40,7 +40,7 @@ class AntivirusService {
       $multipart[] = [
         'name' => 'FILES',
         'contents' => $file,
-        'filename' => is_string($key) ? basename($key) : sha1($file),
+        'filename' => is_string($key) ? basename($key) : hash('sha256', $file),
       ];
     }
 
