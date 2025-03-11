@@ -1,23 +1,49 @@
-import { ArrayFieldTemplateProps, ObjectFieldTemplateProps } from '@rjsf/utils'
-import { Fieldset } from 'hds-react';
+import { ArrayFieldTemplateProps, IconButtonProps, ObjectFieldTemplateProps } from '@rjsf/utils'
+import { Button, ButtonPresetTheme, ButtonVariant, Fieldset } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { getCurrentStepAtom, getFormConfigAtom } from '../store';
+import { getCurrentStepAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
-
-export const FieldsetWidget = () => (
-    <Fieldset
-      border
-      heading=""
-    >
-
-    </Fieldset>
-  );
+import { Children, ReactNode } from 'react';
 
 export const ArrayFieldTemplate = ({
-  idSchema,
+  canAdd,
+  items,
+  onAddClick,
+  registry,
   schema,
   uiSchema,
-}: ArrayFieldTemplateProps) => null
+}: ArrayFieldTemplateProps) => {
+  const { description, title } = schema;
+  const { ArrayFieldItemTemplate } = registry.templates;
+
+  const addText = uiSchema && uiSchema['ui:options'] && uiSchema['ui:options'].addText || null; // @ts-ignore{uiSchema: {'ui:options': {}}} = props;
+
+  return (
+    <div>
+        <div className='webform-section-wrapper'>
+          {description &&
+            <div className='form-item form-item-prh-markup'>
+              {description}
+            </div>
+          }
+        </div>
+      {items.map((item) => <ArrayFieldItemTemplate {...item} />)}
+      {canAdd &&
+        <Button
+          onClick={onAddClick}
+          theme={ButtonPresetTheme.Black}
+          style={{
+            marginTop: 'var(--spacing-m)'
+          }}
+          type='button'
+          variant={ButtonVariant.Primary}
+        >
+          {addText ? addText as ReactNode & string : Drupal.t('Add')}
+        </Button>
+      }
+    </div>
+  )
+};
 
 export const ObjectFieldTemplate = ({
   idSchema,
@@ -25,7 +51,7 @@ export const ObjectFieldTemplate = ({
   schema,
   uiSchema,
 }: ObjectFieldTemplateProps) => {
-  const { additionalProperties, title, description, _step } = schema;
+  const { additionalProperties, description, _isSection, title, _step } = schema;
   const { id: stepId } = useAtomValue(getCurrentStepAtom)[1];
 
   if (idSchema.$id === 'root') {
@@ -69,36 +95,75 @@ export const ObjectFieldTemplate = ({
     )
   }
 
-  if (uiSchema && uiSchema['ui:widget'] === 'FieldsetWidget') {
+  if (_isSection) {
     return (
-      <Fieldset
-        border={properties.length > 1}
-        heading={description || ''}
-      >
-        {properties.map((field) => field.content)}
-      </Fieldset>
+      <section className='form-item webform-section'>
+        <div className='webform-section-flex-wrapper'>
+          <h3 className='webform-section-title'>
+            {title}
+          </h3>
+          <div className='webform-section-wrapper'>
+            {description && <div className='form-item'>{description}</div>}
+            {properties.map((field) => field.content)}
+          </div>
+        </div>
+      </section>
     );
   }
 
-  if (!title) {
-    return (
-      <>
-        {properties.map((field) => field.content)}
-      </>
-    )
-  }
-
   return (
-    <section className='form-item webform-section'>
-      <div className='webform-section-flex-wrapper'>
-        <h3 className='webform-section-title'>
-          {title}
-        </h3>
-        <div className='webform-section-wrapper'>
-          {description && <div className='form-item'>{description}</div>}
-          {properties.map((field) => field.content)}
-        </div>
-      </div>
-    </section>
+    <Fieldset
+      heading={title || ''}
+      border
+    >
+      {description && <div className='form-item'>{description}</div>}
+      {properties.map((field) => field.content)}
+    </Fieldset>
   );
+};
+
+export const ButtonTemplate = ({
+  icon,
+  children,
+  registry,
+  uiSchema,
+  ...props
+}: IconButtonProps) => {
+  return (
+    <Button
+      {...props}
+      style={{
+        display: 'inline-block',
+        marginRight: 'auto',
+        marginTop: 'var(--spacing-m)',
+      }}
+      theme={ButtonPresetTheme.Black}
+      type='button'
+      variant={ButtonVariant.Primary}
+    >
+      {children as ReactNode & string}
+    </Button>
+  )
+}
+
+export const AddButtonTemplate = (props: IconButtonProps) => {
+  const addText = props.uiSchema && props.uiSchema['ui:options'] && props.uiSchema['ui:options'].addText || null; // @ts-ignore{uiSchema: {'ui:options': {}}} = props;
+  return (
+    <ButtonTemplate
+      {...props}
+    >
+      {addText ? addText : Drupal.t('Add')}
+    </ButtonTemplate>
+  )
+};
+
+export const RemoveButtonTemplate = (props: IconButtonProps) => {
+  const removeText = props.uiSchema && props.uiSchema['ui:options'] && props.uiSchema['ui:options'].removeText || null; // @ts-ignore{uiSchema: {'ui:options': {}}} = props;
+  return (
+    <ButtonTemplate
+      {...props}
+    >
+      {removeText ? removeText : Drupal.t('Remove')}
+    </ButtonTemplate>
+  )
 };

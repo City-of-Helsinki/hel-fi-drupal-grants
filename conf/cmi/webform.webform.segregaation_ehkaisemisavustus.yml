@@ -15,8 +15,8 @@ third_party_settings:
       registered_community: registered_community
       unregistered_community: unregistered_community
     applicationTypeTerms:
-      81: '81'
-    applicationTargetGroup: '75'
+      83: '83'
+    applicationTargetGroup: '27'
     applicationOpen: '2022-10-03T11:08:26'
     applicationClose: '2029-07-30T11:19:00'
     applicationActingYearsType: fixed
@@ -156,7 +156,7 @@ elements: |-
       haun_painopisteet_kulttuuri_kehitys: 0
       hankkeen_kohderyhmat_kenelle: 0
       hankkeen_kohderyhmat_erityisryhmat: 0
-      hankkeen_kohderyhmat_tavoitus: 0
+      hankkeen_kohderyhmat_tavoitus_seg: 0
       hankkeen_kohderyhmat_konkretia: 0
       hankkeen_kohderyhmat_osallisuus: 0
       hankkeen_kohderyhmat_osaaminen: 0
@@ -218,7 +218,7 @@ elements: |-
       haun_painopisteet_kulttuuri_kehitys: 0
       hankkeen_kohderyhmat_kenelle: 0
       hankkeen_kohderyhmat_erityisryhmat: 0
-      hankkeen_kohderyhmat_tavoitus: 0
+      hankkeen_kohderyhmat_tavoitus_seg: 0
       hankkeen_kohderyhmat_konkretia: 0
       hankkeen_kohderyhmat_osallisuus: 0
       hankkeen_kohderyhmat_osaaminen: 0
@@ -415,12 +415,12 @@ elements: |-
       compensation_purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan avustuksen käyttötarkoituksesta'
-        '#help': '<p>Kerro mitä tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri käyttökohteet. Kerro myös mitä avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.</p>'
-        '#maxlength': 5000
+        '#help': '<p>Kerro mitä tarkoitusta varten avustusta haetaan.</p>'
+        '#maxlength': 2000
         '#required': true
         '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#counter_maximum': 2000
+        '#counter_maximum_message': '%d/2000 merkkiä jäljellä'
     other_grants_for_same_purpose:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
@@ -735,7 +735,7 @@ elements: |-
     hankkeen_menetelmat_section:
       '#type': webform_section
       '#title': 'Projektin menetelmät'
-      hankkeen_kohderyhmat_tavoitus:
+      hankkeen_kohderyhmat_tavoitus_seg:
         '#type': textarea
         '#title': 'Miten kohderyhmät tavoitetaan ja tunnistetaan?'
         '#description_display': after
@@ -890,7 +890,7 @@ elements: |-
       '#title': Liitteet
       attachments_info:
         '#type': webform_markup
-        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p><h4>Vaaditut liitteet</h4><p>Nuorisotoiminnan erillisavustushakemuksen pakolliset liitteet ovat: yhdistyksen voimassa olevat säännöt (ei koske nuorten toimintaryhmiä), yhdistyksen toiminta- ja talousarvio sille vuodelle, jolle avustusta haetaan sekä hankkeen projektisuunnitelma ja talousarvio. Sääntöjen tulee olla Patentti ja rekisterihallituksen hyväksymät.</p><h4>Usean liitteen toimittaminen yhtenä tiedostona</h4><p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona.</p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4><p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>'
+        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p><h4>Vaaditut liitteet</h4><p>Nuorisotoiminnan erillisavustushakemuksen pakolliset liitteet ovat: yhdistyksen voimassa olevat säännöt (ei koske nuorten toimintaryhmiä), yhdistyksen toimintasuunnitelma ja talousarvio sille vuodelle, jolle avustusta haetaan sekä hankkeen projektisuunnitelma ja talousarvio. Sääntöjen tulee olla Patentti ja rekisterihallituksen hyväksymät.</p><h4>Usean liitteen toimittaminen yhtenä tiedostona</h4><p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona.</p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4><p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>'
       notification_attachments:
         '#type': webform_markup
         '#markup': |

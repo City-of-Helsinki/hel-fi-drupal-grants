@@ -1,4 +1,10 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Drupal\grants_admin_applications\Service\HandleDocumentsBatchService: '@grants_admin_applications.handle_documents_batch_service'
+
   grants_admin_applications.handle_documents_batch_service:
     class: Drupal\grants_admin_applications\Service\HandleDocumentsBatchService
     arguments: [

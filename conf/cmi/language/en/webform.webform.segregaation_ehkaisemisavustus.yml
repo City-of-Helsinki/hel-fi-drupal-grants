@@ -57,8 +57,8 @@ elements: |
     '#title': 'Purpose of use'
   compensation_purpose:
     '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
-    '#help': '<p>Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.</p>'
-    '#counter_maximum_message': '%d/1250 characters remaining'
+    '#help': '<p>Indicate the purpose for which the grant is applied for.</p>'
+    '#counter_maximum_message': '%d/2000 characters remaining'
   other_grants_for_same_purpose:
     '#title': 'Other grants received for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
@@ -167,7 +167,7 @@ elements: |
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_menetelmat_section:
     '#title': 'Project methods'
-  hankkeen_kohderyhmat_tavoitus:
+  hankkeen_kohderyhmat_tavoitus_seg:
     '#title': 'How are target group(s) reached and identified?'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_kohderyhmat_konkretia_seg:

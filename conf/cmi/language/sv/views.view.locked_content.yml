@@ -43,6 +43,8 @@ display:
             group_items:
               1:
                 title: Publicerad
+              2:
+                title: 'Ej publicerad'
         title:
           expose:
             label: Titel

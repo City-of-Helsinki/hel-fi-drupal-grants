@@ -1,26 +1,10 @@
 {
-  "bank_account": {
-    "items": {
-      "ui:emptyValue": "-Valitse tilinumero-"
-    }
-  },
-  "additional_information": {
-    "ui:widget": "textarea"
-  },
-  "extra_info": {
-    "ui:widget": "textarea"
-  },
-  "muu_liite": {
-    "items": {
-      "description": {
-        "ui:widget": "textarea"
-      }
-    }
-  },
   "orienteering_maps": {
-    "items": {
-      "mapName": {
-        "ui:widget": "textarea"
+    "orienteering_subvention": {
+      "orienteering_maps": {
+        "mapName": {
+          "ui:widget": "textarea"
+        }
       }
     }
   }

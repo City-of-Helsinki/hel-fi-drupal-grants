@@ -57,8 +57,8 @@ elements: |
     '#title': 'Användningsän damål'
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
-    '#help': '<p>Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten.</p>'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
+    '#help': '<p>Ange för vilket ändamål understödet ansöks.</p>'
+    '#counter_maximum_message': '%d/2000 tecken kvar'
   other_grants_for_same_purpose:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
@@ -167,7 +167,7 @@ elements: |
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_menetelmat_section:
     '#title': 'Metoder för projektet'
-  hankkeen_kohderyhmat_tavoitus:
+  hankkeen_kohderyhmat_tavoitus_seg:
     '#title': 'Hur nås och identifieras målgrupperna?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_kohderyhmat_konkretia_seg:

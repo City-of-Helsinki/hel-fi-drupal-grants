@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
-import { getFormConfigAtom } from '../store';
 import { TextInput } from 'hds-react';
+import { getFormConfigAtom } from '../store';
 
 export const ApplicantInfo = () => {
   const { grantsProfile: {

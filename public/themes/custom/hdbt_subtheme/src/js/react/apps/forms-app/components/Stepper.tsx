@@ -1,9 +1,8 @@
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Stepper as HDSStepper, StepState } from 'hds-react';
-import { RefObject, useEffect, useRef } from 'react';
-import { FormStep, formStepsAtom, getCurrentStepAtom, getErrorsAtom, setStepAtom } from '../store';
-import { RJSFValidationError } from '@rjsf/utils';
+import React, { MouseEvent, RefObject, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
+import { FormStep, formStepsAtom, getCurrentStepAtom, getErrorPageIndicesAtom, setStepAtom } from '../store';
 
 const transformSteps = (
   steps: Map<number, FormStep>|undefined,
@@ -26,7 +25,7 @@ export const Stepper = ({
 }) => {
   const divRef = useRef<HTMLDivElement|null>(null);
   const [currentIndex] = useAtomValue(getCurrentStepAtom);
-  const { errorPageIndices } = useAtomValue(getErrorsAtom);
+  const errorPageIndices = useAtomValue(getErrorPageIndicesAtom);
   const steps = useAtomValue(formStepsAtom);
   const setStep = useSetAtom(setStepAtom);
   const transformedSteps = transformSteps(steps, errorPageIndices);
@@ -37,13 +36,18 @@ export const Stepper = ({
     }
   }, [divRef, currentIndex])
 
+  const onStepClick = (event: MouseEvent<HTMLButtonElement>, stepIndex: number) => {
+    formRef.current?.validateForm();
+    setStep(stepIndex);
+  }
+
   return (
     <div ref={divRef}>
       <HDSStepper
-        className='grants-stepper'
         language={drupalSettings.path.currentLanguage}
+        onStepClick={onStepClick}
+        selectedStep={currentIndex}
         steps={transformedSteps}
-        onStepClick={(event, stepIndex) => setStep(stepIndex)}
         theme={{
           '--hds-step-content-color': 'var(--color-black)',
           '--hds-stepper-color': 'var(--color-black)',

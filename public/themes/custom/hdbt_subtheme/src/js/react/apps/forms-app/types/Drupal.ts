@@ -1,6 +1,4 @@
-
-// @eslint-disable-nextline
-declare namespace Drupal {
+declare namespace Drupal { // eslint-disable-line @typescript-eslint/no-unused-vars
   const cookieConsent: {
     initialized: () => boolean;
     loadFunction: (callback: () => void) => void;

@@ -1,5 +1,8 @@
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { atom } from 'jotai';
+import { keyErrorsByStep } from './utils';
+import { resolve } from 'path';
+import { initDB } from './db';
 
 export type FormStep = {
   id: string;
@@ -36,8 +39,8 @@ type GrantsProfile = {
 
 type FormState = {
   currentStep: [number, FormStep];
-  errorPageIndices: number[];
-  errors: RJSFValidationError[];
+  errors: Array<[number, RJSFValidationError]>;
+  reachedStep: number;
 }
 
 type FormConfig = {
@@ -54,33 +57,6 @@ type FormConfig = {
 type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema'> & {
   grants_profile: GrantsProfile;
   ui_schema: UiSchema;
-};
-
-const getIndicesWithErrors = (
-  errors: RJSFValidationError[]|undefined,
-  steps?: Map<number, FormStep>,
-) => {
-  if (!steps || !errors || !errors?.length) {
-    return [];
-  }
-
-  const errorIndices: number[] = [];
-  const propertyParentKeys: string[] = [];
-  const regex = new RegExp('^\.([^\.]+)');
-  errors.forEach(error => {
-    let match = error?.property?.match(regex)?.[0];
-
-    if (match) {
-      propertyParentKeys.push(match.split('.')[1]);
-    }
-  });
-  Array.from(steps).forEach(([index, step]) => {
-    if (propertyParentKeys.includes(step.id)) {
-      errorIndices.push(index);
-    }
-  });
-
-  return errorIndices;
 };
 
 const buildFormSteps = ({
@@ -110,7 +86,6 @@ const buildFormSteps = ({
 
   return steps;
 };
-
 export const formConfigAtom = atom<FormConfig|undefined>();
 export const formStateAtom = atom<FormState|undefined>();
 export const formStepsAtom = atom<Map<number, FormStep>|undefined>();
@@ -125,11 +100,11 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
   }));
   _set(formStateAtom, (state) => ({
       currentStep: [0, steps.get(0)],
-      errorPageIndices: [],
       errors: [],
+      reachedStep: 0,
     }));
 });
-export const getFormConfigAtom  = atom(_get => {
+export const getFormConfigAtom = atom(_get => {
   const config = _get(formConfigAtom);
 
   if (!config) {
@@ -147,27 +122,40 @@ const getFormStateAtom  = atom(_get => {
 
   return state;
 });
-export const getCurrentStepAtom = atom(_get => {
-  const currentState = _get(formStateAtom);
+export const getStepsAtom = atom(_get => {
+  const steps = _get(formStepsAtom);
 
-  if (!currentState?.currentStep) {
-    throw new Error('Current step is not set. Form has not been initalized.')
+  if (!steps) {
+    throw new Error('Trying to read steps before form initialization.')
   }
+
+  return steps;
+});
+export const getCurrentStepAtom = atom(_get => {
+  const currentState = _get(getFormStateAtom);
 
   return currentState.currentStep;
 });
 export const setStepAtom = atom(null, (_get, _set, index: number) => {
   const steps = _get(formStepsAtom);
+  const currentState = _get(getFormStateAtom);
 
   const step = steps?.get(index);
   if (!step) {
     throw new Error(`Index ${index} does not exist in defined steps for the form.`);
   }
 
-  _set(formStateAtom, state => state ? {
-      ...state,
+  _set(formStateAtom, _state => ({
+      ...currentState,
+      reachedStep: currentState?.reachedStep > index ? currentState?.reachedStep : index,
       currentStep: [index, step],
-    } : state);
+    })
+  );
+});
+export const getReachedStepAtom = atom(_get => {
+  const { reachedStep } = _get(getFormStateAtom);
+
+  return reachedStep;
 });
 export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError[]) => {
   const steps = _get(formStepsAtom);
@@ -175,15 +163,31 @@ export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError
 
   _set(formStateAtom, state => ({
     ...currentState,
-    errorPageIndices: getIndicesWithErrors(errors, steps),
-    errors,
+    errors: keyErrorsByStep(errors, steps)
   }));
 });
 export const getErrorsAtom = atom(_get => {
-  const {errors, errorPageIndices} = _get(getFormStateAtom);
+  const { errors } = _get(getFormStateAtom);
 
-  return {
-    errors,
-    errorPageIndices,
-  };
+  return errors;
+});
+export const getErrorPageIndicesAtom = atom(_get => {
+  const { errors } = _get(getFormStateAtom);
+
+  return errors.map(([index]) => index);
+});
+export const getAddressesAtom = atom(_get => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+
+  return grantsProfile.addresses;
+});
+export const getAccountsAtom = atom(_get => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+
+  return grantsProfile.bankAccounts;
+});
+export const getOfficialsAtom = atom(_get => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+
+  return grantsProfile.officials;
 });
