@@ -5,6 +5,7 @@ import React, { createRef, useCallback } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { TextArea, TextInput, SelectWidget } from '../components/Input';
+import { FileInput } from '../components/FileInput';
 import { ObjectFieldTemplate } from '../components/Templates';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { FormActions } from '../components/FormActions';
@@ -18,6 +19,7 @@ const widgets: RegistryWidgetsType = {
   SelectWidget,
   TextareaWidget: TextArea,
   TextWidget: TextInput,
+  FileWidget: FileInput,
 };
 
 type RJSFFormContainerProps = {
@@ -55,6 +57,8 @@ export const RJSFFormContainer = ({
   const validatePartialForm = () => {
     const data = formRef.current?.state.formData;
     formRef.current?.validateForm();
+
+    console.log('data', data)
 
     return formRef.current?.validate(data);
   };

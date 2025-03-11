@@ -1,8 +1,8 @@
 import { WidgetProps } from '@rjsf/utils';
-import { TextArea as HDSTextArea, TextInput as HDSTextInput, Select  } from 'hds-react';
+import { TextArea as HDSTextArea, TextInput as HDSTextInput, Select, FileInput as HDSFileInput  } from 'hds-react';
 import { ChangeEvent } from 'react';
 
-const formatErrors = (rawErrors: string[]|undefined) => {
+export const formatErrors = (rawErrors: string[]|undefined) => {
   if (!rawErrors) {
     return undefined;
   }
