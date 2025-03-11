@@ -42,15 +42,19 @@ type FormState = {
 }
 
 type FormConfig = {
-  grantsProfile: GrantsProfile,
-  schema: RJSFSchema;
-  uiSchema: UiSchema;
+  grantsProfile: GrantsProfile
+  schema: RJSFSchema
+  uiSchema: UiSchema
+  token: string
+  settings: {
+    [key: string]: string
+  }
   translations: {
     [key in 'fi'|'sv'|'en']: {
-      [key: string]: string;
-    };
-  };
-};
+      [key: string]: string
+    }
+  }
+}
 
 type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema'> & {
   grants_profile: GrantsProfile;

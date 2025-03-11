@@ -2,6 +2,8 @@ import React, { useCallback } from "react";
 import { WidgetProps } from "@rjsf/utils";
 import { FileInput as HDSFileInput } from "hds-react";
 import { formatErrors } from "./Input";
+import { useAtomValue } from "jotai";
+import { formConfigAtom } from "../store";
 
 function addNameToDataURL(name: string, dataURL: string|null) {
   if (dataURL === null) {
@@ -51,26 +53,52 @@ function dataUrlsToFiles(files?: string|string[]): any[] {
   })
 }
 
-function validateFile(applicationId: string, file: File): boolean {
-  return false;
+async function uploadFiles(field: string, applicationId: string, token: string, files: File[]): Promise<boolean> {
+  const formData = new FormData()
+
+  formData.append('fieldName', field)
+  files.forEach(file => formData.append('file', file))
+
+  const response = await fetch(`/en/application/${applicationId}/upload`, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'X-CSRF-Token': token
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to upload file');
+  }
+
+  return response.json();
 }
 
 export const FileInput = ({
-  id, label,
+  id,
+  label,
   onChange,
   rawErrors,
   value,
   multiple,
   required,
   accept,
+  name,
 }: WidgetProps) => {
+  const { settings: { application_type_id: applicationTypeId }, token } = useAtomValue(formConfigAtom)!;
+
   const handleChange = useCallback(async (files: File[]) => {
+    // Upload files to Drupal.
+    // todo: Do clamav check and upload file to ATV, only store file id frontend.
+    // todo: This might need some way to communicate avustus2 schema path to file upload endpoint?
+    const response = await uploadFiles(name, applicationTypeId, token, files)
+
     // Convert to rjfs dataUrl text.
     await Promise.all(files.map(getFileDataURL))
       .then(results => {
         onChange(multiple ? results : results[0])
       })
-  }, [multiple, onChange])
+  }, [multiple, onChange, applicationTypeId, token])
 
   return <HDSFileInput
     id={id}
