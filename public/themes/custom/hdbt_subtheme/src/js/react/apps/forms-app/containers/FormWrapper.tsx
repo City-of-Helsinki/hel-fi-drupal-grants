@@ -72,6 +72,10 @@ const FormWrapper = ({
   const submitData = async (formSubmitEvent: IChangeEvent) => {
     await fetch(`/en/application/${applicationNumber}`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': data.token
+      },
       body: JSON.stringify(formSubmitEvent.formData),
     });
   };
