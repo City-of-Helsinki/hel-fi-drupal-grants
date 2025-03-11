@@ -49,34 +49,33 @@ const extractPath = async (page: Page) => {
 }
 
 /**
- * The hideSlidePopup function.
+ * The acceptCookies function.
  *
- * This function hides the sliding popup (cookie consent)
- * banner by clicking the "Agree" button on it.
+ * This function accepts cookies and hides the cookie banner.
  *
  * @param page
  *  Playwright page object
  */
-const hideSlidePopup = async (page: Page) => {
+const acceptCookies = async (page: Page) => {
   try {
-    const slidingPopup = await page.locator('#sliding-popup');
-    const agreeButton = await page.locator('.agree-button.eu-cookie-compliance-default-button');
+    const cookieBanner = await page.locator('.hds-cc--banner');
+    const agreeButton = await page.locator('.hds-cc__all-cookies-button');
 
-    if (!slidingPopup || !agreeButton) {
-      logger('Sliding popup already closed for this session.');
+    if (!cookieBanner || !agreeButton) {
+      logger('Cookie banner is already closed for this session.');
       return;
     }
 
     await Promise.all([
-      slidingPopup.waitFor({state: 'visible', timeout: 1000}),
-      agreeButton.waitFor({state: 'visible', timeout: 1000}),
+      cookieBanner.waitFor({state: 'visible', timeout: 500}),
+      agreeButton.waitFor({state: 'visible', timeout: 500}),
       agreeButton.click(),
     ]).then(async () => {
-      logger('Closed sliding popup.')
+      logger('Accepted cookies.')
     });
   }
   catch (error) {
-    logger('Sliding popup already closed for this session.')
+    logger('Cookie banner is already closed for this session.');
   }
 }
 
@@ -188,9 +187,8 @@ export {
   extractPath,
   getApplicationNumberFromBreadCrumb,
   getFulfilledResponse,
-  hideSlidePopup,
+  acceptCookies,
   logCurrentUrl,
   slowLocator,
   waitForTextWithInterval,
 };
-
