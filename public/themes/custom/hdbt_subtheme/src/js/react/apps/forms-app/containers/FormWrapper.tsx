@@ -25,7 +25,7 @@ const transformSchema = (data: any) => {
 
   const transformedProperties: any = {};
 
-  Object.entries(properties).forEach((property: any, index: number) => {
+  Object.entries(properties).forEach((property: any) => {
     const [key, value] = property;
     transformedProperties[key] = {
       ...value,

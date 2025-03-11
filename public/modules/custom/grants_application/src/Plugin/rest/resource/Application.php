@@ -74,18 +74,18 @@ final class Application extends ResourceBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
+    return new self(
       $configuration,
       $plugin_id,
       $plugin_definition,
       $container->getParameter('serializer.formats'),
-      $container->get('logger.factory')->get("logger.channel.grants_application"),
-      $container->get('Drupal\grants_application\Form\FormSettingsService'),
-      $container->get('Drupal\grants_application\User\UserInformationService'),
-      $container->get('Drupal\grants_application\Atv\HelfiAtvService'),
-      $container->get('uuid'),
-      $container->get('Drupal\grants_application\Form\ApplicationNumberService'),
+      $container->get('logger.channel.grants_application'),
+      $container->get(FormSettingsService::class),
+      $container->get(UserInformationService::class),
+      $container->get(HelfiAtvService::class),
+      $container->get(UuidInterface::class),
+      $container->get(ApplicationNumberService::class),
     );
   }
 
