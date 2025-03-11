@@ -159,13 +159,15 @@ const waitForTextWithInterval = async (
  * The getFulfilledResponse function.
  *
  * Wait for a fulfilled response from a request.
+ * Make sure the fulfilled response is not from
+ * cookie banner or cookie monster.
  *
  * @param page
  *  Playwright page object
  */
 async function getFulfilledResponse(page: Page) {
   const response = await page.waitForResponse(async (response) => {
-    return response.ok();
+    return response.ok() && !response.url().includes('api/cookie-banner');
   });
 
   return response.json();
