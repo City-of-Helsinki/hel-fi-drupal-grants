@@ -55,9 +55,9 @@ export default defineConfig({
     {
       name: 'profiles',
       testMatch: [
-        '/profiles/private_person.ts',
         '/profiles/unregistered_community.ts',
         '/profiles/registered_community.ts',
+        '/profiles/private_person.ts',
       ],
       dependencies: ['auth-setup']
     },
