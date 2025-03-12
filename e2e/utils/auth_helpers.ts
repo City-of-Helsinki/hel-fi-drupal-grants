@@ -24,6 +24,12 @@ const AUTH_FILE_PATH = '.auth/user.json';
  *   or selecting an existing one.
  */
 const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
+  // Before selecting the role, make an attempt to accept the cookies.
+  logger(`Make an attempt to accept the cookies.`);
+  await page.goto("/fi");
+  await acceptCookies(page);
+
+  // Check login state and login.
   await checkLoginStateAndLogin(page);
   await page.goto("/fi/asiointirooli-valtuutus");
   await logCurrentUrl(page);
@@ -114,7 +120,6 @@ const login = async (page: Page, SSN?: string) => {
   logger('Logging in...');
   await page.goto('/fi/user/login');
   await logCurrentUrl(page);
-  await acceptCookies(page);
   await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
   await page.locator("#fakevetuma2").click()
   await page.locator("#hetu_input").fill(SSN ?? process.env.TEST_USER_SSN ?? '');
