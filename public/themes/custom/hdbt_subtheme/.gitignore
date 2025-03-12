@@ -9,3 +9,5 @@ src/icons/hds
 .DS_Store
 .idea
 dist/**/*.map
+
+coverage

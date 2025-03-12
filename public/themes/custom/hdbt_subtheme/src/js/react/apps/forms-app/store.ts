@@ -37,7 +37,7 @@ type GrantsProfile = {
   businessId: string;
 };
 
-type FormState = {
+export type FormState = {
   currentStep: [number, FormStep];
   errors: Array<[number, RJSFValidationError]>;
   reachedStep: number;

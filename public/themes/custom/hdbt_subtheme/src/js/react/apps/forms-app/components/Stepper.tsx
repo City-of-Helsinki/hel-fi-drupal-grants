@@ -4,7 +4,7 @@ import React, { MouseEvent, RefObject, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import { FormStep, formStepsAtom, getCurrentStepAtom, getErrorPageIndicesAtom, setStepAtom } from '../store';
 
-const transformSteps = (
+export const transformSteps = (
   steps: Map<number, FormStep>|undefined,
   errorIndices: number[] = [],
 ) => {
@@ -31,7 +31,7 @@ export const Stepper = ({
   const transformedSteps = transformSteps(steps, errorPageIndices);
 
   useEffect(() => {
-    if (divRef.current) {
+    if (divRef?.current?.scrollIntoView) {
       divRef.current.scrollIntoView();
     }
   }, [divRef, currentIndex])
