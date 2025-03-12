@@ -1,7 +1,7 @@
 import {Page} from '@playwright/test';
 import {logger} from "./logger";
 import {existsSync, readFileSync} from 'fs';
-import {logCurrentUrl} from "./helpers";
+import {acceptCookies, logCurrentUrl} from "./helpers";
 import {chmodSync} from "node:fs";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON";
@@ -212,11 +212,16 @@ const sessionIsValid = async (page: Page): Promise<boolean> => {
   await logCurrentUrl(page);
   const actualUrl = page.url();
 
-  if (!actualUrl.includes('/asiointirooli-valtuutus') &&
-      !actualUrl.includes('/oma-asiointi/hakuprofiili')) {
+  if (
+    !actualUrl.includes('/asiointirooli-valtuutus') &&
+    !actualUrl.includes('/oma-asiointi/hakuprofiili')
+  ) {
     logger('Session is not valid.');
     return false;
   }
+
+  // Accept the cookies after verifying the session being valid.
+  await acceptCookies(page);
 
   logger('Session is valid.');
   return true;

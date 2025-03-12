@@ -73,9 +73,6 @@ const fillGrantsFormPage = async (
   const applicationId = await getApplicationNumberFromBreadCrumb(page);
   logger(`Filling form with application ID: ${applicationId}.`);
 
-  // Accept cookies.
-  await acceptCookies(page);
-
   // Loop form pages.
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
     logger('Form page:', formPageKey);
