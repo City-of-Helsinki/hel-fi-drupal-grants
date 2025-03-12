@@ -114,6 +114,7 @@ const login = async (page: Page, SSN?: string) => {
   logger('Logging in...');
   await page.goto('/fi/user/login');
   await logCurrentUrl(page);
+  await acceptCookies(page);
   await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
   await page.locator("#fakevetuma2").click()
   await page.locator("#hetu_input").fill(SSN ?? process.env.TEST_USER_SSN ?? '');
@@ -121,7 +122,6 @@ const login = async (page: Page, SSN?: string) => {
   await page.locator('#tunnistaudu').click();
   await page.locator('#continue-button').click();
   await page.waitForSelector('text="Helsingin kaupunki"');
-  await acceptCookies(page);
   logger('User logged in.')
 }
 
