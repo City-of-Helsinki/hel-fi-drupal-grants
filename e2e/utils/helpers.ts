@@ -1,6 +1,16 @@
 import {Locator, Page} from "@playwright/test";
 import {logger} from "./logger";
 
+declare global {
+  interface Window {
+    hds?: {
+      cookieConsent?: {
+        setGroupsStatusToAccepted: (categories: string[]) => boolean;
+      };
+    };
+  }
+}
+
 /**
  * The slowLocator function.
  *
@@ -51,32 +61,24 @@ const extractPath = async (page: Page) => {
 /**
  * The acceptCookies function.
  *
- * This function accepts cookies and hides the cookie banner.
+ * This function accepts the site wide cookies.
  *
  * @param page
- *  Playwright page object
+ *   Playwright page object
  */
 const acceptCookies = async (page: Page) => {
-  try {
-    const cookieBanner = await page.locator('.hds-cc--banner');
-    const agreeButton = await page.locator('.hds-cc__all-cookies-button');
-
-    if (!cookieBanner || !agreeButton) {
-      logger('Cookie banner is already closed for this session.');
-      return;
+  await page.evaluate(() => {
+    if (window.hds && window.hds.cookieConsent) {
+      const categories = ['essential', 'preferences', 'statistics'];
+      const success = window.hds.cookieConsent.setGroupsStatusToAccepted(categories);
+      if (!success) {
+        logger(`Warning! Could not accept the following cookie categories: ${categories.join(', ')}`);
+      }
     }
-
-    await Promise.all([
-      cookieBanner.waitFor({state: 'visible', timeout: 500}),
-      agreeButton.waitFor({state: 'visible', timeout: 500}),
-      agreeButton.click(),
-    ]).then(async () => {
-      logger('Accepted cookies.')
-    });
-  }
-  catch (error) {
-    logger('Cookie banner is already closed for this session.');
-  }
+    else {
+      logger('Warning! Could not accept HDS cookies.');
+    }
+  });
 }
 
 /**
@@ -186,10 +188,10 @@ const logCurrentUrl = async (page: Page) => {
 }
 
 export {
+  acceptCookies,
   extractPath,
   getApplicationNumberFromBreadCrumb,
   getFulfilledResponse,
-  acceptCookies,
   logCurrentUrl,
   slowLocator,
   waitForTextWithInterval,

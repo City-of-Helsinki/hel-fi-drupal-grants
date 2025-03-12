@@ -221,9 +221,6 @@ const sessionIsValid = async (page: Page): Promise<boolean> => {
     return false;
   }
 
-  // Accept the cookies after verifying the session being valid.
-  await acceptCookies(page);
-
   logger('Session is valid.');
   return true;
 }

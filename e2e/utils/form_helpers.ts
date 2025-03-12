@@ -1,6 +1,5 @@
 import {logger} from "./logger";
 import {
-  acceptCookies,
   extractPath,
   waitForTextWithInterval,
   getApplicationNumberFromBreadCrumb,
@@ -177,9 +176,6 @@ const fillProfileForm = async (
   // Make sure we reached the correct profile form.
   await expect(page.locator('body'), 'Reached the wrong profile form.').toHaveClass(new RegExp(`\\b${formClass}\\b`));
   logger(`Reached the profile form: ${formClass}.`);
-
-  // Accept cookies.
-  await acceptCookies(page);
 
   // Loop form pages.
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
