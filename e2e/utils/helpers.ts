@@ -67,20 +67,45 @@ const extractPath = async (page: Page) => {
  *   Playwright page object
  */
 const acceptCookies = async (page: Page) => {
-  const result = await page.evaluate(() => {
-    if (window.hds && window.hds.cookieConsent) {
-      const categories = ['essential', 'preferences', 'statistics'];
-      const success = window.hds.cookieConsent.setGroupsStatusToAccepted(categories);
-      return { success, categories, hdsExists: true };
-    } else {
-      return { success: false, categories: [], hdsExists: false };
-    }
-  });
+  const maxRetries = 5;
+  const delayBetweenRetries = 500; // 500ms
 
-  if (!result.hdsExists) {
-    logger('Warning! Could not accept HDS cookies.');
-  } else if (!result.success) {
-    logger(`Warning! Could not accept the following cookie categories: ${result.categories.join(', ')}`);
+  let result: {
+    success?: boolean;
+    categories?: string[];
+    hdsExists?: boolean
+  } = {};
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    result = await page.evaluate(() => {
+      if (window.hds?.cookieConsent) {
+        const categories = ['essential', 'preferences', 'statistics'];
+        const success = window.hds.cookieConsent.setGroupsStatusToAccepted(categories);
+        return { success, categories, hdsExists: true };
+      }
+      return { success: false, categories: [], hdsExists: false };
+    }) || {};
+
+    // Exit loop if cookies are set.
+    if (result.hdsExists && result.success) {
+      const categories = result?.categories ?? [];
+      logger?.(`Accepted the following cookie categories: ${categories.join(', ')}`);
+      break;
+    }
+
+    if (attempt < maxRetries) {
+      logger?.(`Attempt ${attempt} failed. Retrying in ${delayBetweenRetries}ms...`);
+      await page.waitForTimeout(delayBetweenRetries);
+    }
+  }
+
+  // Set warnings to make the issue with cookies more prominent.
+  if (!result?.hdsExists) {
+    logger?.('Warning! Could not accept HDS cookies.');
+  }
+  else if (!result?.success) {
+    const categories = result?.categories ?? [];
+    logger?.(`Warning! Could not accept the following cookie categories: ${categories.join(', ')}`);
   }
 }
 
