@@ -121,6 +121,7 @@ const login = async (page: Page, SSN?: string) => {
   await page.locator('#tunnistaudu').click();
   await page.locator('#continue-button').click();
   await page.waitForSelector('text="Helsingin kaupunki"');
+  await acceptCookies(page);
   logger('User logged in.')
 }
 
