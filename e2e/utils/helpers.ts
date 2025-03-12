@@ -67,18 +67,21 @@ const extractPath = async (page: Page) => {
  *   Playwright page object
  */
 const acceptCookies = async (page: Page) => {
-  await page.evaluate(() => {
+  const result = await page.evaluate(() => {
     if (window.hds && window.hds.cookieConsent) {
       const categories = ['essential', 'preferences', 'statistics'];
       const success = window.hds.cookieConsent.setGroupsStatusToAccepted(categories);
-      if (!success) {
-        logger(`Warning! Could not accept the following cookie categories: ${categories.join(', ')}`);
-      }
-    }
-    else {
-      logger('Warning! Could not accept HDS cookies.');
+      return { success, categories, hdsExists: true };
+    } else {
+      return { success: false, categories: [], hdsExists: false };
     }
   });
+
+  if (!result.hdsExists) {
+    logger('Warning! Could not accept HDS cookies.');
+  } else if (!result.success) {
+    logger(`Warning! Could not accept the following cookie categories: ${result.categories.join(', ')}`);
+  }
 }
 
 /**
