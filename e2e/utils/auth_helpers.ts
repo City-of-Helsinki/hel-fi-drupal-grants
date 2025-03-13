@@ -24,11 +24,6 @@ const AUTH_FILE_PATH = '.auth/user.json';
  *   or selecting an existing one.
  */
 const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
-  // Before selecting the role, make an attempt to accept the cookies.
-  logger(`Make an attempt to accept the cookies.`);
-  await page.goto("/fi");
-  await acceptCookies(page);
-
   // Check login state and login.
   await checkLoginStateAndLogin(page);
   await page.goto("/fi/asiointirooli-valtuutus");
@@ -117,8 +112,10 @@ const selectPrivatePersonRole = async (page: Page) => {
  *   A users SSN (social security number).
  */
 const login = async (page: Page, SSN?: string) => {
-  logger('Logging in...');
   await page.goto('/fi/user/login');
+  logger(`Make an attempt to accept the cookies.`);
+  await acceptCookies(page);
+  logger('Logging in...');
   await logCurrentUrl(page);
   await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
   await page.locator("#fakevetuma2").click()
@@ -186,6 +183,7 @@ const getSessionCookie = (): boolean | any => {
   logger('Getting session cookie...');
   const storageState = JSON.parse(readFileSync(AUTH_FILE_PATH, 'utf8'));
   const sessionCookie = storageState.cookies.find((c: { name: string; }) => c.name.startsWith('SSESS'));
+  const hdsCookie = storageState.cookies.find((c: { name: string}) => c.name.startsWith('helfi-cookie-consents'))
 
   if (!sessionCookie) {
     logger('Session cookie not found.');
@@ -193,7 +191,10 @@ const getSessionCookie = (): boolean | any => {
   }
 
   logger('Session cookie found.');
-  return sessionCookie;
+  return {
+    'sessionCookie': sessionCookie,
+    ...(hdsCookie ? { hdsCookie: hdsCookie } : {}),
+  };
 }
 
 /**
@@ -254,15 +255,15 @@ const checkLoginStateAndLogin = async (page: Page) => {
   }
 
   // If no session cookie exists, login and save state.
-  const sessionCookie = getSessionCookie();
-  if (!sessionCookie) {
+  const cookies = getSessionCookie();
+  if (!cookies.sessionCookie) {
     await loginAndSaveStorageState(page);
     return;
   }
 
   // Add the found cookie to page context.
   logger('Adding session cookie to context.');
-  await page.context().addCookies([sessionCookie]);
+  await page.context().addCookies(Object.values(cookies));
 
   // If the session isn't valid, login and save state.
   const hasValidSession = await sessionIsValid(page);
@@ -274,6 +275,6 @@ const checkLoginStateAndLogin = async (page: Page) => {
 
 export {
   Role,
+  checkLoginStateAndLogin,
   selectRole,
-  checkLoginStateAndLogin
 }
