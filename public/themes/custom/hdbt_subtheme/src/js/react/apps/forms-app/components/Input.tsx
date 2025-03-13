@@ -7,10 +7,10 @@ import { getAccountsAtom, getAddressesAtom, getOfficialsAtom } from '../store';
 /**
  * Transform raw errors to a more readable format.
  *
- * @param {array|undefned} rawErrors
+ * @param {array|undefined} rawErrors
  * @returns {string} - Resulting error message
  */
-const formatErrors = (rawErrors: string[]|undefined) => {
+export const formatErrors = (rawErrors: string[]|undefined) => {
   if (!rawErrors) {
     return undefined;
   }

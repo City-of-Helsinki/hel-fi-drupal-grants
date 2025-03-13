@@ -4,6 +4,8 @@ namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Utility\Xss;
 use Drupal\Component\Uuid\UuidInterface;
+use Drupal\Core\Access\CsrfTokenGenerator;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Form\ApplicationNumberService;
@@ -12,6 +14,7 @@ use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\rest\Attribute\RestResource;
 use Drupal\rest\Plugin\ResourceBase;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -55,6 +58,10 @@ final class Application extends ResourceBase {
    *   The uuid service.
    * @param \Drupal\grants_application\Form\ApplicationNumberService $applicationNumberService
    *   The application number service.
+   * @param \Drupal\Core\Access\CsrfTokenGenerator $csrfTokenGenerator
+   *   The csrf token generator.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   *   The language manager.
    */
   public function __construct(
     array $configuration,
@@ -67,6 +74,8 @@ final class Application extends ResourceBase {
     private HelfiAtvService $atvService,
     private UuidInterface $uuid,
     private ApplicationNumberService $applicationNumberService,
+    private CsrfTokenGenerator $csrfTokenGenerator,
+    private LanguageManagerInterface $languageManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -74,18 +83,20 @@ final class Application extends ResourceBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
+    return new self(
       $configuration,
       $plugin_id,
       $plugin_definition,
       $container->getParameter('serializer.formats'),
-      $container->get('logger.factory')->get("logger.channel.grants_application"),
-      $container->get('Drupal\grants_application\Form\FormSettingsService'),
-      $container->get('Drupal\grants_application\User\UserInformationService'),
-      $container->get('Drupal\grants_application\Atv\HelfiAtvService'),
-      $container->get('uuid'),
-      $container->get('Drupal\grants_application\Form\ApplicationNumberService'),
+      $container->get('logger.channel.grants_application'),
+      $container->get(FormSettingsService::class),
+      $container->get(UserInformationService::class),
+      $container->get(HelfiAtvService::class),
+      $container->get(UuidInterface::class),
+      $container->get(ApplicationNumberService::class),
+      $container->get(CsrfTokenGenerator::class),
+      $container->get(LanguageManagerInterface::class),
     );
   }
 
@@ -124,6 +135,7 @@ final class Application extends ResourceBase {
       'form_data' => [],
       'grants_profile' => [],
       'user_data' => [],
+      'token' => $this->csrfTokenGenerator->get('rest'),
       ...$settings->toArray(),
     ];
 
@@ -173,13 +185,15 @@ final class Application extends ResourceBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The json response.
    */
-  public function post(Request $request): JsonResponse {
+  public function post(
+    int $application_type_id,
+    Request $request,
+  ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);
     $env = Helper::getAppEnv();
 
     [
-      'application_type_id' => $application_type_id,
       'application_number' => $application_number,
       'langcode' => $langcode,
       'form_data' => $form_data,
@@ -216,7 +230,7 @@ final class Application extends ResourceBase {
     $application_name = $settings->toArray()['settings']['title'];
     $application_title = $settings->toArray()['settings']['title'];
     $application_type = $settings->toArray()['settings']['application_type'];
-    $langcode = $langcode;
+    $langcode = $this->languageManager->getCurrentLanguage()->getId();
     $sub = $user_data['sub'];
 
     $document = $this->atvService->createAtvDocument(
@@ -234,12 +248,12 @@ final class Application extends ResourceBase {
     );
 
     // @todo Better sanitation.
-    $document->setContent(json_decode(Xss::filter(json_encode($form_data)), TRUE));
+    $document->setContent(json_decode(Xss::filter(json_encode($form_data ?? [])), TRUE));
 
     try {
       $this->atvService->saveNewDocument($document);
     }
-    catch (\Exception $e) {
+    catch (\Exception | GuzzleException $e) {
       // Saving failed.
       return new JsonResponse([], 500);
     }

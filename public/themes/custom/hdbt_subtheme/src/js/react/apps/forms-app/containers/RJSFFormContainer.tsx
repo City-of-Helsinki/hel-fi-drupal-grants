@@ -4,6 +4,7 @@ import validator from '@rjsf/validator-ajv8';
 import React, { createRef, useCallback, useState } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
+import { FileInput } from '../components/FileInput';
 import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
 import { AddButtonTemplate, ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
 import { StaticStepsContainer } from './StaticStepsContainer';
@@ -23,6 +24,7 @@ const widgets: RegistryWidgetsType = {
   SelectWidget,
   TextareaWidget: TextArea,
   TextWidget: TextInput,
+  FileWidget: FileInput,
 };
 
 type RJSFFormContainerProps = {

@@ -1,0 +1,6 @@
+helfi_av.settings:
+  type: config_entity
+  mapping:
+    base_url:
+      label: 'AV service base url.'
+      type: string

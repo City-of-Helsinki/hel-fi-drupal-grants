@@ -5,3 +5,12 @@ helfi_grants.forms_app:
     _title: ''
   requirements:
     _role: helsinkiprofiili
+
+helfi_grants.forms_app_upload:
+  path: '/application/{id}/upload'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::uploadFile'
+    _title: ''
+  methods: [POST]
+  requirements:
+    _role: helsinkiprofiili
