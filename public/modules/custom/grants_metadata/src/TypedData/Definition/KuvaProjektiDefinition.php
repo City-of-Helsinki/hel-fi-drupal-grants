@@ -7,7 +7,7 @@ use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\ListDataDefinition;
 use Drupal\grants_budget_components\TypedData\Definition\GrantsBudgetInfoDefinition;
-use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
+use Drupal\grants_metadata\ConvertHelper;
 
 /**
  * Define Yleisavustushakemus data.
@@ -89,7 +89,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffPeopleFulltime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('formSettings', [
@@ -116,7 +116,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'formElement' => 'osa_aikainen_henkilosto',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ]);
 
@@ -128,7 +128,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffPeopleVoluntary',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -144,7 +144,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffManyearsFulltime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [
@@ -164,7 +164,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffManyearsParttime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [
@@ -281,7 +281,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'eventDaysCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -299,7 +299,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'performanceCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -315,7 +315,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'performanceCountAll',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -333,7 +333,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'exhibitionCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -349,7 +349,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'exhibitionCountAll',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -367,7 +367,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'workshopCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -383,7 +383,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'workshopCountAll',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -400,7 +400,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'firstPublicPerformancesCount',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -417,7 +417,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'premiereCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -465,7 +465,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'eventsVisitorsHkiTotal',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -482,7 +482,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'eventsVisitorsTotal',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -608,7 +608,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersPersonLocal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -624,7 +624,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersPersonGlobal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -640,7 +640,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersCommunityLocal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -656,7 +656,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersCommunityGlobal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -727,7 +727,7 @@ class KuvaProjektiDefinition extends ComplexDataDefinitionBase {
 
     foreach ($subventions as $subventionData) {
       if (isset($subventionData['amount'])) {
-        $subventionsTotalAmount += GrantsHandler::convertToFloat($subventionData['amount']);
+        $subventionsTotalAmount += ConvertHelper::convertToFloat($subventionData['amount']);
       }
     }
 

@@ -6,8 +6,8 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\ListInterface;
 use Drupal\Core\TypedData\Plugin\DataType\Map;
-use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
 use Drupal\grants_metadata\AtvSchema;
+use Drupal\grants_metadata\ConvertHelper;
 use Drupal\grants_metadata\InputmaskHandler;
 
 /**
@@ -55,7 +55,7 @@ class GrantsBudgetComponentService {
           $value = '';
         }
         else {
-          $value = (string) GrantsHandler::convertToFloat($value);
+          $value = (string) ConvertHelper::convertToFloat($value);
         }
 
         $items[] = [
@@ -98,7 +98,7 @@ class GrantsBudgetComponentService {
         $valueToSave = NULL;
       }
       else {
-        $valueToSave = (string) GrantsHandler::convertToFloat($value);
+        $valueToSave = (string) ConvertHelper::convertToFloat($value);
       }
 
       $itemValues = [
@@ -144,7 +144,7 @@ class GrantsBudgetComponentService {
       $groupName = $parent['costGroupName'] ?? $parent['incomeGroupName'];
       if (!empty($parent) && isset($parent[$pathLast])) {
         $retVal[$groupName] = array_map(function ($e) {
-          $value = GrantsHandler::convertToFloat($e['value']);
+          $value = ConvertHelper::convertToFloat($e['value']);
 
           if ($value !== NULL) {
             $value = number_format(
@@ -220,7 +220,7 @@ class GrantsBudgetComponentService {
       return $value;
     }
 
-    $floatValue = (float) GrantsHandler::convertToFloat($value);
+    $floatValue = (float) ConvertHelper::convertToFloat($value);
     return number_format(
       $floatValue,
       2,
