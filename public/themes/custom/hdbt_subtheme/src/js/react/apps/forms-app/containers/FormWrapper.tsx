@@ -57,7 +57,7 @@ const transformData = (data: any) => {
   } = schema;
   const transformedProperties: any = {};
 
-  Object.entries(properties).forEach((property: any, index: number) => {
+  Object.entries(properties).forEach((property: any) => {
     const [key, value] = property;
     transformedProperties[key] = {
       ...value,
@@ -121,6 +121,10 @@ const FormWrapper = ({
   const submitData = async (formSubmitEvent: IChangeEvent) => {
     await fetch(`/en/application/${applicationNumber}`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': data.token
+      },
       body: JSON.stringify(formSubmitEvent.formData),
     });
   };
