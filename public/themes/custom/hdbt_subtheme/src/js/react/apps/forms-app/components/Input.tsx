@@ -7,8 +7,8 @@ import { getAccountsAtom, getAddressesAtom, getOfficialsAtom } from '../store';
 /**
  * Transform raw errors to a more readable format.
  *
- * @param {array|undefined} rawErrors
- * @returns {string} - Resulting error message
+ * @param {array|undefned} rawErrors - Errors from RJSF form
+ * @return {string} - Resulting error message
  */
 export const formatErrors = (rawErrors: string[]|undefined) => {
   if (!rawErrors) {

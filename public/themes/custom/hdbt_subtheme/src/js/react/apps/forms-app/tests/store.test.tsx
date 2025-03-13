@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { useAtomValue } from 'jotai';
 import { getFormConfigAtom } from '../store';
 

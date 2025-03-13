@@ -2,7 +2,7 @@
 /**
  * Initializes IndexedDB for storing form state.
  *
- * @returns {Promise<boolean>} - A promise that resolves to true if IndexedDB
+ * @return {Promise<boolean>} - A promise that resolves to true if IndexedDB
  * is initialized successfully, false otherwise.
  */
 export const initDB = (): Promise<boolean> => new Promise((resolve) => {
@@ -17,7 +17,6 @@ export const initDB = (): Promise<boolean> => new Promise((resolve) => {
   }
 
   request.onsuccess = () => {
-    const db = request.result;
     resolve(true);
   };
 
@@ -30,7 +29,7 @@ export const initDB = (): Promise<boolean> => new Promise((resolve) => {
    * Stores given data in IndexedDB.
    *
    * @param {object} data - Form state data to be stored in IndexedDB.
-   * @returns {Promise<object|string|null>} - A promise that resolves to the stored data
+   * @return {Promise<object|string|null>} - A promise that resolves to the stored data
    * on success, error message on failure, or null if request errors.
    */
 export const addData = <T>(data: T): Promise<T|string|null> => new Promise((resolve) => {

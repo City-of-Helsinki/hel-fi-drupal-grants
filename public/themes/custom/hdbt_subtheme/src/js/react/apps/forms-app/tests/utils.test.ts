@@ -1,8 +1,7 @@
-import { describe, expect, test, it } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { addApplicantInfoStep, getIndicesWithErrors, isValidFormResponse, keyErrorsByStep } from '../utils';
 import { testErrors, testKeyedErrors, testSteps } from '../testutils/Data';
 import { communitySettings } from '../formConstants';
-import { ApplicantInfo } from '../components/ApplicantInfo';
 
 describe('Utils.ts', () => {
   test('getIndicesWithErrors', () => {
@@ -24,7 +23,7 @@ describe('Utils.ts', () => {
 
   test('addApplicantInfoStep', () => {
     const [rootProperty, definition, uiSchemaAdditions] = communitySettings;
-    const result = addApplicantInfoStep({});
+    const result = addApplicantInfoStep({}, {}, {business_id: '123'});
 
     expect(result[0]).toEqual({
       definitions: {

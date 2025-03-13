@@ -5,15 +5,17 @@ export const testErrors: RJSFValidationError[] = [
     message: 'Error 1',
     schemaPath: 'step-1',
     property: '.step-1.random-string',
+    stack: '',
   },
   {
     message: 'Error 2',
     schemaPath: 'step-2',
     property: '.step-2.abstract-string',
+    stack: '',
   }
 ];
 
-export const testKeyedErrors = [
+export const testKeyedErrors: Array<[number, RJSFValidationError]> = [
   [0, testErrors[0]],
   [1, testErrors[1]],
 ];

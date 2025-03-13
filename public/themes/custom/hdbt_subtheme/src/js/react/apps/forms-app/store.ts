@@ -1,8 +1,6 @@
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { atom } from 'jotai';
 import { keyErrorsByStep } from './utils';
-import { resolve } from 'path';
-import { initDB } from './db';
 
 export type FormStep = {
   id: string;

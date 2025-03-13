@@ -1,4 +1,4 @@
-import { RJSFSchema, UiSchema } from '@rjsf/utils';
+import { UiSchema } from '@rjsf/utils';
 import { JSONSchema7Definition, JSONSchema7TypeName } from 'json-schema';
 
 const objectType: JSONSchema7TypeName = 'object';

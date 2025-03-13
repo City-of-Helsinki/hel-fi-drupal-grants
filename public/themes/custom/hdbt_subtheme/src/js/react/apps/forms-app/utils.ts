@@ -1,6 +1,6 @@
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { FormStep } from './store';
-import { communitySettings, privatePersonSettings } from './formConstants';
+import { communitySettings } from './formConstants';
 
 const regex = /^.([^.]+)/;
 
@@ -76,19 +76,18 @@ export const keyErrorsByStep = (
  *
  * @param {Object} data - Server response
  *
- * @return {[boolean, string|null]} - [isValid, message]
+ * @return {Array} - [isValid, message]
  */
-export const isValidFormResponse = (data: Object): [boolean, string|undefined] => {
-  return [true, undefined];
-};
+export const isValidFormResponse = (data: Object): [boolean, string|undefined] => [true, undefined];
 
 /**
  * Add static applicant info step to form schema.
  *
  * @param {Object} schema - Form schema
+ * @param {Object} uiSchema - Form Ui Schema
  * @param {Object} grantsProfile - Grants profile
  *
- * @return Array - Resulting forma and ui schemas
+ * @return {Array} - Resulting forma and ui schemas
  */
 export const addApplicantInfoStep = (
   schema: RJSFSchema,

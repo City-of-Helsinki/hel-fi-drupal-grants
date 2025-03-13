@@ -1,9 +1,11 @@
 import Form, { IChangeEvent } from '@rjsf/core';
 import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
-import React, { createRef, useCallback, useState } from 'react';
+import React, { createRef, useCallback } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
+import { useDebounceCallback } from 'usehooks-ts';
+
 import { FileInput } from '../components/FileInput';
 import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
 import { AddButtonTemplate, ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
@@ -13,8 +15,7 @@ import { Stepper } from '../components/Stepper';
 import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
 import { ErrorsList } from '../components/ErrorsList';
-import { addData, getData } from '../db';
-import { useDebounceCallback } from 'usehooks-ts';
+import { addData } from '../db';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -38,13 +39,13 @@ type RJSFFormContainerProps = {
  * Container for the RJSF form.
  *
  * @typedef {object} RJSFFormContainerProps
- * @property {object} initialFormData - The initial data for the form.
- * @property {object} schema - The schema for the form.
- * @property {function} submitData - The function to call when the form is submitted.
- * @property {object} uiSchema - The uiSchema for the form.
+ * @prop {object} initialFormData - The initial data for the form.
+ * @prop {object} schema - The schema for the form.
+ * @prop {function} submitData - The function to call when the form is submitted.
+ * @prop {object} uiSchema - The uiSchema for the form.
  *
- * @param {RJSFFormContainerProps} props
- * @returns {JSX.Element}
+ * @param {RJSFFormContainerProps} props - JSX props
+ * @return {JSX.Element} - Element that renders
  */
 export const RJSFFormContainer = ({
   initialFormData,

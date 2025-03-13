@@ -1,5 +1,6 @@
 import { useAtomValue } from 'jotai';
 import { getCurrentStepAtom } from '../store';
+import { PreviewContainer } from './PreviewContainer';
 
 export const StaticStepsContainer = ({
   formRef
@@ -13,11 +14,7 @@ export const StaticStepsContainer = ({
   switch(currentStep.id) {
     case 'preview':
       return (
-        <div>
-          <pre>
-            {JSON.stringify(formRef.current.state.formData)}
-          </pre>
-        </div>
+        <PreviewContainer />
       );
     case 'ready':
       return (

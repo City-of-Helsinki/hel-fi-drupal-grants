@@ -2,11 +2,11 @@
 import useSWRImmutable from 'swr/immutable'
 import { useSetAtom } from 'jotai';
 import { IChangeEvent } from '@rjsf/core';
+import { LoadingSpinner } from 'hds-react';
+import { Suspense } from 'react';
 import { RJSFFormContainer } from './RJSFFormContainer';
 import { initializeFormAtom } from '../store';
-import { LoadingSpinner } from 'hds-react';
 import { addApplicantInfoStep, isValidFormResponse } from '../utils';
-import { Suspense, useState } from 'react';
 import { getData, initDB } from '../db';
 
 /**
@@ -15,11 +15,15 @@ import { getData, initDB } from '../db';
  * Checks IndexedDB for existing form data.
  *
  * @param {string} id - The form id
- * @returns {Promise<object>} - Form settings and existing cached form data
+ * @return {Promise<object>} - Form settings and existing cached form data
  */
 async function fetchFormData(id: string) {
-  const dbInitialized = await initDB();
-  const formConfigResponse = await fetch(`/en/application/${id}`);
+  await initDB();
+  const formConfigResponse = await fetch(`/application/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
   const persistedData = await getData();
 
   if (!formConfigResponse.ok) {
@@ -41,7 +45,7 @@ async function fetchFormData(id: string) {
  * - Add _isSection property to each form section
  *
  * @param {object} data - Raw data from server
- * @returns {object} - Resulting data
+ * @return {object} - Resulting data
  */
 const transformData = (data: any) => {
   const {
@@ -94,10 +98,10 @@ type FormWrapperProps = {
  * Renders RJSF form.
  *
  * @typedef {object} FormWrapperProps
- * @property {string} applicationNumber
+ * @prop {string} applicationNumber
  *
- * @param {FormWrapperProps} props
- * @returns {JSX.Element}
+ * @param {FormWrapperProps} props - JSX props
+ * @return {JSX.Element} - RJSF form
  */
 const FormWrapper = ({
   applicationNumber,
@@ -109,7 +113,7 @@ const FormWrapper = ({
     return  <LoadingSpinner />
   }
   const [responseValid, errorMessage] = isValidFormResponse(data);
-  if (!responseValid) {
+  if (!responseValid || error) {
     throw new Error(errorMessage);
   }
 

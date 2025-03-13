@@ -1,11 +1,11 @@
-import { describe, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { StepState } from 'hds-react';
 import { TestProvider } from '../../testutils/TestProvider';
 import { formStateAtom, formStepsAtom } from '../../store';
 import { initializeFormState } from '../../testutils/Helpers';
 import { testKeyedErrors, testSteps } from '../../testutils/Data';
 import { Stepper, transformSteps } from '../../components/Stepper';
-import { StepState } from 'hds-react';
 
 describe('Stepper.tsx tests', () => {
   render(
@@ -16,13 +16,14 @@ describe('Stepper.tsx tests', () => {
       })],
       [formStepsAtom, testSteps],
     ]}>
+      {/* @ts-ignore */}
       <Stepper formRef={null} />
     </TestProvider>
   );
 
   it('Renders stepper', () => {
-    expect(screen.getByText(testSteps.get(0)?.label)).toBeTruthy();
-    expect(screen.getByText(testSteps.get(1)?.label)).toBeTruthy();
+    expect(screen.getByText('Step 1')).toBeTruthy();
+    expect(screen.getByText('Step 2')).toBeTruthy();
   })
 
   it('Transforms steps correctly', () => {

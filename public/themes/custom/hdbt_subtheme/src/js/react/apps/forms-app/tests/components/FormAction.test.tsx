@@ -1,4 +1,4 @@
-import { describe, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { TestProvider } from '../../testutils/TestProvider';
 import { FormActions } from '../../components/FormActions';
@@ -16,7 +16,7 @@ describe('FormAction.tsx tests', () => {
       })],
       [formStepsAtom, testSteps]
     ]}>
-      <FormActions />
+      <FormActions validatePartialForm={() => undefined} />
     </TestProvider>
   );
 

@@ -1,8 +1,9 @@
-import { FormState } from 'store';
-import { C } from 'vitest/dist/chunks/reporters.66aFHiyX';
+import { FormState, FormStep } from '../store';
+
+const initialStep: [number, FormStep] = [0, {label: 'Step 1', id: 'step-1'}];
 
 const initialState = {
-  currentStep: [0, {}],
+  currentStep: initialStep,
   errors: [],
   reachedStep: 0,
 };
@@ -10,12 +11,10 @@ const initialState = {
 /**
  * Returns valid state from partial data.
  *
- * @param {object} formState
- * @returns {object} - Resulting valid state.
+ * @param {Object} formState - Partially filled state
+ * @return {Object} - Resulting valid state.
  */
-export const initializeFormState = (formState: FormState) => {
-  return {
+export const initializeFormState = (formState: Partial<FormState>): FormState => ({
     ...initialState,
     ...formState
-  };
-};
+  });

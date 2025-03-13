@@ -11,7 +11,9 @@ initSentry();
 
 const rootSelector: string = 'grants-react-form';
 const rootElement: HTMLElement | null = document.getElementById(rootSelector);
-const { application_number: applicationNumber } = drupalSettings.grants_react_form;
+// @todo expand when more forms are available
+// const { application_number: applicationNumber } = drupalSettings.grants_react_form;
+const applicationNumber = '58';
 
 const showError = false;
 

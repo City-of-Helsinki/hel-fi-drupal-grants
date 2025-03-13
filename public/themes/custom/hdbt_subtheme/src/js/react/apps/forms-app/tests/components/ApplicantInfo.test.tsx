@@ -1,9 +1,9 @@
-import { describe, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { render } from '@testing-library/react';
 import { TestProvider } from '../../testutils/TestProvider';
 import { ApplicantInfo } from '../../components/ApplicantInfo';
 import { initializeFormAtom } from '../../store';
-import { testGrantsProfile, testResponseData } from '../../testutils/Data';
+import { testResponseData } from '../../testutils/Data';
 
 describe('Applicantinfo.tsx', () => {
   render(
@@ -15,16 +15,6 @@ describe('Applicantinfo.tsx', () => {
   )
 
   it('Renders expected info', () => {
-    const {
-      businessId,
-      companyHome,
-      companyHomePage,
-      companyName,
-      companyNameShort,
-      foundingYear,
-      registrationDate,
-    } = testGrantsProfile;
-
     const inputs = document.querySelectorAll('input');
     expect(inputs.length).toEqual(7);
   });

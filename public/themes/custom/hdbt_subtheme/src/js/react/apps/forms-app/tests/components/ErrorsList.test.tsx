@@ -1,12 +1,10 @@
-import { RJSFValidationError } from '@rjsf/utils';
-import { describe, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { render } from '@testing-library/react';
 
 import { TestProvider } from '../../testutils/TestProvider';
-import { formStateAtom, getErrorsAtom } from '../../store';
+import { formStateAtom } from '../../store';
 import { ErrorsList } from '../../components/ErrorsList';
 import { initializeFormState } from '../../testutils/Helpers';
-import { useAtomValue } from 'jotai';
 import { testKeyedErrors } from '../../testutils/Data';
 
 describe('ErrorList.tsx', async () => {

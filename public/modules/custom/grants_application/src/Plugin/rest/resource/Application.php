@@ -30,7 +30,7 @@ use Symfony\Component\Routing\RouteCollection;
   uri_paths: [
     "canonical" => "/application/{application_type_id}/{application_number}",
     "create" => "/application/{application_type_id}",
-    "edit" => "/applicatoin/{application_type_id}",
+    "edit" => "/application/{application_type_id}",
   ]
 )]
 final class Application extends ResourceBase {
