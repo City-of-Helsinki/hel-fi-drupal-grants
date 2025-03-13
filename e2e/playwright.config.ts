@@ -22,7 +22,8 @@ export default defineConfig({
     : 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    actionTimeout: 60 * 1000,
+    /* Wait for 120s. Drop the timeout to 60s when development server cpu and memory issues have been fixed. */
+    actionTimeout: 120 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: process.env.TEST_BASEURL ?? "https://hel-fi-drupal-grant-applications.docker.so",
     ignoreHTTPSErrors: true,
