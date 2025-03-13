@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  logger.channel.helfi_av:
+    parent: logger.channel_base
+    arguments: ['helfi_av']
+
+  Drupal\helfi_av\AntivirusService: ~
