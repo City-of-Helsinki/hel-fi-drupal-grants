@@ -67,45 +67,26 @@ const extractPath = async (page: Page) => {
  *   Playwright page object
  */
 const acceptCookies = async (page: Page) => {
-  const maxRetries = 5;
-  const delayBetweenRetries = 500; // 500ms
+  try {
+    const cookieBanner = await page.locator('.hds-cc--banner');
+    const agreeButton = await page.locator('.hds-cc__all-cookies-button');
 
-  let result: {
-    success?: boolean;
-    categories?: string[];
-    hdsExists?: boolean
-  } = {};
-
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    result = await page.evaluate(() => {
-      if (window.hds?.cookieConsent) {
-        const categories = ['essential', 'preferences', 'statistics'];
-        const success = window.hds.cookieConsent.setGroupsStatusToAccepted(categories);
-        return { success, categories, hdsExists: true };
-      }
-      return { success: false, categories: [], hdsExists: false };
-    }) || {};
-
-    // Exit loop if cookies are set.
-    if (result.hdsExists && result.success) {
-      const categories = result?.categories ?? [];
-      logger?.(`Accepted the following cookie categories: ${categories.join(', ')}`);
-      break;
+    if (!cookieBanner || !agreeButton) {
+      return;
     }
 
-    if (attempt < maxRetries) {
-      logger?.(`Attempt ${attempt} failed. Retrying in ${delayBetweenRetries}ms...`);
-      await page.waitForTimeout(delayBetweenRetries);
-    }
+    // Setting the cookies via "hds.cookieConsent" doesn't work.
+    // Set the cookies manually.
+    await Promise.all([
+      cookieBanner.waitFor({state: 'visible', timeout: 500}),
+      agreeButton.waitFor({state: 'visible', timeout: 500}),
+      agreeButton.click(),
+    ]).then(async () => {
+      logger('Accepted cookies.')
+    });
   }
-
-  // Set warnings to make the issue with cookies more prominent.
-  if (!result?.hdsExists) {
-    logger?.('Warning! Could not accept HDS cookies.');
-  }
-  else if (!result?.success) {
-    const categories = result?.categories ?? [];
-    logger?.(`Warning! Could not accept the following cookie categories: ${categories.join(', ')}`);
+  catch (error) {
+    // Cookies are already accepted.
   }
 }
 
