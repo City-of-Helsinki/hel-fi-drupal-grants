@@ -44,16 +44,16 @@ type FormState = {
 }
 
 type FormConfig = {
-  grantsProfile: GrantsProfile
-  schema: RJSFSchema
-  uiSchema: UiSchema
-  token: string
+  grantsProfile: GrantsProfile;
+  schema: RJSFSchema;
+  uiSchema: UiSchema;
+  token: string;
   settings: {
-    [key: string]: string
+    [key: string]: string;
   }
   translations: {
     [key in 'fi'|'sv'|'en']: {
-      [key: string]: string
+      [key: string]: string;
     }
   }
 }

@@ -84,8 +84,6 @@ export const RJSFFormContainer = ({
     const data = formRef.current?.state.formData;
     formRef.current?.validateForm();
 
-    console.log('data', data)
-
     return formRef.current?.validate(data);
   };
 
