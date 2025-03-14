@@ -82,12 +82,36 @@ const selectRegisteredCommunityRole = async (page: Page) => {
  *   Playwright page object.
  */
 const selectUnregisteredCommunityRole = async (page: Page, mode: Mode) => {
+  const selectLocator = page.locator('#edit-unregistered-community-selection');
+
+  // Wait until the select dropdown is visible and enabled.
+  await selectLocator.waitFor({ state: 'visible', timeout: 1000 });
+
+  // Get all available options for debugging.
+  const availableOptions = await selectLocator.evaluate((select) => {
+    const selectElement = select as HTMLSelectElement;
+    return Array.from(selectElement.options).map(option => option.value);
+  });
+
+  // Handle new unregistered community.
   if (mode === 'new') {
-    await page.locator('#edit-unregistered-community-selection').selectOption('new');
+    if (!availableOptions.includes('new')) {
+      logger('Option "new" not found in select dropdown.');
+      return;
+    }
+    await selectLocator.selectOption('new');
   }
+
+  // Handle existing unregistered community.
   if (mode === 'existing') {
-    await page.locator('#edit-unregistered-community-selection').selectOption({index: 2});
+    if (availableOptions.length < 2) {
+      logger('Option at index 2 does not exist in select dropdown!');
+      logger(`Available options: ${availableOptions}`);
+      return;
+    }
+    await selectLocator.selectOption({ index: 2 });
   }
+
   await page.locator('[name="unregistered_community"]').click();
   logger('Selected unregistered community role.');
 }
