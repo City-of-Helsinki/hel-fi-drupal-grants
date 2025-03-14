@@ -61,34 +61,26 @@ const extractPath = async (page: Page) => {
 /**
  * The acceptCookies function.
  *
- * This function accepts the site wide cookies.
+ * This function accepts the site-wide cookies.
  *
  * @param page
  *   Playwright page object
  */
 const acceptCookies = async (page: Page) => {
   try {
-    const cookieBanner = await page.locator('.hds-cc--banner');
-    const agreeButton = await page.locator('.hds-cc__all-cookies-button');
+    const cookieBanner = page.locator('.hds-cc--banner');
+    const agreeButton = page.locator('.hds-cc__all-cookies-button');
 
-    if (!cookieBanner || !agreeButton) {
-      return;
-    }
-
-    // Setting the cookies via "hds.cookieConsent" doesn't work.
-    // Set the cookies manually.
-    await Promise.all([
-      cookieBanner.waitFor({state: 'visible', timeout: 500}),
-      agreeButton.waitFor({state: 'visible', timeout: 500}),
-      agreeButton.click(),
-    ]).then(async () => {
+    // Check if the banner is visible before interacting with it
+    if (await cookieBanner.isVisible()) {
+      await agreeButton.waitFor({ state: 'visible', timeout: 1000 });
+      await agreeButton.click();
       logger('Accepted cookies.')
-    });
+    }
+  } catch (error) {
+    logger('No cookie banner found or already accepted.')
   }
-  catch (error) {
-    // Cookies are already accepted.
-  }
-}
+};
 
 /**
  * The getApplicationNumberFromBreadCrumb function.
