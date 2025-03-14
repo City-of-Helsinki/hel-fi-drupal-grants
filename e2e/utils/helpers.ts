@@ -1,6 +1,16 @@
 import {Locator, Page} from "@playwright/test";
 import {logger} from "./logger";
 
+declare global {
+  interface Window {
+    hds?: {
+      cookieConsent?: {
+        setGroupsStatusToAccepted: (categories: string[]) => boolean;
+      };
+    };
+  }
+}
+
 /**
  * The slowLocator function.
  *
@@ -49,36 +59,28 @@ const extractPath = async (page: Page) => {
 }
 
 /**
- * The hideSlidePopup function.
+ * The acceptCookies function.
  *
- * This function hides the sliding popup (cookie consent)
- * banner by clicking the "Agree" button on it.
+ * This function accepts the site-wide cookies.
  *
  * @param page
- *  Playwright page object
+ *   Playwright page object
  */
-const hideSlidePopup = async (page: Page) => {
+const acceptCookies = async (page: Page) => {
   try {
-    const slidingPopup = await page.locator('#sliding-popup');
-    const agreeButton = await page.locator('.agree-button.eu-cookie-compliance-default-button');
+    const cookieBanner = page.locator('.hds-cc--banner');
+    const agreeButton = page.locator('.hds-cc__all-cookies-button');
 
-    if (!slidingPopup || !agreeButton) {
-      logger('Sliding popup already closed for this session.');
-      return;
+    // Check if the banner is visible before interacting with it
+    if (await cookieBanner.isVisible()) {
+      await agreeButton.waitFor({ state: 'visible', timeout: 1000 });
+      await agreeButton.click();
+      logger('Accepted cookies.')
     }
-
-    await Promise.all([
-      slidingPopup.waitFor({state: 'visible', timeout: 1000}),
-      agreeButton.waitFor({state: 'visible', timeout: 1000}),
-      agreeButton.click(),
-    ]).then(async () => {
-      logger('Closed sliding popup.')
-    });
+  } catch (error) {
+    logger('No cookie banner found or already accepted.')
   }
-  catch (error) {
-    logger('Sliding popup already closed for this session.')
-  }
-}
+};
 
 /**
  * The getApplicationNumberFromBreadCrumb function.
@@ -160,13 +162,15 @@ const waitForTextWithInterval = async (
  * The getFulfilledResponse function.
  *
  * Wait for a fulfilled response from a request.
+ * Make sure the fulfilled response is not from
+ * cookie banner or cookie monster.
  *
  * @param page
  *  Playwright page object
  */
 async function getFulfilledResponse(page: Page) {
   const response = await page.waitForResponse(async (response) => {
-    return response.ok();
+    return response.ok() && !response.url().includes('api/cookie-banner');
   });
 
   return response.json();
@@ -185,12 +189,11 @@ const logCurrentUrl = async (page: Page) => {
 }
 
 export {
+  acceptCookies,
   extractPath,
   getApplicationNumberFromBreadCrumb,
   getFulfilledResponse,
-  hideSlidePopup,
   logCurrentUrl,
   slowLocator,
   waitForTextWithInterval,
 };
-

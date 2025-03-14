@@ -1,6 +1,5 @@
 import {logger} from "./logger";
 import {
-  hideSlidePopup,
   extractPath,
   waitForTextWithInterval,
   getApplicationNumberFromBreadCrumb,
@@ -72,9 +71,6 @@ const fillGrantsFormPage = async (
   // Log the application ID.
   const applicationId = await getApplicationNumberFromBreadCrumb(page);
   logger(`Filling form with application ID: ${applicationId}.`);
-
-  // Hide the sliding popup.
-  await hideSlidePopup(page);
 
   // Loop form pages.
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
@@ -180,9 +176,6 @@ const fillProfileForm = async (
   // Make sure we reached the correct profile form.
   await expect(page.locator('body'), 'Reached the wrong profile form.').toHaveClass(new RegExp(`\\b${formClass}\\b`));
   logger(`Reached the profile form: ${formClass}.`);
-
-  // Hide the sliding popup.
-  await hideSlidePopup(page);
 
   // Loop form pages.
   for (const [formPageKey, formPageObject] of Object.entries(formDetails.formPages)) {
@@ -437,4 +430,3 @@ export {
   fillHakijanTiedotUnregisteredCommunity,
   fillHakijanTiedotPrivatePerson,
 };
-

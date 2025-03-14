@@ -44,7 +44,7 @@ test.describe(`Testing page: ${scenario.url}`, () => {
 
     await page.getByRole('link', {name: 'Suomi'}).click();
     languageCode = await page.locator('html').getAttribute('lang');
-    await expect(page.getByRole('heading', {name: 'Avustukset'})).toBeVisible();
+    await expect(page.getByRole('heading', {name: 'Avustukset', exact: true})).toBeVisible();
     await expect(languageCode).toBe('fi');
     logger('Language changing validated.');
   });
@@ -60,4 +60,3 @@ test.describe(`Testing page: ${scenario.url}`, () => {
   });
 
 });
-

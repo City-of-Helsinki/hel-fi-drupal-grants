@@ -17,8 +17,10 @@ test.describe('Unregistered Community - Grants Profile', () => {
     profileExists = await isProfileCreated(profileType);
 
     if (profileExists) {
+      logger(`Using existing profile for unregistered community.`);
       await selectRole(page, 'UNREGISTERED_COMMUNITY', 'existing');
     } else {
+      logger(`Using new profile for unregistered community.`);
       await selectRole(page, 'UNREGISTERED_COMMUNITY', 'new');
     }
   });
@@ -74,4 +76,3 @@ test.describe('Unregistered Community - Grants Profile', () => {
   });
 
 });
-

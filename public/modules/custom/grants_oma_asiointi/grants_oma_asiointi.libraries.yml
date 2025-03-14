@@ -1,5 +1,6 @@
 # Custom module library for general purposes.
 grants_oma_asiointi:
+  version: 2.3.1
   js:
     js/list.min.js: { }
     js/application-draft-list.js: { }
