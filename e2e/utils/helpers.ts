@@ -83,6 +83,27 @@ const acceptCookies = async (page: Page) => {
 };
 
 /**
+ * The hideDialog function.
+ *
+ * This function hides survey dialog.
+ *
+ * @param page
+ *   Playwright page object
+ */
+const hideDialog = async (page: Page) => {
+  try {
+    // Wait for the cookie banner to be attached to the DOM
+    await page.waitForSelector('.dialog__container', { state: 'attached', timeout: 3000 });
+
+    // Wait until the button is available before clicking
+    const skipButton = page.locator('#helfi-survey__close-button');
+    await skipButton.waitFor({ state: 'attached', timeout: 1000 });
+    await skipButton.click();
+  } catch (error) {
+  }
+};
+
+/**
  * The getApplicationNumberFromBreadCrumb function.
  *
  * This functions fetches an applications ID from
@@ -193,6 +214,7 @@ export {
   extractPath,
   getApplicationNumberFromBreadCrumb,
   getFulfilledResponse,
+  hideDialog,
   logCurrentUrl,
   slowLocator,
   waitForTextWithInterval,

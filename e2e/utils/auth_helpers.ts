@@ -1,7 +1,7 @@
 import {Page} from '@playwright/test';
 import {logger} from "./logger";
 import {existsSync, readFileSync} from 'fs';
-import {acceptCookies, logCurrentUrl} from "./helpers";
+import {acceptCookies, hideDialog, logCurrentUrl} from "./helpers";
 import {chmodSync} from "node:fs";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON";
@@ -27,6 +27,8 @@ const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
   // Before selecting the role, make an attempt to accept the cookies.
   await page.goto("/fi");
   await acceptCookies(page);
+  // There might be a survey dialog open, look for it and skip it.
+  await hideDialog(page);
 
   // Check login state and login.
   await checkLoginStateAndLogin(page);
