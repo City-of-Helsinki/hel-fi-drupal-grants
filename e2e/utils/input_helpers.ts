@@ -349,10 +349,10 @@ async function fillRadioField(selector: Selector | undefined, itemKey: string, p
 
     // Fill element with partial for attribute.
     case 'partial-for-attribute':
-      const labelForSelector = `.option.hds-radio-button__label[for*="${selector.value}"]`;
-      await page.waitForSelector(labelForSelector);
+      const labelForSelector = page.locator(`.option.hds-radio-button__label[for*="${selector.value}"]`);
+      await labelForSelector.waitFor({state: 'attached', timeout: 2000});
       try {
-        await page.click(labelForSelector);
+        await labelForSelector.check();
       } catch (error) {
         logger(`Error clicking label with partial 'for' attribute: ${selector.value}`, error);
       }
