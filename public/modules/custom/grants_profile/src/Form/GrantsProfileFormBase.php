@@ -4,6 +4,8 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Component\Uuid\Uuid;
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\DependencyInjection\AutowireTrait;
@@ -18,7 +20,6 @@ use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -47,11 +48,14 @@ abstract class GrantsProfileFormBase extends FormBase {
    *   Profile.
    * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
    *   Session data.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   Uuid generator.
    */
   public function __construct(
     protected TypedDataManagerInterface $typedDataManager,
     protected GrantsProfileService $grantsProfileService,
     protected SessionInterface $session,
+    protected UuidInterface $uuid,
   ) {}
 
   /**
@@ -575,9 +579,9 @@ abstract class GrantsProfileFormBase extends FormBase {
   private function ensureBankAccountIdExists(array &$bankAccount): void {
     // Make sure we have proper UUID as address id.
     if (!isset($bankAccount['bank_account_id']) ||
-      !$this->grantsProfileService->isValidUuid($bankAccount['bank_account_id'])
+      !$this->isValidUuid($bankAccount['bank_account_id'])
       ) {
-      $bankAccount['bank_account_id'] = Uuid::uuid4()->toString();
+      $bankAccount['bank_account_id'] = $this->uuid->generate();
     }
   }
 
@@ -1008,16 +1012,14 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       foreach ($value as $key2 => $value2) {
 
         if ($key == 'addressWrapper') {
-          $values[$key][$key2]['address_id'] = $value2["address_id"] ?? Uuid::uuid4()
-            ->toString();
+          $values[$key][$key2]['address_id'] = $value2["address_id"] ?? $this->uuid->generate();
           $temp = $value2['address'] ?? [];
           unset($values[$key][$key2]['address']);
           $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
           continue;
         }
         elseif ($key == 'officialWrapper') {
-          $values[$key][$key2]['official_id'] = $value2["official_id"] ?? Uuid::uuid4()
-            ->toString();
+          $values[$key][$key2]['official_id'] = $value2["official_id"] ?? $this->uuid->generate();
           $temp = $value2['official'] ?? [];
           unset($values[$key][$key2]['official']);
           $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
@@ -1032,9 +1034,8 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
         // If we have added a new account,
         // then we need to create id for it.
         $value2['bank']['bank_account_id'] = $value2['bank']['bank_account_id'] ?? '';
-        if (!$this->grantsProfileService->isValidUuid($value2['bank']['bank_account_id'])) {
-          $values[$key][$key2]['bank_account_id'] = Uuid::uuid4()
-            ->toString();
+        if (!$this->isValidUuid($value2['bank']['bank_account_id'])) {
+          $values[$key][$key2]['bank_account_id'] = $this->uuid->generate();
         }
 
         $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'] ??
@@ -1205,6 +1206,19 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('form', $form));
     return $response;
+  }
+
+  /**
+   * Check if a given string is a valid UUID.
+   *
+   * @param mixed $uuid
+   *   The string to check.
+   *
+   * @return bool
+   *   Is valid or not?
+   */
+  protected function isValidUuid(mixed $uuid): bool {
+    return is_string($uuid) && Uuid::isValid($uuid);
   }
 
 }

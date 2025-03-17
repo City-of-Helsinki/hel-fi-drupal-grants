@@ -3,6 +3,7 @@
 namespace Drupal\grants_profile;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\file\Entity\File;
@@ -11,7 +12,6 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
 use Psr\Log\LoggerInterface;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
@@ -47,6 +47,8 @@ class GrantsProfileService {
    *   Logger service.
    * @param \Drupal\grants_profile\GrantsProfileCache $grantsProfileCache
    *   Cache.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   Uuid generator.
    */
   public function __construct(
     #[Autowire(service: 'helfi_atv.atv_service')]
@@ -56,6 +58,7 @@ class GrantsProfileService {
     #[Autowire(service: 'logger.channel.grants_profile')]
     private readonly LoggerInterface $logger,
     private readonly GrantsProfileCache $grantsProfileCache,
+    private readonly UuidInterface $uuid,
   ) {
   }
 
@@ -168,7 +171,7 @@ class GrantsProfileService {
     // Make sure business id is saved.
     $documentContent['businessId'] = $selectedCompany['identifier'];
 
-    $transactionId = Uuid::uuid4()->toString();
+    $transactionId = $this->uuid->generate();
 
     // Check if grantsProfile exists.
     if ($grantsProfileDocument == NULL) {
@@ -211,25 +214,6 @@ class GrantsProfileService {
       throw new GrantsProfileException('ATV connection error');
     }
 
-  }
-
-  /**
-   * Check if a given string is a valid UUID.
-   *
-   * @param string $uuid
-   *   The string to check.
-   *
-   * @return bool
-   *   Is valid or not?
-   */
-  public function isValidUuid($uuid): bool {
-
-    if (!is_string($uuid) ||
-      (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) !== 1)) {
-      return FALSE;
-    }
-
-    return TRUE;
   }
 
   /**

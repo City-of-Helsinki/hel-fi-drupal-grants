@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -10,7 +11,6 @@ use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfilePrivatePersonDefinition;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -32,6 +32,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
    *   Profile service.
    * @param \Symfony\Component\HttpFoundation\Session\Session $session
    *   Session data.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   Uuid generator.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
    *   Data for Helsinki Profile.
    */
@@ -39,10 +41,11 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     TypedDataManagerInterface $typedDataManager,
     GrantsProfileService $grantsProfileService,
     SessionInterface $session,
+    UuidInterface $uuid,
     #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
-    parent::__construct($typedDataManager, $grantsProfileService, $session);
+    parent::__construct($typedDataManager, $grantsProfileService, $session, $uuid);
   }
 
   /**
@@ -91,8 +94,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $address = $grantsProfileContent['addresses'][0] ?? NULL;
 
     // Make sure we have proper UUID as address id.
-    if ($address && !$this->grantsProfileService->isValidUuid($address['address_id'])) {
-      $address['address_id'] = Uuid::uuid4()->toString();
+    if ($address && !$this->isValidUuid($address['address_id'])) {
+      $address['address_id'] = $this->uuid->generate();
     }
     $form['isNewProfile'] = [
       '#type' => 'hidden',

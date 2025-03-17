@@ -2,13 +2,13 @@
 
 namespace Drupal\grants_profile;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\helfi_yjdh\Exception\YjdhException;
 use Drupal\helfi_yjdh\YjdhClient;
 use Psr\Log\LoggerInterface;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
@@ -29,6 +29,8 @@ class ProfileConnector {
    *   Messenger service.
    * @param \Psr\Log\LoggerInterface $logger
    *   Logger channel.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   Uuid generator.
    */
   public function __construct(
     #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
@@ -39,6 +41,7 @@ class ProfileConnector {
     protected MessengerInterface $messenger,
     #[Autowire(service: 'logger.channel.grants_profile')]
     protected LoggerInterface $logger,
+    protected UuidInterface $uuid,
   ) {
   }
 
@@ -270,7 +273,7 @@ class ProfileConnector {
         'ownerSsn' => NULL,
         'confirmationFileName' => NULL,
         'confirmationFile' => NULL,
-        'bank_account_id' => Uuid::uuid4()->toString(),
+        'bank_account_id' => $this->uuid->generate(),
       ];
 
       $profileContent['officials'][0] = [

@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -13,7 +14,6 @@ use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use GuzzleHttp\Exception\GuzzleException;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -35,6 +35,8 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    *   Profile service.
    * @param \Symfony\Component\HttpFoundation\Session\Session $session
    *   Session data.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   Uuid generator.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
    *   Data for Helsinki Profile.
    */
@@ -42,10 +44,11 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
     TypedDataManagerInterface $typed_data_manager,
     GrantsProfileService $grantsProfileService,
     SessionInterface $session,
+    UuidInterface $uuid,
     #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
-    parent::__construct($typed_data_manager, $grantsProfileService, $session);
+    parent::__construct($typed_data_manager, $grantsProfileService, $session, $uuid);
   }
 
   /**
@@ -359,8 +362,8 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         $address = $address['address'];
       }
       // Make sure we have proper UUID as address id.
-      if (!isset($address['address_id']) || !$this->grantsProfileService->isValidUuid($address['address_id'])) {
-        $address['address_id'] = Uuid::uuid4()->toString();
+      if (!isset($address['address_id']) || !$this->isValidUuid($address['address_id'])) {
+        $address['address_id'] = $this->uuid->generate();
       }
 
       $form['addressWrapper'][$delta]['address'] = [
@@ -447,7 +450,7 @@ One address is mandatory information in your personal information and on the app
           // We need the delta / id to create delete links in element.
           'address_id' => [
             '#type' => 'hidden',
-            '#value' => Uuid::uuid4()->toString(),
+            '#value' => $this->uuid->generate(),
           ],
 
         ],
@@ -501,8 +504,8 @@ One address is mandatory information in your personal information and on the app
     foreach ($officialValues as $delta => $official) {
 
       // Make sure we have proper UUID as address id.
-      if (!isset($official['official_id']) || !$this->grantsProfileService->isValidUuid($official['official_id'])) {
-        $official['official_id'] = Uuid::uuid4()->toString();
+      if (!isset($official['official_id']) || !$this->isValidUuid($official['official_id'])) {
+        $official['official_id'] = $this->uuid->generate();
       }
 
       $form['officialWrapper'][$delta]['official'] = [
@@ -584,7 +587,7 @@ One address is mandatory information in your personal information and on the app
         ],
         'official_id' => [
           '#type' => 'hidden',
-          '#value' => Uuid::uuid4()->toString(),
+          '#value' => $this->uuid->generate(),
         ],
         'deleteButton' => [
           '#type' => 'submit',

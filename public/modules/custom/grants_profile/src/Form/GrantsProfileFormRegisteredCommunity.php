@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
@@ -11,7 +12,6 @@ use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\PRHUpdaterService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -28,10 +28,11 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
     TypedDataManagerInterface $typed_data_manager,
     GrantsProfileService $grantsProfileService,
     SessionInterface $session,
+    UuidInterface $uuid,
     protected PRHUpdaterService $prhUpdaterService,
     protected FormLockService $lockService,
   ) {
-    parent::__construct($typed_data_manager, $grantsProfileService, $session);
+    parent::__construct($typed_data_manager, $grantsProfileService, $session, $uuid);
   }
 
   /**
@@ -407,8 +408,8 @@ later when completing the grant application.',
         $address = $address['address'];
       }
       // Make sure we have proper UUID as address id.
-      if (!isset($address['address_id']) || !$this->grantsProfileService->isValidUuid($address['address_id'])) {
-        $address['address_id'] = Uuid::uuid4()->toString();
+      if (!isset($address['address_id']) || !$this->isValidUuid($address['address_id'])) {
+        $address['address_id'] = $this->uuid->generate();
       }
 
       $form['addressWrapper'][$delta]['address'] = [
@@ -493,7 +494,7 @@ later when completing the grant application.',
           // We need the delta / id to create delete links in element.
           'address_id' => [
             '#type' => 'hidden',
-            '#value' => Uuid::uuid4()->toString(),
+            '#value' => $this->uuid->generate(),
           ],
           'deleteButton' => [
             '#type' => 'submit',
@@ -572,8 +573,8 @@ later when completing the grant application.',
     foreach ($officialValues as $delta => $official) {
 
       // Make sure we have proper UUID as address id.
-      if (!isset($official['official_id']) || !$this->grantsProfileService->isValidUuid($official['official_id'])) {
-        $official['official_id'] = Uuid::uuid4()->toString();
+      if (!isset($official['official_id']) || !$this->isValidUuid($official['official_id'])) {
+        $official['official_id'] = $this->uuid->generate();
       }
 
       $form['officialWrapper'][$delta]['official'] = [
@@ -655,7 +656,7 @@ later when completing the grant application.',
         ],
         'official_id' => [
           '#type' => 'hidden',
-          '#value' => Uuid::uuid4()->toString(),
+          '#value' => $this->uuid->generate(),
         ],
         'deleteButton' => [
           '#type' => 'submit',
