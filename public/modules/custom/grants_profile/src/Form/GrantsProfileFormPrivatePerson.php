@@ -5,14 +5,14 @@ namespace Drupal\grants_profile\Form;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfilePrivatePersonDefinition;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Profile form.
@@ -36,24 +36,13 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
    *   Data for Helsinki Profile.
    */
   public function __construct(
-    protected TypedDataManager $typedDataManager,
-    protected GrantsProfileService $grantsProfileService,
-    protected Session $session,
+    TypedDataManagerInterface $typedDataManager,
+    GrantsProfileService $grantsProfileService,
+    SessionInterface $session,
+    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
     parent::__construct($typedDataManager, $grantsProfileService, $session);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('typed_data_manager'),
-      $container->get('grants_profile.service'),
-      $container->get('session'),
-      $container->get('helfi_helsinki_profiili.userdata')
-    );
   }
 
   /**

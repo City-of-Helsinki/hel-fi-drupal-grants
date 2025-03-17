@@ -26,6 +26,7 @@ services:
         '@logger.factory',
         '@grants_profile.cache'
     ]
+  Drupal\grants_profile\GrantsProfileService: '@grants_profile.service'
 
   grants_profile.municipality_service:
     class: Drupal\grants_profile\MunicipalityService
@@ -42,6 +43,7 @@ services:
       '@grants_profile.profile_connector',
       '@grants_profile.service'
     ]
+  Drupal\grants_profile\PRHUpdaterService: '@grants_profile.prh_updater_service'
 
   grants_profile.route_subscriber:
     class: Drupal\grants_profile\Routing\RouteSubscriber

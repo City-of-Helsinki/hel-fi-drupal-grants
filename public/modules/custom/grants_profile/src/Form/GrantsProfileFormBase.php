@@ -6,11 +6,12 @@ use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
-use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\file\Element\ManagedFile;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
@@ -18,8 +19,7 @@ use Drupal\helfi_atv\AtvDocument;
 use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Profile form base.
@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 abstract class GrantsProfileFormBase extends FormBase {
 
   use StringTranslationTrait;
+  use AutowireTrait;
 
   /**
    * Variable for translation context.
@@ -40,29 +41,18 @@ abstract class GrantsProfileFormBase extends FormBase {
   /**
    * Constructs a new GrantsProfileForm object.
    *
-   * @param \Drupal\Core\TypedData\TypedDataManager $typedDataManager
+   * @param \Drupal\Core\TypedData\TypedDataManagerInterface $typedDataManager
    *   Typed data manager.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   Profile.
-   * @param \Symfony\Component\HttpFoundation\Session\Session $session
+   * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
    *   Session data.
    */
   public function __construct(
-    protected TypedDataManager $typedDataManager,
+    protected TypedDataManagerInterface $typedDataManager,
     protected GrantsProfileService $grantsProfileService,
-    protected Session $session,
+    protected SessionInterface $session,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('typed_data_manager'),
-      $container->get('grants_profile.service'),
-      $container->get('session'),
-    );
-  }
 
   /**
    * Ajax callback for removing item from form.

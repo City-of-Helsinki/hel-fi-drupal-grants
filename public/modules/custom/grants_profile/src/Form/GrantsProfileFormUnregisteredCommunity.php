@@ -5,7 +5,7 @@ namespace Drupal\grants_profile\Form;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\Core\Url;
 use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
@@ -14,8 +14,8 @@ use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunit
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Profile form.
@@ -25,27 +25,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
 
   use StringTranslationTrait;
-
-  /**
-   * Drupal\Core\TypedData\TypedDataManager definition.
-   *
-   * @var \Drupal\Core\TypedData\TypedDataManager
-   */
-  protected TypedDataManager $typedDataManager;
-
-  /**
-   * Access to grants profile services.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Helsinki profile service.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
 
   /**
    * Constructs a new GrantsProfileForm object.
@@ -60,25 +39,13 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    *   Data for Helsinki Profile.
    */
   public function __construct(
-    TypedDataManager $typed_data_manager,
+    TypedDataManagerInterface $typed_data_manager,
     GrantsProfileService $grantsProfileService,
-    Session $session,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    SessionInterface $session,
+    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
+    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
     parent::__construct($typed_data_manager, $grantsProfileService, $session);
-    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('typed_data_manager'),
-      $container->get('grants_profile.service'),
-      $container->get('session'),
-      $container->get('helfi_helsinki_profiili.userdata')
-    );
   }
 
   /**
