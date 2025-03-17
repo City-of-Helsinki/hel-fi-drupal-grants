@@ -5,9 +5,10 @@ import { IChangeEvent } from '@rjsf/core';
 import { LoadingSpinner } from 'hds-react';
 import { Suspense } from 'react';
 import { RJSFFormContainer } from './RJSFFormContainer';
-import { initializeFormAtom } from '../store';
+import { initializeFormAtom, setApplicationNumberAtom, setSubmitStatusAtom } from '../store';
 import { addApplicantInfoStep, isValidFormResponse } from '../utils';
 import { getData, initDB } from '../db';
+import { SubmitStates } from '../enum/SubmitStates';
 
 /**
  * Fetcher function for the form data.
@@ -18,19 +19,25 @@ import { getData, initDB } from '../db';
  * @return {Promise<object>} - Form settings and existing cached form data
  */
 async function fetchFormData(id: string) {
+  const params = new URLSearchParams(window.location.search);
+  const applicationNumber = params.get('application_number');
+
   await initDB();
-  const formConfigResponse = await fetch(`/application/${id}`, {
+  const formConfigResponse = await fetch(`/application/${id}${applicationNumber ? `/${applicationNumber}` : ''}`, {
     headers: {
       'Content-Type': 'application/json',
     }
   });
-  const persistedData = await getData();
+  const cachedData = await getData(applicationNumber || '58');
 
   if (!formConfigResponse.ok) {
     throw new Error('Failed to fetch form data');
   }
 
   const formConfig = await formConfigResponse.json();
+
+  // @todo decide when we want to use cached data over server data
+  const persistedData = formConfig.form_data ? formConfig.form_data : cachedData;
 
   return {
     ...formConfig,
@@ -61,6 +68,7 @@ const transformData = (data: any) => {
   } = schema;
   const transformedProperties: any = {};
 
+  // Add _step property to each form step
   Object.entries(properties).forEach((property: any) => {
     const [key, value] = property;
     transformedProperties[key] = {
@@ -69,6 +77,7 @@ const transformData = (data: any) => {
     };
   });
 
+  // Add _isSection property to each form section
   Object.entries(definitions).forEach((definition: any) => {
     const [key, definitionValue] = definition;
 
@@ -108,6 +117,8 @@ const FormWrapper = ({
 }: FormWrapperProps) => {
   const { data, isLoading, isValidating, error } = useSWRImmutable(applicationNumber, fetchFormData);
   const initializeForm = useSetAtom(initializeFormAtom);
+  const setSubmitStatus = useSetAtom(setSubmitStatusAtom);
+  const setApplicationNumber = useSetAtom(setApplicationNumberAtom);
 
   if (isLoading || isValidating) {
     return  <LoadingSpinner />
@@ -123,14 +134,28 @@ const FormWrapper = ({
   });
 
   const submitData = async (formSubmitEvent: IChangeEvent) => {
-    await fetch(`/en/application/${applicationNumber}`, {
-      method: 'POST',
+    const response = await fetch(`/en/application/${applicationNumber}`, {
+      body: JSON.stringify({
+        application_number: '',
+        application_type_id: applicationNumber,
+        form_data: formSubmitEvent.formData,
+        langcode: 'en',
+      }),
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-Token': data.token
       },
-      body: JSON.stringify(formSubmitEvent.formData),
+      method: 'POST',
     });
+
+    if (response.ok) {
+      // @todo read submit state from response
+      setSubmitStatus(SubmitStates.submitted);
+      const json = await response.json();
+      const { metadata } = json;
+
+      setApplicationNumber(metadata.applicationnumber);
+    }
   };
 
   return (

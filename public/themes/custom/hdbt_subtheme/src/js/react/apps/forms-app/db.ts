@@ -29,10 +29,11 @@ export const initDB = (): Promise<boolean> => new Promise((resolve) => {
    * Stores given data in IndexedDB.
    *
    * @param {object} data - Form state data to be stored in IndexedDB.
+   * @param {string} formId - Unique ID for the form.
    * @return {Promise<object|string|null>} - A promise that resolves to the stored data
    * on success, error message on failure, or null if request errors.
    */
-export const addData = <T>(data: T): Promise<T|string|null> => new Promise((resolve) => {
+export const addData = <T>(data: T, formId: string): Promise<T|string|null> => new Promise((resolve) => {
   const request = window.indexedDB.open('grants-form-state', 1);
 
   request.onsuccess = () => {
@@ -40,7 +41,7 @@ export const addData = <T>(data: T): Promise<T|string|null> => new Promise((reso
 
     const tx = db.transaction('form-state', 'readwrite');
     const store = tx.objectStore('form-state');
-    store.put(data, 'id-of-the-form');
+    store.put({...data, timestamp: Date.now()}, formId);
     tx.oncomplete = () => {
       resolve(data);
     };
@@ -59,7 +60,13 @@ export const addData = <T>(data: T): Promise<T|string|null> => new Promise((reso
 
 });
 
-export const getData = (): Promise<any> => new Promise((resolve) => {
+/**
+ * Checks indexedDB for cached data.
+ *
+ * @param {string} formId - Unique ID for the form
+  @return {Promise<object|string|null>} - A promise that resolves to the stored data
+ */
+export const getData = (formId: string): Promise<any> => new Promise((resolve) => {
   const request = window.indexedDB.open('grants-form-state', 1);
 
   request.onsuccess = () => {
@@ -67,7 +74,7 @@ export const getData = (): Promise<any> => new Promise((resolve) => {
 
     const tx = db.transaction('form-state', 'readonly');
     const store = tx.objectStore('form-state');
-    const result = store.get('id-of-the-form');
+    const result = store.get(formId);
 
     result.onsuccess = () => {
       resolve(result.result);

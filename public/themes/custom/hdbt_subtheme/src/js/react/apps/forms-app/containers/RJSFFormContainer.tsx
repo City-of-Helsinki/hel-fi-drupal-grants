@@ -12,7 +12,7 @@ import { AddButtonTemplate, ArrayFieldTemplate, ObjectFieldTemplate, RemoveButto
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { FormActions } from '../components/FormActions';
 import { Stepper } from '../components/Stepper';
-import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom } from '../store';
+import { getApplicationNumberAtom, getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
 import { ErrorsList } from '../components/ErrorsList';
 import { addData } from '../db';
@@ -53,14 +53,11 @@ export const RJSFFormContainer = ({
   submitData,
   uiSchema,
 }: RJSFFormContainerProps) => {
-  const persistFormState = useDebounceCallback(
-    (data: IChangeEvent) => {
-      addData(data.formData);
-    },
-    2000,
-  );
   const steps = useAtomValue(getStepsAtom);
   const formRef = createRef<Form>();
+  const readApplicationNumber = useAtomCallback(
+    useCallback(get => get(getApplicationNumberAtom), [])
+  );
   const readCurrentStep = useAtomCallback(
     useCallback(get =>  get(getCurrentStepAtom), [])
   );
@@ -69,6 +66,12 @@ export const RJSFFormContainer = ({
   );
   const setErrors = useSetAtom(setErrorsAtom);
 
+  const browserCacheData = useDebounceCallback(
+    (data: IChangeEvent) => {
+      addData(data.formData, readApplicationNumber() || '58');
+    },
+    2000,
+  );
 
   const onError = (errors: RJSFValidationError[]) => {
     const keyedErrors = keyErrorsByStep(errors, steps);
@@ -92,7 +95,10 @@ export const RJSFFormContainer = ({
     const reachedStep = readReachedStep();
     const keyedErrors = keyErrorsByStep(errors, steps);
 
-    const errorsToShow = keyedErrors.filter(([index]) => index <= reachedStep).map(([index, error]) => error);
+    const errorsToShow = keyedErrors
+      // Workaround for ATV implementation compatibility issue
+      .filter(([index, { message, params }]) => !(message === 'must be object' && params?.type === 'object'))
+      .filter(([index]) => index <= reachedStep).map(([index, error]) => error);
     setErrors(errorsToShow);
 
     return errorsToShow;
@@ -109,7 +115,7 @@ export const RJSFFormContainer = ({
           formData={initialFormData}
           method='POST'
           noHtml5Validate
-          onChange={persistFormState}
+          onChange={browserCacheData}
           onError={onError}
           onSubmit={(data, event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();

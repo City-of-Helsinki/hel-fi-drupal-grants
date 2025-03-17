@@ -1,6 +1,7 @@
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { atom } from 'jotai';
 import { keyErrorsByStep } from './utils';
+import { SubmitState, SubmitStates } from './enum/SubmitStates';
 
 export type FormStep = {
   id: string;
@@ -42,22 +43,25 @@ export type FormState = {
 }
 
 type FormConfig = {
+  applicationNumber?: string;
   grantsProfile: GrantsProfile;
-  schema: RJSFSchema;
-  uiSchema: UiSchema;
   token: string;
+  schema: RJSFSchema;
   settings: {
     [key: string]: string;
   }
+  submitState: SubmitState;
   translations: {
     [key in 'fi'|'sv'|'en']: {
       [key: string]: string;
-    }
-  }
-}
+    };
+  };
+  uiSchema: UiSchema;
+};
 
-type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema'> & {
+type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_state'> & {
   grants_profile: GrantsProfile;
+  submit_state: SubmitState;
   ui_schema: UiSchema;
 };
 
@@ -92,13 +96,19 @@ export const formConfigAtom = atom<FormConfig|undefined>();
 export const formStateAtom = atom<FormState|undefined>();
 export const formStepsAtom = atom<Map<number, FormStep>|undefined>();
 export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData) => {
-  const { grants_profile: grantsProfile, ui_schema: uiSchema, ...rest } = formConfig;
+  const {
+    grants_profile: grantsProfile,
+    submit_state: submitState,
+    ui_schema: uiSchema,
+    ...rest
+  } = formConfig;
   const steps = buildFormSteps(formConfig);
   _set(formStepsAtom, state => steps);
   _set(formConfigAtom, (state) => ({
     grantsProfile,
-    uiSchema,
     ...rest,
+    uiSchema,
+    submitState: submitState || SubmitStates.unsubmitted,
   }));
   _set(formStateAtom, (state) => ({
       currentStep: [0, steps.get(0)],
@@ -192,4 +202,34 @@ export const getOfficialsAtom = atom(_get => {
   const { grantsProfile } = _get(getFormConfigAtom);
 
   return grantsProfile.officials;
+});
+export const getSubmitStatusAtom = atom(_get => {
+  const { submitState } = _get(getFormConfigAtom);
+
+  return submitState;
+});
+export const setSubmitStatusAtom = atom(null, (_get, _set, submitState: SubmitState) => {
+  const formConfig = _get(getFormConfigAtom);
+
+  _set(formConfigAtom, state => ({
+    ...formConfig,
+    submitState,
+  }));
+});
+export const getApplicationNumberAtom = atom(_get => {
+  const { applicationNumber } = _get(getFormConfigAtom);
+
+  return applicationNumber;
+});
+export const setApplicationNumberAtom = atom(null, (_get, _set, applicationNumber: string) => {
+  const formConfig = _get(getFormConfigAtom);
+
+  const params = new URLSearchParams(window.location.search);
+  params.set('application_number', applicationNumber);
+  window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+
+  _set(formConfigAtom, state => ({
+    ...formConfig,
+    applicationNumber,
+  }));
 });

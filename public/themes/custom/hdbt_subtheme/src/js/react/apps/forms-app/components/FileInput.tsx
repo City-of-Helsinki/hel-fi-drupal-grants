@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import { WidgetProps } from "@rjsf/utils";
 import { FileInput as HDSFileInput } from "hds-react";
-import { formatErrors } from "./Input";
 import { useAtomValue } from "jotai";
+import { formatErrors } from "./Input";
 import { formConfigAtom } from "../store";
 
 function addNameToDataURL(name: string, dataURL: string|null) {
@@ -43,7 +43,7 @@ function dataUrlsToFiles(files?: string|string[]): any[] {
     // encoded so that these characters only separate different fields.
     const [, content] = file.split(':')
     const [meta, data] = content.split(',')
-    const [contentType, name, encoding] = meta.split(';')
+    const [contentType, name] = meta.split(';')
     const [, fileName] = name.split('=')
 
 
@@ -91,7 +91,7 @@ export const FileInput = ({
     // Upload files to Drupal.
     // todo: Do clamav check and upload file to ATV, only store file id frontend.
     // todo: This might need some way to communicate avustus2 schema path to file upload endpoint?
-    const response = await uploadFiles(name, applicationTypeId, token, files)
+    await uploadFiles(name, applicationTypeId, token, files)
 
     // Convert to rjfs dataUrl text.
     await Promise.all(files.map(getFileDataURL))
@@ -101,14 +101,15 @@ export const FileInput = ({
   }, [multiple, onChange, applicationTypeId, token])
 
   return <HDSFileInput
-    id={id}
-    label={label}
+    accept={accept}
+    defaultValue={dataUrlsToFiles(value)}
+    dragAndDrop
     errorText={formatErrors(rawErrors)}
     hideLabel={false}
+    id={id}
     invalid={Boolean(rawErrors?.length)}
+    label={label}
     onChange={handleChange}
-    defaultValue={dataUrlsToFiles(value)}
     required={required}
-    accept={accept}
   />
 };

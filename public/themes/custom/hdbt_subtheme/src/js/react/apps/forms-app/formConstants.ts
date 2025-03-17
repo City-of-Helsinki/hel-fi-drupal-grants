@@ -92,7 +92,8 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
             type: stringType,
             default: ''
           }
-        }
+        },
+        required: ['contact_person', 'contact_person_phone_number']
       },
       community_address: {
         title: 'Osoite',
