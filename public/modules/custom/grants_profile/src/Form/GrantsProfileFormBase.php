@@ -14,12 +14,15 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
+use Drupal\Core\Utility\Error;
 use Drupal\file\Element\ManagedFile;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvDocument;
 use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -27,10 +30,11 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  *
  * @phpstan-consistent-constructor
  */
-abstract class GrantsProfileFormBase extends FormBase {
+abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInterface {
 
   use StringTranslationTrait;
   use AutowireTrait;
+  use LoggerAwareTrait;
 
   /**
    * Variable for translation context.
@@ -93,7 +97,6 @@ abstract class GrantsProfileFormBase extends FormBase {
     unset($fieldValue[$deltaToRemove]);
     $formState->setValue($fieldName, $fieldValue);
     $formState->setRebuild();
-
   }
 
   /**
@@ -285,57 +288,52 @@ abstract class GrantsProfileFormBase extends FormBase {
    * Validate & upload file attachment.
    *
    * @param array $element
-   *   Element tobe validated.
+   *   Element to validate.
    * @param \Drupal\Core\Form\FormStateInterface $formState
    *   Form state.
    * @param array $form
    *   The form.
    */
-  public static function validateUpload(array &$element, FormStateInterface $formState, array &$form): void {
+  public function validateUpload(array &$element, FormStateInterface $formState, array &$form): void {
+    $triggeringElement = $formState->getTriggeringElement();
+
+    if (!str_contains($triggeringElement["#name"], 'confirmationFile_upload_button')) {
+      return;
+    }
 
     $storage = $formState->getStorage();
     $grantsProfileDocument = $storage['profileDocument'];
 
-    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $grantsProfileService = \Drupal::service('grants_profile.service');
-
-    $triggeringElement = $formState->getTriggeringElement();
-
     // Figure out paths on form & element.
     $valueParents = $element["#parents"];
 
-    if (str_contains($triggeringElement["#name"], 'confirmationFile_upload_button')) {
-      foreach ($element["#files"] as $file) {
-        try {
+    foreach ($element["#files"] as $file) {
+      try {
+        // Upload attachment to document.
+        $attachmentResponse = $this->grantsProfileService->uploadAttachment(
+          $grantsProfileDocument->getId(),
+          $file
+        );
 
-          // Upload attachment to document.
-          $attachmentResponse = $grantsProfileService->uploadAttachment(
-            $grantsProfileDocument->getId(),
-            $file->getFilename(),
-            $file
-          );
+        $storage['confirmationFiles'][$valueParents[1]] = $attachmentResponse;
+      }
+      catch (GuzzleException | GrantsProfileException $e) {
+        // Set error to form.
+        $formState->setError($element, 'File upload failed, error has been logged.');
+        // Log error.
+        Error::logException($this->logger, $e);
 
-          $storage['confirmationFiles'][$valueParents[1]] = $attachmentResponse;
+        $element['#value'] = NULL;
+        $element['#default_value'] = NULL;
+        unset($element['fids']);
 
+        $element['#files'] = $element['#files'] ?? [];
+        foreach ($element['#files'] as $delta => $file2) {
+          unset($element['file_' . $delta]);
         }
-        catch (GuzzleException | GrantsProfileException $e) {
-          // Set error to form.
-          $formState->setError($element, 'File upload failed, error has been logged.');
-          // Log error.
-          \Drupal::logger('grants_profile')->error($e->getMessage());
 
-          $element['#value'] = NULL;
-          $element['#default_value'] = NULL;
-          unset($element['fids']);
+        unset($element['#label_for']);
 
-          $element['#files'] = $element['#files'] ?? [];
-          foreach ($element['#files'] as $delta => $file2) {
-            unset($element['file_' . $delta]);
-          }
-
-          unset($element['#label_for']);
-
-        }
       }
     }
 
@@ -431,7 +429,7 @@ abstract class GrantsProfileFormBase extends FormBase {
   }
 
   /**
-   * Add address bits in separate method to improve readability.
+   * Add bank account bits.
    *
    * @param array $form
    *   Form.
@@ -453,7 +451,7 @@ abstract class GrantsProfileFormBase extends FormBase {
     ?array $bankAccounts,
     ?string $newItem,
     array|null $strings = [],
-  ) {
+  ): void {
 
     $form['bankAccountWrapper'] = [
       '#type' => 'webform_section',
@@ -692,7 +690,7 @@ of the account owner or a copy of a bank statement.", [], $this->tOpts),
         ],
         'file_validate_size' => [$maxFileSizeInBytes],
       ],
-      '#element_validate' => ['\Drupal\grants_profile\Form\GrantsProfileFormBase::validateUpload'],
+      '#element_validate' => ['::validateUpload'],
       '#upload_location' => $uploadLocation,
       '#sanitize' => TRUE,
       '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>

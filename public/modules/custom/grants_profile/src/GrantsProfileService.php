@@ -6,7 +6,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\file\Entity\File;
+use Drupal\file\FileInterface;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
@@ -329,9 +329,7 @@ class GrantsProfileService {
    *
    * @param string $id
    *   Profile id.
-   * @param string $fileName
-   *   File name.
-   * @param \Drupal\file\Entity\File $file
+   * @param \Drupal\file\FileInterface $file
    *   Actual file to be uploaded.
    *
    * @return mixed
@@ -340,11 +338,11 @@ class GrantsProfileService {
    * @throws \Drupal\grants_profile\GrantsProfileException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function uploadAttachment(string $id, string $fileName, File $file): mixed {
+  public function uploadAttachment(string $id, FileInterface $file): mixed {
     try {
       return $this->atvService->uploadAttachment(
         $id,
-        $fileName,
+        $file->getFilename(),
         $file
       );
     }
