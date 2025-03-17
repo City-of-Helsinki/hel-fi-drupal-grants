@@ -131,6 +131,12 @@ class WebformConfigOverrideCommands extends DrushCommands {
     foreach ($overrides as $override) {
       $applicationTypeId = key($override);
       $configurationOverrides = $override[$applicationTypeId]['grants_metadata'];
+
+      // Skip non-existent mappings, like parent forms.
+      if (!isset($mapping[$applicationTypeId])) {
+        continue;
+      }
+
       $configurationName = $mapping[$applicationTypeId];
 
       $config = $this->configFactory->getEditable($configurationName);
