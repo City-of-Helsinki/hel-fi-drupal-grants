@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_profile\Plugin\DataType;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\TypedData\Attribute\DataType;
 use Drupal\Core\TypedData\Plugin\DataType\Map;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
 
 /**
  * Address DataType.
- *
- * @DataType(
- * id = "grants_profile_registered_community",
- * label = @Translation("Grants Profile RC"),
- * definition_class =
- *   "\Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition"
- * )
  */
+#[DataType(
+  id: 'grants_profile_registered_community',
+  label: new TranslatableMarkup('Grants Profile RC'),
+  definition_class: GrantsProfileRegisteredCommunityDefinition::class
+)]
 class GrantsProfileRegisteredCommunityData extends Map {
 
   /**
@@ -26,15 +28,6 @@ class GrantsProfileRegisteredCommunityData extends Map {
       $values['companyStatusSpecial'] = '';
     }
     parent::setValue($values, $notify);
-  }
-
-  /**
-   * This is where we could validate custom fields, bank accounts etc.
-   */
-  public function validate(): ConstraintViolationListInterface {
-    $parentResults = parent::validate();
-
-    return $parentResults;
   }
 
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_profile\TypedData\Definition;
 
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
