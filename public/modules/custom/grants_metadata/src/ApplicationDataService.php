@@ -7,9 +7,9 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_attachments\DebuggableTrait;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationException;
-use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 

@@ -9,6 +9,7 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\grants_attachments\DebuggableTrait;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvService;

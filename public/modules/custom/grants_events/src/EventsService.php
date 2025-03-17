@@ -5,7 +5,7 @@ namespace Drupal\grants_events;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
-use Drupal\grants_handler\DebuggableTrait;
+use Drupal\grants_attachments\DebuggableTrait;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
 use GuzzleHttp\Client;
