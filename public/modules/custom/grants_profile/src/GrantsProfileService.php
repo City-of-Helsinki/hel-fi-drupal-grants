@@ -6,11 +6,13 @@ use Drupal\Component\Utility\Html;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Utility\Error;
 use Drupal\file\FileInterface;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_audit_log\AuditLogServiceInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -49,6 +51,8 @@ class GrantsProfileService {
    *   Cache.
    * @param \Drupal\Component\Uuid\UuidInterface $uuid
    *   Uuid generator.
+   * @param \Drupal\helfi_audit_log\AuditLogServiceInterface $auditLogService
+   *   The audit log service.
    */
   public function __construct(
     #[Autowire(service: 'helfi_atv.atv_service')]
@@ -59,6 +63,8 @@ class GrantsProfileService {
     private readonly LoggerInterface $logger,
     private readonly GrantsProfileCache $grantsProfileCache,
     private readonly UuidInterface $uuid,
+    #[Autowire(service: 'helfi_audit_log.audit_log')]
+    private readonly AuditLogServiceInterface $auditLogService,
   ) {
   }
 
@@ -150,6 +156,8 @@ class GrantsProfileService {
    *   Document content.
    * @param array $updatedMetadata
    *   Updated metadata.
+   * @param bool $cleanAttachments
+   *   If true, removes attachments not included in $documentContent.
    *
    * @return bool|AtvDocument
    *   Did save succeed?
@@ -157,7 +165,7 @@ class GrantsProfileService {
    * @throws \Drupal\grants_profile\GrantsProfileException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function saveGrantsProfile(array $documentContent, array $updatedMetadata = []): bool|AtvDocument {
+  public function saveGrantsProfile(array $documentContent, array $updatedMetadata = [], bool $cleanAttachments = FALSE): bool|AtvDocument {
     // Get selected company.
     $selectedCompany = $this->getSelectedRoleData();
     // Get grants profile.
@@ -208,12 +216,42 @@ class GrantsProfileService {
     $this->logger->info('Grants profile PATCHed, transactionID: %transactionId',
       ['%transactionId' => $transactionId]);
     try {
-      return $this->atvService->patchDocument($grantsProfileDocument->getId(), $payloadData);
+      $result = $this->atvService->patchDocument($grantsProfileDocument->getId(), $payloadData);
     }
     catch (\Exception $e) {
       throw new GrantsProfileException('ATV connection error');
     }
 
+    if ($cleanAttachments && $result instanceof AtvDocument) {
+      $keep = array_map(static fn (array $account) => $account['confirmationFile'], $documentContent['bankAccounts']);
+      $remove = array_filter($result->getAttachments(), static fn (array $attachment) => !in_array($attachment['filename'], $keep));
+
+      try {
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "SUCCESS",
+          "target" => [
+            "id" => $result->getId(),
+            "type" => $result->getType(),
+            "name" => $result->getTransactionId(),
+          ],
+        ];
+
+        foreach ($remove as $attachment) {
+          $this->atvService->deleteAttachment($result->getId(), $attachment['id']);
+          $this->auditLogService->dispatchEvent($message);
+        }
+      }
+      catch (\Exception $e) {
+        // Failed to clean all attachments.
+        Error::logException($this->logger, $e);
+
+        $message['status'] = 'FAILURE';
+        $this->auditLogService->dispatchEvent($message);
+      }
+    }
+
+    return $result;
   }
 
   /**

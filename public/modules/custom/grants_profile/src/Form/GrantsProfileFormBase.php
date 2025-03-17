@@ -13,8 +13,8 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\TypedData\ComplexDataDefinitionBase;
 use Drupal\Core\TypedData\ComplexDataInterface;
+use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\Core\Utility\Error;
 use Drupal\file\Element\ManagedFile;
@@ -80,20 +80,6 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
     ] = explode('--', $triggeringElement['#name']);
 
     $fieldValue = $formState->getValue($fieldName);
-
-    if ($fieldName == 'bankAccountWrapper' && $fieldValue[$deltaToRemove]['bank']['confirmationFileName']) {
-      // Save file href and remove it after submit.
-      $attachmentsToRemove = $formState->get('attachments_to_remove');
-      if (!$attachmentsToRemove) {
-        $attachmentsToRemove = [];
-      }
-
-      $fileHref = self::parseFileHref($fieldValue[$deltaToRemove]['bank'], $formState);
-      if ($fileHref) {
-        $attachmentsToRemove[] = $fileHref;
-        $formState->set('attachments_to_remove', $attachmentsToRemove);
-      }
-    }
 
     // Remove item from items.
     unset($fieldValue[$deltaToRemove]);
@@ -309,6 +295,7 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
     // Figure out paths on form & element.
     $valueParents = $element["#parents"];
 
+    // TypedData validator requires something in confirmationFiles.
     foreach ($element["#files"] as $file) {
       try {
         // Upload attachment to document.
@@ -335,7 +322,6 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
         }
 
         unset($element['#label_for']);
-
       }
     }
 
@@ -545,7 +531,7 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
         FALSE,
         '',
         TRUE,
-        $bankAccount['bank_account_id'] ?? '',
+        $this->uuid->generate(),
       );
       $formState->setValue('newItem', NULL);
     }
@@ -861,7 +847,6 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
 
     $form['#tree'] = TRUE;
 
-    $form['actions']['submit']['#submit'][] = 'Drupal\grants_profile\Form\GrantsProfileFormBase::removeAttachments';
     $form['actions']['submit']['#submit'][] = [$this, 'submitForm'];
 
     return $form;
@@ -902,7 +887,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       ]);
 
     try {
-      $this->grantsProfileService->saveGrantsProfile($profileDataArray);
+      $this->grantsProfileService->saveGrantsProfile($profileDataArray, cleanAttachments: TRUE);
 
       // Derived form might want to update something when grants profile
       // is successfully saved. The default implementation does nothing.
@@ -922,74 +907,6 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     }
 
     $form_state->setRedirect('grants_profile.show');
-  }
-
-  /**
-   * Remove attachments submit handler.
-   *
-   * @param array $form
-   *   Form.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state.
-   */
-  public static function removeAttachments(array &$form, FormStateInterface $formState): void {
-    $attachments = $formState->get('attachments_to_remove');
-    if (!$attachments) {
-      return;
-    }
-
-    foreach ($attachments as $fileHref) {
-      self::deleteAttachmentFile($fileHref, $formState);
-    }
-  }
-
-  /**
-   * Parse file url from the field structure.
-   *
-   * @param array $field
-   *   Field data.
-   * @param \Drupal\Core\Form\FormStateInterface $formState
-   *   Form state.
-   *
-   * @return string
-   *   File href.
-   */
-  public static function parseFileHref(array $field, FormStateInterface $formState): string {
-    $storage = $formState->getStorage();
-    /** @var \Drupal\helfi_atv\AtvDocument $grantsProfileDocument */
-    $grantsProfileDocument = $storage['profileDocument'];
-
-    // Try to look for a attachment from document.
-    $attachmentToDelete = array_filter(
-      $grantsProfileDocument->getAttachments(),
-      function ($item) use ($field) {
-        if ($item['filename'] == $field['confirmationFileName']) {
-          return TRUE;
-        }
-        return FALSE;
-      });
-
-    $attachmentToDelete = reset($attachmentToDelete);
-    $href = '';
-
-    // If attachment is found.
-    if ($attachmentToDelete) {
-      // Get href for deletion.
-      $href = $attachmentToDelete['href'];
-    }
-    else {
-      // Attachment not found, so we must have just added one.
-      $triggeringElement = $formState->getTriggeringElement();
-      // Get delta for deleting.
-      [$fieldName, $delta] = explode('--', $triggeringElement["#name"]);
-      unset($fieldName);
-      // Upload function has added the attachment information earlier.
-      if ($justAddedElement = $storage["confirmationFiles"][(int) $delta]) {
-        // So we can just grab that href and delete it from ATV.
-        $href = $justAddedElement["href"];
-      }
-    }
-    return $href;
   }
 
   /**
@@ -1055,8 +972,8 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    */
   protected function cleanUpFormValues(array $values, array $input, array $storage): array {
     // Clean up empty values from form values.
-    foreach ($values as $key => $value) {
-      if (!is_array($value)) {
+    foreach ($values as $key => $element) {
+      if (!is_array($element)) {
         continue;
       }
 
@@ -1066,44 +983,45 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       if (!array_key_exists($key, $input)) {
         continue;
       }
-      foreach ($value as $key2 => $value2) {
 
+      foreach ($element as $delta => $value) {
         if ($key == 'addressWrapper') {
-          $values[$key][$key2]['address_id'] = $value2["address_id"] ?? $this->uuid->generate();
-          $temp = $value2['address'] ?? [];
-          unset($values[$key][$key2]['address']);
-          $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
-          continue;
+          $values[$key][$delta]['address_id'] = $value["address_id"] ?? $this->uuid->generate();
+          $temp = $value['address'] ?? [];
+          unset($values[$key][$delta]['address']);
+          $values[$key][$delta] = array_merge($values[$key][$delta], $temp);
         }
         elseif ($key == 'officialWrapper') {
-          $values[$key][$key2]['official_id'] = $value2["official_id"] ?? $this->uuid->generate();
-          $temp = $value2['official'] ?? [];
-          unset($values[$key][$key2]['official']);
-          $values[$key][$key2] = array_merge($values[$key][$key2], $temp);
-          continue;
+          $values[$key][$delta]['official_id'] = $value["official_id"] ?? $this->uuid->generate();
+          $temp = $value['official'] ?? [];
+          unset($values[$key][$delta]['official']);
+          $values[$key][$delta] = array_merge($values[$key][$delta], $temp);
         }
-        elseif ($key != 'bankAccountWrapper') {
-          continue;
+        elseif ($key == 'bankAccountWrapper') {
+          // Set value without fieldset.
+          $values[$key][$delta] = $value['bank'] ?? NULL;
+
+          // If we have added a new account,
+          // then we need to create id for it.
+          $value['bank']['bank_account_id'] = $value['bank']['bank_account_id'] ?? '';
+          if (!$this->isValidUuid($value['bank']['bank_account_id'])) {
+            $values[$key][$delta]['bank_account_id'] = $this->uuid->generate();
+          }
+
+          // TypedData validation requires confirmationFile field, which should
+          // contains the file name. This makes it hard to upload file during
+          // the submit step. Instead of juggling the files in validation step,
+          // just pass the filename to this imaginary field, so TypedData
+          // validator is happy.
+          $values[$key][$delta]['confirmationFileName'] = $storage['confirmationFiles'][$delta]['filename'] ??
+            $values[$key][$delta]['confirmationFileName'] ??
+            NULL;
+
+          $values[$key][$delta]['confirmationFile'] = $values[$key][$delta]['confirmationFileName'] ??
+            $storage['confirmationFiles'][$delta]['filename'] ??
+            $values[$key][$delta]['confirmationFile'] ??
+            NULL;
         }
-        // Set value without fieldset.
-        $values[$key][$key2] = $value2['bank'] ?? NULL;
-
-        // If we have added a new account,
-        // then we need to create id for it.
-        $value2['bank']['bank_account_id'] = $value2['bank']['bank_account_id'] ?? '';
-        if (!$this->isValidUuid($value2['bank']['bank_account_id'])) {
-          $values[$key][$key2]['bank_account_id'] = $this->uuid->generate();
-        }
-
-        $values[$key][$key2]['confirmationFileName'] = $storage['confirmationFiles'][$key2]['filename'] ??
-          $values[$key][$key2]['confirmationFileName'] ??
-          NULL;
-
-        $values[$key][$key2]['confirmationFile'] = $values[$key][$key2]['confirmationFileName'] ??
-          $storage['confirmationFiles'][$key2]['filename'] ??
-          $values[$key][$key2]['confirmationFile'] ??
-          NULL;
-
       }
     }
     return $values;
@@ -1112,7 +1030,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   /**
    * Handle found violations on a form.
    *
-   * @param \Drupal\Core\TypedData\ComplexDataDefinitionBase $grantsProfileDefinition
+   * @param \Drupal\Core\TypedData\DataDefinitionInterface $grantsProfileDefinition
    *   The Profile definition.
    * @param array $grantsProfileContent
    *   The actual contents of the profile.
@@ -1133,7 +1051,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
    * @throws \Drupal\Core\TypedData\Exception\ReadOnlyException
    */
   protected function handleViolations(
-    ComplexDataDefinitionBase $grantsProfileDefinition,
+    DataDefinitionInterface $grantsProfileDefinition,
     array $grantsProfileContent,
     FormStateInterface &$formState,
     array $form,
