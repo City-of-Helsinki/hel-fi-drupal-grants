@@ -4,7 +4,6 @@ namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Link;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_metadata\Validator\EmailValidator;
@@ -318,54 +317,6 @@ later when completing the grant application.',
       $officialArrayKeys,
       $bankAccountArrayKeys
     );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $formState) {
-
-    $storage = $formState->getStorage();
-    if (!isset($storage['grantsProfileData'])) {
-      $this->messenger()->addError($this->t('grantsProfileData not found!', [], $this->tOpts));
-      return;
-    }
-
-    $grantsProfileData = $storage['grantsProfileData'];
-
-    $profileDataArray = $grantsProfileData->toArray();
-
-    try {
-      $success = $this->grantsProfileService->saveGrantsProfile($profileDataArray);
-    }
-    catch (\Exception $e) {
-      $success = FALSE;
-      $this->logger('grants_profile')
-        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
-    }
-
-    $applicationSearchLink = Link::createFromRoute(
-      $this->t('Application search', [], $this->tOpts),
-      'view.application_search_search_api.search_page',
-      [],
-      [
-        'attributes' => [
-          'class' => 'bold-link',
-        ],
-      ]);
-
-    if ($success !== FALSE) {
-      $this->messenger()
-        ->addStatus(
-          $this->t(
-            'Your profile information has been saved. You can go to the application via the @link.',
-            [
-              '@link' => $applicationSearchLink->toString(),
-            ],
-            $this->tOpts));
-    }
-
-    $formState->setRedirect('grants_profile.show');
   }
 
   /**

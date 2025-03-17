@@ -6,6 +6,7 @@ use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\Core\Url;
 use Drupal\grants_metadata\Validator\EmailValidator;
@@ -13,7 +14,6 @@ use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -265,62 +265,16 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   }
 
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
-  public function submitForm(array &$form, FormStateInterface $formState) {
-
-    $storage = $formState->getStorage();
-    if (!isset($storage['grantsProfileData'])) {
-      $this->messenger()->addError($this->t('grantsProfileData not found!', [], $this->tOpts));
-      return;
-    }
-
-    $grantsProfileData = $storage['grantsProfileData'];
-
+  protected function handleGrantsProfileUpdate(ComplexDataInterface $grantsProfileData): void {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
-
     $profileDataArray = $grantsProfileData->toArray();
 
-    try {
-      $success = $this->grantsProfileService->saveGrantsProfile($profileDataArray);
-      $selectedRoleData['name'] = $profileDataArray['companyName'];
-      $this->grantsProfileService->setSelectedRoleData($selectedRoleData);
-    }
-    catch (\Exception $e) {
-      $success = FALSE;
-      $this->logger('grants_profile')
-        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
-    }
-    catch (GuzzleException $e) {
-      $success = FALSE;
-      $this->logger('grants_profile')
-        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
-    }
+    // Update cached role name.
+    $selectedRoleData['name'] = $profileDataArray['companyName'];
 
-    $applicationSearchLink = Link::createFromRoute(
-      $this->t('Application search', [], $this->tOpts),
-      'view.application_search_search_api.search_page',
-      [],
-      [
-        'attributes' => [
-          'class' => 'bold-link',
-        ],
-      ]);
-
-    if ($success !== FALSE) {
-      $this->messenger()
-        ->addStatus(
-          $this->t(
-            'Your profile information has been saved. You can go to the application via the @link.',
-            [
-              '@link' => $applicationSearchLink->toString(),
-            ],
-            $this->tOpts
-          )
-        );
-    }
-
-    $formState->setRedirect('grants_profile.show');
+    $this->grantsProfileService->setSelectedRoleData($selectedRoleData);
   }
 
   /**

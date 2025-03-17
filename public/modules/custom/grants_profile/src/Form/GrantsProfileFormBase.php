@@ -11,8 +11,10 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\ComplexDataDefinitionBase;
+use Drupal\Core\TypedData\ComplexDataInterface;
 use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\Core\Utility\Error;
 use Drupal\file\Element\ManagedFile;
@@ -863,6 +865,63 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     $form['actions']['submit']['#submit'][] = [$this, 'submitForm'];
 
     return $form;
+  }
+
+  /**
+   * Handle successful grants profile update.
+   *
+   * @param \Drupal\Core\TypedData\ComplexDataInterface $grantsProfileData
+   *   Grants profile data.
+   */
+  protected function handleGrantsProfileUpdate(ComplexDataInterface $grantsProfileData): void {
+    // no-op by default.
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
+    $storage = $form_state->getStorage();
+
+    if (!isset($storage['grantsProfileData'])) {
+      $this->messenger()->addError($this->t('grantsProfileData not found!', [], $this->tOpts));
+      return;
+    }
+
+    $grantsProfileData = $storage['grantsProfileData'];
+    $profileDataArray = $grantsProfileData->toArray();
+
+    $applicationSearchLink = Link::createFromRoute(
+      $this->t('Application search', [], $this->tOpts),
+      'view.application_search_search_api.search_page',
+      [],
+      [
+        'attributes' => [
+          'class' => 'bold-link',
+        ],
+      ]);
+
+    try {
+      $this->grantsProfileService->saveGrantsProfile($profileDataArray);
+
+      // Derived form might want to update something when grants profile
+      // is successfully saved. The default implementation does nothing.
+      $this->handleGrantsProfileUpdate($grantsProfileData);
+    }
+    catch (\Throwable $e) {
+      Error::logException($this->logger, $e);
+
+      $this->messenger()
+        ->addStatus(
+          $this->t(
+            'Your profile information has been saved. You can go to the application via the @link.',
+            [
+              '@link' => $applicationSearchLink->toString(),
+            ],
+            $this->tOpts));
+    }
+
+    $form_state->setRedirect('grants_profile.show');
   }
 
   /**
