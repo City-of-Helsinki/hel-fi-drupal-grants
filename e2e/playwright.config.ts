@@ -281,11 +281,13 @@ export default defineConfig({
       dependencies: ['profile-registered_community'],
     },
     /* Form 68 tests. */
-    {
-      name: 'forms-68',
-      testMatch: '/forms/registered_community_68.ts',
-      dependencies: ['profile-registered_community'],
-    },
+    // Disable test for 68:hyte_yleisavustus. It is used as a parent form for
+    // form 71:HYTEEDYLEIS form which doesn't have a test yet.
+    // {
+    //   name: 'forms-68',
+    //   testMatch: '/forms/registered_community_68.ts',
+    //   dependencies: ['profile-registered_community'],
+    // },
     /* Form 69 tests. */
     {
       name: 'forms-69',
