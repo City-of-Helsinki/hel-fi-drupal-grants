@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_test_base\Kernel;
 
-use Drupal\grants_test_base\MockSession;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\webform\Entity\Webform;
 
@@ -26,8 +25,6 @@ class GrantsKernelTestBase extends KernelTestBase {
    * Create session for GrantsProfileService.
    */
   protected function initSession($role = 'registered_community'): void {
-    $session = new MockSession();
-    \Drupal::service('grants_profile.cache')->setSession($session);
     \Drupal::service('grants_profile.service')->setApplicantType($role);
   }
 
