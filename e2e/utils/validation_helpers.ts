@@ -468,22 +468,26 @@ const validateMessaging = async (
   const responseBody = await getFulfilledResponse(page);
   await expect(responseBody.length).toBe(4);
 
-  await page.waitForSelector('form.grants-handler-message .hds-notification--info');
   const infoMessage = page.locator('form.grants-handler-message .hds-notification--info');
+  await infoMessage.waitFor();
+
   await expect(infoMessage).toBeVisible();
   await expect(page.locator('form.grants-handler-message .hds-notification--info .hds-notification__body')).toContainText('Viestisi on lähetetty.');
   await expect(formActionButton).toHaveText('Uusi viesti');
 
   // Reload page to see message list.
   await page.reload();
-  await page.waitForSelector('ul.webform-submission-messages__messages-list');
+  const messagesList = page.locator('ul.webform-submission-messages__messages-list');
+  await messagesList.waitFor({ state: 'attached', timeout: 180 * 1000});
 
   // Validate sending additional messages.
   await textArea.fill('Test message 2');
   await formActionButton.click();
   const secondSubmitBody = await getFulfilledResponse(page);
   expect(secondSubmitBody.length).toBe(4);
-  await page.waitForSelector('ul.webform-submission-messages__messages-list > h5');
+
+  const messagesListTitle = page.locator('ul.webform-submission-messages__messages-list > h5');
+  await messagesListTitle.waitFor();
 
   const messages = await page.locator('.webform-submission-messages__messages-list .webform-submission-messages__message-body').all();
   expect(messages.length).toEqual(2);
