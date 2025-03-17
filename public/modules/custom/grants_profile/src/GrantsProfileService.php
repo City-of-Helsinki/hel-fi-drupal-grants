@@ -3,8 +3,6 @@
 namespace Drupal\grants_profile;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\file\Entity\File;
@@ -12,7 +10,9 @@ use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
+use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Handle all profile functionality.
@@ -28,41 +28,6 @@ class GrantsProfileService {
   const DOCUMENT_TRANSACTION_ID_INITIAL = 'initialSave';
 
   /**
-   * The helfi_atv service.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * The Messenger service.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected MessengerInterface $messenger;
-
-  /**
-   * The Helsinki profiili and Yjhd connector.
-   *
-   * @var \Drupal\grants_profile\ProfileConnector
-   */
-  protected ProfileConnector $profileConnector;
-
-  /**
-   * Logger.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelInterface
-   */
-  protected LoggerChannelInterface $logger;
-
-  /**
-   * Cache.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileCache
-   */
-  protected GrantsProfileCache $grantsProfileCache;
-
-  /**
    * Variable for translation context.
    *
    * @var array|string[] Translation context for class
@@ -72,29 +37,26 @@ class GrantsProfileService {
   /**
    * Constructs a GrantsProfileService object.
    *
-   * @param \Drupal\helfi_atv\AtvService $helfiAtv
+   * @param \Drupal\helfi_atv\AtvService $atvService
    *   The helfi_atv service.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Show messages to user.
    * @param \Drupal\grants_profile\ProfileConnector $profileConnector
    *   Access to profile data.
-   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
+   * @param \Psr\Log\LoggerInterface $logger
    *   Logger service.
    * @param \Drupal\grants_profile\GrantsProfileCache $grantsProfileCache
    *   Cache.
    */
   public function __construct(
-    AtvService $helfiAtv,
-    MessengerInterface $messenger,
-    ProfileConnector $profileConnector,
-    LoggerChannelFactoryInterface $loggerFactory,
-    GrantsProfileCache $grantsProfileCache,
+    #[Autowire(service: 'helfi_atv.atv_service')]
+    private readonly AtvService $atvService,
+    private readonly MessengerInterface $messenger,
+    private readonly ProfileConnector $profileConnector,
+    #[Autowire(service: 'logger.channel.grants_profile')]
+    private readonly LoggerInterface $logger,
+    private readonly GrantsProfileCache $grantsProfileCache,
   ) {
-    $this->atvService = $helfiAtv;
-    $this->messenger = $messenger;
-    $this->profileConnector = $profileConnector;
-    $this->logger = $loggerFactory->get('helfi_atv');
-    $this->grantsProfileCache = $grantsProfileCache;
   }
 
   /**
