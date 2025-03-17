@@ -68,15 +68,14 @@ const extractPath = async (page: Page) => {
  */
 const acceptCookies = async (page: Page) => {
   try {
-    const cookieBanner = page.locator('.hds-cc--banner');
-    const agreeButton = page.locator('.hds-cc__all-cookies-button');
+    // Wait for the cookie banner to be attached to the DOM
+    await page.waitForSelector('.hds-cc--banner', { state: 'attached', timeout: 3000 });
 
-    // Check if the banner is visible before interacting with it
-    if (await cookieBanner.isVisible()) {
-      await agreeButton.waitFor({ state: 'visible', timeout: 1000 });
-      await agreeButton.click();
-      logger('Accepted cookies.')
-    }
+    // Wait until the button is available before clicking
+    const agreeButton = page.locator('.hds-cc__all-cookies-button');
+    await agreeButton.waitFor({ state: 'attached', timeout: 1000 });
+    await agreeButton.click();
+    logger('Accepted cookies.');
   } catch (error) {
     logger('No cookie banner found or already accepted.')
   }
