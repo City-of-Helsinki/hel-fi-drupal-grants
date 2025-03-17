@@ -2,27 +2,19 @@
 
 namespace Drupal\grants_profile;
 
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\helfi_yjdh\Exception\YjdhException;
 use Drupal\helfi_yjdh\YjdhClient;
+use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Helper service to handle connections for Yjdh and HelsinkiProfiili.
  */
 class ProfileConnector {
-
-
-  /**
-   * Log errors.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelInterface
-   */
-  protected LoggerChannelInterface $logger;
 
   /**
    * Constructs a ProfileConnector object.
@@ -35,17 +27,19 @@ class ProfileConnector {
    *   Access to yjdh data.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Messenger service.
-   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
-   *   Logger channel factory.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   Logger channel.
    */
   public function __construct(
+    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     protected HelsinkiProfiiliUserData $helsinkiProfiili,
     protected MunicipalityService $municipalityService,
+    #[Autowire(service: 'helfi_yjdh.client')]
     protected YjdhClient $yjdhClient,
     protected MessengerInterface $messenger,
-    protected LoggerChannelFactoryInterface $loggerChannelFactory,
+    #[Autowire(service: 'logger.channel.grants_profile')]
+    protected LoggerInterface $logger,
   ) {
-    $this->logger = $loggerChannelFactory->get('ProfileConnector');
   }
 
   /**

@@ -13,13 +13,6 @@ services:
 
   grants_profile.profile_connector:
     class: Drupal\grants_profile\ProfileConnector
-    arguments: [
-      '@helfi_helsinki_profiili.userdata',
-      '@grants_profile.municipality_service',
-      '@helfi_yjdh.client',
-      '@messenger',
-      '@logger.factory',
-    ]
   Drupal\grants_profile\ProfileConnector: '@grants_profile.profile_connector'
 
   grants_profile.cache:
@@ -38,6 +31,7 @@ services:
       '@keyvalue.database',
       '@logger.factory',
     ]
+  Drupal\grants_profile\MunicipalityService: '@grants_profile.municipality_service'
 
   grants_profile.prh_updater_service:
     class: Drupal\grants_profile\PRHUpdaterService
