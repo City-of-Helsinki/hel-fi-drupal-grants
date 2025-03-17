@@ -169,22 +169,22 @@ abstract class GrantsProfileFormBase extends FormBase {
 
     // Clear validation errors if we are adding or removing fields.
     if (
-      strpos($triggeringElement['#id'], 'deletebutton') !== FALSE ||
-      strpos($triggeringElement['#id'], 'add') !== FALSE ||
-      strpos($triggeringElement['#id'], 'remove') !== FALSE
+      str_contains($triggeringElement['#id'], 'deletebutton') ||
+      str_contains($triggeringElement['#id'], 'add') ||
+      str_contains($triggeringElement['#id'], 'remove')
     ) {
       $formState->clearErrors();
     }
 
-    // In case of upload, we want ignore all except failed upload.
-    if (strpos($triggeringElement["#id"], 'upload-button') !== FALSE) {
+    // In case of upload, we want to ignore all except failed upload.
+    if (str_contains($triggeringElement["#id"], 'upload-button')) {
       $errors = $formState->getErrors();
       $parents = $triggeringElement['#parents'];
       array_pop($parents);
       $parentsKey = implode('][', $parents);
       $errorsForUpload = [];
 
-      // Found a file upload error. Remove all and the add the correct error.
+      // Found a file upload error. Remove all and then add the correct error.
       if (isset($errors[$parentsKey])) {
         $errorsForUpload[$parentsKey] = $errors[$parentsKey];
         $formValues = $formState->getValues();
