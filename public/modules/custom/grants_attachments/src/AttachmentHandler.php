@@ -14,7 +14,6 @@ use Drupal\Core\TempStore\TempStoreException;
 use Drupal\grants_attachments\Plugin\WebformElement\GrantsAttachments;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationHelpers;
-use Drupal\grants_handler\DebuggableTrait;
 use Drupal\grants_handler\EventException;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_metadata\ApplicationDataService;

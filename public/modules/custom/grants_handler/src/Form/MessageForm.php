@@ -15,7 +15,7 @@ use Drupal\Core\Render\Renderer;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_attachments\AttachmentRemover;
-use Drupal\grants_handler\DebuggableTrait;
+use Drupal\grants_attachments\DebuggableTrait;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\webform\Entity\WebformSubmission;

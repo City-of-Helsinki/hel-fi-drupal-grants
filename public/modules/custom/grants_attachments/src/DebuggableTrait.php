@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\grants_handler;
+namespace Drupal\grants_attachments;
 
 /**
  * Trait to add debug functionality.
