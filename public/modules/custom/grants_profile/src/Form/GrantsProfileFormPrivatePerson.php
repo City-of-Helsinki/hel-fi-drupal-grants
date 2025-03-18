@@ -2,17 +2,17 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfilePrivatePersonDefinition;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Ramsey\Uuid\Uuid;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Profile form.
@@ -32,28 +32,20 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
    *   Profile service.
    * @param \Symfony\Component\HttpFoundation\Session\Session $session
    *   Session data.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   Uuid generator.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
    *   Data for Helsinki Profile.
    */
   public function __construct(
-    protected TypedDataManager $typedDataManager,
-    protected GrantsProfileService $grantsProfileService,
-    protected Session $session,
+    TypedDataManagerInterface $typedDataManager,
+    GrantsProfileService $grantsProfileService,
+    SessionInterface $session,
+    UuidInterface $uuid,
+    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
-    parent::__construct($typedDataManager, $grantsProfileService, $session);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('typed_data_manager'),
-      $container->get('grants_profile.service'),
-      $container->get('session'),
-      $container->get('helfi_helsinki_profiili.userdata')
-    );
+    parent::__construct($typedDataManager, $grantsProfileService, $session, $uuid);
   }
 
   /**
@@ -102,8 +94,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $address = $grantsProfileContent['addresses'][0] ?? NULL;
 
     // Make sure we have proper UUID as address id.
-    if ($address && !$this->grantsProfileService->isValidUuid($address['address_id'])) {
-      $address['address_id'] = Uuid::uuid4()->toString();
+    if ($address && !$this->isValidUuid($address['address_id'])) {
+      $address['address_id'] = $this->uuid->generate();
     }
     $form['isNewProfile'] = [
       '#type' => 'hidden',
@@ -269,51 +261,6 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       $officialArrayKeys,
       $bankAccountArrayKeys
     );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $formState) {
-
-    $storage = $formState->getStorage();
-    if (!isset($storage['grantsProfileData'])) {
-      $this->messenger()->addError($this->t('grantsProfileData not found!', [], $this->tOpts));
-      return;
-    }
-
-    $grantsProfileData = $storage['grantsProfileData'];
-
-    $profileDataArray = $grantsProfileData->toArray();
-
-    try {
-      $success = $this->grantsProfileService->saveGrantsProfile($profileDataArray);
-    }
-    catch (\Throwable $e) {
-      $success = FALSE;
-      $this->logger('grants_profile')
-        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
-    }
-
-    $applicationSearchLink = Link::createFromRoute(
-      $this->t('Application search', [], $this->tOpts),
-      'view.application_search_search_api.search_page',
-      [],
-      [
-        'attributes' => [
-          'class' => 'bold-link',
-        ],
-      ]);
-
-    if ($success !== FALSE) {
-      $this->messenger()
-        ->addStatus(
-          $this->t('Your profile information has been saved. You can go to the application via the @link.', [
-            '@link' => $applicationSearchLink->toString(),
-          ], $this->tOpts));
-    }
-
-    $formState->setRedirect('grants_profile.show');
   }
 
   /**

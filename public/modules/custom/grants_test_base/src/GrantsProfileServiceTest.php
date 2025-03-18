@@ -7,7 +7,7 @@ use Drupal\grants_profile\GrantsProfileService;
 /**
  * Override GrantsProfileService for tests.
  *
- * This add possibility to inject data
+ * This adds possibility to inject data
  * for unregistered community test case.
  */
 class GrantsProfileServiceTest extends GrantsProfileService {

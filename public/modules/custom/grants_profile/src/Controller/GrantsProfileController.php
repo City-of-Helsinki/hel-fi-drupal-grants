@@ -5,7 +5,9 @@ namespace Drupal\grants_profile\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
+use Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -163,19 +165,11 @@ you can do that by going to the Helsinki-profile from this link.', [], $tOpts),
 
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
-    $formObject = NULL;
-
-    if ($selectedRoleData['type'] == 'private_person') {
-      $formObject = $this->formBuilder()->getForm('\Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson');
-    }
-
-    if ($selectedRoleData['type'] == 'registered_community') {
-      $formObject = $this->formBuilder()->getForm('\Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity');
-    }
-
-    if ($selectedRoleData['type'] == 'unregistered_community') {
-      $formObject = $this->formBuilder()->getForm('\Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity');
-    }
+    $formObject = $this->formBuilder()->getForm(match ($selectedRoleData["type"]) {
+      'private_person' => GrantsProfileFormPrivatePerson::class,
+      'registered_community' => GrantsProfileFormRegisteredCommunity::class,
+      'unregistered_community' => GrantsProfileFormUnregisteredCommunity::class,
+    });
 
     $build['#profileForm'] = $formObject;
     return $build;

@@ -3,16 +3,18 @@
 namespace Drupal\grants_profile;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\file\Entity\File;
+use Drupal\Core\Utility\Error;
+use Drupal\file\FileInterface;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
-use Ramsey\Uuid\Uuid;
+use Drupal\helfi_audit_log\AuditLogServiceInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Handle all profile functionality.
@@ -28,41 +30,6 @@ class GrantsProfileService {
   const DOCUMENT_TRANSACTION_ID_INITIAL = 'initialSave';
 
   /**
-   * The helfi_atv service.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * The Messenger service.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected MessengerInterface $messenger;
-
-  /**
-   * The Helsinki profiili and Yjhd connector.
-   *
-   * @var \Drupal\grants_profile\ProfileConnector
-   */
-  protected ProfileConnector $profileConnector;
-
-  /**
-   * Logger.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelInterface
-   */
-  protected LoggerChannelInterface $logger;
-
-  /**
-   * Cache.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileCache
-   */
-  protected GrantsProfileCache $grantsProfileCache;
-
-  /**
    * Variable for translation context.
    *
    * @var array|string[] Translation context for class
@@ -72,29 +39,33 @@ class GrantsProfileService {
   /**
    * Constructs a GrantsProfileService object.
    *
-   * @param \Drupal\helfi_atv\AtvService $helfiAtv
+   * @param \Drupal\helfi_atv\AtvService $atvService
    *   The helfi_atv service.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Show messages to user.
    * @param \Drupal\grants_profile\ProfileConnector $profileConnector
    *   Access to profile data.
-   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
+   * @param \Psr\Log\LoggerInterface $logger
    *   Logger service.
    * @param \Drupal\grants_profile\GrantsProfileCache $grantsProfileCache
    *   Cache.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   Uuid generator.
+   * @param \Drupal\helfi_audit_log\AuditLogServiceInterface $auditLogService
+   *   The audit log service.
    */
   public function __construct(
-    AtvService $helfiAtv,
-    MessengerInterface $messenger,
-    ProfileConnector $profileConnector,
-    LoggerChannelFactoryInterface $loggerFactory,
-    GrantsProfileCache $grantsProfileCache,
+    #[Autowire(service: 'helfi_atv.atv_service')]
+    private readonly AtvService $atvService,
+    private readonly MessengerInterface $messenger,
+    private readonly ProfileConnector $profileConnector,
+    #[Autowire(service: 'logger.channel.grants_profile')]
+    private readonly LoggerInterface $logger,
+    private readonly GrantsProfileCache $grantsProfileCache,
+    private readonly UuidInterface $uuid,
+    #[Autowire(service: 'helfi_audit_log.audit_log')]
+    private readonly AuditLogServiceInterface $auditLogService,
   ) {
-    $this->atvService = $helfiAtv;
-    $this->messenger = $messenger;
-    $this->profileConnector = $profileConnector;
-    $this->logger = $loggerFactory->get('helfi_atv');
-    $this->grantsProfileCache = $grantsProfileCache;
   }
 
   /**
@@ -185,6 +156,8 @@ class GrantsProfileService {
    *   Document content.
    * @param array $updatedMetadata
    *   Updated metadata.
+   * @param bool $cleanAttachments
+   *   If true, removes attachments not included in $documentContent.
    *
    * @return bool|AtvDocument
    *   Did save succeed?
@@ -192,7 +165,7 @@ class GrantsProfileService {
    * @throws \Drupal\grants_profile\GrantsProfileException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function saveGrantsProfile(array $documentContent, array $updatedMetadata = []): bool|AtvDocument {
+  public function saveGrantsProfile(array $documentContent, array $updatedMetadata = [], bool $cleanAttachments = FALSE): bool|AtvDocument {
     // Get selected company.
     $selectedCompany = $this->getSelectedRoleData();
     // Get grants profile.
@@ -206,7 +179,7 @@ class GrantsProfileService {
     // Make sure business id is saved.
     $documentContent['businessId'] = $selectedCompany['identifier'];
 
-    $transactionId = Uuid::uuid4()->toString();
+    $transactionId = $this->uuid->generate();
 
     // Check if grantsProfile exists.
     if ($grantsProfileDocument == NULL) {
@@ -243,31 +216,42 @@ class GrantsProfileService {
     $this->logger->info('Grants profile PATCHed, transactionID: %transactionId',
       ['%transactionId' => $transactionId]);
     try {
-      return $this->atvService->patchDocument($grantsProfileDocument->getId(), $payloadData);
+      $result = $this->atvService->patchDocument($grantsProfileDocument->getId(), $payloadData);
     }
     catch (\Exception $e) {
       throw new GrantsProfileException('ATV connection error');
     }
 
-  }
+    if ($cleanAttachments && $result instanceof AtvDocument) {
+      $keep = array_map(static fn (array $account) => $account['confirmationFile'], $documentContent['bankAccounts']);
+      $remove = array_filter($result->getAttachments(), static fn (array $attachment) => !in_array($attachment['filename'], $keep));
 
-  /**
-   * Check if a given string is a valid UUID.
-   *
-   * @param string $uuid
-   *   The string to check.
-   *
-   * @return bool
-   *   Is valid or not?
-   */
-  public function isValidUuid($uuid): bool {
+      try {
+        $message = [
+          "operation" => "GRANTS_APPLICATION_ATTACHMENT_DELETE",
+          "status" => "SUCCESS",
+          "target" => [
+            "id" => $result->getId(),
+            "type" => $result->getType(),
+            "name" => $result->getTransactionId(),
+          ],
+        ];
 
-    if (!is_string($uuid) ||
-      (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) !== 1)) {
-      return FALSE;
+        foreach ($remove as $attachment) {
+          $this->atvService->deleteAttachment($result->getId(), $attachment['id']);
+          $this->auditLogService->dispatchEvent($message);
+        }
+      }
+      catch (\Exception $e) {
+        // Failed to clean all attachments.
+        Error::logException($this->logger, $e);
+
+        $message['status'] = 'FAILURE';
+        $this->auditLogService->dispatchEvent($message);
+      }
     }
 
-    return TRUE;
+    return $result;
   }
 
   /**
@@ -383,9 +367,7 @@ class GrantsProfileService {
    *
    * @param string $id
    *   Profile id.
-   * @param string $fileName
-   *   File name.
-   * @param \Drupal\file\Entity\File $file
+   * @param \Drupal\file\FileInterface $file
    *   Actual file to be uploaded.
    *
    * @return mixed
@@ -394,11 +376,11 @@ class GrantsProfileService {
    * @throws \Drupal\grants_profile\GrantsProfileException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function uploadAttachment(string $id, string $fileName, File $file): mixed {
+  public function uploadAttachment(string $id, FileInterface $file): mixed {
     try {
       return $this->atvService->uploadAttachment(
         $id,
-        $fileName,
+        $file->getFilename(),
         $file
       );
     }
