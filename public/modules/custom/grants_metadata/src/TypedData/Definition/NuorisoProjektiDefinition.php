@@ -54,7 +54,7 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
           'activitiesInfoArray',
           'membersAge7to28YearsLocal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -68,7 +68,7 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
           'activitiesInfoArray',
           'membersSummaryGlobal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -139,7 +139,7 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
           'projectInfoArray',
           'age7to28yearsLocal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -153,7 +153,7 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
           'projectInfoArray',
           'all',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -190,7 +190,7 @@ class NuorisoProjektiDefinition extends ComplexDataDefinitionBase {
           'budgetInfoArray',
           'selfFinancingAmount',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [

@@ -92,7 +92,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffPeopleFulltime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -107,7 +107,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffPeopleParttime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -122,7 +122,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffPeopleVoluntary',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -175,7 +175,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'eventDaysCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -191,7 +191,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'firstPublicPerformancesCount',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -207,7 +207,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'premiereCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -240,7 +240,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'performanceCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -255,7 +255,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'performanceCountAll',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -271,7 +271,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'exhibitionCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -286,7 +286,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'exhibitionCountAll',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -303,7 +303,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'workshopCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -318,7 +318,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'workshopCountAll',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -341,7 +341,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'eventDaysCount',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -370,7 +370,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'performanceCountAll',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -385,7 +385,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'performanceCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -402,7 +402,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'exhibitionCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -417,7 +417,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'exhibitionCountAll',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -434,7 +434,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'workshopCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -449,7 +449,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'workshopCountAll',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -465,7 +465,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'firstPublicPerformancesCount',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -481,7 +481,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'premiereCountHki',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -518,7 +518,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'eventsVisitorsHkiTotal',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -534,7 +534,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'eventsVisitorsTotal',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -697,7 +697,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersPersonLocal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -712,7 +712,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersPersonGlobal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -727,7 +727,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersCommunityLocal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -742,7 +742,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'membersCommunityGlobal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -757,7 +757,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffManyearsFulltime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [
@@ -776,7 +776,7 @@ class KuvaToimintaDefinition extends ComplexDataDefinitionBase {
           'generalCommunityInfoArray',
           'staffManyearsParttime',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [

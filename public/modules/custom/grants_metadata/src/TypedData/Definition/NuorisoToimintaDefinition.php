@@ -46,7 +46,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'activitiesInfoArray',
           'membersAge0to6YearsGlobal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -60,7 +60,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'activitiesInfoArray',
           'membersAge0to6YearsLocal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -74,7 +74,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'activitiesInfoArray',
           'membersAge7to28YearsGlobal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -88,7 +88,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'activitiesInfoArray',
           'membersAge7to28YearsLocal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -102,7 +102,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'activitiesInfoArray',
           'membersOthersGlobal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -116,7 +116,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'activitiesInfoArray',
           'membersOthersLocal',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -130,7 +130,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'activitiesInfoArray',
           'lastYearYoungPeopleParticipation',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -144,7 +144,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'activitiesInfoArray',
           'lastYearYoungPeopleParticipationDigital',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -198,7 +198,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'hiredOfficialsInfo',
           'amountOfHiredOfficials',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToInt',
         ])
         ->setSetting('typeOverride', [
@@ -213,7 +213,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'budgetInfoArray',
           'employeeSalaries',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [
@@ -232,7 +232,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'budgetInfoArray',
           'mandatoryAndOptionalPersonelCosts',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [
@@ -251,7 +251,7 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
           'budgetInfoArray',
           'travelAndTrainingCosts',
         ])->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [

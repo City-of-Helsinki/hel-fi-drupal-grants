@@ -3,7 +3,7 @@
 namespace Drupal\grants_place_of_operation\Plugin\DataType;
 
 use Drupal\Core\TypedData\Plugin\DataType\Map;
-use Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler;
+use Drupal\grants_metadata\ConvertHelper;
 use Drupal\grants_metadata\Plugin\DataType\DataFormatTrait;
 
 /**
@@ -46,7 +46,7 @@ class PlaceOfOperationData extends Map {
     }
 
     if (isset($values["totalRent"])) {
-      $values["totalRent"] = GrantsHandler::convertToFloat($values["totalRent"]);
+      $values["totalRent"] = ConvertHelper::convertToFloat($values["totalRent"]);
     }
 
     parent::setValue($values, $notify);

@@ -42,7 +42,7 @@ class OtherCompensationDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'float',
         ])
         ->setSetting('valueCallback', [
-          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          '\Drupal\grants_metadata\ConvertHelper',
           'convertToFloat',
         ])
         ->setSetting('webformValueExtracter', [
