@@ -349,7 +349,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                   selector: {
                     type: 'partial-for-attribute',
                     name: '',
-                    value: 'edit-toimintapaikka-items-[INDEX]-item-free-0',
+                    value: 'edit-toimintapaikka-items-[INDEX]-item-free-no',
                   },
                   value: "Ei",
                 },
@@ -471,7 +471,7 @@ const baseFormRegisteredCommunity_52: FormData = {
                   selector: {
                     type: 'partial-for-attribute',
                     name: '',
-                    value: 'edit-toimintapaikka-items-[INDEX]-item-free-1',
+                    value: 'edit-toimintapaikka-items-[INDEX]-item-free-yes',
                   },
                   value: "Kyllä",
                 },
