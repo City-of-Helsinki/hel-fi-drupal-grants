@@ -148,8 +148,8 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
     $elements['free'] = [
       '#type' => 'radios',
       '#options' => [
-        1 => t('Yes', [], $tOpts),
-        0 => t('No', [], $tOpts),
+        'yes' => t('Yes', [], $tOpts),
+        'no' => t('No', [], $tOpts),
       ],
       '#title' => t('Is premise free', [], $tOpts),
     ];
@@ -210,23 +210,6 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public static function processWebformComposite(&$element, FormStateInterface $form_state, &$complete_form): array {
-    $element = parent::processWebformComposite($element, $form_state, $complete_form);
-    $elementValue = $element['#value'];
-
-    if (isset($element["free"]) && ($elementValue["free"] === "false" || $elementValue["free"] === FALSE)) {
-      $element["free"]["#default_value"] = 0;
-    }
-    if (isset($element["free"]) && ($elementValue["free"] === "true" || $elementValue["free"] === TRUE)) {
-      $element["free"]["#default_value"] = 1;
-    }
-
-    return $element;
-  }
-
-  /**
    * The alterState method.
    *
    * This method alters the "required" and "visible" states
@@ -246,10 +229,10 @@ class PlaceOfOperationComposite extends WebformCompositeBase {
 
     if ($compositeName) {
       $element['#states']['visible'] = [
-        [':input[name="' . $compositeName . '[free]"]' => ['value' => '0']],
+        [':input[name="' . $compositeName . '[free]"]' => ['value' => 'no']],
       ];
       $element['#states']['required'] = [
-        [':input[name="' . $compositeName . '[free]"]' => ['value' => '0']],
+        [':input[name="' . $compositeName . '[free]"]' => ['value' => 'no']],
       ];
     }
 

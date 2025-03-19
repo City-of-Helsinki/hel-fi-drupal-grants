@@ -30,23 +30,23 @@ class PlaceOfOperationData extends Map {
    */
   public function setValue($values, $notify = TRUE) {
 
-    if (isset($values["free"])) {
+    if (isset($values['free'])) {
 
-      if ($values["free"] === "false" || $values["free"] === "0") {
-        $values["free"] = FALSE;
+      if ($values['free'] === 'no' || $values['free'] === '0') {
+        $values['free'] = FALSE;
       }
 
-      if ($values["free"] === "true" || $values["free"] === "1") {
-        $values["free"] = TRUE;
+      if ($values['free'] === 'yes' || $values['free'] === '1') {
+        $values['free'] = TRUE;
       }
 
-      if ($values["free"] === "") {
-        unset($values["free"]);
+      if ($values['free'] === '') {
+        unset($values['free']);
       }
     }
 
-    if (isset($values["totalRent"])) {
-      $values["totalRent"] = GrantsHandler::convertToFloat($values["totalRent"]);
+    if (isset($values['totalRent'])) {
+      $values['totalRent'] = GrantsHandler::convertToFloat($values['totalRent']);
     }
 
     parent::setValue($values, $notify);
