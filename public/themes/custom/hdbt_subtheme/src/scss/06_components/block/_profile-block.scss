@@ -10,7 +10,7 @@
   .grants-profile--menuitem--mandate,
   .grants-profile--menuitem--switch-role {
     @include font('body');
-    border-block: 1px solid $color-black-20;
+    border-block-start: 1px solid $color-black-20;
     display: block;
     font-weight: normal;
     padding: $spacing;
