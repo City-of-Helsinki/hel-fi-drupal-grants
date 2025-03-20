@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { TestProvider } from '../../testutils/TestProvider';
-import { FormActions } from '../../components/FormActions';
+import { FormActions } from '../../components/FormActions/FormActions';
 import { formStateAtom, formStepsAtom } from '../../store';
 import { initializeFormState } from '../../testutils/Helpers';
 import { testKeyedErrors, testSteps } from '../../testutils/Data';
 
-describe('FormAction.tsx tests', () => {
+describe('FormActions.tsx tests', () => {
   render(
     <TestProvider initialValues={[
       [formStateAtom, initializeFormState({
@@ -16,7 +16,10 @@ describe('FormAction.tsx tests', () => {
       })],
       [formStepsAtom, testSteps]
     ]}>
-      <FormActions validatePartialForm={() => undefined} />
+      <FormActions
+        saveDraft={() => true}
+        validatePartialForm={() => undefined}
+      />
     </TestProvider>
   );
 

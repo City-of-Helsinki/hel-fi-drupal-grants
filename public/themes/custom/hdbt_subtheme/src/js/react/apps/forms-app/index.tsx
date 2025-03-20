@@ -6,6 +6,7 @@ import initSentry from '@/react/common/helpers/Sentry';
 import { FormNotFoundError } from './components/FormNotFoundError';
 import FormWrapper from './containers/FormWrapper';
 import { GeneralError } from './components/GeneralError';
+import { ToastStack } from './components/ToastStack';
 
 initSentry();
 
@@ -23,6 +24,7 @@ if (rootElement) {
       <ErrorBoundary
         fallback={<GeneralError />}
       >
+        <ToastStack />
         {showError
           ? <FormNotFoundError />
           : <FormWrapper {...{applicationNumber}} />

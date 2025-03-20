@@ -116,3 +116,49 @@ export const addApplicantInfoStep = (
 
   return [transformedSchema, transformedUiSchema];
 };
+
+/**
+ * Get nested property from object with dot notation
+ *
+ * @param {object} obj - Object to traverse
+ * @param {string} path - Point to a nested property in string format
+ * @return {any} - Value of nested property or undefined
+ */
+export const getNestedProperty = (obj: any, path: string) => {
+  const properties = path.split('.');
+  let current = obj;
+
+  properties.forEach(property => {
+    if (!Object.prototype.hasOwnProperty.call(current, property)) {
+      return undefined;
+    }
+    current = current[property];
+  });
+
+  return current;
+}
+
+/**
+ * Set nested object prroperty with dot notation.
+ *
+ * @param {object} obj - object to manipulate
+ * @param {string} path - path to transform
+ * @param {object|string|array} value - value to set
+ *
+ * @return {void}
+ */
+export const setNestedProperty = (obj: any, path: string, value: any) => {
+  const properties = path.split('.').slice(1);
+  let current = obj;
+
+  properties.forEach((property, index) => {
+    if (index === properties.length - 1) {
+      current[property] = value;
+    } else {
+      if (!Object.prototype.hasOwnProperty.call(current, property)) {
+        current[property] = {};
+      }
+      current = current[property];
+    }
+  });
+}

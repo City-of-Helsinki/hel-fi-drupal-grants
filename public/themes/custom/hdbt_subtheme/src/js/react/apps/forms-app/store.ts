@@ -1,5 +1,6 @@
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { atom } from 'jotai';
+import { NotificationProps } from 'hds-react';
 import { keyErrorsByStep } from './utils';
 import { SubmitState, SubmitStates } from './enum/SubmitStates';
 
@@ -232,4 +233,13 @@ export const setApplicationNumberAtom = atom(null, (_get, _set, applicationNumbe
     ...formConfig,
     applicationNumber,
   }));
+});
+
+type SystemNotification = Pick<NotificationProps, 'label'|'type'|'children'>
+export const systemNotificationsAtom = atom<SystemNotification[]>([]);
+export const pushNotificationAtom = atom(null, (_get, _set, notification: SystemNotification) => {
+  _set(systemNotificationsAtom, state => [...state, notification]);
+});
+export const shiftNotificationsAtom = atom(null, (_get, _set) => {
+  _set(systemNotificationsAtom, state => state.slice(1));
 });

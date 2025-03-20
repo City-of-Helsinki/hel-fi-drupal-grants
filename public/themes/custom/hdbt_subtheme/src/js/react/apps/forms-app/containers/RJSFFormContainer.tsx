@@ -10,7 +10,7 @@ import { FileInput } from '../components/FileInput';
 import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
 import { AddButtonTemplate, ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
 import { StaticStepsContainer } from './StaticStepsContainer';
-import { FormActions } from '../components/FormActions';
+import { FormActions } from '../components/FormActions/FormActions';
 import { Stepper } from '../components/Stepper';
 import { getApplicationNumberAtom, getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
@@ -31,7 +31,7 @@ const widgets: RegistryWidgetsType = {
 type RJSFFormContainerProps = {
   initialFormData: any,
   schema: RJSFSchema,
-  submitData: (data: IChangeEvent) => void,
+  submitData: (data: IChangeEvent) => boolean,
   uiSchema: UiSchema,
 };
 
@@ -73,6 +73,12 @@ export const RJSFFormContainer = ({
     2000,
   );
 
+  /**
+   * React to errors in the form.
+   *
+   * @param {array} errors - RJSF validation errors
+   * @return {void}
+   */
   const onError = (errors: RJSFValidationError[]) => {
     const keyedErrors = keyErrorsByStep(errors, steps);
     const [currentStepIndex] = readCurrentStep();
@@ -84,6 +90,11 @@ export const RJSFFormContainer = ({
     }
   };
 
+  /**
+   * Function that can be called to imperatively validate the form.
+   *
+   * @return {object} - validation result
+   */
   const validatePartialForm = () => {
     const data = formRef.current?.state.formData;
     formRef.current?.validateForm();
@@ -91,17 +102,32 @@ export const RJSFFormContainer = ({
     return formRef.current?.validate(data);
   };
 
+  /**
+   * Transforms RJSF-generated errors.
+   *
+   * @param {array} errors - RJSF validation errors
+   * @return {array} - modified and filtered errors
+   */
   const transformErrors: ErrorTransformer = (errors) => {
     const reachedStep = readReachedStep();
     const keyedErrors = keyErrorsByStep(errors, steps);
 
     const errorsToShow = keyedErrors
-      // Workaround for ATV implementation compatibility issue
-      .filter(([index, { message, params }]) => !(message === 'must be object' && params?.type === 'object'))
       .filter(([index]) => index <= reachedStep).map(([index, error]) => error);
     setErrors(errorsToShow);
 
     return errorsToShow;
+  };
+
+  /**
+   * Save daraft application.
+   *
+   * @return {boolean} - Submit success indicator
+   */
+  const saveDraft = () => {
+    const data = formRef.current?.state.formData;
+
+    return submitData(data);
   };
 
   return (
@@ -123,7 +149,7 @@ export const RJSFFormContainer = ({
             const passes = formRef.current?.validateForm();
 
             if (passes) {
-              submitData(data);
+              submitData(data.formData);
             }
           }}
           ref={formRef}
@@ -149,7 +175,10 @@ export const RJSFFormContainer = ({
           validator={validator}
           widgets={widgets}
         >
-          <FormActions {...{validatePartialForm}} />
+          <FormActions
+            saveDraft={saveDraft}
+            validatePartialForm={validatePartialForm}
+          />
         </Form>
       </div>
     </>

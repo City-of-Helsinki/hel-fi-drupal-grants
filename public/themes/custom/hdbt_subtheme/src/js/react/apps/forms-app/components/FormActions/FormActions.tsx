@@ -1,12 +1,15 @@
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Button, ButtonPresetTheme, ButtonVariant, IconDownloadCloud, IconTrash } from 'hds-react';
+import { Button, ButtonPresetTheme, ButtonVariant, IconTrash } from 'hds-react';
 import { ValidationData } from '@rjsf/utils';
-import { getCurrentStepAtom, getErrorsAtom, getStepsAtom, setStepAtom } from '../store';
-import { keyErrorsByStep } from '../utils';
+import { getCurrentStepAtom, getErrorsAtom, getStepsAtom, setStepAtom } from '../../store';
+import { keyErrorsByStep } from '../../utils';
+import { SaveDraftButton } from './SaveDraftButton';
 
 export const FormActions = ({
+  saveDraft,
   validatePartialForm,
 }: {
+  saveDraft: () => boolean,
   validatePartialForm: () => ValidationData<any>|undefined
 }) => {
   const steps = useAtomValue(getStepsAtom);
@@ -41,14 +44,7 @@ export const FormActions = ({
         >
           {Drupal.t('Delete draft')}
         </Button>
-        <Button
-          iconStart={<IconDownloadCloud />}
-          theme={ButtonPresetTheme.Black}
-          type='button'
-          variant={ButtonVariant.Supplementary}
-        >
-          {Drupal.t('Save as draft')}
-        </Button>
+        <SaveDraftButton saveDraft={saveDraft} />
         {
           (currentStepIndex > 0 && currentStepId !== 'ready') &&
           <Button

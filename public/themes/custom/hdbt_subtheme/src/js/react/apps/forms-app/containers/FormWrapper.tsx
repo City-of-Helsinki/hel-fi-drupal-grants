@@ -1,12 +1,12 @@
 // @ts-nocheck
 import useSWRImmutable from 'swr/immutable'
 import { useSetAtom } from 'jotai';
-import { IChangeEvent } from '@rjsf/core';
 import { LoadingSpinner } from 'hds-react';
 import { Suspense } from 'react';
+import { RJSFSchema } from '@rjsf/utils';
 import { RJSFFormContainer } from './RJSFFormContainer';
 import { initializeFormAtom, setApplicationNumberAtom, setSubmitStatusAtom } from '../store';
-import { addApplicantInfoStep, isValidFormResponse } from '../utils';
+import { addApplicantInfoStep, getNestedProperty, isValidFormResponse, setNestedProperty } from '../utils';
 import { getData, initDB } from '../db';
 import { SubmitStates } from '../enum/SubmitStates';
 
@@ -37,12 +37,75 @@ async function fetchFormData(id: string) {
   const formConfig = await formConfigResponse.json();
 
   // @todo decide when we want to use cached data over server data
-  const persistedData = formConfig.form_data ? formConfig.form_data : cachedData;
+  const persistedData = (formConfig.form_data && applicationNumber) ? formConfig.form_data : cachedData;
 
   return {
     ...formConfig,
     persistedData,
   };
+};
+
+/**
+ * Get form paths for dangling arrays in dot notation.
+ *
+ * @param {any} element - current form element
+ * @param {string} prefix - current form element path in dot notation
+ *
+ * @yields {string} - form element path
+ */
+function* iterateFormData(element: any, prefix: string = '') {
+
+  if (typeof element === 'object' && !Array.isArray(element) && element !== null) {
+    // Functional loops mess mess up generator function, so use for - of loop here.
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, value] of Object.entries(element)) {
+        yield* iterateFormData(value, `${prefix}.${key}`);
+    }
+  }
+
+  // Element is an empty array when it should be object
+  if (Array.isArray(element) && element.length === 0) {
+    yield prefix;
+  }
+
+  // Element is array element with empty array as the only element
+  if (
+    Array.isArray(element) &&
+    element.length === 1 &&
+    Array.isArray(element[0]) &&
+    element[0].length === 0
+  ) {
+    yield prefix;
+  }
+};
+
+/**
+ * Fix issue with backend returning arrays instead of empty objects.
+ *
+ * @todo see if this can be done in a less overengineered way
+ *
+ * @param {object} formData - Form data
+ * @param {object} schema - Form schema
+ *
+ * @return {object} - Fixed form data
+ */
+const fixDanglingArrays = (formData: Object<any>, schema: RJSFSchema) => {
+
+  const objectPaths = Array.from(iterateFormData(formData));
+
+  objectPaths.forEach(path => {
+    const schemaDefinition = getNestedProperty(schema.definitions, path);
+
+    if (schemaDefinition && schemaDefinition.type === 'object') {
+      setNestedProperty(formData, path);
+    }
+
+    if (schemaDefinition.type === 'array') {
+      setNestedProperty(formData, path, []);
+    }
+  });
+
+  return formData;
 };
 
 /**
@@ -56,8 +119,9 @@ async function fetchFormData(id: string) {
  */
 const transformData = (data: any) => {
   const {
-    schema: originalSchema,
+    form_data: originalData,
     grants_profile,
+    schema: originalSchema,
     ui_schema: originalUiSchema,
   } = data;
 
@@ -89,6 +153,7 @@ const transformData = (data: any) => {
 
   return {
     ...data,
+    form_data: fixDanglingArrays(originalData, schema),
     schema: {
       ...schema,
       properties: transformedProperties,
@@ -133,12 +198,12 @@ const FormWrapper = ({
     ...transformedData
   });
 
-  const submitData = async (formSubmitEvent: IChangeEvent) => {
+  const submitData = async (submittedData: any): Promise<boolean> => {
     const response = await fetch(`/en/application/${applicationNumber}`, {
       body: JSON.stringify({
         application_number: '',
         application_type_id: applicationNumber,
-        form_data: formSubmitEvent.formData,
+        form_data: submittedData,
         langcode: 'en',
       }),
       headers: {
@@ -155,7 +220,11 @@ const FormWrapper = ({
       const { metadata } = json;
 
       setApplicationNumber(metadata.applicationnumber);
+
+      return true;
     }
+
+    return false;
   };
 
   return (
