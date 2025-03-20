@@ -2,11 +2,13 @@
 import useSWRImmutable from 'swr/immutable'
 import { useSetAtom } from 'jotai';
 import { LoadingSpinner } from 'hds-react';
-import { Suspense } from 'react';
+import { useAtomCallback } from 'jotai/utils';
+import { Suspense, useCallback } from 'react';
 import { RJSFSchema } from '@rjsf/utils';
+
 import { RJSFFormContainer } from './RJSFFormContainer';
-import { initializeFormAtom, setApplicationNumberAtom, setSubmitStatusAtom } from '../store';
-import { addApplicantInfoStep, getNestedProperty, isValidFormResponse, setNestedProperty } from '../utils';
+import { getApplicationNumberAtom, initializeFormAtom, setApplicationNumberAtom, setSubmitStatusAtom } from '../store';
+import { addApplicantInfoStep, getNestedSchemaProperty, isValidFormResponse, setNestedProperty } from '../utils';
 import { getData, initDB } from '../db';
 import { SubmitStates } from '../enum/SubmitStates';
 
@@ -16,12 +18,10 @@ import { SubmitStates } from '../enum/SubmitStates';
  * Checks IndexedDB for existing form data.
  *
  * @param {string} id - The form id
+ * @param {string} applicationNumber - The application number if there is one
  * @return {Promise<object>} - Form settings and existing cached form data
  */
-async function fetchFormData(id: string) {
-  const params = new URLSearchParams(window.location.search);
-  const applicationNumber = params.get('application_number');
-
+async function fetchFormData(id: string, applicationNumber: string) {
   await initDB();
   const formConfigResponse = await fetch(`/application/${id}${applicationNumber ? `/${applicationNumber}` : ''}`, {
     headers: {
@@ -94,14 +94,14 @@ const fixDanglingArrays = (formData: Object<any>, schema: RJSFSchema) => {
   const objectPaths = Array.from(iterateFormData(formData));
 
   objectPaths.forEach(path => {
-    const schemaDefinition = getNestedProperty(schema.definitions, path);
+    const schemaDefinition = getNestedSchemaProperty(schema.definitions, path);
 
     if (schemaDefinition && schemaDefinition.type === 'object') {
-      setNestedProperty(formData, path);
+      setNestedProperty(formData, path, {});
     }
 
-    if (schemaDefinition.type === 'array') {
-      setNestedProperty(formData, path, []);
+    if (schemaDefinition.type === 'array' && schemaDefinition.items[0].type === 'object') {
+      setNestedProperty(formData, path, [{}]);
     }
   });
 
@@ -119,8 +119,8 @@ const fixDanglingArrays = (formData: Object<any>, schema: RJSFSchema) => {
  */
 const transformData = (data: any) => {
   const {
-    form_data: originalData,
     grants_profile,
+    persistedData,
     schema: originalSchema,
     ui_schema: originalUiSchema,
   } = data;
@@ -153,7 +153,7 @@ const transformData = (data: any) => {
 
   return {
     ...data,
-    form_data: fixDanglingArrays(originalData, schema),
+    persistedData: fixDanglingArrays(persistedData, schema),
     schema: {
       ...schema,
       properties: transformedProperties,
@@ -163,7 +163,7 @@ const transformData = (data: any) => {
 };
 
 type FormWrapperProps = {
-    applicationNumber: string
+  applicationTypeId: string
 };
 
 /**
@@ -172,18 +172,27 @@ type FormWrapperProps = {
  * Renders RJSF form.
  *
  * @typedef {object} FormWrapperProps
- * @prop {string} applicationNumber
+ * @prop {string} applicationTypeId
  *
  * @param {FormWrapperProps} props - JSX props
  * @return {JSX.Element} - RJSF form
  */
 const FormWrapper = ({
-  applicationNumber,
+  applicationTypeId,
 }: FormWrapperProps) => {
-  const { data, isLoading, isValidating, error } = useSWRImmutable(applicationNumber, fetchFormData);
+  const params = new URLSearchParams(window.location.search);
+  const applicationNumber = params.get('application_number');
+
+  const { data, isLoading, isValidating, error } = useSWRImmutable(
+    applicationTypeId,
+    (id) => fetchFormData(id, applicationNumber)
+  );
   const initializeForm = useSetAtom(initializeFormAtom);
   const setSubmitStatus = useSetAtom(setSubmitStatusAtom);
   const setApplicationNumber = useSetAtom(setApplicationNumberAtom);
+  const readApplicationNumber = useAtomCallback(
+    useCallback(get => get(getApplicationNumberAtom), [])
+  );
 
   if (isLoading || isValidating) {
     return  <LoadingSpinner />
@@ -195,14 +204,17 @@ const FormWrapper = ({
 
   const transformedData = transformData(data);
   initializeForm({
-    ...transformedData
+    ...transformedData,
+    applicationNumber
   });
 
   const submitData = async (submittedData: any): Promise<boolean> => {
-    const response = await fetch(`/en/application/${applicationNumber}`, {
+    const currentApplicationNumber = readApplicationNumber();
+
+    const response = await fetch(`/en/application/${applicationTypeId}`, {
       body: JSON.stringify({
-        application_number: '',
-        application_type_id: applicationNumber,
+        application_number: currentApplicationNumber || '',
+        application_type_id: applicationTypeId,
         form_data: submittedData,
         langcode: 'en',
       }),
@@ -210,7 +222,7 @@ const FormWrapper = ({
         'Content-Type': 'application/json',
         'X-CSRF-Token': data.token
       },
-      method: 'POST',
+      method: currentApplicationNumber ? 'PATCH' : 'POST',
     });
 
     if (response.ok) {

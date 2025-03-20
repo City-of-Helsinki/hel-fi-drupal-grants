@@ -12,7 +12,7 @@ export const ToastStack = () => {
         autoClose
         label={currentNotification.label}
         onClose={() => shiftNotifications()}
-        position='top-right'
+        position='bottom-right'
         style={{
           zIndex: 100,
         }}

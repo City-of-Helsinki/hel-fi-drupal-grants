@@ -96,7 +96,7 @@ const buildFormSteps = ({
 export const formConfigAtom = atom<FormConfig|undefined>();
 export const formStateAtom = atom<FormState|undefined>();
 export const formStepsAtom = atom<Map<number, FormStep>|undefined>();
-export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData) => {
+export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData, applicationNumber?: string) => {
   const {
     grants_profile: grantsProfile,
     submit_state: submitState,
@@ -106,6 +106,7 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
   const steps = buildFormSteps(formConfig);
   _set(formStepsAtom, state => steps);
   _set(formConfigAtom, (state) => ({
+    applicationNumber,
     grantsProfile,
     ...rest,
     uiSchema,

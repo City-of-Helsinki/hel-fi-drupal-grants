@@ -124,15 +124,20 @@ export const addApplicantInfoStep = (
  * @param {string} path - Point to a nested property in string format
  * @return {any} - Value of nested property or undefined
  */
-export const getNestedProperty = (obj: any, path: string) => {
-  const properties = path.split('.');
+export const getNestedSchemaProperty = (obj: any, path: string) => {
+  const properties = path.split('.').slice(1);
   let current = obj;
 
-  properties.forEach(property => {
+  properties.forEach((property, index) => {
     if (!Object.prototype.hasOwnProperty.call(current, property)) {
       return undefined;
     }
-    current = current[property];
+    if (index === properties.length - 1) {
+      current = current[property];
+    }
+    else {
+      current = current[property]?.properties ?? current[property];
+    }
   });
 
   return current;
