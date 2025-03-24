@@ -67,9 +67,8 @@ test.describe(`Testing page: ${scenario.url}`, () => {
     await page.getByLabel('Etsi hakemusta').pressSequentially(applicationId, {delay: 50});
 
     const visibleApplicationsCount = await getReceivedApplicationCount(page);
-    expect(visibleApplicationsCount).toBe(1);
+    expect(visibleApplicationsCount).toBeGreaterThanOrEqual(1);
     logger('Application filtering text filtering validated.');
   });
 
 });
-

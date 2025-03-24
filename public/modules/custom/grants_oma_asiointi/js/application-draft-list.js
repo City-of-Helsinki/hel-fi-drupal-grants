@@ -1,4 +1,4 @@
-(function ($, Drupal, drupalSettings) {
+(function ($, Drupal) {
   Drupal.behaviors.omaAsiointiFront = {
     attach: function (context, settings) {
       if ($("#oma-asiointi__sent")[0]) {
@@ -53,7 +53,11 @@
 
         });
     }
-    if ($("#oma-asiointi__drafts")[0]) {
+
+    const draftContainer = context.querySelector('#oma-asiointi__drafts');
+    const hasDraftItem = draftContainer && draftContainer.querySelector('li.application-list__item.draft') !== null;
+
+    if (hasDraftItem) {
       const draftsListOptions = {
         pagination: true,
         page: 10,
@@ -62,4 +66,4 @@
     }
   }
 };
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal);

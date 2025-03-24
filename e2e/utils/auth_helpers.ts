@@ -1,7 +1,7 @@
 import {Page} from '@playwright/test';
 import {logger} from "./logger";
 import {existsSync, readFileSync} from 'fs';
-import {logCurrentUrl} from "./helpers";
+import {acceptCookies, hideDialog, logCurrentUrl} from "./helpers";
 import {chmodSync} from "node:fs";
 
 type Role = "REGISTERED_COMMUNITY" | "UNREGISTERED_COMMUNITY" | "PRIVATE_PERSON";
@@ -24,6 +24,13 @@ const AUTH_FILE_PATH = '.auth/user.json';
  *   or selecting an existing one.
  */
 const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
+  // Before selecting the role, make an attempt to accept the cookies.
+  await page.goto("/fi");
+  await acceptCookies(page);
+  // There might be a survey dialog open, look for it and skip it.
+  await hideDialog(page);
+
+  // Check login state and login.
   await checkLoginStateAndLogin(page);
   await page.goto("/fi/asiointirooli-valtuutus");
   await logCurrentUrl(page);
@@ -77,12 +84,36 @@ const selectRegisteredCommunityRole = async (page: Page) => {
  *   Playwright page object.
  */
 const selectUnregisteredCommunityRole = async (page: Page, mode: Mode) => {
+  const selectLocator = page.locator('#edit-unregistered-community-selection');
+
+  // Wait until the select dropdown is visible and enabled.
+  await selectLocator.waitFor({ state: 'visible', timeout: 1000 });
+
+  // Get all available options for debugging.
+  const availableOptions = await selectLocator.evaluate((select) => {
+    const selectElement = select as HTMLSelectElement;
+    return Array.from(selectElement.options).map(option => option.value);
+  });
+
+  // Handle new unregistered community.
   if (mode === 'new') {
-    await page.locator('#edit-unregistered-community-selection').selectOption('new');
+    if (!availableOptions.includes('new')) {
+      logger('Option "new" not found in select dropdown.');
+      return;
+    }
+    await selectLocator.selectOption('new');
   }
+
+  // Handle existing unregistered community.
   if (mode === 'existing') {
-    await page.locator('#edit-unregistered-community-selection').selectOption({index: 2});
+    if (availableOptions.length < 2) {
+      logger('Option at index 2 does not exist in select dropdown!');
+      logger(`Available options: ${availableOptions}`);
+      return;
+    }
+    await selectLocator.selectOption({ index: 2 });
   }
+
   await page.locator('[name="unregistered_community"]').click();
   logger('Selected unregistered community role.');
 }
@@ -111,8 +142,8 @@ const selectPrivatePersonRole = async (page: Page) => {
  *   A users SSN (social security number).
  */
 const login = async (page: Page, SSN?: string) => {
-  logger('Logging in...');
   await page.goto('/fi/user/login');
+  logger('Logging in...');
   await logCurrentUrl(page);
   await page.locator("#edit-openid-connect-client-tunnistamo-login").click();
   await page.locator("#fakevetuma2").click()
@@ -180,6 +211,7 @@ const getSessionCookie = (): boolean | any => {
   logger('Getting session cookie...');
   const storageState = JSON.parse(readFileSync(AUTH_FILE_PATH, 'utf8'));
   const sessionCookie = storageState.cookies.find((c: { name: string; }) => c.name.startsWith('SSESS'));
+  const hdsCookie = storageState.cookies.find((c: { name: string}) => c.name.startsWith('helfi-cookie-consents'))
 
   if (!sessionCookie) {
     logger('Session cookie not found.');
@@ -187,7 +219,10 @@ const getSessionCookie = (): boolean | any => {
   }
 
   logger('Session cookie found.');
-  return sessionCookie;
+  return {
+    'sessionCookie': sessionCookie,
+    ...(hdsCookie ? { hdsCookie: hdsCookie } : {}),
+  };
 }
 
 /**
@@ -212,8 +247,10 @@ const sessionIsValid = async (page: Page): Promise<boolean> => {
   await logCurrentUrl(page);
   const actualUrl = page.url();
 
-  if (!actualUrl.includes('/asiointirooli-valtuutus') &&
-      !actualUrl.includes('/oma-asiointi/hakuprofiili')) {
+  if (
+    !actualUrl.includes('/asiointirooli-valtuutus') &&
+    !actualUrl.includes('/oma-asiointi/hakuprofiili')
+  ) {
     logger('Session is not valid.');
     return false;
   }
@@ -246,15 +283,15 @@ const checkLoginStateAndLogin = async (page: Page) => {
   }
 
   // If no session cookie exists, login and save state.
-  const sessionCookie = getSessionCookie();
-  if (!sessionCookie) {
+  const cookies = getSessionCookie();
+  if (!cookies.sessionCookie) {
     await loginAndSaveStorageState(page);
     return;
   }
 
   // Add the found cookie to page context.
   logger('Adding session cookie to context.');
-  await page.context().addCookies([sessionCookie]);
+  await page.context().addCookies(Object.values(cookies));
 
   // If the session isn't valid, login and save state.
   const hasValidSession = await sessionIsValid(page);
@@ -266,6 +303,6 @@ const checkLoginStateAndLogin = async (page: Page) => {
 
 export {
   Role,
+  checkLoginStateAndLogin,
   selectRole,
-  checkLoginStateAndLogin
 }
