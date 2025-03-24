@@ -12,10 +12,11 @@ import { AddButtonTemplate, ArrayFieldTemplate, ObjectFieldTemplate, RemoveButto
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { FormActions } from '../components/FormActions/FormActions';
 import { Stepper } from '../components/Stepper';
-import { getApplicationNumberAtom, getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom } from '../store';
+import { getApplicationNumberAtom, getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
 import { ErrorsList } from '../components/ErrorsList';
 import { addData } from '../db';
+import { SubmitStates } from '../enum/SubmitStates';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -53,6 +54,7 @@ export const RJSFFormContainer = ({
   submitData,
   uiSchema,
 }: RJSFFormContainerProps) => {
+  const submitStatus = useAtomValue(getSubmitStatusAtom);
   const steps = useAtomValue(getStepsAtom);
   const formRef = createRef<Form>();
   const readApplicationNumber = useAtomCallback(
@@ -155,6 +157,7 @@ export const RJSFFormContainer = ({
               submitData(data.formData);
             }
           }}
+          readonly={submitStatus !== SubmitStates.unsubmitted}
           ref={formRef}
           schema={schema}
           showErrorList={false}

@@ -81,6 +81,7 @@ export const FileInput = ({
   rawErrors,
   value,
   multiple,
+  readonly,
   required,
   accept,
   name,
@@ -103,6 +104,7 @@ export const FileInput = ({
   return <HDSFileInput
     accept={accept}
     defaultValue={dataUrlsToFiles(value)}
+    disabled={readonly}
     dragAndDrop
     errorText={formatErrors(rawErrors)}
     hideLabel={false}

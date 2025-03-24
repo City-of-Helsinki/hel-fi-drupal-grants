@@ -89,6 +89,7 @@ export const SelectWidget = ({
 }: SelectWidgetProps) => (
   <Select
     id={id}
+    disabled={readonly}
     invalid={Boolean(rawErrors?.length)}
     multiSelect={multiple}
     onBlur={() => null}
