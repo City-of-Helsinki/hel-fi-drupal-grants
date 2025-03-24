@@ -19,7 +19,6 @@ settings:
   label: 'Apply for Grants'
   label_display: '0'
   provider: grants_handler
-  foo: 'Tämä on esimerkkiteksti joka ei varmaankaan näy missään, mutta tähän voidaan halutesssa lisätä jotain tekstiä / elementtejä lohkolle.'
 visibility:
   'entity_bundle:node':
     id: 'entity_bundle:node'
