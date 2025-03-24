@@ -18,7 +18,6 @@ settings:
   label: 'Apply for Grants'
   label_display: visible
   provider: grants_handler
-  foo: ''
 visibility:
   'entity_bundle:node':
     id: 'entity_bundle:node'
