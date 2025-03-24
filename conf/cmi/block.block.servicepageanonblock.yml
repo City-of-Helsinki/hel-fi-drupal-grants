@@ -15,10 +15,9 @@ provider: null
 plugin: grants_handler_service_page_anon_block
 settings:
   id: grants_handler_service_page_anon_block
-  label: 'Hae avustusta'
+  label: 'Apply for Grants'
   label_display: visible
   provider: grants_handler
-  foo: ''
 visibility:
   'entity_bundle:node':
     id: 'entity_bundle:node'
