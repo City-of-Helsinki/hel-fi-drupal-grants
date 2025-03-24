@@ -135,7 +135,10 @@ export const RJSFFormContainer = ({
       <ErrorsList />
       <Stepper formRef={formRef} />
       <div className='form-wrapper'>
-        <StaticStepsContainer formRef={formRef} />
+        <StaticStepsContainer
+          formRef={formRef}
+          schema={schema}
+        />
         <Form
           className='grants-react-form webform-submission-form'
           formData={initialFormData}
