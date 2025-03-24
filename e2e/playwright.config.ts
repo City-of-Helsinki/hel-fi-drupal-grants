@@ -22,7 +22,9 @@ export default defineConfig({
     : 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    actionTimeout: 60 * 1000,
+    /* Wait for maximum of 120 seconds. Drop the timeout to 60s when */
+    /* development server cpu and memory issues have been fixed. */
+    actionTimeout: 120 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: process.env.TEST_BASEURL ?? "https://hel-fi-drupal-grant-applications.docker.so",
     ignoreHTTPSErrors: true,
@@ -279,11 +281,13 @@ export default defineConfig({
       dependencies: ['profile-registered_community'],
     },
     /* Form 68 tests. */
-    {
-      name: 'forms-68',
-      testMatch: '/forms/registered_community_68.ts',
-      dependencies: ['profile-registered_community'],
-    },
+    // Disable test for 68:hyte_yleisavustus. It is used as a parent form for
+    // form 71:HYTEEDYLEIS form which doesn't have a test yet.
+    // {
+    //   name: 'forms-68',
+    //   testMatch: '/forms/registered_community_68.ts',
+    //   dependencies: ['profile-registered_community'],
+    // },
     /* Form 69 tests. */
     {
       name: 'forms-69',

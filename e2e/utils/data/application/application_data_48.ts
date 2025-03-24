@@ -1048,6 +1048,12 @@ const copyForm: FormDataWithRemoveOptionalProps = {
         'edit-muu-liite',
       ],
     },
+    '6_talous': {
+      items: {},
+      itemsToRemove: [
+        'edit-budget-other-cost',
+      ],
+    },
   },
   expectedErrors: {},
 };
@@ -1110,8 +1116,8 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
 /**
  * All data for registered community, keyed with id. Those do not matter.
  *
- * Each keyed formdata in this object will result a new test run for this form.
- *
+ * Each keyed form data in this object will
+ * result a new test run for this form.
  */
 const registeredCommunityApplications_48 = {
   draft: baseForm_48,
@@ -1128,7 +1134,8 @@ const registeredCommunityApplications_48 = {
 /**
  * All data for private persons' applications.
  *
- * Each keyed formdata in this object will result a new test run for this form.
+ * Each keyed form data in this object will
+ * result a new test run for this form.
  */
 const privatePersonApplications_48 = {
   draft: baseFormPrivatePerson_48,

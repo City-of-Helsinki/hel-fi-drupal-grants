@@ -1647,6 +1647,7 @@ function grants_handler_preprocess_grants_handler_completion(&$variables) {
       'url' => Url::fromRoute('grants_oma_asiointi.front'),
       'label' => t('My applications', [], $tOpts),
       'theme_hook_original' => '',
+      'directory' => '',
     ]);
   $variables['viewApplicationLink'] = twig_render_template(
     $theme_path . '/templates/navigation/link-button.html.twig',
@@ -1657,6 +1658,7 @@ function grants_handler_preprocess_grants_handler_completion(&$variables) {
       'url' => Url::fromRoute('grants_handler.view_application', ['submission_id' => $variables["submissionId"]]),
       'label' => t('View application', [], $tOpts),
       'theme_hook_original' => '',
+      'directory' => '',
     ]);
   $variables['printApplicationLink'] = twig_render_template(
     $theme_path . '/templates/navigation/link-button.html.twig',
@@ -1667,6 +1669,7 @@ function grants_handler_preprocess_grants_handler_completion(&$variables) {
       'url' => Url::fromRoute('grants_webform_print.submission_print', ['submission_id' => $variables["submissionId"]]),
       'label' => t('Print application', [], $tOpts),
       'theme_hook_original' => '',
+      'directory' => '',
     ]);
 
   try {
