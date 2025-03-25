@@ -37,7 +37,7 @@ async function fetchFormData(id: string, applicationNumber: string) {
   const formConfig = await formConfigResponse.json();
 
   // @todo decide when we want to use cached data over server data
-  const persistedData = /* (formConfig.form_data && applicationNumber) ? formConfig.form_data : */ cachedData;
+  const persistedData = (formConfig.form_data && applicationNumber) ? formConfig.form_data : cachedData;
 
   return {
     ...formConfig,
