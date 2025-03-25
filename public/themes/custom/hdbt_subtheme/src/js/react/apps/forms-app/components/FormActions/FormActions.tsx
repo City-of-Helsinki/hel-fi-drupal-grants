@@ -1,6 +1,7 @@
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Button, ButtonPresetTheme, ButtonVariant } from 'hds-react';
 import { ValidationData } from '@rjsf/utils';
+import { SyntheticEvent } from 'react';
 import { getCurrentStepAtom, getErrorsAtom, getStepsAtom, setStepAtom } from '../../store';
 import { keyErrorsByStep } from '../../utils';
 import { SaveDraftButton } from './SaveDraftButton';
@@ -17,7 +18,9 @@ export const FormActions = ({
   const errors = useAtomValue(getErrorsAtom);
   const setStep = useSetAtom(setStepAtom);
 
-  const nextPageAction = () => {
+  const nextPageAction = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
     const validateResult = validatePartialForm();
 
     if (!validateResult) {
