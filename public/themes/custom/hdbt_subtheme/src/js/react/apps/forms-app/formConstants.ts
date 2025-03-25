@@ -84,13 +84,13 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
         properties: {
           contact_person: {
             title: 'Yhteyshenkilö',
+            minLength: 1,
             type: stringType,
-            default: ''
           },
           contact_person_phone_number: {
             title: 'Puhelinnumero',
+            minLength: 1,
             type: stringType,
-            default: ''
           }
         },
         required: ['contact_person', 'contact_person_phone_number']
