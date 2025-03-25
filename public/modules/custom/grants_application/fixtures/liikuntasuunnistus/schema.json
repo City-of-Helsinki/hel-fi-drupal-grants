@@ -1,6 +1,7 @@
 {
   "definitions": {
     "orienteering_maps": {
+      "required": ["acting_year"],
       "type": "object",
       "properties": {
         "acting_year": {
@@ -95,6 +96,32 @@
           ]
         }
       }
+    },
+    "attachments_page": {
+      "type": "object",
+      "properties": {
+        "attachments_section": {
+          "title": "Liitteet",
+          "type": "object",
+          "properties": {
+            "other_attachment_fieldset": {
+              "title": "Muu liite",
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "Liitetiedosto",
+                  "format": "data-url",
+                  "type": "string"
+                },
+                "file_description": {
+                  "title": "Liitteen kuvaus",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "title": "Liikunta, suunnistuskartta-avustushakemus",
@@ -105,6 +132,11 @@
       "title": "Avustustiedot",
       "type": "object",
       "$ref": "#/definitions/orienteering_maps"
+    },
+    "attachments": {
+      "title": "Liitteet",
+      "type": "object",
+      "$ref": "#/definitions/attachments_page"
     }
   }
 }

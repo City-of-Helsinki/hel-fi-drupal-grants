@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * Install hooks.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_install().
+ */
+function grants_application_install($is_syncing) : void {
+  grants_application_update_rest_permissions();
+}
+
+/**
+ * Update user permissions.
+ */
+function grants_application_update_rest_permissions(): void {
+  $config_factory = \Drupal::configFactory();
+  $permissions = [
+    'rest.resource.application_rest_resource' => [
+      'methods' => ['GET', 'POST', 'PATCH'],
+    ],
+  ];
+
+  $role = 'user.role.helsinkiprofiili';
+  $role = $config_factory->getEditable($role);
+  $raw_data = $role->getRawData();
+
+  foreach ($permissions as $configKey => $options) {
+    $key = explode('.', $configKey);
+    $key = end($key);
+
+    $raw_data['dependencies']['config'][] = $configKey;
+    $raw_data['dependencies']['module'][] = 'rest';
+
+    foreach ($options['methods'] as $method) {
+      $method = strtolower($method);
+
+      $raw_data['permissions'][] = "restful $method $key";
+    }
+  }
+
+  $role->setData($raw_data)->save(TRUE);
+}

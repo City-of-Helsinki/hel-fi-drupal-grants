@@ -4,7 +4,6 @@ namespace Drupal\grants_profile;
 
 use Drupal\helfi_atv\AtvDocument;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -22,9 +21,9 @@ class GrantsProfileCache {
   /**
    * Session.
    *
-   * @var \Symfony\Component\HttpFoundation\Session\Session|SessionInterface
+   * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
    */
-  protected Session|SessionInterface $session;
+  protected SessionInterface $session;
 
   /**
    * Constructs a GrantsProfileCache object.
@@ -37,24 +36,12 @@ class GrantsProfileCache {
   }
 
   /**
-   * Set session instance for the service.
-   *
-   * This is used for tests .
-   *
-   * @param \Symfony\Component\HttpFoundation\Session\Session $session
-   *   Session object.
-   */
-  public function setSession(Session $session): void {
-    $this->session = $session;
-  }
-
-  /**
    * Get session.
    *
-   * @return \Symfony\Component\HttpFoundation\Session\Session|SessionInterface
+   * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
    *   Session object
    */
-  public function getSession(): Session|SessionInterface {
+  private function getSession(): SessionInterface {
     if (isset($this->session)) {
       return $this->session;
     }

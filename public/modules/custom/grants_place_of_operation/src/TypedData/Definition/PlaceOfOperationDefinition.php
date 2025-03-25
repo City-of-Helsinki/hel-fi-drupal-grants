@@ -117,6 +117,10 @@ class PlaceOfOperationDefinition extends ComplexDataDefinitionBase {
       $info['free'] = DataDefinition::create('boolean')
         ->setSetting('jsonPath', [
           'free',
+        ])
+        ->setSetting('webformValueExtracter', [
+          'service' => 'grants_place_of_operation.service',
+          'method' => 'convertBooleanToString',
         ]);
 
       $info['totalRent'] = DataDefinition::create('float')

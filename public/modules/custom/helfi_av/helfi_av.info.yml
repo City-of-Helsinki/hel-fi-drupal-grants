@@ -1,0 +1,7 @@
+name: 'Helfi antivirus'
+type: module
+description: 'Provides antivirus service'
+package: 'helfi'
+core_version_requirement: ^10 || ^11
+dependencies:
+  - helfi_api_base

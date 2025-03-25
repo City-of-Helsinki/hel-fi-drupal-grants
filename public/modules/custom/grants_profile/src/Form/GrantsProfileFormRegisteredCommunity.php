@@ -2,18 +2,16 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Link;
-use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\PRHUpdaterService;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
-use Ramsey\Uuid\Uuid;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Profile form.
@@ -23,45 +21,17 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
 
   /**
-   * PRH data updater service.
-   *
-   * @var \Drupal\grants_profile\PRHUpdaterService
-   */
-  protected PRHUpdaterService $prhUpdaterService;
-
-  /**
-   * Form Lock Service.
-   *
-   * @var \Drupal\grants_handler\FormLockService
-   */
-  protected FormLockService $lockService;
-
-  /**
    * PRH data update service class.
    */
   public function __construct(
-    TypedDataManager $typed_data_manager,
+    TypedDataManagerInterface $typed_data_manager,
     GrantsProfileService $grantsProfileService,
-    Session $session,
-    PRHUpdaterService $prhUpdaterService,
-    FormLockService $lockService,
+    SessionInterface $session,
+    UuidInterface $uuid,
+    protected PRHUpdaterService $prhUpdaterService,
+    protected FormLockService $lockService,
   ) {
-    parent::__construct($typed_data_manager, $grantsProfileService, $session);
-    $this->prhUpdaterService = $prhUpdaterService;
-    $this->lockService = $lockService;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('typed_data_manager'),
-      $container->get('grants_profile.service'),
-      $container->get('session'),
-      $container->get('grants_profile.prh_updater_service'),
-      $container->get('grants_handler.form_lock_service'),
-    );
+    parent::__construct($typed_data_manager, $grantsProfileService, $session, $uuid);
   }
 
   /**
@@ -350,54 +320,6 @@ later when completing the grant application.',
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $formState) {
-
-    $storage = $formState->getStorage();
-    if (!isset($storage['grantsProfileData'])) {
-      $this->messenger()->addError($this->t('grantsProfileData not found!', [], $this->tOpts));
-      return;
-    }
-
-    $grantsProfileData = $storage['grantsProfileData'];
-
-    $profileDataArray = $grantsProfileData->toArray();
-
-    try {
-      $success = $this->grantsProfileService->saveGrantsProfile($profileDataArray);
-    }
-    catch (\Exception $e) {
-      $success = FALSE;
-      $this->logger('grants_profile')
-        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
-    }
-
-    $applicationSearchLink = Link::createFromRoute(
-      $this->t('Application search', [], $this->tOpts),
-      'view.application_search_search_api.search_page',
-      [],
-      [
-        'attributes' => [
-          'class' => 'bold-link',
-        ],
-      ]);
-
-    if ($success !== FALSE) {
-      $this->messenger()
-        ->addStatus(
-          $this->t(
-            'Your profile information has been saved. You can go to the application via the @link.',
-            [
-              '@link' => $applicationSearchLink->toString(),
-            ],
-            $this->tOpts));
-    }
-
-    $formState->setRedirect('grants_profile.show');
-  }
-
-  /**
    * Add address bits in separate method to improve readability.
    *
    * @param array $form
@@ -437,8 +359,8 @@ later when completing the grant application.',
         $address = $address['address'];
       }
       // Make sure we have proper UUID as address id.
-      if (!isset($address['address_id']) || !$this->grantsProfileService->isValidUuid($address['address_id'])) {
-        $address['address_id'] = Uuid::uuid4()->toString();
+      if (!isset($address['address_id']) || !$this->isValidUuid($address['address_id'])) {
+        $address['address_id'] = $this->uuid->generate();
       }
 
       $form['addressWrapper'][$delta]['address'] = [
@@ -523,7 +445,7 @@ later when completing the grant application.',
           // We need the delta / id to create delete links in element.
           'address_id' => [
             '#type' => 'hidden',
-            '#value' => Uuid::uuid4()->toString(),
+            '#value' => $this->uuid->generate(),
           ],
           'deleteButton' => [
             '#type' => 'submit',
@@ -602,8 +524,8 @@ later when completing the grant application.',
     foreach ($officialValues as $delta => $official) {
 
       // Make sure we have proper UUID as address id.
-      if (!isset($official['official_id']) || !$this->grantsProfileService->isValidUuid($official['official_id'])) {
-        $official['official_id'] = Uuid::uuid4()->toString();
+      if (!isset($official['official_id']) || !$this->isValidUuid($official['official_id'])) {
+        $official['official_id'] = $this->uuid->generate();
       }
 
       $form['officialWrapper'][$delta]['official'] = [
@@ -685,7 +607,7 @@ later when completing the grant application.',
         ],
         'official_id' => [
           '#type' => 'hidden',
-          '#value' => Uuid::uuid4()->toString(),
+          '#value' => $this->uuid->generate(),
         ],
         'deleteButton' => [
           '#type' => 'submit',

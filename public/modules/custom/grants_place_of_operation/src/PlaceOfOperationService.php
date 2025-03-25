@@ -194,4 +194,23 @@ class PlaceOfOperationService {
     return $retval;
   }
 
+  /**
+   * Convert the item value from item array to a string.
+   *
+   * This is used to convert boolean values to 'yes' or 'no'.
+   * See: PlaceOfOperationComposite.php, "Free" element.
+   *
+   * @param array $item
+   *   The item array.
+   *
+   * @return string|null
+   *   Returns the value as a string.
+   */
+  public function convertBooleanToString(array $item): ?string {
+    if (!isset($item['value'])) {
+      return NULL;
+    }
+    return $item['value'] ? 'yes' : 'no';
+  }
+
 }

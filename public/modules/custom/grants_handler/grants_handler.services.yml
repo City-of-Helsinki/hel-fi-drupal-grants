@@ -36,6 +36,7 @@ services:
         '@helfi_helsinki_profiili.userdata',
         '@logger.factory',
     ]
+  Drupal\grants_handler\FormLockService: '@grants_handler.form_lock_service'
 
   grants_handler.force_company_authorisation:
     class: Drupal\grants_handler\EventSubscriber\ForceCompanyAuthorisationSubscriber

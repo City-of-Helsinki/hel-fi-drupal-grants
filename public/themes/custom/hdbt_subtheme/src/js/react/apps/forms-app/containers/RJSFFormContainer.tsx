@@ -1,19 +1,22 @@
 import Form, { IChangeEvent } from '@rjsf/core';
 import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
-import React, { createRef, useCallback, useState } from 'react';
+import React, { createRef, useCallback } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
+import { useDebounceCallback } from 'usehooks-ts';
+
+import { FileInput } from '../components/FileInput';
 import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
 import { AddButtonTemplate, ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
 import { StaticStepsContainer } from './StaticStepsContainer';
-import { FormActions } from '../components/FormActions';
+import { FormActions } from '../components/FormActions/FormActions';
 import { Stepper } from '../components/Stepper';
-import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom } from '../store';
+import { getApplicationNumberAtom, getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
 import { ErrorsList } from '../components/ErrorsList';
-import { addData, getData } from '../db';
-import { useDebounceCallback } from 'usehooks-ts';
+import { addData } from '../db';
+import { SubmitStates } from '../enum/SubmitStates';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -23,12 +26,13 @@ const widgets: RegistryWidgetsType = {
   SelectWidget,
   TextareaWidget: TextArea,
   TextWidget: TextInput,
+  FileWidget: FileInput,
 };
 
 type RJSFFormContainerProps = {
   initialFormData: any,
   schema: RJSFSchema,
-  submitData: (data: IChangeEvent) => void,
+  submitData: (data: IChangeEvent, finalSubmit?: boolean) => boolean,
   uiSchema: UiSchema,
 };
 
@@ -36,13 +40,13 @@ type RJSFFormContainerProps = {
  * Container for the RJSF form.
  *
  * @typedef {object} RJSFFormContainerProps
- * @property {object} initialFormData - The initial data for the form.
- * @property {object} schema - The schema for the form.
- * @property {function} submitData - The function to call when the form is submitted.
- * @property {object} uiSchema - The uiSchema for the form.
+ * @prop {object} initialFormData - The initial data for the form.
+ * @prop {object} schema - The schema for the form.
+ * @prop {function} submitData - The function to call when the form is submitted.
+ * @prop {object} uiSchema - The uiSchema for the form.
  *
- * @param {RJSFFormContainerProps} props
- * @returns {JSX.Element}
+ * @param {RJSFFormContainerProps} props - JSX props
+ * @return {JSX.Element} - Element that renders
  */
 export const RJSFFormContainer = ({
   initialFormData,
@@ -50,14 +54,12 @@ export const RJSFFormContainer = ({
   submitData,
   uiSchema,
 }: RJSFFormContainerProps) => {
-  const persistFormState = useDebounceCallback(
-    (data: IChangeEvent) => {
-      addData(data.formData);
-    },
-    2000,
-  );
+  const submitStatus = useAtomValue(getSubmitStatusAtom);
   const steps = useAtomValue(getStepsAtom);
   const formRef = createRef<Form>();
+  const readApplicationNumber = useAtomCallback(
+    useCallback(get => get(getApplicationNumberAtom), [])
+  );
   const readCurrentStep = useAtomCallback(
     useCallback(get =>  get(getCurrentStepAtom), [])
   );
@@ -66,7 +68,19 @@ export const RJSFFormContainer = ({
   );
   const setErrors = useSetAtom(setErrorsAtom);
 
+  const browserCacheData = useDebounceCallback(
+    (data: IChangeEvent) => {
+      addData(data.formData, readApplicationNumber() || '58');
+    },
+    2000,
+  );
 
+  /**
+   * React to errors in the form.
+   *
+   * @param {array} errors - RJSF validation errors
+   * @return {void}
+   */
   const onError = (errors: RJSFValidationError[]) => {
     const keyedErrors = keyErrorsByStep(errors, steps);
     const [currentStepIndex] = readCurrentStep();
@@ -78,6 +92,11 @@ export const RJSFFormContainer = ({
     }
   };
 
+  /**
+   * Function that can be called to imperatively validate the form.
+   *
+   * @return {object} - validation result
+   */
   const validatePartialForm = () => {
     const data = formRef.current?.state.formData;
     formRef.current?.validateForm();
@@ -85,14 +104,32 @@ export const RJSFFormContainer = ({
     return formRef.current?.validate(data);
   };
 
+  /**
+   * Transforms RJSF-generated errors.
+   *
+   * @param {array} errors - RJSF validation errors
+   * @return {array} - modified and filtered errors
+   */
   const transformErrors: ErrorTransformer = (errors) => {
     const reachedStep = readReachedStep();
     const keyedErrors = keyErrorsByStep(errors, steps);
 
-    const errorsToShow = keyedErrors.filter(([index]) => index <= reachedStep).map(([index, error]) => error);
+    const errorsToShow = keyedErrors
+      .filter(([index]) => index <= reachedStep).map(([index, error]) => error);
     setErrors(errorsToShow);
 
     return errorsToShow;
+  };
+
+  /**
+   * Save daraft application.
+   *
+   * @return {boolean} - Submit success indicator
+   */
+  const saveDraft = () => {
+    const data = formRef.current?.state.formData;
+
+    return submitData(data);
   };
 
   return (
@@ -100,13 +137,16 @@ export const RJSFFormContainer = ({
       <ErrorsList />
       <Stepper formRef={formRef} />
       <div className='form-wrapper'>
-        <StaticStepsContainer formRef={formRef} />
+        <StaticStepsContainer
+          formRef={formRef}
+          schema={schema}
+        />
         <Form
           className='grants-react-form webform-submission-form'
           formData={initialFormData}
           method='POST'
           noHtml5Validate
-          onChange={persistFormState}
+          onChange={browserCacheData}
           onError={onError}
           onSubmit={(data, event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
@@ -114,9 +154,10 @@ export const RJSFFormContainer = ({
             const passes = formRef.current?.validateForm();
 
             if (passes) {
-              submitData(data);
+              submitData(data.formData, true);
             }
           }}
+          readonly={submitStatus !== SubmitStates.unsubmitted}
           ref={formRef}
           schema={schema}
           showErrorList={false}
@@ -140,7 +181,10 @@ export const RJSFFormContainer = ({
           validator={validator}
           widgets={widgets}
         >
-          <FormActions {...{validatePartialForm}} />
+          <FormActions
+            saveDraft={saveDraft}
+            validatePartialForm={validatePartialForm}
+          />
         </Form>
       </div>
     </>

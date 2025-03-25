@@ -1,31 +1,28 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  logger.channel.grants_profile:
+    parent: logger.channel_base
+    arguments: ['grants_profile']
+
   grants_profile.user_redirect.service:
     class: Drupal\grants_profile\UserRedirect
     arguments: [ '@request_stack', '@current_user' ]
 
   grants_profile.profile_connector:
     class: Drupal\grants_profile\ProfileConnector
-    arguments: [
-      '@helfi_helsinki_profiili.userdata',
-      '@grants_profile.municipality_service',
-      '@helfi_yjdh.client',
-      '@messenger',
-      '@logger.factory',
-    ]
+  Drupal\grants_profile\ProfileConnector: '@grants_profile.profile_connector'
 
   grants_profile.cache:
     class: Drupal\grants_profile\GrantsProfileCache
     arguments: [ '@request_stack' ]
+  Drupal\grants_profile\GrantsProfileCache: '@grants_profile.cache'
 
   grants_profile.service:
     class: Drupal\grants_profile\GrantsProfileService
-    arguments: [
-        '@helfi_atv.atv_service',
-        '@messenger',
-        '@grants_profile.profile_connector',
-        '@logger.factory',
-        '@grants_profile.cache'
-    ]
+  Drupal\grants_profile\GrantsProfileService: '@grants_profile.service'
 
   grants_profile.municipality_service:
     class: Drupal\grants_profile\MunicipalityService
@@ -34,6 +31,7 @@ services:
       '@keyvalue.database',
       '@logger.factory',
     ]
+  Drupal\grants_profile\MunicipalityService: '@grants_profile.municipality_service'
 
   grants_profile.prh_updater_service:
     class: Drupal\grants_profile\PRHUpdaterService
@@ -42,6 +40,7 @@ services:
       '@grants_profile.profile_connector',
       '@grants_profile.service'
     ]
+  Drupal\grants_profile\PRHUpdaterService: '@grants_profile.prh_updater_service'
 
   grants_profile.route_subscriber:
     class: Drupal\grants_profile\Routing\RouteSubscriber

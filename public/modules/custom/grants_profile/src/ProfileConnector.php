@@ -2,27 +2,19 @@
 
 namespace Drupal\grants_profile;
 
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\helfi_yjdh\Exception\YjdhException;
 use Drupal\helfi_yjdh\YjdhClient;
-use Ramsey\Uuid\Uuid;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Helper service to handle connections for Yjdh and HelsinkiProfiili.
  */
 class ProfileConnector {
-
-
-  /**
-   * Log errors.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelInterface
-   */
-  protected LoggerChannelInterface $logger;
 
   /**
    * Constructs a ProfileConnector object.
@@ -35,17 +27,22 @@ class ProfileConnector {
    *   Access to yjdh data.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Messenger service.
-   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
-   *   Logger channel factory.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   Logger channel.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   Uuid generator.
    */
   public function __construct(
+    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     protected HelsinkiProfiiliUserData $helsinkiProfiili,
     protected MunicipalityService $municipalityService,
+    #[Autowire(service: 'helfi_yjdh.client')]
     protected YjdhClient $yjdhClient,
     protected MessengerInterface $messenger,
-    protected LoggerChannelFactoryInterface $loggerChannelFactory,
+    #[Autowire(service: 'logger.channel.grants_profile')]
+    protected LoggerInterface $logger,
+    protected UuidInterface $uuid,
   ) {
-    $this->logger = $loggerChannelFactory->get('ProfileConnector');
   }
 
   /**
@@ -276,7 +273,7 @@ class ProfileConnector {
         'ownerSsn' => NULL,
         'confirmationFileName' => NULL,
         'confirmationFile' => NULL,
-        'bank_account_id' => Uuid::uuid4()->toString(),
+        'bank_account_id' => $this->uuid->generate(),
       ];
 
       $profileContent['officials'][0] = [

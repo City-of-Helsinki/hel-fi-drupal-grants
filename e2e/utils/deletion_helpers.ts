@@ -63,7 +63,7 @@ const deleteDraftApplication = async (formKey: string, page: Page, formDetails: 
  * This function deletes a draft application by:
  * 1. Navigating to the submission URL.
  * 2. Clicking the "Delete draft" button.
- * 3. Accepting the dialog popup.
+ * 3. Waiting for a possible dialog and accepting it.
  * 4. Waiting for a redirect to "Oma asiointi".
  * 5. Checking that a "Luonnos poistettu" message is displayed.
  *
@@ -79,9 +79,14 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string, appli
   await logCurrentUrl(page);
   await page.waitForURL('**/muokkaa');
   await page.locator('#webform-button--delete-draft').click();
-  page.once('dialog', async dialog => {
+
+  // There has been a dialog to verify the deletion, but it seems to be
+  // removed. However, if it still exists in some cases try to accept it.
+  try {
+    const dialog = await page.waitForEvent('dialog', { timeout: 1000 });
     await dialog.accept();
-  });
+  } catch (error) {}
+
   await logCurrentUrl(page);
   await page.waitForURL('/fi/oma-asiointi');
   await validateDeletionNotification(page, 'Submission URL.', applicationId);

@@ -2,20 +2,20 @@
 
 namespace Drupal\grants_profile\Form;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\TypedData\ComplexDataInterface;
+use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\Core\Url;
 use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileUnregisteredCommunityDefinition;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use GuzzleHttp\Exception\GuzzleException;
-use Ramsey\Uuid\Uuid;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Profile form.
@@ -27,27 +27,6 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
   use StringTranslationTrait;
 
   /**
-   * Drupal\Core\TypedData\TypedDataManager definition.
-   *
-   * @var \Drupal\Core\TypedData\TypedDataManager
-   */
-  protected TypedDataManager $typedDataManager;
-
-  /**
-   * Access to grants profile services.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Helsinki profile service.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
-
-  /**
    * Constructs a new GrantsProfileForm object.
    *
    * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
@@ -56,29 +35,20 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
    *   Profile service.
    * @param \Symfony\Component\HttpFoundation\Session\Session $session
    *   Session data.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   Uuid generator.
    * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
    *   Data for Helsinki Profile.
    */
   public function __construct(
-    TypedDataManager $typed_data_manager,
+    TypedDataManagerInterface $typed_data_manager,
     GrantsProfileService $grantsProfileService,
-    Session $session,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    SessionInterface $session,
+    UuidInterface $uuid,
+    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
+    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {
-    parent::__construct($typed_data_manager, $grantsProfileService, $session);
-    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('typed_data_manager'),
-      $container->get('grants_profile.service'),
-      $container->get('session'),
-      $container->get('helfi_helsinki_profiili.userdata')
-    );
+    parent::__construct($typed_data_manager, $grantsProfileService, $session, $uuid);
   }
 
   /**
@@ -295,62 +265,16 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   }
 
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
-  public function submitForm(array &$form, FormStateInterface $formState) {
-
-    $storage = $formState->getStorage();
-    if (!isset($storage['grantsProfileData'])) {
-      $this->messenger()->addError($this->t('grantsProfileData not found!', [], $this->tOpts));
-      return;
-    }
-
-    $grantsProfileData = $storage['grantsProfileData'];
-
+  protected function handleGrantsProfileUpdate(ComplexDataInterface $grantsProfileData): void {
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
-
     $profileDataArray = $grantsProfileData->toArray();
 
-    try {
-      $success = $this->grantsProfileService->saveGrantsProfile($profileDataArray);
-      $selectedRoleData['name'] = $profileDataArray['companyName'];
-      $this->grantsProfileService->setSelectedRoleData($selectedRoleData);
-    }
-    catch (\Exception $e) {
-      $success = FALSE;
-      $this->logger('grants_profile')
-        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
-    }
-    catch (GuzzleException $e) {
-      $success = FALSE;
-      $this->logger('grants_profile')
-        ->error('Grants profile saving failed. Error: @error', ['@error' => $e->getMessage()]);
-    }
+    // Update cached role name.
+    $selectedRoleData['name'] = $profileDataArray['companyName'];
 
-    $applicationSearchLink = Link::createFromRoute(
-      $this->t('Application search', [], $this->tOpts),
-      'view.application_search_search_api.search_page',
-      [],
-      [
-        'attributes' => [
-          'class' => 'bold-link',
-        ],
-      ]);
-
-    if ($success !== FALSE) {
-      $this->messenger()
-        ->addStatus(
-          $this->t(
-            'Your profile information has been saved. You can go to the application via the @link.',
-            [
-              '@link' => $applicationSearchLink->toString(),
-            ],
-            $this->tOpts
-          )
-        );
-    }
-
-    $formState->setRedirect('grants_profile.show');
+    $this->grantsProfileService->setSelectedRoleData($selectedRoleData);
   }
 
   /**
@@ -392,8 +316,8 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
         $address = $address['address'];
       }
       // Make sure we have proper UUID as address id.
-      if (!isset($address['address_id']) || !$this->grantsProfileService->isValidUuid($address['address_id'])) {
-        $address['address_id'] = Uuid::uuid4()->toString();
+      if (!isset($address['address_id']) || !$this->isValidUuid($address['address_id'])) {
+        $address['address_id'] = $this->uuid->generate();
       }
 
       $form['addressWrapper'][$delta]['address'] = [
@@ -480,7 +404,7 @@ One address is mandatory information in your personal information and on the app
           // We need the delta / id to create delete links in element.
           'address_id' => [
             '#type' => 'hidden',
-            '#value' => Uuid::uuid4()->toString(),
+            '#value' => $this->uuid->generate(),
           ],
 
         ],
@@ -534,8 +458,8 @@ One address is mandatory information in your personal information and on the app
     foreach ($officialValues as $delta => $official) {
 
       // Make sure we have proper UUID as address id.
-      if (!isset($official['official_id']) || !$this->grantsProfileService->isValidUuid($official['official_id'])) {
-        $official['official_id'] = Uuid::uuid4()->toString();
+      if (!isset($official['official_id']) || !$this->isValidUuid($official['official_id'])) {
+        $official['official_id'] = $this->uuid->generate();
       }
 
       $form['officialWrapper'][$delta]['official'] = [
@@ -617,7 +541,7 @@ One address is mandatory information in your personal information and on the app
         ],
         'official_id' => [
           '#type' => 'hidden',
-          '#value' => Uuid::uuid4()->toString(),
+          '#value' => $this->uuid->generate(),
         ],
         'deleteButton' => [
           '#type' => 'submit',

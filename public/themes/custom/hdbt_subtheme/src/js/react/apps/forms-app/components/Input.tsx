@@ -7,10 +7,10 @@ import { getAccountsAtom, getAddressesAtom, getOfficialsAtom } from '../store';
 /**
  * Transform raw errors to a more readable format.
  *
- * @param {array|undefned} rawErrors
- * @returns {string} - Resulting error message
+ * @param {array|undefned} rawErrors - Errors from RJSF form
+ * @return {string} - Resulting error message
  */
-const formatErrors = (rawErrors: string[]|undefined) => {
+export const formatErrors = (rawErrors: string[]|undefined) => {
   if (!rawErrors) {
     return undefined;
   }
@@ -89,6 +89,7 @@ export const SelectWidget = ({
 }: SelectWidgetProps) => (
   <Select
     id={id}
+    disabled={readonly}
     invalid={Boolean(rawErrors?.length)}
     multiSelect={multiple}
     onBlur={() => null}
