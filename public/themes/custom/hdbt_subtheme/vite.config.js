@@ -40,7 +40,10 @@ export default defineConfig(({ command, mode }) => {
         },
       },
     },
-    plugins: [analyzer(), react()],
+    plugins: [
+      // analyzer(),
+      react()
+    ],
     publicDir: false,
     resolve: {
       alias: [
