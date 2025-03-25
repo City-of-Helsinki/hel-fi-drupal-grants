@@ -32,7 +32,7 @@ const widgets: RegistryWidgetsType = {
 type RJSFFormContainerProps = {
   initialFormData: any,
   schema: RJSFSchema,
-  submitData: (data: IChangeEvent) => boolean,
+  submitData: (data: IChangeEvent, finalSubmit?: boolean) => boolean,
   uiSchema: UiSchema,
 };
 
@@ -154,7 +154,7 @@ export const RJSFFormContainer = ({
             const passes = formRef.current?.validateForm();
 
             if (passes) {
-              submitData(data.formData);
+              submitData(data.formData, true);
             }
           }}
           readonly={submitStatus !== SubmitStates.unsubmitted}

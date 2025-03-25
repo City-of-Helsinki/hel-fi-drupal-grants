@@ -1,5 +1,5 @@
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Button, ButtonPresetTheme, ButtonVariant, IconTrash } from 'hds-react';
+import { Button, ButtonPresetTheme, ButtonVariant } from 'hds-react';
 import { ValidationData } from '@rjsf/utils';
 import { getCurrentStepAtom, getErrorsAtom, getStepsAtom, setStepAtom } from '../../store';
 import { keyErrorsByStep } from '../../utils';
@@ -36,6 +36,8 @@ export const FormActions = ({
   return (
     <div className='form-actions form-wrapper'>
       <div className='actions'>
+        {/*
+        @todo add back when deleting draft is supported
         <Button
           iconStart={<IconTrash />}
           theme={ButtonPresetTheme.Black}
@@ -43,7 +45,7 @@ export const FormActions = ({
           variant={ButtonVariant.Supplementary}
         >
           {Drupal.t('Delete draft')}
-        </Button>
+        </Button> */}
         <SaveDraftButton saveDraft={saveDraft} />
         {
           (currentStepIndex > 0 && currentStepId !== 'ready') &&

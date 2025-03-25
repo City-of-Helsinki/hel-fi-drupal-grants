@@ -208,7 +208,7 @@ const FormWrapper = ({
     applicationNumber
   });
 
-  const submitData = async (submittedData: any): Promise<boolean> => {
+  const submitData = async (submittedData: any, finalSubmit: boolean = false): Promise<boolean> => {
     const currentApplicationNumber = readApplicationNumber();
 
     const response = await fetch(`/en/application/${applicationTypeId}`, {
@@ -226,17 +226,18 @@ const FormWrapper = ({
     });
 
     if (response.ok) {
-      // @todo read submit state from response
-      setSubmitStatus(SubmitStates.submitted);
       const json = await response.json();
       const { metadata } = json;
 
       setApplicationNumber(metadata.applicationnumber);
-
-      return true;
     }
 
-    return false;
+    if (response.ok && finalSubmit) {
+      // @todo read submit state from response
+      setSubmitStatus(SubmitStates.submitted);
+    }
+
+    return response.ok;
   };
 
   return (
