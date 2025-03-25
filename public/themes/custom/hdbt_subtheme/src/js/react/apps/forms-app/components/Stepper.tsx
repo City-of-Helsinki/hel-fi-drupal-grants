@@ -2,20 +2,34 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { Stepper as HDSStepper, StepState } from 'hds-react';
 import React, { MouseEvent, RefObject, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
-import { FormStep, formStepsAtom, getCurrentStepAtom, getErrorPageIndicesAtom, setStepAtom } from '../store';
+import { FormStep, formStepsAtom, getCurrentStepAtom, getErrorPageIndicesAtom, getSubmitStatusAtom, setStepAtom } from '../store';
+import { SubmitStates } from '../enum/SubmitStates';
 
-const transformSteps = (
+export const transformSteps = (
   steps: Map<number, FormStep>|undefined,
+  submitState: string,
   errorIndices: number[] = [],
 ) => {
   if (!steps) {
     return [];
   }
 
-  return Array.from(steps).map(([index, step]) => ({
-    label: step.label,
-    state: errorIndices.includes(index) ? StepState.attention : StepState.available,
-  }));
+  return Array.from(steps).map(([index, step]) => {
+    const { label } = step;
+    let state;
+
+    if (index === steps.size - 1) {
+      state = submitState === SubmitStates.unsubmitted ? StepState.disabled : StepState.available;
+    }
+    else {
+      state = errorIndices.includes(index) ? StepState.attention : StepState.available;
+    }
+
+    return {
+      label,
+      state,
+    };
+  });
 }
 
 export const Stepper = ({
@@ -28,10 +42,11 @@ export const Stepper = ({
   const errorPageIndices = useAtomValue(getErrorPageIndicesAtom);
   const steps = useAtomValue(formStepsAtom);
   const setStep = useSetAtom(setStepAtom);
-  const transformedSteps = transformSteps(steps, errorPageIndices);
+  const submitState = useAtomValue(getSubmitStatusAtom);
+  const transformedSteps = transformSteps(steps, submitState, errorPageIndices);
 
   useEffect(() => {
-    if (divRef.current) {
+    if (divRef?.current?.scrollIntoView) {
       divRef.current.scrollIntoView();
     }
   }, [divRef, currentIndex])

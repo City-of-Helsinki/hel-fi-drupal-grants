@@ -1,12 +1,16 @@
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Button, ButtonPresetTheme, ButtonVariant, IconDownloadCloud, IconTrash } from 'hds-react';
+import { Button, ButtonPresetTheme, ButtonVariant } from 'hds-react';
 import { ValidationData } from '@rjsf/utils';
-import { getCurrentStepAtom, getErrorsAtom, getStepsAtom, setStepAtom } from '../store';
-import { keyErrorsByStep } from '../utils';
+import { SyntheticEvent } from 'react';
+import { getCurrentStepAtom, getErrorsAtom, getStepsAtom, setStepAtom } from '../../store';
+import { keyErrorsByStep } from '../../utils';
+import { SaveDraftButton } from './SaveDraftButton';
 
 export const FormActions = ({
+  saveDraft,
   validatePartialForm,
 }: {
+  saveDraft: () => boolean,
   validatePartialForm: () => ValidationData<any>|undefined
 }) => {
   const steps = useAtomValue(getStepsAtom);
@@ -14,7 +18,9 @@ export const FormActions = ({
   const errors = useAtomValue(getErrorsAtom);
   const setStep = useSetAtom(setStepAtom);
 
-  const nextPageAction = () => {
+  const nextPageAction = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
     const validateResult = validatePartialForm();
 
     if (!validateResult) {
@@ -33,6 +39,8 @@ export const FormActions = ({
   return (
     <div className='form-actions form-wrapper'>
       <div className='actions'>
+        {/*
+        @todo add back when deleting draft is supported
         <Button
           iconStart={<IconTrash />}
           theme={ButtonPresetTheme.Black}
@@ -40,15 +48,8 @@ export const FormActions = ({
           variant={ButtonVariant.Supplementary}
         >
           {Drupal.t('Delete draft')}
-        </Button>
-        <Button
-          iconStart={<IconDownloadCloud />}
-          theme={ButtonPresetTheme.Black}
-          type='button'
-          variant={ButtonVariant.Supplementary}
-        >
-          {Drupal.t('Save as draft')}
-        </Button>
+        </Button> */}
+        <SaveDraftButton saveDraft={saveDraft} />
         {
           (currentStepIndex > 0 && currentStepId !== 'ready') &&
           <Button

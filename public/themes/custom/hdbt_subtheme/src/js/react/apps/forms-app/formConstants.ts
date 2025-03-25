@@ -1,4 +1,4 @@
-import { RJSFSchema, UiSchema } from '@rjsf/utils';
+import { UiSchema } from '@rjsf/utils';
 import { JSONSchema7Definition, JSONSchema7TypeName } from 'json-schema';
 
 const objectType: JSONSchema7TypeName = 'object';
@@ -84,15 +84,16 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
         properties: {
           contact_person: {
             title: 'Yhteyshenkilö',
+            minLength: 1,
             type: stringType,
-            default: ''
           },
           contact_person_phone_number: {
             title: 'Puhelinnumero',
+            minLength: 1,
             type: stringType,
-            default: ''
           }
-        }
+        },
+        required: ['contact_person', 'contact_person_phone_number']
       },
       community_address: {
         title: 'Osoite',
@@ -149,7 +150,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
         },
       },
     },
-    required: ['applicant_email', 'bank_account', 'community_address'],
+    required: ['applicant_email', 'contact_person', 'bank_account', 'community_address'],
   },
   {
     applicant_info: {

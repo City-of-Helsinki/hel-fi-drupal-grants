@@ -1,6 +1,6 @@
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { FormStep } from './store';
-import { communitySettings, privatePersonSettings } from './formConstants';
+import { communitySettings } from './formConstants';
 
 const regex = /^.([^.]+)/;
 
@@ -76,19 +76,18 @@ export const keyErrorsByStep = (
  *
  * @param {Object} data - Server response
  *
- * @return {[boolean, string|null]} - [isValid, message]
+ * @return {Array} - [isValid, message]
  */
-export const isValidFormResponse = (data: Object): [boolean, string|undefined] => {
-  return [true, undefined];
-};
+export const isValidFormResponse = (data: Object): [boolean, string|undefined] => [true, undefined];
 
 /**
  * Add static applicant info step to form schema.
  *
  * @param {Object} schema - Form schema
+ * @param {Object} uiSchema - Form Ui Schema
  * @param {Object} grantsProfile - Grants profile
  *
- * @return Array - Resulting forma and ui schemas
+ * @return {Array} - Resulting forma and ui schemas
  */
 export const addApplicantInfoStep = (
   schema: RJSFSchema,
@@ -117,3 +116,54 @@ export const addApplicantInfoStep = (
 
   return [transformedSchema, transformedUiSchema];
 };
+
+/**
+ * Get nested property from object with dot notation
+ *
+ * @param {object} obj - Object to traverse
+ * @param {string} path - Point to a nested property in string format
+ * @return {any} - Value of nested property or undefined
+ */
+export const getNestedSchemaProperty = (obj: any, path: string) => {
+  const properties = path.split('.').slice(1);
+  let current = obj;
+
+  properties.forEach((property, index) => {
+    if (!Object.prototype.hasOwnProperty.call(current, property)) {
+      return undefined;
+    }
+    if (index === properties.length - 1) {
+      current = current[property];
+    }
+    else {
+      current = current[property]?.properties ?? current[property];
+    }
+  });
+
+  return current;
+}
+
+/**
+ * Set nested object prroperty with dot notation.
+ *
+ * @param {object} obj - object to manipulate
+ * @param {string} path - path to transform
+ * @param {object|string|array} value - value to set
+ *
+ * @return {void}
+ */
+export const setNestedProperty = (obj: any, path: string, value: any) => {
+  const properties = path.split('.').slice(1);
+  let current = obj;
+
+  properties.forEach((property, index) => {
+    if (index === properties.length - 1) {
+      current[property] = value;
+    } else {
+      if (!Object.prototype.hasOwnProperty.call(current, property)) {
+        current[property] = {};
+      }
+      current = current[property];
+    }
+  });
+}

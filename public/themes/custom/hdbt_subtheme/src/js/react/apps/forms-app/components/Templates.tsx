@@ -1,9 +1,9 @@
 import { ArrayFieldTemplateProps, IconButtonProps, ObjectFieldTemplateProps } from '@rjsf/utils'
 import { Button, ButtonPresetTheme, ButtonVariant, Fieldset } from 'hds-react';
 import { useAtomValue } from 'jotai';
+import { ReactNode } from 'react';
 import { getCurrentStepAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
-import { Children, ReactNode } from 'react';
 
 export const ArrayFieldTemplate = ({
   canAdd,
@@ -13,7 +13,7 @@ export const ArrayFieldTemplate = ({
   schema,
   uiSchema,
 }: ArrayFieldTemplateProps) => {
-  const { description, title } = schema;
+  const { description } = schema;
   const { ArrayFieldItemTemplate } = registry.templates;
 
   const addText = uiSchema && uiSchema['ui:options'] && uiSchema['ui:options'].addText || null; // @ts-ignore{uiSchema: {'ui:options': {}}} = props;
@@ -51,7 +51,7 @@ export const ObjectFieldTemplate = ({
   schema,
   uiSchema,
 }: ObjectFieldTemplateProps) => {
-  const { additionalProperties, description, _isSection, title, _step } = schema;
+  const { description, _isSection, title, _step } = schema;
   const { id: stepId } = useAtomValue(getCurrentStepAtom)[1];
 
   if (idSchema.$id === 'root') {
@@ -128,8 +128,7 @@ export const ButtonTemplate = ({
   registry,
   uiSchema,
   ...props
-}: IconButtonProps) => {
-  return (
+}: IconButtonProps) => (
     <Button
       {...props}
       style={{
@@ -144,26 +143,27 @@ export const ButtonTemplate = ({
       {children as ReactNode & string}
     </Button>
   )
-}
 
 export const AddButtonTemplate = (props: IconButtonProps) => {
-  const addText = props.uiSchema && props.uiSchema['ui:options'] && props.uiSchema['ui:options'].addText || null; // @ts-ignore{uiSchema: {'ui:options': {}}} = props;
+  const { uiSchema } = props;
+  const addText = uiSchema && uiSchema['ui:options'] && uiSchema['ui:options'].addText || null; // @ts-ignore{{'ui:options': {}} = uiSchema;
   return (
     <ButtonTemplate
       {...props}
     >
-      {addText ? addText : Drupal.t('Add')}
+    {addText || Drupal.t('Add')}
     </ButtonTemplate>
   )
 };
 
 export const RemoveButtonTemplate = (props: IconButtonProps) => {
-  const removeText = props.uiSchema && props.uiSchema['ui:options'] && props.uiSchema['ui:options'].removeText || null; // @ts-ignore{uiSchema: {'ui:options': {}}} = props;
+  const { uiSchema } = props;
+  const removeText = uiSchema && uiSchema['ui:options'] && uiSchema['ui:options'].removeText || null; // @ts-ignore{{'ui:options': {}} = uiSchema;
   return (
     <ButtonTemplate
       {...props}
     >
-      {removeText ? removeText : Drupal.t('Remove')}
+      {removeText || Drupal.t('Remove')}
     </ButtonTemplate>
   )
 };

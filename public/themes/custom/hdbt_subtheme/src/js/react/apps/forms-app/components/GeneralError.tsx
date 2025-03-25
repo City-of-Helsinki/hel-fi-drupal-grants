@@ -1,7 +1,6 @@
 import { Notification } from 'hds-react';
 
-export const GeneralError = () => {
-  return (
+export const GeneralError = () => (
     <Notification
       type='error'
       label={Drupal.t('Error')}
@@ -9,4 +8,3 @@ export const GeneralError = () => {
       {Drupal.t('The application ran into an unrecoverable error. Please refresh the page to continue.')}
     </Notification>
   );
-};

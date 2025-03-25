@@ -1,9 +1,18 @@
+import Form from '@rjsf/core';
+import { RefObject } from 'react';
 import { useAtomValue } from 'jotai';
+import { RJSFSchema } from '@rjsf/utils';
+
 import { getCurrentStepAtom } from '../store';
+import { Preview } from '../components/StaticSteps/Preview';
 
 export const StaticStepsContainer = ({
-  formRef
-}: any) => {
+  formRef,
+  schema,
+}: {
+  formRef: RefObject<Form>,
+  schema: RJSFSchema,
+}) => {
   const currentStep = useAtomValue(getCurrentStepAtom)[1];
 
   if (!formRef.current) {
@@ -13,17 +22,13 @@ export const StaticStepsContainer = ({
   switch(currentStep.id) {
     case 'preview':
       return (
-        <div>
-          <pre>
-            {JSON.stringify(formRef.current.state.formData)}
-          </pre>
-        </div>
+        <Preview {...{formRef, schema}} />
       );
     case 'ready':
       return (
         <div>
           <div>Submitted form: </div>
-          <pre>{JSON.stringify(formRef.current.state.formData)}</pre>
+          <Preview {...{formRef, schema}} />
         </div>
       );
     default:

@@ -1,6 +1,7 @@
 {
   "definitions": {
     "orienteering_maps": {
+      "required": ["acting_year"],
       "type": "object",
       "properties": {
         "acting_year": {
