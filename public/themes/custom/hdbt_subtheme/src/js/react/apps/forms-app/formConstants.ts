@@ -150,7 +150,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
         },
       },
     },
-    required: ['applicant_email', 'bank_account', 'community_address'],
+    required: ['applicant_email', 'contact_person', 'bank_account', 'community_address'],
   },
   {
     applicant_info: {
