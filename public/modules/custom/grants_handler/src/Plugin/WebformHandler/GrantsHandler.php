@@ -1402,7 +1402,7 @@ submit the application only after you have provided all the necessary informatio
       // Fix here: https://helsinkisolutionoffice.atlassian.net/browse/AU-545
     }
     $redirectUrl = Url::fromRoute(
-      'grants_oma_asiointi.front',
+      'grants_handler.view_application',
       [
         'attributes' => [
           'data-drupal-selector' => 'application-saving-failed-link',
