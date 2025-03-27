@@ -322,7 +322,10 @@ final class Application extends ResourceBase {
     }
 
     try {
-      $submission = $this->getSubmission($this->userInformationService->getUserData()['sub'], $application_number);
+      $submission = $this->getSubmissionEntity(
+        $this->userInformationService->getUserData()['sub'],
+        $application_number
+      );
     }
     catch(\Exception $e) {
       // Something wrong.
