@@ -29,7 +29,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   fieldable = FALSE,
  *   admin_permission = "administer content",
  *   handlers = {
- *     "access" = "Drupal\node\NodeAccessControlHandler",
+ *     "access" = "Drupal\grants_application\ApplicationSubmissionAccessControlHandler",
  *   }
  * )
  */
@@ -55,6 +55,10 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
     // Not translatable, which language was used to fill the application.
     $fields['langcode'] = BaseFieldDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Language code'))
+      ->setReadOnly(TRUE);
+
+    $fields['application_type_id'] = BaseFieldDefinition::create('integer')
+      ->setLabel(new TranslatableMarkup('Application type id'))
       ->setReadOnly(TRUE);
 
     // {Env-name}-{application-id}-0000000{number-of-submission}.
