@@ -45,3 +45,15 @@ function grants_application_update_rest_permissions(): void {
 
   $role->setData($raw_data)->save(TRUE);
 }
+
+
+/**
+ * Create custom application submission entity.
+ */
+function grants_application_update_9000() {
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $entity_type = $entity_type_manager->getDefinition('application_submission');
+  \Drupal::entityDefinitionUpdateManager()->installEntityType(
+    $entity_type
+  );
+}
