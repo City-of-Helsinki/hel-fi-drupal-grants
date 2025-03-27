@@ -5,9 +5,12 @@ namespace Drupal\grants_application\Plugin\rest\resource;
 use Drupal\Component\Utility\Xss;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
+use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_application\Atv\HelfiAtvService;
+use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Helper;
@@ -76,6 +79,7 @@ final class Application extends ResourceBase {
     private ApplicationNumberService $applicationNumberService,
     private CsrfTokenGenerator $csrfTokenGenerator,
     private LanguageManagerInterface $languageManager,
+    private EntityTypeManagerInterface $entityTypeManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -97,11 +101,15 @@ final class Application extends ResourceBase {
       $container->get(ApplicationNumberService::class),
       $container->get(CsrfTokenGenerator::class),
       $container->get(LanguageManagerInterface::class),
+      $container->get('entity_type.manager'),
     );
   }
 
   /**
    * Responds to entity GET requests.
+   *
+   * If no application number, it's either preview or new submission.
+   * If nothing in database, it's new submission.
    *
    * @param int $application_type_id
    *   The application type id.
@@ -162,16 +170,31 @@ final class Application extends ResourceBase {
       return new JsonResponse($response);
     }
 
-    // @todo Access check.
+    try {
+      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number);
+    }
+    catch (\Exception $e) {
+      // Error.
+      // @todo 403 ord 500 etc.
+      return new JsonResponse([], 500);
+    }
+
+    $response['grants_profile'] = $grants_profile_data;
+    $response['user_data'] = $user_information;
+
+    if (!$submission) {
+      $response['form_data'] = [];
+      return new JsonResponse($response);
+    }
+
     $form_data = [];
-    if ($application_number) {
-      try {
-        $document = $this->atvService->getDocument($application_number);
-        $form_data = $document->getContent() ?? [];
-      }
-      catch (\Throwable $e) {
-        // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
-      }
+
+    try {
+      $document = $this->atvService->getDocument($application_number);
+      $form_data = $document->getContent();
+    }
+    catch (\Throwable $e) {
+      // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
     }
 
     $response['form_data'] = $form_data;
@@ -181,6 +204,8 @@ final class Application extends ResourceBase {
 
   /**
    * Post request.
+   *
+   * Create a new submission.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The json response.
@@ -208,10 +233,10 @@ final class Application extends ResourceBase {
     }
 
     if (!$settings->isApplicationOpen()) {
+      // @todo Uncomment.
       // Return new JsonResponse([], 403);.
     }
 
-    // @todo Validate form data against schema maybe.
     $application_uuid = $this->uuid->generate();
 
     // @todo Application number generation must match the existing shenanigans.
@@ -252,6 +277,18 @@ final class Application extends ResourceBase {
 
     try {
       $this->atvService->saveNewDocument($document);
+      $now = time();
+      ApplicationSubmission::create([
+        // 'uuid' => $this->uuid->generate(),
+        'sub' => $sub,
+        'langcode' => $langcode,
+        'draft' => TRUE,
+        'application_type_id' => $application_type_id,
+        'application_number' => $application_number,
+        'created' => $now,
+        'changed' => $now,
+      ])
+        ->save();
     }
     catch (\Exception | GuzzleException $e) {
       // Saving failed.
@@ -263,6 +300,8 @@ final class Application extends ResourceBase {
 
   /**
    * Responds to entity PATCH requests.
+   *
+   * Update existing submission.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The HTTP response object.
@@ -283,6 +322,14 @@ final class Application extends ResourceBase {
     }
 
     try {
+      $submission = $this->getSubmission($this->userInformationService->getUserData()['sub'], $application_number);
+    }
+    catch(\Exception $e) {
+      // Something wrong.
+      return new JsonResponse([], 500);
+    }
+
+    try {
       $document = $this->atvService->getDocument($application_number);
     }
     catch (\Throwable $e) {
@@ -299,6 +346,9 @@ final class Application extends ResourceBase {
       // @todo Better sanitation.
       $document->setContent(json_decode(Xss::filter(json_encode($form_data)), TRUE));
       $this->atvService->updateExistingDocument($document);
+
+      $submission->setChangedTime(time());
+      $submission->save();
     }
     catch (\Exception $e) {
       // Unable to find the document.
@@ -318,6 +368,31 @@ final class Application extends ResourceBase {
     }
 
     return $collection;
+  }
+
+  /**
+   * Get the application submission.
+   *
+   * @param string $sub
+   *   User uuid.
+   * @param string $application_number
+   *   The application number.
+   *
+   * @return ApplicationSubmission|bool
+   *   The application submission entity.
+   */
+  private function getSubmissionEntity(string $sub, string $application_number): ApplicationSubmission {
+    $ids = \Drupal::entityQuery('application_submission')
+      ->accessCheck(TRUE)
+      ->condition('sub', $sub)
+      ->condition('application_number', $application_number)
+      ->execute();
+
+    if (!$ids) {
+      throw new \Exception('Application not found');
+    }
+
+    return ApplicationSubmission::load(reset($ids));
   }
 
 }
