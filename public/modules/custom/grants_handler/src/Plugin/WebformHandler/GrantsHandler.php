@@ -1426,9 +1426,7 @@ submit the application only after you have provided all the necessary informatio
             )
           );
 
-        $redirectUrl = Url::fromRoute('grants_handler.view_application', [
-          'submission_id' => $this->applicationNumber,
-        ]);
+        $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
       }
       else {
         $redirectUrl = Url::fromRoute(
