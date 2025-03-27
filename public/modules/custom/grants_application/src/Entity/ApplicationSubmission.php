@@ -6,6 +6,7 @@ namespace Drupal\grants_application\Entity;
 
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityChangedInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
@@ -33,7 +34,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   }
  * )
  */
-class ApplicationSubmission extends ContentEntityBase implements ContentEntityInterface {
+class ApplicationSubmission extends ContentEntityBase implements ContentEntityInterface, EntityChangedInterface {
   use EntityChangedTrait;
 
   /**
@@ -43,7 +44,8 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
     $fields = parent::baseFieldDefinitions($entity_type);
 
     // The user uuid coming from profiili.
-    $fields['sub'] = BaseFieldDefinition::create('uuid')
+    $fields['sub'] = BaseFieldDefinition::create('string')
+      ->setRequired(TRUE)
       ->setLabel(new TranslatableMarkup('External user id'))
       ->setReadOnly(TRUE);
 
@@ -65,6 +67,18 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
     $fields['application_number'] = BaseFieldDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Application number'))
       ->setReadOnly(TRUE);
+
+    $fields['created'] = BaseFieldDefinition::create('created')
+      ->setLabel(t('Authored on'));
+
+    $fields['changed'] = BaseFieldDefinition::create('changed')
+      ->setLabel(new TranslatableMarkup('Changed'))
+      ->setDescription(new TranslatableMarkup('The time that the node was last edited.'));
+
+    // We might want to use the same delete after value here as atv uses.
+    $fields['delete_after'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(new TranslatableMarkup('Delete after'))
+      ->setDescription(new TranslatableMarkup('The time that the entity may be deleted.'));
 
     return $fields;
   }
