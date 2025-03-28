@@ -327,7 +327,7 @@ final class Application extends ResourceBase {
         $application_number
       );
     }
-    catch(\Exception $e) {
+    catch (\Exception $e) {
       // Something wrong.
       return new JsonResponse([], 500);
     }
@@ -385,7 +385,9 @@ final class Application extends ResourceBase {
    *   The application submission entity.
    */
   private function getSubmissionEntity(string $sub, string $application_number): ApplicationSubmission {
-    $ids = \Drupal::entityQuery('application_submission')
+    $ids = $this->entityTypeManager
+      ->getStorage('application_submission')
+      ->getQuery()
       ->accessCheck(TRUE)
       ->condition('sub', $sub)
       ->condition('application_number', $application_number)
