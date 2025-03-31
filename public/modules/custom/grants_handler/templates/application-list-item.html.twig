@@ -18,7 +18,9 @@
       </div>
       <div class="application-list__item--number">
         <h4>{{ "Application number"|t({}, {'context': 'grants_handler'})}}</h4>
-        {{ applicationNumber }}
+        <div class="application-list__item--application-number">
+          {{ applicationNumber }}
+        </div>
       </div>
       {% if (errorType == 'NOT_OPEN') %}
         <div class="hds-notification hds-notification--error">
@@ -40,7 +42,9 @@
       </div>
       <div class="application-list__item--number">
         <h4>{{ "Application number"|t({}, {'context': 'grants_handler'})}}</h4>
-        {{ applicationNumber }}
+        <div class="application-list__item--application-number">
+          {{ applicationNumber }}
+        </div>
       </div>
     {% endif %}
   </div>
