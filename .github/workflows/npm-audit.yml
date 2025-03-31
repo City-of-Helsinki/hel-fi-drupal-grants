@@ -1,0 +1,10 @@
+name: Npm audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * 0'  # Run every fortnight on Sunday at 12
+
+jobs:
+  npm_audit:
+    uses: city-of-helsinki/drupal-gh-actions/.github/workflows/npm-audit.yml@main
