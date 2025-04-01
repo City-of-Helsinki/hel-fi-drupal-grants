@@ -100,10 +100,44 @@
     "attachments_page": {
       "type": "object",
       "properties": {
+        "additional_information_section": {
+          "title": "Lisätietoa hakemukseen liittyen",
+          "type": "object",
+          "properties": {
+            "additional_information": {
+              "title": "Lisätiedot",
+              "type": "string"
+            }
+          }
+        },
         "attachments_section": {
           "title": "Liitteet",
           "type": "object",
           "properties": {
+            "attachment_help_text_1": {
+              "title": "",
+              "description": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
+              "type": "null"
+            },
+            "attachment_help_text_2": {
+              "title": "Vaaditut liitteet",
+              "description": "Suunnistuskarttojen valmistuskustannuksiin liittyvät laskut ja kuitit toimitetaan ainoastaan erikseen pyydettäessä.",
+              "type": "null"
+            },
+            "attachment_help_text_3": {
+              "title": "Usean liitteen toimittaminen yhtenä tiedostona",
+              "description": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
+              "type": "null"
+            },
+            "attachment_help_text_4": {
+              "title": "Helsingin kaupungille aiemmin toimitetut liitteet",
+              "description": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
+              "type": "null"
+            },
+            "extra_info": {
+              "title": "Lisäselvitys liitteistä",
+              "type": "string"
+            },
             "other_attachment_fieldset": {
               "title": "Muu liite",
               "type": "object",
