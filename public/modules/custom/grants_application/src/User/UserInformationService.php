@@ -38,14 +38,15 @@ class UserInformationService {
    * @todo Figure out what this data actually is
    * and document it here.
    *
-   * @return array
+   * @return GrantsProfile
    *   The grants profile.
    */
-  public function getGrantsProfileContent(): array {
+  public function getGrantsProfileContent(): GrantsProfile {
     // @todo Grants profile should to be a value object,
     // to make it more obvious what it contains.
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-    return $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
+    $data = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
+    return new GrantsProfile($data);
   }
 
   /**
@@ -53,6 +54,7 @@ class UserInformationService {
    *
    * @todo Figure out what this actually is
    * and document it here.
+   * Original code uses $selectedCompany.
    *
    * @return array
    *   Array containing selected company data.
@@ -101,7 +103,9 @@ class UserInformationService {
   }
 
   /**
-   * Get the applicant information.
+   * Get applicant information.
+   *
+   * Original implementation: ApplicationInitService.
    *
    * @todo Figure out what this actually is
    * and refactor.
