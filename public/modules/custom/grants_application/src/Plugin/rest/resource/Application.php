@@ -5,11 +5,11 @@ namespace Drupal\grants_application\Plugin\rest\resource;
 use Drupal\Component\Utility\Xss;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
-use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_application\Atv\HelfiAtvService;
+use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
@@ -65,6 +65,8 @@ final class Application extends ResourceBase {
    *   The csrf token generator.
    * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
    *   The language manager.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager.
    */
   public function __construct(
     array $configuration,
@@ -80,6 +82,7 @@ final class Application extends ResourceBase {
     private CsrfTokenGenerator $csrfTokenGenerator,
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
+    private Avus2Mapper $avus2Mapper,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -102,6 +105,7 @@ final class Application extends ResourceBase {
       $container->get(CsrfTokenGenerator::class),
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
+      $container->get(Avus2Mapper::class),
     );
   }
 
@@ -147,6 +151,7 @@ final class Application extends ResourceBase {
       ...$settings->toArray(),
     ];
 
+    // @todo Maybe separate preview endpoint.
     // Allow previewing for anonymous user.
     // @phpstan-ignore-next-line
     if (\Drupal::currentUser()->isAnonymous()) {
@@ -162,7 +167,7 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    $response['grants_profile'] = $grants_profile_data;
+    $response['grants_profile'] = $grants_profile_data->toArray();
     $response['user_data'] = $user_information;
 
     // New form with only user data.
@@ -179,6 +184,7 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    // @todo maybe sanitize the unused & sensitive data.
     $response['grants_profile'] = $grants_profile_data;
     $response['user_data'] = $user_information;
 
@@ -222,7 +228,11 @@ final class Application extends ResourceBase {
       'application_number' => $application_number,
       'langcode' => $langcode,
       'form_data' => $form_data,
+      'draft' => $draft,
     ] = $content;
+
+    // @todo Maybe separate draft and non-draft submissions.
+    $draft = $draft ?? TRUE;
 
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
@@ -273,7 +283,22 @@ final class Application extends ResourceBase {
     );
 
     // @todo Better sanitation.
-    $document->setContent(json_decode(Xss::filter(json_encode($form_data ?? [])), TRUE));
+    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
+    $document_data = ['form_data' => $sanitized_data];
+
+    $atv_mapped_data = $this->avus2Mapper->mapApplicationData(
+      $form_data,
+      $user_data,
+      $selected_company,
+      $this->userInformationService->getUserProfileData(),
+      $this->userInformationService->getGrantsProfileContent(),
+      $settings
+    );
+
+    // Compensation is the original avus2 data.
+    $document_data['compensation'] = $atv_mapped_data;
+
+    $document->setContent($document_data);
 
     try {
       $this->atvService->saveNewDocument($document);
@@ -282,13 +307,18 @@ final class Application extends ResourceBase {
         // 'uuid' => $this->uuid->generate(),
         'sub' => $sub,
         'langcode' => $langcode,
-        'draft' => TRUE,
+        'draft' => $draft,
         'application_type_id' => $application_type_id,
         'application_number' => $application_number,
         'created' => $now,
         'changed' => $now,
       ])
         ->save();
+
+      // @todo Send to AVUS2.
+      // @todo Status-logic (draft, submitted etc...).
+      // If document's state is not draft, i guess we cannot update the state any more.
+      // if (!$draft) {}
     }
     catch (\Exception | GuzzleException $e) {
       // Saving failed.
@@ -314,7 +344,11 @@ final class Application extends ResourceBase {
     [
       'application_number' => $application_number,
       'form_data' => $form_data,
+      'draft' => $draft
     ] = $content;
+
+    // @todo Maybe separate draft and non-draft submissions.
+    $draft = $draft ?? TRUE;
 
     if (!$application_number) {
       // Missing application number.
@@ -347,7 +381,14 @@ final class Application extends ResourceBase {
 
     try {
       // @todo Better sanitation.
-      $document->setContent(json_decode(Xss::filter(json_encode($form_data)), TRUE));
+      $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
+      $document_data = ['form_data' => $sanitized_data];
+
+      // $atv_mapped_data = $this->atvMapper->mapData($sanitized_data);
+
+      $document->setContent($document_data);
+      // @todo Always get the events and messages from atv submission before overwriting.
+
       $this->atvService->updateExistingDocument($document);
 
       $submission->setChangedTime(time());
@@ -381,7 +422,7 @@ final class Application extends ResourceBase {
    * @param string $application_number
    *   The application number.
    *
-   * @return ApplicationSubmission|bool
+   * @return \Drupal\grants_application\Entity\ApplicationSubmission
    *   The application submission entity.
    */
   private function getSubmissionEntity(string $sub, string $application_number): ApplicationSubmission {

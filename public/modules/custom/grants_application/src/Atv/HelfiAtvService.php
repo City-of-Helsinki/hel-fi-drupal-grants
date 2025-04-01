@@ -94,7 +94,7 @@ class HelfiAtvService {
   }
 
   /**
-   * Get ATV-document.
+   * Create a new ATV-document.
    *
    * @param string $application_uuid
    *   The uuid.
@@ -118,6 +118,8 @@ class HelfiAtvService {
    *   The company data.
    * @param string|null $applicant_type
    *   The applicant type.
+   * @param bool $isDraft
+   *   Is draft.
    *
    * @return \Drupal\helfi_atv\AtvDocument
    *   A proper ATV-document
@@ -134,11 +136,14 @@ class HelfiAtvService {
     bool $copy,
     array $selected_company,
     ?string $applicant_type = NULL,
+    bool $isDraft = TRUE,
   ): AtvDocument {
 
     $atvDocument = AtvDocument::create([]);
     $atvDocument->setTransactionId($application_number);
 
+    // @todo Application state logic..
+    // $draft = $isDraft ? 'DRAFT' : 'SUBMITTED';
     // @todo Load this from module settings.
     $atvDocument->setStatus('DRAFT');
 

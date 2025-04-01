@@ -31,7 +31,7 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type): ApplicationSubmissionAccessControlHandler|EntityHandlerInterface {
     return new ApplicationSubmissionAccessControlHandler(
       $entity_type,
-      $container->get('Drupal\grants_application\User\UserInformationService'),
+      $container->get(UserInformationService::class),
     );
   }
 
