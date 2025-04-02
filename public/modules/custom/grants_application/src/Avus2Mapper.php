@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_application;
 
-
 use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\User\GrantsProfile;
 
@@ -10,9 +9,6 @@ use Drupal\grants_application\User\GrantsProfile;
  * Access control handler for form submission.
  */
 final class Avus2Mapper {
-
-  public function __construct() {
-  }
 
   /**
    * Map the form data to Avus2 format.
@@ -25,6 +21,10 @@ final class Avus2Mapper {
    *   Selected company data from user service.
    * @param array $user_profile_data
    *   User profile data from user service.
+   * @param \Drupal\grants_application\User\GrantsProfile $grants_profile
+   *   The grants profile.
+   * @param \Drupal\grants_application\Form\FormSettings $form_settings
+   *   The form settings.
    *
    * @return array
    *   Avus2 mapped array with data.
@@ -35,7 +35,7 @@ final class Avus2Mapper {
     array $company_data,
     array $user_profile_data,
     GrantsProfile $grants_profile,
-    FormSettings $form_settings
+    FormSettings $form_settings,
   ): array {
 
     $applicant_type = $company_data['type'];
@@ -50,34 +50,23 @@ final class Avus2Mapper {
     );
 
     // Check LiikuntaSuunnistusDefinition for these values.
-    $data['compensationInfo']['compensationArray'] = [
-      ['ID' => 'subventionType', 'value' => '15', 'valueType' => 'string', 'label' => null],
-      ['ID' => 'amount', 'value' => '0' ,'valueType' => 'float', 'label' => null],
-    ];
-
+    $data['compensationInfo']['compensationArray'] = $this->getCompensationData();
     $data['applicantOfficialsArray'] = $this->getApplicantOfficials($form_data, $grants_profile);
     $data['currentAddressInfoArray'] = $this->getCurrentAddressData($form_data, $grants_profile);
-
-    // Applicationinfoarray/status is super special field.
     $data['applicationInfoArray'] = $this->getApplicationData($form_settings, $form_data);
-
     $data['bankAccountArray'][] = $this->getBankData($form_data);
-
     $data['otherCompensationInfo'] = $this->getOtherCompensation($form_data);
-
     $data['benefitsInfoArray'] = $this->getBenefits();
-
     $data['activitiesInfoArray'][] = $this->getActivities($grants_profile);
-
     $data['additionalInformation'] = $form_data['attachments']['additional_information_section']['additional_information'];
-
     $data['senderInfoArray'] = $this->getSenderInfo($user_data, $user_profile_data['myProfile']['verifiedPersonalInformation']);
-
     $data['orienteeringMapInfo']['orienteeringMapsArray'] = $this->getOrienteeringMaps($form_data);
 
-    // $this->fillSharedData();
-    // $this->fillApplicationSpecificData(&$data);
-
+    // @todo Refactor ^this in some better way.
+    /*
+    $data = $this->fillSharedData(&$data);
+    $this->fillApplicationSpecificData(&$data, $application_type_id);
+     */
     return $data;
   }
 
@@ -86,30 +75,43 @@ final class Avus2Mapper {
    *
    * Original implementation UserInformationService::getApplicantInformation.
    *
+   * @param string $applicant_type
+   *   The applicant type.
+   * @param array $company_data
+   *   The company data.
+   * @param array $form_data
+   *   The form data.
+   * @param \Drupal\grants_application\User\GrantsProfile $grants_profile
+   *   The grants profile.
+   *
    * @return array
    *   The applicant data.
    */
   public function getApplicantData(
     string $applicant_type,
-    array $userdata,
     array $company_data,
-    array $user_profile_data,
     array $form_data,
     GrantsProfile $grants_profile,
   ): array {
-    // @todo Suuunnistushakemus doesn't support applicant type 1 or 3.
-
-    $user_data = match($applicant_type) {
-      'unregistered_community' => $this->getType1($userdata),
-      'registered_community' => $this->getType2($userdata, $company_data, $user_profile_data, $form_data, $grants_profile),
-      'private_person' => $this->getType3($userdata),
+    // @todo Suunnistushakemus doesn't support applicant type 1 or 3.
+    return match($applicant_type) {
+      'unregistered_community' => $this->getType1(),
+      'registered_community' => $this->getType2($company_data, $form_data, $grants_profile),
+      'private_person' => $this->getType3(),
     };
-
-    return $user_data;
   }
 
-  public function getCompensationData($form_data): array {
-    return [];
+  /**
+   * Get compensation data.
+   *
+   * @return array
+   *   The compensation data.
+   */
+  public function getCompensationData(): array {
+    return [
+      ['ID' => 'subventionType', 'value' => '15', 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'amount', 'value' => '0' , 'valueType' => 'float', 'label' => NULL],
+    ];
   }
 
   /**
@@ -117,7 +119,7 @@ final class Avus2Mapper {
    *
    * @param array $form_data
    *   The form data.
-   * @param Drupal\grants_application\User\GrantsProfile $grants_profile
+   * @param \Drupal\grants_application\User\GrantsProfile $grants_profile
    *   The grants profile.
    *
    * @return array
@@ -128,14 +130,37 @@ final class Avus2Mapper {
     $uuid = $form_data['applicant_info']['community_officials']['community_officials'][0]['official'];
 
     $official_data = $grants_profile->getCommunityOfficialByUuid($uuid);
-    $fields = ['name','role','email','phone'];
+    $fields = ['name', 'role', 'email', 'phone'];
 
     foreach ($fields as $field_name) {
       $row = match($field_name) {
-        'name' => ['ID' => $field_name, 'value' => $official_data[$field_name], 'valueType' => 'string', 'label' => 'nimi'],
-        'role' => ['ID' => $field_name, 'value' => $official_data[$field_name], 'valueType' => 'int', 'label' => 'Rooli'],
-        'email' => ['ID' => $field_name, 'value' => $official_data[$field_name], 'valueType' => 'string', 'label' => 'Sähköposti'],
-        'phone' => ['ID' => $field_name, 'value' => $official_data[$field_name], 'valueType' => 'string', 'label' => 'Puhelinnumero'],
+        'name' => [
+          'ID' => $field_name,
+          'value' => $official_data[$field_name],
+          'valueType' => 'string',
+          'label' => 'nimi',
+        ],
+
+        'role' => [
+          'ID' => $field_name,
+          'value' => $official_data[$field_name],
+          'valueType' => 'int',
+          'label' => 'Rooli',
+        ],
+
+        'email' => [
+          'ID' => $field_name,
+          'value' => $official_data[$field_name],
+          'valueType' => 'string',
+          'label' => 'Sähköposti',
+        ],
+
+        'phone' => [
+          'ID' => $field_name,
+          'value' => $official_data[$field_name],
+          'valueType' => 'string',
+          'label' => 'Puhelinnumero',
+        ],
       };
       $data[] = $row;
     }
@@ -143,9 +168,20 @@ final class Avus2Mapper {
     return $data;
   }
 
-  public function getCurrentAddressData($form_data, GrantsProfile $grants_profile): array {
+  /**
+   * Get current address data.
+   *
+   * @param array $form_data
+   *   The form data.
+   * @param \Drupal\grants_application\User\GrantsProfile $grants_profile
+   *   The grants profile.
+   *
+   * @return array
+   *   The current address data.
+   */
+  public function getCurrentAddressData(array $form_data, GrantsProfile $grants_profile): array {
     $data = [];
-    $fields = ['contactPerson','phoneNumber','street','city','postCode','country'];
+    $fields = ['contactPerson', 'phoneNumber', 'street', 'city', 'postCode', 'country'];
 
     $address_array = $grants_profile->getAddressByStreetname($form_data['applicant_info']['community_address']['community_address']);
     $email = $form_data['applicant_info']['applicant_email']['email'];
@@ -156,12 +192,33 @@ final class Avus2Mapper {
       $row = match($field_name) {
         'contactPerson' => ['ID' => $field_name, 'value' => $email, 'valueType' => 'string', 'label' => 'Yhteyshenkilö'],
         'phoneNumber' => ['ID' => $field_name, 'value' => $phone, 'valueType' => 'string', 'label' => 'Puhelinnumero'],
-        'street' => array('ID' => $field_name, 'value' => $address_array[$field_name], 'valueType' => 'string', 'label' => 'Lähiosoite'),
-        'city' => array('ID' => $field_name, 'value' => $address_array[$field_name], 'valueType' => 'string', 'label' => 'Kaupunki'),
-        'postCode' => array('ID' => $field_name, 'value' => $address_array[$field_name], 'valueType' => 'string', 'label' => 'Postinumero'),
+        'street' => [
+          'ID' => $field_name,
+          'value' => $address_array[$field_name],
+          'valueType' => 'string',
+          'label' => 'Lähiosoite',
+        ],
+
+        'city' => [
+          'ID' => $field_name,
+          'value' => $address_array[$field_name],
+          'valueType' => 'string',
+          'label' => 'Kaupunki',
+        ],
+        'postCode' => [
+          'ID' => $field_name,
+          'value' => $address_array[$field_name],
+          'valueType' => 'string',
+          'label' => 'Postinumero',
+        ],
 
         // @todo Check where that country is actually set in original code
-        'country' => array('ID' => $field_name, 'value' => $address_array[$field_name] ?? 'Suomi', 'valueType' => 'string', 'label' => 'Maa'),
+        'country' => [
+          'ID' => $field_name,
+          'value' => $address_array[$field_name] ?? 'Suomi',
+          'valueType' => 'string',
+          'label' => 'Maa',
+        ],
       };
 
       $data[] = $row;
@@ -170,11 +227,22 @@ final class Avus2Mapper {
     return $data;
   }
 
-  public function getApplicationData(FormSettings $form_settings, $form_data): array {
+  /**
+   * Get the application data.
+   *
+   * @param \Drupal\grants_application\Form\FormSettings $form_settings
+   *   The form settings.
+   * @param array $form_data
+   *   The form data.
+   *
+   * @return array
+   *   The application data.
+   */
+  public function getApplicationData(FormSettings $form_settings, array $form_data): array {
     $application_type = $form_settings->toArray()['settings']['application_type'];
     $acting_year = $form_data['orienteering_maps']['acting_year']['acting_year'];
 
-    // @todo Draft is a super special case, don't know how.
+    // Draft is a super special case, it is overwritten by integration.
     return [
       ['ID' => 'applicationType', 'value' => $application_type, 'valueType' => 'string', 'label' => NULL],
       ['ID' => 'status', 'value' => 'DRAFT', 'valueType' => 'string', 'label' => 'Hakemuksen tila'],
@@ -204,7 +272,10 @@ final class Avus2Mapper {
    * Get other compensation.
    *
    * @param array $form_data
+   *   The form data.
+   *
    * @return array[]
+   *   The other compensation.
    */
   public function getOtherCompensation(array $form_data): array {
     return [
@@ -216,17 +287,23 @@ final class Avus2Mapper {
     ];
   }
 
+  /**
+   * Get the benefits.
+   *
+   * @return array
+   *   The benefits.
+   */
   public function getBenefits(): array {
     return [
-      ['ID' => 'loans', 'value' => '','valueType' => 'string', 'label' => NULL],
-      ['ID' => 'premises', 'value' => '','valueType' => 'string', 'label' => NULL],
+      ['ID' => 'loans', 'value' => '', 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'premises', 'value' => '', 'valueType' => 'string', 'label' => NULL],
     ];
   }
 
   /**
+   * Get the activities.
    *
-   *
-   * @param GrantsProfile $grants_profile
+   * @param \Drupal\grants_application\User\GrantsProfile $grants_profile
    *   The grants profile.
    *
    * @return array
@@ -237,12 +314,22 @@ final class Avus2Mapper {
       'ID' => 'businessPurpose',
       'value' => $grants_profile->getBusinessPurpose(),
       'valueType' => 'string',
-      'label' => NULL
+      'label' => NULL,
     ];
   }
 
+  /**
+   * Get the sender information.
+   *
+   * @param array $user_data
+   *   The user data.
+   * @param array $verified_personal_information
+   *   Data taken from GrantsProfileContent, check user info service.
+   *
+   * @return array
+   *   The sender information.
+   */
   public function getSenderInfo(array $user_data, array $verified_personal_information): array {
-    // Avus2key => information array key.
     $fields = [
       'firstname' => 'firstName',
       'lastname' => 'lastName',
@@ -254,8 +341,19 @@ final class Avus2Mapper {
     $data = [];
     foreach ($fields as $field_name => $user_data_field_name) {
       $row = match($field_name) {
-        'firstname', 'lastname', 'personID' => ['ID' => $field_name, 'value' => $verified_personal_information[$user_data_field_name], "valueType" => "string", 'label' => NULL],
-        'userID', 'email' => ['ID' => $field_name, 'value' =>$user_data[$user_data_field_name], "valueType" => "string", 'label' => NULL ],
+        'firstname', 'lastname', 'personID' => [
+          'ID' => $field_name,
+          'value' => $verified_personal_information[$user_data_field_name],
+          "valueType" => "string",
+          'label' => NULL,
+        ],
+
+        'userID', 'email' => [
+          'ID' => $field_name,
+          'value' => $user_data[$user_data_field_name],
+          "valueType" => "string",
+          'label' => NULL,
+        ],
       };
       $data[] = $row;
     }
@@ -266,26 +364,56 @@ final class Avus2Mapper {
   /**
    * Get orienteering maps.
    *
-   * @param $form_data
+   * @param array $form_data
    *   The form data.
    *
    * @return array
    *   The mapped map data.
    */
-  public function getOrienteeringMaps($form_data): array {
+  public function getOrienteeringMaps(array $form_data): array {
     $fields = ['mapName', 'size', 'voluntaryHours', 'cost', 'otherCompensations'];
     $maps = $form_data['orienteering_maps']['orienteering_subvention']['orienteering_maps'];
 
     $data = [];
-    foreach($maps as $map) {
+    foreach ($maps as $map) {
       $mapData = [];
       foreach ($fields as $field_name) {
         $row = match($field_name) {
-          'mapName' => ['ID' => $field_name, 'value' => $map[$field_name], 'valueType' => 'string', 'label' => 'Kartan nimi, sijainti ja karttatyyppi'],
-          'size' => ['ID' => $field_name, 'value' => $map[$field_name], 'valueType' => 'double', 'label' => 'Koko km2'],
-          'voluntaryHours' => ['ID' => $field_name, 'value' => $map[$field_name], 'valueType' => 'float', 'label' => 'Talkootyö tuntia'],
-          'cost' => ['ID' => $field_name, 'value' => $map[$field_name], 'valueType' => 'double', 'label' => 'Kustannukset euroa'],
-          'otherCompensations' => ['ID' => $field_name, 'value' => $map[$field_name], 'valueType' => 'double', 'label' => 'Muilta saadut avustukset euroa'],
+          'mapName' => [
+            'ID' => $field_name,
+            'value' => $map[$field_name],
+            'valueType' => 'string',
+            'label' => 'Kartan nimi,
+             sijainti ja karttatyyppi',
+          ],
+
+          'size' => [
+            'ID' => $field_name,
+            'value' => $map[$field_name],
+            'valueType' => 'double',
+            'label' => 'Koko km2',
+          ],
+
+          'voluntaryHours' => [
+            'ID' => $field_name,
+            'value' => $map[$field_name],
+            'valueType' => 'float',
+            'label' => 'Talkootyö tuntia',
+          ],
+
+          'cost' => [
+            'ID' => $field_name,
+            'value' => $map[$field_name],
+            'valueType' => 'double',
+            'label' => 'Kustannukset euroa',
+          ],
+
+          'otherCompensations' => [
+            'ID' => $field_name,
+            'value' => $map[$field_name],
+            'valueType' => 'double',
+            'label' => 'Muilta saadut avustukset euroa',
+          ],
         };
         $mapData[] = $row;
       }
@@ -295,45 +423,47 @@ final class Avus2Mapper {
     return $data;
   }
 
-
-  private function getType1($userdata): array {
-    // unregistered_community ???
+  /**
+   * Map the unregistered community data.
+   *
+   * @return array
+   *   The user data mapped to Avus2-format.
+   */
+  private function getType1(): array {
+    // Possibly unregistered community.
     $fields = [
       'applicantType',
-      'communityOfficialName',
-      'firstname',
-      'lastname',
-      'socialSecurityNumber',
-      'email',
-      'street',
-      'city',
-      'postCode',
-      'country',
     ];
 
-    return [];
+    $data = [];
+    foreach ($fields as $field_name) {
+      $data[] = $field_name;
+    }
+    return $data;
   }
 
   /**
    * Get registered community data.
    *
-   * @param array $user_data
+   * @param array $company_data
+   *   The company data.
+   * @param array $form_data
+   *   The form data.
+   * @param \Drupal\grants_application\User\GrantsProfile $grants_profile
    *   The user data.
    *
    * @return array
    *   Avus2 -mapped user data.
    */
   private function getType2(
-    array $user_data,
     array $company_data,
-    array $user_profile_data,
     array $form_data,
     GrantsProfile $grants_profile,
   ): array {
     $fields = [
       'applicantType',
       'companyNumber',
-      'registrationDate', // Tää on muodossa d.m.Y !.
+      'registrationDate',
       'foundingYear',
       'home',
       'homePage',
@@ -356,7 +486,6 @@ final class Avus2Mapper {
 
       // Handle the values field by field.
       match($field_name) {
-        // 'applicantType' => $row['value'] = $company_data['type'],
         'applicantType' => $row['value'] = 2,
         'companyNumber' => $row['value'] = $company_data['identifier'],
         'registrationDate' => $row['value'] = $grants_profile->getRegistrationDate(TRUE),
@@ -374,21 +503,25 @@ final class Avus2Mapper {
     return $data;
   }
 
-  private function getType3($userdata): array {
-    // Private person ??
+  /**
+   * The mapper for private person.
+   *
+   * @return array
+   *   Avus2 -mapped user data.
+   */
+  private function getType3(): array {
+    // This might be private person.
     $fields = [
       'applicantType',
-      'firstname',
-      'lastname',
-      'socialSecurityNumber',
-      'email',
-      'street',
-      'city',
-      'postCode',
-      'country',
     ];
 
-    return [];
+    $data = [];
+    foreach ($fields as $field_name) {
+      // @todo Map the private person data.
+      $data[] = $field_name;
+    }
+
+    return $data;
   }
 
 }

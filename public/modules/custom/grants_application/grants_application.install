@@ -49,7 +49,6 @@ function grants_application_update_rest_permissions(): void {
   $role->setData($raw_data)->save(TRUE);
 }
 
-
 /**
  * Create custom application submission entity.
  */

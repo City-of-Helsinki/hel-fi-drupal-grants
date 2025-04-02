@@ -294,8 +294,6 @@ final class Application extends ResourceBase {
 
       // @todo Send to AVUS2.
       // @todo Status-logic (draft, submitted etc...).
-      // If document's state is not draft, i guess we cannot update the state any more.
-      // if (!$draft) {}
     }
     catch (\Exception | GuzzleException $e) {
       // Saving failed.
@@ -321,7 +319,7 @@ final class Application extends ResourceBase {
     [
       'application_number' => $application_number,
       'form_data' => $form_data,
-      'draft' => $draft
+      'draft' => $draft,
     ] = $content;
 
     // @todo Maybe separate draft and non-draft submissions.
@@ -362,10 +360,8 @@ final class Application extends ResourceBase {
       $document_data = ['form_data' => $sanitized_data];
 
       // $atv_mapped_data = $this->atvMapper->mapData($sanitized_data);
-
       $document->setContent($document_data);
       // @todo Always get the events and messages from atv submission before overwriting.
-
       $this->atvService->updateExistingDocument($document);
 
       $submission->setChangedTime(time());

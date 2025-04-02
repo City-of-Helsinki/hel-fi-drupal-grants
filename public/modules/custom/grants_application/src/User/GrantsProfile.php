@@ -15,7 +15,7 @@ class GrantsProfile {
    * @param array $grantsProfileData
    *   The raw data returned from outside system.
    */
-  public function __construct(private array $grantsProfileData){
+  public function __construct(private array $grantsProfileData) {
   }
 
   /**
@@ -80,8 +80,8 @@ class GrantsProfile {
    * city: string,
    * country: string.
    *
-   * @param string $uuid
-   *   The uuid.
+   * @param string $street_name
+   *   The street name.
    *
    * @return array
    *   The official-array.
@@ -176,7 +176,7 @@ class GrantsProfile {
   }
 
   /**
-   * Get the business purpose
+   * Get the business purpose.
    *
    * @return string
    *   The business purpose

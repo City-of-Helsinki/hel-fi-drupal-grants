@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_application\Atv\HelfiAtvService;
+use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
@@ -66,6 +67,8 @@ final class DraftApplication extends ResourceBase {
    *   The language manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
+   * @param \Drupal\grants_application\Avus2Mapper $avus2Mapper
+   *   The Avus2-mapper.
    */
   public function __construct(
     array $configuration,
@@ -81,6 +84,7 @@ final class DraftApplication extends ResourceBase {
     private CsrfTokenGenerator $csrfTokenGenerator,
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
+    private Avus2Mapper $avus2Mapper,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -103,6 +107,7 @@ final class DraftApplication extends ResourceBase {
       $container->get(CsrfTokenGenerator::class),
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
+      $container->get(Avus2Mapper::class),
     );
   }
 
@@ -184,8 +189,6 @@ final class DraftApplication extends ResourceBase {
       'form_data' => $form_data,
     ] = $content;
 
-    $draft = TRUE;
-
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
@@ -207,7 +210,6 @@ final class DraftApplication extends ResourceBase {
 
     try {
       $selected_company = $this->userInformationService->getSelectedCompany();
-      // Helsinkiprofiiliuserdata getuserdata.
       $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
@@ -218,7 +220,6 @@ final class DraftApplication extends ResourceBase {
     $application_title = $settings->toArray()['settings']['title'];
     $application_type = $settings->toArray()['settings']['application_type'];
     $langcode = $langcode ?? $this->languageManager->getCurrentLanguage()->getId();
-    $sub = $user_data['sub'];
 
     $document = $this->atvService->createAtvDocument(
       $application_uuid,
@@ -227,7 +228,7 @@ final class DraftApplication extends ResourceBase {
       $application_type,
       $application_title,
       $langcode,
-      $sub,
+      $user_data['sub'],
       $selected_company['identifier'],
       FALSE,
       $selected_company,
@@ -238,6 +239,10 @@ final class DraftApplication extends ResourceBase {
     $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
     $document_data = ['form_data' => $sanitized_data];
 
+    // @todo This must be moved to correct place,
+    // do we want to map always or just before actually sending ?
+    // The mapped data must be saved to ATV because
+    // the integration wants to write there.
     $atv_mapped_data = $this->avus2Mapper->mapApplicationData(
       $form_data,
       $user_data,
@@ -256,21 +261,15 @@ final class DraftApplication extends ResourceBase {
       $this->atvService->saveNewDocument($document);
       $now = time();
       ApplicationSubmission::create([
-        // 'uuid' => $this->uuid->generate(),
-        'sub' => $sub,
+        'sub' => $user_data['sub'],
         'langcode' => $langcode,
-        'draft' => $draft,
+        'draft' => TRUE,
         'application_type_id' => $application_type_id,
         'application_number' => $application_number,
         'created' => $now,
         'changed' => $now,
       ])
         ->save();
-
-      // @todo Send to AVUS2.
-      // @todo Status-logic (draft, submitted etc...).
-      // If document's state is not draft, i guess we cannot update the state any more.
-      // if (!$draft) {}
     }
     catch (\Exception | GuzzleException $e) {
       // Saving failed.
@@ -296,7 +295,7 @@ final class DraftApplication extends ResourceBase {
     [
       'application_number' => $application_number,
       'form_data' => $form_data,
-      'draft' => $draft
+      'draft' => $draft,
     ] = $content;
 
     // @todo Maybe separate draft and non-draft submissions.
@@ -336,8 +335,9 @@ final class DraftApplication extends ResourceBase {
       $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
       $document_data = ['form_data' => $sanitized_data];
 
-      //$atv_mapped_data = $this->atvMapper->mapData($sanitized_data);
-
+      /*
+      $atv_mapped_data = $this->atvMapper->mapData($sanitized_data);
+       */
       $document->setContent($document_data);
 
       // @todo Always get the events and messages from atv submission before overwriting.
