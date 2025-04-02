@@ -9,7 +9,6 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_application\Atv\HelfiAtvService;
-use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
@@ -28,15 +27,15 @@ use Symfony\Component\Routing\RouteCollection;
  * The application rest resources.
  */
 #[RestResource(
-  id: "application_rest_resource",
+  id: "draft_application_rest_resource",
   label: new TranslatableMarkup("Application"),
   uri_paths: [
-    "canonical" => "/applications/{application_type_id}/{application_number}",
-    "create" => "/applications/{application_type_id}/send/{application_number}",
-    "edit" => "/applications/{application_type_id}/{application_number}",
+    "canonical" => "/applications/{application_type_id}",
+    "create" => "/applications/draft/{application_type_id}",
+    "edit" => "/applications/draft/{application_type_id}/{application_number}",
   ]
 )]
-final class Application extends ResourceBase {
+final class DraftApplication extends ResourceBase {
 
   /**
    * Constructs a Drupal\rest\Plugin\rest\resource\EntityResource object.
@@ -67,8 +66,6 @@ final class Application extends ResourceBase {
    *   The language manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
-   * @param \Drupal\grants_application\Avus2Mapper $avus2Mapper
-   *   The Avus2-mapper.
    */
   public function __construct(
     array $configuration,
@@ -84,7 +81,6 @@ final class Application extends ResourceBase {
     private CsrfTokenGenerator $csrfTokenGenerator,
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
-    private Avus2Mapper $avus2Mapper,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -107,17 +103,25 @@ final class Application extends ResourceBase {
       $container->get(CsrfTokenGenerator::class),
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
-      $container->get(Avus2Mapper::class),
     );
   }
 
   /**
-   * Get an existing application.
+   * {@inheritDoc}
+   */
+  public function routes(): RouteCollection {
+    $collection = parent::routes();
+    foreach ($collection->all() as $route) {
+      $route->addDefaults(['application_number' => NULL]);
+    }
+    return $collection;
+  }
+
+  /**
+   * Get an empty application with initial data.
    *
    * @param int $application_type_id
    *   The application type id.
-   * @param string|null $application_number
-   *   The unique identifier for the application.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The json response.
@@ -126,19 +130,14 @@ final class Application extends ResourceBase {
    */
   public function get(
     int $application_type_id,
-    ?string $application_number,
   ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
-    if (!$application_number) {
-      return new JsonResponse([], 400);
-    }
-
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
     catch (\Exception $e) {
-      // Cannot find form.
-      return new JsonResponse([], 500);
+      // Cannot find form by application type id.
+      return new JsonResponse([], 404);
     }
 
     if (!$settings->isApplicationOpen()) {
@@ -155,38 +154,17 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    try {
-      // Make sure it exists in database.
-      $this->getSubmissionEntity($user_information['sub'], $application_number);
-    }
-    catch (\Exception $e) {
-      // Cannot get the submission.
-      return new JsonResponse([], 500);
-    }
-
-    try {
-      $document = $this->atvService->getDocument($application_number);
-      $form_data = $document->getContent();
-    }
-    catch (\Throwable $e) {
-      // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
-      return new JsonResponse([], 500);
-    }
-
-    // @todo only return required user data to frontend.
-    $response = [
-      'form_data' => $form_data,
+    return new JsonResponse([
+      'form_data' => [],
       'grants_profile' => $grants_profile_data->toArray(),
       'user_data' => $user_information,
       'token' => $this->csrfTokenGenerator->get('rest'),
       ...$settings->toArray(),
-    ];
-
-    return new JsonResponse($response);
+    ]);
   }
 
   /**
-   * Post request.
+   * Post a draft submission.
    *
    * Create a new submission.
    *
@@ -202,14 +180,11 @@ final class Application extends ResourceBase {
     $env = Helper::getAppEnv();
 
     [
-      'application_number' => $application_number,
       'langcode' => $langcode,
       'form_data' => $form_data,
-      'draft' => $draft,
     ] = $content;
 
-    // @todo Maybe separate draft and non-draft submissions.
-    $draft = $draft ?? TRUE;
+    $draft = TRUE;
 
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
@@ -242,7 +217,7 @@ final class Application extends ResourceBase {
     $application_name = $settings->toArray()['settings']['title'];
     $application_title = $settings->toArray()['settings']['title'];
     $application_type = $settings->toArray()['settings']['application_type'];
-    $langcode = $this->languageManager->getCurrentLanguage()->getId();
+    $langcode = $langcode ?? $this->languageManager->getCurrentLanguage()->getId();
     $sub = $user_data['sub'];
 
     $document = $this->atvService->createAtvDocument(
@@ -361,11 +336,11 @@ final class Application extends ResourceBase {
       $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
       $document_data = ['form_data' => $sanitized_data];
 
-      // $atv_mapped_data = $this->atvMapper->mapData($sanitized_data);
+      //$atv_mapped_data = $this->atvMapper->mapData($sanitized_data);
 
       $document->setContent($document_data);
-      // @todo Always get the events and messages from atv submission before overwriting.
 
+      // @todo Always get the events and messages from atv submission before overwriting.
       $this->atvService->updateExistingDocument($document);
 
       $submission->setChangedTime(time());
@@ -377,18 +352,6 @@ final class Application extends ResourceBase {
     }
 
     return new JsonResponse($document->toArray(), 200);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public function routes(): RouteCollection {
-    $collection = parent::routes();
-    foreach ($collection->all() as $route) {
-      $route->addDefaults(['application_number' => NULL]);
-    }
-
-    return $collection;
   }
 
   /**

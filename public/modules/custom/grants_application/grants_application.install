@@ -23,6 +23,9 @@ function grants_application_update_rest_permissions(): void {
     'rest.resource.application_rest_resource' => [
       'methods' => ['GET', 'POST', 'PATCH'],
     ],
+    'rest.resource.draft_application_rest_resource' => [
+      'methods' => ['GET', 'POST', 'PATCH'],
+    ],
   ];
 
   $role = 'user.role.helsinkiprofiili';
@@ -53,7 +56,6 @@ function grants_application_update_rest_permissions(): void {
 function grants_application_update_9000() {
   $entity_type_manager = \Drupal::entityTypeManager();
   $entity_type = $entity_type_manager->getDefinition('application_submission');
-  \Drupal::entityDefinitionUpdateManager()->installEntityType(
-    $entity_type
-  );
+  \Drupal::entityDefinitionUpdateManager()
+    ->installEntityType($entity_type);
 }
