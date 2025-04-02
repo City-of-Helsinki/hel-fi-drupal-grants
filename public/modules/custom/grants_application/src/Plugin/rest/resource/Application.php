@@ -25,15 +25,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * The application rest resources.
+ * Handle the sent applications.
  */
 #[RestResource(
   id: "application_rest_resource",
   label: new TranslatableMarkup("Application"),
   uri_paths: [
-    "canonical" => "/applications/{application_type_id}/{application_number}",
+    "canonical" => "/applications/{application_type_id}/application/{application_number}",
     "create" => "/applications/{application_type_id}/send/{application_number}",
-    "edit" => "/applications/{application_type_id}/{application_number}",
+    "edit" => "/applications/{application_type_id}/edit/{application_number}",
   ]
 )]
 final class Application extends ResourceBase {

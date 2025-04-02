@@ -23,7 +23,7 @@ import { SubmitStates } from '../enum/SubmitStates';
  */
 async function fetchFormData(id: string, applicationNumber: string) {
   await initDB();
-  const formConfigResponse = await fetch(`/application/${id}${applicationNumber ? `/${applicationNumber}` : ''}`, {
+  const formConfigResponse = await fetch(`/applications/${id}${applicationNumber ? `/${applicationNumber}` : ''}`, {
     headers: {
       'Content-Type': 'application/json',
     }
@@ -211,7 +211,7 @@ const FormWrapper = ({
   const submitData = async (submittedData: any, finalSubmit: boolean = false): Promise<boolean> => {
     const currentApplicationNumber = readApplicationNumber();
 
-    const response = await fetch(`/en/application/${applicationTypeId}`, {
+    const response = await fetch(`/en/applications/draft/${applicationTypeId}`, {
       body: JSON.stringify({
         application_number: currentApplicationNumber || '',
         application_type_id: applicationTypeId,

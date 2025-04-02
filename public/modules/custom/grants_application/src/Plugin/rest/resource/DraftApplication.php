@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * The application rest resources.
+ * Handle the draft applications.
  */
 #[RestResource(
   id: "draft_application_rest_resource",

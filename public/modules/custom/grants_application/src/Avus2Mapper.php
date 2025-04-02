@@ -42,9 +42,7 @@ final class Avus2Mapper {
     $data = [];
     $data['applicantInfoArray'] = $this->getApplicantData(
       $applicant_type,
-      $user_data,
       $company_data,
-      $user_profile_data,
       $form_data,
       $grants_profile,
     );
