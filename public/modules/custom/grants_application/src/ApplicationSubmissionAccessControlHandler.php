@@ -11,7 +11,6 @@ use Drupal\Core\Entity\EntityHandlerInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\User\UserInformationService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
