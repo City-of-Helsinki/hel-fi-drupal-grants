@@ -5,11 +5,13 @@ namespace Drupal\grants_application;
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Access\AccessResultInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityAccessControlHandler;
 use Drupal\Core\Entity\EntityHandlerInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\User\UserInformationService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -39,6 +41,7 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
    * {@inheritdoc}
    */
   public function access(EntityInterface $entity, $operation, ?AccountInterface $account = NULL, $return_as_object = FALSE): AccessResultInterface {
+    assert($entity instanceof ContentEntityInterface);
     $userInformation = $this->userInformationService->getUserData();
 
     if ($userInformation['sub'] && $userInformation['sub'] === $entity->get('sub')->value) {
