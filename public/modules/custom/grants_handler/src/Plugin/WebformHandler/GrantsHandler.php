@@ -1395,13 +1395,14 @@ submit the application only after you have provided all the necessary informatio
     }
     try {
       $applicationData = $this->applicationDataService->webformToTypedData(
-        $this->submittedFormData);
+        $this->submittedFormData
+      );
     }
     catch (ReadOnlyException $e) {
       // Fix here: https://helsinkisolutionoffice.atlassian.net/browse/AU-545
     }
     $redirectUrl = Url::fromRoute(
-      '<front>',
+      'grants_oma_asiointi.front',
       [
         'attributes' => [
           'data-drupal-selector' => 'application-saving-failed-link',
@@ -1425,13 +1426,11 @@ submit the application only after you have provided all the necessary informatio
             )
           );
 
-        $redirectUrl = Url::fromRoute('grants_handler.view_application', [
-          'submission_id' => $this->applicationNumber,
-        ]);
+        $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
       }
       else {
         $redirectUrl = Url::fromRoute(
-          '<front>',
+          'grants_oma_asiointi.front',
           [
             'attributes' => [
               'data-drupal-selector' => 'application-saving-failed-link',
