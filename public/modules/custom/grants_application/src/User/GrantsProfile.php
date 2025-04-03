@@ -60,7 +60,7 @@ class GrantsProfile {
    */
   public function getCommunityOfficialByUuid(?string $uuid): array|null {
     if (empty($uuid)) {
-      return null;
+      return NULL;
     }
 
     foreach ($this->grantsProfileData['officials'] as $official) {
