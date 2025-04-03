@@ -1,9 +1,9 @@
 import { useAtomValue } from 'jotai';
 import { Notification } from 'hds-react';
-import { getErrorsAtom } from '../store';
+import { errorsAtom } from '../store';
 
 export const ErrorsList = () => {
-  const errors = useAtomValue(getErrorsAtom);
+  const errors = useAtomValue(errorsAtom);
 
   if (!errors.length) {
     return null;

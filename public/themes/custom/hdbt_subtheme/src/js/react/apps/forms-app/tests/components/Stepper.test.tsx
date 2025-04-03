@@ -4,7 +4,7 @@ import { StepState } from 'hds-react';
 import { TestProvider } from '../../testutils/TestProvider';
 import { formConfigAtom, formStateAtom, formStepsAtom } from '../../store';
 import { initializeFormState } from '../../testutils/Helpers';
-import { testKeyedErrors, testSteps } from '../../testutils/Data';
+import { testSteps } from '../../testutils/Data';
 import { Stepper, transformSteps } from '../../components/Stepper';
 import { SubmitStates } from '../../enum/SubmitStates';
 
@@ -12,7 +12,6 @@ describe('Stepper.tsx tests', () => {
   render(
     <TestProvider initialValues={[
       [formStateAtom, initializeFormState({
-        errors: testKeyedErrors,
         reachedStep: 1,
       })],
       [formStepsAtom, testSteps],

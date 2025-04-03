@@ -7,9 +7,8 @@ import { Suspense, useCallback } from 'react';
 import { RJSFSchema } from '@rjsf/utils';
 
 import { RJSFFormContainer } from './RJSFFormContainer';
-import { getApplicationNumberAtom, initializeFormAtom, setApplicationNumberAtom, setSubmitStatusAtom } from '../store';
+import { createFormDataAtom, getApplicationNumberAtom, initializeFormAtom, setApplicationNumberAtom, setSubmitStatusAtom } from '../store';
 import { addApplicantInfoStep, getNestedSchemaProperty, isValidFormResponse, setNestedProperty } from '../utils';
-import { getData, initDB } from '../db';
 import { SubmitStates } from '../enum/SubmitStates';
 
 /**
@@ -22,27 +21,17 @@ import { SubmitStates } from '../enum/SubmitStates';
  * @return {Promise<object>} - Form settings and existing cached form data
  */
 async function fetchFormData(id: string, applicationNumber: string) {
-  await initDB();
   const formConfigResponse = await fetch(`/application/${id}${applicationNumber ? `/${applicationNumber}` : ''}`, {
     headers: {
       'Content-Type': 'application/json',
     }
   });
-  const cachedData = await getData(applicationNumber || '58');
 
   if (!formConfigResponse.ok) {
     throw new Error('Failed to fetch form data');
   }
 
-  const formConfig = await formConfigResponse.json();
-
-  // @todo decide when we want to use cached data over server data
-  const persistedData = (formConfig.form_data && applicationNumber) ? formConfig.form_data : cachedData;
-
-  return {
-    ...formConfig,
-    persistedData,
-  };
+  return formConfigResponse.json();
 };
 
 /**
@@ -120,7 +109,7 @@ const fixDanglingArrays = (formData: Object<any>, schema: RJSFSchema) => {
 const transformData = (data: any) => {
   const {
     grants_profile,
-    persistedData,
+    form_data: formData,
     schema: originalSchema,
     ui_schema: originalUiSchema,
   } = data;
@@ -153,7 +142,7 @@ const transformData = (data: any) => {
 
   return {
     ...data,
-    persistedData: fixDanglingArrays(persistedData, schema),
+    formData: fixDanglingArrays(formData, schema),
     schema: {
       ...schema,
       properties: transformedProperties,
@@ -205,10 +194,10 @@ const FormWrapper = ({
   const transformedData = transformData(data);
   initializeForm({
     ...transformedData,
-    applicationNumber
+    applicationNumber,
   });
 
-  const submitData = async (submittedData: any, finalSubmit: boolean = false): Promise<boolean> => {
+  const submitData = async (submittedData: any, finalSubmit: boolean = false): Promise<boolean>|void => {
     const currentApplicationNumber = readApplicationNumber();
 
     const response = await fetch(`/en/application/${applicationTypeId}`, {
@@ -225,25 +214,29 @@ const FormWrapper = ({
       method: currentApplicationNumber ? 'PATCH' : 'POST',
     });
 
-    if (response.ok) {
-      const json = await response.json();
-      const { metadata } = json;
-
-      setApplicationNumber(metadata.applicationnumber);
+    if (!response.ok) {
+      return false;
     }
 
+    const json = await response.json();
+    const { metadata } = json;
+
+    setApplicationNumber(metadata.applicationnumber);
+
     if (response.ok && finalSubmit) {
-      // @todo read submit state from response
+      // @todo read submit status from server response
       setSubmitStatus(SubmitStates.submitted);
     }
 
     return response.ok;
   };
 
+  const formDataAtom = createFormDataAtom(readApplicationNumber() || '58', transformedData.form_data);
+
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <RJSFFormContainer
-        initialFormData={transformedData.persistedData}
+        formDataAtom={formDataAtom}
         schema={transformedData.schema}
         submitData={submitData}
         uiSchema={transformedData.ui_schema}
