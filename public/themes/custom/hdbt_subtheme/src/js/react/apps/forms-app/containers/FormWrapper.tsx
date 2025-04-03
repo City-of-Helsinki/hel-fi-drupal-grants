@@ -23,7 +23,12 @@ import { SubmitStates } from '../enum/SubmitStates';
  */
 async function fetchFormData(id: string, applicationNumber: string) {
   await initDB();
-  const formConfigResponse = await fetch(`/applications/${id}${applicationNumber ? `/${applicationNumber}` : ''}`, {
+
+  const reqUrl = applicationNumber ?
+    `/applications/${id}/application/${applicationNumber}` :
+    `/applications/${id}`;
+
+  const formConfigResponse = await fetch(reqUrl, {
     headers: {
       'Content-Type': 'application/json',
     }
@@ -37,7 +42,7 @@ async function fetchFormData(id: string, applicationNumber: string) {
   const formConfig = await formConfigResponse.json();
 
   // @todo decide when we want to use cached data over server data
-  const persistedData = (formConfig.form_data && applicationNumber) ? formConfig.form_data : cachedData;
+  const persistedData = (formConfig.form_data?.form_data && applicationNumber) ? formConfig.form_data.form_data : cachedData;
 
   return {
     ...formConfig,
@@ -211,7 +216,22 @@ const FormWrapper = ({
   const submitData = async (submittedData: any, finalSubmit: boolean = false): Promise<boolean> => {
     const currentApplicationNumber = readApplicationNumber();
 
-    const response = await fetch(`/en/applications/draft/${applicationTypeId}`, {
+    const getUrlAndMethod = () => {
+      switch(true) {
+        case finalSubmit && Boolean(currentApplicationNumber):
+          return [`/applications/${applicationTypeId}/send/${currentApplicationNumber}`, 'POST'];
+        case finalSubmit:
+          return [`/applications/${applicationTypeId}/send`, 'POST'];
+        case Boolean(currentApplicationNumber):
+          return [`/applications/${applicationTypeId}/application/${currentApplicationNumber}`, 'PATCH'];
+        default:
+          return [`/applications/draft/${applicationTypeId}`, 'POST'];
+      }
+    };
+
+    const [reqUrl, method] = getUrlAndMethod();
+
+    const response = await fetch(reqUrl, {
       body: JSON.stringify({
         application_number: currentApplicationNumber || '',
         application_type_id: applicationTypeId,
@@ -222,7 +242,7 @@ const FormWrapper = ({
         'Content-Type': 'application/json',
         'X-CSRF-Token': data.token
       },
-      method: currentApplicationNumber ? 'PATCH' : 'POST',
+      method,
     });
 
     if (response.ok) {
