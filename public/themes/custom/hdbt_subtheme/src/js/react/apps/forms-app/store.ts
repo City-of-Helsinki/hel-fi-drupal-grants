@@ -1,6 +1,6 @@
+import { ReactNode } from 'react';
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { atom } from 'jotai';
-import { NotificationProps } from 'hds-react';
 import { keyErrorsByStep } from './utils';
 import { SubmitState, SubmitStates } from './enum/SubmitStates';
 
@@ -39,13 +39,13 @@ type GrantsProfile = {
 
 export type FormState = {
   currentStep: [number, FormStep];
-  errors: Array<[number, RJSFValidationError]>;
   reachedStep: number;
 }
 
 type FormConfig = {
   applicationNumber?: string;
   grantsProfile: GrantsProfile;
+  persistedData: any;
   token: string;
   schema: RJSFSchema;
   settings: {
@@ -93,9 +93,38 @@ const buildFormSteps = ({
 
   return steps;
 };
-export const formConfigAtom = atom<FormConfig|undefined>();
+
+export const createFormDataAtom = (key: string, initialValue: any) => {
+  const getInitialValue = () => {
+    const item = sessionStorage.getItem(key);
+    if (item !== null) {
+      return JSON.parse(item);
+    }
+    return {};
+  }
+
+  // @todo use timestamp to determine which data to use. For now, always prefer server.
+  if (initialValue) {
+    sessionStorage.setItem(key, JSON.stringify(initialValue));
+  }
+
+  const baseAtom = atom(getInitialValue());
+  const derivedAtom = atom(
+    (get) => get(baseAtom),
+    (get, set, update) => {
+      const newValue = typeof update === 'function' ? update(get(baseAtom)) : update;
+      set(baseAtom, newValue);
+      sessionStorage.setItem(key, JSON.stringify(newValue));
+    },
+  );
+
+  return derivedAtom;
+};
+
 export const formStateAtom = atom<FormState|undefined>();
+export const formConfigAtom = atom<FormConfig|undefined>();
 export const formStepsAtom = atom<Map<number, FormStep>|undefined>();
+export const errorsAtom = atom<Array<[number, RJSFValidationError]>>([]);
 export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData, applicationNumber?: string) => {
   const {
     grants_profile: grantsProfile,
@@ -114,7 +143,6 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
   }));
   _set(formStateAtom, (state) => ({
       currentStep: [0, steps.get(0)],
-      errors: [],
       reachedStep: 0,
     }));
 });
@@ -173,20 +201,11 @@ export const getReachedStepAtom = atom(_get => {
 });
 export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError[]) => {
   const steps = _get(formStepsAtom);
-  const currentState = _get(getFormStateAtom);
 
-  _set(formStateAtom, state => ({
-    ...currentState,
-    errors: keyErrorsByStep(errors, steps)
-  }));
-});
-export const getErrorsAtom = atom(_get => {
-  const { errors } = _get(getFormStateAtom);
-
-  return errors;
+  _set(errorsAtom, state => keyErrorsByStep(errors, steps));
 });
 export const getErrorPageIndicesAtom = atom(_get => {
-  const { errors } = _get(getFormStateAtom);
+  const errors = _get(errorsAtom);
 
   return errors.map(([index]) => index);
 });
@@ -235,8 +254,11 @@ export const setApplicationNumberAtom = atom(null, (_get, _set, applicationNumbe
     applicationNumber,
   }));
 });
-
-type SystemNotification = Pick<NotificationProps, 'label'|'type'|'children'>
+type SystemNotification = {
+  children: string| ReactNode,
+  label: string | ReactNode,
+  type: 'info' | 'error' | 'alert' | 'success',
+}
 export const systemNotificationsAtom = atom<SystemNotification[]>([]);
 export const pushNotificationAtom = atom(null, (_get, _set, notification: SystemNotification) => {
   _set(systemNotificationsAtom, state => [...state, notification]);

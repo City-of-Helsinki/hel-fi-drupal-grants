@@ -2,16 +2,16 @@ import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { TestProvider } from '../../testutils/TestProvider';
 import { FormActions } from '../../components/FormActions/FormActions';
-import { formStateAtom, formStepsAtom } from '../../store';
+import { errorsAtom, formStateAtom, formStepsAtom } from '../../store';
 import { initializeFormState } from '../../testutils/Helpers';
 import { testKeyedErrors, testSteps } from '../../testutils/Data';
 
 describe('FormActions.tsx tests', () => {
   render(
     <TestProvider initialValues={[
+      [errorsAtom, testKeyedErrors],
       [formStateAtom, initializeFormState({
         currentStep: [0, {id: 'step-1', label: 'Step 1'}],
-        errors: testKeyedErrors,
         reachedStep: 0,
       })],
       [formStepsAtom, testSteps]
