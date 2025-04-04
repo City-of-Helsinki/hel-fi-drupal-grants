@@ -6,11 +6,14 @@ use Drupal\config_ignore\ConfigIgnoreConfig;
  * Implements hook_config_ignore_ignored_alter().
  *
  * Allow creating new webforms when importing.
- * Prevent from editing or deleting when importing and
- * editing, creating or deleting when exporting.
+ * Prevent from editing or deleting when importing or exporting.
  */
 function grants_webform_import_config_ignore_ignored_alter(ConfigIgnoreConfig $ignored): void {
   $list = $ignored->getList('import', 'create');
   $list = array_filter($list, fn($line) => $line !== 'webform.webform.*');
   $ignored->setList('import', 'create', $list);
+
+  $list = $ignored->getList('export', 'create');
+  $list = array_filter($list, fn($line) => $line !== 'webform.webform.*');
+  $ignored->setList('export', 'create', $list);
 }
