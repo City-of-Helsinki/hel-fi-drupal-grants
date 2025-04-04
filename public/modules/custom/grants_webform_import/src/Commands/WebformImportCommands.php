@@ -36,6 +36,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class WebformImportCommands extends DrushCommands {
 
   /**
+   * The allowed environments for running the command.
+   */
+  const ALLOWED_ENVIRONMENTS = ['DEV', 'TEST', 'STAGE'];
+
+  /**
    * CachedStorage.
    *
    * @var \Drupal\Core\Config\StorageInterface
@@ -227,6 +232,10 @@ class WebformImportCommands extends DrushCommands {
    * @aliases gwi, gwi --force, gwi 49, gwi 49 --force
    */
   public function webformImport(mixed $applicationTypeID = FALSE, array $options = ['force' => FALSE]) {
+    if (!in_array(getenv('APP_ENV'), self::ALLOWED_ENVIRONMENTS)) {
+      return;
+    }
+
     $directory = Settings::get('config_sync_directory');
     $webformFiles = glob($directory . '/webform.webform.*');
     $this->force = $options['force'];
