@@ -14,7 +14,7 @@ use Drupal\config_ignore\ConfigIgnoreConfig;
  * Prevent from editing or deleting when importing or exporting.
  */
 function grants_webform_import_config_ignore_ignored_alter(ConfigIgnoreConfig $ignored): void {
-  foreach(['import', 'export'] as $operation) {
+  foreach (['import', 'export'] as $operation) {
     $list = $ignored->getList($operation, 'create');
     $list = array_filter($list, fn($line) => $line !== 'webform.webform.*');
     $ignored->setList($operation, 'create', $list);
