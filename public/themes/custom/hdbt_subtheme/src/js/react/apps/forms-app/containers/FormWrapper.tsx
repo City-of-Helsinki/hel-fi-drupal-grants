@@ -256,7 +256,7 @@ const FormWrapper = ({
     return response.ok;
   };
 
-  const serverData = transformData.form_data;
+  const serverData = transformedData.form_data;
   const initialData = serverData?.form_data || null;
   const formDataAtom = createFormDataAtom(readApplicationNumber() || '58', initialData);
 
