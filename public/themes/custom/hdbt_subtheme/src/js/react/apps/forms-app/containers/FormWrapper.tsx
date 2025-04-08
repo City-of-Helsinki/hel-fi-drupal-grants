@@ -21,8 +21,6 @@ import { SubmitStates } from '../enum/SubmitStates';
  * @return {Promise<object>} - Form settings and existing cached form data
  */
 async function fetchFormData(id: string, applicationNumber: string) {
-  await initDB();
-
   const reqUrl = applicationNumber ?
     `/applications/${id}/application/${applicationNumber}` :
     `/applications/${id}`;
@@ -38,9 +36,7 @@ async function fetchFormData(id: string, applicationNumber: string) {
   }
 
   const formConfig = await formConfigResponse.json();
-
-  // @todo decide when we want to use cached data over server data
-  const persistedData = (formConfig.form_data?.form_data && applicationNumber) ? formConfig.form_data.form_data : cachedData;
+  const persistedData = { ...formConfig.form_data};
 
   return {
     ...formConfig,
@@ -260,7 +256,9 @@ const FormWrapper = ({
     return response.ok;
   };
 
-  const formDataAtom = createFormDataAtom(readApplicationNumber() || '58', transformedData.form_data);
+  const serverData = transformData.form_data;
+  const initialData = serverData?.form_data || null;
+  const formDataAtom = createFormDataAtom(readApplicationNumber() || '58', initialData);
 
   return (
     <Suspense fallback={<LoadingSpinner />}>
