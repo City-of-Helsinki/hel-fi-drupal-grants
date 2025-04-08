@@ -111,9 +111,8 @@ const saveAsDraft = async (page: Page) => {
   }
   await clickButton(page, saveDraftLink);
   await logCurrentUrl(page);
-  await page.waitForURL('**/katso');
+  await page.waitForURL('**/oma-asiointi');
   logger('Form saved as draft.')
 };
 
 export { swapFieldValues };
-

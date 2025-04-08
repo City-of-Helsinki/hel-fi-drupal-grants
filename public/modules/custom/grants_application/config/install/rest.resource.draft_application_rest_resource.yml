@@ -4,8 +4,8 @@ dependencies:
   module:
     - serialization
     - user
-id: application_rest_resource
-plugin_id: application_rest_resource
+id: draft_application_rest_resource
+plugin_id: draft_application_rest_resource
 granularity: method
 configuration:
   GET:

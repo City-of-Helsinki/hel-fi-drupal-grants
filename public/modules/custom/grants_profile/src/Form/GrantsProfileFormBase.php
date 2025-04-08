@@ -887,7 +887,11 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       ]);
 
     try {
-      $this->grantsProfileService->saveGrantsProfile($profileDataArray, cleanAttachments: TRUE);
+      // @todo re-enable cleanAttachments when React form refactoring is done.
+      // Enabling cleanAttachments here caused problems with form grants
+      // submitting. Some attachment submit code caused profile attachments to
+      // be deleted at the form submit when editing already submitted form.
+      $this->grantsProfileService->saveGrantsProfile($profileDataArray, cleanAttachments: FALSE);
 
       // Derived form might want to update something when grants profile
       // is successfully saved. The default implementation does nothing.

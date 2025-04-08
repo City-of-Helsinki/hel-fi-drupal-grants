@@ -2,7 +2,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { Button, ButtonPresetTheme, ButtonVariant } from 'hds-react';
 import { ValidationData } from '@rjsf/utils';
 import { SyntheticEvent } from 'react';
-import { getCurrentStepAtom, getErrorsAtom, getStepsAtom, setStepAtom } from '../../store';
+import { getCurrentStepAtom, errorsAtom, getStepsAtom, setStepAtom } from '../../store';
 import { keyErrorsByStep } from '../../utils';
 import { SaveDraftButton } from './SaveDraftButton';
 
@@ -15,7 +15,7 @@ export const FormActions = ({
 }) => {
   const steps = useAtomValue(getStepsAtom);
   const [currentStepIndex, { id: currentStepId }] = useAtomValue(getCurrentStepAtom);
-  const errors = useAtomValue(getErrorsAtom);
+  const errors = useAtomValue(errorsAtom);
   const setStep = useSetAtom(setStepAtom);
 
   const nextPageAction = (event: SyntheticEvent<HTMLButtonElement>) => {

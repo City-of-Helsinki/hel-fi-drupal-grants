@@ -239,10 +239,10 @@ const verifyDraftSave = async (
 ) => {
   logger(`Verifying draft save...`);
   await logCurrentUrl(page);
-  await page.waitForURL('**/katso');
-  await expect(await page.getByText('Luonnos')).toBeVisible()
-  await expect(await page.getByRole('link', {name: 'Muokkaa hakemusta'})).toBeEnabled();
-  const applicationId = await page.locator(".webform-submission__application_id--body").innerText();
+  await page.waitForURL('**/oma-asiointi');
+  await expect(await page.getByText('Luonnos').first()).toBeVisible()
+  await expect(await page.getByRole('link', {name: 'Muokkaa hakemusta'}).first()).toBeEnabled();
+  const applicationId = await page.locator('.application-list__item--application-number').first().innerText();
 
   if (!applicationId) {
     logger('WARNING: Failed retrieving application ID.');

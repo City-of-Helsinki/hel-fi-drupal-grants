@@ -71,7 +71,7 @@ async function uploadFiles(field: string, applicationId: string, token: string, 
     throw new Error('Failed to upload file');
   }
 
-  return response.json();
+  return true;
 }
 
 export const FileInput = ({

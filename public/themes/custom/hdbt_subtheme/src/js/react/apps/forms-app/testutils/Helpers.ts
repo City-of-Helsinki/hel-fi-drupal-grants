@@ -4,6 +4,7 @@ const initialStep: [number, FormStep] = [0, {label: 'Step 1', id: 'step-1'}];
 
 const initialState = {
   currentStep: initialStep,
+  data: {},
   errors: [],
   reachedStep: 0,
 };
