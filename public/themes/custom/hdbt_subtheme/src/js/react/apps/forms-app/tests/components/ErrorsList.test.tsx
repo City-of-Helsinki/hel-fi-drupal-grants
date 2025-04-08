@@ -2,14 +2,13 @@ import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/react';
 
 import { TestProvider } from '../../testutils/TestProvider';
-import { formStateAtom } from '../../store';
+import { errorsAtom } from '../../store';
 import { ErrorsList } from '../../components/ErrorsList';
-import { initializeFormState } from '../../testutils/Helpers';
 import { testKeyedErrors } from '../../testutils/Data';
 
 describe('ErrorList.tsx', async () => {
   render(
-    <TestProvider initialValues={[[formStateAtom, initializeFormState({errors: testKeyedErrors})]]}>
+    <TestProvider initialValues={[[errorsAtom, testKeyedErrors]]}>
       <ErrorsList />
     </TestProvider>
   );

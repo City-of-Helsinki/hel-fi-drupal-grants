@@ -1,8 +1,24 @@
-import Form from '@rjsf/core';
 import { findSchemaDefinition, RJSFSchema } from '@rjsf/utils';
 import { Accordion } from 'hds-react';
 import { JSONSchema7, JSONSchema7Definition, JSONSchema7Type } from 'json-schema';
-import { Fragment, ReactFragment, RefObject } from 'react';
+import { Fragment, ReactFragment } from 'react';
+
+/**
+ * Parse the file name from a base64 string.
+ *
+ * @param {string} data - the base64 string.
+ * @return {string|undefined} - the file name, fallback if no name or undefined if no data
+ */
+const getFileName = (data: string) => {
+  if (!data) {
+    return undefined;
+  }
+
+  const regex = /;name=(.+);/;
+  const match = data.match(regex);
+
+  return match ? match[1] : Drupal.t('Attached file');
+}
 
 /**
  * Recursive function to generate a printable form of a given property.
@@ -51,7 +67,11 @@ const getPrintableProperty = (
     )
   }
 
-  const printableData = data || '-';
+  const printableData = (
+    property.format === 'data-url' ?
+      getFileName(data)
+      : data
+   ) || '-';
 
   return  (
     <Fragment key={key}>
@@ -131,10 +151,10 @@ const PreviewStep = ({
  * @return {JSX.Element} - The preview
  */
 export const Preview = ({
-  formRef,
+  formData,
   schema,
 }: {
-  formRef: RefObject<Form<any, RJSFSchema, any>>,
+  formData: any,
   schema: RJSFSchema,
 }) => (
   <div className='forms-app__preview'>
@@ -151,7 +171,7 @@ export const Preview = ({
 
       return (
         <PreviewStep
-          data={formRef.current?.state.formData?.[key]}
+          data={formData?.[key]}
           definition={findSchemaDefinition($ref, schema)}
           key={key}
           stepIndex={index + 1}
