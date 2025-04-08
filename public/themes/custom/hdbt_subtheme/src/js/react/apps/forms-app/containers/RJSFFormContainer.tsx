@@ -2,7 +2,7 @@ import Form, { IChangeEvent } from '@rjsf/core';
 import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
 import React, { createRef, useCallback } from 'react';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
 
@@ -12,10 +12,9 @@ import { AddButtonTemplate, ArrayFieldTemplate, ObjectFieldTemplate, RemoveButto
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { FormActions } from '../components/FormActions/FormActions';
 import { Stepper } from '../components/Stepper';
-import { getApplicationNumberAtom, getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom } from '../store';
+import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom, setStepAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
 import { ErrorsList } from '../components/ErrorsList';
-import { addData } from '../db';
 import { SubmitStates } from '../enum/SubmitStates';
 
 const widgets: RegistryWidgetsType = {
@@ -30,7 +29,7 @@ const widgets: RegistryWidgetsType = {
 };
 
 type RJSFFormContainerProps = {
-  initialFormData: any,
+  formDataAtom: any,
   schema: RJSFSchema,
   submitData: (data: IChangeEvent, finalSubmit?: boolean) => boolean,
   uiSchema: UiSchema,
@@ -49,17 +48,17 @@ type RJSFFormContainerProps = {
  * @return {JSX.Element} - Element that renders
  */
 export const RJSFFormContainer = ({
-  initialFormData,
+  formDataAtom,
   schema,
   submitData,
   uiSchema,
 }: RJSFFormContainerProps) => {
+  const [formData, setFormData] = useAtom(formDataAtom)
+
   const submitStatus = useAtomValue(getSubmitStatusAtom);
   const steps = useAtomValue(getStepsAtom);
+  const setStep = useSetAtom(setStepAtom);
   const formRef = createRef<Form>();
-  const readApplicationNumber = useAtomCallback(
-    useCallback(get => get(getApplicationNumberAtom), [])
-  );
   const readCurrentStep = useAtomCallback(
     useCallback(get =>  get(getCurrentStepAtom), [])
   );
@@ -70,7 +69,7 @@ export const RJSFFormContainer = ({
 
   const browserCacheData = useDebounceCallback(
     (data: IChangeEvent) => {
-      addData(data.formData, readApplicationNumber() || '58');
+      setFormData(data.formData);
     },
     2000,
   );
@@ -138,12 +137,12 @@ export const RJSFFormContainer = ({
       <Stepper formRef={formRef} />
       <div className='form-wrapper'>
         <StaticStepsContainer
-          formRef={formRef}
+          formData={formData}
           schema={schema}
         />
         <Form
           className='grants-react-form webform-submission-form'
-          formData={initialFormData}
+          formData={formData || {}}
           method='POST'
           noHtml5Validate
           onChange={browserCacheData}
@@ -155,9 +154,13 @@ export const RJSFFormContainer = ({
 
             if (passes) {
               submitData(data.formData, true);
+              setStep([...steps].pop()?.[0] || 0);
             }
           }}
-          readonly={submitStatus !== SubmitStates.unsubmitted}
+          readonly={
+            submitStatus !== SubmitStates.unsubmitted &&
+            submitStatus !== SubmitStates.editing
+          }
           ref={formRef}
           schema={schema}
           showErrorList={false}
