@@ -90,7 +90,11 @@ class GrantsProfile {
    * @return array
    *   The official-array.
    */
-  public function getAddressByStreetname(string $street_name): array {
+  public function getAddressByStreetname(?string $street_name): array|null {
+    if (empty($street_name)) {
+      return NULL;
+    }
+
     // @todo Maybe do this with the uuid.
     foreach ($this->grantsProfileData['addresses'] as $address) {
       if ($address['street'] === $street_name) {
