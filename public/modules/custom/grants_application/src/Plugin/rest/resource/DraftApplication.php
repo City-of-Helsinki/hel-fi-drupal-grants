@@ -6,8 +6,10 @@ use Drupal\Component\Utility\Xss;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -21,6 +23,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -81,7 +84,6 @@ final class DraftApplication extends ResourceBase {
     private HelfiAtvService $atvService,
     private UuidInterface $uuid,
     private ApplicationNumberService $applicationNumberService,
-    private CsrfTokenGenerator $csrfTokenGenerator,
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
     private Avus2Mapper $avus2Mapper,
@@ -104,7 +106,6 @@ final class DraftApplication extends ResourceBase {
       $container->get(HelfiAtvService::class),
       $container->get(UuidInterface::class),
       $container->get(ApplicationNumberService::class),
-      $container->get(CsrfTokenGenerator::class),
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
       $container->get(Avus2Mapper::class),
@@ -123,7 +124,7 @@ final class DraftApplication extends ResourceBase {
   }
 
   /**
-   * Get an empty application with initial data.
+   * Create the ATV-document and return initial form data.
    *
    * @param int $application_type_id
    *   The application type id.
@@ -135,7 +136,7 @@ final class DraftApplication extends ResourceBase {
    */
   public function get(
     int $application_type_id,
-  ): JsonResponse {
+  ): RedirectResponse {
     // @todo Sanitize & validate & authorize properly.
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
@@ -151,64 +152,6 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
-      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
-      $user_information = $this->userInformationService->getUserData();
-    }
-    catch (\Exception $e) {
-      // Unable to fetch user information.
-      return new JsonResponse([], 500);
-    }
-
-    return new JsonResponse([
-      'form_data' => [],
-      'grants_profile' => $grants_profile_data->toArray(),
-      'user_data' => $user_information,
-      'token' => $this->csrfTokenGenerator->get('rest'),
-      ...$settings->toArray(),
-    ]);
-  }
-
-  /**
-   * Post a draft submission.
-   *
-   * Create a new submission.
-   *
-   * @return \Symfony\Component\HttpFoundation\JsonResponse
-   *   The json response.
-   */
-  public function post(
-    int $application_type_id,
-    Request $request,
-  ): JsonResponse {
-    // @todo Sanitize & validate & authorize properly.
-    $content = json_decode($request->getContent(), TRUE);
-    $env = Helper::getAppEnv();
-
-    [
-      'langcode' => $langcode,
-      'form_data' => $form_data,
-    ] = $content;
-
-    try {
-      $settings = $this->formSettingsService->getFormSettings($application_type_id);
-    }
-    catch (\Exception $e) {
-      // Cannot find form.
-      return new JsonResponse([], 500);
-    }
-
-    if (!$settings->isApplicationOpen()) {
-      // @todo Uncomment.
-      // Return new JsonResponse([], 403);.
-    }
-
-    $application_uuid = $this->uuid->generate();
-
-    // @todo Application number generation must match the existing shenanigans.
-    $application_number = $this->applicationNumberService
-      ->createNewApplicationNumber($env, $application_type_id);
-
-    try {
       $selected_company = $this->userInformationService->getSelectedCompany();
       $user_data = $this->userInformationService->getUserData();
     }
@@ -216,10 +159,19 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    $application_uuid = $this->uuid->generate();
+    $env = Helper::getAppEnv();
+
+    // @todo Application number generation must match the existing shenanigans.
+    $application_number = $this->applicationNumberService
+      ->createNewApplicationNumber($env, $application_type_id);
+
+    $langcode = $this->languageManager
+      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+      ->getId();
     $application_name = $settings->toArray()['settings']['title'];
     $application_title = $settings->toArray()['settings']['title'];
     $application_type = $settings->toArray()['settings']['application_type'];
-    $langcode = $langcode ?? $this->languageManager->getCurrentLanguage()->getId();
 
     $document = $this->atvService->createAtvDocument(
       $application_uuid,
@@ -235,27 +187,7 @@ final class DraftApplication extends ResourceBase {
       $this->userInformationService->getApplicantType(),
     );
 
-    // @todo Better sanitation.
-    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
-    $document_data = ['form_data' => $sanitized_data];
-
-    // @todo This must be moved to correct place,
-    // do we want to map always or just before actually sending ?
-    // The mapped data must be saved to ATV because
-    // the integration wants to write there.
-    $atv_mapped_data = $this->avus2Mapper->mapApplicationData(
-      $form_data,
-      $user_data,
-      $selected_company,
-      $this->userInformationService->getUserProfileData(),
-      $this->userInformationService->getGrantsProfileContent(),
-      $settings
-    );
-
-    // Compensation is the original avus2 data.
-    $document_data['compensation'] = $atv_mapped_data;
-
-    $document->setContent($document_data);
+    $document->setContent([]);
 
     try {
       $document = $this->atvService->saveNewDocument($document);
@@ -277,7 +209,18 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    return new JsonResponse($document->toArray(), 200);
+    $route_name = 'rest.application_rest_resource.GET';
+    $route_parameters = [
+      'application_type_id' => $application_type_id,
+      'application_number' => $application_number,
+    ];
+    $options['absolute'] = TRUE;
+
+    return new RedirectResponse(
+      Url::fromRoute($route_name, $route_parameters, $options)->toString(),
+      301
+    );
+
   }
 
   /**
@@ -290,20 +233,35 @@ final class DraftApplication extends ResourceBase {
    *
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
-  public function patch(Request $request): JsonResponse {
+  public function patch(
+    int $application_type_id,
+    int $application_number,
+    Request $request,
+  ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);
     [
-      'application_number' => $application_number,
       'form_data' => $form_data,
-      'draft' => $draft,
     ] = $content;
 
-    // @todo Maybe separate draft and non-draft submissions.
-    $draft = $draft ?? TRUE;
+    try {
+      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+    }
+    catch (\Exception $e) {
+      // Cannot find form by application type id.
+      return new JsonResponse([], 404);
+    }
 
     if (!$application_number) {
       // Missing application number.
+      return new JsonResponse([], 500);
+    }
+
+    try {
+      $selected_company = $this->userInformationService->getSelectedCompany();
+      $user_data = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
       return new JsonResponse([], 500);
     }
 
@@ -336,9 +294,16 @@ final class DraftApplication extends ResourceBase {
       $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
       $document_data = ['form_data' => $sanitized_data];
 
-      /*
-      $atv_mapped_data = $this->atvMapper->mapData($sanitized_data);
-       */
+      $atv_mapped_data = $this->avus2Mapper->mapApplicationData(
+        $form_data,
+        $user_data,
+        $selected_company,
+        $this->userInformationService->getUserProfileData(),
+        $this->userInformationService->getGrantsProfileContent(),
+        $settings
+      );
+
+      $document_data['compensation'] = $atv_mapped_data;
       $document->setContent($document_data);
 
       // @todo Always get the events and messages from atv submission before overwriting.
