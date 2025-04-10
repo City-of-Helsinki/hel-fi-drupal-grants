@@ -258,9 +258,10 @@ final class DraftApplication extends ResourceBase {
     $document->setContent($document_data);
 
     try {
-      $this->atvService->saveNewDocument($document);
+      $document = $this->atvService->saveNewDocument($document);
       $now = time();
       ApplicationSubmission::create([
+        'document_id' => $document->getId(),
         'sub' => $user_data['sub'],
         'langcode' => $langcode,
         'draft' => TRUE,

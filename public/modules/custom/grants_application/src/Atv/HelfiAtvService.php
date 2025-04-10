@@ -63,8 +63,8 @@ class HelfiAtvService {
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function saveNewDocument(AtvDocument $document): void {
-    $this->atvService->postDocument($document);
+  public function saveNewDocument(AtvDocument $document): AtvDocument {
+    return $this->atvService->postDocument($document);
   }
 
   /**
