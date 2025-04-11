@@ -162,7 +162,8 @@ final class DraftApplication extends ResourceBase {
     $application_uuid = $this->uuid->generate();
     $env = Helper::getAppEnv();
 
-    // @todo Application number generation must match the existing shenanigans.
+    // @todo Application number generation must match the existing shenanigans,
+    // or we must start from application number 1000 or something.
     $application_number = $this->applicationNumberService
       ->createNewApplicationNumber($env, $application_type_id);
 
@@ -216,8 +217,9 @@ final class DraftApplication extends ResourceBase {
     ];
     $options['absolute'] = TRUE;
 
+    // todo We must have the application_number with us.
     return new RedirectResponse(
-      Url::fromRoute($route_name, $route_parameters, $options)->toString(),
+      Url::fromRoute($route_name, $route_parameters, $options)->toString() . '?application_number=' . $application_number,
       301
     );
 
