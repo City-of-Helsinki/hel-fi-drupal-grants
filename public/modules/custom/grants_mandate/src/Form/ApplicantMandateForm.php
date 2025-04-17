@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_mandate\Form;
 
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
@@ -11,7 +14,7 @@ use Drupal\grants_mandate\GrantsMandateService;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -21,65 +24,26 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class ApplicantMandateForm extends FormBase {
 
-  /**
-   * Access to profile data.
-   *
-   * @var \Drupal\grants_profile\GrantsProfileService
-   */
-  protected GrantsProfileService $grantsProfileService;
-
-  /**
-   * Access to helsinki profile data.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
-
-  /**
-   * Use mandate service things.
-   *
-   * @var \Drupal\grants_mandate\GrantsMandateService
-   */
-  protected GrantsMandateService $grantsMandateService;
-
-  /**
-   * The redirect service.
-   *
-   * @var \Drupal\grants_mandate\GrantsMandateRedirectService
-   */
-  protected $redirectService;
+  use AutowireTrait;
 
   /**
    * Constructs a new ModalAddressForm object.
    */
   public function __construct(
-    GrantsProfileService $grantsProfileService,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-    GrantsMandateService $grantsMandateService,
-    GrantsMandateRedirectService $redirectService,
+    protected GrantsProfileService $grantsProfileService,
+    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
+    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    #[Autowire(service: 'grants_mandate.service')]
+    protected GrantsMandateService $grantsMandateService,
+    #[Autowire(service: 'grants_mandate_redirect.service')]
+    protected GrantsMandateRedirectService $redirectService,
   ) {
-    $this->grantsProfileService = $grantsProfileService;
-    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
-    $this->grantsMandateService = $grantsMandateService;
-    $this->redirectService = $redirectService;
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): ApplicantMandateForm|static {
-    return new static(
-      $container->get('grants_profile.service'),
-      $container->get('helfi_helsinki_profiili.userdata'),
-      $container->get('grants_mandate.service'),
-      $container->get('grants_mandate_redirect.service'),
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'grants_mandate_type';
   }
 
@@ -201,13 +165,6 @@ organization or association', [], $tOpts),
     ];
 
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-
   }
 
   /**

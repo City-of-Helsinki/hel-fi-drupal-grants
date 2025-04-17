@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_mandate\EventSubscriber;
 
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\helfi_audit_log\AuditLogService;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -21,44 +23,22 @@ class GrantsMandateExceptionSubscriber implements EventSubscriberInterface {
   use StringTranslationTrait;
 
   /**
-   * The messenger.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected MessengerInterface $messenger;
-
-  /**
-   * Logger.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannel|\Drupal\Core\Logger\LoggerChannelInterface
-   */
-  protected LoggerChannelInterface $logger;
-
-  /**
-   * Audit logger.
-   *
-   * @var \Drupal\helfi_audit_log\AuditLogService
-   */
-  protected AuditLogService $auditLogService;
-
-  /**
    * Constructs event subscriber.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
-   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
+   * @param \Psr\Log\LoggerInterface $logger
    *   Logger.
    * @param \Drupal\helfi_audit_log\AuditLogService $auditLogService
    *   Audit log mandate errors.
    */
   public function __construct(
-    MessengerInterface $messenger,
-    LoggerChannelFactoryInterface $loggerFactory,
-    AuditLogService $auditLogService,
+    protected MessengerInterface $messenger,
+    #[Autowire(service: 'logger.channel.grants_mandate')]
+    protected LoggerInterface $logger,
+    #[Autowire(service: 'helfi_audit_log.audit_log')]
+    protected AuditLogService $auditLogService,
   ) {
-    $this->messenger = $messenger;
-    $this->logger = $loggerFactory->get('grants_mandate');
-    $this->auditLogService = $auditLogService;
   }
 
   /**
@@ -67,7 +47,7 @@ class GrantsMandateExceptionSubscriber implements EventSubscriberInterface {
    * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
    *   Response event.
    */
-  public function onException(ExceptionEvent $event) {
+  public function onException(ExceptionEvent $event): void {
     $ex = $event->getThrowable();
     $exceptionClass = get_class($ex);
     if (str_contains($exceptionClass, 'GrantsMandateException')) {
@@ -95,7 +75,7 @@ class GrantsMandateExceptionSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     return [
       KernelEvents::EXCEPTION => ['onException'],
     ];
