@@ -158,6 +158,9 @@ class GrantsProfileService {
    *   Updated metadata.
    * @param bool $cleanAttachments
    *   If true, removes attachments not included in $documentContent.
+   * @param \DateTimeImmutable|null $deleteAfter
+   *   Ensure the profile is valid at least to the given date.
+   *   Defaults to current time +1 year.
    *
    * @return bool|AtvDocument
    *   Did save succeed?
@@ -165,7 +168,7 @@ class GrantsProfileService {
    * @throws \Drupal\grants_profile\GrantsProfileException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function saveGrantsProfile(array $documentContent, array $updatedMetadata = [], bool $cleanAttachments = FALSE): bool|AtvDocument {
+  public function saveGrantsProfile(array $documentContent, array $updatedMetadata = [], bool $cleanAttachments = FALSE, ?\DateTimeImmutable $deleteAfter = NULL): bool|AtvDocument {
     // Get selected company.
     $selectedCompany = $this->getSelectedRoleData();
     // Get grants profile.
@@ -181,9 +184,19 @@ class GrantsProfileService {
 
     $transactionId = $this->uuid->generate();
 
+    // Any modifications to grants profile extends its lifetime
+    // to at least a year. Other code may extend the lifetime further.
+    if (!$deleteAfter) {
+      $deleteAfter = max(
+        new \DateTimeImmutable($grantsProfileDocument?->getDeleteAfter() ?: '+1 year'),
+        new \DateTimeImmutable('+1 year')
+      );
+    }
+
     // Check if grantsProfile exists.
     if ($grantsProfileDocument == NULL) {
       $newGrantsProfileDocument = $this->newProfileDocument($documentContent);
+      $newGrantsProfileDocument->setDeleteAfter($deleteAfter->format('Y-m-d'));
       $newGrantsProfileDocument->setStatus(self::DOCUMENT_STATUS_SAVED);
       $newGrantsProfileDocument->setTransactionId(self::DOCUMENT_TRANSACTION_ID_INITIAL);
       try {
@@ -212,6 +225,7 @@ class GrantsProfileService {
       'content' => $documentContent,
       'metadata' => $metadata,
       'transaction_id' => $transactionId,
+      'delete_after' => $deleteAfter->format('Y-m-d'),
     ];
     $this->logger->info('Grants profile PATCHed, transactionID: %transactionId',
       ['%transactionId' => $transactionId]);
