@@ -15,9 +15,12 @@ use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\UserInformationService;
+use Drupal\grants_handler\ApplicationSubmitType;
+use Drupal\grants_handler\Event\ApplicationSubmitEvent;
 use Drupal\rest\Attribute\RestResource;
 use Drupal\rest\Plugin\ResourceBase;
 use GuzzleHttp\Exception\GuzzleException;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -69,6 +72,8 @@ final class DraftApplication extends ResourceBase {
    *   The entity type manager.
    * @param \Drupal\grants_application\Avus2Mapper $avus2Mapper
    *   The Avus2-mapper.
+   * @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
+   *   The event dispatcher.
    */
   public function __construct(
     array $configuration,
@@ -85,6 +90,7 @@ final class DraftApplication extends ResourceBase {
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
     private Avus2Mapper $avus2Mapper,
+    private EventDispatcherInterface $dispatcher,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -108,6 +114,7 @@ final class DraftApplication extends ResourceBase {
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
       $container->get(Avus2Mapper::class),
+      $container->get(EventDispatcherInterface::class),
     );
   }
 
@@ -270,6 +277,14 @@ final class DraftApplication extends ResourceBase {
         'changed' => $now,
       ])
         ->save();
+
+      // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
+      // grants_application module when this module is enabled in
+      // production.
+      //
+      // This event lets other parts of the system to react
+      // to user submitting grants forms.
+      $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT_DRAFT));
     }
     catch (\Exception | GuzzleException $e) {
       // Saving failed.

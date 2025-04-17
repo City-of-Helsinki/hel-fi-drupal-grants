@@ -46,3 +46,5 @@ services:
     class: Drupal\grants_profile\Routing\RouteSubscriber
     tags:
       - { name: event_subscriber }
+
+  Drupal\grants_profile\EventSubscriber\ApplicationSubmitSubscriber: ~
