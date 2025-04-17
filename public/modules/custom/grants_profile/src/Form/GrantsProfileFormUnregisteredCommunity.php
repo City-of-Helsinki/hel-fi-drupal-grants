@@ -146,9 +146,9 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   }
 
   /**
-   * Profile data refresh submit handler.
+   * {@inheritDoc}
    */
-  public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state) {
+  public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state): array {
     // Unregistered grants profile doesn't use
     // HP data directly, only for the initial address &
     // person details, but let's update the basic info
