@@ -572,28 +572,6 @@ class GrantsProfileService {
   }
 
   /**
-   * The getUpdatedAt method.
-   *
-   * This method returns timestamp of the time
-   * a profile was last updated.
-   *
-   * @return int|false
-   *   Timestamp of last updated at.
-   *
-   * @throws \Drupal\grants_profile\GrantsProfileException
-   */
-  public function getUpdatedAt(): false|int {
-    // Get selected company.
-    $selectedCompany = $this->getSelectedRoleData();
-    // Get grants profile.
-    $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
-
-    $profileUpdatedAt = $grantsProfileDocument?->getUpdatedAt();
-    $profileUpdatedAt = strtotime($profileUpdatedAt);
-    return $profileUpdatedAt;
-  }
-
-  /**
    * The getNotificationShown method.
    *
    * This method returns timestamp of the time

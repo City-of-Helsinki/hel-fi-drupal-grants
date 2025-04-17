@@ -117,7 +117,9 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       $showProfileNotice = TRUE;
     }
 
-    $updatedAt = $this->grantsProfileService->getUpdatedAt();
+    $updatedAt = $grantsProfileDocument?->getUpdatedAt();
+    $updatedAt = $updatedAt ? strtotime($updatedAt) : false;
+
     $notificationShown = $this->grantsProfileService->getNotificationShown();
 
     $notificationShownTimestamp = ((int) $notificationShown) / 1000;
