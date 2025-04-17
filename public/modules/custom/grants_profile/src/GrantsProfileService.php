@@ -182,8 +182,6 @@ class GrantsProfileService {
     // Make sure business id is saved.
     $documentContent['businessId'] = $selectedCompany['identifier'];
 
-    $transactionId = $this->uuid->generate();
-
     // Any modifications to grants profile extends its lifetime
     // to at least a year. Other code may extend the lifetime further.
     if (!$deleteAfter) {
@@ -200,7 +198,7 @@ class GrantsProfileService {
       $newGrantsProfileDocument->setStatus(self::DOCUMENT_STATUS_SAVED);
       $newGrantsProfileDocument->setTransactionId(self::DOCUMENT_TRANSACTION_ID_INITIAL);
       try {
-        $this->logger->info('Grants profile POSTed, transactionID: %transId', ['%transId' => $transactionId]);
+        $this->logger->info('Grants profile POSTed, transactionID: %transId', ['%transId' => self::DOCUMENT_TRANSACTION_ID_INITIAL]);
         return $this->atvService->postDocument($newGrantsProfileDocument);
       }
       catch (\Exception $e) {
@@ -221,6 +219,7 @@ class GrantsProfileService {
       $metadata = array_merge($metadata, $updatedMetadata);
     }
 
+    $transactionId = $this->uuid->generate();
     $payloadData = [
       'content' => $documentContent,
       'metadata' => $metadata,
