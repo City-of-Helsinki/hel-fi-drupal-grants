@@ -601,19 +601,11 @@ final class GrantsHandler extends WebformHandlerBase {
         throw new \Exception();
       }
     }
-    catch (\Exception $e) {
+    catch (\Exception) {
       $this->messenger()
         ->addWarning($this->t('You must have grants profile created.', [], $tOpts));
 
-      $url = Url::fromRoute('grants_profile.edit');
-      $response = new RedirectResponse($url->toString());
-      $request = $this->requestStack->getCurrentRequest();
-      // Save the session so things like messages get saved.
-      $request->getSession()->save();
-      $response->prepare($request);
-      // Make sure to trigger kernel events.
-      $this->kernel->terminate($request, $response);
-      $response->send();
+      $this->terminateWithRedirect(Url::fromRoute('grants_profile.edit'));
       return;
     }
 
@@ -626,19 +618,26 @@ final class GrantsHandler extends WebformHandlerBase {
         $this->messenger()
           ->addWarning($this->t('You must have bank account saved to your profile.', [], $tOpts));
       }
-      $url = Url::fromRoute('grants_profile.edit');
-      $response = new RedirectResponse($url->toString());
-      $request = $this->requestStack->getCurrentRequest();
-      // Save the session so things like messages get saved.
-      $request->getSession()->save();
-      $response->prepare($request);
-      // Make sure to trigger kernel events.
-      $this->kernel->terminate($request, $response);
-      $response->send();
+
+      $this->terminateWithRedirect(Url::fromRoute('grants_profile.edit'));
       return;
     }
 
     parent::prepareForm($webform_submission, $operation, $form_state);
+  }
+
+  /**
+   * Terminates the request and redirects to the given URL.
+   */
+  private function terminateWithRedirect(Url $redirect): void {
+    $response = new RedirectResponse($redirect->toString());
+    $request = $this->requestStack->getCurrentRequest();
+    // Save the session so things like messages get saved.
+    $request->getSession()->save();
+    $response->prepare($request);
+    // Make sure to trigger kernel events.
+    $this->kernel->terminate($request, $response);
+    $response->send();
   }
 
   /**
