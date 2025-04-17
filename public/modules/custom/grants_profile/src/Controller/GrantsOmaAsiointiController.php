@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\grants_oma_asiointi\Controller;
+namespace Drupal\grants_profile\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;

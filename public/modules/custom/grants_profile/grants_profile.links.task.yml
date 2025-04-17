@@ -1,6 +1,6 @@
 # grants_oma_asiointi.links.task.yml
 
 grants_oma_asiointi.local_tasks:
-  deriver: 'Drupal\grants_oma_asiointi\Plugin\Derivative\DynamicLocalTasks'
+  deriver: 'Drupal\grants_profile\Plugin\Derivative\DynamicLocalTasks'
   weight: 100
 

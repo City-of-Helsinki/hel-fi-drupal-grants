@@ -14,6 +14,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
+use Drupal\helfi_platform_config\DTO\ParagraphTypeCollection;
+use Drupal\user\UserInterface;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_theme().
@@ -114,7 +117,193 @@ function grants_profile_theme(): array {
     ],
   ];
 
+  $theme['grants_oma_asiointi_block'] = [
+    'render element' => 'build',
+    'variables' => [
+      'hascompany' => NULL,
+      'allMessages' => NULL,
+      'messages' => NULL,
+      'allSubmissions' => NULL,
+      'submissions' => NULL,
+      'userProfileData' => NULL,
+      'applicationTypes' => NULL,
+      'lang' => NULL,
+      'link' => NULL,
+      'allMessagesLink' => NULL,
+    ],
+  ];
+  $theme['grants_oma_asiointi_hero_block'] = [
+    'render element' => 'build',
+    'variables' => [
+      'title' => NULL,
+      'roleType' => NULL,
+    ],
+  ];
+  $theme['grants_oma_asiointi_asiointirooli_block'] = [
+    'render element' => 'build',
+    'variables' => [
+      'switchRole' => NULL,
+      'currentRole' => NULL,
+      'asiointiLink' => NULL,
+    ],
+  ];
+  $theme['grants_oma_asiointi_front'] = [
+    'render element' => 'build',
+    'variables' => [
+      'title' => NULL,
+      'notification' => NULL,
+      'infoboxes' => NULL,
+      'drafts' => NULL,
+      'others' => NULL,
+      'unread' => NULL,
+      'link' => NULL,
+    ],
+  ];
+  $theme['grants_user_data_notification'] = [
+    'render element' => 'build',
+    'variables' => [
+      'showNotification' => NULL,
+    ],
+  ];
+
+  $theme['grants_oma_asiointi_infoboxes'] = [
+    'render element' => 'build',
+    'variables' => [
+      'profileNotice' => NULL,
+    ],
+  ];
+
   return $theme;
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function grants_profile_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'grants_profile/grants_oma_asiointi';
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function grants_profile_preprocess_page_title(&$variables) {
+  $variables['initials'] = 'AS';
+  $variables['colorscheme'] = '0';
+}
+
+/**
+ * Implements hook_views_pre_build().
+ */
+function grants_profile_views_pre_build(ViewExecutable $view) {
+  // Only operate on ukk view.
+  if ($view->id() == 'ukk') {
+    // Get the url query parameter.
+    $selected = \Drupal::request()->query->get('ukk');
+    // If we don't have one set.
+    if (!$selected) {
+      // Load all terms form ukk kats.
+      $terms = \Drupal::entityTypeManager()
+        ->getStorage('taxonomy_term')
+        ->loadTree('ukk_kategoriat');
+      $filterValueToSet = 0;
+      // Set first value as selected.
+      foreach ($terms as $term) {
+        $filterValueToSet = (int) $term->tid;
+        break;
+      }
+      // Only use this if we have terms.
+      if ($filterValueToSet != 0) {
+        $view->setExposedInput(['ukk' => $filterValueToSet]);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function grants_profile_menu_local_tasks_alter(&$data, $route_name) {
+  $routes = [
+    'grants_profile.show',
+    'grants_profile.edit',
+    'grants_oma_asiointi.front',
+  ];
+
+  if (!in_array($route_name, $routes)) {
+    return;
+  }
+
+  // We don't currently want to show edit own info local task link,
+  // But other local task links should be visible there.
+  unset($data['tabs'][0]['grants_oma_asiointi.local_tasks:grants_oma_asiointi.grantsprofile.edit']);
+}
+
+/**
+ * Implements hook_user_predelete().
+ */
+function grants_profile_user_predelete(UserInterface $account) {
+  $auditLogger = Drupal::service('helfi_audit_log.audit_log');
+
+  try {
+    $authdata = \Drupal::service('externalauth.authmap')->getAuthData($account->id(), 'openid_connect.tunnistamo');
+    if (isset($authdata['authname'])) {
+      $account->setUsername($authdata['authname']);
+      $account->setEmail(NULL);
+      $account->save();
+    }
+
+    $message = [
+      "operation" => "GRANTS_USER_DELETE",
+      "status" => "SUCCESS",
+      "target" => [
+        "id" => $account->id(),
+        "type" => "DRUPAL_USER",
+        "name" => $account->getAccountName(),
+      ],
+    ];
+  }
+  catch (\Exception $e) {
+    $message = [
+      "operation" => "GRANTS_USER_DELETE",
+      "status" => "FAILURE",
+      "target" => [
+        "id" => $account->id(),
+        "type" => "DRUPAL_USER",
+        "name" => $account->getAccountName(),
+      ],
+    ];
+
+    Drupal::logger('grants_oma_asiointi')->error('Error purging users: @error', ['@error' => $e->getMessage()]);
+  }
+
+  $auditLogger->dispatchEvent($message);
+}
+
+/**
+ * Implements hook_helfi_paragraph_types().
+ */
+function grants_profile_helfi_paragraph_types() : array {
+  $entities = [
+    'node' => [
+      'landing_page' => [
+        'field_content' => [
+          'oma_asiointi',
+        ],
+      ],
+    ],
+  ];
+
+  $enabled = [];
+  foreach ($entities as $entityTypeId => $bundles) {
+    foreach ($bundles as $bundle => $fields) {
+      foreach ($fields as $field => $paragraphTypes) {
+        foreach ($paragraphTypes as $paragraphType) {
+          $enabled[] = new ParagraphTypeCollection($entityTypeId, $bundle, $field, $paragraphType);
+        }
+      }
+    }
+  }
+  return $enabled;
 }
 
 /**

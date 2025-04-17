@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\grants_oma_asiointi\Plugin\Derivative;
+namespace Drupal\grants_profile\Plugin\Derivative;
 
 use Drupal\Component\Plugin\Derivative\DeriverBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\grants_oma_asiointi\Plugin\Block;
+namespace Drupal\grants_profile\Plugin\Block;
 
 use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
