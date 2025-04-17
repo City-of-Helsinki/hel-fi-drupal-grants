@@ -164,6 +164,7 @@ class HelfiAtvService {
 
     $atvDocument->setDraft(TRUE);
     $atvDocument->setDeletable(FALSE);
+    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
 
     // @todo Translate the title somehow.
     $humanReadableTypes = [
