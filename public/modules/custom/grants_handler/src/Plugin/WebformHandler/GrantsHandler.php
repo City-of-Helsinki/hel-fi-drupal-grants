@@ -32,6 +32,7 @@ use Drupal\grants_handler\WebformSubmissionNotesHelper;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\ApplicationDataService;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -594,7 +595,7 @@ final class GrantsHandler extends WebformHandlerBase {
 
     try {
       $grantsProfileDocument = $this->grantsProfileService->getGrantsProfile($selectedCompany);
-      if (gettype($grantsProfileDocument) == 'object' && get_class($grantsProfileDocument) == 'Drupal\helfi_atv\AtvDocument') {
+      if ($grantsProfileDocument instanceof AtvDocument) {
         $grantsProfile = $grantsProfileDocument->getContent();
       }
       else {
