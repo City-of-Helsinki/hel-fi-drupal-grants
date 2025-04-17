@@ -7,12 +7,13 @@ use Drupal\Component\Utility\Xss;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AppendCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\Core\Render\Renderer;
-use Drupal\Core\TypedData\TypedDataManager;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_attachments\AttachmentRemover;
 use Drupal\grants_attachments\DebuggableTrait;
@@ -20,8 +21,8 @@ use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\webform\Entity\WebformSubmission;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Provides a Grants Handler form.
@@ -31,15 +32,16 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class MessageForm extends FormBase {
 
   use DebuggableTrait;
+  use AutowireTrait;
 
   /**
    * Constructs a new AddressForm object.
    *
-   * @param \Drupal\Core\TypedData\TypedDataManager $typedDataManager
+   * @param \Drupal\Core\TypedData\TypedDataManagerInterface $typedDataManager
    *   Typed data manager.
    * @param \Drupal\grants_handler\MessageService $messageService
    *   Send messages.
-   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Load entities.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access ATV.
@@ -51,31 +53,17 @@ class MessageForm extends FormBase {
    *   Session data.
    */
   public function __construct(
-    protected TypedDataManager $typedDataManager,
+    protected TypedDataManagerInterface $typedDataManager,
+    #[Autowire('grants_handler.message_service')]
     protected MessageService $messageService,
-    protected EntityTypeManager $entityTypeManager,
+    protected EntityTypeManagerInterface $entityTypeManager,
     protected AtvService $atvService,
+    #[Autowire('grants_attachments.attachment_remover')]
     protected AttachmentRemover $attachmentRemover,
-    protected Renderer $renderer,
-    protected Session $session,
+    protected RendererInterface $renderer,
+    protected SessionInterface $session,
   ) {
     $this->setDebug(NULL);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): MessageForm|static {
-    return new static(
-      $container->get('typed_data_manager'),
-      $container->get('grants_handler.message_service'),
-      $container->get('entity_type.manager'),
-      $container->get('helfi_atv.atv_service'),
-      $container->get('grants_attachments.attachment_remover'),
-      $container->get('renderer'),
-      $container->get('session')
-
-    );
   }
 
   /**
