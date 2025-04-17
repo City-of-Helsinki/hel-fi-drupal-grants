@@ -63,27 +63,16 @@ class ProfileConnector {
     try {
       $profileData = $this->helsinkiProfiili->getUserProfileData();
     }
-    catch (TokenExpiredException $e) {
+    catch (TokenExpiredException) {
       throw new GrantsProfileException('Unable to fetch Helsinki profiili data');
     }
 
-    switch ($profileType) {
-      case 'private_person':
-        $grantsProfileContent = $this->initGrantsProfilePrivatePerson($profileData);
-        break;
-
-      case 'registered_community':
-        $grantsProfileContent = $this->initGrantsProfileRegisteredCommunity($profileData, $companyData);
-        break;
-
-      case 'unregistered_community':
-        $grantsProfileContent = $this->initGrantsProfileUnRegisteredCommunity($profileData);
-        break;
-
-      default:
-        throw new GrantsProfileException('Unknown profile type.');
-    }
-    return $grantsProfileContent;
+    return match ($profileType) {
+      'private_person' => $this->initGrantsProfilePrivatePerson($profileData),
+      'registered_community' => $this->initGrantsProfileRegisteredCommunity($profileData, $companyData),
+      'unregistered_community' => $this->initGrantsProfileUnRegisteredCommunity($profileData),
+      default => throw new GrantsProfileException('Unknown profile type.'),
+    };
   }
 
   /**
