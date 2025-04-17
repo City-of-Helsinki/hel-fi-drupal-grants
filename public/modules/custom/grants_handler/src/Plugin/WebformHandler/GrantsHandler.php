@@ -22,6 +22,7 @@ use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ApplicationSubmitType;
 use Drupal\grants_handler\ApplicationUploaderService;
 use Drupal\grants_handler\ApplicationValidator;
+use Drupal\grants_handler\Event\ApplicationSubmitEvent;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsErrorStorage;
 use Drupal\grants_handler\GrantsException;
@@ -40,6 +41,7 @@ use Drupal\webform\Plugin\WebformHandlerBase;
 use Drupal\webform\Utility\WebformArrayHelper;
 use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\Exception\GuzzleException;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -258,6 +260,11 @@ final class GrantsHandler extends WebformHandlerBase {
   protected AttachmentRemover $attachmentRemover;
 
   /**
+   * Event dispatcher.
+   */
+  private EventDispatcherInterface $eventDispatcher;
+
+  /**
    * {@inheritDoc}
    */
   public static function create(
@@ -289,6 +296,8 @@ final class GrantsHandler extends WebformHandlerBase {
     $instance->attachmentHandler->setDebug($instance->isDebug());
     $instance->applicationValidator->setDebug($instance->isDebug());
     $instance->applicationStatusService->setDebug($instance->isDebug());
+
+    $instance->eventDispatcher = $container->get(EventDispatcherInterface::class);
 
     return $instance;
   }
@@ -1508,6 +1517,11 @@ submit the application only after you have provided all the necessary informatio
     }
 
     $this->postSaveHandleApplicationNumber($webform_submission);
+
+    if ($this->submitType) {
+      // Let other parts of the system to react to the form submit.
+      $this->eventDispatcher->dispatch(new ApplicationSubmitEvent($this->submitType));
+    }
 
     try {
       // If triggering element is either draft save or proper one,
