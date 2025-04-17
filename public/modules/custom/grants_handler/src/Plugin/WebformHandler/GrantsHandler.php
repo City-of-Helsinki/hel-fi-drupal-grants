@@ -19,6 +19,7 @@ use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\ApplicationInitService;
 use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\grants_handler\ApplicationSubmitType;
 use Drupal\grants_handler\ApplicationUploaderService;
 use Drupal\grants_handler\ApplicationValidator;
 use Drupal\grants_handler\FormLockService;
@@ -119,11 +120,9 @@ final class GrantsHandler extends WebformHandlerBase {
   protected string $newStatus;
 
   /**
-   * Save form trigger for methods where form_state is not available.
-   *
-   * @var string
+   * Save submit type for methods where it cannot be calculated from form_state.
    */
-  protected string $triggeringElement = '';
+  protected ?ApplicationSubmitType $submitType = NULL;
 
   /**
    * Save form for methods where form is not available.
@@ -1003,23 +1002,28 @@ moment and reload the page.',
   }
 
   /**
-   * Get triggering element name from form state.
+   * Get form submit type from form state.
    *
    * @param \Drupal\Core\Form\FormStateInterface|null $form_state
    *   Form state.
    *
-   * @return mixed
-   *   Triggering element name if there's one.
+   * @return \Drupal\grants_handler\ApplicationSubmitType|null
+   *   Form submit type if there's one.
    */
-  public function getTriggeringElementName(?FormStateInterface $form_state): mixed {
-    if ($this->triggeringElement == '') {
+  public function getSubmitType(?FormStateInterface $form_state): ApplicationSubmitType|null {
+    if (!$this->submitType) {
       $triggeringElement = $form_state->getTriggeringElement();
       if (isset($triggeringElement['#submit']) && is_string($triggeringElement['#submit'][0])) {
-        $this->triggeringElement = $triggeringElement['#submit'][0];
+        $this->submitType = match($triggeringElement['#submit'][0]) {
+          '::submit' => ApplicationSubmitType::SUBMIT,
+          '::submitForm' => ApplicationSubmitType::SUBMIT_DRAFT,
+          // Other options can be ::next, ::previous, etc.
+          default => NULL,
+        };
       }
     }
 
-    return $this->triggeringElement;
+    return $this->submitType;
   }
 
   /**
@@ -1131,7 +1135,7 @@ moment and reload the page.',
     // ATV in postSave and in that method these are not available.
     // and the triggering element is pivotal in figuring if we're
     // saving draft or not.
-    $triggeringElement = $this->getTriggeringElementName($form_state);
+    $submitType = $this->getSubmitType($form_state);
     // Form values are needed for parsing attachment in postSave.
     $this->formTemp = $form;
     $this->formStateTemp = $form_state;
@@ -1200,7 +1204,7 @@ moment and reload the page.',
 
     // Figure out status for this application.
     $this->newStatus = $this->applicationStatusService->getNewStatus(
-      $triggeringElement,
+      $submitType,
       $this->submittedFormData,
       $webform_submission
     );
@@ -1214,7 +1218,7 @@ moment and reload the page.',
     $this->validate($webform_submission, $form_state, $form);
     $all_errors = $this->grantsFormNavigationHelper->getAllErrors($webform_submission);
 
-    if ($triggeringElement == '::submit' && ($all_errors === NULL || Helpers::emptyRecursive($all_errors))) {
+    if ($submitType == ApplicationSubmitType::SUBMIT && ($all_errors === NULL || Helpers::emptyRecursive($all_errors))) {
       $applicationData = $this->applicationDataService->webformToTypedData(
         $this->submittedFormData);
 
@@ -1275,7 +1279,7 @@ submit the application only after you have provided all the necessary informatio
     // ATV in postSave and in that method these are not available.
     // and the triggering element is pivotal in figuring if we're
     // saving draft or not.
-    $this->triggeringElement = $this->getTriggeringElementName($form_state);
+    $this->submitType = $this->getSubmitType($form_state);
     // Form values are needed for parsing attachment in postSave.
     $this->formTemp = $form;
     $this->formStateTemp = $form_state;
@@ -1508,11 +1512,14 @@ submit the application only after you have provided all the necessary informatio
     try {
       // If triggering element is either draft save or proper one,
       // we want to parse attachments from form.
-      if ($this->triggeringElement == '::submitForm') {
-        $this->postSaveSubmitForm();
-      }
-      if ($this->triggeringElement == '::submit') {
-        $this->postSaveSubmit($webform_submission);
+      switch ($this->submitType) {
+        case ApplicationSubmitType::SUBMIT_DRAFT:
+          $this->postSaveSubmitForm();
+          break;
+
+        case ApplicationSubmitType::SUBMIT:
+          $this->postSaveSubmit($webform_submission);
+          break;
       }
     }
     catch (GuzzleException $e) {
@@ -1544,7 +1551,7 @@ submit the application only after you have provided all the necessary informatio
     try {
       // Get new status from method that figures that out.
       $this->submittedFormData['status'] = $this->applicationStatusService->getNewStatus(
-        $this->triggeringElement,
+        $this->submitType,
         $this->submittedFormData,
         $webform_submission
       );
