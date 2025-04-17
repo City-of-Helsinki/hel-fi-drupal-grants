@@ -1,60 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_oma_asiointi\Plugin\Block;
 
+use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_profile\GrantsProfileService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides an example block.
  *
- * @Block(
- *   id = "grants_oma_asiointi_asiointirooli_block",
- *   admin_label = @Translation("Grants Oma Asiointi Asiointirooli"),
- *   category = @Translation("Oma Asiointi")
- * )
- *
  * @phpstan-consistent-constructor
  */
-class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInterface {
+#[Block(
+  id: 'grants_oma_asiointi_asiointirooli_block',
+  admin_label: new TranslatableMarkup('Grants Oma Asiointi Asiointirooli'),
+)]
+final class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * Construct block object.
-   *
-   * @param array $configuration
-   *   Block config.
-   * @param string $plugin_id
-   *   Plugin.
-   * @param mixed $plugin_definition
-   *   Plugin def.
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   The grants profile service.
+   * The grants profile service.
    */
-  public function __construct(
-    array $configuration,
-    $plugin_id,
-    $plugin_definition,
-    protected GrantsProfileService $grantsProfileService,
-  ) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
+  protected GrantsProfileService $grantsProfileService;
 
   /**
-   * Factory function.
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   Container.
-   * @param array $configuration
-   *   Block config.
-   * @param string $plugin_id
-   *   Plugin.
-   * @param mixed $plugin_definition
-   *   Plugin def.
-   *
-   * @return static
+   * {@inheritDoc}
    */
   public static function create(
     ContainerInterface $container,
@@ -62,12 +37,9 @@ class AsiointirooliBlock extends BlockBase implements ContainerFactoryPluginInte
     $plugin_id,
     $plugin_definition,
   ): static {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('grants_profile.service'),
-    );
+    $instance = new static($configuration, $plugin_id, $plugin_definition);
+    $instance->grantsProfileService = $container->get('grants_profile.service');
+    return $instance;
   }
 
   /**

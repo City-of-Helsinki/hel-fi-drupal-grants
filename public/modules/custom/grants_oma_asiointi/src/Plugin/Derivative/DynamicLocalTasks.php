@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_oma_asiointi\Plugin\Derivative;
 
 use Drupal\Component\Plugin\Derivative\DeriverBase;
@@ -15,7 +17,7 @@ class DynamicLocalTasks extends DeriverBase {
   /**
    * {@inheritdoc}
    */
-  public function getDerivativeDefinitions($base_plugin_definition) {
+  public function getDerivativeDefinitions($base_plugin_definition): array {
     /* Implement dynamic logic to provide values for the same keys as
      * in example. links.task.yml.
      */

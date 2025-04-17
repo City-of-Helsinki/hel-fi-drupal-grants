@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_oma_asiointi\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
-use Drupal\grants_mandate\Controller\GrantsMandateController;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -24,6 +26,8 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  * @phpstan-consistent-constructor
  */
 class GrantsOmaAsiointiController extends ControllerBase implements ContainerInjectionInterface {
+
+  use AutowireTrait;
 
   /**
    * Logger access.
@@ -50,23 +54,12 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     protected RequestStack $requestStack,
     protected GrantsProfileService $grantsProfileService,
     protected AtvService $helfiAtvAtvService,
+    #[Autowire(service: 'grants_handler.message_service')]
     protected MessageService $messageService,
+    #[Autowire(service: 'grants_handler.application_getter_service')]
     protected ApplicationGetterService $applicationGetterService,
   ) {
     $this->logger = $this->getLogger('grants_oma_asiointi');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): GrantsMandateController|static {
-    return new static(
-      $container->get('request_stack'),
-      $container->get('grants_profile.service'),
-      $container->get('helfi_atv.atv_service'),
-      $container->get('grants_handler.message_service'),
-      $container->get('grants_handler.application_getter_service')
-    );
   }
 
   /**
@@ -118,7 +111,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     }
 
     $updatedAt = $grantsProfileDocument?->getUpdatedAt();
-    $updatedAt = $updatedAt ? strtotime($updatedAt) : false;
+    $updatedAt = $updatedAt ? strtotime($updatedAt) : FALSE;
 
     // Timestamp of the time a notification was shown.
     $notificationShown = $grantsProfileDocument?->getMetadata()['notification_shown'] ?? 0;

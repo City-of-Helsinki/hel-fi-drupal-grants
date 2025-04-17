@@ -1,78 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_oma_asiointi\Plugin\Block;
 
+use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_profile\GrantsProfileService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides an example block.
  *
- * @Block(
- *   id = "grants_oma_asiointi_hero_block",
- *   admin_label = @Translation("Grants Oma Asiointi Hero"),
- *   category = @Translation("Oma Asiointi")
- * )
- *
  * @phpstan-consistent-constructor
  */
-class OmaAsiointiHeroBlock extends BlockBase implements ContainerFactoryPluginInterface {
+#[Block(
+  id: 'grants_oma_asiointi_hero_block',
+  admin_label: new TranslatableMarkup('Grants Oma Asiointi Hero'),
+)]
+final class OmaAsiointiHeroBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * Construct block object.
-   *
-   * @param array $configuration
-   *   Block config.
-   * @param string $plugin_id
-   *   Plugin.
-   * @param mixed $plugin_definition
-   *   Plugin def.
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   The grants profile service.
+   * The grants profile service.
    */
-  public function __construct(
-    array $configuration,
-    $plugin_id,
-    $plugin_definition,
-    protected GrantsProfileService $grantsProfileService,
-  ) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-  }
+  protected GrantsProfileService $grantsProfileService;
 
   /**
-   * Factory function.
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   Container.
-   * @param array $configuration
-   *   Block config.
-   * @param string $plugin_id
-   *   Plugin.
-   * @param mixed $plugin_definition
-   *   Plugin def.
-   *
-   * @return static
+   * {@inheritDoc}
    */
   public static function create(
     ContainerInterface $container,
     array $configuration,
     $plugin_id,
     $plugin_definition,
-  ) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('grants_profile.service'),
-    );
+  ): static {
+    $instance = new static($configuration, $plugin_id, $plugin_definition);
+    $instance->grantsProfileService = $container->get('grants_profile.service');
+    return $instance;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build(): array {
 
     $selectedRole = $this->grantsProfileService->getSelectedRoleData();
     $title = $selectedRole['name'];
@@ -90,7 +62,7 @@ class OmaAsiointiHeroBlock extends BlockBase implements ContainerFactoryPluginIn
   /**
    * Disable cache.
    */
-  public function getCacheMaxAge() {
+  public function getCacheMaxAge(): int {
     return 0;
   }
 
