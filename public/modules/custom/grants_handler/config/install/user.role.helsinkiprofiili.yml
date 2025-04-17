@@ -1,17 +1,20 @@
-uuid: b81215c2-8134-4132-b93c-aa08338f5331
 langcode: en
 status: true
 dependencies:
   module:
+    - file
     - grants_mandate
+    - grants_oma_asiointi
     - grants_profile
     - webform
 id: helsinkiprofiili
 label: HelsinkiProfiili
-weight: 5
+weight: -6
 is_admin: null
 permissions:
+  - 'access grants_oma_asiointi'
   - 'administer own grants_profile'
+  - 'delete own files'
   - 'edit own webform submission'
   - 'get mandates from dvv'
   - 'view own grants_profile'
