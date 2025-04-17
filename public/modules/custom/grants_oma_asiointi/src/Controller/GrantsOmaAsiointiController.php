@@ -120,7 +120,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     $updatedAt = $grantsProfileDocument?->getUpdatedAt();
     $updatedAt = $updatedAt ? strtotime($updatedAt) : false;
 
-    $notificationShown = $this->grantsProfileService->getNotificationShown();
+    // Timestamp of the time a notification was shown.
+    $notificationShown = $grantsProfileDocument?->getMetadata()['notification_shown'] ?? 0;
 
     $notificationShownTimestamp = ((int) $notificationShown) / 1000;
     $threeMonthsAgoTimestamp = strtotime('-3 months');

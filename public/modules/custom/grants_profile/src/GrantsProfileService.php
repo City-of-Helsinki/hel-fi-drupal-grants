@@ -572,27 +572,6 @@ class GrantsProfileService {
   }
 
   /**
-   * The getNotificationShown method.
-   *
-   * This method returns timestamp of the time
-   * a notification was shown.
-   *
-   * @return int|string
-   *   Timestamp of last time notification was shown.
-   *
-   * @throws \Drupal\grants_profile\GrantsProfileException
-   */
-  public function getNotificationShown(): int|string {
-    // Get selected company.
-    $selectedCompany = $this->getSelectedRoleData();
-    // Get grants profile.
-    $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
-
-    $profileMetadata = $grantsProfileDocument?->getMetadata();
-    return $profileMetadata['notification_shown'] ?? 0;
-  }
-
-  /**
    * The setNotificationShown method.
    *
    * This method sets a timestamp of the time
