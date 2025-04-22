@@ -4,23 +4,15 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Controller;
 
-use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
-use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
-use Drupal\Core\Entity\EntityStorageException;
 use Drupal\file\Entity\File;
 use Drupal\grants_application\Atv\HelfiAtvService;
-use Drupal\helfi_atv\AtvDocumentNotFoundException;
-use Drupal\helfi_atv\AtvFailedToConnectException;
-use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusException;
 use Drupal\helfi_av\AntivirusService;
-use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Controller for application actions.
@@ -34,9 +26,7 @@ final class ApplicationController extends ControllerBase {
    */
   public function __construct(
     private readonly AntivirusService $antivirusService,
-    #[Autowire(service: 'helfi_atv.atv_service')]
-    private readonly AtvService $atvService,
-    private readonly HelfiAtvService $helfiAtvService
+    private readonly HelfiAtvService $helfiAtvService,
   ) {
   }
 
@@ -60,17 +50,17 @@ final class ApplicationController extends ControllerBase {
    * Upload file handler.
    *
    * @param string $id
-   *   The application id.
-   * @param Request $request
+   *   The application number.
+   * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request.
    *
-   * @return JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
   public function uploadFile(string $id, Request $request): JsonResponse {
     $file = $request->files->get('file');
     if (!$file || !$id) {
-      return new JsonResponse(status: 406);
+      return new JsonResponse(status: 400);
     }
 
     // @todo Check file type.
@@ -86,62 +76,82 @@ final class ApplicationController extends ControllerBase {
     $file_entity = File::create([
       'filename' => basename($file->getFilename()),
       'status' => 0,
-      'uid' => \Drupal::currentUser()->id(),
+      'uid' => $this->currentUser()->id(),
     ]);
 
     $file_entity->setFileUri($file->getRealPath());
 
-    $submission = \Drupal::entityTypeManager()
+    $submission = $this->entityTypeManager()
       ->getStorage('application_submission')
       ->loadByProperties(['application_number' => $id]);
 
     $submission = reset($submission);
 
-    $result = $this->atvService->uploadAttachment(
-      $submission->document_id->value,
-      $file->getClientOriginalName(),
-      $file_entity,
-    );
+    if (!$submission) {
+      return new JsonResponse(status: 400);
+    }
+
+    try {
+      $result = $this->helfiAtvService->addAttachment(
+        $submission->document_id->value,
+        $file->getClientOriginalName(),
+        $file_entity
+      );
+    }
+    catch (\Exception $e) {
+      // @todo Log exception message.
+      return new JsonResponse(['File upload failed for some reason.'], 500);
+    }
 
     if (!$result) {
       return new JsonResponse(status: 500);
     }
 
-    // todo I guess we must add the events as well.
+    // @todo Check that events are added as normally.
 
     $file_entity->delete();
 
-    // The $result['filename'] is the actual filename.
-    // File id is more meaningful.
-    return new JsonResponse($result);
+    $response = [
+      'filename' => $result['filename'],
+      'file_id' => $result['file_id'],
+      // 'href' => $result['href'],
+      'size' => $result['size'],
+    ];
+
+    return new JsonResponse($response);
   }
 
   /**
+   * Delete the file from application.
+   *
    * @param string $id
-   *   The application id.
+   *   The application number.
    * @param string $file_id
    *   The file id.
-   * @param Request $request
-   *   The request.
    *
-   * @return JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   response object.
    */
-  public function deleteFile(string $id, string $file_id, Request $request) {
-    // Do not delete if application is not draft
-    $submission = \Drupal::entityTypeManager()
+  public function deleteFile(string $id, string $file_id) {
+    if (!$id || !$file_id) {
+      return new JsonResponse(status: 400);
+    }
+
+    $submission = $this->entityTypeManager()
       ->getStorage('application_submission')
       ->loadByProperties(['application_number' => $id]);
-
     $submission = reset($submission);
 
-    if (!$submission->draft->value) {
-      return new JsonResponse(status: 503);
+    if (!$submission || !$submission->draft->value) {
+      // May not delete file if not draft.
+      return new JsonResponse(data: ['Cannot remove file from non-draft application.'], status: 503);
     }
 
     try {
-      // todo Maybe use helfi atv service only.
-      $this->atvService->deleteAttachment($submission->document_id->value, $file_id);
+      $this->helfiAtvService->removeAttachment(
+        $submission->document_id->value,
+        $file_id
+      );
     }
     catch (\Exception $e) {
       return new JsonResponse(status: 500);

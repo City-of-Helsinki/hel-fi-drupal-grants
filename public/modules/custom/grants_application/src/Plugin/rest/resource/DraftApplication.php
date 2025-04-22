@@ -4,7 +4,6 @@ namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Utility\Xss;
 use Drupal\Component\Uuid\UuidInterface;
-use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
@@ -217,7 +216,7 @@ final class DraftApplication extends ResourceBase {
     ];
     $options['absolute'] = TRUE;
 
-    // todo We must have the application_number with us.
+    // @todo Fix the redirect to add the application_number query parameter.
     return new RedirectResponse(
       Url::fromRoute($route_name, $route_parameters, $options)->toString() . '?application_number=' . $application_number,
       301

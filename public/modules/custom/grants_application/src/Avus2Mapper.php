@@ -4,6 +4,7 @@ namespace Drupal\grants_application;
 
 use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\User\GrantsProfile;
+use Drupal\helfi_atv\AtvDocument;
 
 /**
  * Access control handler for form submission.
@@ -36,6 +37,7 @@ final class Avus2Mapper {
     array $user_profile_data,
     GrantsProfile $grants_profile,
     FormSettings $form_settings,
+    AtvDocument $atvDocument,
   ): array {
 
     $applicant_type = $company_data['type'];
@@ -60,7 +62,15 @@ final class Avus2Mapper {
     $data['senderInfoArray'] = $this->getSenderInfo($user_data, $user_profile_data['myProfile']['verifiedPersonalInformation']);
     $data['orienteeringMapInfo']['orienteeringMapsArray'] = $this->getOrienteeringMaps($form_data);
 
-    // @todo Refactor ^this in some better way.
+    // @todo Map files one by one for now, refactor later if possible.
+    $data['attachmentsInfo'] = [
+      'attachmentsArray' => $this->getAttachmentInfo($form_data, $atvDocument),
+      'generalInfoArray' => [
+        'ID' => 'extraInfo', 'value' => '', 'valueType' => 'string', 'label' => 'Lisäselvitys liitteistä'
+      ],
+    ];
+
+    // @todo Refactor ^this in some better way when we are doing the second application type.
     /*
     $data = $this->fillSharedData(&$data);
     $this->fillApplicationSpecificData(&$data, $application_type_id);
@@ -358,6 +368,48 @@ final class Avus2Mapper {
 
     return $data;
   }
+
+  /**
+   * Get the attachment data from application.
+   *
+   * @return array
+   */
+  public function getAttachmentInfo(array $form_data, AtvDocument $document): array {
+/*
+    {"ID":"description","value":"Varmistus tilinumerolle FI4950009420028730","valueType":"string","label":"Liitteen kuvaus"},
+    {"ID":"fileName","value":"dummy.pdf","valueType":"string","label":"Tiedostonimi"},
+    {"ID":"fileType","value":"45","valueType":"int","label":null},
+    {"ID":"integrationID","value":"\/LOCALK\/v1\/documents\/31e77ca6-fdd3-48a7-afb6-41bee86d234f\/attachments\/219139\/","valueType":"string","label":null},
+    {"ID":"isDeliveredLater","value":"false","valueType":"bool","label":"Liite toimitetaan my\u00f6hemmin"},
+    {"ID":"isIncludedInOtherFile","value":"false","valueType":"bool","label":"Liite on toimitettu yhten\u00e4 tiedostona tai toisen hakemuksen yhteydess\u00e4"}
+*/
+    return [];
+  }
+
+  /**
+   * Get the general attachment data from application.
+   *
+   * @return array
+   */
+  public function getGeneralInfo(array $form_data, AtvDocument $document): array {
+    return [];
+  }
+
+  private function createAttachmentData(string $description, string $filename, string $fileType, string $integrationID, bool $isDeliveredLater = false, bool $isIncludedInOtherFile = false) {
+    $fields = ['description','filename','fileType','integrationID','isDeliveredLater','isIncludedInOtherFile'];
+    $isDeliveredLater = $isDeliveredLater ? 'true' : 'false';
+    $isIncludedInOtherFile = $isIncludedInOtherFile ? 'true' : 'false';
+
+    return [
+      ['ID' => 'description', 'value' => "Varmistus tilinumerolle asd asd asd", 'valueType' => 'string', 'label' => 'Liitteen kuvaus'],
+      ['ID' => 'filename', 'value' => $filename, 'valueType' => 'string', 'label' => 'Tiedostonimi'],
+      ['ID' => 'fileType', 'value' => $fileType, 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'integrationID', 'value' => $integrationID, 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'idDeliveredLater', 'value' => $isDeliveredLater, 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'isIncludedInOtherFile', 'value' => $isIncludedInOtherFile, 'valueType' => 'string', 'label' => NULL],
+    ];
+  }
+
 
   /**
    * Get orienteering maps.
