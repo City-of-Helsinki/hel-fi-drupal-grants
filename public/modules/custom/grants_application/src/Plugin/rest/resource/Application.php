@@ -195,8 +195,27 @@ final class Application extends ResourceBase {
    */
   public function post(
     int $application_type_id,
+    string $application_number,
     Request $request,
   ): JsonResponse {
+    if (!$application_type_id || !$application_number) {
+      // @todo Return error.
+    }
+
+    try {
+      $selected_company = $this->userInformationService->getSelectedCompany();
+      // Helsinkiprofiiliuserdata getuserdata.
+      $user_data = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
+      return new JsonResponse([], 500);
+    }
+
+    $sub = $user_data['sub'];
+
+    $submission = $this->getSubmissionEntity($sub, $application_number);
+    $atv_document = $this->atvService->getDocument($application_number);
+
     // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);
     $env = Helper::getAppEnv();
@@ -230,21 +249,15 @@ final class Application extends ResourceBase {
     $application_number = $this->applicationNumberService
       ->createNewApplicationNumber($env, $application_type_id);
 
-    try {
-      $selected_company = $this->userInformationService->getSelectedCompany();
-      // Helsinkiprofiiliuserdata getuserdata.
-      $user_data = $this->userInformationService->getUserData();
-    }
-    catch (\Exception $e) {
-      return new JsonResponse([], 500);
-    }
 
+
+    /*
     $application_name = $settings->toArray()['settings']['title'];
     $application_title = $settings->toArray()['settings']['title'];
     $application_type = $settings->toArray()['settings']['application_type'];
     $langcode = $this->languageManager->getCurrentLanguage()->getId();
-    $sub = $user_data['sub'];
 
+    /*
     $document = $this->atvService->createAtvDocument(
       $application_uuid,
       $application_number,
@@ -258,6 +271,7 @@ final class Application extends ResourceBase {
       $selected_company,
       $this->userInformationService->getApplicantType(),
     );
+    */
 
     // @todo Better sanitation.
     $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
@@ -269,27 +283,30 @@ final class Application extends ResourceBase {
       $selected_company,
       $this->userInformationService->getUserProfileData(),
       $this->userInformationService->getGrantsProfileContent(),
-      $settings
+      $settings,
+      $atv_document,
     );
 
     // Compensation is the original avus2 data.
     $document_data['compensation'] = $atv_mapped_data;
 
-    $document->setContent($document_data);
+    // The attachments ought to be mapped separately
+    // $document_data['attachmentsInfo']['attachmentsArray'] = $this->avus2Mapper->getAttachmentInfo();
+    // This is lisätieto-sivu
+    $document_data['attachmentsInfo']['generalInfoArray'] = [];
+
+    // $document_data['events'] = [];
+
+    $atv_document->setContent($document_data);
 
     try {
-      $this->atvService->saveNewDocument($document);
+      // $this->atvService->saveNewDocument($atv_document);
+      $this->atvService->updateExistingDocument($atv_document);
       $now = time();
-      ApplicationSubmission::create([
-        // 'uuid' => $this->uuid->generate(),
-        'sub' => $sub,
-        'langcode' => $langcode,
-        'draft' => $draft,
-        'application_type_id' => $application_type_id,
-        'application_number' => $application_number,
-        'created' => $now,
-        'changed' => $now,
-      ])
+
+      $submission
+        ->set('changed', $now)
+        ->set('draft', FALSE)
         ->save();
 
       // @todo Send to AVUS2.
@@ -300,7 +317,8 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    return new JsonResponse($document->toArray(), 200);
+    // @todo Proper response.
+    return new JsonResponse($atv_document->toArray(), 200);
   }
 
   /**
@@ -322,8 +340,7 @@ final class Application extends ResourceBase {
       'draft' => $draft,
     ] = $content;
 
-    // @todo Maybe separate draft and non-draft submissions.
-    $draft = $draft ?? TRUE;
+    $draft = $draft ?? FALSE;
 
     if (!$application_number) {
       // Missing application number.

@@ -63,7 +63,6 @@ final class ApplicationController extends ControllerBase {
       return new JsonResponse(status: 400);
     }
 
-    // @todo Check file type.
     try {
       $this->antivirusService->scan([
         $file->getClientOriginalName() => file_get_contents($file->getRealPath()),
@@ -110,11 +109,10 @@ final class ApplicationController extends ControllerBase {
     // @todo Check that events are added as normally.
 
     $file_entity->delete();
-
     $response = [
       'filename' => $result['filename'],
       'file_id' => $result['file_id'],
-      // 'href' => $result['href'],
+      'integration_id' => $result['href'],
       'size' => $result['size'],
     ];
 

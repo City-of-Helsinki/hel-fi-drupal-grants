@@ -290,23 +290,25 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    // @todo Better sanitation.
+    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
+    $document_data = ['form_data' => $sanitized_data];
+
+    $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
+      $form_data,
+      $user_data,
+      $selected_company,
+      $this->userInformationService->getUserProfileData(),
+      $this->userInformationService->getGrantsProfileContent(),
+      $settings,
+      $document,
+    );
+    $document_data['attachmentsInfo'] = $this->avus2Mapper
+      ->getAttachmentInfo($form_data);
+
+    $document->setContent($document_data);
+
     try {
-      // @todo Better sanitation.
-      $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
-      $document_data = ['form_data' => $sanitized_data];
-
-      $atv_mapped_data = $this->avus2Mapper->mapApplicationData(
-        $form_data,
-        $user_data,
-        $selected_company,
-        $this->userInformationService->getUserProfileData(),
-        $this->userInformationService->getGrantsProfileContent(),
-        $settings
-      );
-
-      $document_data['compensation'] = $atv_mapped_data;
-      $document->setContent($document_data);
-
       // @todo Always get the events and messages from atv submission before overwriting.
       $this->atvService->updateExistingDocument($document);
 
@@ -314,7 +316,6 @@ final class DraftApplication extends ResourceBase {
       $submission->save();
     }
     catch (\Exception $e) {
-      // Unable to find the document.
       return new JsonResponse([], 500);
     }
 

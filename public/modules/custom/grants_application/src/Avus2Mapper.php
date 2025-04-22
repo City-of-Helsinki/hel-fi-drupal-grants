@@ -62,16 +62,9 @@ final class Avus2Mapper {
     $data['senderInfoArray'] = $this->getSenderInfo($user_data, $user_profile_data['myProfile']['verifiedPersonalInformation']);
     $data['orienteeringMapInfo']['orienteeringMapsArray'] = $this->getOrienteeringMaps($form_data);
 
-    // @todo Map files one by one for now, refactor later if possible.
-    $data['attachmentsInfo'] = [
-      'attachmentsArray' => $this->getAttachmentInfo($form_data, $atvDocument),
-      'generalInfoArray' => [
-        'ID' => 'extraInfo', 'value' => '', 'valueType' => 'string', 'label' => 'Lisäselvitys liitteistä'
-      ],
-    ];
-
-    // @todo Refactor ^this in some better way when we are doing the second application type.
+    // @todo Refactor ^this in some better way when we are doing the second application mapping.
     /*
+     * for example:
     $data = $this->fillSharedData(&$data);
     $this->fillApplicationSpecificData(&$data, $application_type_id);
      */
@@ -372,41 +365,96 @@ final class Avus2Mapper {
   /**
    * Get the attachment data from application.
    *
+   * Description is the text field related to the file uplaod component.
+   *
+   * Filetype: Just check GrantsAttachments::filetypes for more information.
+   *
+   * Integration id is the path to the file in ATV.
+   *
+   * IsDeliveredLater and the other boolean are checkboxes related to the
+   * file upload component: fields may not exist but the value must be sent.
+   *
    * @return array
+   *   The attachment info array.
    */
-  public function getAttachmentInfo(array $form_data, AtvDocument $document): array {
-/*
-    {"ID":"description","value":"Varmistus tilinumerolle FI4950009420028730","valueType":"string","label":"Liitteen kuvaus"},
-    {"ID":"fileName","value":"dummy.pdf","valueType":"string","label":"Tiedostonimi"},
-    {"ID":"fileType","value":"45","valueType":"int","label":null},
-    {"ID":"integrationID","value":"\/LOCALK\/v1\/documents\/31e77ca6-fdd3-48a7-afb6-41bee86d234f\/attachments\/219139\/","valueType":"string","label":null},
-    {"ID":"isDeliveredLater","value":"false","valueType":"bool","label":"Liite toimitetaan my\u00f6hemmin"},
-    {"ID":"isIncludedInOtherFile","value":"false","valueType":"bool","label":"Liite on toimitettu yhten\u00e4 tiedostona tai toisen hakemuksen yhteydess\u00e4"}
-*/
-    return [];
+  public function getAttachmentInfo(array $form_data): array {
+    $data = [
+      'attachmentsInfoArray' => [],
+      'generalInfoArray' => [],
+    ];
+
+    $files = [];
+    foreach ($form_data['attachments']['files'] as $file) {
+      $files[] = $this->createAttachmentData(
+        $file['description'] ?? '',
+        $file['filename'] ?? '',
+        $file['filetype'] ?? 0,
+        $file['integration_id'] ?? '',
+        $file['isDeliveredLater'] ?? FALSE,
+        $file['isIncludedInOtherFile'] ?? FALSE,
+      );
+    }
+    $data['attachmentsInfoArray'] = $files;
+
+    $extra_info = $form_data['attachments']['additional_information_section']['additional_information'];
+    $data['generalInfoArray'] = [
+      'ID' => 'extraInfo',
+      'value' => $extra_info,
+      'valueType' => 'string',
+      'label' => 'Lisäselvitys liitteistä',
+    ];
+
+    return $data;
   }
 
   /**
    * Get the general attachment data from application.
    *
    * @return array
+   *   The general info.
    */
-  public function getGeneralInfo(array $form_data, AtvDocument $document): array {
-    return [];
+  public function getGeneralInfo(array $form_data): array {
+
   }
 
-  private function createAttachmentData(string $description, string $filename, string $fileType, string $integrationID, bool $isDeliveredLater = false, bool $isIncludedInOtherFile = false) {
-    $fields = ['description','filename','fileType','integrationID','isDeliveredLater','isIncludedInOtherFile'];
+  /**
+   *
+   *
+   * @param string $description
+   *   The file description.
+   * @param string $filename
+   *   The file name.
+   * @param int $filetype
+   *   The file type.
+   * @param string $integrationID
+   *   The integration id.
+   * @param bool $isDeliveredLater
+   *   A checkbox value from the form, or 'false'.
+   * @param bool $isIncludedInOtherFile
+   *   A checkbox value from the form, or 'false'.
+   *
+   * @return array
+   *   The file data in proper format.
+   */
+  private function createAttachmentData(
+    string $description,
+    string $filename,
+    int $filetype,
+    string $integrationID,
+    bool $isDeliveredLater = false,
+    bool $isIncludedInOtherFile = false
+  ) {
     $isDeliveredLater = $isDeliveredLater ? 'true' : 'false';
     $isIncludedInOtherFile = $isIncludedInOtherFile ? 'true' : 'false';
+    $filetype = (string)$filetype;
 
     return [
-      ['ID' => 'description', 'value' => "Varmistus tilinumerolle asd asd asd", 'valueType' => 'string', 'label' => 'Liitteen kuvaus'],
+      ['ID' => 'description', 'value' => $description, 'valueType' => 'string', 'label' => 'Liitteen kuvaus'],
       ['ID' => 'filename', 'value' => $filename, 'valueType' => 'string', 'label' => 'Tiedostonimi'],
-      ['ID' => 'fileType', 'value' => $fileType, 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'fileType', 'value' => $filetype, 'valueType' => 'int', 'label' => NULL],
       ['ID' => 'integrationID', 'value' => $integrationID, 'valueType' => 'string', 'label' => NULL],
-      ['ID' => 'idDeliveredLater', 'value' => $isDeliveredLater, 'valueType' => 'string', 'label' => NULL],
-      ['ID' => 'isIncludedInOtherFile', 'value' => $isIncludedInOtherFile, 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'idDeliveredLater', 'value' => $isDeliveredLater, 'valueType' => 'bool', 'label' => 'Liitteet toimitetaan myöhemmin'],
+      ['ID' => 'isIncludedInOtherFile', 'value' => $isIncludedInOtherFile, 'valueType' => 'string', 'label' => 'Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä'],
     ];
   }
 
