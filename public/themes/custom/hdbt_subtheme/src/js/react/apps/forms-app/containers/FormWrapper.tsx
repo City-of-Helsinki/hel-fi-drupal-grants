@@ -217,7 +217,7 @@ const FormWrapper = ({
         case finalSubmit:
           return [`/applications/${applicationTypeId}/send`, 'POST'];
         case Boolean(currentApplicationNumber):
-          return [`/applications/${applicationTypeId}/application/${currentApplicationNumber}`, 'PATCH'];
+          return [`/applications/draft/${applicationTypeId}/${currentApplicationNumber}`, 'PATCH'];
         default:
           return [`/applications/draft/${applicationTypeId}`, 'POST'];
       }
