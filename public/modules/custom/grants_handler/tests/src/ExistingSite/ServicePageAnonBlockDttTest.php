@@ -104,8 +104,6 @@ class ServicePageAnonBlockDttTest extends ExistingSiteTestBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function tearDown(): void {
-    parent::tearDown();
-
     if (isset($this->webform)) {
       $this->webform->delete();
     }
@@ -113,6 +111,8 @@ class ServicePageAnonBlockDttTest extends ExistingSiteTestBase {
     if (isset($this->servicePage)) {
       $this->servicePage->delete();
     }
+
+    parent::tearDown();
   }
 
 }
