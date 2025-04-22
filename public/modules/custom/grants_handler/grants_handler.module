@@ -20,15 +20,24 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHelpers;
+use Drupal\grants_handler\Entity\Node\ServicePage;
 use Drupal\grants_handler\Event\UserLogoutEvent;
 use Drupal\grants_handler\GrantsErrorStorage;
-use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\Plugin\WebformElement\CompensationsComposite;
 use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionStorageInterface;
 use GuzzleHttp\Exception\GuzzleException;
+
+/**
+ * Implements hook_entity_bundle_info_alter().
+ */
+function grants_handler_entity_bundle_info_alter(array &$bundles): void {
+  if (isset($bundles['node']['service'])) {
+    $bundles['node']['service']['class'] = ServicePage::class;
+  }
+}
 
 /**
  * Implements hook_theme().
@@ -2116,34 +2125,6 @@ function grants_handler_js_settings_build(&$settings, AttachedAssetsInterface $a
   // and other components which are using ajax functions.
   // See: AU-2081 https://helsinkisolutionoffice.atlassian.net/browse/AU-2081
   $settings['grants_handler_dummy_setting'] = TRUE;
-}
-
-/**
- * Implements hook_options_list_alter().
- *
- * Appends possible webform status (In development / Production) to the
- * option name and hides in-development options in PROD env.
- */
-function grants_handler_options_list_alter(array &$options, array $context): void {
-  /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
-  $field_definition = $context['fieldDefinition'];
-
-  if ($field_definition->getName() === 'field_webform') {
-
-    $webforms = Webform::loadMultiple(array_keys($options));
-    $env = Helpers::getAppEnv();
-
-    foreach ($webforms as $key => $webform) {
-      $status = $webform->getThirdPartySetting('grants_metadata', 'status');
-
-      if ($env === 'PROD' && $status === 'development') {
-        unset($options[$key]);
-      }
-      elseif ($status === 'development' && $env !== 'PROD') {
-        $options[$key] .= ' (Development version)';
-      }
-    }
-  }
 }
 
 /**

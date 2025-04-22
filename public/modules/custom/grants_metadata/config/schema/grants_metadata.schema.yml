@@ -1,0 +1,158 @@
+grants_metadata.settings:
+  type: config_object
+  label: 'Grants Metadata Settings'
+  mapping:
+    third_party_options:
+      type: mapping
+      label: 'Third party options'
+      mapping:
+        application_industries:
+          type: sequence
+          label: 'Application industries'
+          sequence:
+            type: string
+            label: 'Application industry'
+        applicant_types:
+          type: sequence
+          label: 'Applicant types'
+          sequence:
+            type: string
+            label: 'Applicant type'
+        application_types:
+          type: sequence
+          label: 'Application types'
+          sequence:
+            type: mapping
+            label: 'Application type'
+            mapping:
+              id:
+                type: string
+                label: 'ID'
+              code:
+                type: string
+                label: 'Code'
+              dataDefinition:
+                type: mapping
+                label: 'Data definition'
+                mapping:
+                  definitionClass:
+                    type: string
+                    label: 'Definition class'
+                  definitionId:
+                    type: string
+                    label: 'Definition ID'
+              labels:
+                type: sequence
+                label: 'Translated labels'
+                sequence:
+                  type: string
+                  label: 'Translated label'
+        application_statuses:
+          type: sequence
+          label: 'Application statuses'
+          sequence:
+            type: string
+            label: 'Application status'
+        subvention_types:
+          type: sequence
+          label: 'Subvention types'
+          sequence:
+            type: string
+            label: 'Subvention type'
+    config_import_ignore:
+      type: sequence
+      label: 'Ignored config values on import'
+      sequence:
+        type: integer
+        label: 'Ignored config value'
+    overridden_configuration:
+      type: sequence
+      label: 'Overridden configuration entries'
+      sequence:
+        type: sequence
+        label: 'Webform ID'
+        sequence:
+          type: mapping
+          label: 'Webform override'
+          mapping:
+            grants_metadata:
+              type: mapping
+              label: 'Grants metadata'
+              mapping:
+                applicationOpen:
+                  type: string
+                  label: 'Application open datetime'
+                applicationClose:
+                  type: string
+                  label: 'Application close datetime'
+                disableCopying:
+                  type: integer
+                  label: 'Disable copying flag'
+
+webform.settings.third_party.grants_metadata:
+  type: mapping
+  label: 'Webform test third party settings'
+  mapping:
+    applicationType:
+      type: string
+      label: 'Application type'
+    applicationTypeID:
+      type: string
+      label: 'Application type ID'
+    applicantTypes:
+      type: sequence
+      label: 'Application types'
+      orderby: key
+      sequence:
+        type: string
+        label: 'Application type'
+    applicationTypeTerms:
+      type: sequence
+      orderby: key
+      label: 'Application type terms'
+      sequence:
+        type: string
+        label: 'Application type term'
+    applicationOpen:
+      type: string
+      label: 'Application open datetime'
+    applicationClose:
+      type: string
+      label: 'Application close datetime'
+    applicationContinuous:
+      type: integer
+      label: 'Application continuous'
+    applicationTargetGroup:
+      type: string
+      label: 'Application target group'
+    disableCopying:
+      type: integer
+      label: 'Disable copying'
+    applicationTypeSelect:
+      type: string
+      label: 'Application type select'
+    applicationIndustry:
+      type: string
+      label: 'Application industry'
+    applicationActingYears:
+      type: sequence
+      label: 'Application acting years'
+      orderby: key
+      sequence:
+        type: string
+        label: 'Application acting year'
+    applicationActingYearsType:
+      type: string
+      label: 'Application acting years type'
+    applicationActingYearsNextCount:
+      type: string
+      label: 'Application acting years next count'
+    status:
+      type: string
+      label: 'Application status'
+    parent:
+      type: string
+      label: 'Parent'
+    avus2BreakingChange:
+      type: boolean
+      label: 'Breaking change on avus2'
