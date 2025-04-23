@@ -28,7 +28,7 @@ third_party_settings:
     disableCopying: 0
     status: development
     parent: ''
-    avus2BreakingChange: 0
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null

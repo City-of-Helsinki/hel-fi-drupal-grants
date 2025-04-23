@@ -1,0 +1,4 @@
+connect_existing_users: true
+override_registration_settings: true
+user_login_display: below
+redirect_login: /oma-asiointi

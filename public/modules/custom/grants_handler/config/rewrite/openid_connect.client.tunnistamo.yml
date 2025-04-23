@@ -1,5 +1,6 @@
+config_rewrite: replace
 uuid: bae77892-6e34-4e85-bed7-f5e729e4e4e6
-langcode: fi
+langcode: en
 status: true
 dependencies:
   module:
@@ -10,14 +11,15 @@ plugin: tunnistamo
 settings:
   client_id: dev
   client_secret: dev
+  iss_allowed_domains: ''
   is_production: 0
   auto_login: 0
-  environment_url: 'https://tunnistamo.test.hel.ninja'
-  client_scopes: 'openid,profile,email,https://api.hel.fi/auth/helsinkiprofile,https://api.hel.fi/avustusasiointi'
+  environment_url: ''
+  client_scopes: 'openid,email'
   client_roles:
-    helsinkiprofiili: helsinkiprofiili
     authenticated: '0'
     admin: '0'
     content_producer: '0'
     read_only: '0'
-  scopes: 'openid,profile,email,https://api.hel.fi/auth/helsinkiprofile,https://api.hel.fi/avustusasiointi'
+    helsinkiprofiili: '0'
+  debug_log: false
