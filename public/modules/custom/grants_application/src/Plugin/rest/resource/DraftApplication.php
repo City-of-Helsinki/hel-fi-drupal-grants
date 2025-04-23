@@ -135,7 +135,7 @@ final class DraftApplication extends ResourceBase {
    */
   public function get(
     int $application_type_id,
-  ): RedirectResponse {
+  ): RedirectResponse|JsonResponse {
     // @todo Sanitize & validate & authorize properly.
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
@@ -203,6 +203,9 @@ final class DraftApplication extends ResourceBase {
         'changed' => $now,
       ])
         ->save();
+
+      // @todo We must add bank confirmation file to the document at some point.
+      // Either here or when we are doing the actual submission.
     }
     catch (\Exception | GuzzleException $e) {
       // Saving failed.

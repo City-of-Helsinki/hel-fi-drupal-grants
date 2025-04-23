@@ -107,12 +107,11 @@ final class ApplicationController extends ControllerBase {
     }
 
     // @todo Check that events are added as normally.
-
     $file_entity->delete();
     $response = [
       'filename' => $result['filename'],
-      'file_id' => $result['file_id'],
-      'integration_id' => $result['href'],
+      'file_id' => $result['id'],
+      'href' => $result['href'],
       'size' => $result['size'],
     ];
 

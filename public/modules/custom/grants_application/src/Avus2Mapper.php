@@ -363,9 +363,9 @@ final class Avus2Mapper {
   }
 
   /**
-   * Get the attachment data from application.
+   * Get the attachment data from application, contains files and general info.
    *
-   * Description is the text field related to the file uplaod component.
+   * Description is the text field related to the file upload component.
    *
    * Filetype: Just check GrantsAttachments::filetypes for more information.
    *
@@ -394,6 +394,17 @@ final class Avus2Mapper {
         $file['isIncludedInOtherFile'] ?? FALSE,
       );
     }
+
+    // Bank-file is always part of the submission afaik.
+    $files[] = $this->createAttachmentData(
+      "Varmistus tilinumerolle TILINUMERO TÄHÄN",
+      'filename',
+      45,
+      'integration_id tänne',
+      'false',
+      'false',
+    );
+
     $data['attachmentsInfoArray'] = $files;
 
     $extra_info = $form_data['attachments']['additional_information_section']['additional_information'];
@@ -405,16 +416,6 @@ final class Avus2Mapper {
     ];
 
     return $data;
-  }
-
-  /**
-   * Get the general attachment data from application.
-   *
-   * @return array
-   *   The general info.
-   */
-  public function getGeneralInfo(array $form_data): array {
-
   }
 
   /**
@@ -442,19 +443,29 @@ final class Avus2Mapper {
     int $filetype,
     string $integrationID,
     bool $isDeliveredLater = false,
-    bool $isIncludedInOtherFile = false
-  ) {
+    bool $isIncludedInOtherFile = false,
+  ): array {
     $isDeliveredLater = $isDeliveredLater ? 'true' : 'false';
     $isIncludedInOtherFile = $isIncludedInOtherFile ? 'true' : 'false';
-    $filetype = (string)$filetype;
+    $filetype = (string)$filetype ?? '0';
 
     return [
       ['ID' => 'description', 'value' => $description, 'valueType' => 'string', 'label' => 'Liitteen kuvaus'],
       ['ID' => 'filename', 'value' => $filename, 'valueType' => 'string', 'label' => 'Tiedostonimi'],
       ['ID' => 'fileType', 'value' => $filetype, 'valueType' => 'int', 'label' => NULL],
       ['ID' => 'integrationID', 'value' => $integrationID, 'valueType' => 'string', 'label' => NULL],
-      ['ID' => 'idDeliveredLater', 'value' => $isDeliveredLater, 'valueType' => 'bool', 'label' => 'Liitteet toimitetaan myöhemmin'],
-      ['ID' => 'isIncludedInOtherFile', 'value' => $isIncludedInOtherFile, 'valueType' => 'string', 'label' => 'Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä'],
+      [
+        'ID' => 'idDeliveredLater',
+        'value' => $isDeliveredLater,
+        'valueType' => 'bool',
+        'label' => 'Liitteet toimitetaan myöhemmin',
+      ],
+      [
+        'ID' => 'isIncludedInOtherFile',
+        'value' => $isIncludedInOtherFile,
+        'valueType' => 'string',
+        'label' => 'Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä',
+      ],
     ];
   }
 
