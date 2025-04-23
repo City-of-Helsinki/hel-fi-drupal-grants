@@ -59,6 +59,12 @@ final class DraftApplication extends ResourceBase {
    *   The user information service.
    * @param \Drupal\grants_application\Atv\HelfiAtvService $atvService
    *   The helfi atv service.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   The uuid interface.
+   * @param \Drupal\grants_application\Form\ApplicationNumberService $applicationNumberService
+   *   The application number service.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   *   The language manager interface.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
    * @param \Drupal\grants_application\Avus2Mapper $avus2Mapper
