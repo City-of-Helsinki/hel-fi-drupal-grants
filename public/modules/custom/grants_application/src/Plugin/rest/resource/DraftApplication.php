@@ -217,12 +217,13 @@ final class DraftApplication extends ResourceBase {
     ];
     $options['absolute'] = TRUE;
 
-    // @todo Fix the redirect to add the application_number query parameter.
+    $options = [
+      'absolute' => TRUE,
+      'query' => ['application_number' => $application_number],
+    ];
     return new RedirectResponse(
-      Url::fromRoute($route_name, $route_parameters, $options)->toString() . '?application_number=' . $application_number,
-      301
+      Url::fromRoute($route_name, $route_parameters, $options)->toString(), 301
     );
-
   }
 
   /**
@@ -296,7 +297,7 @@ final class DraftApplication extends ResourceBase {
     $document_data = ['form_data' => $sanitized_data];
 
     $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
-      $form_data,
+      $sanitized_data,
       $user_data,
       $selected_company,
       $this->userInformationService->getUserProfileData(),
@@ -305,7 +306,7 @@ final class DraftApplication extends ResourceBase {
       $document,
     );
     $document_data['attachmentsInfo'] = $this->avus2Mapper
-      ->getAttachmentInfo($form_data);
+      ->getAttachmentInfo($sanitized_data);
 
     $document->setContent($document_data);
 
