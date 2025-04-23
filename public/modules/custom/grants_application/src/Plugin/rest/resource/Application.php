@@ -112,6 +112,8 @@ final class Application extends ResourceBase {
   /**
    * Get an existing application.
    *
+   * An application that has been saved as a draft or already sent.
+   *
    * @param int $application_type_id
    *   The application type id.
    * @param string|null $application_number

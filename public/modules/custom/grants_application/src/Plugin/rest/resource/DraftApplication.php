@@ -4,11 +4,11 @@ namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Utility\Xss;
 use Drupal\Component\Uuid\UuidInterface;
+use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -59,16 +59,12 @@ final class DraftApplication extends ResourceBase {
    *   The user information service.
    * @param \Drupal\grants_application\Atv\HelfiAtvService $atvService
    *   The helfi atv service.
-   * @param \Drupal\Component\Uuid\UuidInterface $uuid
-   *   The uuid service.
-   * @param \Drupal\grants_application\Form\ApplicationNumberService $applicationNumberService
-   *   The application number service.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
-   *   The language manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
    * @param \Drupal\grants_application\Avus2Mapper $avus2Mapper
    *   The Avus2-mapper.
+   * @param \Drupal\Core\Access\CsrfTokenGenerator $csrfTokenGenerator
+   *   The token generator.
    */
   public function __construct(
     array $configuration,
@@ -84,6 +80,7 @@ final class DraftApplication extends ResourceBase {
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
     private Avus2Mapper $avus2Mapper,
+    private CsrfTokenGenerator $csrfTokenGenerator,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -106,6 +103,7 @@ final class DraftApplication extends ResourceBase {
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
       $container->get(Avus2Mapper::class),
+      $container->get(CsrfTokenGenerator::class),
     );
   }
 
@@ -121,7 +119,9 @@ final class DraftApplication extends ResourceBase {
   }
 
   /**
-   * Create the ATV-document and return initial form data.
+   * Return initial form data.
+   *
+   * The atv-document and application number is created in controller.
    *
    * @param int $application_type_id
    *   The application type id.
@@ -146,6 +146,44 @@ final class DraftApplication extends ResourceBase {
     if (!$settings->isApplicationOpen()) {
       // @todo Uncomment.
       // return new JsonResponse([], 403);
+    }
+
+    try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $user_information = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
+      // Unable to fetch user information.
+      return new JsonResponse([], 500);
+    }
+
+    // @todo only return required user data to frontend.
+    $response = [
+      'form_data' => [],
+      'grants_profile' => $grants_profile_data->toArray(),
+      'user_data' => $user_information,
+      'token' => $this->csrfTokenGenerator->get('rest'),
+      ...$settings->toArray(),
+    ];
+
+    return new JsonResponse($response);
+  }
+
+  /**
+   * Create the initial document.
+   *
+   * @param int $application_type_id
+   *   The application type id.
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   The response.
+   */
+  public function post(int $application_type_id): JsonResponse {
+    try {
+      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+    }
+    catch (\Exception $e) {
+      // Cannot find form by application type id.
+      return new JsonResponse([], 404);
     }
 
     try {
@@ -210,20 +248,10 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    $route_name = 'rest.application_rest_resource.GET';
-    $route_parameters = [
-      'application_type_id' => $application_type_id,
+    return new JsonResponse([
       'application_number' => $application_number,
-    ];
-    $options['absolute'] = TRUE;
-
-    $options = [
-      'absolute' => TRUE,
-      'query' => ['application_number' => $application_number],
-    ];
-    return new RedirectResponse(
-      Url::fromRoute($route_name, $route_parameters, $options)->toString(), 301
-    );
+      'document_id' => $document->getId(),
+    ], 200);
   }
 
   /**
@@ -243,9 +271,7 @@ final class DraftApplication extends ResourceBase {
   ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);
-    [
-      'form_data' => $form_data,
-    ] = $content;
+    ['form_data' => $form_data] = $content;
 
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);

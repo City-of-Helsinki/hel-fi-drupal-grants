@@ -244,9 +244,7 @@ const FormWrapper = ({
     }
 
     const json = await response.json();
-    const { metadata } = json;
-
-    setApplicationNumber(metadata.applicationnumber);
+    setApplicationNumber(json.application_number);
 
     if (response.ok && finalSubmit) {
       // @todo read submit status from server response

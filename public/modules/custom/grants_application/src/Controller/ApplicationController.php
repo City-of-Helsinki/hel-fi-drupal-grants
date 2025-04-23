@@ -4,12 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Controller;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\file\Entity\File;
 use Drupal\grants_application\Atv\HelfiAtvService;
+use Drupal\grants_application\Avus2Mapper;
+use Drupal\grants_application\Entity\ApplicationSubmission;
+use Drupal\grants_application\Form\ApplicationNumberService;
+use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Helper;
+use Drupal\grants_application\User\UserInformationService;
 use Drupal\helfi_av\AntivirusException;
 use Drupal\helfi_av\AntivirusService;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
