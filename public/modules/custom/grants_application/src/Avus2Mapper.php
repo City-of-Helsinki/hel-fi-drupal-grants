@@ -26,6 +26,8 @@ final class Avus2Mapper {
    *   The grants profile.
    * @param \Drupal\grants_application\Form\FormSettings $form_settings
    *   The form settings.
+   * @param \Drupal\helfi_atv\AtvDocument $atvDocument
+   *   The atv-document.
    *
    * @return array
    *   Avus2 mapped array with data.
@@ -398,14 +400,14 @@ final class Avus2Mapper {
     // @todo Bank-file is always part of the submission afaik.
     /*
     $files[] = $this->createAttachmentData(
-      "Varmistus tilinumerolle TILINUMERO TÄHÄN",
-      'filename tähän',
-      45,
-      'integration_id tänne',
-      'false',
-      'false',
+    "Varmistus tilinumerolle TILINUMERO TÄHÄN",
+    'filename tähän',
+    45,
+    'integration_id tänne',
+    'false',
+    'false',
     );
-    */
+     */
 
     $data['attachmentsInfoArray'] = $files;
 
@@ -444,12 +446,12 @@ final class Avus2Mapper {
     string $filename,
     int $filetype,
     string $integrationID,
-    bool $isDeliveredLater = false,
-    bool $isIncludedInOtherFile = false,
+    bool $isDeliveredLater = FALSE,
+    bool $isIncludedInOtherFile = FALSE,
   ): array {
     $isDeliveredLater = $isDeliveredLater ? 'true' : 'false';
     $isIncludedInOtherFile = $isIncludedInOtherFile ? 'true' : 'false';
-    $filetype = (string)$filetype ?? '0';
+    $filetype = (string) $filetype ?? '0';
 
     return [
       ['ID' => 'description', 'value' => $description, 'valueType' => 'string', 'label' => 'Liitteen kuvaus'],
@@ -470,7 +472,6 @@ final class Avus2Mapper {
       ],
     ];
   }
-
 
   /**
    * Get orienteering maps.

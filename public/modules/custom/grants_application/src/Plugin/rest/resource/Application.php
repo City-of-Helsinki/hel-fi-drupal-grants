@@ -198,6 +198,9 @@ final class Application extends ResourceBase {
     string $application_number,
     Request $request,
   ): JsonResponse {
+    // @todo Send to avus2.
+
+    /*
     if (!$application_type_id || !$application_number) {
       // @todo Return error.
     }
@@ -246,10 +249,9 @@ final class Application extends ResourceBase {
     $application_uuid = $this->uuid->generate();
 
     // @todo Application number generation must match the existing shenanigans.
+    /*
     $application_number = $this->applicationNumberService
       ->createNewApplicationNumber($env, $application_type_id);
-
-
 
     /*
     $application_name = $settings->toArray()['settings']['title'];
@@ -259,19 +261,21 @@ final class Application extends ResourceBase {
 
     /*
     $document = $this->atvService->createAtvDocument(
-      $application_uuid,
-      $application_number,
-      $application_name,
-      $application_type,
-      $application_title,
-      $langcode,
-      $sub,
-      $selected_company['identifier'],
-      FALSE,
-      $selected_company,
-      $this->userInformationService->getApplicantType(),
+    $application_uuid,
+    $application_number,
+    $application_name,
+    $application_type,
+    $application_title,
+    $langcode,
+    $sub,
+    $selected_company['identifier'],
+    FALSE,
+    $selected_company,
+    $this->userInformationService->getApplicantType(),
     );
-    */
+
+
+
 
     // @todo Better sanitation.
     $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
@@ -291,12 +295,11 @@ final class Application extends ResourceBase {
     $document_data['compensation'] = $atv_mapped_data;
 
     // The attachments ought to be mapped separately
-    // $document_data['attachmentsInfo']['attachmentsArray'] = $this->avus2Mapper->getAttachmentInfo();
-    // This is lisätieto-sivu
+    // $document_data['attachmentsInfo']['attachmentsArray'] =
+    // $this->avus2Mapper->getAttachmentInfo();
     $document_data['attachmentsInfo']['generalInfoArray'] = [];
 
     // $document_data['events'] = [];
-
     $atv_document->setContent($document_data);
 
     try {
@@ -319,6 +322,9 @@ final class Application extends ResourceBase {
 
     // @todo Proper response.
     return new JsonResponse($atv_document->toArray(), 200);
+    */
+
+    return new JsonResponse([], 200);
   }
 
   /**

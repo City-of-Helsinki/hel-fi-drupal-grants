@@ -10,7 +10,6 @@ use Drupal\file\Entity\File;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\helfi_av\AntivirusException;
 use Drupal\helfi_av\AntivirusService;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

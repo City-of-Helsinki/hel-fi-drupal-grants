@@ -63,8 +63,6 @@ final class DraftApplication extends ResourceBase {
    *   The uuid service.
    * @param \Drupal\grants_application\Form\ApplicationNumberService $applicationNumberService
    *   The application number service.
-   * @param \Drupal\Core\Access\CsrfTokenGenerator $csrfTokenGenerator
-   *   The csrf token generator.
    * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
    *   The language manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager

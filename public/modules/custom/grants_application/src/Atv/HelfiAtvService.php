@@ -83,10 +83,10 @@ class HelfiAtvService {
    * Add an attachment to the document.
    *
    * @param string $document_id
-   *   The uuid of the document
+   *   The uuid of the document.
    * @param string $filename
    *   The file name.
-   * @param File $file
+   * @param \Drupal\file\Entity\File $file
    *   The file entity.
    */
   public function addAttachment(string $document_id, string $filename, File $file): mixed {
