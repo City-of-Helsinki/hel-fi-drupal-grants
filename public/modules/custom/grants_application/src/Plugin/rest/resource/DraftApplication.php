@@ -174,6 +174,7 @@ final class DraftApplication extends ResourceBase {
    *
    * @param int $application_type_id
    *   The application type id.
+   *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
