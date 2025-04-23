@@ -395,15 +395,17 @@ final class Avus2Mapper {
       );
     }
 
-    // Bank-file is always part of the submission afaik.
+    // @todo Bank-file is always part of the submission afaik.
+    /*
     $files[] = $this->createAttachmentData(
       "Varmistus tilinumerolle TILINUMERO TÄHÄN",
-      'filename',
+      'filename tähän',
       45,
       'integration_id tänne',
       'false',
       'false',
     );
+    */
 
     $data['attachmentsInfoArray'] = $files;
 
@@ -419,7 +421,7 @@ final class Avus2Mapper {
   }
 
   /**
-   *
+   * Create an Avus2 complient attachment data.
    *
    * @param string $description
    *   The file description.
