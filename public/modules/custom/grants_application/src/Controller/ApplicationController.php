@@ -79,6 +79,7 @@ final class ApplicationController extends ControllerBase {
 
     $file_entity->setFileUri($file->getRealPath());
 
+    /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
     $submission = $this->entityTypeManager()
       ->getStorage('application_submission')
       ->loadByProperties(['application_number' => $id]);
@@ -128,11 +129,12 @@ final class ApplicationController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   response object.
    */
-  public function deleteFile(string $id, string $file_id) {
+  public function deleteFile(string $id, string $file_id): JsonResponse {
     if (!$id || !$file_id) {
       return new JsonResponse(status: 400);
     }
 
+    /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
     $submission = $this->entityTypeManager()
       ->getStorage('application_submission')
       ->loadByProperties(['application_number' => $id]);
