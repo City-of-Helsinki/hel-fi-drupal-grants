@@ -83,8 +83,8 @@ interface ApplicationStatusServiceInterface {
   /**
    * Determines the new status for a submission based on a triggering action.
    *
-   * @param string $triggeringElement
-   *   The triggering form element.
+   * @param \Drupal\grants_handler\ApplicationSubmitType|null $submitType
+   *   The application submit type.
    * @param array $submittedFormData
    *   The submitted form data.
    * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
@@ -93,7 +93,7 @@ interface ApplicationStatusServiceInterface {
    * @return string
    *   The new status to set.
    */
-  public function getNewStatus(string $triggeringElement, array $submittedFormData, WebformSubmissionInterface $webform_submission): string;
+  public function getNewStatus(?ApplicationSubmitType $submitType, array $submittedFormData, WebformSubmissionInterface $webform_submission): string;
 
   /**
    * Gets the updated status header.
