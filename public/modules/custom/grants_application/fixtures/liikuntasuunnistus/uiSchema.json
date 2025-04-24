@@ -13,7 +13,8 @@
       },
       "other_attachment_fieldset": {
         "file": {
-          "ui:help": "Vain yksi tiedosto.\nSuositus alle 2 Mt, enintään 20 Mt.\nSallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
+          "ui:help": "Vain yksi tiedosto.\nSuositus alle 2 Mt, enintään 20 Mt.\nSallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
+          "misc:file-type": 0
         }
       }
     }

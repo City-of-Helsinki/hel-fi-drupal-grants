@@ -28,5 +28,24 @@ enforce:
       base: self
       sources:
         - palvelukartta.hel.fi
+        - 'https://*.youtube-nocookie.com'
+        - 'https://*.youtube.com'
+        - 'https://*.youtu.be'
+        - 'https://*.vimeo.com'
+        - 'https://suite.icareus.com'
+        - 'https://players.icareus.com'
+        - 'https://*.helsinkikanava.fi'
+        - 'https://*.powerbi.com'
+    object-src:
+      base: self
+      sources:
+        - palvelukartta.hel.fi
+        - 'https://*.youtube-nocookie.com'
+        - 'https://*.youtube.com'
+        - 'https://*.youtu.be'
+        - 'https://*.vimeo.com'
+        - 'https://suite.icareus.com'
+        - 'https://players.icareus.com'
+        - 'https://*.helsinkikanava.fi'
   reporting:
     plugin: none

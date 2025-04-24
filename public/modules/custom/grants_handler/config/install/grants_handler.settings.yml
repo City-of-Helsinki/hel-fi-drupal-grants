@@ -2,43 +2,48 @@ statusStrings:
   en:
     DRAFT: Draft
     SENT: Sent
-    SUBMITTED: Submitted
+    SUBMITTED: 'Sent - waiting for confirmation'
     RECEIVED: Received
+    PREPARING: 'In Preparation'
     PENDING: Pending
     PROCESSING: Processing
     READY: Ready
-    DONE: Done
+    DONE: Processed
     REJECTED: Rejected
     DELETED: Deleted
-    CANCELED: Canceled
-    CANCELLED: Canceled
+    CANCELED: Cancelled
+    CANCELLED: Cancelled
     CLOSED: Closed
+    RESOLVED: Processed
   fi:
     DRAFT: Luonnos
     SENT: Lähetetty
-    SUBMITTED: Lähetetty - odotetaan vahvistusta
+    SUBMITTED: 'Lähetetty - odotetaan vahvistusta'
     RECEIVED: Vastaanotettu
+    PREPARING: Valmistelussa
     PENDING: Odottaa
     PROCESSING: Käsittelyssä
     READY: Valmiina
-    DONE: Käsitelty
+    RESOLVED: Ratkaistu
+    DONE: Ratkaistu
     REJECTED: Hylätty
     DELETED: Poistettu
     CANCELED: Peruttu
     CANCELLED: Peruttu
-    CLOSED: Ratkaistu
+    CLOSED: Suljettu
   sv:
-    DRAFT: Draft
-    SENT: Sent
-    SUBMITTED: Submitted
-    RECEIVED: Mottagits
-    PENDING: Pending
-    PROCESSING: Processing
-    READY: Ready
-    DONE: Done
-    REJECTED: Rejected
-    DELETED: Deleted
-    CANCELED: Canceled
-    CANCELLED: Canceled
-    CLOSED: Closed
-
+    DRAFT: Utkast
+    SENT: Skickad
+    SUBMITTED: 'Skickad - väntar på bekräftelse'
+    RECEIVED: Mottagen
+    PREPARING: Förbereds
+    PENDING: 'I väntan på'
+    PROCESSING: Behandlas
+    READY: Redo
+    DONE: Behandlad
+    REJECTED: Avvisade
+    DELETED: Raderade
+    CANCELED: Annullerad
+    CANCELLED: Annullerad
+    CLOSED: Stängd
+    RESOLVED: Behandlad

@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - grants_application
     - serialization
     - user
 id: draft_application_rest_resource

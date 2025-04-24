@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Service to handle application statuses.
  */
-final class ApplicationStatusService implements ContainerInjectionInterface {
+final class ApplicationStatusService implements ApplicationStatusServiceInterface, ContainerInjectionInterface {
 
   use DebuggableTrait;
 
