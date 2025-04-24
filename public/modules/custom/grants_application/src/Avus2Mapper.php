@@ -4,6 +4,7 @@ namespace Drupal\grants_application;
 
 use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\User\GrantsProfile;
+use Drupal\helfi_atv\AtvDocument;
 
 /**
  * Access control handler for form submission.
@@ -25,6 +26,8 @@ final class Avus2Mapper {
    *   The grants profile.
    * @param \Drupal\grants_application\Form\FormSettings $form_settings
    *   The form settings.
+   * @param \Drupal\helfi_atv\AtvDocument $atvDocument
+   *   The atv-document.
    *
    * @return array
    *   Avus2 mapped array with data.
@@ -36,6 +39,7 @@ final class Avus2Mapper {
     array $user_profile_data,
     GrantsProfile $grants_profile,
     FormSettings $form_settings,
+    AtvDocument $atvDocument,
   ): array {
 
     $applicant_type = $company_data['type'];
@@ -60,8 +64,9 @@ final class Avus2Mapper {
     $data['senderInfoArray'] = $this->getSenderInfo($user_data, $user_profile_data['myProfile']['verifiedPersonalInformation']);
     $data['orienteeringMapInfo']['orienteeringMapsArray'] = $this->getOrienteeringMaps($form_data);
 
-    // @todo Refactor ^this in some better way.
+    // @todo Refactor ^this in some better way when we are doing the second application mapping.
     /*
+     * for example:
     $data = $this->fillSharedData(&$data);
     $this->fillApplicationSpecificData(&$data, $application_type_id);
      */
@@ -357,6 +362,115 @@ final class Avus2Mapper {
     }
 
     return $data;
+  }
+
+  /**
+   * Get the attachment data from application, contains files and general info.
+   *
+   * Description is the text field related to the file upload component.
+   *
+   * Filetype: Just check GrantsAttachments::filetypes for more information.
+   *
+   * Integration id is the path to the file in ATV.
+   *
+   * IsDeliveredLater and the other boolean are checkboxes related to the
+   * file upload component: fields may not exist but the value must be sent.
+   *
+   * @return array
+   *   The attachment info array.
+   */
+  public function getAttachmentInfo(array $form_data): array {
+    $data = [
+      'attachmentsInfoArray' => [],
+      'generalInfoArray' => [],
+    ];
+
+    $files = [];
+    foreach ($form_data['attachments']['files'] as $file) {
+      $files[] = $this->createAttachmentData(
+        $file['description'] ?? '',
+        $file['filename'] ?? '',
+        $file['filetype'] ?? 0,
+        $file['integration_id'] ?? '',
+        $file['isDeliveredLater'] ?? FALSE,
+        $file['isIncludedInOtherFile'] ?? FALSE,
+      );
+    }
+
+    // @todo Bank-file is always part of the submission afaik.
+    /*
+    $files[] = $this->createAttachmentData(
+    "Varmistus tilinumerolle TILINUMERO TÄHÄN",
+    'filename tähän',
+    45,
+    'integration_id tänne',
+    'false',
+    'false',
+    );
+     */
+
+    $data['attachmentsInfoArray'] = $files;
+
+    $extra_info = $form_data['attachments']['additional_information_section']['additional_information'];
+    $data['generalInfoArray'] = [
+      'ID' => 'extraInfo',
+      'value' => $extra_info,
+      'valueType' => 'string',
+      'label' => 'Lisäselvitys liitteistä',
+    ];
+
+    return $data;
+  }
+
+  /**
+   * Create an Avus2 complient attachment data.
+   *
+   * @param string $description
+   *   The file description.
+   * @param string $filename
+   *   The file name.
+   * @param int $filetype
+   *   The file type.
+   * @param string $integrationID
+   *   The integration id.
+   * @param bool $isDeliveredLater
+   *   A checkbox value from the form, or 'false'.
+   * @param bool $isIncludedInOtherFile
+   *   A checkbox value from the form, or 'false'.
+   *
+   * @return array
+   *   The file data in proper format.
+   */
+  private function createAttachmentData(
+    string $description,
+    string $filename,
+    int $filetype,
+    string $integrationID,
+    bool $isDeliveredLater = FALSE,
+    bool $isIncludedInOtherFile = FALSE,
+  ): array {
+    $isDeliveredLater = $isDeliveredLater ? 'true' : 'false';
+    $isIncludedInOtherFile = $isIncludedInOtherFile ? 'true' : 'false';
+    $filetype = (string) $filetype ?? '0';
+
+    return [
+      ['ID' => 'description', 'value' => $description, 'valueType' => 'string', 'label' => 'Liitteen kuvaus'],
+      ['ID' => 'filename', 'value' => $filename, 'valueType' => 'string', 'label' => 'Tiedostonimi'],
+      ['ID' => 'fileType', 'value' => $filetype, 'valueType' => 'int', 'label' => NULL],
+      ['ID' => 'integrationID', 'value' => $integrationID, 'valueType' => 'string', 'label' => NULL],
+      [
+        'ID' => 'idDeliveredLater',
+        'value' => $isDeliveredLater,
+        'valueType' => 'bool',
+        'label' => 'Liitteet toimitetaan myöhemmin',
+      ],
+      [
+        'ID' => 'isIncludedInOtherFile',
+        'value' => $isIncludedInOtherFile,
+        'valueType' => 'string',
+        'label' => 'Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä',
+      ],
+    ];
   }
 
   /**

@@ -13,11 +13,9 @@ use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
-use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\rest\Attribute\RestResource;
 use Drupal\rest\Plugin\ResourceBase;
-use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * Handle the sent applications.
+ * Handle the ready applications.
  */
 #[RestResource(
   id: "application_rest_resource",
@@ -114,6 +112,8 @@ final class Application extends ResourceBase {
   /**
    * Get an existing application.
    *
+   * An application that has been saved as a draft or already sent.
+   *
    * @param int $application_type_id
    *   The application type id.
    * @param string|null $application_number
@@ -195,112 +195,11 @@ final class Application extends ResourceBase {
    */
   public function post(
     int $application_type_id,
+    string $application_number,
     Request $request,
   ): JsonResponse {
-    // @todo Sanitize & validate & authorize properly.
-    $content = json_decode($request->getContent(), TRUE);
-    $env = Helper::getAppEnv();
-
-    [
-      'application_number' => $application_number,
-      'langcode' => $langcode,
-      'form_data' => $form_data,
-      'draft' => $draft,
-    ] = $content;
-
-    // @todo Maybe separate draft and non-draft submissions.
-    $draft = $draft ?? TRUE;
-
-    try {
-      $settings = $this->formSettingsService->getFormSettings($application_type_id);
-    }
-    catch (\Exception $e) {
-      // Cannot find form.
-      return new JsonResponse([], 500);
-    }
-
-    if (!$settings->isApplicationOpen()) {
-      // @todo Uncomment.
-      // Return new JsonResponse([], 403);.
-    }
-
-    $application_uuid = $this->uuid->generate();
-
-    // @todo Application number generation must match the existing shenanigans.
-    $application_number = $this->applicationNumberService
-      ->createNewApplicationNumber($env, $application_type_id);
-
-    try {
-      $selected_company = $this->userInformationService->getSelectedCompany();
-      // Helsinkiprofiiliuserdata getuserdata.
-      $user_data = $this->userInformationService->getUserData();
-    }
-    catch (\Exception $e) {
-      return new JsonResponse([], 500);
-    }
-
-    $application_name = $settings->toArray()['settings']['title'];
-    $application_title = $settings->toArray()['settings']['title'];
-    $application_type = $settings->toArray()['settings']['application_type'];
-    $langcode = $this->languageManager->getCurrentLanguage()->getId();
-    $sub = $user_data['sub'];
-
-    $document = $this->atvService->createAtvDocument(
-      $application_uuid,
-      $application_number,
-      $application_name,
-      $application_type,
-      $application_title,
-      $langcode,
-      $sub,
-      $selected_company['identifier'],
-      FALSE,
-      $selected_company,
-      $this->userInformationService->getApplicantType(),
-    );
-
-    // @todo Better sanitation.
-    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
-    $document_data = ['form_data' => $sanitized_data];
-
-    $atv_mapped_data = $this->avus2Mapper->mapApplicationData(
-      $form_data,
-      $user_data,
-      $selected_company,
-      $this->userInformationService->getUserProfileData(),
-      $this->userInformationService->getGrantsProfileContent(),
-      $settings
-    );
-
-    // Compensation is the original avus2 data.
-    $document_data['compensation'] = $atv_mapped_data;
-
-    $document->setContent($document_data);
-
-    try {
-      $this->atvService->saveNewDocument($document);
-      $now = time();
-      ApplicationSubmission::create([
-        // 'uuid' => $this->uuid->generate(),
-        'sub' => $sub,
-        'langcode' => $langcode,
-        'draft' => $draft,
-        'application_type_id' => $application_type_id,
-        'application_number' => $application_number,
-        'created' => $now,
-        'changed' => $now,
-      ])
-        ->save();
-
-      // @todo Send to AVUS2.
-      // @todo Status-logic (draft, submitted etc...).
-    }
-    catch (\Exception | GuzzleException $e) {
-      // Saving failed.
-      return new JsonResponse([], 500);
-    }
-
-    return new JsonResponse($document->toArray(), 200);
+    // @todo Send to avus2.
+    return new JsonResponse([], 200);
   }
 
   /**
@@ -322,8 +221,7 @@ final class Application extends ResourceBase {
       'draft' => $draft,
     ] = $content;
 
-    // @todo Maybe separate draft and non-draft submissions.
-    $draft = $draft ?? TRUE;
+    $draft = $draft ?? FALSE;
 
     if (!$application_number) {
       // Missing application number.

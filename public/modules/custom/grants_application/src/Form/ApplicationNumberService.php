@@ -23,13 +23,13 @@ final class ApplicationNumberService {
    *
    * @param string $env
    *   Current environment.
-   * @param int $application_type_id
+   * @param int|string $application_type_id
    *   The application type id.
    *
    * @return string
    *   The application number.
    */
-  public function createNewApplicationNumber(string $env, int $application_type_id): string {
+  public function createNewApplicationNumber(string $env, int|string $application_type_id): string {
     /** @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface $store */
     $store = $this->keyValue->get('application_numbers');
 

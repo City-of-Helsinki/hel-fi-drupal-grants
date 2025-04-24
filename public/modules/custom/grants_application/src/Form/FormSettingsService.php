@@ -20,13 +20,13 @@ class FormSettingsService {
    * This is initial hardcoded way to load the settings. The form name
    * is the same as the folder name in fixtures folder.
    *
-   * @param int $form_type_id
+   * @param int|string $form_type_id
    *   The id of the application.
    *
    * @return FormSettings
    *   Contains json-schema, third party settings and translations etc.
    */
-  public function getFormSettings(int $form_type_id): FormSettings {
+  public function getFormSettings(int|string $form_type_id): FormSettings {
     if (!isset($this->forms[$form_type_id])) {
       throw new \InvalidArgumentException('Application not found.');
     }

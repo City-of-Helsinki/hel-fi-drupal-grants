@@ -43,6 +43,12 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
+    // The ATV-document uuid.
+    $fields['document_id'] = BaseFieldDefinition::create('string')
+      ->setRequired(TRUE)
+      ->setLabel(new TranslatableMarkup('ATV-document uuid'))
+      ->setReadOnly(TRUE);
+
     // The user uuid coming from profiili.
     $fields['sub'] = BaseFieldDefinition::create('string')
       ->setRequired(TRUE)
