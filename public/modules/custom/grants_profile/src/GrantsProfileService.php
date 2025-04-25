@@ -158,6 +158,9 @@ class GrantsProfileService {
    *   Updated metadata.
    * @param bool $cleanAttachments
    *   If true, removes attachments not included in $documentContent.
+   * @param \DateTimeImmutable|null $deleteAfter
+   *   Ensure the profile is valid at least to the given date.
+   *   Defaults to current time +1 year.
    *
    * @return bool|AtvDocument
    *   Did save succeed?
@@ -165,7 +168,7 @@ class GrantsProfileService {
    * @throws \Drupal\grants_profile\GrantsProfileException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function saveGrantsProfile(array $documentContent, array $updatedMetadata = [], bool $cleanAttachments = FALSE): bool|AtvDocument {
+  public function saveGrantsProfile(array $documentContent, array $updatedMetadata = [], bool $cleanAttachments = FALSE, ?\DateTimeImmutable $deleteAfter = NULL): bool|AtvDocument {
     // Get selected company.
     $selectedCompany = $this->getSelectedRoleData();
     // Get grants profile.
@@ -179,15 +182,23 @@ class GrantsProfileService {
     // Make sure business id is saved.
     $documentContent['businessId'] = $selectedCompany['identifier'];
 
-    $transactionId = $this->uuid->generate();
+    // Any modifications to grants profile extends its lifetime
+    // to at least a year. Other code may extend the lifetime further.
+    if (!$deleteAfter) {
+      $deleteAfter = max(
+        new \DateTimeImmutable($grantsProfileDocument?->getDeleteAfter() ?: '+1 year'),
+        new \DateTimeImmutable('+1 year')
+      );
+    }
 
     // Check if grantsProfile exists.
     if ($grantsProfileDocument == NULL) {
       $newGrantsProfileDocument = $this->newProfileDocument($documentContent);
+      $newGrantsProfileDocument->setDeleteAfter($deleteAfter->format('Y-m-d'));
       $newGrantsProfileDocument->setStatus(self::DOCUMENT_STATUS_SAVED);
       $newGrantsProfileDocument->setTransactionId(self::DOCUMENT_TRANSACTION_ID_INITIAL);
       try {
-        $this->logger->info('Grants profile POSTed, transactionID: %transId', ['%transId' => $transactionId]);
+        $this->logger->info('Grants profile POSTed, transactionID: %transId', ['%transId' => self::DOCUMENT_TRANSACTION_ID_INITIAL]);
         return $this->atvService->postDocument($newGrantsProfileDocument);
       }
       catch (\Exception $e) {
@@ -208,10 +219,12 @@ class GrantsProfileService {
       $metadata = array_merge($metadata, $updatedMetadata);
     }
 
+    $transactionId = $this->uuid->generate();
     $payloadData = [
       'content' => $documentContent,
       'metadata' => $metadata,
       'transaction_id' => $transactionId,
+      'delete_after' => $deleteAfter->format('Y-m-d'),
     ];
     $this->logger->info('Grants profile PATCHed, transactionID: %transactionId',
       ['%transactionId' => $transactionId]);
@@ -569,49 +582,6 @@ class GrantsProfileService {
       }
     }
     return $profileDocumentContent;
-  }
-
-  /**
-   * The getUpdatedAt method.
-   *
-   * This method returns timestamp of the time
-   * a profile was last updated.
-   *
-   * @return int|false
-   *   Timestamp of last updated at.
-   *
-   * @throws \Drupal\grants_profile\GrantsProfileException
-   */
-  public function getUpdatedAt(): false|int {
-    // Get selected company.
-    $selectedCompany = $this->getSelectedRoleData();
-    // Get grants profile.
-    $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
-
-    $profileUpdatedAt = $grantsProfileDocument?->getUpdatedAt();
-    $profileUpdatedAt = strtotime($profileUpdatedAt);
-    return $profileUpdatedAt;
-  }
-
-  /**
-   * The getNotificationShown method.
-   *
-   * This method returns timestamp of the time
-   * a notification was shown.
-   *
-   * @return int|string
-   *   Timestamp of last time notification was shown.
-   *
-   * @throws \Drupal\grants_profile\GrantsProfileException
-   */
-  public function getNotificationShown(): int|string {
-    // Get selected company.
-    $selectedCompany = $this->getSelectedRoleData();
-    // Get grants profile.
-    $grantsProfileDocument = $this->getGrantsProfile($selectedCompany);
-
-    $profileMetadata = $grantsProfileDocument?->getMetadata();
-    return $profileMetadata['notification_shown'] ?? 0;
   }
 
   /**

@@ -190,15 +190,19 @@ later when completing the grant application.',
   }
 
   /**
-   * Profile data refresh submit handler.
+   * {@inheritDoc}
    */
-  public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state) {
+  public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state): array {
     $storage = $form_state->getStorage();
 
     $document = $storage['profileDocument'];
 
     try {
       $this->prhUpdaterService->update($document);
+
+      $this->messenger()->addStatus(
+        $this->t('Data from PRH successfully updated.', [], $this->tOpts)
+      );
     }
     catch (\Exception $e) {
       $this->logger('grants_profile')
@@ -211,9 +215,6 @@ later when completing the grant application.',
       );
     }
 
-    $this->messenger()->addStatus(
-      $this->t('Data from PRH successfully updated.', [], $this->tOpts)
-    );
     $form_state->setRebuild();
     return $form;
   }

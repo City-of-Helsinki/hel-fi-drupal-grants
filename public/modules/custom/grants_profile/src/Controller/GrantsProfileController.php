@@ -3,6 +3,7 @@
 namespace Drupal\grants_profile\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\grants_profile\Form\GrantsProfileFormPrivatePerson;
@@ -11,7 +12,7 @@ use Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -20,6 +21,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @phpstan-consistent-constructor
  */
 class GrantsProfileController extends ControllerBase {
+
+  use AutowireTrait;
 
   /**
    * ModalFormContactController constructor.
@@ -31,23 +34,9 @@ class GrantsProfileController extends ControllerBase {
    */
   public function __construct(
     protected GrantsProfileService $grantsProfileService,
+    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
   ) {}
-
-  /**
-   * {@inheritdoc}
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   The Drupal service container.
-   *
-   * @return static
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('grants_profile.service'),
-      $container->get('helfi_helsinki_profiili.userdata')
-    );
-  }
 
   /**
    * Builds the response.

@@ -1,12 +1,16 @@
 <?php
 
-namespace Drupal\grants_oma_asiointi\Plugin\Block;
+declare(strict_types=1);
 
+namespace Drupal\grants_profile\Plugin\Block;
+
+use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
@@ -21,14 +25,12 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Provides an example block.
  *
- * @Block(
- *   id = "grants_oma_asiointi_block",
- *   admin_label = @Translation("Grants Oma Asiointi"),
- *   category = @Translation("Oma Asiointi")
- * )
- *
  * @phpstan-consistent-constructor
  */
+#[Block(
+  id: 'grants_oma_asiointi_block',
+  admin_label: new TranslatableMarkup('Grants Oma Asiointi'),
+)]
 class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -71,7 +73,6 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
     protected LanguageManagerInterface $languageManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-
   }
 
   /**
@@ -243,7 +244,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * Disable cache.
    */
-  public function getCacheMaxAge() {
+  public function getCacheMaxAge(): int {
     return 0;
   }
 

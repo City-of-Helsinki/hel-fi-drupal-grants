@@ -30,6 +30,154 @@ class GrantsProfileServiceTest extends UnitTestCase {
   use ProphecyTrait;
 
   /**
+   * Tests creating new grants profile.
+   */
+  public function testProfileCreation(): void {
+    $atv = $this->prophesize(AtvService::class);
+
+    // searchDocuments return [] -> profile does not exist.
+    $atv->searchDocuments(Argument::any(), Argument::any())
+      ->willReturn([]);
+
+    $profileConnector = $this->prophesize(ProfileConnector::class);
+    $profileConnector
+      ->getUserId()
+      ->willReturn('123');
+
+    $sut = $this->getSut(
+      atvService: $atv->reveal(),
+      profileConnector: $profileConnector->reveal(),
+      grantsProfileCache: $this->createMockedGrantsProfileCache([
+        'selected_company' => [
+          'companyName' => 'Test',
+          'type' => 'registered_community',
+          'identifier' => 'test_company',
+        ],
+      ]),
+    );
+
+    // Should create new ATV document.
+    $atv
+      ->createDocument(Argument::any())
+      ->will(static fn ($args) => AtvDocument::create($args[0]));
+
+    $argumentTest = function (AtvDocument $document) {
+      // Document should have deleted after date.
+      $this->assertGreaterThan(
+        new \DateTimeImmutable('now'),
+        new \DateTimeImmutable($document->getDeleteAfter())
+      );
+
+      return TRUE;
+    };
+
+    $atv
+      ->postDocument(Argument::that($argumentTest))
+      ->shouldBeCalled()
+      ->willReturn(AtvDocument::create([]));
+
+    $sut->saveGrantsProfile([
+      'bankAccounts' => [],
+    ]);
+  }
+
+  /**
+   * Tests updating grants profile deleted_after field.
+   */
+  public function testProfileDeleteAfterUpdate(): void {
+    $doc = AtvDocument::create([
+      'id' => 'test-document-1',
+      'transaction_id' => '123',
+      'type' => 'grants_profile',
+      'delete_after' => '2020-01-01',
+      'content' => [
+        'bankAccounts' => [],
+      ],
+      'metadata' => [],
+      'attachments' => [],
+    ]);
+
+    $atv = $this->prophesize(AtvService::class);
+
+    // searchDocuments return [] -> profile does not exist.
+    $atv->searchDocuments(Argument::any(), Argument::any())
+      ->willReturn([$doc]);
+
+    $sut = $this->getSut(
+      atvService: $atv->reveal(),
+      grantsProfileCache: $this->createMockedGrantsProfileCache([
+        'selected_company' => [
+          'companyName' => 'Test',
+          'type' => 'registered_community',
+          'identifier' => 'test_company',
+        ],
+      ]),
+    );
+
+    $argumentTest = function (array $documentContent) {
+      $this->assertEquals('2025-01-01', $documentContent['delete_after']);
+      return TRUE;
+    };
+
+    $atv
+      ->patchDocument($doc->getId(), Argument::that($argumentTest))
+      ->shouldBeCalled()
+      ->willReturn(TRUE);
+
+    $sut->saveGrantsProfile([], deleteAfter: new \DateTimeImmutable('2025-01-01'));
+  }
+
+  /**
+   * Tests updating grants profile.
+   */
+  public function testProfileUpdate(): void {
+    $doc = AtvDocument::create([
+      'id' => 'test-document-1',
+      'transaction_id' => '123',
+      'type' => 'grants_profile',
+      'delete_after' => '2020-01-01',
+      'content' => [
+        'bankAccounts' => [],
+      ],
+      'metadata' => [],
+      'attachments' => [],
+    ]);
+
+    $atv = $this->prophesize(AtvService::class);
+
+    // searchDocuments return [] -> profile does not exist.
+    $atv->searchDocuments(Argument::any(), Argument::any())
+      ->willReturn([$doc]);
+
+    $sut = $this->getSut(
+      atvService: $atv->reveal(),
+      grantsProfileCache: $this->createMockedGrantsProfileCache([
+        'selected_company' => [
+          'companyName' => 'Test',
+          'type' => 'registered_community',
+          'identifier' => 'test_company',
+        ],
+      ]),
+    );
+
+    // Regular update just set delete_after to some future date.
+    $argumentTest = function (array $documentContent) {
+      $this->assertGreaterThan(
+        new \DateTimeImmutable('now'),
+        new \DateTimeImmutable($documentContent['delete_after'])
+      );
+      return TRUE;
+    };
+
+    $atv
+      ->patchDocument($doc->getId(), Argument::that($argumentTest))
+      ->shouldBeCalled()
+      ->willReturn(TRUE);
+
+    $sut->saveGrantsProfile([]);
+  }
+
+  /**
    * Tests saveGrantsProfile().
    */
   public function testAttachmentCleaning(): void {

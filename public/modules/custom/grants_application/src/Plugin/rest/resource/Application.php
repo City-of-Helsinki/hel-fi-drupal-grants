@@ -14,8 +14,11 @@ use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\User\UserInformationService;
+use Drupal\grants_handler\ApplicationSubmitType;
+use Drupal\grants_handler\Event\ApplicationSubmitEvent;
 use Drupal\rest\Attribute\RestResource;
 use Drupal\rest\Plugin\ResourceBase;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -67,6 +70,8 @@ final class Application extends ResourceBase {
    *   The entity type manager.
    * @param \Drupal\grants_application\Avus2Mapper $avus2Mapper
    *   The Avus2-mapper.
+   * @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
+   *   The event dispatcher.
    */
   public function __construct(
     array $configuration,
@@ -83,6 +88,7 @@ final class Application extends ResourceBase {
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
     private Avus2Mapper $avus2Mapper,
+    private EventDispatcherInterface $dispatcher,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -106,6 +112,7 @@ final class Application extends ResourceBase {
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
       $container->get(Avus2Mapper::class),
+      $container->get(EventDispatcherInterface::class),
     );
   }
 
@@ -198,6 +205,14 @@ final class Application extends ResourceBase {
     string $application_number,
     Request $request,
   ): JsonResponse {
+    // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
+    // grants_application module when this module is enabled in
+    // production.
+    //
+    // This event lets other parts of the system to react
+    // to user submitting grants forms.
+    $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
+
     // @todo Send to avus2.
     return new JsonResponse([], 200);
   }
@@ -269,6 +284,14 @@ final class Application extends ResourceBase {
       // Unable to find the document.
       return new JsonResponse([], 500);
     }
+
+    // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
+    // grants_application module when this module is enabled in
+    // production.
+    //
+    // This event lets other parts of the system to react
+    // to user submitting grants forms.
+    $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
     return new JsonResponse($document->toArray(), 200);
   }

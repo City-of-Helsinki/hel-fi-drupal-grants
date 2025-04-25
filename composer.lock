@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11a84bb03f53da17b4220ec7dd81399e",
+    "content-hash": "0910d9633db5c98b210c76597d69ae32",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5652,16 +5652,16 @@
         },
         {
             "name": "drupal/helfi_atv",
-            "version": "0.9.30",
+            "version": "0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv.git",
-                "reference": "cb0127a4f7a4cf9c772afcc7723d96afa6c1b325"
+                "reference": "1c38adfad70e0df87de66d83a595598cf82368e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/cb0127a4f7a4cf9c772afcc7723d96afa6c1b325",
-                "reference": "cb0127a4f7a4cf9c772afcc7723d96afa6c1b325",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-atv/zipball/1c38adfad70e0df87de66d83a595598cf82368e5",
+                "reference": "1c38adfad70e0df87de66d83a595598cf82368e5",
                 "shasum": ""
             },
             "require": {
@@ -5670,20 +5670,15 @@
                 "league/openapi-psr7-validator": "^0.22.0"
             },
             "type": "drupal-module",
-            "autoload": {
-                "psr-4": {
-                    "Drupal\\HelfiAtv\\": "src/"
-                }
-            },
             "license": [
                 "GPL-2.0-or-later"
             ],
             "description": "ATV integration module",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.9.30",
+                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/tree/0.10.0",
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-atv/issues"
             },
-            "time": "2024-07-08T11:16:13+00:00"
+            "time": "2025-04-23T13:25:40+00:00"
         },
         {
             "name": "drupal/helfi_audit_log",

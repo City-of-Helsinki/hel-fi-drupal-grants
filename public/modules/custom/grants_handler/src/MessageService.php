@@ -15,7 +15,8 @@ use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\webform\Entity\WebformSubmission;
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Handle message uploading and other things related.
@@ -24,20 +25,6 @@ class MessageService {
 
   use StringTranslationTrait;
   use DebuggableTrait;
-
-  /**
-   * The helfi_helsinki_profiili.userdata service.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata;
-
-  /**
-   * The HTTP client.
-   *
-   * @var \GuzzleHttp\Client
-   */
-  protected Client $httpClient;
 
   /**
    * Logger.
@@ -74,34 +61,12 @@ class MessageService {
    */
   protected string $password;
 
-
-  /**
-   * Atv access.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * Current user.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected AccountProxyInterface $currentUser;
-
-  /**
-   * Application status service.
-   *
-   * @var \Drupal\grants_handler\ApplicationStatusService
-   */
-  protected ApplicationStatusService $applicationStatusService;
-
   /**
    * Constructs a MessageService object.
    *
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata
+   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata
    *   The helfi_helsinki_profiili.userdata service.
-   * @param \GuzzleHttp\Client $http_client
+   * @param \GuzzleHttp\ClientInterface $httpClient
    *   Client to post data.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerFactory
    *   Log things.
@@ -113,19 +78,16 @@ class MessageService {
    *   Application status service.
    */
   public function __construct(
-    HelsinkiProfiiliUserData $helfi_helsinki_profiili_userdata,
-    Client $http_client,
+    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
+    private HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata,
+    private ClientInterface $httpClient,
     LoggerChannelFactoryInterface $loggerFactory,
-    AtvService $atvService,
-    AccountProxyInterface $currentUser,
-    ApplicationStatusService $applicationStatusService,
+    private AtvService $atvService,
+    private AccountProxyInterface $currentUser,
+    #[Autowire(service: 'grants_handler.application_status_service')]
+    private ApplicationStatusService $applicationStatusService,
   ) {
-    $this->helfiHelsinkiProfiiliUserdata = $helfi_helsinki_profiili_userdata;
-    $this->httpClient = $http_client;
     $this->logger = $loggerFactory->get('grants_handler_message_service');
-    $this->atvService = $atvService;
-    $this->currentUser = $currentUser;
-    $this->applicationStatusService = $applicationStatusService;
 
     $this->endpoint = getenv('AVUSTUS2_MESSAGE_ENDPOINT');
     $this->username = getenv('AVUSTUS2_USERNAME');
@@ -168,7 +130,7 @@ class MessageService {
     // Make sure data from user is sanitized.
     $messageData = AtvSchema::sanitizeInput($unSanitizedMessageData);
 
-    if (isset($submissionData["application_number"]) && !empty($submissionData["application_number"])) {
+    if (!empty($submissionData["application_number"])) {
       $messageData['caseId'] = $submissionData["application_number"];
 
       if ($userData === NULL) {
@@ -185,7 +147,7 @@ class MessageService {
 
       $messageDataJson = Json::encode($messageData);
 
-      $res = $this->httpClient->post($this->endpoint, [
+      $res = $this->httpClient->request('POST', $this->endpoint, [
         'auth' => [$this->username, $this->password, "Basic"],
         'body' => $messageDataJson,
       ]);

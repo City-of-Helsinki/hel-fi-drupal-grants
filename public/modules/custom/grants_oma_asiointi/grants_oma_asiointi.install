@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for grants_oma_asiointi.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Extension\ModuleInstallerInterface;
+
+/**
+ * Remove the module.
+ */
+function grants_oma_asiointi_update_9001(): void {
+  // Content of this module was moved to grants_profile.
+  \Drupal::service(ModuleInstallerInterface::class)->uninstall(['grants_oma_asiointi']);
+}

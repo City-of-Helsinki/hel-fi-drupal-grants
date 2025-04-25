@@ -37,6 +37,8 @@ class ServicePageAnonBlockCacheExpirationTest extends KernelTestBase {
     'helfi_audit_log',
     'locale',
     'language',
+    'block',
+    'path_alias',
     'file',
     'field',
     'helfi_api_base',

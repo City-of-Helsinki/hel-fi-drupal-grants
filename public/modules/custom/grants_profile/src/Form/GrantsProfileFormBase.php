@@ -25,6 +25,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -1179,9 +1180,14 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
   }
 
   /**
+   * Profile data refresh submit handler.
+   */
+  abstract public function profileDataRefreshSubmitHandler(array $form, FormStateInterface $form_state): array;
+
+  /**
    * Profile data refresh ajax callback.
    */
-  public function profileDataRefreshAjaxCallback(array $form) {
+  public function profileDataRefreshAjaxCallback(array $form): Response {
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('form', $form));
     return $response;
