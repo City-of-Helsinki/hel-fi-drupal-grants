@@ -727,7 +727,7 @@ elements: |-
         '#title': 'Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös'
         '#multiple': false
         '#filetype': '8'
-        '#help': 'Liit&auml; t&auml;h&auml;n yhdistyksen viimeisimm&auml;n vuosikokouksen p&ouml;yt&auml;kirja. Jos yhdistyksell&auml; on kaksi kokousta, liit&auml; t&auml;h&auml;n kev&auml;tkokouksen p&ouml;yt&auml;kirja. Liit&auml; syyskokouksen p&ouml;yt&auml;kirja kohtaan Muu liite.'
+        '#help': "Liitä tähän yhteisön kokouksen pöytäkirja, jossa edellisen päättyneen tilikauden tilinpäätös on vahvistettu ja vastuuvapauden myöntäminen käsitelty. Yhdistyksillä tilinpäätös vahvistetaan aina yhdistyksen kokouksessa. Mikäli yhteisöltä ei edellytetä vuosikokousta tai muuta yhteisön kokousta, jossa tilinpäätös tulisi vahvistaa ja vastuuvapaus käsitellä, ei tätä liitettä tarvitse toimittaa."
         '#title_display': before
         '#description__access': false
       toimintasuunnitelma:
