@@ -230,14 +230,15 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
 
       $grantsProfileContent['businessId'] = $companyData['businessId'];
       $grantsProfileContent['companyHome'] = $companyData['companyHome'];
-
-      // UHF-10845 Update and refetch the company data after mandating.
-      // Uncomment to test changing company data.
-      // phpcs:ignore
-      // $grantsProfileContent['companyHome'] .= ' test-override-'.random_int(1, 100);
-
+      $grantsProfileContent['companyName'] = $companyData['companyName'];
       $grantsProfileContent['registrationDate'] = $companyData['registrationDate'];
 
+      // UHF-10845, UHF-11688 Update the company data after mandating.
+      // Uncomment to test changing company data.
+      // phpcs:ignore
+      // $grantsProfileContent['companyHome'] .= ' test-override';
+      // phpcs:ignore
+      // $grantsProfileContent['companyName'] .= ' name-override';
       $this->grantsProfileService->saveGrantsProfile($grantsProfileContent);
 
       $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
