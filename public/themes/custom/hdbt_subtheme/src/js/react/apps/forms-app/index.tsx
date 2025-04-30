@@ -27,7 +27,10 @@ if (rootElement) {
         <ToastStack />
         {showError
           ? <FormNotFoundError />
-          : <FormWrapper {...{applicationTypeId}} />
+          : <FormWrapper
+              applicationTypeId={applicationTypeId}
+              token={drupalSettings.grants_react_form.token}
+            />
         }
       </ErrorBoundary>
     </React.StrictMode>,
