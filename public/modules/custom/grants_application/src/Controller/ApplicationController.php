@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Controller;
 
+use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\file\Entity\File;
@@ -26,6 +27,7 @@ final class ApplicationController extends ControllerBase {
   public function __construct(
     private readonly AntivirusService $antivirusService,
     private readonly HelfiAtvService $helfiAtvService,
+    private readonly CsrfTokenGenerator $csrfTokenGenerator,
   ) {
   }
 
@@ -39,6 +41,7 @@ final class ApplicationController extends ControllerBase {
         'drupalSettings' => [
           'grants_react_form' => [
             'application_number' => $id,
+            'token' => $this->csrfTokenGenerator->get('rest'),
           ],
         ],
       ],
