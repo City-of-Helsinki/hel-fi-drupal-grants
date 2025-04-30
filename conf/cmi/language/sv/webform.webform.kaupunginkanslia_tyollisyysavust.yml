@@ -256,7 +256,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vuosikokouksen_poytakirja:
     '#title': 'Protokoll från årsstämman med det godkända bokslutet för den föregående räkenskapsperioden'
-    '#help': 'Bifoga protokollet från samfundets möte här, där bokslutet för den föregående avslutade räkenskapsperioden har godkänts och beviljandet av ansvarsfrihet behandlats. Samfundens bokslut fastställs alltid vid samfundets årsmöte. Om samfundet inte är skyldigt att ha ett årsmöte eller annat samfundsmöte där bokslutet bör godkännas och ansvarsfriheten behandlas, behöver denna bilaga inte lämnas in.'
+    '#help': "Bifoga protokollet från samfundets möte här, där bokslutet för den föregående avslutade räkenskapsperioden har godkänts och beviljandet av ansvarsfrihet behandlats. Samfundens bokslut fastställs alltid vid samfundets årsmöte. Om samfundet inte är skyldigt att ha ett årsmöte eller annat samfundsmöte där bokslutet bör godkännas och ansvarsfriheten behandlas, behöver denna bilaga inte lämnas in."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''
