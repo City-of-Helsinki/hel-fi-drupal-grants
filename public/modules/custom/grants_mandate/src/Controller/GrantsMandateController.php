@@ -233,7 +233,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
       $grantsProfileContent['companyName'] = $companyData['companyName'];
       $grantsProfileContent['registrationDate'] = $companyData['registrationDate'];
 
-      // UHF-10845, UHF-11688 Update and refetch the company data after mandating.
+      // UHF-10845, UHF-11688 Update the company data after mandating.
       // Uncomment to test changing company data.
       // phpcs:ignore
       // $grantsProfileContent['companyHome'] .= ' test-override';
