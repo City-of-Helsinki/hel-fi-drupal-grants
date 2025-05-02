@@ -228,7 +228,7 @@ elements: |
     '#title': 'Describe the professional level of organizing the activities, and how the operations are organized.'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_ekologisuus:
-    '#title': 'How are ecological aspects taken into consideration in organizing the activities? What kinds of actions are taken, and resources and expertise available for this purpose?'
+    '#title': 'Does the community have an environmental sustainability plan or a corresponding operating model in use? Which, or what kind of model is it? Describe how it is implemented in practice and how compliance is monitored and supervised.'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_yhteistyokumppanit:
     '#title': 'Name the central partners, and describe the forms and conditions of each collaboration.'
