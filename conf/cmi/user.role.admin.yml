@@ -38,7 +38,6 @@ dependencies:
     - filter
     - grants_attachments
     - grants_industries
-    - grants_oma_asiointi
     - grants_profile
     - hdbt_cookie_banner
     - helfi_api_base
