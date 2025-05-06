@@ -6,6 +6,7 @@ use Drupal\Component\Utility\Xss;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_application\Atv\HelfiAtvService;
@@ -15,12 +16,16 @@ use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\UserInformationService;
+use Drupal\grants_handler\ApplicationSubmitType;
+use Drupal\grants_handler\Event\ApplicationSubmitEvent;
 use Drupal\rest\Attribute\RestResource;
 use Drupal\rest\Plugin\ResourceBase;
 use GuzzleHttp\Exception\GuzzleException;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -58,17 +63,19 @@ final class DraftApplication extends ResourceBase {
    * @param \Drupal\grants_application\Atv\HelfiAtvService $atvService
    *   The helfi atv service.
    * @param \Drupal\Component\Uuid\UuidInterface $uuid
-   *   The uuid service.
+   *   The uuid interface.
    * @param \Drupal\grants_application\Form\ApplicationNumberService $applicationNumberService
    *   The application number service.
-   * @param \Drupal\Core\Access\CsrfTokenGenerator $csrfTokenGenerator
-   *   The csrf token generator.
    * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
-   *   The language manager.
+   *   The language manager interface.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
    * @param \Drupal\grants_application\Avus2Mapper $avus2Mapper
    *   The Avus2-mapper.
+   * @param \Drupal\Core\Access\CsrfTokenGenerator $csrfTokenGenerator
+   *   The token generator.
+   * @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
+   *   The event dispatcher.
    */
   public function __construct(
     array $configuration,
@@ -81,10 +88,11 @@ final class DraftApplication extends ResourceBase {
     private HelfiAtvService $atvService,
     private UuidInterface $uuid,
     private ApplicationNumberService $applicationNumberService,
-    private CsrfTokenGenerator $csrfTokenGenerator,
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
     private Avus2Mapper $avus2Mapper,
+    private CsrfTokenGenerator $csrfTokenGenerator,
+    private EventDispatcherInterface $dispatcher,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -104,10 +112,11 @@ final class DraftApplication extends ResourceBase {
       $container->get(HelfiAtvService::class),
       $container->get(UuidInterface::class),
       $container->get(ApplicationNumberService::class),
-      $container->get(CsrfTokenGenerator::class),
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
       $container->get(Avus2Mapper::class),
+      $container->get(CsrfTokenGenerator::class),
+      $container->get(EventDispatcherInterface::class),
     );
   }
 
@@ -123,7 +132,9 @@ final class DraftApplication extends ResourceBase {
   }
 
   /**
-   * Get an empty application with initial data.
+   * Return initial form data.
+   *
+   * The atv-document and application number is created in controller.
    *
    * @param int $application_type_id
    *   The application type id.
@@ -135,7 +146,7 @@ final class DraftApplication extends ResourceBase {
    */
   public function get(
     int $application_type_id,
-  ): JsonResponse {
+  ): RedirectResponse|JsonResponse {
     // @todo Sanitize & validate & authorize properly.
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
@@ -159,54 +170,35 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    return new JsonResponse([
+    // @todo only return required user data to frontend.
+    $response = [
       'form_data' => [],
       'grants_profile' => $grants_profile_data->toArray(),
       'user_data' => $user_information,
       'token' => $this->csrfTokenGenerator->get('rest'),
       ...$settings->toArray(),
-    ]);
+    ];
+
+    return new JsonResponse($response);
   }
 
   /**
-   * Post a draft submission.
+   * Create the initial document.
    *
-   * Create a new submission.
+   * @param int $application_type_id
+   *   The application type id.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
-   *   The json response.
+   *   The response.
    */
-  public function post(
-    int $application_type_id,
-    Request $request,
-  ): JsonResponse {
-    // @todo Sanitize & validate & authorize properly.
-    $content = json_decode($request->getContent(), TRUE);
-    $env = Helper::getAppEnv();
-
-    [
-      'langcode' => $langcode,
-      'form_data' => $form_data,
-    ] = $content;
-
+  public function post(int $application_type_id): JsonResponse {
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
     catch (\Exception $e) {
-      // Cannot find form.
-      return new JsonResponse([], 500);
+      // Cannot find form by application type id.
+      return new JsonResponse([], 404);
     }
-
-    if (!$settings->isApplicationOpen()) {
-      // @todo Uncomment.
-      // Return new JsonResponse([], 403);.
-    }
-
-    $application_uuid = $this->uuid->generate();
-
-    // @todo Application number generation must match the existing shenanigans.
-    $application_number = $this->applicationNumberService
-      ->createNewApplicationNumber($env, $application_type_id);
 
     try {
       $selected_company = $this->userInformationService->getSelectedCompany();
@@ -216,10 +208,20 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    $application_uuid = $this->uuid->generate();
+    $env = Helper::getAppEnv();
+
+    // @todo Application number generation must match the existing shenanigans,
+    // or we must start from application number 1000 or something.
+    $application_number = $this->applicationNumberService
+      ->createNewApplicationNumber($env, $application_type_id);
+
+    $langcode = $this->languageManager
+      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+      ->getId();
     $application_name = $settings->toArray()['settings']['title'];
     $application_title = $settings->toArray()['settings']['title'];
     $application_type = $settings->toArray()['settings']['application_type'];
-    $langcode = $langcode ?? $this->languageManager->getCurrentLanguage()->getId();
 
     $document = $this->atvService->createAtvDocument(
       $application_uuid,
@@ -235,32 +237,13 @@ final class DraftApplication extends ResourceBase {
       $this->userInformationService->getApplicantType(),
     );
 
-    // @todo Better sanitation.
-    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
-    $document_data = ['form_data' => $sanitized_data];
-
-    // @todo This must be moved to correct place,
-    // do we want to map always or just before actually sending ?
-    // The mapped data must be saved to ATV because
-    // the integration wants to write there.
-    $atv_mapped_data = $this->avus2Mapper->mapApplicationData(
-      $form_data,
-      $user_data,
-      $selected_company,
-      $this->userInformationService->getUserProfileData(),
-      $this->userInformationService->getGrantsProfileContent(),
-      $settings
-    );
-
-    // Compensation is the original avus2 data.
-    $document_data['compensation'] = $atv_mapped_data;
-
-    $document->setContent($document_data);
+    $document->setContent([]);
 
     try {
-      $this->atvService->saveNewDocument($document);
+      $document = $this->atvService->saveNewDocument($document);
       $now = time();
       ApplicationSubmission::create([
+        'document_id' => $document->getId(),
         'sub' => $user_data['sub'],
         'langcode' => $langcode,
         'draft' => TRUE,
@@ -270,13 +253,19 @@ final class DraftApplication extends ResourceBase {
         'changed' => $now,
       ])
         ->save();
+
+      // @todo We must add bank confirmation file to the document at some point.
+      // Either here or when we are doing the actual submission.
     }
     catch (\Exception | GuzzleException $e) {
       // Saving failed.
       return new JsonResponse([], 500);
     }
 
-    return new JsonResponse($document->toArray(), 200);
+    return new JsonResponse([
+      'application_number' => $application_number,
+      'document_id' => $document->getId(),
+    ], 200);
   }
 
   /**
@@ -289,20 +278,33 @@ final class DraftApplication extends ResourceBase {
    *
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
-  public function patch(Request $request): JsonResponse {
+  public function patch(
+    int $application_type_id,
+    int $application_number,
+    Request $request,
+  ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);
-    [
-      'application_number' => $application_number,
-      'form_data' => $form_data,
-      'draft' => $draft,
-    ] = $content;
+    ['form_data' => $form_data] = $content;
 
-    // @todo Maybe separate draft and non-draft submissions.
-    $draft = $draft ?? TRUE;
+    try {
+      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+    }
+    catch (\Exception $e) {
+      // Cannot find form by application type id.
+      return new JsonResponse([], 404);
+    }
 
     if (!$application_number) {
       // Missing application number.
+      return new JsonResponse([], 500);
+    }
+
+    try {
+      $selected_company = $this->userInformationService->getSelectedCompany();
+      $user_data = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
       return new JsonResponse([], 500);
     }
 
@@ -330,16 +332,25 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    // @todo Better sanitation.
+    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
+    $document_data = ['form_data' => $sanitized_data];
+
+    $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
+      $sanitized_data,
+      $user_data,
+      $selected_company,
+      $this->userInformationService->getUserProfileData(),
+      $this->userInformationService->getGrantsProfileContent(),
+      $settings,
+      $document,
+    );
+    $document_data['attachmentsInfo'] = $this->avus2Mapper
+      ->getAttachmentInfo($sanitized_data);
+
+    $document->setContent($document_data);
+
     try {
-      // @todo Better sanitation.
-      $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
-      $document_data = ['form_data' => $sanitized_data];
-
-      /*
-      $atv_mapped_data = $this->atvMapper->mapData($sanitized_data);
-       */
-      $document->setContent($document_data);
-
       // @todo Always get the events and messages from atv submission before overwriting.
       $this->atvService->updateExistingDocument($document);
 
@@ -347,9 +358,16 @@ final class DraftApplication extends ResourceBase {
       $submission->save();
     }
     catch (\Exception $e) {
-      // Unable to find the document.
       return new JsonResponse([], 500);
     }
+
+    // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
+    // grants_application module when this module is enabled in
+    // production.
+    //
+    // This event lets other parts of the system to react
+    // to user submitting grants forms.
+    $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT_DRAFT));
 
     return new JsonResponse($document->toArray(), 200);
   }

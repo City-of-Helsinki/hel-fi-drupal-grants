@@ -246,7 +246,7 @@ elements: |
     '#isAttachmentNew__title': ''
   vuosikokouksen_poytakirja:
     '#title': 'Minutes of the annual meeting confirming the financial statements for the previous accounting period'
-    '#help': 'Append here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association&rsquo;s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this attachment does not need to be submitted.'
+    '#help': "Append here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability discussed. For associations, the financial statements are always confirmed at the association's annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability discussed, this attachment does not need to be submitted."
     '#attachmentName__title': ''
     '#fileStatus__title': ''
     '#fileType__title': ''

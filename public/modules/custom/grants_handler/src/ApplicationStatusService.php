@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Service to handle application statuses.
  */
-final class ApplicationStatusService implements ContainerInjectionInterface {
+final class ApplicationStatusService implements ApplicationStatusServiceInterface, ContainerInjectionInterface {
 
   use DebuggableTrait;
 
@@ -268,7 +268,7 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
   /**
    * Figure out status for new or updated application submission.
    *
-   * @param string $triggeringElement
+   * @param \Drupal\grants_handler\ApplicationSubmitType|null $submitType
    *   Element clicked.
    *   Form specs.
    *   State of form.
@@ -281,16 +281,16 @@ final class ApplicationStatusService implements ContainerInjectionInterface {
    *   Status for application, unchanged if no specific update done.
    */
   public function getNewStatus(
-    string $triggeringElement,
+    ?ApplicationSubmitType $submitType,
     array $submittedFormData,
     WebformSubmissionInterface $webform_submission,
   ): string {
     $status = $submittedFormData['status'] ?? $this->applicationStatuses['DRAFT'];
 
-    if ($triggeringElement == '::submitForm') {
+    if ($submitType == ApplicationSubmitType::SUBMIT_DRAFT) {
       $status = $this->applicationStatuses['DRAFT'];
     }
-    elseif ($triggeringElement == '::submit' && $this->canSubmissionBeSubmitted($webform_submission, NULL)) {
+    elseif ($submitType == ApplicationSubmitType::SUBMIT && $this->canSubmissionBeSubmitted($webform_submission, NULL)) {
       if ($status == 'DRAFT' || $status == '') {
         $status = $this->applicationStatuses['SUBMITTED'];
       }

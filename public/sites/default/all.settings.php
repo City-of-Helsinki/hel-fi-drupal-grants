@@ -100,7 +100,7 @@ $config['openid_connect.client.tunnistamoadmin']['settings']['ad_roles'] = [
   // New mappings.
   [
     'ad_role' => '947058f4-697e-41bb-baf5-f69b49e5579a',
-    'roles' => ['super_administrator'],
+    'roles' => ['super_administrator', 'grants_admin'],
   ],
   [
     'ad_role' => 'Drupal_Helfi_kaupunkitaso_paakayttajat',

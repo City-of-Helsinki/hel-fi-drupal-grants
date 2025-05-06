@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Atv;
 
+use Drupal\file\Entity\File;
+use Drupal\file\FileInterface;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
@@ -63,8 +65,8 @@ class HelfiAtvService {
    * @throws \Drupal\helfi_atv\AtvFailedToConnectException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function saveNewDocument(AtvDocument $document): void {
-    $this->atvService->postDocument($document);
+  public function saveNewDocument(AtvDocument $document): AtvDocument {
+    return $this->atvService->postDocument($document);
   }
 
   /**
@@ -75,6 +77,32 @@ class HelfiAtvService {
    */
   public function updateExistingDocument(AtvDocument $document): void {
     $this->atvService->patchDocument($document->getId(), $document->toArray());
+  }
+
+  /**
+   * Add an attachment to the document.
+   *
+   * @param string $document_id
+   *   The uuid of the document.
+   * @param string $filename
+   *   The file name.
+   * @param \Drupal\file\Entity\File $file
+   *   The file entity.
+   */
+  public function addAttachment(string $document_id, string $filename, File $file): mixed {
+    return $this->atvService->uploadAttachment($document_id, $filename, $file);
+  }
+
+  /**
+   * Remove an attachment from the document.
+   *
+   * @param string $document_id
+   *   The document uuid.
+   * @param string $attachment_id
+   *   The attachment id.
+   */
+  public function removeAttachment(string $document_id, string $attachment_id): AtvDocument|bool|array|FileInterface {
+    return $this->atvService->deleteAttachment($document_id, $attachment_id);
   }
 
   /**
@@ -144,7 +172,7 @@ class HelfiAtvService {
 
     // @todo Application state logic..
     // $draft = $isDraft ? 'DRAFT' : 'SUBMITTED';
-    // @todo Load this from module settings.
+    // @todo Load this from module settings config.
     $atvDocument->setStatus('DRAFT');
 
     $atvDocument->setType($application_type);
@@ -164,6 +192,7 @@ class HelfiAtvService {
 
     $atvDocument->setDraft(TRUE);
     $atvDocument->setDeletable(FALSE);
+    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
 
     // @todo Translate the title somehow.
     $humanReadableTypes = [

@@ -53,13 +53,13 @@ function dataUrlsToFiles(files?: string|string[]): any[] {
   })
 }
 
-async function uploadFiles(field: string, applicationId: string, token: string, files: File[]): Promise<boolean> {
+async function uploadFiles(field: string, applicationNumber: string, token: string, files: File[]): Promise<boolean> {
   const formData = new FormData()
 
   formData.append('fieldName', field)
   files.forEach(file => formData.append('file', file))
 
-  const response = await fetch(`/en/application/${applicationId}/upload`, {
+  const response = await fetch(`/en/application/${applicationNumber}/upload`, {
     method: 'POST',
     body: formData,
     headers: {
@@ -86,20 +86,22 @@ export const FileInput = ({
   accept,
   name,
 }: WidgetProps) => {
-  const { settings: { application_type_id: applicationTypeId }, token } = useAtomValue(formConfigAtom)!;
+  const { applicationNumber, token } = useAtomValue(formConfigAtom)!;
 
   const handleChange = useCallback(async (files: File[]) => {
     // Upload files to Drupal.
     // todo: Do clamav check and upload file to ATV, only store file id frontend.
     // todo: This might need some way to communicate avustus2 schema path to file upload endpoint?
-    await uploadFiles(name, applicationTypeId, token, files)
+    if (applicationNumber) {
+      await uploadFiles(name, applicationNumber, token, files)
+    }
 
     // Convert to rjfs dataUrl text.
     await Promise.all(files.map(getFileDataURL))
       .then(results => {
         onChange(multiple ? results : results[0])
       })
-  }, [multiple, onChange, applicationTypeId, token])
+  }, [multiple, onChange, applicationNumber, token])
 
   return <HDSFileInput
     accept={accept}

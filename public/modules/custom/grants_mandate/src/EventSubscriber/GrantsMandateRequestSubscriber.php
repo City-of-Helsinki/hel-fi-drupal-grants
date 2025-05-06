@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_mandate\EventSubscriber;
 
-use Drupal\Core\Routing\CurrentRouteMatch;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\grants_mandate\GrantsMandateRedirectService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -27,13 +29,13 @@ class GrantsMandateRequestSubscriber implements EventSubscriberInterface {
    *   Request Stack.
    * @param \Drupal\Core\Session\AccountProxyInterface $account
    *   Current User.
-   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
+   * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
    *   Route match.
    */
   public function __construct(
     protected RequestStack $requestStack,
     protected AccountProxyInterface $account,
-    protected CurrentRouteMatch $routeMatch,
+    protected RouteMatchInterface $routeMatch,
   ) {
   }
 

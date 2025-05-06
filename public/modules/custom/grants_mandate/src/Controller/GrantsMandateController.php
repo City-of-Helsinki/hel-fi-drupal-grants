@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_mandate\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Url;
 use Drupal\grants_handler\Helpers;
@@ -12,7 +15,7 @@ use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\ProfileConnector;
 use Drupal\helfi_atv\AtvDocument;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -22,6 +25,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * @phpstan-consistent-constructor
  */
 class GrantsMandateController extends ControllerBase implements ContainerInjectionInterface {
+
+  use AutowireTrait;
 
   /**
    * Allowed roles.
@@ -53,8 +58,10 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    */
   public function __construct(
     private RequestStack $requestStack,
+    #[Autowire(service: 'grants_mandate.service')]
     private GrantsMandateService $grantsMandateService,
     private GrantsProfileService $grantsProfileService,
+    #[Autowire(service: 'grants_mandate_redirect.service')]
     private GrantsMandateRedirectService $redirectService,
     private ProfileConnector $profileConnector,
   ) {
@@ -68,20 +75,6 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
       'J',
       ...$extraRoles,
     ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): GrantsMandateController|static {
-    $controller = new static(
-      $container->get('request_stack'),
-      $container->get('grants_mandate.service'),
-      $container->get('grants_profile.service'),
-      $container->get('grants_mandate_redirect.service'),
-      $container->get('grants_profile.profile_connector'),
-    );
-    return $controller->setLoggerFactory($container->get('logger.factory'));
   }
 
   /**
@@ -188,7 +181,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    * @return bool
    *   Is user allowed to use this mandate.
    */
-  protected function hasAllowedRole(array $roles) {
+  protected function hasAllowedRole(array $roles): bool {
     $allowedRoles = $this->allowedRoles;
     foreach ($roles as $role) {
       if (in_array($role, $allowedRoles)) {
@@ -237,14 +230,15 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
 
       $grantsProfileContent['businessId'] = $companyData['businessId'];
       $grantsProfileContent['companyHome'] = $companyData['companyHome'];
-
-      // UHF-10845 Update and refetch the company data after mandating.
-      // Uncomment to test changing company data.
-      // phpcs:ignore
-      // $grantsProfileContent['companyHome'] .= ' test-override-'.random_int(1, 100);
-
+      $grantsProfileContent['companyName'] = $companyData['companyName'];
       $grantsProfileContent['registrationDate'] = $companyData['registrationDate'];
 
+      // UHF-10845, UHF-11688 Update the company data after mandating.
+      // Uncomment to test changing company data.
+      // phpcs:ignore
+      // $grantsProfileContent['companyHome'] .= ' test-override';
+      // phpcs:ignore
+      // $grantsProfileContent['companyName'] .= ' name-override';
       $this->grantsProfileService->saveGrantsProfile($grantsProfileContent);
 
       $selectedCompany = $this->grantsProfileService->getSelectedRoleData();

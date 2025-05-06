@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   grants_handler_linkmodifier:
     class: Drupal\grants_handler\LinkModifierService
     tags:
@@ -7,14 +10,6 @@ services:
 
   grants_handler.message_service:
     class: Drupal\grants_handler\MessageService
-    arguments: [
-        '@helfi_helsinki_profiili.userdata',
-        '@http_client',
-        '@logger.factory',
-        '@helfi_atv.atv_service',
-        '@current_user',
-        '@grants_handler.application_status_service'
-    ]
     calls:
       - [ setEventsService, [ '@?grants_events.events_service' ] ]
 

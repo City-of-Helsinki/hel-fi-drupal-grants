@@ -1,6 +1,6 @@
 name: Oma Asiointi
 type: module
-description: Module for person/company own details &amp; things related to them.
+description: Module for person/company own details &amp; things related to them (DEPRECATED).
 package: Helfi
 core_version_requirement: ^9 || ^10
 dependencies:

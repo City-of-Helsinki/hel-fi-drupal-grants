@@ -1,4 +1,12 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  logger.channel.grants_mandate:
+    parent: logger.channel_base
+    arguments: [ 'grants_mandate' ]
+
   grants_mandate.service:
     class: Drupal\grants_mandate\GrantsMandateService
     arguments: [
@@ -20,16 +28,10 @@ services:
 
   grants_mandate.handle_mandate_errors:
     class: Drupal\grants_mandate\EventSubscriber\GrantsMandateExceptionSubscriber
-    arguments: [ '@messenger','@logger.factory', '@helfi_audit_log.audit_log' ]
     tags:
       - { name: event_subscriber }
 
   grants_mandate.request_subscriber:
     class: Drupal\grants_mandate\EventSubscriber\GrantsMandateRequestSubscriber
-    arguments: [
-      '@request_stack',
-      '@current_user',
-      '@current_route_match'
-    ]
     tags:
       - { name: event_subscriber }

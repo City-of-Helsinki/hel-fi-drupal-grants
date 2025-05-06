@@ -1,20 +1,30 @@
-webform.handler.example:
-  type: mapping
-  label: Example
+grants_handler.settings:
+  type: config_object
+  label: 'Grants handler settings'
   mapping:
-    message:
-      label: Message
-      type: string
+    statusStrings:
+      type: sequence
+      label: 'Status strings by language'
+      sequence:
+        type: sequence
+        label: 'Language status strings'
+        sequence:
+          type: string
+          label: 'Language status label'
+
+webform.handler.grants_handler:
+  type: mapping
+  label: 'Grants handler settings'
+  mapping:
     debug:
       type: boolean
-      label: 'Enable debugging'
-grants_handler.statusStrings:
-  type: config_object
-  label: 'Status strings'
-  mapping:
+      label: 'Enable debug mode'
+    endpoint:
+      type: string
+      label: 'Custom endpoint'
     message:
-      type: text
-      label: 'Message'
+      type: string
+      label: 'Custom message'
 
 block.settings.grants_handler_service_page_auth_block:
   type: block_settings
