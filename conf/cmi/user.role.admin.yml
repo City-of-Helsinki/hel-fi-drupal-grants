@@ -72,7 +72,7 @@ dependencies:
 _core:
   default_config_hash: fnOpQQ5r1eprWvQPrJPWRfDqxozQiZnwIdYFPKb0lbM
 id: admin
-label: Admin
+label: Administrator
 weight: 1
 is_admin: null
 permissions:
