@@ -38,7 +38,6 @@ dependencies:
     - filter
     - grants_attachments
     - grants_industries
-    - grants_oma_asiointi
     - grants_profile
     - hdbt_cookie_banner
     - helfi_api_base
@@ -73,7 +72,7 @@ dependencies:
 _core:
   default_config_hash: fnOpQQ5r1eprWvQPrJPWRfDqxozQiZnwIdYFPKb0lbM
 id: admin
-label: Administrator
+label: Admin
 weight: 1
 is_admin: null
 permissions:
