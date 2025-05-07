@@ -13,8 +13,6 @@ third_party_settings:
     applicationIndustry: KANSLIA
     applicantTypes:
       registered_community: registered_community
-      unregistered_community: unregistered_community
-      private_person: private_person
     applicationTypeTerms:
       66: '66'
     applicationTargetGroup: '30'
