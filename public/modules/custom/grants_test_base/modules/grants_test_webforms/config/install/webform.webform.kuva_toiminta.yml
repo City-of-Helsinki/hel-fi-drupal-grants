@@ -1059,6 +1059,9 @@ elements: |-
     talousarvio:
       '#type': webform_section
       '#title': Talousarvio
+      markup_01:
+        '#type': webform_markup
+        '#markup': '<p>Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan. Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta oman talousarvionsa mukaisesti.</p>'
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
