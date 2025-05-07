@@ -17,14 +17,16 @@ third_party_settings:
       49: '49'
       45: '45'
     applicationTargetGroup: '25'
-    applicationOpen: '2024-05-02T00:00:00'
-    applicationClose: '2024-06-03T16:00:00'
+    applicationOpen: '2025-05-02T00:00:00'
+    applicationClose: '2025-06-02T16:00:00'
     applicationActingYearsType: next_x_years
     applicationActingYears: {  }
     applicationActingYearsNextCount: '1'
     applicationContinuous: 0
     disableCopying: 0
     status: released
+    parent: ''
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null
