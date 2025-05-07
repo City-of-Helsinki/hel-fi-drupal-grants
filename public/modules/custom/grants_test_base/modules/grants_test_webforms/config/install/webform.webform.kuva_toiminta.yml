@@ -816,6 +816,7 @@ elements: |-
       maarat_fieldset:
         '#type': fieldset
         '#title': Kävijämääristä
+        '#required': true
         '#attributes':
           class:
             - grants-fieldset
@@ -823,6 +824,7 @@ elements: |-
           '#type': number
           '#title': 'Kävijämäärä Helsingissä'
           '#help': 'Älä täytä samoja kävijöitä kahteen kertaan, esim. näyttelytilassa järjestettyä työpajaa sekä näyttelyihin että työpajoihin.'
+          '#required': true
           '#attributes':
             class:
               - webform--small
@@ -830,6 +832,7 @@ elements: |-
           '#type': number
           '#title': 'Kävijämäärä kaikkiaan'
           '#help': 'Määrä kaikkiaan -kohdassa täytä luvut sisältäen toiminnan kokonaisuudessaan sekä Suomessa että mahdollisesti ulkomailla.'
+          '#required': true
           '#attributes':
             class:
               - webform--small
