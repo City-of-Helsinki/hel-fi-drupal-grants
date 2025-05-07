@@ -312,7 +312,7 @@ elements: |
     '#title': 'Beskriv hur er verksamhet är organiserad och på vilket sätt den är professionell.'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_ekologisuus:
-    '#title': 'Hur beaktar ni ekologiska aspekter när ni planerar och genomför er verksamhet? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?'
+    '#title': 'Har verksamheten en miljöansvarsplan eller motsvarande verksamhetsmodell? Vilken, eller vilken typ av modell? Berätta om implementeringen i praktiken och hur efterlevnaden övervakas och kontrolleras.'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_yhteistyokumppanit:
     '#title': 'Namnge era fem mest centrala samarbetsparter och beskriv formen och villkoren för ert samarbete. '
