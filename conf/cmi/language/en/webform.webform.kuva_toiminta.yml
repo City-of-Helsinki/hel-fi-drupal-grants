@@ -376,7 +376,7 @@ elements: |
       1: 'Yes'
       0: 'No'
   toteutuneet_tulot:
-    '#markup': '<h4>Realized incomes</h4>'
+    '#markup': '<h4>Realized incomes</h4><p>In the first three fields you are asked to fill in specific information about the grants you have received. In the last field you are asked to fill in all realized incomes in total, including the grants listed above and all other incomes.</p>'
   toteutuneet_tulot_data:
     '#otherCompensationFromCity__help': 'The operational grant that was granted for the same operations for the previous completed financial year.'
     '#stateOperativeSubvention__help': 'Including the operational grants from the Finnish Film Foundation (SES) and the Funding Centre for Social Welfare and Health Organisations (STEA). Other than operational grants should be included in the other grants.'

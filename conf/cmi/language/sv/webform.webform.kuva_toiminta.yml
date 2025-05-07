@@ -377,7 +377,7 @@ elements: |
       1: Ja
       0: Nej
   toteutuneet_tulot:
-    '#markup': '<h4>Realiserade inkomster</h4>'
+    '#markup': '<h4>Realiserade inkomster</h4><p>I de tre första avsnitten ber vi om detaljerad information om mottagna understöd. Det sista avsnittet avser alla realiserade inkomster sammanlagt, inklusive understöd som anges ovan och alla övriga inkomster.</p>'
   toteutuneet_tulot_data:
     '#otherCompensationFromCity__help': 'Understöd som beviljats för samma ändamål under föregående räkenskapsår.'
     '#stateOperativeSubvention__help': 'Inkluderar verksamhetsunderstöd från Finlands filmstiftelse (SES) och Social- och hälsoorganisationernas understödscentral (STEA). Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd.'

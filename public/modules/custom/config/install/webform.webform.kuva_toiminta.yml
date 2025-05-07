@@ -1260,7 +1260,7 @@ elements: |-
           0: Ei
       toteutuneet_tulot:
         '#type': webform_markup
-        '#markup': '<h4>Toteutuneet tulot</h4>'
+        '#markup': '<h4>Toteutuneet tulot</h4><p>Kolmessa ensimmäisessä kohdassa kysytään eritellysti tietoja saaduista avustuksista. Viimeisessä kohdassa kysytään kaikkia toteutuneita tuloja yhteensä sisältäen yllälistatut avustukset ja kaikki muut tulot.</p>'
       toteutuneet_tulot_data:
         '#type': grants_budget_income_static
         '#title': '<empty>'
