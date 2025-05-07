@@ -189,7 +189,7 @@ elements: |
   suunniteltu_toiminta:
     '#title': 'Planerad verksamhet'
   arvio_maarasta_markup:
-    '#markup': "<h4>En uppskattning av kvantiteter</h4>\r\n\r\n<p>Mata in informationen gällande er egen verksamhet under det år som avses i ansökan. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet.</p>"
+    '#markup': "<h4>En uppskattning av kvantiteter</h4><p>Mata in informationen gällande er egen verksamhet under det år som avses i ansökan. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska kvantiteter endast beskriva denna del av verksamheten. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa:
     '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_fieldset:

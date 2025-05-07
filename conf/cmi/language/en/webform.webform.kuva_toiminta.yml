@@ -190,7 +190,7 @@ elements: |
   suunniteltu_toiminta:
     '#title': 'Planned activities'
   arvio_maarasta_markup:
-    '#markup': "<h4>Estimated numbers</h4>\r\n\r\n<p>Answer regarding your own activities during the year that you are applying the grant for. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason we ask for the volumes for Helsinki and of the entire activities, separately.</p>"
+    '#markup': "<h4>Estimated numbers</h4><p>Answer regarding your own activities during the year that you are applying the grant for. If the grant only applies to a limited part of the organization's activities, the reported numbers should reflect only that part of the activities. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason we ask for the volumes for Helsinki and of the entire activities, separately.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa:
     '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_fieldset:

@@ -654,10 +654,7 @@ elements: |-
       '#title': 'Suunniteltu toiminta'
       arvio_maarasta_markup:
         '#type': webform_markup
-        '#markup': |-
-          <h4>Arvio m&auml;&auml;rist&auml;</h4>
-
-          <p>Syötä tiedot koskien omaa toimintaa vuonna, jolle avustusta haetaan. Syötä tiedot vain fyysisten esitysten, näyttelyiden ja työpajojen osalta, älä laske mukaan pelkästään digitaalisina toteutettuja ohjelmasisältöjä. Helsingin kaupungin avustuksissa arvioidaan toiminnan kohdistumista Helsinkiin ja helsinkiläisiin. Tästä syystä osaa tiedoista kysytään eritellysti Helsingin ja kokonaisuuden osalta.</p>
+        '#markup': '<h4>Arvio määristä</h4><p>Syötä tiedot koskien omaa toimintaa vuonna, jolle avustusta haetaan. Jos avustus kohdistuu vain osaan toiminnasta, tulee myös määrien koskea vain tätä osaa toiminnasta. Syötä tiedot vain fyysisten esitysten, näyttelyiden ja työpajojen osalta, älä laske mukaan pelkästään digitaalisina toteutettuja ohjelmasisältöjä. Helsingin kaupungin avustuksissa arvioidaan toiminnan kohdistumista Helsinkiin ja helsinkiläisiin. Tästä syystä osaa tiedoista kysytään eritellysti Helsingin ja kokonaisuuden osalta.</p>'
       tapahtuma_tai_esityspaivien_maara_helsingissa:
         '#type': textfield
         '#maxlength': 9
