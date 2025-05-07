@@ -756,10 +756,7 @@ elements: |-
         '#required': true
       toteutuneet_markup:
         '#type': webform_markup
-        '#markup': |-
-          <h4>Toteutuneet m&auml;&auml;r&auml;t</h4>
-
-          <p>Sy&ouml;t&auml; tiedot koskien omaa toimintaa edellisen&auml; p&auml;&auml;ttyneen&auml; vuonna. Sy&ouml;t&auml; tiedot vain fyysisten esitysten, n&auml;yttelyiden ja ty&ouml;pajojen osalta, &auml;l&auml; laske mukaan pelk&auml;st&auml;&auml;n digitaalisina toteutettuja ohjelmasis&auml;lt&ouml;j&auml;.</p>
+        '#markup': '<h4>Toteutuneet määrät</h4><p>Syötä tiedot koskien omaa toimintaa edellisenä päättyneenä vuonna. Jos avustus kohdistuu vain osaan toiminnasta, tulee myös määrien koskea vain tätä osaa toiminnasta. Syötä tiedot vain fyysisten esitysten, näyttelyiden ja työpajojen osalta, älä laske mukaan pelkästään digitaalisina toteutettuja ohjelmasisältöjä. Helsingin kaupungin avustuksissa arvioidaan toiminnan kohdistumista Helsinkiin ja helsinkiläisiin. Tästä syystä osaa tiedoista kysytään eritellysti Helsingin ja kokonaisuuden osalta.</p>'
       tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
         '#type': number
         '#title': 'Tapahtuma- tai esityspäivien määrä Helsingissä'

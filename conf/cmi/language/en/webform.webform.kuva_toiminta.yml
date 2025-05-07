@@ -240,7 +240,7 @@ elements: |
       1: 'Yes'
       0: 'No'
   toteutuneet_markup:
-    '#markup': "<h4>Realized numbers</h4>\r\n\r\n<p>Answer regarding your own activities during the previous completed financial year. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason, we ask for the volumes separately for Helsinki and of the entire activities, separately.</p>"
+    '#markup': "<h4>Realized numbers</h4><p>Answer regarding your own activities during the previous completed financial year. If the grant only applies to a limited part of the organization's activities, the reported numbers should reflect only that part of the activities. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason, we ask for the volumes separately for Helsinki and of the entire activities, separately.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
     '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:

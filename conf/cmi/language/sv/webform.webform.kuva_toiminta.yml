@@ -239,7 +239,7 @@ elements: |
       1: Ja
       0: Nej
   toteutuneet_markup:
-    '#markup': "<h4>Förverkligade antal och mängder</h4>\r\n\r\n<p>Mata in information gällande er egen verksamhet under det senaste hela verksamhetsåret. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet.</p>"
+    '#markup': "<h4>Förverkligade antal och mängder</h4><p>Mata in information gällande er egen verksamhet under det senaste hela verksamhetsåret. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska antal och mängder endast beskriva denna del av verksamheten. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
     '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:
