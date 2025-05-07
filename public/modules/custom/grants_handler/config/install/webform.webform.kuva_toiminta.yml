@@ -1272,7 +1272,7 @@ elements: |-
       '#title': 'Toteutuneet tulot ja menot'
       markup_02:
         '#type': webform_markup
-        '#markup': '<p>Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti.</p>'
+        '#markup': '<p>Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti. Laske mukaan kaikki tulot (kohtaan "tulot yhteensä") ja kaikki menot (kohtaan "menot yhteensä") sisältäen mm. poistot ja rahoitustoiminnan kulut ja tuotot. Tarkista lopuksi, että tulojen ja menojen erotus vastaa tilinpäätöksen yli/alijäämää.</p><p>Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta kustannuspaikkakohtaisen tuloslaskelman mukaisesti.</p>'
       organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true

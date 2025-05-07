@@ -369,7 +369,7 @@ elements: |
   toteutuneet_tulot_ja_menot:
     '#title': 'Förverkligade inkomster och utgifter'
   markup_02:
-    '#markup': '<p>Föregående avslutade räkenskapsår. Enligt bokslutet.</p>'
+    '#markup': '<p>Föregående avslutade räkenskapsår. Enligt bokslutet. Inkludera alla intäkter (under "inkomster sammanlagt") och alla utgifter (under "utgifter sammanlagt"), inklusive bland annat: avskrivningar och finansiella kostnader och intäkter. Kontrollera slutligen att skillnaden mellan inkomster och utgifter motsvarar över-/underskottet i bokslutet.<p></p>Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med en separat kostnadsställerapport.</p>'
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen fick statsandelar (VOS)'
     '#help': 'Välj ja, bara om du med säkerhet vet att din organisation fick finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
