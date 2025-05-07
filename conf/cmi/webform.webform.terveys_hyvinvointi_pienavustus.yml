@@ -17,7 +17,7 @@ third_party_settings:
       private_person: private_person
     applicationTypeTerms:
       66: '66'
-    applicationTargetGroup: '25'
+    applicationTargetGroup: '30'
     applicationOpen: '2025-01-15T00:00:01'
     applicationClose: '2025-04-02T15:30:00'
     applicationActingYearsType: current_and_next_x_years
