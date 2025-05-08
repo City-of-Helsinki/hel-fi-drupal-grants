@@ -112,7 +112,7 @@ const hideDialog = async (page: Page) => {
  *  Playwright page object.
  */
 const getApplicationNumberFromBreadCrumb = async (page: Page) => {
-  const breadcrumbSelector = '.breadcrumb__link';
+  const breadcrumbSelector = '.hds-breadcrumb__link';
   const breadcrumbLinks = await page.$$(breadcrumbSelector);
   return await breadcrumbLinks[breadcrumbLinks.length - 1].textContent();
 }
