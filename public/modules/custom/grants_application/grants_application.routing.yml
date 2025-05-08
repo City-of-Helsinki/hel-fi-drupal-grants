@@ -14,10 +14,10 @@ helfi_grants.forms_app_upload:
   requirements:
     _role: helsinkiprofiili
 
-helfi_grants.forms_app_delete_file:
-  path: '/application/{id}/file/{file_id}/delete'
+helfi_grants.form_get_file:
+  path: '/application/attachment'
   defaults:
-    _controller: '\Drupal\grants_application\Controller\ApplicationController::deleteFile'
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::getFile'
   methods: [POST]
   requirements:
     _role: helsinkiprofiili

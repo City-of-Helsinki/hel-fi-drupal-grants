@@ -4,23 +4,6 @@ import { JSONSchema7, JSONSchema7Definition, JSONSchema7Type } from 'json-schema
 import { Fragment, ReactFragment } from 'react';
 
 /**
- * Parse the file name from a base64 string.
- *
- * @param {string} data - the base64 string.
- * @return {string|undefined} - the file name, fallback if no name or undefined if no data
- */
-const getFileName = (data: string) => {
-  if (!data) {
-    return undefined;
-  }
-
-  const regex = /;name=(.+);/;
-  const match = data.match(regex);
-
-  return match ? match[1] : Drupal.t('Attached file');
-}
-
-/**
  * Recursive function to generate a printable form of a given property.
  *
  * @param {objcet} property - the property definition from the schema.
@@ -69,7 +52,7 @@ const getPrintableProperty = (
 
   const printableData = (
     property.format === 'data-url' ?
-      getFileName(data)
+      data?.filename || '-'
       : data
    ) || '-';
 
