@@ -7,7 +7,7 @@ import { Suspense, useCallback } from 'react';
 import { RJSFSchema } from '@rjsf/utils';
 
 import { RJSFFormContainer } from './RJSFFormContainer';
-import { createFormDataAtom, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom, setApplicationNumberAtom, setSubmitStatusAtom } from '../store';
+import { createFormDataAtom, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom, setSubmitStatusAtom } from '../store';
 import { addApplicantInfoStep, getNestedSchemaProperty, isValidFormResponse, setNestedProperty } from '../utils';
 import { SubmitStates } from '../enum/SubmitStates';
 
@@ -45,7 +45,7 @@ async function fetchFormData(id: string, token: string) {
     applicationNumber = application_number;
   }
 
-  const formConfigResponse = await fetch(`/applications/${id}/application/${applicationNumber}`, {
+  const formConfigResponse = await fetch(`/applications/draft/${id}/${applicationNumber}`, {
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-Token': token,
@@ -99,6 +99,21 @@ function* iterateFormData(element: any, prefix: string = '') {
     yield prefix;
   }
 };
+
+function* getAttachments(element: any) {
+  if (!element || typeof element !== 'object') {
+    return;
+  }
+
+  if (element.hasOwnProperty('fileId')) {
+    yield element;
+  }
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [, value] of Object.entries(element)) {
+    yield* getAttachments(value);
+  }
+}
 
 /**
  * Fix issue with backend returning arrays instead of empty objects.
@@ -211,7 +226,6 @@ const FormWrapper = ({
   const initializeForm = useSetAtom(initializeFormAtom);
   const setSubmitStatus = useSetAtom(setSubmitStatusAtom);
   const pushNotification = useSetAtom(pushNotificationAtom);
-  const setApplicationNumber = useSetAtom(setApplicationNumberAtom);
   const readApplicationNumber = useAtomCallback(
     useCallback(get => get(getApplicationNumberAtom), [])
   );
@@ -232,6 +246,7 @@ const FormWrapper = ({
       body: JSON.stringify({
         application_number: readApplicationNumber() || '',
         application_type_id: applicationTypeId,
+        attachments: Array.from(getAttachments(submittedData)),
         form_data: submittedData,
         langcode: 'en',
       }),
@@ -246,13 +261,8 @@ const FormWrapper = ({
       return false;
     }
 
-    const json = await response.json();
-    setApplicationNumber(json.application_number);
-
-    if (response.ok && finalSubmit) {
-      // @todo read submit status from server response
-      setSubmitStatus(SubmitStates.submitted);
-    }
+    // @todo read submit status from server response
+    setSubmitStatus(SubmitStates.submitted);
 
     return response.ok;
   };
@@ -262,6 +272,13 @@ const FormWrapper = ({
 
   const saveDraft = async (submittedData: any) => {
     const response = await fetch(`/applications/draft/${applicationTypeId}/${readApplicationNumber()}`, {
+      body: JSON.stringify({
+        application_number: readApplicationNumber() || '',
+        application_type_id: applicationTypeId,
+        attachments: Array.from(getAttachments(submittedData)),
+        form_data: submittedData,
+        langcode: 'en',
+      }),
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-Token': token,

@@ -43,7 +43,7 @@ export type FormState = {
 }
 
 type FormConfig = {
-  applicationNumber?: string;
+  applicationNumber: string;
   grantsProfile: GrantsProfile;
   persistedData: any;
   token: string;

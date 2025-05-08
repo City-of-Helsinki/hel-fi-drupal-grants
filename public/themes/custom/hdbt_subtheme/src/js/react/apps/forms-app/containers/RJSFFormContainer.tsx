@@ -1,4 +1,4 @@
-import Form, { IChangeEvent } from '@rjsf/core';
+import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
 import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
 import React, { createRef, useCallback } from 'react';
@@ -25,7 +25,6 @@ const widgets: RegistryWidgetsType = {
   SelectWidget,
   TextareaWidget: TextArea,
   TextWidget: TextInput,
-  FileWidget: FileInput,
 };
 
 type RJSFFormContainerProps = {
@@ -133,6 +132,10 @@ export const RJSFFormContainer = ({
         />
         <Form
           className='grants-react-form webform-submission-form'
+          fields={{
+            ...getDefaultRegistry().fields,
+            atvFile: FileInput,
+          }}
           formData={formData || {}}
           method='POST'
           noHtml5Validate
