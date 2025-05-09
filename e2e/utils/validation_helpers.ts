@@ -46,11 +46,21 @@ const validateSubmission = async (
   }
 
   const thisStoreData = storedata[formKey];
+
   if (thisStoreData.status === 'DRAFT' || thisStoreData.status === 'RECEIVED') {
     logger(`Validating draft application with application ID: ${thisStoreData.applicationId}...`);
-    await navigateAndValidateViewPage(page, thisStoreData);
+    const applicationId = thisStoreData.applicationId;
+    const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
+    await page.goto(viewPageURL);
+    await logCurrentUrl(page);
+    await page.waitForURL('**/katso');
+    const applicationIdContainer = await page.locator('.webform-submission__application_id');
+    const applicationIdContainerText = await applicationIdContainer.textContent();
+    expect(applicationIdContainerText).toContain(applicationId);
+    logger('Draft validation on page:', viewPageURL);
     await validateFormData(page, 'viewPage', formDetails);
   }
+
   if (thisStoreData.status === 'RECEIVED') {
     logger(`Validating messaging for sent application with application ID: ${thisStoreData.applicationId}...`);
     await validateMessaging(page, thisStoreData);
@@ -399,35 +409,6 @@ const validateField = async (
   } catch (error) {
     validationErrorCallback(constructMessage(MessageType.ContentNotFound, itemKey, rawInputValue, formattedInputValue, itemSelector));
   }
-}
-
-/**
- * The navigateAndValidateViewPage function.
- *
- * This function navigates to an applications "View"
- * page and makes sure that we get to it. This is done
- * so that we can validate the input application data
- * against the resulting data on the "View" page.
- *
- * @param page
- *   Page object from Playwright.
- * @param thisStoreData
- *   The env form data.
- */
-const navigateAndValidateViewPage = async (
-  page: Page,
-  thisStoreData: any
-) => {
-
-  const applicationId = thisStoreData.applicationId;
-  const viewPageURL = `/fi/hakemus/${applicationId}/katso`;
-  await page.goto(viewPageURL);
-  await logCurrentUrl(page);
-  await page.waitForURL('**/katso');
-  const applicationIdContainer = await page.locator('.webform-submission__application_id');
-  const applicationIdContainerText = await applicationIdContainer.textContent();
-  expect(applicationIdContainerText).toContain(applicationId);
-  logger('Draft validation on page:', viewPageURL);
 }
 
 /**
