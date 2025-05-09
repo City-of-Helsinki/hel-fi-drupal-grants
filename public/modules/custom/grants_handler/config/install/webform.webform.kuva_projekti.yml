@@ -915,7 +915,7 @@ elements: |-
               value: registered_community
       markup_01:
         '#type': webform_markup
-        '#markup': 'Kirjaa talousarvioon kaikki hankkeen tulot ja menot kokonaisuudessaan. Älä siis kirjaa vain niitä menoja, jotka on tarkoitus kattaa haetulla avustuksella.'
+        '#markup': 'Kirjaa talousarvioon kaikki hankkeen tulot ja menot kokonaisuudessaan. Älä siis kirjaa vain niitä menoja, jotka on tarkoitus kattaa haetulla avustuksella. Avustusta ei voida myöntää hankkeelle, jonka koko rahoitusta haetaan kyseisellä avustuksella.'
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
@@ -926,7 +926,7 @@ elements: |-
           0: Ei
       tulot:
         '#type': webform_markup
-        '#markup': '<h4>Suunnitellut tulot</h4>'
+        '#markup': '<h4>Suunnitellut tulot</h4><p>Kirjaa alle kaikki hankkeen erilaiset tulot. Merkitse kukin tulo sille parhaiten sopivaan kohtaan, älä siis merkitse samaa tuloa kahteen eri kohtaan. Yhteenlaskettuna tähän merkityt tulot muodostavat koko hankkeen tulot yhteensä.</p>'
       budget_static_income:
         '#type': grants_budget_income_static
         '#title': '<empty>'
@@ -962,7 +962,7 @@ elements: |-
         '#totalIncome__access': false
       menot:
         '#type': webform_markup
-        '#markup': '<h4>Suunnitellut menot</h4>'
+        '#markup': '<h4>Suunnitellut menot</h4><p>Kirjaa alle kaikki hankkeen erilaiset menot. Merkitse kukin meno sille parhaiten sopivaan kohtaan, älä siis merkitse samaa menoa kahteen eri kohtaan. Yhteenlaskettuna tähän merkityt menot muodostavat koko hankkeen menot yhteensä.</p>'
       budget_static_cost:
         '#type': grants_budget_cost_static
         '#title': '<empty>'

@@ -652,10 +652,7 @@ elements: |-
       '#title': 'Suunniteltu toiminta'
       arvio_maarasta_markup:
         '#type': webform_markup
-        '#markup': |-
-          <h4>Arvio m&auml;&auml;rist&auml;</h4>
-
-          <p>Sy&ouml;t&auml; tiedot koskien omaa toimintaa vuonna, jolle avustusta haetaan. Sy&ouml;t&auml; tiedot vain fyysisten esitysten, n&auml;yttelyiden ja ty&ouml;pajojen osalta, &auml;l&auml; laske mukaan pelk&auml;st&auml;&auml;n digitaalisina toteutettuja ohjelmasis&auml;lt&ouml;j&auml;.</p>
+        '#markup': '<h4>Arvio määristä</h4><p>Syötä tiedot koskien omaa toimintaa vuonna, jolle avustusta haetaan. Jos avustus kohdistuu vain osaan toiminnasta, tulee myös määrien koskea vain tätä osaa toiminnasta. Syötä tiedot vain fyysisten esitysten, näyttelyiden ja työpajojen osalta, älä laske mukaan pelkästään digitaalisina toteutettuja ohjelmasisältöjä. Helsingin kaupungin avustuksissa arvioidaan toiminnan kohdistumista Helsinkiin ja helsinkiläisiin. Tästä syystä osaa tiedoista kysytään eritellysti Helsingin ja kokonaisuuden osalta.</p>'
       tapahtuma_tai_esityspaivien_maara_helsingissa:
         '#type': textfield
         '#maxlength': 9
@@ -795,10 +792,7 @@ elements: |-
         '#required': true
       toteutuneet_markup:
         '#type': webform_markup
-        '#markup': |-
-          <h4>Toteutuneet m&auml;&auml;r&auml;t</h4>
-
-          <p>Sy&ouml;t&auml; tiedot koskien omaa toimintaa edellisen&auml; p&auml;&auml;ttyneen&auml; vuonna. Sy&ouml;t&auml; tiedot vain fyysisten esitysten, n&auml;yttelyiden ja ty&ouml;pajojen osalta, &auml;l&auml; laske mukaan pelk&auml;st&auml;&auml;n digitaalisina toteutettuja ohjelmasis&auml;lt&ouml;j&auml;.</p>
+        '#markup': '<h4>Toteutuneet määrät</h4><p>Syötä tiedot koskien omaa toimintaa edellisenä päättyneenä vuonna. Jos avustus kohdistuu vain osaan toiminnasta, tulee myös määrien koskea vain tätä osaa toiminnasta. Syötä tiedot vain fyysisten esitysten, näyttelyiden ja työpajojen osalta, älä laske mukaan pelkästään digitaalisina toteutettuja ohjelmasisältöjä. Helsingin kaupungin avustuksissa arvioidaan toiminnan kohdistumista Helsinkiin ja helsinkiläisiin. Tästä syystä osaa tiedoista kysytään eritellysti Helsingin ja kokonaisuuden osalta.</p>'
       tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
         '#type': textfield
         '#maxlength': 9
@@ -879,6 +873,7 @@ elements: |-
       maarat_fieldset:
         '#type': fieldset
         '#title': Kävijämääristä
+        '#required': true
         '#attributes':
           class:
             - grants-fieldset
@@ -889,6 +884,7 @@ elements: |-
           '#pattern': '^[0-9 ]*$'
           '#title': 'Kävijämäärä Helsingissä'
           '#help': 'Älä täytä samoja kävijöitä kahteen kertaan, esim. näyttelytilassa järjestettyä työpajaa sekä näyttelyihin että työpajoihin.'
+          '#required': true
           '#attributes':
             class:
               - webform--small
@@ -899,6 +895,7 @@ elements: |-
           '#pattern': '^[0-9 ]*$'
           '#title': 'Kävijämäärä kaikkiaan'
           '#help': 'Määrä kaikkiaan -kohdassa täytä luvut sisältäen toiminnan kokonaisuudessaan sekä Suomessa että mahdollisesti ulkomailla.'
+          '#required': true
           '#attributes':
             class:
               - webform--small
@@ -1069,7 +1066,7 @@ elements: |-
             ':input[name="avustukset_summa"]':
               value:
                 greater_equal: '5000'
-        '#title': 'Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
+        '#title': 'Onko yhteisöllä käytössä ympäristövastuusuunnitelma tai vastaava toimintamalli? Mikä tai millainen malli on kyseessä? Kerro sen toteuttamisesta käytännössä ja miten noudattamista seurataan ja valvotaan.'
         '#maxlength': 1000
         '#counter_type': character
         '#counter_maximum': 1000
@@ -1129,6 +1126,9 @@ elements: |-
     talousarvio:
       '#type': webform_section
       '#title': Talousarvio
+      markup_01:
+        '#type': webform_markup
+        '#markup': '<p>Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan. Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta oman talousarvionsa mukaisesti.</p>'
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
@@ -1245,6 +1245,9 @@ elements: |-
     toteutuneet_tulot_ja_menot:
       '#type': webform_section
       '#title': 'Toteutuneet tulot ja menot'
+      markup_02:
+        '#type': webform_markup
+        '#markup': '<p>Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti. Laske mukaan kaikki tulot (kohtaan "tulot yhteensä") ja kaikki menot (kohtaan "menot yhteensä") sisältäen mm. poistot ja rahoitustoiminnan kulut ja tuotot. Tarkista lopuksi, että tulojen ja menojen erotus vastaa tilinpäätöksen yli/alijäämää.</p><p>Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta kustannuspaikkakohtaisen tuloslaskelman mukaisesti.</p>'
       organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
         '#type': radios
         '#required': true
@@ -1254,7 +1257,7 @@ elements: |-
           0: Ei
       toteutuneet_tulot:
         '#type': webform_markup
-        '#markup': '<h4>Toteutuneet tulot</h4>'
+        '#markup': '<h4>Toteutuneet tulot</h4><p>Kolmessa ensimmäisessä kohdassa kysytään eritellysti tietoja saaduista avustuksista. Viimeisessä kohdassa kysytään kaikkia toteutuneita tuloja yhteensä sisältäen yllälistatut avustukset ja kaikki muut tulot.</p>'
       toteutuneet_tulot_data:
         '#type': grants_budget_income_static
         '#title': '<empty>'
@@ -1450,10 +1453,10 @@ elements: |-
         '#description__access': false
       toimintasuunnitelma_sille_vuodelle_jolle_haet_avustusta_monivuot:
         '#type': grants_attachments
-        '#title': 'Toimintasuunnitelma (sille vuodelle jolle haet avustusta, monivuotisissa koko avustuskaudelle sisältäen suunnitelman itsearviointityökalusta ja tasa-arvo- ja yhtenvertaisuussuunnitelmasta) '
+        '#title': 'Toimintasuunnitelma (sille vuodelle, jolle haet avustusta, monivuotisissa koko avustuskaudelle sisältäen suunnitelman itsearviointityökalusta ja tasa-arvo- ja yhdenvertaisuussuunnitelmasta)'
         '#multiple': false
         '#filetype': '1'
-        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. , monivuotisissa koko avustuskaudelle sis&auml;lt&auml;en suunnitelman itsearviointity&ouml;kalusta ja tasa-arvo- ja yhtenvertaisuussuunnitelmasta)&nbsp;'
+        '#help': 'Liit&auml; t&auml;h&auml;n koko yhteis&ouml;n toimintasuunnitelma. , monivuotisissa koko avustuskaudelle sis&auml;lt&auml;en suunnitelman itsearviointity&ouml;kalusta ja tasa-arvo- ja yhdenvertaisuussuunnitelmasta)'
         '#title_display': ''
         '#description__access': false
       talousarvio_sille_vuodelle_jolle_haet_avustusta_monivuotisissa_k:
