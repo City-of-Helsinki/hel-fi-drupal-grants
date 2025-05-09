@@ -213,13 +213,13 @@ const FormWrapper = ({
     const getUrlAndMethod = () => {
       switch(true) {
         case finalSubmit && Boolean(currentApplicationNumber):
-          return [`/applications/${applicationTypeId}/send/${currentApplicationNumber}`, 'POST'];
+          return [`/applications/${applicationTypeId}/application/${currentApplicationNumber}`, 'POST'];
         case finalSubmit:
-          return [`/applications/${applicationTypeId}/send`, 'POST'];
+          return [`/applications/${applicationTypeId}/application`, 'POST'];
         case Boolean(currentApplicationNumber):
-          return [`/applications/draft/${applicationTypeId}/${currentApplicationNumber}`, 'PATCH'];
+          return [`/applications/${applicationTypeId}/${currentApplicationNumber}`, 'PATCH'];
         default:
-          return [`/applications/draft/${applicationTypeId}`, 'POST'];
+          return [`/applications/${applicationTypeId}`, 'POST'];
       }
     };
 

@@ -36,9 +36,9 @@ use Symfony\Component\Routing\RouteCollection;
   id: "draft_application_rest_resource",
   label: new TranslatableMarkup("Application"),
   uri_paths: [
-    "canonical" => "/applications/{application_type_id}",
-    "create" => "/applications/draft/{application_type_id}",
-    "edit" => "/applications/draft/{application_type_id}/{application_number}",
+    "canonical" => "/applications/{application_type_id}/{application_number}",
+    "create" => "/applications/{application_type_id}",
+    "edit" => "/applications/{application_type_id}/{application_number}",
   ]
 )]
 final class DraftApplication extends ResourceBase {
@@ -280,8 +280,7 @@ final class DraftApplication extends ResourceBase {
    */
   public function patch(
     int $application_type_id,
-    int $application_number,
-    Request $request,
+    string $application_number,
   ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);

@@ -33,8 +33,8 @@ use Symfony\Component\Routing\RouteCollection;
   label: new TranslatableMarkup("Application"),
   uri_paths: [
     "canonical" => "/applications/{application_type_id}/application/{application_number}",
-    "create" => "/applications/{application_type_id}/send/{application_number}",
-    "edit" => "/applications/{application_type_id}/edit/{application_number}",
+    "create" => "/applications/{application_type_id}/application/{application_number}",
+    "edit" => "/applications/{application_type_id}/application/{application_number}",
   ]
 )]
 final class Application extends ResourceBase {
