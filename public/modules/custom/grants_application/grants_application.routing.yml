@@ -13,11 +13,3 @@ helfi_grants.forms_app_upload:
   methods: [POST]
   requirements:
     _role: helsinkiprofiili
-
-helfi_grants.form_get_file:
-  path: '/application/attachment'
-  defaults:
-    _controller: '\Drupal\grants_application\Controller\ApplicationController::getFile'
-  methods: [POST]
-  requirements:
-    _role: helsinkiprofiili
