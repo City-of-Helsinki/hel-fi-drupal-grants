@@ -1,59 +1,23 @@
 import React, { useCallback } from "react";
-import { WidgetProps } from "@rjsf/utils";
+import { FieldProps, UiSchema } from "@rjsf/utils";
 import { FileInput as HDSFileInput } from "hds-react";
 import { useAtomValue } from "jotai";
 import { formatErrors } from "./Input";
-import { formConfigAtom } from "../store";
+import { formConfigAtom, getApplicationNumberAtom } from "../store";
 
-function addNameToDataURL(name: string, dataURL: string|null) {
-  if (dataURL === null) {
+type ATVFile = {
+  fileType: string;
+  fileName: string;
+  fileId: number;
+  href: string;
+  size: number;
+}
+
+async function uploadFiles(field: string, applicationNumber: string, token: string, files: File[], fileType: number): Promise<ATVFile|null> {
+  if (!files.length) {
     return null;
   }
 
-  return dataURL.replace(';base64', `;name=${encodeURIComponent(name)};base64`);
-}
-
-function getFileDataURL(file: File): Promise<string|null> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (typeof event.target?.result === 'string') {
-        resolve(addNameToDataURL(file.name, event.target.result))
-      }
-      else {
-        resolve(null)
-      }
-    }
-    reader.onerror = reject
-    reader.readAsDataURL(file);
-  });
-}
-
-function dataUrlsToFiles(files?: string|string[]): any[] {
-  if (!files) {
-    return []
-  }
-
-  if (!Array.isArray(files)) {
-    files = [files]
-  }
-
-  return files.map(file => {
-    // These splits rely on the fact that file content is
-    // encoded so that these characters only separate different fields.
-    const [, content] = file.split(':')
-    const [meta, data] = content.split(',')
-    const [contentType, name] = meta.split(';')
-    const [, fileName] = name.split('=')
-
-
-    return new File([atob(data)], decodeURIComponent(fileName), {
-      type: contentType ?? 'application/octet-stream'
-    })
-  })
-}
-
-async function uploadFiles(field: string, applicationNumber: string, token: string, files: File[]): Promise<boolean> {
   const formData = new FormData()
 
   formData.append('fieldName', field)
@@ -71,48 +35,71 @@ async function uploadFiles(field: string, applicationNumber: string, token: stri
     throw new Error('Failed to upload file');
   }
 
-  return true;
+  return {
+    ...await response.json(),
+    fileType,
+  };
 }
 
+const filesFromATVData = (value?: ATVFile): File[] => {
+  if (!value || !value.fileName) {
+    return [];
+  }
+
+  const data = new Uint8Array(value.size);
+  return [new File([data], value.fileName)];
+};
+
 export const FileInput = ({
+  accept,
+  formData,
   id,
   label,
+  multiple,
+  name,
   onChange,
   rawErrors,
-  value,
-  multiple,
   readonly,
   required,
-  accept,
-  name,
-}: WidgetProps) => {
-  const { applicationNumber, token } = useAtomValue(formConfigAtom)!;
+  uiSchema,
+}: FieldProps) => {
+  const applicationNumber = useAtomValue(getApplicationNumberAtom);
+  const { token } = useAtomValue(formConfigAtom)!;
+  const { 'misc:file-type': fileType } = uiSchema as UiSchema & {
+    'misc:file-type': number;
+  };
 
   const handleChange = useCallback(async (files: File[]) => {
-    // Upload files to Drupal.
-    // todo: Do clamav check and upload file to ATV, only store file id frontend.
-    // todo: This might need some way to communicate avustus2 schema path to file upload endpoint?
-    if (applicationNumber) {
-      await uploadFiles(name, applicationNumber, token, files)
+    const result = await uploadFiles(name, applicationNumber, token, files, fileType);
+
+    if (!result) {
+      return;
     }
 
-    // Convert to rjfs dataUrl text.
-    await Promise.all(files.map(getFileDataURL))
-      .then(results => {
-        onChange(multiple ? results : results[0])
-      })
-  }, [multiple, onChange, applicationNumber, token])
+    const { href: integrationID, ...rest } = result;
+
+    onChange({
+      integrationID,
+      isDeliveredLater: false,
+      isIncludedInOtherFile: false,
+      isNewAttachment: true,
+      ...rest,
+    });
+  }, [applicationNumber, multiple, onChange, token])
 
   return <HDSFileInput
     accept={accept}
-    defaultValue={dataUrlsToFiles(value)}
+    // @ts-ignore @fixme typescript is wrong
+    defaultValue={filesFromATVData(formData)}
     disabled={readonly}
     dragAndDrop
     errorText={formatErrors(rawErrors)}
     hideLabel={false}
-    id={id}
+    id={id || ''}
     invalid={Boolean(rawErrors?.length)}
     label={label}
+    // 20mb in bytes
+    maxSize={20 * 1024 * 1024}
     onChange={handleChange}
     required={required}
   />

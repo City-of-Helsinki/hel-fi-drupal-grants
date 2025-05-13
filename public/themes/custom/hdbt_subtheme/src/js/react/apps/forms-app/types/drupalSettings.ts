@@ -13,7 +13,8 @@ declare namespace drupalSettings { // eslint-disable-line @typescript-eslint/no-
     hakuvahti_url_set: boolean;
   };
   const grants_react_form: {
-    form: string;
     application_number: string;
+    form: string;
+    token: string;
   };
 };

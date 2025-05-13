@@ -78,7 +78,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
         },
         required: ['email']
       },
-      contact_person: {
+      contact_person_info: {
         title: 'Hakemuksen yhteyshenkilö',
         type: objectType,
         properties: {
@@ -93,7 +93,6 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
             type: stringType,
           }
         },
-        required: ['contact_person', 'contact_person_phone_number']
       },
       community_address: {
         title: 'Osoite',
@@ -150,7 +149,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
         },
       },
     },
-    required: ['applicant_email', 'contact_person', 'bank_account', 'community_address'],
+    required: ['applicant_email', 'contact_person_info', 'bank_account', 'community_address'],
   },
   {
     applicant_info: {

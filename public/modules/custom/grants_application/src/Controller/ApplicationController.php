@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Controller;
 
+use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\file\Entity\File;
@@ -26,6 +27,7 @@ final class ApplicationController extends ControllerBase {
   public function __construct(
     private readonly AntivirusService $antivirusService,
     private readonly HelfiAtvService $helfiAtvService,
+    private readonly CsrfTokenGenerator $csrfTokenGenerator,
   ) {
   }
 
@@ -39,6 +41,7 @@ final class ApplicationController extends ControllerBase {
         'drupalSettings' => [
           'grants_react_form' => [
             'application_number' => $id,
+            'token' => $this->csrfTokenGenerator->get('rest'),
           ],
         ],
       ],
@@ -109,53 +112,13 @@ final class ApplicationController extends ControllerBase {
     // @todo Check that events are added as normally.
     $file_entity->delete();
     $response = [
-      'filename' => $result['filename'],
-      'file_id' => $result['id'],
+      'fileName' => $result['filename'],
+      'fileId' => $result['id'],
       'href' => $result['href'],
       'size' => $result['size'],
     ];
 
     return new JsonResponse($response);
-  }
-
-  /**
-   * Delete the file from application.
-   *
-   * @param string $id
-   *   The application number.
-   * @param string $file_id
-   *   The file id.
-   *
-   * @return \Symfony\Component\HttpFoundation\JsonResponse
-   *   response object.
-   */
-  public function deleteFile(string $id, string $file_id): JsonResponse {
-    if (!$id || !$file_id) {
-      return new JsonResponse(status: 400);
-    }
-
-    /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
-    $submission = $this->entityTypeManager()
-      ->getStorage('application_submission')
-      ->loadByProperties(['application_number' => $id]);
-    $submission = reset($submission);
-
-    if (!$submission || !$submission->draft->value) {
-      // May not delete file if not draft.
-      return new JsonResponse(data: ['Cannot remove file from non-draft application.'], status: 503);
-    }
-
-    try {
-      $this->helfiAtvService->removeAttachment(
-        $submission->document_id->value,
-        $file_id
-      );
-    }
-    catch (\Exception $e) {
-      return new JsonResponse(status: 500);
-    }
-
-    return new JsonResponse(status: 200);
   }
 
 }
