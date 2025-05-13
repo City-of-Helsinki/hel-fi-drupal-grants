@@ -1062,8 +1062,14 @@ const fieldSwapForm: FormDataWithRemoveOptionalProps = {
   title: 'Field swap form',
   testFieldSwap: true,
   formPages: {
-    "1_hakijan_tiedot": {
-      items: {},
+    '1_hakijan_tiedot': {
+      items: {
+        'edit-bank-account-account-number-select': {
+          role: 'select',
+          value: PROFILE_INPUT_DATA.iban,
+          viewPageSelector: '.form-item-bank-account',
+        },
+      },
       itemsToSwap: [
         {field: 'edit-bank-account-account-number-select', swapValue: PROFILE_INPUT_DATA.iban2},
       ]
