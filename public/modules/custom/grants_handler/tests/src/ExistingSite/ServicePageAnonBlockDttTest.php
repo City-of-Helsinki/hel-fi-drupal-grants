@@ -45,6 +45,7 @@ class ServicePageAnonBlockDttTest extends ExistingSiteTestBase {
     $this->webform->setThirdPartySetting('grants_metadata', 'applicationContinuous', 1);
     $this->webform->setThirdPartySetting('grants_metadata', 'applicationActingYears', date('Y'));
     $this->webform->save();
+    $this->markEntityForCleanup($this->webform);
 
     // Create a service page.
     $this->servicePage = $this->createNode([
@@ -53,6 +54,7 @@ class ServicePageAnonBlockDttTest extends ExistingSiteTestBase {
       'status' => 1,
     ]);
     $this->servicePage->save();
+    $this->markEntityForCleanup($this->servicePage);
     $this->assertTrue($this->servicePage instanceof ServicePage);
 
     // Create a user with permissions to edit the service page.
@@ -96,23 +98,6 @@ class ServicePageAnonBlockDttTest extends ExistingSiteTestBase {
     // Now assert that block content reflects "closed".
     $this->drupalGet($this->servicePage->toUrl());
     $this->assertSession()->pageTextContains('This application is not open');
-  }
-
-  /**
-   * Tear down.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   */
-  public function tearDown(): void {
-    if (isset($this->webform)) {
-      $this->webform->delete();
-    }
-
-    if (isset($this->servicePage)) {
-      $this->servicePage->delete();
-    }
-
-    parent::tearDown();
   }
 
 }
