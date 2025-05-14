@@ -243,7 +243,7 @@ elements: |
   talousarvio:
     '#title': Budget
   processed_text:
-    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Gällande det år, för vilket stöd ansöks med denna ansökan.</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Gällande det år, för vilket stöd ansöks med denna ansökan. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med den egna budgeten.</div>\r\n</div>\r\n</div>\r\n"
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
     '#help': 'Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'

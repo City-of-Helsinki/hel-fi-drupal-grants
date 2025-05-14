@@ -823,7 +823,7 @@ elements: |-
         '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
-          <div class="hds-notification__label"><span>Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan</span></div>
+          <div class="hds-notification__label"><span>Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan. Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta oman talousarvionsa mukaisesti.</span></div>
           </div>
           </div>
       organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
