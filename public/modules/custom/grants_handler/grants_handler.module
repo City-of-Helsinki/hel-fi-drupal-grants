@@ -244,6 +244,14 @@ function grants_handler_theme(): array {
         'message_body' => NULL,
       ],
     ],
+    'grant_terms' => [
+      'variables' => [
+        'block' => NULL,
+        'terms' => NULL,
+        'notification' => NULL,
+        'updated_terms' => FALSE,
+      ],
+    ],
   ];
 }
 
@@ -912,60 +920,47 @@ function grants_handler_webform_submission_form_alter(&$form, FormStateInterface
 /**
  * Implements hook_preprocess_HOOK().
  */
-function grants_handler_preprocess_webform_submission_data(&$variables) {
-  $tOpts = ['context' => 'grants_handler'];
-
-  // Create query + type condition.
-  $query = \Drupal::entityQuery('block_content')
-    ->condition('type', 'terms_block');
-
-  $language = \Drupal::languageManager()->getCurrentLanguage();
+function grants_handler_preprocess_webform_submission_data(&$variables): void {
   $variables['preview_title'] = $variables['webform']->getSetting('preview_title');
+
+  /** @var \Drupal\webform\WebformSubmissionInterface $submission */
+  $submission = $variables['webform_submission'];
+
+  $query = \Drupal::entityQuery('block_content');
 
   // Get blocks for ALL forms and this form.
   $orGroup = $query
     ->orConditionGroup()
     ->condition('field_form', $variables['webform']->id())
     ->condition('field_show_on_all_forms', TRUE);
-  $query->condition($orGroup);
-  $query->accessCheck(FALSE);
-  $results = $query->execute();
 
-  // Load blocks.
-  $blocks = BlockContent::loadMultiple(array_values($results));
+  $results = $query
+    ->condition('type', 'terms_block')
+    ->condition($orGroup)
+    ->accessCheck(FALSE)
+    ->execute();
+
+  $viewBuilder = \Drupal::entityTypeManager()
+    ->getViewBuilder('block_content');
+
   // Add term acceptance things for every block loaded.
-  foreach ($blocks as $block) {
-    // Render content.
-    // See admin/structure/block/block-content/manage/terms_block/display.
-    // Only body field is wanted to render.
-    $output = \Drupal::entityTypeManager()
-      ->getViewBuilder('block_content')
-      ->view($block);
+  foreach (BlockContent::loadMultiple($results) as $block) {
+    $updated_terms = FALSE;
 
-    // We use title field directly so we need to get translated version.
-    $translatedBlock = $block->getTranslation($language->getId());
-    $translatedTitle = $translatedBlock->get('field_link_title')->value;
+    // Render notice that the terms have changed if this submission
+    // was submitted before the terms have been updated.
+    if ($submission->isCompleted() && ($block->getChangedTime() > $submission->getCompletedTime())) {
+      $updated_terms = $block->getChangedTime();
+    }
 
-    // Content rendering respects active language.
-    $render = \Drupal::service('renderer')->render($output);
-    // Id for element.
-    $htmlId = 'accept_terms_' . $block->id();
-    $terms_info = [
-      '#theme' => 'hds_notification',
-      '#type' => 'alert',
-      '#label' => t('Note!', [], $tOpts),
-      '#body' => t('Accept the terms and send the application.', [], $tOpts),
-      '#class' => 'notification-margin-bottom',
-      '#aria_level' => '3',
+    $variables['terms'][] = [
+      '#theme' => 'grant_terms',
+      '#block' => $block->getTranslation(\Drupal::languageManager()->getCurrentLanguage()->getId()),
+      // See admin/structure/block/block-content/manage/terms_block/display.
+      // Only the body field is drawn.
+      '#terms' => $viewBuilder->view($block),
+      '#updated_terms' => $updated_terms,
     ];
-    $terms_info_rendered = Markup::create(\Drupal::service('renderer')->render($terms_info));
-    // Add html for checkbox.
-    $variables['confirm_texts'][] = '<div class="terms_block">' . $render . '</div>
-      ' . $terms_info_rendered . '
-      <div class="hds-checkbox">
-        <input type="checkbox" id="' . $htmlId . '" required="required" class="hds-checkbox__input" />
-        <label for="' . $htmlId . '"  class="hds-checkbox__label">' . $translatedTitle . '</label>
-      </div>';
   }
 }
 

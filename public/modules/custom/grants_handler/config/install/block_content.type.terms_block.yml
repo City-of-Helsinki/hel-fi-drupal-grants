@@ -5,4 +5,4 @@ dependencies: {  }
 id: terms_block
 label: 'Terms block'
 revision: false
-description: 'Grants terms block'
+description: 'Terms block on the preview page'
