@@ -246,6 +246,11 @@ export const getApplicationNumberAtom = atom(_get => {
 
   return applicationNumber;
 });
+export const getTranslationsAtom = atom(_get => {
+  const { translations } = _get(getFormConfigAtom);
+
+  return translations;
+})
 export const setApplicationNumberAtom = atom(null, (_get, _set, applicationNumber: string) => {
   const formConfig = _get(getFormConfigAtom);
 

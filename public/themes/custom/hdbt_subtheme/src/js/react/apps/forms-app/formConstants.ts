@@ -66,12 +66,9 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
     type: objectType,
     properties: {
       applicant_email: {
-        title: 'Sähköpostiosoite',
-        description: 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.',
         type: objectType,
         properties: {
           email: {
-            title: 'Sähköpostiosoite',
             type: stringType,
             format: 'email'
           }
@@ -79,57 +76,46 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
         required: ['email']
       },
       contact_person_info: {
-        title: 'Hakemuksen yhteyshenkilö',
         type: objectType,
         properties: {
           contact_person: {
-            title: 'Yhteyshenkilö',
             minLength: 1,
             type: stringType,
           },
           contact_person_phone_number: {
-            title: 'Puhelinnumero',
             minLength: 1,
             type: stringType,
           }
         },
       },
       community_address: {
-        title: 'Osoite',
         type: objectType,
         properties: {
           community_address: {
-            title: 'Valitse osoite',
             type: stringType,
           }
         },
         required: ['community_address']
       },
       bank_account: {
-        title: 'Tilinumero',
         type: objectType,
         properties: {
           bank_account: {
-            title: 'Valitse tilinumero',
             type: stringType,
           }
         },
         required: ['bank_account']
       },
       community_officials: {
-        title: 'Toiminnasta vastaavat henkilöt',
         type: objectType,
         properties: {
           community_officials: {
             type: 'array',
-            title: 'Toiminnasta vastaavat henkilöt',
             items: [
               {
-                title: 'Valitse toiminnasta vastaavat henkilöt',
                 type: objectType,
                 properties: {
                   official: {
-                    title: 'Valitse vastaava henkilö',
                     type: stringType,
                   },
                 },
@@ -170,7 +156,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
               'ui:widget': 'community_officials',
             },
             'ui:options': {
-              removeText: 'Poista henkilö',
+              removeText: 'root_applicant_info_community_officials_community_officials.removeText',
             }
           },
           items: {
@@ -180,7 +166,6 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
           },
           'ui:options': {
             addable: true,
-            addText: 'Lisää henkilö',
             orderable: false,
             removable: true,
           }

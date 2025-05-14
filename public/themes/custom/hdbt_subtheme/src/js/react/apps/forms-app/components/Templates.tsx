@@ -1,12 +1,16 @@
 import { ArrayFieldTemplateProps, IconButtonProps, ObjectFieldTemplateProps } from '@rjsf/utils'
 import { Button, ButtonPresetTheme, ButtonVariant, Fieldset } from 'hds-react';
-import { useAtomValue } from 'jotai';
 import { ReactNode } from 'react';
+import { useAtomValue } from 'jotai';
+import { useTranslation } from 'react-i18next';
+
 import { getCurrentStepAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
+import { useIdToTranslations } from '../hooks/useIdToTranslations';
 
 export const ArrayFieldTemplate = ({
   canAdd,
+  idSchema,
   items,
   onAddClick,
   registry,
@@ -16,7 +20,7 @@ export const ArrayFieldTemplate = ({
   const { description } = schema;
   const { ArrayFieldItemTemplate } = registry.templates;
 
-  const addText = uiSchema && uiSchema['ui:options'] && uiSchema['ui:options'].addText || null; // @ts-ignore{uiSchema: {'ui:options': {}}} = props;
+  const { addText } = useIdToTranslations(idSchema.$id);
 
   return (
     <div>
@@ -51,7 +55,9 @@ export const ObjectFieldTemplate = ({
   schema,
   uiSchema,
 }: ObjectFieldTemplateProps) => {
-  const { description, _isSection, title, _step } = schema;
+  const { title, description } = useIdToTranslations(idSchema.$id);
+
+  const { _isSection, _step } = schema;
   const { id: stepId } = useAtomValue(getCurrentStepAtom)[1];
 
   if (idSchema.$id === 'root') {
@@ -129,41 +135,30 @@ export const ButtonTemplate = ({
   uiSchema,
   ...props
 }: IconButtonProps) => (
-    <Button
-      {...props}
-      style={{
-        display: 'inline-block',
-        marginRight: 'auto',
-        marginTop: 'var(--spacing-m)',
-      }}
-      theme={ButtonPresetTheme.Black}
-      type='button'
-      variant={ButtonVariant.Primary}
-    >
-      {children as ReactNode & string}
-    </Button>
-  )
-
-export const AddButtonTemplate = (props: IconButtonProps) => {
-  const { uiSchema } = props;
-  const addText = uiSchema && uiSchema['ui:options'] && uiSchema['ui:options'].addText || null; // @ts-ignore{{'ui:options': {}} = uiSchema;
-  return (
-    <ButtonTemplate
-      {...props}
-    >
-    {addText || Drupal.t('Add')}
-    </ButtonTemplate>
-  )
-};
+  <Button
+    {...props}
+    style={{
+      display: 'inline-block',
+      marginRight: 'auto',
+      marginTop: 'var(--spacing-m)',
+    }}
+    theme={ButtonPresetTheme.Black}
+    type='button'
+    variant={ButtonVariant.Primary}
+  >
+    {children as ReactNode & string}
+  </Button>
+);
 
 export const RemoveButtonTemplate = (props: IconButtonProps) => {
+  const { t } = useTranslation();
   const { uiSchema } = props;
   const removeText = uiSchema && uiSchema['ui:options'] && uiSchema['ui:options'].removeText || null; // @ts-ignore{{'ui:options': {}} = uiSchema;
   return (
     <ButtonTemplate
       {...props}
     >
-      {removeText || Drupal.t('Remove')}
+      {removeText ? t(removeText.toString()) : Drupal.t('Remove')}
     </ButtonTemplate>
   )
 };

@@ -3,6 +3,7 @@ import { TextArea as HDSTextArea, TextInput as HDSTextInput, Select  } from 'hds
 import { useAtomValue } from 'jotai';
 import { ChangeEvent } from 'react';
 import { getAccountsAtom, getAddressesAtom, getOfficialsAtom } from '../store';
+import { useIdToTranslations } from '../hooks/useIdToTranslations';
 
 /**
  * Transform raw errors to a more readable format.
@@ -27,13 +28,15 @@ export const TextInput = ({
   readonly,
   required,
   value,
-}: WidgetProps) => (
-  <HDSTextInput
+}: WidgetProps) => {
+  const { title } = useIdToTranslations(id);
+
+  return <HDSTextInput
     errorText={formatErrors(rawErrors)}
     hideLabel={false}
     id={id}
     invalid={Boolean(rawErrors?.length)}
-    label={label}
+    label={title}
     name={name}
     onBlur={() => null}
     onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value)}
@@ -42,7 +45,7 @@ export const TextInput = ({
     required={required}
     value={value ?? ''}
   />
-);
+};
 
 export const TextArea = ({
   id,
@@ -53,13 +56,15 @@ export const TextArea = ({
   readonly,
   required,
   value,
-}: WidgetProps) => (
-  <HDSTextArea
+}: WidgetProps) => {
+  const { title } = useIdToTranslations(id);
+
+  return <HDSTextArea
     errorText={formatErrors(rawErrors)}
     hideLabel={false}
     id={id}
     invalid={Boolean(rawErrors?.length)}
-    label={label}
+    label={title}
     name={name}
     onBlur={() => null}
     onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
@@ -68,7 +73,7 @@ export const TextArea = ({
     required={required}
     value={value ?? ''}
   />
-);
+}
 
 type SelectWidgetProps = WidgetProps & {
   assistive?: string;
@@ -86,8 +91,10 @@ export const SelectWidget = ({
   readonly,
   required,
   value,
-}: SelectWidgetProps) => (
-  <Select
+}: SelectWidgetProps) => {
+  const { title } = useIdToTranslations(id);
+ 
+  return <Select
     id={id}
     disabled={readonly}
     invalid={Boolean(rawErrors?.length)}
@@ -111,12 +118,12 @@ export const SelectWidget = ({
     texts={{
       assistive,
       error: rawErrors ? formatErrors(rawErrors) : undefined,
-      label: label ?? '',
+      label: title ?? '',
       placeholder: '- Valitse -',
     }}
     value={value}
-  />
-);
+  />;
+};
 
 export const AddressSelect = (props: WidgetProps) => {
   const addresses = useAtomValue(getAddressesAtom);

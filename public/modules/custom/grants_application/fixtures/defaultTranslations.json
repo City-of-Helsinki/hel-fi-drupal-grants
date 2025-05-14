@@ -1,0 +1,29 @@
+{
+  "fi": {
+    "translation": {
+      "root_applicant_info.title": "Yhteisö, jolle haetaan avustusta",
+      "root_applicant_info_applicant_email.title": "Sähköpostiosoite",
+      "root_applicant_info_applicant_email.description": "Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.",
+      "root_applicant_info_applicant_email_email.title": "Sähköpostiosoite",
+      "root_applicant_info_contact_person_info.title": "Hakemuksen yhteyshenkilö",
+      "root_applicant_info_contact_person_info_contact_person.title": "Yhteyshenkilö",
+      "root_applicant_info_contact_person_info_contact_person_phone_number.title": "Puhelinnumero",
+      "root_applicant_info_community_address.title": "Osoite",
+      "root_applicant_info_community_address_community_address.title": "Valitse osoite",
+      "root_applicant_info_bank_account.title": "Tilinumero",
+      "root_applicant_info_bank_account_bank_account.title": "Tilinumero",
+      "root_applicant_info_community_officials.title": "Toiminnasta vastaavat henkilöt",
+      "root_applicant_info_community_officials_community_officials.addText": "Lisää henkilö",
+      "root_applicant_info_community_officials_community_officials.removeText": "Poista henkilö",
+      "root_applicant_info_community_officials_community_officials.title": "Toiminnasta vastaavat henkilöt",
+      "root_applicant_info_community_officials_community_officials_0.title": "Valitse toiminnasta vastaavat henkilöt",
+      "root_applicant_info_community_officials_community_officials_0_official.title": "Valitse toiminnasta vastaavat henkilöt"
+    }
+  },
+  "en": {
+    "translation": {}
+  },
+  "sv": {
+    "translation": {}
+  }
+}

@@ -1,10 +1,12 @@
 // @ts-nocheck
-import useSWRImmutable from 'swr/immutable'
-import { useSetAtom } from 'jotai';
 import { LoadingSpinner } from 'hds-react';
-import { useAtomCallback } from 'jotai/utils';
-import { Suspense, useCallback } from 'react';
 import { RJSFSchema } from '@rjsf/utils';
+import {  useCallback } from 'react';
+import { useAtomCallback } from 'jotai/utils';
+import { useSetAtom } from 'jotai';
+import i18next from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import useSWRImmutable from 'swr/immutable'
 
 import { RJSFFormContainer } from './RJSFFormContainer';
 import { createFormDataAtom, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom, setSubmitStatusAtom } from '../store';
@@ -304,16 +306,26 @@ const FormWrapper = ({
     return response.ok;
   };
 
+  i18next
+    .use(initReactI18next)
+    .init({
+      // Enable for additional info. Dont use in prod.
+      // debug: true,
+      fallbackLng: 'fi',
+      lng: drupalSettings.path.currentLanguage,
+      resources: transformedData.translations,
+      parseMissingKeyHandler: (key: string) => null,
+      returnNull: true,
+    });
+
   return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <RJSFFormContainer
-        formDataAtom={formDataAtom}
-        saveDraft={saveDraft}
-        schema={transformedData.schema}
-        submitData={submitData}
-        uiSchema={transformedData.ui_schema}
-      />
-    </Suspense>
+    <RJSFFormContainer
+      formDataAtom={formDataAtom}
+      saveDraft={saveDraft}
+      schema={transformedData.schema}
+      submitData={submitData}
+      uiSchema={transformedData.ui_schema}
+    />
   );
 };
 

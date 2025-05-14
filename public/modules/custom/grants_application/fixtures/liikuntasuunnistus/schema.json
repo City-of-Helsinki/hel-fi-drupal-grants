@@ -7,7 +7,7 @@
         "acting_year": {
           "title": "Avustuksen tiedot",
           "type": "object",
-          "description": "Tällä lomakkeella haetaan avustusta suunnistuskarttan valmistuskustannuksista. Avustusta voidaan myöntää vain Suunnistusliiton karttarekisteriin raportoiduista suunnistus- ja opetuskartoista.",
+          "description": "Tällä lomakkeella haetaan avustusta suunnistuskartan valmistuskustannuksista. Avustusta voidaan myöntää vain Suunnistusliiton karttarekisteriin raportoiduista suunnistus- ja opetuskartoista.",
           "properties": {
             "acting_year": {
               "title": "Vuosi, jolle avustusta haetaan",

@@ -1,21 +1,21 @@
-import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
 import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
-import validator from '@rjsf/validator-ajv8';
-import React, { createRef, useCallback } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
+import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
+import React, { createRef, useCallback } from 'react';
+import { customizeValidator } from '@rjsf/validator-ajv8';
 
+import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
+import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
-import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
-import { AddButtonTemplate, ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
-import { StaticStepsContainer } from './StaticStepsContainer';
 import { FormActions } from '../components/FormActions/FormActions';
-import { Stepper } from '../components/Stepper';
 import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom, setStepAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
-import { ErrorsList } from '../components/ErrorsList';
+import { StaticStepsContainer } from './StaticStepsContainer';
+import { Stepper } from '../components/Stepper';
 import { SubmitStates } from '../enum/SubmitStates';
+import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -161,7 +161,6 @@ export const RJSFFormContainer = ({
           templates={{
             ArrayFieldTemplate,
             ButtonTemplates: {
-              AddButton: AddButtonTemplate,
               RemoveButton: RemoveButtonTemplate,
               SubmitButton: () => null
             },
@@ -175,7 +174,7 @@ export const RJSFFormContainer = ({
               label: false,
             },
           }}
-          validator={validator}
+          validator={customizeValidator({})}
           widgets={widgets}
         >
           <FormActions

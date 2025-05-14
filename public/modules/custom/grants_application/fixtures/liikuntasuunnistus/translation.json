@@ -1,15 +1,4 @@
 {
-  "fi": {
-    "suunnistus.title": "Suunnistuslomake",
-    "suunnistus.description": "Tämä on suunnistuslomake",
-    "firstname": "Etunimi",
-    "firstname.description": "Annathan oikean etunimesi",
-    "firstname.default": "Jaska",
-    "lastname": "Sukunimi",
-    "age": "Ikä",
-    "bio": "Kuvaus",
-    "suunnistus.telephone": "Suunnistusavustus-puhelin"
-  },
   "en": {
     "suunnistus.title": "Orienteering form",
     "suunnistus.description": "This is orienteering",
@@ -20,6 +9,24 @@
     "age": "Age",
     "bio": "Description",
     "suunnistus.telephone": "Orienteering phone number"
+  },
+  "fi": {
+    "translation": {
+      "root_orienteering_maps_acting_year.title": "Avustuksen tiedot",
+      "root_orienteering_maps_acting_year.description": "Tällä lomakkeella haetaan avustusta suunnistuskartan valmistuskustannuksista. Avustusta voidaan myöntää vain Suunnistusliiton karttarekisteriin raportoiduista suunnistus- ja opetuskartoista.",
+      "root_orienteering_maps_acting_year.acting_year.title": "Vuosi, jolle avustusta haetaan",
+      "root_orienteering_maps_orienteering_subvention.title": "Suunnistuskartta-avustus",
+      "root_orienteering_maps_orienteering_subvention_orienteering_maps.title": "Suunnistuskartta-avustus",
+      "root_orienteering_maps_orienteering_subvention_orienteering_maps_mapName.title": "Kartan nimi, sijainti ja karttatyyppi",
+      "root_orienteering_maps_orienteering_subvention_orienteering_maps_size.title": "Koko km2",
+      "root_orienteering_maps_orienteering_subvention_orienteering_maps_voluntaryHours.title": "Talkootyö tuntia",
+      "root_orienteering_maps_orienteering_subvention_orienteering_maps_cost.title": "Kustannukset euroa",
+      "root_orienteering_maps_orienteering_subvention_orienteering_maps_otherCompensations.title": "Muilta saadut avustukset euroa",
+      "root_attachments_additional_information_section.title" : "Lisätietoa hakemukseen liittyen",
+      "root_attachments_additional_information_section_additional_information.title": "Lisätiedot",
+      "root_attachments_attachments_section_extra_info.title": "Lisäselvitys liitteistä",
+      "root_attachments_attachments_section_other_attachment_fieldset.file_description.title": "Liitteen kuvaus"
+    }
   },
   "sv": {
     "suunnistus.title": "placeholder",
