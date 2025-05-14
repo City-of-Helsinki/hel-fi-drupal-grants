@@ -693,8 +693,8 @@ elements: |-
               - webform--small
     helsingissa_jarjestettava:
       '#type': webform_section
-      '#title': 'Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin'
-      '#description': 'Kirjaa kaikkien eri Helsingissä olevien opetuspaikkojen tiedot edellisenä päättyneenä tilivuonna.'
+      '#title': 'Helsingissä järjestettävä opetus toteutettiin'
+      '#description': 'Kirjaa kaikkien eri Helsingissä olevien opetuspaikkojen tiedot edellisenä päättyneenä tilivuonna. Kirjaa vain opetuspaikat, ei esim. oppilasnäytösten tai tapahtumien paikkoja.'
       helsingissa_jarjestettava_tila:
         '#type': premises_composite
         '#title': Tila
@@ -759,7 +759,7 @@ elements: |-
       '#title': 'Toiminnan järjestäminen'
       toiminta_ekologisuus:
         '#type': textarea
-        '#title': 'Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
+        '#title': 'Onko yhteisöllä käytössä ympäristövastuusuunnitelma tai vastaava toimintamalli? Mikä tai millainen malli on kyseessä? Kerro sen toteuttamisesta käytännössä ja miten noudattamista seurataan ja valvotaan.'
         '#maxlength': 1000
         '#counter_type': character
         '#counter_maximum': 1000

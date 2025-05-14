@@ -202,7 +202,7 @@ elements: |
     '#title': 'General syllabus'
   helsingissa_jarjestettava:
     '#title': 'The teaching locations in Helsinki'
-    '#description': 'List all different teaching locations in Helsinki in the previous calendar year.'
+    '#description': 'List all different teaching locations in Helsinki in the previous calendar year. Only list teaching locations, not locations for student performances or events, for example.'
   helsingissa_jarjestettava_tila:
     '#title': Space
     '#citySection__help': 'Urban Environment Division include for example school classrooms. Culture and Leisure Division include for example spaces governed by the culture, library, youth, or sports units. Education Division include for example spaces governed by the adult education centres.'
@@ -228,7 +228,7 @@ elements: |
   toiminnan_jarjestaminen:
     '#title': Operations
   toiminta_ekologisuus:
-    '#title': 'How are ecological aspects taken into consideration in organizing the activities? What kinds of actions are taken, and resources and expertise available for this purpose?'
+    '#title': 'Does the community have an environmental sustainability plan or a corresponding operating model in use? Which, or what kind of model is it? Describe how it is implemented in practice and how compliance is monitored and supervised.'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminnan_kehittyminen:
     '#title': Development

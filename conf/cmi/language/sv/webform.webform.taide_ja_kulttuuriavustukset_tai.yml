@@ -199,8 +199,8 @@ elements: |
   opetustunnit_yleinen_oppimaara:
     '#title': 'Allmän lärokurs'
   helsingissa_jarjestettava:
-    '#title': 'Öppen verksamhet för publik i Helsingfors'
-    '#description': 'Anteckna information om alla platser f&ouml;r undervisning i Helsingfors f&ouml;reg&aring;ende kalender&aring;r.'
+    '#title': 'Platser för undervisning i Helsingfors'
+    '#description': 'Anteckna information om alla platser för undervisning i Helsingfors föregående kalenderår. Anteckna endast platser för undervisning, inte t.ex. platser för elevframträdanden eller olika evenemang.'
   helsingissa_jarjestettava_tila:
     '#title': Plats
     '#citySection__help': 'Stadsmiljösektorns utrymmen omfattar till exempel skolornas klassrum. Kultur- och fritidssektorns utrymmen omfattar till exempel utrymmen som administreras av kultur-, biblioteks-, ungdoms- eller idrottstjänsterna. Sektorn för fostran och bildning omfattar till exempel arbetarinstitutens utrymmen.'
@@ -223,7 +223,7 @@ elements: |
   toiminnan_jarjestaminen:
     '#title': 'Verksamhetens struktur'
   toiminta_ekologisuus:
-    '#title': 'Hur beaktar ni ekologiska aspekter när ni planerar och genomför er verksamhet? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?'
+    '#title': 'Har verksamheten en miljöansvarsplan eller motsvarande verksamhetsmodell? Vilken, eller vilken typ av modell? Berätta om implementeringen i praktiken och hur efterlevnaden övervakas och kontrolleras.'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminnan_kehittyminen:
     '#title': 'Utveckling av verksamheten'
