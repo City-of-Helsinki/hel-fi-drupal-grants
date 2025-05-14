@@ -936,7 +936,7 @@ elements: |-
         '#markup': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
-          <div class="hds-notification__label">Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti.</div>
+          <div class="hds-notification__label">Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti. Laske mukaan kaikki tulot (kohtaan "tulot yhteensä) ja kaikki menot (kohtaan "menot yhteensä") sisältäen mm. poistot ja rahoitustoiminnan kulut ja tuotot. Tarkista lopuksi, että tulojen ja menojen erotus vastaa tilinpäätöksen yli/alijäämää.<br/><br/>Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta kustannuspaikkakohtaisen tuloslaskelman mukaisesti.</div>
           </div>
           </div>
       organisaatio_kuului_valtionosuusjarjestelmaan_vos_:

@@ -274,7 +274,12 @@ elements: |
   toteutuneet_tulot_ja_menot:
     '#title': 'Realized incomes and expenses'
   processed_text_01:
-    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Regarding the previous completed financial year. As stated in the financial statements.</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': |
+      <div class="hds-notification hds-notification--info">
+      <div class="hds-notification__content">
+      <div class="hds-notification__label">Regarding the previous completed financial year. As stated in the financial statements. Please include all income (under "incomes in total") and all expenses (under "expenses in total"), including items such as depreciation as well as financial income and expenses. At the end, please check that the difference between income and expenses matches the surplus/deficit reported in the financial statements.<br/><br/>If the grant only applies to a limited part of the organization&apos;s activities, the reported figures should reflect only that part of the activities, in accordance with a separate cost center report.</div>
+      </div>
+      </div>
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belonged to the central government subsidies system (VOS)'
     '#help': 'Select yes, only if you know for sure that your organization received funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'
