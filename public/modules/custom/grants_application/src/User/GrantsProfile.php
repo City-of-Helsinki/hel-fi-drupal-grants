@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\User;
 
+use Drupal\views\Plugin\views\display\Attachment;
+
 /**
  * The grants profile class.
  */
 class GrantsProfile {
+
+  private $attachments = [];
 
   /**
    * The constructor.
@@ -16,6 +20,29 @@ class GrantsProfile {
    *   The raw data returned from outside system.
    */
   public function __construct(private array $grantsProfileData) {
+  }
+
+  public function setAttachments(array $attachments): void {
+    $this->attachments = $attachments;
+  }
+
+  /**
+   * Get attachment by name.
+   *
+   * Used for bank account file at least.
+   *
+   * @param string $name
+   *   Name of the file.
+   *
+   * @return array|null
+   *   The attachment array from ATV.
+   */
+  public function getAttachmentByName(string $name): array|null {
+    return array_find($this->attachments, fn($attachment) => $attachment['filename'] === $name);
+  }
+
+  public function getAttachmentById(int $id): array {
+    return array_find($this->attachments, fn($attachment) => $attachment['id'] === $id);
   }
 
   /**

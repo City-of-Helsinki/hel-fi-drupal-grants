@@ -4,6 +4,7 @@ namespace Drupal\grants_application;
 
 use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\User\GrantsProfile;
+use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\helfi_atv\AtvDocument;
 
 /**
@@ -371,7 +372,7 @@ final class Avus2Mapper {
    *
    * Filetype: Just check GrantsAttachments::filetypes for more information.
    *
-   * Integration id is the path to the file in ATV.
+   * Integration id can be built using getIntregrationIdFomFileHref-method.
    *
    * IsDeliveredLater and the other boolean are checkboxes related to the
    * file upload component: fields may not exist but the value must be sent.
@@ -379,35 +380,26 @@ final class Avus2Mapper {
    * @return array
    *   The attachment info array.
    */
-  public function getAttachmentInfo(array $form_data): array {
+  public function getAttachmentAndGeneralInfo(array $form_data): array {
     $data = [
       'attachmentsInfoArray' => [],
       'generalInfoArray' => [],
     ];
 
     $files = [];
-    foreach ($form_data['attachments']['files'] as $file) {
-      $files[] = $this->createAttachmentData(
-        $file['description'] ?? '',
-        $file['filename'] ?? '',
-        $file['filetype'] ?? 0,
-        $file['integration_id'] ?? '',
-        $file['isDeliveredLater'] ?? FALSE,
-        $file['isIncludedInOtherFile'] ?? FALSE,
-      );
+    if (isset($form_data['attachments']['files'])) {
+      // $integration_id = AttachmentHandlerHelper::getIntegrationIdFromFileHref($confirmation_file['href']);
+      foreach ($form_data['attachments']['files'] as $file) {
+        $files[] = $this->createAttachmentData(
+          $file['description'] ?? '',
+          $file['filename'] ?? '',
+          $file['filetype'] ?? 0,
+          $file['integration_id'] ?? '',
+          $file['isDeliveredLater'] ?? FALSE,
+          $file['isIncludedInOtherFile'] ?? FALSE,
+        );
+      }
     }
-
-    // @todo Bank-file is always part of the submission afaik.
-    /*
-    $files[] = $this->createAttachmentData(
-    "Varmistus tilinumerolle TILINUMERO TÄHÄN",
-    'filename tähän',
-    45,
-    'integration_id tänne',
-    'false',
-    'false',
-    );
-     */
 
     $data['attachmentsInfoArray'] = $files;
 
@@ -420,6 +412,59 @@ final class Avus2Mapper {
     ];
 
     return $data;
+  }
+
+  /**
+   * Find the bank account confirmation file and create attachment data.
+   *
+   * Bank account file must be added to the ATV-document as an attachment
+   * manually, since user only selects the bank id on the form.
+   *
+   * @param array $form_data
+   * @param array $bank_accounts
+   * @param array $profile_attachments
+   *
+   * @return array
+   */
+  public function getBankFileData(array $form_data, array $bank_accounts, array $profile_attachments): array {
+    $selected_bank_account = $form_data["applicant_info"]["bank_account"]["bank_account"];
+
+    if ($account = array_find($bank_accounts, fn(array $account) => $account['bankAccount'] === $selected_bank_account)) {
+      $confirmation_filename = $account['confirmationFile'];
+      $confirmation_file = array_find($profile_attachments, fn(array $attachment) => $attachment['filename'] === $confirmation_filename);
+
+      $integration_id = AttachmentHandlerHelper::getIntegrationIdFromFileHref($confirmation_file['href']);
+
+      // Filetype 45 as stated in GrantsAttachments::filetypes.
+      return $this->createAttachmentData(
+        "Vahvistus tilinuerolle $selected_bank_account",
+        $confirmation_file['filename'],
+        45,
+        $integration_id,
+        false,
+        false
+      );
+    }
+
+    throw new \Exception("Unknown bank account");
+
+    /*
+    return $this->createAttachmentData(
+      "Varmistus tilinumerolle $bank_account_number",
+    );
+    */
+
+    // @todo Bank-file is always part of the submission afaik.
+    /*
+    $files[] = $this->createAttachmentData(
+    "Varmistus tilinumerolle TILINUMERO TÄHÄN",
+    'filename tähän',
+    45,
+    'integration_id tänne',
+    'false',
+    'false',
+    );
+     */
   }
 
   /**

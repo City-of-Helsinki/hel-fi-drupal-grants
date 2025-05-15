@@ -195,16 +195,99 @@ final class Application extends ResourceBase {
   /**
    * Post request.
    *
-   * Create a new submission.
+   * Send application to Avus2
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The json response.
    */
   public function post(
     int $application_type_id,
-    string $application_number,
-    Request $request,
+    ?string $application_number = NULL,
   ): JsonResponse {
+    // @todo Sanitize & validate & authorize properly.
+    $content = json_decode(\Drupal::request()->getContent(), TRUE);
+    ['form_data' => $form_data] = $content;
+
+    try {
+      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+    }
+    catch (\Exception $e) {
+      // Cannot find form by application type id.
+      return new JsonResponse([], 404);
+    }
+
+    if (!$application_number) {
+      // Missing application number.
+      return new JsonResponse(['missing application number'], 500);
+    }
+
+    try {
+      $selected_company = $this->userInformationService->getSelectedCompany();
+      $user_data = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
+      return new JsonResponse([], 500);
+    }
+
+    try {
+      $submission = $this->getSubmissionEntity(
+        $this->userInformationService->getUserData()['sub'],
+        $application_number
+      );
+    }
+    catch (\Exception $e) {
+      // Something wrong.
+      return new JsonResponse([], 500);
+    }
+
+    try {
+      $document = $this->atvService->getDocument($application_number);
+    }
+    catch (\Throwable $e) {
+      // Error while fetching the document.
+      return new JsonResponse([], 500);
+    }
+
+    // @todo Better sanitation.
+    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
+    $document_data = ['form_data' => $form_data];
+
+    $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
+      $form_data,
+      $user_data,
+      $selected_company,
+      $this->userInformationService->getUserProfileData(),
+      $this->userInformationService->getGrantsProfileContent(),
+      $settings,
+      $document,
+    );
+
+    // these are outside the compensation
+    $document_data['attachmentsInfo'] = $this->avus2Mapper
+      ->getAttachmentAndGeneralInfo($form_data);
+
+    $profile_attachments = $this->userInformationService->getGrantsProfileAttachments();
+
+    // TODOOOO
+    $document_data['attachmentsInfoArray']['attachmentsInfoArray'][] = $this->avus2Mapper->getBankFileData(
+      $form_data, $profile_attachments
+    ); // = $document_data['attachmentsInfo'];
+
+    // TODO Do not override messages and events.
+    $document->setContent($document_data);
+
+    try {
+      // @todo Always get the events and messages from atv submission before overwriting.
+      $this->atvService->updateExistingDocument($document);
+
+      $submission->setChangedTime(time());
+      // set draft false
+      $submission->save();
+    }
+    catch (\Exception $e) {
+      return new JsonResponse([], 500);
+    }
+
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
     // grants_application module when this module is enabled in
     // production.
@@ -235,6 +318,8 @@ final class Application extends ResourceBase {
       'form_data' => $form_data,
       'draft' => $draft,
     ] = $content;
+
+    // TODO check if we are allowed to send this any more.
 
     $draft = $draft ?? FALSE;
 

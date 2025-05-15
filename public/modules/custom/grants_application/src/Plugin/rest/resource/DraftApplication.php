@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_application\Plugin\rest\resource;
 
-use Drupal\Component\Utility\Xss;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -26,7 +25,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
@@ -283,7 +281,7 @@ final class DraftApplication extends ResourceBase {
     string $application_number,
   ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
-    $content = json_decode($request->getContent(), TRUE);
+    $content = json_decode(\Drupal::request()->getContent(), TRUE);
     ['form_data' => $form_data] = $content;
 
     try {
@@ -332,11 +330,11 @@ final class DraftApplication extends ResourceBase {
     }
 
     // @todo Better sanitation.
-    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
-    $document_data = ['form_data' => $sanitized_data];
+    // $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
+    $document_data = ['form_data' => $form_data];
 
     $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
-      $sanitized_data,
+      $form_data,
       $user_data,
       $selected_company,
       $this->userInformationService->getUserProfileData(),
@@ -345,7 +343,7 @@ final class DraftApplication extends ResourceBase {
       $document,
     );
     $document_data['attachmentsInfo'] = $this->avus2Mapper
-      ->getAttachmentInfo($sanitized_data);
+      ->getAttachmentInfo($form_data);
 
     $document->setContent($document_data);
 

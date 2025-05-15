@@ -6,6 +6,7 @@ namespace Drupal\grants_application\User;
 
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -30,6 +31,19 @@ class UserInformationService {
     #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     private HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata,
   ) {
+  }
+
+  /**
+   * Get the grants profile attachments
+   *
+   * This can be used to get the files attached to grants profile.
+   *
+   * @return AtvDocument
+   */
+  public function getGrantsProfileAttachments(): array {
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+    $profile = $this->grantsProfileService->getGrantsProfile($selectedCompany, FALSE);
+    return $profile->getAttachments();
   }
 
   /**
