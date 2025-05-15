@@ -296,7 +296,7 @@ final class DraftApplication extends ResourceBase {
   /**
    * Responds to entity PATCH requests.
    *
-   * Update existing submission.
+   * Update existing draft submission.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The HTTP response object.
@@ -346,6 +346,8 @@ final class DraftApplication extends ResourceBase {
       // Something wrong.
       return new JsonResponse([], 500);
     }
+
+    // @todo Check that the application is actually a draft.
 
     try {
       $document = $this->atvService->getDocument($application_number);

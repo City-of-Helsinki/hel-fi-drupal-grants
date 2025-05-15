@@ -80,7 +80,7 @@ function* iterateFormData(element: any, prefix: string = '') {
     // Functional loops mess mess up generator function, so use for - of loop here.
     // eslint-disable-next-line no-restricted-syntax
     for (const [key, value] of Object.entries(element)) {
-        yield* iterateFormData(value, `${prefix}.${key}`);
+      yield* iterateFormData(value, `${prefix}.${key}`);
     }
   }
 
@@ -272,7 +272,11 @@ const FormWrapper = ({
   const formDataAtom = createFormDataAtom(transformedData.applicationNumber, initialData);
 
   const saveDraft = async (submittedData: any) => {
+<<<<<<< Updated upstream
     const response = await fetch(`/applications/${applicationTypeId}/${readApplicationNumber()}`, {
+=======
+    const response = await fetch(`/applications/${applicationTypeId}/application/${readApplicationNumber()}`, {
+>>>>>>> Stashed changes
       body: JSON.stringify({
         application_number: readApplicationNumber() || '',
         application_type_id: applicationTypeId,

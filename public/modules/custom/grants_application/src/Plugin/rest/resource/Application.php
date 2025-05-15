@@ -168,7 +168,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot get the submission.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['Unable to fetch submission'], 500);
     }
 
     try {
@@ -316,7 +316,7 @@ final class Application extends ResourceBase {
     [
       'application_number' => $application_number,
       'form_data' => $form_data,
-      'draft' => $draft,
+      // 'draft' => $draft,
     ] = $content;
 
     // TODO check if we are allowed to send this any more.
@@ -354,8 +354,10 @@ final class Application extends ResourceBase {
 
     try {
       // @todo Better sanitation.
-      $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
-      $document_data = ['form_data' => $sanitized_data];
+      // $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
+      // $document_data = ['form_data' => $sanitized_data];
+
+      $document_data = ['form_data' => $form_data ?? []];
 
       // $atv_mapped_data = $this->atvMapper->mapData($sanitized_data);
       $document->setContent($document_data);
