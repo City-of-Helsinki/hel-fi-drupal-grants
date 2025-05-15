@@ -262,13 +262,13 @@ final class Application extends ResourceBase {
       $document,
     );
 
-    // these are outside the compensation
+    // These are outside the compensation.
     $document_data['attachmentsInfo'] = $this->avus2Mapper
       ->getAttachmentAndGeneralInfo($form_data);
 
     $profile_attachments = $this->userInformationService->getGrantsProfileAttachments();
 
-    // TODOOOO
+    // Todo.
     $document_data['attachmentsInfoArray']['attachmentsInfoArray'][] = $this->avus2Mapper->getBankFileData(
       $form_data, $profile_attachments
     ); // = $document_data['attachmentsInfo'];
