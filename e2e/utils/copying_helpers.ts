@@ -158,7 +158,7 @@ const makeApplicationCopy = async (
   // Save the new application as a draft.
   await page.locator('[data-drupal-selector="edit-actions-draft"]').click();
   await logCurrentUrl(page);
-  await page.waitForURL('**/katso');
+  await page.waitForURL('/fi/oma-asiointi');
 
   // Store the copied applications data to the env.
   const storeName = `${profileType}_${formId}`;

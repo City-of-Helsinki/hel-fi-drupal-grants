@@ -189,7 +189,7 @@ elements: |
   suunniteltu_toiminta:
     '#title': 'Planerad verksamhet'
   arvio_maarasta_markup:
-    '#markup': "<h4>En uppskattning av kvantiteter</h4>\r\n\r\n<p>Mata in informationen gällande er egen verksamhet under det år som avses i ansökan. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet.</p>"
+    '#markup': "<h4>En uppskattning av kvantiteter</h4><p>Mata in informationen gällande er egen verksamhet under det år som avses i ansökan. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska kvantiteter endast beskriva denna del av verksamheten. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa:
     '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_fieldset:
@@ -239,7 +239,7 @@ elements: |
       1: Ja
       0: Nej
   toteutuneet_markup:
-    '#markup': "<h4>Förverkligade antal och mängder</h4>\r\n\r\n<p>Mata in information gällande er egen verksamhet under det senaste hela verksamhetsåret. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet.</p>"
+    '#markup': "<h4>Förverkligade antal och mängder</h4><p>Mata in information gällande er egen verksamhet under det senaste hela verksamhetsåret. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska antal och mängder endast beskriva denna del av verksamheten. Mata in uppgifterna enbart för de fysiska föreställningarna, utställningarna och verkstäderna, räkna inte in de enbart digitalt genomförda programinnehållen. Verksamhetens inriktning på Helsingfors och helsingforsborna är avgörande för kulturstöden från Helsingfors stad. Därför frågar man både efter den helsingforsinriktade verksamheten och även efter verksamheten i sin helhet.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
     '#title': 'Antalet evenemangs- eller föreställningsdagar i Helsingfors'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:
@@ -312,7 +312,7 @@ elements: |
     '#title': 'Beskriv hur er verksamhet är organiserad och på vilket sätt den är professionell.'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_ekologisuus:
-    '#title': 'Hur beaktar ni ekologiska aspekter när ni planerar och genomför er verksamhet? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?'
+    '#title': 'Har verksamheten en miljöansvarsplan eller motsvarande verksamhetsmodell? Vilken, eller vilken typ av modell? Berätta om implementeringen i praktiken och hur efterlevnaden övervakas och kontrolleras.'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminta_yhteistyokumppanit:
     '#title': 'Namnge era fem mest centrala samarbetsparter och beskriv formen och villkoren för ert samarbete. '
@@ -336,7 +336,7 @@ elements: |
   talousarvio:
     '#title': Budget
   markup_01:
-    '#markup': '<p>Gällande det år, för vilket stöd ansöks med denna ansökan.</p>'
+    '#markup': '<p>Gällande det år, för vilket stöd ansöks med denna ansökan. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med den egna budgeten.</p>'
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
     '#help': '<p>Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.</p>'
@@ -369,7 +369,7 @@ elements: |
   toteutuneet_tulot_ja_menot:
     '#title': 'Förverkligade inkomster och utgifter'
   markup_02:
-    '#markup': '<p>Föregående avslutade räkenskapsår. Enligt bokslutet.</p>'
+    '#markup': '<p>Föregående avslutade räkenskapsår. Enligt bokslutet. Inkludera alla intäkter (under "inkomster sammanlagt") och alla utgifter (under "utgifter sammanlagt"), inklusive bland annat: avskrivningar och finansiella kostnader och intäkter. Kontrollera slutligen att skillnaden mellan inkomster och utgifter motsvarar över-/underskottet i bokslutet.<p></p>Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med en separat kostnadsställerapport.</p>'
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen fick statsandelar (VOS)'
     '#help': 'Välj ja, bara om du med säkerhet vet att din organisation fick finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
@@ -377,7 +377,7 @@ elements: |
       1: Ja
       0: Nej
   toteutuneet_tulot:
-    '#markup': '<h4>Realiserade inkomster</h4>'
+    '#markup': '<h4>Realiserade inkomster</h4><p>I de tre första avsnitten ber vi om detaljerad information om mottagna understöd. Det sista avsnittet avser alla realiserade inkomster sammanlagt, inklusive understöd som anges ovan och alla övriga inkomster.</p>'
   toteutuneet_tulot_data:
     '#otherCompensationFromCity__help': 'Understöd som beviljats för samma ändamål under föregående räkenskapsår.'
     '#stateOperativeSubvention__help': 'Inkluderar verksamhetsunderstöd från Finlands filmstiftelse (SES) och Social- och hälsoorganisationernas understödscentral (STEA). Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd.'

@@ -50,7 +50,17 @@ const swapFieldValues = async (
   }
 
   logger('Validating form with swapped values...');
-  await saveAsDraft(page);
+  const saveDraftLink: Selector = {
+    type: 'data-drupal-selector',
+    name: 'data-drupal-selector',
+    value: 'edit-actions-draft',
+  }
+  await clickButton(page, saveDraftLink);
+  await logCurrentUrl(page);
+  await page.waitForURL('/**/oma-asiointi');
+  logger('Form saved as draft.')
+  await goToSubmissionUrl(page, submissionUrl);
+  await navigateToApplicationPage(page, 'webform_preview');
   await validateFormData(page, 'viewPage', formDetails);
 }
 
@@ -92,27 +102,6 @@ const swapFieldValuesOnPage = async (
     itemField.value = itemToSwap.swapValue;
     await fillFormField(page, itemField, itemKey, true);
   }
-};
-
-/**
- * The saveAsDraft function.
- *
- * This function saves and application
- * as draft.
- *
- * @param page
- *   Page object from Playwright.
- */
-const saveAsDraft = async (page: Page) => {
-  const saveDraftLink: Selector = {
-    type: 'data-drupal-selector',
-    name: 'data-drupal-selector',
-    value: 'edit-actions-draft',
-  }
-  await clickButton(page, saveDraftLink);
-  await logCurrentUrl(page);
-  await page.waitForURL('**/oma-asiointi');
-  logger('Form saved as draft.')
 };
 
 export { swapFieldValues };

@@ -41,6 +41,10 @@ msgid "Accept the terms and send the application."
 msgstr "Hyväksy ehdot ja lähetä hakemus."
 
 msgctxt "grants_handler"
+msgid "The grant terms have been updated on @date."
+msgstr "Avustusehdot on päivitetty @date."
+
+msgctxt "grants_handler"
 msgid "Note!"
 msgstr "Huom!"
 

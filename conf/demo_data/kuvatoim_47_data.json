@@ -1195,7 +1195,7 @@
               {
                 "ID": "description",
                 "label": "Liitteen kuvaus",
-                "value": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta, monivuotisissa koko avustuskaudelle sisältäen suunnitelman itsearviointityökalusta ja tasa-arvo- ja yhtenvertaisuussuunnitelmasta) ",
+                "value": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta, monivuotisissa koko avustuskaudelle sisältäen suunnitelman itsearviointityökalusta ja tasa-arvo- ja yhdenvertaisuussuunnitelmasta)",
                 "valueType": "string",
                 "meta": "{\"page\":{\"id\":\"lisatiedot_ja_liitteet\",\"number\":7,\"label\":\"7. Lisätiedot ja liitteet\"},\"section\":{\"id\":\"liitteet\",\"weight\":130,\"label\":\"Liitteet\"},\"element\":{\"weight\":false,\"label\":\"Liitteen kuvaus\",\"hidden\":false}}"
               },

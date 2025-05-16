@@ -1,0 +1,32 @@
+{% set notification_message = 'Accept the terms and send the application.'|t({}, {'context': 'grants_handler'}) %}
+
+{% if updated_terms %}
+  {% set notification_message = [
+    notification_message,
+    'The grant terms have been updated on @date.'|t({ '@date': updated_terms|format_date('date') }, {'context': 'grants_handler'}),
+  ] | join(' ') %}
+{% endif %}
+
+<div class="grant-terms">
+  <div class="terms_block">
+    {{ terms }}
+  </div>
+
+  {% include "@hdbt/misc/status-message.twig" ignore missing with
+    {
+      type: 'warning',
+      size: 'large',
+      title: 'Note!'|t({}, {'context': 'grants_handler'}),
+      messages: [
+        notification_message,
+      ],
+    }
+  %}
+
+  <div class="hds-checkbox">
+    <input type="checkbox" id="{{ block.id.value|e('html') }}" required="required" class="hds-checkbox__input" />
+    <label for="{{ block.id.value|e('html') }}" class="hds-checkbox__label">{{ block.field_link_title.value }}</label>
+  </div>
+
+  <hr />
+</div>

@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - block_content.type.terms_block
     - media.type.file
     - media.type.hel_map
     - media.type.helfi_chart
@@ -61,6 +62,7 @@ is_admin: null
 permissions:
   - 'access administration pages'
   - 'access any webform configuration'
+  - 'access block library'
   - 'access content overview'
   - 'access entity usage statistics'
   - 'access files overview'
@@ -174,6 +176,7 @@ permissions:
   - 'edit any page content'
   - 'edit any remote_video media'
   - 'edit any service content'
+  - 'edit any terms_block block content'
   - 'edit any webform'
   - 'edit any webform submission'
   - 'edit own announcement content'
@@ -207,6 +210,7 @@ permissions:
   - 'revert address revisions'
   - 'revert all revisions'
   - 'revert announcement revisions'
+  - 'revert any terms_block block content revisions'
   - 'revert faq revisions'
   - 'revert form_page revisions'
   - 'revert landing_page revisions'
@@ -252,6 +256,7 @@ permissions:
   - 'view all media revisions'
   - 'view all revisions'
   - 'view announcement revisions'
+  - 'view any terms_block block content history'
   - 'view any unpublished content'
   - 'view any unpublished landing_page content'
   - 'view any unpublished page content'

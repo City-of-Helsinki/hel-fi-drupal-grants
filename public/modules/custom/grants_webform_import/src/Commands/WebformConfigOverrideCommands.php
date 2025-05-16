@@ -137,24 +137,29 @@ class WebformConfigOverrideCommands extends DrushCommands {
         continue;
       }
 
-      $configurationName = $mapping[$applicationTypeId];
+      $configurationNames = $mapping[$applicationTypeId];
 
-      $config = $this->configFactory->getEditable($configurationName);
-      $originalConfiguration = $config->get('third_party_settings.grants_metadata');
+      foreach ($configurationNames as $configurationName) {
+        $config = $this->configFactory->getEditable($configurationName);
+        $originalConfiguration = $config->get('third_party_settings.grants_metadata');
 
-      if ($configurationOverrides && $originalConfiguration) {
-        $overriddenConfiguration = array_merge($originalConfiguration, $configurationOverrides);
-        $config->set('third_party_settings.grants_metadata', $overriddenConfiguration);
-        $config->save();
-        $this->logMessage($configurationName,
-                          $applicationTypeId,
-                          $configurationOverrides,
-                          $originalConfiguration,
-                          $overriddenConfiguration);
-        $this->updateServicePages($configurationName);
-        continue;
+        if ($configurationOverrides && $originalConfiguration) {
+          $overriddenConfiguration = array_merge($originalConfiguration, $configurationOverrides);
+          $config->set('third_party_settings.grants_metadata', $overriddenConfiguration);
+          $config->save();
+          $this->logMessage(
+            $configurationName,
+            $applicationTypeId,
+            $configurationOverrides,
+            $originalConfiguration,
+            $overriddenConfiguration
+          );
+          $this->updateServicePages($configurationName);
+          continue;
+        }
+
+        $this->output()->writeln("Error importing configuration overrides for $applicationTypeId ($configurationName).\n");
       }
-      $this->output()->writeln("Error importing configuration overrides for $applicationTypeId.\n");
     }
   }
 
@@ -279,9 +284,20 @@ class WebformConfigOverrideCommands extends DrushCommands {
 
     // Build the desired output and return.
     return array_reduce($mapping, function ($output, $item) {
-      $output[$item['applicationTypeId']] = $item['name'];
+      $id = $item['applicationTypeId'];
+      $name = $item['name'];
+
+      // If this ID hasn't been seen before, initialize it with an empty array.
+      if (!isset($output[$id])) {
+        $output[$id] = [];
+      }
+
+      // Append the current name to the array for this ID.
+      $output[$id][] = $name;
+
+      // Return the updated output for the next iteration.
       return $output;
-    });
+    }, []);
   }
 
   /**

@@ -409,6 +409,7 @@ const baseFormRegisteredCommunity_50: FormData = {
               value: 'edit-helsingissa-jarjestettava-tila-add-submit',
               resultValue: 'edit-helsingissa-jarjestettava-tila-items-[INDEX]'
             },
+            //@ts-ignore
             items: {
               0: [
                 {

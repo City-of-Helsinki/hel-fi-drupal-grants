@@ -41,6 +41,10 @@ msgid "Accept the terms and send the application."
 msgstr "Acceptera villkoren och skicka ansökan."
 
 msgctxt "grants_handler"
+msgid "The grant terms have been updated on @date."
+msgstr "Understödsvillkor har uppdaterats den @date."
+
+msgctxt "grants_handler"
 msgid "Note!"
 msgstr "OBS!"
 

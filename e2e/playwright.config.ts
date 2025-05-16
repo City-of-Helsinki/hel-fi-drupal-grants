@@ -98,6 +98,7 @@ export default defineConfig({
     {
       name: 'forms-all',
       testMatch: '/forms/*',
+      grepInvert: /registered_community_68\.ts/,
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
     },
     /* Run all smoke tests. */
@@ -283,6 +284,7 @@ export default defineConfig({
     /* Form 68 tests. */
     // Disable test for 68:hyte_yleisavustus. It is used as a parent form for
     // form 71:HYTEEDYLEIS form which doesn't have a test yet.
+    // The test is excluded in "name: 'forms-all'" test.
     // {
     //   name: 'forms-68',
     //   testMatch: '/forms/registered_community_68.ts',

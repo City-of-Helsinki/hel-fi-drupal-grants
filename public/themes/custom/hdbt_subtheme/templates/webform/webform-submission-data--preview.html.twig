@@ -32,13 +32,11 @@
         <div{{ attributes.addClass(classes) }}>
           <h2 class="grants__page-header">{{ preview_title }}</h2>
           {{ elements }}
-          {% if confirm_texts %}
-            {% for confirm_text in confirm_texts %}
-              {{ confirm_text|raw }}
-              <hr />
+          {% if terms %}
+            {% for terms_section in terms %}
+              {{ terms_section }}
             {% endfor %}
           {% endif %}
-
         </div>
       </div>
     </td></tr></tbody>
