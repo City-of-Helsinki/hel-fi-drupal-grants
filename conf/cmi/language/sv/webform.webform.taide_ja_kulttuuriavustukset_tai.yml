@@ -199,8 +199,8 @@ elements: |
   opetustunnit_yleinen_oppimaara:
     '#title': 'Allmän lärokurs'
   helsingissa_jarjestettava:
-    '#title': 'Öppen verksamhet för publik i Helsingfors'
-    '#description': 'Anteckna information om alla platser f&ouml;r undervisning i Helsingfors f&ouml;reg&aring;ende kalender&aring;r.'
+    '#title': 'Platser för undervisning i Helsingfors'
+    '#description': 'Anteckna information om alla platser för undervisning i Helsingfors föregående kalenderår. Anteckna endast platser för undervisning, inte t.ex. platser för elevframträdanden eller olika evenemang.'
   helsingissa_jarjestettava_tila:
     '#title': Plats
     '#citySection__help': 'Stadsmiljösektorns utrymmen omfattar till exempel skolornas klassrum. Kultur- och fritidssektorns utrymmen omfattar till exempel utrymmen som administreras av kultur-, biblioteks-, ungdoms- eller idrottstjänsterna. Sektorn för fostran och bildning omfattar till exempel arbetarinstitutens utrymmen.'
@@ -223,7 +223,7 @@ elements: |
   toiminnan_jarjestaminen:
     '#title': 'Verksamhetens struktur'
   toiminta_ekologisuus:
-    '#title': 'Hur beaktar ni ekologiska aspekter när ni planerar och genomför er verksamhet? Vilka åtgärder vidtar ni, vilka resurser och vilket kunnande har ni gällande detta?'
+    '#title': 'Har verksamheten en miljöansvarsplan eller motsvarande verksamhetsmodell? Vilken, eller vilken typ av modell? Berätta om implementeringen i praktiken och hur efterlevnaden övervakas och kontrolleras.'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   toiminnan_kehittyminen:
     '#title': 'Utveckling av verksamheten'
@@ -243,7 +243,7 @@ elements: |
   talousarvio:
     '#title': Budget
   processed_text:
-    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Gällande det år, för vilket stöd ansöks med denna ansökan.</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Gällande det år, för vilket stöd ansöks med denna ansökan. Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med den egna budgeten.</div>\r\n</div>\r\n</div>\r\n"
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen får statsandelar (VOS)'
     '#help': 'Välj ja, bara om du med säkerhet vet att din organisation får finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
@@ -271,7 +271,12 @@ elements: |
   toteutuneet_tulot_ja_menot:
     '#title': 'Förverkligade inkomster och utgifter'
   processed_text_01:
-    '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\">Föregående avslutade räkenskapsår. Enligt bokslutet.</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': |
+      <div class="hds-notification hds-notification--info">
+      <div class="hds-notification__content">
+      <div class="hds-notification__label">Föregående avslutade räkenskapsår. Enligt bokslutet. Inkludera alla intäkter (under "inkomster sammanlagt") och alla utgifter (under "utgifter sammanlagt"), inklusive bland annat: avskrivningar och finansiella kostnader och intäkter. Kontrollera slutligen att skillnaden mellan inkomster och utgifter motsvarar över-/underskottet i bokslutet.<br/><br/>Om understödet endast riktar sig till en begränsad del av organisationens verksamhet ska siffrorna endast beskriva denna del av verksamheten i enlighet med en separat kostnadsställerapport.</div>
+      </div>
+      </div>
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'Organisationen fick statsandelar (VOS)'
     '#help': 'Välj ja, bara om du med säkerhet vet att din organisation fick finansiering i form av statsandelar. Detta innebär inte alla stöd som beviljas av staten, utan snarare en lagstadgad separat finansieringsform för en begränsad grupp. Statsandelar till konst- och kulturaktörer är subventioner som baseras på beräknade andelar, till exempel årsverken och deras styckpris eller antalet undervisningstimmar i den grundläggande konstundervisningen.'
@@ -279,7 +284,7 @@ elements: |
       1: Ja
       0: Nej
   toteutuneet_tulot:
-    '#markup': '<h4>F&ouml;rverkligade inkomster</h4>'
+    '#markup': '<h4>Förverkligade inkomster</h4><p>I de tre första avsnitten ber vi om detaljerad information om mottagna understöd. Det sista avsnittet avser alla realiserade inkomster sammanlagt, inklusive understöd som anges ovan och alla övriga inkomster.</p>'
   toteutuneet_tulot_data:
     '#otherCompensationFromCity__help': 'Understöd som beviljats för samma ändamål under föregående räkenskapsår.'
     '#stateOperativeSubvention__help': 'Ange övriga understöd än verksamhetsunderstöd på frågan Övriga understöd.'
