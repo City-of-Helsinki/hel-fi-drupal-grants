@@ -65,6 +65,8 @@ final class ApplicationController extends ControllerBase {
       return new JsonResponse(status: 400);
     }
 
+
+
     try {
       $this->antivirusService->scan([
         $file->getClientOriginalName() => file_get_contents($file->getRealPath()),
@@ -109,7 +111,9 @@ final class ApplicationController extends ControllerBase {
       return new JsonResponse(status: 500);
     }
 
-    // @todo Check that events are added as normally.
+    // @todo Check that events are added as normally HANDLER_ATT_OK.
+    // https://helsinkisolutionoffice.atlassian.net/wiki/spaces/KAN/pages/8671232440/Hakemuksen+elinkaaren+tapahtumat+Eventit
+
     $file_entity->delete();
     $response = [
       'fileName' => $result['filename'],

@@ -9,17 +9,21 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_application\Atv\HelfiAtvService;
+use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\User\UserInformationService;
+use Drupal\grants_attachments\AttachmentHandler;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationSubmitType;
 use Drupal\grants_handler\Event\ApplicationSubmitEvent;
 use Drupal\rest\Attribute\RestResource;
 use Drupal\rest\Plugin\ResourceBase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,6 +93,9 @@ final class Application extends ResourceBase {
     private EntityTypeManagerInterface $entityTypeManager,
     private Avus2Mapper $avus2Mapper,
     private EventDispatcherInterface $dispatcher,
+    private Avus2Integration $integration,
+    private EventsService $eventsService,
+    private AttachmentHandler $attachmentHandler,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -113,6 +120,9 @@ final class Application extends ResourceBase {
       $container->get('entity_type.manager'),
       $container->get(Avus2Mapper::class),
       $container->get(EventDispatcherInterface::class),
+      $container->get(Avus2Mapper::class),
+      $container->get(EventsService::class),
+      $container->get(AttachmentHandler::class),
     );
   }
 
@@ -140,6 +150,7 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 400);
     }
 
+    // TODO täällä pitää parsia ATV_dokumentista viimeisin STATUS_UPDATE -eventti.
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
@@ -206,7 +217,10 @@ final class Application extends ResourceBase {
   ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
     $content = json_decode(\Drupal::request()->getContent(), TRUE);
-    ['form_data' => $form_data] = $content;
+    [
+      'form_data' => $form_data,
+      'attachments' => $attachments
+    ] = $content;
 
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
@@ -217,11 +231,11 @@ final class Application extends ResourceBase {
     }
 
     if (!$application_number) {
-      // Missing application number.
       return new JsonResponse(['missing application number'], 500);
     }
 
     try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
       $user_data = $this->userInformationService->getUserData();
     }
@@ -236,7 +250,7 @@ final class Application extends ResourceBase {
       );
     }
     catch (\Exception $e) {
-      // Something wrong.
+      // Cannot find correct draft submission.
       return new JsonResponse([], 500);
     }
 
@@ -244,13 +258,36 @@ final class Application extends ResourceBase {
       $document = $this->atvService->getDocument($application_number);
     }
     catch (\Throwable $e) {
-      // Error while fetching the document.
+      // Cannot fetch the corresponding ATV document.
       return new JsonResponse([], 500);
     }
 
     // @todo Better sanitation.
-    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
+    // $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
     $document_data = ['form_data' => $form_data];
+
+    // Here we do the actual work
+    // Handle bank account file upload / other bank account shenanigans
+      // The bank account file handling causes extra document load and save
+      // No need to do anything with the document before this has been done
+    // Map the react form data to Avus2 format
+    // Update the ATV document one last time before sending to integration
+    // Send to integration
+    // Update the custom submission entity
+
+    // Handle bank account.
+    // @todo Sanity check.
+    // @todo Rewrite the bank account file logic completely.
+    $bank_account_number = $form_data["applicant_info"]["bank_account"]["bank_account"];
+    $content = $document->getContent();
+    $this->attachmentHandler->handleBankAccountConfirmation(
+      $bank_account_number,
+      $application_number,
+      $content,
+      FALSE
+    );
+
+    $document = $this->atvService->getDocument($application_number);
 
     $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
       $form_data,
@@ -262,26 +299,51 @@ final class Application extends ResourceBase {
       $document,
     );
 
-    // These are outside the compensation.
+    // Attachments and general info are outside the compensation.
     $document_data['attachmentsInfo'] = $this->avus2Mapper
-      ->getAttachmentAndGeneralInfo($form_data);
+      ->getAttachmentAndGeneralInfo($attachments, $form_data);
 
-    $profile_attachments = $this->userInformationService->getGrantsProfileAttachments();
-
-    // Todo.
-    $document_data['attachmentsInfoArray']['attachmentsInfoArray'][] = $this->avus2Mapper->getBankFileData(
-      $form_data, $profile_attachments
-    ); // = $document_data['attachmentsInfo'];
-
-    // TODO Do not override messages and events.
+    // Update the atv document before sending to integration.
     $document->setContent($document_data);
 
-    try {
-      // @todo Always get the events and messages from atv submission before overwriting.
-      $this->atvService->updateExistingDocument($document);
+    $this->atvService->updateExistingDocument($document);
 
+    // Save to Avus2.
+    $document = $this->atvService->getDocument($application_number);
+
+    // Save id has previously been saved to database to track
+    // unsuccessful submissions due to integration failures.
+    // @todo Use drupal uuid service maybe ?
+    $save_id = Uuid::uuid4()->toString();
+
+    // We don't use the event api to apply this particular event.
+    // instead we just put the event into the document.
+    $event = $this->eventsService->getEventData(
+      'HANDLER_SEND_INTEGRATION',
+      $application_number,
+      'Send application to integration.',
+      $save_id
+    );
+    $this->eventsService->addNewEventForApplication($document, $event);
+
+    $success = FALSE;
+    try {
+      $success = $this->integration->sendToAvus2($document, $application_number, $save_id);
+    }
+    catch (\Exception $e) {
+      // Log the exception,
+      // return success = false to react.
+    }
+
+    if (!$success) {
+      // Return success = false to react frontend.
+      $this->logger->error('jep');
+      // R return new JsonResponse([], 500);.
+    }
+
+    try {
       $submission->setChangedTime(time());
-      // set draft false
+      $submission->set('draft', FALSE);
       $submission->save();
     }
     catch (\Exception $e) {
@@ -296,7 +358,6 @@ final class Application extends ResourceBase {
     // to user submitting grants forms.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
-    // @todo Send to avus2.
     return new JsonResponse([], 200);
   }
 
@@ -321,7 +382,7 @@ final class Application extends ResourceBase {
 
     // TODO check if we are allowed to send this any more.
 
-    $draft = $draft ?? FALSE;
+    // $draft = $draft ?? FALSE;
 
     if (!$application_number) {
       // Missing application number.
@@ -351,6 +412,8 @@ final class Application extends ResourceBase {
       // Unable to find the document.
       return new JsonResponse([], 500);
     }
+
+    // @todo Add event HANDLER_SEND_INTEGRATION.
 
     try {
       // @todo Better sanitation.

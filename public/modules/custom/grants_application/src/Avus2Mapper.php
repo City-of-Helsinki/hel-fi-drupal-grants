@@ -380,25 +380,24 @@ final class Avus2Mapper {
    * @return array
    *   The attachment info array.
    */
-  public function getAttachmentAndGeneralInfo(array $form_data): array {
+  public function getAttachmentAndGeneralInfo(array $attachments, array $form_data): array {
     $data = [
-      'attachmentsInfoArray' => [],
+      'attachmentsArray' => [],
       'generalInfoArray' => [],
     ];
 
     $files = [];
-    if (isset($form_data['attachments']['files'])) {
-      // $integration_id = AttachmentHandlerHelper::getIntegrationIdFromFileHref($confirmation_file['href']);
-      foreach ($form_data['attachments']['files'] as $file) {
-        $files[] = $this->createAttachmentData(
-          $file['description'] ?? '',
-          $file['filename'] ?? '',
-          $file['filetype'] ?? 0,
-          $file['integration_id'] ?? '',
-          $file['isDeliveredLater'] ?? FALSE,
-          $file['isIncludedInOtherFile'] ?? FALSE,
-        );
-      }
+    foreach ($attachments as $file) {
+      $integration_id = AttachmentHandlerHelper::getIntegrationIdFromFileHref($file['integrationID']);
+
+      $files[] = $this->createAttachmentData(
+        $file['description'] ?? '', // tää on jotain maagista
+        $file['fileName'] ?? '',
+        $file['fileType'] ?? 0,
+        $integration_id,
+        $file['isDeliveredLater'] ?? FALSE,
+        $file['isIncludedInOtherFile'] ?? FALSE,
+      );
     }
 
     $data['attachmentsInfoArray'] = $files;

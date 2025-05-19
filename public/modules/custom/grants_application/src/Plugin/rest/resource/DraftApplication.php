@@ -377,7 +377,7 @@ final class DraftApplication extends ResourceBase {
     );
 
     $document_data['attachmentsInfo'] = $this->avus2Mapper
-      ->getAttachmentInfo($form_data);
+      ->getAttachmentAndGeneralInfo($form_data);
 
     $document->setContent($document_data);
 

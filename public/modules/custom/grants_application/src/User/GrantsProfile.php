@@ -45,6 +45,10 @@ class GrantsProfile {
     return array_find($this->attachments, fn($attachment) => $attachment['id'] === $id);
   }
 
+  public function getBankAccounts(): array {
+    return $this->grantsProfileData['bankAccounts'];
+  }
+
   /**
    * Get the raw profile data array.
    *

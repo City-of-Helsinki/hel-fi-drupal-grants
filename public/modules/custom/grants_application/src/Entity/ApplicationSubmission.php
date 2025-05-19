@@ -89,4 +89,14 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
     return $fields;
   }
 
+  /**
+   * Is the submission only a draft.
+   *
+   * @return bool
+   *   Is draft.
+   */
+  public function isDraft(): bool {
+    return $this->get('draft')->getValue();
+  }
+
 }

@@ -34,7 +34,7 @@ class UserInformationService {
   }
 
   /**
-   * Get the grants profile attachments
+   * Get the grants profile attachments.
    *
    * This can be used to get the files attached to grants profile.
    *
