@@ -3,7 +3,6 @@ import { TextArea as HDSTextArea, TextInput as HDSTextInput, Select  } from 'hds
 import { useAtomValue } from 'jotai';
 import { ChangeEvent } from 'react';
 import { getAccountsAtom, getAddressesAtom, getOfficialsAtom } from '../store';
-import { useIdToTranslations } from '../hooks/useIdToTranslations';
 
 /**
  * Transform raw errors to a more readable format.
@@ -28,15 +27,13 @@ export const TextInput = ({
   readonly,
   required,
   value,
-}: WidgetProps) => {
-  const { title } = useIdToTranslations(id);
-
-  return <HDSTextInput
+}: WidgetProps) => (
+  <HDSTextInput
     errorText={formatErrors(rawErrors)}
     hideLabel={false}
     id={id}
     invalid={Boolean(rawErrors?.length)}
-    label={title}
+    label={label}
     name={name}
     onBlur={() => null}
     onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value)}
@@ -45,7 +42,7 @@ export const TextInput = ({
     required={required}
     value={value ?? ''}
   />
-};
+);
 
 export const TextArea = ({
   id,
@@ -56,15 +53,13 @@ export const TextArea = ({
   readonly,
   required,
   value,
-}: WidgetProps) => {
-  const { title } = useIdToTranslations(id);
-
-  return <HDSTextArea
+}: WidgetProps) => (
+  <HDSTextArea
     errorText={formatErrors(rawErrors)}
     hideLabel={false}
     id={id}
     invalid={Boolean(rawErrors?.length)}
-    label={title}
+    label={label}
     name={name}
     onBlur={() => null}
     onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
@@ -73,7 +68,7 @@ export const TextArea = ({
     required={required}
     value={value ?? ''}
   />
-}
+)
 
 type SelectWidgetProps = WidgetProps & {
   assistive?: string;
@@ -91,10 +86,8 @@ export const SelectWidget = ({
   readonly,
   required,
   value,
-}: SelectWidgetProps) => {
-  const { title } = useIdToTranslations(id);
- 
-  return <Select
+}: SelectWidgetProps) => (
+  <Select
     id={id}
     disabled={readonly}
     invalid={Boolean(rawErrors?.length)}
@@ -118,12 +111,12 @@ export const SelectWidget = ({
     texts={{
       assistive,
       error: rawErrors ? formatErrors(rawErrors) : undefined,
-      label: title ?? '',
+      label: label ?? '',
       placeholder: '- Valitse -',
     }}
     value={value}
-  />;
-};
+  />
+);
 
 export const AddressSelect = (props: WidgetProps) => {
   const addresses = useAtomValue(getAddressesAtom);
@@ -169,7 +162,11 @@ export const CommunityOfficialsSelect = (props: WidgetProps) => {
   }
 
   if (!options.length) {
-    selectProps.assistive = 'Profiiliisi ei ole tallennettu yhtään yhteisöstä vastaavaa henkilöä, joten et voi lisätä niitä hakemukselle.';
+    selectProps.assistive = Drupal.t(
+      'You do not have any community officials saved in your profile, so you cannot add any to the application.',
+      {},
+      {context: 'Grants application: Community officials'}
+    );
   }
 
   return (

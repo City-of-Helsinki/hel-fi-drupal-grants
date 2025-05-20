@@ -2,7 +2,6 @@ import { ArrayFieldTemplateProps, IconButtonProps, ObjectFieldTemplateProps } fr
 import { Button, ButtonPresetTheme, ButtonVariant, Fieldset } from 'hds-react';
 import { ReactNode } from 'react';
 import { useAtomValue } from 'jotai';
-import { useTranslation } from 'react-i18next';
 
 import { getCurrentStepAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
@@ -55,9 +54,7 @@ export const ObjectFieldTemplate = ({
   schema,
   uiSchema,
 }: ObjectFieldTemplateProps) => {
-  const { title, description } = useIdToTranslations(idSchema.$id);
-
-  const { _isSection, _step } = schema;
+  const { _isSection, _step, description, title } = schema;
   const { id: stepId } = useAtomValue(getCurrentStepAtom)[1];
 
   if (idSchema.$id === 'root') {
@@ -151,14 +148,13 @@ export const ButtonTemplate = ({
 );
 
 export const RemoveButtonTemplate = (props: IconButtonProps) => {
-  const { t } = useTranslation();
   const { uiSchema } = props;
   const removeText = uiSchema && uiSchema['ui:options'] && uiSchema['ui:options'].removeText || null; // @ts-ignore{{'ui:options': {}} = uiSchema;
   return (
     <ButtonTemplate
       {...props}
     >
-      {removeText ? t(removeText.toString()) : Drupal.t('Remove')}
+      {removeText || Drupal.t('Remove')}
     </ButtonTemplate>
   )
 };

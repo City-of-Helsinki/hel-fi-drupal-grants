@@ -6,8 +6,8 @@ import { LoadingSpinner } from 'hds-react';
 import { FormNotFoundError } from './components/FormNotFoundError';
 import { GeneralError } from './components/GeneralError';
 import { ToastStack } from './components/ToastStack';
-import FormWrapper from './containers/FormWrapper';
 import initSentry from '@/react/common/helpers/Sentry';
+import { AppContainer } from './containers/AppContainer';
 
 initSentry();
 
@@ -29,7 +29,7 @@ if (rootElement) {
         <Suspense fallback={<LoadingSpinner />}>
         {showError
           ? <FormNotFoundError />
-          : <FormWrapper
+          : <AppContainer
               applicationTypeId={applicationTypeId}
               token={drupalSettings.grants_react_form.token}
             />

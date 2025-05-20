@@ -4,7 +4,7 @@ import { useState } from 'react';
 export const SaveDraftButton = ({
   saveDraft
 }: {
-  saveDraft: () => boolean;
+  saveDraft: () => Promise<boolean>;
 }) => {
   const [submitting, setSubmitting] = useState(false);
 
@@ -22,6 +22,6 @@ export const SaveDraftButton = ({
       type='button'
       variant={ButtonVariant.Supplementary}
     >
-      {Drupal.t('Save as draft')}
+      {Drupal.t('Save as draft', {}, {context: 'Grants application: Draft'})}
     </Button>
 };

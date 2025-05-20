@@ -58,7 +58,7 @@ export const privatePersonSettings: [JSONSchema7Definition, JSONSchema7Definitio
 
 export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
   {
-    title: 'Yhteisö, jolle haetaan avustusta',
+    title: 'applicant_info.title',
     type: objectType,
     '$ref': '#/definitions/applicant_info',
   },
@@ -66,73 +66,87 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
     type: objectType,
     properties: {
       applicant_email: {
-        type: objectType,
+        description: 'applicant_email.description',
         properties: {
           email: {
+            format: 'email',
+            title: 'applicant_email_email.title',
             type: stringType,
-            format: 'email'
           }
         },
-        required: ['email']
+        required: ['email'],
+        title: 'applicant_email.title',
+        type: objectType,
       },
       contact_person_info: {
+        title: 'contact_person_info.title',
         type: objectType,
         properties: {
           contact_person: {
             minLength: 1,
+            title: 'contact_person.title',
             type: stringType,
           },
           contact_person_phone_number: {
             minLength: 1,
+            title: 'contact_person_phone_number.title',
             type: stringType,
           }
         },
       },
       community_address: {
-        type: objectType,
         properties: {
           community_address: {
+            title: 'community_address_community_address.title',
             type: stringType,
           }
         },
-        required: ['community_address']
+        required: ['community_address'],
+        title: 'community_address.title',
+        type: objectType,
       },
       bank_account: {
-        type: objectType,
         properties: {
           bank_account: {
+            title: 'bank_account_bank_account.title',
             type: stringType,
           }
         },
-        required: ['bank_account']
+        required: ['bank_account'],
+        title: 'bank_account.title',
+        type: objectType,
       },
       community_officials: {
-        type: objectType,
         properties: {
           community_officials: {
-            type: 'array',
-            items: [
-              {
-                type: objectType,
-                properties: {
-                  official: {
-                    type: stringType,
-                  },
-                },
-              },
-            ],
             additionalItems: {
-              title: 'Valitse toiminnasta vastaavat henkilöt',
+              title: 'community_officials_community_officials.title',
               type: objectType,
               properties: {
                 official: {
-                  title: 'Valitse vastaava henkilö',
+                  title: 'community_officials_community_officials_official.title',
                   type: stringType,
                 },
               },
             },
+            items: [
+              {
+                properties: {
+                  official: {
+                    title: 'community_officials_community_officials_official.title',
+                    type: stringType,
+                  },
+                },
+                title: 'community_officials_community_officials.title',
+                type: objectType,
+              },
+            ],
+            title: 'community_officials_community_officials.title',
+            type: 'array',
           },
         },
+        title: 'community_officials.title',
+        type: objectType,
       },
     },
     required: ['applicant_email', 'contact_person_info', 'bank_account', 'community_address'],
@@ -156,7 +170,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
               'ui:widget': 'community_officials',
             },
             'ui:options': {
-              removeText: 'root_applicant_info_community_officials_community_officials.removeText',
+              removeText: 'community_officials_community_officials.removeText',
             }
           },
           items: {

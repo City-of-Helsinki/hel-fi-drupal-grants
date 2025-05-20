@@ -85,11 +85,11 @@ const buildFormSteps = ({
   const previewIndex = steps.size;
   steps.set(previewIndex, {
     id: 'preview',
-    label: Drupal.t('Confirm, preview and submit'),
+    label: Drupal.t('Confirm, preview and submit', {}, {context: 'Grants application: Steps'}),
   });
   steps.set(previewIndex + 1, {
     id: 'ready',
-    label: Drupal.t('Ready'),
+    label: Drupal.t('Ready', {}, {context: 'Grants application: Steps'}),
   });
 
   return steps;

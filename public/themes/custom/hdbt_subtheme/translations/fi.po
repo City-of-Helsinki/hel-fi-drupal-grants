@@ -474,3 +474,47 @@ msgstr "Käy kaikilla sivuilla ennen kuin lähetät hakemuksen"
 msgctxt "grants_theme"
 msgid "Unvisited pages:"
 msgstr "Sivut, joilla ei ole käyty:"
+
+msgctxt "Grants application: Validation"
+msgid "Field is required"
+msgstr "Kenttä on pakollinen"
+
+msgctxt "Grants application: Validation"
+msgid "@field field is required"
+msgstr "@field kenttä on pakollinen"
+
+msgctxt "Grants application: Draft"
+msgid "Save as draft"
+msgstr "Tallenna luonnoksena"
+
+msgctxt "Grants application: Draft"
+msgid "Save successful."
+msgstr "Tallentaminen onnistui."
+
+msgctxt "Grants application: Draft"
+msgid "Save failed."
+msgstr "Tallentaminen epäonnistui."
+
+msgctxt "Grants application: Steps"
+msgid "Confirm, preview and submit"
+msgstr "Vahvista, esikatsele ja lähetä"
+
+msgctxt "Grants application: Steps"
+msgid "Ready"
+msgstr "Valmis"
+
+msgctxt "Grants application: Errors"
+msgid "Error on page @page"
+msgstr "Virhe sivulla @page"
+
+msgctxt "Grants application: Community officials"
+msgid "You do not have any community officials saved in your profile, so you cannot add any to the application."
+msgstr "Profiiliisi ei ole tallennettu yhtään yhteisöstä vastaavaa henkilöä, joten et voi lisätä niitä hakemukselle."
+
+msgctxt "Grants application: Draft"
+msgid "Application saved as draft."
+msgstr "Hakemus on tallennettu luonnoksena."
+
+msgctxt "Grants application: Draft"
+msgid "Application could not be saved as draft."
+msgstr "Hakemusta ei voitu tallentaa luonnoksena."

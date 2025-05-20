@@ -16,6 +16,7 @@ import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
 import { SubmitStates } from '../enum/SubmitStates';
 import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
+import { localizeErrors } from '../localizeErrors';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -25,14 +26,6 @@ const widgets: RegistryWidgetsType = {
   SelectWidget,
   TextareaWidget: TextArea,
   TextWidget: TextInput,
-};
-
-type RJSFFormContainerProps = {
-  formDataAtom: any,
-  saveDraft: (data: any) => boolean,
-  schema: RJSFSchema,
-  submitData: (data: IChangeEvent) => boolean,
-  uiSchema: UiSchema,
 };
 
 /**
@@ -53,7 +46,13 @@ export const RJSFFormContainer = ({
   schema,
   submitData,
   uiSchema,
-}: RJSFFormContainerProps) => {
+}: {
+  formDataAtom: any;
+  saveDraft: (data: any) => Promise<boolean>;
+  schema: RJSFSchema;
+  submitData: (data: IChangeEvent) => Promise<boolean>;
+  uiSchema: UiSchema;
+}) => {
   const [formData, setFormData] = useAtom(formDataAtom)
 
   const submitStatus = useAtomValue(getSubmitStatusAtom);
@@ -174,7 +173,7 @@ export const RJSFFormContainer = ({
               label: false,
             },
           }}
-          validator={customizeValidator({})}
+          validator={customizeValidator({}, localizeErrors)}
           widgets={widgets}
         >
           <FormActions

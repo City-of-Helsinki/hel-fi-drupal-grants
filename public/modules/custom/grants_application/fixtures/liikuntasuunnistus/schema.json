@@ -1,16 +1,14 @@
 {
   "definitions": {
     "orienteering_maps": {
-      "required": ["acting_year"],
-      "type": "object",
       "properties": {
-        "acting_year": {
-          "title": "Avustuksen tiedot",
+        "acting_year_section": {
+          "title": "acting_year_section.title",
           "type": "object",
-          "description": "Tällä lomakkeella haetaan avustusta suunnistuskartan valmistuskustannuksista. Avustusta voidaan myöntää vain Suunnistusliiton karttarekisteriin raportoiduista suunnistus- ja opetuskartoista.",
+          "description": "acting_year_section.description",
           "properties": {
             "acting_year": {
-              "title": "Vuosi, jolle avustusta haetaan",
+              "title": "acting_year.title",
               "type": "string",
               "enum": [
                 "2025"
@@ -20,37 +18,37 @@
           "required": ["acting_year"]
         },
         "orienteering_subvention": {
-          "title": "Suunnistuskartta-avustus",
+          "title": "orienteering_subvention.title",
           "type":"object",
           "properties": {
             "orienteering_maps": {
               "type": "array",
-              "title": "Suunnistuskartta-avustus",
+              "title": "orienteering_subvention.title",
               "minItems": 1,
               "items": [
                 {
                   "type": "object",
-                  "title": "Suunnistuskartta-avustus",
+                  "title": "orienteering_subvention.title",
                   "properties": {
                     "mapName": {
-                      "title": "Kartan nimi, sijainti ja karttatyyppi",
+                      "title": "mapName.title",
                       "type": "string",
                       "minLength": 1
                     },
                     "size": {
-                      "title": "Koko km2",
+                      "title": "size.title",
                       "type": "integer"
                     },
                     "voluntaryHours": {
-                      "title": "Talkootyö tuntia",
+                      "title": "voluntaryHours.title",
                       "type": "string"
                     },
                     "cost": {
-                      "title": "Kustannukset euroa",
+                      "title": "cost.title",
                       "type": "integer"
                     },
                     "otherCompensations": {
-                      "title": "Muilta saadut avustukset euroa",
+                      "title": "otherCompensations.title",
                       "type": "integer"
                     }
                   },
@@ -61,27 +59,27 @@
               ],
               "additionalItems": {
                 "type": "object",
-                "title": "Suunnistuskartta-avustus",
+                "title": "orienteering_subvention.title",
                 "properties": {
                   "mapName": {
-                    "title": "Kartan nimi, sijainti ja karttatyyppi",
+                    "title": "mapName.title",
                     "type": "string",
                     "minLength": 1
                   },
                   "size": {
-                    "title": "Koko km2",
+                    "title": "size.title",
                     "type": "integer"
                   },
                   "voluntaryHours": {
-                    "title": "Talkootyö tuntia",
+                    "title": "voluntaryHours.title",
                     "type": "string"
                   },
                   "cost": {
-                    "title": "Kustannukset euroa",
+                    "title": "cost.title",
                     "type": "integer"
                   },
                   "otherCompensations": {
-                    "title": "Muilta saadut avustukset euroa",
+                    "title": "otherCompensations.title",
                     "type": "integer"
                   }
                 },
@@ -95,55 +93,37 @@
             "orienteering_maps"
           ]
         }
-      }
+      },
+      "required": ["acting_year_section"],
+      "type": "object"
     },
     "attachments_page": {
       "type": "object",
       "properties": {
         "additional_information_section": {
-          "title": "Lisätietoa hakemukseen liittyen",
+          "title": "additional_information_section.title",
           "type": "object",
           "properties": {
             "additional_information": {
-              "title": "Lisätiedot",
+              "title": "additional_information.title",
               "type": "string"
             }
           }
         },
         "attachments_section": {
-          "title": "Liitteet",
+          "title": "attachments_section.title",
           "type": "object",
           "properties": {
-            "attachment_help_text_1": {
-              "title": "",
-              "description": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
-              "type": "null"
-            },
-            "attachment_help_text_2": {
-              "title": "Vaaditut liitteet",
-              "description": "Suunnistuskarttojen valmistuskustannuksiin liittyvät laskut ja kuitit toimitetaan ainoastaan erikseen pyydettäessä.",
-              "type": "null"
-            },
-            "attachment_help_text_3": {
-              "title": "Usean liitteen toimittaminen yhtenä tiedostona",
-              "description": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
-              "type": "null"
-            },
-            "attachment_help_text_4": {
-              "title": "Helsingin kaupungille aiemmin toimitetut liitteet",
-              "description": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
-              "type": "null"
-            },
             "extra_info": {
-              "title": "Lisäselvitys liitteistä",
+              "title": "extra_info.title",
               "type": "string"
             },
             "other_attachment_fieldset": {
-              "title": "Muu liite",
+              "title": "other_attachment_fieldset.title",
               "type": "object",
               "properties": {
                 "file": {
-                  "title": "Liitetiedosto",
+                  "title": "file.title",
                   "type": "object",
                   "properties": {
                     "file_id": {
@@ -173,7 +153,7 @@
                   }
                 },
                 "file_description": {
-                  "title": "Liitteen kuvaus",
+                  "title": "file_description.title",
                   "type": "string"
                 }
               }
@@ -183,17 +163,16 @@
       }
     }
   },
-  "title": "Liikunta, suunnistuskartta-avustushakemus",
   "description": "",
   "type": "object",
   "properties": {
-    "orienteering_maps": {
-      "title": "Avustustiedot",
+    "orienteering_maps_step": {
+      "title": "orienteering_maps_step.title",
       "type": "object",
       "$ref": "#/definitions/orienteering_maps"
     },
-    "attachments": {
-      "title": "Liitteet",
+    "attachments_step": {
+      "title": "attachments_step.title",
       "type": "object",
       "$ref": "#/definitions/attachments_page"
     }
