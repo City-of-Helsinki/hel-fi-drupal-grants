@@ -7,9 +7,25 @@ import { Suspense, useCallback } from 'react';
 import { RJSFSchema } from '@rjsf/utils';
 
 import { RJSFFormContainer } from './RJSFFormContainer';
-import { createFormDataAtom, getApplicationNumberAtom, initializeFormAtom, setApplicationNumberAtom, setSubmitStatusAtom } from '../store';
+import { createFormDataAtom, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom, setSubmitStatusAtom } from '../store';
 import { addApplicantInfoStep, getNestedSchemaProperty, isValidFormResponse, setNestedProperty } from '../utils';
 import { SubmitStates } from '../enum/SubmitStates';
+
+const instantiateDocument = async(id: string, token: string) => {
+  const response = await fetch(`/applications/draft/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': token,
+    },
+    method: 'POST',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to instantiate application');
+  }
+
+  return response.json();
+};
 
 /**
  * Fetcher function for the form data.
@@ -17,18 +33,23 @@ import { SubmitStates } from '../enum/SubmitStates';
  * Checks IndexedDB for existing form data.
  *
  * @param {string} id - The form id
- * @param {string} applicationNumber - The application number if there is one
+ * @param {string} token - CSRF token
  * @return {Promise<object>} - Form settings and existing cached form data
  */
-async function fetchFormData(id: string, applicationNumber: string) {
-  const reqUrl = applicationNumber ?
-    `/applications/${id}/application/${applicationNumber}` :
-    `/applications/${id}`;
+async function fetchFormData(id: string, token: string) {
+  const params = new URLSearchParams(window.location.search);
+  let applicationNumber = params.get('application_number');
 
-  const formConfigResponse = await fetch(reqUrl, {
+  if (!applicationNumber) {
+    const { application_number } = await instantiateDocument(id, token);
+    applicationNumber = application_number;
+  }
+
+  const formConfigResponse = await fetch(`/applications/draft/${id}/${applicationNumber}`, {
     headers: {
       'Content-Type': 'application/json',
-    }
+      'X-CSRF-Token': token,
+    },
   });
 
   if (!formConfigResponse.ok) {
@@ -41,6 +62,7 @@ async function fetchFormData(id: string, applicationNumber: string) {
   return {
     ...formConfig,
     persistedData,
+    applicationNumber,
   };
 };
 
@@ -77,6 +99,21 @@ function* iterateFormData(element: any, prefix: string = '') {
     yield prefix;
   }
 };
+
+function* getAttachments(element: any) {
+  if (!element || typeof element !== 'object') {
+    return;
+  }
+
+  if (element.hasOwnProperty('fileId')) {
+    yield element;
+  }
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [, value] of Object.entries(element)) {
+    yield* getAttachments(value);
+  }
+}
 
 /**
  * Fix issue with backend returning arrays instead of empty objects.
@@ -162,7 +199,8 @@ const transformData = (data: any) => {
 };
 
 type FormWrapperProps = {
-  applicationTypeId: string
+  applicationTypeId: string;
+  token: string;
 };
 
 /**
@@ -178,17 +216,16 @@ type FormWrapperProps = {
  */
 const FormWrapper = ({
   applicationTypeId,
+  token,
 }: FormWrapperProps) => {
-  const params = new URLSearchParams(window.location.search);
-  const applicationNumber = params.get('application_number');
-
   const { data, isLoading, isValidating, error } = useSWRImmutable(
     applicationTypeId,
-    (id) => fetchFormData(id, applicationNumber)
+    (id) => fetchFormData(id, token),
   );
+
   const initializeForm = useSetAtom(initializeFormAtom);
   const setSubmitStatus = useSetAtom(setSubmitStatusAtom);
-  const setApplicationNumber = useSetAtom(setApplicationNumberAtom);
+  const pushNotification = useSetAtom(pushNotificationAtom);
   const readApplicationNumber = useAtomCallback(
     useCallback(get => get(getApplicationNumberAtom), [])
   );
@@ -202,66 +239,76 @@ const FormWrapper = ({
   }
 
   const transformedData = transformData(data);
-  initializeForm({
-    ...transformedData,
-    applicationNumber,
-  });
+  initializeForm(transformedData);
 
-  const submitData = async (submittedData: any, finalSubmit: boolean = false): Promise<boolean>|void => {
-    const currentApplicationNumber = readApplicationNumber();
-
-    const getUrlAndMethod = () => {
-      switch(true) {
-        case finalSubmit && Boolean(currentApplicationNumber):
-          return [`/applications/${applicationTypeId}/send/${currentApplicationNumber}`, 'POST'];
-        case finalSubmit:
-          return [`/applications/${applicationTypeId}/send`, 'POST'];
-        case Boolean(currentApplicationNumber):
-          return [`/applications/draft/${applicationTypeId}/${currentApplicationNumber}`, 'PATCH'];
-        default:
-          return [`/applications/draft/${applicationTypeId}`, 'POST'];
-      }
-    };
-
-    const [reqUrl, method] = getUrlAndMethod();
-
-    const response = await fetch(reqUrl, {
+  const submitData = async (submittedData: any): Promise<boolean> => {
+    const response = await fetch(`/en/applications/${applicationTypeId}/send/${readApplicationNumber()}`, {
       body: JSON.stringify({
-        application_number: currentApplicationNumber || '',
+        application_number: readApplicationNumber() || '',
         application_type_id: applicationTypeId,
+        attachments: Array.from(getAttachments(submittedData)),
         form_data: submittedData,
         langcode: 'en',
       }),
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': data.token
+        'X-CSRF-Token': token
       },
-      method,
+      method: 'POST',
     });
 
     if (!response.ok) {
       return false;
     }
 
-    const json = await response.json();
-    setApplicationNumber(json.application_number);
+    // @todo read submit status from server response
+    setSubmitStatus(SubmitStates.submitted);
 
-    if (response.ok && finalSubmit) {
-      // @todo read submit status from server response
-      setSubmitStatus(SubmitStates.submitted);
+    return response.ok;
+  };
+
+  const initialData = transformedData.form_data?.form_data || null;
+  const formDataAtom = createFormDataAtom(transformedData.applicationNumber, initialData);
+
+  const saveDraft = async (submittedData: any) => {
+    const response = await fetch(`/applications/draft/${applicationTypeId}/${readApplicationNumber()}`, {
+      body: JSON.stringify({
+        application_number: readApplicationNumber() || '',
+        application_type_id: applicationTypeId,
+        attachments: Array.from(getAttachments(submittedData)),
+        form_data: submittedData,
+        langcode: 'en',
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': token,
+      },
+      method: 'PATCH',
+    });
+
+    if (response.ok) {
+      pushNotification({
+        children: <div>{Drupal.t('Application saved as draft.')}</div>,
+        label: Drupal.t('Save successful.'),
+        type: 'success',
+      });
+    }
+    else {
+      pushNotification({
+        children: <div>{Drupal.t('Application could not be saved as draft.')}</div>,
+        label: Drupal.t('Save failed.'),
+        type: 'error',
+      });
     }
 
     return response.ok;
   };
 
-  const serverData = transformedData.form_data;
-  const initialData = serverData?.form_data || null;
-  const formDataAtom = createFormDataAtom(readApplicationNumber() || '58', initialData);
-
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <RJSFFormContainer
         formDataAtom={formDataAtom}
+        saveDraft={saveDraft}
         schema={transformedData.schema}
         submitData={submitData}
         uiSchema={transformedData.ui_schema}

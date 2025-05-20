@@ -694,8 +694,8 @@ elements: |-
               - webform--small
     helsingissa_jarjestettava:
       '#type': webform_section
-      '#title': 'Helsingissä järjestettävä yleisölle avoin toiminta toteutettiin'
-      '#description': 'Kirjaa kaikkien eri Helsingissä olevien opetuspaikkojen tiedot edellisenä päättyneenä tilivuonna.'
+      '#title': 'Helsingissä järjestettävä opetus toteutettiin'
+      '#description': 'Kirjaa kaikkien eri Helsingissä olevien opetuspaikkojen tiedot edellisenä päättyneenä tilivuonna. Kirjaa vain opetuspaikat, ei esim. oppilasnäytösten tai tapahtumien paikkoja.'
       helsingissa_jarjestettava_tila:
         '#type': premises_composite
         '#title': Tila
@@ -760,7 +760,7 @@ elements: |-
       '#title': 'Toiminnan järjestäminen'
       toiminta_ekologisuus:
         '#type': textarea
-        '#title': 'Miten ekologisuus huomioidaan toiminnan järjestämisessä? Minkälaisia toimenpiteitä, resursseja ja osaamista on asian edistämiseksi?'
+        '#title': 'Onko yhteisöllä käytössä ympäristövastuusuunnitelma tai vastaava toimintamalli? Mikä tai millainen malli on kyseessä? Kerro sen toteuttamisesta käytännössä ja miten noudattamista seurataan ja valvotaan.'
         '#maxlength': 1000
         '#counter_type': character
         '#counter_maximum': 1000
@@ -814,7 +814,7 @@ elements: |-
         '#text': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
-          <div class="hds-notification__label"><span>Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan</span></div>
+          <div class="hds-notification__label"><span>Koskien sitä vuotta, jolle avustusta tällä hakemuksella haetaan. Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta oman talousarvionsa mukaisesti.</span></div>
           </div>
           </div>
         '#format': full_html
@@ -926,7 +926,7 @@ elements: |-
         '#text': |
           <div class="hds-notification hds-notification--info">
           <div class="hds-notification__content">
-          <div class="hds-notification__label">Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti.</div>
+          <div class="hds-notification__label">Edellisenä päättyneenä tilivuonna. Tilinpäätöksen mukaisesti. Laske mukaan kaikki tulot (kohtaan "tulot yhteensä") ja kaikki menot (kohtaan "menot yhteensä") sisältäen mm. poistot ja rahoitustoiminnan kulut ja tuotot. Tarkista lopuksi, että tulojen ja menojen erotus vastaa tilinpäätöksen yli/alijäämää.<br/><br/>Jos avustus kohdistuu vain osaan toiminnasta, tulee lukujen koskea vain tätä osaa toiminnasta kustannuspaikkakohtaisen tuloslaskelman mukaisesti.</div>
           </div>
           </div>
         '#format': full_html
@@ -939,7 +939,7 @@ elements: |-
           0: Ei
       toteutuneet_tulot:
         '#type': webform_markup
-        '#markup': '<h4>Toteutuneet tulot</h4>'
+        '#markup': '<h4>Toteutuneet tulot</h4><p>Kolmessa ensimmäisessä kohdassa kysytään eritellysti tietoja saaduista avustuksista. Viimeisessä kohdassa kysytään kaikkia toteutuneita tuloja yhteensä sisältäen yllälistatut avustukset ja kaikki muut tulot.</p>'
       toteutuneet_tulot_data:
         '#type': grants_budget_income_static
         '#title': '<empty>'

@@ -7,25 +7,25 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '72'
     applicationType: SOTEPEYLEIS
     applicationTypeID: '72'
-    applicationIndustry: KANSLIA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
       49: '49'
-    applicationTargetGroup: '30'
     applicationOpen: '2025-05-02T00:00:01'
     applicationClose: '2025-06-02T16:00:00'
-    applicationActingYearsType: next_x_years
-    applicationActingYears: {  }
-    applicationActingYearsNextCount: '1'
     applicationContinuous: 0
+    applicationTargetGroup: '30'
     disableCopying: 0
+    applicationTypeSelect: '72'
+    applicationIndustry: KANSLIA
+    applicationActingYears: {  }
+    applicationActingYearsType: next_x_years
+    applicationActingYearsNextCount: '1'
     status: released
     parent: d8472e68-d6bd-4de2-a409-f0a177bf9e94
-    avus2BreakingChange: 0
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null
