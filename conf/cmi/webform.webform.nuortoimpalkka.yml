@@ -7,24 +7,24 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '63'
     applicationType: NUORTOIMPALKKA
     applicationTypeID: '63'
-    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
       unregistered_community: unregistered_community
     applicationTypeTerms:
       45: '45'
       46: '46'
-    applicationTargetGroup: '27'
     applicationOpen: '2025-01-01T00:00:00'
     applicationClose: '2025-02-28T23:59:59'
-    applicationActingYearsType: current_and_next_x_years
-    applicationActingYears: {  }
-    applicationActingYearsNextCount: '1'
     applicationContinuous: 0
+    applicationTargetGroup: '27'
     disableCopying: 0
+    applicationTypeSelect: '63'
+    applicationIndustry: KUVA
+    applicationActingYears: {  }
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYearsNextCount: '1'
     status: released
     parent: ''
     avus2BreakingChange: false
