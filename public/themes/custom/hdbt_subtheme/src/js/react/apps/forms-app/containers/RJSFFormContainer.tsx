@@ -1,4 +1,4 @@
-import Form, { IChangeEvent } from '@rjsf/core';
+import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
 import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
 import React, { createRef, useCallback } from 'react';
@@ -25,13 +25,13 @@ const widgets: RegistryWidgetsType = {
   SelectWidget,
   TextareaWidget: TextArea,
   TextWidget: TextInput,
-  FileWidget: FileInput,
 };
 
 type RJSFFormContainerProps = {
   formDataAtom: any,
+  saveDraft: (data: any) => boolean,
   schema: RJSFSchema,
-  submitData: (data: IChangeEvent, finalSubmit?: boolean) => boolean,
+  submitData: (data: IChangeEvent) => boolean,
   uiSchema: UiSchema,
 };
 
@@ -49,6 +49,7 @@ type RJSFFormContainerProps = {
  */
 export const RJSFFormContainer = ({
   formDataAtom,
+  saveDraft,
   schema,
   submitData,
   uiSchema,
@@ -120,17 +121,6 @@ export const RJSFFormContainer = ({
     return errorsToShow;
   };
 
-  /**
-   * Save daraft application.
-   *
-   * @return {boolean} - Submit success indicator
-   */
-  const saveDraft = () => {
-    const data = formRef.current?.state.formData;
-
-    return submitData(data);
-  };
-
   return (
     <>
       <ErrorsList />
@@ -142,6 +132,10 @@ export const RJSFFormContainer = ({
         />
         <Form
           className='grants-react-form webform-submission-form'
+          fields={{
+            ...getDefaultRegistry().fields,
+            atvFile: FileInput,
+          }}
           formData={formData || {}}
           method='POST'
           noHtml5Validate
@@ -153,7 +147,7 @@ export const RJSFFormContainer = ({
             const passes = formRef.current?.validateForm();
 
             if (passes) {
-              submitData(data.formData, true);
+              submitData(data.formData);
               setStep([...steps].pop()?.[0] || 0);
             }
           }}
@@ -185,7 +179,7 @@ export const RJSFFormContainer = ({
           widgets={widgets}
         >
           <FormActions
-            saveDraft={saveDraft}
+            saveDraft={() => saveDraft(formData)}
             validatePartialForm={validatePartialForm}
           />
         </Form>

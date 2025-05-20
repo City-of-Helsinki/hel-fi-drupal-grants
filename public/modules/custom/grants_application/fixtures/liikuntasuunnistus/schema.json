@@ -144,8 +144,33 @@
               "properties": {
                 "file": {
                   "title": "Liitetiedosto",
-                  "format": "data-url",
-                  "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "filename": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
                 },
                 "file_description": {
                   "title": "Liitteen kuvaus",
