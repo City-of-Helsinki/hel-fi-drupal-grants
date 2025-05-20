@@ -5,7 +5,6 @@ import { useAtomValue } from 'jotai';
 
 import { getCurrentStepAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
-import { useIdToTranslations } from '../hooks/useIdToTranslations';
 
 export const ArrayFieldTemplate = ({
   canAdd,
@@ -19,7 +18,7 @@ export const ArrayFieldTemplate = ({
   const { description } = schema;
   const { ArrayFieldItemTemplate } = registry.templates;
 
-  const { addText } = useIdToTranslations(idSchema.$id);
+  const addText = uiSchema && uiSchema['ui:options'] && uiSchema['ui:options'].addText || null; // @ts-ignore{{'ui:options': {}} = uiSchema;
 
   return (
     <div>

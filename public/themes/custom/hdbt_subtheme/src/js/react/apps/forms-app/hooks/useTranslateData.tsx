@@ -5,9 +5,6 @@ export const useTranslateData = (data: any) => {
   const { t } = useTranslation();
   const { schema, ui_schema } = data;
 
-  // @ts-ignore
-  window.t = t;
-
   const translateSchemaElement = (element: any): any => {
     const result: any = {};
     ['addText', 'description', 'title'].forEach((key: string) => {
