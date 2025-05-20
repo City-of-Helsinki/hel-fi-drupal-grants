@@ -64,13 +64,13 @@ class FormSettingsService {
 
   /**
    * Combine default translations with form specific translations.
-   * 
+   *
    * @param array $translations
    *   Form specific translations.
    */
   private function combineTranslations(array $translations): array {
     $defaultTranslations = json_decode(file_get_contents(__DIR__ . '/../../fixtures/defaultTranslations.json'), TRUE);
-    
+
     return array_merge_recursive($defaultTranslations, $translations);
   }
 
