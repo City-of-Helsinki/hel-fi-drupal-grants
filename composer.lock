@@ -193,16 +193,16 @@
         },
         {
             "name": "caxy/php-htmldiff",
-            "version": "v0.1.16",
+            "version": "v0.1.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/caxy/php-htmldiff.git",
-                "reference": "5c580b4f09285c078f0c5cb261573412a736a8cb"
+                "reference": "194feb154e32f585dd2ca8ae6929a53abfcebf9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/caxy/php-htmldiff/zipball/5c580b4f09285c078f0c5cb261573412a736a8cb",
-                "reference": "5c580b4f09285c078f0c5cb261573412a736a8cb",
+                "url": "https://api.github.com/repos/caxy/php-htmldiff/zipball/194feb154e32f585dd2ca8ae6929a53abfcebf9e",
+                "reference": "194feb154e32f585dd2ca8ae6929a53abfcebf9e",
                 "shasum": ""
             },
             "require": {
@@ -248,9 +248,9 @@
             ],
             "support": {
                 "issues": "https://github.com/caxy/php-htmldiff/issues",
-                "source": "https://github.com/caxy/php-htmldiff/tree/v0.1.16"
+                "source": "https://github.com/caxy/php-htmldiff/tree/v0.1.17"
             },
-            "time": "2025-01-22T17:03:45+00:00"
+            "time": "2025-05-16T17:04:33+00:00"
         },
         {
             "name": "chi-teck/drupal-code-generator",
@@ -5527,16 +5527,16 @@
         },
         {
             "name": "drupal/hdbt",
-            "version": "6.11.0",
+            "version": "6.11.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-hdbt.git",
-                "reference": "f759b060674327b6ebad715f9a6ca999a4ab9ca1"
+                "reference": "9e4ca33fdbf4dd6fdb2b3f399427d53aa9e79c5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/f759b060674327b6ebad715f9a6ca999a4ab9ca1",
-                "reference": "f759b060674327b6ebad715f9a6ca999a4ab9ca1",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/9e4ca33fdbf4dd6fdb2b3f399427d53aa9e79c5a",
+                "reference": "9e4ca33fdbf4dd6fdb2b3f399427d53aa9e79c5a",
                 "shasum": ""
             },
             "require": {
@@ -5555,10 +5555,10 @@
                 "Drupal"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.11.0",
+                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.11.5",
                 "issues": "https://github.com/City-of-Helsinki/drupal-hdbt/issues"
             },
-            "time": "2025-05-15T10:22:42+00:00"
+            "time": "2025-05-20T11:18:54+00:00"
         },
         {
             "name": "drupal/hdbt_admin",
@@ -5962,16 +5962,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "4.14.0",
+            "version": "4.14.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "4655949a81dd3c49ebdf8861ddd65a64a6f11faf"
+                "reference": "8b5784fd46cfe76425b9f753efa5fcae41239f25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/4655949a81dd3c49ebdf8861ddd65a64a6f11faf",
-                "reference": "4655949a81dd3c49ebdf8861ddd65a64a6f11faf",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/8b5784fd46cfe76425b9f753efa5fcae41239f25",
+                "reference": "8b5784fd46cfe76425b9f753efa5fcae41239f25",
                 "shasum": ""
             },
             "require": {
@@ -6056,6 +6056,9 @@
                     "drupal/content_lock": {
                         "[#UHF-4553] Fix unlock content button redirect": "https://raw.githubusercontent.com/City-of-Helsinki/drupal-helfi-platform-config/82081691e4a6d05b3716052d5fff46a04027bdc3/patches/content-lock-uhf-4553.patch"
                     },
+                    "drupal/search_api": {
+                        "[#UHF-10647] Patch for fixing install on update hook": "https://raw.githubusercontent.com/City-of-Helsinki/drupal-helfi-platform-config/f9d8086fb9926c7e6fb6a3d446f9644424f9d1f7/patches/UHF-10647-search-api.patch"
+                    },
                     "drupal/core": {
                         "[#UHF-181] Hide untranslated menu links (https://www.drupal.org/project/drupal/issues/3091246)": "https://www.drupal.org/files/issues/2023-12-18/3091246--allow-menu-tree-manipulators-alter--24.patch",
                         "[#UHF-3812] Ajax exposed filters not working for multiple instances of the same Views block placed on one page (https://www.drupal.org/project/drupal/issues/3163299)": "https://www.drupal.org/files/issues/2023-05-07/3163299-104-D10.patch",
@@ -6092,10 +6095,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.14.0",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.14.4",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2025-05-15T10:07:37+00:00"
+            "time": "2025-05-19T15:15:05+00:00"
         },
         {
             "name": "drupal/helfi_proxy",
@@ -7463,17 +7466,17 @@
         },
         {
             "name": "drupal/monolog",
-            "version": "3.0.4",
+            "version": "3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/monolog.git",
-                "reference": "3.0.4"
+                "reference": "3.0.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/monolog-3.0.4.zip",
-                "reference": "3.0.4",
-                "shasum": "5e86b3598b826dca767c52bc7e63cb2c049212d3"
+                "url": "https://ftp.drupal.org/files/projects/monolog-3.0.5.zip",
+                "reference": "3.0.5",
+                "shasum": "c151d8ca5a006e0250ef0aaaca44cc1c3359cc33"
             },
             "require": {
                 "drupal/core": "^10 || ^11",
@@ -7491,8 +7494,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.0.4",
-                    "datestamp": "1723450250",
+                    "version": "3.0.5",
+                    "datestamp": "1747324419",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
