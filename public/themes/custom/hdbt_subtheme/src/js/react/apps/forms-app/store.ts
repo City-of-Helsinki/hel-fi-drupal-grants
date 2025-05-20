@@ -43,7 +43,7 @@ export type FormState = {
 }
 
 type FormConfig = {
-  applicationNumber?: string;
+  applicationNumber: string;
   grantsProfile: GrantsProfile;
   persistedData: any;
   token: string;
@@ -61,6 +61,7 @@ type FormConfig = {
 };
 
 type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_state'> & {
+  applicationNumber: string;
   grants_profile: GrantsProfile;
   submit_state: SubmitState;
   ui_schema: UiSchema;
@@ -125,7 +126,7 @@ export const formStateAtom = atom<FormState|undefined>();
 export const formConfigAtom = atom<FormConfig|undefined>();
 export const formStepsAtom = atom<Map<number, FormStep>|undefined>();
 export const errorsAtom = atom<Array<[number, RJSFValidationError]>>([]);
-export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData, applicationNumber?: string) => {
+export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData) => {
   const {
     grants_profile: grantsProfile,
     submit_state: submitState,
@@ -135,7 +136,6 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
   const steps = buildFormSteps(formConfig);
   _set(formStepsAtom, state => steps);
   _set(formConfigAtom, (state) => ({
-    applicationNumber,
     grantsProfile,
     ...rest,
     uiSchema,
@@ -145,6 +145,10 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
       currentStep: [0, steps.get(0)],
       reachedStep: 0,
     }));
+
+  // Make sure application number is set in url params.
+  const { applicationNumber } = formConfig;
+  _set(setApplicationNumberAtom, applicationNumber);
 });
 export const getFormConfigAtom = atom(_get => {
   const config = _get(formConfigAtom);

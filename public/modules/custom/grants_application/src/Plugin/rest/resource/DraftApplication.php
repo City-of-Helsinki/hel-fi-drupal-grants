@@ -36,7 +36,7 @@ use Symfony\Component\Routing\RouteCollection;
   id: "draft_application_rest_resource",
   label: new TranslatableMarkup("Application"),
   uri_paths: [
-    "canonical" => "/applications/{application_type_id}",
+    "canonical" => "/applications/draft/{application_type_id}/{application_number}",
     "create" => "/applications/draft/{application_type_id}",
     "edit" => "/applications/draft/{application_type_id}/{application_number}",
   ]
@@ -138,6 +138,8 @@ final class DraftApplication extends ResourceBase {
    *
    * @param int $application_type_id
    *   The application type id.
+   * @param string $application_number
+   *   The application number.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The json response.
@@ -146,8 +148,13 @@ final class DraftApplication extends ResourceBase {
    */
   public function get(
     int $application_type_id,
+    string $application_number,
   ): RedirectResponse|JsonResponse {
     // @todo Sanitize & validate & authorize properly.
+    if (!$application_number) {
+      return new JsonResponse([], 400);
+    }
+
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
@@ -170,9 +177,27 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    try {
+      // Make sure it exists in database.
+      $this->getSubmissionEntity($user_information['sub'], $application_number);
+    }
+    catch (\Exception $e) {
+      // Cannot get the submission.
+      return new JsonResponse([], 500);
+    }
+
+    try {
+      $document = $this->atvService->getDocument($application_number);
+      $form_data = $document->getContent();
+    }
+    catch (\Throwable $e) {
+      // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
+      return new JsonResponse([], 500);
+    }
+
     // @todo only return required user data to frontend.
     $response = [
-      'form_data' => [],
+      'form_data' => $form_data,
       'grants_profile' => $grants_profile_data->toArray(),
       'user_data' => $user_information,
       'token' => $this->csrfTokenGenerator->get('rest'),
@@ -280,12 +305,15 @@ final class DraftApplication extends ResourceBase {
    */
   public function patch(
     int $application_type_id,
-    int $application_number,
+    string $application_number,
     Request $request,
   ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);
-    ['form_data' => $form_data] = $content;
+    [
+      'attachments' => $attachments,
+      'form_data' => $form_data,
+    ] = $content;
 
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
@@ -333,11 +361,11 @@ final class DraftApplication extends ResourceBase {
     }
 
     // @todo Better sanitation.
-    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
+    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])), TRUE);
     $document_data = ['form_data' => $sanitized_data];
 
     $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
-      $sanitized_data,
+      (array) $sanitized_data,
       $user_data,
       $selected_company,
       $this->userInformationService->getUserProfileData(),
@@ -349,6 +377,13 @@ final class DraftApplication extends ResourceBase {
       ->getAttachmentInfo($sanitized_data);
 
     $document->setContent($document_data);
+
+    try {
+      $this->cleanUpAttachments($document, $attachments);
+    }
+    catch (\Exception $e) {
+      // @todo log error
+    }
 
     try {
       // @todo Always get the events and messages from atv submission before overwriting.
@@ -370,6 +405,24 @@ final class DraftApplication extends ResourceBase {
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT_DRAFT));
 
     return new JsonResponse($document->toArray(), 200);
+  }
+
+  /**
+   * Remove unused attachments from ATV document.
+   *
+   * @param object $document
+   *   The ATV document.
+   * @param array $attachments
+   *   The attachments.
+   */
+  private function cleanUpAttachments($document, $attachments = []): void {
+    $attachment_ids = array_column($attachments, 'fileId');
+
+    foreach ($document->getAttachments() as $attachment) {
+      if (!in_array($attachment['id'], $attachment_ids)) {
+        $this->atvService->removeAttachment($document->getId(), $attachment['id']);
+      }
+    }
   }
 
   /**
