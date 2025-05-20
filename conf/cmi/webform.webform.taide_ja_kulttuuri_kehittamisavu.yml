@@ -7,21 +7,21 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '49'
     applicationType: KUVAKEHA
     applicationTypeID: '49'
-    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
       72: '72'
-      74: '74'
       73: '73'
-    applicationTargetGroup: '22'
+      74: '74'
     applicationOpen: '2024-06-05T10:00:26'
     applicationClose: '2024-09-02T16:02:00'
     applicationContinuous: 0
+    applicationTargetGroup: '22'
     disableCopying: 0
+    applicationTypeSelect: '49'
+    applicationIndustry: KUVA
     applicationActingYears:
       2024: '2024'
       2025: '2025'
