@@ -504,8 +504,8 @@ msgid "Ready"
 msgstr "Valmis"
 
 msgctxt "Grants application: Errors"
-msgid "Error on page @page"
-msgstr "Virhe sivulla @page"
+msgid "Error on page @page:"
+msgstr "Virhe sivulla @page:"
 
 msgctxt "Grants application: Community officials"
 msgid "You do not have any community officials saved in your profile, so you cannot add any to the application."

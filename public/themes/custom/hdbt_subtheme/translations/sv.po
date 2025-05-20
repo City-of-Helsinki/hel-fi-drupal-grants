@@ -454,8 +454,8 @@ msgid "Ready"
 msgstr "Slutförd"
 
 msgctxt "Grants application: Errors"
-msgid "Error on page @page"
-msgstr "Fel på sidan @page"
+msgid "Error on page @page:"
+msgstr "Fel på sidan @page:"
 
 msgctxt "Grants application: Community officials"
 msgid "You do not have any community officials saved in your profile, so you cannot add any to the application."
