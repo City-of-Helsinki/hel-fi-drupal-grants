@@ -150,11 +150,6 @@ if ($blob_storage_name = getenv('AZURE_BLOB_STORAGE_NAME')) {
   $settings['flysystem'] = $schemes;
 }
 
-
-if ($navigation_authentication_key = getenv('DRUPAL_NAVIGATION_API_KEY')) {
-  $config['helfi_navigation.api']['key'] = $navigation_authentication_key;
-}
-
 // Make sure project name and app env are defined in GitHub actions too.
 if ($github_repository = getenv('GITHUB_REPOSITORY')) {
   if (!getenv('APP_ENV')) {
@@ -370,6 +365,17 @@ if (getenv('ELASTICSEARCH_URL')) {
   }
 }
 
+// Elasticsearch suggestions server config. Etusivu elasticsearch instance is
+// shared between all core sites for indexing suggestions data.
+if (getenv('ELASTICSEARCH_ETUSIVU_URL')) {
+  $config['search_api.server.etusivu']['backend_config']['connector_config']['url'] = getenv('ELASTICSEARCH_ETUSIVU_URL');
+
+  if (getenv('ELASTICSEARCH_ETUSIVU_WRITER_USER') && getenv('ELASTICSEARCH_ETUSIVU_WRITER_PASSWORD')) {
+    $config['search_api.server.etusivu']['backend_config']['connector'] = 'helfi_connector';
+    $config['search_api.server.etusivu']['backend_config']['connector_config']['username'] = getenv('ELASTICSEARCH_ETUSIVU_WRITER_USER');
+    $config['search_api.server.etusivu']['backend_config']['connector_config']['password'] = getenv('ELASTICSEARCH_ETUSIVU_WRITER_PASSWORD');
+  }
+}
 
 // Supported values: https://github.com/Seldaek/monolog/blob/main/doc/01-usage.md#log-levels.
 $default_log_level = getenv('APP_ENV') === 'production' ? 'info' : 'debug';

@@ -25,6 +25,7 @@ third_party_settings:
     disableCopying: 0
     status: released
     parent: ''
+    avus2BreakingChange: 0
 weight: 0
 open: null
 close: null

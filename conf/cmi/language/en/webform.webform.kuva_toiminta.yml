@@ -190,7 +190,7 @@ elements: |
   suunniteltu_toiminta:
     '#title': 'Planned activities'
   arvio_maarasta_markup:
-    '#markup': "<h4>Estimated numbers</h4>\r\n\r\n<p>Answer regarding your own activities during the year that you are applying the grant for. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason we ask for the volumes for Helsinki and of the entire activities, separately.</p>"
+    '#markup': "<h4>Estimated numbers</h4><p>Answer regarding your own activities during the year that you are applying the grant for. If the grant only applies to a limited part of the organization's activities, the reported numbers should reflect only that part of the activities. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason we ask for the volumes for Helsinki and of the entire activities, separately.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa:
     '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_fieldset:
@@ -240,7 +240,7 @@ elements: |
       1: 'Yes'
       0: 'No'
   toteutuneet_markup:
-    '#markup': "<h4>Realized numbers</h4>\r\n\r\n<p>Answer regarding your own activities during the previous completed financial year. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason, we ask for the volumes separately for Helsinki and of the entire activities, separately.</p>"
+    '#markup': "<h4>Realized numbers</h4><p>Answer regarding your own activities during the previous completed financial year. If the grant only applies to a limited part of the organization's activities, the reported numbers should reflect only that part of the activities. Only include information about physical performances, exhibitions, and workshops, do not include contents that are carried out solely in digital format. In the case of grants by the City of Helsinki, the focus of the activities on Helsinki and Helsinki residents is assessed. For this reason, we ask for the volumes separately for Helsinki and of the entire activities, separately.</p>"
   tapahtuma_tai_esityspaivien_maara_helsingissa_toteutuneet:
     '#title': 'Number of days during which the events take place in Helsinki'
   esityspaivien_maara_helsingissa_toteutuneet_fieldset:
@@ -313,7 +313,7 @@ elements: |
     '#title': 'Describe the professional level of organizing the activities, and how the operations are organized'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_ekologisuus:
-    '#title': 'How are ecological aspects taken into consideration in organizing the activities? What kinds of actions are taken, and resources and expertise available for this purpose?'
+    '#title': 'Does the community have an environmental sustainability plan or a corresponding operating model in use? Which, or what kind of model is it? Describe how it is implemented in practice and how compliance is monitored and supervised.'
     '#counter_maximum_message': '%d/1000 characters remaining'
   toiminta_yhteistyokumppanit:
     '#title': 'Name the central partners, and describe the forms and conditions of each collaboration.'
@@ -336,7 +336,7 @@ elements: |
   talousarvio:
     '#title': 'Planned budget'
   markup_01:
-    '#markup': '<p>Regarding the year that the grant is applied for with this application.</p>'
+    '#markup': "<p>Regarding the year that the grant is applied for with this application. If the grant only applies to a limited part of the organization's activities, the reported figures should reflect only that part of the activities, in accordance with its designated budget.</p>"
   organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belongs to the central government subsidies system (VOS)'
     '#help': '<p>Select yes, only if you know for sure that your organization receives funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.</p>'
@@ -368,7 +368,7 @@ elements: |
   toteutuneet_tulot_ja_menot:
     '#title': 'Realized incomes and expenses'
   markup_02:
-    '#markup': '<p>Regarding the previous completed financial year. As stated in the financial statements.</p>'
+    '#markup': '<p>Regarding the previous completed financial year. As stated in the financial statements. Please include all income (under "incomes in total") and all expenses (under "expenses in total"), including items such as depreciation as well as financial income and expenses. At the end, please check that the difference between income and expenses matches the surplus/deficit reported in the financial statements.<p></p>If the grant only applies to a limited part of the organization&apos;s activities, the reported figures should reflect only that part of the activities, in accordance with a separate cost center report.</p>'
   organisaatio_kuului_valtionosuusjarjestelmaan_vos_:
     '#title': 'The organization belonged to the central government subsidies system (VOS)'
     '#help': 'Select yes, only if you know for sure that your organization received funding in the form of the central government subsidies. This does not refer to all the grants granted by the state, but to a separate statutory form of funding for a limited group. For art and culture operators the central government subsidies are calculated based on, for example, person-years of work and their unit price or the number of teaching hours of basic arts education.'
@@ -376,7 +376,7 @@ elements: |
       1: 'Yes'
       0: 'No'
   toteutuneet_tulot:
-    '#markup': '<h4>Realized incomes</h4>'
+    '#markup': '<h4>Realized incomes</h4><p>In the first three fields you are asked to fill in specific information about the grants you have received. In the last field you are asked to fill in all realized incomes in total, including the grants listed above and all other incomes.</p>'
   toteutuneet_tulot_data:
     '#otherCompensationFromCity__help': 'The operational grant that was granted for the same operations for the previous completed financial year.'
     '#stateOperativeSubvention__help': 'Including the operational grants from the Finnish Film Foundation (SES) and the Funding Centre for Social Welfare and Health Organisations (STEA). Other than operational grants should be included in the other grants.'
