@@ -424,3 +424,47 @@ msgstr "Du måste besöka alla sidor i formuläret innan du kan skicka in ansök
 msgctxt "grants_theme"
 msgid "Unvisited pages:"
 msgstr "Obesökta sidor:"
+
+msgctxt "Grants application: Validation"
+msgid "Field is required"
+msgstr "Fält är obligatoriskt"
+
+msgctxt "Grants application: Validation"
+msgid "@field field is required"
+msgstr "Fält @field är obligatoriskt."
+
+msgctxt "Grants application: Draft"
+msgid "Save as draft"
+msgstr "Spara som oavslutad"
+
+msgctxt "Grants application: Draft"
+msgid "Save successful"
+msgstr "Sparat lyckades."
+
+msgctxt "Grants application: Draft"
+msgid "Save failed."
+msgstr "Sparande misslyckades."
+
+msgctxt "Grants application: Steps"
+msgid "Confirm, preview and submit"
+msgstr "Bekräfta, förhandsgranska och skicka"
+
+msgctxt "Grants application: Steps"
+msgid "Ready"
+msgstr "Slutförd"
+
+msgctxt "Grants application: Errors"
+msgid "Error on page @page:"
+msgstr "Fel på sidan @page:"
+
+msgctxt "Grants application: Community officials"
+msgid "You do not have any community officials saved in your profile, so you cannot add any to the application."
+msgstr "Du har inga motsvarande personer sparade i din profil, så du kan inte lägga till några i programmet."
+
+msgctxt "Grants application: Draft"
+msgid "Application saved as draft."
+msgstr "Ansökan sparad som oavslutad."
+
+msgctxt "Grants application: Draft"
+msgid "Application could not be saved as draft."
+msgstr "Ansökan kunde inte sparas som oavslutad."

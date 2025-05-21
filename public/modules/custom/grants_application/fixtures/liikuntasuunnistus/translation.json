@@ -1,35 +1,71 @@
 {
-  "fi": {
-    "suunnistus.title": "Suunnistuslomake",
-    "suunnistus.description": "Tämä on suunnistuslomake",
-    "firstname": "Etunimi",
-    "firstname.description": "Annathan oikean etunimesi",
-    "firstname.default": "Jaska",
-    "lastname": "Sukunimi",
-    "age": "Ikä",
-    "bio": "Kuvaus",
-    "suunnistus.telephone": "Suunnistusavustus-puhelin"
-  },
   "en": {
-    "suunnistus.title": "Orienteering form",
-    "suunnistus.description": "This is orienteering",
-    "firstname": "First name",
-    "firstname.description": "Your real first name if you may",
-    "firstname.default": "Chuck",
-    "lastname": "Last name",
-    "age": "Age",
-    "bio": "Description",
-    "suunnistus.telephone": "Orienteering phone number"
+    "translation": {
+      "orienteering_maps_step.title": "Grant details",
+      "attachments_step.title": "Additional information and attachments",
+      "acting_year_section.title": "Grant details",
+      "acting_year_section.description": "This form is used to apply for a grant for the production costs of orienteering maps. Grants can only be awarded for orienteering and teaching maps reported to the map register of the Finnish Orienteering Federation.",
+      "acting_year.title": "Year for which I am applying for a grant",
+      "orienteering_subvention.title": "Orienteering map grant",
+      "mapName.title": "Map name, location and map type",
+      "size.title": "Size in km2",
+      "voluntaryHours.title": "Informal voluntary work in hours",
+      "cost.title": "Costs in euros",
+      "otherCompensations.title": "Grants received from others in euros",
+      "additional_information_section.title" : "Additional information concerning the application",
+      "additional_information.title": "Additional information",
+      "attachments_section.title": "Attachments",
+      "extra_info.title": "Further clarification on attachments",
+      "other_attachment_fieldset.title": "Other attachment",
+      "other_attachment_fieldset.ui_help": "One file only.\nAllowed types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
+      "file.title": "Attachment",
+      "file_description.title": "Attachment description"
+    }
+  },
+  "fi": {
+    "translation": {
+      "orienteering_maps_step.title": "Avustustiedot",
+      "attachments_step.title": "Lisätiedot ja liitteet",
+      "acting_year_section.title": "Avustuksen tiedot",
+      "acting_year_section.description": "Tällä lomakkeella haetaan avustusta suunnistuskartan valmistuskustannuksista. Avustusta voidaan myöntää vain Suunnistusliiton karttarekisteriin raportoiduista suunnistus- ja opetuskartoista.",
+      "acting_year.title": "Vuosi, jolle avustusta haetaan",
+      "orienteering_subvention.title": "Suunnistuskartta-avustus",
+      "mapName.title": "Kartan nimi, sijainti ja karttatyyppi",
+      "size.title": "Koko km2",
+      "voluntaryHours.title": "Talkootyö tuntia",
+      "cost.title": "Kustannukset euroa",
+      "otherCompensations.title": "Muilta saadut avustukset euroa",
+      "additional_information_section.title" : "Lisätietoa hakemukseen liittyen",
+      "additional_information.title": "Lisätiedot",
+      "attachments_section.title": "Liitteet",
+      "extra_info.title": "Lisäselvitys liitteistä",
+      "other_attachment_fieldset.title": "Muu liite",
+      "other_attachment_fieldset.ui_help": "Vain yksi tiedosto.\nSuositus alle 2 Mt, enintään 20 Mt.\nSallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
+      "file.title": "Liitetiedosto",
+      "file_description.title": "Liitteen kuvaus"
+    }
   },
   "sv": {
-    "suunnistus.title": "placeholder",
-    "suunnistus.description": "placeholder",
-    "firstname": "Svenska",
-    "firstname.description": "svennnska",
-    "firstname.default": "Sven",
-    "lastname": "Svenska",
-    "age": "Svenska",
-    "bio": "Svenska",
-    "suunnistus.telephone": "SvenskaSvenska"
+    "translation": {
+      "orienteering_maps_step.title": "Uppgifter om understödet",
+      "attachments_step.title": "Ytterligare information och bilagor",
+      "acting_year_section.title": "Uppgifter om understödet",
+      "acting_year_section.description": "Med denna blankett ansöks om understöd för framställningskostnader för en orienteringskarta. Understödet kan endast beviljas för de orienterings- och undervisningskartor som rapporterats till Orienteringsförbundets kartregister.",
+      "acting_year.title": "År för vilket jag ansöker om understöd",
+      "orienteering_subvention.title": "Understöd för framställning av orienteringskartor",
+      "mapName.title": "Kartans namn, läge och karttyp",
+      "size.title": "Storlek, km2",
+      "voluntaryHours.title": "Talkoarbete, timmar",
+      "cost.title": "Kostnader, euro",
+      "otherCompensations.title": "Understöd från tredje part, euro",
+      "additional_information_section.title" : "Ytterligare information för ansökan",
+      "additional_information.title": "Ytterligare information",
+      "attachments_section.title": "Bilagor",
+      "extra_info.title": "Ytterligare information om bilagorna",
+      "other_attachment_fieldset.title": "Annan bilaga",
+      "other_attachment_fieldset.ui_help": "Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip. ",
+      "file.title": "Bilaga",
+      "file_description.title": "Beskrivning av bilagan"
+    }
   }
 }

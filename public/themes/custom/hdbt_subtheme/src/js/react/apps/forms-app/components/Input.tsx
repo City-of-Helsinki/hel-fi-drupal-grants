@@ -68,7 +68,7 @@ export const TextArea = ({
     required={required}
     value={value ?? ''}
   />
-);
+)
 
 type SelectWidgetProps = WidgetProps & {
   assistive?: string;
@@ -162,7 +162,11 @@ export const CommunityOfficialsSelect = (props: WidgetProps) => {
   }
 
   if (!options.length) {
-    selectProps.assistive = 'Profiiliisi ei ole tallennettu yhtään yhteisöstä vastaavaa henkilöä, joten et voi lisätä niitä hakemukselle.';
+    selectProps.assistive = Drupal.t(
+      'You do not have any community officials saved in your profile, so you cannot add any to the application.',
+      {},
+      {context: 'Grants application: Community officials'}
+    );
   }
 
   return (

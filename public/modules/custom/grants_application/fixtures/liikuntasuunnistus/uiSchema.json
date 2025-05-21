@@ -1,10 +1,8 @@
 {
-  "attachments": {
+  "attachments_step": {
     "additional_information_section": {
       "additional_information": {
-        "ui:widget": "textarea",
-        "ui:tooltip": "Testi Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen.",
-        "ui:help": "Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen."
+        "ui:widget": "textarea"
       }
     },
     "attachments_section": {
@@ -14,13 +12,13 @@
       "other_attachment_fieldset": {
         "file": {
           "misc:file-type": 0,
-          "ui:help": "Vain yksi tiedosto.\nSuositus alle 2 Mt, enintään 20 Mt.\nSallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
+          "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
       }
     }
   },
-  "orienteering_maps": {
+  "orienteering_maps_step": {
     "orienteering_subvention": {
       "orienteering_maps": {
         "mapName": {

@@ -10,8 +10,8 @@ export const FormActions = ({
   saveDraft,
   validatePartialForm,
 }: {
-  saveDraft: () => boolean,
-  validatePartialForm: () => ValidationData<any>|undefined
+  saveDraft: () => Promise<boolean>;
+  validatePartialForm: () => ValidationData<any>|undefined;
 }) => {
   const steps = useAtomValue(getStepsAtom);
   const [currentStepIndex, { id: currentStepId }] = useAtomValue(getCurrentStepAtom);
