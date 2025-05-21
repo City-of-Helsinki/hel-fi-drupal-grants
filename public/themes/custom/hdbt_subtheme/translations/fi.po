@@ -518,3 +518,7 @@ msgstr "Hakemus on tallennettu luonnoksena."
 msgctxt "Grants application: Draft"
 msgid "Application could not be saved as draft."
 msgstr "Hakemusta ei voitu tallentaa luonnoksena."
+
+msgctxt "Grants application: Validation"
+msgid "@mail ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com."
+msgstr "Hakemusta ei voitu tallentaa luonnoksena."

@@ -61,7 +61,7 @@ const formatRequiredError = (error: ErrorObject) => {
 const formatPatternError = (error: ErrorObject) => {
   const { data } = error;
 
-  return Drupal.t('Email address @mail is not valid. Use the format user@example.com.', {'@mail': data}, {context: 'Grants application: Validation'});
+  return Drupal.t('The email address @mail is not valid. Use the format user@example.com.', {'@mail': data}, {context: 'Grants application: Validation'});
 }
 
 /**
