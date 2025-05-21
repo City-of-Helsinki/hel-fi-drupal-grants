@@ -21,7 +21,7 @@ const getPrintableProperty = (
   }
 
   if (property.type === 'object') {
-    return (
+    return property?.properties?.fileName ? (data?.fileName || '-') : (
       <Fragment key={key}>
         {/* @todo fix this when updating styles. Leave for now since the old styles use label without control */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -50,18 +50,12 @@ const getPrintableProperty = (
     )
   }
 
-  const printableData = (
-    property.format === 'data-url' ?
-      data?.filename || '-'
-      : data
-   ) || '-';
-
   return  (
     <Fragment key={key}>
         {/* @todo fix this when updating styles. Leave for now since the old styles use label without control */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label>{property.title || ''}</label>
-      <span>{printableData}</span>
+      <span>{data || '-'}</span>
     </Fragment>
   );
 }

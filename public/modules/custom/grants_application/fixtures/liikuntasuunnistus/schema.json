@@ -129,7 +129,7 @@
                     "file_id": {
                       "type": "integer"
                     },
-                    "filename": {
+                    "fileName": {
                       "type": "string"
                     },
                     "fileType": {
@@ -164,6 +164,7 @@
     }
   },
   "description": "",
+  "title": "form_title",
   "type": "object",
   "properties": {
     "orienteering_maps_step": {
