@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_application\Plugin\rest\resource;
 
-use Drupal\Component\Utility\Xss;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -195,20 +194,28 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    // @todo only return required user data to frontend.
-    $response = [
-      'form_data' => $form_data,
-      'grants_profile' => $grants_profile_data->toArray(),
-      'user_data' => $user_information,
-      'token' => $this->csrfTokenGenerator->get('rest'),
-      ...$settings->toArray(),
-    ];
+    // @todo On actual save, we are putting form_data inside
+    // "compensation" to prevent it from getting overwritten by the integration.
+    // This should be done in more clean way. Maybe separate ATV-doc for react
+    // form or something else.
+    $response = [];
+    $response['form_data'] = isset($form_data['form_data']) ? $form_data['form_data'] : $form_data['compensation']['form_data'];
+
+    // @todo Only return required user data to frontend
+    $response['grants_profile'] = $grants_profile_data->toArray();
+    $response['user_data'] = $user_information;
+    $response['token'] = $this->csrfTokenGenerator->get('rest');
+    $response = array_merge($response, $settings->toArray());
 
     return new JsonResponse($response);
   }
 
   /**
    * Create the initial document.
+   *
+   * This is only called when a react-form is opened for the first time.
+   * After that the patch-function takes care of submitting the form as draft.
+   * Submitting is handled in Application-resource.
    *
    * @param int $application_type_id
    *   The application type id.
@@ -348,7 +355,9 @@ final class DraftApplication extends ResourceBase {
     }
 
     // @todo Check that the application is actually a draft.
-
+    // Actually, the document state should not be > "received"
+    // since an application which is taken into processing
+    // should not change.
     try {
       $document = $this->atvService->getDocument($application_number);
     }
@@ -363,7 +372,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     // @todo Better sanitation.
-    $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])), TRUE);
+    // $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])), TRUE);
     $document_data = ['form_data' => $form_data];
 
     $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
@@ -373,13 +382,22 @@ final class DraftApplication extends ResourceBase {
       $this->userInformationService->getUserProfileData(),
       $this->userInformationService->getGrantsProfileContent(),
       $settings,
-      $document,
+      $application_number,
     );
 
     $document_data['attachmentsInfo'] = $this->avus2Mapper
-      ->getAttachmentAndGeneralInfo($form_data);
+      ->getAttachmentAndGeneralInfo($attachments, $form_data);
 
-    $document->setContent($document_data);
+    // @todo clean this up a bit, unnecessarily duplicated variables.
+    // Make sure the events and messages are not overridden.
+    $content = $document->getContent();
+    $content['compensation'] = $document_data['compensation'];
+    $content['form_data'] = $form_data;
+    // Temporary solution since integration removes the root form_data^.
+    $content['compensation']['form_data'] = $form_data;
+    $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
+
+    $document->setContent($content);
 
     try {
       $this->cleanUpAttachments($document, $attachments);

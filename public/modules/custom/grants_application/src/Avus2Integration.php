@@ -7,8 +7,8 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\ClientInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Avus2 integration.
@@ -39,17 +39,18 @@ final class Avus2Integration {
   /**
    * The logger.
    *
-   * @var LoggerChannelInterface
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
   private LoggerChannelInterface $logger;
 
   /**
-   *
+   * The constructor.
    */
   public function __construct(
     private LoggerChannelFactoryInterface $loggerFactory,
+    #[Autowire(service: 'grants_metadata.atv_schema')]
     private AtvSchema $atvSchema,
-    private Client $httpClient,
+    private ClientInterface $httpClient,
   ) {
     $this->logger = $this->loggerFactory->get('avus2_integration');
 
@@ -65,7 +66,7 @@ final class Avus2Integration {
   /**
    * Send the form data to Avus2.
    *
-   * @param AtvDocument $document
+   * @param \Drupal\helfi_atv\AtvDocument $document
    *   The document.
    * @param string $application_number
    *   The application number.
@@ -81,6 +82,7 @@ final class Avus2Integration {
     // we don't want to send that.
     $content = $document->getContent();
     unset($content['form_data']);
+    unset($content['compensation']['form_data']);
     $json = Json::encode($content);
 
     try {
@@ -116,14 +118,13 @@ final class Avus2Integration {
     catch (\Exception $e) {
       /*
       $this->messenger->addError(
-        $this->t('Application saving failed, error has been logged.',
-          [],
-          ['context' => 'grants_handler']),
+      $this->t('Application saving failed, error has been logged.',
+      [],
+      ['context' => 'grants_handler']),
       );
-      */
-      // $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
+       */
+      $this->logger->error('Error saving application: %msg', ['%msg' => $e->getMessage()]);
       // \Sentry\captureException($e);
-
       return FALSE;
     }
   }

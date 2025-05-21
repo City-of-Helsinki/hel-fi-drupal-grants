@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_application\Plugin\rest\resource;
 
-use Drupal\Component\Utility\Xss;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -12,11 +11,12 @@ use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
-use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_events\EventsService;
+use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ApplicationSubmitType;
 use Drupal\grants_handler\Event\ApplicationSubmitEvent;
 use Drupal\rest\Attribute\RestResource;
@@ -76,6 +76,14 @@ final class Application extends ResourceBase {
    *   The Avus2-mapper.
    * @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
    *   The event dispatcher.
+   * @param \Drupal\grants_application\Avus2Integration $integration
+   *   The integration.
+   * @param \Drupal\grants_events\EventsService $eventsService
+   *   The event service.
+   * @param \Drupal\grants_attachments\AttachmentHandler $attachmentHandler
+   *   The attachment handler.
+   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
+   *   The application status service.
    */
   public function __construct(
     array $configuration,
@@ -87,7 +95,6 @@ final class Application extends ResourceBase {
     private UserInformationService $userInformationService,
     private HelfiAtvService $atvService,
     private UuidInterface $uuid,
-    private ApplicationNumberService $applicationNumberService,
     private CsrfTokenGenerator $csrfTokenGenerator,
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
@@ -96,6 +103,7 @@ final class Application extends ResourceBase {
     private Avus2Integration $integration,
     private EventsService $eventsService,
     private AttachmentHandler $attachmentHandler,
+    private ApplicationStatusService $applicationStatusService,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -114,15 +122,15 @@ final class Application extends ResourceBase {
       $container->get(UserInformationService::class),
       $container->get(HelfiAtvService::class),
       $container->get(UuidInterface::class),
-      $container->get(ApplicationNumberService::class),
       $container->get(CsrfTokenGenerator::class),
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
       $container->get(Avus2Mapper::class),
       $container->get(EventDispatcherInterface::class),
-      $container->get(Avus2Mapper::class),
-      $container->get(EventsService::class),
-      $container->get(AttachmentHandler::class),
+      $container->get(Avus2Integration::class),
+      $container->get('grants_events.events_service'),
+      $container->get('grants_attachments.attachment_handler'),
+      $container->get('grants_handler.application_status_service'),
     );
   }
 
@@ -219,7 +227,7 @@ final class Application extends ResourceBase {
     $content = json_decode(\Drupal::request()->getContent(), TRUE);
     [
       'form_data' => $form_data,
-      'attachments' => $attachments
+      'attachments' => $attachments,
     ] = $content;
 
     try {
@@ -262,33 +270,64 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    // Here we do the actual work.
+    // Handle bank account file upload / other bank account shenanigans.
+      // The bank account file handling causes extra document load and save.
+      // No need to do anything with the document before this has been done.
+    // Map the React-form data to Avus2-format.
+    // Update the ATV document one last time before sending to integration.
+    // Send to integration.
+    // Update the custom submission entity.
+
+
+    // Check if the bank file is already added to the ATV document.
+    $selected_bank_account_number = $form_data["applicant_info"]["bank_account"]["bank_account"];
+    $bank_file = FALSE;
+    foreach ($grants_profile_data->getBankAccounts() as $bank_account) {
+      $bank_file = array_find($document->getAttachments(), fn(array $attachment) => $bank_account['confirmationFile'] === $attachment['filename']);
+    } // todo add file type check as well
+
+    // If not, we must take if from the profile document and upload to application form document.
+    $bank_accounts = $grants_profile_data->getBankAccounts();
+    $profile_files = $this->userInformationService->getGrantsProfileAttachments();
+
+    try {
+      $bank_confirmation_file_array = Helper::findMatchingBankConfirmationFile(
+        $selected_bank_account_number,
+        $bank_accounts,
+        $profile_files,
+      );
+    }
+    catch (\Exception $e) {
+      // The selected bank account does not exist in user profile for some reason.
+      return new JsonResponse(['mismatch in given bank information and profile bank accounts.'], 500);
+    }
+
+    $actual_file = NULL;
+    if (!$bank_file) {
+      try {
+        /** @var \Drupal\file\FileInterface $actual_file */
+        $actual_file = $this->atvService->getAttachment($bank_confirmation_file_array['href']);
+      }
+      catch (\Exception $e) {
+        // file does not exist in atv? not possible.
+      }
+      if ($actual_file) {
+        $this->atvService->addAttachment($document->getId(), $bank_confirmation_file_array['filename'], $actual_file);
+        $actual_file->delete();
+      }
+    }
+
+
+    // After bank file has been handled, load the ATV document.
+    // Continue with the Avus2-mapping.
+    $document = $this->atvService->getDocument($application_number);
+
     // @todo Better sanitation.
     // $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
     $document_data = ['form_data' => $form_data];
 
-    // Here we do the actual work
-    // Handle bank account file upload / other bank account shenanigans
-      // The bank account file handling causes extra document load and save
-      // No need to do anything with the document before this has been done
-    // Map the react form data to Avus2 format
-    // Update the ATV document one last time before sending to integration
-    // Send to integration
-    // Update the custom submission entity
-
-    // Handle bank account.
-    // @todo Sanity check.
-    // @todo Rewrite the bank account file logic completely.
-    $bank_account_number = $form_data["applicant_info"]["bank_account"]["bank_account"];
-    $content = $document->getContent();
-    $this->attachmentHandler->handleBankAccountConfirmation(
-      $bank_account_number,
-      $application_number,
-      $content,
-      FALSE
-    );
-
-    $document = $this->atvService->getDocument($application_number);
-
+    // @todo Should be refactored to handle all the forms in proper way.
     $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
       $form_data,
       $user_data,
@@ -296,20 +335,39 @@ final class Application extends ResourceBase {
       $this->userInformationService->getUserProfileData(),
       $this->userInformationService->getGrantsProfileContent(),
       $settings,
-      $document,
+      $application_number,
     );
 
     // Attachments and general info are outside the compensation.
     $document_data['attachmentsInfo'] = $this->avus2Mapper
       ->getAttachmentAndGeneralInfo($attachments, $form_data);
 
+    $mapped_bank_confirmation_file = $this->avus2Mapper->createBankFileData($selected_bank_account_number, $bank_confirmation_file_array);
+    $document_data['attachmentsInfo']['attachmentsArray'][] = $mapped_bank_confirmation_file;
+
+    $document_data["formUpdate"] = FALSE;
+
+    if (!isset($document_data["statusUpdates"])) {
+      $document_data["statusUpdates"] = [];
+    }
+
+    if (!isset($document_data["events"])) {
+      $document_data["events"] = [];
+    }
+
+    if (!isset($document_data['messages'])) {
+      $document_data['messages'] = [];
+    }
+
     // Update the atv document before sending to integration.
+    // Lets try a way to hold on to the document data.
+    $document_data['compensation']['form_data'] = $form_data;
+
     $document->setContent($document_data);
 
     $this->atvService->updateExistingDocument($document);
 
-    // Save to Avus2.
-    $document = $this->atvService->getDocument($application_number);
+    // $document = $this->atvService->getDocument($application_number);
 
     // Save id has previously been saved to database to track
     // unsuccessful submissions due to integration failures.
@@ -333,11 +391,13 @@ final class Application extends ResourceBase {
     catch (\Exception $e) {
       // Log the exception,
       // return success = false to react.
+      //$this->logger('Error while sending application to integration: ' . $e->getMessage());
+      $x = 1;
     }
 
     if (!$success) {
       // Return success = false to react frontend.
-      $this->logger->error('jep');
+      $this->logger->error('Could not send application to integration.');
       // R return new JsonResponse([], 500);.
     }
 

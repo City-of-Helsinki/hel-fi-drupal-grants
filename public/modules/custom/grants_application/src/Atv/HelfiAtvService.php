@@ -106,6 +106,19 @@ class HelfiAtvService {
   }
 
   /**
+   * Get attachment file from atv document.
+   *
+   * @param string $href
+   *   The href from profile document attachment.
+   *
+   * @return \Drupal\file\FileInterface|bool
+   *   The actual file or boolean if not found.
+   */
+  public function getAttachment(string $href): FileInterface|bool {
+    return $this->atvService->getAttachment($href);
+  }
+
+  /**
    * Get the environment.
    *
    * @return string

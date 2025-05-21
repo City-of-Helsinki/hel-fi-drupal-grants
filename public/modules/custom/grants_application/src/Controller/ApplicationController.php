@@ -60,12 +60,11 @@ final class ApplicationController extends ControllerBase {
    *   The response.
    */
   public function uploadFile(string $id, Request $request): JsonResponse {
+    /** @var \Symfony\Component\HttpFoundation\File\File $file */
     $file = $request->files->get('file');
     if (!$file || !$id) {
       return new JsonResponse(status: 400);
     }
-
-
 
     try {
       $this->antivirusService->scan([
@@ -112,7 +111,8 @@ final class ApplicationController extends ControllerBase {
     }
 
     // @todo Check that events are added as normally HANDLER_ATT_OK.
-    // https://helsinkisolutionoffice.atlassian.net/wiki/spaces/KAN/pages/8671232440/Hakemuksen+elinkaaren+tapahtumat+Eventit
+    // Https://helsinkisolutionoffice.atlassian.net/wiki/spaces/KAN/pages/
+    // 8671232440/Hakemuksen+elinkaaren+tapahtumat+Eventit.
 
     $file_entity->delete();
     $response = [
