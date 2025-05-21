@@ -41,7 +41,6 @@ class GrantsTermsTest extends GrantsHandlerKernelTestBase {
       'title' => 'Terms of service',
       'langcode' => 'en',
       'body' => 'You are free to...',
-      'field_show_on_all_forms' => TRUE,
       'field_link_title' => 'I accept the terms',
     ]);
     $block->save();

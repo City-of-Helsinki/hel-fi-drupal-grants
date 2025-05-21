@@ -4,5 +4,5 @@ status: true
 dependencies: {  }
 id: terms_block
 label: 'Terms block'
-revision: false
+revision: true
 description: 'Grants terms block'

@@ -926,17 +926,9 @@ function grants_handler_preprocess_webform_submission_data(&$variables): void {
   /** @var \Drupal\webform\WebformSubmissionInterface $submission */
   $submission = $variables['webform_submission'];
 
-  $query = \Drupal::entityQuery('block_content');
-
-  // Get blocks for ALL forms and this form.
-  $orGroup = $query
-    ->orConditionGroup()
-    ->condition('field_form', $variables['webform']->id())
-    ->condition('field_show_on_all_forms', TRUE);
-
-  $results = $query
+  // Get ALL blocks.
+  $results = \Drupal::entityQuery('block_content')
     ->condition('type', 'terms_block')
-    ->condition($orGroup)
     ->accessCheck(FALSE)
     ->execute();
 

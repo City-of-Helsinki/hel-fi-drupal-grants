@@ -98,6 +98,7 @@ export const FileInput = ({
     id={id || ''}
     invalid={Boolean(rawErrors?.length)}
     label={label}
+    language={drupalSettings.path.currentLanguage}
     // 20mb in bytes
     maxSize={20 * 1024 * 1024}
     onChange={handleChange}
