@@ -43,6 +43,13 @@ function* iterateFormData(element: any, prefix: string = ''): IterableIterator<s
   }
 };
 
+/**
+ * Iterate over all attachments in a form data object.
+ *
+ * @param {any} element - Form data object
+ *
+ * @yields {ATVFile} - Attachment
+ */
 function* getAttachments(element: any): IterableIterator<ATVFile> {
   if (!element || typeof element !== 'object') {
     return;

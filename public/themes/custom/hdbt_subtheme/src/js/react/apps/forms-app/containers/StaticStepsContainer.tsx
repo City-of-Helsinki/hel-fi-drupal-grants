@@ -1,4 +1,4 @@
-import { useAtomValue } from 'jotai';
+import { useAtomValue, WritableAtom } from 'jotai';
 import { RJSFSchema } from '@rjsf/utils';
 
 import { getCurrentStepAtom } from '../store';
@@ -6,12 +6,13 @@ import { Preview } from '../components/StaticSteps/Preview';
 import { Ready } from '../components/StaticSteps/Ready';
 
 export const StaticStepsContainer = ({
-  formData,
+  formDataAtom,
   schema,
 }: {
-  formData: any,
-  schema: RJSFSchema,
+  formDataAtom: WritableAtom<any, [update: unknown], any>;
+  schema: RJSFSchema;
 }) => {
+  const formData= useAtomValue(formDataAtom);
   const currentStep = useAtomValue(getCurrentStepAtom)[1];
 
   switch(currentStep.id) {

@@ -1,9 +1,9 @@
 import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom, WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
 import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
-import React, { createRef, useCallback } from 'react';
+import React, { createRef, useCallback, useEffect } from 'react';
 import { customizeValidator } from '@rjsf/validator-ajv8';
 
 import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
@@ -47,13 +47,19 @@ export const RJSFFormContainer = ({
   submitData,
   uiSchema,
 }: {
-  formDataAtom: any;
+  formDataAtom: WritableAtom<any, [update: unknown], any>;
   saveDraft: (data: any) => Promise<boolean>;
   schema: RJSFSchema;
   submitData: (data: IChangeEvent) => Promise<boolean>;
   uiSchema: UiSchema;
 }) => {
-  const [formData, setFormData] = useAtom(formDataAtom)
+  const setFormData = useSetAtom(formDataAtom)
+
+  useEffect(() => {
+    if (schema?.title) {
+      document.title = `${schema.title} ${document.title}`;
+    }
+  }, [schema]);
 
   const submitStatus = useAtomValue(getSubmitStatusAtom);
   const steps = useAtomValue(getStepsAtom);
@@ -64,6 +70,9 @@ export const RJSFFormContainer = ({
   );
   const readReachedStep = useAtomCallback(
     useCallback(get => get(getReachedStepAtom), [])
+  );
+  const readFormData = useAtomCallback(
+    useCallback(get => get(formDataAtom), [])
   );
   const setErrors = useSetAtom(setErrorsAtom);
 
@@ -122,11 +131,12 @@ export const RJSFFormContainer = ({
 
   return (
     <>
+      {schema?.title && <h1>{schema.title}</h1>}
       <ErrorsList />
       <Stepper formRef={formRef} />
       <div className='form-wrapper'>
         <StaticStepsContainer
-          formData={formData}
+          formDataAtom={formDataAtom}
           schema={schema}
         />
         <Form
@@ -135,7 +145,8 @@ export const RJSFFormContainer = ({
             ...getDefaultRegistry().fields,
             atvFile: FileInput,
           }}
-          formData={formData || {}}
+          formData={readFormData() || {}}
+          liveValidate={false}
           method='POST'
           noHtml5Validate
           onChange={browserCacheData}
@@ -177,7 +188,7 @@ export const RJSFFormContainer = ({
           widgets={widgets}
         >
           <FormActions
-            saveDraft={() => saveDraft(formData)}
+            saveDraft={() => saveDraft(readFormData())}
             validatePartialForm={validatePartialForm}
           />
         </Form>

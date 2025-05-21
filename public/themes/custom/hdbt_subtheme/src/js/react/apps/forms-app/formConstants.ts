@@ -79,8 +79,6 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
         type: objectType,
       },
       contact_person_info: {
-        title: 'contact_person_info.title',
-        type: objectType,
         properties: {
           contact_person: {
             minLength: 1,
@@ -93,6 +91,9 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
             type: stringType,
           }
         },
+        required: ['contact_person', 'contact_person_phone_number'],
+        title: 'contact_person_info.title',
+        type: objectType,
       },
       community_address: {
         properties: {
