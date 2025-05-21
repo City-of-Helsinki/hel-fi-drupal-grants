@@ -468,3 +468,7 @@ msgstr "Ansökan sparad som oavslutad."
 msgctxt "Grants application: Draft"
 msgid "Application could not be saved as draft."
 msgstr "Ansökan kunde inte sparas som oavslutad."
+
+msgctxt "Grants application: Validation"
+msgid "The email address @mail is not valid. Use the format user@example.com."
+msgstr "@mail är inte en giltig e-postadress. Använd formen user@example.com."
