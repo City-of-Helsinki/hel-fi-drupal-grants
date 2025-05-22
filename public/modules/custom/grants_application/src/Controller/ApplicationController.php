@@ -33,6 +33,11 @@ final class ApplicationController extends ControllerBase {
 
   /**
    * Render the forms react app.
+   * 
+   * @param string $id
+   *   The application number.
+   * 
+   * @return array
    */
   public function formsApp(string $id): array {
     return [
