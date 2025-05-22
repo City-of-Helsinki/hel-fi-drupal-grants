@@ -199,7 +199,7 @@ final class DraftApplication extends ResourceBase {
     // This should be done in more clean way. Maybe separate ATV-doc for react
     // form or something else.
     $response = [];
-    $response['form_data'] = isset($form_data['form_data']) ? $form_data['form_data'] : $form_data['compensation']['form_data'];
+    $response['form_data'] = $form_data['form_data'] ?? $form_data['compensation']['form_data'];
 
     // @todo Only return required user data to frontend
     $response['grants_profile'] = $grants_profile_data->toArray();
@@ -372,7 +372,6 @@ final class DraftApplication extends ResourceBase {
     }
 
     // @todo Better sanitation.
-    // $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])), TRUE);
     $document_data = ['form_data' => $form_data];
 
     $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(

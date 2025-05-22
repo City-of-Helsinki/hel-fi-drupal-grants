@@ -64,8 +64,6 @@ final class Application extends ResourceBase {
    *   The helfi atv service.
    * @param \Drupal\Component\Uuid\UuidInterface $uuid
    *   The uuid service.
-   * @param \Drupal\grants_application\Form\ApplicationNumberService $applicationNumberService
-   *   The application number service.
    * @param \Drupal\Core\Access\CsrfTokenGenerator $csrfTokenGenerator
    *   The csrf token generator.
    * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
@@ -158,7 +156,8 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 400);
     }
 
-    // TODO täällä pitää parsia ATV_dokumentista viimeisin STATUS_UPDATE -eventti.
+    // @todo Parse the last STATUS_UPDATE event here.
+    // It can be used to determinate if this is editable.
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
@@ -272,14 +271,12 @@ final class Application extends ResourceBase {
 
     // Here we do the actual work.
     // Handle bank account file upload / other bank account shenanigans.
-      // The bank account file handling causes extra document load and save.
-      // No need to do anything with the document before this has been done.
+    // The bank account file handling causes extra document load and save.
+    // No need to do anything with the document before this has been done.
     // Map the React-form data to Avus2-format.
     // Update the ATV document one last time before sending to integration.
     // Send to integration.
     // Update the custom submission entity.
-
-
     // Check if the bank file is already added to the ATV document.
     $selected_bank_account_number = $form_data["applicant_info"]["bank_account"]["bank_account"];
     $bank_file = FALSE;
@@ -299,7 +296,7 @@ final class Application extends ResourceBase {
       );
     }
     catch (\Exception $e) {
-      // The selected bank account does not exist in user profile for some reason.
+      // The user has removed bank account from profile.
       return new JsonResponse(['mismatch in given bank information and profile bank accounts.'], 500);
     }
 
@@ -310,7 +307,7 @@ final class Application extends ResourceBase {
         $actual_file = $this->atvService->getAttachment($bank_confirmation_file_array['href']);
       }
       catch (\Exception $e) {
-        // file does not exist in atv? not possible.
+        // file does not exist in atv? Should not be possible.
       }
       if ($actual_file) {
         $this->atvService->addAttachment($document->getId(), $bank_confirmation_file_array['filename'], $actual_file);
@@ -324,7 +321,6 @@ final class Application extends ResourceBase {
     $document = $this->atvService->getDocument($application_number);
 
     // @todo Better sanitation.
-    // $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
     $document_data = ['form_data' => $form_data];
 
     // @todo Should be refactored to handle all the forms in proper way.
@@ -391,14 +387,12 @@ final class Application extends ResourceBase {
     catch (\Exception $e) {
       // Log the exception,
       // return success = false to react.
-      //$this->logger('Error while sending application to integration: ' . $e->getMessage());
-      $x = 1;
+      // @todo Log the failure to send to integration and return.
     }
 
     if (!$success) {
-      // Return success = false to react frontend.
-      $this->logger->error('Could not send application to integration.');
-      // R return new JsonResponse([], 500);.
+      // Avus2 returned non-200 code.
+      // Log and return.
     }
 
     try {
@@ -432,18 +426,16 @@ final class Application extends ResourceBase {
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
   public function patch(Request $request): JsonResponse {
+    // @todo This function is not yet called.
+    // This needs to be refactored to handle patch request.
     // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);
     [
       'application_number' => $application_number,
       'form_data' => $form_data,
-      // 'draft' => $draft,
     ] = $content;
 
-    // TODO check if we are allowed to send this any more.
-
-    // $draft = $draft ?? FALSE;
-
+    // @todo Check if we are allowed to send this any more.
     if (!$application_number) {
       // Missing application number.
       return new JsonResponse([], 500);
@@ -474,15 +466,10 @@ final class Application extends ResourceBase {
     }
 
     // @todo Add event HANDLER_SEND_INTEGRATION.
-
     try {
       // @todo Better sanitation.
-      // $sanitized_data = json_decode(Xss::filter(json_encode($form_data ?? [])));
-      // $document_data = ['form_data' => $sanitized_data];
-
       $document_data = ['form_data' => $form_data ?? []];
 
-      // $atv_mapped_data = $this->atvMapper->mapData($sanitized_data);
       $document->setContent($document_data);
       // @todo Always get the events and messages from atv submission before overwriting.
       $this->atvService->updateExistingDocument($document);

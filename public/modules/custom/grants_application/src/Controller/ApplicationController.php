@@ -113,7 +113,6 @@ final class ApplicationController extends ControllerBase {
     // @todo Check that events are added as normally HANDLER_ATT_OK.
     // Https://helsinkisolutionoffice.atlassian.net/wiki/spaces/KAN/pages/
     // 8671232440/Hakemuksen+elinkaaren+tapahtumat+Eventit.
-
     $file_entity->delete();
     $response = [
       'fileName' => $result['filename'],
