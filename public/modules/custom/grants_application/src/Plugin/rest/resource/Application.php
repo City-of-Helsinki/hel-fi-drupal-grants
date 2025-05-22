@@ -280,9 +280,10 @@ final class Application extends ResourceBase {
     // Check if the bank file is already added to the ATV document.
     $selected_bank_account_number = $form_data["applicant_info"]["bank_account"]["bank_account"];
     $bank_file = FALSE;
+    // @todo Add file type check as well (filetype = 45 etc).
     foreach ($grants_profile_data->getBankAccounts() as $bank_account) {
       $bank_file = array_find($document->getAttachments(), fn(array $attachment) => $bank_account['confirmationFile'] === $attachment['filename']);
-    } // @todo Add file type check as well (filetype = 45 etc).
+    }
 
     // If not, we must take if from the profile document
     // and upload to application form document.

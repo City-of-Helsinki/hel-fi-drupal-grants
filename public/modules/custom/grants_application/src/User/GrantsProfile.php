@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\User;
 
-use Drupal\views\Plugin\views\display\Attachment;
-
 /**
  * The grants profile class.
  */
 class GrantsProfile {
 
+  /**
+   * Profile attachments.
+   *
+   * @var array
+   */
   private $attachments = [];
 
   /**
@@ -44,7 +47,7 @@ class GrantsProfile {
    *   The attachment id.
    *
    * @return array
-   * The attachment array.
+   *   The attachment array.
    */
   public function getAttachmentById(int $id): array {
     return array_find($this->attachments, fn($attachment) => $attachment['id'] === $id);
