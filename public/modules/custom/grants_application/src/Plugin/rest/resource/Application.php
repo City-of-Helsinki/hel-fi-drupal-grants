@@ -313,6 +313,7 @@ final class Application extends ResourceBase {
         // File does not exist in atv? Should not be possible.
       }
       if ($actual_file) {
+        // @todo Some users may get 403 from this one, ask Jere for more information.
         $this->atvService->addAttachment($document->getId(), $bank_confirmation_file_array['filename'], $actual_file);
         $actual_file->delete();
       }
