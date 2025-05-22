@@ -522,7 +522,7 @@ final class Avus2Mapper {
    */
   public function getOrienteeringMaps(array $form_data): array {
     $fields = ['mapName', 'size', 'voluntaryHours', 'cost', 'otherCompensations'];
-    $maps = $form_data['orienteering_maps']['orienteering_subvention']['orienteering_maps'];
+    $maps = $form_data['orienteering_maps_step']['orienteering_subvention']['orienteering_maps'];
 
     $data = [];
     foreach ($maps as $map) {
