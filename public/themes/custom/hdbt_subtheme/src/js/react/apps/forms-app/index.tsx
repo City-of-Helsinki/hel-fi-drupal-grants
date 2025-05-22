@@ -1,12 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import { ErrorBoundary } from '@sentry/react';
+import React, { Suspense } from 'react';
+import ReactDOM from 'react-dom';
+import { LoadingSpinner } from 'hds-react';
 
-import initSentry from '@/react/common/helpers/Sentry';
 import { FormNotFoundError } from './components/FormNotFoundError';
-import FormWrapper from './containers/FormWrapper';
 import { GeneralError } from './components/GeneralError';
 import { ToastStack } from './components/ToastStack';
+import initSentry from '@/react/common/helpers/Sentry';
+import { AppContainer } from './containers/AppContainer';
 
 initSentry();
 
@@ -25,13 +26,15 @@ if (rootElement) {
         fallback={<GeneralError />}
       >
         <ToastStack />
+        <Suspense fallback={<LoadingSpinner />}>
         {showError
           ? <FormNotFoundError />
-          : <FormWrapper
+          : <AppContainer
               applicationTypeId={applicationTypeId}
               token={drupalSettings.grants_react_form.token}
             />
         }
+        </Suspense>
       </ErrorBoundary>
     </React.StrictMode>,
     rootElement

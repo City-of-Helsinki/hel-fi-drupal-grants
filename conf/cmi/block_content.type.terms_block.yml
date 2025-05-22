@@ -3,6 +3,6 @@ langcode: en
 status: true
 dependencies: {  }
 id: terms_block
-label: Ehtolohko
+label: 'Terms block'
 revision: false
-description: 'Lohko esikatselusivulle'
+description: 'Grants terms block'
