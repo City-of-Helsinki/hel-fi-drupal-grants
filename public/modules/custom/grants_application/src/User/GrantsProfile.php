@@ -10,12 +10,57 @@ namespace Drupal\grants_application\User;
 class GrantsProfile {
 
   /**
+   * Profile attachments.
+   *
+   * @var array
+   */
+  private $attachments = [];
+
+  /**
    * The constructor.
    *
    * @param array $grantsProfileData
    *   The raw data returned from outside system.
    */
   public function __construct(private array $grantsProfileData) {
+  }
+
+  /**
+   * Get attachment by name.
+   *
+   * Used for bank account file at least.
+   *
+   * @param string $name
+   *   Name of the file.
+   *
+   * @return array|null
+   *   The attachment array from ATV.
+   */
+  public function getAttachmentByName(string $name): array|null {
+    return array_find($this->attachments, fn($attachment) => $attachment['filename'] === $name);
+  }
+
+  /**
+   * Get an attachment by attachment id.
+   *
+   * @param int $id
+   *   The attachment id.
+   *
+   * @return array
+   *   The attachment array.
+   */
+  public function getAttachmentById(int $id): array {
+    return array_find($this->attachments, fn($attachment) => $attachment['id'] === $id);
+  }
+
+  /**
+   * Get bank accounts from grants profile.
+   *
+   * @return array
+   *   The bank accounts.
+   */
+  public function getBankAccounts(): array {
+    return $this->grantsProfileData['bankAccounts'];
   }
 
   /**
@@ -103,7 +148,7 @@ class GrantsProfile {
     }
 
     // This should not be possible since the end user selects the data
-    // from this list.
+    // from this list unless deleted from profile.
     throw new \Exception('Selected address not found.');
   }
 

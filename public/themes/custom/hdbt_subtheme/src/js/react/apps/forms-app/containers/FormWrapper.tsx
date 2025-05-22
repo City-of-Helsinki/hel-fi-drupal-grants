@@ -126,7 +126,7 @@ const transformData = (data: any) => {
   if (definitions) {
     Object.entries(definitions).forEach((definition: any) => {
       const [key, definitionValue] = definition;
-  
+
       Object.entries(definitionValue.properties).forEach((subProperty: any) => {
         const [subKey] = subProperty;
         // @ts-ignore
@@ -176,7 +176,7 @@ export const FormWrapper = ({
   initializeForm(translatedData);
 
   const submitData = async (submittedData: any): Promise<boolean> => {
-    const response = await fetch(`/en/applications/${applicationTypeId}/send/${readApplicationNumber()}`, {
+    const response = await fetch(`/en/applications/${applicationTypeId}/application/${readApplicationNumber()}`, {
       body: JSON.stringify({
         application_number: readApplicationNumber() || '',
         application_type_id: applicationTypeId,
@@ -205,7 +205,7 @@ export const FormWrapper = ({
   const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData);
 
   const saveDraft = async (submittedData: any) => {
-    const response = await fetch(`/applications/draft/${applicationTypeId}/${readApplicationNumber()}`, {
+    const response = await fetch(`/applications/${applicationTypeId}/${readApplicationNumber()}`, {
       body: JSON.stringify({
         application_number: readApplicationNumber() || '',
         application_type_id: applicationTypeId,
@@ -248,3 +248,5 @@ export const FormWrapper = ({
     />
   );
 };
+
+export default FormWrapper;

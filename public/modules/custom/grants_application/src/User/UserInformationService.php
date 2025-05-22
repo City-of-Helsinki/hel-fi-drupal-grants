@@ -33,6 +33,20 @@ class UserInformationService {
   }
 
   /**
+   * Get the grants profile attachments.
+   *
+   * This can be used to get the files attached to grants profile.
+   *
+   * @return array
+   *   An array of profile attachments.
+   */
+  public function getGrantsProfileAttachments(): array {
+    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+    $profile = $this->grantsProfileService->getGrantsProfile($selectedCompany, FALSE);
+    return $profile->getAttachments();
+  }
+
+  /**
    * Get the grants profile data fetched from ATV.
    *
    * @todo Figure out what this data actually is
