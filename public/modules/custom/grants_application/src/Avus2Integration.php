@@ -7,6 +7,7 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_metadata\AtvSchema;
 use Drupal\helfi_atv\AtvDocument;
+use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -103,7 +104,7 @@ final class Avus2Integration {
       // Set new saveid to header.
       $headers['X-hki-saveId'] = $save_id;
 
-      $res = $this->httpClient->post($this->endpoint, [
+      $res = $this->httpClient->request('POST', $this->endpoint, [
         'auth' => [
           $this->username,
           $this->password,

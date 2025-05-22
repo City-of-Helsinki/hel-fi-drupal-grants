@@ -437,7 +437,7 @@ final class Avus2Mapper {
    * Bank account file must be added to the ATV-document as an attachment
    * manually, since user only selects the bank id on the form.
    *
-   * @param array $selected_bank_account
+   * @param string $selected_bank_account
    *   The bank account number.
    * @param array $bank_file
    *   The file array from atv.

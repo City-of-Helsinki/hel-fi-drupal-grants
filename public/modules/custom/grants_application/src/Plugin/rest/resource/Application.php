@@ -219,11 +219,12 @@ final class Application extends ResourceBase {
    *   The json response.
    */
   public function post(
+    Request $request,
     int $application_type_id,
     ?string $application_number = NULL,
   ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
-    $content = json_decode(\Drupal::request()->getContent(), TRUE);
+    $content = json_decode($request->getContent(), TRUE);
     [
       'form_data' => $form_data,
       'attachments' => $attachments,

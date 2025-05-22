@@ -66,9 +66,12 @@ final class ApplicationController extends ControllerBase {
       return new JsonResponse(status: 400);
     }
 
+    // @phpstan-ignore-next-line
+    $file_original_name = $file->getClientOriginalName();
+
     try {
       $this->antivirusService->scan([
-        $file->getClientOriginalName() => file_get_contents($file->getRealPath()),
+        $file_original_name => file_get_contents($file->getRealPath()),
       ]);
     }
     catch (AntivirusException $e) {
@@ -97,7 +100,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $result = $this->helfiAtvService->addAttachment(
         $submission->document_id->value,
-        $file->getClientOriginalName(),
+        $file_original_name,
         $file_entity
       );
     }
