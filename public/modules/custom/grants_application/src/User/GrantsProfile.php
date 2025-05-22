@@ -22,10 +22,6 @@ class GrantsProfile {
   public function __construct(private array $grantsProfileData) {
   }
 
-  public function setAttachments(array $attachments): void {
-    $this->attachments = $attachments;
-  }
-
   /**
    * Get attachment by name.
    *
@@ -41,10 +37,25 @@ class GrantsProfile {
     return array_find($this->attachments, fn($attachment) => $attachment['filename'] === $name);
   }
 
+  /**
+   * Get an attachment by attachment id.
+   *
+   * @param int $id
+   *   The attachment id.
+   *
+   * @return array
+   * The attachment array.
+   */
   public function getAttachmentById(int $id): array {
     return array_find($this->attachments, fn($attachment) => $attachment['id'] === $id);
   }
 
+  /**
+   * Get bank accounts from grants profile.
+   *
+   * @return array
+   *   The bank accounts.
+   */
   public function getBankAccounts(): array {
     return $this->grantsProfileData['bankAccounts'];
   }
@@ -134,7 +145,7 @@ class GrantsProfile {
     }
 
     // This should not be possible since the end user selects the data
-    // from this list.
+    // from this list unless deleted from profile.
     throw new \Exception('Selected address not found.');
   }
 

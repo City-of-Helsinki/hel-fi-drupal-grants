@@ -282,9 +282,10 @@ final class Application extends ResourceBase {
     $bank_file = FALSE;
     foreach ($grants_profile_data->getBankAccounts() as $bank_account) {
       $bank_file = array_find($document->getAttachments(), fn(array $attachment) => $bank_account['confirmationFile'] === $attachment['filename']);
-    } // todo add file type check as well
+    } // @todo Add file type check as well (filetype = 45 etc).
 
-    // If not, we must take if from the profile document and upload to application form document.
+    // If not, we must take if from the profile document
+    // and upload to application form document.
     $bank_accounts = $grants_profile_data->getBankAccounts();
     $profile_files = $this->userInformationService->getGrantsProfileAttachments();
 
@@ -307,14 +308,13 @@ final class Application extends ResourceBase {
         $actual_file = $this->atvService->getAttachment($bank_confirmation_file_array['href']);
       }
       catch (\Exception $e) {
-        // file does not exist in atv? Should not be possible.
+        // File does not exist in atv? Should not be possible.
       }
       if ($actual_file) {
         $this->atvService->addAttachment($document->getId(), $bank_confirmation_file_array['filename'], $actual_file);
         $actual_file->delete();
       }
     }
-
 
     // After bank file has been handled, load the ATV document.
     // Continue with the Avus2-mapping.
@@ -362,8 +362,6 @@ final class Application extends ResourceBase {
     $document->setContent($document_data);
 
     $this->atvService->updateExistingDocument($document);
-
-    // $document = $this->atvService->getDocument($application_number);
 
     // Save id has previously been saved to database to track
     // unsuccessful submissions due to integration failures.

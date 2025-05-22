@@ -5,7 +5,6 @@ namespace Drupal\grants_application;
 use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
-use Drupal\helfi_atv\AtvDocument;
 
 /**
  * Access control handler for form submission.
@@ -27,8 +26,6 @@ final class Avus2Mapper {
    *   The grants profile.
    * @param \Drupal\grants_application\Form\FormSettings $form_settings
    *   The form settings.
-   * @param \Drupal\helfi_atv\AtvDocument $atvDocument
-   *   The atv-document.
    * @param string $application_number
    *   The application number.
    *
@@ -120,7 +117,8 @@ final class Avus2Mapper {
     return [[
       ['ID' => 'subventionType', 'value' => '15', 'valueType' => 'string', 'label' => NULL],
       ['ID' => 'amount', 'value' => '0' , 'valueType' => 'float', 'label' => NULL],
-    ]];
+    ],
+    ];
   }
 
   /**
@@ -243,6 +241,10 @@ final class Avus2Mapper {
    *   The form settings.
    * @param array $form_data
    *   The form data.
+   * @param string $application_number
+   *   The application number.
+   * @param string $now
+   *   Formatted datetime string.
    *
    * @return array
    *   The application data.
@@ -253,7 +255,7 @@ final class Avus2Mapper {
 
     // Draft is a super special case, it is overwritten by integration.
     // @todo Proper timestamps.
-    // @todo Proper type id
+    // @todo Proper type id.
     return [
       ['ID' => 'applicationType', 'value' => $application_type, 'valueType' => 'string', 'label' => NULL],
       ['ID' => 'applicationTypeID', 'value' => "58", 'valueType' => 'string', 'label' => NULL],
@@ -423,7 +425,8 @@ final class Avus2Mapper {
       'value' => $extra_info,
       'valueType' => 'string',
       'label' => 'Lisäselvitys liitteistä',
-    ]];
+    ],
+    ];
 
     return $data;
   }
@@ -434,12 +437,13 @@ final class Avus2Mapper {
    * Bank account file must be added to the ATV-document as an attachment
    * manually, since user only selects the bank id on the form.
    *
-   * @param array $bank_accounts
-   *   The bank account.
-   * @param array $profile_attachments
+   * @param array $selected_bank_account
+   *   The bank account number.
+   * @param array $bank_file
    *   The file array from atv.
    *
    * @return array
+   *   The bank file data.
    */
   public function createBankFileData(string $selected_bank_account, array $bank_file): array {
     $integration_id = AttachmentHandlerHelper::getIntegrationIdFromFileHref($bank_file['href']);
@@ -527,35 +531,35 @@ final class Avus2Mapper {
         $row = match($field_name) {
           'mapName' => [
             'ID' => $field_name,
-            'value' => (string)$map[$field_name],
+            'value' => (string) $map[$field_name],
             'valueType' => 'string',
             'label' => 'Kartan nimi, sijainti ja karttatyyppi',
           ],
 
           'size' => [
             'ID' => $field_name,
-            'value' => (string)$map[$field_name],
+            'value' => (string) $map[$field_name],
             'valueType' => 'double',
             'label' => 'Koko km2',
           ],
 
           'voluntaryHours' => [
             'ID' => $field_name,
-            'value' => (string)$map[$field_name],
+            'value' => (string) $map[$field_name],
             'valueType' => 'float',
             'label' => 'Talkootyö tuntia',
           ],
 
           'cost' => [
             'ID' => $field_name,
-            'value' => (string)$map[$field_name],
+            'value' => (string) $map[$field_name],
             'valueType' => 'double',
             'label' => 'Kustannukset euroa',
           ],
 
           'otherCompensations' => [
             'ID' => $field_name,
-            'value' => (string)$map[$field_name],
+            'value' => (string) $map[$field_name],
             'valueType' => 'double',
             'label' => 'Muilta saadut avustukset euroa',
           ],
