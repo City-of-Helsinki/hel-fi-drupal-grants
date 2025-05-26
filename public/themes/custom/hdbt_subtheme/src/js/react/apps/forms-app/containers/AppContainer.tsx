@@ -17,7 +17,7 @@ import { isValidFormResponse } from '../utils';
  * @throws {Error} - If the instantiation request fails.
  */
 const instantiateDocument = async(id: string, token: string) => {
-  const response = await fetch(`/applications/draft/${id}`, {
+  const response = await fetch(`/applications/${id}`, {
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-Token': token,
@@ -39,9 +39,9 @@ const instantiateDocument = async(id: string, token: string) => {
  *
  * @param {string} id - The form id
  * @param {string} token - CSRF token
- * 
+ *
  * @return {Promise<object>} - Form settings and existing cached form data
- * 
+ *
  * @throws {Error} - If the request fails
  */
 async function fetchFormData(id: string, token: string) {
@@ -53,7 +53,7 @@ async function fetchFormData(id: string, token: string) {
     applicationNumber = application_number;
   }
 
-  const formConfigResponse = await fetch(`/applications/draft/${id}/${applicationNumber}`, {
+  const formConfigResponse = await fetch(`/applications/${id}/${applicationNumber}`, {
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-Token': token,
