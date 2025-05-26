@@ -17,6 +17,7 @@ import { Stepper } from '../components/Stepper';
 import { SubmitStates } from '../enum/SubmitStates';
 import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
 import { localizeErrors } from '../localizeErrors';
+import { SubmittedForm } from '../components/SubmittedForm';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -76,6 +77,10 @@ export const RJSFFormContainer = ({
   );
   const setErrors = useSetAtom(setErrorsAtom);
 
+  if (submitStatus !==  SubmitStates.DRAFT) {
+    return <SubmittedForm {...{formData: readFormData(), schema}} />
+  }
+
   const browserCacheData = useDebounceCallback(
     (data: IChangeEvent) => {
       setFormData(data.formData);
@@ -123,7 +128,12 @@ export const RJSFFormContainer = ({
     const keyedErrors = keyErrorsByStep(errors, steps);
 
     const errorsToShow = keyedErrors
-      .filter(([index]) => index <= reachedStep).map(([index, error]) => error);
+      .filter(([index]) => index <= reachedStep)
+      .filter(([index, error]) => {
+        const { name } = error;
+        return name !== 'type';
+      })
+      .map(([index, error]) => error);
     setErrors(errorsToShow);
 
     return errorsToShow;
@@ -161,10 +171,7 @@ export const RJSFFormContainer = ({
               setStep([...steps].pop()?.[0] || 0);
             }
           }}
-          readonly={
-            submitStatus !== SubmitStates.unsubmitted &&
-            submitStatus !== SubmitStates.editing
-          }
+          readonly={submitStatus !== SubmitStates.DRAFT}
           ref={formRef}
           schema={schema}
           showErrorList={false}

@@ -22,6 +22,7 @@
           "type":"object",
           "properties": {
             "orienteering_maps": {
+              "default": [],
               "type": "array",
               "title": "orienteering_subvention.title",
               "minItems": 1,
@@ -111,6 +112,7 @@
           }
         },
         "attachments_section": {
+          "description": "attachments_section.description",
           "title": "attachments_section.title",
           "type": "object",
           "properties": {

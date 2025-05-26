@@ -203,12 +203,13 @@ export const FormWrapper = ({
     }
 
     // @todo read submit status from server response
-    setSubmitStatus(SubmitStates.submitted);
+    setSubmitStatus(SubmitStates.SUBMITTED);
 
     return response.ok;
   };
 
-  const initialData = translatedData.form_data?.form_data || null;
+  console.log(translatedData);
+  const initialData = translatedData.status === SubmitStates.DRAFT ? translatedData.form_data?.form_data : translatedData?.form_data?.compensation?.form_data || null;
   const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData);
 
   const saveDraft = async (submittedData: any) => {

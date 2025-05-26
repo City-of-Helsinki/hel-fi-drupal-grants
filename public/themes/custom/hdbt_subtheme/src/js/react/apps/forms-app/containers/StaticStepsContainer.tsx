@@ -2,8 +2,7 @@ import { useAtomValue, WritableAtom } from 'jotai';
 import { RJSFSchema } from '@rjsf/utils';
 
 import { getCurrentStepAtom } from '../store';
-import { Preview } from '../components/StaticSteps/Preview';
-import { Ready } from '../components/StaticSteps/Ready';
+import { Preview } from '../components/Preview';
 
 export const StaticStepsContainer = ({
   formDataAtom,
@@ -20,13 +19,9 @@ export const StaticStepsContainer = ({
       return (
         <Preview {...{formData, schema}} />
       );
+    //  At least for now, this page is never accessible.
     case 'ready':
-      return (
-        <div>
-          <Ready />
-          <Preview {...{formData, schema}} />
-        </div>
-      );
+      return null;
     default:
       return null;
   }

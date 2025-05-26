@@ -199,8 +199,9 @@ final class DraftApplication extends ResourceBase {
     $response = [
       'form_data' => $form_data,
       'grants_profile' => $grants_profile_data->toArray(),
-      'user_data' => $user_information,
+      'status' => $document->getStatus(),
       'token' => $this->csrfTokenGenerator->get('rest'),
+      'user_data' => $user_information,
       ...$settings->toArray(),
     ];
 

@@ -39,6 +39,7 @@
       "otherCompensations.title": "Muilta saadut avustukset euroa",
       "additional_information_section.title" : "Lisätietoa hakemukseen liittyen",
       "additional_information.title": "Lisätiedot",
+      "attachments_section.description": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
       "attachments_section.title": "Liitteet",
       "extra_info.title": "Lisäselvitys liitteistä",
       "other_attachment_fieldset.title": "Muu liite",

@@ -90,15 +90,10 @@ export const AppContainer = ({
     return  <LoadingSpinner />
   }
 
-  const [responseValid, errorMessage] = isValidFormResponse(data);
-  if (!responseValid || error) {
-    throw new Error(errorMessage);
-  }
-
   i18next
     .use(initReactI18next)
     .init({
-      // Enable for additional info. Dont use in prod.
+      // Enable for additional info. Don't use in prod.
       // debug: true,
       fallbackLng: 'fi',
       lng: drupalSettings.path.currentLanguage,

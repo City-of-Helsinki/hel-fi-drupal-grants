@@ -19,7 +19,7 @@ export const transformSteps = (
     let state;
 
     if (index === steps.size - 1) {
-      state = submitState === SubmitStates.unsubmitted ? StepState.disabled : StepState.available;
+      state = submitState === SubmitStates.DRAFT ? StepState.disabled : StepState.available;
     }
     else {
       state = errorIndices.includes(index) ? StepState.attention : StepState.available;

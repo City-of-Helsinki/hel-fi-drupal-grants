@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { atom } from 'jotai';
 import { keyErrorsByStep } from './utils';
-import { SubmitState, SubmitStates } from './enum/SubmitStates';
+import { SubmitStates } from './enum/SubmitStates';
 
 export type FormStep = {
   id: string;
@@ -51,7 +51,7 @@ type FormConfig = {
   settings: {
     [key: string]: string;
   }
-  submitState: SubmitState;
+  submitState: string;
   translations: {
     [key in 'fi'|'sv'|'en']: {
       [key: string]: string;
@@ -63,7 +63,7 @@ type FormConfig = {
 type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_state'> & {
   applicationNumber: string;
   grants_profile: GrantsProfile;
-  submit_state: SubmitState;
+  status: string;
   ui_schema: UiSchema;
 };
 
@@ -129,7 +129,7 @@ export const errorsAtom = atom<Array<[number, RJSFValidationError]>>([]);
 export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData) => {
   const {
     grants_profile: grantsProfile,
-    submit_state: submitState,
+    status,
     ui_schema: uiSchema,
     ...rest
   } = formConfig;
@@ -139,7 +139,7 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
     grantsProfile,
     ...rest,
     uiSchema,
-    submitState: submitState || SubmitStates.unsubmitted,
+    submitState: status || SubmitStates.DRAFT,
   }));
   _set(formStateAtom, (state) => ({
       currentStep: [0, steps.get(0)],
@@ -233,7 +233,7 @@ export const getSubmitStatusAtom = atom(_get => {
 
   return submitState;
 });
-export const setSubmitStatusAtom = atom(null, (_get, _set, submitState: SubmitState) => {
+export const setSubmitStatusAtom = atom(null, (_get, _set, submitState: string) => {
   const formConfig = _get(getFormConfigAtom);
 
   _set(formConfigAtom, state => ({

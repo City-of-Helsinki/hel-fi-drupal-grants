@@ -16,7 +16,7 @@ describe('Stepper.tsx tests', () => {
       })],
       [formStepsAtom, testSteps],
       [formConfigAtom, {
-        submitState: SubmitStates.unsubmitted,
+        submitState: SubmitStates.DRAFT,
       }]
     ]}>
       {/* @ts-ignore */}
@@ -30,8 +30,8 @@ describe('Stepper.tsx tests', () => {
   })
 
   it('Transforms steps correctly', () => {
-    expect(transformSteps(undefined, SubmitStates.unsubmitted, [])).toEqual([]);
-    expect(transformSteps(testSteps, SubmitStates.unsubmitted, [])).toEqual([
+    expect(transformSteps(undefined, SubmitStates.DRAFT, [])).toEqual([]);
+    expect(transformSteps(testSteps, SubmitStates.DRAFT, [])).toEqual([
       {
         label: testSteps.get(0)?.label,
         state: StepState.available,
@@ -41,7 +41,7 @@ describe('Stepper.tsx tests', () => {
         state: StepState.disabled,
       }
     ]);
-    expect(transformSteps(testSteps, SubmitStates.unsubmitted, [0])).toEqual([
+    expect(transformSteps(testSteps, SubmitStates.DRAFT, [0])).toEqual([
       {
         label: testSteps.get(0)?.label,
         state: StepState.attention,
