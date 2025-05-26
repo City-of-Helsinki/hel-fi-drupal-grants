@@ -18,6 +18,7 @@ import { SubmitStates } from '../enum/SubmitStates';
 import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
 import { localizeErrors } from '../localizeErrors';
 import { SubmittedForm } from '../components/SubmittedForm';
+import { TextParagraph } from '../components/TextParagraph';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -154,6 +155,7 @@ export const RJSFFormContainer = ({
           fields={{
             ...getDefaultRegistry().fields,
             atvFile: FileInput,
+            textParagraph: TextParagraph,
           }}
           formData={readFormData() || {}}
           liveValidate={false}

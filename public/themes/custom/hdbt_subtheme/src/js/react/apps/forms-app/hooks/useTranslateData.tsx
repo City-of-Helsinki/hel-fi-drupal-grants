@@ -17,6 +17,10 @@ export const useTranslateData = (data: any) => {
   };
 
   const iterateSchema = (element: any): any => {
+    if (typeof element === 'string') {
+      return t(element);
+    }
+
     const translations: RJSFSchema = translateSchemaElement(element);
     const result: RJSFSchema = {...element, ...translations};
     

@@ -116,6 +116,35 @@
           "title": "attachments_section.title",
           "type": "object",
           "properties": {
+            "required_attachments_help": {
+              "title": "required_attachments_help.title",
+              "type": "array",
+              "items": [
+                "required_attachments_help.value"
+              ]
+            },
+            "multiple_attachments_help": {
+              "title": "multiple_attachments_help.title",
+              "type": "array",
+              "items": [
+                "multiple_attachments_help.value"
+              ]
+            },
+            "formerly_provided_attachments_help": {
+              "title": "formerly_provided_attachments_help.title",
+              "type": "array",
+              "items": [
+                "formerly_provided_attachments_help.value"
+              ]
+            },
+            "cant_view_after_help": {
+              "title": "cant_view_after_help.title",
+              "type": "array",
+              "items": [
+                "cant_view_after_help.value",
+                "cant_view_after_help.value_2"
+              ]
+            },
             "extra_info": {
               "title": "extra_info.title",
               "type": "string"

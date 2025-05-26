@@ -7,16 +7,12 @@ export const SubmittedForm = ({
 }: {
   formData: any,
   schema: RJSFSchema
-}) => {
-  console.log(formData);
-
-  return (
-    <>
-      <h1>{schema.title}</h1>
-      <Preview
-        formData={formData}
-        schema={schema}
-      />
-    </>
-  );
-}
+}) => (
+  <>
+    <h1>{schema.title}</h1>
+    <Preview
+      formData={formData}
+      schema={schema}
+    />
+  </>
+);

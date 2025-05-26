@@ -208,7 +208,6 @@ export const FormWrapper = ({
     return response.ok;
   };
 
-  console.log(translatedData);
   const initialData = translatedData.status === SubmitStates.DRAFT ? translatedData.form_data?.form_data : translatedData?.form_data?.compensation?.form_data || null;
   const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData);
 

@@ -4,7 +4,6 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import { FormWrapper } from './FormWrapper';
-import { isValidFormResponse } from '../utils';
 
 /**
  * Instantiates a new application draft for the given form.
@@ -81,7 +80,7 @@ export const AppContainer = ({
   applicationTypeId: string;
   token: string;
 }) => {
-  const { data, error, isLoading, isValidating} = useSWRImmutable(
+  const { data, isLoading, isValidating} = useSWRImmutable(
     applicationTypeId,
     (id) => fetchFormData(id, token),
   );
