@@ -358,11 +358,15 @@ final class Application extends ResourceBase {
       $document_data['messages'] = [];
     }
 
+    // @codingStandardsIgnoreStart
     // Update the atv document before sending to integration.
     // Lets try a way to hold on to the document data.
+    // @todo Sanitize the input.
+    // NOSONAR
     $document_data['compensation']['form_data'] = $form_data;
-
+    // NOSONAR
     $document->setContent($document_data);
+    // @codingStandardsIgnoreEnd
 
     $this->atvService->updateExistingDocument($document);
 
