@@ -360,7 +360,7 @@ final class Application extends ResourceBase {
 
     // Update the atv document before sending to integration.
     // Lets try a way to hold on to the document data.
-    // @todo Sanitize the input
+    // @todo Sanitize the input.
     // NOSONAR
     $document_data['compensation']['form_data'] = $form_data;
     // NOSONAR
