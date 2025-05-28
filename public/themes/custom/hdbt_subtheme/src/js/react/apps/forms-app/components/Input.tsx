@@ -26,6 +26,7 @@ export const TextInput = ({
   rawErrors,
   readonly,
   required,
+  uiSchema,
   value,
 }: WidgetProps) => (
   <HDSTextInput
@@ -40,6 +41,9 @@ export const TextInput = ({
     onFocus={() => null}
     readOnly={readonly}
     required={required}
+    tooltipButtonLabel={uiSchema?.['ui:options']?.tooltipButtonLabel?.toString()}
+    tooltipLabel={uiSchema?.['ui:options']?.tooltipLabel?.toString()}
+    tooltipText={uiSchema?.['ui:options']?.tooltipText?.toString()}
     value={value ?? ''}
   />
 );

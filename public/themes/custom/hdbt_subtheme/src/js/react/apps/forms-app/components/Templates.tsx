@@ -1,9 +1,9 @@
 import { ArrayFieldTemplateProps, IconButtonProps, ObjectFieldTemplateProps } from '@rjsf/utils'
-import { Button, ButtonPresetTheme, ButtonVariant, Fieldset } from 'hds-react';
+import { Button, ButtonPresetTheme, ButtonVariant, Fieldset, Notification } from 'hds-react';
 import { ReactNode } from 'react';
 import { useAtomValue } from 'jotai';
 
-import { getCurrentStepAtom } from '../store';
+import { formStepsAtom, getCurrentStepAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
 
 export const ArrayFieldTemplate = ({
@@ -54,7 +54,8 @@ export const ObjectFieldTemplate = ({
   uiSchema,
 }: ObjectFieldTemplateProps) => {
   const { _isSection, _step, description, title } = schema;
-  const { id: stepId } = useAtomValue(getCurrentStepAtom)[1];
+  const steps = useAtomValue(formStepsAtom);
+  const [stepIndex, { id: stepId }] = useAtomValue(getCurrentStepAtom);
 
   if (idSchema.$id === 'root') {
     return (
@@ -72,6 +73,16 @@ export const ObjectFieldTemplate = ({
     return (
       <>
         {title && <h2 className='grants__page-header'>{title}</h2>}
+        {stepIndex === 0 && (
+          <Notification label={Drupal.t('Some information fetched from personal information')}>
+            {Drupal.t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.')}
+          </Notification>
+        )}
+        {steps && stepIndex < steps.size - 2 && (
+          <Notification label={Drupal.t('Fill in the fields to all the questions that you can answer.')}>
+            {Drupal.t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.')}
+          </Notification>
+        )}
         {
           stepId === 'applicant_info' &&
           <section className='grants-profile--imported-section webform-section'>

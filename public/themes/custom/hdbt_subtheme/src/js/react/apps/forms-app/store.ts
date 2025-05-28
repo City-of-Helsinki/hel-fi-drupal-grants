@@ -275,3 +275,42 @@ export const pushNotificationAtom = atom(null, (_get, _set, notification: System
 export const shiftNotificationsAtom = atom(null, (_get, _set) => {
   _set(systemNotificationsAtom, state => state.slice(1));
 });
+
+type avus2Data = {
+  attachmentsInfo: {
+    attachmentsArray: Array<{
+      ID: string;
+      label: string;
+      value: string;
+      valueType: string;
+    }[]>;
+    generalInfoArray: Array<{
+      ID: string;
+      label: string;
+      valueType: string;
+    }>
+  };
+  events: Array<{
+    caseId: string;
+    eventCode: number;
+    eventCreated: string;
+    eventDescription: string;
+    eventID: string;
+    eventSource: string;
+    eventTarget: string;
+    eventType: string;
+    timeUpdated: string;
+  }>
+  messages: any[];
+  statusUpdates: Array<{
+    caseId: string;
+    citizenCaseStatus: string;
+    eventType: string;
+    eventCode: 1;
+    eventSource: string;
+    timeUpdated: string;
+    timeCreated: string;
+  }>
+};
+export const avus2DataAtom = atom<avus2Data|null>();
+

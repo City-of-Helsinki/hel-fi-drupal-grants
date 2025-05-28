@@ -25,6 +25,8 @@
       "applicant_email.title": "Sähköpostiosoite",
       "applicant_email.description": "Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.",
       "applicant_email_email.title": "Sähköpostiosoite",
+      "applicant_email.tooltip_button_label": "Lisätietoja: Sähköpostiosoite",
+      "applicant_email.tooltip_text": "Ilmoita sähköpostiosoite, johon tähän hakemukseen liittyvät viestit sekä herätteet osoitetaan ja jota luetaan aktiivisesti",
       "contact_person_info.title": "Hakemuksen yhteyshenkilö",
       "contact_person.title": "Yhteyshenkilö",
       "contact_person_phone_number.title": "Puhelinnumero",

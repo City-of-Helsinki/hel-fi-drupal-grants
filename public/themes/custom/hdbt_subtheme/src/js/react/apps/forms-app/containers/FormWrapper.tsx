@@ -4,7 +4,7 @@ import { useAtomCallback } from 'jotai/utils';
 import { useSetAtom } from 'jotai';
 
 import { RJSFFormContainer } from './RJSFFormContainer';
-import { createFormDataAtom, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom, setSubmitStatusAtom } from '../store';
+import { avus2DataAtom, createFormDataAtom, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom, setSubmitStatusAtom } from '../store';
 import { addApplicantInfoStep, getNestedSchemaProperty, setNestedProperty } from '../utils';
 import { SubmitStates } from '../enum/SubmitStates';
 import { useTranslateData } from '../hooks/useTranslateData';
@@ -179,6 +179,7 @@ export const FormWrapper = ({
   );
   const transformedData = transformData(data);
   const translatedData = useTranslateData(transformedData);
+  const setAvus2Data = useSetAtom(avus2DataAtom);
 
   initializeForm(translatedData);
 
@@ -210,6 +211,22 @@ export const FormWrapper = ({
 
   const initialData = translatedData.status === SubmitStates.DRAFT ? translatedData.form_data?.form_data : translatedData?.form_data?.compensation?.form_data || null;
   const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData);
+
+  if (translatedData.status !== SubmitStates.DRAFT) {
+    const {
+      attachmentsInfo,
+      statusUpdates,
+      events,
+      messages
+    } = translatedData.form_data;
+
+    setAvus2Data({
+      attachmentsInfo,
+      statusUpdates,
+      events,
+      messages
+    });
+  }
 
   const saveDraft = async (submittedData: any) => {
     const response = await fetch(`/applications/draft/${applicationTypeId}/${readApplicationNumber()}`, {

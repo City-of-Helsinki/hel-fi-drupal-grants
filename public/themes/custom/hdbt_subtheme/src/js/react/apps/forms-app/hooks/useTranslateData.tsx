@@ -48,6 +48,9 @@ export const useTranslateData = (data: any) => {
   const translateUiSchemaElement = (element: string, key: string) => {
     const translatableKeys = [
       'removeText',
+      'tooltipButtonLabel',
+      'tooltipLabel',
+      'tooltipText',
       'ui:help',
       'ui:tooltip',
     ]

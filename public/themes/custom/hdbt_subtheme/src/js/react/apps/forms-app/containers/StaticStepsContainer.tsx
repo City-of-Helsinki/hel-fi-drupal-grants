@@ -17,7 +17,10 @@ export const StaticStepsContainer = ({
   switch(currentStep.id) {
     case 'preview':
       return (
-        <Preview {...{formData, schema}} />
+        <>
+          <h2>{Drupal.t('Confirm, preview and submit', {}, {context: 'Grants application: Steps'})}</h2>
+          <Preview {...{formData, schema}} />
+        </>
       );
     //  At least for now, this page is never accessible.
     case 'ready':

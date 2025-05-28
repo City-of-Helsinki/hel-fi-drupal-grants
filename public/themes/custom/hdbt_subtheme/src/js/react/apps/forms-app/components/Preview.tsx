@@ -135,7 +135,6 @@ export const Preview = ({
   schema: RJSFSchema,
 }) => (
   <div className='forms-app__preview'>
-    <h2>{Drupal.t('Confirm, preview and submit', {}, {context: 'Grants application: Steps'})}</h2>
     {schema.properties && Object.entries(schema.properties).map((property, index: number) => {
       const [key, value] = property;
 
