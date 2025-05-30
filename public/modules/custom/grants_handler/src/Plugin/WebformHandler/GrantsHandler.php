@@ -451,13 +451,24 @@ final class GrantsHandler extends WebformHandlerBase {
     }
 
     if (isset($values['bank_account']) && $values['bank_account'] !== NULL) {
-      $values['account_number'] = $values['bank_account']['account_number'];
+      // Make sure the bank account exists on profile.
+      $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+      $profile = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
 
-      if (isset($values['bank_account']['account_number_owner_name']) && !empty($values['bank_account']['account_number_owner_name'])) {
-        $values['account_number_owner_name'] = $values['bank_account']['account_number_owner_name'];
-      }
-      if (isset($values['bank_account']['account_number_ssn']) && !empty($values['bank_account']['account_number_ssn'])) {
-        $values['account_number_ssn'] = $values['bank_account']['account_number_ssn'];
+      $correctAccount = array_find(
+        $profile['bankAccounts'],
+        fn($account) => $account['bankAccount'] === $values['bank_account']['account_number']
+      );
+
+      if ($correctAccount) {
+        $values['account_number'] = $values['bank_account']['account_number'];
+
+        if (isset($values['bank_account']['account_number_owner_name']) && !empty($values['bank_account']['account_number_owner_name'])) {
+          $values['account_number_owner_name'] = $values['bank_account']['account_number_owner_name'];
+        }
+        if (isset($values['bank_account']['account_number_ssn']) && !empty($values['bank_account']['account_number_ssn'])) {
+          $values['account_number_ssn'] = $values['bank_account']['account_number_ssn'];
+        }
       }
 
       unset($values['bank_account']);
