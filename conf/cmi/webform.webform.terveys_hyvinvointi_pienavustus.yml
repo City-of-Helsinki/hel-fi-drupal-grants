@@ -205,7 +205,7 @@ elements: |-
       '#title': Käyttötarkoitus
       purpose_intro_text:
         '#type': webform_markup
-        '#markup': '<p>Kuvaus kaikille avoimesta maksuttomasta toiminnasta, johon avustusta haetaan sek&auml; talousarvio kustannusten kohdentumisesta.</p>'
+        '#markup': '<p>Käyttötarkoituksen lisäksi, kerro mitä kuluja avustuksesta maksetaan.</p>'
       purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
