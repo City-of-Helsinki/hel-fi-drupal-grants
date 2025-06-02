@@ -451,14 +451,23 @@ final class GrantsHandler extends WebformHandlerBase {
     }
 
     if (isset($values['bank_account']) && $values['bank_account'] !== NULL) {
-      // Make sure the bank account exists on profile.
-      $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-      $profile = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
+      $status = $values['status'];
+      $checkBankFileStatus = ['DRAFT', 'SENT', 'SUBMITTED', 'RECEIVED'];
 
-      $correctAccount = array_find(
-        $profile['bankAccounts'],
-        fn($account) => $account['bankAccount'] === $values['bank_account']['account_number']
-      );
+      // Make sure the bank account still exists on profile,
+      // but only in case the application is still editable.
+      // If the application is being processed,
+      // we don't want to mess with this value.
+      $correctAccount = TRUE;
+      if (in_array($status, $checkBankFileStatus)) {
+        $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+        $profile = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
+
+        $correctAccount = array_find(
+          $profile['bankAccounts'],
+          fn($account) => $account['bankAccount'] === $values['bank_account']['account_number']
+        );
+      }
 
       if ($correctAccount) {
         $values['account_number'] = $values['bank_account']['account_number'];
