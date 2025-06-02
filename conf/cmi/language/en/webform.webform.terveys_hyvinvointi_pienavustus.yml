@@ -56,7 +56,7 @@ elements: |
   kayttotarkoitus:
     '#title': 'Purpose of use'
   purpose_intro_text:
-    '#markup': '<p>Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.</p>'
+    '#markup': '<p>In addition to the purpose of the grant, please indicate what expenses will be paid from the grant.</p>'
   purpose:
     '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
     '#help': '<p>Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.</p>'

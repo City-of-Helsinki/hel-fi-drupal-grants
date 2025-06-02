@@ -72,7 +72,7 @@ elements: |
   kayttotarkoitus:
     '#title': Användningsområde
   purpose_intro_text:
-    '#markup': '<p>Ange f&ouml;r vilket &auml;ndam&aring;l underst&ouml;det ans&ouml;ks och vid behov specificera de olika &auml;ndam&aring;len. Ange ocks&aring; vad underst&ouml;det &auml;r avsett f&ouml;r och vilka m&aring;l som &auml;r relaterade till den underst&ouml;dda verksamheten.</p>'
+    '#markup': '<p>Utöver användningsändamålet med bidraget, ange vilka kostnader som kommer att betalas med bidraget.</p>'
   purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
     '#help': '<p>Ber&auml;tta f&ouml;r vilket syfte bidraget s&ouml;ks, vid behov, specificera de olika anv&auml;ndningsomr&aring;dena. Ber&auml;tta ocks&aring; vad assistansen &auml;r avsedd att uppn&aring; och vilka m&aring;l som &auml;r relaterade till den verksamhet som ska assisteras.</p>'
