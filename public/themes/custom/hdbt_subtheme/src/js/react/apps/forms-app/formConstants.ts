@@ -165,12 +165,18 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
       },
       bank_account: {
         bank_account: {
-          'ui:widget': 'bank_account'
+          'ui:widget': 'bank_account',
+          'ui:options': {
+            printableName: 'bank_account.title'
+          }
         }
       },
       community_address: {
         community_address: {
-          'ui:widget': 'address'
+          'ui:widget': 'address',
+          'ui:options': {
+            printableName: 'community_address.title'
+          }
         }
       },
       community_officials: {
@@ -186,10 +192,14 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
           items: {
             official: {
               'ui:widget': 'community_officials',
+              'ui:options': {
+                hideNameFromPrint: true,
+              }
             },
           },
           'ui:options': {
             addable: true,
+            hideNameFromPrint: true,
             orderable: false,
             removable: true,
           }

@@ -241,6 +241,14 @@ export const setSubmitStatusAtom = atom(null, (_get, _set, submitState: string) 
     submitState,
   }));
 });
+export const getSchemasAtom = atom(_get => {
+  const { schema, uiSchema } = _get(getFormConfigAtom);
+
+  return {
+    schema,
+    uiSchema,
+  };
+});
 export const getApplicationNumberAtom = atom(_get => {
   const { applicationNumber } = _get(getFormConfigAtom);
 
@@ -313,4 +321,9 @@ type avus2Data = {
   }>
 };
 export const avus2DataAtom = atom<avus2Data|null>();
+export const shouldRenderPreviewAtom = atom(_get => {
+  const { submitState } = _get(getFormConfigAtom);
+  const { currentStep } = _get(getFormStateAtom);
 
+  return submitState !== SubmitStates.DRAFT || currentStep[1].id === 'preview';
+});

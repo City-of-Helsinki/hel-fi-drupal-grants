@@ -522,3 +522,47 @@ msgstr "Hakemusta ei voitu tallentaa luonnoksena."
 msgctxt "Grants application: Validation"
 msgid "@mail ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com."
 msgstr "Hakemusta ei voitu tallentaa luonnoksena."
+
+msgctxt "Grants application: Submitted form"
+msgid "Application number"
+msgstr "Hakemuksen numero"
+
+msgctxt "Grants application: Submitted form"
+msgid "Application info"
+msgstr "Hakemuksen tiedot"
+
+msgctxt "Grants application: Submitted form"
+msgid "Application"
+msgstr "Hakemus"
+
+msgctxt "Grants application: Submitted form"
+msgid "Here you can see details of your application"
+msgstr "Tässä näet hakemuksesi yksityiskohdat"
+
+msgctxt "Grants application: Submitted form"
+msgid "Print application"
+msgstr "Tulosta hakemus"
+
+msgctxt "Grants application: Submitted form"
+msgid "Copy application"
+msgstr "Kopioi hakemus"
+
+msgctxt "Grants application: Submitted form"
+msgid "Sent date"
+msgstr "Lähetyspäivänmäärä"
+
+msgctxt "Grants application: Submitted form"
+msgid "Handler information"
+msgstr "Käsittelijän tiedot"
+
+msgctxt "Grants application: Submitted form"
+msgid "No handler information set"
+msgstr "Ei käsittelijän tietoja"
+
+msgctxt "Grants application: Submitted form"
+msgid "Application statuses"
+msgstr "Hakemuksen tila"
+
+msgctxt "Grants application: Submitted form"
+msgid "Attachments"
+msgstr "Hakemuksen liitteet"

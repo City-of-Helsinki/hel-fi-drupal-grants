@@ -17,8 +17,8 @@ import { Stepper } from '../components/Stepper';
 import { SubmitStates } from '../enum/SubmitStates';
 import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
 import { localizeErrors } from '../localizeErrors';
-import { SubmittedForm } from '../components/SubmittedForm';
 import { TextParagraph } from '../components/TextParagraph';
+import { SubmittedForm } from '../components/SubmittedForm';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -78,10 +78,6 @@ export const RJSFFormContainer = ({
   );
   const setErrors = useSetAtom(setErrorsAtom);
 
-  if (submitStatus !==  SubmitStates.DRAFT) {
-    return <SubmittedForm {...{formData: readFormData(), schema}} />
-  }
-
   const browserCacheData = useDebounceCallback(
     (data: IChangeEvent) => {
       setFormData(data.formData);
@@ -140,16 +136,24 @@ export const RJSFFormContainer = ({
     return errorsToShow;
   };
 
-  return (
-    <>
-      {schema?.title && <h1>{schema.title}</h1>}
-      <ErrorsList />
-      <Stepper formRef={formRef} />
+  const readonly = submitStatus !== SubmitStates.DRAFT
+
+  return <>
+      {
+        !readonly && <>
+          <h1>{schema?.title}</h1>
+          <ErrorsList />
+          <Stepper formRef={formRef} />
+        </>
+      }
       <div className='form-wrapper'>
-        <StaticStepsContainer
-          formDataAtom={formDataAtom}
-          schema={schema}
-        />
+        {readonly ?
+          <SubmittedForm formData={readFormData()} schema={schema} /> :
+          <StaticStepsContainer
+            formDataAtom={formDataAtom}
+            schema={schema}
+          />
+        }
         <Form
           className='grants-react-form webform-submission-form'
           fields={{
@@ -173,7 +177,7 @@ export const RJSFFormContainer = ({
               setStep([...steps].pop()?.[0] || 0);
             }
           }}
-          readonly={submitStatus !== SubmitStates.DRAFT}
+          readonly={readonly}
           ref={formRef}
           schema={schema}
           showErrorList={false}
@@ -196,12 +200,12 @@ export const RJSFFormContainer = ({
           validator={customizeValidator({}, localizeErrors)}
           widgets={widgets}
         >
-          <FormActions
+         {!readonly && <FormActions
             saveDraft={() => saveDraft(readFormData())}
             validatePartialForm={validatePartialForm}
           />
+         }
         </Form>
       </div>
-    </>
-  );
+    </>;
 }

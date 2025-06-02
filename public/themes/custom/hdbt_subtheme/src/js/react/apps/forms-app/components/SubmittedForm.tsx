@@ -2,7 +2,6 @@ import { RJSFSchema } from '@rjsf/utils';
 import { useAtomValue } from 'jotai';
 
 import { getApplicationNumberAtom } from '../store';
-import { Preview } from './Preview';
 import { StatusLabel } from './StatusLabel';
 import { FormSummary } from './FormSummary';
 
@@ -29,10 +28,6 @@ export const SubmittedForm = ({
       <FormSummary {...{formData, schema}} />
       <h3>{Drupal.t('Application', {}, {context: 'Grants application: Submitted form'})}</h3>
       <p>{Drupal.t('Here you can see details of your application', {}, {context: 'Grants application: Submitted form'})}</p>
-      <Preview
-        formData={formData}
-        schema={schema}
-      />
     </>
   );
 }

@@ -34,6 +34,9 @@
   "orienteering_maps_step": {
     "orienteering_subvention": {
       "orienteering_maps": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
         "mapName": {
           "ui:widget": "textarea"
         }
