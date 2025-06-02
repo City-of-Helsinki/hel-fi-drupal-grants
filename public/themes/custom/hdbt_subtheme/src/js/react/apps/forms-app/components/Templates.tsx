@@ -208,7 +208,13 @@ export const ObjectFieldTemplate = ({
         {/* @todo fix when rebuilding styles  */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         {!hideName && printableName ? <label>{printableName}</label> : <label>{title}</label>}
-        {properties.map((field) => field.content)}
+        {properties.map((field) => {
+          if (field.content.props.uiSchema?.['ui:help']) {
+            field.content.props.uiSchema['ui:help'] = '';
+          }
+
+          return field.content;
+        })}
       </>
     );
   }

@@ -74,9 +74,6 @@ export const FileInput = ({
   if (shouldRenderPreview) {
     return (
       <>
-        {/* @todo fix when rebuilding styles  */}
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label>{label}</label>
         {defaultValue.map(file => <p key={file.name}>{file.name}</p>)}
       </>
     )
