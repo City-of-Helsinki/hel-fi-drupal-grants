@@ -451,7 +451,7 @@ final class GrantsHandler extends WebformHandlerBase {
     }
 
     if (isset($values['bank_account']) && $values['bank_account'] !== NULL) {
-      $status = $values['status'];
+      $status = $values['status'] ?? '';
       $checkBankFileStatus = ['DRAFT', 'SENT', 'SUBMITTED', 'RECEIVED'];
 
       // Make sure the bank account still exists on profile,
