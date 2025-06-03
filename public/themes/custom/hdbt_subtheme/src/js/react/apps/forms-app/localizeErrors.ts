@@ -1,5 +1,33 @@
 import { ErrorObject } from 'ajv';
 
+
+/**
+ * Localize the "minLength" error from AJV.
+ *
+ * If the minimum length is 1, use the "required" error message.
+ *
+ * @param {ErrorObject} error
+ *   The error object.
+ *
+ * @return {string}
+ *   The localized error message.
+ */
+const formatMinLengthError = (error: ErrorObject) => {
+  const { params: { limit }, parentSchema } = error;
+
+  // RJSF accepts empty strings as valid input for string fields (since this is valid according JSONSchema specification)
+  if (limit === 1 && parentSchema) {
+    return Drupal.t('@field field is required', {'@field': parentSchema.title}, {context: 'Grants application: Validation'});
+  }
+
+  return Drupal.t('@field field must be at least @limit characters', {
+    '@field': parentSchema?.title,
+    '@limit': limit,
+  }, {
+    context: 'Grants application: Validation',
+  });
+}
+
 /**
  * Format a required field error message.
  *
@@ -24,6 +52,19 @@ const formatRequiredError = (error: ErrorObject) => {
 
 
 /**
+ * @todo extend this to support other patterns
+ * 
+ * @param {ErrorObject} error - The error object containing validation details.
+ * 
+ * @return {string} - Translated error message indicating the required field.
+ */
+const formatPatternError = (error: ErrorObject) => {
+  const { data } = error;
+
+  return Drupal.t('The email address @mail is not valid. Use the format user@example.com.', {'@mail': data}, {context: 'Grants application: Validation'});
+}
+
+/**
  * Localize validation errors.
  *
  * @param {ErrorObject[]|null} errors - Ajv validation errors
@@ -40,6 +81,14 @@ export const localizeErrors = (errors?: null | ErrorObject[]) => {
     let outMessage: string|null|undefined;
 
     switch (error.keyword) {
+      case 'format': {
+        outMessage = formatPatternError(error);
+        break;
+      }
+      case 'minLength': {
+        outMessage = formatMinLengthError(error);
+        break;
+      }
       case 'required': {
         outMessage = formatRequiredError(error);
         break;

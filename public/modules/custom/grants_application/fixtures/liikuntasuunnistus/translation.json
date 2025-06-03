@@ -1,6 +1,7 @@
 {
   "en": {
     "translation": {
+      "form_title": "Sports, grant application for orienteering maps",
       "orienteering_maps_step.title": "Grant details",
       "attachments_step.title": "Additional information and attachments",
       "acting_year_section.title": "Grant details",
@@ -24,6 +25,7 @@
   },
   "fi": {
     "translation": {
+      "form_title": "Liikunta, suunnistuskartta-avustushakemus",
       "orienteering_maps_step.title": "Avustustiedot",
       "attachments_step.title": "Lisätiedot ja liitteet",
       "acting_year_section.title": "Avustuksen tiedot",
@@ -37,6 +39,16 @@
       "otherCompensations.title": "Muilta saadut avustukset euroa",
       "additional_information_section.title" : "Lisätietoa hakemukseen liittyen",
       "additional_information.title": "Lisätiedot",
+      "required_attachments_help.title": "Vaaditut liitteet",
+      "required_attachments_help.value": "Suunnistuskarttojen valmistuskustannuksiin liittyvät laskut ja kuitit toimitetaan ainoastaan erikseen pyydettäessä.",
+      "multiple_attachments_help.title": "Usean liitteen toimittaminen yhtenä tiedostona",
+      "multiple_attachments_help.value": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
+      "formerly_provided_attachments_help.title": "Helsingin kaupungille aiemmin toimitetut liitteet",
+      "formerly_provided_attachments_help.value": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
+      "cant_view_after_help.title": "Liitteiden sisältöä ei voi tarkastella jälkikäteen",
+      "cant_view_after_help.value": "Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.",
+      "cant_view_after_help.value_2": "Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.",
+      "attachments_section.description": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
       "attachments_section.title": "Liitteet",
       "extra_info.title": "Lisäselvitys liitteistä",
       "other_attachment_fieldset.title": "Muu liite",
@@ -47,6 +59,7 @@
   },
   "sv": {
     "translation": {
+      "form_title": "Idrott, ansökan om bidrag för orienteringskarta",
       "orienteering_maps_step.title": "Uppgifter om understödet",
       "attachments_step.title": "Ytterligare information och bilagor",
       "acting_year_section.title": "Uppgifter om understödet",

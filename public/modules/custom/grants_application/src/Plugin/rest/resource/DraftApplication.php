@@ -204,6 +204,7 @@ final class DraftApplication extends ResourceBase {
     // @todo Only return required user data to frontend
     $response['grants_profile'] = $grants_profile_data->toArray();
     $response['user_data'] = $user_information;
+    $response['status'] = $document->getStatus();
     $response['token'] = $this->csrfTokenGenerator->get('rest');
     $response = array_merge($response, $settings->toArray());
 

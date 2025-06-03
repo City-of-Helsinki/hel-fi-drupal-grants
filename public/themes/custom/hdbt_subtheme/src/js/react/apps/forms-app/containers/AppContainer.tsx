@@ -4,7 +4,6 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import { FormWrapper } from './FormWrapper';
-import { isValidFormResponse } from '../utils';
 
 /**
  * Instantiates a new application draft for the given form.
@@ -81,7 +80,7 @@ export const AppContainer = ({
   applicationTypeId: string;
   token: string;
 }) => {
-  const { data, error, isLoading, isValidating} = useSWRImmutable(
+  const { data, isLoading, isValidating} = useSWRImmutable(
     applicationTypeId,
     (id) => fetchFormData(id, token),
   );
@@ -90,15 +89,10 @@ export const AppContainer = ({
     return  <LoadingSpinner />
   }
 
-  const [responseValid, errorMessage] = isValidFormResponse(data);
-  if (!responseValid || error) {
-    throw new Error(errorMessage);
-  }
-
   i18next
     .use(initReactI18next)
     .init({
-      // Enable for additional info. Dont use in prod.
+      // Enable for additional info. Don't use in prod.
       // debug: true,
       fallbackLng: 'fi',
       lng: drupalSettings.path.currentLanguage,

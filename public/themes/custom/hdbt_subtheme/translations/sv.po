@@ -468,3 +468,99 @@ msgstr "Ansökan sparad som oavslutad."
 msgctxt "Grants application: Draft"
 msgid "Application could not be saved as draft."
 msgstr "Ansökan kunde inte sparas som oavslutad."
+
+msgctxt "Grants application: Validation"
+msgid "The email address @mail is not valid. Use the format user@example.com."
+msgstr "@mail är inte en giltig e-postadress. Använd formen user@example.com."
+
+msgctxt "Grants application: Submitted form"
+msgid "Application number"
+msgstr "Ansökningsnummer"
+
+msgctxt "Grants application: Submitted form"
+msgid "Application info"
+msgstr "Ansökningsinformation"
+
+msgctxt "Grants application: Submitted form"
+msgid "Application"
+msgstr "Ansökan"
+
+msgctxt "Grants application: Submitted form"
+msgid "Here you can see details of your application"
+msgstr "Här kan du se detaljer om din ansökan"
+
+msgctxt "Grants application: Submitted form"
+msgid "Print application"
+msgstr "Skriva ut den ifyllda ansökan"
+
+msgctxt "Grants application: Submitted form"
+msgid "Copy application"
+msgstr "Kopiera ansökan"
+
+msgctxt "Grants application: Submitted form"
+msgid "Sent date"
+msgstr "Sänd"
+
+msgctxt "Grants application: Submitted form"
+msgid "Handler information"
+msgstr "Händelser"
+
+msgctxt "Grants application: Submitted form"
+msgid "No handler information set"
+msgstr "Ingen händelserinformation"
+
+msgctxt "Grants application: Submitted form"
+msgid "Application statuses"
+msgstr "Status"
+
+msgctxt "Grants application: Submitted form"
+msgid "Attachments"
+msgstr "Bilagor"
+
+msgctxt "Grants application: Status label"
+msgid "Cancelled"
+msgstr "Annullerad"
+
+msgctxt "Grants application: Status label"
+msgid "Draft"
+msgstr "Utkast"
+
+msgctxt "Grants application: Status label"
+msgid "Pending"
+msgstr "I väntan på"
+
+msgctxt "Grants application: Status label"
+msgid "In Preparation"
+msgstr "Förbereds"
+
+msgctxt "Grants application: Status label"
+msgid "Processing"
+msgstr "Behandlas"
+
+msgctxt "Grants application: Status label"
+msgid "Received"
+msgstr "Mottagen"
+
+msgctxt "Grants application: Status label"
+msgid "Rejected"
+msgstr "Avvisade"
+
+msgctxt "Grants application: Status label"
+msgid "Resolved"
+msgstr "Behandlad"
+
+msgctxt "Grants application: Status label"
+msgid "Sent - waiting for confirmation"
+msgstr "Skickad - väntar på bekräftelse"
+
+msgctxt "Grants application: Status label"
+msgid "Closed"
+msgstr "Stängd"
+
+msgctxt "Grants application: Status label"
+msgid "Deleted"
+msgstr "Raderade"
+
+msgctxt "Grants application: Status label"
+msgid "Ready"
+msgstr "Redo"

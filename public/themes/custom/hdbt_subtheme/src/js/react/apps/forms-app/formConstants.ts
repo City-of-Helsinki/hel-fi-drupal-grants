@@ -79,8 +79,6 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
         type: objectType,
       },
       contact_person_info: {
-        title: 'contact_person_info.title',
-        type: objectType,
         properties: {
           contact_person: {
             minLength: 1,
@@ -93,6 +91,9 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
             type: stringType,
           }
         },
+        required: ['contact_person', 'contact_person_phone_number'],
+        title: 'contact_person_info.title',
+        type: objectType,
       },
       community_address: {
         properties: {
@@ -153,14 +154,29 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
   },
   {
     applicant_info: {
+      applicant_email: {
+        email: {
+          'ui:options': {
+            tooltipLabel: 'applicant_email_email.title',
+            tooltipButtonLabel: 'applicant_email.tooltip_button_label',
+            tooltipText: 'applicant_email.tooltip_text',
+          }
+        }
+      },
       bank_account: {
         bank_account: {
-          'ui:widget': 'bank_account'
+          'ui:widget': 'bank_account',
+          'ui:options': {
+            printableName: 'bank_account.title'
+          }
         }
       },
       community_address: {
         community_address: {
-          'ui:widget': 'address'
+          'ui:widget': 'address',
+          'ui:options': {
+            printableName: 'community_address.title'
+          }
         }
       },
       community_officials: {
@@ -176,10 +192,14 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
           items: {
             official: {
               'ui:widget': 'community_officials',
+              'ui:options': {
+                hideNameFromPrint: true,
+              }
             },
           },
           'ui:options': {
             addable: true,
+            hideNameFromPrint: true,
             orderable: false,
             removable: true,
           }

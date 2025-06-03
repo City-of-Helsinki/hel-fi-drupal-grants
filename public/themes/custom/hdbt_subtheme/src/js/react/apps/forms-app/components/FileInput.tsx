@@ -3,7 +3,7 @@ import { FieldProps, UiSchema } from "@rjsf/utils";
 import { FileInput as HDSFileInput } from "hds-react";
 import { useAtomValue } from "jotai";
 import { formatErrors } from "./Input";
-import { formConfigAtom, getApplicationNumberAtom } from "../store";
+import { formConfigAtom, getApplicationNumberAtom, shouldRenderPreviewAtom } from "../store";
 
 type ATVFile = {
   fileType: string;
@@ -63,11 +63,21 @@ export const FileInput = ({
   required,
   uiSchema,
 }: FieldProps) => {
+  const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const applicationNumber = useAtomValue(getApplicationNumberAtom);
   const { token } = useAtomValue(formConfigAtom)!;
   const { 'misc:file-type': fileType } = uiSchema as UiSchema & {
     'misc:file-type': number;
   };
+  const defaultValue = filesFromATVData(formData);
+
+  if (shouldRenderPreview) {
+    return (
+      <>
+        {defaultValue.map(file => <p key={file.name}>{file.name}</p>)}
+      </>
+    )
+  }
 
   const handleChange = useCallback(async (files: File[]) => {
     const result = await uploadFiles(name, applicationNumber, token, files, fileType);
@@ -90,7 +100,7 @@ export const FileInput = ({
   return <HDSFileInput
     accept={accept}
     // @ts-ignore @fixme typescript is wrong
-    defaultValue={filesFromATVData(formData)}
+    defaultValue={defaultValue}
     disabled={readonly}
     dragAndDrop
     errorText={formatErrors(rawErrors)}

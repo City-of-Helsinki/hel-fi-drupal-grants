@@ -9,6 +9,19 @@
       "extra_info": {
         "ui:widget": "textarea"
       },
+      "required_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "multiple_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "formerly_provided_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "cant_view_after_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
       "other_attachment_fieldset": {
         "file": {
           "misc:file-type": 0,
@@ -21,6 +34,9 @@
   "orienteering_maps_step": {
     "orienteering_subvention": {
       "orienteering_maps": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
         "mapName": {
           "ui:widget": "textarea"
         }

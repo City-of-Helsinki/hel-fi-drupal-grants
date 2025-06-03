@@ -17,6 +17,10 @@ export const useTranslateData = (data: any) => {
   };
 
   const iterateSchema = (element: any): any => {
+    if (typeof element === 'string') {
+      return t(element);
+    }
+
     const translations: RJSFSchema = translateSchemaElement(element);
     const result: RJSFSchema = {...element, ...translations};
     
@@ -43,7 +47,11 @@ export const useTranslateData = (data: any) => {
 
   const translateUiSchemaElement = (element: string, key: string) => {
     const translatableKeys = [
+      'printableName',
       'removeText',
+      'tooltipButtonLabel',
+      'tooltipLabel',
+      'tooltipText',
       'ui:help',
       'ui:tooltip',
     ]
