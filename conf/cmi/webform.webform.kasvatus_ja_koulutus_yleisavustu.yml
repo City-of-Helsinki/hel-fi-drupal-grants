@@ -7,21 +7,21 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '51'
     applicationType: KASKOYLEIS
     applicationTypeID: '51'
-    applicationIndustry: KASKO
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      64: '64'
       45: '45'
       48: '48'
-    applicationTargetGroup: '21'
+      64: '64'
     applicationOpen: '2025-04-07T09:00:00'
     applicationClose: '2025-10-03T16:00:00'
     applicationContinuous: 0
+    applicationTargetGroup: '21'
     disableCopying: 0
+    applicationTypeSelect: '51'
+    applicationIndustry: KASKO
     applicationActingYears: {  }
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '1'
