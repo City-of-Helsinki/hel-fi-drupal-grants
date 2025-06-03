@@ -7,24 +7,24 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '50'
     applicationType: KUVAPERUS
     applicationTypeID: '50'
-    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
       62: '62'
-    applicationTargetGroup: '22'
     applicationOpen: '2024-06-05T08:26:00'
     applicationClose: '2024-10-12T10:00:00'
     applicationContinuous: 0
+    applicationTargetGroup: '22'
     disableCopying: 1
-    applicationActingYearsType: next_x_years
+    applicationTypeSelect: '50'
+    applicationIndustry: KUVA
     applicationActingYears:
       2024: '2024'
       2025: '2025'
       2026: '2026'
+    applicationActingYearsType: next_x_years
     applicationActingYearsNextCount: '1'
     status: released
     parent: ''
