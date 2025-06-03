@@ -65,14 +65,18 @@ final class ApplicationController extends ControllerBase {
    *   The response.
    */
   public function uploadFile(string $id, Request $request): JsonResponse {
+    /** @var \Symfony\Component\HttpFoundation\File\File $file */
     $file = $request->files->get('file');
     if (!$file || !$id) {
       return new JsonResponse(status: 400);
     }
 
+    // @phpstan-ignore-next-line
+    $file_original_name = $file->getClientOriginalName();
+
     try {
       $this->antivirusService->scan([
-        $file->getClientOriginalName() => file_get_contents($file->getRealPath()),
+        $file_original_name => file_get_contents($file->getRealPath()),
       ]);
     }
     catch (AntivirusException $e) {
@@ -101,7 +105,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $result = $this->helfiAtvService->addAttachment(
         $submission->document_id->value,
-        $file->getClientOriginalName(),
+        $file_original_name,
         $file_entity
       );
     }
@@ -114,7 +118,9 @@ final class ApplicationController extends ControllerBase {
       return new JsonResponse(status: 500);
     }
 
-    // @todo Check that events are added as normally.
+    // @todo Check that events are added as normally HANDLER_ATT_OK.
+    // Https://helsinkisolutionoffice.atlassian.net/wiki/spaces/KAN/pages/
+    // 8671232440/Hakemuksen+elinkaaren+tapahtumat+Eventit.
     $file_entity->delete();
     $response = [
       'fileName' => $result['filename'],

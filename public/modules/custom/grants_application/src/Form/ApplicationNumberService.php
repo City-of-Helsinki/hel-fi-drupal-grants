@@ -37,6 +37,12 @@ final class ApplicationNumberService {
 
     $savedSerial = $store->get($last_serial_key, 0);
 
+    // @todo This should/could be handled differently before going live.
+    // We are making sure we are not reusing already used application numbers.
+    if ($savedSerial < 1000) {
+      $savedSerial += 1000;
+    }
+
     $newSerial = $savedSerial + 1;
 
     $application_number = self::getApplicationNumberInEnvFormat($env, (string) $application_type_id, (string) $newSerial);

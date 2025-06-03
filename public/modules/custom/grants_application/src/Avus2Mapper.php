@@ -4,7 +4,7 @@ namespace Drupal\grants_application;
 
 use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\User\GrantsProfile;
-use Drupal\helfi_atv\AtvDocument;
+use Drupal\grants_attachments\AttachmentHandlerHelper;
 
 /**
  * Access control handler for form submission.
@@ -26,8 +26,8 @@ final class Avus2Mapper {
    *   The grants profile.
    * @param \Drupal\grants_application\Form\FormSettings $form_settings
    *   The form settings.
-   * @param \Drupal\helfi_atv\AtvDocument $atvDocument
-   *   The atv-document.
+   * @param string $application_number
+   *   The application number.
    *
    * @return array
    *   Avus2 mapped array with data.
@@ -39,7 +39,7 @@ final class Avus2Mapper {
     array $user_profile_data,
     GrantsProfile $grants_profile,
     FormSettings $form_settings,
-    AtvDocument $atvDocument,
+    string $application_number,
   ): array {
 
     $applicant_type = $company_data['type'];
@@ -51,13 +51,16 @@ final class Avus2Mapper {
       $grants_profile,
     );
 
+    $now = (new \DateTime())->format('Y-m-d\TH:i:s');
+
     // Check LiikuntaSuunnistusDefinition for these values.
     $data['compensationInfo']['compensationArray'] = $this->getCompensationData();
-    $data['applicantOfficialsArray'] = $this->getApplicantOfficials($form_data, $grants_profile);
+    // @todo Move the array inside the function on applicantOfficialsArray.
+    $data['applicantOfficialsArray'] = [$this->getApplicantOfficials($form_data, $grants_profile)];
     $data['currentAddressInfoArray'] = $this->getCurrentAddressData($form_data, $grants_profile);
-    $data['applicationInfoArray'] = $this->getApplicationData($form_settings, $form_data);
+    $data['applicationInfoArray'] = $this->getApplicationData($form_settings, $form_data, $application_number, $now);
     $data['bankAccountArray'][] = $this->getBankData($form_data);
-    $data['otherCompensationInfo'] = $this->getOtherCompensation($form_data);
+    $data['otherCompensationsInfo'] = $this->getOtherCompensation($form_data);
     $data['benefitsInfoArray'] = $this->getBenefits();
     $data['activitiesInfoArray'][] = $this->getActivities($grants_profile);
     $data['additionalInformation'] = $form_data['attachments']['additional_information_section']['additional_information'];
@@ -111,9 +114,10 @@ final class Avus2Mapper {
    *   The compensation data.
    */
   public function getCompensationData(): array {
-    return [
+    return [[
       ['ID' => 'subventionType', 'value' => '15', 'valueType' => 'string', 'label' => NULL],
       ['ID' => 'amount', 'value' => '0' , 'valueType' => 'float', 'label' => NULL],
+    ],
     ];
   }
 
@@ -141,7 +145,7 @@ final class Avus2Mapper {
           'ID' => $field_name,
           'value' => $official_data[$field_name],
           'valueType' => 'string',
-          'label' => 'nimi',
+          'label' => 'Nimi',
         ],
 
         'role' => [
@@ -187,13 +191,13 @@ final class Avus2Mapper {
     $fields = ['contactPerson', 'phoneNumber', 'street', 'city', 'postCode', 'country'];
 
     $address_array = $grants_profile->getAddressByStreetname($form_data['applicant_info']['community_address']['community_address']);
-    $email = $form_data['applicant_info']['applicant_email']['email'];
-    $phone = $form_data['applicant_info']['contact_person']['contact_person_phone_number'];
+    $name = $form_data['applicant_info']['contact_person_info']['contact_person'];
+    $phone = $form_data['applicant_info']['contact_person_info']['contact_person_phone_number'];
 
     // It can be null in the grants profile addresses.
     foreach ($fields as $field_name) {
       $row = match($field_name) {
-        'contactPerson' => ['ID' => $field_name, 'value' => $email, 'valueType' => 'string', 'label' => 'Yhteyshenkilö'],
+        'contactPerson' => ['ID' => $field_name, 'value' => $name, 'valueType' => 'string', 'label' => 'Yhteyshenkilö'],
         'phoneNumber' => ['ID' => $field_name, 'value' => $phone, 'valueType' => 'string', 'label' => 'Puhelinnumero'],
         'street' => [
           'ID' => $field_name,
@@ -237,17 +241,28 @@ final class Avus2Mapper {
    *   The form settings.
    * @param array $form_data
    *   The form data.
+   * @param string $application_number
+   *   The application number.
+   * @param string $now
+   *   Formatted datetime string.
    *
    * @return array
    *   The application data.
    */
-  public function getApplicationData(FormSettings $form_settings, array $form_data): array {
+  public function getApplicationData(FormSettings $form_settings, array $form_data, string $application_number, string $now): array {
     $application_type = $form_settings->toArray()['settings']['application_type'];
     $acting_year = $form_data['orienteering_maps']['acting_year']['acting_year'];
 
     // Draft is a super special case, it is overwritten by integration.
+    // @todo Proper timestamps.
+    // @todo Proper type id.
     return [
       ['ID' => 'applicationType', 'value' => $application_type, 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'applicationTypeID', 'value' => "58", 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'formTimeStamp', 'value' => $now, 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'createdFormTimeStamp', 'value' => $now, 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'submittedFormTimeStamp', 'value' => $now, 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'applicationNumber', 'value' => $application_number, 'valueType' => 'string', 'label' => 'Hakemusnumero'],
       ['ID' => 'status', 'value' => 'DRAFT', 'valueType' => 'string', 'label' => 'Hakemuksen tila'],
       ['ID' => 'actingYear', 'value' => $acting_year, 'valueType' => 'string', 'label' => 'Vuosi, jolle haen avustusta'],
     ];
@@ -281,11 +296,12 @@ final class Avus2Mapper {
    *   The other compensation.
    */
   public function getOtherCompensation(array $form_data): array {
+    // @todo The values when we get a from where those are present.
     return [
       'otherCompensationsArray' => [],
       'otherCompensationsInfoArray' => [
-        ['ID' => 'otherCompensationsTotal', 'value' => 0, 'valueType' => 'double', 'label' => NULL],
-        ['ID' => 'otherAppliedCompensationsTotal', 'value' => 0, 'valueType' => 'double', 'label' => NULL],
+        ['ID' => 'otherCompensationsTotal', 'value' => "0", 'valueType' => 'double', 'label' => NULL],
+        ['ID' => 'otherAppliedCompensationsTotal', 'value' => "0", 'valueType' => 'double', 'label' => NULL],
       ],
     ];
   }
@@ -371,7 +387,7 @@ final class Avus2Mapper {
    *
    * Filetype: Just check GrantsAttachments::filetypes for more information.
    *
-   * Integration id is the path to the file in ATV.
+   * Integration id can be built using getIntregrationIdFomFileHref-method.
    *
    * IsDeliveredLater and the other boolean are checkboxes related to the
    * file upload component: fields may not exist but the value must be sent.
@@ -379,47 +395,69 @@ final class Avus2Mapper {
    * @return array
    *   The attachment info array.
    */
-  public function getAttachmentInfo(array $form_data): array {
+  public function getAttachmentAndGeneralInfo(array $attachments, array $form_data): array {
     $data = [
-      'attachmentsInfoArray' => [],
+      'attachmentsArray' => [],
       'generalInfoArray' => [],
     ];
 
     $files = [];
-    foreach ($form_data['attachments']['files'] as $file) {
+    foreach ($attachments as $file) {
+      $integration_id = AttachmentHandlerHelper::getIntegrationIdFromFileHref($file['integrationID']);
+      $integration_id = AttachmentHandlerHelper::addEnvToIntegrationId($integration_id);
+
+      // @todo Description.
       $files[] = $this->createAttachmentData(
         $file['description'] ?? '',
-        $file['filename'] ?? '',
-        $file['filetype'] ?? 0,
-        $file['integration_id'] ?? '',
+        $file['fileName'] ?? '',
+        $file['fileType'] ?? 0,
+        $integration_id,
         $file['isDeliveredLater'] ?? FALSE,
         $file['isIncludedInOtherFile'] ?? FALSE,
       );
     }
 
-    // @todo Bank-file is always part of the submission afaik.
-    /*
-    $files[] = $this->createAttachmentData(
-    "Varmistus tilinumerolle TILINUMERO TÄHÄN",
-    'filename tähän',
-    45,
-    'integration_id tänne',
-    'false',
-    'false',
-    );
-     */
-
-    $data['attachmentsInfoArray'] = $files;
+    $data['attachmentsArray'] = $files;
 
     $extra_info = $form_data['attachments']['additional_information_section']['additional_information'];
-    $data['generalInfoArray'] = [
+    $data['generalInfoArray'] = [[
       'ID' => 'extraInfo',
       'value' => $extra_info,
       'valueType' => 'string',
       'label' => 'Lisäselvitys liitteistä',
+    ],
     ];
 
     return $data;
+  }
+
+  /**
+   * Find the bank account confirmation file and create attachment data.
+   *
+   * Bank account file must be added to the ATV-document as an attachment
+   * manually, since user only selects the bank id on the form.
+   *
+   * @param string $selected_bank_account
+   *   The bank account number.
+   * @param array $bank_file
+   *   The file array from atv.
+   *
+   * @return array
+   *   The bank file data.
+   */
+  public function createBankFileData(string $selected_bank_account, array $bank_file): array {
+    $integration_id = AttachmentHandlerHelper::getIntegrationIdFromFileHref($bank_file['href']);
+    $integration_id = AttachmentHandlerHelper::addEnvToIntegrationId($integration_id);
+
+    // Filetype 45 as stated in GrantsAttachments::filetypes.
+    return $this->createAttachmentData(
+      "Vahvistus tilinumerolle $selected_bank_account",
+      $bank_file['filename'],
+      45,
+      $integration_id,
+      FALSE,
+      FALSE,
+    );
   }
 
   /**
@@ -455,19 +493,19 @@ final class Avus2Mapper {
 
     return [
       ['ID' => 'description', 'value' => $description, 'valueType' => 'string', 'label' => 'Liitteen kuvaus'],
-      ['ID' => 'filename', 'value' => $filename, 'valueType' => 'string', 'label' => 'Tiedostonimi'],
-      ['ID' => 'fileType', 'value' => $filetype, 'valueType' => 'int', 'label' => NULL],
-      ['ID' => 'integrationID', 'value' => $integrationID, 'valueType' => 'string', 'label' => NULL],
+      ['ID' => 'fileName', 'value' => $filename, 'valueType' => 'string', 'label' => 'Tiedostonimi'],
+      ['ID' => 'fileType', 'value' => $filetype, 'valueType' => 'int', 'label' => "filetype"],
+      ['ID' => 'integrationID', 'value' => $integrationID, 'valueType' => 'string', 'label' => "integrationID"],
       [
-        'ID' => 'idDeliveredLater',
+        'ID' => 'isDeliveredLater',
         'value' => $isDeliveredLater,
         'valueType' => 'bool',
-        'label' => 'Liitteet toimitetaan myöhemmin',
+        'label' => 'Liite toimitetaan myöhemmin',
       ],
       [
         'ID' => 'isIncludedInOtherFile',
         'value' => $isIncludedInOtherFile,
-        'valueType' => 'string',
+        'valueType' => 'bool',
         'label' => 'Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä',
       ],
     ];
@@ -484,7 +522,7 @@ final class Avus2Mapper {
    */
   public function getOrienteeringMaps(array $form_data): array {
     $fields = ['mapName', 'size', 'voluntaryHours', 'cost', 'otherCompensations'];
-    $maps = $form_data['orienteering_maps']['orienteering_subvention']['orienteering_maps'];
+    $maps = $form_data['orienteering_maps_step']['orienteering_subvention']['orienteering_maps'];
 
     $data = [];
     foreach ($maps as $map) {
@@ -493,36 +531,35 @@ final class Avus2Mapper {
         $row = match($field_name) {
           'mapName' => [
             'ID' => $field_name,
-            'value' => $map[$field_name],
+            'value' => (string) $map[$field_name],
             'valueType' => 'string',
-            'label' => 'Kartan nimi,
-             sijainti ja karttatyyppi',
+            'label' => 'Kartan nimi, sijainti ja karttatyyppi',
           ],
 
           'size' => [
             'ID' => $field_name,
-            'value' => $map[$field_name],
+            'value' => (string) $map[$field_name],
             'valueType' => 'double',
             'label' => 'Koko km2',
           ],
 
           'voluntaryHours' => [
             'ID' => $field_name,
-            'value' => $map[$field_name],
+            'value' => (string) $map[$field_name],
             'valueType' => 'float',
             'label' => 'Talkootyö tuntia',
           ],
 
           'cost' => [
             'ID' => $field_name,
-            'value' => $map[$field_name],
+            'value' => (string) $map[$field_name],
             'valueType' => 'double',
             'label' => 'Kustannukset euroa',
           ],
 
           'otherCompensations' => [
             'ID' => $field_name,
-            'value' => $map[$field_name],
+            'value' => (string) $map[$field_name],
             'valueType' => 'double',
             'label' => 'Muilta saadut avustukset euroa',
           ],
@@ -598,7 +635,7 @@ final class Avus2Mapper {
 
       // Handle the values field by field.
       match($field_name) {
-        'applicantType' => $row['value'] = 2,
+        'applicantType' => $row['value'] = "2",
         'companyNumber' => $row['value'] = $company_data['identifier'],
         'registrationDate' => $row['value'] = $grants_profile->getRegistrationDate(TRUE),
         'foundingYear' => $row['value'] = $grants_profile->getFoundingYear(),
