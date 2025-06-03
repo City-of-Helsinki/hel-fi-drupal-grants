@@ -120,29 +120,44 @@
               "title": "required_attachments_help.title",
               "type": "array",
               "items": [
-                "required_attachments_help.value"
+                {
+                  "title": "required_attachments_help.value",
+                  "type": "null"
+                }
               ]
             },
             "multiple_attachments_help": {
               "title": "multiple_attachments_help.title",
               "type": "array",
               "items": [
-                "multiple_attachments_help.value"
+                {
+                 "title": "multiple_attachments_help.value",
+                 "type": "null"
+                }
               ]
             },
             "formerly_provided_attachments_help": {
               "title": "formerly_provided_attachments_help.title",
               "type": "array",
               "items": [
-                "formerly_provided_attachments_help.value"
+                {
+                 "title": "formerly_provided_attachments_help.value",
+                 "type": "null"
+                }
               ]
             },
             "cant_view_after_help": {
               "title": "cant_view_after_help.title",
               "type": "array",
               "items": [
-                "cant_view_after_help.value",
-                "cant_view_after_help.value_2"
+                {
+                  "title": "cant_view_after_help.value",
+                  "type": "null"
+                },
+                {
+                  "title": "cant_view_after_help.value_2",
+                  "type": "null"
+                }
               ]
             },
             "extra_info": {

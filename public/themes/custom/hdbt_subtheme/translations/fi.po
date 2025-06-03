@@ -566,3 +566,51 @@ msgstr "Hakemuksen tila"
 msgctxt "Grants application: Submitted form"
 msgid "Attachments"
 msgstr "Hakemuksen liitteet"
+
+msgctxt "Grants application: Status label"
+msgid "Cancelled"
+msgstr "Peruttu"
+
+msgctxt "Grants application: Status label"
+msgid "Draft"
+msgstr "Luonnos"
+
+msgctxt "Grants application: Status label"
+msgid "Pending"
+msgstr "Odottaa"
+
+msgctxt "Grants application: Status label"
+msgid "In Preparation"
+msgstr "Valmistelussa"
+
+msgctxt "Grants application: Status label"
+msgid "Processing"
+msgstr "Käsittelyssä"
+
+msgctxt "Grants application: Status label"
+msgid "Received"
+msgstr "Vastaanotettu"
+
+msgctxt "Grants application: Status label"
+msgid "Rejected"
+msgstr "Hylätty"
+
+msgctxt "Grants application: Status label"
+msgid "Resolved"
+msgstr "Ratkaistu"
+
+msgctxt "Grants application: Status label"
+msgid "Sent - waiting for confirmation"
+msgstr "Lähetetty - odotetaan vahvistusta"
+
+msgctxt "Grants application: Status label"
+msgid "Closed"
+msgstr "Suljettu"
+
+msgctxt "Grants application: Status label"
+msgid "Deleted"
+msgstr "Poistettu"
+
+msgctxt "Grants application: Status label"
+msgid "Ready"
+msgstr "Valmiina"
