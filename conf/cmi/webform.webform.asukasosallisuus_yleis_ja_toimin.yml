@@ -7,23 +7,23 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '67'
     applicationType: ASUKASYLEISTOIM
     applicationTypeID: '67'
-    applicationIndustry: KANSLIA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      49: '49'
       45: '45'
-    applicationTargetGroup: '25'
+      49: '49'
     applicationOpen: '2025-05-02T00:00:00'
     applicationClose: '2025-06-02T16:00:00'
-    applicationActingYearsType: next_x_years
-    applicationActingYears: {  }
-    applicationActingYearsNextCount: '1'
     applicationContinuous: 0
+    applicationTargetGroup: '25'
     disableCopying: 0
+    applicationTypeSelect: '67'
+    applicationIndustry: KANSLIA
+    applicationActingYears: {  }
+    applicationActingYearsType: next_x_years
+    applicationActingYearsNextCount: '1'
     status: released
     parent: ''
     avus2BreakingChange: false

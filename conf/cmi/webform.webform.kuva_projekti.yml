@@ -10,9 +10,9 @@ third_party_settings:
     applicationType: KUVAPROJ
     applicationTypeID: '48'
     applicantTypes:
+      private_person: private_person
       registered_community: registered_community
       unregistered_community: unregistered_community
-      private_person: private_person
     applicationTypeTerms:
       47: '47'
     applicationOpen: '2022-10-02T11:08:26'
