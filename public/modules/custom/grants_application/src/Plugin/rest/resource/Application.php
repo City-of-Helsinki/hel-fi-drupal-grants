@@ -385,12 +385,6 @@ final class Application extends ResourceBase {
     );
     $this->eventsService->addNewEventForApplication($document, $event);
 
-    // @todo Make sure the formUpdate is set properly.
-    // Initial import from ATV MUST have formUpdate FALSE, and
-    // any subsequent update must have it as TRUE. The application status
-    // handling makes this possibly very complicated, hence separate method
-    // figuring it out.
-    // This comment^ is from GrantsHandler::getFormUpdate.
     $success = FALSE;
     try {
       $success = $this->integration->sendToAvus2($document, $application_number, $save_id);
