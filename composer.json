@@ -167,6 +167,11 @@
             "drupal/core": "-p2"
         }
     },
+    "patches": {
+      "drupal/core": {
+        "[#UHF-11784] Sort the source and target arrays in the configuration storage comparer to avoid false positives": "./public/modules/contrib/helfi_platform_config/patches/drupal-core-sort-storage-comparer-source-and-target-arrays.patch"
+      }
+    },
     "repositories": [
         {
             "type": "composer",
