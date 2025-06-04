@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { atom } from 'jotai';
 import { keyErrorsByStep } from './utils';
-import { SubmitState, SubmitStates } from './enum/SubmitStates';
+import { SubmitStates } from './enum/SubmitStates';
 
 export type FormStep = {
   id: string;
@@ -51,7 +51,7 @@ type FormConfig = {
   settings: {
     [key: string]: string;
   }
-  submitState: SubmitState;
+  submitState: string;
   translations: {
     [key in 'fi'|'sv'|'en']: {
       [key: string]: string;
@@ -63,7 +63,7 @@ type FormConfig = {
 type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_state'> & {
   applicationNumber: string;
   grants_profile: GrantsProfile;
-  submit_state: SubmitState;
+  status: string;
   ui_schema: UiSchema;
 };
 
@@ -85,11 +85,11 @@ const buildFormSteps = ({
   const previewIndex = steps.size;
   steps.set(previewIndex, {
     id: 'preview',
-    label: Drupal.t('Confirm, preview and submit'),
+    label: Drupal.t('Confirm, preview and submit', {}, {context: 'Grants application: Steps'}),
   });
   steps.set(previewIndex + 1, {
     id: 'ready',
-    label: Drupal.t('Ready'),
+    label: Drupal.t('Ready', {}, {context: 'Grants application: Steps'}),
   });
 
   return steps;
@@ -129,7 +129,7 @@ export const errorsAtom = atom<Array<[number, RJSFValidationError]>>([]);
 export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData) => {
   const {
     grants_profile: grantsProfile,
-    submit_state: submitState,
+    status,
     ui_schema: uiSchema,
     ...rest
   } = formConfig;
@@ -139,7 +139,7 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
     grantsProfile,
     ...rest,
     uiSchema,
-    submitState: submitState || SubmitStates.unsubmitted,
+    submitState: status || SubmitStates.DRAFT,
   }));
   _set(formStateAtom, (state) => ({
       currentStep: [0, steps.get(0)],
@@ -233,7 +233,7 @@ export const getSubmitStatusAtom = atom(_get => {
 
   return submitState;
 });
-export const setSubmitStatusAtom = atom(null, (_get, _set, submitState: SubmitState) => {
+export const setSubmitStatusAtom = atom(null, (_get, _set, submitState: string) => {
   const formConfig = _get(getFormConfigAtom);
 
   _set(formConfigAtom, state => ({
@@ -241,11 +241,24 @@ export const setSubmitStatusAtom = atom(null, (_get, _set, submitState: SubmitSt
     submitState,
   }));
 });
+export const getSchemasAtom = atom(_get => {
+  const { schema, uiSchema } = _get(getFormConfigAtom);
+
+  return {
+    schema,
+    uiSchema,
+  };
+});
 export const getApplicationNumberAtom = atom(_get => {
   const { applicationNumber } = _get(getFormConfigAtom);
 
   return applicationNumber;
 });
+export const getTranslationsAtom = atom(_get => {
+  const { translations } = _get(getFormConfigAtom);
+
+  return translations;
+})
 export const setApplicationNumberAtom = atom(null, (_get, _set, applicationNumber: string) => {
   const formConfig = _get(getFormConfigAtom);
 
@@ -269,4 +282,48 @@ export const pushNotificationAtom = atom(null, (_get, _set, notification: System
 });
 export const shiftNotificationsAtom = atom(null, (_get, _set) => {
   _set(systemNotificationsAtom, state => state.slice(1));
+});
+
+type avus2Data = {
+  attachmentsInfo: {
+    attachmentsArray: Array<{
+      ID: string;
+      label: string;
+      value: string;
+      valueType: string;
+    }[]>;
+    generalInfoArray: Array<{
+      ID: string;
+      label: string;
+      valueType: string;
+    }>
+  };
+  events: Array<{
+    caseId: string;
+    eventCode: number;
+    eventCreated: string;
+    eventDescription: string;
+    eventID: string;
+    eventSource: string;
+    eventTarget: string;
+    eventType: string;
+    timeUpdated: string;
+  }>
+  messages: any[];
+  statusUpdates: Array<{
+    caseId: string;
+    citizenCaseStatus: string;
+    eventType: string;
+    eventCode: 1;
+    eventSource: string;
+    timeUpdated: string;
+    timeCreated: string;
+  }>
+};
+export const avus2DataAtom = atom<avus2Data|null>();
+export const shouldRenderPreviewAtom = atom(_get => {
+  const { submitState } = _get(getFormConfigAtom);
+  const { currentStep } = _get(getFormStateAtom);
+
+  return submitState !== SubmitStates.DRAFT || currentStep[1].id === 'preview';
 });

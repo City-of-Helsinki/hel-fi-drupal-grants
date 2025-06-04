@@ -15,3 +15,5 @@ services:
   Drupal\grants_application\Atv\HelfiAtvService: ~
 
   Drupal\grants_application\Avus2Mapper: ~
+
+  Drupal\grants_application\Avus2Integration: ~

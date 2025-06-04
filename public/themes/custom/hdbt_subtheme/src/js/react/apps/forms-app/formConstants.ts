@@ -58,7 +58,7 @@ export const privatePersonSettings: [JSONSchema7Definition, JSONSchema7Definitio
 
 export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
   {
-    title: 'Yhteisö, jolle haetaan avustusta',
+    title: 'applicant_info.title',
     type: objectType,
     '$ref': '#/definitions/applicant_info',
   },
@@ -66,101 +66,117 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
     type: objectType,
     properties: {
       applicant_email: {
-        title: 'Sähköpostiosoite',
-        description: 'Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.',
-        type: objectType,
+        description: 'applicant_email.description',
         properties: {
           email: {
-            title: 'Sähköpostiosoite',
+            format: 'email',
+            title: 'applicant_email_email.title',
             type: stringType,
-            format: 'email'
           }
         },
-        required: ['email']
+        required: ['email'],
+        title: 'applicant_email.title',
+        type: objectType,
       },
       contact_person_info: {
-        title: 'Hakemuksen yhteyshenkilö',
-        type: objectType,
         properties: {
           contact_person: {
-            title: 'Yhteyshenkilö',
             minLength: 1,
+            title: 'contact_person.title',
             type: stringType,
           },
           contact_person_phone_number: {
-            title: 'Puhelinnumero',
             minLength: 1,
+            title: 'contact_person_phone_number.title',
             type: stringType,
           }
         },
+        required: ['contact_person', 'contact_person_phone_number'],
+        title: 'contact_person_info.title',
+        type: objectType,
       },
       community_address: {
-        title: 'Osoite',
-        type: objectType,
         properties: {
           community_address: {
-            title: 'Valitse osoite',
+            title: 'community_address_community_address.title',
             type: stringType,
           }
         },
-        required: ['community_address']
+        required: ['community_address'],
+        title: 'community_address.title',
+        type: objectType,
       },
       bank_account: {
-        title: 'Tilinumero',
-        type: objectType,
         properties: {
           bank_account: {
-            title: 'Valitse tilinumero',
+            title: 'bank_account_bank_account.title',
             type: stringType,
           }
         },
-        required: ['bank_account']
+        required: ['bank_account'],
+        title: 'bank_account.title',
+        type: objectType,
       },
       community_officials: {
-        title: 'Toiminnasta vastaavat henkilöt',
-        type: objectType,
         properties: {
           community_officials: {
-            type: 'array',
-            title: 'Toiminnasta vastaavat henkilöt',
-            items: [
-              {
-                title: 'Valitse toiminnasta vastaavat henkilöt',
-                type: objectType,
-                properties: {
-                  official: {
-                    title: 'Valitse vastaava henkilö',
-                    type: stringType,
-                  },
-                },
-              },
-            ],
             additionalItems: {
-              title: 'Valitse toiminnasta vastaavat henkilöt',
+              title: 'community_officials_community_officials.title',
               type: objectType,
               properties: {
                 official: {
-                  title: 'Valitse vastaava henkilö',
+                  title: 'community_officials_community_officials_official.title',
                   type: stringType,
                 },
               },
             },
+            items: [
+              {
+                properties: {
+                  official: {
+                    title: 'community_officials_community_officials_official.title',
+                    type: stringType,
+                  },
+                },
+                title: 'community_officials_community_officials.title',
+                type: objectType,
+              },
+            ],
+            title: 'community_officials_community_officials.title',
+            type: 'array',
           },
         },
+        title: 'community_officials.title',
+        type: objectType,
       },
     },
     required: ['applicant_email', 'contact_person_info', 'bank_account', 'community_address'],
   },
   {
     applicant_info: {
+      applicant_email: {
+        email: {
+          'ui:options': {
+            tooltipLabel: 'applicant_email_email.title',
+            tooltipButtonLabel: 'applicant_email.tooltip_button_label',
+            tooltipText: 'applicant_email.tooltip_text',
+          }
+        }
+      },
       bank_account: {
         bank_account: {
-          'ui:widget': 'bank_account'
+          'ui:widget': 'bank_account',
+          'ui:options': {
+            printableName: 'bank_account.title'
+          }
         }
       },
       community_address: {
         community_address: {
-          'ui:widget': 'address'
+          'ui:widget': 'address',
+          'ui:options': {
+            printableName: 'community_address.title'
+          }
         }
       },
       community_officials: {
@@ -170,17 +186,20 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
               'ui:widget': 'community_officials',
             },
             'ui:options': {
-              removeText: 'Poista henkilö',
+              removeText: 'community_officials_community_officials.removeText',
             }
           },
           items: {
             official: {
               'ui:widget': 'community_officials',
+              'ui:options': {
+                hideNameFromPrint: true,
+              }
             },
           },
           'ui:options': {
             addable: true,
-            addText: 'Lisää henkilö',
+            hideNameFromPrint: true,
             orderable: false,
             removable: true,
           }

@@ -1,21 +1,24 @@
-import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
 import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
-import validator from '@rjsf/validator-ajv8';
-import React, { createRef, useCallback } from 'react';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom, WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
+import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
+import React, { createRef, useCallback, useEffect } from 'react';
+import { customizeValidator } from '@rjsf/validator-ajv8';
 
+import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
+import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
-import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
-import { AddButtonTemplate, ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
-import { StaticStepsContainer } from './StaticStepsContainer';
 import { FormActions } from '../components/FormActions/FormActions';
-import { Stepper } from '../components/Stepper';
 import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom, setStepAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
-import { ErrorsList } from '../components/ErrorsList';
+import { StaticStepsContainer } from './StaticStepsContainer';
+import { Stepper } from '../components/Stepper';
 import { SubmitStates } from '../enum/SubmitStates';
+import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
+import { localizeErrors } from '../localizeErrors';
+import { TextParagraph } from '../components/TextParagraph';
+import { SubmittedForm } from '../components/SubmittedForm';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -25,14 +28,6 @@ const widgets: RegistryWidgetsType = {
   SelectWidget,
   TextareaWidget: TextArea,
   TextWidget: TextInput,
-};
-
-type RJSFFormContainerProps = {
-  formDataAtom: any,
-  saveDraft: (data: any) => boolean,
-  schema: RJSFSchema,
-  submitData: (data: IChangeEvent) => boolean,
-  uiSchema: UiSchema,
 };
 
 /**
@@ -53,8 +48,20 @@ export const RJSFFormContainer = ({
   schema,
   submitData,
   uiSchema,
-}: RJSFFormContainerProps) => {
-  const [formData, setFormData] = useAtom(formDataAtom)
+}: {
+  formDataAtom: WritableAtom<any, [update: unknown], any>;
+  saveDraft: (data: any) => Promise<boolean>;
+  schema: RJSFSchema;
+  submitData: (data: IChangeEvent) => Promise<boolean>;
+  uiSchema: UiSchema;
+}) => {
+  const setFormData = useSetAtom(formDataAtom)
+
+  useEffect(() => {
+    if (schema?.title) {
+      document.title = `${schema.title} ${document.title}`;
+    }
+  }, [schema]);
 
   const submitStatus = useAtomValue(getSubmitStatusAtom);
   const steps = useAtomValue(getStepsAtom);
@@ -65,6 +72,9 @@ export const RJSFFormContainer = ({
   );
   const readReachedStep = useAtomCallback(
     useCallback(get => get(getReachedStepAtom), [])
+  );
+  const readFormData = useAtomCallback(
+    useCallback(get => get(formDataAtom), [])
   );
   const setErrors = useSetAtom(setErrorsAtom);
 
@@ -115,28 +125,44 @@ export const RJSFFormContainer = ({
     const keyedErrors = keyErrorsByStep(errors, steps);
 
     const errorsToShow = keyedErrors
-      .filter(([index]) => index <= reachedStep).map(([index, error]) => error);
+      .filter(([index]) => index <= reachedStep)
+      .filter(([index, error]) => {
+        const { name } = error;
+        return name !== 'type';
+      })
+      .map(([index, error]) => error);
     setErrors(errorsToShow);
 
     return errorsToShow;
   };
 
-  return (
-    <>
-      <ErrorsList />
-      <Stepper formRef={formRef} />
+  const readonly = submitStatus !== SubmitStates.DRAFT
+
+  return <>
+      {
+        !readonly && <>
+          <h1>{schema?.title}</h1>
+          <ErrorsList />
+          <Stepper formRef={formRef} />
+        </>
+      }
       <div className='form-wrapper'>
-        <StaticStepsContainer
-          formData={formData}
-          schema={schema}
-        />
+        {readonly ?
+          <SubmittedForm formData={readFormData()} schema={schema} /> :
+          <StaticStepsContainer
+            formDataAtom={formDataAtom}
+            schema={schema}
+          />
+        }
         <Form
           className='grants-react-form webform-submission-form'
           fields={{
             ...getDefaultRegistry().fields,
             atvFile: FileInput,
+            textParagraph: TextParagraph,
           }}
-          formData={formData || {}}
+          formData={readFormData() || {}}
+          liveValidate={false}
           method='POST'
           noHtml5Validate
           onChange={browserCacheData}
@@ -151,17 +177,13 @@ export const RJSFFormContainer = ({
               setStep([...steps].pop()?.[0] || 0);
             }
           }}
-          readonly={
-            submitStatus !== SubmitStates.unsubmitted &&
-            submitStatus !== SubmitStates.editing
-          }
+          readonly={readonly}
           ref={formRef}
           schema={schema}
           showErrorList={false}
           templates={{
             ArrayFieldTemplate,
             ButtonTemplates: {
-              AddButton: AddButtonTemplate,
               RemoveButton: RemoveButtonTemplate,
               SubmitButton: () => null
             },
@@ -175,15 +197,15 @@ export const RJSFFormContainer = ({
               label: false,
             },
           }}
-          validator={validator}
+          validator={customizeValidator({}, localizeErrors)}
           widgets={widgets}
         >
-          <FormActions
-            saveDraft={() => saveDraft(formData)}
+         {!readonly && <FormActions
+            saveDraft={() => saveDraft(readFormData())}
             validatePartialForm={validatePartialForm}
           />
+         }
         </Form>
       </div>
-    </>
-  );
+    </>;
 }

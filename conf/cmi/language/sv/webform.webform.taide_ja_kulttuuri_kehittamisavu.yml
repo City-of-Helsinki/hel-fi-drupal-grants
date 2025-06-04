@@ -238,7 +238,7 @@ elements: |
     '#help': '<p>Nämn högst cirka fem partners.</p>'
     '#counter_maximum_message': '%d/1000 tecken kvar'
   6_talous:
-    '#title': '6.  Budget'
+    '#title': '6. Ekonomi'
     '#prev_button_label': 'Tidigare'
     '#next_button_label': 'Nästa'
   talousarvio:

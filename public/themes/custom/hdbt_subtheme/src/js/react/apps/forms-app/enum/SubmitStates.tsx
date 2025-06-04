@@ -1,16 +1,17 @@
-
-export type SubmitState = 'unsubmitted' | 'submitted' | 'accepted' | 'editing';
-
-type SubmitStatesType = {
-  accepted: SubmitState;
-  editing: SubmitState;
-  submitted: SubmitState;
-  unsubmitted: SubmitState;
-}
-
-export const SubmitStates: SubmitStatesType = {
-  accepted: 'accepted',
-  editing: 'editing',
-  submitted: 'submitted',
-  unsubmitted: 'unsubmitted',
+/**
+ * Statuses Avus2 uses.
+ */
+export const SubmitStates = {
+  CANCELLED: 'CANCELLED',
+  CLOSED: 'CLOSED',
+  DELETED: 'DELETED',
+  DRAFT: 'DRAFT',
+  PENDING: 'PENDING',
+  PREPARING: 'PREPARING',
+  PROCESSING: 'PROCESSING',
+  READY: 'READY',
+  RECEIVED: 'RECEIVED',
+  REJECTED: 'REJECTED',
+  RESOLVED: 'RESOLVED',
+  SUBMITTED: 'SUBMITTED',
 };

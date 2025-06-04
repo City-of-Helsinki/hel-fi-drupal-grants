@@ -44,6 +44,8 @@ class FormSettingsService {
       $settings[$suffix] = json_decode($data, TRUE);
     }
 
+    $settings['translation'] = $this->combineTranslations($settings['translation']);
+
     return new FormSettings(...$settings);
   }
 
@@ -58,6 +60,18 @@ class FormSettingsService {
    */
   public function isApplicationOpen(int $id): bool {
     return $this->getFormSettings($id)->isApplicationOpen();
+  }
+
+  /**
+   * Combine default translations with form specific translations.
+   *
+   * @param array $translations
+   *   Form specific translations.
+   */
+  private function combineTranslations(array $translations): array {
+    $defaultTranslations = json_decode(file_get_contents(__DIR__ . '/../../fixtures/defaultTranslations.json'), TRUE);
+
+    return array_merge_recursive($defaultTranslations, $translations);
   }
 
   /**
