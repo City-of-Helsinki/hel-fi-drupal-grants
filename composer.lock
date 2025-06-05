@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17ce0ead6847598ac31d570ee3f05dfe",
+    "content-hash": "0910d9633db5c98b210c76597d69ae32",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2317,17 +2317,17 @@
         },
         {
             "name": "drupal/admin_toolbar",
-            "version": "3.6.0",
+            "version": "3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/admin_toolbar.git",
-                "reference": "3.6.0"
+                "reference": "3.6.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/admin_toolbar-3.6.0.zip",
-                "reference": "3.6.0",
-                "shasum": "ee03fd8e5394525f6e0aaf19db75624fbefc5b5d"
+                "url": "https://ftp.drupal.org/files/projects/admin_toolbar-3.6.1.zip",
+                "reference": "3.6.1",
+                "shasum": "40e8874bdf100de90e0eec6984be14f0ec7765b0"
             },
             "require": {
                 "drupal/core": "^9.5 || ^10 || ^11"
@@ -2338,8 +2338,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.6.0",
-                    "datestamp": "1747981575",
+                    "version": "3.6.1",
+                    "datestamp": "1749079734",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -5958,16 +5958,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "dev-UHF-11784",
+            "version": "4.14.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "f97ff68d17c4d7203d1d6f35959e3cb664178e45"
+                "reference": "90e691f19bd93fcaa2e11b048c49c763f04a6938"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/f97ff68d17c4d7203d1d6f35959e3cb664178e45",
-                "reference": "f97ff68d17c4d7203d1d6f35959e3cb664178e45",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/90e691f19bd93fcaa2e11b048c49c763f04a6938",
+                "reference": "90e691f19bd93fcaa2e11b048c49c763f04a6938",
                 "shasum": ""
             },
             "require": {
@@ -6090,10 +6090,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/UHF-11784",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.14.18",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2025-06-04T12:56:37+00:00"
+            "time": "2025-06-03T12:53:59+00:00"
         },
         {
             "name": "drupal/helfi_proxy",
@@ -23765,7 +23765,6 @@
     "stability-flags": {
         "drupal/block_field": 5,
         "drupal/helfi_drupal_tools": 20,
-        "drupal/helfi_platform_config": 20,
         "drupal/multivalue_form_element": 10,
         "drupal/session_limit": 10
     },
