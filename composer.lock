@@ -3149,16 +3149,16 @@
         },
         {
             "name": "drupal/core",
-            "version": "10.4.7",
+            "version": "10.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core.git",
-                "reference": "547fa74348dda2ecb4a3e752f88a5c40be675d64"
+                "reference": "18b5bd895531f95c8c537e2445a27d64415c3846"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core/zipball/547fa74348dda2ecb4a3e752f88a5c40be675d64",
-                "reference": "547fa74348dda2ecb4a3e752f88a5c40be675d64",
+                "url": "https://api.github.com/repos/drupal/core/zipball/18b5bd895531f95c8c537e2445a27d64415c3846",
+                "reference": "18b5bd895531f95c8c537e2445a27d64415c3846",
                 "shasum": ""
             },
             "require": {
@@ -3307,13 +3307,13 @@
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
             "support": {
-                "source": "https://github.com/drupal/core/tree/10.4.7"
+                "source": "https://github.com/drupal/core/tree/10.4.8"
             },
-            "time": "2025-05-08T04:06:41+00:00"
+            "time": "2025-06-05T23:40:40+00:00"
         },
         {
             "name": "drupal/core-composer-scaffold",
-            "version": "10.4.7",
+            "version": "10.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-composer-scaffold.git",
@@ -3357,7 +3357,7 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.4.7"
+                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.5.0-beta1"
             },
             "time": "2024-08-22T14:31:30+00:00"
         },
@@ -5523,16 +5523,16 @@
         },
         {
             "name": "drupal/hdbt",
-            "version": "6.11.12",
+            "version": "6.11.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-hdbt.git",
-                "reference": "326bdc4998ad8f2c6c8ae4dd8f9a59001a5fec60"
+                "reference": "c9ac94477dbae5ea16976cb49ff2b17de30b0ae2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/326bdc4998ad8f2c6c8ae4dd8f9a59001a5fec60",
-                "reference": "326bdc4998ad8f2c6c8ae4dd8f9a59001a5fec60",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/c9ac94477dbae5ea16976cb49ff2b17de30b0ae2",
+                "reference": "c9ac94477dbae5ea16976cb49ff2b17de30b0ae2",
                 "shasum": ""
             },
             "require": {
@@ -5551,10 +5551,10 @@
                 "Drupal"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.11.12",
+                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.11.13",
                 "issues": "https://github.com/City-of-Helsinki/drupal-hdbt/issues"
             },
-            "time": "2025-06-02T17:04:31+00:00"
+            "time": "2025-06-05T12:40:18+00:00"
         },
         {
             "name": "drupal/hdbt_admin",
@@ -5958,16 +5958,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "4.14.21",
+            "version": "4.14.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "97bf33e0b8a72dee8d6252ba0481977ab9289829"
+                "reference": "827d445b94033f3738422696584e8f64de7ab066"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/97bf33e0b8a72dee8d6252ba0481977ab9289829",
-                "reference": "97bf33e0b8a72dee8d6252ba0481977ab9289829",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/827d445b94033f3738422696584e8f64de7ab066",
+                "reference": "827d445b94033f3738422696584e8f64de7ab066",
                 "shasum": ""
             },
             "require": {
@@ -6093,10 +6093,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.14.21",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/4.14.23",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2025-06-05T12:28:50+00:00"
+            "time": "2025-06-09T08:03:40+00:00"
         },
         {
             "name": "drupal/helfi_proxy",
@@ -15204,16 +15204,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "4.11.1",
+            "version": "4.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "53dc0bcb6a667cac5b760b46f98d5380e63e02ca"
+                "reference": "0173702ffcbe36ce7638f07f090271294866a7a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/53dc0bcb6a667cac5b760b46f98d5380e63e02ca",
-                "reference": "53dc0bcb6a667cac5b760b46f98d5380e63e02ca",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/0173702ffcbe36ce7638f07f090271294866a7a0",
+                "reference": "0173702ffcbe36ce7638f07f090271294866a7a0",
                 "shasum": ""
             },
             "require": {
@@ -15277,7 +15277,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/4.11.1"
+                "source": "https://github.com/getsentry/sentry-php/tree/4.12.0"
             },
             "funding": [
                 {
@@ -15289,7 +15289,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-05-12T11:30:33+00:00"
+            "time": "2025-06-07T08:37:56+00:00"
         },
         {
             "name": "stomp-php/stomp-php",
@@ -24017,6 +24017,6 @@
     "platform": {
         "ext-json": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
