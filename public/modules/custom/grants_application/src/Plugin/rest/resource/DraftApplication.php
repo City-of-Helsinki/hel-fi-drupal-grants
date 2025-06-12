@@ -178,7 +178,7 @@ final class DraftApplication extends ResourceBase {
 
     try {
       // Make sure it exists in database.
-      $this->getSubmissionEntity($user_information['sub'], $application_number);
+      $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception $e) {
       // Cannot get the submission.
@@ -233,6 +233,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
       $user_data = $this->userInformationService->getUserData();
     }
@@ -276,6 +277,7 @@ final class DraftApplication extends ResourceBase {
       $now = time();
       ApplicationSubmission::create([
         'document_id' => $document->getId(),
+        'business_id' => $grants_profile_data->getBusinessId(),
         'sub' => $user_data['sub'],
         'langcode' => $langcode,
         'draft' => TRUE,
@@ -336,6 +338,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
       $user_data = $this->userInformationService->getUserData();
     }
@@ -346,7 +349,8 @@ final class DraftApplication extends ResourceBase {
     try {
       $submission = $this->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
-        $application_number
+        $application_number,
+        $grants_profile_data->getBusinessId(),
       );
     }
     catch (\Exception $e) {
@@ -452,11 +456,14 @@ final class DraftApplication extends ResourceBase {
    *   User uuid.
    * @param string $application_number
    *   The application number.
+   * @param string $business_id
+   *   The business id.
    *
    * @return \Drupal\grants_application\Entity\ApplicationSubmission
    *   The application submission entity.
    */
-  private function getSubmissionEntity(string $sub, string $application_number): ApplicationSubmission {
+  private function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
+    // @todo Duplicated, put this in better place.
     $ids = $this->entityTypeManager
       ->getStorage('application_submission')
       ->getQuery()
@@ -465,11 +472,23 @@ final class DraftApplication extends ResourceBase {
       ->condition('application_number', $application_number)
       ->execute();
 
-    if (!$ids) {
-      throw new \Exception('Application not found');
+    if ($ids) {
+      return ApplicationSubmission::load(reset($ids));
     }
 
-    return ApplicationSubmission::load(reset($ids));
+    $ids = $this->entityTypeManager
+      ->getStorage('application_submission')
+      ->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('business_id', $business_id)
+      ->condition('application_number', $application_number)
+      ->execute();
+
+    if ($ids) {
+      return ApplicationSubmission::load(reset($ids));
+    }
+
+    throw new \Exception('Application not found');
   }
 
 }
