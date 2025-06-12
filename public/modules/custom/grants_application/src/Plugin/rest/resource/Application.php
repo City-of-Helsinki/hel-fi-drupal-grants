@@ -427,6 +427,7 @@ final class Application extends ResourceBase {
     return new JsonResponse([], 200);
   }
 
+  // phpcs:disable
   /**
    * Responds to entity PATCH requests.
    *
@@ -519,6 +520,7 @@ final class Application extends ResourceBase {
 
     return new JsonResponse($document->toArray(), 200);
   }
+  // phpcs:enabled
 
   /**
    * {@inheritDoc}
