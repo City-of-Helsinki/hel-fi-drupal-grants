@@ -541,6 +541,8 @@ final class Application extends ResourceBase {
    *   User uuid.
    * @param string $application_number
    *   The application number.
+   * @param string $business_id
+   *   The business id.
    *
    * @return \Drupal\grants_application\Entity\ApplicationSubmission
    *   The application submission entity.
