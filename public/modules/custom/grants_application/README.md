@@ -9,11 +9,11 @@ The new react-form implementation.
 
 Return an empty form data for new submission.
 
-#### POST: /applications/draft/{application_type_id}
+#### POST: /applications/{application_type_id}/{application_number}
 
 Create the document and return application number and document id.
 
-#### PATCH: /applications/draft/{application_type_id}/{application_number}
+#### PATCH: /applications/{application_type_id}/{application_number}
 
 Update existing document.
 
@@ -25,11 +25,11 @@ Update existing document.
 
 Get the application which has been saved as a draft or sent to Avus2.
 
-#### POST: /applications/{application_type_id}/send/{application_number}
+#### POST: /applications/{application_type_id}/application/{application_number}
 
 TBD (post and patch could be the same functionality I guess)
 
-#### PATCH: /applications/{application_type_id}/edit/{application_number}
+#### PATCH: /applications/{application_type_id}/application/{application_number}
 
 TBD (post and patch could be the same functionality I guess)
 

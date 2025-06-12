@@ -463,6 +463,11 @@ class AttachmentHandler {
     $existingAccountNumber = $existingData['account_number'] ?? FALSE;
     $accountHasChanged = FALSE;
     if ($existingAccountNumber && $existingAccountNumber !== $accountNumber) {
+      // UHF-11927.
+      // The way the bank upload is done, bank file upload deletion
+      // event is overridden every time and I don't think there is any real
+      // way of fixing this. The event being overridden is not that big
+      // problem anyway. This should be the only place.
       $applicationDocument = $this->deletePreviousAccountConfirmation(
         $existingData,
         $applicationDocument,

@@ -40,13 +40,20 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
    * {@inheritdoc}
    */
   public function access(EntityInterface $entity, $operation, ?AccountInterface $account = NULL, $return_as_object = FALSE): AccessResultInterface {
-    // @todo Registered community access,
-    // add nullable community identifier to the submission entity.
-    // Check ApplicationAccessHandler.php in grants hander.
+    // Original implementation: ApplicationAccessHandler.php in grants handler.
     assert($entity instanceof ContentEntityInterface);
     $userInformation = $this->userInformationService->getUserData();
 
     if ($userInformation['sub'] && $userInformation['sub'] === $entity->get('sub')->value) {
+      return new AccessResultAllowed();
+    }
+
+    $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+    $business_id = $grants_profile_data->getBusinessId();
+    if (
+      $business_id &&
+      $business_id === $entity->get('business_id')->value
+    ) {
       return new AccessResultAllowed();
     }
 
