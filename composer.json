@@ -65,7 +65,7 @@
         "drupal/webform_rest": "^4.0",
         "drupal/webform_translation_permissions": "^2.0",
         "drupal/webform_views": "^5.2",
-        "drush/drush": "^12",
+        "drush/drush": "^13",
         "globalcitizen/php-iban": "^4.1",
         "guzzlehttp/guzzle": "^7",
         "nesbot/carbon": "^2.64",
