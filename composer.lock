@@ -24017,7 +24017,7 @@
             "version": "2.3.0",
             "source": {
                 "type": "git",
-                "url": "https://git.drupalcode.org/project/dtt/",
+                "url": "https://git.drupalcode.org/project/dtt.git",
                 "reference": "9385da6be0db48ecdb27e6646ae2bb0864c1dcee"
             },
             "require": {

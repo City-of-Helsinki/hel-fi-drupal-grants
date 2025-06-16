@@ -211,5 +211,11 @@
         "phpcbf-al": "vendor/bin/phpcbf public/modules/contrib/helfi_audit_log --standard=Drupal,DrupalPractice --ignore=*.js,*.css --extensions=php,module,install",
         "phpcs-gdpr": "vendor/bin/phpcs public/modules/contrib/helfi_gdpr_api --standard=Drupal,DrupalPractice --ignore=*.js,*.css --extensions=php,module,install",
         "phpcbf-gdpr": "vendor/bin/phpcbf public/modules/contrib/helfi_gdpr_api --standard=Drupal,DrupalPractice --ignore=*.js,*.css --extensions=php,module,install"
+    },
+    "autoload": {
+        "psr-4": {
+            "Drush\\Style\\": "vendor/drush/drush/src-symfony-compatibility/v6/Style",
+            "Drush\\Symfony\\": "vendor/drush/drush/src-symfony-compatibility/v6/Symfony"
+        }
     }
 }
