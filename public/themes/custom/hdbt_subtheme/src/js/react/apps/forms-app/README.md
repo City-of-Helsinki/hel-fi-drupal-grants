@@ -3,7 +3,7 @@
 
 This is an embedded React app for grants applications.
 
-App is based heavily on https://rjsf-team.github.io/react-jsonschema-form/docs.
+App is based on [react-jsonschema-form](https://rjsf-team.github.io/react-jsonschema-form/docs).
 
 ## Templates & widgets
 
@@ -17,6 +17,19 @@ We have introduced some custom ways to configure the forms.
 
 * **misc:file-type** `number` This is a value necessary for Avus2. It's passed during form submit and does nothing else. See `FileInput.tsx`.
 * **misc:variant** `string` Determines a variant of a component to be rendered. See `TextParagraph.tsx`.
+
+### Variants
+
+Variants of components are determined with the custom `misc:variant` key in `UiSchema.json`. Our current variants are:
+
+* TextParagraph
+  * **infoBox** a highlighted version of text paragraph field.
+* TextInput (default for string fields)
+  * **width-s** max. 180px wide
+  * **width-m** max. 282px wide
+  * **width-l** max. 384px wide
+  * **width-xl** max. 588px wide
+  * **width-xxl** max. 792px wide
 
 ### ui:options additions
 
