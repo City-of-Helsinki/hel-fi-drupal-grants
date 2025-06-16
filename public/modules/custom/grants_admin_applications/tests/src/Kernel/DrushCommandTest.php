@@ -10,11 +10,11 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
 use Drupal\KernelTests\KernelTestBase;
 use Drush\Commands\DrushCommands;
+use Drush\Style\DrushStyle;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Kernel tests for Drush commands.
@@ -101,7 +101,7 @@ class DrushCommandTest extends KernelTestBase {
     $command->restoreState(
       $this->prophesize(InputInterface::class)->reveal(),
       $this->prophesize(OutputInterface::class)->reveal(),
-      $this->prophesize(SymfonyStyle::class)->reveal()
+      $this->prophesize(DrushStyle::class)->reveal()
     );
 
     $this->assertEquals(DrushCommands::EXIT_FAILURE, $command->cleanTestApplications('test-uid'));
