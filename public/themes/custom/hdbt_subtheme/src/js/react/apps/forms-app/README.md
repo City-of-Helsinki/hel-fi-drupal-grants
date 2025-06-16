@@ -12,6 +12,37 @@ App is based on [react-jsonschema-form](https://rjsf-team.github.io/react-jsonsc
 We have introduced some custom ways to configure the forms.
 
 ### Field types
+ 
+* **atvFile** renders a fileinput. Has additional functionality for uploading files to ATV.
+  * Fields using this need to be `object` type in `schema.json`.
+  * Following structure is necessary for the fields (inside properties):
+  ```
+      "file_id": {
+        "type": "integer"
+      },
+      "fileName": {
+        "type": "string"
+      },
+      "fileType": {
+        "type": "integer"
+      },
+      "integrationID": {
+        "type": "string"
+      },
+      "isDeliveredLater": {
+        "type": "boolean"
+      },
+      "isIncludedInOtherFile": {
+        "type": "boolean"
+      },
+      "isNewAttachment": {
+        "type": "boolean"
+      },
+      "size": {
+        "type": "integer"
+      }
+  ```
+* **textParagraph** used to render a simple text paragraph without input element. See `TextParagraph.tsx`.
 
 ### UiSchema
 
@@ -42,3 +73,8 @@ We've added some custom keys to ui:options.
 * **tooltipButtonLabel** `string` Button label for HDS tooltip feature. See `Input.tsx`.
 * **tooltipLabel** `string` Label for HDS tooltip feature. See `Input.tsx`.
 * **tooltipText** `string` Inner text for HDS tooltip feature. See `Input.tsx`.
+
+### Widgets
+
+All custom widgets can be found in `Input.tsx`.
+Basically all we're doing here is overriding default inputs with HDS components, with some minor adjustments for select fields that use data from Suomi.fi integration.
