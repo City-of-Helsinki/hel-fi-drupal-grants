@@ -7,9 +7,9 @@ dependencies:
   module:
     - menu_block_current_language
   theme:
-    - hdbt
-id: footertopnavigationsecond
-theme: hdbt
+    - hdbt_subtheme
+id: hdbt_subtheme_footertopnavigationsecond
+theme: hdbt_subtheme
 region: footer_top
 weight: 0
 provider: null
