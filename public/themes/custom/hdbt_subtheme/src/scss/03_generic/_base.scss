@@ -1,6 +1,14 @@
 body {
+  // These are old values. These can be removed once old webform reliance is no more.
   --webform-element-width--input-small: 184px;
   --webform-element-width--input-medium: 332px;
   --webform-element-width--input-large: 591px;
   --webform-element-width--fieldset: 714px;
+
+  // New width values to use with react forms.
+  --forms-app-element-width--input-small: 180px;
+  --forms-app-element-width--input-medium: 282px;
+  --forms-app-element-width--input-large: 384px;
+  --forms-app-element-width--input-xl: 588px;
+  --forms-app-element-width--input-xxl: 792px;
 }
