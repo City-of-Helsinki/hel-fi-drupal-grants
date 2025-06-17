@@ -9,7 +9,7 @@ dependencies:
 id: page_title
 theme: hdbt_subtheme
 region: content
-weight: -13
+weight: -14
 provider: helfi_base_content
 plugin: page_title_block
 settings:
