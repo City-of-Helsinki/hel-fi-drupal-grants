@@ -10,18 +10,33 @@
 
     {{ content.field_content }}
 
-    <div class="components components--errand-services">
-      <div class="components__container">
-        {{ content.field_errand_service }}
+    {% if content.field_errand_service|render %}
+      <div class="components components--errand-services">
+        {% embed "@hdbt/misc/component.twig" with
+          {
+            component_classes: [ 'component', 'component--errand-service' ],
+          }
+        %}
+          {% block component_content %}
+            {{ content.field_errand_service }}
+          {% endblock component_content %}
+        {% endembed %}
       </div>
-    </div>
+    {% endif %}
 
-    <div class="components components--bottom-content">
-      <div class="components__container">
-        {{ content.field_bottom_content }}
+    {% if content.field_bottom_content|render %}
+      <div class="components components--bottom-content">
+        {% embed "@hdbt/misc/component.twig" with
+          {
+            component_classes: [ 'component', 'component--bottom-content' ],
+          }
+        %}
+          {% block component_content %}
+            {{ content.field_bottom_content }}
+          {% endblock component_content %}
+        {% endembed %}
       </div>
-    </div>
-
+    {% endif %}
   {% endblock main_content %}
 
 {% endembed %}
