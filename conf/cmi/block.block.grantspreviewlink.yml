@@ -9,7 +9,7 @@ dependencies:
     - hdbt_subtheme
 id: grantspreviewlink
 theme: hdbt_subtheme
-region: sidebar_first
+region: sidebar_second
 weight: -14
 provider: null
 plugin: grants_preview_link

@@ -9,7 +9,7 @@ dependencies:
     - hdbt_subtheme
 id: servicepageanonblock
 theme: hdbt_subtheme
-region: sidebar_first
+region: sidebar_second
 weight: -15
 provider: null
 plugin: grants_handler_service_page_anon_block
