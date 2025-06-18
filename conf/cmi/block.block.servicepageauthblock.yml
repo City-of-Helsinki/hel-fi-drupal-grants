@@ -10,7 +10,7 @@ dependencies:
     - hdbt_subtheme
 id: servicepageauthblock
 theme: hdbt_subtheme
-region: sidebar_first
+region: sidebar_second
 weight: -16
 provider: null
 plugin: grants_handler_service_page_auth_block

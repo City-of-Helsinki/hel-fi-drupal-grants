@@ -1,11 +1,13 @@
 #block-servicepageauthblock,
 #block-servicepageanonblock {
-  h2 {
-    @include font('h4');
-  }
-
   .hds-button {
     margin-top: var(--spacing-m);
+  }
+
+  @include breakpoint($breakpoint-l) {
+    h2 {
+      @include font('h4');
+    }
   }
 }
 

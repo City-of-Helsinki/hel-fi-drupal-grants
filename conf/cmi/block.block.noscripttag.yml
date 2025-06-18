@@ -10,7 +10,7 @@ dependencies:
 id: noscripttag
 theme: hdbt_subtheme
 region: before_content
-weight: -14
+weight: -12
 provider: null
 plugin: grant_applications_noscripttag
 settings:

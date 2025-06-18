@@ -1,4 +1,4 @@
-uuid: 44106463-68c3-4086-b90f-6b5c7a0e1c51
+uuid: 44103463-68c3-4086-b90f-6b5c7a0e1c51
 langcode: en
 status: true
 dependencies:
@@ -7,9 +7,9 @@ dependencies:
   module:
     - menu_block_current_language
   theme:
-    - hdbt
-id: footertopnavigationsecond
-theme: hdbt
+    - hdbt_subtheme
+id: hdbt_subtheme_footertopnavigationsecond
+theme: hdbt_subtheme
 region: footer_top
 weight: 0
 provider: null

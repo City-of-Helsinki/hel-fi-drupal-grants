@@ -9,7 +9,7 @@ _core:
 id: hdbt_subtheme_local_actions
 theme: hdbt_subtheme
 region: tools
-weight: -12
+weight: -16
 provider: null
 plugin: local_actions_block
 settings:
