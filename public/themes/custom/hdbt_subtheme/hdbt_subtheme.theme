@@ -319,7 +319,7 @@ function hdbt_subtheme_preprocess_webform_section(array &$variables): void {
  * @see template_preprocess_webform_section()
  * @see /webform/templates/webform-section.html.twig
  */
-function hdbt_subtheme_preprocess_form_element(array &$variables, $title_parents = ['label']): void {
+function hdbt_subtheme_preprocess_form_element(array &$variables): void {
 
   $element = &$variables['element'];
   $type = $element['#type'] ?? '';
@@ -385,12 +385,10 @@ function hdbt_subtheme_preprocess_form_element(array &$variables, $title_parents
     unset($variables['description']);
   }
 
-  if (is_string($title_parents)) {
-    $title_parents = [$title_parents];
-  }
-
-  // Add help to title (aka label).
-  _hdbt_subtheme_preprocess_help($variables, $title_parents);
+  // Add help to description fields title.
+  // For example: Association information page, Description of the purpose of
+  // the activity of the registered association field.
+  _hdbt_subtheme_preprocess_help($variables);
 
   // Hide 'item' label[for].
   if ($type === 'item') {
@@ -407,8 +405,11 @@ function hdbt_subtheme_preprocess_form_element(array &$variables, $title_parents
 
 /**
  * Append #help to title or element variable.
+ *
+ * @param array $variables
+ *   The template variables.
  */
-function _hdbt_subtheme_preprocess_help(array &$variables, $title_parents = ['label']): void {
+function _hdbt_subtheme_preprocess_help(array &$variables): void {
 
   $element = &$variables['element'];
   $type = $element['#type'] ?? '';
