@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   module:
-    - grants_oma_asiointi
+    - grants_profile
     - user
   theme:
     - hdbt_subtheme
@@ -17,7 +17,7 @@ settings:
   id: grants_oma_asiointi_asiointirooli_block
   label: 'Grants Oma Asiointi Asiointirooli'
   label_display: '0'
-  provider: grants_oma_asiointi
+  provider: grants_profile
 visibility:
   user_role:
     id: user_role

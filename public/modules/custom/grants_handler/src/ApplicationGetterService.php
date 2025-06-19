@@ -407,12 +407,16 @@ final class ApplicationGetterService {
     }
 
     try {
-      // Try to load webform via UUID and return it.
-      $wids = $this->entityTypeManager->getStorage('webform')
+      // Try to load webform via UUID.
+      $webform_ids = $this->entityTypeManager->getStorage('webform')
         ->getQuery()
         ->condition('uuid', $uuid)
         ->execute();
-      return Webform::load(reset($wids));
+
+      // Return the webform if it was found.
+      if (!empty($webform_ids)) {
+        return Webform::load(reset($webform_ids));
+      }
     }
     catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
       // Log failure.

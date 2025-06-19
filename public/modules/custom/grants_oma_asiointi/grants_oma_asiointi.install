@@ -12,7 +12,7 @@ use Drupal\Core\Extension\ModuleInstallerInterface;
 /**
  * Remove the module.
  */
-function grants_oma_asiointi_update_9001(): void {
+function grants_oma_asiointi_update_9002(): void {
   // Content of this module was moved to grants_profile.
   \Drupal::service(ModuleInstallerInterface::class)->uninstall(['grants_oma_asiointi']);
 }

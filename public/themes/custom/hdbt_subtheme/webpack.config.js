@@ -5,7 +5,6 @@ const FriendlyErrorsWebpackPlugin = require('@nuxt/friendly-errors-webpack-plugi
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const { merge } = require('webpack-merge');
-const SvgToSprite = require('./webpack.svgToSprite');
 
 // Handle entry points.
 const Entries = () => {
@@ -115,12 +114,6 @@ module.exports = (env, argv) => {
       },
     },
     plugins: [
-      // Uncomment following lines to create svg icon sprite.
-      // new SvgToSprite(
-      //   path.resolve(__dirname, 'src/icons/**/*.svg'),
-      //   'icons/hdbt-subtheme-sprite.svg',
-      //   'icons.json'
-      // ),
       new FriendlyErrorsWebpackPlugin(),
       new RemoveEmptyScriptsPlugin(),
       new MiniCssExtractPlugin({

@@ -19,7 +19,7 @@ default_value:
   -
     plugin_id: grants_oma_asiointi_block
     settings:
-      provider: grants_oma_asiointi
+      provider: grants_profile
       label: 'Grants Oma Asiointi'
       label_display: ''
 default_value_callback: ''
