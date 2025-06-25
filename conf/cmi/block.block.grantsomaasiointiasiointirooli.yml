@@ -9,8 +9,8 @@ dependencies:
     - hdbt_subtheme
 id: grantsomaasiointiasiointirooli
 theme: hdbt_subtheme
-region: breadcrumb
-weight: -14
+region: before_content
+weight: -15
 provider: null
 plugin: grants_oma_asiointi_asiointirooli_block
 settings:

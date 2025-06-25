@@ -10,8 +10,8 @@ _core:
   default_config_hash: _UoTG8MagibHn89173NtrwtSq5ylXJRanQkHTZmRGe4
 id: hdbt_subtheme_local_tasks
 theme: hdbt_subtheme
-region: tools
-weight: -13
+region: before_content
+weight: -10
 provider: null
 plugin: local_tasks_block
 settings:

@@ -9,7 +9,7 @@ dependencies:
 id: surveys
 theme: hdbt_subtheme
 region: before_content
-weight: -15
+weight: -14
 provider: helfi_node_survey
 plugin: surveys
 settings:

@@ -9,8 +9,8 @@ dependencies:
     - hdbt_subtheme
 id: grantsomaasiointihero
 theme: hdbt_subtheme
-region: breadcrumb
-weight: -12
+region: before_content
+weight: -11
 provider: null
 plugin: grants_oma_asiointi_hero_block
 settings:
