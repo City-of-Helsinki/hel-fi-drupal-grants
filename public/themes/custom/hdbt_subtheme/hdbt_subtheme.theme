@@ -12,13 +12,9 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
+use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\webform\Entity\Webform;
-
-/**
- * @file
- * Functions to support theming in the HDBT Subtheme.
- */
 
 /**
  * Implements hook_theme().
@@ -34,9 +30,9 @@ function hdbt_subtheme_theme($existing, $type, $theme, $path): array {
 }
 
 /**
- * Implements hook_preprocess_status_messages().
+ * Implements hook_preprocess_HOOK().
  */
-function hdbt_subtheme_preprocess_status_messages(&$variables): void {
+function hdbt_subtheme_preprocess_status_messages(array &$variables): void {
   $request = \Drupal::request();
   $is_ajax = $request->isXmlHttpRequest();
   $variables['is_ajax'] = $is_ajax;
@@ -45,7 +41,7 @@ function hdbt_subtheme_preprocess_status_messages(&$variables): void {
 /**
  * Implements hook_preprocess_HOOK().
  */
-function hdbt_subtheme_preprocess_menu(&$variables): void {
+function hdbt_subtheme_preprocess_menu(array &$variables): void {
   $variables['#cache']['contexts'] = ['url.path'];
 
   foreach ($variables['items'] as &$item) {
@@ -64,9 +60,9 @@ function hdbt_subtheme_preprocess_menu(&$variables): void {
 }
 
 /**
- * Implements hook_aggregator_fetcher_info_alter().
+ * Implements hook_preprocess_HOOK().
  */
-function hdbt_subtheme_preprocess_views_view(&$variables): void {
+function hdbt_subtheme_preprocess_views_view(array &$variables): void {
   $view = $variables['view'];
 
   // Operate only on ukk view.
@@ -144,9 +140,9 @@ function hdbt_subtheme_preprocess_views_view(&$variables): void {
 }
 
 /**
- * Preprocess details.
+ * Implements hook_preprocess_HOOK().
  */
-function hdbt_subtheme_preprocess_details(&$variables): void {
+function hdbt_subtheme_preprocess_details(array &$variables): void {
   $uuid_service = \Drupal::service('uuid');
   $uuid = $uuid_service->generate();
 
@@ -163,9 +159,9 @@ function hdbt_subtheme_preprocess_details(&$variables): void {
 }
 
 /**
- * Preprocess views view fields.
+ * Implements hook_preprocess_HOOK().
  */
-function hdbt_subtheme_preprocess_views_view_fields(&$variables): void {
+function hdbt_subtheme_preprocess_views_view_fields(array &$variables): void {
   $view = $variables['view'];
 
   if ($view->id() === 'application_search_search_api') {
@@ -201,26 +197,27 @@ function hdbt_subtheme_preprocess_views_view_fields(&$variables): void {
 }
 
 /**
- * Adds webform details to the printing page.
+ * Implements hook_preprocess_HOOK().
  */
-function hdbt_subtheme_preprocess_grants_handler_print_atv_document(&$vars): void {
-  $language = $vars['document_langcode'];
-  $vars["title"] = $vars['atv_document']['human_readable_type'][$language];
-  $vars['helsinki_logo'] = [
+function hdbt_subtheme_preprocess_grants_handler_print_atv_document(array &$variables): void {
+  // Adds webform details to the printing page.
+  $language = $variables['document_langcode'];
+  $variables['title'] = $variables['atv_document']['human_readable_type'][$language];
+  $variables['helsinki_logo'] = [
     '#theme' => 'misc/helsinki_logo_icon',
     '#language' => $language,
   ];
-  ksort($vars['pages']);
-  $vars['date'] = date_format(date_create($vars['atv_document']['updated_at']), 'd.m.Y H:i');
+  ksort($variables['pages']);
+  $variables['date'] = date_format(date_create($variables['atv_document']['updated_at']), 'd.m.Y H:i');
 
   /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
   $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
 
-  $submissionObject = $applicationGetterService->submissionObjectFromApplicationNumber($vars['atv_document']['transaction_id']);
+  $submissionObject = $applicationGetterService->submissionObjectFromApplicationNumber($variables['atv_document']['transaction_id']);
 
-  $vars['statusTag'] = [
+  $variables['statusTag'] = [
     '#theme' => 'application_status_tag',
-    '#applicationID' => $vars['atv_document']['transaction_id'],
+    '#applicationID' => $variables['atv_document']['transaction_id'],
     '#langcode' => $language,
     '#submission' => $submissionObject,
   ];
@@ -228,20 +225,21 @@ function hdbt_subtheme_preprocess_grants_handler_print_atv_document(&$vars): voi
 }
 
 /**
- * Adds webform details to the preview page for printing.
+ * Implements hook_preprocess_HOOK().
  */
-function grants_webform_print_preprocess_webform_submission_data(&$vars): void {
-  $wf = $vars['webform_submission']->getWebform();
-  $vars["title"] = $wf->label();
+function grants_webform_print_preprocess_webform_submission_data(array &$variables): void {
+  // Add webform details to the preview page for printing.
+  $webform = $variables['webform_submission']->getWebform();
+  $variables['title'] = $webform->label();
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
-  $vars['helsinki_logo'] = [
+  $variables['helsinki_logo'] = [
     '#theme' => 'misc/helsinki_logo_icon',
     '#language' => $language,
   ];
 }
 
 /**
- * Implements hook_preprocess_webform_element_base_html().
+ * Implements hook_preprocess_HOOK().
  */
 function hdbt_subtheme_preprocess_webform_element_base_html(array &$variables): void {
   $route_name = \Drupal::routeMatch()->getRouteName();
@@ -254,7 +252,7 @@ function hdbt_subtheme_preprocess_webform_element_base_html(array &$variables): 
 }
 
 /**
- * Implements hook_preprocess_field().
+ * Implements hook_preprocess_HOOK().
  */
 function hdbt_subtheme_preprocess_field(array &$variables): void {
   $route_name = \Drupal::routeMatch()->getRouteName();
@@ -267,7 +265,7 @@ function hdbt_subtheme_preprocess_field(array &$variables): void {
 }
 
 /**
- * Implements hook_preprocess_form_element_label().
+ * Implements hook_preprocess_HOOK().
  */
 function hdbt_subtheme_preprocess_form_element_label(array &$variables): void {
   $route_name = \Drupal::routeMatch()->getRouteName();
@@ -322,7 +320,7 @@ function hdbt_subtheme_preprocess_webform_section(array &$variables): void {
  * @see template_preprocess_webform_section()
  * @see /webform/templates/webform-section.html.twig
  */
-function hdbt_subtheme_preprocess_form_element(array &$variables, $title_parents = ['label']): void {
+function hdbt_subtheme_preprocess_form_element(array &$variables): void {
 
   $element = &$variables['element'];
   $type = $element['#type'] ?? '';
@@ -388,12 +386,10 @@ function hdbt_subtheme_preprocess_form_element(array &$variables, $title_parents
     unset($variables['description']);
   }
 
-  if (is_string($title_parents)) {
-    $title_parents = [$title_parents];
-  }
-
-  // Add help to title (aka label).
-  _hdbt_subtheme_preprocess_help($variables, $title_parents);
+  // Add help to description fields title.
+  // For example: Association information page, Description of the purpose of
+  // the activity of the registered association field.
+  _hdbt_subtheme_preprocess_help($variables);
 
   // Hide 'item' label[for].
   if ($type === 'item') {
@@ -410,8 +406,11 @@ function hdbt_subtheme_preprocess_form_element(array &$variables, $title_parents
 
 /**
  * Append #help to title or element variable.
+ *
+ * @param array $variables
+ *   The template variables.
  */
-function _hdbt_subtheme_preprocess_help(array &$variables, $title_parents = ['label']): void {
+function _hdbt_subtheme_preprocess_help(array &$variables): void {
 
   $element = &$variables['element'];
   $type = $element['#type'] ?? '';
@@ -497,18 +496,9 @@ function _hdbt_subtheme_preprocess_help(array &$variables, $title_parents = ['la
 }
 
 /**
- * Implements hook_preprocess_HOOK().
- */
-function hdbt_subtheme_preprocess_block(&$variables): void {
-  if (isset($variables['elements']['#id'])) {
-    $variables['content']['#attributes']['block_id'] = $variables['elements']['#id'];
-  }
-}
-
-/**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
-function hdbt_subtheme_theme_suggestions_block_alter(&$suggestions, $variables): void {
+function hdbt_subtheme_theme_suggestions_block_alter(array &$suggestions, array $variables): void {
   // Load theme suggestions for blocks from parent theme.
   foreach ($suggestions as &$suggestion) {
     $suggestion = str_replace('hdbt_subtheme_', '', $suggestion);
@@ -537,7 +527,7 @@ function hdbt_subtheme_theme_suggestions_region_alter(array &$suggestions, array
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
-function hdbt_subtheme_theme_suggestions_menu_alter(&$suggestions, $variables): void {
+function hdbt_subtheme_theme_suggestions_menu_alter(array &$suggestions, array $variables): void {
   if (isset($variables['attributes']['block_id'])) {
     $block_id = str_replace('hdbt_subtheme_', '', $variables['attributes']['block_id']);
 
@@ -553,7 +543,7 @@ function hdbt_subtheme_theme_suggestions_menu_alter(&$suggestions, $variables): 
 /**
  * Implements hook_preprocess_html().
  */
-function hdbt_subtheme_preprocess_html(&$variables): void {
+function hdbt_subtheme_preprocess_html(array &$variables): void {
   $route = \Drupal::routeMatch()->getRouteObject();
 
   if ($route) {
@@ -590,13 +580,12 @@ function hdbt_subtheme_preprocess_html(&$variables): void {
     $variables['attributes']['class'][] = "page--oma-asiointi__{$selectedRoleData['type']}";
     $variables['attributes']['class'][] = "grants-role-{$selectedRoleData['type']}";
   }
-
 }
 
 /**
  * Implements hook_form_alter().
  */
-function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
+function hdbt_subtheme_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
   if ($form_id == 'openid_connect_login_form') {
     $form['openid_connect_client_tunnistamo_login']['#value'] = t('Log in');
     $form['openid_connect_client_tunnistamo_login']['#attributes']['role'] = "link";
@@ -625,24 +614,18 @@ function hdbt_subtheme_form_alter(&$form, FormStateInterface $form_state, $form_
 }
 
 /**
- * Implements hook_preprocess_block__user_login_block().
+ * Implements hook_preprocess_HOOK().
  */
-function hdbt_subtheme_preprocess_block__user_login_block(&$variables, $hook): void {
-  $variables['content']['user_links'] = NULL;
-}
+function hdbt_subtheme_preprocess_page(&$variables): void {
+  // Handle sidebar visibility.
+  $entity = hdbt_admin_tools_get_page_entity();
+  if ($entity instanceof NodeInterface) {
 
-/**
- * Implements template_preprocess_paragraph().
- */
-function hdbt_subtheme_preprocess_paragraph(&$variables): void {
-  /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
-  $paragraph = $variables['paragraph'];
-  $parentBundle = $paragraph->bundle();
-  if ($parentBundle == 'oma_asiointi') {
-    /** @var \Drupal\grants_profile\GrantsProfileService $grantsProfileService */
-    $grantsProfileService = \Drupal::service('grants_profile.service');
-    $selectedCompany = $grantsProfileService->getSelectedRoleData();
-    $variables['company'] = $selectedCompany;
+    // Handle the second sidebar visibility for the "Service"
+    // (service) content type.
+    if ($entity->getType() === 'service') {
+      $variables['has_sidebar_second'] = TRUE;
+    }
   }
 }
 

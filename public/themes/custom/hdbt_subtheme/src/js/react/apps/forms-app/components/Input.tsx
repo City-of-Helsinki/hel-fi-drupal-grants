@@ -52,6 +52,23 @@ export const TextInput = ({
     return <PreviewInput value={value} label={label} uiSchema={uiSchema} />
   }
 
+  const getMaxWidth = () => {
+    switch (uiSchema?.['misc:variant']) {
+      case 'width-s':
+        return 'var(--forms-app-element-width--input-small)';
+      case 'width-m':
+        return 'var(--forms-app-element-width--input-medium)';
+      case 'width-l':
+        return 'var(--forms-app-element-width--input-large)';
+      case 'width-xl':
+        return 'var(--forms-app-element-width--input-xl)';
+      case 'width-xxl':
+        return 'var(--forms-app-element-width--input-xxl)';
+      default:
+        return 'auto';
+    }
+  };
+
   return (
     <HDSTextInput
       errorText={formatErrors(rawErrors)}
@@ -65,6 +82,9 @@ export const TextInput = ({
       onFocus={() => null}
       readOnly={readonly}
       required={required}
+      style={{
+        maxWidth: getMaxWidth(),
+      }}
       tooltipButtonLabel={uiSchema?.['ui:options']?.tooltipButtonLabel?.toString()}
       tooltipLabel={uiSchema?.['ui:options']?.tooltipLabel?.toString()}
       tooltipText={uiSchema?.['ui:options']?.tooltipText?.toString()}
