@@ -3,8 +3,3 @@ type: module
 description: Module for person/company own details &amp; things related to them (DEPRECATED).
 package: Helfi
 core_version_requirement: ^9 || ^10
-dependencies:
-  - grants_handler
-
-'interface translation project': grants_oma_asiointi
-'interface translation server pattern': modules/custom/grants_oma_asiointi/translations/%language.po
