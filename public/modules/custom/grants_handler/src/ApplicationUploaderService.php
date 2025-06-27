@@ -175,7 +175,7 @@ final class ApplicationUploaderService {
     if ($newHeader && $newHeader != '') {
       $atvDocument->setStatus($newHeader);
     }
-
+    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
     $updatedDocument = $this->helfiAtvAtvService->patchDocument(
       $atvDocument->getId(),
       $atvDocument->toArray()
