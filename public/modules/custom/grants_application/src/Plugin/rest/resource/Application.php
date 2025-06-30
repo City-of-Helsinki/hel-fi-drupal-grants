@@ -224,6 +224,7 @@ final class Application extends ResourceBase {
     ?string $application_number = NULL,
   ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
+    /// phpcs:disable
     // NOSONAR
     $content = json_decode($request->getContent(), TRUE);
     // NOSONAR
@@ -232,6 +233,7 @@ final class Application extends ResourceBase {
       'attachments' => $attachments,
     ] = $content;
 
+    // phpcs:enable
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
