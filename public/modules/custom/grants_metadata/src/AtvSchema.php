@@ -379,7 +379,7 @@ class AtvSchema {
         in_array($item['ID'], $keys) &&
         !in_array($item['ID'], $values)
       ) {
-        $values[$item['ID']] = htmlspecialchars_decode($item['value'] ?? '');
+        $values[$item['ID']] = $item['value'] != NULL ? htmlspecialchars_decode($item['value']) : NULL;
       }
     }
   }
