@@ -450,6 +450,11 @@ final class Application extends ResourceBase {
     // @todo This function is not yet called.
     // This needs to be refactored to handle patch request.
     // @todo Sanitize & validate & authorize properly.
+
+    $prevent_duplicate_code_error = $application_number ?: FALSE;
+    return new JsonResponse([$prevent_duplicate_code_error], 200);
+
+    /*
     $content = json_decode($request->getContent(), TRUE);
     [
       'form_data' => $form_data,
@@ -514,15 +519,17 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    */
+
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
     // grants_application module when this module is enabled in
     // production.
     //
     // This event lets other parts of the system to react
     // to user submitting grants forms.
-    $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
+    // $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
-    return new JsonResponse($document->toArray(), 200);
+    // return new JsonResponse($document->toArray(), 200);
   }
   // phpcs:enabled
 
