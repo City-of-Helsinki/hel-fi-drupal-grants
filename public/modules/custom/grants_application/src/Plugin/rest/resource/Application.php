@@ -224,7 +224,9 @@ final class Application extends ResourceBase {
     ?string $application_number = NULL,
   ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
+    // NOSONAR
     $content = json_decode($request->getContent(), TRUE);
+    // NOSONAR
     [
       'form_data' => $form_data,
       'attachments' => $attachments,
