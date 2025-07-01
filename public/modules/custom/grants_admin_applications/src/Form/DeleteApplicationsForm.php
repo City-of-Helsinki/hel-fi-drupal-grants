@@ -301,7 +301,10 @@ final class DeleteApplicationsForm extends FormBase {
         ->notice($failedDeletionMessage);
     }
 
-    $this->handleDocumentsBatchService->run($documentsToDelete);
+    // @phpstan-ignore-next-line
+    \Drupal::getContainer()
+      ->get(HandleDocumentsBatchService::class)
+      ->run($documentsToDelete);
   }
 
   /**
