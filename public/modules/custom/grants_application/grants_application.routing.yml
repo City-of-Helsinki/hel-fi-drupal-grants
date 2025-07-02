@@ -2,6 +2,9 @@ helfi_grants.forms_app:
   path: '/application/{id}/render'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
+  options:
+    query:
+      application_number: ""
   requirements:
     _role: helsinkiprofiili
 
@@ -10,5 +13,20 @@ helfi_grants.forms_app_upload:
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::uploadFile'
   methods: [POST]
+  requirements:
+    _role: helsinkiprofiili
+
+helfi_grants.forms_app_remove:
+  path: '/application/{id}/remove'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::removeApplication'
+  methods: [POST]
+  requirements:
+    _role: helsinkiprofiili
+
+helfi_grants.print_view:
+  path: '/application/{id}/print'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::printApplication'
   requirements:
     _role: helsinkiprofiili
