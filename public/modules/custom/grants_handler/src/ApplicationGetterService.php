@@ -9,6 +9,7 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileService;
@@ -175,8 +176,13 @@ final class ApplicationGetterService {
       $applicationNumber = $document->getTransactionId();
 
       if (array_key_exists($document->getType(), Helpers::getApplicationTypes())) {
+
+        // Must check both react form submission and the webform submission.
         try {
-          $submission = $this->submissionObjectFromApplicationNumber($applicationNumber, $document, FALSE, TRUE);
+          if (!$submission = $this->getReactFormApplicationSubmission($applicationNumber, $document)) {
+            $submission = $this->submissionObjectFromApplicationNumber($applicationNumber, $document, FALSE, TRUE);
+          }
+          $submission_entity = $submission;
         }
         catch (\Throwable $e) {
           $this->logger->error(
@@ -196,17 +202,21 @@ final class ApplicationGetterService {
         // Since we've already loaded webform for submission object the old way,
         // we should have it here anyways. Just make sure it's in the metadata
         // as well.
-        if (!isset($submissionData["metadata"]["form_uuid"])) {
+        if ($webform && !isset($submissionData["metadata"]["form_uuid"])) {
           $submissionData["metadata"]["form_uuid"] = $webform->uuid();
         }
 
-        $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
+        if ($webform || $submission_entity) {
+          $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
+        }
+
         $submission = [
           '#theme' => $themeHook,
           '#submission' => $submissionData,
           '#document' => $document,
           '#webform' => $webform,
           '#submission_id' => $submission->id(),
+          '#submission_entity' => $submission_entity,
         ];
 
         $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
@@ -365,6 +375,36 @@ final class ApplicationGetterService {
     $this->submissions[$applicationNumber] = $submissionObject;
 
     return $submissionObject;
+  }
+
+  /**
+   * Get the React form submission object.
+   *
+   * @param string $applicationNumber
+   *   The application number.
+   * @param \Drupal\helfi_atv\AtvDocument|null $document
+   *   The atv document.
+   *
+   * @return \Drupal\grants_application\Entity\ApplicationSubmission|null
+   *   The submission object.
+   */
+  private function getReactFormApplicationSubmission(
+    string $applicationNumber,
+    ?AtvDocument $document = NULL,
+  ):?ApplicationSubmission {
+    /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
+    $submissions = $this->entityTypeManager->getStorage('application_submission')
+      ->loadByProperties(['application_number' => $applicationNumber]);
+
+    if (!$document) {
+      $document = $this->getAtvDocument($applicationNumber, FALSE);
+    }
+
+    if (!$submissions) {
+      return NULL;
+    }
+
+    return reset($submissions);
   }
 
   /**
