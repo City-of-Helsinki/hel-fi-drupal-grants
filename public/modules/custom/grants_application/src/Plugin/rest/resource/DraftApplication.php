@@ -187,7 +187,7 @@ final class DraftApplication extends ResourceBase {
 
     try {
       $document = $this->atvService->getDocument($application_number);
-      $form_data = $document->getContent();
+      $document_content = $document->getContent();
     }
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
@@ -199,7 +199,13 @@ final class DraftApplication extends ResourceBase {
     // This should be done in more clean way. Maybe separate ATV-doc for react
     // form or something else.
     $response = [];
-    $response['form_data'] = $form_data['form_data'] ?? $form_data['compensation']['form_data'];
+
+    if (!$document_content['form_data'] || !$document_content['compensation']) {
+      $response['form_data'] = [];
+    }
+    else {
+      $response['form_data'] = $document_content['form_data'] ?? $document_content['compensation']['form_data'];
+    }
 
     // @todo Only return required user data to frontend
     $response['grants_profile'] = $grants_profile_data->toArray();
