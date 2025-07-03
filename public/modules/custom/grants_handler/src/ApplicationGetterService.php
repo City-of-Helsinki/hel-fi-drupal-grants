@@ -7,7 +7,7 @@ namespace Drupal\grants_handler;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Extension\ModuleHandler;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -61,7 +61,7 @@ final class ApplicationGetterService {
     private readonly MessageService $grantsHandlerMessageService,
     private readonly LoggerChannelFactoryInterface $loggerChannelFactory,
     private readonly EntityTypeManagerInterface $entityTypeManager,
-    private readonly ModuleHandler $moduleHandler,
+    private readonly ModuleHandlerInterface $moduleHandler,
   ) {
     $this->logger = $loggerChannelFactory->get('application_getter_service');
   }
