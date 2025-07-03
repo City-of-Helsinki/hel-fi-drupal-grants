@@ -1392,11 +1392,6 @@ function grants_handler_preprocess_application_list(&$variables) {
 function grants_handler_preprocess_application_list_item(&$variables): void {
   $tOpts = ['context' => 'grants_handler'];
 
-  // Get status service and get listed statuses.
-  /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
-  $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
-  $applicationStatuses = $applicationStatusService->getApplicationStatuses();
-
   $submissionData = $variables['submission'];
   $submissionId = $variables['submission_id'];
   $webform = $variables['webform'];
@@ -2140,13 +2135,15 @@ function _grants_handler_handle_webform_application(&$variables, array $tOpts) {
 }
 
 function _grants_handler_handle_react_application(&$variables) {
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   /** @var FormSettingsService $formSettingsService */
   $formSettingsService = \Drupal::service( FormSettingsService::class);
 
   // @todo add Archived to the settings ?
   $settings = $formSettingsService
     ->getFormSettings($variables['submission']['application_type_id'])
-    ->toArray()['settings'];
+    ->toArray();
+
   $submission = $variables['submission'];
 
   /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission_entity */
@@ -2170,10 +2167,10 @@ function _grants_handler_handle_react_application(&$variables) {
   $variables['applicationSubmitted'] = $time;
   $variables['applicationSubmittedSortable'] = $sortableTime;
 
-  $variables['viewApplicationLink'] = $submission_entity->getViewApplicationLink($settings['title']); // Link::fromTextAndUrl($viewApplicationLinkText, $viewApplicationUrl);
-  $variables['editApplicationLink'] = $submission_entity->getEditApplicationLink($settings['title']); // Link::fromTextAndUrl($editApplicationLinkText, $editApplicationUrl);
+  $variables['viewApplicationLink'] = $submission_entity->getViewApplicationLink($settings['settings']['title']);
+  $variables['editApplicationLink'] = $submission_entity->getEditApplicationLink($settings['settings']['title']);
 
-  $variables['deleteApplicationUrl'] = $submission_entity->getDeleteApplicationUrl($settings['title'])->toString();
+  $variables['deleteApplicationUrl'] = $submission_entity->getDeleteApplicationUrl()->toString();
   $variables['printApplicationUrl'] =  $submission_entity->getPrintApplicationUrl()->toString();
 
   $variables['errorType'] = NULL;
@@ -2182,24 +2179,19 @@ function _grants_handler_handle_react_application(&$variables) {
   $variables['hasUnreadText'] = NULL;
   $unreadMsgs = [];
 
-  // @todo TÄMÄ
   if (!empty($submissionData['messages'])) {
     $variables['hasUnread'] = TRUE;
     $variables['hasUnreadText'] = \Drupal::translation()
       ->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
   }
 
-
-
-
   $variables['statusString'] = $submission['status'];
   $variables['applicationNumber'] = $submission['application_number'];
 
-  // @todo Tää pitää kai kääntää
-  $variables['applicationFormName'] = $settings['title'];
-  $variables['openStartDate'] = strtotime($settings['application_open']);
-  $variables['openEndDate'] =  strtotime($settings['application_close']);
-  $variables['isContinuous'] = $settings['continuous'];
+  $variables['applicationFormName'] = $settings['translations'][$language]['translation']['form_title'];
+  $variables['openStartDate'] = strtotime($settings['settings']['application_open']);
+  $variables['openEndDate'] =  strtotime($settings['settings']['application_close']);
+  $variables['isContinuous'] = $settings['settings']['continuous'];
 
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
     $variables['errorType'] = 'NOT_OPEN';

@@ -172,17 +172,18 @@ final class ApplicationGetterService {
      * Create rows for table.
      */
     foreach ($applicationDocuments as $document) {
-
+      $submission_entity = NULL;
       $applicationNumber = $document->getTransactionId();
 
       if (array_key_exists($document->getType(), Helpers::getApplicationTypes())) {
 
-        // Must check both react form submission and the webform submission.
+        // Must check both react form and the webform submission.
         try {
-          if (!$submission = $this->getReactFormApplicationSubmission($applicationNumber, $document)) {
+          if ($submission = $this->getReactFormApplicationSubmission($applicationNumber)) {
+            $submission_entity = $submission;
+          } else {
             $submission = $this->submissionObjectFromApplicationNumber($applicationNumber, $document, FALSE, TRUE);
           }
-          $submission_entity = $submission;
         }
         catch (\Throwable $e) {
           $this->logger->error(
@@ -218,6 +219,10 @@ final class ApplicationGetterService {
           '#submission_id' => $submission->id(),
           '#submission_entity' => $submission_entity,
         ];
+
+        if ($submission_entity) {
+          $submissionData['status'] = $document->getStatus();
+        }
 
         $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
         if ($sortByFinished === TRUE) {
@@ -390,15 +395,10 @@ final class ApplicationGetterService {
    */
   private function getReactFormApplicationSubmission(
     string $applicationNumber,
-    ?AtvDocument $document = NULL,
   ):?ApplicationSubmission {
     /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
     $submissions = $this->entityTypeManager->getStorage('application_submission')
       ->loadByProperties(['application_number' => $applicationNumber]);
-
-    if (!$document) {
-      $document = $this->getAtvDocument($applicationNumber, FALSE);
-    }
 
     if (!$submissions) {
       return NULL;
