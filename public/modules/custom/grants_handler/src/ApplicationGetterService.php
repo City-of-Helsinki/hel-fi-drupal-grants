@@ -197,6 +197,10 @@ final class ApplicationGetterService {
         }
 
         $submissionData = $submission->getData();
+        if ($submission_entity) {
+          $submissionData['status'] = $document->getStatus();
+        }
+
         $webform = $submission->getWebform();
 
         // There's old applications w/o form_uuid, let's add it here
