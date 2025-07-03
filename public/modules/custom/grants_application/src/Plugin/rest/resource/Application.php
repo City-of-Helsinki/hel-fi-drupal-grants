@@ -373,7 +373,9 @@ final class Application extends ResourceBase {
     );
     $this->eventsService->addNewEventForApplication($document, $event);
 
-    $document_data['events'] = $document->getContent()['events'];
+    if ($document->getContent()['events']) {
+      $document_data['events'] = $document->getContent()['events'];
+    }
 
     // @codingStandardsIgnoreStart
     // Update the atv document before sending to integration.
