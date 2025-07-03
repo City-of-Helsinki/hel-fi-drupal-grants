@@ -1968,10 +1968,12 @@ function grants_handler_preprocess_webform(array &$variables) {
 /**
  * Handle webform submissions in oma-asiointi list.
  *
- * @param $variables
+ * @param array $variables
  *   The variables.
+ * @param array $tOpts
+ *   The tOpts.
  */
-function _grants_handler_handle_webform_application(&$variables, array $tOpts) {
+function _grants_handler_handle_webform_application(array &$variables, array $tOpts) {
   /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
   $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
   $applicationStatuses = $applicationStatusService->getApplicationStatuses();
@@ -2144,10 +2146,10 @@ function _grants_handler_handle_webform_application(&$variables, array $tOpts) {
 /**
  * Handle react submissions in oma-asiointi list.
  *
- * @param $variables
+ * @param array $variables
  *   The variables.
  */
-function _grants_handler_handle_react_application(&$variables) {
+function _grants_handler_handle_react_application(array &$variables) {
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $formSettingsService = \Drupal::service(FormSettingsService::class);
 
