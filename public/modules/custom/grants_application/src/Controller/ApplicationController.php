@@ -133,4 +133,16 @@ final class ApplicationController extends ControllerBase {
     return new JsonResponse($response);
   }
 
+  /**
+   * Remove an application.
+   */
+  public function removeApplication() {
+  }
+
+  /**
+   * Print the application.
+   */
+  public function printApplication() {
+  }
+
 }
