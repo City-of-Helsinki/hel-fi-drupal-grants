@@ -1,5 +1,5 @@
 helfi_grants.forms_app:
-  path: '/application/{id}/render'
+  path: '/application/new/{id}'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
   requirements:
