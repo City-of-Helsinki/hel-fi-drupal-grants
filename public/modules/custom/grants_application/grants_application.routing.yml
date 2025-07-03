@@ -20,7 +20,7 @@ helfi_grants.forms_app_remove:
   path: '/application/{id}/remove'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::removeApplication'
-  methods: [POST]
+  methods: [GET, POST]
   requirements:
     _role: helsinkiprofiili
 
