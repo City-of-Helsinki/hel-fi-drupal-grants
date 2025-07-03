@@ -7,6 +7,7 @@ namespace Drupal\grants_handler;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -60,6 +61,7 @@ final class ApplicationGetterService {
     private readonly MessageService $grantsHandlerMessageService,
     private readonly LoggerChannelFactoryInterface $loggerChannelFactory,
     private readonly EntityTypeManagerInterface $entityTypeManager,
+    private readonly ModuleHandler $moduleHandler,
   ) {
     $this->logger = $loggerChannelFactory->get('application_getter_service');
   }
@@ -179,7 +181,11 @@ final class ApplicationGetterService {
 
         // Must check both react form and the webform submission.
         try {
-          if ($submission = $this->getReactFormApplicationSubmission($applicationNumber)) {
+          $submission = NULL;
+          if ($this->moduleHandler->moduleExists('grants_application')) {
+            $submission = $this->getReactFormApplicationSubmission($applicationNumber);
+          }
+          if ($submission) {
             $submission_entity = $submission;
           }
           else {
