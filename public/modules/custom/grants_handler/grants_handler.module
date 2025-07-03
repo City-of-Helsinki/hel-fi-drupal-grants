@@ -2193,8 +2193,16 @@ function _grants_handler_handle_react_application(array &$variables) {
   $variables['hasUnreadText'] = NULL;
   $unreadMsgs = [];
 
-  if (!empty($submissionData['messages'])) {
-    $variables['hasUnread'] = TRUE;
+  if (!empty($submission['messages'])) {
+    foreach ($submission['messages'] as $msg) {
+      if ($msg['sentBy'] == 'Avustusten kasittelyjarjestelma' && $msg['messageStatus'] == 'UNREAD') {
+        array_push($unreadMsgs, $msg);
+        if (!$variables['hasUnread']) {
+          $variables['hasUnread'] = TRUE;
+        }
+      }
+    }
+
     $variables['hasUnreadText'] = \Drupal::translation()
       ->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
   }

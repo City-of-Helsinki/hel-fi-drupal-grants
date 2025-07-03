@@ -198,6 +198,8 @@ final class ApplicationGetterService {
         }
 
         $submissionData = $submission->getData();
+
+        // Add value for oma-asiointi listing.
         if ($submission_entity) {
           $submissionData['status'] = $document->getStatus();
           $submissionData['messages'] = $document->getMessages();
