@@ -12,6 +12,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 
@@ -42,6 +43,7 @@ use Drupal\Core\Url;
  */
 class ApplicationSubmission extends ContentEntityBase implements ContentEntityInterface, EntityChangedInterface {
   use EntityChangedTrait;
+  use StringTranslationTrait;
 
   /**
    * {@inheritDoc}
@@ -185,14 +187,16 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    *   The markup.
    */
   private function createMarkup(string $link_text, string $application_name): Markup {
+    // phpcs:disable
     return Markup::create(
       sprintf('%s %s %s %s',
-        t($link_text, [], ['context' => 'grants_handler']),
+        $this->t($link_text, [], ['context' => 'grants_handler']),
         '<span class="visually-hidden">',
         $application_name,
         '<span>',
       )
     );
+    // phpcs:enable
   }
 
   /**
@@ -212,7 +216,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
   /**
    * Get the print url.
    *
-   * @return Url
+   * @return \Drupal\Core\Url
    *   The url.
    */
   public function getPrintApplicationUrl(): Url {

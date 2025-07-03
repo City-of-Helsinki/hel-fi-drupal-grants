@@ -346,12 +346,12 @@ final class Application extends ResourceBase {
 
     $document_data['formUpdate'] = !$submission->get('draft')->value;
 
-    if (!isset($document_data["statusUpdates"])) {
-      $document_data["statusUpdates"] = [];
+    if (!isset($document_data['statusUpdates'])) {
+      $document_data['statusUpdates'] = [];
     }
 
-    if (!isset($document_data["events"])) {
-      $document_data["events"] = [];
+    if (!isset($document_data['events'])) {
+      $document_data['events'] = [];
     }
 
     if (!isset($document_data['messages'])) {

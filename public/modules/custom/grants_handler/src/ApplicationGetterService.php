@@ -181,7 +181,8 @@ final class ApplicationGetterService {
         try {
           if ($submission = $this->getReactFormApplicationSubmission($applicationNumber)) {
             $submission_entity = $submission;
-          } else {
+          }
+          else {
             $submission = $this->submissionObjectFromApplicationNumber($applicationNumber, $document, FALSE, TRUE);
           }
         }
@@ -391,8 +392,6 @@ final class ApplicationGetterService {
    *
    * @param string $applicationNumber
    *   The application number.
-   * @param \Drupal\helfi_atv\AtvDocument|null $document
-   *   The atv document.
    *
    * @return \Drupal\grants_application\Entity\ApplicationSubmission|null
    *   The submission object.
