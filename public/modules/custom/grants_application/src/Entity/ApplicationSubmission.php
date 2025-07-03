@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Entity;
 
+use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
@@ -183,10 +184,10 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    * @param string $application_name
    *   Application name for visually hidden.
    *
-   * @return \Drupal\Core\Render\Markup
+   * @return \Drupal\Component\Render\MarkupInterface|string
    *   The markup.
    */
-  private function createMarkup(string $link_text, string $application_name): Markup {
+  private function createMarkup(string $link_text, string $application_name): MarkupInterface|string {
     // phpcs:disable
     return Markup::create(
       sprintf('%s %s %s %s',
@@ -242,15 +243,16 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    *   Data required by "oma-asiointi" -listing page.
    */
   public function getData(): array {
+    // Values are changed in ApplicationGetterService::getCompanyApplications.
     return [
       'application_type_id' => $this->get('application_type_id')->value,
       'form_timestamp_created' => date('Y-m-d h:i:s', (int) $this->get('created')->value),
       'form_timestamp' => $this->get('changed')->value,
       'form_timestamp_submitted' => $this->get('created')->value,
-      // @todo Add this.
       'status' => $this->get('draft')->value ? 'DRAFT' : '',
       'application_number' => $this->get('application_number')->value,
       'language' => $this->get('langcode')->value,
+      'messages' => [],
     ];
   }
 

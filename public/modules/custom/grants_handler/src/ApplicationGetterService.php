@@ -200,6 +200,7 @@ final class ApplicationGetterService {
         $submissionData = $submission->getData();
         if ($submission_entity) {
           $submissionData['status'] = $document->getStatus();
+          $submissionData['messages'] = $document->getMessages();
         }
 
         $webform = $submission->getWebform();
@@ -399,15 +400,15 @@ final class ApplicationGetterService {
   private function getReactFormApplicationSubmission(
     string $applicationNumber,
   ):?ApplicationSubmission {
-    /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
     $submissions = $this->entityTypeManager->getStorage('application_submission')
       ->loadByProperties(['application_number' => $applicationNumber]);
 
     if (!$submissions) {
       return NULL;
     }
-
-    return reset($submissions);
+    $submission = reset($submissions);
+    assert($submission instanceof ApplicationSubmission);
+    return $submission;
   }
 
   /**

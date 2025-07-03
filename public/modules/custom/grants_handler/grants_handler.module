@@ -2193,7 +2193,6 @@ function _grants_handler_handle_react_application(array &$variables) {
   $variables['hasUnreadText'] = NULL;
   $unreadMsgs = [];
 
-  // @todo Messages.
   if (!empty($submissionData['messages'])) {
     $variables['hasUnread'] = TRUE;
     $variables['hasUnreadText'] = \Drupal::translation()
