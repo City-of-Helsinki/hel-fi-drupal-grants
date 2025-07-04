@@ -4,13 +4,11 @@ namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
-use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_application\Atv\HelfiAtvService;
-use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
@@ -76,7 +74,7 @@ final class DraftApplication extends ResourceBase {
    * @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
    *   The event dispatcher.
    * @param \Drupal\grants_application\Form\FormValidator $formValidator
-   *   The form validator
+   *   The form validator.
    */
   public function __construct(
     array $configuration,
@@ -332,7 +330,7 @@ final class DraftApplication extends ResourceBase {
     ] = $content;
 
     try {
-      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+      // $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
     catch (\Exception $e) {
       // Cannot find form by application type id.
@@ -345,8 +343,8 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
-      $selected_company = $this->userInformationService->getSelectedCompany();
-      $user_data = $this->userInformationService->getUserData();
+      // $selected_company = $this->userInformationService->getSelectedCompany();
+      // $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
       return new JsonResponse([], 500);
@@ -397,20 +395,20 @@ final class DraftApplication extends ResourceBase {
     $settings,
     $application_number,
     );
-     */
+
 
     $document_data['attachmentsInfo'] = $this->avus2Mapper
-    ->getAttachmentAndGeneralInfo($attachments, $form_data);
+      ->getAttachmentAndGeneralInfo($attachments, $form_data);
+    */
 
     $document_data['compensation'] = [];
     // @todo clean this up a bit, unnecessarily duplicated variables.
     $content = $document->getContent();
-    $content['compensation'] = $document_data['compensation'];
+    // $content['compensation'] = $document_data['compensation'];
     $content['form_data'] = $form_data;
     // Temporary solution since integration removes the root form_data^.
-    $content['compensation']['form_data'] = $form_data;
-    $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
-
+    // $content['compensation']['form_data'] = $form_data;
+    // $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
     $document->setContent($content);
 
     try {
