@@ -253,7 +253,8 @@ final class Avus2Mapper {
     $application_type = $form_settings->toArray()['settings']['application_type'];
     $acting_year = $form_data['orienteering_maps_step']['acting_year_section']['acting_year'];
 
-    // Draft is a super special case, it is overwritten by integration.
+    // Status is a super special case, it is overwritten by integration
+    // when form is submitted.
     // @todo Proper timestamps.
     // @todo Proper type id.
     return [
