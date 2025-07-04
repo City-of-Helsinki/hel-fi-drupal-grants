@@ -64,6 +64,12 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
       ->setLabel(new TranslatableMarkup('External user id'))
       ->setReadOnly(TRUE);
 
+    // In case of registered community, multiple people might have access.
+    $fields['business_id'] = BaseFieldDefinition::create('string')
+      ->setRequired(FALSE)
+      ->setLabel(new TranslatableMarkup('External business id'))
+      ->setReadOnly(TRUE);
+
     // Saved as a draft or sent to backend.
     $fields['draft'] = BaseFieldDefinition::create('boolean')
       ->setLabel(new TranslatableMarkup('Draft'))
