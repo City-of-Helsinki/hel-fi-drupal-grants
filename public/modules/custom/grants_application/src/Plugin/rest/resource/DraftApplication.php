@@ -345,6 +345,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       /*
       $selected_company = $this->userInformationService->getSelectedCompany();
       user_data = $this->userInformationService->getUserData();
