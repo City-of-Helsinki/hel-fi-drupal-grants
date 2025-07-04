@@ -415,7 +415,7 @@ final class DraftApplication extends ResourceBase {
     $document_data['compensation'] = [];
     $content['compensation']['form_data'] = $form_data;
     $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
-    */
+     */
     $document->setContent($content);
 
     try {
