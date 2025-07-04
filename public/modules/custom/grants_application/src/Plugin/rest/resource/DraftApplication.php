@@ -330,7 +330,7 @@ final class DraftApplication extends ResourceBase {
     ] = $content;
 
     try {
-      // $settings = $this->formSettingsService->getFormSettings($application_type_id);
+      $this->formSettingsService->getFormSettings($application_type_id);
     }
     catch (\Exception $e) {
       // Cannot find form by application type id.
@@ -343,8 +343,10 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
-      // $selected_company = $this->userInformationService->getSelectedCompany();
-      // $user_data = $this->userInformationService->getUserData();
+      /*
+      $selected_company = $this->userInformationService->getSelectedCompany();
+      user_data = $this->userInformationService->getUserData();
+       */
     }
     catch (\Exception $e) {
       return new JsonResponse([], 500);
@@ -379,9 +381,10 @@ final class DraftApplication extends ResourceBase {
     }
 
     // @todo Better sanitation.
+    /*
     $document_data = [
-      'form_data' => $form_data,
-      'attachmentsInfo' => [],
+    'form_data' => $form_data,
+    'attachmentsInfo' => [],
     ];
 
     // Mapping here for development purpose only.
@@ -396,19 +399,20 @@ final class DraftApplication extends ResourceBase {
     $application_number,
     );
 
-
     $document_data['attachmentsInfo'] = $this->avus2Mapper
-      ->getAttachmentAndGeneralInfo($attachments, $form_data);
-    */
+    ->getAttachmentAndGeneralInfo($attachments, $form_data);
+     */
 
-    $document_data['compensation'] = [];
     // @todo clean this up a bit, unnecessarily duplicated variables.
     $content = $document->getContent();
     // $content['compensation'] = $document_data['compensation'];
     $content['form_data'] = $form_data;
     // Temporary solution since integration removes the root form_data^.
-    // $content['compensation']['form_data'] = $form_data;
-    // $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
+    /*
+    $document_data['compensation'] = [];
+    $content['compensation']['form_data'] = $form_data;
+    $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
+    */
     $document->setContent($content);
 
     try {
