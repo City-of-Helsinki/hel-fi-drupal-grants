@@ -32,6 +32,8 @@ class ServicePageBlockService {
    *   The current route match.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   The grants profile service.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
+   *   The module handler.
    */
   public function __construct(
     protected EntityTypeManager $entityTypeManager,
@@ -104,9 +106,10 @@ class ServicePageBlockService {
   }
 
   /**
-   * Get react form link if current node has ID set for it. 
-   * 
+   * Get react form link if current node has ID set for it.
+   *
    * @return \Drupal\Core\Url|null
+   *   Resulting URL or null
    */
   public function getReactFormLink(): ?Url {
     if (

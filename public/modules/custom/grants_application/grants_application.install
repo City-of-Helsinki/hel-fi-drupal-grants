@@ -75,7 +75,7 @@ function grants_application_update_9001() {
       'alias' => '/bilagor/ny/{id}',
       'langcode' => 'sv',
       'path' => '/application/new/{id}',
-    ]
+    ],
   ];
 
   foreach ($paths as $path) {
