@@ -231,11 +231,12 @@ function grants_handler_theme(): array {
     'grants_service_page_block' => [
       'render element' => 'build',
       'variables' => [
-        'webformLink' => NULL,
+        'auth' => NULL,
         'link' => NULL,
         'text' => NULL,
-        'auth' => NULL,
+        'reactFormLink' => NULL,
         'title' => NULL,
+        'webformLink' => NULL,
       ],
     ],
     'application_timeout_message' => [

@@ -148,15 +148,15 @@ on this page before proceeding to the application.', [], $tOpts);
     $webformLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webformId]);
 
     $build['content'] = [
-      '#theme' => 'grants_service_page_block',
+      '#auth' => 'auth',
       '#link' => $applicationLink,
       '#text' => $descrtiption,
-      '#auth' => 'auth',
+      '#reactFormLink' => $this->servicePageBlockService->getReactFormLink(),
+      '#theme' => 'grants_service_page_block',
       '#webformLink' => $webformLink,
     ];
 
     return $build;
-
   }
 
   /**
