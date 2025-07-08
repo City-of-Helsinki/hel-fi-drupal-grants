@@ -1,5 +1,5 @@
 import { RJSFSchema } from '@rjsf/utils';
-import {  useCallback } from 'react';
+import { useCallback } from 'react';
 import { useAtomCallback } from 'jotai/utils';
 import { useSetAtom } from 'jotai';
 
@@ -263,6 +263,14 @@ export const FormWrapper = ({
   };
 
   return (
+    <>
+    <button type='button' onClick={() => pushNotification({
+      children: <div>{Drupal.t('Application saved as draft.', {}, {context: 'Grants application: Draft'})}</div>,
+      label: Drupal.t('Save successful.', {}, {context: 'Grants application: Draft'}),
+      type: 'success',
+    })}>
+      Test notification
+    </button>
     <RJSFFormContainer
       formDataAtom={formDataAtom}
       saveDraft={saveDraft}
@@ -270,6 +278,7 @@ export const FormWrapper = ({
       submitData={submitData}
       uiSchema={translatedData.ui_schema}
     />
+    </>
   );
 };
 
