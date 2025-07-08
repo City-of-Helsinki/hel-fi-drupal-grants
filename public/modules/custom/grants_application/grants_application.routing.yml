@@ -1,7 +1,8 @@
 helfi_grants.forms_app:
-  path: '/application/new/{id}'
+  path: '/application/new/{id}/{application_number}'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
+    application_number: NULL
   requirements:
     _role: helsinkiprofiili
 
