@@ -4,16 +4,16 @@ display:
     display_options:
       fields:
         tpr_service_bulk_form:
-          label: 'Bulk update'
+          label: Massuppdatera
           action_title: Åtgärd
         name:
           label: Titel
           separator: ', '
         name_1:
-          label: 'Lock owner'
+          label: 'Lås ägare'
           separator: ', '
         langcode:
-          label: 'Content language'
+          label: 'Språk för innehåll'
           separator: ', '
         operations:
           label: Funktioner

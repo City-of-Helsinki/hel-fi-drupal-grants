@@ -300,8 +300,12 @@ final class DeleteApplicationsForm extends FormBase {
       $this->logger('grants_admin_applications')
         ->notice($failedDeletionMessage);
     }
-
-    $this->handleDocumentsBatchService->run($documentsToDelete);
+    // phpcs:disable
+    // @phpstan-ignore-next-line
+    \Drupal::getContainer()
+      ->get(HandleDocumentsBatchService::class)
+      ->run($documentsToDelete);
+    // phpcs:enabled
   }
 
   /**
