@@ -17,3 +17,5 @@ services:
   Drupal\grants_application\Avus2Mapper: ~
 
   Drupal\grants_application\Avus2Integration: ~
+
+  Drupal\grants_application\Form\FormValidator: ~

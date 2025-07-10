@@ -7,11 +7,17 @@ namespace Drupal\grants_application\Controller;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 use Drupal\grants_application\Atv\HelfiAtvService;
+use Drupal\grants_application\Entity\ApplicationSubmission;
+use Drupal\grants_handler\ApplicationGetterService;
+use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusException;
 use Drupal\helfi_av\AntivirusService;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -28,6 +34,10 @@ final class ApplicationController extends ControllerBase {
     private readonly AntivirusService $antivirusService,
     private readonly HelfiAtvService $helfiAtvService,
     private readonly CsrfTokenGenerator $csrfTokenGenerator,
+    #[Autowire(service: 'grants_handler.application_getter_service')]
+    private readonly ApplicationGetterService $applicationGetterService,
+    #[Autowire(service: 'helfi_atv.atv_service')]
+    private readonly AtvService $atvService,
   ) {
   }
 
@@ -131,6 +141,69 @@ final class ApplicationController extends ControllerBase {
     ];
 
     return new JsonResponse($response);
+  }
+
+  /**
+   * Remove an application.
+   */
+  public function removeApplication(string $id) {
+    // @todo The original implementation and this must be done properly.
+    $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
+    $tOpts = ['context' => 'grants_handler'];
+
+    try {
+      $ids = $this->entityTypeManager()->getStorage('application_submission')
+        ->getQuery()
+        ->accessCheck(TRUE)
+        ->condition('application_number', $id)
+        ->execute();
+
+      if (!$ids) {
+        $this->messenger()
+          ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
+        $this->getLogger('grants_handler')
+          ->error('Error: %error', ['%error' => "Cannot find application number $id"]);
+        return new RedirectResponse($redirectUrl->toString());
+      }
+
+      $submission = ApplicationSubmission::load(reset($ids));
+    }
+    catch (\Exception  $e) {
+      $this->messenger()
+        ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
+      $this->getLogger('grants_handler')
+        ->error('Error: %error', ['%error' => $e->getMessage()]);
+      return new RedirectResponse($redirectUrl->toString());
+    }
+    $document = $this->applicationGetterService->getAtvDocument($id);
+
+    if (!$submission || $submission->get('draft')->value !== "1") {
+      if ($document->getStatus() !== 'DRAFT') {
+        $this->messenger()
+          ->addError($this->t('Only DRAFT status submissions are deletable', [], $tOpts));
+        return new RedirectResponse($redirectUrl->toString());
+      }
+    }
+
+    try {
+      if ($this->atvService->deleteDocument($document)) {
+        $submission->delete();
+      }
+    }
+    catch (\Exception $e) {
+      $this->messenger()
+        ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
+      $this->getLogger('grants_handler')
+        ->error('Error: %error', ['%error' => $e->getMessage()]);
+    }
+
+    return new RedirectResponse($redirectUrl->toString());
+  }
+
+  /**
+   * Print the application.
+   */
+  public function printApplication() {
   }
 
 }

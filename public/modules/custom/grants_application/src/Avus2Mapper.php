@@ -63,7 +63,7 @@ final class Avus2Mapper {
     $data['otherCompensationsInfo'] = $this->getOtherCompensation($form_data);
     $data['benefitsInfoArray'] = $this->getBenefits();
     $data['activitiesInfoArray'][] = $this->getActivities($grants_profile);
-    $data['additionalInformation'] = $form_data['attachments']['additional_information_section']['additional_information'];
+    $data['additionalInformation'] = $form_data['attachments_step']['additional_information_section']['additional_information'];
     $data['senderInfoArray'] = $this->getSenderInfo($user_data, $user_profile_data['myProfile']['verifiedPersonalInformation']);
     $data['orienteeringMapInfo']['orienteeringMapsArray'] = $this->getOrienteeringMaps($form_data);
 
@@ -251,9 +251,10 @@ final class Avus2Mapper {
    */
   public function getApplicationData(FormSettings $form_settings, array $form_data, string $application_number, string $now): array {
     $application_type = $form_settings->toArray()['settings']['application_type'];
-    $acting_year = $form_data['orienteering_maps']['acting_year']['acting_year'];
+    $acting_year = $form_data['orienteering_maps_step']['acting_year_section']['acting_year'];
 
-    // Draft is a super special case, it is overwritten by integration.
+    // Status is a super special case, it is overwritten by integration
+    // when form is submitted.
     // @todo Proper timestamps.
     // @todo Proper type id.
     return [
@@ -387,7 +388,7 @@ final class Avus2Mapper {
    *
    * Filetype: Just check GrantsAttachments::filetypes for more information.
    *
-   * Integration id can be built using getIntregrationIdFomFileHref-method.
+   * Integration id can be built using getIntegrationIdFomFileHref-method.
    *
    * IsDeliveredLater and the other boolean are checkboxes related to the
    * file upload component: fields may not exist but the value must be sent.
@@ -419,7 +420,7 @@ final class Avus2Mapper {
 
     $data['attachmentsArray'] = $files;
 
-    $extra_info = $form_data['attachments']['additional_information_section']['additional_information'];
+    $extra_info = $form_data['attachments_step']['additional_information_section']['additional_information'];
     $data['generalInfoArray'] = [[
       'ID' => 'extraInfo',
       'value' => $extra_info,

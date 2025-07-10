@@ -349,31 +349,19 @@ final class Application extends ResourceBase {
     $mapped_bank_confirmation_file = $this->avus2Mapper->createBankFileData($selected_bank_account_number, $bank_confirmation_file_array);
     $document_data['attachmentsInfo']['attachmentsArray'][] = $mapped_bank_confirmation_file;
 
-    $document_data["formUpdate"] = FALSE;
+    $document_data['formUpdate'] = !$submission->get('draft')->value;
 
-    if (!isset($document_data["statusUpdates"])) {
-      $document_data["statusUpdates"] = [];
+    if (!isset($document_data['statusUpdates'])) {
+      $document_data['statusUpdates'] = [];
     }
 
-    if (!isset($document_data["events"])) {
-      $document_data["events"] = [];
+    if (!isset($document_data['events'])) {
+      $document_data['events'] = [];
     }
 
     if (!isset($document_data['messages'])) {
       $document_data['messages'] = [];
     }
-
-    // @codingStandardsIgnoreStart
-    // Update the atv document before sending to integration.
-    // Lets try a way to hold on to the document data.
-    // @todo Sanitize the input.
-    // NOSONAR
-    $document_data['compensation']['form_data'] = $form_data;
-    // NOSONAR
-    $document->setContent($document_data);
-    // @codingStandardsIgnoreEnd
-
-    $this->atvService->updateExistingDocument($document);
 
     // Save id has previously been saved to database to track
     // unsuccessful submissions due to integration failures.
@@ -389,6 +377,22 @@ final class Application extends ResourceBase {
       $save_id
     );
     $this->eventsService->addNewEventForApplication($document, $event);
+
+    if ($document->getContent()['events']) {
+      $document_data['events'] = $document->getContent()['events'];
+    }
+
+    // @codingStandardsIgnoreStart
+    // Update the atv document before sending to integration.
+    // Lets try a way to hold on to the document data.
+    // @todo Sanitize the input.
+    // NOSONAR
+    $document_data['compensation']['form_data'] = $form_data;
+    // NOSONAR
+    $document->setContent($document_data);
+    // @codingStandardsIgnoreEnd
+
+    $this->atvService->updateExistingDocument($document);
 
     // @todo Make sure the formUpdate is set properly.
     // Initial import from ATV MUST have formUpdate FALSE, and
