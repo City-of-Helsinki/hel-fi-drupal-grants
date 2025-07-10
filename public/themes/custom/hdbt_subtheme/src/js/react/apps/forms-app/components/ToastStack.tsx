@@ -1,17 +1,30 @@
 import { Notification } from 'hds-react';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { shiftNotificationsAtom, systemNotificationsAtom } from '../store';
+import { useEffect, useState } from 'react';
+
+import { shiftNotificationsAtom, SystemNotification, systemNotificationsAtom } from '../store';
 
 export const ToastStack = () => {
   const notifications = useAtomValue(systemNotificationsAtom);
   const shiftNotifications = useSetAtom(shiftNotificationsAtom);
-  const currentNotification = notifications.length && notifications[0];
+  const [currentNotification, setCurrentNotification] = useState<SystemNotification|null>(notifications[0] || null);
+
+  useEffect(() => {
+    if (!currentNotification && notifications.length > 0) {
+      setCurrentNotification(notifications[0]);
+    }
+  }, [currentNotification, notifications, setCurrentNotification]);
+
+  const handleClose = () => {
+    shiftNotifications();
+    setCurrentNotification(null);
+  };
 
   return currentNotification ?
       <Notification
         autoClose
+        onClose={handleClose}
         label={currentNotification.label}
-        onClose={() => shiftNotifications()}
         position='bottom-right'
         style={{
           zIndex: 100,

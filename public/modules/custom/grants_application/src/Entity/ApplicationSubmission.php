@@ -209,14 +209,15 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
   /**
    * {@inheritDoc}
    */
-  public function toUrl($rel = NULL, array $options = []) {
-    $parameters = ['id' => $this->get('application_type_id')->value];
-    $query = ['query' => ['application_number' => $this->get('application_number')->value]];
+  public function toUrl($rel = NULL, array $options = []): Url {
+    $parameters = [
+      'id' => $this->get('application_type_id')->value,
+      'application_number' => $this->get('application_number')->value,
+    ];
 
     return Url::fromRoute(
       'helfi_grants.forms_app',
       $parameters,
-      $query,
     );
   }
 

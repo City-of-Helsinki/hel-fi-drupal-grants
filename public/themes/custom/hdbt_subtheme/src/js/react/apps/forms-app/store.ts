@@ -3,6 +3,7 @@ import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import { atom } from 'jotai';
 import { keyErrorsByStep } from './utils';
 import { SubmitStates } from './enum/SubmitStates';
+import { getUrlParts } from './testutils/Helpers';
 
 export type FormStep = {
   id: string;
@@ -28,11 +29,11 @@ type GrantsProfile = {
     country: string;
   }>;
   bankAccounts: Array<{
-      bankAccount: string;
-      confirmationFile: string;
-      bank_account_id: string;
-      ownerName?: string;
-      ownerSsn?: string;
+    bankAccount: string;
+    confirmationFile: string;
+    bank_account_id: string;
+    ownerName?: string;
+    ownerSsn?: string;
   }>,
   businessId: string;
 };
@@ -262,16 +263,18 @@ export const getTranslationsAtom = atom(_get => {
 export const setApplicationNumberAtom = atom(null, (_get, _set, applicationNumber: string) => {
   const formConfig = _get(getFormConfigAtom);
 
-  const params = new URLSearchParams(window.location.search);
-  params.set('application_number', applicationNumber);
-  window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+  const currentParts = getUrlParts();
+  currentParts[4] = applicationNumber;
+  const currentUrl = new URL(window.location.href);
+  currentUrl.pathname = currentParts.join('/');
+  window.history.replaceState(null, '', currentUrl.toString());
 
   _set(formConfigAtom, state => ({
     ...formConfig,
     applicationNumber,
   }));
 });
-type SystemNotification = {
+export type SystemNotification = {
   children: string| ReactNode,
   label: string | ReactNode,
   type: 'info' | 'error' | 'alert' | 'success',

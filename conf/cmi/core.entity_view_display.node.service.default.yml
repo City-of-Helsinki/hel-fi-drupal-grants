@@ -20,6 +20,7 @@ dependencies:
     - field.field.node.service.field_liftup_image
     - field.field.node.service.field_lower_content
     - field.field.node.service.field_metatags
+    - field.field.node.service.field_react_form_id
     - field.field.node.service.field_service_channel
     - field.field.node.service.field_sidebar_content
     - field.field.node.service.field_target_group
@@ -146,6 +147,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 5
+    region: content
+  field_react_form_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 18
     region: content
   field_sidebar_content:
     type: entity_reference_revisions_entity_view
