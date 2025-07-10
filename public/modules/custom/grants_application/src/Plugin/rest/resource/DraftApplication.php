@@ -9,10 +9,10 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_application\Atv\HelfiAtvService;
-use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormValidator;
 use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_handler\ApplicationSubmitType;
@@ -69,18 +69,18 @@ final class DraftApplication extends ResourceBase {
    *   The language manager interface.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
-   * @param \Drupal\grants_application\Avus2Mapper $avus2Mapper
-   *   The Avus2-mapper.
    * @param \Drupal\Core\Access\CsrfTokenGenerator $csrfTokenGenerator
    *   The token generator.
    * @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
    *   The event dispatcher.
+   * @param \Drupal\grants_application\Form\FormValidator $formValidator
+   *   The form validator.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    $serializer_formats,
+    array $serializer_formats,
     LoggerInterface $logger,
     private FormSettingsService $formSettingsService,
     private UserInformationService $userInformationService,
@@ -89,9 +89,9 @@ final class DraftApplication extends ResourceBase {
     private ApplicationNumberService $applicationNumberService,
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
-    private Avus2Mapper $avus2Mapper,
     private CsrfTokenGenerator $csrfTokenGenerator,
     private EventDispatcherInterface $dispatcher,
+    private FormValidator $formValidator,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -113,9 +113,9 @@ final class DraftApplication extends ResourceBase {
       $container->get(ApplicationNumberService::class),
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
-      $container->get(Avus2Mapper::class),
       $container->get(CsrfTokenGenerator::class),
       $container->get(EventDispatcherInterface::class),
+      $container->get(FormValidator::class),
     );
   }
 
@@ -187,7 +187,7 @@ final class DraftApplication extends ResourceBase {
 
     try {
       $document = $this->atvService->getDocument($application_number);
-      $form_data = $document->getContent();
+      $document_content = $document->getContent();
     }
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
@@ -199,7 +199,13 @@ final class DraftApplication extends ResourceBase {
     // This should be done in more clean way. Maybe separate ATV-doc for react
     // form or something else.
     $response = [];
-    $response['form_data'] = $form_data['form_data'] ?? $form_data['compensation']['form_data'];
+
+    if (!$document_content['form_data'] || !$document_content['compensation']) {
+      $response['form_data'] = [];
+    }
+    else {
+      $response['form_data'] = $document_content['form_data'] ?? $document_content['compensation']['form_data'];
+    }
 
     // @todo Only return required user data to frontend
     $response['grants_profile'] = $grants_profile_data->toArray();
@@ -326,7 +332,7 @@ final class DraftApplication extends ResourceBase {
     ] = $content;
 
     try {
-      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+      $this->formSettingsService->getFormSettings($application_type_id);
     }
     catch (\Exception $e) {
       // Cannot find form by application type id.
@@ -340,8 +346,10 @@ final class DraftApplication extends ResourceBase {
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      /*
       $selected_company = $this->userInformationService->getSelectedCompany();
-      $user_data = $this->userInformationService->getUserData();
+      user_data = $this->userInformationService->getUserData();
+       */
     }
     catch (\Exception $e) {
       return new JsonResponse([], 500);
@@ -377,30 +385,38 @@ final class DraftApplication extends ResourceBase {
     }
 
     // @todo Better sanitation.
-    $document_data = ['form_data' => $form_data];
+    /*
+    $document_data = [
+    'form_data' => $form_data,
+    'attachmentsInfo' => [],
+    ];
 
+    // Mapping here for development purpose only.
+    /*
     $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
-      $form_data,
-      $user_data,
-      $selected_company,
-      $this->userInformationService->getUserProfileData(),
-      $this->userInformationService->getGrantsProfileContent(),
-      $settings,
-      $application_number,
+    $form_data,
+    $user_data,
+    $selected_company,
+    $this->userInformationService->getUserProfileData(),
+    $this->userInformationService->getGrantsProfileContent(),
+    $settings,
+    $application_number,
     );
 
     $document_data['attachmentsInfo'] = $this->avus2Mapper
-      ->getAttachmentAndGeneralInfo($attachments, $form_data);
+    ->getAttachmentAndGeneralInfo($attachments, $form_data);
+     */
 
     // @todo clean this up a bit, unnecessarily duplicated variables.
-    // Make sure the events and messages are not overridden.
     $content = $document->getContent();
-    $content['compensation'] = $document_data['compensation'];
+    // $content['compensation'] = $document_data['compensation'];
     $content['form_data'] = $form_data;
     // Temporary solution since integration removes the root form_data^.
+    /*
+    $document_data['compensation'] = [];
     $content['compensation']['form_data'] = $form_data;
     $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
-
+     */
     $document->setContent($content);
 
     try {
