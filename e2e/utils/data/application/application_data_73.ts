@@ -17,8 +17,8 @@ import {getFakeEmailAddress} from "../../field_helpers";
  */
 const baseForm_73: FormData = {
   title: 'Save as draft.',
-  formSelector: 'webform-submission-nuorlomaleir-form',
-  formPath: '/fi/form/nuorlomaleir',
+  formSelector: 'webform-submission-nuorleiri-form',
+  formPath: '/fi/form/nuorleiri',
   formPages: {
     "1_hakijan_tiedot": {
       items: {
@@ -348,7 +348,7 @@ const baseForm_73: FormData = {
     },
   },
   expectedErrors: {},
-  expectedDestination: "/fi/hakemus/nuorlomaleir/",
+  expectedDestination: "/fi/hakemus/nuorleiri/",
 }
 
 /**
