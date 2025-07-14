@@ -271,6 +271,16 @@ third_party_options:
         fi: 'Sosiaali-, terveys- ja pelastustoimen yleisavustus'
         en: 'EN Sosiaali-, terveys- ja pelastustoimen yleisavustus'
         sv: 'SV Sosiaali-, terveys- ja pelastustoimen yleisavustus'
+    73:
+      id: NUORLEIRI
+      code: NUORLEIRI
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoLeiriDefinition
+        definitionId: grants_metadata_nuorisoleiri
+      labels:
+        fi: 'Nuorisotoiminnan leiriavustushakemus'
+        en: 'Camp grants for youth activities'
+        sv: 'Ungdomsverksamhet, lägerunderstöd'
   application_statuses:
     DRAFT: DRAFT
     SUBMITTED: SUBMITTED
@@ -339,6 +349,7 @@ config_import_ignore:
   - 60
   - 65
   - 67
+  - 73
 overridden_configuration:
   -
     53:
@@ -501,4 +512,10 @@ overridden_configuration:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-07-30T11:19:00'
+        disableCopying: 0
+  -
+    73:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-08-30T11:19:00'
         disableCopying: 0
