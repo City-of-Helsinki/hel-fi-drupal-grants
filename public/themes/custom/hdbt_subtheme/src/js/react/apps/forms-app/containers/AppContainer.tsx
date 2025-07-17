@@ -4,6 +4,7 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import { FormWrapper } from './FormWrapper';
+import { getUrlParts } from '../testutils/Helpers';
 
 /**
  * Instantiates a new application draft for the given form.
@@ -44,8 +45,7 @@ const instantiateDocument = async(id: string, token: string) => {
  * @throws {Error} - If the request fails
  */
 async function fetchFormData(id: string, token: string) {
-  const params = new URLSearchParams(window.location.search);
-  let applicationNumber = params.get('application_number');
+  let applicationNumber = getUrlParts()?.[4];
 
   if (!applicationNumber) {
     const { application_number } = await instantiateDocument(id, token);

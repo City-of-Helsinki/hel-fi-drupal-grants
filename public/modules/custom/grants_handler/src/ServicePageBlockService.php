@@ -5,7 +5,9 @@ namespace Drupal\grants_handler;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
+use Drupal\Core\Url;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\webform\Entity\Webform;
 
@@ -13,6 +15,13 @@ use Drupal\webform\Entity\Webform;
  * Provides the ServicePageBlockService service.
  */
 class ServicePageBlockService {
+
+  /**
+   * The current node.
+   *
+   * @var \Drupal\node\NodeInterface
+   */
+  protected $currentNode;
 
   /**
    * Constructs a new WebformLoader.
@@ -23,12 +32,17 @@ class ServicePageBlockService {
    *   The current route match.
    * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
    *   The grants profile service.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
+   *   The module handler.
    */
   public function __construct(
     protected EntityTypeManager $entityTypeManager,
     protected CurrentRouteMatch $routeMatch,
     protected GrantsProfileService $grantsProfileService,
-  ) {}
+    protected ModuleHandlerInterface $moduleHandler,
+  ) {
+    $this->currentNode = $this->routeMatch->getParameter('node');
+  }
 
   /**
    * The loadServicePageWebform function.
@@ -43,12 +57,11 @@ class ServicePageBlockService {
    */
   public function loadServicePageWebform(): Webform|bool {
     try {
-      $node = $this->routeMatch->getParameter('node');
-      if (!$node || $node->bundle() !== 'service') {
+      if (!$this->currentNode || $this->currentNode->bundle() !== 'service') {
         return FALSE;
       }
 
-      $webformId = $node->get('field_webform')->target_id;
+      $webformId = $this->currentNode->get('field_webform')->target_id;
       if (!$webformId) {
         return FALSE;
       }
@@ -90,6 +103,30 @@ class ServicePageBlockService {
       return FALSE;
     }
     return TRUE;
+  }
+
+  /**
+   * Get react form link if current node has ID set for it.
+   *
+   * @return \Drupal\Core\Url|null
+   *   Resulting URL or null
+   */
+  public function getReactFormLink(): ?Url {
+    if (
+      getenv('APP_ENV') === 'production' ||
+      !$this->moduleHandler->moduleExists('grants_application') ||
+      !$this->currentNode ||
+      $this->currentNode->bundle() !== 'service'
+    ) {
+      return NULL;
+    }
+
+    $formId = $this->currentNode->get('field_react_form_id')->value;
+    if (!$formId) {
+      return NULL;
+    }
+
+    return Url::fromRoute('helfi_grants.forms_app', ['id' => $formId]);
   }
 
   /**
