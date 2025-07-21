@@ -58,6 +58,7 @@ final class ApplicationController extends ControllerBase {
           'grants_react_form' => [
             'application_number' => $id,
             'token' => $this->csrfTokenGenerator->get('rest'),
+            'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
           ],
         ],
       ],
