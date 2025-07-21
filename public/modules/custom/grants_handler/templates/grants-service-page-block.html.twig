@@ -14,6 +14,11 @@
 <h3><span class="hel-icon hel-icon--{{ icon }}-circle hel-icon--size-s" aria-hidden="true"></span> {{ title }}</h3>
 <p>{{ text }}</p>
 {{ link }}
+{% if reactFormLink %}
+  <a href="{{ reactFormLink }}" class="hds-button hds-button--primary">
+    <span class="hds-button__label">{{ "New form using renewed form application"|t({}, {'context': 'grants_handler'}) }}</span>
+  </a>
+{% endif %}
 {% if webformLink %}
     <a href="{{ webformLink }}" class="hds-button hds-button--supplementary">
       <span class="hds-button__label">{{ "Preview the application"|t({}, {'context': 'grants_preview_link'}) }}</span>

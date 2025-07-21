@@ -1,7 +1,8 @@
 helfi_grants.forms_app:
-  path: '/application/{id}/render'
+  path: '/application/new/{id}/{application_number}'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
+    application_number: NULL
   options:
     query:
       application_number: ""
