@@ -19,3 +19,14 @@ export const initializeFormState = (formState: Partial<FormState>): FormState =>
     ...initialState,
     ...formState
   });
+
+/**
+ * Get URL path parts from current URL in an array.
+ *
+ * @return {string[]} - Array of URL parts.
+ */
+export const getUrlParts = () => {
+  const path = window.location.pathname;
+
+  return path.split('/').filter(Boolean);
+}

@@ -1,5 +1,5 @@
 import { RJSFSchema } from '@rjsf/utils';
-import {  useCallback } from 'react';
+import { useCallback } from 'react';
 import { useAtomCallback } from 'jotai/utils';
 import { useSetAtom } from 'jotai';
 

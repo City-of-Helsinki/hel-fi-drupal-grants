@@ -79,6 +79,10 @@ class Mappings {
       'class' => 'Drupal\grants_metadata\TypedData\Definition\NuorisoLomaDefinition',
       'parameter' => 'grants_metadata_nuorisoloma',
     ],
+    'nuorisoleiri' => [
+      'class' => 'Drupal\grants_metadata\TypedData\Definition\NuorisoLeiriDefinition',
+      'parameter' => 'grants_metadata_nuorisoleiri',
+    ],
     'nuorisoprojekti' => [
       'class' => 'Drupal\grants_metadata\TypedData\Definition\NuorisoProjektiDefinition',
       'parameter' => 'grants_metadata_nuorisoprojekti',
