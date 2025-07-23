@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Entity;
 
+use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
 
 /**
  * Defines the Application submission entity.
@@ -31,11 +36,15 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   admin_permission = "administer content",
  *   handlers = {
  *     "access" = "Drupal\grants_application\ApplicationSubmissionAccessControlHandler",
+ *   },
+ *   links = {
+ *     "canonical" = "/application/{id}/render"
  *   }
  * )
  */
 class ApplicationSubmission extends ContentEntityBase implements ContentEntityInterface, EntityChangedInterface {
   use EntityChangedTrait;
+  use StringTranslationTrait;
 
   /**
    * {@inheritDoc}
@@ -90,7 +99,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
     // We might want to use the same delete after value here as atv uses.
     $fields['delete_after'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(new TranslatableMarkup('Delete after'))
-      ->setDescription(new TranslatableMarkup('The time that the entity may be deleted.'));
+      ->setDescription(new TranslatableMarkup('The time that the entity must be deleted.'));
 
     return $fields;
   }
@@ -103,6 +112,165 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    */
   public function isDraft(): bool {
     return $this->get('draft')->getValue();
+  }
+
+  /**
+   * Submitted date time.
+   *
+   * @param string $format
+   *   The formatting format for datetime object.
+   *
+   * @return string
+   *   The date time string.
+   */
+  public function getSubmittedDateTime(string $format = 'd.m.Y H:i'): string {
+    $changed = $this->get('changed')->value;
+    $timezone = new \DateTimeZone('Europe/Helsinki');
+    return (new \DateTime("@$changed"))
+      ->setTimezone($timezone)
+      ->format($format);
+  }
+
+  /**
+   * Create view -link for oma asiointi.
+   *
+   * @param string $application_form_name
+   *   Application name.
+   *
+   * @return \Drupal\Core\Link
+   *   The link.
+   */
+  public function getViewApplicationLink(string $application_form_name): Link {
+    $markup = $this->createMarkup('View application', $application_form_name);
+    return Link::fromTextAndUrl($markup, $this->toUrl());
+  }
+
+  /**
+   * Create edit link for oma-asiointi.
+   *
+   * @param string $application_form_name
+   *   Application name.
+   *
+   * @return \Drupal\Core\Link
+   *   The link.
+   */
+  public function getEditApplicationLink(string $application_form_name): Link {
+    $markup = $this->createMarkup('Edit application', $application_form_name);
+    return Link::fromTextAndUrl($markup, $this->toUrl());
+  }
+
+  /**
+   * Get the delete url.
+   *
+   * @return \Drupal\Core\Url
+   *   The delete url.
+   */
+  public function getDeleteApplicationUrl(): Url {
+    return Url::fromRoute(
+      'helfi_grants.forms_app_remove',
+      [
+        'id' => $this->get('application_number')->value,
+      ],
+      [
+        'attributes' => [
+          'data-drupal-selector' => 'application-delete-link',
+          'class' => [
+            'application-delete-link-' . $this->get('application_number')->value,
+          ],
+        ],
+      ]
+    );
+  }
+
+  /**
+   * Create markup for links.
+   *
+   * @param string $link_text
+   *   The visible text to the link.
+   * @param string $application_name
+   *   Application name for visually hidden.
+   *
+   * @return \Drupal\Component\Render\MarkupInterface|string
+   *   The markup.
+   */
+  private function createMarkup(string $link_text, string $application_name): MarkupInterface|string {
+    // phpcs:disable
+    return Markup::create(
+      sprintf('%s %s %s %s',
+        $this->t($link_text, [], ['context' => 'grants_handler']),
+        '<span class="visually-hidden">',
+        $application_name,
+        '<span>',
+      )
+    );
+    // phpcs:enable
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function toUrl($rel = NULL, array $options = []): Url {
+    $parameters = [
+      'id' => $this->get('application_type_id')->value,
+      'application_number' => $this->get('application_number')->value,
+    ];
+
+    return Url::fromRoute(
+      'helfi_grants.forms_app',
+      $parameters,
+    );
+  }
+
+  /**
+   * Get the print url.
+   *
+   * @return \Drupal\Core\Url
+   *   The url.
+   */
+  public function getPrintApplicationUrl(): Url {
+    $parameters = ['id' => $this->get('application_number')->value];
+    $attributes = [
+      'attributes' => [
+        'data-drupal-selector' => 'application-print-link',
+        'class' => ['hds-button', 'hds-button--supplementary'],
+      ],
+    ];
+
+    return Url::fromRoute(
+      'helfi_grants.print_view',
+      $parameters,
+      $attributes,
+    );
+  }
+
+  /**
+   * Get data used in list rendering.
+   *
+   * @return array
+   *   Data required by "oma-asiointi" -listing page.
+   */
+  public function getData(): array {
+    // Values are changed in ApplicationGetterService::getCompanyApplications.
+    return [
+      'application_type_id' => $this->get('application_type_id')->value,
+      'form_timestamp_created' => date('Y-m-d h:i:s', (int) $this->get('created')->value),
+      'form_timestamp' => $this->get('changed')->value,
+      'form_timestamp_submitted' => $this->get('created')->value,
+      'status' => $this->get('draft')->value ? 'DRAFT' : '',
+      'application_number' => $this->get('application_number')->value,
+      'language' => $this->get('langcode')->value,
+      'messages' => [],
+    ];
+  }
+
+  /**
+   * Backward compatibility for oma-asiointi list.
+   *
+   * @return null
+   *   Null value.
+   */
+  public function getWebform(): NULL {
+    return NULL;
   }
 
 }

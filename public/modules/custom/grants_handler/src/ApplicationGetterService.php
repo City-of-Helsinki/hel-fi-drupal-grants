@@ -7,8 +7,10 @@ namespace Drupal\grants_handler;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_mandate\CompanySelectException;
 use Drupal\grants_metadata\DocumentContentMapper;
 use Drupal\grants_profile\GrantsProfileService;
@@ -59,6 +61,7 @@ final class ApplicationGetterService {
     private readonly MessageService $grantsHandlerMessageService,
     private readonly LoggerChannelFactoryInterface $loggerChannelFactory,
     private readonly EntityTypeManagerInterface $entityTypeManager,
+    private readonly ModuleHandlerInterface $moduleHandler,
   ) {
     $this->logger = $loggerChannelFactory->get('application_getter_service');
   }
@@ -171,12 +174,23 @@ final class ApplicationGetterService {
      * Create rows for table.
      */
     foreach ($applicationDocuments as $document) {
-
+      $submission_entity = NULL;
       $applicationNumber = $document->getTransactionId();
 
       if (array_key_exists($document->getType(), Helpers::getApplicationTypes())) {
+
+        // Must check both react form and the webform submission.
         try {
-          $submission = $this->submissionObjectFromApplicationNumber($applicationNumber, $document, FALSE, TRUE);
+          $submission = NULL;
+          if ($this->moduleHandler->moduleExists('grants_application')) {
+            $submission = $this->getReactFormApplicationSubmission($applicationNumber);
+          }
+          if ($submission) {
+            $submission_entity = $submission;
+          }
+          else {
+            $submission = $this->submissionObjectFromApplicationNumber($applicationNumber, $document, FALSE, TRUE);
+          }
         }
         catch (\Throwable $e) {
           $this->logger->error(
@@ -190,24 +204,39 @@ final class ApplicationGetterService {
         }
 
         $submissionData = $submission->getData();
+
+        // Add value for oma-asiointi listing.
+        if ($submission_entity) {
+          $submissionData['status'] = $document->getStatus();
+          // $submissionData['messages'] = $document->getMessages();
+        }
+
         $webform = $submission->getWebform();
 
         // There's old applications w/o form_uuid, let's add it here
         // Since we've already loaded webform for submission object the old way,
         // we should have it here anyways. Just make sure it's in the metadata
         // as well.
-        if (!isset($submissionData["metadata"]["form_uuid"])) {
+        if ($webform && !isset($submissionData["metadata"]["form_uuid"])) {
           $submissionData["metadata"]["form_uuid"] = $webform->uuid();
         }
 
-        $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
+        if ($webform || $submission_entity) {
+          $submissionData['messages'] = $this->grantsHandlerMessageService->parseMessages($submissionData);
+        }
+
         $submission = [
           '#theme' => $themeHook,
           '#submission' => $submissionData,
           '#document' => $document,
           '#webform' => $webform,
           '#submission_id' => $submission->id(),
+          '#submission_entity' => $submission_entity,
         ];
+
+        if ($submission_entity) {
+          $submissionData['status'] = $document->getStatus();
+        }
 
         $ts = strtotime($submissionData['form_timestamp_created'] ?? '');
         if ($sortByFinished === TRUE) {
@@ -365,6 +394,29 @@ final class ApplicationGetterService {
     $this->submissions[$applicationNumber] = $submissionObject;
 
     return $submissionObject;
+  }
+
+  /**
+   * Get the React form submission object.
+   *
+   * @param string $applicationNumber
+   *   The application number.
+   *
+   * @return \Drupal\grants_application\Entity\ApplicationSubmission|null
+   *   The submission object.
+   */
+  private function getReactFormApplicationSubmission(
+    string $applicationNumber,
+  ):?ApplicationSubmission {
+    $submissions = $this->entityTypeManager->getStorage('application_submission')
+      ->loadByProperties(['application_number' => $applicationNumber]);
+
+    if (!$submissions) {
+      return NULL;
+    }
+    $submission = reset($submissions);
+    assert($submission instanceof ApplicationSubmission);
+    return $submission;
   }
 
   /**
