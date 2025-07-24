@@ -2,10 +2,8 @@ helfi_grants.forms_app:
   path: '/application/new/{id}/{application_number}'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
+    _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getFormTitle'
     application_number: NULL
-  options:
-    query:
-      application_number: ""
   requirements:
     _role: helsinkiprofiili
 

@@ -60,25 +60,3 @@ function grants_application_update_9000() {
   \Drupal::entityDefinitionUpdateManager()
     ->installEntityType($entity_type);
 }
-
-/**
- * Add path aliases for react form.
- */
-function grants_application_update_9001() {
-  $paths = [
-    [
-      'alias' => '/hakemus/uusi/{id}',
-      'langcode' => 'fi',
-      'path' => '/application/new/{id}',
-    ],
-    [
-      'alias' => '/bilagor/ny/{id}',
-      'langcode' => 'sv',
-      'path' => '/application/new/{id}',
-    ],
-  ];
-
-  foreach ($paths as $path) {
-    PathAlias::create($path)->save();
-  }
-}

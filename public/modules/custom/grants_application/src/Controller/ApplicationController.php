@@ -7,10 +7,12 @@ namespace Drupal\grants_application\Controller;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusException;
@@ -38,7 +40,29 @@ final class ApplicationController extends ControllerBase {
     private readonly ApplicationGetterService $applicationGetterService,
     #[Autowire(service: 'helfi_atv.atv_service')]
     private readonly AtvService $atvService,
+    private readonly FormSettingsService $formSettingsService,
   ) {
+  }
+
+  /**
+   * Return appropriate translation for form title.
+   * 
+   * @param string $id
+   *   The application number.
+   * 
+   * @return string
+   *   The form title
+   */
+  public function getFormTitle(string $id): string {
+    try {
+      $formSettings = $this->formSettingsService->getFormSettings($id);
+    }
+    catch (\Exception $e) {
+      return '';
+    }
+
+    $langcode = $this->languageManager()->getCurrentLanguage()->getId();
+    return $formSettings->toArray()['translations'][$langcode]['translation']['form_title'];
   }
 
   /**

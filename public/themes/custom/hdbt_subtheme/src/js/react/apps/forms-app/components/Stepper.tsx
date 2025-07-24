@@ -63,6 +63,9 @@ export const Stepper = ({
         onStepClick={onStepClick}
         selectedStep={currentIndex}
         steps={transformedSteps}
+        style={{
+          marginTop: 'var(--spacing-m)',
+        }}
         theme={{
           '--hds-step-content-color': 'var(--color-black)',
           '--hds-stepper-color': 'var(--color-black)',

@@ -374,6 +374,7 @@ class AtvSchema {
       }
       if (
         is_numeric($key) &&
+        $item !== NULL &&
         !AtvSchema::numericKeys($item) &&
         isset($item['ID']) &&
         in_array($item['ID'], $keys) &&
