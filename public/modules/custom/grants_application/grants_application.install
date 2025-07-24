@@ -7,8 +7,6 @@
 
 declare(strict_types=1);
 
-use Drupal\path_alias\Entity\PathAlias;
-
 /**
  * Implements hook_install().
  */

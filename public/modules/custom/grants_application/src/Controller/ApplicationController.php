@@ -7,7 +7,6 @@ namespace Drupal\grants_application\Controller;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
-use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 use Drupal\grants_application\Atv\HelfiAtvService;
@@ -46,10 +45,10 @@ final class ApplicationController extends ControllerBase {
 
   /**
    * Return appropriate translation for form title.
-   * 
+   *
    * @param string $id
    *   The application number.
-   * 
+   *
    * @return string
    *   The form title
    */
