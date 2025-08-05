@@ -18,6 +18,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\Entity\Node\ServicePage;
@@ -151,6 +152,7 @@ function grants_handler_theme(): array {
         'document' => NULL,
         'webform' => NULL,
         'submission_id' => NULL,
+        'submission_entity' => NULL,
       ],
     ],
 
@@ -231,11 +233,12 @@ function grants_handler_theme(): array {
     'grants_service_page_block' => [
       'render element' => 'build',
       'variables' => [
-        'webformLink' => NULL,
+        'auth' => NULL,
         'link' => NULL,
         'text' => NULL,
-        'auth' => NULL,
+        'reactFormLink' => NULL,
         'title' => NULL,
+        'webformLink' => NULL,
       ],
     ],
     'application_timeout_message' => [
@@ -1390,178 +1393,19 @@ function grants_handler_preprocess_application_list(&$variables) {
 function grants_handler_preprocess_application_list_item(&$variables): void {
   $tOpts = ['context' => 'grants_handler'];
 
-  // Get status service and get listed statuses.
-  /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
-  $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
-  $applicationStatuses = $applicationStatusService->getApplicationStatuses();
-
   $submissionData = $variables['submission'];
   $submissionId = $variables['submission_id'];
   $webform = $variables['webform'];
 
-  if (!$webform || !$submissionData || !$submissionId) {
+  if (!$submissionData || !$submissionId) {
     return;
   }
 
-  if (!isset($submissionData["metadata"]["form_uuid"])) {
-    \Drupal::logger('grants_handler')
-      ->error('No form uuid found for submission @submissionId',
-        ['@submissionId' => $submissionData["application_number"]]);
-    return;
+  if ($webform) {
+    _grants_handler_handle_webform_application($variables, $tOpts);
   }
-
-  /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
-  $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
-
-  // Get webform.
-  $webform = $applicationGetterService->getWebformFromApplicationNumber($submissionData["application_number"]);
-  // Set webform title.
-  $variables['applicationFormName'] = $webform->label();
-
-  $variables['applicationNumber'] = $submissionData["application_number"];
-
-  try {
-    if ($submissionData['status'] == 'DRAFT') {
-      if (isset($submissionData["form_timestamp"]) && !empty($submissionData["form_timestamp"])) {
-        $dt = new DateTime($submissionData["form_timestamp"], new DateTimeZone('Europe/Helsinki'));
-        $variables['applicationSubmitted'] = $dt->format('d.m.Y H:i');
-        $variables['applicationSubmittedSortable'] = $dt->format('Y-m-d\TH:i:s');
-      }
-    }
-    else {
-      if (isset($submissionData["form_timestamp_submitted"]) && !empty($submissionData["form_timestamp_submitted"])) {
-        $dt = new DateTime($submissionData["form_timestamp_submitted"], new DateTimeZone('Europe/Helsinki'));
-        $variables['applicationSubmitted'] = $dt->format('d.m.Y H:i');
-        $variables['applicationSubmittedSortable'] = $dt->format('Y-m-d\TH:i:s');
-      }
-    }
-  }
-  catch (\Exception $e) {
-  }
-
-  $deleteAppUrl = Url::fromRoute(
-    'grants_handler.clear-navigations',
-    [
-      'submission_id' => $submissionData["application_number"],
-    ],
-    [
-      'attributes' => [
-        'data-drupal-selector' => 'application-delete-link',
-        'class' => [
-          'application-delete-link-' . $variables['applicationNumber'],
-        ],
-      ],
-    ]
-  );
-
-  $printAppUrl = Url::fromRoute(
-    'grants_webform_print.submission_print',
-    [
-      'submission_id' => $submissionData['application_number'],
-    ],
-    [
-      'attributes' => [
-        'data-drupal-selector' => 'application-print-link',
-        'class' => ['hds-button', 'hds-button--supplementary'],
-      ],
-    ]
-  );
-
-  $viewApplicationUrl = Url::fromRoute(
-    'grants_handler.view_application',
-    [
-      'submission_id' => $variables['applicationNumber'],
-    ],
-  );
-
-  $editApplicationUrl = Url::fromRoute(
-    'grants_handler.edit_application',
-    [
-      'webform' => $webform->id(),
-      'webform_submission' => $submissionId,
-    ],
-    [
-      'attributes' => [
-        'data-drupal-selector' => 'application-edit-link',
-        'class' => [
-          'application-edit-link-' . $variables['applicationNumber'],
-        ],
-      ],
-    ]
-  );
-
-  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
-
-  $variables['statusTag'] = [
-    '#theme' => 'application_status_tag',
-    '#langcode' => $language,
-    '#applicationID' => $submissionData["application_number"],
-    '#submission_data' => $submissionData,
-  ];
-
-  $variables['classes'] = [
-    strtolower($applicationStatuses[$submissionData["status"]]),
-    strtolower($submissionData["application_number"]),
-  ];
-
-  $editApplicationLinkText = Markup::create(
-    t('Edit application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
-  );
-  $viewApplicationLinkText = Markup::create(
-    t('View application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
-  );
-
-  $variables['viewApplicationLink'] = Link::fromTextAndUrl($viewApplicationLinkText, $viewApplicationUrl);
-  $variables['editApplicationLink'] = Link::fromTextAndUrl($editApplicationLinkText, $editApplicationUrl);
-
-  $variables['deleteApplicationUrl'] = $deleteAppUrl->toString();
-  $variables['printApplicationUrl'] = $printAppUrl->toString();
-
-  $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
-
-  $variables['errorType'] = NULL;
-
-  $variables['hasUnread'] = FALSE;
-  $variables['hasUnreadText'] = NULL;
-  $unreadMsgs = [];
-  if (!empty($submissionData['messages'])) {
-    foreach ($submissionData['messages'] as $msg) {
-      if ($msg['sentBy'] == 'Avustusten kasittelyjarjestelma' && $msg['messageStatus'] == 'UNREAD') {
-        array_push($unreadMsgs, $msg);
-        if ($variables['hasUnread'] == FALSE) {
-          $variables['hasUnread'] = TRUE;
-        }
-      }
-    }
-
-    $variables['hasUnreadText'] = \Drupal::translation()
-      ->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
-  }
-
-  $status = $applicationStatusService->getWebformStatus($webform);
-
-  $variables['openStartDate'] = $thirdPartySettings['applicationOpen'] ? strtotime($thirdPartySettings['applicationOpen']) : '';
-  $variables['openEndDate'] = $thirdPartySettings['applicationClose'] ? strtotime($thirdPartySettings['applicationClose']) : '';
-  $variables['isContinuous'] = $thirdPartySettings['applicationContinuous'] != 0;
-  if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
-    $variables['errorType'] = 'NOT_OPEN';
-  }
-  elseif ($status === 'archived') {
-    $variables['errorType'] = 'ARCHIVED';
-  }
-  try {
-    if (array_key_exists($submissionData["status"], $applicationStatuses)) {
-      $variables['statusString'] = $submissionData['status'];
-    }
-    else {
-      \Drupal::logger('grants_handler')
-        ->info('Application status not in valid statuses: %number', [
-          '%number' => $submissionData["application_number"],
-        ]);
-    }
-  }
-  catch (\Exception $e) {
-    $variables['statusString'] = '';
+  else {
+    _grants_handler_handle_react_application($variables);
   }
 }
 
@@ -2120,4 +1964,263 @@ function grants_handler_js_settings_build(&$settings, AttachedAssetsInterface $a
 function grants_handler_preprocess_webform(array &$variables) {
   $variables['#attached']['library'][] = 'grants_handler/grants-dialog';
   $variables['#attached']['library'][] = 'hdbt/focus-trap';
+}
+
+/**
+ * Handle webform submissions in oma-asiointi list.
+ *
+ * @param array $variables
+ *   The variables.
+ * @param array $tOpts
+ *   The tOpts.
+ */
+function _grants_handler_handle_webform_application(array &$variables, array $tOpts) {
+  /** @var \Drupal\grants_handler\ApplicationStatusService $applicationStatusService */
+  $applicationStatusService = \Drupal::service('grants_handler.application_status_service');
+  $applicationStatuses = $applicationStatusService->getApplicationStatuses();
+
+  $submissionData = $variables['submission'];
+  $submissionId = $variables['submission_id'];
+
+  if (!isset($submissionData["metadata"]["form_uuid"])) {
+    \Drupal::logger('grants_handler')
+      ->error('No form uuid found for submission @submissionId',
+        ['@submissionId' => $submissionData["application_number"]]);
+    return;
+  }
+
+  /** @var \Drupal\grants_handler\ApplicationGetterService $applicationGetterService */
+  $applicationGetterService = \Drupal::service('grants_handler.application_getter_service');
+
+  // Get webform.
+  $webform = $applicationGetterService->getWebformFromApplicationNumber($submissionData["application_number"]);
+  // Set webform title.
+  $variables['applicationFormName'] = $webform->label();
+
+  $variables['applicationNumber'] = $submissionData["application_number"];
+
+  try {
+    if ($submissionData['status'] == 'DRAFT') {
+      if (!empty($submissionData["form_timestamp"])) {
+        $dt = new DateTime($submissionData["form_timestamp"], new DateTimeZone('Europe/Helsinki'));
+        $variables['applicationSubmitted'] = $dt->format('d.m.Y H:i');
+        $variables['applicationSubmittedSortable'] = $dt->format('Y-m-d\TH:i:s');
+      }
+    }
+    else {
+      if (!empty($submissionData["form_timestamp_submitted"])) {
+        $dt = new DateTime($submissionData["form_timestamp_submitted"], new DateTimeZone('Europe/Helsinki'));
+        $variables['applicationSubmitted'] = $dt->format('d.m.Y H:i');
+        $variables['applicationSubmittedSortable'] = $dt->format('Y-m-d\TH:i:s');
+      }
+    }
+  }
+  catch (\Exception $e) {
+  }
+
+  $deleteAppUrl = Url::fromRoute(
+    'grants_handler.clear-navigations',
+    [
+      'submission_id' => $submissionData["application_number"],
+    ],
+    [
+      'attributes' => [
+        'data-drupal-selector' => 'application-delete-link',
+        'class' => [
+          'application-delete-link-' . $variables['applicationNumber'],
+        ],
+      ],
+    ]
+  );
+
+  $printAppUrl = Url::fromRoute(
+    'grants_webform_print.submission_print',
+    [
+      'submission_id' => $submissionData['application_number'],
+    ],
+    [
+      'attributes' => [
+        'data-drupal-selector' => 'application-print-link',
+        'class' => ['hds-button', 'hds-button--supplementary'],
+      ],
+    ]
+  );
+
+  $viewApplicationUrl = Url::fromRoute(
+    'grants_handler.view_application',
+    [
+      'submission_id' => $variables['applicationNumber'],
+    ],
+  );
+
+  $editApplicationUrl = Url::fromRoute(
+    'grants_handler.edit_application',
+    [
+      'webform' => $webform->id(),
+      'webform_submission' => $submissionId,
+    ],
+    [
+      'attributes' => [
+        'data-drupal-selector' => 'application-edit-link',
+        'class' => [
+          'application-edit-link-' . $variables['applicationNumber'],
+        ],
+      ],
+    ]
+  );
+
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+  $variables['statusTag'] = [
+    '#theme' => 'application_status_tag',
+    '#langcode' => $language,
+    '#applicationID' => $submissionData["application_number"],
+    '#submission_data' => $submissionData,
+  ];
+
+  $variables['classes'] = [
+    strtolower($applicationStatuses[$submissionData["status"]]),
+    strtolower($submissionData["application_number"]),
+  ];
+
+  $editApplicationLinkText = Markup::create(
+    t('Edit application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
+  );
+  $viewApplicationLinkText = Markup::create(
+    t('View application', [], $tOpts) . ' <span class="visually-hidden">' . $variables['applicationFormName'] . '</span>'
+  );
+
+  $variables['viewApplicationLink'] = Link::fromTextAndUrl($viewApplicationLinkText, $viewApplicationUrl);
+  $variables['editApplicationLink'] = Link::fromTextAndUrl($editApplicationLinkText, $editApplicationUrl);
+
+  $variables['deleteApplicationUrl'] = $deleteAppUrl->toString();
+  $variables['printApplicationUrl'] = $printAppUrl->toString();
+
+  $thirdPartySettings = $webform->getThirdPartySettings('grants_metadata');
+
+  $variables['errorType'] = NULL;
+
+  $variables['hasUnread'] = FALSE;
+  $variables['hasUnreadText'] = NULL;
+  $unreadMsgs = [];
+  if (!empty($submissionData['messages'])) {
+    foreach ($submissionData['messages'] as $msg) {
+      if ($msg['sentBy'] == 'Avustusten kasittelyjarjestelma' && $msg['messageStatus'] == 'UNREAD') {
+        array_push($unreadMsgs, $msg);
+        if ($variables['hasUnread'] == FALSE) {
+          $variables['hasUnread'] = TRUE;
+        }
+      }
+    }
+
+    $variables['hasUnreadText'] = \Drupal::translation()
+      ->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
+  }
+
+  $status = $applicationStatusService->getWebformStatus($webform);
+
+  $variables['openStartDate'] = $thirdPartySettings['applicationOpen'] ? strtotime($thirdPartySettings['applicationOpen']) : '';
+  $variables['openEndDate'] = $thirdPartySettings['applicationClose'] ? strtotime($thirdPartySettings['applicationClose']) : '';
+  $variables['isContinuous'] = $thirdPartySettings['applicationContinuous'] != 0;
+  if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
+    $variables['errorType'] = 'NOT_OPEN';
+  }
+  elseif ($status === 'archived') {
+    $variables['errorType'] = 'ARCHIVED';
+  }
+  try {
+    if (array_key_exists($submissionData["status"], $applicationStatuses)) {
+      $variables['statusString'] = $submissionData['status'];
+    }
+    else {
+      \Drupal::logger('grants_handler')
+        ->info('Application status not in valid statuses: %number', [
+          '%number' => $submissionData["application_number"],
+        ]);
+    }
+  }
+  catch (\Exception $e) {
+    $variables['statusString'] = '';
+  }
+}
+
+/**
+ * Handle react submissions in oma-asiointi list.
+ *
+ * @param array $variables
+ *   The variables.
+ */
+function _grants_handler_handle_react_application(array &$variables) {
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  $formSettingsService = \Drupal::service(FormSettingsService::class);
+
+  // @todo add Archived to the settings ?
+  $settings = $formSettingsService
+    ->getFormSettings($variables['submission']['application_type_id'])
+    ->toArray();
+
+  $submission = $variables['submission'];
+
+  /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission_entity */
+  $submission_entity = $variables['submission_entity'];
+  $status = TRUE;
+
+  $variables['statusTag'] = [
+    '#theme' => 'application_status_tag',
+    '#langcode' => $submission_entity->get('langcode')->value,
+    '#applicationID' => $submission_entity->get('application_number')->value,
+    '#submission_data' => $submission,
+  ];
+
+  $variables['classes'] = [
+    strtolower($submission['status']),
+    strtolower($submission['application_number']),
+  ];
+
+  $time = $submission_entity->getSubmittedDateTime('d.m.Y H:i');
+  $sortableTime = $submission_entity->getSubmittedDateTime('Y-m-d\TH:i:s');
+  $variables['applicationSubmitted'] = $time;
+  $variables['applicationSubmittedSortable'] = $sortableTime;
+
+  $variables['viewApplicationLink'] = $submission_entity->getViewApplicationLink($settings['settings']['title']);
+  $variables['editApplicationLink'] = $submission_entity->getEditApplicationLink($settings['settings']['title']);
+
+  $variables['deleteApplicationUrl'] = $submission_entity->getDeleteApplicationUrl()->toString();
+  $variables['printApplicationUrl'] = $submission_entity->getPrintApplicationUrl()->toString();
+
+  $variables['errorType'] = NULL;
+
+  $variables['hasUnread'] = FALSE;
+  $variables['hasUnreadText'] = NULL;
+  $unreadMsgs = [];
+
+  if (!empty($submission['messages'])) {
+    foreach ($submission['messages'] as $msg) {
+      if ($msg['sentBy'] == 'Avustusten kasittelyjarjestelma' && $msg['messageStatus'] == 'UNREAD') {
+        array_push($unreadMsgs, $msg);
+        if (!$variables['hasUnread']) {
+          $variables['hasUnread'] = TRUE;
+        }
+      }
+    }
+
+    $variables['hasUnreadText'] = \Drupal::translation()
+      ->formatPlural(count($unreadMsgs), '1 new message', '@count new messages');
+  }
+
+  $variables['statusString'] = $submission['status'];
+  $variables['applicationNumber'] = $submission['application_number'];
+
+  $variables['applicationFormName'] = $settings['translations'][$language]['translation']['form_title'];
+  $variables['openStartDate'] = strtotime($settings['settings']['application_open']);
+  $variables['openEndDate'] = strtotime($settings['settings']['application_close']);
+  $variables['isContinuous'] = $settings['settings']['continuous'];
+
+  if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
+    $variables['errorType'] = 'NOT_OPEN';
+  }
+  elseif ($status === 'archived') {
+    $variables['errorType'] = 'ARCHIVED';
+  }
+
 }

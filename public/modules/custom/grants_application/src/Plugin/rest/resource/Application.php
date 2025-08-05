@@ -182,7 +182,7 @@ final class Application extends ResourceBase {
 
     try {
       // Make sure it exists in database.
-      $this->getSubmissionEntity($user_information['sub'], $application_number);
+      $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception $e) {
       // Cannot get the submission.
@@ -224,12 +224,16 @@ final class Application extends ResourceBase {
     ?string $application_number = NULL,
   ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
+    /// phpcs:disable
+    // NOSONAR
     $content = json_decode($request->getContent(), TRUE);
+    // NOSONAR
     [
       'form_data' => $form_data,
       'attachments' => $attachments,
     ] = $content;
 
+    // phpcs:enable
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
@@ -254,7 +258,8 @@ final class Application extends ResourceBase {
     try {
       $submission = $this->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
-        $application_number
+        $application_number,
+        $grants_profile_data->getBusinessId(),
       );
     }
     catch (\Exception $e) {
@@ -344,31 +349,19 @@ final class Application extends ResourceBase {
     $mapped_bank_confirmation_file = $this->avus2Mapper->createBankFileData($selected_bank_account_number, $bank_confirmation_file_array);
     $document_data['attachmentsInfo']['attachmentsArray'][] = $mapped_bank_confirmation_file;
 
-    $document_data["formUpdate"] = FALSE;
+    $document_data['formUpdate'] = !$submission->get('draft')->value;
 
-    if (!isset($document_data["statusUpdates"])) {
-      $document_data["statusUpdates"] = [];
+    if (!isset($document_data['statusUpdates'])) {
+      $document_data['statusUpdates'] = [];
     }
 
-    if (!isset($document_data["events"])) {
-      $document_data["events"] = [];
+    if (!isset($document_data['events'])) {
+      $document_data['events'] = [];
     }
 
     if (!isset($document_data['messages'])) {
       $document_data['messages'] = [];
     }
-
-    // @codingStandardsIgnoreStart
-    // Update the atv document before sending to integration.
-    // Lets try a way to hold on to the document data.
-    // @todo Sanitize the input.
-    // NOSONAR
-    $document_data['compensation']['form_data'] = $form_data;
-    // NOSONAR
-    $document->setContent($document_data);
-    // @codingStandardsIgnoreEnd
-
-    $this->atvService->updateExistingDocument($document);
 
     // Save id has previously been saved to database to track
     // unsuccessful submissions due to integration failures.
@@ -384,6 +377,22 @@ final class Application extends ResourceBase {
       $save_id
     );
     $this->eventsService->addNewEventForApplication($document, $event);
+
+    if ($document->getContent()['events']) {
+      $document_data['events'] = $document->getContent()['events'];
+    }
+
+    // @codingStandardsIgnoreStart
+    // Update the atv document before sending to integration.
+    // Lets try a way to hold on to the document data.
+    // @todo Sanitize the input.
+    // NOSONAR
+    $document_data['compensation']['form_data'] = $form_data;
+    // NOSONAR
+    $document->setContent($document_data);
+    // @codingStandardsIgnoreEnd
+
+    $this->atvService->updateExistingDocument($document);
 
     // @todo Make sure the formUpdate is set properly.
     // Initial import from ATV MUST have formUpdate FALSE, and
@@ -426,6 +435,7 @@ final class Application extends ResourceBase {
     return new JsonResponse([], 200);
   }
 
+  // phpcs:disable
   /**
    * Responds to entity PATCH requests.
    *
@@ -436,30 +446,55 @@ final class Application extends ResourceBase {
    *
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
-  public function patch(Request $request): JsonResponse {
+  public function patch(
+    Request $request,
+    int $application_type_id,
+    ?string $application_number = NULL,
+  ): JsonResponse {
     // @todo This function is not yet called.
     // This needs to be refactored to handle patch request.
     // @todo Sanitize & validate & authorize properly.
+
+    $prevent_duplicate_code_error = $application_number ?: FALSE;
+    return new JsonResponse([$prevent_duplicate_code_error], 200);
+
+    /*
     $content = json_decode($request->getContent(), TRUE);
     [
-      'application_number' => $application_number,
       'form_data' => $form_data,
+      'attachments' => $attachments,
     ] = $content;
 
-    // @todo Check if we are allowed to send this any more.
+    try {
+      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+    }
+    catch (\Exception $e) {
+      // Cannot find form by application type id.
+      return new JsonResponse([], 404);
+    }
+
     if (!$application_number) {
-      // Missing application number.
+      return new JsonResponse(['missing application number'], 500);
+    }
+
+    try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $selected_company = $this->userInformationService->getSelectedCompany();
+      $user_data = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
       return new JsonResponse([], 500);
     }
 
     try {
       $submission = $this->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
-        $application_number
+        $application_number,
+        $grants_profile_data->getBusinessId(),
       );
     }
     catch (\Exception $e) {
-      // Something wrong.
+      // Cannot find correct draft submission.
       return new JsonResponse([], 500);
     }
 
@@ -467,12 +502,7 @@ final class Application extends ResourceBase {
       $document = $this->atvService->getDocument($application_number);
     }
     catch (\Throwable $e) {
-      // Error while fetching the document.
-      return new JsonResponse([], 500);
-    }
-
-    if (!$document) {
-      // Unable to find the document.
+      // Cannot fetch the corresponding ATV document.
       return new JsonResponse([], 500);
     }
 
@@ -493,16 +523,19 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    */
+
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
     // grants_application module when this module is enabled in
     // production.
     //
     // This event lets other parts of the system to react
     // to user submitting grants forms.
-    $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
+    // $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
-    return new JsonResponse($document->toArray(), 200);
+    // return new JsonResponse($document->toArray(), 200);
   }
+  // phpcs:enabled
 
   /**
    * {@inheritDoc}
@@ -523,11 +556,14 @@ final class Application extends ResourceBase {
    *   User uuid.
    * @param string $application_number
    *   The application number.
+   * @param string $business_id
+   *   The business id.
    *
    * @return \Drupal\grants_application\Entity\ApplicationSubmission
    *   The application submission entity.
    */
-  private function getSubmissionEntity(string $sub, string $application_number): ApplicationSubmission {
+  private function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
+    // @todo Duplicated, put this in better place.
     $ids = $this->entityTypeManager
       ->getStorage('application_submission')
       ->getQuery()
@@ -536,11 +572,23 @@ final class Application extends ResourceBase {
       ->condition('application_number', $application_number)
       ->execute();
 
-    if (!$ids) {
-      throw new \Exception('Application not found');
+    if ($ids) {
+      return ApplicationSubmission::load(reset($ids));
     }
 
-    return ApplicationSubmission::load(reset($ids));
+    $ids = $this->entityTypeManager
+      ->getStorage('application_submission')
+      ->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('business_id', $business_id)
+      ->condition('application_number', $application_number)
+      ->execute();
+
+    if ($ids) {
+      return ApplicationSubmission::load(reset($ids));
+    }
+
+    throw new \Exception('Application not found');
   }
 
 }

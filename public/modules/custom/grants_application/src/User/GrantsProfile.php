@@ -238,4 +238,14 @@ class GrantsProfile {
     return $this->grantsProfileData['businessPurpose'];
   }
 
+  /**
+   * Get the business id.
+   *
+   * @return string
+   *   Business id.
+   */
+  public function getBusinessId(): string {
+    return $this->grantsProfileData['businessId'];
+  }
+
 }

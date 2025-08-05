@@ -679,3 +679,7 @@ msgstr "Kopioitava hakemus"
 msgctxt "grants_handler"
 msgid "Application to copy"
 msgstr "Kopioitava hakemus"
+
+msgctxt "grants_handler"
+msgid "New form using renewed form application"
+msgstr "Uusi lomake käyttäen uudistettua lomakesovellusta"
