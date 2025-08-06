@@ -12,6 +12,7 @@ use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
@@ -58,6 +59,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     protected MessageService $messageService,
     #[Autowire(service: 'grants_handler.application_getter_service')]
     protected ApplicationGetterService $applicationGetterService,
+    protected AtvService $atvService,
   ) {
     $this->logger = $this->getLogger('grants_oma_asiointi');
   }
@@ -89,7 +91,6 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function build(): array {
-
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
 
     if ($selectedCompany == NULL) {
@@ -136,6 +137,10 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
         TRUE,
         'application_list_item'
       );
+
+      $missing_delete_after = $applications['missing_delete_after'];
+      unset($applications['missing_delete_after']);
+
     }
     catch (\Throwable $e) {
       // If errors, just don't do anything.
@@ -145,6 +150,29 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     unset($applications['DRAFT']);
     // Parse messages.
     [$other, $unreadMsg] = $this->parseMessages($applications);
+
+    // If any of the drafts are missing deleteAfter value,
+    // update the missing values.
+    if ($missing_delete_after) {
+      foreach ($drafts as $draft) {
+        $atvDocument = $draft['#document'];
+        if (!$atvDocument || $atvDocument->getDeleteAfter()) {
+          continue;
+        }
+
+        $atvDocument->setDeleteAfter((new \DateTimeImmutable('+1 years'))->format('Y-m-d'));
+        try {
+          $this->atvService->patchDocument($atvDocument->getId(), $atvDocument->toArray());
+        }
+        catch(\Exception $e) {
+          $this->logger
+            ->error(
+              'Unable to update deleteAfter value: @error',
+              ['@error' => $e->getMessage()]
+            );
+        }
+      }
+    }
 
     return [
       '#theme' => 'grants_oma_asiointi_front',

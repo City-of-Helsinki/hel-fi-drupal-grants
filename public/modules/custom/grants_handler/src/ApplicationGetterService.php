@@ -169,6 +169,7 @@ final class ApplicationGetterService {
     }
 
     $applicationDocuments = $this->helfiAtvAtvService->searchDocuments($searchParams);
+    $missing_delete_after = FALSE;
 
     /*
      * Create rows for table.
@@ -177,8 +178,11 @@ final class ApplicationGetterService {
       $submission_entity = NULL;
       $applicationNumber = $document->getTransactionId();
 
-      if (array_key_exists($document->getType(), Helpers::getApplicationTypes())) {
+      if (!$missing_delete_after && $document->getDeleteAfter() === NULL) {
+        $missing_delete_after = TRUE;
+      }
 
+      if (array_key_exists($document->getType(), Helpers::getApplicationTypes())) {
         // Must check both react form and the webform submission.
         try {
           $submission = NULL;
@@ -271,6 +275,7 @@ final class ApplicationGetterService {
         $applicationsSorted[$key] = $value;
       }
       ksort($applicationsSorted);
+      $applicationsSorted['missing_delete_after'] = $missing_delete_after;
       return $applicationsSorted;
     }
     else {
