@@ -59,9 +59,9 @@ class DeleteAfterWorker extends QueueWorkerBase implements ContainerFactoryPlugi
       $document = $this->atvService->getDocument($document_id, TRUE);
     }
     catch (AtvDocumentNotFoundException $e) {
-      $this->logger->warning(
-        'Tried to update document, not found and skipping.',
-        ['%document_id' => $document_id]);
+      $this->logger->info(
+        'Tried to update document, not found and skipping: @document_id',
+        ['@document_id' => $document_id]);
       return;
     }
     catch (\Exception $e) {
@@ -81,9 +81,9 @@ class DeleteAfterWorker extends QueueWorkerBase implements ContainerFactoryPlugi
       $this->atvService->patchDocument($document_id, $document->toArray());
     }
     catch (AtvDocumentNotFoundException $e) {
-      $this->logger->warning(
-        'Tried to update document, not found and skipping.',
-        ['%document_id' => $document_id]);
+      $this->logger->info(
+        'Tried to update document, not found and skipping: @document_id',
+        ['@document_id' => $document_id]);
       return;
     }
     catch (\Exception $e) {
