@@ -178,7 +178,12 @@ final class ApplicationGetterService {
       $submission_entity = NULL;
       $applicationNumber = $document->getTransactionId();
 
-      if (!$missing_delete_after && $document->getDeleteAfter() === NULL) {
+      // Check if any of the drafts are missing delete after.
+      if (
+        !$missing_delete_after &&
+        $document->getStatus() === 'DRAFT' &&
+        $document->getDeleteAfter() === NULL
+      ) {
         $missing_delete_after = TRUE;
       }
 

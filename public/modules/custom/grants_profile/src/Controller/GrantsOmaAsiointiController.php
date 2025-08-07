@@ -7,6 +7,7 @@ namespace Drupal\grants_profile\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Queue\QueueFactory;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
@@ -50,6 +51,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    *   The message service.
    * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
    *   The application getter service.
+   * @param \Drupal\helfi_atv\AtvService $atvService
+   *   The atv-service.
    */
   public function __construct(
     protected RequestStack $requestStack,
@@ -155,22 +158,21 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     // update the missing values.
     if ($missing_delete_after) {
       foreach ($drafts as $draft) {
-        $atvDocument = $draft['#document'];
+        $atvDocument = isset($draft['#document']) ? $draft['#document'] : NULL;
         if (!$atvDocument || $atvDocument->getDeleteAfter()) {
           continue;
         }
 
-        $atvDocument->setDeleteAfter((new \DateTimeImmutable('+1 years'))->format('Y-m-d'));
-        try {
-          $this->atvService->patchDocument($atvDocument->getId(), $atvDocument->toArray());
-        }
-        catch(\Exception $e) {
-          $this->logger
-            ->error(
-              'Unable to update deleteAfter value: @error',
-              ['@error' => $e->getMessage()]
-            );
-        }
+        /** @var QueueFactory $qf */
+        $qf = \Drupal::service('queue');
+        $qf->get('delete_after_queue')
+          ->createItem(
+          [
+            'document_id' => $atvDocument->getId(),
+            'delete_after' => (new \DateTimeImmutable('+1 years'))->format('Y-m-d'),
+          ]
+        );
+
       }
     }
 
