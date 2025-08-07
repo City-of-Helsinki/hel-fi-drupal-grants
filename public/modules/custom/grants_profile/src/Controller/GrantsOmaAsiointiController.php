@@ -7,13 +7,12 @@ namespace Drupal\grants_profile\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\Core\Queue\QueueFactory;
+use Drupal\Core\Queue\QueueFactoryInterface;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
-use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
@@ -53,6 +52,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    *   The application getter service.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   The atv-service.
+   * @param \Drupal\Core\Queue\QueueFactoryInterface $queueFactory
+   *   The queue factory.
    */
   public function __construct(
     protected RequestStack $requestStack,
@@ -63,6 +64,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     #[Autowire(service: 'grants_handler.application_getter_service')]
     protected ApplicationGetterService $applicationGetterService,
     protected AtvService $atvService,
+    protected QueueFactoryInterface $queueFactory,
   ) {
     $this->logger = $this->getLogger('grants_oma_asiointi');
   }
@@ -158,14 +160,13 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     // update the missing values.
     if ($missing_delete_after) {
       foreach ($drafts as $draft) {
-        $atvDocument = isset($draft['#document']) ? $draft['#document'] : NULL;
+        $atvDocument = $draft['#document'] ?? NULL;
         if (!$atvDocument || $atvDocument->getDeleteAfter()) {
           continue;
         }
 
-        /** @var QueueFactory $qf */
-        $qf = \Drupal::service('queue');
-        $qf->get('delete_after_queue')
+        $this->queueFactory
+          ->get('delete_after_queue')
           ->createItem(
           [
             'document_id' => $atvDocument->getId(),
