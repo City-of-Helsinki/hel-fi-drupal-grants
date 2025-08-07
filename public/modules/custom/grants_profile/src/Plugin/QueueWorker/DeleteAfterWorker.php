@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\grants_profile\Plugin\QueueWorker;
 
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
-use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 
@@ -30,7 +29,7 @@ class DeleteAfterWorker extends QueueWorkerBase implements ContainerFactoryPlugi
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private readonly LoggerChannelInterface $logger,
+    private readonly LoggerInterface $logger,
     private readonly AtvService $atvService,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -44,7 +43,7 @@ class DeleteAfterWorker extends QueueWorkerBase implements ContainerFactoryPlugi
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('logger.channel.grants_application'),
+      $container->get('logger.channel.grants_profile'),
       $container->get(AtvService::class),
     );
   }
