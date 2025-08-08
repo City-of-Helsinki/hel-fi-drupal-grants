@@ -7,7 +7,7 @@ namespace Drupal\grants_profile\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\Core\Queue\QueueFactoryInterface;
+use Drupal\Core\Queue\QueueFactory;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
@@ -52,7 +52,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    *   The application getter service.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   The atv-service.
-   * @param \Drupal\Core\Queue\QueueFactoryInterface $queueFactory
+   * @param \Drupal\Core\Queue\QueueFactory $queueFactory
    *   The queue factory.
    */
   public function __construct(
@@ -64,7 +64,7 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     #[Autowire(service: 'grants_handler.application_getter_service')]
     protected ApplicationGetterService $applicationGetterService,
     protected AtvService $atvService,
-    protected QueueFactoryInterface $queueFactory,
+    protected QueueFactory $queueFactory,
   ) {
     $this->logger = $this->getLogger('grants_oma_asiointi');
   }
