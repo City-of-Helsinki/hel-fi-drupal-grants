@@ -142,15 +142,15 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
         TRUE,
         'application_list_item'
       );
-
-      $missing_delete_after = $applications['missing_delete_after'];
-      unset($applications['missing_delete_after']);
-
     }
     catch (\Throwable $e) {
       // If errors, just don't do anything.
       $applications = [];
     }
+
+    $missing_delete_after = $applications['missing_delete_after'] ?? FALSE;
+    unset($applications['missing_delete_after']);
+
     $drafts = $applications['DRAFT'] ?? [];
     unset($applications['DRAFT']);
     // Parse messages.
