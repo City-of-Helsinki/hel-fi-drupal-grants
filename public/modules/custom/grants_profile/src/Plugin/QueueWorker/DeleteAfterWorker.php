@@ -20,7 +20,7 @@ use Drupal\helfi_atv\AtvDocumentNotFoundException;
  *   cron = {"time" = 60}
  * )
  */
-class DeleteAfterWorker extends QueueWorkerBase implements ContainerFactoryPluginInterface {
+final class DeleteAfterWorker extends QueueWorkerBase implements ContainerFactoryPluginInterface {
 
   /**
    * {@inheritdoc}
