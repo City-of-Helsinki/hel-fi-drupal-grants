@@ -113,6 +113,24 @@ you cannot do any modifications while the form is locked for them.',
     // Get content from document.
     $grantsProfileContent = $grantsProfile->getContent();
 
+    // Prevent the code from dying if the user managed to
+    // "corrupt" the profile document data in atv.
+    if (!isset($grantsProfileContent['addresses'])) {
+      $this->logger->error(
+        'User might have multiple profiles(hakuprofiili) for single businessId: DocumentId @documentId',
+        ['@documentId' => $grantsProfile->getId()]
+      );
+      $grantsProfileContent['addresses'] = [];
+    }
+
+    if (!isset($grantsProfileContent['officials'])) {
+      $grantsProfileContent['officials'] = [];
+    }
+
+    if (!isset($grantsProfileContent['bankAccounts'])) {
+      $grantsProfileContent['bankAccounts'] = [];
+    }
+
     $storage = $form_state->getStorage();
     $storage['profileDocument'] = $grantsProfile;
 

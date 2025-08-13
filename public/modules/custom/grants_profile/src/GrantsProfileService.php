@@ -456,6 +456,15 @@ class GrantsProfileService {
     if (empty($searchDocuments)) {
       throw new AtvDocumentNotFoundException('Not found');
     }
+
+    // The profile document count should never be more than 1.
+    if (count($searchDocuments) > 1) {
+      $this->logger->error(
+        'More than one profile documents found: DocumentId @documentId',
+        ['documentId' => $searchDocuments[0]->getId()]
+      );
+    }
+
     return reset($searchDocuments);
   }
 
