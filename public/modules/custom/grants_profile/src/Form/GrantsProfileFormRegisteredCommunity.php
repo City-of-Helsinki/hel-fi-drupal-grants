@@ -10,6 +10,7 @@ use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\PRHUpdaterService;
+use Drupal\grants_profile\ProfileFetchTimeoutException;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -72,7 +73,19 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
-    $grantsProfile = $this->getGrantsProfileDocument();
+    try {
+      $grantsProfile = $this->getGrantsProfileDocument();
+    }
+    catch (ProfileFetchTimeoutException $e) {
+      $this->messenger()
+        ->addError(
+        $this->t(
+            'Something went wrong. Please try again in a moment.',
+            [],
+            ['context' => 'grants_oma_asiointi']
+          )
+        );
+    }
 
     if ($grantsProfile == NULL) {
       return [];

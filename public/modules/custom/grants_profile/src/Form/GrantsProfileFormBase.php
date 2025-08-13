@@ -20,6 +20,7 @@ use Drupal\Core\Utility\Error;
 use Drupal\file\Element\ManagedFile;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\grants_profile\ProfileFetchTimeoutException;
 use Drupal\helfi_atv\AtvDocument;
 use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
@@ -762,6 +763,7 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
     // Load grants profile.
+    // May cause an exception in case of timeout.
     $grantsProfile = $this->grantsProfileService->getGrantsProfile($selectedRoleData, TRUE);
 
     // If no profile exist.
