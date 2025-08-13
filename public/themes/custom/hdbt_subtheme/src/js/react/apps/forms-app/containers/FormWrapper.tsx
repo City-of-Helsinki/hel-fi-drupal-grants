@@ -247,11 +247,8 @@ export const FormWrapper = ({
     });
 
     if (response.ok) {
-      pushNotification({
-        children: <div>{Drupal.t('Application saved as draft.', {}, {context: 'Grants application: Draft'})}</div>,
-        label: Drupal.t('Save successful.', {}, {context: 'Grants application: Draft'}),
-        type: 'success',
-      });
+      const redirectUrl = drupalSettings.grants_react_form.list_view_path;
+      window.location.href = redirectUrl;
     }
     else {
       pushNotification({

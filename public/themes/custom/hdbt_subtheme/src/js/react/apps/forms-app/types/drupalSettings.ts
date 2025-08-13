@@ -13,6 +13,7 @@ declare namespace drupalSettings { // eslint-disable-line @typescript-eslint/no-
   const grants_react_form: {
     application_number: string;
     form: string;
+    list_view_path: string;
     token: string;
   };
 };
