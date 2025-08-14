@@ -11,6 +11,7 @@ use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusException;
@@ -38,7 +39,29 @@ final class ApplicationController extends ControllerBase {
     private readonly ApplicationGetterService $applicationGetterService,
     #[Autowire(service: 'helfi_atv.atv_service')]
     private readonly AtvService $atvService,
+    private readonly FormSettingsService $formSettingsService,
   ) {
+  }
+
+  /**
+   * Return appropriate translation for form title.
+   *
+   * @param string $id
+   *   The application number.
+   *
+   * @return string
+   *   The form title
+   */
+  public function getFormTitle(string $id): string {
+    try {
+      $formSettings = $this->formSettingsService->getFormSettings($id);
+    }
+    catch (\Exception $e) {
+      return '';
+    }
+
+    $langcode = $this->languageManager()->getCurrentLanguage()->getId();
+    return $formSettings->toArray()['translations'][$langcode]['translation']['form_title'];
   }
 
   /**
@@ -58,6 +81,7 @@ final class ApplicationController extends ControllerBase {
           'grants_react_form' => [
             'application_number' => $id,
             'token' => $this->csrfTokenGenerator->get('rest'),
+            'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
           ],
         ],
       ],

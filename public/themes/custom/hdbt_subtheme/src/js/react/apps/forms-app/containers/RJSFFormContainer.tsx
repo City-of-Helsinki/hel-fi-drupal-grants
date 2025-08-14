@@ -3,7 +3,7 @@ import { useAtomValue, useSetAtom, WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
 import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
-import React, { createRef, useCallback, useEffect } from 'react';
+import React, { createRef, useCallback } from 'react';
 import { customizeValidator } from '@rjsf/validator-ajv8';
 
 import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
@@ -52,17 +52,10 @@ export const RJSFFormContainer = ({
   formDataAtom: WritableAtom<any, [update: unknown], any>;
   saveDraft: (data: any) => Promise<boolean>;
   schema: RJSFSchema;
-  submitData: (data: IChangeEvent) => Promise<boolean>;
+  submitData: (data: IChangeEvent) => Promise<[boolean, string]>;
   uiSchema: UiSchema;
 }) => {
   const setFormData = useSetAtom(formDataAtom)
-
-  useEffect(() => {
-    if (schema?.title) {
-      document.title = `${schema.title} ${document.title}`;
-    }
-  }, [schema]);
-
   const submitStatus = useAtomValue(getSubmitStatusAtom);
   const steps = useAtomValue(getStepsAtom);
   const setStep = useSetAtom(setStepAtom);
@@ -141,7 +134,6 @@ export const RJSFFormContainer = ({
   return <>
       {
         !readonly && <>
-          <h1>{schema?.title}</h1>
           <ErrorsList />
           <Stepper formRef={formRef} />
         </>
@@ -167,13 +159,19 @@ export const RJSFFormContainer = ({
           noHtml5Validate
           onChange={browserCacheData}
           onError={onError}
-          onSubmit={(data, event: React.FormEvent<HTMLFormElement>) => {
+          onSubmit={async (data, event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
 
             const passes = formRef.current?.validateForm();
 
             if (passes) {
-              submitData(data.formData);
+              const result = await submitData(data.formData);
+              
+              const [success, redirectUrl] = result;
+              
+              if (success && redirectUrl) {
+                window.location.href = redirectUrl;
+              }
               setStep([...steps].pop()?.[0] || 0);
             }
           }}
