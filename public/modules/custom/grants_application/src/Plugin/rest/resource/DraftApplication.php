@@ -451,8 +451,7 @@ final class DraftApplication extends ResourceBase {
   }
 
   /**
-   * Shows a status message to the user that the application has been saved
-   * as a draft.
+   * Shows a status message to the user when saving.
    *
    * @param string $application_number
    *   The application number.
