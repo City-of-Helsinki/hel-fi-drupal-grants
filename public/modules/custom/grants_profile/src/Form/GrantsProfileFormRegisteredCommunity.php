@@ -80,7 +80,7 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
       $this->messenger()
         ->addError(
         $this->t(
-            'Something went wrong. Please try again in a moment.',
+            'Fetching the profile timed out. Please try again in a moment.',
             [],
             ['context' => 'grants_oma_asiointi']
           )

@@ -447,6 +447,13 @@ class GrantsProfileService {
         $this->logger->error('Profile Request to ATV timed out');
         throw new ProfileFetchTimeoutException();
       }
+
+      // Returning notfound-exception here may cause problems since
+      // in some cases, caller may consider this as 404 instead of 500.
+      $this->logger->error(
+        'Unexpected ConnectException while fetching profile: @message',
+        ['@message' => $e->getMessage()]
+      );
       throw new AtvDocumentNotFoundException('Not found');
     }
     catch (\Exception $e) {
