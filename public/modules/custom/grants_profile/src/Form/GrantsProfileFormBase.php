@@ -762,7 +762,6 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     $selectedRoleData = $this->grantsProfileService->getSelectedRoleData();
 
     // Load grants profile.
-    // May cause an exception in case of timeout.
     $grantsProfile = $this->grantsProfileService->getGrantsProfile($selectedRoleData, TRUE);
 
     // If no profile exist.
