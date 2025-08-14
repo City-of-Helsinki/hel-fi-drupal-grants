@@ -172,6 +172,8 @@ Removal can not be done if there are sent applications. This cannot be undone.',
         TRUE,
         'application_list_item'
       );
+      unset($applications['missing_delete_after']);
+
       $drafts = [];
       if (isset($applications['DRAFT'])) {
         $drafts = $applications['DRAFT'];
