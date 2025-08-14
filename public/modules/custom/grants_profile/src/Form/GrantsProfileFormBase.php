@@ -20,7 +20,6 @@ use Drupal\Core\Utility\Error;
 use Drupal\file\Element\ManagedFile;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
-use Drupal\grants_profile\ProfileFetchTimeoutException;
 use Drupal\helfi_atv\AtvDocument;
 use GuzzleHttp\Exception\GuzzleException;
 use PHP_IBAN\IBAN;
