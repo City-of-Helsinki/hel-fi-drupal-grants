@@ -683,3 +683,7 @@ msgstr "Kopioitava hakemus"
 msgctxt "grants_handler"
 msgid "New form using renewed form application"
 msgstr "Uusi lomake käyttäen uudistettua lomakesovellusta"
+
+msgctxt "grants_handler"
+msgid "Fetching applications timed out. Please try again in a moment"
+msgstr "Hakemusten hakeminen aikakatkaistiin. Yritä hetken kuluttua uudelleen"

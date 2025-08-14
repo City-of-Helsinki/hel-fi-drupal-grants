@@ -138,7 +138,16 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       );
     }
     catch (\Throwable $e) {
+      $this->messenger()->addError(
+        $this->t(
+          'Something went wrong. Please try again in a moment.',
+          [],
+          ['context' => 'grants_oma_asiointi'],
+        )
+      );
+
       // If errors, just don't do anything.
+      // @todo Really do nothing ?
       $applications = [];
     }
     $drafts = $applications['DRAFT'] ?? [];
