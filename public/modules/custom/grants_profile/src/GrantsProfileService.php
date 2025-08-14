@@ -448,8 +448,9 @@ class GrantsProfileService {
         throw new ProfileFetchTimeoutException();
       }
 
-      // Returning notfound-exception here may cause problems since
-      // in some cases, caller may consider this as 404 instead of 500.
+      // Throwing notfound-exception here may cause problems since
+      // in some cases, caller may consider ConnectException
+      // as 404 instead of 500.
       $this->logger->error(
         'Unexpected ConnectException while fetching profile: @message',
         ['@message' => $e->getMessage()]
