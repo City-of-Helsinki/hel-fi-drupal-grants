@@ -116,10 +116,6 @@ you cannot do any modifications while the form is locked for them.',
     // Prevent the code from dying if the user managed to
     // "corrupt" the profile document data in atv.
     if (!isset($grantsProfileContent['addresses'])) {
-      $this->logger->error(
-        'User might have multiple profiles(hakuprofiili) for single businessId: DocumentId @documentId',
-        ['@documentId' => $grantsProfile->getId()]
-      );
       $grantsProfileContent['addresses'] = [];
     }
 
