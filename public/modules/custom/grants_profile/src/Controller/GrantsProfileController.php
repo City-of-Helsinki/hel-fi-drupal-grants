@@ -11,6 +11,7 @@ use Drupal\grants_profile\Form\GrantsProfileFormRegisteredCommunity;
 use Drupal\grants_profile\Form\GrantsProfileFormUnregisteredCommunity;
 use Drupal\grants_profile\GrantsProfileException;
 use Drupal\grants_profile\GrantsProfileService;
+use Drupal\grants_profile\ProfileFetchTimeoutException;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -59,11 +60,22 @@ class GrantsProfileController extends ControllerBase {
     try {
       $profile = $this->grantsProfileService->getGrantsProfileContent($selectedRoleData, TRUE);
     }
+    catch (ProfileFetchTimeoutException $e) {
+      $this->messenger()
+        ->addError(
+          $this->t(
+            'Fetching the profile timed out. Please try again in a moment.',
+            [],
+            ['context' => 'grants_oma_asiointi']
+          )
+        );
+      return new RedirectResponse(Url::fromRoute('<front>')->toString());
+    }
     catch (GrantsProfileException $e) {
       $this->messenger()
         ->addError($this->t('Connection error', [], $tOpts), TRUE);
       // Not much to do without actual data.
-      return new RedirectResponse('<front>');
+      return new RedirectResponse(Url::fromRoute('<front>')->toString());
     }
 
     if (empty($profile)) {

@@ -13,6 +13,7 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_audit_log\AuditLogServiceInterface;
+use GuzzleHttp\Exception\ConnectException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -363,6 +364,9 @@ class GrantsProfileService {
       $this->grantsProfileCache->setToCache($profileIdentifier['identifier'], $profileDocument);
       return $profileDocument;
     }
+    catch (ProfileFetchTimeoutException $e) {
+      throw $e;
+    }
     catch (AtvDocumentNotFoundException $e) {
       return NULL;
     }
@@ -416,7 +420,6 @@ class GrantsProfileService {
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
    */
   private function getGrantsProfileFromAtv(array $profileIdentifier, $refetch = FALSE): AtvDocument {
-
     // Registered communities we can fetch by the business id.
     if ($profileIdentifier["type"] === 'registered_community') {
       $searchParams = [
@@ -438,6 +441,22 @@ class GrantsProfileService {
     try {
       $searchDocuments = $this->atvService->searchDocuments($searchParams, $refetch);
     }
+    catch (ConnectException $e) {
+      // Handle timeout, curl errno 28 is timeout.
+      if ($e->getHandlerContext()['errno'] === 28) {
+        $this->logger->error('Profile Request to ATV timed out');
+        throw new ProfileFetchTimeoutException();
+      }
+
+      // Throwing notfound-exception here may cause problems since
+      // in some cases, caller may consider ConnectException
+      // as 404 instead of 500.
+      $this->logger->error(
+        'Unexpected ConnectException while fetching profile: @message',
+        ['@message' => $e->getMessage()]
+      );
+      throw new AtvDocumentNotFoundException('Not found');
+    }
     catch (\Exception $e) {
       throw new AtvDocumentNotFoundException('Not found');
     }
@@ -445,6 +464,15 @@ class GrantsProfileService {
     if (empty($searchDocuments)) {
       throw new AtvDocumentNotFoundException('Not found');
     }
+
+    // The profile document count should never be more than 1.
+    if (count($searchDocuments) > 1) {
+      $this->logger->error(
+        'More than one profile documents found: DocumentId @documentId',
+        ['documentId' => $searchDocuments[0]->getId()]
+      );
+    }
+
     return reset($searchDocuments);
   }
 
