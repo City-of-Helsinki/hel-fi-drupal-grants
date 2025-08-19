@@ -10,6 +10,7 @@ use Drupal\grants_metadata\Validator\EmailValidator;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\grants_profile\Plugin\Validation\Constraint\ValidPostalCodeValidator;
 use Drupal\grants_profile\PRHUpdaterService;
+use Drupal\grants_profile\ProfileFetchTimeoutException;
 use Drupal\grants_profile\TypedData\Definition\GrantsProfileRegisteredCommunityDefinition;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -72,7 +73,21 @@ class GrantsProfileFormRegisteredCommunity extends GrantsProfileFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildForm($form, $form_state);
-    $grantsProfile = $this->getGrantsProfileDocument();
+    $grantsProfile = NULL;
+
+    try {
+      $grantsProfile = $this->getGrantsProfileDocument();
+    }
+    catch (ProfileFetchTimeoutException $e) {
+      $this->messenger()
+        ->addError(
+        $this->t(
+            'Fetching the profile timed out. Please try again in a moment.',
+            [],
+            ['context' => 'grants_oma_asiointi']
+          )
+        );
+    }
 
     if ($grantsProfile == NULL) {
       return [];
@@ -99,6 +114,20 @@ you cannot do any modifications while the form is locked for them.',
 
     // Get content from document.
     $grantsProfileContent = $grantsProfile->getContent();
+
+    // Prevent the code from dying if the user managed to
+    // "corrupt" the profile document data in atv.
+    if (!isset($grantsProfileContent['addresses'])) {
+      $grantsProfileContent['addresses'] = [];
+    }
+
+    if (!isset($grantsProfileContent['officials'])) {
+      $grantsProfileContent['officials'] = [];
+    }
+
+    if (!isset($grantsProfileContent['bankAccounts'])) {
+      $grantsProfileContent['bankAccounts'] = [];
+    }
 
     $storage = $form_state->getStorage();
     $storage['profileDocument'] = $grantsProfile;

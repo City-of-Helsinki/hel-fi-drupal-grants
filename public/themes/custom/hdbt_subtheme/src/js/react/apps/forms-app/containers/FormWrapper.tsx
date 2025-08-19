@@ -183,7 +183,7 @@ export const FormWrapper = ({
 
   initializeForm(translatedData);
 
-  const submitData = async (submittedData: any): Promise<boolean> => {
+  const submitData = async (submittedData: any): Promise<[boolean, string|null]> => {
     const response = await fetch(`/en/applications/${applicationTypeId}/application/${readApplicationNumber()}`, {
       body: JSON.stringify({
         application_number: readApplicationNumber() || '',
@@ -200,13 +200,15 @@ export const FormWrapper = ({
     });
 
     if (!response.ok) {
-      return false;
+      return [response.ok, null];
     }
+
+    const json = await response.json();
 
     // @todo read submit status from server response
     setSubmitStatus(SubmitStates.SUBMITTED);
 
-    return response.ok;
+    return [response.ok, json.redirect_url];
   };
 
   const initialData = translatedData.status === SubmitStates.DRAFT ? translatedData.form_data?.form_data : translatedData?.form_data?.compensation?.form_data || null;
@@ -245,11 +247,8 @@ export const FormWrapper = ({
     });
 
     if (response.ok) {
-      pushNotification({
-        children: <div>{Drupal.t('Application saved as draft.', {}, {context: 'Grants application: Draft'})}</div>,
-        label: Drupal.t('Save successful.', {}, {context: 'Grants application: Draft'}),
-        type: 'success',
-      });
+      const redirectUrl = drupalSettings.grants_react_form.list_view_path;
+      window.location.href = redirectUrl;
     }
     else {
       pushNotification({

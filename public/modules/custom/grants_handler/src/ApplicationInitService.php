@@ -376,6 +376,7 @@ class ApplicationInitService {
     $typeData = $this->applicationDataService->webformToTypedData($submissionData);
     $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($typeData, $submissionObject, $submissionData);
     $atvDocument->setContent($appDocumentContent);
+    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+1 years'))->format('Y-m-d'));
     $newDocument = $this->atvService->postDocument($atvDocument);
 
     if ($copy) {

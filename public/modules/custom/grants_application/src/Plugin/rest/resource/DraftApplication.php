@@ -437,6 +437,8 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    $this->showSavedMessage($application_number);
+
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
     // grants_application module when this module is enabled in
     // production.
@@ -446,6 +448,24 @@ final class DraftApplication extends ResourceBase {
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT_DRAFT));
 
     return new JsonResponse($document->toArray(), 200);
+  }
+
+  /**
+   * Shows a status message to the user when saving.
+   *
+   * @param string $application_number
+   *   The application number.
+   */
+  private function showSavedMessage(string $application_number): void {
+    $this->messenger()
+      ->addStatus(
+        $this->t(
+          'Grant application (<span id="saved-application-number">@number</span>) saved as DRAFT',
+          [
+            '@number' => $application_number,
+          ]
+        )
+      );
   }
 
   /**

@@ -7,6 +7,7 @@ namespace Drupal\grants_profile\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Queue\QueueFactory;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_handler\MessageService;
@@ -49,6 +50,10 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    *   The message service.
    * @param \Drupal\grants_handler\ApplicationGetterService $applicationGetterService
    *   The application getter service.
+   * @param \Drupal\helfi_atv\AtvService $atvService
+   *   The atv-service.
+   * @param \Drupal\Core\Queue\QueueFactory $queueFactory
+   *   The queue factory.
    */
   public function __construct(
     protected RequestStack $requestStack,
@@ -58,6 +63,8 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     protected MessageService $messageService,
     #[Autowire(service: 'grants_handler.application_getter_service')]
     protected ApplicationGetterService $applicationGetterService,
+    protected AtvService $atvService,
+    protected QueueFactory $queueFactory,
   ) {
     $this->logger = $this->getLogger('grants_oma_asiointi');
   }
@@ -89,7 +96,6 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
    * @throws \Drupal\grants_profile\GrantsProfileException
    */
   public function build(): array {
-
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
 
     if ($selectedCompany == NULL) {
@@ -138,13 +144,47 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
       );
     }
     catch (\Throwable $e) {
+      $this->messenger()->addError(
+        $this->t(
+          'Something went wrong. Please try again in a moment.',
+          [],
+          ['context' => 'grants_oma_asiointi'],
+        )
+      );
+
       // If errors, just don't do anything.
+      // @todo Really do nothing ?
       $applications = [];
     }
+
+    $missing_delete_after = $applications['missing_delete_after'] ?? FALSE;
+    unset($applications['missing_delete_after']);
+
     $drafts = $applications['DRAFT'] ?? [];
     unset($applications['DRAFT']);
     // Parse messages.
     [$other, $unreadMsg] = $this->parseMessages($applications);
+
+    // If any of the drafts are missing deleteAfter value,
+    // update the missing values.
+    if ($missing_delete_after) {
+      foreach ($drafts as $draft) {
+        $atvDocument = $draft['#document'] ?? NULL;
+        if (!$atvDocument || $atvDocument->getDeleteAfter()) {
+          continue;
+        }
+
+        $this->queueFactory
+          ->get('delete_after_queue')
+          ->createItem(
+          [
+            'document_id' => $atvDocument->getId(),
+            'delete_after' => (new \DateTimeImmutable('+1 years'))->format('Y-m-d'),
+          ]
+        );
+
+      }
+    }
 
     return [
       '#theme' => 'grants_oma_asiointi_front',
