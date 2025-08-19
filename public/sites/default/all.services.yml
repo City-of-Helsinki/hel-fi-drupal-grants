@@ -1,3 +1,9 @@
 # Test services and overrides.
 parameters:
-  helfi_api_base.internal_domains: []
+  helfi_api_base.internal_domains:
+    - 'avustukset.hel.fi'
+    - 'hel-fi-drupal-grant-applications.docker.so'
+    - 'avustukset.test.hel.ninja'
+    - 'avustukset.dev.hel.ninja'
+    - 'avustukset.stage.hel.ninja'
+
