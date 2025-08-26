@@ -59,7 +59,7 @@ elements: |
   leirien_tiedot:
     '#title': ' Information about the camps'
   markup_02:
-    '#markup': 'The estimated information of the camps is reported in a separate &lsquo;Advance information on camps&rsquo; Excel attachment. <strong>Please fill out the attachment carefully for each camp.</strong> <a href="#">The attachment can be downloaded here</a> or <a href="https://avustukset.hel.fi/en/information-about-grants/grants-for-youth-activities/holiday-camp-grants-for-youth-activities">from the service description page of the camp grant</a>. The attachment is mandatory and must be submitted when sending the application.'
+    '#markup': 'The estimated information of the camps is reported in a separate Excel attachment. Please fill out the attachment carefully for each camp. The attachment can be downloaded from <a href="https://avustukset.hel.fi/en/information-about-grants/grants-for-youth-activities/holiday-camp-grants-for-youth-activities">from the service description page of the camp grant</a>. The attachment is mandatory and must be submitted when sending the application.'
   3_talousarvio:
     '#title': '3. Budget'
   tulot:
