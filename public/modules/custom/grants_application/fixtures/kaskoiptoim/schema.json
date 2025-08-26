@@ -1,0 +1,808 @@
+{
+  "definitions": {
+    "other_materials_acquired_item": {
+      "type": "object",
+      "title": "other_materials_acquired_item.title",
+      "properties": {
+        "other_material_acquired_description": {
+          "title": "other_material_acquired_description.title",
+          "type": "string"
+        },
+        "other_material_acquired_amount": {
+          "title": "other_material_acquired_amount.title",
+          "type": "integer"
+        }
+      }
+    },
+    "other_services_acquired_item": {
+      "type": "object",
+      "title": "other_services_acquired_item.title",
+      "properties": {
+        "other_service_acquired_description": {
+          "title": "other_service_acquired_description.title",
+          "type": "string"
+        },
+        "other_service_acquired_amount": {
+          "title": "other_service_acquired_amount.title",
+          "type": "integer"
+        }
+      }
+    },
+    "other_expenditures_item": {
+      "type": "object",
+      "title": "other_expenditures_item.title",
+      "properties": {
+        "other_expenditure_description": {
+          "title": "other_expenditure_description.title",
+          "type": "string"
+        },
+        "other_expenditure_amount": {
+          "title": "other_expenditure_amount.title",
+          "type": "integer"
+        }
+      }
+    },
+    "other_benefits_item": {
+      "type": "object",
+      "title": "other_benefits_item.title",
+      "properties": {
+        "other_benefit_description": {
+          "title": "other_benefit_description.title",
+          "type": "string"
+        },
+        "other_benefit_amount": {
+          "title": "other_benefit_amount.title",
+          "type": "integer"
+        }
+      }
+    },
+    "locations_info_item": {
+      "type": "object",
+      "title": "locations_info_item.title",
+      "properties": {
+        "location_name": {
+          "title": "location_name.title",
+          "type": "string"
+        },
+        "location_address": {
+          "title": "location_address.title",
+          "type": "string"
+        },
+        "location_postal_code": {
+          "title": "location_postal_code.title",
+          "type": "string"
+        },
+        "location_pupil_number": {
+          "title": "location_pupil_number.title",
+          "type": "string"
+        },
+        "location_pupil_number_special_needs": {
+          "title": "location_pupil_number_special_needs.title",
+          "type": "string"
+        },
+        "location_number_of_groups": {
+          "title": "location_number_of_groups.title",
+          "type": "string"
+        },
+        "location_number_of_groups_special_needs": {
+          "title": "location_number_of_groups_special_needs.title",
+          "type": "string"
+        },
+        "location_staff": {
+          "title": "location_staff.title",
+          "type": "string"
+        },
+        "location_held_in_provided_space": {
+          "title": "location_held_in_provided_space.title",
+          "type": "string"
+        }
+      }
+    },
+    "other_compensation_item": {
+      "type": "object",
+      "title": "other_compensation_item.title",
+      "properties": {
+        "other_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "other_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "other_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "other_compensation_amount": {
+          "title": "other_compensation_amount.title",
+          "type": "integer"
+        },
+        "other_compensation_description": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      }
+    },
+    "grant_info_step": {
+      "properties": {
+        "acting_year_section": {
+          "title": "acting_year_section.title",
+          "type": "object",
+          "properties": {
+            "acting_year": {
+              "title": "acting_year.title",
+              "type": "string",
+              "enum": [
+                "2025"
+              ]
+            }
+          },
+          "required": ["acting_year"]
+        },
+        "subventions_section": {
+          "title": "subventions_section.title",
+          "type": "object",
+          "properties": {
+            "subventions": {
+              "title": "subventions.title",
+              "type": "string"
+            }
+          },
+          "required": ["subventions"]
+        },
+        "purpose_section": {
+          "title": "purpose_section.title",
+          "type": "object",
+          "properties": {
+            "purpose": {
+              "title": "purpose.title",
+              "type": "string"
+            }
+          }
+        },
+        "other_compensations_section": {
+          "title": "other_compensations_section.title",
+          "type": "object",
+          "properties": {
+            "have_received_other_compensations": {
+              "enum": [
+                "have_received_other_compensations.yes",
+                "have_received_other_compensations.no"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_received_other_compensations": {
+                    "const": "have_received_other_compensations.yes"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/other_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/other_compensation_item"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "city_benefits_loans_section": {
+          "type": "object",
+          "properties": {
+            "city_benefits_loans": {
+              "title": "city_benefits_loans.title",
+              "type": "string"
+            }
+          }
+        },
+        "city_premises_benefits_section": {
+          "type": "object",
+          "properties": {
+            "city_premises_benefits": {
+              "title": "city_premises_benefits.title",
+              "type": "string"
+            }
+          }
+        },
+        "prior_benefits_usage_section": {
+          "type": "object",
+          "properties": {
+            "have_received_prior_compensations": {
+              "enum": [
+                "have_received_prior_compensations.yes",
+                "have_received_prior_compensations.no"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_received_prior_compensations": {
+                    "const": "have_received_prior_compensations.yes"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "prior_compensations": {
+                    "description": "prior_compensations.description",
+                    "title": "prior_compensations.title",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "community_activity_step": {
+      "type": "object",
+      "properties": {
+        "community_activity_section": {
+          "type": "object",
+          "properties": {
+            "community_activity_description": {
+              "title": "community_activity.title",
+              "type": "string"
+            },
+            "community_practices_business": {
+              "title": "community_practices_business.title",
+              "type": "boolean"
+            }
+          }
+        },
+        "locations_info_section": {
+          "type": "object",
+          "properties": {
+            "locations_info": {
+              "title": "locations_info.title",
+              "description": "locations_info.description",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/locations_info_item"
+              }
+            }
+          }
+        }
+      }
+    },
+    "budget_step": {
+      "type": "object",
+      "properties": {
+        "economy_forecast_section": {
+          "type": "object",
+          "properties": {
+            "economy_forecast": {
+              "description": "economy_forecast.description",
+              "type": "null"
+            }
+          }
+        },
+        "income_section": {
+          "type": "object",
+          "properties": {
+            "applied_benefits": {
+              "title": "applied_benefits.title",
+              "type": "integer"
+            },
+            "customer_sales": {
+              "title": "customer_sales.title",
+              "type": "integer"
+            },
+            "donations": {
+              "title": "donations.title",
+              "type": "integer"
+            }
+          }
+        },
+        "other_benefits_section": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/other_benefits_item"
+          }
+        },
+        "expenditure_section": {
+          "type": "object",
+          "properties": {
+            "salaries_and_bonuses": {
+              "title": "salaries_and_bonuses.title",
+              "type": "integer"
+            },
+            "rents": {
+              "title": "rents.title",
+              "type": "integer"
+            },
+            "personnel_side_costs": {
+              "title": "personnel_side_costs.title",
+              "type": "integer"
+            }
+          }
+        },
+        "other_expenditures_section": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/other_expenditures_item"
+          }
+        },
+        "usage_of_benefits_section": {
+          "type": "object",
+          "properties": {
+            "snacks": {
+              "title": "snacks.title",
+              "type": "integer"
+            },
+            "cleaning_services": {
+              "title": "cleaning_services.title",
+              "type": "integer"
+            },
+            "property_maintenance": {
+              "title": "property_maintenance.title",
+              "type": "integer"
+            },
+            "travel": {
+              "title": "travel.title",
+              "type": "integer"
+            }
+          }
+        },
+        "other_services_acquired_section": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/other_services_acquired_item"
+          }
+        },
+        "other_materials_section": {
+          "type": "object",
+          "properties": {
+            "snacks": {
+              "title": "snacks.title",
+              "type": "integer"
+            },
+            "heating": {
+              "title": "heating.title",
+              "type": "integer"
+            },
+            "water": {
+              "title": "water.title",
+              "type": "integer"
+            },
+            "electricity": {
+              "title": "electricity.title",
+              "type": "integer"
+            },
+            "operational_materials": {
+              "title": "operational_materials.title",
+              "type": "integer"
+            }
+          }
+        },
+        "other_materials_acquired_section": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/other_materials_acquired_item"
+          }
+        },
+        "benefit_usage_other_expenditure_section": {
+          "type": "object",
+          "proeprties": {
+            "management_office_expenses": {
+              "title": "management_office_expenses.title",
+              "type": "integer"
+            },
+            "accounting_auditing_expenses": {
+              "title": "accounting_auditing_expenses.title",
+              "type": "integer"
+            },
+            "staff_health_expenses": {
+              "title": "staff_health_expenses.title",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "attachments_step": {
+      "type": "object",
+      "properties": {
+        "additional_info_section": {
+          "type": "object",
+          "properties": {
+            "additional_info": {
+              "title": "additional_info.title",
+              "type": "string"
+            }
+          }
+        },
+        "appendices_section": {
+          "type": "object",
+          "description": "appendices_section.description",
+          "properties": {
+            "required_attachments_help": {
+              "title": "required_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "required_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "multiple_attachments_help": {
+              "title": "multiple_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                 "title": "multiple_attachments_help.value",
+                 "type": "null"
+                }
+              ]
+            },
+            "formerly_provided_attachments_help": {
+              "title": "formerly_provided_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                 "title": "formerly_provided_attachments_help.value",
+                 "type": "null"
+                }
+              ]
+            },
+            "cant_view_after_help": {
+              "title": "cant_view_after_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "cant_view_after_help.value",
+                  "type": "null"
+                },
+                {
+                  "title": "cant_view_after_help.value_2",
+                  "type": "null"
+                }
+              ]
+            },
+            "community_rules": {
+              "title": "community_rules.title",
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "file.title",
+                  "type": "string",
+                  "properties": {
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "confirmed_financial_statements": {
+              "title": "confirmed_financial_statements.title",
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "file.title",
+                  "type": "string",
+                  "properties": {
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "confirmed_annual_report": {
+              "title": "confirmed_annual_report.title",
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "file.title",
+                  "type": "string",
+                  "properties": {
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "confirmed_audit_report": {
+              "title": "confirmed_audit_report.title",
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "file.title",
+                  "type": "string",
+                  "properties": {
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "action_plan": {
+              "title": "action_plan.title",
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "file.title",
+                  "type": "string",
+                  "properties": {
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "lease_agreement": {
+              "title": "lease_agreement.title",
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "file.title",
+                  "type": "string",
+                  "properties": {
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "budget": {
+              "title": "budget.title",
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "file.title",
+                  "type": "string",
+                  "properties": {
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "further_clarification": {
+              "title": "further_clarification.title",
+              "type": "string"  
+            },
+            "other_attachment_fieldset": {
+              "title": "other_attachment_fieldset.title",
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "file_id": {
+                      "type": "integer"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "type": "integer"
+                    },
+                    "integrationID": {
+                      "type": "string"
+                    },
+                    "isDeliveredLater": {
+                      "type": "boolean"
+                    },
+                    "isIncludedInOtherFile": {
+                      "type": "boolean"
+                    },
+                    "isNewAttachment": {
+                      "type": "boolean"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "file_description": {
+                  "title": "file_description.title",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "grant_info_step": {
+      "title": "grant_info_step.title",
+      "type": "object",
+      "$ref": "#/definitions/grant_info_step"
+    },
+    "community_activity_step": {
+      "$ref": "#/definitions/community_activity_step",
+      "title": "community_activity_step.title"
+    },
+    "budget_step": {
+      "$ref": "#/definitions/budget_step",
+      "title": "budget_step.title",
+      "type": "object"
+    },
+    "attachments_step": {
+      "$ref": "#/definitions/attachments_step",
+      "title": "attachments_step.title",
+      "type": "object"
+    }
+  }
+}
