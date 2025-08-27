@@ -2,42 +2,42 @@
   "definitions": {
     "other_materials_acquired_item": {
       "type": "object",
-      "title": "other_materials_acquired_item.title",
+      "title": "other_expenses",
       "properties": {
         "other_material_acquired_description": {
-          "title": "other_material_acquired_description.title",
+          "title": "cost_explanation_expense",
           "type": "string"
         },
         "other_material_acquired_amount": {
-          "title": "other_material_acquired_amount.title",
+          "title": "amount",
           "type": "integer"
         }
       }
     },
     "other_services_acquired_item": {
       "type": "object",
-      "title": "other_services_acquired_item.title",
+      "title": "other_expenses",
       "properties": {
         "other_service_acquired_description": {
-          "title": "other_service_acquired_description.title",
+          "title": "cost_explanation_expense",
           "type": "string"
         },
         "other_service_acquired_amount": {
-          "title": "other_service_acquired_amount.title",
+          "title": "amount",
           "type": "integer"
         }
       }
     },
     "other_expenditures_item": {
       "type": "object",
-      "title": "other_expenditures_item.title",
+      "title": "other_expenses",
       "properties": {
         "other_expenditure_description": {
-          "title": "other_expenditure_description.title",
+          "title": "cost_explanation_expense",
           "type": "string"
         },
         "other_expenditure_amount": {
-          "title": "other_expenditure_amount.title",
+          "title": "amount",
           "type": "integer"
         }
       }
@@ -47,18 +47,17 @@
       "title": "other_benefits_item.title",
       "properties": {
         "other_benefit_description": {
-          "title": "other_benefit_description.title",
+          "title": "cost_explanation_income",
           "type": "string"
         },
         "other_benefit_amount": {
-          "title": "other_benefit_amount.title",
+          "title": "amount",
           "type": "integer"
         }
       }
     },
     "locations_info_item": {
       "type": "object",
-      "title": "locations_info_item.title",
       "properties": {
         "location_name": {
           "title": "location_name.title",
@@ -100,7 +99,6 @@
     },
     "other_compensation_item": {
       "type": "object",
-      "title": "other_compensation_item.title",
       "properties": {
         "other_compensation_issuer": {
           "title": "other_compensation_issuer.title",
@@ -169,12 +167,13 @@
         },
         "other_compensations_section": {
           "title": "other_compensations_section.title",
+          "description": "other_compensations_section.description",
           "type": "object",
           "properties": {
             "have_received_other_compensations": {
               "enum": [
-                "have_received_other_compensations.yes",
-                "have_received_other_compensations.no"
+                "boolean.yes",
+                "boolean.no"
               ]
             }
           },
@@ -183,7 +182,7 @@
               "if": {
                 "properties": {
                   "have_received_other_compensations": {
-                    "const": "have_received_other_compensations.yes"
+                    "const": "boolean.yes"
                   }
                 }
               },
@@ -205,6 +204,7 @@
         },
         "city_benefits_loans_section": {
           "type": "object",
+          "description": "city_benefits_loans_section.description",
           "properties": {
             "city_benefits_loans": {
               "title": "city_benefits_loans.title",
@@ -214,6 +214,7 @@
         },
         "city_premises_benefits_section": {
           "type": "object",
+          "description": "city_premises_benefits_section.description",
           "properties": {
             "city_premises_benefits": {
               "title": "city_premises_benefits.title",
@@ -226,8 +227,8 @@
           "properties": {
             "have_received_prior_compensations": {
               "enum": [
-                "have_received_prior_compensations.yes",
-                "have_received_prior_compensations.no"
+                "boolean.yes",
+                "boolean.no"
               ]
             }
           },
@@ -236,7 +237,7 @@
               "if": {
                 "properties": {
                   "have_received_prior_compensations": {
-                    "const": "have_received_prior_compensations.yes"
+                    "const": "boolean.yes"
                   }
                 }
               },
@@ -290,6 +291,7 @@
       "properties": {
         "economy_forecast_section": {
           "type": "object",
+          "title": "economy_forecast_section.title",
           "properties": {
             "economy_forecast": {
               "description": "economy_forecast.description",
@@ -298,6 +300,7 @@
           }
         },
         "income_section": {
+          "title": "income_section.title",
           "type": "object",
           "properties": {
             "applied_benefits": {
@@ -315,12 +318,14 @@
           }
         },
         "other_benefits_section": {
+          "title": "other_benefits_section.title",
           "type": "array",
           "items": {
             "$ref": "#/definitions/other_benefits_item"
           }
         },
         "expenditure_section": {
+          "title":  "expenditure_section.title",
           "type": "object",
           "properties": {
             "salaries_and_bonuses": {
@@ -338,12 +343,14 @@
           }
         },
         "other_expenditures_section": {
+          "title": "other_ependitures_section.title",
           "type": "array",
           "items": {
             "$ref": "#/definitions/other_expenditures_item"
           }
         },
         "usage_of_benefits_section": {
+          "title": "usage_of_benefits_section.title",
           "type": "object",
           "properties": {
             "snacks": {
@@ -365,12 +372,14 @@
           }
         },
         "other_services_acquired_section": {
+          "title": "other_services_acquired_section.title",
           "type": "array",
           "items": {
             "$ref": "#/definitions/other_services_acquired_item"
           }
         },
         "other_materials_section": {
+          "title": "other_materials_section.title",
           "type": "object",
           "properties": {
             "snacks": {
@@ -396,12 +405,14 @@
           }
         },
         "other_materials_acquired_section": {
+          "title": "other_materials_acquired_section.title",
           "type": "array",
           "items": {
             "$ref": "#/definitions/other_materials_acquired_item"
           }
         },
         "benefit_usage_other_expenditure_section": {
+          "title": "benefit_usage_other_expenditure_section.title",
           "type": "object",
           "proeprties": {
             "management_office_expenses": {
@@ -416,6 +427,46 @@
               "title": "staff_health_expenses.title",
               "type": "integer"
             }
+          }
+        },
+        "other_expenses_section": {
+          "title": "other_ependitures_section.title",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/other_expenditures_item"
+          }
+        },
+        "customer_space_usage_section": {
+          "title": "customer_space_usage_section.title",
+          "type": "object",
+          "properties": {
+            "salaries_and_bonuses": {
+              "title": "salaries_and_bonuses.title",
+              "type": "integer"
+            },
+            "rents": {
+              "title": "rents.title",
+              "type": "integer"
+            },
+            "materials": {
+              "title": "materials.title",
+              "type": "integer"
+            },
+            "services": {
+              "title": "services.title",
+              "type": "integer"
+            },
+            "personnel_side_costs": {
+              "title": "personnel_side_costs.title",
+              "type": "integer"
+            }
+          }
+        },
+        "other_expenses_section_1": {
+          "title": "other_ependitures_section.title",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/other_expenditures_item"
           }
         }
       }
@@ -433,6 +484,7 @@
           }
         },
         "appendices_section": {
+          "title": "appendices_section.title",
           "type": "object",
           "description": "appendices_section.description",
           "properties": {
