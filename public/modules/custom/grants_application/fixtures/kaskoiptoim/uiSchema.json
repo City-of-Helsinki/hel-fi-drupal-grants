@@ -1,0 +1,116 @@
+{
+  "grant_info_step": {
+    "purpose_section": {
+      "purpose": {
+        "ui:widget": "textarea"
+      }
+    },
+    "other_compensations_section": {
+      "other_compensations": {
+        "other_compensation_description": {
+          "ui:widget": "textarea"
+        }
+      }
+    },
+    "city_benefits_loans_section": {
+      "city_benefits_loans": {
+        "ui:widget": "textarea"
+      }
+    },
+    "city_premises_benefits_section": {
+      "city_premises_benefits": {
+        "ui:widget": "textarea"
+      }
+    },
+    "prior_benefits_usage_section": {
+      "prior_compensations": {
+        "ui:widget": "textarea"
+      }
+    }
+  },
+  "community_activity_step": {
+    "community_activity_section": {
+      "community_activity_description": {
+        "ui:widget": "textarea"
+      }
+    }
+  },
+  "attachments_step": {
+    "additional_info_section": {
+      "additional_info": {
+        "ui:widget": "textarea"
+      }
+    },
+    "appendices_section": {
+      "required_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "multiple_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "formerly_provided_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "cant_view_after_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "community_rules": {
+        "file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "confirmed_financial_statements": {
+        "file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "confirmed_annual_report": {
+        "file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "confirmed_audit_report": {
+        "file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "action_plan": {
+        "file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "lease_agreement": {
+        "file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "budget": {
+        "file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "other_attachment_fieldset": {
+        "file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      }
+    }
+  }
+}
