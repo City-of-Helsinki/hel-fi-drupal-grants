@@ -141,9 +141,22 @@ final class ApplicationController extends ControllerBase {
       $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
     }
     catch (
-    EntityStorageException |
-    CompanySelectException $e) {
-      return AccessResult::forbidden('Submission gettting failed');
+      EntityStorageException |
+      CompanySelectException $e
+    ) {
+      $this->getLogger('grant_access')
+        ->error(
+          'Unable to load entity or company selection failed: @message',
+          ['@message' => $e->getMessage()],
+        );
+      return AccessResult::forbidden('Submission getting failed');
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grant_access')->error(
+        'Unexpected unhandled exception: @message',
+        ['@message' => $e->getMessage()],
+      );
+      return AccessResult::forbidden('Submission getting failed');
     }
 
     if ($webform_submission == NULL) {
