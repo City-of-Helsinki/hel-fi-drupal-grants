@@ -95,12 +95,31 @@ final class ApplicationController extends ControllerBase {
       return AccessResult::forbidden('No submission found');
     }
 
+    try {
+      $singleSubmissionAccess = $this->applicationAccessHandler->singleSubmissionAccess(
+        $webform_submissionObject
+      );
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_application_access')
+        ->error(
+          "Unable to resolve single submission access due to exception: @message",
+          ['@message' => $e->getMessage()]
+        );
+      return AccessResult::forbidden("Unable to resolve single submission access: {$e->getMessage()}");
+    }
+
     // Parameters from the route and/or request as needed.
+    $viewPermission = $account->hasPermission('view own webform submission');
+    if (!$viewPermission || !$singleSubmissionAccess) {
+      $this->getLogger('grant_access')
+        ->error("Access denied, user is missing view permission or single submission access.");
+    }
+
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->applicationAccessHandler->singleSubmissionAccess(
-        $webform_submissionObject
-      ));
+      $singleSubmissionAccess
+    );
   }
 
   /**
@@ -137,12 +156,29 @@ final class ApplicationController extends ControllerBase {
       return AccessResult::forbidden('No webform found');
     }
 
+    try {
+      $singleSubmissionAccess = $this->applicationAccessHandler->singleSubmissionAccess(
+        $webform_submission
+      );
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_application_access')->error("Unable to resolve single submission access: {$e->getMessage()}");
+      return AccessResult::forbidden('Unable to resolve single submission access');
+    }
+
+    if (
+      !$account->hasPermission('view own webform submission') ||
+      !$singleSubmissionAccess
+    ) {
+      $this->getLogger('grant_access')
+        ->error("Access denied, user is missing view permission or single submission access.");
+    }
+
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->applicationAccessHandler->singleSubmissionAccess(
-        $webform_submission
-      ));
+      $singleSubmissionAccess
+    );
   }
 
   /**
