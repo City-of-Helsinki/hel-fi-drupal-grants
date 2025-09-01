@@ -95,12 +95,31 @@ final class ApplicationController extends ControllerBase {
       return AccessResult::forbidden('No submission found');
     }
 
+    try {
+      $singleSubmissionAccess = $this->applicationAccessHandler->singleSubmissionAccess(
+        $webform_submissionObject
+      );
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_application_access')
+        ->error(
+          "Unable to resolve single submission access due to exception: @message",
+          ['@message' => $e->getMessage()]
+        );
+      return AccessResult::forbidden("Unable to resolve single submission access");
+    }
+
     // Parameters from the route and/or request as needed.
+    $viewPermission = $account->hasPermission('view own webform submission');
+    if (!$viewPermission || !$singleSubmissionAccess) {
+      $this->getLogger('grant_access')
+        ->error("Access denied, user is missing view permission or single submission access.");
+    }
+
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->applicationAccessHandler->singleSubmissionAccess(
-        $webform_submissionObject
-      ));
+      $singleSubmissionAccess
+    );
   }
 
   /**
@@ -122,9 +141,22 @@ final class ApplicationController extends ControllerBase {
       $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
     }
     catch (
-    EntityStorageException |
-    CompanySelectException $e) {
-      return AccessResult::forbidden('Submission gettting failed');
+      EntityStorageException |
+      CompanySelectException $e
+    ) {
+      $this->getLogger('grant_access')
+        ->error(
+          'Unable to load entity or company selection failed: @message',
+          ['@message' => $e->getMessage()],
+        );
+      return AccessResult::forbidden('Submission getting failed');
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grant_access')->error(
+        'Unexpected unhandled exception: @message',
+        ['@message' => $e->getMessage()],
+      );
+      return AccessResult::forbidden('Submission getting failed');
     }
 
     if ($webform_submission == NULL) {
@@ -137,12 +169,29 @@ final class ApplicationController extends ControllerBase {
       return AccessResult::forbidden('No webform found');
     }
 
+    try {
+      $singleSubmissionAccess = $this->applicationAccessHandler->singleSubmissionAccess(
+        $webform_submission
+      );
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_application_access')->error("Unable to resolve single submission access: {$e->getMessage()}");
+      return AccessResult::forbidden('Unable to resolve single submission access');
+    }
+
+    if (
+      !$account->hasPermission('view own webform submission') ||
+      !$singleSubmissionAccess
+    ) {
+      $this->getLogger('grant_access')
+        ->error("Access denied, user is missing view permission or single submission access.");
+    }
+
     // Parameters from the route and/or request as needed.
     return AccessResult::allowedIf(
       $account->hasPermission('view own webform submission') &&
-      $this->applicationAccessHandler->singleSubmissionAccess(
-        $webform_submission
-      ));
+      $singleSubmissionAccess
+    );
   }
 
   /**
