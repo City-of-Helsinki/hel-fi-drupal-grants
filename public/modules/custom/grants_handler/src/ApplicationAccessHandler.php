@@ -20,7 +20,7 @@ final readonly class ApplicationAccessHandler {
    *
    * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
-  private \Drupal\Core\Logger\LoggerChannelInterface $logger;
+  private LoggerChannelInterface $logger;
 
   /**
    * Constructs an ApplicationAccessHandler object.
