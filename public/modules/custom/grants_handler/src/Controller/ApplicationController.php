@@ -106,7 +106,7 @@ final class ApplicationController extends ControllerBase {
           "Unable to resolve single submission access due to exception: @message",
           ['@message' => $e->getMessage()]
         );
-      return AccessResult::forbidden("Unable to resolve single submission access: {$e->getMessage()}");
+      return AccessResult::forbidden("Unable to resolve single submission access");
     }
 
     // Parameters from the route and/or request as needed.
