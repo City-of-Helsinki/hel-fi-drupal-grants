@@ -4,14 +4,13 @@ import { useState } from 'react';
 export const SaveDraftButton = ({
   saveDraft
 }: {
-  saveDraft: () => Promise<boolean>;
+  saveDraft: () => void;
 }) => {
   const [submitting, setSubmitting] = useState(false);
 
   const onClick = async() => {
     setSubmitting(true);
-    await saveDraft();
-    setSubmitting(false);
+    saveDraft();
   }
 
   return <Button

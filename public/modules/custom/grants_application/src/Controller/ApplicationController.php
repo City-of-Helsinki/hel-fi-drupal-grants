@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Controller;
 
+use Drupal\block_content\Entity\BlockContent;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
@@ -74,6 +75,9 @@ final class ApplicationController extends ControllerBase {
    *   The resulting array
    */
   public function formsApp(string $id): array {
+    // Grant terms are stored in block 
+    $terms_block = BlockContent::load(1);
+    
     return [
       '#theme' => 'forms_app',
       '#attached' => [
@@ -82,6 +86,10 @@ final class ApplicationController extends ControllerBase {
             'application_number' => $id,
             'token' => $this->csrfTokenGenerator->get('rest'),
             'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
+            'terms' => [
+              'body' => $terms_block->get('body')->getValue()[0]['value'],
+              'link_title' => $terms_block->get('field_link_title')->getValue()[0]['value'],
+            ],
           ],
         ],
       ],

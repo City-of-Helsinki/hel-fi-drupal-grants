@@ -14,6 +14,11 @@ declare namespace drupalSettings { // eslint-disable-line @typescript-eslint/no-
     application_number: string;
     form: string;
     list_view_path: string;
+    terms: {
+      body: string;
+      header: string;
+      link_title: string;
+    }
     token: string;
   };
 };

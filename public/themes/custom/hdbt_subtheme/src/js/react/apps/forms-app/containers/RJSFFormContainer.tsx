@@ -10,7 +10,7 @@ import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '.
 import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
 import { FormActions } from '../components/FormActions/FormActions';
-import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom, setStepAtom } from '../store';
+import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom } from '../store';
 import { keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
@@ -19,6 +19,7 @@ import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, Co
 import { localizeErrors } from '../localizeErrors';
 import { TextParagraph } from '../components/TextParagraph';
 import { SubmittedForm } from '../components/SubmittedForm';
+import { Terms } from '../components/Terms';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -50,15 +51,14 @@ export const RJSFFormContainer = ({
   uiSchema,
 }: {
   formDataAtom: WritableAtom<any, [update: unknown], any>;
-  saveDraft: (data: any) => Promise<boolean>;
+  saveDraft: (data: any) => void;
   schema: RJSFSchema;
-  submitData: (data: IChangeEvent) => Promise<[boolean, string]>;
+  submitData: (data: IChangeEvent) => void;
   uiSchema: UiSchema;
 }) => {
   const setFormData = useSetAtom(formDataAtom)
   const submitStatus = useAtomValue(getSubmitStatusAtom);
   const steps = useAtomValue(getStepsAtom);
-  const setStep = useSetAtom(setStepAtom);
   const formRef = createRef<Form>();
   const readCurrentStep = useAtomCallback(
     useCallback(get =>  get(getCurrentStepAtom), [])
@@ -165,19 +165,12 @@ export const RJSFFormContainer = ({
             const passes = formRef.current?.validateForm();
 
             if (passes) {
-              const result = await submitData(data.formData);
-              
-              const [success, redirectUrl] = result;
-              
-              if (success && redirectUrl) {
-                window.location.href = redirectUrl;
-              }
-              setStep([...steps].pop()?.[0] || 0);
+              submitData(data.formData);
             }
           }}
           readonly={readonly}
           ref={formRef}
-          schema={schema}
+          schema={schema} 
           showErrorList={false}
           templates={{
             ArrayFieldTemplate,
@@ -198,11 +191,12 @@ export const RJSFFormContainer = ({
           validator={customizeValidator({}, localizeErrors)}
           widgets={widgets}
         >
-         {!readonly && <FormActions
-            saveDraft={() => saveDraft(readFormData())}
-            validatePartialForm={validatePartialForm}
-          />
-         }
+          <Terms />
+          {!readonly && <FormActions
+              saveDraft={() => saveDraft(readFormData())}
+              validatePartialForm={validatePartialForm}
+            />
+          }
         </Form>
       </div>
     </>;
