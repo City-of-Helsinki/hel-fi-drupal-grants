@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Controller;
 
-use Drupal\block_content\Entity\BlockContent;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
@@ -75,9 +74,10 @@ final class ApplicationController extends ControllerBase {
    *   The resulting array
    */
   public function formsApp(string $id): array {
-    // Grant terms are stored in block 
-    $terms_block = BlockContent::load(1);
-    
+    // Grant terms are stored in block.
+    $blockStorage = $this->entityTypeManager()->getStorage('block_content');
+    $terms_block = $blockStorage->load(1);
+
     return [
       '#theme' => 'forms_app',
       '#attached' => [
