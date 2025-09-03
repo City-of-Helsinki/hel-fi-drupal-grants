@@ -12,7 +12,10 @@ class FormSettingsService {
   /**
    * Hardcoded dummy list of forms.
    */
-  private array $forms = [58 => 'liikuntasuunnistus'];
+  private array $forms = [
+    52 => 'kaskoiptoim',
+    58 => 'liikuntasuunnistus',
+  ];
 
   /**
    * Get the application settings.

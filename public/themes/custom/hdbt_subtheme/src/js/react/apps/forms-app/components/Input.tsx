@@ -1,22 +1,11 @@
-import { WidgetProps } from '@rjsf/utils';
-import { TextArea as HDSTextArea, TextInput as HDSTextInput, Select  } from 'hds-react';
-import { useAtomValue } from 'jotai';
 import { ChangeEvent } from 'react';
+import { Fieldset, TextArea as HDSTextArea, TextInput as HDSTextInput, Notification, RadioButton, Select  } from 'hds-react';
+import { useAtomValue } from 'jotai';
+import { useTranslation } from 'react-i18next';
+import { WidgetProps } from '@rjsf/utils';
+
 import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, shouldRenderPreviewAtom } from '../store';
-
-/**
- * Transform raw errors to a more readable format.
- *
- * @param {array|undefned} rawErrors - Errors from RJSF form
- * @return {string} - Resulting error messagea
- */
-export const formatErrors = (rawErrors: string[]|undefined) => {
-  if (!rawErrors) {
-    return undefined;
-  }
-
-  return rawErrors.join('\n');
-};
+import { formatErrors } from '../utils';
 
 export const PreviewInput = ({
   value,
@@ -31,7 +20,7 @@ export const PreviewInput = ({
     {/* @todo fix when rebuilding styles  */}
     {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
     {!uiSchema?.['ui:options']?.hideNameFromPrint && <label>{uiSchema?.['ui:options']?.printableName?.toString() ?? label}</label>}
-    {value ?? '-'}
+    {Array.isArray(value) ? value.join(', ') : (value ?? '-')}
   </>
 );
 
@@ -101,6 +90,7 @@ export const TextArea = ({
   rawErrors,
   readonly,
   required,
+  schema,
   value,
   uiSchema,
 }: WidgetProps) => {
@@ -211,18 +201,79 @@ export const BankAccountSelect = (props: WidgetProps) => {
   );
 }
 
-export const CommunityOfficialsSelect = (props: WidgetProps) => {
+const roleMap = new Map([
+  [1, Drupal.t('Chairperson', [], { context: 'grants_profile' })],
+  [2, Drupal.t('Contact person', [], { context: 'grants_profile' }),],
+  [3, Drupal.t('Other', [], { context: 'grants_profile' })],
+  [4, Drupal.t('Treasurer', [], { context: 'grants_profile' })],
+  [5, Drupal.t('Auditor', [], { context: 'grants_profile' })],
+  [7, Drupal.t('Secretary', [], { context: 'grants_profile' })],
+  [8, Drupal.t('Deputy chairperson', [], { context: 'grants_profile' }),],
+  [9, Drupal.t('Chief executive officer', [], { context: 'grants_profile' })],
+  [10, Drupal.t('Producer', [], { context: 'grants_profile' })],
+  [11, Drupal.t('Responsible person', [], { context: 'grants_profile' })],
+  [12, Drupal.t('Executive director', [], { context: 'grants_profile' })],
+]);
+
+/**
+ * Get translated string for community official role.
+ * 
+ * @param {number} roleId - Role id
+ * 
+ * @return {string|undefined} - Role name or undefined
+ */
+const getCommunityOfficialRole = (roleId: number|string) => roleMap.get(Number(roleId));
+
+export const CommunityOfficialsSelect = ({
+  label,
+  value,
+  uiSchema,
+  ...rest
+}: WidgetProps) => {
+  const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const officials = useAtomValue(getOfficialsAtom);
   const options = Object.assign(officials.map(({
     name,
+    role,
     official_id,
   }) => ({
-    label: name,
+    label: `${name} (${getCommunityOfficialRole(role)})`,
     value: official_id,
   })));
 
+  const formatPreviewValue =  () => {
+    if (Array.isArray(value)) {
+      return value.map(official_id => {
+        const {
+          email,
+          name,
+          phone,
+          role,
+        } = officials.find(({ official_id: officialId }) => officialId === official_id);
+
+        return `${getCommunityOfficialRole(role)}: ${name} (${email}, ${phone})`;
+      }); 
+    }
+
+    const {
+      email,
+      name,
+      phone,
+      role,
+    } = officials.find(({ official_id: officialId }) => officialId === value);
+
+    return `${getCommunityOfficialRole(role)}: ${name} (${email}, ${phone})`;
+  };
+
+  if (shouldRenderPreview) {
+    return <PreviewInput value={formatPreviewValue()} label={label} uiSchema={uiSchema} />
+  }
+
   const selectProps: SelectWidgetProps = {
-    ...props,
+    label,
+    value,
+    uiSchema,
+    ...rest,
     options: {enumOptions: options},
   }
 
@@ -238,3 +289,45 @@ export const CommunityOfficialsSelect = (props: WidgetProps) => {
     <SelectWidget {...{...selectProps}} />
   );
 }
+
+export const RadioWidget = ({
+  id,
+  label,
+  onChange,
+  options,
+  rawErrors,
+  required,
+  value,
+  uiSchema,
+}: WidgetProps) => {
+  const { t } = useTranslation();
+  const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  
+  if (shouldRenderPreview) {
+    return <PreviewInput value={value} label={label} uiSchema={uiSchema} />
+  }
+  
+  const { affirmativeExpands } = uiSchema?.['ui:options'] ?? {};
+  return <>
+      {affirmativeExpands && (
+        <Notification
+          label={t('affimative_expands')}
+          type="info"
+        />
+      )}
+      <Fieldset
+        id={id}
+        heading={`${label}${required ? ' *' : ''}`}
+      >
+        {options?.enumOptions?.map((option: any) => <RadioButton
+          checked={option.value === value}
+          id={option.value}
+          key={option.value}
+          label={option.label}
+          name={option.value}
+          onChange={() => onChange(option.value)}
+        />)}
+        {rawErrors?.length > 0 && <Notification type='error'>{formatErrors(rawErrors)}</Notification>}
+      </Fieldset>
+    </>
+};
