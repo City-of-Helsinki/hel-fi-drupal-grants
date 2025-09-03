@@ -614,3 +614,11 @@ msgstr "Poistettu"
 msgctxt "Grants application: Status label"
 msgid "Ready"
 msgstr "Valmiina"
+
+msgctxt "Grants application: Submit"
+msgid "Application could not be submitted."
+msgstr "Hakemusta ei voitu lähettää."
+
+msgctxt "Grants application: Submit"
+msgid "Submission failed."
+msgstr "Lähettäminen epäonnistui."

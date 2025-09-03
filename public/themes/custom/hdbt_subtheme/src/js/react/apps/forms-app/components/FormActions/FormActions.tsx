@@ -2,7 +2,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { Button, ButtonPresetTheme, ButtonVariant } from 'hds-react';
 import { ValidationData } from '@rjsf/utils';
 import { SyntheticEvent } from 'react';
-import { getCurrentStepAtom, errorsAtom, getStepsAtom, setStepAtom } from '../../store';
+import { getCurrentStepAtom, errorsAtom, getStepsAtom, setStepAtom, finalAcceptanceAtom } from '../../store';
 import { keyErrorsByStep } from '../../utils';
 import { SaveDraftButton } from './SaveDraftButton';
 
@@ -13,6 +13,7 @@ export const FormActions = ({
   saveDraft: () => Promise<boolean>;
   validatePartialForm: () => ValidationData<any>|undefined;
 }) => {
+  const finalAcceptance = useAtomValue(finalAcceptanceAtom);
   const steps = useAtomValue(getStepsAtom);
   const [currentStepIndex, { id: currentStepId }] = useAtomValue(getCurrentStepAtom);
   const errors = useAtomValue(errorsAtom);
@@ -66,7 +67,7 @@ export const FormActions = ({
             (
               currentStepId === 'preview' ?
               <Button
-                disabled={Boolean(errors?.length) || false}
+                disabled={Boolean(errors?.length) || !finalAcceptance}
                 theme={ButtonPresetTheme.Black}
                 type='submit'
                 variant={ButtonVariant.Primary}

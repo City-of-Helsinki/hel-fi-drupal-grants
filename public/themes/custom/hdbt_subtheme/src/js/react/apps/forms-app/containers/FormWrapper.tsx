@@ -4,7 +4,7 @@ import { useAtomCallback } from 'jotai/utils';
 import { useSetAtom } from 'jotai';
 
 import { RJSFFormContainer } from './RJSFFormContainer';
-import { avus2DataAtom, createFormDataAtom, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom, setSubmitStatusAtom } from '../store';
+import { avus2DataAtom, createFormDataAtom, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom } from '../store';
 import { addApplicantInfoStep, getNestedSchemaProperty, setNestedProperty } from '../utils';
 import { SubmitStates } from '../enum/SubmitStates';
 import { useTranslateData } from '../hooks/useTranslateData';
@@ -164,7 +164,7 @@ const transformData = (data: any) => {
  */
 export const FormWrapper = ({
   applicationTypeId,
-  data,
+  data, 
   token,
 }: {
   applicationTypeId: string;
@@ -172,7 +172,6 @@ export const FormWrapper = ({
   token: string;
 }) => {
   const initializeForm = useSetAtom(initializeFormAtom);
-  const setSubmitStatus = useSetAtom(setSubmitStatusAtom);
   const pushNotification = useSetAtom(pushNotificationAtom);
   const readApplicationNumber = useAtomCallback(
     useCallback(get => get(getApplicationNumberAtom), [])
@@ -183,8 +182,9 @@ export const FormWrapper = ({
 
   initializeForm(translatedData);
 
-  const submitData = async (submittedData: any): Promise<[boolean, string|null]> => {
-    const response = await fetch(`/en/applications/${applicationTypeId}/application/${readApplicationNumber()}`, {
+  const { currentLanguage } = drupalSettings.path;
+  const submitData = async (submittedData: any): void => {
+    const response = await fetch(`/${currentLanguage}/applications/${applicationTypeId}/application/${readApplicationNumber()}`, {
       body: JSON.stringify({
         application_number: readApplicationNumber() || '',
         application_type_id: applicationTypeId,
@@ -200,15 +200,19 @@ export const FormWrapper = ({
     });
 
     if (!response.ok) {
-      return [response.ok, null];
+      pushNotification({
+        children: <div>{Drupal.t('Application could not be submitted.', {}, {context: 'Grants application: Submit'})}</div>,
+        label: Drupal.t('Submission failed.', {}, {context: 'Grants application: Submit'}),
+        type: 'error',
+      });
+
+      return;
     }
 
     const json = await response.json();
+    const { redirect_url } = json;
 
-    // @todo read submit status from server response
-    setSubmitStatus(SubmitStates.SUBMITTED);
-
-    return [response.ok, json.redirect_url];
+    window.location.href = redirect_url;
   };
 
   const initialData = translatedData.status === SubmitStates.DRAFT ? translatedData.form_data?.form_data : translatedData?.form_data?.compensation?.form_data || null;
@@ -231,7 +235,7 @@ export const FormWrapper = ({
   }
 
   const saveDraft = async (submittedData: any) => {
-    const response = await fetch(`/applications/${applicationTypeId}/${readApplicationNumber()}`, {
+    const response = await fetch(`/${currentLanguage}/applications/${applicationTypeId}/${readApplicationNumber()}`, {
       body: JSON.stringify({
         application_number: readApplicationNumber() || '',
         application_type_id: applicationTypeId,
@@ -246,19 +250,18 @@ export const FormWrapper = ({
       method: 'PATCH',
     });
 
-    if (response.ok) {
-      const redirectUrl = drupalSettings.grants_react_form.list_view_path;
-      window.location.href = redirectUrl;
-    }
-    else {
+    if (!response.ok) {
       pushNotification({
         children: <div>{Drupal.t('Application could not be saved as draft.', {}, {context: 'Grants application: Draft'})}</div>,
         label: Drupal.t('Save failed.', {}, {context: 'Grants application: Draft'}),
         type: 'error',
       });
+      
+      return;
     }
 
-    return response.ok;
+    const redirectUrl = drupalSettings.grants_react_form.list_view_path;
+    window.location.href = redirectUrl;
   };
 
   return (
