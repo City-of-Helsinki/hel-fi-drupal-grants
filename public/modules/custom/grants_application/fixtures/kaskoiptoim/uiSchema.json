@@ -6,6 +6,12 @@
       }
     },
     "other_compensations_section": {
+      "have_received_other_compensations": {
+        "ui:widget": "radio",
+        "ui:options": {
+          "affirmativeExpands": true
+        }
+      },
       "other_compensations": {
         "other_compensation_description": {
           "ui:widget": "textarea"

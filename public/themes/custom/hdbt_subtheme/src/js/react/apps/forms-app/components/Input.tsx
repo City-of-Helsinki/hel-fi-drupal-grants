@@ -1,7 +1,9 @@
-import { WidgetProps } from '@rjsf/utils';
-import { TextArea as HDSTextArea, TextInput as HDSTextInput, Select  } from 'hds-react';
-import { useAtomValue } from 'jotai';
 import { ChangeEvent } from 'react';
+import { Fieldset, TextArea as HDSTextArea, TextInput as HDSTextInput, Notification, RadioButton, Select  } from 'hds-react';
+import { useAtomValue } from 'jotai';
+import { useTranslation } from 'react-i18next';
+import { WidgetProps } from '@rjsf/utils';
+
 import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, shouldRenderPreviewAtom } from '../store';
 
 /**
@@ -238,3 +240,37 @@ export const CommunityOfficialsSelect = (props: WidgetProps) => {
     <SelectWidget {...{...selectProps}} />
   );
 }
+
+export const RadioWidget = ({
+  id,
+  label,
+  onChange,
+  options,
+  value,
+  uiSchema,
+}: WidgetProps) => {
+  const { t } = useTranslation();
+  const { affirmativeExpands } = uiSchema?.['ui:options'] ?? {};
+
+  return <>
+      {affirmativeExpands && (
+        <Notification
+          label={t('affimative_expands')}
+          type="info"
+        />
+      )}
+      <Fieldset
+        id={id}
+        heading={label}
+      >
+        {options?.enumOptions?.map((option: any) => <RadioButton
+          checked={option.value === value}
+          id={option.value}
+          key={option.value}
+          label={option.label}
+          name={option.value}
+          onChange={() => onChange(option.value)}
+        />)}
+      </Fieldset>
+    </>
+};

@@ -93,7 +93,10 @@
         },
         "location_held_in_provided_space": {
           "title": "location_held_in_provided_space.title",
-          "type": "string"
+          "enum": [
+            "boolean.no",
+            "boolean.yes"
+          ]
         }
       }
     },
@@ -171,6 +174,7 @@
           "type": "object",
           "properties": {
             "have_received_other_compensations": {
+              "title": "have_received_other_compensations.title",
               "enum": [
                 "boolean.yes",
                 "boolean.no"
@@ -267,7 +271,10 @@
             },
             "community_practices_business": {
               "title": "community_practices_business.title",
-              "type": "boolean"
+              "enum": [
+                "boolean.yes",
+                "boolean.no"
+              ]
             }
           }
         },
@@ -279,6 +286,9 @@
               "description": "locations_info.description",
               "type": "array",
               "items": {
+                "$ref": "#/definitions/locations_info_item"
+              },
+              "additionalItems": {
                 "$ref": "#/definitions/locations_info_item"
               }
             }
@@ -834,7 +844,7 @@
     }
   },
   "description": "",
-  "title": "",
+  "title": "form_title",
   "type": "object",
   "properties": {
     "grant_info_step": {

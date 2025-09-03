@@ -1,4 +1,4 @@
-import { RJSFSchema, UiSchema } from '@rjsf/utils';
+import { enumOptionsDeselectValue, RJSFSchema, UiSchema } from '@rjsf/utils';
 import { useTranslation } from 'react-i18next';
 
 export const useTranslateData = (data: any) => {
@@ -23,8 +23,8 @@ export const useTranslateData = (data: any) => {
 
     const translations: RJSFSchema = translateSchemaElement(element);
     const result: RJSFSchema = {...element, ...translations};
-    
-    ['properties', 'definitions'].forEach((key: string) => {
+
+    ['if', 'then', 'properties', 'definitions'].forEach((key: string) => {
       if (element?.[key]) {
         const keyResult: RJSFSchema = {};
         Object.entries(element[key]).forEach(([subKey, value]) => {
@@ -34,12 +34,22 @@ export const useTranslateData = (data: any) => {
       }
     });
 
-    if (element.additionalItems) {
-      result.additionalItems = iterateSchema(element.additionalItems);
+    ['const', 'additionalItems'].forEach((key: string) => {
+      if (element?.[key]) {
+        result[key] = iterateSchema(element[key]);
+      }
+    });
+
+    if (element?.items && Array.isArray(element.items)) {
+      result.items = element.items.map((item: RJSFSchema) => iterateSchema(item))
     }
 
-    if (element?.items) {
-      result.items = element.items.map((item: RJSFSchema) => iterateSchema(item))
+    if (element?.enum && Array.isArray(element.enum)) {
+      result.enum = element.enum.map((item: string) => item.includes('.') ? t(item) : item);
+    }
+
+    if (element.allOf && Array.isArray(element.allOf)) {
+      result.allOf = element.allOf.map((item: RJSFSchema) => iterateSchema(item));
     }
 
     return result;

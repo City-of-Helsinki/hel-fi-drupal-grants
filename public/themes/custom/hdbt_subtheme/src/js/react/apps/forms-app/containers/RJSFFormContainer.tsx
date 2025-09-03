@@ -15,7 +15,7 @@ import { keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
 import { SubmitStates } from '../enum/SubmitStates';
-import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
+import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect, RadioWidget } from '../components/Input';
 import { localizeErrors } from '../localizeErrors';
 import { TextParagraph } from '../components/TextParagraph';
 import { SubmittedForm } from '../components/SubmittedForm';
@@ -26,6 +26,7 @@ const widgets: RegistryWidgetsType = {
   'bank_account': BankAccountSelect,
   'community_officials': CommunityOfficialsSelect,
   EmailWidget: TextInput,
+  RadioWidget,
   SelectWidget,
   TextareaWidget: TextArea,
   TextWidget: TextInput,
@@ -176,7 +177,9 @@ export const RJSFFormContainer = ({
             ArrayFieldTemplate,
             ButtonTemplates: {
               RemoveButton: RemoveButtonTemplate,
-              SubmitButton: () => null
+              SubmitButton: () => null,
+              MoveDownButton: () => null,
+              MoveUpButton: () => null,
             },
             FieldErrorTemplate: () => null,
             ObjectFieldTemplate,
