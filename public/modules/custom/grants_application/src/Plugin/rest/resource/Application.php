@@ -434,7 +434,11 @@ final class Application extends ResourceBase {
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
     return new JsonResponse([
-      'redirect_url' => Url::fromRoute('grants_handler.completion', ['submission_id' => $application_number])->toString(),
+      'redirect_url' => Url::fromRoute(
+        'grants_handler.completion',
+        ['submission_id' => $application_number],
+        ['absolute' => TRUE],
+      )->toString(),
     ], 200);
   }
 

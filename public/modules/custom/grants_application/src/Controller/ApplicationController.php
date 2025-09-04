@@ -74,6 +74,10 @@ final class ApplicationController extends ControllerBase {
    *   The resulting array
    */
   public function formsApp(string $id): array {
+    // Grant terms are stored in block.
+    $blockStorage = $this->entityTypeManager()->getStorage('block_content');
+    $terms_block = $blockStorage->load(1);
+
     return [
       '#theme' => 'forms_app',
       '#attached' => [
@@ -82,6 +86,10 @@ final class ApplicationController extends ControllerBase {
             'application_number' => $id,
             'token' => $this->csrfTokenGenerator->get('rest'),
             'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
+            'terms' => [
+              'body' => $terms_block->get('body')->getValue()[0]['value'],
+              'link_title' => $terms_block->get('field_link_title')->getValue()[0]['value'],
+            ],
           ],
         ],
       ],

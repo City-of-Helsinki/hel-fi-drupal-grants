@@ -564,3 +564,11 @@ msgstr "Raderade"
 msgctxt "Grants application: Status label"
 msgid "Ready"
 msgstr "Redo"
+
+msgctxt "Grants application: Submit"
+msgid "Application could not be submitted."
+msgstr "Ansökan kunde inte skickas in."
+
+msgctxt "Grants application: Submit"
+msgid "Submission failed."
+msgstr "Inskickandet misslyckades."

@@ -62,7 +62,7 @@ elements: |
   leirien_tiedot:
     '#title': 'Uppgifter om lägren'
   markup_02:
-    '#markup': 'Använd den separata Excel-bilagan för att ange lägrens preliminära uppgifter. <strong>Fyll i bilagan noggrant för varje läger.</strong> <a href="#">Bilagan kan laddas ner här</a> eller <a href="https://avustukset.hel.fi/sv/om-understoden/understod-for-ungdomsverksamhet/understod-for-ungdomsverksamhet-lagerunderstod-under">från lägerbidragets tjänstebeskrivningssida</a>. Bilagan är obligatorisk och ska lämnas in när ansökan skickas.'
+    '#markup': 'Använd den separata Excel-bilagan för att ange lägrens preliminära uppgifter. Fyll i bilagan noggrant för varje läger. Bilagan kan laddas ner från <a href="https://avustukset.hel.fi/sv/om-understoden/understod-for-ungdomsverksamhet/understod-for-ungdomsverksamhet-lagerunderstod-under">lägerbidragets tjänstebeskrivningssida</a>. Bilagan är obligatorisk och ska lämnas in när ansökan skickas.'
   3_talousarvio:
     '#title': '3. Budget'
   tulot:

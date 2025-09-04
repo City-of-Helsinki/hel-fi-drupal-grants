@@ -169,6 +169,7 @@ const getFormStateAtom  = atom(_get => {
 
   return state;
 });
+export const finalAcceptanceAtom = atom<boolean>(false);
 export const getStepsAtom = atom(_get => {
   const steps = _get(formStepsAtom);
 
@@ -198,6 +199,7 @@ export const setStepAtom = atom(null, (_get, _set, index: number) => {
       currentStep: [index, step],
     })
   );
+  _set(finalAcceptanceAtom, false);
 });
 export const getReachedStepAtom = atom(_get => {
   const { reachedStep } = _get(getFormStateAtom);

@@ -261,7 +261,7 @@ elements: |-
       '#title': 'Leirien tiedot'
       markup_02:
         '#type': webform_markup
-        '#markup': 'Leirien arvioidut tiedot ilmoitetaan erillisellä Ennakkotiedot leireistä excel-liitteellä. <strong>Täytä liite huolellisesti jokaisen leirin kohdalta.</strong><a href="#">Liite on ladattavissa tästä</a> tai <a href="https://avustukset.hel.fi/fi/nuorisotoiminnan-loma-aikojen-leiriavustus" target="_blank">leiriavustuksen palvelukuvaussivulta</a>. Liite on pakollinen ja se on toimitettava hakemuksen lähettämisen yhteydessä.'
+        '#markup': 'Leirien arvioidut tiedot ilmoitetaan erillisellä Excel-liitteellä. Täytä liite huolellisesti jokaisen leirin kohdalta. Liite on ladattavissa <a href="https://avustukset.hel.fi/fi/nuorisotoiminnan-loma-aikojen-leiriavustus" target="_blank">leiriavustuksen palvelukuvaussivulta</a>. Liite on pakollinen ja se on toimitettava hakemuksen lähettämisen yhteydessä.'
   3_talousarvio:
     '#type': webform_wizard_page
     '#title': '3. Talousarvio'
