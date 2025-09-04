@@ -12,10 +12,9 @@ third_party_settings:
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      72: '72'
-      73: '73'
-    applicationOpen: '2024-06-05T10:00:26'
-    applicationClose: '2024-09-02T16:02:00'
+      74: '74'
+    applicationOpen: '2025-09-03T08:00:26'
+    applicationClose: '2025-09-25T16:02:00'
     applicationContinuous: 0
     applicationTargetGroup: '22'
     disableCopying: 0
