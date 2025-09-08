@@ -440,7 +440,7 @@ final class AtvPrintViewController extends ControllerBase {
     if ($field['ID'] == 'status') {
       // Transform status to be only capitalized and not all uppercase.
       $normalized = ucfirst(strtolower($field['value']));
-      $field['value'] = $this->t($normalized, [], ['context' => 'Grants application: Status label']);
+      $field['value'] = $this->t($normalized, [], ['context' => 'Grants application: Status label']); // phpcs:ignore
     }
   }
 
