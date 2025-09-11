@@ -1,4 +1,3 @@
-langcode: fi
 third_party_options:
   application_industries:
     KYMP: KYMP
@@ -78,3 +77,4 @@ third_party_options:
     52: 'Liikunnan erityisavustus 2'
     53: 'Kulttuurin ja vapaa-ajan erityisavustus 1'
     54: 'Kulttuurin ja vapaa-ajan erityisavustus 2'
+langcode: fi
