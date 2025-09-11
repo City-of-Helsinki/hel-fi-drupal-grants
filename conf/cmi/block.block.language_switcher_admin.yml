@@ -12,7 +12,7 @@ _core:
 id: language_switcher_admin
 theme: hdbt_admin
 region: header
-weight: -4
+weight: -3
 provider: null
 plugin: 'language_block:language_content'
 settings:
@@ -24,4 +24,4 @@ visibility:
   request_path:
     id: request_path
     negate: true
-    pages: "/node/*\r\n/admin/content/integrations/*/edit\r\n/group/*/content/create/*"
+    pages: "/node/*\r\n/admin/content/integrations/*/edit\r\n/group/*/content/create/*\r\n/admin/tools/application-metadata/*"
