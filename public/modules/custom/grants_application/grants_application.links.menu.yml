@@ -1,0 +1,6 @@
+application_metadata.collection:
+  title: 'Application metadata'
+  description: 'Manage application metadata items'
+  route_name: entity.application_metadata.collection
+  parent: hdbt_admin_tools.overview
+  weight: 20
