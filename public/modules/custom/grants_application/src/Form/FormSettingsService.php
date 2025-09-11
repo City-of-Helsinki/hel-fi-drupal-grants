@@ -24,11 +24,6 @@ class FormSettingsService {
   }
 
   /**
-   * Hardcoded dummy list of forms.
-   */
-  private array $forms = [58 => 'liikuntasuunnistus'];
-
-  /**
    * Get the application settings.
    *
    * This is initial hardcoded way to load the settings. The form name
@@ -41,22 +36,37 @@ class FormSettingsService {
    *   Contains json-schema, third party settings and translations etc.
    */
   public function getFormSettings(int|string $form_type_id): FormSettings {
-    if (!isset($this->forms[$form_type_id])) {
-      throw new \InvalidArgumentException('Application not found.');
+    $storage = \Drupal::entityTypeManager()->getStorage('application_metadata');
+    $matches = $storage->loadByProperties([
+      // For simple fields, the main property ('value') is implied.
+      'application_type_id' => $form_type_id,
+    ]);
+    $application_metadata = reset($matches);
+    $settings = [];
+
+    // Load application metadata if available and set it to settings.
+    if ($application_metadata) {
+      $settings['settings'] = $application_metadata->getMetadata();
+    }
+    elseif (!isset($this->forms[$form_type_id])) {
+      throw new \InvalidArgumentException('Application configuration not found.');
     }
 
     $form_type = $this->formTypes[$form_type_id];
     $form_name = $form_type['id'];
 
     // Load all the required settings from fixtures.
-    $settings = [];
     foreach ($this->getSettingsFiles() as $suffix) {
       $path_to_file = sprintf(__DIR__ . '/../../fixtures/%s/%s.json',
         $form_name,
         $suffix
       );
       $data = file_get_contents($path_to_file) ?: '{}';
-      $settings[$suffix] = json_decode($data, TRUE);
+
+      // Skip filled settings.
+      if (!isset($settings[$suffix])) {
+        $settings[$suffix] = json_decode($data, TRUE);
+      }
     }
 
     $settings['translation'] = $this->combineTranslations($settings['translation']);
