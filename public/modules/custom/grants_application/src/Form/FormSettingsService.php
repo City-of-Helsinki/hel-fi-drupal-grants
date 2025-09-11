@@ -10,6 +10,20 @@ namespace Drupal\grants_application\Form;
 class FormSettingsService {
 
   /**
+   * List of application types.
+   *
+   * @var array
+   */
+  private array $formTypes;
+
+  public function __construct() {
+    $this->formTypes = json_decode(
+      file_get_contents('/../../form_configuration/form_types.json'),
+      TRUE,
+    );
+  }
+
+  /**
    * Hardcoded dummy list of forms.
    */
   private array $forms = [58 => 'liikuntasuunnistus'];
@@ -31,7 +45,8 @@ class FormSettingsService {
       throw new \InvalidArgumentException('Application not found.');
     }
 
-    $form_name = $this->forms[$form_type_id];
+    $form_type = $this->formTypes[$form_type_id];
+    $form_name = $form_type['id'];
 
     // Load all the required settings from fixtures.
     $settings = [];
