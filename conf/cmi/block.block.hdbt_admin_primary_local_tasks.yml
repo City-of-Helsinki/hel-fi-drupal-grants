@@ -1,4 +1,4 @@
-uuid: df6769f4-d20f-4b55-a4b9-10e6b4082d5b
+uuid: 05937698-f6e3-4dee-90b6-6f9349ff35bb
 langcode: en
 status: true
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
 id: hdbt_admin_primary_local_tasks
 theme: hdbt_admin
 region: header
-weight: -3
+weight: -4
 provider: null
 plugin: local_tasks_block
 settings:
