@@ -58,3 +58,13 @@ function grants_application_update_9000() {
   \Drupal::entityDefinitionUpdateManager()
     ->installEntityType($entity_type);
 }
+
+/**
+ * Install application metadata entity.
+ */
+function grants_application_update_9001() {
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $entity_type = $entity_type_manager->getDefinition('application_metadata');
+  \Drupal::entityDefinitionUpdateManager()
+    ->installEntityType($entity_type);
+}
