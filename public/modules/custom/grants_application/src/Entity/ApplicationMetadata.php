@@ -205,7 +205,6 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
 
     $fields['application_close'] = BaseFieldDefinition::create('datetime')
       ->setLabel(t('Application closes'))
-      ->setDescription(t('When applications close.'))
       ->setSetting('datetime_type', 'datetime')
       ->setDisplayOptions('form', [
         'type' => 'datetime_default',
