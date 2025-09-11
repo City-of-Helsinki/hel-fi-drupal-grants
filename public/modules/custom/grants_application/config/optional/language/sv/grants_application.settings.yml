@@ -1,0 +1,59 @@
+application_industries:
+  KYMP: KYMP
+  SOTE: SOTE
+  KANSLIA: KANSLIA
+  PEL: PEL
+  KUVA: KUVA
+  KASKO: KASKO
+applicant_types:
+  registered_community: 'Rekisteröity yhdistys'
+  unregistered_community: 'Rekisteröitymätön yhteisö tai ryhmä'
+  private_person: Yksityishenkilö
+application_statuses:
+  DRAFT: DRAFT
+  SUBMITTED: SUBMITTED
+  RECEIVED: RECEIVED
+  PREPARING: PREPARING
+  PENDING: PENDING
+  PROCESSING: PROCESSING
+  CANCELLED: CANCELLED
+  RESOLVED: RESOLVED
+subvention_types:
+  1: Verksamhetsunderstöd
+  2: Löneunderstöd
+  4: Projektunderstöd
+  5: Hyresunderstöd
+  6: 'Allmänt understöd'
+  7: 'Utbildningsbidrag för arbetslösa'
+  8: 'Räntor och amorteringar'
+  9: Annan
+  11: Transportunderstöd
+  12: Lägerunderstöd
+  13: 'Kompensation för avgiftsfrihet'
+  14: 'Extra understöd'
+  15: 'Understöd för orienteringskarta'
+  17: 'Understöd för verksamhetsutveckling'
+  29: 'Utveclingsunderstöd / Helsingforsmodellen'
+  31: Sportunderstöd
+  32: 'Understöd för lokaler'
+  34: 'Grundläggande konstundervisning'
+  35: Småbarnspedagogik
+  36: 'Fri bildning'
+  37: Evenemangsbidrag
+  38: 'Små bidrag'
+  39: 'Bidrag för integrationsarbete'
+  40: 'Kultur och fritid: ansökan om understöd'
+  41: Anläggningsunderstöd
+  42: 'Understöd till andra föreningar som främjar idrott och motion'
+  43: 'Riktat understöd för idrott och motion'
+  44: Utvecklingsunderstöd
+  45: 'Utvecklingsunderstöd för Helsingforsmodellen'
+  46: 'Utvecklingsunderstöd för grundläggande konstundervisning'
+  47: 'Specialunderstöd för kultur 1'
+  48: 'Specialunderstöd för kultur 2'
+  49: 'Specialunderstöd för ungdomsverksamhet 1'
+  50: 'Specialunderstöd för ungdomsverksamhet 2'
+  51: 'Specialunderstöd för idrott 1'
+  52: 'Specialunderstöd för idrott 2'
+  53: 'Specialunderstöd för kultur och fritid 1'
+  54: 'Specialunderstöd för kultur och fritid 2'
