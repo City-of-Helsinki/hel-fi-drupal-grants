@@ -53,7 +53,7 @@ function grants_application_application_type_allowed_values(
   FieldStorageDefinitionInterface $definition,
   ?FieldableEntityInterface $entity,
 ): array {
-  $config = \Drupal::configFactory()->getEditable('grants_application.settings');
+  $config = \Drupal::config('grants_application.settings');
   return array_map(
     fn($type) => $type['labels']['fi'],
     $config->get('application_types') ?: []
@@ -76,7 +76,7 @@ function grants_application_application_industry_allowed_values(
   FieldStorageDefinitionInterface $definition,
   ?FieldableEntityInterface $entity,
 ): array {
-  $config = \Drupal::configFactory()->getEditable('grants_application.settings');
+  $config = \Drupal::config('grants_application.settings');
   return $config->get('application_industries') ?? [];
 }
 
@@ -96,7 +96,7 @@ function grants_application_applicant_types_allowed_values(
   FieldStorageDefinitionInterface $definition,
   ?FieldableEntityInterface $entity,
 ): array {
-  $config = \Drupal::configFactory()->getEditable('grants_application.settings');
+  $config = \Drupal::config('grants_application.settings');
   return $config->get('applicant_types') ?? [];
 }
 
@@ -116,7 +116,7 @@ function grants_application_application_subvention_types_allowed_values(
   FieldStorageDefinitionInterface $definition,
   ?FieldableEntityInterface $entity,
 ): array {
-  $config = \Drupal::configFactory()->getEditable('grants_application.settings');
+  $config = \Drupal::config('grants_application.settings');
   return $config->get('subvention_types') ?? [];
 }
 
