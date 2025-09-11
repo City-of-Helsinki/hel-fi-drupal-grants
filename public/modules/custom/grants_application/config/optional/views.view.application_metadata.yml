@@ -696,62 +696,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        application_type_select:
-          id: application_type_select
-          table: application_metadata
-          field: application_type_select
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: application_metadata
-          entity_field: application_type_select
-          plugin_id: string
-          operator: contains
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: application_type_select_op
-            label: 'Application type'
-            description: ''
-            use_operator: false
-            operator: application_type_select_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: application_type_select
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              json_api_user: '0'
-              read_only: '0'
-              helsinkiprofiili: '0'
-              content_producer_industry: '0'
-              content_producer: '0'
-              grants_producer_industry: '0'
-              grants_producer: '0'
-              ad_user: '0'
-              grants_admin: '0'
-              admin: '0'
-              editor: '0'
-              super_administrator: '0'
-              performance_test_user: '0'
-              survey_editor: '0'
-            placeholder: ''
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
         application_type:
           id: application_type
           table: application_metadata
@@ -926,10 +870,72 @@ display:
           row_class: ''
           default_row_class: true
           columns:
-            operations: operations
-          default: '-1'
+            label: label
+            application_type_1: application_type_1
+            application_type_id_1: application_type_id_1
+            application_subvention_type_value: application_subvention_type_value
+            application_industry: application_industry
+            name: name
+            status: status
+            changed: changed
+            operations_1: operations_1
+          default: changed
           info:
-            operations:
+            label:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            application_type_1:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            application_type_id_1:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            application_subvention_type_value:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            application_industry:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            name:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            status:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            changed:
+              sortable: true
+              default_sort_order: desc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            operations_1:
               align: ''
               separator: ''
               empty_column: false
