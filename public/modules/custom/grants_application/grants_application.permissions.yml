@@ -1,0 +1,16 @@
+administer application metadata:
+  title: 'Administer application metadata'
+  description: 'Manage application metadata entities and fields.'
+  restrict access: true
+
+view application metadata:
+  title: 'View application metadata entities'
+  description: 'Allows viewing the canonical page of Application metadata.'
+
+view unpublished application metadata:
+  title: 'View unpublished application metadata'
+  description: 'View unpublished application metadata items via UI or API.'
+
+view all application metadata revisions:
+  title: 'View all application metadata revisions'
+  description: 'View the revision history of application metadata.'

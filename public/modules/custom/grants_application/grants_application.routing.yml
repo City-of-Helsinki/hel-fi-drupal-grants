@@ -29,3 +29,50 @@ helfi_grants.print_view:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::printApplication'
   requirements:
     _role: helsinkiprofiili
+
+entity.application_metadata.collection:
+  path: '/admin/tools/application-metadata'
+  defaults:
+    _entity_list: 'application_metadata'
+    _title: 'Application Metadata'
+  requirements:
+    _permission: 'administer application metadata'
+
+entity.application_metadata.canonical:
+  path: '/admin/tools/application-metadata/{application_metadata}'
+  defaults:
+    _entity_view: 'application_metadata.default'
+    _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
+    _title: 'Application metadata'
+  requirements:
+    _entity_access: 'application_metadata.view'
+    _permission: 'view application metadata'
+  options:
+    parameters:
+      application_metadata:
+        type: 'entity:application_metadata'
+    _admin_route: TRUE
+
+entity.application_metadata.add_form:
+  path: '/admin/tools/application-metadata/add'
+  defaults:
+    _entity_form: 'application_metadata.default'
+    _title: 'Add application metadata'
+  requirements:
+    _entity_create_access: 'application_metadata'
+
+entity.application_metadata.edit_form:
+  path: '/admin/tools/application-metadata/{application_metadata}/edit'
+  defaults:
+    _entity_form: 'application_metadata.default'
+    _title: 'Edit application metadata'
+  requirements:
+    _entity_access: 'application_metadata.update'
+
+entity.application_metadata.delete_form:
+  path: '/admin/tools/application-metadata/{application_metadata}/delete'
+  defaults:
+    _entity_form: 'application_metadata.delete'
+    _title: 'Delete application metadata'
+  requirements:
+    _entity_access: 'application_metadata.delete'

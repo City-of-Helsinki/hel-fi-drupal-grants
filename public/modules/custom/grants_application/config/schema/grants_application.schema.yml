@@ -1,0 +1,76 @@
+grants_application.settings:
+  type: config_object
+  label: 'Grants application settings'
+  mapping:
+    application_industries:
+      type: sequence
+      label: 'Application industries'
+      sequence:
+        type: string
+        label: 'Industries'
+    applicant_types:
+      type: sequence
+      label: 'Applicant types'
+      sequence:
+        type: string
+        label: 'Applicant type'
+    application_statuses:
+      type: sequence
+      label: 'Application statuses'
+      sequence:
+        type: string
+        label: 'Application status'
+    subvention_types:
+      type: sequence
+      label: 'Subvention types'
+      sequence:
+        type: string
+        label: 'Subvention type'
+    application_types:
+      type: sequence
+      label: 'Application types'
+      sequence:
+        type: mapping
+        label: 'Application type'
+        mapping:
+          id:
+            type: string
+            label: 'ID'
+          code:
+            type: string
+            label: 'Code'
+          labels:
+            type: sequence
+            label: 'Translated labels'
+            sequence:
+              type: string
+              label: 'Translated label'
+    config_import_ignore:
+      type: sequence
+      label: 'Ignored config values on import'
+      sequence:
+        type: integer
+        label: 'Ignored config value'
+    overridden_configuration:
+      type: sequence
+      label: 'Overridden configuration entries'
+      sequence:
+        type: sequence
+        label: 'Form ID'
+        sequence:
+          type: mapping
+          label: 'Form override'
+          mapping:
+            grants_metadata:
+              type: mapping
+              label: 'Grants metadata'
+              mapping:
+                applicationOpen:
+                  type: string
+                  label: 'Application open datetime'
+                applicationClose:
+                  type: string
+                  label: 'Application close datetime'
+                disableCopying:
+                  type: integer
+                  label: 'Disable copying flag'

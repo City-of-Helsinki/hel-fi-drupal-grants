@@ -1,0 +1,10 @@
+application_metadata_form:
+  css:
+    component:
+      assets/css/applicationMetadataForm.css: {}
+  js:
+    assets/js/applicationMetadataForm.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
