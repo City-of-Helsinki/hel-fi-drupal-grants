@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\helfi_platform_config\ConfigUpdate\ConfigUpdater;
+
 /**
  * Implements hook_install().
  */
@@ -67,4 +69,6 @@ function grants_application_update_9001() {
   $entity_type = $entity_type_manager->getDefinition('application_metadata');
   \Drupal::entityDefinitionUpdateManager()
     ->installEntityType($entity_type);
+  \Drupal::service(ConfigUpdater::class)
+    ->installDefaultConfig('module', 'grants_application');
 }
