@@ -9,6 +9,7 @@ use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
 /**
  * A class for retrieving form specific settings.
@@ -98,22 +99,6 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    *   or when the form type configuration is invalid.
    */
   public function getFormSettings(int|string $form_type_id): FormSettings {
-    $storage = $this->entityTypeManager->getStorage('application_metadata');
-    $matches = $storage->loadByProperties([
-      'application_type_id' => $form_type_id,
-    ]);
-    $application_metadata = reset($matches);
-    $settings = [];
-
-    // Load application metadata if available and set it to settings.
-    /** @var \Drupal\grants_application\Entity\ApplicationMetadata $application_metadata */
-    if ($application_metadata) {
-      $settings['settings'] = $application_metadata->getMetadata();
-    }
-    elseif (!isset($this->formTypes[$form_type_id])) {
-      throw new \InvalidArgumentException('Application configuration not found.');
-    }
-
     $form_type = $this->formTypes[$form_type_id] ?? NULL;
     if (!$form_type || !isset($form_type['id'])) {
       throw new \InvalidArgumentException(sprintf('Unknown form type id: %s', (string) $form_type_id));
@@ -128,6 +113,20 @@ final class FormSettingsService implements FormSettingsServiceInterface {
       if (!isset($settings[$suffix])) {
         $settings[$suffix] = json_decode($data, TRUE);
       }
+    }
+
+
+    $storage = $this->entityTypeManager->getStorage('application_metadata');
+    $matches = $storage->loadByProperties([
+      'application_type_id' => $form_type_id,
+    ]);
+    $application_metadata = reset($matches);
+    $settings = [];
+
+    // Load application metadata if available and set it to settings.
+    /** @var \Drupal\grants_application\Entity\ApplicationMetadata $application_metadata */
+    if ($application_metadata) {
+      $settings['settings'] = $application_metadata->getMetadata();
     }
 
     $settings['translation'] = $this->combineTranslations($settings['translation']);
@@ -244,7 +243,12 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    * Read the dummy hardcoded form from json files.
    */
   private function getSettingsFiles(): array {
-    return ['settings', 'schema', 'uiSchema', 'translation'];
+    $files = ['schema', 'uiSchema', 'translation'];
+    if (env('APP_ENV') !== 'production') {
+      $files[] = 'settings';
+    }
+
+    return $files;
   }
 
   /**
