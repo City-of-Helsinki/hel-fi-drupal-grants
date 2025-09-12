@@ -100,7 +100,6 @@ final class FormSettingsService implements FormSettingsServiceInterface {
   public function getFormSettings(int|string $form_type_id): FormSettings {
     $storage = $this->entityTypeManager->getStorage('application_metadata');
     $matches = $storage->loadByProperties([
-      // For simple fields, the main property ('value') is implied.
       'application_type_id' => $form_type_id,
     ]);
     $application_metadata = reset($matches);
