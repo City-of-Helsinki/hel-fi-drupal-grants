@@ -115,7 +115,6 @@ final class FormSettingsService implements FormSettingsServiceInterface {
       }
     }
 
-
     $storage = $this->entityTypeManager->getStorage('application_metadata');
     $matches = $storage->loadByProperties([
       'application_type_id' => $form_type_id,
@@ -127,6 +126,9 @@ final class FormSettingsService implements FormSettingsServiceInterface {
     /** @var \Drupal\grants_application\Entity\ApplicationMetadata $application_metadata */
     if ($application_metadata) {
       $settings['settings'] = $application_metadata->getMetadata();
+    }
+    else {
+      throw new \Exception('Unable to load application metadata');
     }
 
     $settings['translation'] = $this->combineTranslations($settings['translation']);
