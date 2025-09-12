@@ -127,8 +127,9 @@ final class FormSettingsService implements FormSettingsServiceInterface {
     if ($application_metadata) {
       $settings['settings'] = $application_metadata->getMetadata();
     }
-    else {
-      throw new \Exception('Unable to load application metadata');
+
+    if (!$settings['settings']) {
+      throw new \Exception("Unable to load settings for form $form_type_id");
     }
 
     $settings['translation'] = $this->combineTranslations($settings['translation']);
