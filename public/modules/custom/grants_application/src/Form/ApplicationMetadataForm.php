@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Form;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
@@ -17,21 +16,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 final class ApplicationMetadataForm extends ContentEntityForm {
 
-  /**
-   * The config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
   public function __construct(
     EntityRepositoryInterface $entity_repository,
     EntityTypeBundleInfoInterface $entity_type_bundle_info,
     TimeInterface $time,
-    ConfigFactoryInterface $config_factory,
+    protected FormSettingsService $formSettingsService,
   ) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
-    $this->configFactory = $config_factory;
   }
 
   /**
@@ -42,7 +33,7 @@ final class ApplicationMetadataForm extends ContentEntityForm {
       $container->get('entity.repository'),
       $container->get('entity_type.bundle.info'),
       $container->get('datetime.time'),
-      $container->get('config.factory'),
+      $container->get(FormSettingsServiceInterface::class),
     );
   }
 
@@ -60,7 +51,8 @@ final class ApplicationMetadataForm extends ContentEntityForm {
     $form = parent::buildForm($form, $form_state);
     $form['label']['widget'][0]['value']['#description'] = $this->t('Application label will be auto-filled on submit based on Application type.');
 
-    $application_types = $this->configFactory->getEditable('grants_application.settings')->get('application_types') ?? [];
+    $types = $this->formSettingsService->getFormConfig('form_types');
+    $application_types = $this->formSettingsService->getLabels($types) ?? [];
 
     // Attach JS/CSS libraries.
     $form['#attached']['library'][] = 'grants_application/application_metadata_form';
