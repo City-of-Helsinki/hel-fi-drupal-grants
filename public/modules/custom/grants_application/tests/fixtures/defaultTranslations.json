@@ -1,0 +1,11 @@
+{
+  "common": {
+    "submit": {
+      "labels": {
+        "en": "Submit",
+        "fi": "Lähetä",
+        "sv": "Skicka"
+      }
+    }
+  }
+}
