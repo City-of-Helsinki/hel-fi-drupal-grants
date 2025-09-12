@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\grants_application\Kernel\Form;
 
 use Drupal\Core\Form\FormState;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 
 /**
@@ -14,6 +15,16 @@ use Drupal\Tests\grants_application\Kernel\KernelTestBase;
  * @group grants_application
  */
 final class ApplicationMetadataFormTest extends KernelTestBase {
+
+  /**
+   * The form settings service being tested.
+   */
+  private FormSettingsService $service;
+
+  /**
+   * The directory path containing test fixtures.
+   */
+  private string $fixturesDir;
 
   /**
    * {@inheritdoc}
@@ -26,16 +37,20 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     $this->installConfig(['system', 'datetime']);
     $this->installEntitySchema('application_metadata');
 
-    // Set up test configuration for the form.
-    $this->config('grants_application.settings')
-      ->set('application_types', [
-        10 => ['id' => 'TEST10APPLICATION', 'code' => 'TEST10', 'labels' => ['fi' => 'Test 10']],
-        20 => ['id' => 'TEST20APPLICATION', 'code' => 'TEST20', 'labels' => ['fi' => 'Test 20']],
-      ])
-      ->set('applicant_types', ['test_applicant_type' => 'Test Applicant Type'])
-      ->set('application_industries', ['industry' => 'Industry'])
-      ->set('subvention_types', [1 => 'Type 1', 2 => 'Type 2'])
-      ->save();
+    // Point the service to tests/fixtures/ paths for test data.
+    $this->fixturesDir = dirname(__DIR__, 3) . '/fixtures';
+
+    $this->service = new FormSettingsService(
+      $this->container->get('entity_type.manager'),
+      $this->container->get('extension.list.module'),
+      $this->container->get('language_manager'),
+      $this->fixturesDir,
+      $this->fixturesDir,
+    );
+
+    // Override the real service so forms resolve this one.
+    $this->container->set(FormSettingsService::class, $this->service);
+    \Drupal::setContainer($this->container);
   }
 
   /**
@@ -90,15 +105,15 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     $form_state = new FormState();
     $form = $form_builder->buildForm($form_object, $form_state);
 
-    // Set the application type values to match the test configuration.
-    $form_state->setValue('application_type_select', 10);
+    // Use the test123application ID from our fixtures.
+    $form_state->setValue('application_type_select', '123');
 
     // These values should be set by the form's JavaScript based on
     // application_type_select. But for the test, we need to set them directly.
     $form_state->setValue('label', [['value' => 'Test Application']]);
-    $form_state->setValue('application_type', [['value' => 'TEST10APPLICATION']]);
-    $form_state->setValue('application_type_id', [['value' => '10']]);
-    $form_state->setValue('application_industry', 'industry');
+    $form_state->setValue('application_type', [['value' => 'TEST123APPLICATION']]);
+    $form_state->setValue('application_type_id', [['value' => '123']]);
+    $form_state->setValue('application_industry', 'TESTINDUSTRY');
 
     // Set multi-value fields.
     $form_state->setValueForElement($form['applicant_types']['widget'], ['test_applicant_type']);
@@ -150,8 +165,8 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     $entity = reset($entities);
 
     // Verify field values match what we submitted.
-    $this->assertEquals('TEST10APPLICATION', $entity->get('application_type')->value);
-    $this->assertEquals('10', $entity->get('application_type_id')->value);
+    $this->assertEquals('TEST123APPLICATION', $entity->get('application_type')->value);
+    $this->assertEquals('123', $entity->get('application_type_id')->value);
     $this->assertTrue((bool) $entity->get('application_continuous')->value);
     $this->assertFalse((bool) $entity->get('disable_copying')->value);
   }
@@ -177,20 +192,7 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     // The form should attach application types in the format
     // expected by the frontend.
     $expected_types = [
-      '10' => [
-        'id' => 'TEST10APPLICATION',
-        'code' => 'TEST10',
-        'labels' => [
-          'fi' => 'Test 10',
-        ],
-      ],
-      '20' => [
-        'id' => 'TEST20APPLICATION',
-        'code' => 'TEST20',
-        'labels' => [
-          'fi' => 'Test 20',
-        ],
-      ],
+      '123' => 'Test 123 application',
     ];
     $this->assertEquals(
       $expected_types,
