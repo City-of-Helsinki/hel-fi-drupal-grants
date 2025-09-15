@@ -107,8 +107,8 @@ final class FormSettingsService implements FormSettingsServiceInterface {
 
     // Load all the required settings from fixtures.
     foreach ($this->getSettingsFiles() as $suffix) {
-      $pathToFile = sprintf('%s/%s/%s.json', $this->fixturesDir, $form_name, $suffix);
-      $data = file_get_contents(strtolower($pathToFile)) ?: '{}';
+      $pathToFile = sprintf('%s/%s/%s.json', $this->fixturesDir, strtolower($form_name), $suffix);
+      $data = file_get_contents($pathToFile) ?: '{}';
 
       if (!isset($settings[$suffix])) {
         $settings[$suffix] = json_decode($data, TRUE);
