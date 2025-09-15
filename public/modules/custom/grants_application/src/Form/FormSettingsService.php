@@ -250,7 +250,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
     $path = $this->fixturesDir . '/defaultTranslations.json';
     $default = file_get_contents($path);
     $defaultTranslations = $default !== FALSE ? json_decode($default, TRUE) : [];
-    return array_merge_recursive($defaultTranslations, $translations);
+    return array_replace_recursive($defaultTranslations, $translations);
   }
 
   /**
