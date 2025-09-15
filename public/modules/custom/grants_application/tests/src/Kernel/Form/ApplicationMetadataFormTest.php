@@ -192,7 +192,15 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     // The form should attach application types in the format
     // expected by the frontend.
     $expected_types = [
-      '123' => 'Test 123 application',
+      '123' => [
+        'id' => 'TEST123APPLICATION',
+        'code' => 'TESTAPPLICATION',
+        'labels' => [
+          'en' => 'Test 123 application',
+          'fi' => 'Testi 123 hakemus',
+          'sv' => 'Test 123 ansöknings',
+        ],
+      ],
     ];
     $this->assertEquals(
       $expected_types,
