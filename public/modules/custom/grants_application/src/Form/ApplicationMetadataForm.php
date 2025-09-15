@@ -51,8 +51,7 @@ final class ApplicationMetadataForm extends ContentEntityForm {
     $form = parent::buildForm($form, $form_state);
     $form['label']['widget'][0]['value']['#description'] = $this->t('Application label will be auto-filled on submit based on Application type.');
 
-    $types = $this->formSettingsService->getFormConfig('form_types');
-    $application_types = $this->formSettingsService->getLabels($types) ?? [];
+    $application_types = $this->formSettingsService->getFormConfig('form_types');
 
     // Attach JS/CSS libraries.
     $form['#attached']['library'][] = 'grants_application/application_metadata_form';
