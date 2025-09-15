@@ -10,7 +10,6 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\grants_application\Entity\ApplicationMetadata;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
 /**
  * A class for retrieving form specific settings.
