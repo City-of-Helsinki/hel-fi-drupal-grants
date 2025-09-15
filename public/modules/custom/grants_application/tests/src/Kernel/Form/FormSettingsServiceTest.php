@@ -136,6 +136,62 @@ final class FormSettingsServiceTest extends KernelTestBase {
   }
 
   /**
+   * Tests that the method handles invalid entries in the input array.
+   */
+  protected function testGetLabelsMultipleItemsHandlesInvalidEntries(): void {
+    $service = $this->createServiceWithLanguage('en');
+    $section = [
+      'valid' => ['labels' => ['en' => 'OK']],
+      'invalid' => ['foo' => 'bar'],
+    ];
+
+    $labels = $service->getLabels($section);
+
+    $this->assertSame('OK', $labels['valid']);
+    $this->assertSame([], $labels['invalid']);
+    $this->assertSame('', $service->getLabels(NULL));
+  }
+
+  /**
+   * Tests that settings.json is loaded when not in production.
+   */
+  protected function testFormSettingsLoadsSettingsWhenNotProduction(): void {
+    putenv('APP_ENV=dev');
+    $this->createApplicationMetadataEntity();
+    $settings = $this->service->getFormSettings(123)->toArray();
+
+    // In non-production, settings.json fixture should be read.
+    $this->assertArrayHasKey('title', $settings['settings']);
+    $this->assertSame('Test application (fixture)', $settings['settings']['title']);
+    putenv('APP_ENV');
+  }
+
+  /**
+   * Tests that settings.json is not loaded when in production.
+   */
+  public function testFormSettingsDoesNotLoadSettingsInProduction(): void {
+    putenv('APP_ENV=production');
+    $this->createApplicationMetadataEntity();
+    $settings = $this->service->getFormSettings(123)->toArray();
+
+    // In production, settings.json should NOT be included.
+    $this->assertArrayHasKey('title', $settings['settings']);
+    $this->assertSame('Test application', $settings['settings']['title']);
+    putenv('APP_ENV');
+  }
+
+  /**
+   * Tests that an exception is thrown when settings are not found.
+   */
+  public function testFormSettings(): void {
+    putenv('APP_ENV=production');
+    $this->expectException(\Exception::class);
+    $this->expectExceptionMessage('Unable to load settings for form 123.');
+    $this->service->getFormSettings(123);
+    putenv('APP_ENV');
+  }
+
+  /**
    * Helper to create the service with a forced interface language.
    */
   private function createServiceWithLanguage(string $langcode): FormSettingsService {
@@ -154,6 +210,23 @@ final class FormSettingsServiceTest extends KernelTestBase {
       $this->fixturesDir,
       $this->fixturesDir,
     );
+  }
+
+  /**
+   * Helper function to create an application metadata entity.
+   */
+  private function createApplicationMetadataEntity(): void {
+    // Create an entity with all fields populated.
+    /** @var \Drupal\grants_application\Entity\ApplicationMetadata $entity */
+    $entity = $this->container->get('entity_type.manager')
+      ->getStorage('application_metadata')
+      ->create([
+        'label' => 'Test application',
+        'status' => TRUE,
+        'uid' => 1,
+        'application_type_id' => 123,
+      ]);
+    $entity->save();
   }
 
 }
