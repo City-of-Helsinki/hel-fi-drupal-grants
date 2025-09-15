@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\grants_application\Entity\ApplicationMetadata;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
@@ -109,6 +110,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
       throw new \InvalidArgumentException(sprintf('Unknown form type id: %s', (string) $form_type_id));
     }
     $form_name = $form_type['id'];
+    $settings = [];
 
     // Load all the required settings from fixtures.
     foreach ($this->getSettingsFiles() as $suffix) {
@@ -120,23 +122,22 @@ final class FormSettingsService implements FormSettingsServiceInterface {
       }
     }
 
-    $storage = $this->entityTypeManager->getStorage('application_metadata');
-    $matches = $storage->loadByProperties([
-      'application_type_id' => $form_type_id,
-    ]);
-    $application_metadata = reset($matches);
-    $settings = [];
-
     // Load application metadata if available and set it to settings.
+    $storage = $this->entityTypeManager->getStorage('application_metadata');
+    $matches = $storage->loadByProperties(['application_type_id' => $form_type_id]);
+    $application_metadata = reset($matches);
+
     /** @var \Drupal\grants_application\Entity\ApplicationMetadata $application_metadata */
-    if ($application_metadata) {
+    if ($application_metadata instanceof ApplicationMetadata) {
       $settings['settings'] = $application_metadata->getMetadata();
     }
 
-    if (!$settings['settings']) {
-      throw new \Exception("Unable to load settings for form $form_type_id");
+    // Throw an exception if settings are not found.
+    if (!isset($settings['settings'])) {
+      throw new \Exception("Unable to load settings for form $form_type_id.");
     }
 
+    // Combine form specific translations with default translations.
     $settings['translation'] = $this->combineTranslations($settings['translation']);
 
     return new FormSettings(...$settings);
@@ -257,7 +258,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    */
   private function getSettingsFiles(): array {
     $files = ['schema', 'uiSchema', 'translation'];
-    if (env('APP_ENV') !== 'production') {
+    if (getenv('APP_ENV') !== 'production') {
       $files[] = 'settings';
     }
 
