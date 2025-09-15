@@ -9,6 +9,7 @@ services:
 
   Drupal\grants_application\Form\FormSettingsService: ~
   Drupal\grants_application\Form\ApplicationNumberService: ~
+  Drupal\grants_application\Form\ApplicationMetadataForm: ~
 
   Drupal\grants_application\User\UserInformationService: ~
 
