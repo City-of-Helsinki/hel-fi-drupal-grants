@@ -95,8 +95,13 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    *   schema and translations.
    *
    * @throws \InvalidArgumentException
-   *   Thrown when the specified form type ID is not found in the configuration
-   *   or when the form type configuration is invalid.
+   *   When the specified form type ID is not found in the configuration.
+   * @throws \RuntimeException
+   *   When there's an error reading the form configuration files.
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   *   When the application_metadata entity type is not found.
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   *   When the application_metadata entity type is not valid.
    */
   public function getFormSettings(int|string $form_type_id): FormSettings {
     $form_type = $this->formTypes[$form_type_id] ?? NULL;
@@ -145,6 +150,11 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    *
    * @return bool
    *   Application is open.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   *   When the application_metadata entity type is not valid.
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   *   When the application_metadata entity type is not found.
    */
   public function isApplicationOpen(int $id): bool {
     return $this->getFormSettings($id)->isApplicationOpen();
