@@ -36,7 +36,7 @@ entity.application_metadata.collection:
     _entity_list: 'application_metadata'
     _title: 'Application Metadata'
   requirements:
-    _permission: 'administer application metadata'
+    _permission: 'access application_metadata overview'
 
 entity.application_metadata.canonical:
   path: '/admin/tools/application-metadata/{application_metadata}'
@@ -46,7 +46,6 @@ entity.application_metadata.canonical:
     _title: 'Application metadata'
   requirements:
     _entity_access: 'application_metadata.view'
-    _permission: 'view application metadata'
   options:
     parameters:
       application_metadata:

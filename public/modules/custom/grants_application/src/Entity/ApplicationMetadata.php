@@ -36,13 +36,13 @@ use Drupal\user\EntityOwnerTrait;
  *     "permission_provider" = "Drupal\entity\EntityPermissionProvider",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "route_provider" = {
- *       "revision" = "\Drupal\entity\Routing\RevisionRouteProvider",
+ *       "revision" = "Drupal\entity\Routing\RevisionRouteProvider",
  *     },
  *     "local_action_provider" = {
- *       "collection" = "\Drupal\entity\Menu\EntityCollectionLocalActionProvider",
+ *       "collection" = "Drupal\entity\Menu\EntityCollectionLocalActionProvider",
  *     },
  *     "local_task_provider" = {
- *       "default" = "\Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
+ *       "default" = "Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
  *     },
  *   },
  *   base_table = "application_metadata",
@@ -51,6 +51,7 @@ use Drupal\user\EntityOwnerTrait;
  *   revision_data_table = "application_metadata_field_revision",
  *   show_revision_ui = TRUE,
  *   translatable = FALSE,
+ *   admin_permission = "administer application_metadata",
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
