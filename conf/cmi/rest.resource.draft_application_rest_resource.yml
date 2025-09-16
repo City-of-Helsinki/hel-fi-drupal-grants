@@ -1,0 +1,29 @@
+uuid: 550d4075-e05e-4c00-9846-ad5c79a6c3c1
+langcode: en
+status: true
+dependencies:
+  module:
+    - grants_application
+    - serialization
+    - user
+_core:
+  default_config_hash: VizH3yvgIi80DiB3RDFmu8x_oWNpzRXDJJrmaijsn8E
+id: draft_application_rest_resource
+plugin_id: draft_application_rest_resource
+granularity: method
+configuration:
+  GET:
+    supported_formats:
+      - json
+    supported_auth:
+      - cookie
+  POST:
+    supported_formats:
+      - json
+    supported_auth:
+      - cookie
+  PATCH:
+    supported_formats:
+      - json
+    supported_auth:
+      - cookie
