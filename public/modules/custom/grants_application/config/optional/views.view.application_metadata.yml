@@ -632,7 +632,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'administer application metadata'
+          perm: 'access application_metadata overview'
       cache:
         type: tag
         options: {  }

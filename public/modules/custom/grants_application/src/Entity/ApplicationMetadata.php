@@ -50,7 +50,6 @@ use Drupal\user\EntityOwnerTrait;
  *   revision_table = "application_metadata_revision",
  *   revision_data_table = "application_metadata_field_revision",
  *   show_revision_ui = TRUE,
- *   admin_permission = "administer application metadata",
  *   translatable = FALSE,
  *   entity_keys = {
  *     "id" = "id",
