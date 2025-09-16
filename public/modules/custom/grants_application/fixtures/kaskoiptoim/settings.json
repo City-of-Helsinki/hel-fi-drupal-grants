@@ -3,19 +3,12 @@
   "description": "KASKOIPTOIM",
   "application_type": "KASKOIPTOIM",
   "application_type_id": 52,
-  "application_industry": "KASKO",
   "application_open": "2025-01-10T00:00:00",
   "application_close": "2026-12-15T23:59:59",
   "applicant_types": [
     "registered_community"
   ],
-  "application_type_terms": [
-    45
-  ],
   "subvention_type": [
-    45
-  ],
-  "taa_siis_on_avustuslaji_suomeksi": [
     45
   ],
   "target_group": 21,
