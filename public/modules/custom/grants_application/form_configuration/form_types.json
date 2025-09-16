@@ -1,0 +1,245 @@
+{
+  "29": {
+    "id": "ECONOMICGRANTAPPLICATION",
+    "code": "YLEIS",
+    "labels": {
+      "fi": "Kaupunginhallitus, yleisavustushakemus",
+      "en": "City Board, general grant application",
+      "sv": "Stadsstyrelsen, allmän bidragsansökan"
+    }
+  },
+  "47": {
+    "id": "KUVATOIM",
+    "code": "KUVATOIM",
+    "labels": {
+      "fi": "Taide- ja kulttuuriavustukset: toiminta-avustukset",
+      "en": "Arts and culture grants: Operational grants",
+      "sv": "Understöd för konst och kultur: Verksamhetsunderstöd"
+    }
+  },
+  "48": {
+    "id": "KUVAPROJ",
+    "code": "KUVAPROJ",
+    "labels": {
+      "fi": "Taide- ja kulttuuriavustukset: projektiavustukset",
+      "en": "Arts and culture grants: Project grants",
+      "sv": "Understöd för konst och kultur: Projektstöd"
+    }
+  },
+  "49": {
+    "id": "KUVAKEHA",
+    "code": "KUVAKEHA",
+    "labels": {
+      "fi": "Kulttuurin kehittämisavustukset",
+      "en": "Development grants for culture",
+      "sv": "Utvecklingsstöd för kultur"
+    }
+  },
+  "50": {
+    "id": "KUVAPERUS",
+    "code": "KUVAPERUS",
+    "labels": {
+      "fi": "Taiteen perusopetuksen avustukset",
+      "en": "Basic arts education grants",
+      "sv": "Stöd för grundläggande konstundervisning"
+    }
+  },
+  "51": {
+    "id": "KASKOYLEIS",
+    "code": "KASKOYLEIS",
+    "labels": {
+      "fi": "Kasvatus ja koulutus, yleisavustushakemus",
+      "en": "Education, general grant application",
+      "sv": "Fostran och utbildning, allmän bidragsansökan"
+    }
+  },
+  "52": {
+    "id": "KASKOIPTOIM",
+    "code": "KASKOIPTOIM",
+    "labels": {
+      "fi": "Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille",
+      "en": "Education, grant application for organisers of afternoon activities for school children",
+      "sv": "Fostran och utbildning, ansökan om verksamhetsbidrag för organisatörer av eftermiddagsverksamhet för skolbarn"
+    }
+  },
+  "53": {
+    "id": "KASKOIPLISA",
+    "code": "KASKOIPLISA",
+    "labels": {
+      "fi": "Kasvatus ja koulutus, iltapäivätoiminnan harkinnanvarainen lisäavustushakemus",
+      "en": "Education, supplementary discretionary grant application for afternoon activities",
+      "sv": "Fostran och utbildning, ansökan om extra bidrag enligt behovsprövning för eftermiddagsverksamhet"
+    }
+  },
+  "54": {
+    "id": "KANSLIATYO",
+    "code": "KANSLIATYO",
+    "labels": {
+      "fi": "Kaupunginkanslia, työllisyysavustushakemus",
+      "en": "City Executive Office, employment grant application",
+      "sv": "Stadskansliet, ansökan om sysselsättningsunderstöd"
+    }
+  },
+  "56": {
+    "id": "LIIKUNTAYLEIS",
+    "code": "LIIKUNTAYLEIS",
+    "labels": {
+      "fi": "Liikunta, yleisavustushakemus",
+      "en": "Sports, general grant application",
+      "sv": "Idrott, allmän bidragsansökan"
+    }
+  },
+  "57": {
+    "id": "LIIKUNTALAITOS",
+    "code": "LIIKUNTALAITOS",
+    "labels": {
+      "fi": "Liikunta, laitos- ja säätiöavustukset",
+      "en": "Sports, grants for institutions and foundations",
+      "sv": "Idrott,  bidrag för anstalter och stiftelser"
+    }
+  },
+  "58": {
+    "id": "LIIKUNTASUUNNISTUS",
+    "code": "LIIKUNTASUUNNISTUS",
+    "labels": {
+      "fi": "Liikunta, suunnistuskartta-avustushakemus",
+      "en": "Sports, grant application for orienteering maps",
+      "sv": "Idrott, ansökan om bidrag för orienteringskarta"
+    }
+  },
+  "59": {
+    "id": "LIIKUNTATAPAHTUMA",
+    "code": "LIIKUNTATAPAHTUMA",
+    "labels": {
+      "fi": "Liikunta, tapahtuma-avustushakemus",
+      "en": "Sports, grant application for events",
+      "sv": "Idrott, ansökan om evenemangsbidrag"
+    }
+  },
+  "60": {
+    "id": "LIIKUNTATILANKAYTTO",
+    "code": "LIIKUNTATILANKAYTTO",
+    "labels": {
+      "fi": "Liikunta, toiminta- ja tilankäyttöavustushakemus",
+      "en": "Sports, grant application for activities and use of space",
+      "sv": "Idrott, ansökan om bidrag för verksamhet och lokaler"
+    }
+  },
+  "61": {
+    "id": "YMPARISTOYLEIS",
+    "code": "YMPARISTOYLEIS",
+    "labels": {
+      "fi": "Ympäristöpalvelut, yleisavustushakemus",
+      "en": "Environmental services, general grant application",
+      "sv": "Miljötjänster, allmän bidragsansökan"
+    }
+  },
+  "62": {
+    "id": "NUORPROJ",
+    "code": "NUORPROJ",
+    "labels": {
+      "fi": "Nuorisotoimi, projektiavustushakemus",
+      "en": "Project grants for youth activities",
+      "sv": "Ungdomsverksamhet, projektunderstöd"
+    }
+  },
+  "63": {
+    "id": "NUORTOIMPALKKA",
+    "code": "NUORTOIMPALKKA",
+    "labels": {
+      "fi": "Nuorisopalvelu, toiminta- ja palkkausavustushakemus",
+      "en": "Youth service, operations and employment grant application",
+      "sv": "Ungdomstjänst, ansökan om verksamhets- och anställningsbidrag"
+    }
+  },
+  "64": {
+    "id": "ASUKASPIEN",
+    "code": "ASUKASPIEN",
+    "labels": {
+      "fi": "Asukasosallisuus, pienavustushakemus",
+      "en": "Citizen Participation, small grant application",
+      "sv": "Invånardelaktighet, ansökan om små bidrag"
+    }
+  },
+  "65": {
+    "id": "NUORLOMALEIR",
+    "code": "NUORLOMALEIR",
+    "labels": {
+      "fi": "Nuorisotoimi, loma-aikojen leiriavustushakemus",
+      "en": "Holiday camp grants for youth activities",
+      "sv": "Ungdomsverksamhet, lägerunderstöd under skollovstider"
+    }
+  },
+  "66": {
+    "id": "NUORTOIMPALKENNAKKO",
+    "code": "NUORTOIMPALKENNAKKO",
+    "labels": {
+      "fi": "Nuorisotoimi, toiminta- ja palkkausavustusennakkohakemus",
+      "en": "Youth service, operations and employment grant advance application",
+      "sv": "Ungdomstjänst, förskottsansökan om verksamhets- och anställningsbidrag"
+    }
+  },
+  "67": {
+    "id": "ASUKASYLEISTOIM",
+    "code": "ASUKASYLEISTOIM",
+    "labels": {
+      "fi": "Asukasosallisuus, yleis- ja toiminta-avustushakemus",
+      "en": "Citizen Participation, general and operational grant application",
+      "sv": "Invånardelaktighet, ansökan om allmänna och verksamhetsbidrag"
+    }
+  },
+  "68": {
+    "id": "HYVINYLEIS",
+    "code": "HYVINYLEIS",
+    "labels": {
+      "fi": "Hyvinvoinnin ja terveyden edistämisen sekä sosiaali-, terveys- ja pelastustoimen yleisavustushakemus",
+      "en": "General grants for welfare and health promotion, social welfare and health care and rescue services",
+      "sv": "Allmänt understöd inom främjandet av välfärd och hälsa och social- och hälsovården samt räddningsväsendet"
+    }
+  },
+  "69": {
+    "id": "LEIRISELVITYS",
+    "code": "LEIRISELVITYS",
+    "labels": {
+      "fi": "Nuorisopalvelu, loma-aikojen leiriavustusselvitys",
+      "en": "Youth service, camp grant report for holiday periods",
+      "sv": "Ungdomstjänst, utredning över lägerbidrag under semestertiden"
+    }
+  },
+  "70": {
+    "id": "KUVAERILLIS",
+    "code": "KUVAERILLIS",
+    "labels": {
+      "fi": "KuvaErillis FI",
+      "en": "KuvaErillis EN",
+      "sv": "KuvaErillis SV"
+    }
+  },
+  "71": {
+    "id": "HYTEEDYLEIS",
+    "code": "HYTEEDYLEIS",
+    "labels": {
+      "fi": "Hyvinvoinnin ja terveyden edistämisen yleisavustus",
+      "en": "General grants for welfare and health promotion",
+      "sv": "Allmänt understöd inom främjandet av välfärd och hälsa"
+    }
+  },
+  "72": {
+    "id": "SOTEPEYLEIS",
+    "code": "SOTEPEYLEIS",
+    "labels": {
+      "fi": "Sosiaali-, terveys- ja pelastustoimen yleisavustus",
+      "en": "EN Sosiaali-, terveys- ja pelastustoimen yleisavustus",
+      "sv": "SV Sosiaali-, terveys- ja pelastustoimen yleisavustus"
+    }
+  },
+  "73": {
+    "id": "NUORLEIRI",
+    "code": "NUORLEIRI",
+    "labels": {
+      "fi": "Nuorisotoiminnan leiriavustushakemus",
+      "en": "Camp grants for youth activities",
+      "sv": "Ungdomsverksamhet, lägerunderstöd"
+    }
+  }
+}

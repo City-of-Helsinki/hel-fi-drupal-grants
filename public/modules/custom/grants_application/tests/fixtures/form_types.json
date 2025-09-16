@@ -1,0 +1,11 @@
+{
+  "123": {
+    "id": "TEST123APPLICATION",
+    "code": "TESTAPPLICATION",
+    "labels": {
+      "fi": "Testi 123 hakemus",
+      "en": "Test 123 application",
+      "sv": "Test 123 ansöknings"
+    }
+  }
+}

@@ -4,6 +4,9 @@ msgstr ""
 msgid "Application metadata"
 msgstr "Hakemuksen asetukset"
 
+msgid "Manage application metadata"
+msgstr "Hallitse hakemusten asetuksia"
+
 msgid "Manage application metadata items"
 msgstr "Hallitse hakemuksen asetuksia"
 
@@ -13,8 +16,11 @@ msgstr "Hakemuksen asetusnimi"
 msgid "Application type"
 msgstr "Hakemustyyppi"
 
-msgid "Application type ID"
+msgid "Application type code"
 msgstr "Hakemuksen tyypin koodi"
+
+msgid "Application type ID"
+msgstr "Hakemuksen tyypin ID"
 
 msgid "Applicant types"
 msgstr "Hakijatyypit"
@@ -54,3 +60,6 @@ msgstr "Muokkaa hakemuksen asetuksia"
 
 msgid "Delete application metadata"
 msgstr "Poista hakemuksen asetukset"
+
+msgid "Saved the application metadata for %label (ID: %id)."
+msgstr "Tallennettu %label (ID: %id) hakemuksen asetukset."
