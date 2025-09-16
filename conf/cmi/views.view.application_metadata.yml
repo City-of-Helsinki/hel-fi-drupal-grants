@@ -1,4 +1,4 @@
-uuid: 3e65ddfa-8626-4281-bd77-2b6a8d9a0379
+uuid: 0c7bd588-d838-46cb-a30f-9e567b763398
 langcode: en
 status: true
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
     - options
     - user
 _core:
-  default_config_hash: TylIDnX_dnHihmTaK3qunAfCrVhPC4QyhjMJy9c_eKs
+  default_config_hash: 9PmRAfpOK_dWRis26ZX_UFve00SjX9Gk0l8HQWRiM7M
 id: application_metadata
 label: 'Application metadata'
 module: views
@@ -22,7 +22,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Application metadata'
+      title: 'Manage application metadata'
       fields:
         label:
           id: label
@@ -99,7 +99,7 @@ display:
           entity_type: application_metadata
           entity_field: application_type
           plugin_id: field
-          label: 'Application type'
+          label: 'Application type code'
           exclude: false
           alter:
             alter_text: false
@@ -641,7 +641,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'administer application metadata'
+          perm: 'access application_metadata overview'
       cache:
         type: tag
         options: {  }

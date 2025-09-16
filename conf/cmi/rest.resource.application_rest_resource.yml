@@ -1,0 +1,29 @@
+uuid: a6bb171b-6419-4654-b35c-bd8f5e7212fe
+langcode: en
+status: true
+dependencies:
+  module:
+    - grants_application
+    - serialization
+    - user
+_core:
+  default_config_hash: 0xVtQ_DOW3NtyI-9giWMIvNE14fuPoAVHdZ90NbV0do
+id: application_rest_resource
+plugin_id: application_rest_resource
+granularity: method
+configuration:
+  GET:
+    supported_formats:
+      - json
+    supported_auth:
+      - cookie
+  POST:
+    supported_formats:
+      - json
+    supported_auth:
+      - cookie
+  PATCH:
+    supported_formats:
+      - json
+    supported_auth:
+      - cookie
