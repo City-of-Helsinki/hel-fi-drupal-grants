@@ -6,7 +6,7 @@
  */
 
 $databases['default']['default']['pdo'] = [
-  \PDO::MYSQL_ATTR_SSL_CA => getenv('AZURE_SQL_SSL_CA_PATH'),
+  \PDO::MYSQL_ATTR_SSL_CA => '/etc/ssl/certs/ca-certificates.crt',
   \PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => FALSE,
 ];
 // Azure specific filesystem fixes.
