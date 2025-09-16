@@ -93,7 +93,7 @@ export const AppContainer = ({
     .use(initReactI18next)
     .init({
       // Enable for additional info. Don't use in prod.
-      debug: true,
+      // debug: true,
       fallbackLng: 'fi',
       lng: drupalSettings.path.currentLanguage,
       resources: data?.translations,
