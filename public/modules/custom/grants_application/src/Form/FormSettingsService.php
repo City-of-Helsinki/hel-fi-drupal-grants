@@ -253,7 +253,10 @@ final class FormSettingsService implements FormSettingsServiceInterface {
   }
 
   /**
-   * Read the dummy hardcoded form from json files.
+   * Get the required setting files for any application.
+   *
+   * @return array
+   *   List of files required by any React-application form.
    */
   private function getSettingsFiles(): array {
     $files = ['schema', 'uiSchema', 'translation'];
