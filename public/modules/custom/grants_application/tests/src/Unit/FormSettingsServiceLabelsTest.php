@@ -61,8 +61,6 @@ final class FormSettingsServiceLabelsTest extends UnitTestCase {
 
   /**
    * Tests the getLabels with single label sections and fallback behavior.
-   *
-   * @covers ::getLabels
    */
   public function testGetLabelsSingleWithFallbacks(): void {
     $service = $this->buildService('fi');
@@ -90,8 +88,6 @@ final class FormSettingsServiceLabelsTest extends UnitTestCase {
    *   language preferences.
    * - The array keys are preserved in the returned result.
    * - Language fallback works as expected.
-   *
-   * @covers ::getLabels
    */
   public function testGetLabelsMultiplePreservesKeys(): void {
     $service = $this->buildService('fi');
