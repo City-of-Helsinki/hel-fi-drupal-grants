@@ -60,3 +60,6 @@ msgstr "Redigera ansöknings inställningar"
 
 msgid "Delete application metadata"
 msgstr "Radera ansöknings inställningar"
+
+msgid "Saved the application metadata for %label (ID: %id)."
+msgstr "Sparade ansöknings inställningar för %label (ID: %id)."
