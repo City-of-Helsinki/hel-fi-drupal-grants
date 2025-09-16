@@ -8,8 +8,8 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\grants_application\Entity\ApplicationMetadata;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
 /**
  * A class for retrieving form specific settings.
@@ -95,8 +95,13 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    *   schema and translations.
    *
    * @throws \InvalidArgumentException
-   *   Thrown when the specified form type ID is not found in the configuration
-   *   or when the form type configuration is invalid.
+   *   When the specified form type ID is not found in the configuration.
+   * @throws \RuntimeException
+   *   When there's an error reading the form configuration files.
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   *   When the application_metadata entity type is not found.
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   *   When the application_metadata entity type is not valid.
    */
   public function getFormSettings(int|string $form_type_id): FormSettings {
     $form_type = $this->formTypes[$form_type_id] ?? NULL;
@@ -104,34 +109,34 @@ final class FormSettingsService implements FormSettingsServiceInterface {
       throw new \InvalidArgumentException(sprintf('Unknown form type id: %s', (string) $form_type_id));
     }
     $form_name = $form_type['id'];
+    $settings = [];
 
     // Load all the required settings from fixtures.
     foreach ($this->getSettingsFiles() as $suffix) {
-      $pathToFile = sprintf('%s/%s/%s.json', $this->fixturesDir, $form_name, $suffix);
-      $data = file_get_contents(strtolower($pathToFile)) ?: '{}';
+      $pathToFile = sprintf('%s/%s/%s.json', $this->fixturesDir, strtolower($form_name), $suffix);
+      $data = file_get_contents($pathToFile) ?: '{}';
 
       if (!isset($settings[$suffix])) {
         $settings[$suffix] = json_decode($data, TRUE);
       }
     }
 
-    $storage = $this->entityTypeManager->getStorage('application_metadata');
-    $matches = $storage->loadByProperties([
-      'application_type_id' => $form_type_id,
-    ]);
-    $application_metadata = reset($matches);
-    $settings = [];
-
     // Load application metadata if available and set it to settings.
+    $storage = $this->entityTypeManager->getStorage('application_metadata');
+    $matches = $storage->loadByProperties(['application_type_id' => $form_type_id]);
+    $application_metadata = reset($matches);
+
     /** @var \Drupal\grants_application\Entity\ApplicationMetadata $application_metadata */
-    if ($application_metadata) {
+    if ($application_metadata instanceof ApplicationMetadata) {
       $settings['settings'] = $application_metadata->getMetadata();
     }
 
-    if (!$settings['settings']) {
-      throw new \Exception("Unable to load settings for form $form_type_id");
+    // Throw an exception if settings are not found.
+    if (!isset($settings['settings'])) {
+      throw new \Exception("Unable to load settings for form $form_type_id.");
     }
 
+    // Combine form specific translations with default translations.
     $settings['translation'] = $this->combineTranslations($settings['translation']);
 
     return new FormSettings(...$settings);
@@ -145,6 +150,11 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    *
    * @return bool
    *   Application is open.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   *   When the application_metadata entity type is not valid.
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   *   When the application_metadata entity type is not found.
    */
   public function isApplicationOpen(int $id): bool {
     return $this->getFormSettings($id)->isApplicationOpen();
@@ -239,7 +249,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
     $path = $this->fixturesDir . '/defaultTranslations.json';
     $default = file_get_contents($path);
     $defaultTranslations = $default !== FALSE ? json_decode($default, TRUE) : [];
-    return array_merge_recursive($defaultTranslations, $translations);
+    return array_replace_recursive($defaultTranslations, $translations);
   }
 
   /**
@@ -250,7 +260,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    */
   private function getSettingsFiles(): array {
     $files = ['schema', 'uiSchema', 'translation'];
-    if (env('APP_ENV') !== 'production') {
+    if (getenv('APP_ENV') !== 'production') {
       $files[] = 'settings';
     }
 

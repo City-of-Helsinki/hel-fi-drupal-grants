@@ -19,7 +19,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Application metadata'
+      title: 'Manage application metadata'
       fields:
         label:
           id: label
@@ -96,7 +96,7 @@ display:
           entity_type: application_metadata
           entity_field: application_type
           plugin_id: field
-          label: 'Application type'
+          label: 'Application type code'
           exclude: false
           alter:
             alter_text: false

@@ -76,8 +76,49 @@ TBD
 #### Mapping
 TBD
 
-#### Service page settings entity and file
-TBD
+#### Service page settings entity and fixtures
+
+Service page settings entity (Application metadata) defines the configuration and settings for different types of grant applications. It stores essential information that controls how applications are processed and displayed.
+
+##### Data Structure
+
+Application types are defined in `form_configuration/form_types.json`.
+Grants / Application industries, applicant types, application statuses and subvention types are defined in `form_configuration/form_configuration.json`.
+
+The entity contains the following key fields:
+
+- **Application Type**: The type of application (selected from a predefined list)
+- **Application Name**: Human-readable name of the application (used in UI for admins)
+- **Application Type Code**: Machine-readable code for the application type
+- **Application Type ID**: Unique identifier for the application type
+- **Grants Industry**: Industry/category the grant belongs to
+- **Applicant Types**: Types of applicants eligible for this application (multiple selection)
+- **Subvention Type**: Type of financial support provided (multiple selection)
+- **Target Group**: Intended audience/beneficiaries of the grant
+- **Application Period**: Open and close dates for applications
+- **Continuous Application**: Whether applications are accepted on an ongoing basis
+- **Disable Copying**: Option to prevent copying this application
+
+##### Application Metadata Entity
+
+All application metadata entities are listed in `/admin/tools/application-metadata`.
+
+1. **Creating a New Application Metadata**
+   - Navigate to `/admin/tools/application-metadata/add`
+   - Select application type from the list
+     - Application name, application type code and application type ID are autofilled based on the selected application type
+   - Fill in the rest of the fields
+
+##### Fixtures (Development/Testing Only)
+
+Fixtures are automatically loaded in non-production environments, and they provide default values when no entity exists. If application metadata entity has been created for the application type, the fixture values are ignored. Fixtures are always ignored in production.
+
+Place fixture files in `fixtures/{application_type}/`.
+Required files:
+ - `schema.json`: Form schema definition
+ - `uiSchema.json`: UI configuration
+ - `translation.json`: Translation strings
+ - `settings.json`: Application settings
 
 #### Translations
 TBD

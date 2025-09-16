@@ -1,6 +1,6 @@
 /**
  * @file
- * Autofill hidden application metadata fields based on a select choice.
+ * Autofill "readonly" application metadata fields based on a select choice.
  */
 ((Drupal, drupalSettings, once) => {
   Drupal.behaviors.applicationMetadataForm = {

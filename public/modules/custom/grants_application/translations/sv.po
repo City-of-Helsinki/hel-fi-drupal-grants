@@ -4,6 +4,9 @@ msgstr ""
 msgid "Application metadata"
 msgstr "Ansöknings inställningar"
 
+msgid "Manage application metadata"
+msgstr "Hantera ansöknings inställningar"
+
 msgid "Manage application metadata items"
 msgstr "Hantera ansöknings inställningar"
 
@@ -12,6 +15,9 @@ msgstr "Ansöknings inställningsnamn"
 
 msgid "Application type"
 msgstr "Ansökningstyp"
+
+msgid "Application type code"
+msgstr "Ansökningstyp-kod"
 
 msgid "Application type ID"
 msgstr "Ansökningstyp-ID"
