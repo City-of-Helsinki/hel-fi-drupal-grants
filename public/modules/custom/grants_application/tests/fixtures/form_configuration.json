@@ -1,0 +1,34 @@
+{
+  "application_industries": {
+    "TESTINDUSTRY": {
+      "labels": {
+        "und": "TESTINDUSTRY"
+      }
+    }
+  },
+  "applicant_types": {
+    "test_applicant_type": {
+      "labels": {
+        "en": "Test",
+        "fi": "Testi",
+        "sv": "Test"
+      }
+    }
+  },
+  "application_statuses": {
+    "TEMPSTATUS": {
+      "labels": {
+        "und": "TEMPSTATUS"
+      }
+    }
+  },
+  "subvention_types": {
+    "1": {
+      "labels": {
+        "en": "Subvention type",
+        "fi": "Avustuslaji",
+        "sv": "Typ av bidrag"
+      }
+    }
+  }
+}

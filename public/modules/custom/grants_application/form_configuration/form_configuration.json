@@ -1,0 +1,367 @@
+{
+  "application_industries": {
+    "KYMP": {
+      "labels": {
+        "und": "KYMP"
+      }
+    },
+    "SOTE": {
+      "labels": {
+        "und": "SOTE"
+      }
+    },
+    "KANSLIA": {
+      "labels": {
+        "und": "KANSLIA"
+      }
+    },
+    "PEL": {
+      "labels": {
+        "und": "PEL"
+      }
+    },
+    "KUVA": {
+      "labels": {
+        "und": "KUVA"
+      }
+    },
+    "KASKO": {
+      "labels": {
+        "und": "KASKO"
+      }
+    }
+  },
+  "applicant_types": {
+    "registered_community": {
+      "labels": {
+        "en": "Registered community",
+        "fi": "Rekisteröity yhdistys",
+        "sv": "Registrerad gemenskap"
+      }
+    },
+    "unregistered_community": {
+      "labels": {
+        "en": "Unregistered community or group",
+        "fi": "Rekisteröitymätön yhteisö tai ryhmä",
+        "sv": "Icke-registrerad förening eller verksamhetsgrupp"
+      }
+    },
+    "private_person": {
+      "labels": {
+        "en": "Private person",
+        "fi": "Yksityishenkilö",
+        "sv": "Privatperson"
+      }
+    }
+  },
+  "application_statuses": {
+    "DRAFT": {
+      "labels": {
+        "und": "DRAFT"
+      }
+    },
+    "SUBMITTED": {
+      "labels": {
+        "und": "SUBMITTED"
+      }
+    },
+    "RECEIVED": {
+      "labels": {
+        "und": "RECEIVED"
+      }
+    },
+    "PREPARING": {
+      "labels": {
+        "und": "PREPARING"
+      }
+    },
+    "PENDING": {
+      "labels": {
+        "und": "PENDING"
+      }
+    },
+    "PROCESSING": {
+      "labels": {
+        "und": "PROCESSING"
+      }
+    },
+    "CANCELLED": {
+      "labels": {
+        "und": "CANCELLED"
+      }
+    },
+    "RESOLVED": {
+      "labels": {
+        "und": "RESOLVED"
+      }
+    }
+  },
+  "subvention_types": {
+    "1": {
+      "labels": {
+        "en": "Operating grant",
+        "fi": "Toiminta-avustus",
+        "sv": "Verksamhetsunderstöd"
+      }
+    },
+    "2": {
+      "labels": {
+        "en": "Wage subsidy",
+        "fi": "Palkkausavustus",
+        "sv": "Löneunderstöd"
+      }
+    },
+    "4": {
+      "labels": {
+        "en": "Project grant",
+        "fi": "Projektiavustus",
+        "sv": "Projektunderstöd"
+      }
+    },
+    "5": {
+      "labels": {
+        "en": "Rent subsidy",
+        "fi": "Vuokra-avustus",
+        "sv": "Hyresunderstöd"
+      }
+    },
+    "6": {
+      "labels": {
+        "en": "General grant",
+        "fi": "Yleisavustus",
+        "sv": "Allmänt understöd"
+      }
+    },
+    "7": {
+      "labels": {
+        "en": "Education grant for unemployed",
+        "fi": "Työttömien koulutusavustus",
+        "sv": "Utbildningsbidrag för arbetslösa"
+      }
+    },
+    "8": {
+      "labels": {
+        "en": "Interests and installments",
+        "fi": "Korot ja lyhennykset",
+        "sv": "Räntor och amorteringar"
+      }
+    },
+    "9": {
+      "labels": {
+        "en": "Other",
+        "fi": "Muu",
+        "sv": "Annan"
+      }
+    },
+    "11": {
+      "labels": {
+        "en": "Transport subsidy",
+        "fi": "Kuljetusavustus",
+        "sv": "Transportunderstöd"
+      }
+    },
+    "12": {
+      "labels": {
+        "en": "Camp grant",
+        "fi": "Leiriavustus",
+        "sv": "Lägerunderstöd"
+      }
+    },
+    "13": {
+      "labels": {
+        "en": "Exemption from payments compensation",
+        "fi": "Maksuvapauskompensaatio",
+        "sv": "Kompensation för avgiftsfrihet"
+      }
+    },
+    "14": {
+      "labels": {
+        "en": "Extra grant",
+        "fi": "Lisäavustus",
+        "sv": "Extra understöd"
+      }
+    },
+    "15": {
+      "labels": {
+        "en": "Navigation map grant",
+        "fi": "Suunnistuskartta-avustus",
+        "sv": "Understöd för orienteringskarta"
+      }
+    },
+    "17": {
+      "labels": {
+        "en": "Grant for operations development",
+        "fi": "Toiminnan kehittämisavustus",
+        "sv": "Understöd för verksamhetsutveckling"
+      }
+    },
+    "29": {
+      "labels": {
+        "en": "Development grant / The Helsinki Model",
+        "fi": "Kehittämisavustukset / Helsingin malli",
+        "sv": "Utveclingsunderstöd / Helsingforsmodellen"
+      }
+    },
+    "31": {
+      "labels": {
+        "en": "Start grant",
+        "fi": "Starttiavustus",
+        "sv": "Sportunderstöd"
+      }
+    },
+    "32": {
+      "labels": {
+        "en": "Facility usage grant",
+        "fi": "Tilankäyttöavustus",
+        "sv": "Understöd för lokaler"
+      }
+    },
+    "34": {
+      "labels": {
+        "en": "Basic arts education",
+        "fi": "Taiteen perusopetus",
+        "sv": "Grundläggande konstundervisning"
+      }
+    },
+    "35": {
+      "labels": {
+        "en": "Early childhood education",
+        "fi": "Varhaiskasvatus",
+        "sv": "Småbarnspedagogik"
+      }
+    },
+    "36": {
+      "labels": {
+        "en": "Liberal adult education",
+        "fi": "Vapaa sivistystyö",
+        "sv": "Fri bildning"
+      }
+    },
+    "37": {
+      "labels": {
+        "en": "Event grant",
+        "fi": "Tapahtuma-avustus",
+        "sv": "Evenemangsbidrag"
+      }
+    },
+    "38": {
+      "labels": {
+        "en": "Small grant",
+        "fi": "Pienavustus",
+        "sv": "Små bidrag"
+      }
+    },
+    "39": {
+      "labels": {
+        "en": "Immigrant integration grant",
+        "fi": "Kotouttamisavustus",
+        "sv": "Bidrag för integrationsarbete"
+      }
+    },
+    "40": {
+      "labels": {
+        "en": "Culture and leisure: application for subsidy",
+        "fi": "Harrastushaku",
+        "sv": "Kultur och fritid: ansökan om understöd"
+      }
+    },
+    "41": {
+      "labels": {
+        "en": "Institution and foundation grants",
+        "fi": "Laitosavustus",
+        "sv": "Anläggningsunderstöd"
+      }
+    },
+    "42": {
+      "labels": {
+        "en": "Grant for other associations promoting physical activity",
+        "fi": "Muiden liikuntaa edistävien yhteisöjen avustus",
+        "sv": "Understöd till andra föreningar som främjar idrott och motion"
+      }
+    },
+    "43": {
+      "labels": {
+        "en": "Targeted sports grant",
+        "fi": "Kohdeavustus",
+        "sv": "Riktat understöd för idrott och motion"
+      }
+    },
+    "44": {
+      "labels": {
+        "en": "Development grant",
+        "fi": "Kehittämisavustus",
+        "sv": "Utvecklingsunderstöd"
+      }
+    },
+    "45": {
+      "labels": {
+        "en": "Development grant for the Helsinki Model",
+        "fi": "Helsingin mallin kehittämisavustus",
+        "sv": "Utvecklingsunderstöd för Helsingforsmodellen"
+      }
+    },
+    "46": {
+      "labels": {
+        "en": "Development grant for basic arts education",
+        "fi": "Taiteen perusopetuksen kehittämisavustus",
+        "sv": "Utvecklingsunderstöd för grundläggande konstundervisning"
+      }
+    },
+    "47": {
+      "labels": {
+        "en": "Special grant for culture 1",
+        "fi": "Kulttuurin erityisavustus 1",
+        "sv": "Specialunderstöd för kultur 1"
+      }
+    },
+    "48": {
+      "labels": {
+        "en": "Special grant for culture 2",
+        "fi": "Kulttuurin erityisavustus 2",
+        "sv": "Specialunderstöd för kultur 2"
+      }
+    },
+    "49": {
+      "labels": {
+        "en": "Special grant for youth activities 1",
+        "fi": "Nuorison erityisavustus 1",
+        "sv": "Specialunderstöd för ungdomsverksamhet 1"
+      }
+    },
+    "50": {
+      "labels": {
+        "en": "Special grant for youth activities 2",
+        "fi": "Nuorison erityisavustus 2",
+        "sv": "Specialunderstöd för ungdomsverksamhet 2"
+      }
+    },
+    "51": {
+      "labels": {
+        "en": "Special grant for sports 1",
+        "fi": "Liikunnan erityisavustus 1",
+        "sv": "Specialunderstöd för idrott 1"
+      }
+    },
+    "52": {
+      "labels": {
+        "en": "Special grant for sports 2",
+        "fi": "Liikunnan erityisavustus 2",
+        "sv": "Specialunderstöd för idrott 2"
+      }
+    },
+    "53": {
+      "labels": {
+        "en": "Special grant for culture and leisure 1",
+        "fi": "Kulttuurin ja vapaa-ajan erityisavustus 1",
+        "sv": "Specialunderstöd för kultur och fritid 1"
+      }
+    },
+    "54": {
+      "labels": {
+        "en": "Special grant for culture and leisure 2",
+        "fi": "Kulttuurin ja vapaa-ajan erityisavustus 2",
+        "sv": "Specialunderstöd för kultur och fritid 2"
+      }
+    }
+  }
+}

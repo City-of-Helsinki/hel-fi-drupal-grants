@@ -7,8 +7,13 @@ services:
     parent: logger.channel_base
     arguments: ['grants_application']
 
-  Drupal\grants_application\Form\FormSettingsService: ~
+  Drupal\grants_application\Form\FormSettingsService:
+    arguments:
+      - '@entity_type.manager'
+      - '@extension.list.module'
+      - '@language_manager'
   Drupal\grants_application\Form\ApplicationNumberService: ~
+  Drupal\grants_application\Form\ApplicationMetadataForm: ~
 
   Drupal\grants_application\User\UserInformationService: ~
 

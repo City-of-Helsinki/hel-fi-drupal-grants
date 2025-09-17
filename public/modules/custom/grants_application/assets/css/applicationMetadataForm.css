@@ -1,0 +1,8 @@
+/* Imitate disabled look */
+.is-read-only {
+  cursor: not-allowed;
+  color: var(--gin-color-disabled);
+  background-color: var(--gin-color-disabled-bg) !important;
+  border-color: var(--gin-color-disabled-border);
+  box-shadow: none;
+}

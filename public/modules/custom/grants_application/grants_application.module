@@ -5,6 +5,10 @@
  * Module hooks.
  */
 
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\grants_application\Form\FormSettingsService;
+
 /**
  * Implements hook_theme().
  */
@@ -16,4 +20,129 @@ function grants_application_theme(): array {
       ],
     ],
   ];
+}
+
+/**
+ * Register routes to apply Gin’s content edit form layout.
+ *
+ * @return array
+ *   An array of route names.
+ *
+ * @see GinContentFormHelper->isContentForm()
+ */
+function grants_application_gin_content_form_routes(): array {
+  // Apply gin theme to application metadata forms.
+  return [
+    'entity.application_metadata.add_form',
+    'entity.application_metadata.edit_form',
+  ];
+}
+
+/**
+ * Allowed values callback for the Application type field.
+ *
+ * @param \Drupal\Core\Field\FieldStorageDefinitionInterface $definition
+ *   The field storage definition.
+ * @param \Drupal\Core\Entity\FieldableEntityInterface|null $entity
+ *   The entity context if known.
+ *
+ * @return array
+ *   An array of key => label pairs, where the key is the machine name of the
+ *   application type and the label is the human-readable name.
+ */
+function grants_application_application_type_allowed_values(
+  FieldStorageDefinitionInterface $definition,
+  ?FieldableEntityInterface $entity,
+): array {
+  /** @var \Drupal\grants_application\Form\FormSettingsService $form_settings_service */
+  $form_settings_service = \Drupal::service(FormSettingsService::class);
+  $types = $form_settings_service->getFormConfig('form_types');
+  return $form_settings_service->getLabels($types);
+}
+
+/**
+ * Allowed values callback for the Application industry field.
+ *
+ * @param \Drupal\Core\Field\FieldStorageDefinitionInterface $definition
+ *   The field storage definition.
+ * @param \Drupal\Core\Entity\FieldableEntityInterface|null $entity
+ *   The entity context if known.
+ *
+ * @return array
+ *   An array of key => label pairs, where the key is the machine name of the
+ *   application type and the label is the human-readable name.
+ */
+function grants_application_application_industry_allowed_values(
+  FieldStorageDefinitionInterface $definition,
+  ?FieldableEntityInterface $entity,
+): array {
+  /** @var \Drupal\grants_application\Form\FormSettingsService $form_settings_service */
+  $form_settings_service = \Drupal::service(FormSettingsService::class);
+  $types = $form_settings_service->getFormConfig('form_configuration', 'application_industries');
+  return $form_settings_service->getLabels($types);
+}
+
+/**
+ * Allowed values callback for the Application types field.
+ *
+ * @param \Drupal\Core\Field\FieldStorageDefinitionInterface $definition
+ *   The field storage definition.
+ * @param \Drupal\Core\Entity\FieldableEntityInterface|null $entity
+ *   The entity context if known.
+ *
+ * @return array
+ *   An array of key => label pairs, where the key is the machine name of the
+ *   application type and the label is the human-readable name.
+ */
+function grants_application_applicant_types_allowed_values(
+  FieldStorageDefinitionInterface $definition,
+  ?FieldableEntityInterface $entity,
+): array {
+  /** @var \Drupal\grants_application\Form\FormSettingsService $form_settings_service */
+  $form_settings_service = \Drupal::service(FormSettingsService::class);
+  $types = $form_settings_service->getFormConfig('form_configuration', 'applicant_types');
+  return $form_settings_service->getLabels($types);
+}
+
+/**
+ * Allowed values callback for the Application types field.
+ *
+ * @param \Drupal\Core\Field\FieldStorageDefinitionInterface $definition
+ *   The field storage definition.
+ * @param \Drupal\Core\Entity\FieldableEntityInterface|null $entity
+ *   The entity context if known.
+ *
+ * @return array
+ *   An array of key => label pairs, where the key is the machine name of the
+ *   application type and the label is the human-readable name.
+ */
+function grants_application_application_subvention_types_allowed_values(
+  FieldStorageDefinitionInterface $definition,
+  ?FieldableEntityInterface $entity,
+): array {
+  /** @var \Drupal\grants_application\Form\FormSettingsService $form_settings_service */
+  $form_settings_service = \Drupal::service(FormSettingsService::class);
+  $types = $form_settings_service->getFormConfig('form_configuration', 'subvention_types');
+  return $form_settings_service->getLabels($types);
+}
+
+/**
+ * Allowed values callback for the Application acting years field.
+ *
+ * @param \Drupal\Core\Field\FieldStorageDefinitionInterface $definition
+ *   The field storage definition.
+ * @param \Drupal\Core\Entity\FieldableEntityInterface|null $entity
+ *   The entity context if known.
+ *
+ * @return array
+ *   An array of key => label pairs, where the key is the machine name of the
+ *   application type and the label is the human-readable name.
+ */
+function grants_application_application_acting_years_allowed_values(
+  FieldStorageDefinitionInterface $definition,
+  ?FieldableEntityInterface $entity,
+): array {
+  $current_year = (int) date('Y');
+  $years = range($current_year, $current_year + 10);
+  return array_combine($years, $years);
 }

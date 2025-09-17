@@ -1,2 +1,65 @@
 msgid ""
 msgstr ""
+
+msgid "Application metadata"
+msgstr "Hakemuksen asetukset"
+
+msgid "Manage application metadata"
+msgstr "Hallitse hakemusten asetuksia"
+
+msgid "Manage application metadata items"
+msgstr "Hallitse hakemuksen asetuksia"
+
+msgid "Application name"
+msgstr "Hakemuksen asetusnimi"
+
+msgid "Application type"
+msgstr "Hakemustyyppi"
+
+msgid "Application type code"
+msgstr "Hakemuksen tyypin koodi"
+
+msgid "Application type ID"
+msgstr "Hakemuksen tyypin ID"
+
+msgid "Applicant types"
+msgstr "Hakijatyypit"
+
+msgid "Application types"
+msgstr "Hakemustyypit"
+
+msgid "Grants industry"
+msgstr "Toimiala"
+
+msgid "Subvention type"
+msgstr "Avustuslajin koodi"
+
+msgid "Application target group"
+msgstr "Hakemuksen kohderyhmä"
+
+msgid "Application opens"
+msgstr "Hakemus aukeaa"
+
+msgid "Application closes"
+msgstr "Hakemus sulkeutuu"
+
+msgid "Application acting years"
+msgstr "Hakemuksen voimassaolovuodet"
+
+msgid "Application continuous"
+msgstr "Jatkuva hakemus"
+
+msgid "Disable copying"
+msgstr "Poista hakemuksen kopiointi käytöstä"
+
+msgid "Add application metadata"
+msgstr "Lisää hakemuksen asetukset"
+
+msgid "Edit application metadata"
+msgstr "Muokkaa hakemuksen asetuksia"
+
+msgid "Delete application metadata"
+msgstr "Poista hakemuksen asetukset"
+
+msgid "Saved the application metadata for %label (ID: %id)."
+msgstr "Tallennettu %label (ID: %id) hakemuksen asetukset."

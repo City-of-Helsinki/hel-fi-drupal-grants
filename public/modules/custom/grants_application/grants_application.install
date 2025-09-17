@@ -7,11 +7,28 @@
 
 declare(strict_types=1);
 
+use Drupal\user\Entity\Role;
+
 /**
  * Implements hook_install().
  */
 function grants_application_install($is_syncing) : void {
+  // Do not perform following steps if the module is being installed as part
+  // of a configuration import.
+  if ($is_syncing) {
+    return;
+  }
+
+  // Manage permissions.
   grants_application_update_rest_permissions();
+  grants_application_manage_application_metadata_permissions();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function grants_application_uninstall(): void {
+  grants_application_manage_application_metadata_permissions(TRUE);
 }
 
 /**
@@ -50,6 +67,55 @@ function grants_application_update_rest_permissions(): void {
 }
 
 /**
+ * Manage application_metadata permissions.
+ *
+ * @param bool $revoke
+ *   Revoke permissions if TRUE, grant if FALSE.
+ */
+function grants_application_manage_application_metadata_permissions(bool $revoke = FALSE): void {
+  $map = [
+    'grants_admin' => [
+      'access application_metadata overview',
+      'create application_metadata',
+      'delete any application_metadata',
+      'delete own application_metadata',
+      'update any application_metadata',
+      'update own application_metadata',
+      'view application_metadata',
+      'view own unpublished application_metadata',
+    ],
+  ];
+
+  foreach ($map as $role_id => $permissions) {
+    $role = Role::load($role_id);
+    if (!$role) {
+      continue;
+    }
+
+    if (!$revoke) {
+      foreach ($permissions as $permission) {
+        if (!$role->hasPermission($permission)) {
+          $role->grantPermission($permission);
+        }
+      }
+    }
+    else {
+      foreach ($permissions as $permission) {
+        if ($role->hasPermission($permission)) {
+          $role->revokePermission($permission);
+        }
+      }
+    }
+    try {
+      $role->save();
+    }
+    catch (\Exception $e) {
+      Drupal::logger('grants_application')->error($e->getMessage());
+    }
+  }
+}
+
+/**
  * Create custom application submission entity.
  */
 function grants_application_update_9000() {
@@ -57,4 +123,16 @@ function grants_application_update_9000() {
   $entity_type = $entity_type_manager->getDefinition('application_submission');
   \Drupal::entityDefinitionUpdateManager()
     ->installEntityType($entity_type);
+}
+
+/**
+ * Install application metadata entity.
+ */
+function grants_application_update_9001() {
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $entity_type = $entity_type_manager->getDefinition('application_metadata');
+  \Drupal::entityDefinitionUpdateManager()
+    ->installEntityType($entity_type);
+  \Drupal::service('config.installer')
+    ->installDefaultConfig('module', 'grants_application');
 }

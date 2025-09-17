@@ -7,23 +7,23 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '58'
     applicationType: LIIKUNTASUUNNISTUS
     applicationTypeID: '58'
-    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
       57: '57'
-    applicationTargetGroup: '26'
     applicationOpen: '2025-01-10T00:00:00'
     applicationClose: '2025-02-15T23:59:59'
-    applicationActingYearsType: fixed
+    applicationContinuous: 0
+    applicationTargetGroup: '26'
+    disableCopying: 1
+    applicationTypeSelect: '58'
+    applicationIndustry: KUVA
     applicationActingYears:
       2025: '2025'
+    applicationActingYearsType: fixed
     applicationActingYearsNextCount: '0'
-    applicationContinuous: 0
-    disableCopying: 1
     status: released
     parent: ''
     avus2BreakingChange: false

@@ -1,3 +1,65 @@
 msgid ""
 msgstr ""
 
+msgid "Application metadata"
+msgstr "Ansöknings inställningar"
+
+msgid "Manage application metadata"
+msgstr "Hantera ansöknings inställningar"
+
+msgid "Manage application metadata items"
+msgstr "Hantera ansöknings inställningar"
+
+msgid "Application name"
+msgstr "Ansöknings inställningsnamn"
+
+msgid "Application type"
+msgstr "Ansökningstyp"
+
+msgid "Application type code"
+msgstr "Ansökningstyp-kod"
+
+msgid "Application type ID"
+msgstr "Ansökningstyp-ID"
+
+msgid "Applicant types"
+msgstr "Ansökartyper"
+
+msgid "Application types"
+msgstr "Ansökningstyper"
+
+msgid "Grants industry"
+msgstr "Industri"
+
+msgid "Subvention type"
+msgstr "Typ av bidrag"
+
+msgid "Application target group"
+msgstr "Ansöknings målgrupp"
+
+msgid "Application opens"
+msgstr "Ansökningen öppnas"
+
+msgid "Application closes"
+msgstr "Ansökningen stängs"
+
+msgid "Application acting years"
+msgstr "Ansökningens giltighetstid"
+
+msgid "Application continuous"
+msgstr "Är ansökningen kontinuerlig"
+
+msgid "Disable copying"
+msgstr "Inaktivera kopiering för detta ansökningen"
+
+msgid "Add application metadata"
+msgstr "Skapa ansöknings inställningar"
+
+msgid "Edit application metadata"
+msgstr "Redigera ansöknings inställningar"
+
+msgid "Delete application metadata"
+msgstr "Radera ansöknings inställningar"
+
+msgid "Saved the application metadata for %label (ID: %id)."
+msgstr "Sparade ansöknings inställningar för %label (ID: %id)."

@@ -272,6 +272,7 @@ final class AtvPrintViewController extends ControllerBase {
     $this->handleLiitteetSection($field);
     $this->handleSubventionType($field, $labelData, $langcode, $isSubventionType, $subventionType);
     $this->handleRole($field);
+    $this->handleStatus($field);
     $this->handleBooleanValues($field, $langcode);
   }
 
@@ -404,6 +405,7 @@ final class AtvPrintViewController extends ControllerBase {
     if ($field['ID'] === 'subventionType') {
       $typeNames = CompensationsComposite::getOptionsForTypes($langcode);
       $subventionType = $typeNames[$field['value']];
+      $field['value'] = $subventionType;
       $isSubventionType = TRUE;
     }
     elseif ($isSubventionType) {
@@ -425,6 +427,20 @@ final class AtvPrintViewController extends ControllerBase {
       if ($role) {
         $field['value'] = $role;
       }
+    }
+  }
+
+  /**
+   * Handle status.
+   *
+   * @param array $field
+   *   Field.
+   */
+  private function handleStatus(array &$field): void {
+    if ($field['ID'] == 'status') {
+      // Transform status to be only capitalized and not all uppercase.
+      $normalized = ucfirst(strtolower($field['value']));
+      $field['value'] = $this->t($normalized, [], ['context' => 'Grants application: Status label']); // phpcs:ignore
     }
   }
 
