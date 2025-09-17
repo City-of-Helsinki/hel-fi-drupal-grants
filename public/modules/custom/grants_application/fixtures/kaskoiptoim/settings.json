@@ -1,0 +1,20 @@
+{
+  "title": "Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille",
+  "description": "KASKOIPTOIM",
+  "application_type": "KASKOIPTOIM",
+  "application_type_id": 52,
+  "application_open": "2025-01-10T00:00:00",
+  "application_close": "2026-12-15T23:59:59",
+  "applicant_types": [
+    "registered_community"
+  ],
+  "subvention_type": [
+    45
+  ],
+  "target_group": 21,
+  "acting_years": [
+    2025
+  ],
+  "continuous": false,
+  "disable_copy": false
+}

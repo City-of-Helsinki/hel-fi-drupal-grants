@@ -206,10 +206,15 @@ export const getReachedStepAtom = atom(_get => {
 
   return reachedStep;
 });
-export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError[]) => {
+export const setErrorsAtom = atom(null, (_get, _set, errors: RJSFValidationError[], additiveOnly = false) => {
   const steps = _get(formStepsAtom);
 
-  _set(errorsAtom, state => keyErrorsByStep(errors, steps));
+  if (!additiveOnly) {
+    _set(errorsAtom, state => keyErrorsByStep(errors, steps));
+    return;
+  }
+
+  _set(errorsAtom, state => [...state, ...keyErrorsByStep(errors, steps)]);
 });
 export const getErrorPageIndicesAtom = atom(_get => {
   const errors = _get(errorsAtom);

@@ -1,11 +1,22 @@
 {
   "grant_info_step": {
+    "subventions_section": {
+      "subventions": {
+        "ui:field": "subventionTable"
+      }
+    },
     "purpose_section": {
       "purpose": {
         "ui:widget": "textarea"
       }
     },
     "other_compensations_section": {
+      "have_received_other_compensations": {
+        "ui:widget": "radio",
+        "ui:options": {
+          "affirmativeExpands": true
+        }
+      },
       "other_compensations": {
         "other_compensation_description": {
           "ui:widget": "textarea"
@@ -23,8 +34,17 @@
       }
     },
     "prior_benefits_usage_section": {
+      "have_received_prior_compensations": {
+        "ui:widget": "radio",
+        "ui:options": {
+          "affirmativeExpands": true
+        }
+      },
       "prior_compensations": {
         "ui:widget": "textarea"
+      },
+      "prior_compensations_help": {
+        "ui:field": "textParagraph"
       }
     }
   },
@@ -32,6 +52,9 @@
     "community_activity_section": {
       "community_activity_description": {
         "ui:widget": "textarea"
+      },
+      "community_practices_business": {
+        "ui:widget": "radio"
       }
     }
   },

@@ -2,8 +2,8 @@ import React, { useCallback } from "react";
 import { FieldProps, UiSchema } from "@rjsf/utils";
 import { FileInput as HDSFileInput } from "hds-react";
 import { useAtomValue } from "jotai";
-import { formatErrors } from "./Input";
 import { formConfigAtom, getApplicationNumberAtom, shouldRenderPreviewAtom } from "../store";
+import { formatErrors } from '../utils';
 
 type ATVFile = {
   fileType: string;
