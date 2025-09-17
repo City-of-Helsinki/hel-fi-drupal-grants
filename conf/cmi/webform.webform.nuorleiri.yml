@@ -7,28 +7,28 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '73'
     applicationType: NUORLEIRI
     applicationTypeID: '73'
-    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
       unregistered_community: unregistered_community
     applicationTypeTerms:
       54: '54'
+    applicationOpen: '2025-09-08T00:00:01'
+    applicationClose: '2025-10-31T23:59:59'
+    applicationContinuous: 0
     applicationTargetGroup: '27'
-    applicationOpen: '2024-09-01T00:00:00'
-    applicationClose: '2024-10-31T23:59:59'
-    applicationActingYearsType: next_x_years
+    disableCopying: 0
+    applicationTypeSelect: '73'
+    applicationIndustry: KUVA
     applicationActingYears:
-      2024: '2024'
       2025: '2025'
       2026: '2026'
+    applicationActingYearsType: next_x_years
     applicationActingYearsNextCount: '1'
-    applicationContinuous: 0
-    disableCopying: 0
     status: released
     parent: ''
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null
