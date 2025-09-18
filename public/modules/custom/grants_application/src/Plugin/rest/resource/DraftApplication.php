@@ -200,7 +200,7 @@ final class DraftApplication extends ResourceBase {
     // form or something else.
     $response = [];
 
-    if (!$document_content['form_data'] || !$document_content['compensation']) {
+    if (!$document_content['form_data'] && !$document_content['compensation']) {
       $response['form_data'] = [];
     }
     else {
