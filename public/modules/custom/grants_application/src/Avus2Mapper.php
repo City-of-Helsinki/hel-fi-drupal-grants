@@ -56,10 +56,9 @@ final class Avus2Mapper {
     // Check LiikuntaSuunnistusDefinition for these values.
     $data['compensationInfo']['compensationArray'] = $this->getCompensationData();
     // @todo Move the array inside the function on applicantOfficialsArray.
-
     $officials = $this->getApplicantOfficials($form_data, $grants_profile);
     if (!empty($officials)) {
-      $data['applicantOfficialsArray'] = [$officials];  
+      $data['applicantOfficialsArray'] = [$officials];
     }
 
     $data['currentAddressInfoArray'] = $this->getCurrentAddressData($form_data, $grants_profile);
