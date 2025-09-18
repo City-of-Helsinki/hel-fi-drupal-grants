@@ -219,7 +219,7 @@ export const RJSFFormContainer = ({
           onSubmit={async (data, event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
 
-            if (readCurrentStep() !== 'preview') {
+            if (readCurrentStep()[1].id !== 'preview') {
               return;
             }
 
