@@ -71,3 +71,46 @@ fieldset.grants-attachments--wrapper {
 .grants-attachments--wrapper .webform-readonly {
   display: none;
 }
+
+// Handle the placeholder text overflow on long file names.
+.grants-handler-message .form-item--error-message,
+.grants-attachments--fields-wrapper .form-item--error-message,
+.hds-notification--error .hds-notification__body {
+  .placeholder {
+    display: inline-block;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+}
+
+// Handle the paddings of the error message list.
+.grants-attachments--fields-wrapper .form-item--error-message {
+  ul {
+    padding-left: 0;
+  }
+
+  li {
+    list-style-type: none;
+  }
+}
+
+.grants-handler-message .form-type-managed-file {
+  // Handle the paddings of the message attachment button and uploaded file name.
+  dd,
+  span.file {
+    margin-inline-start: 0;
+  }
+
+  // Handle the placeholder text overflow on long file names.
+  span.file > a {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+}
