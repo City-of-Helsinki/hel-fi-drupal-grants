@@ -1,6 +1,6 @@
 {
   "definitions": {
-    "other_materials_acquired_item": {
+    "_other_materials_acquired_item": {
       "type": "object",
       "title": "other_expenses",
       "properties": {
@@ -14,7 +14,7 @@
         }
       }
     },
-    "other_services_acquired_item": {
+    "_other_services_acquired_item": {
       "type": "object",
       "title": "other_expenses",
       "properties": {
@@ -28,7 +28,7 @@
         }
       }
     },
-    "other_expenditures_item": {
+    "_other_expenditures_item": {
       "type": "object",
       "title": "other_expenses",
       "properties": {
@@ -42,7 +42,7 @@
         }
       }
     },
-    "other_benefits_item": {
+    "_other_benefits_item": {
       "type": "object",
       "title": "other_benefits_item.title",
       "properties": {
@@ -56,7 +56,7 @@
         }
       }
     },
-    "locations_info_item": {
+    "_locations_info_item": {
       "type": "object",
       "properties": {
         "location_name": {
@@ -93,11 +93,14 @@
         },
         "location_held_in_provided_space": {
           "title": "location_held_in_provided_space.title",
-          "type": "string"
+          "enum": [
+            "boolean.no",
+            "boolean.yes"
+          ]
         }
       }
     },
-    "other_compensation_item": {
+    "_other_compensation_item": {
       "type": "object",
       "properties": {
         "other_compensation_issuer": {
@@ -150,7 +153,12 @@
           "properties": {
             "subventions": {
               "title": "subventions.title",
-              "type": "string"
+              "options": [
+                {
+                  "id": 1,
+                  "label": "subventions.1.title"
+                }
+              ]
             }
           },
           "required": ["subventions"]
@@ -163,7 +171,8 @@
               "title": "purpose.title",
               "type": "string"
             }
-          }
+          },
+          "required": ["purpose"]
         },
         "other_compensations_section": {
           "title": "other_compensations_section.title",
@@ -171,12 +180,15 @@
           "type": "object",
           "properties": {
             "have_received_other_compensations": {
+              "title": "have_received_other_compensations.title",
               "enum": [
                 "boolean.yes",
                 "boolean.no"
-              ]
+              ],
+              "default": "boolean.no"
             }
           },
+          "required": ["have_received_other_compensations"],
           "allOf": [
             {
               "if": {
@@ -191,11 +203,12 @@
                   "other_compensations": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/definitions/other_compensation_item"
+                      "$ref": "#/definitions/_other_compensation_item"
                     },
                     "additionalItems": {
-                      "$ref": "#/definitions/other_compensation_item"
-                    }
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "minItems": 1
                   }
                 }
               }
@@ -203,6 +216,7 @@
           ]
         },
         "city_benefits_loans_section": {
+          "title": "city_benefits_loans_section.title",
           "type": "object",
           "description": "city_benefits_loans_section.description",
           "properties": {
@@ -213,6 +227,7 @@
           }
         },
         "city_premises_benefits_section": {
+          "title": "city_premises_benefits.title",
           "type": "object",
           "description": "city_premises_benefits_section.description",
           "properties": {
@@ -223,21 +238,25 @@
           }
         },
         "prior_benefits_usage_section": {
+          "title": "prior_benefits_usage_section.title",
           "type": "object",
           "properties": {
             "have_received_prior_compensations": {
+              "title": "have_received_prior_compensations.title",
               "enum": [
-                "boolean.yes",
-                "boolean.no"
-              ]
+                "have_received_prior_compensations.no",
+                "have_received_prior_compensations.yes"
+              ],
+              "default": "have_received_prior_compensations.no"
             }
           },
+          "required": ["have_received_prior_compensations"],
           "allOf": [
             {
               "if": {
                 "properties": {
                   "have_received_prior_compensations": {
-                    "const": "boolean.yes"
+                    "const": "have_received_prior_compensations.yes"
                   }
                 }
               },
@@ -267,9 +286,13 @@
             },
             "community_practices_business": {
               "title": "community_practices_business.title",
-              "type": "boolean"
+              "enum": [
+                "boolean.yes",
+                "boolean.no"
+              ]
             }
-          }
+          },
+          "required": ["community_practices_business"]
         },
         "locations_info_section": {
           "type": "object",
@@ -279,7 +302,10 @@
               "description": "locations_info.description",
               "type": "array",
               "items": {
-                "$ref": "#/definitions/locations_info_item"
+                "$ref": "#/definitions/_locations_info_item"
+              },
+              "additionalItems": {
+                "$ref": "#/definitions/_locations_info_item"
               }
             }
           }
@@ -319,9 +345,16 @@
         },
         "other_benefits_section": {
           "title": "other_benefits_section.title",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/other_benefits_item"
+          "type": "object",
+          "properties": {
+            "other_benefits": {
+              "title": "other_benefits_section.title",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_other_benefits_item"
+              },
+              "minItems": 1
+            }
           }
         },
         "expenditure_section": {
@@ -343,10 +376,16 @@
           }
         },
         "other_expenditures_section": {
-          "title": "other_ependitures_section.title",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/other_expenditures_item"
+          "title": "other_expenditures_section.title",
+          "type": "object",
+          "properties": {
+            "other_expenditures": {
+              "title": "other_expenditures_section.title",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_other_expenditures_item"
+              }
+            }
           }
         },
         "usage_of_benefits_section": {
@@ -373,9 +412,15 @@
         },
         "other_services_acquired_section": {
           "title": "other_services_acquired_section.title",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/other_services_acquired_item"
+          "type": "object",
+          "properties": {
+            "other_services_acquired": {
+              "title": "other_services_acquired_section.title",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_other_services_acquired_item"
+              }
+            }
           }
         },
         "other_materials_section": {
@@ -406,9 +451,15 @@
         },
         "other_materials_acquired_section": {
           "title": "other_materials_acquired_section.title",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/other_materials_acquired_item"
+          "type": "object",
+          "properties": {
+            "other_materials_acquired": {
+              "title": "other_materials_acquired_section.title",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_other_materials_acquired_item"
+              }
+            }
           }
         },
         "benefit_usage_other_expenditure_section": {
@@ -430,10 +481,16 @@
           }
         },
         "other_expenses_section": {
-          "title": "other_ependitures_section.title",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/other_expenditures_item"
+          "title": "other_expenditures_section.title",
+          "type": "object",
+          "properties": {
+            "other_expenses": {
+              "title": "other_expenditures_section.title",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_other_expenditures_item"
+              }
+            }
           }
         },
         "customer_space_usage_section": {
@@ -463,10 +520,16 @@
           }
         },
         "other_expenses_section_1": {
-          "title": "other_ependitures_section.title",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/other_expenditures_item"
+          "title": "other_expenditures_section.title",
+          "type": "object",
+          "properties": {
+            "other_expenses": {
+              "title": "other_expenditures_section.title",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_other_expenditures_item"
+              }
+            }
           }
         }
       }
@@ -834,7 +897,7 @@
     }
   },
   "description": "",
-  "title": "",
+  "title": "form_title",
   "type": "object",
   "properties": {
     "grant_info_step": {

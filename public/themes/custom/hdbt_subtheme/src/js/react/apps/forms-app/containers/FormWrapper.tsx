@@ -9,6 +9,7 @@ import { addApplicantInfoStep, getNestedSchemaProperty, setNestedProperty } from
 import { SubmitStates } from '../enum/SubmitStates';
 import { useTranslateData } from '../hooks/useTranslateData';
 import { ATVFile } from '../types/ATVFile';
+import { InvalidSchemaBoundary } from '../errors/InvalidSchemaBoundary';
 
 /**
  * Get form paths for dangling arrays in dot notation.
@@ -134,11 +135,13 @@ const transformData = (data: any) => {
     Object.entries(definitions).forEach((definition: any) => {
       const [key, definitionValue] = definition;
 
-      Object.entries(definitionValue.properties).forEach((subProperty: any) => {
-        const [subKey] = subProperty;
-        // @ts-ignore
-        definitions[key].properties[subKey]._isSection = true;
-      });
+      if (key.charAt(0) !== '_') {
+        Object.entries(definitionValue.properties).forEach((subProperty: any) => {
+          const [subKey] = subProperty;
+          // @ts-ignore
+          definitions[key].properties[subKey]._isSection = true;
+        });
+      }
     });
   }
 
@@ -265,13 +268,15 @@ export const FormWrapper = ({
   };
 
   return (
-    <RJSFFormContainer
-      formDataAtom={formDataAtom}
-      saveDraft={saveDraft}
-      schema={translatedData.schema}
-      submitData={submitData}
-      uiSchema={translatedData.ui_schema}
-    />
+    <InvalidSchemaBoundary>
+      <RJSFFormContainer
+        formDataAtom={formDataAtom}
+        saveDraft={saveDraft}
+        schema={translatedData.schema}
+        submitData={submitData}
+        uiSchema={translatedData.ui_schema}
+      />
+    </InvalidSchemaBoundary>
   );
 };
 

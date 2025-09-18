@@ -55,11 +55,12 @@ export const keyErrorsByStep = (
   }
 
   const keyedErrors: Array<[number, RJSFValidationError]> = [];
+  const stepsArray = Array.from(steps);
 
   errors.forEach(error => {
     const match = error?.property?.match(regex)?.[0];
 
-    const matchedStep = Array.from(steps).find(([index, step]) => step.id === match?.split('.')[1]);
+    const matchedStep = stepsArray.find(([index, step]) => step.id === match?.split('.')[1]);
 
     if (matchedStep) {
       const [matchedIndex] = matchedStep;
@@ -167,3 +168,41 @@ export const setNestedProperty = (obj: any, path: string, value: any) => {
     }
   });
 }
+
+/**
+ * Finds field of a given type in the form schema.
+ * 
+ * @param {any} element - current element
+ * @param {string } type - field type
+ * @param { string } prefix - current form element path in dot notation
+ * 
+ * @yields {string} - form element path
+ */
+export function* findFieldsOfType(element: any, type: string, prefix: string = ''): IterableIterator<string> {
+  const isObject = typeof element === 'object' && !Array.isArray(element) && element !== null;
+
+  if (isObject && element['ui:field'] && element['ui:field'] === type) {
+    yield prefix;
+  }
+  else if (isObject) {
+    // Functional loops mess mess up generator function, so use for - of loop here.
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, value] of Object.entries(element)) {
+        yield* findFieldsOfType(value, type, prefix.length ? `${prefix}.${key}`: key);
+    }
+  }
+};
+
+/**
+ * Transform raw errors to a more readable format.
+ *
+ * @param {array|undefned} rawErrors - Errors from RJSF form
+ * @return {string} - Resulting error messagea
+ */
+export const formatErrors = (rawErrors: string[]|undefined) => {
+  if (!rawErrors) {
+    return undefined;
+  }
+
+  return rawErrors.join('\n');
+};

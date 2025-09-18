@@ -67,6 +67,7 @@ Variants of components are determined with the custom `misc:variant` key in `UiS
 We've added some custom keys to ui:options.
 
 * **addText** `string` Renders a custom text for 'add more' button (used in array fields). See `Templates.tsx`.
+* **affirmativeExpands** `boolean` Prints an indication that affirmative answer opens another field. See `Templates.tsx`.
 * **hideNameFromPint** `boolean` Hides field name when viewing a preview or submitted form. See `Templates.tsx`.
 * **printableName** `string` Overrides the field name in preview or submitted form. See `Templates.tsx`.
 * **removeText** `string` Renders a custom text for 'remove item' button (used in array fields). See `Templates.tsx`.

@@ -13,9 +13,7 @@ initSentry();
 
 const rootSelector: string = 'grants-react-form';
 const rootElement: HTMLElement | null = document.getElementById(rootSelector);
-// @todo expand when more forms are available
-// const { application_type_id: applicationTypeId } = drupalSettings.grants_react_form;
-const applicationTypeId = '58';
+const { application_number: applicationTypeId } = drupalSettings.grants_react_form;
 
 const showError = false;
 
@@ -27,13 +25,13 @@ if (rootElement) {
       >
         <ToastStack />
         <Suspense fallback={<LoadingSpinner />}>
-        {showError
-          ? <FormNotFoundError />
-          : <AppContainer
-              applicationTypeId={applicationTypeId}
-              token={drupalSettings.grants_react_form.token}
-            />
-        }
+          {showError
+            ? <FormNotFoundError />
+            : <AppContainer
+                applicationTypeId={applicationTypeId}
+                token={drupalSettings.grants_react_form.token}
+              />
+          }
         </Suspense>
       </ErrorBoundary>
     </React.StrictMode>,

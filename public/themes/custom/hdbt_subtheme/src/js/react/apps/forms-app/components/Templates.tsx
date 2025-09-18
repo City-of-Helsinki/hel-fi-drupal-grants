@@ -23,12 +23,23 @@ export const ArrayFieldTemplate = ({
     const hideName = uiSchema?.['ui:options']?.hideNameFromPrint;
     const printableName = uiSchema?.['ui:options']?.printableName;
 
+    // Depending on user actions, items can be empty
+    const renderableItems = items.filter(item => {
+      const value = item?.children?.props?.formData;
+      return value && Object.keys(value).length;
+    }).map(item => <ArrayFieldItemTemplate {...{
+      ...item,
+      canAdd: false,
+      hasRemove: false,
+      hasToolbar: false,
+    }} />)
+
     return (
       <>
         {/* @todo fix when rebuilding styles  */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         {!hideName && (printableName ? <label>{printableName}</label> : <label>{schema.title}</label>)}
-        {items.map((item) => <ArrayFieldItemTemplate {...item} />)}
+        {renderableItems.length ? renderableItems : '-'}
       </>
     )
   }
@@ -135,7 +146,6 @@ export const ObjectFieldTemplate = ({
     return <PreviewStep title={title} properties={properties} uiSchema={uiSchema} />;
   }
 
-  // @todo fix type errors with additionalProperties
   if (_step && _step !== stepId) {
     return null;
   }
@@ -222,7 +232,7 @@ export const ObjectFieldTemplate = ({
   return (
     <Fieldset
       heading={title || ''}
-      border
+      border={!uiSchema.file}
     >
       {description && <div className='form-item'>{description}</div>}
       {properties.map((field) => field.content)}
