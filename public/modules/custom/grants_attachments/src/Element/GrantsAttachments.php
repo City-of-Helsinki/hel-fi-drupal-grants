@@ -33,6 +33,7 @@ use GuzzleHttp\Exception\GuzzleException;
 class GrantsAttachments extends WebformCompositeBase {
 
   const DEFAULT_ALLOWED_FILE_TYPES = 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip';
+  const DEFAULT_FILENAME_LENGTH = 100;
 
   /**
    * {@inheritdoc}
@@ -40,8 +41,6 @@ class GrantsAttachments extends WebformCompositeBase {
   public function getInfo(): array {
     return parent::getInfo() + ['#theme' => 'grants_attachments'];
   }
-
-  // @codingStandardsIgnoreStart
 
   /**
    * Build webform element based on data in ATV document.
@@ -82,7 +81,7 @@ class GrantsAttachments extends WebformCompositeBase {
       $element['#attributes']['error_label'] = $errors['label'];
     }
 
-    // Attachment has been deleted, show default componenet state.
+    // Attachment has been deleted, show default component state.
     if (isset($storage['deleted_attachments'][$arrayKey]) && $storage['deleted_attachments'][$arrayKey]) {
       unset($element['attachmentName']);
       return $element;
@@ -91,9 +90,8 @@ class GrantsAttachments extends WebformCompositeBase {
     if (isset($submissionData[$element['#webform_key']]) && is_array($submissionData[$element['#webform_key']])) {
       $dataForElement = $element['#value'];
 
-      // When user goes to previous step etc. we might lose the additional data for the just
-      // uploaded elements. As we are saving these to storage - let's find
-      // out the actual data the and use it.
+      // When navigating back in a multistep form, we need to restore the file
+      // from storage since it might be lost during form rebuilds.
       if ($dataForElement['integrationID'] && isset($storage['fids_info']) && $dataForElement) {
         foreach ($storage['fids_info'] as $finfo) {
           if ($dataForElement['integrationID'] == $finfo['integrationID']) {
@@ -238,8 +236,6 @@ class GrantsAttachments extends WebformCompositeBase {
     return $element;
   }
 
-  // @codingStandardsIgnoreEnd
-
   /**
    * Form elements for attachments.
    *
@@ -265,9 +261,10 @@ class GrantsAttachments extends WebformCompositeBase {
       '#multiple' => FALSE,
       '#uri_scheme' => 'private',
       '#file_extensions' => $allowedFileTypes,
-      // Managed file assumes that this is always in MB..
+      // Managed file assumes that this is always in MB.
       '#max_filesize' => 20,
       '#upload_validators' => [
+        'grants_attachments_validate_name_length' => self::DEFAULT_FILENAME_LENGTH,
         'file_validate_extensions' => $allowedFileTypesArray,
         'file_validate_size' => [$maxFileSizeInBytes],
       ],

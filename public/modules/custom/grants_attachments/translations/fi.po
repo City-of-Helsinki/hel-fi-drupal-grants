@@ -100,3 +100,7 @@ msgstr "Pilkkueroteltu lista sallituista tiedostomuodoista."
 
 msgid "Your upload has been renamed to %filename."
 msgstr "Tiedostosi on nimetty uudelleen: %filename."
+
+msgctxt "grants_attachments"
+msgid "The file's name exceeds the @maxLength characters limit. Rename the file and try again."
+msgstr "Tiedoston nimi ylittää @maxLength merkin rajan. Nimeä tiedosto uudelleen ja yritä uudelleen."

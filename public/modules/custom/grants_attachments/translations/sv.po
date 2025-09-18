@@ -92,3 +92,7 @@ msgstr[1] "@count fel har hittats: "
 
 msgid "Your upload has been renamed to %filename."
 msgstr "Din uppladdning har bytt namn till %filename."
+
+msgctxt "grants_attachments"
+msgid "The file's name exceeds the @maxLength characters limit. Rename the file and try again."
+msgstr "Filens namn överskrider gränsen på @maxLength tecken. Byt namn på filen och försök igen."
