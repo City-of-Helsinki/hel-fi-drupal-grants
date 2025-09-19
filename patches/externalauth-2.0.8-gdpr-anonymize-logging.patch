@@ -1,0 +1,47 @@
+diff --git a/src/ExternalAuth.php b/src/ExternalAuth.php
+index 8bd8247..3f22e63 100644
+--- a/src/ExternalAuth.php
++++ b/src/ExternalAuth.php
+@@ -102,7 +102,7 @@ class ExternalAuth implements ExternalAuthInterface {
+ 
+     $account_search = $entity_storage->loadByProperties(['name' => $authmap_event->getUsername()]);
+     if ($account = reset($account_search)) {
+-      throw new ExternalAuthRegisterException(sprintf('User could not be registered. There is already an account with username "%s"', $authmap_event->getUsername()));
++      throw new ExternalAuthRegisterException(sprintf('User could not be registered. There is already an account with UUID "%s"', $authname));
+     }
+ 
+     // Set up the account data to be used for the user entity.
+@@ -121,9 +121,8 @@ class ExternalAuth implements ExternalAuthInterface {
+     $account->save();
+     $this->authmap->save($account, $provider, $authmap_event->getAuthname(), $authmap_event->getData());
+     $this->eventDispatcher->dispatch(new ExternalAuthRegisterEvent($account, $provider, $authmap_event->getAuthname(), $authmap_event->getData()), ExternalAuthEvents::REGISTER);
+-    $this->logger->notice('External registration of user %name from provider %provider and authname %authname',
++    $this->logger->notice('External registration of user UUID %authname from provider %provider.',
+       [
+-        '%name' => $account->getAccountName(),
+         '%provider' => $provider,
+         '%authname' => $authname,
+       ]
+@@ -151,7 +150,7 @@ class ExternalAuth implements ExternalAuthInterface {
+    */
+   public function userLoginFinalize(UserInterface $account, string $authname, string $provider): UserInterface {
+     user_login_finalize($account);
+-    $this->logger->notice('External login of user %name', ['%name' => $account->getAccountName()]);
++    $this->logger->notice('External login of UUID %authname', ['%authname' => $authname]);
+     $this->eventDispatcher->dispatch(new ExternalAuthLoginEvent($account, $provider, $authname), ExternalAuthEvents::LOGIN);
+     return $account;
+   }
+@@ -169,12 +168,9 @@ class ExternalAuth implements ExternalAuthInterface {
+ 
+     // If we update the authmap entry, let's log the change.
+     if (!empty($current_authname)) {
+-      $this->logger->debug('Authmap change (%old => %new) for user %name with uid %uid from provider %provider', [
++      $this->logger->debug('Authmap change for UUID %old. New UUID %new.', [
+         '%old' => $current_authname,
+         '%new' => $authname,
+-        '%name' => $account->getAccountName(),
+-        '%uid' => $account->id(),
+-        '%provider' => $provider,
+       ]);
+     }
+ 

@@ -116,6 +116,9 @@
             },
             "drupal/crop": {
                 "Fix encoded paths for files": "patches/AU-2225-fix-encoded-paths.patch"
+            },
+            "drupal/externalauth": {
+                "Anonymize logging of user data.": "patches/externalauth-2.0.8-gdpr-anonymize-logging.patch"
             }
         },
         "drupal-scaffold": {
