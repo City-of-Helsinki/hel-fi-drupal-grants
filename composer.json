@@ -113,7 +113,8 @@
                 "Anonymize logging of user data.": "patches/drupal_10.5.3-user-module-gdpr-anonymize-logging.patch"
             },
             "drupal/autologout": {
-                "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch"
+                "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch",
+                "Anonymize logging of user data.": "patches/autologout_2.0.0-gdpr-anonymize-logging.patch"
             },
             "drupal/crop": {
                 "Fix encoded paths for files": "patches/AU-2225-fix-encoded-paths.patch"
