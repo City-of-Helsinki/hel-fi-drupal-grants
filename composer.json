@@ -119,6 +119,9 @@
             },
             "drupal/externalauth": {
                 "Anonymize logging of user data.": "patches/externalauth-2.0.8-gdpr-anonymize-logging.patch"
+            },
+            "drupal/helfi_helsinki_profiili": {
+                "Anonymize logging of user data.": "patches/helfi_helsinki_profiili-0.9.30-gdpr-anonymize-logging.patch"
             }
         },
         "drupal-scaffold": {
