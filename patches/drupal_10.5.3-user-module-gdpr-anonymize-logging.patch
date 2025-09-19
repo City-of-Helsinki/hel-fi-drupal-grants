@@ -1,0 +1,28 @@
+diff --git a/core/modules/user/user.module b/modules/user/user.module
+index 9fafc8f63e..e8f62eb775 100644
+--- a/core/modules/user/user.module
++++ b/core/modules/user/user.module
+@@ -456,7 +456,9 @@ function template_preprocess_username(&$variables) {
+  */
+ function user_login_finalize(UserInterface $account) {
+   \Drupal::currentUser()->setAccount($account);
+-  \Drupal::logger('user')->info('Session opened for %name.', ['%name' => $account->getAccountName()]);
++  \Drupal::logger('user')->info('Session opened for UUID %drupal_uuid.', [
++    '%drupal_uuid' => $account->get('uuid')->getString(),
++  ]);
+   // Update the user table timestamp noting user has logged in.
+   // This is also used to invalidate one-time login links.
+   $account->setLastLoginTime(\Drupal::time()->getRequestTime());
+@@ -1237,9 +1239,9 @@ function user_toolbar() {
+  */
+ function user_logout() {
+   $user = \Drupal::currentUser();
+-
+-  \Drupal::logger('user')->info('Session closed for %name.', ['%name' => $user->getAccountName()]);
+-
++  \Drupal::logger('user')->info('Session closed for UUID %drupal_uuid.', [
++    '%drupal_uuid' => User::load($user->id())->get('uuid')->getString(),
++  ]);
+   \Drupal::moduleHandler()->invokeAll('user_logout', [$user]);
+
+   // Destroy the current session, and reset $user to the anonymous user.

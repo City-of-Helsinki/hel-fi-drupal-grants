@@ -109,7 +109,8 @@
             "drupal/core": {
                 "Fix missing wrapper from core form": "patches/fix-form-wrapper.patch",
                 "#3023228: Status messages show up twice": "https://www.drupal.org/files/issues/2023-07-19/3023228-39.patch",
-                "Asset resolver empty settings cache issue": "patches/assetresolver-settings.patch"
+                "Asset resolver empty settings cache issue": "patches/assetresolver-settings.patch",
+                "Anonymize logging of user data.": "patches/drupal_10.5.3-user-module-gdpr-anonymize-logging.patch"
             },
             "drupal/autologout": {
                 "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch"
