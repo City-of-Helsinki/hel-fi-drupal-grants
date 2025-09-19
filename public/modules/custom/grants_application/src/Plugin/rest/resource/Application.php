@@ -14,6 +14,7 @@ use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Helper;
+use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_events\EventsService;
@@ -332,8 +333,10 @@ final class Application extends ResourceBase {
     // @todo Better sanitation.
     $document_data = ['form_data' => $form_data];
 
-    // @todo Should be refactored to handle all the forms in proper way.
-    $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
+    $applicantTypeId = $this->userInformationService->getApplicantTypeId();
+
+    $mapper = new JsonMapper();
+    $document_data = $mapper->map(
       $form_data,
       $user_data,
       $selected_company,
@@ -341,6 +344,7 @@ final class Application extends ResourceBase {
       $this->userInformationService->getGrantsProfileContent(),
       $settings,
       $application_number,
+      $applicantTypeId,
     );
 
     // Attachments and general info are outside the compensation.
