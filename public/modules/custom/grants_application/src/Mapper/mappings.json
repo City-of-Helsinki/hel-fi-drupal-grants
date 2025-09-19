@@ -1,0 +1,62 @@
+{
+  "compensation.applicationInfoArray.0.actingYear": {
+    "source_type": "form_data",
+    "source": "orienteering_maps_step.acting_year_section.acting_year",
+    "data": {
+      "ID": "actingYear",
+      "label": "Vuosi, jolle haen avustusta",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "orienteeringMapInfo.orienteeringMapsArray.0.n.mapName": {
+    "source_type": "form_data",
+    "source": "orienteering_maps.orienteering_subvention.orienteering_maps.mapName",
+    "data": {
+      "ID": "mapName",
+      "label": "Kartan nimi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "orienteeringMapInfo.orienteeringMapsArray.0.n.size": {
+    "source_type": "react",
+    "source": "orienteering_maps.orienteering_subvention.orienteering_maps.size",
+    "data": {
+      "ID": "size",
+      "label": "Koko",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "orienteeringMapInfo.orienteeringMapsArray.0.n.voluntaryHours": {
+    "source_type": "react",
+    "source": "orienteering_maps.orienteering_subvention.orienteering_maps.voluntaryHours",
+    "data": {
+      "ID": "voluntaryHours",
+      "label": "Talkootyö",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "orienteeringMapInfo.orienteeringMapsArray.0.n.cost": {
+    "source_type": "react",
+    "source": "orienteering_maps.orienteering_subvention.orienteering_maps.cost",
+    "data": {
+      "ID": "cost",
+      "label": "Kustannukset",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "orienteeringMapInfo.orienteeringMapsArray.0.n.otherCompensations": {
+    "source_type": "react",
+    "source": "orienteering_maps.orienteering_subvention.orienteering_maps.otherCompensations",
+    "data": {
+      "ID": "otherCompensations",
+      "label": "Muilta saadut avustukset",
+      "value": "",
+      "valueType": "string"
+    }
+  }
+}
