@@ -110,20 +110,20 @@
                 "Fix missing wrapper from core form": "patches/fix-form-wrapper.patch",
                 "#3023228: Status messages show up twice": "https://www.drupal.org/files/issues/2023-07-19/3023228-39.patch",
                 "Asset resolver empty settings cache issue": "patches/assetresolver-settings.patch",
-                "Anonymize logging of user data.": "patches/drupal_10.5.3-user-module-gdpr-anonymize-logging.patch"
+                "Pseudonymize logging of user data.": "patches/drupal_10.5.3-user-module-gdpr-pseudonymize-logging.patch"
             },
             "drupal/autologout": {
                 "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch",
-                "Anonymize logging of user data.": "patches/autologout_2.0.0-gdpr-anonymize-logging.patch"
+                "Pseudonymize logging of user data.": "patches/autologout_2.0.0-gdpr-pseudonymize-logging.patch"
             },
             "drupal/crop": {
                 "Fix encoded paths for files": "patches/AU-2225-fix-encoded-paths.patch"
             },
             "drupal/externalauth": {
-                "Anonymize logging of user data.": "patches/externalauth-2.0.8-gdpr-anonymize-logging.patch"
+                "Pseudonymize logging of user data.": "patches/externalauth-2.0.8-gdpr-pseudonymize-logging.patch"
             },
             "drupal/helfi_helsinki_profiili": {
-                "Anonymize logging of user data.": "patches/helfi_helsinki_profiili-0.9.30-gdpr-anonymize-logging.patch"
+                "Pseudonymize logging of user data.": "patches/helfi_helsinki_profiili-0.9.30-gdpr-pseudonymize-logging.patch"
             }
         },
         "drupal-scaffold": {
