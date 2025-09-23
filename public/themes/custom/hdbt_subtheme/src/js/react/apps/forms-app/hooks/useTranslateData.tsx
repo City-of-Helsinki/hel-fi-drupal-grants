@@ -2,6 +2,14 @@ import { RJSFSchema, UiSchema } from '@rjsf/utils';
 import { useTranslation } from 'react-i18next';
 
 /**
+ * Check if value should be translated.
+ *
+ * @param {string} value - value to check
+ * @return {boolean} - result
+ */
+const isTranslatableString = (value: string) => typeof value === 'string' && value.includes('.');
+
+/**
  * Translates given data using the provided schema and uiSchema.
  * The translated data is then returned in an object with the same structure as the input data.
  * The schema and uiSchema are recursively translated, and the translated values are replaced in the same structure.
@@ -14,12 +22,12 @@ export const useTranslateData = (data: any) => {
   const { schema, ui_schema } = data;
 
   const translateSchemaElement = (element: any): any => {
-    const result: any = {};
+    const result: any = {...element};
     ['addText', 'description', 'title', 'default'].forEach((key: string) => {
-      if (element[key]) {
+      if (element[key] && isTranslatableString(element[key])) {
         result[key] = t(element[key]);
       }
-    })
+    });
 
     return result;
   };
@@ -53,7 +61,7 @@ export const useTranslateData = (data: any) => {
     }
 
     if (element?.enum && Array.isArray(element.enum)) {
-      result.enum = element.enum.map((item: string) => typeof item === 'string' && item.includes('.') ? t(item) : item);
+      result.enum = element.enum.map((item: string) => isTranslatableString(item) ? t(item) : item);
     }
 
     if (element?.options && Array.isArray(element.options)) {
