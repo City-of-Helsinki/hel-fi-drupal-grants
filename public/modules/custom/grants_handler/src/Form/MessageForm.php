@@ -17,6 +17,7 @@ use Drupal\Core\TypedData\TypedDataManagerInterface;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_attachments\AttachmentRemover;
 use Drupal\grants_attachments\DebuggableTrait;
+use Drupal\grants_attachments\Element\GrantsAttachments;
 use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\webform\Entity\WebformSubmission;
@@ -107,6 +108,7 @@ class MessageForm extends FormBase {
         '#uri_scheme' => 'private',
         '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
         '#upload_validators' => [
+          'grants_attachments_validate_name_length' => GrantsAttachments::DEFAULT_FILENAME_LENGTH,
           'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
           'file_validate_size' => [$maxFileSizeInBytes],
         ],
