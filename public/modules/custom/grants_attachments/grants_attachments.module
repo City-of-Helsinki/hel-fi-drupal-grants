@@ -78,34 +78,3 @@ function grants_attachments_form_alter(&$form, FormStateInterface $form_state, $
     }
   }
 }
-
-/**
- * Checks for files with names longer than can be stored in the ATV.
- *
- * @param \Drupal\file\FileInterface $file
- *   A file entity.
- *
- * @return array
- *   An empty array if the file name length is smaller than the limit or an
- *   array containing an error message if it's not or is empty.
- *
- * @deprecated in drupal:10.2.0 and is removed from drupal:11.0.0. Use the
- *   'file.validator' service instead.
- *
- * @see https://www.drupal.org/node/3363700
- */
-function grants_attachments_validate_name_length(FileInterface $file, $maxLength) {
-  $errors = [];
-
-  if (!$file->getFilename()) {
-    $errors[] = t("The file's name is empty. Enter a name for the file.");
-  }
-  if (strlen($file->getFilename()) >= $maxLength) {
-    $errors[] = t(
-      "The file's name exceeds the @maxLength characters limit. Rename the file and try again.",
-      ['@maxLength' => $maxLength],
-      ['context' => 'grants_attachments'],
-    );
-  }
-  return $errors;
-}
