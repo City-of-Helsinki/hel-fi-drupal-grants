@@ -3,7 +3,7 @@ import { Notification } from 'hds-react';
 import { useAtomValue } from 'jotai';
 import { JSONSchema7Definition } from 'json-schema';
 
-import { shouldRenderPreviewAtom } from '../store';
+import { shouldRenderPreviewAtom } from '../../store';
 
 export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);

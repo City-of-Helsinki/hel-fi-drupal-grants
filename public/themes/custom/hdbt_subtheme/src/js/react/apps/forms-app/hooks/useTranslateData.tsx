@@ -1,17 +1,33 @@
 import { RJSFSchema, UiSchema } from '@rjsf/utils';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * Check if value should be translated.
+ *
+ * @param {string} value - value to check
+ * @return {boolean} - result
+ */
+const isTranslatableString = (value: string) => typeof value === 'string' && value.includes('.');
+
+/**
+ * Translates given data using the provided schema and uiSchema.
+ * The translated data is then returned in an object with the same structure as the input data.
+ * The schema and uiSchema are recursively translated, and the translated values are replaced in the same structure.
+ *
+ * @param {object} data - An object that contains the schema and uiSchema to be translated.
+ * @return {object} An object with the same structure as the input data, but with the translated values.
+ */
 export const useTranslateData = (data: any) => {
   const { t } = useTranslation();
   const { schema, ui_schema } = data;
 
   const translateSchemaElement = (element: any): any => {
-    const result: any = {};
-    ['addText', 'description', 'title'].forEach((key: string) => {
-      if (element[key]) {
+    const result: any = {...element};
+    ['addText', 'description', 'title', 'default'].forEach((key: string) => {
+      if (element[key] && isTranslatableString(element[key])) {
         result[key] = t(element[key]);
       }
-    })
+    });
 
     return result;
   };
@@ -23,7 +39,7 @@ export const useTranslateData = (data: any) => {
 
     const translations: RJSFSchema = translateSchemaElement(element);
     const result: RJSFSchema = {...element, ...translations};
-    
+
     ['properties', 'definitions'].forEach((key: string) => {
       if (element?.[key]) {
         const keyResult: RJSFSchema = {};
@@ -34,12 +50,29 @@ export const useTranslateData = (data: any) => {
       }
     });
 
-    if (element.additionalItems) {
-      result.additionalItems = iterateSchema(element.additionalItems);
+    ['if', 'then', 'const', 'additionalItems'].forEach((key: string) => {
+      if (element?.[key]) {
+        result[key] = iterateSchema(element[key]);
+      }
+    });
+
+    if (element?.items && Array.isArray(element.items)) {
+      result.items = element.items.map((item: RJSFSchema) => iterateSchema(item))
     }
 
-    if (element?.items) {
-      result.items = element.items.map((item: RJSFSchema) => iterateSchema(item))
+    if (element?.enum && Array.isArray(element.enum)) {
+      result.enum = element.enum.map((item: string) => isTranslatableString(item) ? t(item) : item);
+    }
+
+    if (element?.options && Array.isArray(element.options)) {
+      result.options = element.options.map(({ label, ...rest }) => ({
+        ...rest,
+        label: t(label),
+      }));
+    }
+
+    if (element.allOf && Array.isArray(element.allOf)) {
+      result.allOf = element.allOf.map((item: RJSFSchema) => iterateSchema(item));
     }
 
     return result;

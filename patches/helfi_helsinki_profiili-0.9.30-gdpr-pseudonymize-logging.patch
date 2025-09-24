@@ -1,0 +1,15 @@
+diff --git a/src/HelsinkiProfiiliUserData.php b/src/HelsinkiProfiiliUserData.php
+index 892d944..8341895 100644
+--- a/src/HelsinkiProfiiliUserData.php
++++ b/src/HelsinkiProfiiliUserData.php
+@@ -360,8 +360,8 @@ class HelsinkiProfiiliUserData {
+         throw new ProfileDataException('No profile data found');
+       }
+       else {
+-        $this->logger->notice('User %user got their HelsinkiProfiili data form endpoint', [
+-          '%user' => $this->currentUser->getDisplayName(),
++        $this->logger->notice('User with UUID %drupal_uuid got their HelsinkiProfiili data form endpoint', [
++          '%drupal_uuid' => $this->currentUser->getAccount()->get('uuid')->getString(),
+         ]);
+       }
+ 

@@ -56,7 +56,11 @@ final class Avus2Mapper {
     // Check LiikuntaSuunnistusDefinition for these values.
     $data['compensationInfo']['compensationArray'] = $this->getCompensationData();
     // @todo Move the array inside the function on applicantOfficialsArray.
-    $data['applicantOfficialsArray'] = [$this->getApplicantOfficials($form_data, $grants_profile)];
+    $officials = $this->getApplicantOfficials($form_data, $grants_profile);
+    if (!empty($officials)) {
+      $data['applicantOfficialsArray'] = [$officials];
+    }
+
     $data['currentAddressInfoArray'] = $this->getCurrentAddressData($form_data, $grants_profile);
     $data['applicationInfoArray'] = $this->getApplicationData($form_settings, $form_data, $application_number, $now);
     $data['bankAccountArray'][] = $this->getBankData($form_data);
@@ -137,6 +141,11 @@ final class Avus2Mapper {
     $uuid = $form_data['applicant_info']['community_officials']['community_officials'][0]['official'];
 
     $official_data = $grants_profile->getCommunityOfficialByUuid($uuid);
+
+    if (!$official_data) {
+      return [];
+    }
+
     $fields = ['name', 'role', 'email', 'phone'];
 
     foreach ($fields as $field_name) {

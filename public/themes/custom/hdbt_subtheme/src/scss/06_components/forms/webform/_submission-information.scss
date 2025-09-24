@@ -78,6 +78,13 @@
       min-width: fit-content;
     }
   }
+
+  // Fix the overflow-wrap for long file names.
+  .application-attachment-list {
+    li {
+      overflow-wrap: anywhere;
+    }
+  }
 }
 
 .hel-icon.hel-icon--copy {

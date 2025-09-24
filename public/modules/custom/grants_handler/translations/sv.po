@@ -136,9 +136,6 @@ msgctxt "grants_handler"
 msgid "Your data is safe, but not all the\ninformation in your application has been updated yet. Please wait \nmoment and reload the page."
 msgstr "Din information är säker, men all information i din ansökan har inte uppdaterats ännu. Vänligen vänta ett ögonblick och ladda om sidan."
 
-msgid "File upload failed, error has been logged."
-msgstr "Filuppladdning misslyckades, fel har loggats"
-
 msgctxt "grants_handler"
 msgid 'Completion page for @submissionId'
 msgstr 'Slutförd sida för @submissionId'
