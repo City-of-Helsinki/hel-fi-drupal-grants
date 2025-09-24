@@ -519,3 +519,89 @@ input[type='radio'] + label.form-required::after {
 .grants-attachments--fields-wrapper .button--delete-attachment{
   margin-top: var(--spacing-layout-xs);
 }
+
+.grants-react-form {
+  .form-group {
+    &.field-string,
+    &.field-integer {
+      margin-block-end: $spacing;
+    }
+  }
+
+  .form-section__title {
+    margin-block: 0 $spacing;
+  }
+
+  .form-section {
+    margin-block-end: $spacing-triple;
+  }
+
+
+  @include breakpoint($breakpoint-m) {
+    .form-section {
+      display: flex;
+      gap: $spacing-triple;
+    }
+
+    .form-section__title {
+      margin: 0;
+      width: 33%;
+    }
+
+    .form-section__content {
+      width: 67%;
+    }
+  }
+
+  .form-item__description,
+  .help-block {
+    color: $color-black-60;
+    margin-block-end: $spacing-and-half;
+  }
+
+  .array-item,
+  .form-item__file {
+    border: 2px solid $color-black-50;
+    margin-block-end: $spacing-and-half;
+    padding: $spacing-double;
+  }
+
+  .form-item__file {
+    display: flex;
+    flex-direction: column;
+
+    legend {
+      float: left;
+      width: 100%;
+    }
+  }
+
+  .form-item__fieldset {
+    legend {
+      @include font('h4');
+      margin-block-end: $spacing-half;
+      width: 100%;
+    }
+  }
+
+  //TODO: Remove when HDS supports file input styling
+  .form-item__fileinput {
+    & > div:first-child > div:first-child > div:first-child {
+      border-color: $color-black;
+      color: $color-black;
+    }
+
+    button {
+      @extend .hds-button--secondary;
+    }
+  }
+
+  .form-item__paragraph-title {
+    margin-block: 0 $spacing-half;
+  }
+
+  .form-item__paragraph,
+  .notification_hds-notification {
+    margin-block: 0 $spacing-and-half;
+  }
+}
