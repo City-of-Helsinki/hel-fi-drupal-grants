@@ -151,12 +151,12 @@ export const ObjectFieldTemplate = ({
       <>
         {title && <h2 className='grants__page-header'>{title}</h2>}
         {stepIndex === 0 && (
-          <Notification className="notification_hds-notification" label={Drupal.t('Some information fetched from personal information')}>
+          <Notification className="hdbt-form--notification" label={Drupal.t('Some information fetched from personal information')}>
             {Drupal.t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.')}
           </Notification>
         )}
         {steps && stepIndex < steps.size - 2 && (
-          <Notification className="notification_hds-notification" label={Drupal.t('Fill in the fields to all the questions that you can answer.')}>
+          <Notification className="hdbt-form--notification" label={Drupal.t('Fill in the fields to all the questions that you can answer.')}>
             {Drupal.t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.')}
           </Notification>
         )}
@@ -191,11 +191,11 @@ export const ObjectFieldTemplate = ({
 
   if (_isSection) {
     return (
-      <section className='form-section'>
-        <h3 className="form-section__title">
+      <section className='hdbt-form--section'>
+        <h3 className="hdbt-form--section__title">
           {title}
         </h3>
-        <div className="form-section__content">
+        <div className="hdbt-form--section__content">
           {description && <div className='form-item__description'>{description}</div>}
           {properties.map((field) => field.content)}
         </div>
@@ -226,7 +226,7 @@ export const ObjectFieldTemplate = ({
   return (
     <Fieldset
       heading={title || ''}
-      className='form-item__fieldset'
+      className='hdbt-form--fieldset'
     >
       {description && <div className='form-item__description'>{description}</div>}
       {properties.map((field) => field.content)}

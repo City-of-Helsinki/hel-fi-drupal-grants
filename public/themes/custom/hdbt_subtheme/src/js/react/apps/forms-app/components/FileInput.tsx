@@ -113,6 +113,6 @@ export const FileInput = ({
     maxSize={20 * 1024 * 1024}
     onChange={handleChange}
     required={required}
-    className="form-item__fileinput"
+    className="hdbt-form--fileinput"
   />
 };

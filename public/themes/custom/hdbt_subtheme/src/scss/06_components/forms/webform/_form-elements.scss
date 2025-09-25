@@ -528,27 +528,26 @@ input[type='radio'] + label.form-required::after {
     }
   }
 
-  .form-section__title {
+  .hdbt-form--section__title {
     margin-block: 0 $spacing;
-  }
 
-  .form-section {
-    margin-block-end: $spacing-triple;
-  }
-
-
-  @include breakpoint($breakpoint-m) {
-    .form-section {
-      display: flex;
-      gap: $spacing-triple;
-    }
-
-    .form-section__title {
+    @include breakpoint($breakpoint-m) {
       margin: 0;
       width: 33%;
     }
+  }
 
-    .form-section__content {
+  .hdbt-form--section {
+    margin-block-end: $spacing-triple;
+
+    @include breakpoint($breakpoint-m) {
+      display: flex;
+      gap: $spacing-triple;
+    }
+  }
+
+  .hdbt-form--section__content {
+    @include breakpoint($breakpoint-m) {
       width: 67%;
     }
   }
@@ -559,33 +558,20 @@ input[type='radio'] + label.form-required::after {
     margin-block-end: $spacing-and-half;
   }
 
-  .array-item,
-  .form-item__file {
+  .array-item {
     border: 2px solid $color-black-50;
     margin-block-end: $spacing-and-half;
     padding: $spacing-double;
   }
 
-  .form-item__file {
-    display: flex;
-    flex-direction: column;
-
-    legend {
-      float: left;
-      width: 100%;
-    }
-  }
-
-  .form-item__fieldset {
-    legend {
-      @include font('h4');
-      margin-block-end: $spacing-half;
-      width: 100%;
-    }
+  .hdbt-form--fieldset legend {
+    @include font('h4');
+    margin-block-end: $spacing-half;
+    width: 100%;
   }
 
   //TODO: Remove when HDS supports file input styling
-  .form-item__fileinput {
+  .hdbt-form--fileinput {
     & > div:first-child > div:first-child > div:first-child {
       border-color: $color-black;
       color: $color-black;
@@ -596,12 +582,12 @@ input[type='radio'] + label.form-required::after {
     }
   }
 
-  .form-item__paragraph-title {
+  .hdbt-form--paragraph__title {
     margin-block: 0 $spacing-half;
   }
 
-  .form-item__paragraph,
-  .notification_hds-notification {
+  .hdbt-form--paragraph,
+  .hdbt-form--notification {
     margin-block: 0 $spacing-and-half;
   }
 }

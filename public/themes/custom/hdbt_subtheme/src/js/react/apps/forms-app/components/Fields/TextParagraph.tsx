@@ -30,13 +30,13 @@ export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
   };
 
   return variant === 'infobox' ? (
-    <Notification label={title} className="notification_hds-notification">
+    <Notification label={title} className="hdbt-form--notification">
       {Array.isArray(items) && items?.length && items.map((p, index: number) => <p key={index}>{getTitle(p)}</p>)}
     </Notification>
   ) : (
     <div>
-      {title && <h4 className='form-item__paragraph-title'>{title}</h4>}
-      {Array.isArray(items) && items?.length && items.map((p, index: number) => <p className="form-item__paragraph" key={index}>{getTitle(p)}</p>)}
+      {title && <h4 className='hdbt-form--paragraph__title'>{title}</h4>}
+      {Array.isArray(items) && items?.length && items.map((p, index: number) => <p className="hdbt-form--paragraph" key={index}>{getTitle(p)}</p>)}
     </div>
   )
 }
