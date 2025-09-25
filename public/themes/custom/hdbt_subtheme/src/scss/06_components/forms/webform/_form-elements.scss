@@ -520,74 +520,72 @@ input[type='radio'] + label.form-required::after {
   margin-top: var(--spacing-layout-xs);
 }
 
-.grants-react-form {
-  .form-group {
-    &.field-string,
-    &.field-integer {
-      margin-block-end: $spacing;
-    }
+.form-group {
+  &.field-string,
+  &.field-integer {
+    margin-block-end: $spacing;
+  }
+}
+
+.hdbt-form--section__title {
+  margin-block: 0 $spacing;
+
+  @include breakpoint($breakpoint-m) {
+    margin: 0;
+    width: 33%;
+  }
+}
+
+.hdbt-form--section {
+  margin-block-end: $spacing-triple;
+
+  @include breakpoint($breakpoint-m) {
+    display: flex;
+    gap: $spacing-triple;
+  }
+}
+
+.hdbt-form--section__content {
+  @include breakpoint($breakpoint-m) {
+    width: 67%;
+  }
+}
+
+.hdbt-form--description,
+.help-block {
+  color: $color-black-60;
+  margin-block-end: $spacing-and-half;
+}
+
+.array-item {
+  border: 2px solid $color-black-50;
+  margin-block-end: $spacing-and-half;
+  padding: $spacing-double;
+}
+
+.hdbt-form--fieldset legend {
+  @include font('h4');
+  margin-block-end: $spacing-half;
+  width: 100%;
+}
+
+//TODO: Remove when HDS supports file input styling
+.hdbt-form--fileinput {
+  & > div:first-child > div:first-child > div:first-child {
+    border-color: $color-black;
+    color: $color-black;
   }
 
-  .hdbt-form--section__title {
-    margin-block: 0 $spacing;
-
-    @include breakpoint($breakpoint-m) {
-      margin: 0;
-      width: 33%;
-    }
+  button {
+    @extend .hds-button--secondary;
   }
+}
 
-  .hdbt-form--section {
-    margin-block-end: $spacing-triple;
+.hdbt-form--paragraph__title {
+  margin-block: 0 $spacing-half;
+}
 
-    @include breakpoint($breakpoint-m) {
-      display: flex;
-      gap: $spacing-triple;
-    }
-  }
-
-  .hdbt-form--section__content {
-    @include breakpoint($breakpoint-m) {
-      width: 67%;
-    }
-  }
-
-  .form-item__description,
-  .help-block {
-    color: $color-black-60;
-    margin-block-end: $spacing-and-half;
-  }
-
-  .array-item {
-    border: 2px solid $color-black-50;
-    margin-block-end: $spacing-and-half;
-    padding: $spacing-double;
-  }
-
-  .hdbt-form--fieldset legend {
-    @include font('h4');
-    margin-block-end: $spacing-half;
-    width: 100%;
-  }
-
-  //TODO: Remove when HDS supports file input styling
-  .hdbt-form--fileinput {
-    & > div:first-child > div:first-child > div:first-child {
-      border-color: $color-black;
-      color: $color-black;
-    }
-
-    button {
-      @extend .hds-button--secondary;
-    }
-  }
-
-  .hdbt-form--paragraph__title {
-    margin-block: 0 $spacing-half;
-  }
-
-  .hdbt-form--paragraph__content,
-  .hdbt-form--notification {
-    margin-block: 0 $spacing-and-half;
-  }
+.hdbt-form--paragraph__content,
+.hdbt-form--notification {
+  margin-block: 0 $spacing-and-half;
 }

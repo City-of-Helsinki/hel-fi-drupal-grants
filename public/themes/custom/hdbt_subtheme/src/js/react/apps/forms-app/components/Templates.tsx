@@ -47,9 +47,9 @@ export const ArrayFieldTemplate = ({
   const addText = uiSchema?.['ui:options']?.addText;
 
   return (
-    <div className="form-section__fieldset">
+    <div>
       {description &&
-        <div className='form-item__description'>
+        <div className='hdbt-form--description'>
           {description}
         </div>
       }
@@ -196,7 +196,7 @@ export const ObjectFieldTemplate = ({
           {title}
         </h3>
         <div className="hdbt-form--section__content">
-          {description && <div className='form-item__description'>{description}</div>}
+          {description && <div className='hdbt-form--description'>{description}</div>}
           {properties.map((field) => field.content)}
         </div>
       </section>
@@ -228,7 +228,7 @@ export const ObjectFieldTemplate = ({
       heading={title || ''}
       className='hdbt-form--fieldset'
     >
-      {description && <div className='form-item__description'>{description}</div>}
+      {description && <div className='hdbt-form--description'>{description}</div>}
       {properties.map((field) => field.content)}
     </Fieldset>
   );
