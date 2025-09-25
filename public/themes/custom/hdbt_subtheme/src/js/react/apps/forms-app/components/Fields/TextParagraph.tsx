@@ -34,9 +34,9 @@ export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
       {Array.isArray(items) && items?.length && items.map((p, index: number) => <p key={index}>{getTitle(p)}</p>)}
     </Notification>
   ) : (
-    <div>
-      {title && <h4 className='hdbt-form--paragraph__title'>{title}</h4>}
-      {Array.isArray(items) && items?.length && items.map((p, index: number) => <p className="hdbt-form--paragraph" key={index}>{getTitle(p)}</p>)}
+    <div className="hdbt-form--paragraph">
+      {title && <h4 className="hdbt-form--paragraph__title">{title}</h4>}
+      {Array.isArray(items) && items?.length && items.map((p, index: number) => <p className="hdbt-form--paragraph__content" key={index}>{getTitle(p)}</p>)}
     </div>
   )
 }

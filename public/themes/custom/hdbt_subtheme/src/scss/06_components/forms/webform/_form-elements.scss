@@ -586,7 +586,7 @@ input[type='radio'] + label.form-required::after {
     margin-block: 0 $spacing-half;
   }
 
-  .hdbt-form--paragraph,
+  .hdbt-form--paragraph__content,
   .hdbt-form--notification {
     margin-block: 0 $spacing-and-half;
   }
