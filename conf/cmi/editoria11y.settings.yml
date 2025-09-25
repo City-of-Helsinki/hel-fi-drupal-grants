@@ -1,14 +1,14 @@
 content_root: ''
-assertiveness: null
+assertiveness: smart
 no_load: ''
 ignore_all_if_absent: ''
-ignore_elements: ''
+ignore_elements: '.card img, .picture--computed img, .content-card__image img, .card-teaser__img img, .list-of-links__item__image img, .components--computed *, .announcement__content-body p'
 panel_no_cover: ''
 embedded_content_warning: ''
 download_links: ''
 link_strings_new_windows: ''
 ignore_link_strings: ''
-link_ignore_selector: ''
+link_ignore_selector: 'svg.ext, svg.mailto, .link-purpose-text'
 hidden_handlers: ''
 element_hides_overflow: ''
 ed11y_theme: sleekTheme
@@ -22,11 +22,11 @@ redundant_prefix: ''
 custom_tests: 0
 disable_live: false
 live_h_inherit: ''
-live_h2: ''
+live_h2: 'form[id^="node-"] #edit-body-wrapper .ck-content'
 live_h3: ''
 live_h4: ''
 hide_edit_links: ''
-ck5_table_headers: none
+ck5_table_headers: row
 ignore_tests:
   linkNewWindow: '0'
   linkNoText: '0'
@@ -40,7 +40,7 @@ ignore_tests:
   tableNoHeaderCells: '0'
   tableEmptyHeaderCell: '0'
   tableContainsContentHeading: '0'
-  embedVideo: '0'
+  embedVideo: embedVideo
   embedAudio: '0'
   embedVisualization: '0'
   embedTwitter: '0'
