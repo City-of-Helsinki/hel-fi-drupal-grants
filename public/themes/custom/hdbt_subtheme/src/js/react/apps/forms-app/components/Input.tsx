@@ -3,7 +3,7 @@ import { Fieldset, TextArea as HDSTextArea, TextInput as HDSTextInput, Notificat
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { WidgetProps } from '@rjsf/utils';
-
+import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, shouldRenderPreviewAtom } from '../store';
 import { formatErrors } from '../utils';
 
@@ -74,9 +74,6 @@ export const TextInput = ({
       style={{
         maxWidth: getMaxWidth(),
       }}
-      tooltipButtonLabel={uiSchema?.['ui:options']?.tooltipButtonLabel?.toString()}
-      tooltipLabel={uiSchema?.['ui:options']?.tooltipLabel?.toString()}
-      tooltipText={uiSchema?.['ui:options']?.tooltipText?.toString()}
       value={value ?? ''}
     />
   );
@@ -113,6 +110,7 @@ export const TextArea = ({
     readOnly={readonly}
     required={required}
     value={value ?? ''}
+    helperText='xx/5000' // TODO: Implement character count
   />
 };
 
@@ -169,6 +167,8 @@ export const SelectWidget = ({
         placeholder: '- Valitse -',
       }}
       value={value}
+      theme={defaultSelectTheme}
+      className='hdbt-form--select'
     />
   );
 };
