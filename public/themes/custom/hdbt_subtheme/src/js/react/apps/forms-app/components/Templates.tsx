@@ -1,10 +1,11 @@
 import { ArrayFieldTemplateProps, IconButtonProps, ObjectFieldTemplatePropertyType, ObjectFieldTemplateProps } from '@rjsf/utils'
-import { Accordion, Button, ButtonPresetTheme, ButtonVariant, Fieldset, Notification, IconCross, IconPlus } from 'hds-react';
+import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus } from 'hds-react';
 import { ReactNode } from 'react';
 import { useAtomValue } from 'jotai';
 
 import { formStepsAtom, getCurrentStepAtom, shouldRenderPreviewAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
+import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 
 export const ArrayFieldTemplate = ({
   canAdd,
@@ -57,9 +58,8 @@ export const ArrayFieldTemplate = ({
       {canAdd &&
         <Button
           onClick={onAddClick}
-          theme={ButtonPresetTheme.Black}
+          theme={secondaryButtonTheme}
           type='button'
-          variant={ButtonVariant.Secondary}
           iconStart={<IconPlus />}
         >
           {addText ? addText as ReactNode & string : Drupal.t('Add')}
@@ -103,17 +103,10 @@ const PreviewSection = ({
   const printableName = uiSchema?.['ui:options']?.printableName;
 
   return (
-    <section
-      className='form-item'
-      style={{
-        width: '100%',
-      }}
-    >
-      <div className=''>
-        <h4 className=''>{printableName || title}</h4>
-        <div>
-          {properties.map((field) => field.content)}
-        </div>
+    <section className='hdbt-form--section grants-form--preview-section'>
+      <h4 className='hdbt-form--section__title'>{printableName || title}</h4>
+      <div className='hdbt-form--section__content'>
+        {properties.map((field) => field.content)}
       </div>
     </section>
   );
@@ -150,16 +143,18 @@ export const ObjectFieldTemplate = ({
     return (
       <>
         {title && <h2 className='grants-form__page-title'>{title}</h2>}
-        {stepIndex === 0 && (
-          <Notification className="hdbt-form--notification" label={Drupal.t('Some information fetched from personal information')}>
-            {Drupal.t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.')}
-          </Notification>
-        )}
-        {steps && stepIndex < steps.size - 2 && (
-          <Notification className="hdbt-form--notification" label={Drupal.t('Fill in the fields to all the questions that you can answer.')}>
-            {Drupal.t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.')}
-          </Notification>
-        )}
+        <div className="grants-form__notification-container">
+          {stepIndex === 0 && (
+            <Notification className="hdbt-form--notification" label={Drupal.t('Some information fetched from personal information')}>
+              {Drupal.t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.')}
+            </Notification>
+          )}
+          {steps && stepIndex < steps.size - 2 && (
+            <Notification className="hdbt-form--notification" label={Drupal.t('Fill in the fields to all the questions that you can answer.')}>
+              {Drupal.t('Fields marked with * are mandatory information that you must fill in in order to save and send the information.')}
+            </Notification>
+          )}
+        </div>
         {
           stepId === 'applicant_info' &&
           <section className='prh-content-block'>
@@ -246,9 +241,8 @@ export const ButtonTemplate = ({
       marginRight: 'auto',
       marginTop: 'var(--spacing-m)',
     }}
-    theme={ButtonPresetTheme.Black}
+    theme={secondaryButtonTheme}
     type='button'
-    variant={ButtonVariant.Secondary}
     iconStart={<IconCross />}
   >
     {children as ReactNode & string}

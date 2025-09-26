@@ -1,6 +1,13 @@
 import { useAtomValue } from 'jotai';
-import { TextInput } from 'hds-react';
 import { getFormConfigAtom } from '../store';
+
+
+const InfoField = ({ label, value }: { label: string; value: string | number }) => (
+  <div className="prh-content-block__item">
+    <div className="prh-content-block__item__label">{label}</div>
+    <div className="prh-content-block__item__value">{value}</div>
+  </div>
+);
 
 export const ApplicantInfo = () => {
   const { grantsProfile: {
@@ -17,58 +24,19 @@ export const ApplicantInfo = () => {
 
   return (
     <>
-      <div className='prh-content-block__content-row'>
-        <TextInput
-          id='companyName'
-          className='prh-content-block__item'
-          readOnly
-          value={companyName}
-          label={Drupal.t('Name of association')}
-        />
-        <TextInput
-          id='businessId'
-          className='prh-content-block__item'
-          readOnly
-          value={businessId}
-          label={Drupal.t('Business ID')}
-        />
-        <TextInput
-          id='registrationDate'
-          className='prh-content-block__item'
-          readOnly
-          value={registrationDateString}
-          label={Drupal.t('Date of registration')}
-        />
+      <div className="prh-content-block__content-row">
+        <InfoField label={Drupal.t('Name of association')} value={companyName} />
+        <InfoField label={Drupal.t('Business ID')} value={businessId} />
+        <InfoField label={Drupal.t('Date of registration')} value={registrationDateString} />
       </div>
-      <div className='prh-content-block__content-row'>
-        <TextInput
-          id='companyHome'
-          className='prh-content-block__item'
-          readOnly
-          value={companyHome}
+      <div className="prh-content-block__content-row">
+        <InfoField
           label={Drupal.t('Municipality where the association is based (domicile)')}
+          value={companyHome}
         />
-        <TextInput
-          id='companyNameShort'
-          className='prh-content-block__item'
-          readOnly
-          value={companyNameShort}
-          label={Drupal.t('Abbreviated name')}
-        />
-        <TextInput
-          id='foundingYear'
-          className='prh-content-block__item'
-          readOnly
-          value={foundingYear}
-          label={Drupal.t('Year of establishment')}
-        />
-        <TextInput
-          id='companyHomePage'
-          className='prh-content-block__item'
-          readOnly
-          value={companyHomePage}
-          label={Drupal.t('Website address')}
-        />
+        <InfoField label={Drupal.t('Abbreviated name')} value={companyNameShort} />
+        <InfoField label={Drupal.t('Year of establishment')} value={foundingYear} />
+        <InfoField label={Drupal.t('Website address')} value={companyHomePage} />
       </div>
     </>
   );
