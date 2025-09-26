@@ -523,7 +523,7 @@ input[type='radio'] + label.form-required::after {
 .form-group:not(:last-child) {
   &.field-string,
   &.field-integer {
-    margin-block-end: $spacing;
+    margin-block-end: $spacing-and-half;
   }
 }
 
@@ -580,8 +580,12 @@ input[type='radio'] + label.form-required::after {
 
 .hdbt-form--fieldset legend {
   @include font('h4');
-  margin-block-end: $spacing-half;
+  margin-block-end: $spacing-and-half;
   width: 100%;
+
+  & + .hdbt-form--description {
+    margin-block-start: calc(-1 * #{$spacing});
+  }
 }
 
 //TODO: Remove when HDS supports file input styling
