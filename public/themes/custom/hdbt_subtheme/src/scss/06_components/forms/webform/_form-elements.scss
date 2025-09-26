@@ -599,6 +599,7 @@ input[type='radio'] + label.form-required::after {
 .prh-content-block {
   background-color: $color-black-5;
   border-bottom: $spacing-half solid $color-engel-dark;
+  margin-bottom: $spacing-quadruple;
   padding: $spacing-double;
 }
 
@@ -607,4 +608,12 @@ input[type='radio'] + label.form-required::after {
   display: flex;
   margin-block-start: $spacing;
   padding-block-start: $spacing;
+}
+
+.hdbt-form--stepper {
+  margin-block: $spacing-quadruple;
+}
+
+.grants-form--page-title {
+  margin-block-end: $spacing-quadruple;
 }

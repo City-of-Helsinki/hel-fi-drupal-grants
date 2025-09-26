@@ -149,7 +149,7 @@ export const ObjectFieldTemplate = ({
   if (_step && _step === stepId) {
     return (
       <>
-        {title && <h2 className=''>{title}</h2>}
+        {title && <h2 className='grants-form--page-title'>{title}</h2>}
         {stepIndex === 0 && (
           <Notification className="hdbt-form--notification" label={Drupal.t('Some information fetched from personal information')}>
             {Drupal.t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.')}
