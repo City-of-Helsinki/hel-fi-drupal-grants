@@ -561,7 +561,11 @@ input[type='radio'] + label.form-required::after {
 .field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
   border: 2px solid $color-black-50;
   margin-block-end: $spacing-and-half;
-  padding: $spacing-double !important;
+  padding: $spacing-double;
+}
+
+.array-item .hdbt-form--fieldset {
+  padding: 0;
 }
 
 .field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
@@ -574,7 +578,7 @@ input[type='radio'] + label.form-required::after {
   }
 }
 
-.hdbt-form--fieldset legend{
+.hdbt-form--fieldset legend {
   @include font('h4');
   margin-block-end: $spacing-half;
   width: 100%;

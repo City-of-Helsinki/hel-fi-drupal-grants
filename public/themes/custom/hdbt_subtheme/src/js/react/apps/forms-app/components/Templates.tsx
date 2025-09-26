@@ -228,7 +228,6 @@ export const ObjectFieldTemplate = ({
       heading={title || ''}
       className='hdbt-form--fieldset'
       style={{
-        padding: '0',
         marginInline: '0',
       }}
     >
