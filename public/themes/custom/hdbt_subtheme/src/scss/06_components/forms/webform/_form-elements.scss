@@ -520,7 +520,7 @@ input[type='radio'] + label.form-required::after {
   margin-top: var(--spacing-layout-xs);
 }
 
-.form-group {
+.form-group:not(:last-child) {
   &.field-string,
   &.field-integer {
     margin-block-end: $spacing;
@@ -561,12 +561,21 @@ input[type='radio'] + label.form-required::after {
   border: 2px solid $color-black-50;
   margin-block-end: $spacing-and-half;
   padding: $spacing-double;
+
+  //Removes bottom margin from select elements inside array items
+  label + div {
+    margin: 0;
+  }
 }
 
-.hdbt-form--fieldset legend {
-  @include font('h4');
-  margin-block-end: $spacing-half;
-  width: 100%;
+.hdbt-form--fieldset{
+  padding: 0;
+
+  legend {
+    @include font('h4');
+    margin-block-end: $spacing-half;
+    width: 100%;
+  }
 }
 
 //TODO: Remove when HDS supports file input styling
