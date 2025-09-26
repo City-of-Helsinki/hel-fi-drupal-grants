@@ -168,6 +168,7 @@ export const SelectWidget = ({
       }}
       value={value}
       theme={defaultSelectTheme}
+      className='hdbt-form--select'
     />
   );
 };
