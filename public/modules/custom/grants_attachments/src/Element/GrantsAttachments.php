@@ -33,7 +33,6 @@ use GuzzleHttp\Exception\GuzzleException;
 class GrantsAttachments extends WebformCompositeBase {
 
   const DEFAULT_ALLOWED_FILE_TYPES = 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip';
-  const DEFAULT_FILENAME_LENGTH = 100;
 
   /**
    * {@inheritdoc}
@@ -264,7 +263,6 @@ class GrantsAttachments extends WebformCompositeBase {
       // Managed file assumes that this is always in MB.
       '#max_filesize' => 20,
       '#upload_validators' => [
-        'grants_attachments_validate_name_length' => self::DEFAULT_FILENAME_LENGTH,
         'file_validate_extensions' => $allowedFileTypesArray,
         'file_validate_size' => [$maxFileSizeInBytes],
       ],
