@@ -248,6 +248,7 @@ export const ButtonTemplate = ({
     {...props}
     style={{
       marginRight: 'auto',
+      marginTop: 'var(--spacing-m)',
     }}
     theme={ButtonPresetTheme.Black}
     type='button'
