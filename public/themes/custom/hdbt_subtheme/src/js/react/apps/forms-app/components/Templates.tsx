@@ -227,6 +227,9 @@ export const ObjectFieldTemplate = ({
     <Fieldset
       heading={title || ''}
       className='hdbt-form--fieldset'
+      style={{
+        padding: '0',
+      }}
     >
       {description && <div className='hdbt-form--description'>{description}</div>}
       {properties.map((field) => field.content)}
@@ -245,6 +248,7 @@ export const ButtonTemplate = ({
     {...props}
     style={{
       marginRight: 'auto',
+      marginTop: 'var(--spacing-m)',
     }}
     theme={ButtonPresetTheme.Black}
     type='button'
