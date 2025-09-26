@@ -557,20 +557,27 @@ input[type='radio'] + label.form-required::after {
   margin-block-end: $spacing-and-half;
 }
 
-.array-item {
+.array-item,
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
   border: 2px solid $color-black-50;
   margin-block-end: $spacing-and-half;
-  padding: $spacing-double;
+  padding: $spacing-double !important;
 }
 
-.hdbt-form--fieldset{
-  padding: 0;
-
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
   legend {
-    @include font('h4');
-    margin-block-end: $spacing-half;
-    width: 100%;
+    float: left;
   }
+
+  legend + * {
+    clear: both;
+  }
+}
+
+.hdbt-form--fieldset legend{
+  @include font('h4');
+  margin-block-end: $spacing-half;
+  width: 100%;
 }
 
 //TODO: Remove when HDS supports file input styling
