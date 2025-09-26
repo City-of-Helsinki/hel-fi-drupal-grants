@@ -561,11 +561,6 @@ input[type='radio'] + label.form-required::after {
   border: 2px solid $color-black-50;
   margin-block-end: $spacing-and-half;
   padding: $spacing-double;
-
-  //Removes bottom margin from select elements inside array items
-  label + div {
-    margin: 0;
-  }
 }
 
 .hdbt-form--fieldset{
@@ -597,4 +592,8 @@ input[type='radio'] + label.form-required::after {
 .hdbt-form--paragraph__content,
 .hdbt-form--notification {
   margin-block: 0 $spacing-and-half;
+}
+
+.hdbt-form--select label + div {
+  margin-bottom: 0;
 }
