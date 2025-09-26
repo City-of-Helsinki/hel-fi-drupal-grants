@@ -523,7 +523,7 @@ input[type='radio'] + label.form-required::after {
 .form-group:not(:last-child) {
   &.field-string,
   &.field-integer {
-    margin-block-end: $spacing;
+    margin-block-end: $spacing-and-half;
   }
 }
 
@@ -557,24 +557,34 @@ input[type='radio'] + label.form-required::after {
   margin-block-end: $spacing-and-half;
 }
 
-.array-item {
+.array-item,
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
   border: 2px solid $color-black-50;
   margin-block-end: $spacing-and-half;
   padding: $spacing-double;
+}
 
-  //Removes bottom margin from select elements inside array items
-  label + div {
-    margin: 0;
+.array-item .hdbt-form--fieldset {
+  padding: 0;
+}
+
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
+  legend {
+    float: left;
+  }
+
+  legend + * {
+    clear: both;
   }
 }
 
-.hdbt-form--fieldset{
-  padding: 0;
+.hdbt-form--fieldset legend {
+  @include font('h4');
+  margin-block-end: $spacing-and-half;
+  width: 100%;
 
-  legend {
-    @include font('h4');
-    margin-block-end: $spacing-half;
-    width: 100%;
+  & + .hdbt-form--description {
+    margin-block-start: calc(-1 * #{$spacing});
   }
 }
 
@@ -597,6 +607,10 @@ input[type='radio'] + label.form-required::after {
 .hdbt-form--paragraph__content,
 .hdbt-form--notification {
   margin-block: 0 $spacing-and-half;
+}
+
+.hdbt-form--select label + div {
+  margin-bottom: 0;
 }
 
 .hdbt-form--actions {
@@ -626,3 +640,4 @@ input[type='radio'] + label.form-required::after {
 .grants-form--page-title {
   margin-block-end: $spacing-quadruple;
 }
+

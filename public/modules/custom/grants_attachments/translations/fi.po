@@ -105,6 +105,5 @@ msgctxt "grants_attachments"
 msgid "File upload failed, error has been logged."
 msgstr "Tiedoston tallennus epäonnistui, virhe on kirjattu."
 
-msgctxt "grants_attachments"
-msgid "The file's name exceeds the @maxLength characters limit. Rename the file and try again."
-msgstr "Tiedoston nimi ylittää @maxLength merkin rajan. Nimeä tiedosto lyhyemmällä nimellä ja yritä uudelleen."
+msgid "The file's name exceeds the %maxLength characters limit. Rename the file and try again."
+msgstr "Tiedoston nimi ylittää %maxLength merkin rajan. Nimeä tiedosto lyhyemmällä nimellä ja yritä uudelleen."

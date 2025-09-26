@@ -5,7 +5,7 @@ import { SyntheticEvent } from 'react';
 import { getCurrentStepAtom, errorsAtom, getStepsAtom, setStepAtom, finalAcceptanceAtom } from '../../store';
 import { keyErrorsByStep } from '../../utils';
 import { SaveDraftButton } from './SaveDraftButton';
-import { primaryButtonStyle } from '@/react/common/constants/buttonStyle';
+import { primaryButtonTheme } from '@/react/common/constants/buttonTheme';
 
 export const FormActions = ({
   saveDraft,
@@ -54,7 +54,7 @@ export const FormActions = ({
         (currentStepIndex > 0 && currentStepId !== 'ready') &&
         <Button
           onClick={() => setStep(currentStepIndex - 1)}
-          theme={primaryButtonStyle}
+          theme={primaryButtonTheme}
           type='button'
           iconStart={<IconAngleLeft />}
         >
@@ -68,14 +68,14 @@ export const FormActions = ({
             <Button
               disabled={Boolean(errors?.length) || !finalAcceptance}
               type='submit'
-              theme={primaryButtonStyle}
+              theme={primaryButtonTheme}
             >
               {Drupal.t('Submit')}
             </Button> :
             <Button
               onClick={nextPageAction}
               type='button'
-              theme={primaryButtonStyle}
+              theme={primaryButtonTheme}
               iconEnd={<IconAngleRight />}
             >
               {Drupal.t('Next')}
