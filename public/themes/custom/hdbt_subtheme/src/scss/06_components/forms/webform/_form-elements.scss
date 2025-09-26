@@ -624,20 +624,31 @@ input[type='radio'] + label.form-required::after {
   border-bottom: $spacing-half solid $color-engel-dark;
   margin-bottom: $spacing-quadruple;
   padding: $spacing-double;
+
+  & > p {
+    margin-block: 0 $spacing-and-half;
+  }
 }
 
-.prh-content-block__content {
+.prh-content-block__content-row {
   border-top: 1px solid $color-black-20;
   display: flex;
-  margin-block-start: $spacing;
   padding-block-start: $spacing;
+}
+
+.prh-content-block__item {
+  height: auto;
 }
 
 .hdbt-form--stepper {
   margin-block: $spacing-quadruple;
+
+  button {
+    box-sizing: content-box;
+  }
 }
 
-.grants-form--page-title {
+.grants-form__page-title {
   margin-block-end: $spacing-quadruple;
 }
 

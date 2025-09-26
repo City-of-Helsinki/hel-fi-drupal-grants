@@ -68,7 +68,7 @@ export const Stepper = ({
           '--hds-step-content-color': 'var(--color-black-90)',
           '--hds-stepper-background-color': 'var(--color-white)',
           '--hds-stepper-color': 'var(--color-black-90)',
-          '--hds-stepper-focus-border-color': 'var(--color-black-90)'
+          '--hds-stepper-focus-border-color': 'var(--color-coat-of-arms)'
         }}
         className="hdbt-form--stepper"
       />
