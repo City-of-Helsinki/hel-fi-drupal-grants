@@ -589,3 +589,22 @@ input[type='radio'] + label.form-required::after {
 .hdbt-form--notification {
   margin-block: 0 $spacing-and-half;
 }
+
+.hdbt-form--actions {
+  display: flex;
+  gap: $spacing-half;
+  justify-content: right;
+}
+
+.prh-content-block {
+  background-color: $color-black-5;
+  border-bottom: $spacing-half solid $color-engel-dark;
+  padding: $spacing-double;
+}
+
+.prh-content-block__content {
+  border-top: 1px solid $color-black-20;
+  display: flex;
+  margin-block-start: $spacing;
+  padding-block-start: $spacing;
+}

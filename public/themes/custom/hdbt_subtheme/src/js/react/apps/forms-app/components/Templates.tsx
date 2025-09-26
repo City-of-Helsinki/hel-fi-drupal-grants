@@ -149,7 +149,7 @@ export const ObjectFieldTemplate = ({
   if (_step && _step === stepId) {
     return (
       <>
-        {title && <h2 className='grants__page-header'>{title}</h2>}
+        {title && <h2 className=''>{title}</h2>}
         {stepIndex === 0 && (
           <Notification className="hdbt-form--notification" label={Drupal.t('Some information fetched from personal information')}>
             {Drupal.t('Check the information on the form before sending the application. You can change your own information from personal information section of the site.')}
@@ -162,20 +162,16 @@ export const ObjectFieldTemplate = ({
         )}
         {
           stepId === 'applicant_info' &&
-          <section className='grants-profile--imported-section webform-section'>
-            <div className='webform-section-flex-wrapper'>
-              <div className=''>
-                <div className='grants-profile-prh-info'>
-                  {Drupal.t('The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.')}
-                </div>
-              </div>
-              <ApplicantInfo />
-            </div>
+          <section className='prh-content-block'>
+            <p>
+              {Drupal.t('The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.')}
+            </p>
+          <ApplicantInfo />
           </section>
         }
-        <div className='form-content'>
+        <div className='hdbt-form--content'>
           {description &&
-            <div className='form-content__description'>
+            <div className='hdbt-form--content__description'>
               {description}
             </div>
           }

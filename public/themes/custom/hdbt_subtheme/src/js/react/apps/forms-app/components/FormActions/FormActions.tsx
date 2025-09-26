@@ -1,10 +1,11 @@
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Button, ButtonPresetTheme, ButtonVariant } from 'hds-react';
+import { Button, IconTrash, IconAngleLeft, IconAngleRight } from 'hds-react';
 import { ValidationData } from '@rjsf/utils';
 import { SyntheticEvent } from 'react';
 import { getCurrentStepAtom, errorsAtom, getStepsAtom, setStepAtom, finalAcceptanceAtom } from '../../store';
 import { keyErrorsByStep } from '../../utils';
 import { SaveDraftButton } from './SaveDraftButton';
+import { primaryButtonStyle } from '@/react/common/constants/buttonStyle';
 
 export const FormActions = ({
   saveDraft,
@@ -38,53 +39,49 @@ export const FormActions = ({
   };
 
   return (
-    <div className='form-actions form-wrapper'>
-      <div className='actions'>
-        {/*
-        @todo add back when deleting draft is supported
+    <div className='hdbt-form--actions'>
+      {/* @todo add back when deleting is supported
+      <Button
+        iconStart={<IconTrash />}
+        theme={ButtonPresetTheme.Black}
+        type='button'
+        variant={ButtonVariant.Supplementary}
+      >
+        {Drupal.t('Delete draft')}
+      </Button> */}
+      <SaveDraftButton saveDraft={saveDraft} />
+      {
+        (currentStepIndex > 0 && currentStepId !== 'ready') &&
         <Button
-          iconStart={<IconTrash />}
-          theme={ButtonPresetTheme.Black}
+          onClick={() => setStep(currentStepIndex - 1)}
+          theme={primaryButtonStyle}
           type='button'
-          variant={ButtonVariant.Supplementary}
+          iconStart={<IconAngleLeft />}
         >
-          {Drupal.t('Delete draft')}
-        </Button> */}
-        <SaveDraftButton saveDraft={saveDraft} />
-        {
-          (currentStepIndex > 0 && currentStepId !== 'ready') &&
-          <Button
-            onClick={() => setStep(currentStepIndex - 1)}
-            theme={ButtonPresetTheme.Black}
-            type='button'
-            variant={ButtonVariant.Primary}
-          >
-            {Drupal.t('Previous')}
-          </Button>
-        }
-        {
-          currentStepId !== 'ready' &&
-            (
-              currentStepId === 'preview' ?
-              <Button
-                disabled={Boolean(errors?.length) || !finalAcceptance}
-                theme={ButtonPresetTheme.Black}
-                type='submit'
-                variant={ButtonVariant.Primary}
-              >
-                {Drupal.t('Submit')}
-              </Button> :
-              <Button
-                onClick={nextPageAction}
-                theme={ButtonPresetTheme.Black}
-                type='button'
-                variant={ButtonVariant.Primary}
-              >
-                {Drupal.t('Next')}
-              </Button>
-            )
-        }
-      </div>
+          {Drupal.t('Previous')}
+        </Button>
+      }
+      {
+        currentStepId !== 'ready' &&
+          (
+            currentStepId === 'preview' ?
+            <Button
+              disabled={Boolean(errors?.length) || !finalAcceptance}
+              type='submit'
+              theme={primaryButtonStyle}
+            >
+              {Drupal.t('Submit')}
+            </Button> :
+            <Button
+              onClick={nextPageAction}
+              type='button'
+              theme={primaryButtonStyle}
+              iconEnd={<IconAngleRight />}
+            >
+              {Drupal.t('Next')}
+            </Button>
+          )
+      }
     </div>
   );
 };

@@ -63,15 +63,14 @@ export const Stepper = ({
         onStepClick={onStepClick}
         selectedStep={currentIndex}
         steps={transformedSteps}
-        style={{
-          marginTop: 'var(--spacing-m)',
-        }}
         theme={{
-          '--hds-step-content-color': 'var(--color-black)',
-          '--hds-stepper-color': 'var(--color-black)',
-          '--hds-stepper-focus-border-color': 'var(--color-black)',
-          '--hds-not-selected-step-label-color': 'var(--color-black)',
+          '--hds-not-selected-step-label-color': 'var(--color-black-90)',
+          '--hds-step-content-color': 'var(--color-black-90)',
+          '--hds-stepper-background-color': 'var(--color-white)',
+          '--hds-stepper-color': 'var(--color-black-90)',
+          '--hds-stepper-focus-border-color': 'var(--color-black-90)'
         }}
+        className="hdbt-form--stepper"
       />
     </div>
   )

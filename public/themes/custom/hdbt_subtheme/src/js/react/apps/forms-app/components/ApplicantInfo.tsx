@@ -17,54 +17,54 @@ export const ApplicantInfo = () => {
 
   return (
     <>
-      <div className='applicant-info--from-grants'>
+      <div className='prh-content-block__content'>
         <TextInput
           id='companyName'
-          className='grants-handler-prefilled-field'
+          className=''
           readOnly
           value={companyName}
           label={Drupal.t('Name of association')}
         />
         <TextInput
           id='businessId'
-          className='grants-handler-prefilled-field'
+          className=''
           readOnly
           value={businessId}
           label={Drupal.t('Business ID')}
         />
         <TextInput
           id='registrationDate'
-          className='grants-handler-prefilled-field'
+          className=''
           readOnly
           value={registrationDateString}
           label={Drupal.t('Date of registration')}
         />
       </div>
-      <div className='applicant-info--from-grants'>
+      <div className='prh-content-block__content'>
         <TextInput
           id='companyHome'
-          className='grants-handler-prefilled-field'
+          className=''
           readOnly
           value={companyHome}
           label={Drupal.t('Municipality where the association is based (domicile)')}
         />
         <TextInput
           id='companyNameShort'
-          className='grants-handler-prefilled-field'
+          className=''
           readOnly
           value={companyNameShort}
           label={Drupal.t('Abbreviated name')}
         />
         <TextInput
           id='foundingYear'
-          className='grants-handler-prefilled-field'
+          className=''
           readOnly
           value={foundingYear}
           label={Drupal.t('Year of establishment')}
         />
         <TextInput
           id='companyHomePage'
-          className='grants-handler-prefilled-field'
+          className=''
           readOnly
           value={companyHomePage}
           label={Drupal.t('Website address')}
