@@ -655,8 +655,17 @@ input[type='radio'] + label.form-required::after {
 .hdbt-form--stepper {
   margin-block: $spacing-quadruple;
 
+  // Fixes stepper circle size
   button {
     box-sizing: content-box;
+  }
+
+  div:has(svg[aria-label='error']) {
+    border-color: $color-error;
+  }
+
+  svg[aria-label='error'] {
+    color: $color-error;
   }
 }
 
