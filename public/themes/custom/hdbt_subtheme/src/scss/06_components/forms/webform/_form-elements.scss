@@ -653,6 +653,10 @@ input[type='radio'] + label.form-required::after {
   @include breakpoint($breakpoint-m) {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  &:last-child {
+    margin-block-end: 0;
+  }
 }
 
 .prh-content-block__item__label {
