@@ -557,6 +557,8 @@ input[type='radio'] + label.form-required::after {
   margin-block-end: $spacing-and-half;
 }
 
+//Target array items that are not in preview section
+//Add same styles to fieldset that are not in array-item
 .array-item:not(.grants-form--preview-section .array-item),
 .field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
   border: 2px solid $color-black-50;
@@ -568,6 +570,7 @@ input[type='radio'] + label.form-required::after {
   padding: 0;
 }
 
+// Align legend when fieldset is not in array item
 .field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
   legend {
     float: left;
@@ -615,6 +618,7 @@ input[type='radio'] + label.form-required::after {
 
 .hdbt-form--actions {
   display: flex;
+  flex-wrap: wrap;
   gap: $spacing-half;
   justify-content: right;
 }
@@ -664,6 +668,19 @@ input[type='radio'] + label.form-required::after {
     box-sizing: content-box;
   }
 
+  // Styles for non-current step button texts
+  button[aria-current='false'] {
+    p {
+      text-decoration-thickness: remify(1px);
+      text-underline-offset: 10%;
+    }
+
+    &:hover p,
+    &:focus p {
+      text-decoration-thickness: remify(2px);
+    }
+  }
+
   div:has(svg[aria-label='error']) {
     border-color: $color-error;
   }
@@ -705,4 +722,8 @@ input[type='radio'] + label.form-required::after {
       @include font('h5')
     }
   }
+}
+
+.grants-form---terms {
+  margin-block-end: $spacing-triple;
 }

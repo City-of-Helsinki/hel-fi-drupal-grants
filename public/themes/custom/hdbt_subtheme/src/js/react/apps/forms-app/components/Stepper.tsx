@@ -4,6 +4,7 @@ import React, { MouseEvent, RefObject, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import { FormStep, formStepsAtom, getCurrentStepAtom, getErrorPageIndicesAtom, getSubmitStatusAtom, setStepAtom } from '../store';
 import { SubmitStates } from '../enum/SubmitStates';
+import { defaultStepperTheme } from '@/react/common/constants/stepperTheme';
 
 export const transformSteps = (
   steps: Map<number, FormStep>|undefined,
@@ -63,13 +64,7 @@ export const Stepper = ({
         onStepClick={onStepClick}
         selectedStep={currentIndex}
         steps={transformedSteps}
-        theme={{
-          '--hds-not-selected-step-label-color': 'var(--color-black-90)',
-          '--hds-step-content-color': 'var(--color-black-90)',
-          '--hds-stepper-background-color': 'var(--color-white)',
-          '--hds-stepper-color': 'var(--color-black-90)',
-          '--hds-stepper-focus-border-color': 'var(--color-coat-of-arms)'
-        }}
+        theme={defaultStepperTheme}
         className='hdbt-form--stepper'
       />
     </div>

@@ -1,5 +1,6 @@
-import { Button, ButtonPresetTheme, ButtonVariant, IconDownloadCloud } from 'hds-react';
+import { Button, IconDownloadCloud } from 'hds-react';
 import { useState } from 'react';
+import { supplementaryButtonTheme } from '@/react/common/constants/buttonTheme';
 
 export const SaveDraftButton = ({
   saveDraft
@@ -17,9 +18,9 @@ export const SaveDraftButton = ({
       disabled={submitting}
       iconStart={<IconDownloadCloud />}
       onClick={onClick}
-      theme={ButtonPresetTheme.Black}
+      className=''
+      theme={supplementaryButtonTheme}
       type='button'
-      variant={ButtonVariant.Supplementary}
     >
       {Drupal.t('Save as draft', {}, {context: 'Grants application: Draft'})}
     </Button>
