@@ -122,7 +122,6 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
           community_officials: {
             additionalItems: {
               title: 'community_officials_community_officials.title',
-              description: 'community_officials_community_officials.description',
               type: objectType,
               properties: {
                 official: {
@@ -140,7 +139,6 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
                   },
                 },
                 title: 'community_officials_community_officials.title',
-                description: 'community_officials_community_officials.description',
                 type: objectType,
               },
             ],
@@ -195,7 +193,6 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
             },
             'ui:options': {
               removeText: 'community_officials_community_officials.removeText',
-              addText: 'community_officials_community_officials.addText',
             }
           },
           items: {
