@@ -158,6 +158,7 @@ export const ObjectFieldTemplate = ({
         {
           stepId === 'applicant_info' &&
           <section className='prh-content-block'>
+            <h3 className='prh-content-block__title'>Placeholder title</h3>
             <p>
               {Drupal.t('The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.')}
             </p>
