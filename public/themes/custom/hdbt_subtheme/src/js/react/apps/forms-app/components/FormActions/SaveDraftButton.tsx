@@ -18,7 +18,6 @@ export const SaveDraftButton = ({
       disabled={submitting}
       iconStart={<IconDownloadCloud />}
       onClick={onClick}
-      className=''
       theme={secondaryButtonTheme}
       type='button'
     >
