@@ -618,9 +618,26 @@ input[type='radio'] + label.form-required::after {
 
 .hdbt-form--actions {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   gap: $spacing-half;
   justify-content: right;
+
+  button {
+    width: 100%;
+
+    @include breakpoint($breakpoint-m) {
+      width: auto;
+    }
+  }
+
+  button.hdbt-form--pager-button {
+    width: calc(50% - $spacing-quarter);
+
+    @include breakpoint($breakpoint-m) {
+      width: auto;
+    }
+  }
 }
 
 .prh-content-block {

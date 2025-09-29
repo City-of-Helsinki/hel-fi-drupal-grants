@@ -52,6 +52,7 @@ export const FormActions = ({
       {
         (currentStepIndex > 0 && currentStepId !== 'ready') &&
         <Button
+          className='hdbt-form--pager-button'
           onClick={() => setStep(currentStepIndex - 1)}
           theme={primaryButtonTheme}
           type='button'
@@ -73,6 +74,7 @@ export const FormActions = ({
             </Button> :
             <Button
               onClick={nextPageAction}
+              className='hdbt-form--pager-button'
               type='button'
               theme={primaryButtonTheme}
               iconEnd={<IconAngleRight />}
