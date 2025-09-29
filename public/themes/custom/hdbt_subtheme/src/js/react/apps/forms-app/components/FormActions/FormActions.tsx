@@ -5,7 +5,7 @@ import { SyntheticEvent } from 'react';
 import { getCurrentStepAtom, errorsAtom, getStepsAtom, setStepAtom, finalAcceptanceAtom } from '../../store';
 import { keyErrorsByStep } from '../../utils';
 import { SaveDraftButton } from './SaveDraftButton';
-import { primaryButtonTheme } from '@/react/common/constants/buttonTheme';
+import { primaryButtonTheme, secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 
 export const FormActions = ({
   saveDraft,
@@ -43,9 +43,8 @@ export const FormActions = ({
       {/* @todo add back when deleting is supported
       <Button
         iconStart={<IconTrash />}
-        theme={ButtonPresetTheme.Black}
+        theme={secondaryButtonTheme}
         type='button'
-        variant={ButtonVariant.Supplementary}
       >
         {Drupal.t('Delete draft')}
       </Button> */}
