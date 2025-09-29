@@ -519,3 +519,96 @@ input[type='radio'] + label.form-required::after {
 .grants-attachments--fields-wrapper .button--delete-attachment{
   margin-top: var(--spacing-layout-xs);
 }
+
+.form-group:not(:last-child) {
+  &.field-string,
+  &.field-integer {
+    margin-block-end: $spacing-and-half;
+  }
+}
+
+.hdbt-form--section__title {
+  margin-block: 0 $spacing;
+
+  @include breakpoint($breakpoint-m) {
+    margin: 0;
+    width: 33%;
+  }
+}
+
+.hdbt-form--section {
+  margin-block-end: $spacing-triple;
+
+  @include breakpoint($breakpoint-m) {
+    display: flex;
+    gap: $spacing-triple;
+  }
+}
+
+.hdbt-form--section__content {
+  @include breakpoint($breakpoint-m) {
+    width: 67%;
+  }
+}
+
+.hdbt-form--description,
+.help-block {
+  color: $color-black-60;
+  margin-block-end: $spacing-and-half;
+}
+
+.array-item,
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
+  border: 2px solid $color-black-50;
+  margin-block-end: $spacing-and-half;
+  padding: $spacing-double;
+}
+
+.array-item .hdbt-form--fieldset {
+  padding: 0;
+}
+
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
+  legend {
+    float: left;
+  }
+
+  legend + * {
+    clear: both;
+  }
+}
+
+.hdbt-form--fieldset legend {
+  @include font('h4');
+  margin-block-end: $spacing-and-half;
+  width: 100%;
+
+  & + .hdbt-form--description {
+    margin-block-start: calc(-1 * #{$spacing});
+  }
+}
+
+//TODO: Remove when HDS supports file input styling
+.hdbt-form--fileinput {
+  & > div:first-child > div:first-child > div:first-child {
+    border-color: $color-black;
+    color: $color-black;
+  }
+
+  button {
+    @extend .hds-button--secondary;
+  }
+}
+
+.hdbt-form--paragraph__title {
+  margin-block: 0 $spacing-half;
+}
+
+.hdbt-form--paragraph__content,
+.hdbt-form--notification {
+  margin-block: 0 $spacing-and-half;
+}
+
+.hdbt-form--select label + div {
+  margin-bottom: 0;
+}
