@@ -13,6 +13,7 @@ export const ErrorsList = () => {
     <Notification
       label={Drupal.t('Missing or incomplete information')}
       type='error'
+      style={{ marginTop: 'var(--spacing-2-xl)' }}
     >
       <ul>
         {errors.map(([index, error]) => (

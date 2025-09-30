@@ -142,7 +142,13 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    */
   public function getViewApplicationLink(string $application_form_name): Link {
     $markup = $this->createMarkup('View application', $application_form_name);
-    return Link::fromTextAndUrl($markup, $this->toUrl());
+    $url = Url::fromRoute(
+      'grants_handler.view_application',
+      ['submission_id' => $this->get('application_number')->value],
+
+    );
+
+    return Link::fromTextAndUrl($markup, $url);
   }
 
   /**

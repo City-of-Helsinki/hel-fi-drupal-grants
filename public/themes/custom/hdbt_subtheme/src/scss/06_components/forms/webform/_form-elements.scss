@@ -519,3 +519,232 @@ input[type='radio'] + label.form-required::after {
 .grants-attachments--fields-wrapper .button--delete-attachment{
   margin-top: var(--spacing-layout-xs);
 }
+
+.form-group:not(:last-child) {
+  &.field-string,
+  &.field-integer {
+    margin-block-end: $spacing-and-half;
+  }
+}
+
+.hdbt-form--section__title {
+  margin-block: 0 $spacing;
+
+  @include breakpoint($breakpoint-m) {
+    margin: 0;
+    width: 33%;
+  }
+}
+
+.hdbt-form--section {
+  margin-block-end: $spacing-triple;
+
+  @include breakpoint($breakpoint-m) {
+    display: flex;
+    gap: $spacing-triple;
+  }
+}
+
+.hdbt-form--section__content {
+  @include breakpoint($breakpoint-m) {
+    width: 67%;
+  }
+}
+
+.hdbt-form--description,
+.help-block {
+  color: $color-black-60;
+  margin-block-end: $spacing-and-half;
+}
+
+//Target array items that are not in preview section
+//Add same styles to fieldset that are not in array-item
+.array-item:not(.grants-form--preview-section .array-item),
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
+  border: 2px solid $color-black-50;
+  margin-block-end: $spacing-and-half;
+  padding: $spacing-double;
+}
+
+.array-item .hdbt-form--fieldset {
+  padding: 0;
+}
+
+// Align legend when fieldset is not in array item
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
+  legend {
+    float: left;
+  }
+
+  legend + * {
+    clear: both;
+  }
+}
+
+.hdbt-form--fieldset legend {
+  @include font('h4');
+  margin-block-end: $spacing-and-half;
+  width: 100%;
+
+  & + .hdbt-form--description {
+    margin-block-start: calc(-1 * #{$spacing});
+  }
+}
+
+//TODO: Remove when HDS supports file input styling
+.hdbt-form--fileinput {
+  & > div:first-child > div:first-child > div:first-child {
+    border-color: $color-black;
+    color: $color-black;
+  }
+
+  button {
+    @extend .hds-button--secondary;
+  }
+}
+
+.hdbt-form--paragraph__title {
+  margin-block: 0 $spacing-half;
+}
+
+.hdbt-form--paragraph__content,
+.hdbt-form--notification {
+  margin-block: 0 $spacing-and-half;
+}
+
+.hdbt-form--select label + div {
+  margin-bottom: 0;
+}
+
+.hdbt-form--actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: $spacing-half;
+  justify-content: right;
+
+  button {
+    width: 100%;
+
+    @include breakpoint($breakpoint-m) {
+      width: auto;
+    }
+  }
+
+  button.hdbt-form--pager-button {
+    width: calc(50% - $spacing-quarter);
+
+    @include breakpoint($breakpoint-m) {
+      width: auto;
+    }
+  }
+}
+
+.prh-content-block {
+  background-color: $color-black-5;
+  border-bottom: $spacing-half solid $color-engel-dark;
+  margin-bottom: $spacing-quadruple;
+  padding: $spacing-double;
+
+  & > p {
+    margin-block: 0 $spacing-and-half;
+  }
+}
+
+.prh-content-block__title {
+  margin-block: 0 $spacing-and-half;
+}
+
+.prh-content-block__content-row {
+  border-top: 1px solid $color-black-20;
+  display: grid;
+  gap: $spacing;
+  grid-template-columns: repeat(1, 1fr);
+  margin-block-end: $spacing;
+  padding-block-start: $spacing;
+
+  @include breakpoint($breakpoint-s) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoint($breakpoint-m) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &:last-child {
+    margin-block-end: 0;
+  }
+}
+
+.prh-content-block__item__label {
+  font-weight: $font-weight-medium;
+  margin-block-end: $spacing-half;
+}
+
+.hdbt-form--stepper {
+  margin-block: $spacing-quadruple;
+
+  // Fixes stepper circle size
+  button {
+    box-sizing: content-box;
+  }
+
+  // Styles for non-current step button texts
+  button[aria-current='false'] {
+    p {
+      text-decoration-thickness: remify(1px);
+      text-underline-offset: 10%;
+    }
+
+    &:hover p,
+    &:focus p {
+      text-decoration-thickness: remify(2px);
+    }
+  }
+
+  div:has(svg[aria-label='error']) {
+    border-color: $color-error;
+  }
+
+  svg[aria-label='error'] {
+    color: $color-error;
+  }
+}
+
+.grants-form__page-title {
+  margin-block-end: $spacing-quadruple;
+}
+
+.grants-form__notification-container {
+  margin-block-end: $spacing-triple;
+
+  .hdbt-form--notification:last-of-type {
+    margin-block-end: 0;
+  }
+}
+
+.grants-form--preview-section {
+  .field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    font-weight: $font-weight-medium;
+    margin-block-end: $spacing;
+  }
+
+  .array-item {
+    border: 2px solid $color-black-50;
+    margin-block-end: $spacing-and-half;
+    padding: $spacing;
+
+    .field-object:first-of-type > label {
+      @include font('h5')
+    }
+  }
+}
+
+.grants-form---terms {
+  margin-block-end: $spacing-triple;
+}

@@ -22,4 +22,11 @@
     margin-top: 0;
     padding-left: 0;
   }
+
+  // Fix the overflow-wrap for long file names.
+  .webform-element-type-grants-attachments {
+    li {
+      overflow-wrap: anywhere;
+    }
+  }
 }

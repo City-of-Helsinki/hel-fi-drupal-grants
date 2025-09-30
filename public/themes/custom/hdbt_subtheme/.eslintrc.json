@@ -136,6 +136,7 @@
         "react/no-array-index-key": "off",
         "react/function-component-definition": [1, { "namedComponents": ["arrow-function", "function-declaration"] }],
         "react/self-closing-comp": 0,
+        "react/prop-types": 0,
         "import/extensions": 0,
         "import/no-unresolved": 0,
         // These rules are not needed with react 17 JSX transform.

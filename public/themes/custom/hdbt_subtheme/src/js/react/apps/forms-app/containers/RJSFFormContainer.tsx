@@ -1,31 +1,35 @@
-import { ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
+import { CustomValidator, ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
 import { useAtomValue, useSetAtom, WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
 import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
-import React, { createRef, useCallback } from 'react';
+import React, { createRef, useCallback, useMemo, useState } from 'react';
 import { customizeValidator } from '@rjsf/validator-ajv8';
+import { useTranslation } from 'react-i18next';
 
 import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
 import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
 import { FormActions } from '../components/FormActions/FormActions';
 import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom } from '../store';
-import { keyErrorsByStep } from '../utils';
+import { findFieldsOfType, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
 import { SubmitStates } from '../enum/SubmitStates';
-import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect } from '../components/Input';
+import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect, RadioWidget } from '../components/Input';
 import { localizeErrors } from '../localizeErrors';
-import { TextParagraph } from '../components/TextParagraph';
+import { TextParagraph } from '../components/Fields/TextParagraph';
 import { SubmittedForm } from '../components/SubmittedForm';
 import { Terms } from '../components/Terms';
+import { SubventionTable } from '../components/Fields/SubventionTable';
+import { InvalidSchemaError } from '../errors/InvalidSchemaError';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
   'bank_account': BankAccountSelect,
   'community_officials': CommunityOfficialsSelect,
   EmailWidget: TextInput,
+  RadioWidget,
   SelectWidget,
   TextareaWidget: TextArea,
   TextWidget: TextInput,
@@ -56,6 +60,9 @@ export const RJSFFormContainer = ({
   submitData: (data: IChangeEvent) => void;
   uiSchema: UiSchema;
 }) => {
+  const { t } = useTranslation();
+  const [invalidSchemaError, setInvalidSchemaError] = useState<InvalidSchemaError | null>(null);
+  const subventionFields = useMemo(() => Array.from(findFieldsOfType(uiSchema, 'subventionTable')), [uiSchema]); 
   const setFormData = useSetAtom(formDataAtom)
   const submitStatus = useAtomValue(getSubmitStatusAtom);
   const steps = useAtomValue(getStepsAtom);
@@ -77,6 +84,10 @@ export const RJSFFormContainer = ({
     },
     2000,
   );
+
+  if (invalidSchemaError) {
+    throw invalidSchemaError;
+  }
 
   /**
    * React to errors in the form.
@@ -107,6 +118,18 @@ export const RJSFFormContainer = ({
     return formRef.current?.validate(data);
   };
 
+  const filterErrorsByReachedStep = (errors) => {
+    const reachedStep = readReachedStep();
+
+    return errors
+      .filter(([index]) => index <= reachedStep)
+      .filter(([index, error]) => {
+        const { name } = error;
+        return name !== 'type';
+      })
+      .map(([index, error]) => error);
+  };
+
   /**
    * Transforms RJSF-generated errors.
    *
@@ -114,19 +137,51 @@ export const RJSFFormContainer = ({
    * @return {array} - modified and filtered errors
    */
   const transformErrors: ErrorTransformer = (errors) => {
-    const reachedStep = readReachedStep();
-    const keyedErrors = keyErrorsByStep(errors, steps);
+    if (
+      Array.isArray(errors) &&
+      errors[0]?.stack.includes('schema is invalid')
+    ) {
+      setInvalidSchemaError(new InvalidSchemaError(errors[0].stack));
+      return;
+    }
 
-    const errorsToShow = keyedErrors
-      .filter(([index]) => index <= reachedStep)
-      .filter(([index, error]) => {
-        const { name } = error;
-        return name !== 'type';
-      })
-      .map(([index, error]) => error);
+    const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(errors, steps));  
     setErrors(errorsToShow);
 
     return errorsToShow;
+  };
+
+/**
+ * Custom validation rules for RJSF form.
+ * 
+ * @param {object} formData - Form data
+ * @param {object} errors - Form errors
+ * @param {object} _uiSchema - Form Ui Schema
+ * 
+ * @return {object} - Form errors
+ */
+  const customValidate: CustomValidator = (formData, errors, _uiSchema) => {
+    const newErrors = [];
+
+    subventionFields.forEach(field => {
+      const values = field.split('.').reduce((acc, curr) => acc && acc[curr], formData);
+      const _field = field.split('.').reduce((acc, curr) => acc && acc[curr], errors);
+      const hasValues = values ? Object.entries(values).reduce((acc, [key, curr]) => acc || Number(curr[1].value) > 0, false) : false;
+
+      if (!hasValues) {
+        _field.addError(t('subvention.greater_than_zero'));
+        newErrors.push({
+          property: `.${field}`,
+          message: t('subvention.greater_than_zero'),
+          schemaPath: `.${field}`,
+        });
+      }
+    });
+
+    const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(newErrors, steps));  
+    setErrors(errorsToShow, true);
+
+    return errors;
   };
 
   const readonly = submitStatus !== SubmitStates.DRAFT
@@ -147,10 +202,12 @@ export const RJSFFormContainer = ({
           />
         }
         <Form
-          className='grants-react-form webform-submission-form'
+          className='grants-form'
+          customValidate={customValidate}
           fields={{
             ...getDefaultRegistry().fields,
             atvFile: FileInput,
+            subventionTable: SubventionTable,
             textParagraph: TextParagraph,
           }}
           formData={readFormData() || {}}
@@ -162,6 +219,10 @@ export const RJSFFormContainer = ({
           onSubmit={async (data, event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
 
+            if (readCurrentStep()[1].id !== 'preview') {
+              return;
+            }
+
             const passes = formRef.current?.validateForm();
 
             if (passes) {
@@ -170,13 +231,15 @@ export const RJSFFormContainer = ({
           }}
           readonly={readonly}
           ref={formRef}
-          schema={schema} 
+          schema={schema}
           showErrorList={false}
           templates={{
             ArrayFieldTemplate,
             ButtonTemplates: {
               RemoveButton: RemoveButtonTemplate,
-              SubmitButton: () => null
+              SubmitButton: () => null,
+              MoveDownButton: () => null,
+              MoveUpButton: () => null,
             },
             FieldErrorTemplate: () => null,
             ObjectFieldTemplate,
