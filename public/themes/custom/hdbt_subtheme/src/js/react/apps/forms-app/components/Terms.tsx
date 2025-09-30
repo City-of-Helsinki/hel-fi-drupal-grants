@@ -13,13 +13,13 @@ export const Terms = () => {
   const { body, link_title } = drupalSettings.grants_react_form.terms;
 
   return (
-    <div className="grant-terms">
+    <div className="grants-form---terms">
       <div className="terms_block">
         {/* eslint-disable-next-line react/no-danger */}
         <div dangerouslySetInnerHTML={{__html: body}} />
       </div>
       <div>
-        <Notification className='hds-notification' type='alert' label='Huom!'>
+        <Notification className='hdbt-form--notification' type='alert' label='Huom!'>
           Hyväksy ehdot ja lähetä hakemus
         </Notification>
         <Checkbox
