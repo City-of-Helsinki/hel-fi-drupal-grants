@@ -516,18 +516,18 @@ elements: |-
     '#next_button_label': 'Seuraava'
     yhdistyksen_jasenmaara_tai_aktiivisesti_toimintaan_osallistuvien:
       '#type': webform_section
-      '#title': 'Yhdistyksen jäsenmäärä tai aktiivisesti toimintaan osallistuvien määrä'
+      '#title': 'Aktiivisesti toimintaan osallistuvat/jäsenet'
       jasenmaara_fieldset:
         '#type': fieldset
         '#title': Jäsenmäärä
-        '#help': 'Jos yhteisöllä on jäseniä, merkitse ne tähän.'
+        '#help': 'Merkitse tähän yhdistyksen aktiivisesti toimintaan osallistuvat ja/tai jäsenet'
         '#attributes':
           class:
             - grants-fieldset
             - grants-fieldset-short
         jasenet_0_6_vuotiaat:
           '#type': textfield
-          '#title': 'Jäsenet 0 - 6 vuotiaat'
+          '#title': '0 - 6 vuotiaat'
           '#maxlength': 9
           '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
           '#pattern': '^[0-9 ]*$'
@@ -552,7 +552,7 @@ elements: |-
         jasenet_7_28_vuotiaat:
           '#type': textfield
           '#required': true
-          '#title': 'Jäsenet 7 - 28 vuotiaat'
+          '#title': '7 - 28 vuotiaat'
           '#maxlength': 9
           '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
           '#pattern': '^[0-9 ]*$'
@@ -576,7 +576,7 @@ elements: |-
         muut_jasenet_tai_aktiiviset_osallistujat:
           '#type': textfield
           '#required': true
-          '#title': 'Muut jäsenet tai aktiiviset osallistujat'
+          '#title': 'Muut osallistujat'
           '#maxlength': 9
           '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
           '#pattern': '^[0-9 ]*$'
@@ -740,7 +740,7 @@ elements: |-
                 greater: '0'
     edellisen_vuoden_palkkauskulut:
       '#type': webform_section
-      '#title': 'Edellisen vuoden palkkauskulut'
+      '#title': 'Edellisen kauden palkkauskulut'
       '#states':
         visible:
           ':input[name="palkkaussumma"]':
@@ -753,7 +753,7 @@ elements: |-
             ':input[name="palkkaussumma"]':
               value:
                 greater: '0'
-        '#markup': '<p>Erittele tähän työntekijän tai työntekijöiden palkkauskulut edelliseltä kalenterivuodelta. Palkkausavustuksen käyttöön oikeuttavia hyväksyttäviä menoja ovat työntekijän palkkauskulut, palkkauksesta aiheutuvat lakisääteiset ja vapaaehtoiset sosiaalikulut sekä lakisääteiset vakuutukset ja työntekijän työstä aiheutuvat matkakustannukset. Ota tähän mukaan vain sen työntekijän tai niiden työntekijöiden palkkauskulut, joihin olette voineet /olisitte voineet käyttää palkkausavustusta. Tähän eivät kuulu esimerkiksi erilaiset hanketyöntekijät.</p>'
+        '#markup': '<p>Erittele tähän työntekijän tai työntekijöiden palkkauskulut edelliseltä päättyneeltä tilikaudelta. Palkkausavustuksen käyttöön oikeuttavia hyväksyttäviä menoja ovat työntekijän palkkauskulut, palkkauksesta aiheutuvat lakisääteiset ja vapaaehtoiset sosiaalikulut sekä lakisääteiset vakuutukset ja työntekijän työstä aiheutuvat matkakustannukset. Ota tähän mukaan vain sen työntekijän tai niiden työntekijöiden palkkauskulut, joihin olette voineet /olisitte voineet käyttää palkkausavustusta. Tähän eivät kuulu esimerkiksi erilaiset hanketyöntekijät.</p>'
       palkkauskulut:
         '#type': textfield
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''2'', ''radixPoint'': '','', ''substituteRadixPoint'': ''true'''
@@ -884,14 +884,13 @@ elements: |-
           <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
           </p><h4>Vaaditut liitteet</h4>
           <p>Toiminta- ja palkkausavustushakemuksen pakolliset liitteet ovat yhdistyksen voimassa
-          olevat säännöt, hakuvuotta edellisen vuoden vahvistettu tilinpäätös, toimintakertomus sekä
-          tilin/toiminnantarkastuskertomus allekirjoitettuna ja sen kokouksen pöytäkirja, jossa
-          tilinpäätös on vahvistettu ja vastuuvapaus käsitelty. Lisäksi pakollisia liitteitä ovat
-          talousarvio ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. Sääntöjen täytyy
-          olla Patentti- ja rekisterihallituksen hyväksymät.</p>
-          <h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
-          <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys
-          liitteistä -kohdassa.</p>
+          olevat säännöt, tilinpäätös edelliseltä päättyneeltä tilikaudelta sisältäen laajan tuloslaskelman,
+          toimintakertomus sekä tilin/toiminnantarkastuskertomus allekirjoitettuna ja sen kokouksen pöytäkirja,
+          jossa tilinpäätös on vahvistettu ja vastuuvapaus käsitelty. Lisäksi pakollisia liitteitä ovat talousarvio
+          ja toimintasuunnitelma sille vuodelle, jolle avustusta haetaan. Sääntöjen täytyy olla Patentti- ja
+          rekisterihallituksen hyväksymät. Palkkausavustushakemuksen liitteenä tulee lisäksi olla piirijärjestön
+          tai siihen verrattavan järjestön alaisten osastojen /ryhmien nimet ja jäsenmäärät.
+          </p>
           <h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
           <p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun
           avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön
@@ -922,8 +921,8 @@ elements: |-
         '#multiple': false
         '#filetype': '43'
         '#help': |-
-          <p>Tilinp&auml;&auml;t&ouml;ksen t&auml;ytyy sis&auml;lt&auml;&auml; v&auml;hint&auml;&auml;n tuloslaskelma ja tase. Yhdistys liitt&auml;&auml; t&auml;h&auml;n kohtaan yhdistyksen j&auml;senkokouksessa vahvistetun ja allekirjoitetun tilinp&auml;&auml;t&ouml;ksen.</p>
-          <p>Yhteis&ouml;n tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa s&auml;&auml;nn&ouml;iss&auml; lukee, mik&auml; on yhdistyksen tilikausi.</p>
+          <p>Yhdistys liittää tähän kohtaan yhdistyksen jäsenkokouksessa vahvistetun ja allekirjoitetun tilinpäätöksen. Tilinpäätöksen täytyy sisältää tuloslaskelma ja tase. Mukana tulee olla myös laaja tuloslaskelma, josta selviää tarkempi kustannusten erittely.</p>
+          <p>Yhteisön tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa säännöissä lukee mikä on yhdistyksen tilikausi.</p>
         '#title_display': before
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi sis&auml;lt&ouml; alta.'
         '#description__access': false
