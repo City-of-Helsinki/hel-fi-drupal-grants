@@ -202,7 +202,7 @@ export const RJSFFormContainer = ({
           />
         }
         <Form
-          className='grants-react-form webform-submission-form'
+          className='grants-form'
           customValidate={customValidate}
           fields={{
             ...getDefaultRegistry().fields,
