@@ -1,3 +1,4 @@
+uuid: 17ab842d-be64-4ea8-93d6-d5e421432276
 langcode: fi
 status: open
 dependencies:
@@ -6,7 +7,7 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationType: NUORTOIMPALKKA
+    applicationType: NUORTOIMPALKKA2
     applicationTypeID: '75'
     applicantTypes:
       registered_community: registered_community
@@ -15,7 +16,7 @@ third_party_settings:
       45: '45'
       46: '46'
     applicationOpen: '2025-01-01T00:00:00'
-    applicationClose: '2025-30-12T23:59:59'
+    applicationClose: '2025-12-30T23:59:59'
     applicationContinuous: 0
     applicationTargetGroup: '27'
     disableCopying: 0
@@ -24,8 +25,8 @@ third_party_settings:
     applicationActingYears: {  }
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '1'
-    status: released
-    parent: ''
+    status: development
+    parent: 'f5ce73c5-6e6c-4acb-bd52-650d09db29c0'
     avus2BreakingChange: false
 weight: 0
 open: null
@@ -33,7 +34,7 @@ close: null
 uid: 1
 template: false
 archive: false
-id: nuortoimpalkka
+id: nuortoimpalkka2
 title: 'Nuorisotoiminnan toiminta- ja palkkausavustushakemus'
 description: NUORTOIMPALKKA
 categories:
