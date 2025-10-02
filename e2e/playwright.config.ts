@@ -237,9 +237,6 @@ export default defineConfig({
       testMatch: '/forms/registered_community_64.ts',
       dependencies: ['profile-registered_community']
     },
-    /* Form 65 tests. */
-    /*
-    Disable 65. ID73 is updated version.
     {
       name: 'forms-65',
       testMatch: /forms\/.*_65\.ts$/,
@@ -255,7 +252,6 @@ export default defineConfig({
       testMatch: '/forms/registered_community_65.ts',
       dependencies: ['profile-registered_community']
     },
-    */
     /* Form 66 tests. */
     {
       name: 'forms-66',
@@ -324,11 +320,14 @@ export default defineConfig({
       name: 'forms-73-registered',
       testMatch: '/forms/registered_community_73.ts',
       dependencies: ['profile-registered_community']
-    },
+    }
+    /*
+    @todo Enable the 75 tests.
     {
       name: 'forms-75-registered',
       testMatch: '/forms/registered_community_75.ts',
       dependencies: ['profile-registered_community']
     }
+   */
   ],
 });
