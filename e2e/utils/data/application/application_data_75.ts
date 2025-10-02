@@ -18,8 +18,8 @@ import {getFakeEmailAddress} from "../../field_helpers";
  */
 const baseFormRegisteredCommunity_63: FormData = {
   title: 'Save as draft.',
-  formSelector: 'webform-submission-nuortoimpalkka-form',
-  formPath: '/fi/form/nuortoimpalkka',
+  formSelector: 'webform-submission-nuortoimintapalkka-form',
+  formPath: '/fi/form/nuortoimintapalkka',
   formPages: {
     "1_hakijan_tiedot": {
       items: {
@@ -937,7 +937,7 @@ const baseFormRegisteredCommunity_63: FormData = {
     },
   },
   expectedErrors: {},
-  expectedDestination: "/fi/hakemus/nuortoimpalkka/",
+  expectedDestination: "/fi/hakemus/nuortoimintapalkka/",
 }
 
 const missingValues: FormDataWithRemoveOptionalProps = {

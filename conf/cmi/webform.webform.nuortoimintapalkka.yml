@@ -7,7 +7,7 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationType: NUORTOIMPALKKA2
+    applicationType: NUORTOIMINTAPALKKA
     applicationTypeID: '75'
     applicantTypes:
       registered_community: registered_community
@@ -34,9 +34,9 @@ close: null
 uid: 1
 template: false
 archive: false
-id: nuortoimpalkka2
+id: nuortoimintapalkka
 title: 'Nuorisotoiminnan toiminta- ja palkkausavustushakemus'
-description: NUORTOIMPALKKA
+description: NUORTOIMINTAPALKKA
 categories:
   - Tuotannossa
 elements: |-

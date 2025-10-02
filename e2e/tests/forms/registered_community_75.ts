@@ -286,9 +286,7 @@ const formPages: PageHandlers = {
   },
 };
 
-// Used to be form ID63.
-// @todo The name might change when schema is updated.
-test.describe('NUORTOIMPALKKA2(75)', () => {
+test.describe('NUORTOIMINTAPALKKA(75)', () => {
   let page: Page;
 
   const profileType = 'registered_community';
