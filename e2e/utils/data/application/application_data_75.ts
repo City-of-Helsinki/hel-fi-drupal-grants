@@ -75,6 +75,24 @@ const baseFormRegisteredCommunity_63: FormData = {
           viewPageSelector: '.form-item-subventions',
           viewPageFormatter: viewPageFormatCurrency
         },
+        "edit-haen-toimintaavustus-ennakkoa-1": {
+          role: "radio",
+          selector: {
+            type: "dom-id-label",
+            name: "data-drupal-selector",
+            value: "edit-haen-toimintaavustus-ennakkoa-1"
+          },
+          value: "Kyllä",
+        },
+        "edit-haen-palkkausavustus-ennakkoa-1": {
+          role: "radio",
+          selector: {
+            type: "dom-id-label",
+            name: "data-drupal-selector",
+            value: "edit-haen-palkkausavustus-ennakkoa-1"
+          },
+          value: "Kyllä",
+        },
         "edit-haen-vuokra-avustusta-1": {
           role: "radio",
           selector: {
