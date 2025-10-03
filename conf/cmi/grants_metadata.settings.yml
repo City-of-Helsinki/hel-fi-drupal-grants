@@ -281,6 +281,16 @@ third_party_options:
         fi: 'Nuorisotoiminnan leiriavustushakemus'
         en: 'Camp grants for youth activities'
         sv: 'Ungdomsverksamhet, lägerunderstöd'
+    75:
+      id: NUORTOIMINTAPALKKA
+      code: NUORTOIMINTAPALKKA
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisoToimintaDefinition
+        definitionId: grants_metadata_nuorisotoiminta
+      labels:
+        fi: 'Nuorisopalvelu, toiminta- ja palkkausavustushakemus'
+        en: 'Youth service, operations and employment grant application'
+        sv: 'Ungdomstjänst, ansökan om verksamhets- och anställningsbidrag'
   application_statuses:
     DRAFT: DRAFT
     SUBMITTED: SUBMITTED
@@ -350,6 +360,7 @@ config_import_ignore:
   - 65
   - 67
   - 73
+  - 75
 overridden_configuration:
   -
     53:
@@ -515,6 +526,11 @@ overridden_configuration:
         disableCopying: 0
   -
     73:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-08-30T11:19:00'
+        disableCopying: 0
+  - 75:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-08-30T11:19:00'

@@ -286,11 +286,11 @@ const formPages: PageHandlers = {
   },
 };
 
-test.describe('NUORTOIMPALKKA(63)', () => {
+test.describe('NUORTOIMINTAPALKKA(75)', () => {
   let page: Page;
 
   const profileType = 'registered_community';
-  const formId = '63';
+  const formId = '75';
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage();
