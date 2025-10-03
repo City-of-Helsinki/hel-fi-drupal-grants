@@ -26,7 +26,7 @@ third_party_settings:
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '1'
     status: development
-    parent: 'f5ce73c5-6e6c-4acb-bd52-650d09db29c0'
+    parent: f5ce73c5-6e6c-4acb-bd52-650d09db29c0
     avus2BreakingChange: false
 weight: 0
 open: null
