@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Drupal\grants_application\Mapper;
 
 /**
- * Simple json handler implementation.
+ * Allow more complex mappings.
  */
 class JsonHandler {
 
-
+  /**
+   * Array of fields which require more complex mapping.
+   *
+   * field json path => function name
+   */
   public const array definitionHandlerMap = [
     'path_to_source' => 'functionName',
     'compensation.budgetInfo.incomeGroupsArrayStatic.0.otherIncomeRowsArrayStatic.0.muut_avustukset_field_0' => 'setLabelAndValue',

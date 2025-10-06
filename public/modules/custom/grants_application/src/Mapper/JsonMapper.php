@@ -31,7 +31,7 @@ class JsonMapper {
   }
 
   /**
-   * Map the data from application form to AVUS2 format.
+   * Map the data from application form to AVUS2-format.
    *
    * @param array $formData
    *   The form data.
@@ -47,10 +47,11 @@ class JsonMapper {
    *   The form settings
    * @param string $applicationNumber
    *   The application number.
-   * @param string $applicant_type
-   *   The applicant type.
+   * @param int $applicantTypeId
+   *   The applicant type id.
+   *
    * @return array
-   * @throws \Exception
+   *   The data mapped in Avus2-format.
    */
   public function map(
     array $formData,
@@ -77,10 +78,11 @@ class JsonMapper {
     $data = [];
     $errors = [];
 
-    // Here we handle (currently) all three mapping cases, from top to bottom:
-    // Use a custom handler function to do whatever you need(for hard cases).
+    // Here we handle (currently) all three mapping cases.
+    // From top to bottom:
+    // Use a custom handler function to do whatever you need (for complex cases).
     // Use the hard coded data from mappings.json and add it to the target.
-    // Use the source data and add it to the target.
+    // Use the source data and add it to the target (default).
     foreach ($this->mappings as $target => $definition) {
       $sourcePath = $definition['source'];
       $datasource = $definition['datasource'];
@@ -88,9 +90,7 @@ class JsonMapper {
 
       // Some of the fields are too complex to handle via mapper.
       // In that case, we should handle the value by handler function.
-      // And we cheat by updating the definition beforehand.
-      // This might not work later but so far this is enough.
-      // @todo Refactor when needed.
+      // At this point, this is a sufficient implementation.
       if ($handle_value) {
         $sourceValue = $this->getValue($allDataSources[$datasource], $sourcePath);
         $definition['data'] = $this->customHandler
