@@ -3,7 +3,7 @@ import { useAtomValue, useSetAtom, WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
 import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
-import React, { createRef, useCallback, useState } from 'react';
+import React, { createRef, useCallback, useMemo, useState } from 'react';
 import { customizeValidator } from '@rjsf/validator-ajv8';
 import { useTranslation } from 'react-i18next';
 
@@ -62,6 +62,7 @@ export const RJSFFormContainer = ({
 }) => {
   const { t } = useTranslation();
   const [invalidSchemaError, setInvalidSchemaError] = useState<InvalidSchemaError | null>(null);
+  const subventionFields = useMemo(() => Array.from(findFieldsOfType(uiSchema, 'subventionTable')), [uiSchema]); 
   const setFormData = useSetAtom(formDataAtom)
   const submitStatus = useAtomValue(getSubmitStatusAtom);
   const steps = useAtomValue(getStepsAtom);
@@ -160,7 +161,6 @@ export const RJSFFormContainer = ({
  * @return {object} - Form errors
  */
   const customValidate: CustomValidator = (formData, errors, _uiSchema) => {
-    const subventionFields = Array.from(findFieldsOfType(_uiSchema, 'subventionTable'));
     const newErrors = [];
 
     subventionFields.forEach(field => {
@@ -202,7 +202,7 @@ export const RJSFFormContainer = ({
           />
         }
         <Form
-          className='grants-react-form webform-submission-form'
+          className='grants-form'
           customValidate={customValidate}
           fields={{
             ...getDefaultRegistry().fields,

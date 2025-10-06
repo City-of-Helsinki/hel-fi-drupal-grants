@@ -1,38 +1,42 @@
 # [UHF-0000](https://helsinkisolutionoffice.atlassian.net/browse/UHF-0000)
-<!-- What problem does this solve? -->
 
 ## What was done
-<!-- Describe what was done -->
-
-* This thing was fixed
+<!-- Describe what was done, f.e. fixed bug in accordion javascript. -->
+* 
 
 ## How to install
-
-* Make sure your instance is up and running on correct branch.
-  * `git checkout UHF-0000_insert_correct_branch`
+<!-- Describe steps how to install the features. Default steps are provided. -->
+* Make sure your instance is up and running latest version of dev-branch
+  * `git checkout dev && git pull origin dev`
   * `make fresh`
-* Run `make drush-cr`
+* Switch to feature branch
+  * `git fetch && git checkout UHF-0000_insert_correct_branch`
+* Run code updates
+  * `composer install`
+  * `make drush-deploy drush-locale-update drush-cr`
 
 ## How to test
-<!-- Describe steps how to test the features, add as many steps as you want to be tested -->
+<!-- Describe steps how to test the features. Add as many steps as you want to be tested -->
+* [ ] 
+* [ ] Check that the code follows our standards
 
-* [ ] Check that this feature works
-* [ ] Check that code follows our standards
+<!-- 
+Check list for the developer
 
-## Designers review
-<!-- One of the checkboxes below needs to be checked like this: `[x]` (or click when not in edit mode) -->
+Privacy  
+- Do the changes you made have an impact on privacy? If you are unsure, please check the checklist at: https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HEL/pages/9930473479/Tietosuojan+tarkistuslista+kehitt+jille
 
-* [ ] This PR does not need designers review
-* [ ] This PR has been visually reviewed by a designer (Name of the designer)
+Documentation
+- Check the documentation exists and is up to date. Add link if the documentation is not included in the PR.
 
+Translations
+- Make sure all necessary translations have been added.
 
-## Automatic- / Regression tests
-<!-- One of the checkboxes below needs to be checked like this: `[x]` (or click when not in edit mode) -->
+E2E tests
+- Make sure the tests pass when you run `make test-pw` on your local.
+- Detailed instructions can be found here: https://github.com/City-of-Helsinki/hel-fi-drupal-grants/blob/dev/e2e/README.md#environment-setup
+-->
 
-* [ ] This PR makes no changes that effects any tests. (This will be caught in automatic testing later on, but please, please run regression tests always on PR before asking for a review)
-* [ ] This PR passes regression tests. (`make test-pw`)
-
-## Other PRs
-<!-- For example an related PR in another repository -->
-
-* Link to other PR
+## Links to related PRs
+<!-- F.e. a related PR in another repository -->
+* 

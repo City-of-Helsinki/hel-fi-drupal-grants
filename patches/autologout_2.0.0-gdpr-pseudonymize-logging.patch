@@ -1,0 +1,26 @@
+diff --git a/src/AutologoutManager.php b/src/AutologoutManager.php
+index 5c50f99..8574130 100644
+--- a/src/AutologoutManager.php
++++ b/src/AutologoutManager.php
+@@ -15,6 +15,7 @@ use Drupal\Core\Session\AccountInterface;
+ use Drupal\Core\Session\AnonymousUserSession;
+ use Drupal\Core\Session\SessionManager;
+ use Drupal\Core\StringTranslation\StringTranslationTrait;
++use Drupal\user\Entity\User;
+ use Drupal\user\UserData;
+ use Drupal\user\UserDataInterface;
+ use Drupal\user\UserInterface;
+@@ -189,10 +190,9 @@ class AutologoutManager implements AutologoutManagerInterface {
+   public function logout() {
+     $user = $this->currentUser;
+     if ($this->autoLogoutSettings->get('use_watchdog')) {
+-      $this->logger->info(
+-        'Session automatically closed for %name by autologout.',
+-        ['%name' => $user->getAccountName()]
+-      );
++      $this->logger->info('Session automatically closed for UUID %drupal_uuid by autologout.', [
++        '%drupal_uuid' => User::load($user->id())->get('uuid')->getString(),
++      ]);
+     }
+
+     // Destroy the current session.

@@ -1,0 +1,13 @@
+diff --git a/core/modules/file/src/Plugin/Validation/Constraint/FileNameLengthConstraint.php b/core/modules/file/src/Plugin/Validation/Constraint/FileNameLengthConstraint.php
+index cd541cc949..af466df690 100644
+--- a/core/modules/file/src/Plugin/Validation/Constraint/FileNameLengthConstraint.php
++++ b/core/modules/file/src/Plugin/Validation/Constraint/FileNameLengthConstraint.php
+@@ -21,7 +21,7 @@ class FileNameLengthConstraint extends SymfonyConstraint {
+    *
+    * @var int
+    */
+-  public int $maxLength = 240;
++  public int $maxLength = 100;
+
+   /**
+    * The message when file name is empty.
