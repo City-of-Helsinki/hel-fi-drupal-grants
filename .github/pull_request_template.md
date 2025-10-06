@@ -2,7 +2,7 @@
 
 ## What was done
 <!-- Describe what was done, f.e. fixed bug in accordion javascript. -->
-* 
+*
 
 ## How to install
 <!-- Describe steps how to install the features. Default steps are provided. -->
@@ -20,10 +20,10 @@
 * [ ] 
 * [ ] Check that the code follows our standards
 
-<!-- 
+<!--
 Check list for the developer
 
-Privacy  
+Privacy
 - Do the changes you made have an impact on privacy? If you are unsure, please check the checklist at: https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HEL/pages/9930473479/Tietosuojan+tarkistuslista+kehitt+jille
 
 Documentation
@@ -35,8 +35,11 @@ Translations
 E2E tests
 - Make sure the tests pass when you run `make test-pw` on your local.
 - Detailed instructions can be found here: https://github.com/City-of-Helsinki/hel-fi-drupal-grants/blob/dev/e2e/README.md#environment-setup
+
+Application that are no longer used
+- Archive the webform applications after they are no longer used. This stops users from sending old drafts of the archived application.
 -->
 
 ## Links to related PRs
 <!-- F.e. a related PR in another repository -->
-* 
+*
