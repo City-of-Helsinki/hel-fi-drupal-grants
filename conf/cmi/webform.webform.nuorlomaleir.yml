@@ -25,21 +25,20 @@ third_party_settings:
       2025: '2025'
       2026: '2026'
     applicationActingYearsNextCount: '1'
-    applicationContinuous: 0
-    disableCopying: 0
-    status: released
+    status: archived
     parent: ''
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null
 uid: 1
 template: false
-archive: false
+archive: true
 id: nuorlomaleir
 title: 'Nuorisotoimi, loma-aikojen leiriavustushakemus'
 description: '<p>NUORLOMALEIR</p>'
 categories:
-  - Tuotannossa
+  - Arkistoitu
 elements: |-
   applicant_type:
     '#type': hidden
