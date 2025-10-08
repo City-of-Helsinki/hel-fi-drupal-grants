@@ -25,8 +25,8 @@ final class JsonMapperTest extends UnitTestCase {
    */
   public function testDefaultMapping(): void {
     // Get mappings for a few fields and the datasources.
-    $defaultMappings = $this->getMapping('defaultMappings.json');
-    $dataSources = $this->getAllDatasources('defaultDatasource.json');
+    $defaultMappings = $this->getMapping('mappings.json');
+    $dataSources = $this->getAllDatasources('defaultFieldForm.json');
 
     // Perform mapping from source data to target data.
     $mapper = new JsonMapper($defaultMappings);
@@ -36,24 +36,49 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertTrue(isset($mappedData['compensation']['applicant']['user'][0]['ID']), "Assert simple value");
     $this->assertTrue($mappedData['compensation']['applicant']['user'][0]['ID'] === 'applicant_name');
     $this->assertTrue($mappedData['compensation']['applicant']['user'][1]['value'] === '1947');
+  }
+
+  public function testMultipleValueFieldMapping(): void {
+    $defaultMappings = $this->getMapping('mappings.json');
+    $dataSources = $this->getAllDatasources('multipleValueFieldForm.json');
+
+    // Perform mapping from source data to target data.
+    $mapper = new JsonMapper($defaultMappings);
+    $mappedData = $mapper->map($dataSources);
 
     $this->assertTrue(isset($mappedData['compensation']['orienteeringMapInfo']['orienteeringMapsArray'][0][0]['ID']), "Assert multiple values");
     $this->assertTrue($mappedData['compensation']['orienteeringMapInfo']['orienteeringMapsArray'][0][0]['value'] === "Peruskoulun suunnistuskartta");
   }
 
-
   /**
-   * Test different cases where data is hardcoded into mapping.
+   * Test the complex value mapping.
+   *
+   * At this point there is only one which is setLabelAndValue-function.
+   *
+   * @return void
    */
-  public function testHardcodedValueMapping(): void {
-    $defaultMappings = $this->getMapping('hardcodedMappings.json');
-    $dataSources = $this->getAllDatasources('hardcodedDatasource.json');
+  public function testComplexValueMapping(): void {
+    $defaultMappings = $this->getMapping('mappings.json');
+    $dataSources = $this->getAllDatasources('complexFieldForm.json');
 
+    // Perform mapping from source data to target data.
     $mapper = new JsonMapper($defaultMappings);
     $mappedData = $mapper->map($dataSources);
 
-    $this->assertTrue(isset($mappedData['compensation']['default_information'][0]['ID']), "Test hardcoded values");
-    $this->assertTrue(isset($mappedData['compensation']['default_information'][1]['value']));
+    $this->assertTrue(isset($mappedData['compensation']['costs']['budget'][0]['ID']), "Assert complex values");
+    $this->assertTrue($mappedData['compensation']['costs']['budget'][0]['label'] === 'Toimitilat');
+  }
+
+  public function testSimpleFieldValueMapping(): void {
+    $defaultMappings = $this->getMapping('mappings.json');
+    $dataSources = $this->getAllDatasources('simpleFieldForm.json');
+
+    // Perform mapping from source data to target data.
+    $mapper = new JsonMapper($defaultMappings);
+    $mappedData = $mapper->map($dataSources);
+
+    $this->assertTrue(isset($mappedData['compensation']['additionalInformation']), "Simple field test.");
+    $this->assertNotEmpty($mappedData['compensation']['additionalInformation']);
   }
 
   /**

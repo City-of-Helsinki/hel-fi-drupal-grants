@@ -1,5 +1,6 @@
 {
   "compensation.applicant.user.username": {
+    "#tip": "Default values",
     "datasource": "form_data",
     "source": "react_application.applicant.name",
     "mapping_type": "default",
@@ -33,8 +34,20 @@
     }
   },
 
+
+  "compensation.additionalInformation": {
+    "#tip": "Simple value",
+    "datasource": "form_data",
+    "source": "react_application.attachments.additional_information",
+    "mapping_type": "simple",
+    "data": {
+      "additional_information": ""
+    }
+  },
+
+
   "compensation.orienteeringMapInfo.orienteeringMapsArray.0.n": {
-    "#tip": "The key inside fieldname must match the field on react form",
+    "#tip": "Multiple values",
     "datasource": "form_data",
     "source": "react_application.maps.mapArray",
     "mapping_type": "multiple_values",
@@ -51,6 +64,20 @@
         "label": "Koko km2",
         "valueType": "double"
       }
+    }
+  },
+
+  "compensation.costs.budget.properties": {
+    "#tip": "Complex mapping",
+    "datasource": "form_data",
+    "source": "react_application.budget.properties.0",
+    "mapping_type": "custom",
+    "custom_handler": "setLabelAndValue",
+    "data": {
+      "ID": "budget_item",
+      "label": "This is overridden by handler function.",
+      "value": "This is overridden as well.",
+      "valueType": "double"
     }
   }
 }

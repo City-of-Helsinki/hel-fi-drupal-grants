@@ -40,19 +40,16 @@ class JsonMapper {
       $sourcePath = $definition['source'];
       $dataSourceType = $definition['datasource'];
       $mappingType = $definition['mapping_type'];
-      if (
-        $mappingType != 'hardcoded' &&
-        !$this->sourcePathExists($allDataSources, $dataSourceType, $sourcePath)
-      ) {
+      if (!$this->sourcePathExists($allDataSources, $dataSourceType, $sourcePath)) {
         continue;
       }
 
       match($definition['mapping_type']) {
-        "default" => $this->handleDefault($data, $definition, $target, $allDataSources),
-        "multiple_values" => $this->handleMultipleValues($data, $definition, $target, $allDataSources),
-        "custom" => $this->handleCustom($data, $definition, $target, $allDataSources),
-        "hardcoded" => $this->handleHardcoded($data, $definition, $target),
-        // "single_value" => $this->default(),
+        'default' => $this->handleDefault($data, $definition, $target, $allDataSources),
+        'multiple_values' => $this->handleMultipleValues($data, $definition, $target, $allDataSources),
+        'custom' => $this->handleCustom($data, $definition, $target, $allDataSources),
+        'simple' => $this->handleSimple($data, $definition, $target, $allDataSources),
+        // 'hardcoded' => $this->handleHardcoded($data, $definition, $target),
         default => $this->handleDefault($data, $definition, $target, $allDataSources),
       };
     }
@@ -76,13 +73,12 @@ class JsonMapper {
   }
 
   /**
-   * Handle the most basic case, copy and paste the value from source to target.
+   * Handle the most basic case, copy the value from source to target.
    *
    * @param $data
    * @param array $definition
    * @param $target
    * @param array $dataSources
-   * @return void'
    */
   private function handleDefault(&$data, array $definition, $target, array $dataSources) {
     $sourcePath = $definition['source'];
@@ -121,11 +117,34 @@ class JsonMapper {
 
   }
 
+  /**
+   * Just use the mapped data.
+   *
+   * @param $data
+   * @param array $definition
+   * @param $targetPath
+   * @return void
+   */
   private function handleHardcoded(&$data, array $definition, $targetPath) {
     $value = $definition['data'];
     $this->setTargetValue($data, $targetPath, $value, $definition);
   }
 
+  /**
+   * Handle the case where we just set a key and value to the target.
+   *
+   * @param $data
+   * @param array $definition
+   * @param $targetPath
+   * @param array $dataSources
+   */
+  private function handleSimple(&$data, array $definition, $targetPath, array $dataSources) {
+    $sourcePath = $definition['source'];
+    $sourceValue = $this->getValue($dataSources[$definition['datasource']], $sourcePath);
+
+    $targetValue = $sourceValue;
+    $this->setTargetValue($data, $targetPath, $targetValue, $definition);
+  }
 
   /**
    * Handle the more complex cases.
@@ -141,7 +160,7 @@ class JsonMapper {
    * @param array $dataSources
    *   The data sources.
    */
-  private function handleCustom(&$data, array $definition, $targetPath, array $dataSources) {
+  private function handleCustom(&$data, array $definition, $targetPath, array $dataSources): void {
     $sourcePath = $definition['source'];
 
     $sourceValue = $this->getValue($dataSources[$definition['datasource']], $sourcePath);
@@ -151,11 +170,10 @@ class JsonMapper {
         $sourceValue,
         $definition
       );
+    $sourceValue = $definition['data'];
 
     $this->setTargetValue($data, $targetPath, $sourceValue, $definition);
   }
-
-  public function default() {}
 
   public function mapMultipleValues(array $allDataSources) {
     $data = [];
@@ -213,7 +231,13 @@ class JsonMapper {
     // When we reach the end of source path, get the value.
     if (count($indexes) === 1) {
       $value = $array[$indexes[0]];
-      if (!is_null($value) && !is_array($value)) {
+      // Commented this out because of complex value must return array
+      // if (!is_null($value) && !is_array($value)) {
+      if (!is_null($value)) {
+        if (is_array($value)) {
+          return $value;
+        }
+
         // All values must be string.
         return (string)$value;
       }
@@ -254,50 +278,25 @@ class JsonMapper {
    *
    * @return void
    */
-  private function setTargetValue(array &$data, string $targetPath, string|array $value, array $definition): void {
+  private function setTargetValue(array &$data, string $targetPath, string|array $sourceValue, array $definition): void {
     // This is the predefined hardcoded part of the json data for all fields.
-    $valueArray = $definition['data'];
+    $targetValue = $definition['data'];
 
-    if ($definition['mapping_type'] === 'default') {
-      $valueArray['value'] = $value;
-    }
-    elseif($definition['mapping_type'] === 'multiple_values') {
-      $valueArray = $value;
-    }
-    elseif($definition['mapping_type'] === 'hardcoded') {
-      $valueArray = $value;
-    }
-
-    // Handle the values that can have 1 to n values added to it.
-    // Check otherCompensationsArray from mappings.json.
-    // TODO handle the fields that can have n values set by user.
-    /*
-    if (isset($definition['multiple_values'])) {
-      $valueArray = $value;
-    }
-    // Usually we set the value to the predefined json object.
-    else if (isset($theValue['value'])) {
-      $valueArray['value'] = $value;
-    }
-    // Sometimes the value is just a "key": "value"
-    else {
-      $valueArray = $value;
-    }
-    */
+    match($definition['mapping_type']) {
+      'default' => $targetValue['value'] = $sourceValue,
+      'multiple_values',
+      'custom',
+      'simple' => $targetValue = $sourceValue,
+      // 'hardcoded' => $targetValue = $sourceValue,
+      default => $targetValue['value'] = $sourceValue,
+    };
 
     $this->setTargetValueRecursively(
       $data,
       explode('.', $targetPath),
-      $valueArray
+      $targetValue
     );
   }
-
-  public function setMultipleTargetValues(array &$data, string $targetPath, array $values, array $definition): void {
-    $definitions = $definition['data'];
-    $targetPath = rtrim($targetPath, '.n');
-
-  }
-
 
   /**
    * Traverse the target array recursively and set value.

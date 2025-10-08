@@ -44,8 +44,15 @@ class JsonHandler {
   static function setLabelAndValue(array $data, array $definition): array {
     $handledData = $definition['data'];
 
-    $handledData['label'] = $data[0];
-    $handledData['value'] = $data[1];
+    if (!is_array($data) || empty($data) || count($data) !== 2) {
+      return [
+        'label' => '',
+        'value' => '',
+      ];
+    }
+
+    $handledData['label'] = array_values($data)[0];
+    $handledData['value'] = array_values($data)[1];
 
     return $handledData;
   }

@@ -1,14 +1,5 @@
 {
   "react_application": {
-    "applicant": {
-      "name": "Jooseppi",
-      "birth_year": "1947"
-    },
-    "another": {
-      "0": {
-        "one": 1
-      }
-    },
     "maps": {
       "mapArray": [
         {
