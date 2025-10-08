@@ -38,6 +38,7 @@ E2E tests
 
 Application that are no longer used
 - Archive the webform applications after they are no longer used. This stops users from sending old drafts of the archived application.
+- Archived webforms must also be removed from the E2E tests since they can't be tested after archiving.
 -->
 
 ## Links to related PRs
