@@ -60,6 +60,12 @@ elements: |
   subventions:
     '#title': Understöd
     '#description': '<p>Om du också ansöker om hyresunderstöd, inkludera hyresunderstödets belopp i verksamhetsunderstödets ansökningsbelopp.</p>'
+  haen_vuokra_avustusta:
+    '#title': 'Jag ansöker om hyresunderstöd'
+    '#description': '<p>Hyresunderstödet söks i samband med verksamhetsunderstödet. Inkludera hyresunderstödets ansökningsbelopp i verksamhetsunderstödets ansökningsbelopp. Kom också ihåg att anteckna att du ansöker om verksamhetsunderstöd.</p>'
+    '#options':
+      1: Ja
+      0: Nej
   haen_toimintaavustus_ennakkoa:
     '#title': 'Jag ansöker om förskott på verksamhetsunderstödet'
     '#options':
@@ -71,12 +77,6 @@ elements: |
     '#options':
       1: 'Yes'
       0: 'No'
-  haen_vuokra_avustusta:
-    '#title': 'Jag ansöker om hyresunderstöd'
-    '#description': '<p>Hyresunderstödet söks i samband med verksamhetsunderstödet. Inkludera hyresunderstödets ansökningsbelopp i verksamhetsunderstödets ansökningsbelopp. Kom också ihåg att anteckna att du ansöker om verksamhetsunderstöd.</p>'
-    '#options':
-      1: Ja
-      0: Nej
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
