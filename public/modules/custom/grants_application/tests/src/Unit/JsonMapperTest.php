@@ -55,7 +55,7 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertTrue(isset($mappedData['compensation']['default_information'][0]['ID']), "Test hardcoded values");
     $this->assertTrue(isset($mappedData['compensation']['default_information'][1]['value']));
   }
-  
+
   /**
    * Combine the common datasources and the actual form into one.
    *
