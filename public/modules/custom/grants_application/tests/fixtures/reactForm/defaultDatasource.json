@@ -1,0 +1,25 @@
+{
+  "react_application": {
+    "applicant": {
+      "name": "Jooseppi",
+      "birth_year": "1947"
+    },
+    "another": {
+      "0": {
+        "one": 1
+      }
+    },
+    "maps": {
+      "mapArray": [
+        {
+          "mapName": "Peruskoulun suunnistuskartta",
+          "size": 10
+        },
+        {
+          "mapName": "Purjehduskerhon karikkokartta",
+          "size": 50
+        }
+      ]
+    }
+  }
+}

@@ -334,9 +334,9 @@ final class Application extends ResourceBase {
     $document_data = ['form_data' => $form_data];
 
     $applicantTypeId = $this->userInformationService->getApplicantTypeId();
-
+    /*
     $mapper = new JsonMapper();
-    $document_data = $mapper->map(
+    $dataSources = $mapper->getCombinedDataSources(
       $form_data,
       $user_data,
       $selected_company,
@@ -346,6 +346,12 @@ final class Application extends ResourceBase {
       $application_number,
       $applicantTypeId,
     );
+
+    $document_data = $mapper->map($dataSources);
+    */
+
+    $x = 1;
+    die('not so far.');
 
     // Attachments and general info are outside the compensation.
     $document_data['attachmentsInfo'] = $this->avus2Mapper

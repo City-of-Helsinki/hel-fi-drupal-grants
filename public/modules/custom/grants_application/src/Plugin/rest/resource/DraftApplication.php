@@ -392,7 +392,7 @@ final class DraftApplication extends ResourceBase {
     ];
 
     // Mapping here for development purpose only.
-    /*
+
     $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
     $form_data,
     $user_data,

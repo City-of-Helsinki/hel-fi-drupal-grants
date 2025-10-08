@@ -748,7 +748,7 @@
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.otherIncomeRowsArrayStatic.0.muut_avustukset_field_0": {
     "datasource": "form_data",
     "source": "budget_step.other_benefits_section.other_benefits",
-    "handle_value": true,
+    "custom_handler": "setLabelAndValue",
     "data": {
       "ID": "donations",
       "label": "",
@@ -820,7 +820,7 @@
     "tip": "TODO SPECIAL CASE: first field value is 'label', second field value is 'value'",
     "datasource": "form_data",
     "source": "budget_step.other_expenditures_section.other_expenditures.0",
-    "handle_value": true,
+    "custom_handler": "setLabelAndValue",
     "data": {
       "ID": "muut_menot_4_0",
       "label": "SPECIAL",
@@ -881,7 +881,7 @@
     "tip": "TODO SPECIAL CASE: first field value is 'label', second field value is 'value'",
     "datasource": "form_data",
     "source": "budget_step.other_services_acquired_section.other_services_acquired.0",
-    "handle_value": true,
+    "custom_handler": "setLabelAndValue",
     "data": {
       "ID": "muut_palveluiden_ostot_2_0",
       "label": "SPECIAL",
@@ -952,7 +952,7 @@
     "tip": "TODO SPECIAL CASE: first field value is 'label', second field value is 'value'",
     "datasource": "form_data",
     "source": "budget_step.other_materials_acquired_section.other_materials_acquired.0",
-    "handle_value": true,
+    "custom_handler": "setLabelAndValue",
     "data": {
       "ID": "muut_menot_tarvikkeet_0",
       "label": "SPECIAL",
@@ -976,7 +976,7 @@
     "tip": "TODO SPECIAL CASE: first field value is 'label', second field value is 'value'",
     "datasource": "form_data",
     "source": "budget_step.other_expenses_section.other_expenses.0",
-    "handle_value": true,
+    "custom_handler": "setLabelAndValue",
     "data": {
       "ID": "muut_menot_2_0",
       "label": "SPECIAL",
@@ -1047,7 +1047,7 @@
     "tip": "TODO SPECIAL CASE: first field value is 'label', second field value is 'value'",
     "datasource": "form_data",
     "source": "budget_step.other_expenses_section_1.other_expenses.0",
-    "handle_value": true,
+    "custom_handler": "setLabelAndValue",
     "data": {
       "ID": "muut_menot_3_0",
       "label": "SPECIAL",

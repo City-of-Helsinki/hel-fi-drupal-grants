@@ -1,0 +1,56 @@
+{
+  "compensation.applicant.user.username": {
+    "datasource": "form_data",
+    "source": "react_application.applicant.name",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicant_name",
+      "label": "The applicant name",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicant.user.birth_year": {
+    "datasource": "form_data",
+    "source": "react_application.applicant.birth_year",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicant_year_of_birth",
+      "label": "The ",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.random.0.randomvalue": {
+    "datasource": "form_data",
+    "source": "react_application.another.0.one",
+    "mapping_type": "default",
+    "data": {
+      "ID": "something",
+      "label": "Just a mapped value",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+
+  "compensation.orienteeringMapInfo.orienteeringMapsArray.0.n": {
+    "#tip": "The key inside fieldname must match the field on react form",
+    "datasource": "form_data",
+    "source": "react_application.maps.mapArray",
+    "mapping_type": "multiple_values",
+    "data": {
+      "mapName": {
+        "ID": "name",
+        "value": "",
+        "label": "Suunnistuskartan nimi",
+        "valueType": "string"
+      },
+      "size": {
+        "ID": "size",
+        "value": "",
+        "label": "Koko km2",
+        "valueType": "double"
+      }
+    }
+  }
+}

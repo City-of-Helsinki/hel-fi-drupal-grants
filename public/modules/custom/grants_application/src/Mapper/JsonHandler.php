@@ -10,29 +10,14 @@ namespace Drupal\grants_application\Mapper;
 class JsonHandler {
 
   /**
-   * Array of fields which require more complex mapping.
-   *
-   * field json path => function name
-   */
-  public const array definitionHandlerMap = [
-    'path_to_source' => 'functionName',
-    'compensation.budgetInfo.incomeGroupsArrayStatic.0.otherIncomeRowsArrayStatic.0.muut_avustukset_field_0' => 'setLabelAndValue',
-    'compensation.budgetInfo.costGroupsArrayStatic.1.otherCostRowsArrayStatic.0.muut_menot_4_0' => 'setLabelAndValue',
-    'compensation.budgetInfo.costGroupsArrayStatic.2.otherCostRowsArrayStatic.0.muut_palveluiden_ostot_2_0' => 'setLabelAndValue',
-    'compensation.budgetInfo.costGroupsArrayStatic.3.otherCostRowsArrayStatic.0.muut_menot_tarvikkeet_0' => 'setLabelAndValue',
-    'compensation.budgetInfo.costGroupsArrayStatic.4.otherCostRowsArrayStatic.0.muut_menot_2_0' => 'setLabelAndValue',
-    'compensation.budgetInfo.costGroupsArrayStatic.5.otherCostRowsArrayStatic.0.muut_menot_3_0' => 'setLabelAndValue',
-  ];
-
-  /**
    * Run custom handler function which returns updated definition.
    *
    * For example Form ID 52 required that one data-definition is
    * created by adding one field value as 'label' and another field value as
    * the 'value'. This is too complex operation for the mapper itself.
    *
-   * @param $path
-   *   Path to source data.
+   * @param $handler
+   *   The name of the handler function.
    * @param $data
    *   The actual data to handle.
    * @param $definition
@@ -41,12 +26,8 @@ class JsonHandler {
    * @return mixed
    *   Anything that is needed.
    */
-  public function handleDefinitionUpdate($path, $data, $definition): mixed {
-    if (!isset(self::definitionHandlerMap[$path])) {
-      throw new \Exception('Handler function not set.');
-    }
-
-    return call_user_func([self::class, self::definitionHandlerMap[$path]], $data, $definition);
+  public function handleDefinitionUpdate(string $handler, array $data, array $definition): mixed {
+    return call_user_func([self::class, $handler], $data, $definition);
   }
 
   /**
