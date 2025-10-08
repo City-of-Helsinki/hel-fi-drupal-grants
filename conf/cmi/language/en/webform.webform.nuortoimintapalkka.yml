@@ -57,6 +57,12 @@ elements: |
   subventions:
     '#title': Grants
     '#description': '<p>If you are also applying for a facility rent grant, include the rent grant amount in the application amount of the operating grant.</p>'
+  haen_vuokra_avustusta:
+    '#title': 'I am applying for a facility rent grant'
+    '#description': '<p>A facility rent grant is applied for in connection with an operating grant. Include the applied amount of rent grant in the application amount of the operating grant. Also remember to mark that you are applying for an operating grant.</p>'
+    '#options':
+      1: 'Yes'
+      0: 'No'
   haen_toimintaavustus_ennakkoa:
     '#title': 'I am applying for operating grant advance'
     '#options':
@@ -65,12 +71,6 @@ elements: |
   haen_palkkausavustus_ennakkoa:
     '#title': 'I am applying for hiring grant advance'
     '#description': 'An advance payment of the grant can be granted to an association that received a grant in the previous year (meaning the year before the application year). The advance can be up to half of the amount of the previous grant. Please note that the advance will be reclaimed if the association is not awarded the actual grant. If you wish to provide additional information regarding the advance, you can do so in the additional information section of the application.'
-    '#options':
-      1: 'Yes'
-      0: 'No'
-  haen_vuokra_avustusta:
-    '#title': 'I am applying for a facility rent grant'
-    '#description': '<p>A facility rent grant is applied for in connection with an operating grant. Include the applied amount of rent grant in the application amount of the operating grant. Also remember to mark that you are applying for an operating grant.</p>'
     '#options':
       1: 'Yes'
       0: 'No'
