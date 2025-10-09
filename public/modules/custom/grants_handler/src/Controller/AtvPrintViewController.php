@@ -455,25 +455,72 @@ final class AtvPrintViewController extends ControllerBase {
    *
    * @param array $field
    *   Field.
+   * @param string $langcode
+   *   Document language.
    */
   private function handleStatus(array &$field, string $langcode): void {
     if ($field['ID'] == 'status') {
       $statusMap = [
-        'DRAFT' => $this->t('Draft', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'SENT' => $this->t('Sent', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'SUBMITTED' => $this->t('Sent - waiting for confirmation', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'RECEIVED' => $this->t('Received', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'PREPARING' => $this->t('In Preparation', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'PENDING' => $this->t('Pending', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'PROCESSING' => $this->t('Processing', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'READY' => $this->t('Ready', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'DONE' => $this->t('Processed', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'REJECTED' => $this->t('Rejected', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'DELETED' => $this->t('Deleted', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'CANCELED' => $this->t('Cancelled', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'CANCELLED' => $this->t('Cancelled', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'CLOSED' => $this->t('Closed', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
-        'RESOLVED' => $this->t('Processed', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
+        'DRAFT' => $this->t('Draft', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'SENT' => $this->t('Sent', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'SUBMITTED' => $this->t('Sent - waiting for confirmation', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'RECEIVED' => $this->t('Received', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'PREPARING' => $this->t('In Preparation', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'PENDING' => $this->t('Pending', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'PROCESSING' => $this->t('Processing', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'READY' => $this->t('Ready', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'DONE' => $this->t('Processed', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'REJECTED' => $this->t('Rejected', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'DELETED' => $this->t('Deleted', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'CANCELED' => $this->t('Cancelled', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'CANCELLED' => $this->t('Cancelled', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'CLOSED' => $this->t('Closed', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
+        'RESOLVED' => $this->t('Processed', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode
+        ]),
       ];
 
       $field['value'] = $statusMap[$field['value']];
