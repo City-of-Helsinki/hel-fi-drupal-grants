@@ -98,7 +98,7 @@ export default defineConfig({
     {
       name: 'forms-all',
       testMatch: '/forms/*',
-      grepInvert: /registered_community_68\.ts/,
+      grepInvert: /archived/,
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
     },
     /* Run all smoke tests. */
