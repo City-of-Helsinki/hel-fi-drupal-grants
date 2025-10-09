@@ -259,7 +259,7 @@ final class AtvPrintViewController extends ControllerBase {
    */
   private function handleContent(
     array &$field,
-    array $labelData,
+    array &$labelData,
     string $langcode,
     bool &$isSubventionType,
     string &$subventionType,
@@ -268,12 +268,12 @@ final class AtvPrintViewController extends ControllerBase {
     $this->handleDates($field);
     $this->handleInputMasks($field, $labelData);
     $this->handleIssuer($field, $langcode);
-    $this->handleSection($field, $labelData);
     $this->handleLiitteetSection($field);
     $this->handleSubventionType($field, $labelData, $langcode, $isSubventionType, $subventionType);
     $this->handleRole($field);
     $this->handleStatus($field);
     $this->handleBooleanValues($field, $langcode);
+    $this->translateLabels($field, $labelData);
   }
 
   /**
@@ -342,17 +342,35 @@ final class AtvPrintViewController extends ControllerBase {
   }
 
   /**
-   * Handle section.
+   * Translate application number and status labels.
    *
    * @param array $field
    *   Field.
    * @param array $labelData
    *   Label data.
    */
-  private function handleSection(array &$field, array &$labelData): void {
+  private function translateLabels(array &$field, array &$labelData): void {
+    $translatedLabels = [
+      'application_number' => [
+        'label' => 'Hakemusnumero',
+        'translation' => $this->t('Application number', [], ['context' => 'grants_handler']),
+      ],
+      'application_status' => [
+        'label' => 'Hakemuksen tila',
+        'translation' => $this->t('Application status', [], ['context' => 'grants_handler']),
+      ],
+    ];
+
+    foreach ($translatedLabels as $translatedLabel) {
+      foreach (['section', 'element'] as $parent) {
+        if ($labelData[$parent]['label'] === $translatedLabel['label']) {
+          $labelData[$parent]['label'] = $translatedLabel['translation'];
+        }
+      }
+    }
+
     if ($labelData['section']['id'] === 'application_number' || $labelData['section']['id'] === 'status') {
       unset($field);
-      unset($labelData['section']);
     }
   }
 

@@ -273,6 +273,10 @@ msgid "Application number"
 msgstr "Hakemusnumero"
 
 msgctxt "grants_handler"
+msgid "Application status"
+msgstr "Hakemuksen tila"
+
+msgctxt "grants_handler"
 msgid "Grant application sent successfully"
 msgstr "Avustushakemus lähetetty onnistuneesti"
 

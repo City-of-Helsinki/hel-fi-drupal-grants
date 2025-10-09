@@ -273,6 +273,10 @@ msgid "Application number"
 msgstr "Ansökningsnummer"
 
 msgctxt "grants_handler"
+msgid "Application status"
+msgstr "Ansökningsstatus"
+
+msgctxt "grants_handler"
 msgid "Grant application sent successfully"
 msgstr "Anslagsansökan har skickats"
 
