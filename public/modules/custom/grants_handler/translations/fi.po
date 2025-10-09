@@ -688,3 +688,63 @@ msgstr "Uusi lomake käyttäen uudistettua lomakesovellusta"
 msgctxt "grants_handler"
 msgid "Fetching applications timed out. Please try again in a moment"
 msgstr "Hakemusten hakeminen aikakatkaistiin. Yritä hetken kuluttua uudelleen"
+
+msgctxt "grants_handler"
+msgid "Draft"
+msgstr "Luonnos"
+
+msgctxt "grants_handler"
+msgid "Sent"
+msgstr "Lähetetty"
+
+msgctxt "grants_handler"
+msgid "Sent - waiting for confirmation"
+msgstr "Lähetetty - odotetaan vahvistusta"
+
+msgctxt "grants_handler"
+msgid "Received"
+msgstr "Vastaanotettu"
+
+msgctxt "grants_handler"
+msgid "In Preparation"
+msgstr "Valmistelussa"
+
+msgctxt "grants_handler"
+msgid "Pending"
+msgstr "Odottaa"
+
+msgctxt "grants_handler"
+msgid "Processing"
+msgstr "Käsittelyssä"
+
+msgctxt "grants_handler"
+msgid "Ready"
+msgstr "Valmiina"
+
+msgctxt "grants_handler"
+msgid "Processed"
+msgstr "Ratkaistu"
+
+msgctxt "grants_handler"
+msgid "Rejected"
+msgstr "Ratkaistu"
+
+msgctxt "grants_handler"
+msgid "Deleted"
+msgstr "Hylätty"
+
+msgctxt "grants_handler"
+msgid "Cancelled"
+msgstr "Poistettu"
+
+msgctxt "grants_handler"
+msgid "Cancelled"
+msgstr "Peruttu"
+
+msgctxt "grants_handler"
+msgid "Closed"
+msgstr "Peruttu"
+
+msgctxt "grants_handler"
+msgid "Processed"
+msgstr "Suljettu"

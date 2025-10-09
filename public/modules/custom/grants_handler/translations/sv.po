@@ -679,3 +679,63 @@ msgstr "Ansökan är under behandling. Ansökan kan inte redigeras eller skickas
 msgctxt "grants_handler"
 msgid "New form using renewed form application"
 msgstr "Nytt formulär med förnyad ansökningsblankett"
+
+msgctxt "grants_handler"
+msgid "Draft"
+msgstr "Utkast"
+
+msgctxt "grants_handler"
+msgid "Sent"
+msgstr "Skickad"
+
+msgctxt "grants_handler"
+msgid "Sent - waiting for confirmation"
+msgstr "Skickad - väntar på bekräftelse"
+
+msgctxt "grants_handler"
+msgid "Received"
+msgstr "Mottagen"
+
+msgctxt "grants_handler"
+msgid "In Preparation"
+msgstr "Förbereds"
+
+msgctxt "grants_handler"
+msgid "Pending"
+msgstr "I väntan på"
+
+msgctxt "grants_handler"
+msgid "Processing"
+msgstr "Behandlas"
+
+msgctxt "grants_handler"
+msgid "Ready"
+msgstr "Redo"
+
+msgctxt "grants_handler"
+msgid "Processed"
+msgstr "Behandlad"
+
+msgctxt "grants_handler"
+msgid "Rejected"
+msgstr "Avvisade"
+
+msgctxt "grants_handler"
+msgid "Deleted"
+msgstr "Raderade"
+
+msgctxt "grants_handler"
+msgid "Cancelled"
+msgstr "Annullerad"
+
+msgctxt "grants_handler"
+msgid "Cancelled"
+msgstr "Annullerad"
+
+msgctxt "grants_handler"
+msgid "Closed"
+msgstr "Stängd"
+
+msgctxt "grants_handler"
+msgid "Processed"
+msgstr "Behandlad"
