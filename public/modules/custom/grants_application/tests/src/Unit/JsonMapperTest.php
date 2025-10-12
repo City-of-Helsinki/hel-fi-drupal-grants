@@ -65,8 +65,11 @@ final class JsonMapperTest extends UnitTestCase {
     $mapper = new JsonMapper($defaultMappings);
     $mappedData = $mapper->map($dataSources);
 
-    $this->assertTrue(isset($mappedData['compensation']['costs']['budget'][0]['ID']), "Assert complex values");
-    $this->assertTrue($mappedData['compensation']['costs']['budget'][0]['label'] === 'Toimitilat');
+    $this->assertTrue(isset($mappedData['compensation']['costs']['budget']['properties'][0]['ID']), "Assert complex values");
+    $this->assertTrue($mappedData['compensation']['costs']['budget']['properties'][0]['label'] === 'Toimitilat');
+
+    $this->assertTrue(isset($mappedData['compensation']['otherCostRowsArrayStatic'][0]['ID']), 'Income component');
+    $this->assertTrue(str_contains($mappedData['compensation']['otherCostRowsArrayStatic'][1]['ID'], '_1'));
   }
 
   public function testSimpleFieldValueMapping(): void {
@@ -80,6 +83,48 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertTrue(isset($mappedData['compensation']['additionalInformation']), "Simple field test.");
     $this->assertNotEmpty($mappedData['compensation']['additionalInformation']);
   }
+
+
+
+  public function testEmptyValueMapping(): void {
+    $defaultMappings = $this->getMapping('mappings.json');
+    $dataSources = $this->getAllDatasources('emptyFieldForm.json');
+
+    // Perform mapping from source data to target data.
+    $mapper = new JsonMapper($defaultMappings);
+    $mappedData = $mapper->map($dataSources);
+
+    $this->assertTrue(isset($mappedData['compensation']['budgetInfo']['costGroupsArrayStatic'][0]), "Assert empty value");
+    $this->assertTrue(is_array($mappedData['compensation']['budgetInfo']['costGroupsArrayStatic'][0]));
+    $this->assertTrue(empty($mappedData['compensation']['budgetInfo']['costGroupsArrayStatic'][0]));
+  }
+
+  public function testHardcoded(): void {
+    $defaultMappings = $this->getMapping('mappings.json');
+    $dataSources = $this->getAllDatasources('hardcodedFieldForm.json');
+
+    // Perform mapping from source data to target data.
+    $mapper = new JsonMapper($defaultMappings);
+    $mappedData = $mapper->map($dataSources);
+
+    $this->assertTrue(isset($mappedData['compensation']['budgetInfo'][0]["ID"]));
+
+    $this->assertTrue(isset($mappedData['compensation']['budgetInfo']['hardcoded']));
+    $this->assertTrue($mappedData['compensation']['budgetInfo']['hardcoded'] == 'my_value');
+  }
+
+  /*
+  public function testForm(): void {
+
+    $defaultMappings = $this->getMapping('form58mappings.json');
+    $dataSources = $this->getAllDatasources('form58.json');
+
+    // Perform mapping from source data to target data.
+    $mapper = new JsonMapper($defaultMappings);
+    $mappedData = $mapper->map($dataSources);
+
+  }
+  */
 
   /**
    * Combine the common datasources and the actual form into one.

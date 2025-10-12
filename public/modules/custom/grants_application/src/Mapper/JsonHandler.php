@@ -57,4 +57,23 @@ class JsonHandler {
     return $handledData;
   }
 
+  /**
+   * Map income component.
+   *
+   * @param array $data
+   * @param array $definition
+   * @return array
+   */
+  static function income(array $data, array $definition): array {
+    $result = [];
+
+    foreach($data as $key => $item) {
+      $mappedItem = self::setLabelAndValue($item, $definition);
+      $mappedItem['ID'] .= "_$key";
+      $result[] = $mappedItem;
+    }
+
+    return $result;
+  }
+
 }

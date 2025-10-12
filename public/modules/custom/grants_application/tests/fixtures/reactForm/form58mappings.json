@@ -1,5 +1,5 @@
 {
-  "compensation.applicantInfoArray.0": {
+  "compensation.applicantInfoArray.0.applicantType": {
     "datasource": "custom",
     "source": "applicant_type_id",
     "mapping_type": "default",
@@ -10,7 +10,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicantInfoArray.1": {
+  "compensation.applicantInfoArray.0.companyNumber": {
     "datasource": "company",
     "source": "identifier",
     "mapping_type": "default",
@@ -21,7 +21,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicantInfoArray.2": {
+  "compensation.applicantInfoArray.0.registrationDate": {
     "datasource": "custom",
     "source": "registration_date",
     "mapping_type": "default",
@@ -32,7 +32,7 @@
       "valueType": "datetime"
     }
   },
-  "compensation.applicantInfoArray.3": {
+  "compensation.applicantInfoArray.0.foundingYear": {
     "datasource": "grants_profile_array",
     "source": "foundingYear",
     "mapping_type": "default",
@@ -43,7 +43,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicantInfoArray.4": {
+  "compensation.applicantInfoArray.0.home": {
     "datasource": "grants_profile_array",
     "source": "companyHome",
     "mapping_type": "default",
@@ -54,7 +54,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicantInfoArray.5": {
+  "compensation.applicantInfoArray.0.homePage": {
     "datasource": "grants_profile_array",
     "source": "companyHomePage",
     "mapping_type": "default",
@@ -65,7 +65,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicantInfoArray.6": {
+  "compensation.applicantInfoArray.0.communityOfficialName": {
     "datasource": "grants_profile_array",
     "source": "companyName",
     "mapping_type": "default",
@@ -76,7 +76,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicantInfoArray.7": {
+  "compensation.applicantInfoArray.0.communityOfficialNameShort": {
     "datasource": "grants_profile_array",
     "source": "companyNameShort",
     "mapping_type": "default",
@@ -87,7 +87,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicantInfoArray.8": {
+  "compensation.applicantInfoArray.0.email": {
     "datasource": "form_data",
     "source": "applicant_info.applicant_email.email",
     "mapping_type": "default",
@@ -99,7 +99,7 @@
     }
   },
 
-  "compensation.compensationsInfo.compensationArray.0": {
+  "compensation.compensationsInfo.compensationArray.0.subventionType": {
     "#tip1": "tää voi olla valinta tai kovakoodattu lomakkeella 58",
     "datasource": "form_data",
     "source": "grant_info_step.subventions_section.subventions.0.0.value",
@@ -111,7 +111,7 @@
       "valueType": "string"
     }
   },
-  "compensation.compensationsInfo.compensationArray.1": {
+  "compensation.compensationsInfo.compensationArray.0.amount": {
     "#tip": "todo todo todo",
     "datasource": "form_data",
     "source": "grant_info_step.subventions_section.subventions.0.1.value",
@@ -124,7 +124,7 @@
     }
   },
 
-  "compensation.applicantOfficialsArray.0.0": {
+  "compensation.applicantOfficialsArray.0.0.name": {
     "datasource": "custom",
     "source": "selected_community_official.name",
     "mapping_type": "default",
@@ -135,7 +135,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicantOfficialsArray.0.1": {
+  "compensation.applicantOfficialsArray.0.0.role": {
     "datasource": "custom",
     "source": "selected_community_official.role",
     "mapping_type": "default",
@@ -146,7 +146,7 @@
       "valueType": "int"
     }
   },
-  "compensation.applicantOfficialsArray.0.2": {
+  "compensation.applicantOfficialsArray.0.0.email": {
     "datasource": "custom",
     "source": "selected_community_official.email",
     "mapping_type": "default",
@@ -157,7 +157,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicantOfficialsArray.0.3": {
+  "compensation.applicantOfficialsArray.0.0.phone": {
     "datasource": "custom",
     "source": "selected_community_official.phone",
     "mapping_type": "default",
@@ -168,6 +168,7 @@
       "valueType": "string"
     }
   },
+
 
   "compensation.currentAddressInfoArray.0.contactPerson": {
     "datasource": "form_data",
@@ -389,32 +390,31 @@
     }
   },
 
-  "compensation.activitiesInfoArray.0": {
-    "tip": "todo todo todo Tää pitää prefillaa react-lomakkeella, se data pitäs tulla jo settarien mukana",
-    "datasource": "form_data",
-    "source": "community_activity_step.community_activity_section.community_activity_description",
+  "compensation.activitiesInfoArray.0.businessPurpose": {
+    "skip": true,
+    "tip": "todo todo todo Tää pitää prefillaa react-lomakkeella",
+    "datasource": "grants_profile_array",
+    "source": "businessPurpose",
     "data": {
       "ID": "businessPurpose",
-      "label": "Toiminnan kuvaus",
+      "label": null,
       "value": "",
       "valueType": "string"
     }
   },
-  "compensation.activitiesInfoArray.1": {
-    "#tip": "todo todo todo react palauttaa 'kyllä', pitää olla 'true', eli boolean stringinä",
+  "compensation.activitiesInfoArray.0.communityPracticesBusiness": {
     "datasource": "form_data",
     "source": "community_activity_step.community_activity_section.community_practices_business",
     "mapping_type": "default",
     "data": {
-      "ID": "communityPracticesBusiness",
+      "ID": "businessPurpose",
       "label": null,
       "value": "",
-      "valueType": "bool"
+      "valueType": "string"
     }
   },
 
   "compensation.additionalInformation": {
-    "#tip": "todo fix broken",
     "skip": true,
     "datasource": "form_data",
     "source": "attachments_step.additional_information_section.additional_information",
@@ -424,7 +424,7 @@
     }
   },
 
-  "compensation.senderInfoArray.0": {
+  "compensation.senderInfoArray.0.firstname": {
     "datasource": "user_profile",
     "source": "myProfile.verifiedPersonalInformation.firstName",
     "mapping_type": "default",
@@ -435,7 +435,7 @@
       "valueType": "string"
     }
   },
-  "compensation.senderInfoArray.1": {
+  "compensation.senderInfoArray.0.lastname": {
     "datasource": "user_profile",
     "source": "myProfile.verifiedPersonalInformation.lastName",
     "mapping_type": "default",
@@ -446,7 +446,7 @@
       "valueType": "string"
     }
   },
-  "compensation.senderInfoArray.2": {
+  "compensation.senderInfoArray.0.personID": {
     "datasource": "user_profile",
     "source": "myProfile.verifiedPersonalInformation.nationalIdentificationNumber",
     "mapping_type": "default",
@@ -457,7 +457,7 @@
       "valueType": "string"
     }
   },
-  "compensation.senderInfoArray.3": {
+  "compensation.senderInfoArray.0.userID": {
     "datasource": "user",
     "source": "sub",
     "mapping_type": "default",
@@ -468,7 +468,7 @@
       "valueType": "string"
     }
   },
-  "compensation.senderInfoArray.4": {
+  "compensation.senderInfoArray.0.email": {
     "datasource": "user",
     "source": "email",
     "mapping_type": "default",
@@ -493,8 +493,8 @@
     }
   },
 
-  "compensation.compensationInfo.generalInfoArray.0": {
-    "#tip": "todo missing this must be done on react side, change the last number on this one and the ones below",
+  "compensation.compensationInfo.generalInfoArray.0.totalAmount": {
+    "#tip": "todo missing this must be done on react side.",
     "skip": true,
     "datasource": "form_data",
     "source": "",
@@ -506,7 +506,7 @@
       "valueType": "double"
     }
   },
-  "compensation.compensationInfo.generalInfoArray.0": {
+  "compensation.compensationInfo.generalInfoArray.0.purpose": {
     "datasource": "form_data",
     "source": "grant_info_step.purpose_section.purpose",
     "mapping_type": "default",
@@ -517,7 +517,7 @@
       "valueType": "string"
     }
   },
-  "compensation.compensationInfo.generalInfoArray.1": {
+  "compensation.compensationInfo.generalInfoArray.0.compensationPreviousYear": {
     "tip": "boolean kyllä, tää pitää varmaan kääntää 'true'",
     "datasource": "form_data",
     "source": "grant_info_step.prior_benefits_usage_section.have_received_prior_compensations",
@@ -529,7 +529,7 @@
       "valueType": "bool"
     }
   },
-  "compensation.compensationInfo.generalInfoArray.2": {
+  "compensation.compensationInfo.generalInfoArray.0.explanation": {
     "datasource": "form_data",
     "source": "grant_info_step.prior_benefits_usage_section.prior_compensations",
     "mapping_type": "default",
@@ -605,36 +605,37 @@
     }
   },
 
+
   "compensation.otherCompensationsInfo.otherCompensationsArray.0.n": {
     "datasource": "form_data",
     "source": "grant_info_step.other_compensations_section.other_compensations",
     "mapping_type": "multiple_values",
     "data": {
-      "other_compensation_issuer": {
+      "issuer": {
         "ID": "issuer",
         "label": "Avustuksen myöntäjä",
         "value": "",
         "valueType": "string"
       },
-      "other_compensation_issuer_name": {
+      "issuerName": {
         "ID": "issuerName",
         "label": "Myöntäjän nimi",
         "value": "",
         "valueType": "string"
       },
-      "other_compensation_issuer_year": {
+      "year": {
         "ID": "year",
         "label": "Vuosi",
         "value": "",
         "valueType": "string"
       },
-      "other_compensation_amount": {
+      "amount": {
         "ID": "amount",
         "label": "",
         "value": "",
         "valueType": "string"
       },
-      "other_compensation_description": {
+      "purpose": {
         "ID": "purpose",
         "label": "Kuvaus käyttötarkoituksesta",
         "value": "",

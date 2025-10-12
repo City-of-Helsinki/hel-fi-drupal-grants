@@ -16,6 +16,18 @@
           "name": "Juoma",
           "cost": "203.45"
         }
+      },
+      "benefits": {
+        "other_benefits": {
+          "0": {
+            "description": "tuki1",
+            "amount": 100
+          },
+          "1": {
+            "description": "tuki2",
+            "amount": 555
+          }
+        }
       }
     }
   }

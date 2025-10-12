@@ -14,6 +14,7 @@ use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Form\FormValidator;
 use Drupal\grants_application\Helper;
+use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_handler\ApplicationSubmitType;
 use Drupal\grants_handler\Event\ApplicationSubmitEvent;
@@ -384,28 +385,24 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    // @todo Better sanitation.
+    // @todo Test mapping here.
     /*
-    $document_data = [
-    'form_data' => $form_data,
-    'attachmentsInfo' => [],
-    ];
+    $mappingFile = "ID$application_type_id.json";
+    $mappings = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/' . $mappingFile), TRUE);
 
-    // Mapping here for development purpose only.
-
-    $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
-    $form_data,
-    $user_data,
-    $selected_company,
-    $this->userInformationService->getUserProfileData(),
-    $this->userInformationService->getGrantsProfileContent(),
-    $settings,
-    $application_number,
+    $mapper = new JsonMapper($mappings);
+    $dataSources = $mapper->getCombinedDataSources(
+      $form_data,
+      $this->userInformationService->getUserData(),
+      $this->userInformationService->getSelectedCompany(),
+      $this->userInformationService->getUserProfileData(),
+      $grants_profile_data,
+      $this->formSettingsService->getFormSettings($application_type_id),
+      $application_number,
+      $this->userInformationService->getApplicantType(),
     );
-
-    $document_data['attachmentsInfo'] = $this->avus2Mapper
-    ->getAttachmentAndGeneralInfo($attachments, $form_data);
-     */
+    $mappedData = $mapper->map($dataSources);
+    */
 
     // @todo clean this up a bit, unnecessarily duplicated variables.
     $content = $document->getContent();

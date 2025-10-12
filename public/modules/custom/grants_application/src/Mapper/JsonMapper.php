@@ -20,7 +20,10 @@ class JsonMapper {
   /**
    * The constructor.
    */
-  public function __construct(private readonly array $mappings) {
+  public function __construct(
+    private readonly array $mappings,
+    private readonly array $defaultMappings = []
+  ) {
     $this->customHandler = new JsonHandler();
   }
 
@@ -36,11 +39,22 @@ class JsonMapper {
   public function map(array $allDataSources): array {
     $data = [];
 
-    foreach ($this->mappings as $target => $definition) {
+    // todo Refactor
+    // Avus2 is a confusing in a way, that there is no way of knowing what
+    // data is actually required. Therefore, we should send all the data that
+    // is sent via webforms-implementation. Only other way to figure this out
+    // is by sending half-filled applications and checking the returned errors.
+    // In defaultMappings.json we gather all fields that require at least
+    // something in them.
+    /*
+    foreach($this->defaultMappings as $target => $definition) {
       $sourcePath = $definition['source'];
       $dataSourceType = $definition['datasource'];
-      $mappingType = $definition['mapping_type'];
-      if (!$this->sourcePathExists($allDataSources, $dataSourceType, $sourcePath)) {
+      if (
+        (isset($definition['skip']) && $definition['skip']) ||
+        !$definition['source'] ||
+        !$this->sourcePathExists($allDataSources, $dataSourceType, $sourcePath)
+      ) {
         continue;
       }
 
@@ -49,7 +63,45 @@ class JsonMapper {
         'multiple_values' => $this->handleMultipleValues($data, $definition, $target, $allDataSources),
         'custom' => $this->handleCustom($data, $definition, $target, $allDataSources),
         'simple' => $this->handleSimple($data, $definition, $target, $allDataSources),
-        // 'hardcoded' => $this->handleHardcoded($data, $definition, $target),
+        'hardcoded' => $this->handleHardcoded($data, $definition, $target),
+        'empty' => $this->handleEmpty($data, $definition, $target),
+        default => $this->handleDefault($data, $definition, $target, $allDataSources),
+      };
+    }
+
+    //pois.
+    $target = null;
+    $definition = null;
+    */
+
+    foreach ($this->mappings as $target => $definition) {
+      $sourcePath = $definition['source'];
+      $dataSourceType = $definition['datasource'];
+
+      // todo Refactor.
+      if (!isset($definition['skip']) && ($definition['mapping_type'] === 'empty' || $definition['mapping_type'] === 'hardcoded')) {
+        match($definition['mapping_type']) {
+          'empty' => $this->handleEmpty($data, $definition, $target),
+          'hardcoded' => $this->handleHardcoded($data, $definition, $target),
+        };
+        continue;
+      }
+
+      if (
+        (isset($definition['skip']) && $definition['skip']) ||
+        !$definition['source'] ||
+        !$this->sourcePathExists($allDataSources, $dataSourceType, $sourcePath)
+      ) {
+        continue;
+      }
+
+      match($definition['mapping_type']) {
+        'default' => $this->handleDefault($data, $definition, $target, $allDataSources),
+        'multiple_values' => $this->handleMultipleValues($data, $definition, $target, $allDataSources),
+        'custom' => $this->handleCustom($data, $definition, $target, $allDataSources),
+        'simple' => $this->handleSimple($data, $definition, $target, $allDataSources),
+        'hardcoded' => $this->handleHardcoded($data, $definition, $target),
+        'empty' => $this->handleEmpty($data, $definition, $target),
         default => $this->handleDefault($data, $definition, $target, $allDataSources),
       };
     }
@@ -85,6 +137,27 @@ class JsonMapper {
 
     $value = $this->getValue($dataSources[$definition['datasource']], $sourcePath);
     $this->setTargetValue($data, $target, $value, $definition);
+  }
+
+  /**
+   * @param $data
+   * @param array $definition
+   * @param $target
+   * @return void
+   */
+  private function handleEmpty(&$data, array $definition, $target) {
+    $this->setTargetValue($data, $target, [], $definition);
+  }
+
+  /**
+   * @param $data
+   * @param $definition
+   * @param $target
+   * @param $allDataSources
+   * @return void
+   */
+  private function handleIncome($data, $definition, $target, $allDataSources){
+    $x = 1;
   }
 
   /**
@@ -126,7 +199,7 @@ class JsonMapper {
    * @return void
    */
   private function handleHardcoded(&$data, array $definition, $targetPath) {
-    $value = $definition['data'];
+    $value = array_values($definition['data'])[0];
     $this->setTargetValue($data, $targetPath, $value, $definition);
   }
 
@@ -231,17 +304,16 @@ class JsonMapper {
     // When we reach the end of source path, get the value.
     if (count($indexes) === 1) {
       $value = $array[$indexes[0]];
-      // Commented this out because of complex value must return array
-      // if (!is_null($value) && !is_array($value)) {
-      if (!is_null($value)) {
-        if (is_array($value)) {
-          return $value;
-        }
-
-        // All values must be string.
-        return (string)$value;
+      if (is_null($value)) {
+        return [];
       }
-      return [];
+
+      if (is_array($value)) {
+        return $value;
+      }
+
+      // All values must be string.
+      return (string)$value;
     }
 
     // If we are still traversing the array, keep going.
@@ -287,14 +359,21 @@ class JsonMapper {
       'multiple_values',
       'custom',
       'simple' => $targetValue = $sourceValue,
-      // 'hardcoded' => $targetValue = $sourceValue,
+      'empty' => $targetValue = [],
+      'hardcoded' => $targetValue = $sourceValue,
       default => $targetValue['value'] = $sourceValue,
     };
+
+    $key = null;
+    if ($definition['mapping_type'] == 'hardcoded') {
+      $key = array_key_first($definition['data']);
+    }
 
     $this->setTargetValueRecursively(
       $data,
       explode('.', $targetPath),
-      $targetValue
+      $targetValue,
+      $key
     );
   }
 
@@ -308,25 +387,41 @@ class JsonMapper {
    * @param $theValue
    *   The value whatever it may be.
    */
-  private function setTargetValueRecursively(&$data, $indexes, $theValue): void {
+  private function setTargetValueRecursively(&$data, $indexes, $theValue, $key = NULL): void {
     if (count($indexes) === 1) {
-      // @todo Refactor exceptions.
-      if ($indexes[0] === 'additionalInformation') {
-        $data[$indexes[0]] = $theValue;
-        return;
-      }
-      if (is_array($theValue) && empty($theValue)) {
-        // allow setting empty value to target data.
+
+      // hardcoded values are just key: value.
+      if ($indexes[0] === $key) {
+        $data[$key] = $theValue;
         return;
       }
 
-      $data[] = $theValue;
+      // @todo Refactor exceptions.
+      if ($indexes[0] === 'additionalInformation') {
+         $data[$indexes[0]] = $theValue;
+         return;
+      }
+      elseif (is_array($theValue) && empty($theValue)) {
+        // allow setting empty value to target data.
+        $data[] = $theValue;
+        return;
+      }
+
+      if (is_numeric($indexes[0])) {
+        $data[] = $theValue;
+        return;
+      }
+
+      $data[$indexes[0]] = $theValue;
       return;
     }
 
-    $this->setTargetValueRecursively($data[$indexes[0]], array_slice($indexes, 1), $theValue);
+    $this->setTargetValueRecursively($data[$indexes[0]], array_slice($indexes, 1), $theValue, $key);
   }
 
+  private function setEmptyTargetValue() {
+
+  }
 
   /**
    * Combine the data sources required by mapper.
@@ -341,7 +436,7 @@ class JsonMapper {
    * @param GrantsProfile $grantsProfile
    * @param FormSettings $formSettings
    * @param string $applicationNumber
-   * @param int $applicantTypeId
+   * @param int $applicantType
    *
    * @return array
    *   Array of data required by mapper.
@@ -354,7 +449,7 @@ class JsonMapper {
     GrantsProfile $grantsProfile,
     FormSettings $formSettings,
     string $applicationNumber,
-    int $applicantTypeId,
+    string $applicantType,
   ): array {
 
     $community_official_uuid = $formData['applicant_info']['community_officials']['community_officials'][0]['official'];
@@ -369,6 +464,13 @@ class JsonMapper {
       // User has deleted the community official and exception occurs.
       throw $e;
     }
+
+    $types = [
+      'unregistered_community' => 1,
+      'registered_community' => 2,
+      'todo_the_third_one' => 3,
+    ];
+    $applicantTypeId = $types[$applicantType] ?? 0;
 
     // Any data can be added here, and it is accessible by the mapper.
     $custom = [

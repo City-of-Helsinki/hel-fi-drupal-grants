@@ -1,4 +1,7 @@
 {
-  "data": {
+  "react_application": {
+    "budget": {
+      "amount": "100"
+    }
   }
 }

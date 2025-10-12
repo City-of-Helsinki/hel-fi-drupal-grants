@@ -1,4 +1,14 @@
 {
+  "json.path.to.target": {
+    "#tip": "this is just an example",
+    "skip": true,
+    "datasource": "form_data",
+    "source": "json.path.to.source.data",
+    "mapping_type": "default",
+    "data": {
+    }
+  },
+
   "compensation.applicantInfoArray.0": {
     "datasource": "custom",
     "source": "applicant_type_id",
@@ -99,31 +109,6 @@
     }
   },
 
-  "compensation.compensationsInfo.compensationArray.0": {
-    "#tip1": "tää voi olla valinta tai kovakoodattu lomakkeella 58",
-    "datasource": "form_data",
-    "source": "grant_info_step.subventions_section.subventions.0.0.value",
-    "mapping_type": "default",
-    "data": {
-      "ID": "subventionType",
-      "label": "Avustuslajin koodi",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.compensationsInfo.compensationArray.1": {
-    "#tip": "todo todo todo",
-    "datasource": "form_data",
-    "source": "grant_info_step.subventions_section.subventions.0.1.value",
-    "mapping_type": "default",
-    "data": {
-      "ID": "amount",
-      "label": "Avustuslajin summa",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-
   "compensation.applicantOfficialsArray.0.0": {
     "datasource": "custom",
     "source": "selected_community_official.name",
@@ -169,7 +154,7 @@
     }
   },
 
-  "compensation.currentAddressInfoArray.0.contactPerson": {
+  "compensation.currentAddressInfoArray.0": {
     "datasource": "form_data",
     "source": "applicant_info.contact_person_info.contact_person",
     "mapping_type": "default",
@@ -180,7 +165,7 @@
       "valueType": "string"
     }
   },
-  "compensation.currentAddressInfoArray.0.phoneNumber": {
+  "compensation.currentAddressInfoArray.1": {
     "datasource": "form_data",
     "source": "applicant_info.contact_person_info.contact_person_phone_number",
     "mapping_type": "default",
@@ -191,7 +176,7 @@
       "valueType": "string"
     }
   },
-  "compensation.currentAddressInfoArray.0.street": {
+  "compensation.currentAddressInfoArray.2": {
     "datasource": "custom",
     "source": "selected_address.street",
     "mapping_type": "default",
@@ -202,7 +187,7 @@
       "valueType": "string"
     }
   },
-  "compensation.currentAddressInfoArray.0.city": {
+  "compensation.currentAddressInfoArray.3": {
     "datasource": "custom",
     "source": "selected_address.city",
     "mapping_type": "default",
@@ -213,7 +198,7 @@
       "valueType": "string"
     }
   },
-  "compensation.currentAddressInfoArray.0.postCode": {
+  "compensation.currentAddressInfoArray.4": {
     "datasource": "custom",
     "source": "selected_address.postCode",
     "mapping_type": "default",
@@ -224,7 +209,7 @@
       "valueType": "string"
     }
   },
-  "compensation.currentAddressInfoArray.0.country": {
+  "compensation.currentAddressInfoArray.5": {
     "datasource": "custom",
     "source": "selected_address.country",
     "mapping_type": "default",
@@ -237,7 +222,7 @@
   },
 
 
-  "compensation.applicationInfoArray.0.applicationType": {
+  "compensation.applicationInfoArray.0": {
     "datasource": "form_settings",
     "source": "settings.application_type",
     "mapping_type": "default",
@@ -248,7 +233,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicationInfoArray.0.applicationTypeID": {
+  "compensation.applicationInfoArray.1": {
     "datasource": "form_settings",
     "source": "settings.application_type_id",
     "mapping_type": "default",
@@ -259,7 +244,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicationInfoArray.0.formTimeStamp": {
+  "compensation.applicationInfoArray.2": {
     "datasource": "custom",
     "source": "now",
     "mapping_type": "default",
@@ -270,7 +255,7 @@
       "valueType": "datetime"
     }
   },
-  "compensation.applicationInfoArray.0.createdFormTimeStamp": {
+  "compensation.applicationInfoArray.3": {
     "#tip": "check ID52 webform submit.",
     "datasource": "custom",
     "source": "now",
@@ -282,18 +267,7 @@
       "valueType": "datetime"
     }
   },
-  "compensation.applicationInfoArray.0.submittedFormTimeStamp": {
-    "datasource": "custom",
-    "source": "now",
-    "mapping_type": "default",
-    "data": {
-      "ID": "submittedFormTimeStamp",
-      "label": null,
-      "value": "",
-      "valueType": "datetime"
-    }
-  },
-  "compensation.applicationInfoArray.0.applicationNumber": {
+  "compensation.applicationInfoArray.4": {
     "datasource": "custom",
     "source": "application_number",
     "mapping_type": "default",
@@ -304,7 +278,7 @@
       "valueType": "string"
     }
   },
-  "compensation.applicationInfoArray.0.status": {
+  "compensation.applicationInfoArray.5": {
     "datasource": "custom",
     "source": "status",
     "mapping_type": "default",
@@ -315,19 +289,19 @@
       "valueType": "string"
     }
   },
-  "compensation.applicationInfoArray.0.actingYear": {
+  "compensation.applicationInfoArray.6": {
+    "#tip": "acting year",
     "datasource": "form_data",
-    "source": "orienteering_maps_step.acting_year_section.acting_year",
+    "source": "grant_info_step.acting_year_section.acting_year",
     "mapping_type": "default",
     "data": {
       "ID": "actingYear",
       "label": "Vuosi, jolle haen avustusta",
       "value": "",
-      "valueType": "int"
+      "valueType": "string"
     }
   },
-
-  "compensation.bankAccountArray.accountNumber": {
+  "compensation.bankAccountArray.0": {
     "#tip": "webform submission ID52 does not contain other bank information",
     "datasource": "form_data",
     "source": "applicant_info.bank_account.bank_account",
@@ -340,8 +314,8 @@
     }
   },
 
-  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0.otherCompensationsTotal": {
-    "tip": "todo",
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
+    "tip": "todo sum all other compensations",
     "datasource": "form_data",
     "source": null,
     "mapping_type": "default",
@@ -352,23 +326,23 @@
       "valueType": "double"
     }
   },
-  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0.otherAppliedCompensationsTotal": {
-    "skip": true,
-    "tip": "todo",
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
     "datasource": "form_data",
-    "source": null,
-    "mapping_type": "default",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
     "data": {
-      "ID": "otherAppliedCompensationsTotal",
-      "label": null,
-      "value": "",
-      "valueType": "double"
+      "0": {
+        "ID": "otherAppliedCompensationsTotal",
+        "label": null,
+        "value": "0",
+        "valueType": "double"
+      }
     }
   },
 
-  "compensation.benefitsInfoArray.0.loans": {
+  "compensation.benefitsInfoArray.0": {
     "datasource": "form_data",
-    "source": "grants_info_step.purpose_section.purpose",
+    "source": "grant_info_step.purpose_section.purpose",
     "mapping_type": "default",
     "data": {
       "ID": "loans",
@@ -377,9 +351,9 @@
       "valueType": "string"
     }
   },
-  "compensation.benefitsInfoArray.0.premises": {
+  "compensation.benefitsInfoArray.1": {
     "datasource": "form_data",
-    "source": "grants_info_step.city_premises_benefits_section.city_premises_benefits.purpose",
+    "source": "grant_info_step.city_premises_benefits_section.city_premises_benefits",
     "mapping_type": "default",
     "data": {
       "ID": "premises",
@@ -390,7 +364,7 @@
   },
 
   "compensation.activitiesInfoArray.0": {
-    "tip": "todo todo todo Tää pitää prefillaa react-lomakkeella, se data pitäs tulla jo settarien mukana",
+    "tip": "todo react Tää pitää prefillaa react-lomakkeella, se data pitäs tulla jo settarien mukana",
     "datasource": "form_data",
     "source": "community_activity_step.community_activity_section.community_activity_description",
     "data": {
@@ -401,7 +375,7 @@
     }
   },
   "compensation.activitiesInfoArray.1": {
-    "#tip": "todo todo todo react palauttaa 'kyllä', pitää olla 'true', eli boolean stringinä",
+    "#tip": "todo boolean react palauttaa 'kyllä', pitää olla 'true', eli boolean stringinä",
     "datasource": "form_data",
     "source": "community_activity_step.community_activity_section.community_practices_business",
     "mapping_type": "default",
@@ -414,10 +388,8 @@
   },
 
   "compensation.additionalInformation": {
-    "#tip": "todo fix broken",
-    "skip": true,
     "datasource": "form_data",
-    "source": "attachments_step.additional_information_section.additional_information",
+    "source": "attachments_step.additional_info_section.additional_info",
     "mapping_type": "simple",
     "data": {
       "additionalInformation": ""
@@ -494,19 +466,6 @@
   },
 
   "compensation.compensationInfo.generalInfoArray.0": {
-    "#tip": "todo missing this must be done on react side, change the last number on this one and the ones below",
-    "skip": true,
-    "datasource": "form_data",
-    "source": "",
-    "mapping_type": "default",
-    "data":  {
-      "ID": "totalAmount",
-      "label": "Haettavat avustukset yhteensä",
-      "value": "",
-      "valueType": "double"
-    }
-  },
-  "compensation.compensationInfo.generalInfoArray.0": {
     "datasource": "form_data",
     "source": "grant_info_step.purpose_section.purpose",
     "mapping_type": "default",
@@ -518,7 +477,7 @@
     }
   },
   "compensation.compensationInfo.generalInfoArray.1": {
-    "tip": "boolean kyllä, tää pitää varmaan kääntää 'true'",
+    "tip": "todo boolean 'kyllä', tää pitää varmaan kääntää 'true'",
     "datasource": "form_data",
     "source": "grant_info_step.prior_benefits_usage_section.have_received_prior_compensations",
     "mapping_type": "default",
@@ -538,70 +497,6 @@
       "label": "Selvitys avustuksen käyytöstä",
       "value": "",
       "valueType": "string"
-    }
-  },
-
-
-  "compensation.orienteeringMapInfo.orienteeringMapsArray.0.n": {
-    "datasource": "form_data",
-    "source": "orienteering_maps_step.orienteering_subvention.orienteering_maps",
-    "mapping_type": "multiple_values",
-    "data": {
-      "mapName": {
-        "ID": "mapName",
-        "label": "Kartan nimi",
-        "value": "",
-        "valueType": "string"
-      },
-      "size": {
-        "ID": "size",
-        "label": "Koko",
-        "value": "",
-        "valueType": "string"
-      },
-      "voluntaryHours": {
-        "ID": "voluntaryHours",
-        "label": "Talkootyö",
-        "value": "",
-        "valueType": "string"
-      },
-      "cost": {
-        "ID": "cost",
-        "label": "Kustannukset",
-        "value": "",
-        "valueType": "string"
-      },
-      "otherCompensation": {
-        "ID": "otherCompensations",
-        "label": "Muilta saadut avustukset",
-        "value": "",
-        "valueType": "string"
-      }
-    }
-  },
-
-  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0.otherCompensationsTotal": {
-    "skip": true,
-    "tip": "TODO missing tää on vissii laskennallinen kenttä. TÄÄ ON KAHDELLA LOMAKKEELLA MUT TOISESSA TYHJÄ",
-    "datasource": "form_data",
-    "source": "",
-    "data": {
-      "ID": "otherCompensationsTotal",
-      "label": null,
-      "value": "",
-      "valueType": "double"
-    }
-  },
-  "TODO:compensation.otherCompensationsInfo.otherCompensationsInfoArray.0.otherAppliedCompensationsTotal": {
-    "skip": true,
-    "tip": "TODO missing tää on vissii laskennallinen kenttä. TÄÄ ON KAHDELLA LOMAKKEELLA MUT TOISESSA TYHJÄ",
-    "datasource": "form_data",
-    "source": "",
-    "data": {
-      "ID": "otherAppliedCompensationsTotal",
-      "label": null,
-      "value": "",
-      "valueType": "double"
     }
   },
 
@@ -643,79 +538,80 @@
     }
   },
 
-
   "compensation.premisesInfo.premisesArray.0.n": {
+    "#tip": "todo boolean must be 'true' instead of 'kyllä'",
+    "#tip2": "todo missing 'totalRent', 'rent start time' and 'rent end time'",
     "datasource": "form_data",
-    "source": "grant_info_step.community_activity_step.locations_info_section.locations_info.location_name",
+    "source": "community_activity_step.locations_info_section.locations_info",
     "mapping_type": "multiple_values",
     "data": {
-      "location": {
+      "location_name": {
         "ID": "purpose",
         "label": "Toimintapaikka",
         "value": "",
         "valueType": "string"
       },
-      "streetAddress": {
+      "location_address": {
         "ID": "streetAddress",
         "label": "Osoite",
         "value": "",
         "valueType": "string"
       },
-      "postCode": {
+      "location_postal_code": {
         "ID": "postCode",
         "label": "Postinumero",
         "value": "",
         "valueType": "string"
       },
-      "studentCount": {
+      "location_pupil_number": {
         "ID": "studentCount",
         "label": "Oppilaiden lukumäärä",
         "value": "",
         "valueType": "int"
       },
-      "specialStudents": {
+      "location_pupil_number_special_needs": {
         "ID": "specialStudents",
         "label": "Joista erityisoppilaita",
         "value": "",
         "valueType": "int"
       },
-      "groupCount": {
+      "location_number_of_groups": {
         "ID": "groupCount",
         "label": "Ryhmien lukumäärä",
         "value": "",
         "valueType": "int"
       },
-      "specialGroups": {
+      "location_number_of_groups_special_needs": {
         "ID": "specialGroups",
         "label": "Joista erityisoppilaiden pienryhmiä",
         "value": "",
         "valueType": "int"
       },
-      "personnelCount": {
+      "location_staff": {
         "ID": "personnelCount",
         "label": "Henkilöstön lukumäärä",
         "value": "",
         "valueType": "int"
       },
-      "free": {
+      "location_held_in_provided_space": {
         "ID": "free",
         "label": "Toimintaa järjestetään kaupungin opetus-, sosiaali- tai nuorisotoimelta saaduissa maksuttomissa tiloissa",
         "value": "",
         "valueType": "bool"
       },
-      "totalRent": {
+      "location_total_rent": {
         "ID": "totalRent",
         "label": "Euroa yhteensä lukuvuoden aikana €",
         "value": "",
         "valueType": "double"
       },
-      "rentTimeBegin": {
-        "ID": "rentTimeEnd",
+      "location_rent_start_time": {
+        "ID": "rentTimeBegin",
         "label": "Vuokra-aika lukuvuoden aikana, alkaen",
         "value": "",
         "valueType": "datetime"
       },
-      "rentTimeEnd": {
+      "location_rent_end_time": {
         "ID": "rentTimeEnd",
         "label": "Vuokra-aika lukuvuoden aikana, päättyen",
         "value": "",
@@ -793,7 +689,6 @@
     "data": {}
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.costGroupName": {
-    "todo": "todo fix",
     "datasource": "form_data",
     "source": null,
     "mapping_type": "hardcoded",
@@ -969,7 +864,7 @@
     }
   },
   "compensation.budgetInfo.costGroupsArrayStatic.3.costRowsArrayStatic.4": {
-    "#tip": "todo check supplies === operational materials? ",
+    "#tip": "todo check supplies === operational materials? onko oikein",
     "datasource": "form_data",
     "source": "budget_step.other_materials_section.operational_materials",
     "mapping_type": "default",
@@ -993,7 +888,6 @@
     }
   },
   "compensation.budgetInfo.costGroupsArrayStatic.3.costGroupName": {
-    "#tip": "todo fix",
     "datasource": "form_data",
     "source": null,
     "mapping_type": "hardcoded",
@@ -1004,7 +898,7 @@
 
   "compensation.budgetInfo.costGroupsArrayStatic.4.costRowsArrayStatic.0": {
     "skip": true,
-    "#tip": "todo missing",
+    "#tip": "todo missing react",
     "datasource": "form_data",
     "source": "missing",
     "mapping_type": "default",
@@ -1017,7 +911,7 @@
   },
   "compensation.budgetInfo.costGroupsArrayStatic.4.costRowsArrayStatic.1": {
     "skip": true,
-    "#tip": "todo missing",
+    "#tip": "todo missing react",
     "datasource": "form_data",
     "source": "missing",
     "mapping_type": "default",
@@ -1030,7 +924,7 @@
   },
   "compensation.budgetInfo.costGroupsArrayStatic.4.costRowsArrayStatic.2": {
     "skip": true,
-    "#tip": "todo missing",
+    "#tip": "todo missing react",
     "datasource": "form_data",
     "source": "missing",
     "mapping_type": "default",
@@ -1137,6 +1031,30 @@
     "mapping_type": "hardcoded",
     "data": {
       "costGroupName": "useOfCustomerFeeIncome"
+    }
+  },
+
+  "compensation.compensationInfo.compensationArray.0.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.0.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "subventionType",
+      "label": "Avustuslajin koodi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.compensationInfo.compensationArray.0.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "value": "",
+      "valueType": "float",
+      "label": "Avustussumma"
     }
   }
 }
