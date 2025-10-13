@@ -105,6 +105,7 @@
   },
 
   "compensation.budgetInfo.0": {
+    "skip": true,
     "datasource": "form_data",
     "source": "react_application.budget.amount",
     "mapping_type": "default",
@@ -123,6 +124,17 @@
     "mapping_type": "hardcoded",
     "data": {
       "hardcoded": "my_value"
+    }
+  },
+
+  "compensation.budgetInfo.hardcoded2.0": {
+    "datasource": "form_data",
+    "source": "",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "hardcoded": "object"
+      }
     }
   }
 

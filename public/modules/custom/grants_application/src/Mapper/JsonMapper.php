@@ -39,41 +39,6 @@ class JsonMapper {
   public function map(array $allDataSources): array {
     $data = [];
 
-    // todo Refactor
-    // Avus2 is a confusing in a way, that there is no way of knowing what
-    // data is actually required. Therefore, we should send all the data that
-    // is sent via webforms-implementation. Only other way to figure this out
-    // is by sending half-filled applications and checking the returned errors.
-    // In defaultMappings.json we gather all fields that require at least
-    // something in them.
-    /*
-    foreach($this->defaultMappings as $target => $definition) {
-      $sourcePath = $definition['source'];
-      $dataSourceType = $definition['datasource'];
-      if (
-        (isset($definition['skip']) && $definition['skip']) ||
-        !$definition['source'] ||
-        !$this->sourcePathExists($allDataSources, $dataSourceType, $sourcePath)
-      ) {
-        continue;
-      }
-
-      match($definition['mapping_type']) {
-        'default' => $this->handleDefault($data, $definition, $target, $allDataSources),
-        'multiple_values' => $this->handleMultipleValues($data, $definition, $target, $allDataSources),
-        'custom' => $this->handleCustom($data, $definition, $target, $allDataSources),
-        'simple' => $this->handleSimple($data, $definition, $target, $allDataSources),
-        'hardcoded' => $this->handleHardcoded($data, $definition, $target),
-        'empty' => $this->handleEmpty($data, $definition, $target),
-        default => $this->handleDefault($data, $definition, $target, $allDataSources),
-      };
-    }
-
-    //pois.
-    $target = null;
-    $definition = null;
-    */
-
     foreach ($this->mappings as $target => $definition) {
       $sourcePath = $definition['source'];
       $dataSourceType = $definition['datasource'];
@@ -147,17 +112,6 @@ class JsonMapper {
    */
   private function handleEmpty(&$data, array $definition, $target) {
     $this->setTargetValue($data, $target, [], $definition);
-  }
-
-  /**
-   * @param $data
-   * @param $definition
-   * @param $target
-   * @param $allDataSources
-   * @return void
-   */
-  private function handleIncome($data, $definition, $target, $allDataSources){
-    $x = 1;
   }
 
   /**
@@ -248,35 +202,12 @@ class JsonMapper {
     $this->setTargetValue($data, $targetPath, $sourceValue, $definition);
   }
 
-  public function mapMultipleValues(array $allDataSources) {
-    $data = [];
-    foreach ($this->mappings as $target => $definition) {
-      $sourcePath = $definition['source'];
-      $datasource = $definition['datasource'];
-
-      if (isset($definition['multiple_values'])) {
-        $sourceValues = $this->getMultipleValues($allDataSources[$datasource], $sourcePath);
-
-        $t = rtrim($target, '.n');
-        foreach ($sourceValues as $singleObject) {
-          $dd = [];
-          foreach ($singleObject as $fieldName => $v) {
-            $d = $definition['data'][$fieldName];
-            $d['value'] = $v;
-            $dd[] = $d;
-          }
-          $this->setTargetValue($data, $t, $dd, $definition);
-        }
-      }
-
-    }
-  }
-
   /**
    * Get a value for field from application form.
    *
    * @param array $sourceData
    * @param string $sourcePath
+   *
    * @return string
    */
   private function getValue(array $sourceData, string $sourcePath): array|string|null {
@@ -284,6 +215,14 @@ class JsonMapper {
     return $this->getNestedArrayValue($sourceData, $path);
   }
 
+  /**
+   * Get all the values for the multivalue-field.
+   *
+   * @param array $sourceData
+   * @param string $sourcePath
+   *
+   * @return array|string|null
+   */
   private function getMultipleValues(array $sourceData, string $sourcePath): array|string|null {
     $path = explode('.', $sourcePath);
     return $this->getMultipleNestedArrayValues($sourceData, $path);

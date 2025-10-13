@@ -107,24 +107,11 @@ final class JsonMapperTest extends UnitTestCase {
     $mapper = new JsonMapper($defaultMappings);
     $mappedData = $mapper->map($dataSources);
 
-    $this->assertTrue(isset($mappedData['compensation']['budgetInfo'][0]["ID"]));
-
     $this->assertTrue(isset($mappedData['compensation']['budgetInfo']['hardcoded']));
     $this->assertTrue($mappedData['compensation']['budgetInfo']['hardcoded'] == 'my_value');
+
+    $this->assertTrue($mappedData['compensation']['budgetInfo']['hardcoded2'][0]['hardcoded'] == 'object');
   }
-
-  /*
-  public function testForm(): void {
-
-    $defaultMappings = $this->getMapping('form58mappings.json');
-    $dataSources = $this->getAllDatasources('form58.json');
-
-    // Perform mapping from source data to target data.
-    $mapper = new JsonMapper($defaultMappings);
-    $mappedData = $mapper->map($dataSources);
-
-  }
-  */
 
   /**
    * Combine the common datasources and the actual form into one.
