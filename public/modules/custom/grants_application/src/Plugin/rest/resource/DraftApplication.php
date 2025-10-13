@@ -14,7 +14,6 @@ use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Form\FormValidator;
 use Drupal\grants_application\Helper;
-use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_handler\ApplicationSubmitType;
 use Drupal\grants_handler\Event\ApplicationSubmitEvent;
@@ -392,17 +391,18 @@ final class DraftApplication extends ResourceBase {
 
     $mapper = new JsonMapper($mappings);
     $dataSources = $mapper->getCombinedDataSources(
-      $form_data,
-      $this->userInformationService->getUserData(),
-      $this->userInformationService->getSelectedCompany(),
-      $this->userInformationService->getUserProfileData(),
-      $grants_profile_data,
-      $this->formSettingsService->getFormSettings($application_type_id),
-      $application_number,
-      $this->userInformationService->getApplicantType(),
+    $form_data,
+    $this->userInformationService->getUserData(),
+    $this->userInformationService->getSelectedCompany(),
+    $this->userInformationService->getUserProfileData(),
+    $grants_profile_data,
+    $this->formSettingsService->getFormSettings($application_type_id),
+    $application_number,
+    $this->userInformationService->getApplicantType(),
     );
     $mappedData = $mapper->map($dataSources);
-    */
+    die('add breakpoint here');
+     */
 
     // @todo clean this up a bit, unnecessarily duplicated variables.
     $content = $document->getContent();

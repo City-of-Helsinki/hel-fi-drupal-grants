@@ -16,11 +16,11 @@ class JsonHandler {
    * created by adding one field value as 'label' and another field value as
    * the 'value'. This is too complex operation for the mapper itself.
    *
-   * @param $handler
+   * @param string $handler
    *   The name of the handler function.
-   * @param $data
+   * @param array $data
    *   The actual data to handle.
-   * @param $definition
+   * @param array $definition
    *   The mapping definition.
    *
    * @return mixed
@@ -41,10 +41,10 @@ class JsonHandler {
    * @return array
    *   A data-definition which is accepted by Avus2.
    */
-  static function setLabelAndValue(array $data, array $definition): array {
+  public static function setLabelAndValue(array $data, array $definition): array {
     $handledData = $definition['data'];
 
-    if (!is_array($data) || empty($data) || count($data) !== 2) {
+    if (empty($data) || count($data) !== 2) {
       return [
         'label' => '',
         'value' => '',
@@ -61,13 +61,17 @@ class JsonHandler {
    * Map income component.
    *
    * @param array $data
+   *   The data.
    * @param array $definition
+   *   Mapping definition.
+   *
    * @return array
+   *   The income field data.
    */
-  static function income(array $data, array $definition): array {
+  public static function income(array $data, array $definition): array {
     $result = [];
 
-    foreach($data as $key => $item) {
+    foreach ($data as $key => $item) {
       $mappedItem = self::setLabelAndValue($item, $definition);
       $mappedItem['ID'] .= "_$key";
       $result[] = $mappedItem;

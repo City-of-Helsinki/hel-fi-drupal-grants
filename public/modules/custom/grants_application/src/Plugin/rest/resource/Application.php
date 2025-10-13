@@ -14,7 +14,6 @@ use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Helper;
-use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_events\EventsService;
@@ -337,18 +336,18 @@ final class Application extends ResourceBase {
     /*
     $mapper = new JsonMapper();
     $dataSources = $mapper->getCombinedDataSources(
-      $form_data,
-      $user_data,
-      $selected_company,
-      $this->userInformationService->getUserProfileData(),
-      $this->userInformationService->getGrantsProfileContent(),
-      $settings,
-      $application_number,
-      $applicantTypeId,
+    $form_data,
+    $user_data,
+    $selected_company,
+    $this->userInformationService->getUserProfileData(),
+    $this->userInformationService->getGrantsProfileContent(),
+    $settings,
+    $application_number,
+    $applicantTypeId,
     );
 
     $document_data = $mapper->map($dataSources);
-    */
+     */
 
     $x = 1;
     die('not so far.');

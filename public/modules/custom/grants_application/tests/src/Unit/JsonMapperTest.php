@@ -14,14 +14,8 @@ use Drupal\Tests\UnitTestCase;
  */
 final class JsonMapperTest extends UnitTestCase {
 
-  protected function setUp(): void {
-    parent::setUp();
-  }
-
   /**
    * Test the default mappings.
-   *
-   * @return void
    */
   public function testDefaultMapping(): void {
     // Get mappings for a few fields and the datasources.
@@ -38,6 +32,11 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertTrue($mappedData['compensation']['applicant']['user'][1]['value'] === '1947');
   }
 
+  /**
+   * Test multiple value field mapping.
+   *
+   * User can add multivalue -fieldgroup multiple times.
+   */
   public function testMultipleValueFieldMapping(): void {
     $defaultMappings = $this->getMapping('mappings.json');
     $dataSources = $this->getAllDatasources('multipleValueFieldForm.json');
@@ -54,8 +53,6 @@ final class JsonMapperTest extends UnitTestCase {
    * Test the complex value mapping.
    *
    * At this point there is only one which is setLabelAndValue-function.
-   *
-   * @return void
    */
   public function testComplexValueMapping(): void {
     $defaultMappings = $this->getMapping('mappings.json');
@@ -72,6 +69,11 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertTrue(str_contains($mappedData['compensation']['otherCostRowsArrayStatic'][1]['ID'], '_1'));
   }
 
+  /**
+   * Test simple values mapping.
+   *
+   * Simple value is Key: value where key is hardcoded, value comes from data.
+   */
   public function testSimpleFieldValueMapping(): void {
     $defaultMappings = $this->getMapping('mappings.json');
     $dataSources = $this->getAllDatasources('simpleFieldForm.json');
@@ -84,8 +86,9 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertNotEmpty($mappedData['compensation']['additionalInformation']);
   }
 
-
-
+  /**
+   * Test empty values.
+   */
   public function testEmptyValueMapping(): void {
     $defaultMappings = $this->getMapping('mappings.json');
     $dataSources = $this->getAllDatasources('emptyFieldForm.json');
@@ -99,6 +102,9 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertTrue(empty($mappedData['compensation']['budgetInfo']['costGroupsArrayStatic'][0]));
   }
 
+  /**
+   * Test hardcoded values.
+   */
   public function testHardcoded(): void {
     $defaultMappings = $this->getMapping('mappings.json');
     $dataSources = $this->getAllDatasources('hardcodedFieldForm.json');
@@ -125,8 +131,8 @@ final class JsonMapperTest extends UnitTestCase {
    *   Common datasource data and the form-data combined.
    */
   private function getAllDatasources(string $fixtureName): array {
-    $commonDatasources = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/commonDatasources.json'),TRUE);
-    $specificDatasource = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/'. $fixtureName), TRUE);
+    $commonDatasources = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/commonDatasources.json'), TRUE);
+    $specificDatasource = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/' . $fixtureName), TRUE);
     $commonDatasources['form_data'] = $specificDatasource;
 
     return $commonDatasources;
@@ -145,7 +151,8 @@ final class JsonMapperTest extends UnitTestCase {
    *   The mapping file.
    */
   private function getMapping(string $fixtureName): array {
-    $mappingFixtures = file_get_contents(__DIR__ . '/../../fixtures/reactForm/'. $fixtureName);
-    return json_decode($mappingFixtures, true);
+    $mappingFixtures = file_get_contents(__DIR__ . '/../../fixtures/reactForm/' . $fixtureName);
+    return json_decode($mappingFixtures, TRUE);
   }
+
 }

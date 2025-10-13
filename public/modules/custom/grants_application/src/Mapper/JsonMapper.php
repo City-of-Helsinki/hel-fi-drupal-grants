@@ -22,7 +22,7 @@ class JsonMapper {
    */
   public function __construct(
     private readonly array $mappings,
-    private readonly array $defaultMappings = []
+    private readonly array $defaultMappings = [],
   ) {
     $this->customHandler = new JsonHandler();
   }
@@ -43,7 +43,7 @@ class JsonMapper {
       $sourcePath = $definition['source'];
       $dataSourceType = $definition['datasource'];
 
-      // todo Refactor.
+      // @todo Refactor.
       if (!isset($definition['skip']) && ($definition['mapping_type'] === 'empty' || $definition['mapping_type'] === 'hardcoded')) {
         match($definition['mapping_type']) {
           'empty' => $this->handleEmpty($data, $definition, $target),
@@ -78,8 +78,14 @@ class JsonMapper {
    * Does the source path exist on datasource.
    *
    * @param array $dataSources
-   * @param array $definition
+   *   All data sources.
+   * @param string $sourceType
+   *   The source type.
+   * @param string $sourcePath
+   *   The path to the data.
+   *
    * @return bool
+   *   Does the path exist on source data.
    */
   private function sourcePathExists(array $dataSources, string $sourceType, string $sourcePath): bool {
     $value = $this->getValue($dataSources[$sourceType], $sourcePath);
@@ -92,26 +98,34 @@ class JsonMapper {
   /**
    * Handle the most basic case, copy the value from source to target.
    *
-   * @param $data
+   * @param array $data
+   *   The target data.
    * @param array $definition
-   * @param $target
+   *   The mapping definition.
+   * @param string $targetPath
+   *   The target data path.
    * @param array $dataSources
+   *   The data sources.
    */
-  private function handleDefault(&$data, array $definition, $target, array $dataSources) {
+  private function handleDefault(&$data, array $definition, string $targetPath, array $dataSources): void {
     $sourcePath = $definition['source'];
 
     $value = $this->getValue($dataSources[$definition['datasource']], $sourcePath);
-    $this->setTargetValue($data, $target, $value, $definition);
+    $this->setTargetValue($data, $targetPath, $value, $definition);
   }
 
   /**
-   * @param $data
+   * Handle empty data.
+   *
+   * @param array $data
+   *   The target data.
    * @param array $definition
-   * @param $target
-   * @return void
+   *   The mapping definition.
+   * @param string $targetPath
+   *   The target data path.
    */
-  private function handleEmpty(&$data, array $definition, $target) {
-    $this->setTargetValue($data, $target, [], $definition);
+  private function handleEmpty(&$data, array $definition, $targetPath) {
+    $this->setTargetValue($data, $targetPath, [], $definition);
   }
 
   /**
@@ -119,13 +133,16 @@ class JsonMapper {
    *
    * F.ex ID58, user may add multiple orienteeringMaps on one application.
    *
-   * @param $data
+   * @param array $data
+   *   The target data.
    * @param array $definition
-   * @param $targetPath
+   *   The mapping definition.
+   * @param string $targetPath
+   *   The target data path.
    * @param array $dataSources
-   * @return void
+   *   The data sources.
    */
-  private function handleMultipleValues(&$data, array $definition, $targetPath, array $dataSources) {
+  private function handleMultipleValues(&$data, array $definition, string $targetPath, array $dataSources): void {
     $sourcePath = $definition['source'];
     $targetPath = rtrim($targetPath, '.n');
 
@@ -147,12 +164,14 @@ class JsonMapper {
   /**
    * Just use the mapped data.
    *
-   * @param $data
+   * @param array $data
+   *   The target data.
    * @param array $definition
-   * @param $targetPath
-   * @return void
+   *   The mapping definition.
+   * @param string $targetPath
+   *   The target data path.
    */
-  private function handleHardcoded(&$data, array $definition, $targetPath) {
+  private function handleHardcoded(&$data, array $definition, string $targetPath): void {
     $value = array_values($definition['data'])[0];
     $this->setTargetValue($data, $targetPath, $value, $definition);
   }
@@ -160,12 +179,16 @@ class JsonMapper {
   /**
    * Handle the case where we just set a key and value to the target.
    *
-   * @param $data
+   * @param array $data
+   *   The target data.
    * @param array $definition
-   * @param $targetPath
+   *   The mapping definition.
+   * @param string $targetPath
+   *   The target data path.
    * @param array $dataSources
+   *   The data sources.
    */
-  private function handleSimple(&$data, array $definition, $targetPath, array $dataSources) {
+  private function handleSimple(&$data, array $definition, string $targetPath, array $dataSources): void {
     $sourcePath = $definition['source'];
     $sourceValue = $this->getValue($dataSources[$definition['datasource']], $sourcePath);
 
@@ -178,16 +201,16 @@ class JsonMapper {
    *
    * You can add new handlers to the handler class.
    *
-   * @param $data
-   *   The data array.
+   * @param array $data
+   *   The target data array.
    * @param array $definition
    *   The mapping definition.
-   * @param $targetPath
-   *   The target path
+   * @param string $targetPath
+   *   The target path.
    * @param array $dataSources
    *   The data sources.
    */
-  private function handleCustom(&$data, array $definition, $targetPath, array $dataSources): void {
+  private function handleCustom(&$data, array $definition, string $targetPath, array $dataSources): void {
     $sourcePath = $definition['source'];
 
     $sourceValue = $this->getValue($dataSources[$definition['datasource']], $sourcePath);
@@ -203,12 +226,15 @@ class JsonMapper {
   }
 
   /**
-   * Get a value for field from application form.
+   * Get a value for field from source-data.
    *
    * @param array $sourceData
+   *   The source data.
    * @param string $sourcePath
+   *   Path to the data.
    *
-   * @return string
+   * @return array|string|null
+   *   The value.
    */
   private function getValue(array $sourceData, string $sourcePath): array|string|null {
     $path = explode('.', $sourcePath);
@@ -219,9 +245,12 @@ class JsonMapper {
    * Get all the values for the multivalue-field.
    *
    * @param array $sourceData
+   *   The source data.
    * @param string $sourcePath
+   *   The source path.
    *
    * @return array|string|null
+   *   The value from source-data
    */
   private function getMultipleValues(array $sourceData, string $sourcePath): array|string|null {
     $path = explode('.', $sourcePath);
@@ -231,18 +260,18 @@ class JsonMapper {
   /**
    * Traverse an array recursively and return target value.
    *
-   * @param array $array
-   *   The data array.
-   * @param $indexes
+   * @param array $sourceData
+   *   The source data -array.
+   * @param array $indexes
    *   The array indexes.
    *
-   * @return mixed
+   * @return array|string|null
    *   The data or null.
    */
-  private function getNestedArrayValue(array $array, $indexes): array|string|null {
+  private function getNestedArrayValue(array $sourceData, array $indexes): array|string|null {
     // When we reach the end of source path, get the value.
     if (count($indexes) === 1) {
-      $value = $array[$indexes[0]];
+      $value = $sourceData[$indexes[0]];
       if (is_null($value)) {
         return [];
       }
@@ -252,25 +281,35 @@ class JsonMapper {
       }
 
       // All values must be string.
-      return (string)$value;
+      return (string) $value;
     }
 
     // If we are still traversing the array, keep going.
-    if (isset($indexes[0]) && isset($array[$indexes[0]])) {
-      return $this->getNestedArrayValue($array[$indexes[0]], array_slice($indexes, 1));
+    if (isset($indexes[0]) && isset($sourceData[$indexes[0]])) {
+      return $this->getNestedArrayValue($sourceData[$indexes[0]], array_slice($indexes, 1));
     }
     return NULL;
   }
 
-
-  private function getMultipleNestedArrayValues(array $array, $indexes) {
+  /**
+   * Get values for the multi-value field.
+   *
+   * @param array $sourceData
+   *   The source data.
+   * @param array $indexes
+   *   The json-path as array.
+   *
+   * @return mixed|null
+   *   The value.
+   */
+  private function getMultipleNestedArrayValues(array $sourceData, array $indexes) {
     if (count($indexes) === 1) {
-      return $array[$indexes[0]];
+      return $sourceData[$indexes[0]];
     }
 
     // If we are still traversing the array, keep going.
-    if (isset($indexes[0]) && isset($array[$indexes[0]])) {
-      return $this->getMultipleNestedArrayValues($array[$indexes[0]], array_slice($indexes, 1));
+    if (isset($indexes[0]) && isset($sourceData[$indexes[0]])) {
+      return $this->getMultipleNestedArrayValues($sourceData[$indexes[0]], array_slice($indexes, 1));
     }
     return NULL;
   }
@@ -282,12 +321,10 @@ class JsonMapper {
    *   The data parsed from source.
    * @param string $targetPath
    *   Data location on AVUS2 document tree.
-   * @param string|array $value
-   *   The value.
+   * @param string|array $sourceValue
+   *   The source value.
    * @param array $definition
    *   Predefined data for the Avus2 document.
-   *
-   * @return void
    */
   private function setTargetValue(array &$data, string $targetPath, string|array $sourceValue, array $definition): void {
     // This is the predefined hardcoded part of the json data for all fields.
@@ -303,7 +340,8 @@ class JsonMapper {
       default => $targetValue['value'] = $sourceValue,
     };
 
-    $key = null;
+    // @todo Refactor hardcoded.
+    $key = NULL;
     if ($definition['mapping_type'] == 'hardcoded') {
       $key = array_key_first($definition['data']);
     }
@@ -319,17 +357,19 @@ class JsonMapper {
   /**
    * Traverse the target array recursively and set value.
    *
-   * @param $data
+   * @param array $data
    *   The actual data array.
-   * @param $indexes
+   * @param array $indexes
    *   Array of indexes to traverse.
-   * @param $theValue
+   * @param mixed $theValue
    *   The value whatever it may be.
+   * @param string $key
+   *   Key for hardcoded value.
    */
   private function setTargetValueRecursively(&$data, $indexes, $theValue, $key = NULL): void {
     if (count($indexes) === 1) {
 
-      // hardcoded values are just key: value.
+      // Hardcoded values are just key: value.
       if ($indexes[0] === $key) {
         $data[$key] = $theValue;
         return;
@@ -337,11 +377,11 @@ class JsonMapper {
 
       // @todo Refactor exceptions.
       if ($indexes[0] === 'additionalInformation') {
-         $data[$indexes[0]] = $theValue;
-         return;
+        $data[$indexes[0]] = $theValue;
+        return;
       }
       elseif (is_array($theValue) && empty($theValue)) {
-        // allow setting empty value to target data.
+        // Allow setting empty value to target data.
         $data[] = $theValue;
         return;
       }
@@ -358,10 +398,6 @@ class JsonMapper {
     $this->setTargetValueRecursively($data[$indexes[0]], array_slice($indexes, 1), $theValue, $key);
   }
 
-  private function setEmptyTargetValue() {
-
-  }
-
   /**
    * Combine the data sources required by mapper.
    *
@@ -369,13 +405,21 @@ class JsonMapper {
    * For example form settings, grants profile and many more.
    *
    * @param array $formData
+   *   The form data.
    * @param array $userData
+   *   The user data.
    * @param array $companyData
+   *   The company data.
    * @param array $userProfileData
-   * @param GrantsProfile $grantsProfile
-   * @param FormSettings $formSettings
+   *   The user profile data.
+   * @param \Drupal\grants_application\User\GrantsProfile $grantsProfile
+   *   The grants profile aka. hakuprofiili.
+   * @param \Drupal\grants_application\Form\FormSettings $formSettings
+   *   The form settings.
    * @param string $applicationNumber
+   *   The application number.
    * @param int $applicantType
+   *   The applicant type.
    *
    * @return array
    *   Array of data required by mapper.
