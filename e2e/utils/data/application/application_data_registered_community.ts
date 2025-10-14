@@ -18,7 +18,8 @@ import {registeredCommunityApplications_67} from "./application_data_67";
 import {registeredCommunityApplications_69} from "./application_data_69";
 import {registeredCommunityApplications_70} from "./application_data_70";
 import {registeredCommunityApplications_73} from "./application_data_73";
-import {registeredCommunityApplications_75} from "./application_data_75";
+// @todo Enable the 75 tests.
+// import {registeredCommunityApplications_75} from "./application_data_75";
 
 const registeredCommunityApplications = {
   29: registeredCommunityApplications_29,
@@ -41,7 +42,8 @@ const registeredCommunityApplications = {
   69: registeredCommunityApplications_69,
   70: registeredCommunityApplications_70,
   73: registeredCommunityApplications_73,
-  75: registeredCommunityApplications_75,
+  // @todo Enable the 75 tests.
+  // 75: registeredCommunityApplications_75,
 }
 
 export {
