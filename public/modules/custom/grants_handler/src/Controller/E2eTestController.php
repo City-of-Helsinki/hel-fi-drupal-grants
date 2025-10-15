@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * E2e test controller.
  */
-Class E2eTestController extends ControllerBase {
+class E2eTestController extends ControllerBase {
 
   public function __construct(
     private AtvService $atvService,
