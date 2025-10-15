@@ -60,3 +60,19 @@ grants_handler.atv_print_view:
     _controller: '\Drupal\grants_handler\Controller\AtvPrintViewController'
   requirements:
     _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
+
+grants_handler.remove_e2e_test_user_documents:
+  path: '/test/user/{uuid}/profile/{profile_type}/remove'
+  defaults:
+    _controller: \Drupal\grants_handler\Controller\E2eTestController::removeTestUserDocuments
+  requirements:
+    _role: helsinkiprofiili
+    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::access'
+
+grants_handler.remove_e2e_test_application_documents:
+  path: '/test/document/{id}/remove'
+  defaults:
+    _controller: \Drupal\grants_handler\Controller\E2eTestController::removeTestApplicationDocuments
+  requirements:
+    _role: helsinkiprofiili
+    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::access'
