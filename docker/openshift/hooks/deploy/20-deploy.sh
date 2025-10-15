@@ -20,6 +20,7 @@ drush state:set system.maintenance_mode 1 --input-format=integer
 drush helfi:pre-deploy || true
 # Run maintenance tasks (config import, database updates etc)
 drush deploy
+exit 1
 # Run post-deploy tasks.
 # @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/deploy-hooks.md
 drush helfi:post-deploy || true
