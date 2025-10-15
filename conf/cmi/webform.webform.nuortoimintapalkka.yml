@@ -310,6 +310,13 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
+      haen_vuokra_avustusta:
+        '#type': radios
+        '#title': 'Haen vuokra-avustusta'
+        '#description': 'Vuokra-avustusta haetaan toiminta-avustuksen yhteydess&auml;. Sis&auml;llyt&auml; vuokra-avustuksen hakusumma toiminta-avustuksen hakusummaan. Muista my&ouml;s merkit&auml; hakevasti toiminta-avustusta.'
+        '#options':
+          1: Kyllä
+          0: Ei
       haen_toimintaavustus_ennakkoa:
         '#type': radios
         '#title': 'Haen toiminta-avustusennakkoa'
@@ -326,13 +333,6 @@ elements: |-
           1: Kyllä
           0: Ei
         '#required': true
-      haen_vuokra_avustusta:
-        '#type': radios
-        '#title': 'Haen vuokra-avustusta'
-        '#description': 'Vuokra-avustusta haetaan toiminta-avustuksen yhteydess&auml;. Sis&auml;llyt&auml; vuokra-avustuksen hakusumma toiminta-avustuksen hakusummaan. Muista my&ouml;s merkit&auml; hakevasti toiminta-avustusta.'
-        '#options':
-          1: Kyllä
-          0: Ei
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
