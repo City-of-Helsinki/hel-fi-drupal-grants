@@ -98,7 +98,7 @@ export default defineConfig({
     {
       name: 'forms-all',
       testMatch: '/forms/*',
-      grepInvert: /registered_community_68\.ts/,
+      grepInvert: /(archived|upcoming)/,
       dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
     },
     /* Run all smoke tests. */
@@ -216,12 +216,6 @@ export default defineConfig({
       testMatch: '/forms/registered_community_62.ts',
       dependencies: ['profile-registered_community']
     },
-    /* Form 63 tests. */
-    {
-      name: 'forms-63',
-      testMatch: '/forms/registered_community_63.ts',
-      dependencies: ['profile-registered_community']
-    },
     /* Form 64 tests. */
     {
       name: 'forms-64',
@@ -244,21 +238,23 @@ export default defineConfig({
       dependencies: ['profile-registered_community']
     },
     /* Form 65 tests. */
-    {
-      name: 'forms-65',
-      testMatch: /forms\/.*_65\.ts$/,
-      dependencies: ['profile-unregistered_community', 'profile-registered_community']
-    },
-    {
-      name: 'forms-65-unregistered',
-      testMatch: '/forms/unregistered_community_65.ts',
-      dependencies: ['profile-unregistered_community']
-    },
-    {
-      name: 'forms-65-registered',
-      testMatch: '/forms/registered_community_65.ts',
-      dependencies: ['profile-registered_community']
-    },
+    // Disable test for ID65:nuorlomaleir. It is archived form
+    // and the form ID73 is the current version of this application.
+    // {
+    //   name: 'forms-65',
+    //   testMatch: /forms\/.*_65\.ts$/,
+    //   dependencies: ['profile-unregistered_community', 'profile-registered_community']
+    // },
+    // {
+    //   name: 'forms-65-unregistered',
+    //   testMatch: '/forms/unregistered_community_65.ts',
+    //   dependencies: ['profile-unregistered_community']
+    // },
+    // {
+    //   name: 'forms-65-registered',
+    //   testMatch: '/forms/registered_community_65.ts',
+    //   dependencies: ['profile-registered_community']
+    // },
     /* Form 66 tests. */
     {
       name: 'forms-66',
@@ -327,6 +323,14 @@ export default defineConfig({
       name: 'forms-73-registered',
       testMatch: '/forms/registered_community_73.ts',
       dependencies: ['profile-registered_community']
-    },
+    }
+    /*
+    @todo Enable the 75 tests.
+    {
+      name: 'forms-75-registered',
+      testMatch: '/forms/registered_community_75.ts',
+      dependencies: ['profile-registered_community']
+    }
+   */
   ],
 });

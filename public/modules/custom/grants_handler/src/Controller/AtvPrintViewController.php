@@ -259,7 +259,7 @@ final class AtvPrintViewController extends ControllerBase {
    */
   private function handleContent(
     array &$field,
-    array $labelData,
+    array &$labelData,
     string $langcode,
     bool &$isSubventionType,
     string &$subventionType,
@@ -268,12 +268,12 @@ final class AtvPrintViewController extends ControllerBase {
     $this->handleDates($field);
     $this->handleInputMasks($field, $labelData);
     $this->handleIssuer($field, $langcode);
-    $this->handleSection($field, $labelData);
     $this->handleLiitteetSection($field);
     $this->handleSubventionType($field, $labelData, $langcode, $isSubventionType, $subventionType);
     $this->handleRole($field);
-    $this->handleStatus($field);
+    $this->handleStatus($field, $langcode);
     $this->handleBooleanValues($field, $langcode);
+    $this->translateLabels($field, $labelData, $langcode);
   }
 
   /**
@@ -342,17 +342,37 @@ final class AtvPrintViewController extends ControllerBase {
   }
 
   /**
-   * Handle section.
+   * Translate application number and status labels.
    *
    * @param array $field
    *   Field.
    * @param array $labelData
    *   Label data.
+   * @param string $langcode
+   *   Document language.
    */
-  private function handleSection(array &$field, array &$labelData): void {
+  private function translateLabels(array &$field, array &$labelData, string $langcode): void {
+    $translatedLabels = [
+      'application_number' => [
+        'label' => 'Hakemusnumero',
+        'translation' => $this->t('Application number', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
+      ],
+      'application_status' => [
+        'label' => 'Hakemuksen tila',
+        'translation' => $this->t('Application status', [], ['context' => 'grants_handler', 'langcode' => $langcode]),
+      ],
+    ];
+
+    foreach ($translatedLabels as $translatedLabel) {
+      foreach (['section', 'element'] as $parent) {
+        if ($labelData[$parent]['label'] === $translatedLabel['label']) {
+          $labelData[$parent]['label'] = $translatedLabel['translation'];
+        }
+      }
+    }
+
     if ($labelData['section']['id'] === 'application_number' || $labelData['section']['id'] === 'status') {
       unset($field);
-      unset($labelData['section']);
     }
   }
 
@@ -435,12 +455,75 @@ final class AtvPrintViewController extends ControllerBase {
    *
    * @param array $field
    *   Field.
+   * @param string $langcode
+   *   Document language.
    */
-  private function handleStatus(array &$field): void {
+  private function handleStatus(array &$field, string $langcode): void {
     if ($field['ID'] == 'status') {
-      // Transform status to be only capitalized and not all uppercase.
-      $normalized = ucfirst(strtolower($field['value']));
-      $field['value'] = $this->t($normalized, [], ['context' => 'Grants application: Status label']); // phpcs:ignore
+      $statusMap = [
+        'DRAFT' => $this->t('Draft', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'SENT' => $this->t('Sent', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'SUBMITTED' => $this->t('Sent - waiting for confirmation', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'RECEIVED' => $this->t('Received', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'PREPARING' => $this->t('In Preparation', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'PENDING' => $this->t('Pending', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'PROCESSING' => $this->t('Processing', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'READY' => $this->t('Ready', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'DONE' => $this->t('Processed', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'REJECTED' => $this->t('Rejected', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'DELETED' => $this->t('Deleted', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'CANCELED' => $this->t('Cancelled', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'CANCELLED' => $this->t('Cancelled', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'CLOSED' => $this->t('Closed', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+        'RESOLVED' => $this->t('Processed', [], [
+          'context' => 'grants_handler',
+          'langcode' => $langcode,
+        ]),
+      ];
+
+      $field['value'] = $statusMap[$field['value']];
     }
   }
 
