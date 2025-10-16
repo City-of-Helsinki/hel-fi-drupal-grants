@@ -28,14 +28,6 @@ interface PaginatedDocumentList {
 
 const baseURL = process.env.TEST_BASEURL ?? "https://hel-fi-drupal-grant-applications.docker.so";
 
-const drupalApi = async () => {
-  // const extraHTTPHeaders = {
-  //   "Content-Type": "application/json",
-  // }
-  //
-  // return request.newContext({baseURL, extraHTTPHeaders, ignoreHTTPSErrors: true});
-}
-
 /**
  * The fetchLatestProfileByType function.
  *
