@@ -8,7 +8,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-
 /**
  * E2e test controller.
  */
@@ -27,28 +26,46 @@ class E2eTestController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
-  public function removeTestApplicationDocuments(string $id): JsonResponse {
+  public function fetchLatestProfileByType(string $id, string $profileType): JsonResponse {
     if (getenv('APP_ENV') === 'production') {
       $this->logger->error('Test data removal should not be done in production environment.');
       return new JsonResponse('', 403);
     }
 
+    $lookFor = [
+      'appenv' => $this->getAppEnvForAtv(getenv('APP_ENV')),
+      'profile_type' => $profileType,
+    ];
+
+    $parameters = [
+      'lookfor' => $lookFor,
+      'user_id' => $id,
+      'type' => 'grants_profile',
+      'sort' => 'updated_at',
+    ];
+
     try {
-      $document = $this->atvService->getDocument($id);
-      $this->atvService->deleteDocument($document);
+      $documents = $this->atvService->searchDocuments($parameters, TRUE);
     }
     catch (\Throwable $e) {
-      $this->logger->error('Exception while deleting e2e test document: $id');
-      return new JsonResponse('', 500);
+      $this->logger->error('Exception while searching for documents: ' . $e->getMessage());
+      return new JsonResponse(['Exception while searching for test documents'], 500);
     }
 
-    return new JsonResponse('Document deleted.', 200);
+    if (empty($documents)) {
+      $this->logger->error(
+        'E2E-test requested for latest profile but cannot find.'
+      );
+      return new JsonResponse('Document not found.', 404);
+    }
+
+    return new JsonResponse($documents[0], 200);
   }
 
   /**
    * Send ATV-request to remove user-related documents created by E2E-tests.
    *
-   * @param string $uuid
+   * @param string $id
    *   The document uuid.
    * @param string $profileType
    *   The profile type.
@@ -56,25 +73,22 @@ class E2eTestController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
-  public function removeTestUserDocuments(string $uuid, string $profileType): JsonResponse {
+  public function removeTestUserDocuments(string $id, string $profileType): JsonResponse {
     if (getenv('APP_ENV') === 'production') {
       $this->logger->error('Test data removal should not be done in production environment.');
       return new JsonResponse('', 403);
     }
 
-    $appEnvForAtv = '';
-
-    $lookfor = [
-      'appenv' => $appEnvForAtv,
+    $lookFor = [
+      'appenv' => $this->getAppEnvForAtv(getenv('APP_ENV')),
       'profile_type' => $profileType,
     ];
 
     $parameters = [
-      'lookfor' => $lookfor,
-      'user_id' => $uuid,
+      'lookfor' => $lookFor,
+      'user_id' => $id,
       'type' => 'grants_profile',
       'service_name' => 'AvustushakemusIntegraatio',
-      'profile_type' => $profileType,
     ];
 
     try {
@@ -106,6 +120,24 @@ class E2eTestController extends ControllerBase {
     }
 
     return new JsonResponse('Documents deleted', 200);
+  }
+
+  /**
+   * Drupal app env to ATV app env.
+   *
+   * @param string $appEnv
+   *   The app env.
+   *
+   * @return string
+   *   ATV -app-env.
+   */
+  private function getAppEnvForAtv(string $appEnv): string {
+    return match($appEnv) {
+      'development' => 'DEV',
+      'testing' => 'TEST',
+      'staging' => 'STAGE',
+      default => strtoupper($appEnv),
+    };
   }
 
 }

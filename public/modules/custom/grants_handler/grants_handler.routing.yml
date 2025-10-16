@@ -62,17 +62,17 @@ grants_handler.atv_print_view:
     _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
 
 grants_handler.remove_e2e_test_user_documents:
-  path: '/test/user/{uuid}/profile/{profile_type}/remove'
+  path: '/test/document/{id}/profile/{profileType}/remove'
   defaults:
     _controller: \Drupal\grants_handler\Controller\E2eTestController::removeTestUserDocuments
   requirements:
     _role: helsinkiprofiili
-    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::access'
+    _method: 'POST'
 
-grants_handler.remove_e2e_test_application_documents:
-  path: '/test/document/{id}/remove'
+grants_handler.fetch_latest_e2e_profile_by_type:
+  path: '/test/document/{id}/profile/{profileType}'
   defaults:
-    _controller: \Drupal\grants_handler\Controller\E2eTestController::removeTestApplicationDocuments
+    _controller: \Drupal\grants_handler\Controller\E2eTestController::fetchLatestProfileByType
   requirements:
     _role: helsinkiprofiili
-    _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::access'
+    _method: 'GET'
