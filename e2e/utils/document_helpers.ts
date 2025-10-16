@@ -79,7 +79,6 @@ const deleteGrantsProfiles = async (testUserUUID: string, profileType: string, p
   const api = page.context().request;
   const endpoint = `/test/document/${testUserUUID}/profile/${profileType}/remove`;
 
-
   const response = await api.post(endpoint);
   if (response.status() > 299) {
     logger(`Backend returned non-200 response. Something went wrong.`);
