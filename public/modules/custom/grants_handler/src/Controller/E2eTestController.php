@@ -85,6 +85,8 @@ class E2eTestController extends ControllerBase {
       return new JsonResponse(['No documents found, nothing to delete'], 200);
     }
 
+    $errors = FALSE;
+
     /** @var \Drupal\helfi_atv\AtvDocument $document */
     foreach ($documents as $document) {
       try {
@@ -92,7 +94,12 @@ class E2eTestController extends ControllerBase {
       }
       catch (\Throwable $e) {
         $this->logger->error('Exception while deleting test document: ' . $document->getId() . ' ' . $e->getMessage());
+        $errors = TRUE;
       }
+    }
+
+    if ($errors) {
+      return new JsonResponse('Error while deleting documents', 500);
     }
 
     return new JsonResponse('Documents deleted', 200);
