@@ -15,7 +15,7 @@ test.describe('Registered Community - Grants Profile', () => {
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
     await selectRole(page, 'REGISTERED_COMMUNITY');
-    profileExists = await isProfileCreated(profileType);
+    profileExists = await isProfileCreated(profileType, page);
   });
 
   test.afterAll(async() => {
