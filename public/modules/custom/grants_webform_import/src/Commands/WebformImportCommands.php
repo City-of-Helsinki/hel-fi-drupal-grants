@@ -376,8 +376,6 @@ class WebformImportCommands extends DrushCommands {
 
       // Check if a singular form ID has been requested.
       if ($this->applicationTypeID && !$this->formMatchesRequestedId($name)) {
-        $this->output()
-          ->writeln("File skipped because of mismatching application type ID: $file");
         continue;
       }
 
@@ -528,8 +526,6 @@ class WebformImportCommands extends DrushCommands {
 
         // Check if a singular form ID has been requested.
         if ($this->applicationTypeID && !$this->formMatchesRequestedId($name)) {
-          $this->output()
-            ->writeln("Translation skipped because of mismatching application type ID: $file");
           continue;
         }
 

@@ -1,0 +1,34 @@
+{
+  "react_application": {
+    "budget": {
+      "properties": {
+        "0": {
+          "name": "Toimitilat",
+          "const": "2000.99"
+        }
+      },
+      "materials": {
+        "0": {
+          "name": "Ruoka",
+          "cost": "99.90"
+        },
+        "1": {
+          "name": "Juoma",
+          "cost": "203.45"
+        }
+      },
+      "benefits": {
+        "other_benefits": {
+          "0": {
+            "description": "tuki1",
+            "amount": 100
+          },
+          "1": {
+            "description": "tuki2",
+            "amount": 555
+          }
+        }
+      }
+    }
+  }
+}
