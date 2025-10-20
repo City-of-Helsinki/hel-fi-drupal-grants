@@ -178,7 +178,7 @@ final class DraftApplication extends ResourceBase {
 
     try {
       // Make sure it exists in database.
-      $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception $e) {
       // Cannot get the submission.
@@ -212,8 +212,9 @@ final class DraftApplication extends ResourceBase {
     $response['user_data'] = $user_information;
     $response['status'] = $document->getStatus();
     $response['token'] = $this->csrfTokenGenerator->get('rest');
+    $response['last_changed'] = $submission->get('changed')->value;
     $response = array_merge($response, $settings->toArray());
-
+ 
     return new JsonResponse($response);
   }
 

@@ -13,6 +13,7 @@ use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\ApplicationGetterService;
+use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusException;
 use Drupal\helfi_av\AntivirusService;
@@ -20,6 +21,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Controller for application actions.
@@ -40,6 +42,8 @@ final class ApplicationController extends ControllerBase {
     #[Autowire(service: 'helfi_atv.atv_service')]
     private readonly AtvService $atvService,
     private readonly FormSettingsService $formSettingsService,
+    #[Autowire(service: 'grants_handler.application_status_service')]
+    private readonly ApplicationStatusService $applicationStatusService,
   ) {
   }
 
@@ -73,10 +77,33 @@ final class ApplicationController extends ControllerBase {
    * @return array
    *   The resulting array
    */
-  public function formsApp(string $id): array {
+  public function formsApp(string $id, ?string $application_number): array|RedirectResponse {
     // Grant terms are stored in block.
     $blockStorage = $this->entityTypeManager()->getStorage('block_content');
     $terms_block = $blockStorage->load(1);
+
+    if ($application_number && !$submission = $this->getApplicationSubmission($application_number)) {
+      throw new NotFoundHttpException();
+    }
+
+    if ($submission && !$submission->isDraft()) {
+      try {
+        $document = $this->helfiAtvService->getDocument($application_number);
+
+        if (!$this->applicationStatusService->isSubmissionEditable(null, $document->getStatus())) {
+          $this->messenger()
+            ->addError($this->t('The application is being processed. The application cannot be edited or submitted.'));
+
+          return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
+        }
+      }
+      catch (\Throwable $e) {
+        $this->messenger()
+          ->addError($this->t('Your request was not fulfilled due to network error.', [], ['context' => 'grants_handler']));
+
+        return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
+      }
+    }
 
     return [
       '#theme' => 'forms_app',
@@ -236,6 +263,22 @@ final class ApplicationController extends ControllerBase {
    * Print the application.
    */
   public function printApplication() {
+  }
+
+  private function getApplicationSubmission(string $application_number): ?ApplicationSubmission {
+    /** @var \Drupal\grants_application\Entity\ApplicationSubmission[] $submissions */
+    $submissions = $this->entityTypeManager()
+      ->getStorage('application_submission')
+      ->loadByProperties(['application_number' => $application_number]);
+
+    return $submissions ? reset($submissions) : NULL;
+  }
+
+  private function getRedirectBackUrl(?string $application_number): Url {
+    if ($application_number) {
+      return Url::fromRoute('grants_handler.view_application', ['submission_id' => $application_number]);
+    }
+    return Url::fromRoute('grants_oma_asiointi.front');
   }
 
 }
