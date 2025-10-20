@@ -13,9 +13,6 @@ const checkEnvVariables = () => {
 
   // The required variables.
   const requiredEnv = [
-    'ATV_BASE_URL',
-    'TEST_ATV_URL',
-    'ATV_API_KEY',
     'APP_ENV',
     'TEST_USER_SSN',
     'TEST_USER_UUID',
