@@ -1,9 +1,9 @@
 /*
-* Supplementary button styles on webform. Used on delete draft and
-* save draft buttons.
+* Supplementary button styles on webform. Used on delete draft,
+* save draft and print buttons.
 * TODO: Remove these styles when webforms are deleted.
 */
-.form-actions .hds-button.hds-button--supplementary {
+.hds-button.hds-button--supplementary {
   --background-color-hover: rgb(0 0 0 / 10%);
   text-decoration: none;
 
