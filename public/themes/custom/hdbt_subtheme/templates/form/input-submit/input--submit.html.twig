@@ -20,13 +20,15 @@
 %}
 {% apply spaceless %}
   <button {{ attributes.addClass(button_classes) }}>
-    {% if icon_left is not null and icon_left is not empty %}
-      <span aria-hidden="true" class="hel-icon hel-icon--{{ icon_left }}"></span>
-    {% endif %}
-    <span class="hds-button__label">{{ text_label }}</span>
-    {% if icon_right is not null and icon_right is not empty %}
-      <span aria-hidden="true" class="hel-icon hel-icon--{{ icon_right }}"></span>
-    {% endif %}
+    <span class="hds-button__label_wrapper">
+      {% if icon_left is not null and icon_left is not empty %}
+        <span aria-hidden="true" class="hel-icon hel-icon--{{ icon_left }}"></span>
+      {% endif %}
+      <span class="hds-button__label">{{ text_label }}</span>
+      {% if icon_right is not null and icon_right is not empty %}
+        <span aria-hidden="true" class="hel-icon hel-icon--{{ icon_right }}"></span>
+      {% endif %}
+    </span>
   </button>
   {{ children }}
 {% endapply %}
