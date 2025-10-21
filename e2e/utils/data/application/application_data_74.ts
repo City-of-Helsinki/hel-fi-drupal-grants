@@ -252,12 +252,12 @@ const baseForm_74: FormData = {
           selector: {
             type: 'form-topnavi-link',
             name: 'data-drupal-selector',
-            value: '3_tarkemmat_tiedot',
+            value: '3_yhteison_tiedot',
           }
         },
       },
     },
-    '3_yhteison_toiminta': {
+    '3_yhteison_tiedot': {
       items: {
         "edit-business-purpose": {
           value: faker.lorem.sentences(4),
@@ -311,7 +311,13 @@ const baseForm_74: FormData = {
     },
     "lisatiedot_ja_liitteet": {
       items: {
-        "edit-additional-information": {
+        'edit-additional-information': {
+          role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-additional-information',
+          },
           value: faker.lorem.sentences(3),
         },
         'edit-yhteison-saannot-attachment-upload': {
@@ -393,6 +399,11 @@ const baseForm_74: FormData = {
         },
         "edit-extra-info": {
           role: 'input',
+          selector: {
+            type: 'data-drupal-selector',
+            name: 'data-drupal-selector',
+            value: 'edit-extra-info',
+          },
           value: faker.lorem.sentences(2),
         },
         "edit-muu-liite": {
@@ -463,7 +474,7 @@ const baseForm_74: FormData = {
     },
   },
   expectedErrors: {},
-  expectedDestination: '/fi/form/tyollisyys',
+  expectedDestination: '/fi/hakemus/tyollisyys/',
 }
 
 /**
@@ -492,7 +503,7 @@ const missingValues: FormDataWithRemoveOptionalProps = {
         'edit-myonnetty-avustus',
       ],
     },
-    '3_yhteison_toiminta': {
+    '3_yhteison_tiedot': {
       items: {},
       itemsToRemove: [
         'edit-community-practices-business-1',
@@ -521,7 +532,6 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
     'edit-subventions-items-0-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
     'edit-compensation-purpose': 'Virhe sivulla 2. Avustustiedot: Mihin avustus käytetään? kenttä on pakollinen.',
-    'edit-myonnetty-avustus': 'Virhe sivulla 2. Avustustiedot: Käyttöselvitys edellisenä vuonna saamastani avustuksesta kenttä on pakollinen.',
     'edit-community-practices-business-1': 'Virhe sivulla 3. Yhteisön toiminta: Harjoittaako yhteisö liiketoimintaa kenttä on pakollinen.',
     'edit-yhteison-saannot-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Yhteisön säännöt ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',
     'edit-vahvistettu-tilinpaatos-attachment-upload': 'Virhe sivulla 4. Lisätiedot ja liitteet: Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta) ei sisällä liitettyä tiedostoa, se täytyy toimittaa joko myöhemmin tai olla jo toimitettu.',

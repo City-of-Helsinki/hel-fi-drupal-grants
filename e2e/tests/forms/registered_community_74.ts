@@ -22,7 +22,7 @@ const formPages: PageHandlers = {
     }
 
     if (items['edit-compensation-purpose']) {
-      await page.getByRole('textbox', {name: 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'})
+      await page.getByRole('textbox', {name: 'Mihin avustus käytetään?'})
         .fill(items['edit-compensation-purpose'].value ?? '');
     }
 
@@ -70,9 +70,9 @@ const formPages: PageHandlers = {
         .fill(items['edit-benefits-premises'].value ?? '');
     }
 
-    if (items['edit-compensation-boolean-1']) {
+    if (items['edit-compensation-boolean']) {
       await page.locator('#edit-compensation-boolean')
-        .getByText(items['edit-compensation-boolean-1'].value ?? '').click();
+        .getByText(items['edit-compensation-boolean'].value ?? '').click();
     }
 
     if (items['edit-compensation-explanation']) {
@@ -80,7 +80,8 @@ const formPages: PageHandlers = {
         .fill(items['edit-compensation-explanation'].value ?? '');
     }
   },
-  '3_yhteison_toiminta': async (page: Page, {items}: FormPage) => {
+
+  '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
     if (items['edit-business-purpose']) {
       await page.locator('#edit-business-purpose')
