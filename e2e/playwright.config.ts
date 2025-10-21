@@ -24,7 +24,7 @@ export default defineConfig({
   use: {
     /* Wait for maximum of 120 seconds. Drop the timeout to 60s when */
     /* development server cpu and memory issues have been fixed. */
-    actionTimeout: 30 * 1000,
+    actionTimeout: 120 * 1000,
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: process.env.TEST_BASEURL ?? "https://hel-fi-drupal-grant-applications.docker.so",
     ignoreHTTPSErrors: true,
@@ -330,13 +330,11 @@ export default defineConfig({
       testMatch: '/forms/registered_community_74.ts',
       dependencies: ['profile-registered_community']
     },
-    /*
-    @todo Enable the 75 tests.
+    /* Form 75 tests. */
     {
-      name: 'forms-75-registered',
+      name: 'forms-75',
       testMatch: '/forms/registered_community_75.ts',
       dependencies: ['profile-registered_community']
     }
-   */
   ],
 });
