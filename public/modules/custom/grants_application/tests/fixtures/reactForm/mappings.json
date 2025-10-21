@@ -1,0 +1,141 @@
+{
+  "compensation.applicant.user.0": {
+    "#tip": "Default values",
+    "datasource": "form_data",
+    "source": "react_application.applicant.name",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicant_name",
+      "label": "The applicant name",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicant.user.1": {
+    "datasource": "form_data",
+    "source": "react_application.applicant.birth_year",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicant_year_of_birth",
+      "label": "The ",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.random.0.randomvalue.0": {
+    "datasource": "form_data",
+    "source": "react_application.another.0.one",
+    "mapping_type": "default",
+    "data": {
+      "ID": "something",
+      "label": "Just a mapped value",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+
+
+  "compensation.additionalInformation": {
+    "#tip": "Simple value",
+    "datasource": "form_data",
+    "source": "react_application.attachments.additional_information",
+    "mapping_type": "simple",
+    "data": {
+      "additional_information": ""
+    }
+  },
+
+
+  "compensation.orienteeringMapInfo.orienteeringMapsArray.0.n": {
+    "#tip": "Multiple values",
+    "#tip2": "the data key is the react-form field name.",
+    "datasource": "form_data",
+    "source": "react_application.maps.mapArray",
+    "mapping_type": "multiple_values",
+    "data": {
+      "mapName": {
+        "ID": "name",
+        "value": "",
+        "label": "Suunnistuskartan nimi",
+        "valueType": "string"
+      },
+      "size": {
+        "ID": "size",
+        "value": "",
+        "label": "Koko km2",
+        "valueType": "double"
+      }
+    }
+  },
+
+  "compensation.costs.budget.properties.0": {
+    "#tip": "Complex mapping",
+    "datasource": "form_data",
+    "source": "react_application.budget.properties.0",
+    "mapping_type": "custom",
+    "custom_handler": "setLabelAndValue",
+    "data": {
+      "ID": "budget_item",
+      "label": "This is overridden by handler function.",
+      "value": "This is overridden as well.",
+      "valueType": "double"
+    }
+  },
+
+  "compensation.otherCostRowsArrayStatic": {
+    "#tip": "income field label always gets _0 added to it.",
+    "datasource": "form_data",
+    "source": "react_application.budget.benefits.other_benefits",
+    "mapping_type": "custom",
+    "custom_handler": "income",
+    "data": {
+      "ID": "muut_menot_2",
+      "label": "SPECIAL",
+      "value": "SPECIAL",
+      "valueType": "double"
+    }
+  },
+
+  "compensation.budgetInfo.costGroupsArrayStatic.0": {
+    "#tip": "empty mapping",
+    "datasource": "form_data",
+    "source": "",
+    "mapping_type": "empty",
+    "data": {}
+  },
+
+  "compensation.budgetInfo.0": {
+    "skip": true,
+    "datasource": "form_data",
+    "source": "react_application.budget.amount",
+    "mapping_type": "default",
+    "data": {
+      "ID": "test_id",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.budgetInfo.hardcoded": {
+    "#tip": "hardcoded mapping, ",
+    "datasource": "form_data",
+    "source": "",
+    "mapping_type": "hardcoded",
+    "data": {
+      "hardcoded": "my_value"
+    }
+  },
+
+  "compensation.budgetInfo.hardcoded2.0": {
+    "datasource": "form_data",
+    "source": "",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "hardcoded": "object"
+      }
+    }
+  }
+
+}

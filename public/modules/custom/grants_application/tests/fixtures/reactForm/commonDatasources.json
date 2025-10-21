@@ -1,0 +1,16 @@
+{
+  "user": {"sub":"123345678-abcd-1234-ab12-abcdefgh","name":"Nordea Demo","given_name":"Nordea","locale":"fi","family_name":"Demo","email":"user_no_mail@hel.fi"},
+  "company": {"name":"Activenakusteri Oy","identifier":"7769480-5","complete":true,"type":"registered_community"},
+  "user_profile": {"myProfile":{"id":"abcdefghijklmnopqrstuvwxyzåäö1234567890","firstName":"Nordea","lastName":"Demo","nickname":"","language":"FINNISH","primaryAddress":{"primary":false,"id":"zaqwsxcderfvgg123!-_","address":"Testiosoite 8162","postalCode":"48892","city":"Testikaupunki 82","countryCode":"FI","addressType":"OTHER"},"addresses":{"edges":[{"node":{"primary":false,"id":"zaqwsxcderfvgg123!-_","address":"Testiosoite 8162","postalCode":"48892","city":"Testikaupunki 82","countryCode":"FI","addressType":"OTHER"}}]},"primaryEmail":{"id":"asdfghjkl_-","email":"user_profile_no_mail@hel.fi","primary":true,"emailType":"NONE"},"emails":{"edges":[{"node":{"primary":true,"id":"asdfghjkl_-","email":"uesr_profile_no_mail@hel.fi","emailType":"NONE"}}]},"primaryPhone":{"primary":false,"id":"qwertyuiop=","phone":"+358000000","phoneType":"OTHER"},"phones":{"edges":[{"node":{"primary":false,"id":"abcdefghik-_","phone":"+35800000000","phoneType":"OTHER"}}]},"verifiedPersonalInformation":{"firstName":"Nordea","lastName":"Demo","givenName":"Nordea","nationalIdentificationNumber":"010101A0101","municipalityOfResidence":"Turku","municipalityOfResidenceNumber":"853","permanentAddress":{"streetAddress":"Mansikkatie 11","postalCode":"20006","postOffice":"TURKU"}}}},
+  "grants_profile_array": {"companyNameShort":"Akt","companyName":"Activenakusteri Oy","companyHome":"HELSINKI","companyHomePage":"www.google.com","companyStatus":"STATUS3","companyStatusSpecial":"2","businessPurpose":"T\u00e4m\u00e4 on hakuprofiilin tietoa","foundingYear":"2020","registrationDate":"2023-04-27T00:00:00.000+00:00","officials":[{"official_id":"a464c2d0-a79a-400e-a9cf-32f583675194","name":"Teppo Testaaja","role":"2","email":"teppo.testaaja@noreply.com","phone":"+358451234657"}],"addresses":[{"address_id":"a59e8ddf-1f4f-404d-9076-3495ce95f284","street":"Mannerheimintie 12","postCode":"00100","city":"Helsinki","country":null}],"bankAccounts":[{"bankAccount":"FI4950009420028730","bank_account_id":"ec40832f-d70f-454a-acd5-b3e8f477ccb2","confirmationFile":"dummy.pdf","ownerName":null,"ownerSsn":null}],"businessId":"7769480-5"},
+  "form_settings": {"title":"Tämä on hakemuksen otsikko","description":"HAKEMUSIDSTRING","application_type":"HAKEMUSIDSTRING","application_type_id":12,"application_industry":"KUVA","application_open":"2025-01-10T00:00:00","application_close":"2026-12-15T23:59:59","applicant_types":["registered_community"],"subvention_type":[15],"target_group":26,"acting_years":[2025],"continuous":false,"disable_copy":false},
+  "custom": {
+    "application_type_id": 12,
+    "application_number": "ABCDE-123-0001009",
+    "now": "2025-10-06T13:13:13",
+    "registration_date": "21.5.2023",
+    "selected_address": {"address_id":"a59e8ddf-1f4f-404d-9076-3495ce95f284","street":"Mannerheimintie 12","postCode":"00100","city":"Helsinki","country":"Suomi"},
+    "selected_community_official": {"official_id":"a464c2d0-a79a-400e-a9cf-32f583675194","name":"Teppo Testaaja","role":"2","email":"teppo.testaaja@noreply.com","phone":"+358451234657"},
+    "status": "DRAFT"
+  }
+}

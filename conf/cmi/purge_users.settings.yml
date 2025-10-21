@@ -11,15 +11,21 @@ enabled_loggedin_users: true
 enabled_inactive_users: false
 enabled_blocked_users: false
 purge_included_users_roles:
-  helsinkiprofiili: helsinkiprofiili
-  authenticated: '0'
+  authenticated: authenticated
+  json_api_user: '0'
   read_only: '0'
+  helsinkiprofiili: helsinkiprofiili
   content_producer_industry: '0'
   content_producer: '0'
+  grants_producer_industry: '0'
   grants_producer: '0'
   ad_user: '0'
   grants_admin: '0'
   admin: '0'
+  editor: '0'
+  super_administrator: '0'
+  performance_test_user: '0'
+  survey_editor: '0'
 purge_on_cron: true
 inactive_user_notify_subject: 'Your account is deleted'
 inactive_user_notify_text: "Dear User, \r\n\r\nYour account has been deleted due the website’s policy to automatically remove users who match certain criteria. If you have concerns regarding the deletion, please talk to the administrator of the website. \r\n\r\nThank you"
@@ -27,13 +33,19 @@ send_email_notification: false
 purge_user_cancel_method: user_cancel_delete
 disregard_blocked_users: false
 purge_excluded_users_roles:
+  json_api_user: json_api_user
+  read_only: read_only
   content_producer_industry: content_producer_industry
   content_producer: content_producer
+  grants_producer_industry: grants_producer_industry
   grants_producer: grants_producer
   ad_user: ad_user
   grants_admin: grants_admin
   admin: admin
-  read_only: '0'
+  editor: editor
+  super_administrator: super_administrator
+  performance_test_user: performance_test_user
+  survey_editor: survey_editor
   helsinkiprofiili: '0'
 user_before_deletion_subject: 'Your account will be deleted'
 user_before_deletion_text: "Dear User, \r\n\r\nYour account will be deleted soon due the website’s policy to automatically remove users who match certain criteria. If you have concerns regarding the deletion, please talk to the administrator of the website.  \r\n\r\nThank you"

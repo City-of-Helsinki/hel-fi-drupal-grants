@@ -14,7 +14,7 @@ test.describe('Unregistered Community - Grants Profile', () => {
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
-    profileExists = await isProfileCreated(profileType);
+    profileExists = await isProfileCreated(profileType, page);
 
     if (profileExists) {
       logger(`Using existing profile for unregistered community.`);
