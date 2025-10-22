@@ -30,36 +30,6 @@ const formPages: PageHandlers = {
       await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
     }
 
-    // if (items['edit-olemme-saaneet-muita-avustuksia-1']) {
-    //   await page.locator('#edit-olemme-saaneet-muita-avustuksia-1')
-    //     .getByText(items['edit-olemme-saaneet-muita-avustuksia-1'].value ?? '').click();
-    // }
-    //
-    // if (items['edit-myonnetty-avustus-items-0-item-issuer']) {
-    //   await page.locator('#edit-myonnetty-avustus-items-0-item-issuer')
-    //     .selectOption({ label: items['edit-myonnetty-avustus-items-0-item-issuer'].value});
-    // }
-    //
-    // if (items['edit-myonnetty-avustus-items-0-item-issuer-name']) {
-    //   await page.locator('#edit-myonnetty-avustus-items-0-item-issuer-name')
-    //     .fill(items['edit-myonnetty-avustus-items-0-item-issuer-name'].value ?? '');
-    // }
-    //
-    // if (items['edit-myonnetty-avustus-items-0-item-year']) {
-    //   await page.locator('#edit-myonnetty-avustus-items-0-item-year')
-    //     .fill(items['edit-myonnetty-avustus-items-0-item-year'].value ?? '');
-    // }
-    //
-    // if (items['edit-myonnetty-avustus-items-0-item-amount']) {
-    //   await page.locator('#edit-myonnetty-avustus-items-0-item-amount')
-    //     .fill(items['edit-myonnetty-avustus-items-0-item-amount'].value ?? '');
-    // }
-    //
-    // if (items['edit-myonnetty-avustus-items-0-item-purpose']) {
-    //   await page.locator('#edit-myonnetty-avustus-items-0-item-purpose')
-    //     .fill(items['edit-myonnetty-avustus-items-0-item-purpose'].value ?? '');
-    // }
-
     if (items['edit-benefits-loans']) {
       await page.locator('#edit-benefits-loans')
         .fill(items['edit-benefits-loans'].value ?? '');

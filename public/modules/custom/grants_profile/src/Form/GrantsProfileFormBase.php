@@ -63,9 +63,7 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
     protected GrantsProfileService $grantsProfileService,
     protected SessionInterface $session,
     protected UuidInterface $uuid,
-  ) {
-    $this->setLogger(\Drupal::logger('grants_profile'));
-  }
+  ) {}
 
   /**
    * Ajax callback for removing item from form.
