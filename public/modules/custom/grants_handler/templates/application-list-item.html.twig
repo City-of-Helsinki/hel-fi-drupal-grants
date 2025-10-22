@@ -78,19 +78,15 @@
     {% if (statusString == 'DRAFT') %}
       <div class="application-list__item--delete">
         <a class="hds-button hds-button--supplementary application-delete-link-{{ applicationNumber }}" href="{{ deleteApplicationUrl }}">
-          <span class="hds-button__label_wrapper">
-            <span aria-hidden="true" class="hel-icon hel-icon--trash hel-icon--size-s"></span>
-            <span class="hds-button__label">{{ "Delete application"|t({}, {'context': 'grants_handler'})}} <span class="visually-hidden">{{ applicationFormName }}</span></span>
-          </span>
+          <span aria-hidden="true" class="hel-icon hel-icon--trash hel-icon--size-s"></span>
+          <span class="hds-button__label">{{ "Delete application"|t({}, {'context': 'grants_handler'})}} <span class="visually-hidden">{{ applicationFormName }}</span></span>
         </a>
       </div>
     {% else %}
       <div class="application-list__item--print">
         <a class="hds-button hds-button--supplementary" href="{{ printApplicationUrl }}">
-          <span class="hds-button__label_wrapper">
-            <span aria-hidden="true" class="hel-icon hel-icon--printer hel-icon--size-s"></span>
-            <span class="hds-button__label">{{ "Print application"|t({}, {'context': 'grants_handler'})}} <span class="visually-hidden">{{ applicationFormName }}</span></span>
-          </span>
+          <span aria-hidden="true" class="hel-icon hel-icon--printer hel-icon--size-s"></span>
+          <span class="hds-button__label">{{ "Print application"|t({}, {'context': 'grants_handler'})}} <span class="visually-hidden">{{ applicationFormName }}</span></span>
         </a>
       </div>
     {% endif %}

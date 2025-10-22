@@ -8,11 +8,8 @@
   text-decoration: none;
 
   .hds-button__label {
+    margin: 0;
     text-decoration: underline;
-  }
-
-  &:hover .hds-button__label {
-    text-decoration: none;
   }
 
   &:hover {
