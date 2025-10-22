@@ -19,6 +19,10 @@ class AsukasYleisToimDefinition extends YleisDefinitionBase {
     $this->propertyDefinitions = parent::getPropertyDefinitions();
     $info = &$this->propertyDefinitions;
 
+    // Remove the compensation_purpose from base class.
+    unset($info['compensation_purpose']);
+
+    // Add purpose with the same JSON path as compensation_purpose.
     $info['purpose'] = DataDefinition::create('string')
       ->setSetting('jsonPath', [
         'compensation',
