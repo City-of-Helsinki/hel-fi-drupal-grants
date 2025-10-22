@@ -171,17 +171,4 @@ class YleisDefinitionBase extends ComplexDataDefinitionBase {
     return $this->propertyDefinitions;
   }
 
-  /**
-   * Override property definition.
-   *
-   * @param string $name
-   *   Property name.
-   *
-   * @return \Drupal\Core\TypedData\DataDefinitionInterface|void|null
-   *   Property definition.
-   */
-  public function getPropertyDefinition($name) {
-    return parent::getPropertyDefinition($name);
-  }
-
 }
