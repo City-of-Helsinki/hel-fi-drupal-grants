@@ -8,6 +8,10 @@ services:
       - { name: path_processor_inbound, priority: 200 }
     arguments: [ '@request_stack' ]
 
+  logger.channel.grants_e2e:
+    parent: logger.channel_base
+    arguments: ['grants_e2e']
+
   grants_handler.message_service:
     class: Drupal\grants_handler\MessageService
     calls:
@@ -68,7 +72,6 @@ services:
       - { name: event_subscriber }
     arguments:
       [ '@language_manager' ]
-
 
   grants_handler.event_subscriber:
     class: Drupal\grants_handler\EventSubscriber\CompanySelectExceptionSubscriber

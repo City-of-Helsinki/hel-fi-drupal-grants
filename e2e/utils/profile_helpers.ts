@@ -1,4 +1,4 @@
-import {Page,} from '@playwright/test';
+import {Page} from '@playwright/test';
 import {FormData} from "./data/test_data"
 import {logger} from "./logger";
 import {deleteGrantsProfiles, fetchLatestProfileByType} from "./document_helpers";
@@ -26,7 +26,7 @@ function isTimestampLessThanAnHourAgo(timestamp: string) {
  * @param profileType
  *  Profile type, registered_community, private_person etc..
  */
-const isProfileCreated = async (profileType: string) => {
+const isProfileCreated = async (profileType: string, page: Page) => {
   logger('Profile...');
 
   if (process.env.CREATE_PROFILE === 'TRUE') {
@@ -34,7 +34,7 @@ const isProfileCreated = async (profileType: string) => {
     return false;
   }
 
-  return fetchLatestProfileByType(process.env.TEST_USER_UUID ?? '', profileType)
+  return fetchLatestProfileByType(process.env.TEST_USER_UUID ?? '', profileType, page)
     .then((profile) => {
       if (!profile || !profile.updated_at) return false;
 
@@ -76,7 +76,7 @@ const isProfileCreated = async (profileType: string) => {
  *   The profile type.
  */
 const runProfileFormTest = async (page: Page, formData: FormData, profileType: string) => {
-  await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType);
+  await deleteGrantsProfiles(process.env.TEST_USER_UUID ?? '', profileType, page);
   await fillProfileForm(page, formData, formData.formPath, formData.formSelector);
 };
 

@@ -15,7 +15,7 @@ test.describe('Private person - Grants Profile', () => {
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage()
     await selectRole(page, 'PRIVATE_PERSON');
-    profileExists = await isProfileCreated(profileType);
+    profileExists = await isProfileCreated(profileType, page);
   });
 
   test.afterAll(async() => {

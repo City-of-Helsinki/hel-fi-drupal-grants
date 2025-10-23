@@ -16,7 +16,7 @@ import {getFakeEmailAddress} from "../../field_helpers";
 /**
  * Basic form data for successful submit to Avus2
  */
-const baseFormRegisteredCommunity_63: FormData = {
+const baseFormRegisteredCommunity_75: FormData = {
   title: 'Save as draft.',
   formSelector: 'webform-submission-nuortoimintapalkka-form',
   formPath: '/fi/form/nuortoimintapalkka',
@@ -75,30 +75,30 @@ const baseFormRegisteredCommunity_63: FormData = {
           viewPageSelector: '.form-item-subventions',
           viewPageFormatter: viewPageFormatCurrency
         },
-        "edit-haen-toimintaavustus-ennakkoa-1": {
-          role: "radio",
+        "edit-haen-vuokra-avustusta-1": {
+          role: 'radio',
           selector: {
-            type: "dom-id-label",
-            name: "data-drupal-selector",
-            value: "edit-haen-toimintaavustus-ennakkoa-1"
+            type: 'dom-id-label',
+            name: 'data-drupal-selector',
+            value: 'edit-haen-vuokra-avustusta-1',
+          },
+          value: "Kyllä",
+        },
+        "edit-haen-toimintaavustus-ennakkoa-1": {
+          role: 'radio',
+          selector: {
+            type: 'dom-id-label',
+            name: 'data-drupal-selector',
+            value: 'edit-haen-toimintaavustus-ennakkoa-1',
           },
           value: "Kyllä",
         },
         "edit-haen-palkkausavustus-ennakkoa-1": {
-          role: "radio",
+          role: 'radio',
           selector: {
-            type: "dom-id-label",
-            name: "data-drupal-selector",
-            value: "edit-haen-palkkausavustus-ennakkoa-1"
-          },
-          value: "Kyllä",
-        },
-        "edit-haen-vuokra-avustusta-1": {
-          role: "radio",
-          selector: {
-            type: "dom-id-label",
-            name: "data-drupal-selector",
-            value: "edit-haen-vuokra-avustusta-1"
+            type: 'dom-id-label',
+            name: 'data-drupal-selector',
+            value: 'edit-haen-palkkausavustus-ennakkoa-1',
           },
           value: "Kyllä",
         },
@@ -1021,11 +1021,11 @@ const missingValues: FormDataWithRemoveOptionalProps = {
     'edit-community-address-community-address-select': 'Virhe sivulla 1. Hakijan tiedot: Valitse osoite kenttä on pakollinen.',
     'edit-acting-year': 'Virhe sivulla 2. Avustustiedot: Vuosi, jolle haen avustusta kenttä on pakollinen.',
     'edit-subventions-items-1-amount': 'Virhe sivulla 2. Avustustiedot: Sinun on syötettävä vähintään yhdelle avustuslajille summa',
-    'edit-jasenet-0-6-vuotiaat': 'Virhe sivulla 3. Yhteisön toiminta: Jäsenet 0 - 6 vuotiaat kenttä on pakollinen.',
+    'edit-jasenet-0-6-vuotiaat': 'Virhe sivulla 3. Yhteisön toiminta: 0 - 6 vuotiaat kenttä on pakollinen.',
     'edit-0-6-joista-helsinkilaisia': 'Virhe sivulla 3. Yhteisön toiminta: Joista helsinkiläisiä kenttä on pakollinen.',
-    'edit-jasenet-7-28-vuotiaat': 'Virhe sivulla 3. Yhteisön toiminta: Jäsenet 7 - 28 vuotiaat kenttä on pakollinen.',
+    'edit-jasenet-7-28-vuotiaat': 'Virhe sivulla 3. Yhteisön toiminta: 7 - 28 vuotiaat kenttä on pakollinen.',
     'edit-7-28-joista-helsinkilaisia': 'Virhe sivulla 3. Yhteisön toiminta: Joista helsinkiläisiä kenttä on pakollinen.',
-    'edit-muut-jasenet-tai-aktiiviset-osallistujat': 'Virhe sivulla 3. Yhteisön toiminta: Muut jäsenet tai aktiiviset osallistujat kenttä on pakollinen.',
+    'edit-muut-jasenet-tai-aktiiviset-osallistujat': 'Virhe sivulla 3. Yhteisön toiminta: Muut osallistujat kenttä on pakollinen.',
     'edit-muut-joista-helsinkilaisia': 'Virhe sivulla 3. Yhteisön toiminta: Joista helsinkiläisiä kenttä on pakollinen.',
     'edit-alle-29-vuotiaiden-kaikki-osallistumiskerrat-edellisena-kalenter': 'Virhe sivulla 3. Yhteisön toiminta: Alle 29-vuotiaiden kaikki osallistumiskerrat edellisenä kalenterivuotena kenttä on pakollinen.',
     'edit-joista-alle-29-vuotiaiden-digitaalisia-osallistumiskertoja-oli': 'Virhe sivulla 3. Yhteisön toiminta: Joista alle 29-vuotiaiden digitaalisia osallistumiskertoja oli kenttä on pakollinen.',
@@ -1244,10 +1244,10 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
 };
 
 const registeredCommunityApplications_75 = {
-  draft: baseFormRegisteredCommunity_63,
-  missing_values: createFormData(baseFormRegisteredCommunity_63, missingValues),
-  wrong_values: createFormData(baseFormRegisteredCommunity_63, wrongValues),
-  success: createFormData(baseFormRegisteredCommunity_63, sendApplication),
+  draft: baseFormRegisteredCommunity_75,
+  missing_values: createFormData(baseFormRegisteredCommunity_75, missingValues),
+  wrong_values: createFormData(baseFormRegisteredCommunity_75, wrongValues),
+  success: createFormData(baseFormRegisteredCommunity_75, sendApplication),
 }
 
 export {

@@ -294,7 +294,7 @@ class AtvSchema {
       $itemValue = self::convertToBooleanString($itemValue);
     }
 
-    if ($itemTypes['jsonType'] == 'int') {
+    if ($itemTypes['jsonType'] == 'int' && !empty($itemValue)) {
       $itemValue = str_replace('_', '', $itemValue);
     }
 

@@ -169,4 +169,18 @@ class UserInformationService {
     };
   }
 
+  /**
+   * Get the applicant type id.
+   *
+   * @return int
+   *   The applicant type id.
+   */
+  public function getApplicantTypeId(): int {
+    return match($this->getApplicantType()){
+      'unregistered_community' => 1,
+      'registered_community' => 2,
+      'private_person' => 3,
+    };
+  }
+
 }

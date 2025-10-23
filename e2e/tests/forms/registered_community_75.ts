@@ -26,6 +26,16 @@ const formPages: PageHandlers = {
         .getByText(items['edit-haen-vuokra-avustusta-1'].value ?? '').click();
     }
 
+    if (items['edit-haen-toimintaavustus-ennakkoa-1']) {
+      await page.locator('#edit-haen-toimintaavustus-ennakkoa')
+        .getByText(items['edit-haen-toimintaavustus-ennakkoa-1'].value ?? '').click();
+    }
+
+    if (items['edit-haen-palkkausavustus-ennakkoa-1']) {
+      await page.locator('#edit-haen-palkkausavustus-ennakkoa')
+        .getByText(items['edit-haen-palkkausavustus-ennakkoa-1'].value ?? '').click();
+    }
+
     if (items['edit-myonnetty-avustus']) {
       await fillFormField(page, items['edit-myonnetty-avustus'], 'edit-myonnetty-avustus')
     }

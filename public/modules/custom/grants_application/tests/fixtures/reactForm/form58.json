@@ -1,0 +1,186 @@
+{
+  "applicant_info" : {
+    "applicant_email" : {
+      "email" : "Eerik@notgeemail.com"
+    },
+    "contact_person_info" : {
+      "contact_person" : "Eerikki Eira",
+      "contact_person_phone_number" : "041 4321 321 43"
+    },
+    "community_address" : {
+      "community_address" : "Mannerheimintie 12"
+    },
+    "bank_account" : {
+      "bank_account" : "FI4950009420028730"
+    },
+    "community_officials" : {
+      "community_officials" : [ {
+        "official" : "a464c2d0-a79a-400e-a9cf-32f583675194"
+      } ]
+    }
+  },
+  "grant_info_step" : {
+    "acting_year_section" : {
+      "acting_year" : "2025"
+    },
+    "subventions_section" : {
+      "subventions" : [ [ {
+        "ID" : "subventionType",
+        "label" : "Avustuslaji",
+        "value" : "1",
+        "valueType" : "string"
+      }, {
+        "ID" : "amount",
+        "label" : "Euroa",
+        "value" : "100",
+        "valueType" : "double"
+      } ] ]
+    },
+    "purpose_section" : {
+      "purpose" : "Käyttötarkoitus löytyy kyllä"
+    },
+    "other_compensations_section" : {
+      "have_received_other_compensations" : "Kyllä",
+      "other_compensations" : [ {
+        "other_compensation_issuer" : "EU",
+        "other_compensation_issuer_name" : "EEUUUU",
+        "other_compensation_issuer_year" : "2021",
+        "other_compensation_amount" : 200,
+        "other_compensation_description" : "Rahat käytettiin iltapäivätoimintaan"
+      }, {
+        "other_compensation_issuer" : "Valtio",
+        "other_compensation_issuer_name" : "Suomen valtion tukiputka",
+        "other_compensation_issuer_year" : "2025",
+        "other_compensation_amount" : 2222,
+        "other_compensation_description" : "Palkkaa työntekijöille"
+      } ]
+    },
+    "city_benefits_loans_section" : {
+      "city_benefits_loans" : "Lainoja ja takauksia ei ole"
+    },
+    "city_premises_benefits_section" : {
+      "city_premises_benefits" : "Tilat ovat tilat ovat tilat."
+    },
+    "prior_benefits_usage_section" : {
+      "have_received_prior_compensations" : "Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
+      "prior_compensations" : "lisäselvitys siitä jooh"
+    }
+  },
+  "community_activity_step" : {
+    "community_activity_section" : {
+      "community_activity_description" : "Kuvausta toiminnasta",
+      "community_practices_business" : "Kyllä"
+    },
+    "locations_info_section" : {
+      "locations_info" : [ {
+        "location_name" : "toimintapaikka 1 1 1 1 1",
+        "location_address" : "Kauppakatu 22 ",
+        "location_postal_code" : "43231",
+        "location_pupil_number" : "12",
+        "location_pupil_number_special_needs" : "2",
+        "location_number_of_groups" : "2",
+        "location_number_of_groups_special_needs" : "1",
+        "location_staff" : "4",
+        "location_held_in_provided_space" : "Kyllä"
+      }, {
+        "location_name" : "toimintapaikka numero 2",
+        "location_address" : "osososooite",
+        "location_postal_code" : "20002",
+        "location_pupil_number" : "30",
+        "location_pupil_number_special_needs" : "5",
+        "location_number_of_groups" : "3",
+        "location_number_of_groups_special_needs" : "1",
+        "location_staff" : "5",
+        "location_held_in_provided_space" : "Ei"
+      } ]
+    }
+  },
+  "budget_step" : {
+    "economy_forecast_section" : {
+      "economy_forecast" : null
+    },
+    "income_section" : {
+      "applied_benefits" : 1000,
+      "customer_sales" : 2000,
+      "donations" : 3000
+    },
+    "other_benefits_section" : {
+      "other_benefits" : [ {
+        "other_benefit_description" : "eka avustus",
+        "other_benefit_amount" : 100
+      }, {
+        "other_benefit_description" : "toka avustus",
+        "other_benefit_amount" : 200
+      } ]
+    },
+    "expenditure_section" : {
+      "salaries_and_bonuses" : 111,
+      "rents" : 222,
+      "personnel_side_costs" : 333
+    },
+    "other_expenditures_section" : {
+      "other_expenditures" : [ {
+        "other_expenditure_description" : "muuta menoa numero 1",
+        "other_expenditure_amount" : 444
+      }, {
+        "other_expenditure_description" : "meno viisi",
+        "other_expenditure_amount" : 555
+      } ]
+    },
+    "usage_of_benefits_section" : {
+      "snacks" : 10,
+      "cleaning_services" : 20,
+      "property_maintenance" : 30,
+      "travel" : 40
+    },
+    "other_services_acquired_section" : {
+      "other_services_acquired" : [ {
+        "other_service_acquired_description" : "muuuuuuut palvellluiden ossssstot",
+        "other_service_acquired_amount" : 222
+      } ]
+    },
+    "other_materials_section" : {
+      "snacks" : 77,
+      "heating" : 66,
+      "water" : 55,
+      "electricity" : 44,
+      "operational_materials" : 33
+    },
+    "other_materials_acquired_section" : {
+      "other_materials_acquired" : [ {
+        "other_material_acquired_description" : "jotain ihan muuta ainetta tarviketta ja tavaraa",
+        "other_material_acquired_amount" : 777
+      } ]
+    },
+    "other_expenses_section" : {
+      "other_expenses" : [ {
+        "other_expenditure_description" : "muut menot",
+        "other_expenditure_amount" : 1111
+      } ]
+    },
+    "customer_space_usage_section" : {
+      "salaries_and_bonuses" : 100,
+      "rents" : 200,
+      "materials" : 300,
+      "services" : 400,
+      "personnel_side_costs" : 500
+    },
+    "other_expenses_section_1" : {
+      "other_expenses" : [ {
+        "other_expenditure_description" : "papapapappapa",
+        "other_expenditure_amount" : 200202020
+      } ]
+    }
+  },
+  "attachments_step" : {
+    "additional_info_section" : {
+      "additional_info" : "lisätietoa"
+    },
+    "appendices_section" : {
+      "required_attachments_help" : [ null ],
+      "multiple_attachments_help" : [ null ],
+      "formerly_provided_attachments_help" : [ null ],
+      "cant_view_after_help" : [ null, null ]
+    }
+  }
+}

@@ -52,9 +52,6 @@ The following environment variables need to be set in a `.env` files for the tes
 The file should be located in the `/e2e` directory.
 
 #### Mandatory:
-- **ATV_BASE_URL**: The base url for ATV.
-- **TEST_ATV_URL**: The ATV test url (same as above).
-- **ATV_API_KEY**: The ATV API key.
 - **APP_ENV**: The local APP env (usually LOCAL{X}, where {X} is exchanged for the first letter in your last name, like LOCALT).
 - **TEST_USER_SSN**: A test users social security number (can be found from a ATV document in Postman).
 - **TEST_USER_UUID** A test users UUID (can be found from a ATV document in Postman).
@@ -75,12 +72,9 @@ Example `.env` file:
 # Copy this file to create a .env file and make necessary changes.
 # NOTE! Copy the relevant values from local.settings.php to these environment variables.
 # NOTE! The following keys have to be set for the tests to work:
-# ATV_BASE_URL, TEST_ATV_URL, ATV_API_KEY, APP_ENV, TEST_USER_SSN, TEST_USER_UUID.
+# APP_ENV, TEST_USER_SSN, TEST_USER_UUID.
 # =======================
 
-ATV_BASE_URL="https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi"
-TEST_ATV_URL="https://atv-api-hki-kanslia-atv-test.agw.arodevtest.hel.fi"
-ATV_API_KEY="{ENTER A ATV API KEY}"
 APP_ENV="{ENTER A APP ENV}"
 
 # Set the disabled form variants.
