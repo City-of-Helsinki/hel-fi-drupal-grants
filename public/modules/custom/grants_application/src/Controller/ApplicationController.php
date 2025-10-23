@@ -77,7 +77,7 @@ final class ApplicationController extends ControllerBase {
    * @return array
    *   The resulting array
    */
-  public function formsApp(string $id, ?string $application_number): array|RedirectResponse {
+  public function formsApp(string $id, ?string $application_number, bool $use_draft): array|RedirectResponse {
     // Grant terms are stored in block.
     $blockStorage = $this->entityTypeManager()->getStorage('block_content');
     $terms_block = $blockStorage->load(1);
@@ -117,6 +117,7 @@ final class ApplicationController extends ControllerBase {
               'body' => $terms_block->get('body')->getValue()[0]['value'],
               'link_title' => $terms_block->get('field_link_title')->getValue()[0]['value'],
             ],
+            'use_draft' => $use_draft,
           ],
         ],
       ],

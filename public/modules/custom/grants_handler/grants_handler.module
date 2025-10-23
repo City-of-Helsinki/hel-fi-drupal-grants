@@ -1614,7 +1614,7 @@ function _grants_handler_get_edit_url($webform, $submission, $submissionData) {
 
   if ($react_submission_ids) {
     return Url::fromRoute(
-      'helfi_grants.forms_app',
+      'helfi_grants.forms_app_edit',
       [
         'application_number' => $submissionData['application_number'],
         'id' => $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID'),

@@ -3,7 +3,6 @@ import { Stepper as HDSStepper, StepState } from 'hds-react';
 import React, { MouseEvent, RefObject, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import { FormStep, formStepsAtom, getCurrentStepAtom, getErrorPageIndicesAtom, getSubmitStatusAtom, setStepAtom } from '../store';
-import { SubmitStates } from '../enum/SubmitStates';
 import { defaultStepperTheme } from '@/react/common/constants/stepperTheme';
 
 export const transformSteps = (
@@ -20,7 +19,7 @@ export const transformSteps = (
     let state;
 
     if (index === steps.size - 1) {
-      state = submitState === SubmitStates.DRAFT ? StepState.disabled : StepState.available;
+      state = StepState.disabled;
     }
     else {
       state = errorIndices.includes(index) ? StepState.attention : StepState.available;

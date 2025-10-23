@@ -206,3 +206,10 @@ export const formatErrors = (rawErrors: string[]|undefined) => {
 
   return rawErrors.join('\n');
 };
+
+/**
+ * Check if the form is in draft mode.
+ *
+ * @return {boolean} - Whether form is a draft
+ */
+export const isDraft = () => drupalSettings.grants_react_form.use_draft;
