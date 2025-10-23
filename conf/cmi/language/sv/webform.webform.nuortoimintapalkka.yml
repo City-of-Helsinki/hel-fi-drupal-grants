@@ -69,14 +69,14 @@ elements: |
   haen_toimintaavustus_ennakkoa:
     '#title': 'Jag ansöker om förskott på verksamhetsunderstödet'
     '#options':
-      1: 'Yes'
-      0: 'No'
+      1: Ja
+      0: Nej
   haen_palkkausavustus_ennakkoa:
     '#title': 'Jag ansöker om förskott på löneunderstödet'
     '#description': 'Förskott på understödet kan beviljas till en förening som har fått understöd under föregående år (det vill säga året före ansökningsåret). Förskottet kan uppgå till högst hälften av det tidigare beviljade understödet. Observera att förskottet återkrävs om föreningen inte beviljas det egentliga understödet. Om du vill ge ytterligare information om förskottet, kan du göra det i tilläggsinformationsfältet i ansökan.'
     '#options':
-      1: 'Yes'
-      0: 'No'
+      1: Ja
+      0: Nej
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:

@@ -1,5 +1,5 @@
 <?php
-
+// phpcs:ignoreFile
 namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
@@ -387,7 +387,9 @@ final class DraftApplication extends ResourceBase {
     // @todo Test mapping here.
     /*
     $mappingFile = "ID$application_type_id.json";
-    $mappings = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/' . $mappingFile), TRUE);
+    $mappings = json_decode(file_get_contents(
+      __DIR__ . '/../../../Mapper/Mappings/' . $mappingFile
+    ), TRUE);
 
     $mapper = new JsonMapper($mappings);
     $dataSources = $mapper->getCombinedDataSources(
