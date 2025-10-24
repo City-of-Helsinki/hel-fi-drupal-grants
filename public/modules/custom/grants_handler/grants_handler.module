@@ -1595,9 +1595,19 @@ function grants_handler_preprocess_html(array &$variables) {
 }
 
 /**
+ * Get edit URL for application.
  *
+ * @param \Drupal\webform\Entity\Webform $webform
+ *   Webform entity.
+ * @param \Drupal\webform\Entity\WebformSubmission $submission
+ *   Webform submission entity.
+ * @param array $submissionData
+ *   Submission data array.
+ *
+ * @return \Drupal\Core\Url
+ *   URL object.
  */
-function _grants_handler_get_edit_url($webform, $submission, $submissionData) {
+function _grants_handler_get_edit_url($webform, $submission, $submissionData): Url {
   $attributes = [
     'data-drupal-selector' => 'application-edit-link',
     'class' => [
