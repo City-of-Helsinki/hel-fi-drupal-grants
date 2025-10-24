@@ -1,11 +1,13 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import { Fieldset, TextArea as HDSTextArea, TextInput as HDSTextInput, Notification, RadioButton, Select  } from 'hds-react';
+import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { WidgetProps } from '@rjsf/utils';
+
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
-import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, shouldRenderPreviewAtom } from '../store';
 import { formatErrors } from '../utils';
+import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, getProfileAtom, shouldRenderPreviewAtom } from '../store';
 
 export const PreviewInput = ({
   value,
@@ -91,26 +93,40 @@ export const TextArea = ({
   value,
   uiSchema,
 }: WidgetProps) => {
+  const readGrantsProfile = useAtomCallback(
+    useCallback(get => get(getProfileAtom), [])
+  );
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (shouldRenderPreview) {
     return <PreviewInput value={value} label={label} uiSchema={uiSchema} />
   }
 
+  const getDefaultValue = () => {
+    if (!uiSchema?.['misc:profilePrefill']) {
+      return;
+    }
+    const grantsProfile = readGrantsProfile();
+    return grantsProfile?.[uiSchema?.['misc:profilePrefill']] ?? undefined;
+  };
+
   return <HDSTextArea
+    defaultValue={getDefaultValue()}
     errorText={formatErrors(rawErrors)}
+    helperText='xx/5000' // TODO: Implement character count
     hideLabel={false}
-    id={id}
     invalid={Boolean(rawErrors?.length)}
-    label={label}
-    name={name}
     onBlur={() => null}
     onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
     onFocus={() => null}
     readOnly={readonly}
-    required={required}
-    value={value ?? ''}
-    helperText='xx/5000' // TODO: Implement character count
+    {...{
+      label,
+      name,
+      id,
+      required,
+      value
+    }}
   />
 };
 

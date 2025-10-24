@@ -51,6 +51,7 @@
   "community_activity_step": {
     "community_activity_section": {
       "community_activity_description": {
+        "misc:profilePrefill": "businessPurpose",
         "ui:widget": "textarea"
       },
       "community_practices_business": {
