@@ -280,7 +280,11 @@ final class ApplicationController extends ControllerBase {
    * @return \Drupal\grants_application\Entity\ApplicationSubmission|null
    *   The application submission entity or null if not found.
    */
-  private function getApplicationSubmission(string $application_number): ?ApplicationSubmission {
+  private function getApplicationSubmission(?string $application_number): ?ApplicationSubmission {
+    if (!$application_number) {
+      return NULL;
+    }
+
     /** @var \Drupal\grants_application\Entity\ApplicationSubmission[] $submissions */
     $submissions = $this->entityTypeManager()
       ->getStorage('application_submission')
