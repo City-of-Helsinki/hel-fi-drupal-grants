@@ -1594,6 +1594,9 @@ function grants_handler_preprocess_html(array &$variables) {
   }
 }
 
+/**
+ *
+ */
 function _grants_handler_get_edit_url($webform, $submission, $submissionData) {
   $attributes = [
     'data-drupal-selector' => 'application-edit-link',
@@ -1605,12 +1608,12 @@ function _grants_handler_get_edit_url($webform, $submission, $submissionData) {
   ];
 
   $react_submission_ids = \Drupal::entityTypeManager()
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('sub', $submissionData['sender_user_id'])
-      ->condition('application_number', $submissionData['application_number'])
-      ->execute();
+    ->getStorage('application_submission')
+    ->getQuery()
+    ->accessCheck(TRUE)
+    ->condition('sub', $submissionData['sender_user_id'])
+    ->condition('application_number', $submissionData['application_number'])
+    ->execute();
 
   if ($react_submission_ids) {
     return Url::fromRoute(
