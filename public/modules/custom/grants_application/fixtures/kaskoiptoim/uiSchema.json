@@ -79,56 +79,56 @@
         "ui:field": "textParagraph"
       },
       "community_rules": {
-        "file": {
+        "community_rules_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
       },
       "confirmed_financial_statements": {
-        "file": {
+        "confirmed_financial_statements_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
       },
       "confirmed_annual_report": {
-        "file": {
+        "confirmed_annual_report_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
       },
       "confirmed_audit_report": {
-        "file": {
+        "confirmed_audit_report_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
       },
       "action_plan": {
-        "file": {
+        "action_plan_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
       },
       "lease_agreement": {
-        "file": {
+        "lease_agreement_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
       },
       "budget": {
-        "file": {
+        "budget_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
       },
       "other_attachment_fieldset": {
-        "file": {
+        "other_attachment_fieldset_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"

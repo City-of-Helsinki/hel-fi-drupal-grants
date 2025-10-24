@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { FieldProps, UiSchema } from "@rjsf/utils";
-import { FileInput as HDSFileInput } from "hds-react";
+import { Checkbox, FileInput as HDSFileInput } from "hds-react";
 import { useAtomValue } from "jotai";
 import { formConfigAtom, getApplicationNumberAtom, shouldRenderPreviewAtom } from "../store";
 import { formatErrors } from '../utils';
@@ -54,6 +54,7 @@ export const FileInput = ({
   accept,
   formData,
   id,
+  idSchema,
   label,
   multiple,
   name,
@@ -70,6 +71,7 @@ export const FileInput = ({
     'misc:file-type': number;
   };
   const defaultValue = filesFromATVData(formData);
+  const { isDeliveredLater, isIncludedInOtherFile } = formData || {};
 
   if (shouldRenderPreview) {
     return (
@@ -80,6 +82,11 @@ export const FileInput = ({
   }
 
   const handleChange = useCallback(async (files: File[]) => {
+    if (!files.length) {
+      onChange(undefined);
+      return;
+    } 
+
     const result = await uploadFiles(name, applicationNumber, token, files, fileType);
 
     if (!result) {
@@ -97,9 +104,8 @@ export const FileInput = ({
     });
   }, [applicationNumber, multiple, onChange, token])
 
-  return <HDSFileInput
+  const inputElement = <HDSFileInput
     accept={accept}
-    // @ts-ignore @fixme typescript is wrong
     defaultValue={defaultValue}
     disabled={readonly}
     dragAndDrop
@@ -113,6 +119,40 @@ export const FileInput = ({
     maxSize={20 * 1024 * 1024}
     onChange={handleChange}
     required={required}
-    className="hdbt-form--fileinput"
-  />
+  />;
+
+  if (uiSchema['misc:variant'] === 'simple') {
+    inputElement.className = 'hdbt-form--fileinput';
+    return inputElement;
+  }
+
+  return (
+    <div className="hdbt-form--fileinput">
+      {inputElement}
+      <Checkbox
+        checked={isDeliveredLater || false}
+        disabled={defaultValue.length}
+        id={`${name}-delivered-later`}
+        label={Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' })}
+        onChange={(e) => {
+          onChange({
+            ...formData,
+            isDeliveredLater: e.target.checked,
+          });
+        }}
+      />
+      <Checkbox
+        checked={isIncludedInOtherFile || false}
+        disabled={defaultValue.length}
+        id={`${name}-included-in-other-file`}
+        label={Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' })}
+        onChange={(e) => {
+          onChange({
+            ...formData,
+            isIncludedInOtherFile: e.target.checked,
+          });
+        }}
+      />
+    </div>
+  );
 };

@@ -1,11 +1,11 @@
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Button, IconTrash, IconAngleLeft, IconAngleRight } from 'hds-react';
+import { Button, IconAngleLeft, IconAngleRight } from 'hds-react';
 import { ValidationData } from '@rjsf/utils';
 import { SyntheticEvent } from 'react';
 import { getCurrentStepAtom, errorsAtom, getStepsAtom, setStepAtom, finalAcceptanceAtom } from '../../store';
 import { keyErrorsByStep } from '../../utils';
 import { SaveDraftButton } from './SaveDraftButton';
-import { primaryButtonTheme, secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
+import { primaryButtonTheme } from '@/react/common/constants/buttonTheme';
 
 export const FormActions = ({
   saveDraft,
