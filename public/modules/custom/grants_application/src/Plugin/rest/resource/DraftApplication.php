@@ -1,5 +1,5 @@
 <?php
-
+// phpcs:ignoreFile
 namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
@@ -200,7 +200,7 @@ final class DraftApplication extends ResourceBase {
     // form or something else.
     $response = [];
 
-    if (!$document_content['form_data'] || !$document_content['compensation']) {
+    if (!$document_content['form_data'] && !$document_content['compensation']) {
       $response['form_data'] = [];
     }
     else {
@@ -385,27 +385,26 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    // @todo Better sanitation.
+    // @todo Test mapping here.
     /*
-    $document_data = [
-    'form_data' => $form_data,
-    'attachmentsInfo' => [],
-    ];
+    $mappingFile = "ID$application_type_id.json";
+    $mappings = json_decode(file_get_contents(
+      __DIR__ . '/../../../Mapper/Mappings/' . $mappingFile
+    ), TRUE);
 
-    // Mapping here for development purpose only.
-    /*
-    $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
+    $mapper = new JsonMapper($mappings);
+    $dataSources = $mapper->getCombinedDataSources(
     $form_data,
-    $user_data,
-    $selected_company,
+    $this->userInformationService->getUserData(),
+    $this->userInformationService->getSelectedCompany(),
     $this->userInformationService->getUserProfileData(),
-    $this->userInformationService->getGrantsProfileContent(),
-    $settings,
+    $grants_profile_data,
+    $this->formSettingsService->getFormSettings($application_type_id),
     $application_number,
+    $this->userInformationService->getApplicantType(),
     );
-
-    $document_data['attachmentsInfo'] = $this->avus2Mapper
-    ->getAttachmentAndGeneralInfo($attachments, $form_data);
+    $mappedData = $mapper->map($dataSources);
+    die('add breakpoint here');
      */
 
     // @todo clean this up a bit, unnecessarily duplicated variables.

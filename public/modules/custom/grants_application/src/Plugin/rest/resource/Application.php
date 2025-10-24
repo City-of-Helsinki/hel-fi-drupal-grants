@@ -1,5 +1,5 @@
 <?php
-
+// phpcs:ignoreFile
 namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
@@ -337,16 +337,25 @@ final class Application extends ResourceBase {
     // @todo Better sanitation.
     $document_data = ['form_data' => $form_data];
 
-    // @todo Should be refactored to handle all the forms in proper way.
-    $document_data['compensation'] = $this->avus2Mapper->mapApplicationData(
-      $form_data,
-      $user_data,
-      $selected_company,
-      $this->userInformationService->getUserProfileData(),
-      $this->userInformationService->getGrantsProfileContent(),
-      $settings,
-      $application_number,
+    $applicantTypeId = $this->userInformationService->getApplicantTypeId();
+    /*
+    $mapper = new JsonMapper();
+    $dataSources = $mapper->getCombinedDataSources(
+    $form_data,
+    $user_data,
+    $selected_company,
+    $this->userInformationService->getUserProfileData(),
+    $this->userInformationService->getGrantsProfileContent(),
+    $settings,
+    $application_number,
+    $applicantTypeId,
     );
+
+    $document_data = $mapper->map($dataSources);
+     */
+
+    $x = 1;
+    die('not so far.');
 
     // Attachments and general info are outside the compensation.
     $document_data['attachmentsInfo'] = $this->avus2Mapper

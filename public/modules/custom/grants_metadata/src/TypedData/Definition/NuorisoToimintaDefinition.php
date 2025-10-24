@@ -28,22 +28,29 @@ class NuorisoToimintaDefinition extends ComplexDataDefinitionBase {
         $info[$key] = $property;
       }
 
-      // @todo When ready, add the json path.
-      /*
       $info['haen_toimintaavustus_ennakkoa'] = DataDefinition::create('boolean')
-      ->setSettings('jsonPath', [])
-      ->setSetting('typeOverride', [
-      'dataType' => 'string',
-      'jsonType' => 'bool',
-      ]);
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'generalInfoArray',
+          'operativeSubventionApplied',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'bool',
+        ]);
 
       $info['haen_palkkausavustus_ennakkoa'] = DataDefinition::create('boolean')
-      ->setSettings('jsonPath', [])
-      ->setSetting('typeOverride', [
-      'dataType' => 'string',
-      'jsonType' => 'bool',
-      ]);
-       */
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'generalInfoArray',
+          'salarySubventionApplied',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'bool',
+        ]);
 
       $info['haen_vuokra_avustusta'] = DataDefinition::create('boolean')
         ->setSetting('jsonPath', [
