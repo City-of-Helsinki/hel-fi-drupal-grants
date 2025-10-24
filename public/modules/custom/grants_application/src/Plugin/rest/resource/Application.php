@@ -4,6 +4,7 @@ namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -199,12 +200,16 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    $changeTime = new DrupalDateTime($document->getUpdatedAt());
+
     // @todo only return required user data to frontend.
     $response = [
       'form_data' => $form_data,
       'grants_profile' => $grants_profile_data->toArray(),
-      'user_data' => $user_information,
+      'last_changed' => $changeTime->getTimestamp(),
+      'status' => $document->getStatus(),
       'token' => $this->csrfTokenGenerator->get('rest'),
+      'user_data' => $user_information,
       ...$settings->toArray(),
     ];
 

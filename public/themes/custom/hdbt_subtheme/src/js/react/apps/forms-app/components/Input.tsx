@@ -97,12 +97,16 @@ export const TextArea = ({
     return <PreviewInput value={value} label={label} uiSchema={uiSchema} />
   }
 
+  const maxLength = uiSchema?.['misc:max-length'] ?? 5000;
+
   return <HDSTextArea
     errorText={formatErrors(rawErrors)}
+    helperText={`${value?.length || 0}/${maxLength}`}
     hideLabel={false}
     id={id}
     invalid={Boolean(rawErrors?.length)}
     label={label}
+    maxLength={maxLength}
     name={name}
     onBlur={() => null}
     onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
@@ -110,7 +114,6 @@ export const TextArea = ({
     readOnly={readonly}
     required={required}
     value={value ?? ''}
-    helperText='xx/5000' // TODO: Implement character count
   />
 };
 

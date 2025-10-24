@@ -748,3 +748,7 @@ msgstr "Peruttu"
 msgctxt "grants_handler"
 msgid "Processed"
 msgstr "Suljettu"
+
+msgctxt "grants_handler"
+msgid "Preview"
+msgstr "Esikatseluun"

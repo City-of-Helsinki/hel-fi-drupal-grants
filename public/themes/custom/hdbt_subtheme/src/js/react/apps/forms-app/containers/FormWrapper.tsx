@@ -238,8 +238,10 @@ export const FormWrapper = ({
     window.location.href = redirect_url;
   };
 
-  const initialData = translatedData.status === SubmitStates.DRAFT ? translatedData?.form_data: translatedData?.form_data?.compensation?.form_data || null;
-  const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData);
+  const initialData = translatedData.status === SubmitStates.DRAFT ?
+    translatedData.form_data?.form_data :
+    translatedData?.form_data?.compensation?.form_data || null;
+  const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData,  data?.last_changed);
 
   if (translatedData.status !== SubmitStates.DRAFT) {
     const {

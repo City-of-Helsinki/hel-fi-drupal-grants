@@ -20,5 +20,6 @@ declare namespace drupalSettings { // eslint-disable-line @typescript-eslint/no-
       link_title: string;
     }
     token: string;
+    use_draft: boolean;
   };
 };

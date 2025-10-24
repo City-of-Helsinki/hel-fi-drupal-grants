@@ -52,7 +52,12 @@ async function fetchFormData(id: string, token: string) {
     applicationNumber = application_number;
   }
 
-  const formConfigResponse = await fetch(`/applications/${id}/${applicationNumber}`, {
+  const { use_draft: useDraft } = drupalSettings.grants_react_form;
+  // Uses DraftApplication or Application REST resource based on useDraft flag
+  const fetchUrl = useDraft ? 
+    `/applications/${id}/${applicationNumber}` :
+    `/applications/${id}/application/${applicationNumber}`;
+  const formConfigResponse = await fetch(fetchUrl, {
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-Token': token,

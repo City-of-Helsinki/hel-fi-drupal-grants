@@ -739,3 +739,7 @@ msgstr "Stängd"
 msgctxt "grants_handler"
 msgid "Processed"
 msgstr "Behandlad"
+
+msgctxt "grants_handler"
+msgid "Preview"
+msgstr "För förhandsvisning"
