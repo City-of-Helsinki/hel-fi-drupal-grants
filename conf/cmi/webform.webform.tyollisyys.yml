@@ -33,7 +33,7 @@ uid: 1
 template: false
 archive: false
 id: tyollisyys
-title: 'Työllisyysavustushakemus'
+title: Työllisyysavustushakemus
 description: '<p>TYOLLISYYS</p>'
 categories:
   - Tuotannossa
