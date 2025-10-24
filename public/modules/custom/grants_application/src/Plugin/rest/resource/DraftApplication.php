@@ -214,7 +214,7 @@ final class DraftApplication extends ResourceBase {
     $response['token'] = $this->csrfTokenGenerator->get('rest');
     $response['last_changed'] = $submission->get('changed')->value;
     $response = array_merge($response, $settings->toArray());
- 
+
     return new JsonResponse($response);
   }
 

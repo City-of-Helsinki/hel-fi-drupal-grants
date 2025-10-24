@@ -73,6 +73,10 @@ final class ApplicationController extends ControllerBase {
    *
    * @param string $id
    *   The application number.
+   * @param string|null $application_number
+   *   The application number to use for the form.
+   * @param bool $use_draft
+   *   Whether to use the draft version of the form.
    *
    * @return array
    *   The resulting array
@@ -82,7 +86,8 @@ final class ApplicationController extends ControllerBase {
     $blockStorage = $this->entityTypeManager()->getStorage('block_content');
     $terms_block = $blockStorage->load(1);
 
-    if ($application_number && !$submission = $this->getApplicationSubmission($application_number)) {
+    $submission = $this->getApplicationSubmission($application_number);
+    if ($application_number && !$submission) {
       throw new NotFoundHttpException();
     }
 
@@ -90,7 +95,7 @@ final class ApplicationController extends ControllerBase {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
-        if (!$this->applicationStatusService->isSubmissionEditable(null, $document->getStatus())) {
+        if (!$this->applicationStatusService->isSubmissionEditable(NULL, $document->getStatus())) {
           $this->messenger()
             ->addError($this->t('The application is being processed. The application cannot be edited or submitted.'));
 
@@ -266,6 +271,15 @@ final class ApplicationController extends ControllerBase {
   public function printApplication() {
   }
 
+  /**
+   * Get the application submission entity.
+   *
+   * @param string $application_number
+   *   The application number.
+   *
+   * @return \Drupal\grants_application\Entity\ApplicationSubmission|null
+   *   The application submission entity or null if not found.
+   */
   private function getApplicationSubmission(string $application_number): ?ApplicationSubmission {
     /** @var \Drupal\grants_application\Entity\ApplicationSubmission[] $submissions */
     $submissions = $this->entityTypeManager()
@@ -275,6 +289,15 @@ final class ApplicationController extends ControllerBase {
     return $submissions ? reset($submissions) : NULL;
   }
 
+  /**
+   * Get the redirect back url.
+   *
+   * @param string|null $application_number
+   *   The application number.
+   *
+   * @return \Drupal\Core\Url
+   *   The redirect url.
+   */
   private function getRedirectBackUrl(?string $application_number): Url {
     if ($application_number) {
       return Url::fromRoute('grants_handler.view_application', ['submission_id' => $application_number]);
