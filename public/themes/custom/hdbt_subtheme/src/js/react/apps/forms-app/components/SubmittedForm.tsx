@@ -17,7 +17,6 @@ export const SubmittedForm = ({
   return (
     <>
       <StatusLabel />
-      <h1>{schema.title}</h1>
       <div className='webform-submission__application_id'>
         <h2>{Drupal.t('Application number', {}, {context: 'Grants application: Submitted form'})}</h2>
         <div className='webform-submission__application_id--body'>

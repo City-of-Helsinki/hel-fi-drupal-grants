@@ -1595,6 +1595,62 @@ function grants_handler_preprocess_html(array &$variables) {
 }
 
 /**
+ * Get edit URL for application.
+ *
+ * @param \Drupal\webform\Entity\Webform $webform
+ *   Webform entity.
+ * @param \Drupal\webform\Entity\WebformSubmission $submission
+ *   Webform submission entity.
+ * @param array $submissionData
+ *   Submission data array.
+ *
+ * @return \Drupal\Core\Url
+ *   URL object.
+ */
+function _grants_handler_get_edit_url($webform, $submission, $submissionData): Url {
+  $attributes = [
+    'data-drupal-selector' => 'application-edit-link',
+    'class' => [
+      'hds-button',
+      'hds-button--primary',
+      'application-edit-link-' . $submissionData['application_number'],
+    ],
+  ];
+
+  $react_submission_ids = \Drupal::entityTypeManager()
+    ->getStorage('application_submission')
+    ->getQuery()
+    ->accessCheck(TRUE)
+    ->condition('sub', $submissionData['sender_user_id'])
+    ->condition('application_number', $submissionData['application_number'])
+    ->execute();
+
+  if ($react_submission_ids) {
+    return Url::fromRoute(
+      'helfi_grants.forms_app_edit',
+      [
+        'application_number' => $submissionData['application_number'],
+        'id' => $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID'),
+      ],
+      [
+        'attributes' => $attributes,
+      ]
+    );
+  }
+
+  return Url::fromRoute(
+    'grants_handler.edit_application',
+    [
+      'webform' => $webform->id(),
+      'webform_submission' => $submission->id(),
+    ],
+    [
+      'attributes' => $attributes,
+    ]
+  );
+}
+
+/**
  * Process information box.
  *
  * @param array $variables
@@ -1636,23 +1692,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $printApplicationLink = Link::fromTextAndUrl($printApplicationLinkText, $printApplicationUrl);
   $variables['printApplicationLink'] = $printApplicationLink;
 
-  $editApplicationUrl = Url::fromRoute(
-    'grants_handler.edit_application',
-    [
-      'webform' => $webform->id(),
-      'webform_submission' => $submission->id(),
-    ],
-    [
-      'attributes' => [
-        'data-drupal-selector' => 'application-edit-link',
-        'class' => [
-          'hds-button',
-          'hds-button--primary',
-          'application-edit-link-' . $submissionData['application_number'],
-        ],
-      ],
-    ]
-  );
+  $editApplicationUrl = _grants_handler_get_edit_url($webform, $submission, $submissionData);
 
   if ($applicationStatusService->isSubmissionEditable($submission)) {
     $editApplicationLinkText = [
