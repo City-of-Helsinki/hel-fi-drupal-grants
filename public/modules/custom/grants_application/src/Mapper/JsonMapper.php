@@ -533,12 +533,6 @@ class JsonMapper {
   private function createSingleFileData(array $data, string $description = ''): array {
     $fileData = [];
 
-    $fileData[] = [
-      'ID' => 'description',
-      'value' => $description,
-      'valueType' => 'string',
-    ];
-
     foreach($data as $key => $value) {
       $definition = [
         'ID' => $key,
@@ -555,6 +549,13 @@ class JsonMapper {
 
       $fileData[] = $definition;
     }
+
+    // Set description as first.
+    array_unshift($fileData, [
+      'ID' => 'description',
+      'value' => $description,
+      'valueType' => 'string',
+    ]);
 
     return $fileData;
   }

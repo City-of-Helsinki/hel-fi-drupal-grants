@@ -11,10 +11,10 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2Integration;
-use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Helper;
+use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_events\EventsService;
@@ -72,8 +72,6 @@ final class Application extends ResourceBase {
    *   The language manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
-   * @param \Drupal\grants_application\Avus2Mapper $avus2Mapper
-   *   The Avus2-mapper.
    * @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
    *   The event dispatcher.
    * @param \Drupal\grants_application\Avus2Integration $integration
@@ -98,7 +96,6 @@ final class Application extends ResourceBase {
     private CsrfTokenGenerator $csrfTokenGenerator,
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
-    private Avus2Mapper $avus2Mapper,
     private EventDispatcherInterface $dispatcher,
     private Avus2Integration $integration,
     private EventsService $eventsService,
@@ -125,7 +122,6 @@ final class Application extends ResourceBase {
       $container->get(CsrfTokenGenerator::class),
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
-      $container->get(Avus2Mapper::class),
       $container->get(EventDispatcherInterface::class),
       $container->get(Avus2Integration::class),
       $container->get('grants_events.events_service'),
@@ -335,35 +331,43 @@ final class Application extends ResourceBase {
     $document = $this->atvService->getDocument($application_number);
 
     // @todo Better sanitation.
-    $document_data = ['form_data' => $form_data];
+    // $document_data = ['form_data' => $form_data];
 
     $applicantTypeId = $this->userInformationService->getApplicantTypeId();
-    /*
-    $mapper = new JsonMapper();
-    $dataSources = $mapper->getCombinedDataSources(
-    $form_data,
-    $user_data,
-    $selected_company,
-    $this->userInformationService->getUserProfileData(),
-    $this->userInformationService->getGrantsProfileContent(),
-    $settings,
-    $application_number,
-    $applicantTypeId,
-    );
+
+    $mappingFileName = "ID$application_type_id.json";
+    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/'.$mappingFileName), TRUE);
+    $mapper = new JsonMapper($mapping);
+    try {
+      $dataSources = $mapper->getCombinedDataSources(
+        $form_data,
+        $user_data,
+        $selected_company,
+        $this->userInformationService->getUserProfileData(),
+        $this->userInformationService->getGrantsProfileContent(),
+        $settings,
+        $application_number,
+        $applicantTypeId,
+      );
+    }
+    catch (\Exception $e) {
+      // Unable to combine datasources, bad atv-connection maybe?
+      // @todo Proper error message to react.
+      return new JsonResponse([], 500);
+    }
 
     $document_data = $mapper->map($dataSources);
-     */
 
-    $x = 1;
-    die('not so far.');
+    // Handle all files.
+    $bankFile = $mapper->mapBankFile($selected_bank_account_number, $bank_file);
+    $fileData = $mapper->mapFiles($dataSources);
 
-    // Attachments and general info are outside the compensation.
-    $document_data['attachmentsInfo'] = $this->avus2Mapper
-      ->getAttachmentAndGeneralInfo($attachments, $form_data);
+    $fileData['attachmentsInfo']['attachmentsArray'][] = $bankFile;
 
-    $mapped_bank_confirmation_file = $this->avus2Mapper->createBankFileData($selected_bank_account_number, $bank_confirmation_file_array);
-    $document_data['attachmentsInfo']['attachmentsArray'][] = $mapped_bank_confirmation_file;
+    $document_data = array_merge($document_data, $fileData);
 
+    // Keep the react-form data.
+    $document_data['form_data'] = $form_data;
     $document_data['formUpdate'] = !$submission->get('draft')->value;
 
     if (!isset($document_data['statusUpdates'])) {
