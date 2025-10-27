@@ -700,7 +700,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
 This will prevent applications created with an older webform version, which are in draft or received status,
 from being edited, even if normal rules would otherwise permit it.
 <strong>Only admins/developers should change this, if required.</strong>', [], $tOpts),
-      '#disabled' => !$isSuperUser,
+      '#disabled' => !$currentUser->hasPermission('administer webform'),
     ];
   }
 
