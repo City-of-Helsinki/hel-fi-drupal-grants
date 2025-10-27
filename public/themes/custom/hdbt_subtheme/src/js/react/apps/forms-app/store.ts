@@ -1,9 +1,11 @@
+import { atom } from 'jotai';
+import { DateTime } from 'luxon';
 import { ReactNode } from 'react';
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
-import { atom } from 'jotai';
+
+import { getUrlParts } from './testutils/Helpers';
 import { keyErrorsByStep } from './utils';
 import { SubmitStates } from './enum/SubmitStates';
-import { getUrlParts } from './testutils/Helpers';
 
 export type FormStep = {
   id: string;
@@ -79,36 +81,50 @@ const buildFormSteps = ({
 
     steps.set(index, {
       id: key,
-      label: value.title
+      label: `${index + 1}. ${value.title}`,
     });
   });
 
   const previewIndex = steps.size;
+  const readyIndex = previewIndex + 1;
   steps.set(previewIndex, {
     id: 'preview',
-    label: Drupal.t('Confirm, preview and submit', {}, {context: 'Grants application: Steps'}),
+    label: `${previewIndex + 1}. ${Drupal.t('Confirm, preview and submit', {}, {context: 'Grants application: Steps'})}`,
   });
-  steps.set(previewIndex + 1, {
+  steps.set(readyIndex, {
     id: 'ready',
-    label: Drupal.t('Ready', {}, {context: 'Grants application: Steps'}),
+    label: `${readyIndex + 1}. ${Drupal.t('Ready', {}, {context: 'Grants application: Steps'})}`,
   });
 
   return steps;
 };
 
-export const createFormDataAtom = (key: string, initialValue: any) => {
-  const getInitialValue = () => {
-    const item = sessionStorage.getItem(key);
-    if (item !== null) {
-      return JSON.parse(item);
-    }
-    return {};
-  }
+export const createFormDataAtom = (key: string, initialValue: any, timestamp?: number) => {
+  initialValue = initialValue && Array.isArray(initialValue) && !initialValue.length ? {} : initialValue;
 
-  // @todo use timestamp to determine which data to use. For now, always prefer server.
-  if (initialValue) {
-    sessionStorage.setItem(key, JSON.stringify(initialValue));
-  }
+  const getInitialValue = () => {
+    const sessionItem = JSON.parse(sessionStorage.getItem(key));
+    
+    if (
+      !sessionItem ||
+      // Handle old style session data without timestamp.
+      // @todo Remove this check after a few months of deployment.
+      !sessionItem?.timestamp
+    ) {
+      sessionStorage.setItem(key, JSON.stringify({timestamp: timestamp || Math.floor(Date.now() / 1000), data: initialValue}));
+      return initialValue;
+    }
+
+    const {timestamp: sessionTimeStamp, data: sessionData} = sessionItem;
+    const sessionTime = DateTime.fromMillis(Number(sessionTimeStamp) * 1000);
+    const serverTime = timestamp ? DateTime.fromMillis(Number(timestamp) * 1000) : null;
+
+    if (serverTime && sessionTime < serverTime) {
+      return initialValue;
+    }
+
+    return sessionData ?? {};
+  };
 
   const baseAtom = atom(getInitialValue());
   const derivedAtom = atom(
@@ -116,7 +132,7 @@ export const createFormDataAtom = (key: string, initialValue: any) => {
     (get, set, update) => {
       const newValue = typeof update === 'function' ? update(get(baseAtom)) : update;
       set(baseAtom, newValue);
-      sessionStorage.setItem(key, JSON.stringify(newValue));
+      sessionStorage.setItem(key, JSON.stringify({timestamp: Math.floor(Date.now() / 1000), data: newValue}));
     },
   );
 
@@ -136,7 +152,7 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
   } = formConfig;
   const steps = buildFormSteps(formConfig);
   _set(formStepsAtom, state => steps);
-  _set(formConfigAtom, (state) => ({
+  _set(formConfigAtom, (state) => ({ 
     grantsProfile,
     ...rest,
     uiSchema,
@@ -332,8 +348,28 @@ type avus2Data = {
 };
 export const avus2DataAtom = atom<avus2Data|null>();
 export const shouldRenderPreviewAtom = atom(_get => {
-  const { submitState } = _get(getFormConfigAtom);
   const { currentStep } = _get(getFormStateAtom);
 
-  return submitState !== SubmitStates.DRAFT || currentStep[1].id === 'preview';
+  return currentStep[1].id === 'preview';
+});
+export const isBeingSubmittedAtom = atom<boolean>(false);
+export const isReadOnlyAtom = atom(_get => {
+  const { submitState } = _get(getFormConfigAtom);
+  const isBeingSubmitted = _get(isBeingSubmittedAtom);
+
+  return submitState === ![
+    SubmitStates.DRAFT,
+    SubmitStates.RECEIVED,
+    SubmitStates.PREPARING,
+  ].includes(submitState) || isBeingSubmitted;
+});
+
+export const getFormTitleAtom = atom(_get => {
+  const { settings } = _get(getFormConfigAtom);
+
+  if (!settings) {
+    return '';
+  }
+
+  return settings?.title ?? '';
 });
