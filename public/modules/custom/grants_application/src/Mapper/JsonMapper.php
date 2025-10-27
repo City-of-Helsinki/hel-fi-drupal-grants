@@ -490,10 +490,37 @@ class JsonMapper {
 
   private function handleFile(&$data, array $definition, string $targetPath, array $dataSources): void {
     $value = $this->getValue($dataSources[$definition['datasource']], $definition['source']);
-    // $this->setFileData();
-    $this->setTargetValue($data, $targetPath, $value, $definition);
+    $fileData = $this->createSingleFileData($value);
+    $this->setTargetValue($data, $targetPath, $fileData, $definition);
   }
 
-  private function setFileData(): void {}
+  private function createSingleFileData(array $data, string $description = ''): array {
+    $fileData = [];
+
+    $fileData[] = [
+      'ID' => 'description',
+      'value' => $description,
+      'valueType' => 'string',
+    ];
+
+    foreach($data as $key => $value) {
+      $definition = [
+        'ID' => $key,
+        'value' => $value,
+      ];
+
+      match($key) {
+        'fileType' => $definition['valueType'] = 'int',
+        'isNewAttachment',
+        'isIncludedInOtherFile',
+        'isDeliveredLater' => $definition['valueType'] = 'bool',
+        default => $definition['valueType'] = 'string'
+      };
+
+      $fileData[] = $definition;
+    }
+
+    return $fileData;
+  }
 
 }
