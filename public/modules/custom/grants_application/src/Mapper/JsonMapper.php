@@ -22,7 +22,6 @@ class JsonMapper {
    */
   public function __construct(
     private readonly array $mappings,
-    private readonly array $defaultMappings = [],
   ) {
     $this->customHandler = new JsonHandler();
   }
@@ -43,7 +42,7 @@ class JsonMapper {
       $sourcePath = $definition['source'];
       $dataSourceType = $definition['datasource'];
 
-      // @todo Refactor.
+      // @todo Refactor empty & hardcoded maybe.
       if (!isset($definition['skip']) && ($definition['mapping_type'] === 'empty' || $definition['mapping_type'] === 'hardcoded')) {
         match($definition['mapping_type']) {
           'empty' => $this->handleEmpty($data, $definition, $target),
@@ -242,22 +241,6 @@ class JsonMapper {
   }
 
   /**
-   * Get all the values for the multivalue-field.
-   *
-   * @param array $sourceData
-   *   The source data.
-   * @param string $sourcePath
-   *   The source path.
-   *
-   * @return array|string|null
-   *   The value from source-data
-   */
-  private function getMultipleValues(array $sourceData, string $sourcePath): array|string|null {
-    $path = explode('.', $sourcePath);
-    return $this->getMultipleNestedArrayValues($sourceData, $path);
-  }
-
-  /**
    * Traverse an array recursively and return target value.
    *
    * @param array $sourceData
@@ -292,7 +275,23 @@ class JsonMapper {
   }
 
   /**
-   * Get values for the multi-value field.
+   * Get all the values for the multivalue-field.
+   *
+   * @param array $sourceData
+   *   The source data.
+   * @param string $sourcePath
+   *   The source path.
+   *
+   * @return array|string|null
+   *   The value from source-data
+   */
+  private function getMultipleValues(array $sourceData, string $sourcePath): array|string|null {
+    $path = explode('.', $sourcePath);
+    return $this->getMultipleNestedArrayValues($sourceData, $path);
+  }
+
+  /**
+   * Get values for the multi-value field recursively.
    *
    * @param array $sourceData
    *   The source data.
@@ -337,6 +336,7 @@ class JsonMapper {
       'simple' => $targetValue = $sourceValue,
       'empty' => $targetValue = [],
       'hardcoded' => $targetValue = $sourceValue,
+      'file' => $targetValue = $sourceValue,
       default => $targetValue['value'] = $sourceValue,
     };
 
@@ -476,5 +476,24 @@ class JsonMapper {
       'custom' => $custom,
     ];
   }
+
+  public function mapFiles(array $dataSources): array {
+    $fileData = [];
+
+    $definitions = array_filter($this->mappings, fn(array $item) => $item['mapping_type'] === 'file');
+    foreach ($definitions as $targetPath => $definition) {
+      $this->handleFile($fileData, $definition, $targetPath, $dataSources);
+    }
+
+    return $fileData;
+  }
+
+  private function handleFile(&$data, array $definition, string $targetPath, array $dataSources): void {
+    $value = $this->getValue($dataSources[$definition['datasource']], $definition['source']);
+    // $this->setFileData();
+    $this->setTargetValue($data, $targetPath, $value, $definition);
+  }
+
+  private function setFileData(): void {}
 
 }
