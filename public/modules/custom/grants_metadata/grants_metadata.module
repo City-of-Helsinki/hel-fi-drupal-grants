@@ -657,7 +657,6 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
     }
 
     $currentUser = Drupal::currentUser();
-    $isSuperUser = $currentUser->id() == 1;
 
     $form['third_party_settings']['grants_metadata']['status'] = [
       '#type' => 'radios',
@@ -669,7 +668,7 @@ function grants_metadata_form_alter(&$form, FormStateInterface $form_state, $for
       ],
       '#required' => TRUE,
       '#default_value' => $formStatus ?? 'development',
-      '#disabled' => ($isDuplicateForm || !$isSuperUser),
+      '#disabled' => ($isDuplicateForm || !$currentUser->hasPermission('administer webform')),
       '#description' => t('
 <p>In production: Changing the webform elements is not allowed.</p>
 <p>In development: Webform elements can be edited. Form can be filled up in non-production environments.</p>
