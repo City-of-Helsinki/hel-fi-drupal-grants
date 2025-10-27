@@ -3,7 +3,7 @@ import { useAtomValue, useSetAtom, WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
 import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
-import React, { createRef, useCallback, useMemo, useState } from 'react';
+import React, { createRef, useCallback, useState } from 'react';
 import { customizeValidator } from '@rjsf/validator-ajv8';
 import { useTranslation } from 'react-i18next';
 
@@ -11,8 +11,8 @@ import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '.
 import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
 import { FormActions } from '../components/FormActions/FormActions';
-import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom } from '../store';
-import { findFieldsOfType, keyErrorsByStep } from '../utils';
+import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom, getSubventionFieldsAtom } from '../store';
+import { keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
 import { SubmitStates } from '../enum/SubmitStates';
@@ -23,6 +23,7 @@ import { SubmittedForm } from '../components/SubmittedForm';
 import { Terms } from '../components/Terms';
 import { SubventionTable } from '../components/Fields/SubventionTable';
 import { InvalidSchemaError } from '../errors/InvalidSchemaError';
+import { SubventionSum } from '../components/Fields/SubventionSum';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -62,7 +63,7 @@ export const RJSFFormContainer = ({
 }) => {
   const { t } = useTranslation();
   const [invalidSchemaError, setInvalidSchemaError] = useState<InvalidSchemaError | null>(null);
-  const subventionFields = useMemo(() => Array.from(findFieldsOfType(uiSchema, 'subventionTable')), [uiSchema]); 
+  const subventionFields = useAtomValue(getSubventionFieldsAtom);
   const setFormData = useSetAtom(formDataAtom)
   const submitStatus = useAtomValue(getSubmitStatusAtom);
   const steps = useAtomValue(getStepsAtom);
@@ -208,6 +209,7 @@ export const RJSFFormContainer = ({
             ...getDefaultRegistry().fields,
             atvFile: FileInput,
             subventionTable: SubventionTable,
+            subventionSum: SubventionSum,
             textParagraph: TextParagraph,
           }}
           formData={readFormData() || {}}

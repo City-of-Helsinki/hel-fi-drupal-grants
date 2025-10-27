@@ -59,6 +59,13 @@
       }
     }
   },
+  "budget_step": {
+    "income_section": {
+      "applied_benefits": {
+        "ui:field": "subventionSum"
+      }
+    }
+  },
   "attachments_step": {
     "additional_info_section": {
       "additional_info": {

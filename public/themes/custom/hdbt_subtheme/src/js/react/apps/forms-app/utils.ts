@@ -206,3 +206,26 @@ export const formatErrors = (rawErrors: string[]|undefined) => {
 
   return rawErrors.join('\n');
 };
+
+/**
+ * Get the total sum of subvention fields from the form data.
+ *
+ * @param {object} formData - Form data
+ * @param {array} subventionFields - Array of subvention field paths
+ * @return {number} - Total sum
+ */
+export const getSubventionSum = (formData, subventionFields) => subventionFields.reduce((total, field) => {
+  const values = getNestedSchemaProperty(formData, field);
+
+  if (values.length) {
+    Object.entries(values).forEach(([key, curr]) => {
+      const amount = Number(curr[1].value);
+
+      if (!Number.isNaN(amount)) {
+        total += amount;
+      }
+    });
+  }
+
+  return total;
+}, 0);
