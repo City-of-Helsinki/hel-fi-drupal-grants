@@ -6,6 +6,7 @@ namespace Drupal\grants_application\Mapper;
 
 use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\User\GrantsProfile;
+use Drupal\grants_attachments\AttachmentHandlerHelper;
 
 /**
  * The json mapper.
@@ -22,7 +23,6 @@ class JsonMapper {
    */
   public function __construct(
     private readonly array $mappings,
-    private readonly array $defaultMappings = [],
   ) {
     $this->customHandler = new JsonHandler();
   }
@@ -43,7 +43,7 @@ class JsonMapper {
       $sourcePath = $definition['source'];
       $dataSourceType = $definition['datasource'];
 
-      // @todo Refactor.
+      // @todo Refactor empty & hardcoded maybe.
       if (!isset($definition['skip']) && ($definition['mapping_type'] === 'empty' || $definition['mapping_type'] === 'hardcoded')) {
         match($definition['mapping_type']) {
           'empty' => $this->handleEmpty($data, $definition, $target),
@@ -242,22 +242,6 @@ class JsonMapper {
   }
 
   /**
-   * Get all the values for the multivalue-field.
-   *
-   * @param array $sourceData
-   *   The source data.
-   * @param string $sourcePath
-   *   The source path.
-   *
-   * @return array|string|null
-   *   The value from source-data
-   */
-  private function getMultipleValues(array $sourceData, string $sourcePath): array|string|null {
-    $path = explode('.', $sourcePath);
-    return $this->getMultipleNestedArrayValues($sourceData, $path);
-  }
-
-  /**
    * Traverse an array recursively and return target value.
    *
    * @param array $sourceData
@@ -292,7 +276,23 @@ class JsonMapper {
   }
 
   /**
-   * Get values for the multi-value field.
+   * Get all the values for the multivalue-field.
+   *
+   * @param array $sourceData
+   *   The source data.
+   * @param string $sourcePath
+   *   The source path.
+   *
+   * @return array|string|null
+   *   The value from source-data
+   */
+  private function getMultipleValues(array $sourceData, string $sourcePath): array|string|null {
+    $path = explode('.', $sourcePath);
+    return $this->getMultipleNestedArrayValues($sourceData, $path);
+  }
+
+  /**
+   * Get values for the multi-value field recursively.
    *
    * @param array $sourceData
    *   The source data.
@@ -337,6 +337,7 @@ class JsonMapper {
       'simple' => $targetValue = $sourceValue,
       'empty' => $targetValue = [],
       'hardcoded' => $targetValue = $sourceValue,
+      'file' => $targetValue = $sourceValue,
       default => $targetValue['value'] = $sourceValue,
     };
 
@@ -474,6 +475,128 @@ class JsonMapper {
       'grants_profile_array' => $grantsProfile->toArray(),
       'form_settings' => $formSettings->toArray(),
       'custom' => $custom,
+    ];
+  }
+
+  /**
+   * Map all files added to the application.
+   *
+   * The file data lives outside of compensations in the final data.
+   *
+   * @param array $dataSources
+   *   The datasources.
+   *
+   * @return array
+   *   Array of mapped files.
+   */
+  public function mapFiles(array $dataSources): array {
+    $fileData = [];
+
+    $definitions = array_filter($this->mappings, fn(array $item) => $item['mapping_type'] === 'file');
+    foreach ($definitions as $targetPath => $definition) {
+      $this->handleFile($fileData, $definition, $targetPath, $dataSources);
+    }
+
+    return $fileData;
+  }
+
+  /**
+   * Get the values from the form and map it in correct format.
+   *
+   * @param $data
+   *   The final data.
+   * @param array $definition
+   *   The file-field definitions from mapping-json.
+   * @param string $targetPath
+   *   The json-path to target data location.
+   * @param array $dataSources
+   *   The data sources.
+   */
+  private function handleFile(&$data, array $definition, string $targetPath, array $dataSources): void {
+    $value = $this->getValue($dataSources[$definition['datasource']], $definition['source']);
+    $fileData = $this->createSingleFileData($value);
+    $this->setTargetValue($data, $targetPath, $fileData, $definition);
+  }
+
+
+  /**
+   * Create single file mapping.
+   *
+   * @param array $data
+   *   The data related to single file mapping.
+   * @param string $description
+   *   The description for the file.
+   *
+   * @return array
+   *   Single file mapping.
+   */
+  private function createSingleFileData(array $data, string $description = ''): array {
+    $fileData = [];
+
+    $fileData[] = [
+      'ID' => 'description',
+      'value' => $description,
+      'valueType' => 'string',
+    ];
+
+    foreach($data as $key => $value) {
+      $definition = [
+        'ID' => $key,
+        'value' => $value,
+      ];
+
+      match($key) {
+        'fileType' => $definition['valueType'] = 'int',
+        'isNewAttachment',
+        'isIncludedInOtherFile',
+        'isDeliveredLater' => $definition['valueType'] = 'bool',
+        default => $definition['valueType'] = 'string'
+      };
+
+      $fileData[] = $definition;
+    }
+
+    return $fileData;
+  }
+
+  /**
+   * Handle the bank file mapping.
+   *
+   * @param string $selected_bank_account
+   *   The selected bank account number.
+   * @param array $bank_file
+   *   The uploaded bank file.
+   *
+   * @return array
+   *   Mapping for bank file.
+   */
+  public function mapBankFile(string $selected_bank_account, array $bank_file): array {
+    $integrationID = AttachmentHandlerHelper::getIntegrationIdFromFileHref($bank_file['href']);
+    $integrationID = AttachmentHandlerHelper::addEnvToIntegrationId($integrationID);
+
+    $description = "Vahvistus tilinumerolle $selected_bank_account";
+    $filename = $bank_file['filename'];
+    $isDeliveredLater =  'false';
+    $isIncludedInOtherFile = 'false';
+    $filetype = "45";
+
+    return [
+      ['ID' => 'description', 'value' => $description, 'valueType' => 'string', 'label' => 'Liitteen kuvaus'],
+      ['ID' => 'fileName', 'value' => $filename, 'valueType' => 'string', 'label' => 'Tiedostonimi'],
+      ['ID' => 'fileType', 'value' => $filetype, 'valueType' => 'int', 'label' => "filetype"],
+      ['ID' => 'integrationID', 'value' => $integrationID, 'valueType' => 'string', 'label' => "integrationID"],
+      [
+        'ID' => 'isDeliveredLater',
+        'value' => $isDeliveredLater,
+        'valueType' => 'bool',
+        'label' => 'Liite toimitetaan myöhemmin',
+      ],
+      [
+        'ID' => 'isIncludedInOtherFile',
+        'value' => $isIncludedInOtherFile,
+        'valueType' => 'bool',
+        'label' => 'Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä',
+      ],
     ];
   }
 

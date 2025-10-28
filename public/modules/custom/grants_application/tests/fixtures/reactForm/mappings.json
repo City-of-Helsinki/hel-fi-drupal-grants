@@ -118,7 +118,7 @@
   },
 
   "compensation.budgetInfo.hardcoded": {
-    "#tip": "hardcoded mapping, ",
+    "#tip": "hardcoded mapping, just text",
     "datasource": "form_data",
     "source": "",
     "mapping_type": "hardcoded",
@@ -128,6 +128,7 @@
   },
 
   "compensation.budgetInfo.hardcoded2.0": {
+    "#tip": "hardcoded mapping, a complete object",
     "datasource": "form_data",
     "source": "",
     "mapping_type": "hardcoded",
@@ -136,6 +137,14 @@
         "hardcoded": "object"
       }
     }
+  },
+
+  "attachmentsInfo.attachmentsArray.0.0": {
+    "#tip": "file mapping",
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.other_attachment_fieldset.file",
+    "mapping_type": "file",
+    "data": {}
   }
 
 }
