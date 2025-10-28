@@ -27,7 +27,7 @@ class TyollisyysDefinition extends ComplexDataDefinitionBase {
     }
 
     $info['members_applicant_person_local'] = DataDefinition::create('integer')
-      ->setSetting('defaultValue', "")
+      ->setSetting('defaultValue', "0")
       ->setSetting('valueCallback', [
         '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
         'convertToInt',
@@ -43,7 +43,7 @@ class TyollisyysDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $info['members_applicant_person_global'] = DataDefinition::create('integer')
-      ->setSetting('defaultValue', "")
+      ->setSetting('defaultValue', "0")
       ->setSetting('valueCallback', [
         '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
         'convertToInt',
@@ -55,7 +55,7 @@ class TyollisyysDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $info['members_applicant_community_local'] = DataDefinition::create('integer')
-      ->setSetting('defaultValue', "")
+      ->setSetting('defaultValue', "0")
       ->setSetting('valueCallback', [
         '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
         'convertToInt',
@@ -67,6 +67,7 @@ class TyollisyysDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $info['members_applicant_community_global'] = DataDefinition::create('integer')
+      ->setSetting('defaultValue', "0")
       ->setSetting('valueCallback', [
         '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
         'convertToInt',
