@@ -181,11 +181,18 @@
           "properties": {
             "have_received_other_compensations": {
               "title": "have_received_other_compensations.title",
-              "enum": [
-                "boolean.yes",
-                "boolean.no"
+              "type": "boolean",
+              "oneOf": [
+                {
+                  "const": false,
+                  "title": "boolean.no"
+                },
+                {
+                  "const": true,
+                  "title": "boolean.yes"
+                }
               ],
-              "default": "boolean.no"
+              "default": false
             }
           },
           "required": ["have_received_other_compensations"],
@@ -194,7 +201,7 @@
               "if": {
                 "properties": {
                   "have_received_other_compensations": {
-                    "const": "boolean.yes"
+                    "const": true
                   }
                 }
               },
@@ -243,11 +250,18 @@
           "properties": {
             "have_received_prior_compensations": {
               "title": "have_received_prior_compensations.title",
-              "enum": [
-                "have_received_prior_compensations.no",
-                "have_received_prior_compensations.yes"
+              "type": "boolean",
+              "oneOf": [
+                {
+                  "const": false,
+                  "title": "have_received_prior_compensations.no"
+                },
+                {
+                  "const": true,
+                  "title": "have_received_prior_compensations.yes"
+                }
               ],
-              "default": "have_received_prior_compensations.no"
+              "default": false
             }
           },
           "required": ["have_received_prior_compensations"],

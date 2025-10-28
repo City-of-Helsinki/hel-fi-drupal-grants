@@ -7,7 +7,12 @@
     },
     "purpose_section": {
       "purpose": {
-        "ui:widget": "textarea"
+        "ui:widget": "textarea",
+        "ui:condition": {
+          "field": "have_received_other_compensations",
+          "value": true,
+          "operator": "all"
+        }
       }
     },
     "other_compensations_section": {

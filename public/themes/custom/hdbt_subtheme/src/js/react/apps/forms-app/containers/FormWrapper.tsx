@@ -3,9 +3,9 @@ import { useCallback } from 'react';
 import { useAtomCallback } from 'jotai/utils';
 import { useSetAtom, useStore } from 'jotai';
 
-import { addApplicantInfoStep, findFieldsOfType, getNestedSchemaProperty, setNestedProperty } from '../utils';
+import { addApplicantInfoStep, getNestedSchemaProperty, setNestedProperty } from '../utils';
 import { ATVFile } from '../types/ATVFile';
-import { avus2DataAtom, createFormDataAtom, formDataAtomRef, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom, subventionFieldsAtom } from '../store';
+import { avus2DataAtom, createFormDataAtom, formDataAtomRef, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom } from '../store';
 import { InvalidSchemaBoundary } from '../errors/InvalidSchemaBoundary';
 import { RJSFFormContainer } from './RJSFFormContainer';
 import { SubmitStates } from '../enum/SubmitStates';
@@ -239,9 +239,12 @@ export const FormWrapper = ({
     window.location.href = redirect_url;
   };
 
-  const initialData = translatedData.status === SubmitStates.DRAFT ? translatedData?.form_data: translatedData?.form_data?.compensation?.form_data || null;
-  const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData);
+  const initialData = translatedData.status === SubmitStates.DRAFT ?
+    translatedData.form_data?.form_data :
+    translatedData?.form_data?.compensation?.form_data || null;
+  const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData,  data?.last_changed);
   store.set(formDataAtomRef, formDataAtom);
+
   if (translatedData.status !== SubmitStates.DRAFT) {
     const {
       attachmentsInfo,

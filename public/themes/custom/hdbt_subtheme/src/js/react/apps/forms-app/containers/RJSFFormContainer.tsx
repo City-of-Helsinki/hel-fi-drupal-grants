@@ -7,23 +7,23 @@ import React, { createRef, useCallback, useState } from 'react';
 import { customizeValidator } from '@rjsf/validator-ajv8';
 import { useTranslation } from 'react-i18next';
 
+import { AddressSelect, BankAccountSelect, CommunityOfficialsSelect, RadioWidget, SelectWidget, TextArea, TextInput } from '../components/Input';
 import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
 import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
 import { FormActions } from '../components/FormActions/FormActions';
-import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom, getSubventionFieldsAtom } from '../store';
-import { keyErrorsByStep } from '../utils';
+import { FormSummary } from '../components/FormSummary';
+import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom, getSubventionFieldsAtom, isReadOnlyAtom, isBeingSubmittedAtom } from '../store';
+import { InvalidSchemaError } from '../errors/InvalidSchemaError';
+import { isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
-import { SubmitStates } from '../enum/SubmitStates';
-import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect, RadioWidget } from '../components/Input';
-import { localizeErrors } from '../localizeErrors';
-import { TextParagraph } from '../components/Fields/TextParagraph';
 import { SubmittedForm } from '../components/SubmittedForm';
-import { Terms } from '../components/Terms';
-import { SubventionTable } from '../components/Fields/SubventionTable';
-import { InvalidSchemaError } from '../errors/InvalidSchemaError';
 import { SubventionSum } from '../components/Fields/SubventionSum';
+import { SubventionTable } from '../components/Fields/SubventionTable';
+import { Terms } from '../components/Terms';
+import { TextParagraph } from '../components/Fields/TextParagraph';
+import { localizeErrors } from '../localizeErrors';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -64,9 +64,10 @@ export const RJSFFormContainer = ({
   const { t } = useTranslation();
   const [invalidSchemaError, setInvalidSchemaError] = useState<InvalidSchemaError | null>(null);
   const subventionFields = useAtomValue(getSubventionFieldsAtom);
-  const setFormData = useSetAtom(formDataAtom)
-  const submitStatus = useAtomValue(getSubmitStatusAtom);
+  const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
+  const readOnly = useAtomValue(isReadOnlyAtom);
+  const setIsSubmitting = useSetAtom(isBeingSubmittedAtom);
   const formRef = createRef<Form>();
   const readCurrentStep = useAtomCallback(
     useCallback(get =>  get(getCurrentStepAtom), [])
@@ -185,17 +186,21 @@ export const RJSFFormContainer = ({
     return errors;
   };
 
-  const readonly = submitStatus !== SubmitStates.DRAFT
-
   return <>
       {
-        !readonly && <>
+       !readOnly && <>
           <ErrorsList />
           <Stepper formRef={formRef} />
         </>
       }
       <div className='form-wrapper'>
-        {readonly ?
+        {!isDraft() && (
+          <FormSummary
+            formData={readFormData()}
+            schema={schema}
+          />
+        )}
+        {readOnly ?
           <SubmittedForm formData={readFormData()} schema={schema} /> :
           <StaticStepsContainer
             formDataAtom={formDataAtom}
@@ -219,6 +224,7 @@ export const RJSFFormContainer = ({
           onChange={browserCacheData}
           onError={onError}
           onSubmit={async (data, event: React.FormEvent<HTMLFormElement>) => {
+            setIsSubmitting(true);
             event.preventDefault();
 
             if (readCurrentStep()[1].id !== 'preview') {
@@ -230,8 +236,11 @@ export const RJSFFormContainer = ({
             if (passes) {
               submitData(data.formData);
             }
+            else {
+              setIsSubmitting(false);
+            }
           }}
-          readonly={readonly}
+          readonly={readOnly}
           ref={formRef}
           schema={schema}
           showErrorList={false}
@@ -257,11 +266,10 @@ export const RJSFFormContainer = ({
           widgets={widgets}
         >
           <Terms />
-          {!readonly && <FormActions
-              saveDraft={() => saveDraft(readFormData())}
-              validatePartialForm={validatePartialForm}
-            />
-          }
+          <FormActions
+            saveDraft={() => saveDraft(readFormData())}
+            validatePartialForm={validatePartialForm}
+          />
         </Form>
       </div>
     </>;

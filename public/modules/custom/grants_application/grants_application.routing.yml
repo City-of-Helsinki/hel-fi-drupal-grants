@@ -4,6 +4,16 @@ helfi_grants.forms_app:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
     _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getFormTitle'
     application_number: NULL
+    use_draft: TRUE
+  requirements:
+    _role: helsinkiprofiili
+
+helfi_grants.forms_app_edit:
+  path: '/application/new/{id}/{application_number}/edit'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
+    _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getFormTitle'
+    use_draft: FALSE
   requirements:
     _role: helsinkiprofiili
 

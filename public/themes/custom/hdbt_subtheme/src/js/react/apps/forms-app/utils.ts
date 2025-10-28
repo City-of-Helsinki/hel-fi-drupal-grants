@@ -229,3 +229,10 @@ export const getSubventionSum = (formData, subventionFields) => subventionFields
 
   return total;
 }, 0);
+
+/**
+ * Check if the form is in draft mode.
+ *
+ * @return {boolean} - Whether form is a draft
+ */
+export const isDraft = () => drupalSettings.grants_react_form.use_draft;

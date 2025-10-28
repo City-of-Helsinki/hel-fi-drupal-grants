@@ -119,8 +119,21 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertTrue($mappedData['compensation']['budgetInfo']['hardcoded2'][0]['hardcoded'] == 'object');
   }
 
+  public function testFileMapping(): void {
+    $defaultMappings = $this->getMapping('mappings.json');
+    $dataSources = $this->getAllDatasources('fileFieldForm.json');
+
+    $mapper = new JsonMapper($defaultMappings);
+    $mappedFiles = $mapper->mapFiles($dataSources);
+
+    $this->assertTrue(isset($mappedFiles['attachmentsInfo']['attachmentsArray'][0][0]), 'File array exists.');
+    $this->assertTrue($mappedFiles['attachmentsInfo']['attachmentsArray'][0][0][0]['ID'] === 'description', 'First field: description');
+    $this->assertTrue($mappedFiles['attachmentsInfo']['attachmentsArray'][0][0][1]['ID'] === 'fileName', 'Second field: fileName');
+    $this->assertTrue($mappedFiles['attachmentsInfo']['attachmentsArray'][0][0][1]['value'] === 'testfile.pdf');
+  }
+
   /**
-   * Combine the common datasources and the actual form into one.
+   * Combine the common data sources and the actual form into one.
    *
    * The end result contains data from react-form, user profile,...
    *

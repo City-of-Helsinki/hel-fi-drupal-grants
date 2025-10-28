@@ -110,10 +110,12 @@ export const TextArea = ({
     return grantsProfile?.[uiSchema?.['misc:profilePrefill']] ?? undefined;
   };
 
+  const maxLength = uiSchema?.['misc:max-length'] ?? 5000;
+
   return <HDSTextArea
     defaultValue={getDefaultValue()}
     errorText={formatErrors(rawErrors)}
-    helperText='xx/5000' // TODO: Implement character count
+    helperText={`${value?.length || 0}/${maxLength}`}
     hideLabel={false}
     invalid={Boolean(rawErrors?.length)}
     onBlur={() => null}
@@ -121,11 +123,12 @@ export const TextArea = ({
     onFocus={() => null}
     readOnly={readonly}
     {...{
-      label,
-      name,
       id,
+      label,
+      maxLength,
+      name,
       required,
-      value
+      value,
     }}
   />
 };
@@ -335,14 +338,18 @@ export const RadioWidget = ({
         id={id}
         heading={`${label}${required ? ' *' : ''}`}
       >
-        {options?.enumOptions?.map((option: any) => <RadioButton
-          checked={option.value === value}
-          id={option.value}
-          key={option.value}
-          label={option.label}
-          name={option.value}
-          onChange={() => onChange(option.value)}
-        />)}
+        {options?.enumOptions?.map((option: any) => {
+          const optionId = `${id}-${option.value}`;
+
+          return <RadioButton
+            checked={option.value === value}
+            id={optionId}
+            key={optionId}
+            label={option.label}
+            name={optionId}
+            onChange={() => onChange(option.value)}
+          />;
+        })}
         {rawErrors?.length > 0 && <Notification type='error'>{formatErrors(rawErrors)}</Notification>}
       </Fieldset>
     </>
