@@ -2161,7 +2161,7 @@ function _grants_handler_handle_webform_application(array &$variables, array $tO
 
   $variables['openStartDate'] = $thirdPartySettings['applicationOpen'] ? strtotime($thirdPartySettings['applicationOpen']) : '';
   $variables['openEndDate'] = $thirdPartySettings['applicationClose'] ? strtotime($thirdPartySettings['applicationClose']) : '';
-  $variables['isContinuous'] = isset($thirdPartySettings['applicationContinuous']) ? ($thirdPartySettings['applicationContinuous'] != 0) : false;
+  $variables['isContinuous'] = isset($thirdPartySettings['applicationContinuous']) ? ($thirdPartySettings['applicationContinuous'] != 0) : FALSE;
   if (!$variables['isContinuous'] && ($variables['openStartDate'] > time() || $variables['openEndDate'] < time())) {
     $variables['errorType'] = 'NOT_OPEN';
   }
