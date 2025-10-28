@@ -28,7 +28,7 @@ export const FormSummary = ({
     return dateObject.toLocaleString('fi');
   };
 
-  const statusEvents = avus2Data?.events.filter(event => event.eventType === 'STATUS_UPDATE') || [];
+  const statusEvents = avus2Data?.events?.filter(event => event.eventType === 'STATUS_UPDATE') || [];
   const statuses = statusEvents.map(event => {
     const date = DateTime.fromISO(event.timeCreated);
     return `${StatusLabels[event.eventDescription]}: ${date.setLocale('fi').toLocaleString(DateTime.DATETIME_MED)}`;

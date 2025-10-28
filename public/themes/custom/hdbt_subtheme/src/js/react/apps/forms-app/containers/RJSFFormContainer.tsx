@@ -169,7 +169,7 @@ export const RJSFFormContainer = ({
       const _field = field.split('.').reduce((acc, curr) => acc && acc[curr], errors);
       const hasValues = values ? Object.entries(values).reduce((acc, [key, curr]) => acc || Number(curr[1].value) > 0, false) : false;
 
-      if (!hasValues) {
+      if (_field && !hasValues) {
         _field.addError(t('subvention.greater_than_zero'));
         newErrors.push({
           property: `.${field}`,
