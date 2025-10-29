@@ -251,7 +251,15 @@ elements: |
       <p>In addition, a budget and action plan for the year for which the grant is being applied for are mandatory attachments. The rules must be approved by the Finnish Patent and Registration Office.</p>
       <p>For the hiring grant application, a list of the names and membership numbers of the departments/groups under the district organization or a comparable organization must also be attached.</p>
   notification_attachments:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': |
+      <div class="hds-notification hds-notification--info">
+      <div class="hds-notification__content">
+      <div class="hds-notification__label"><span>The contents of the attachments cannot be viewed afterwards</span></div>
+
+      <div class="hds-notification__body"><p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>
+      <p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p></div>
+      </div>
+      </div>
   yhteison_saannot:
     '#title': 'Community Rules'
     '#attachmentName__title': ''
