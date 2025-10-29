@@ -271,7 +271,6 @@ elements: |
   vahvistettu_tilinpaatos:
     '#title': 'Fastställt bokslut (för den föregående avslutade räkenskapsperioden)'
     '#help': |-
-      <p>Föreningen bifogar här det bokslut som har fastställts och undertecknats vid föreningens medlemsmöte. Bokslutet ska innehålla resultaträkning och balansräkning. En detaljerad resultaträkning som visar en mer specifik kostnadsfördelning ska också ingå.</p>
       <p>Föreningens räkenskapsperiod kan vara ett kalenderår eller någon annan period. I föreningens stadgar anges vilken räkenskapsperiod som gäller.</p>
     '#multiple__no_items_message': '<p>Ei syötettyjä arvoja. Lisää uusi sisältö alta.</p>'
     '#attachmentName__title': ''
