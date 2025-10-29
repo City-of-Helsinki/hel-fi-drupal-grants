@@ -288,7 +288,7 @@ third_party_options:
         definitionClass: Drupal\grants_metadata\TypedData\Definition\TyollisyysDefinition
         definitionId: grants_metadata_tyollisyys
       labels:
-        fi: 'Työllisyysavustushakemus'
+        fi: Työllisyysavustushakemus
         en: 'The employment grant application'
         sv: 'Ansökan om sysselsättningsstöd'
     75:
