@@ -330,35 +330,43 @@ final class Application extends ResourceBase {
     $document = $this->atvService->getDocument($application_number);
 
     // @todo Better sanitation.
-    $document_data = ['form_data' => $form_data];
+    // $document_data = ['form_data' => $form_data];
 
     $applicantTypeId = $this->userInformationService->getApplicantTypeId();
-    /*
-    $mapper = new JsonMapper();
-    $dataSources = $mapper->getCombinedDataSources(
-    $form_data,
-    $user_data,
-    $selected_company,
-    $this->userInformationService->getUserProfileData(),
-    $this->userInformationService->getGrantsProfileContent(),
-    $settings,
-    $application_number,
-    $applicantTypeId,
-    );
+
+    $mappingFileName = "ID$application_type_id.json";
+    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/'.$mappingFileName), TRUE);
+    $mapper = new JsonMapper($mapping);
+    try {
+      $dataSources = $mapper->getCombinedDataSources(
+        $form_data,
+        $user_data,
+        $selected_company,
+        $this->userInformationService->getUserProfileData(),
+        $this->userInformationService->getGrantsProfileContent(),
+        $settings,
+        $application_number,
+        $applicantTypeId,
+      );
+    }
+    catch (\Exception $e) {
+      // Unable to combine datasources, bad atv-connection maybe?
+      // @todo Proper error message to react.
+      return new JsonResponse([], 500);
+    }
 
     $document_data = $mapper->map($dataSources);
-     */
 
-    $x = 1;
-    die('not so far.');
+    // Handle all files.
+    $bankFile = $mapper->mapBankFile($selected_bank_account_number, $bank_file);
+    $fileData = $mapper->mapFiles($dataSources);
 
-    // Attachments and general info are outside the compensation.
-    $document_data['attachmentsInfo'] = $this->avus2Mapper
-      ->getAttachmentAndGeneralInfo($attachments, $form_data);
+    $fileData['attachmentsInfo']['attachmentsArray'][] = $bankFile;
 
-    $mapped_bank_confirmation_file = $this->avus2Mapper->createBankFileData($selected_bank_account_number, $bank_confirmation_file_array);
-    $document_data['attachmentsInfo']['attachmentsArray'][] = $mapped_bank_confirmation_file;
+    $document_data = array_merge($document_data, $fileData);
 
+    // Keep the react-form data.
+    $document_data['form_data'] = $form_data;
     $document_data['formUpdate'] = !$submission->get('draft')->value;
 
     if (!isset($document_data['statusUpdates'])) {
