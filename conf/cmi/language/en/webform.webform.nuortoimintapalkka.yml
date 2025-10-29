@@ -145,7 +145,7 @@ elements: |
     '#prev_button_label': 'Previous'
     '#next_button_label': 'Next'
   yhdistyksen_jasenmaara_tai_aktiivisesti_toimintaan_osallistuvien:
-    '#title': 'Active participants/members'
+    '#title': 'The number of active participants or members of the association'
   jasenmaara_fieldset:
     '#title': 'Active participants/members'
     '#help': '<p>Indicate here the individuals who actively participate in the association’s activities and/or are members</p>'
