@@ -362,6 +362,13 @@
         "fi": "Kulttuurin ja vapaa-ajan erityisavustus 2",
         "sv": "Specialunderstöd för kultur och fritid 2"
       }
+    },
+    "55": {
+      "labels": {
+        "en": "Employment grant",
+        "fi": "Työllisyysavustus",
+        "sv": "Sysselsättningsstöd"
+      }
     }
   }
 }

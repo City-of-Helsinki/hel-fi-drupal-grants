@@ -67,6 +67,26 @@ function* getAttachments(element: any): IterableIterator<ATVFile> {
 }
 
 /**
+ * Checks if a given schema definition should be fixed for an array field.
+ * The definition is fixed if it is an array with an object type item,
+ * or if it has a reference to another schema definition.
+ *
+ * @param {RJSFSchema} schemaDefinition - The schema definition to check.
+ *
+ * @return {boolean} - True if the schema definition should be fixed, false otherwise.
+ */
+const shouldFixArrayField = (schemaDefinition: RJSFSchema) => {
+  if (schemaDefinition?.type !== 'array') {
+    return false;
+  }
+
+  return (
+    schemaDefinition.items[0] &&
+    schemaDefinition.items[0].type === 'object'
+  ) || schemaDefinition.items?.$ref;
+};
+
+/**
  * Fix issue with backend returning arrays instead of empty objects.
  *
  * @todo see if this can be done in a less overengineered way
@@ -87,7 +107,7 @@ const fixDanglingArrays = (formData: any, schema: RJSFSchema) => {
       setNestedProperty(formData, path, {});
     }
 
-    if (schemaDefinition.type === 'array' && schemaDefinition.items[0].type === 'object') {
+    if (shouldFixArrayField(schemaDefinition)) {
       setNestedProperty(formData, path, [{}]);
     }
   });
@@ -218,8 +238,10 @@ export const FormWrapper = ({
     window.location.href = redirect_url;
   };
 
-  const initialData = translatedData.status === SubmitStates.DRAFT ? translatedData.form_data?.form_data : translatedData?.form_data?.compensation?.form_data || null;
-  const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData);
+  const initialData = translatedData.status === SubmitStates.DRAFT ?
+    translatedData.form_data?.form_data :
+    translatedData?.form_data?.compensation?.form_data || null;
+  const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData,  data?.last_changed);
 
   if (translatedData.status !== SubmitStates.DRAFT) {
     const {

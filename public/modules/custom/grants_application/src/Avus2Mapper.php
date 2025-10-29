@@ -306,7 +306,7 @@ final class Avus2Mapper {
    *   The other compensation.
    */
   public function getOtherCompensation(array $form_data): array {
-    // @todo The values when we get a from where those are present.
+    // @todo The values when we get a form where those are present.
     return [
       'otherCompensationsArray' => [],
       'otherCompensationsInfoArray' => [

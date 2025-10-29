@@ -125,7 +125,7 @@ export const addApplicantInfoStep = (
  * @param {string} path - Point to a nested property in string format
  * @return {any} - Value of nested property or undefined
  */
-export const getNestedSchemaProperty = (obj: any, path: string) => {
+export const getNestedSchemaProperty = (obj: RJSFSchema, path: string) => {
   const properties = path.split('.').slice(1);
   let current = obj;
 
@@ -206,3 +206,10 @@ export const formatErrors = (rawErrors: string[]|undefined) => {
 
   return rawErrors.join('\n');
 };
+
+/**
+ * Check if the form is in draft mode.
+ *
+ * @return {boolean} - Whether form is a draft
+ */
+export const isDraft = () => drupalSettings.grants_react_form.use_draft;

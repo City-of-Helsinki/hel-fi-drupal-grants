@@ -1,8 +1,9 @@
 import { Button, ButtonPresetTheme, ButtonVariant, IconCopy, IconPrinter } from 'hds-react';
+import { DateTime } from 'luxon';
 import { RJSFSchema } from '@rjsf/utils';
 import { useAtomValue } from 'jotai';
 
-import { avus2DataAtom } from '../store';
+import { avus2DataAtom, getFormTitleAtom } from '../store';
 import { StatusLabels } from '../enum/StatusLabels';
 import { SubmitStates } from '../enum/SubmitStates';
 
@@ -14,6 +15,7 @@ export const FormSummary = ({
   schema: RJSFSchema,
 }) => {
   const avus2Data = useAtomValue(avus2DataAtom);
+  const formTitle = useAtomValue(getFormTitleAtom);
 
   const getSentDate = () => {
     const date = avus2Data?.statusUpdates?.find(statusUpdate => statusUpdate.citizenCaseStatus === SubmitStates.RECEIVED);
@@ -26,10 +28,16 @@ export const FormSummary = ({
     return dateObject.toLocaleString('fi');
   };
 
+  const statusEvents = avus2Data?.events?.filter(event => event.eventType === 'STATUS_UPDATE') || [];
+  const statuses = statusEvents.map(event => {
+    const date = DateTime.fromISO(event.timeCreated);
+    return `${StatusLabels[event.eventDescription]}: ${date.setLocale('fi').toLocaleString(DateTime.DATETIME_MED)}`;
+  });
+
   return (
     <div className='webform-submission-information'>
       <div className='webform-submission-information__row webform-submission-information__row-top'>
-        <h4>{schema.title}</h4>
+        <h4>{formTitle}</h4>
         <div className='webform-submission-information__supportlinks'>
           <Button
             iconStart={<IconPrinter />}
@@ -58,11 +66,8 @@ export const FormSummary = ({
         </div>
         <div>
           <h5>{Drupal.t('Application statuses', {}, {context: 'Grants application: Submitted form'})}</h5>
-          {avus2Data?.statusUpdates?.length && <ul className='application-status-history'>
-            {avus2Data.statusUpdates.map((statusUpdate) => {
-              const date = new Date(statusUpdate.timeCreated);
-              return <li>{`${StatusLabels[statusUpdate.citizenCaseStatus]}: ${date.toLocaleDateString('fi')}`}</li>;
-              })}
+          {statuses?.length && <ul className='application-status-history'>
+            {statuses.map((status) => <li>{status}</li>)}
           </ul>}
         </div>
         <div>
@@ -70,7 +75,7 @@ export const FormSummary = ({
           {avus2Data?.attachmentsInfo?.attachmentsArray?.length && <ul className='application-attachment-list'>
             {avus2Data.attachmentsInfo.attachmentsArray.map(attachment => {
                 const [description, name] = attachment;
-                return <li>{`${description.value ? `${description.value}: ` : ''}${name.value}`}</li>;
+                return <li>{`${description.value ? `${description.value}, ` : ''}${name.value}`}</li>;
             })}
           </ul>}
         </div>

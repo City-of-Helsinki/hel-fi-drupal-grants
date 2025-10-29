@@ -1,0 +1,602 @@
+{
+  "json.path.to.target": {
+    "#tip": "this is just an example",
+    "skip": true,
+    "datasource": "form_data",
+    "source": "json.path.to.source.data",
+    "mapping_type": "default",
+    "data": {
+    }
+  },
+
+  "compensation.compensationInfo.compensationArray.0.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "subventionType",
+        "label": "Avustuslaji",
+        "value": "15",
+        "valueType": "string"
+      }
+    }
+  },
+
+  "compensation.compensationInfo.compensationArray.0.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "amount",
+        "value": "0",
+        "valueType": "float",
+        "label": null
+      }
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherCompensationsArray.0": {
+    "datasource": "form_data",
+    "source": "empty",
+    "mapping_type": "empty",
+    "data": {}
+  },
+
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherCompensationsTotal",
+        "value": "0",
+        "valueType": "double",
+        "label": null
+      }
+    }
+  },
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherAppliedCompensationsTotal",
+        "value": "0",
+        "valueType": "double",
+        "label": null
+      }
+    }
+  },
+
+  "compensation.applicantInfoArray.0": {
+    "datasource": "custom",
+    "source": "applicant_type_id",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicantType",
+      "label": "Hakijan tyyppi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantInfoArray.1": {
+    "datasource": "company",
+    "source": "identifier",
+    "mapping_type": "default",
+    "data": {
+      "ID": "companyNumber",
+      "label": "Y-Tunnus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantInfoArray.2": {
+    "datasource": "custom",
+    "source": "registration_date",
+    "mapping_type": "default",
+    "data": {
+      "ID": "registrationDate",
+      "label": "Rekisteröimispäivä",
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.applicantInfoArray.3": {
+    "datasource": "grants_profile_array",
+    "source": "foundingYear",
+    "mapping_type": "default",
+    "data": {
+      "ID": "foundingYear",
+      "label": "Perustamisvuosi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantInfoArray.4": {
+    "datasource": "grants_profile_array",
+    "source": "companyHome",
+    "mapping_type": "default",
+    "data": {
+      "ID": "home",
+      "label": "Kotipaikka",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantInfoArray.5": {
+    "datasource": "grants_profile_array",
+    "source": "companyHomePage",
+    "mapping_type": "default",
+    "data": {
+      "ID": "homePage",
+      "label": "www-sivut",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantInfoArray.6": {
+    "datasource": "grants_profile_array",
+    "source": "companyName",
+    "mapping_type": "default",
+    "data": {
+      "ID": "communityOfficialName",
+      "label": "Yhteisön nimi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantInfoArray.7": {
+    "datasource": "grants_profile_array",
+    "source": "companyNameShort",
+    "mapping_type": "default",
+    "data": {
+      "ID": "communityOfficialNameShort",
+      "label": "Yhteisön lyhenne",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantInfoArray.8": {
+    "datasource": "form_data",
+    "source": "applicant_info.applicant_email.email",
+    "mapping_type": "default",
+    "data": {
+      "ID": "email",
+      "label": "Sähköpostiosoite",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.compensationsInfo.compensationArray.0": {
+    "#tip1": "tää voi olla valinta tai kovakoodattu lomakkeella 58",
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.0.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "subventionType",
+      "label": "Avustuslajin koodi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationsInfo.compensationArray.1": {
+    "#tip": "todo todo todo",
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Avustuslajin summa",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.applicantOfficialsArray.0.0": {
+    "datasource": "custom",
+    "source": "selected_community_official.name",
+    "mapping_type": "default",
+    "data": {
+      "ID": "name",
+      "label": "Nimi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantOfficialsArray.0.1": {
+    "datasource": "custom",
+    "source": "selected_community_official.role",
+    "mapping_type": "default",
+    "data": {
+      "ID": "role",
+      "label": "Rooli",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.applicantOfficialsArray.0.2": {
+    "datasource": "custom",
+    "source": "selected_community_official.email",
+    "mapping_type": "default",
+    "data": {
+      "ID": "email",
+      "label": "Sähköposti",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantOfficialsArray.0.3": {
+    "datasource": "custom",
+    "source": "selected_community_official.phone",
+    "mapping_type": "default",
+    "data": {
+      "ID": "phone",
+      "label": "Puhelinnumero",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.currentAddressInfoArray.0": {
+    "datasource": "form_data",
+    "source": "applicant_info.contact_person_info.contact_person",
+    "mapping_type": "default",
+    "data": {
+      "ID": "contactPerson",
+      "label": "Yhteyshenkilö",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.1": {
+    "datasource": "form_data",
+    "source": "applicant_info.contact_person_info.contact_person_phone_number",
+    "mapping_type": "default",
+    "data": {
+      "ID": "phoneNumber",
+      "label": "Puhelinnumero",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.2": {
+    "datasource": "custom",
+    "source": "selected_address.street",
+    "mapping_type": "default",
+    "data": {
+      "ID": "street",
+      "label": "Lähiosoite",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.3": {
+    "datasource": "custom",
+    "source": "selected_address.city",
+    "mapping_type": "default",
+    "data": {
+      "ID": "city",
+      "label": "Kaupunki",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.4": {
+    "datasource": "custom",
+    "source": "selected_address.postCode",
+    "mapping_type": "default",
+    "data": {
+      "ID": "postCode",
+      "label": "Postinumero",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.5": {
+    "datasource": "custom",
+    "source": "selected_address.country",
+    "mapping_type": "default",
+    "data": {
+      "ID": "country",
+      "label": "Maa",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+
+  "compensation.applicationInfoArray.0": {
+    "datasource": "form_settings",
+    "source": "settings.application_type",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicationType",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicationInfoArray.1": {
+    "datasource": "form_settings",
+    "source": "settings.application_type_id",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicationTypeID",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicationInfoArray.2": {
+    "datasource": "custom",
+    "source": "now",
+    "mapping_type": "default",
+    "data": {
+      "ID": "formTimeStamp",
+      "label": null,
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.applicationInfoArray.3": {
+    "#tip": "check ID52 webform submit.",
+    "datasource": "custom",
+    "source": "now",
+    "mapping_type": "default",
+    "data": {
+      "ID": "createdFormTimeStamp",
+      "label": null,
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.applicationInfoArray.4": {
+    "datasource": "custom",
+    "source": "now",
+    "mapping_type": "default",
+    "data": {
+      "ID": "submittedFormTimeStamp",
+      "label": null,
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.applicationInfoArray.5": {
+    "datasource": "custom",
+    "source": "application_number",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicationNumber",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicationInfoArray.6": {
+    "datasource": "custom",
+    "source": "status",
+    "mapping_type": "default",
+    "data": {
+      "ID": "status",
+      "label": "Hakemuksen tila",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicationInfoArray.7": {
+    "datasource": "form_data",
+    "source": "orienteering_maps_step.acting_year_section.acting_year",
+    "mapping_type": "default",
+    "data": {
+      "ID": "actingYear",
+      "label": "Vuosi, jolle haen avustusta",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+
+  "compensation.bankAccountArray.0": {
+    "#tip": "webform submission ID52 does not contain other bank information",
+    "datasource": "form_data",
+    "source": "applicant_info.bank_account.bank_account",
+    "mapping_type": "default",
+    "data": {
+      "ID": "accountNumber",
+      "label": "Tilinumero",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.benefitsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "loans",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.benefitsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "premises",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+
+  "compensation.activitiesInfoArray.0": {
+    "tip": "todo todo todo Tää pitää prefillaa react-lomakkeella, se data pitäs tulla jo settarien mukana",
+    "datasource": "form_data",
+    "source": "community_activity_step.community_activity_section.community_activity_description",
+    "data": {
+      "ID": "businessPurpose",
+      "label": "Toiminnan kuvaus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activitiesInfoArray.1": {
+    "#tip": "todo todo todo react palauttaa 'kyllä', pitää olla 'true', eli boolean stringinä",
+    "datasource": "form_data",
+    "source": "community_activity_step.community_activity_section.community_practices_business",
+    "mapping_type": "default",
+    "data": {
+      "ID": "communityPracticesBusiness",
+      "label": null,
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+
+  "compensation.additionalInformation": {
+    "datasource": "form_data",
+    "source": "attachments_step.additional_information_section.additional_information",
+    "mapping_type": "simple",
+    "data": {
+      "additionalInformation": ""
+    }
+  },
+
+  "compensation.senderInfoArray.0": {
+    "datasource": "user_profile",
+    "source": "myProfile.verifiedPersonalInformation.firstName",
+    "mapping_type": "default",
+    "data": {
+      "ID": "firstname",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.senderInfoArray.1": {
+    "datasource": "user_profile",
+    "source": "myProfile.verifiedPersonalInformation.lastName",
+    "mapping_type": "default",
+    "data": {
+      "ID": "lastname",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.senderInfoArray.2": {
+    "datasource": "user_profile",
+    "source": "myProfile.verifiedPersonalInformation.nationalIdentificationNumber",
+    "mapping_type": "default",
+    "data": {
+      "ID": "personID",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.senderInfoArray.3": {
+    "datasource": "user",
+    "source": "sub",
+    "mapping_type": "default",
+    "data": {
+      "ID": "userID",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.senderInfoArray.4": {
+    "datasource": "user",
+    "source": "email",
+    "mapping_type": "default",
+    "data": {
+      "ID": "email",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.attachmentsInfo.attachmentsArray.generalInfoArray.extraInfo": {
+    "#tip": "attachment extra info",
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.extra_info",
+    "mapping_type": "default",
+    "data": {
+      "ID": "extraInfo",
+      "label": "Lisäselvitys liitteistä",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.orienteeringMapInfo.orienteeringMapsArray.0.n": {
+    "datasource": "form_data",
+    "source": "orienteering_maps_step.orienteering_subvention.orienteering_maps",
+    "mapping_type": "multiple_values",
+    "data": {
+      "mapName": {
+        "ID": "mapName",
+        "label": "Kartan nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "size": {
+        "ID": "size",
+        "label": "Koko",
+        "value": "",
+        "valueType": "double"
+      },
+      "voluntaryHours": {
+        "ID": "voluntaryHours",
+        "label": "Talkootyö",
+        "value": "",
+        "valueType": "float"
+      },
+      "cost": {
+        "ID": "cost",
+        "label": "Kustannukset",
+        "value": "",
+        "valueType": "double"
+      },
+      "otherCompensation": {
+        "ID": "otherCompensations",
+        "label": "Muilta saadut avustukset",
+        "value": "",
+        "valueType": "double"
+      }
+    }
+  },
+
+  "attachmentsInfo.attachmentsArray.0.0.description": {
+    "#tip": "file description",
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.other_attachment_fieldset.description",
+    "mapping_type": "default",
+    "data": {
+      "ID": "description",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "attachmentsInfo.attachmentsArray.0.0": {
+    "#tip": "file mapping",
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.other_attachment_fieldset.file",
+    "mapping_type": "file",
+    "data": {}
+  }
+
+}

@@ -599,7 +599,7 @@
               "title": "community_rules.title",
               "type": "object",
               "properties": {
-                "file": {
+                "community_rules_file": {
                   "title": "file.title",
                   "type": "string",
                   "properties": {
@@ -635,7 +635,7 @@
               "title": "confirmed_financial_statements.title",
               "type": "object",
               "properties": {
-                "file": {
+                "confirmed_financial_statements_file": {
                   "title": "file.title",
                   "type": "string",
                   "properties": {
@@ -671,7 +671,7 @@
               "title": "confirmed_annual_report.title",
               "type": "object",
               "properties": {
-                "file": {
+                "confirmed_annual_report_file": {
                   "title": "file.title",
                   "type": "string",
                   "properties": {
@@ -707,7 +707,7 @@
               "title": "confirmed_audit_report.title",
               "type": "object",
               "properties": {
-                "file": {
+                "confirmed_audit_report_file": {
                   "title": "file.title",
                   "type": "string",
                   "properties": {
@@ -743,7 +743,7 @@
               "title": "action_plan.title",
               "type": "object",
               "properties": {
-                "file": {
+                "action_plan_file": {
                   "title": "file.title",
                   "type": "string",
                   "properties": {
@@ -779,7 +779,7 @@
               "title": "lease_agreement.title",
               "type": "object",
               "properties": {
-                "file": {
+                "lease_agreement_file": {
                   "title": "file.title",
                   "type": "string",
                   "properties": {
@@ -815,7 +815,7 @@
               "title": "budget.title",
               "type": "object",
               "properties": {
-                "file": {
+                "budget_file": {
                   "title": "file.title",
                   "type": "string",
                   "properties": {
@@ -855,7 +855,7 @@
               "title": "other_attachment_fieldset.title",
               "type": "object",
               "properties": {
-                "file": {
+                "other_attachment_fieldset_file": {
                   "title": "file.title",
                   "type": "object",
                   "properties": {

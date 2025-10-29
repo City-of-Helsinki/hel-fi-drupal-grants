@@ -10,19 +10,19 @@ import { useTranslation } from 'react-i18next';
 import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
 import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
+import { findFieldsOfType, isDraft, keyErrorsByStep } from '../utils';
 import { FormActions } from '../components/FormActions/FormActions';
-import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, getSubmitStatusAtom, setErrorsAtom } from '../store';
-import { findFieldsOfType, keyErrorsByStep } from '../utils';
+import { FormSummary } from '../components/FormSummary';
+import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, isBeingSubmittedAtom, isReadOnlyAtom, setErrorsAtom } from '../store';
+import { InvalidSchemaError } from '../errors/InvalidSchemaError';
+import { localizeErrors } from '../localizeErrors';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
-import { SubmitStates } from '../enum/SubmitStates';
-import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect, RadioWidget } from '../components/Input';
-import { localizeErrors } from '../localizeErrors';
-import { TextParagraph } from '../components/Fields/TextParagraph';
 import { SubmittedForm } from '../components/SubmittedForm';
-import { Terms } from '../components/Terms';
 import { SubventionTable } from '../components/Fields/SubventionTable';
-import { InvalidSchemaError } from '../errors/InvalidSchemaError';
+import { Terms } from '../components/Terms';
+import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect, RadioWidget } from '../components/Input';
+import { TextParagraph } from '../components/Fields/TextParagraph';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -63,9 +63,10 @@ export const RJSFFormContainer = ({
   const { t } = useTranslation();
   const [invalidSchemaError, setInvalidSchemaError] = useState<InvalidSchemaError | null>(null);
   const subventionFields = useMemo(() => Array.from(findFieldsOfType(uiSchema, 'subventionTable')), [uiSchema]); 
-  const setFormData = useSetAtom(formDataAtom)
-  const submitStatus = useAtomValue(getSubmitStatusAtom);
+  const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
+  const readOnly = useAtomValue(isReadOnlyAtom);
+  const setIsSubmitting = useSetAtom(isBeingSubmittedAtom);
   const formRef = createRef<Form>();
   const readCurrentStep = useAtomCallback(
     useCallback(get =>  get(getCurrentStepAtom), [])
@@ -168,7 +169,7 @@ export const RJSFFormContainer = ({
       const _field = field.split('.').reduce((acc, curr) => acc && acc[curr], errors);
       const hasValues = values ? Object.entries(values).reduce((acc, [key, curr]) => acc || Number(curr[1].value) > 0, false) : false;
 
-      if (!hasValues) {
+      if (_field && !hasValues) {
         _field.addError(t('subvention.greater_than_zero'));
         newErrors.push({
           property: `.${field}`,
@@ -184,17 +185,21 @@ export const RJSFFormContainer = ({
     return errors;
   };
 
-  const readonly = submitStatus !== SubmitStates.DRAFT
-
   return <>
       {
-        !readonly && <>
+       !readOnly && <>
           <ErrorsList />
           <Stepper formRef={formRef} />
         </>
       }
       <div className='form-wrapper'>
-        {readonly ?
+        {!isDraft() && (
+          <FormSummary
+            formData={readFormData()}
+            schema={schema}
+          />
+        )}
+        {readOnly ?
           <SubmittedForm formData={readFormData()} schema={schema} /> :
           <StaticStepsContainer
             formDataAtom={formDataAtom}
@@ -217,6 +222,7 @@ export const RJSFFormContainer = ({
           onChange={browserCacheData}
           onError={onError}
           onSubmit={async (data, event: React.FormEvent<HTMLFormElement>) => {
+            setIsSubmitting(true);
             event.preventDefault();
 
             if (readCurrentStep()[1].id !== 'preview') {
@@ -228,8 +234,11 @@ export const RJSFFormContainer = ({
             if (passes) {
               submitData(data.formData);
             }
+            else {
+              setIsSubmitting(false);
+            }
           }}
-          readonly={readonly}
+          readonly={readOnly}
           ref={formRef}
           schema={schema}
           showErrorList={false}
@@ -255,11 +264,10 @@ export const RJSFFormContainer = ({
           widgets={widgets}
         >
           <Terms />
-          {!readonly && <FormActions
-              saveDraft={() => saveDraft(readFormData())}
-              validatePartialForm={validatePartialForm}
-            />
-          }
+          <FormActions
+            saveDraft={() => saveDraft(readFormData())}
+            validatePartialForm={validatePartialForm}
+          />
         </Form>
       </div>
     </>;

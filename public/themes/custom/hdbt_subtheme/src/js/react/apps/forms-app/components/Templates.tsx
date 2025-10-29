@@ -120,7 +120,7 @@ export const ObjectFieldTemplate = ({
 }: ObjectFieldTemplateProps) => {
   const { _isSection, _step, description, title } = schema;
   const steps = useAtomValue(formStepsAtom);
-  const [stepIndex, { id: stepId }] = useAtomValue(getCurrentStepAtom);
+  const [stepIndex, { id: stepId, label: stepLabel }] = useAtomValue(getCurrentStepAtom);
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (idSchema.$id === 'root') {
@@ -158,7 +158,7 @@ export const ObjectFieldTemplate = ({
         {
           stepId === 'applicant_info' &&
           <section className='prh-content-block'>
-            <h3 className='prh-content-block__title'>Placeholder title</h3>
+            <h3 className='prh-content-block__title'>{stepLabel}</h3>
             <p>
               {Drupal.t('The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question.')}
             </p>
