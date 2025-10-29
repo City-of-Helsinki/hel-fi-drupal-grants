@@ -148,7 +148,7 @@ elements: |
     '#prev_button_label': 'Tidigare'
     '#next_button_label': 'Nästa'
   yhdistyksen_jasenmaara_tai_aktiivisesti_toimintaan_osallistuvien:
-    '#title': 'Antal aktiva deltagare eller medlemmar i föreningen'
+    '#title': 'Aktiva deltagare/medlemmar'
   jasenmaara_fieldset:
     '#title': 'Aktiva deltagare/medlemmar'
     '#help': '<p>Ange här de personer som aktivt deltar i föreningens verksamhet och/eller är medlemmar</p>'
