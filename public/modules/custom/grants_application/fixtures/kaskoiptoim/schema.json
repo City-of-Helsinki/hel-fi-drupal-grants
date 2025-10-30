@@ -94,11 +94,35 @@
         "location_held_in_provided_space": {
           "title": "location_held_in_provided_space.title",
           "enum": [
-            "boolean.no",
-            "boolean.yes"
+            false,
+            true
           ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "location_held_in_provided_space": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "unprovided_space_details": {
+                "title": "123",
+                "properties": {
+                  "asd": {
+                    "title": "123",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "_other_compensation_item": {
       "type": "object",
@@ -132,6 +156,12 @@
       }
     },
     "grant_info_step": {
+      "required": [
+        "acting_year_section",
+        "purpose_section",
+        "other_compensations_section",
+        "prior_benefits_usage_section"
+      ],
       "properties": {
         "acting_year_section": {
           "title": "acting_year_section.title",
@@ -160,8 +190,7 @@
                 }
               ]
             }
-          },
-          "required": ["subventions"]
+          }
         },
         "purpose_section": {
           "title": "purpose_section.title",
@@ -181,21 +210,13 @@
           "properties": {
             "have_received_other_compensations": {
               "title": "have_received_other_compensations.title",
-              "type": "boolean",
-              "oneOf": [
-                {
-                  "const": false,
-                  "title": "boolean.no"
-                },
-                {
-                  "const": true,
-                  "title": "boolean.yes"
-                }
-              ],
-              "default": false
+              "enum": [
+                false,
+                true
+              ]
             }
           },
-          "required": ["have_received_other_compensations"],
+          "required": ["have_received_other_compensations", "other_compensations"],
           "allOf": [
             {
               "if": {
@@ -250,18 +271,10 @@
           "properties": {
             "have_received_prior_compensations": {
               "title": "have_received_prior_compensations.title",
-              "type": "boolean",
-              "oneOf": [
-                {
-                  "const": false,
-                  "title": "have_received_prior_compensations.no"
-                },
-                {
-                  "const": true,
-                  "title": "have_received_prior_compensations.yes"
-                }
-              ],
-              "default": false
+              "enum": [
+                false,
+                true
+              ]
             }
           },
           "required": ["have_received_prior_compensations"],
@@ -270,7 +283,7 @@
               "if": {
                 "properties": {
                   "have_received_prior_compensations": {
-                    "const": "have_received_prior_compensations.yes"
+                    "const": true
                   }
                 }
               },
@@ -301,8 +314,8 @@
             "community_practices_business": {
               "title": "community_practices_business.title",
               "enum": [
-                "boolean.yes",
-                "boolean.no"
+                true,
+                false
               ]
             }
           },
@@ -479,7 +492,7 @@
         "benefit_usage_other_expenditure_section": {
           "title": "benefit_usage_other_expenditure_section.title",
           "type": "object",
-          "proeprties": {
+          "properties": {
             "management_office_expenses": {
               "title": "management_office_expenses.title",
               "type": "integer"

@@ -318,6 +318,7 @@ export const RadioWidget = ({
   required,
   value,
   uiSchema,
+  ...rest
 }: WidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
@@ -334,15 +335,13 @@ export const RadioWidget = ({
           type="info"
         />
       )}
-      <Fieldset
-        id={id}
-        heading={`${label}${required ? ' *' : ''}`}
-      >
+      <Fieldset heading={`${label}${required ? ' *' : ''}`}>
         {options?.enumOptions?.map((option: any) => {
-          const optionId = `${id}-${option.value}`;
+          const optionId = `${id}_${option.value}`;
 
           return <RadioButton
             checked={option.value === value}
+            focusable
             id={optionId}
             key={optionId}
             label={option.label}

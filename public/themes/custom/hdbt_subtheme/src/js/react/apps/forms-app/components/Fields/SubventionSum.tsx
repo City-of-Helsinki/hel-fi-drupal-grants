@@ -6,8 +6,10 @@ import { formDataAtomRef, getSubventionFieldsAtom } from '../../store';
 import { getSubventionSum } from '../../utils';
 
 export const SubventionSum = ({
-  id,
+  idSchema,
   name,
+  schema,
+  ...rest
 }: FieldProps) => {
   const fields = useAtomValue(getSubventionFieldsAtom);
   const formDataAtom = useAtomValue(formDataAtomRef);
@@ -17,11 +19,9 @@ export const SubventionSum = ({
 
   return <TextInput
     disabled
-    label={name}
+    id={idSchema.$id}
+    label={schema?.title}
     value={sum}
-    {...{
-      id, 
-      name,
-    }}
+    name={name}
   />;
 };

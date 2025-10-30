@@ -7,20 +7,19 @@
     },
     "purpose_section": {
       "purpose": {
-        "ui:widget": "textarea",
-        "ui:condition": {
-          "field": "have_received_other_compensations",
-          "value": true,
-          "operator": "all"
-        }
+        "ui:widget": "textarea"
       }
     },
     "other_compensations_section": {
       "have_received_other_compensations": {
-        "ui:widget": "radio",
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
         "ui:options": {
           "affirmativeExpands": true
-        }
+        },
+        "ui:widget": "radio"
       },
       "other_compensations": {
         "other_compensation_description": {
@@ -40,6 +39,10 @@
     },
     "prior_benefits_usage_section": {
       "have_received_prior_compensations": {
+        "ui:enumNames": [
+          "have_received_prior_compensations.no",
+          "have_received_prior_compensations.yes"
+        ],
         "ui:widget": "radio",
         "ui:options": {
           "affirmativeExpands": true
@@ -60,7 +63,27 @@
         "ui:widget": "textarea"
       },
       "community_practices_business": {
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
         "ui:widget": "radio"
+      }
+    },
+    "locations_info_section": {
+      "locations_info": {
+        "items": {
+          "location_held_in_provided_space": {
+            "ui:enumNames": [
+              "boolean.no",
+              "boolean.yes"
+            ],
+            "ui:options": {
+              "affirmativeExpands": true
+            },
+            "ui:widget": "radio"
+          }
+        }
       }
     }
   },
