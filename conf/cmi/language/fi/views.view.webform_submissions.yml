@@ -1,5 +1,7 @@
+label: Verkkolomakelähetykset
 display:
   default:
+    display_title: Oletus
     display_options:
       exposed_form:
         options:
@@ -43,7 +45,6 @@ display:
           exception:
             title: Kaikki
       title: Verkkolomakelähetykset
-    display_title: Oletus
   embed_administer:
     display_options:
       fields:
@@ -161,4 +162,3 @@ display:
         in_draft:
           expose:
             label: 'Is draft'
-label: Verkkolomakelähetykset
