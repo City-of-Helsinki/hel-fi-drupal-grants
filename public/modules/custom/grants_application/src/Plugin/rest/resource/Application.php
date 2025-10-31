@@ -425,8 +425,6 @@ final class Application extends ResourceBase {
     // @todo Add SUBMITTED status here probably.
     //$document->setStatus('SUBMITTED');
 
-    $this->atvService
-
     // @codingStandardsIgnoreStart
     // Update the atv document before sending to integration.
     // Lets try a way to hold on to the document data.
