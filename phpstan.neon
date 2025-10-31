@@ -95,26 +95,6 @@ parameters:
       path: public/modules/custom/helfi_atv/tests/src/Kernel/RequestTest.php
 
     -
-      message: "#^Call to method fromYamlFile\\(\\) on an unknown class League\\\\OpenAPIValidation\\\\PSR7\\\\ValidatorBuilder\\.$#"
-      count: 1
-      path: public/modules/custom/helfi_atv/tests/src/Kernel/RequestTest.php
-
-    -
-      message: "#^Call to method validate\\(\\) on an unknown class League\\\\OpenAPIValidation\\\\PSR7\\\\RequestValidator\\.$#"
-      count: 2
-      path: public/modules/custom/helfi_atv/tests/src/Kernel/RequestTest.php
-
-    -
-      message: "#^Instantiated class League\\\\OpenAPIValidation\\\\PSR7\\\\ValidatorBuilder not found\\.$#"
-      count: 1
-      path: public/modules/custom/helfi_atv/tests/src/Kernel/RequestTest.php
-
-    -
-      message: "#^Property Drupal\\\\Tests\\\\helfi_atv\\\\Kernel\\\\RequestTest\\:\\:\\$validator has unknown class League\\\\OpenAPIValidation\\\\PSR7\\\\RequestValidator as its type\\.$#"
-      count: 2
-      path: public/modules/custom/helfi_atv/tests/src/Kernel/RequestTest.php
-
-    -
       message: "#^Method Drupal\\\\helfi_audit_log\\\\Event\\\\AuditLogEvent\\:\\:isValid\\(\\) should return bool but returns string\\.$#"
       count: 1
       path: public/modules/custom/helfi_audit_log/src/Event/AuditLogEvent.php
