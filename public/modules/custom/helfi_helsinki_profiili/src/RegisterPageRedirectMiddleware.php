@@ -57,7 +57,7 @@ class RegisterPageRedirectMiddleware implements HttpKernelInterface {
   /**
    * {@inheritdoc}
    */
-  public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = TRUE): RedirectResponse|Response {
+  public function handle(Request $request, $type = self::MAIN_REQUEST, $catch = TRUE): RedirectResponse|Response {
 
     $url = $request->getRequestUri();
     $language = $this->languageManager->getCurrentLanguage()->getId();

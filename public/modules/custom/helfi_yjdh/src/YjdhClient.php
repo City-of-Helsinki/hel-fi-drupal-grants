@@ -63,7 +63,7 @@ class YjdhClient {
   /**
    * Endpoint urls for service distinction.
    *
-   * @var \string[][]
+   * @var array<string, array<int, string>>
    */
   protected array $endpoints;
 
@@ -310,7 +310,7 @@ class YjdhClient {
 
     $endExplode = explode('/', $endpoint);
 
-    $thisUrl = '';
+    $thisUrl = $resultName = '';
     $thisAuth = [];
 
     if ($thisService == 'ytj') {
