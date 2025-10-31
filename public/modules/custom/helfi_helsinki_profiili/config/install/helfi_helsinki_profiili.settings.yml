@@ -1,0 +1,9 @@
+roles:
+  hp_user_roles:
+    - 'helsinkiprofiili_vahva'
+    - 'helsinkiprofiili_heikko'
+  admin_user_roles:
+    - 'verkkolomake_hallinnoija'
+clients:
+  hp_user_client: 'tunnistamo'
+  hp_admin_client: 'tunnistamoadmin'
