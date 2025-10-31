@@ -221,17 +221,17 @@ export const BankAccountSelect = (props: WidgetProps) => {
 }
 
 const roleMap = new Map([
-  [1, Drupal.t('Chairperson', [], { context: 'grants_profile' })],
-  [2, Drupal.t('Contact person', [], { context: 'grants_profile' }),],
-  [3, Drupal.t('Other', [], { context: 'grants_profile' })],
-  [4, Drupal.t('Treasurer', [], { context: 'grants_profile' })],
-  [5, Drupal.t('Auditor', [], { context: 'grants_profile' })],
-  [7, Drupal.t('Secretary', [], { context: 'grants_profile' })],
-  [8, Drupal.t('Deputy chairperson', [], { context: 'grants_profile' }),],
-  [9, Drupal.t('Chief executive officer', [], { context: 'grants_profile' })],
-  [10, Drupal.t('Producer', [], { context: 'grants_profile' })],
-  [11, Drupal.t('Responsible person', [], { context: 'grants_profile' })],
-  [12, Drupal.t('Executive director', [], { context: 'grants_profile' })],
+  [1, Drupal.t('Chairperson', {}, { context: 'grants_profile' })],
+  [2, Drupal.t('Contact person', {}, { context: 'grants_profile' }),],
+  [3, Drupal.t('Other', {}, { context: 'grants_profile' })],
+  [4, Drupal.t('Treasurer', {}, { context: 'grants_profile' })],
+  [5, Drupal.t('Auditor', {}, { context: 'grants_profile' })],
+  [7, Drupal.t('Secretary', {}, { context: 'grants_profile' })],
+  [8, Drupal.t('Deputy chairperson', {}, { context: 'grants_profile' }),],
+  [9, Drupal.t('Chief executive officer', {}, { context: 'grants_profile' })],
+  [10, Drupal.t('Producer', {}, { context: 'grants_profile' })],
+  [11, Drupal.t('Responsible person', {}, { context: 'grants_profile' })],
+  [12, Drupal.t('Executive director', {}, { context: 'grants_profile' })],
 ]);
 
 /**
