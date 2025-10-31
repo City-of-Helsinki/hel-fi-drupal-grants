@@ -148,12 +148,12 @@ class JsonMapper {
 
     $sourceValues = $this->getMultipleValues($dataSources[$definition['datasource']], $sourcePath);
 
-    // Source value contains multiple objects with contains multiple fields.
+    // Source value contains multiple objects which contains multiple fields.
     foreach ($sourceValues as $singleObject) {
       $values = [];
       foreach ($singleObject as $fieldName => $value) {
         $valueArray = $definition['data'][$fieldName];
-        $valueArray['value'] = $value;
+        $valueArray['value'] = (string) $value ?? "";
         $values[] = $valueArray;
       }
       $this->setTargetValue($data, $targetPath, $values, $definition);
@@ -433,7 +433,7 @@ class JsonMapper {
     GrantsProfile $grantsProfile,
     FormSettings $formSettings,
     string $applicationNumber,
-    string $applicantType,
+    string $applicantTypeId,
   ): array {
 
     $community_official_uuid = $formData['applicant_info']['community_officials']['community_officials'][0]['official'];
@@ -448,13 +448,6 @@ class JsonMapper {
       // User has deleted the community official and exception occurs.
       throw $e;
     }
-
-    $types = [
-      'unregistered_community' => 1,
-      'registered_community' => 2,
-      'todo_the_third_one' => 3,
-    ];
-    $applicantTypeId = $types[$applicantType] ?? 0;
 
     // Any data can be added here, and it is accessible by the mapper.
     $custom = [
@@ -514,6 +507,9 @@ class JsonMapper {
    */
   private function handleFile(&$data, array $definition, string $targetPath, array $dataSources): void {
     $value = $this->getValue($dataSources[$definition['datasource']], $definition['source']);
+    if (!$value) {
+      return;
+    }
     $fileData = $this->createSingleFileData($value);
     $this->setTargetValue($data, $targetPath, $fileData, $definition);
   }

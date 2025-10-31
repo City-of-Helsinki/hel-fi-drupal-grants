@@ -285,7 +285,7 @@ final class Application extends ResourceBase {
     // Update the ATV document one last time before sending to integration.
     // Send to integration.
     // Update the custom submission entity.
-    // Check if the bank file is already added to the ATV document.
+    // Start: Check if the bank file is already added to the ATV document.
     $selected_bank_account_number = $form_data["applicant_info"]["bank_account"]["bank_account"];
     $bank_file = FALSE;
     // @todo Add file type check as well (filetype = 45 etc).
@@ -320,9 +320,27 @@ final class Application extends ResourceBase {
         // File does not exist in atv? Should not be possible.
       }
       if ($actual_file) {
-        // @todo Some users may get 403 from this one, ask Jere for more information.
-        $this->atvService->addAttachment($document->getId(), $bank_confirmation_file_array['filename'], $actual_file);
+        $this->atvService->addAttachment(
+          $document->getId(),
+          $bank_confirmation_file_array['filename'],
+          $actual_file,
+        );
         $actual_file->delete();
+        // @todo Add ATT_HANDLER_OK event here probably.
+      }
+
+      // After uploading the bank file, reload the document to verify that it exists.
+      $document = $this->atvService->getDocument($application_number);
+      foreach ($grants_profile_data->getBankAccounts() as $bank_account) {
+        $bank_file = array_find(
+          $document->getAttachments(),
+          fn(array $attachment) => $bank_account['confirmationFile'] === $attachment['filename']);
+      }
+
+      // This should not be possible.
+      if (!$bank_file) {
+        $this->logger->error('User is unable to upload bank file to document or race condition.');
+        // We just uploaded it but
       }
     }
 
@@ -352,8 +370,11 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Unable to combine datasources, bad atv-connection maybe?
-      // @todo Proper error message to react.
-      return new JsonResponse([], 500);
+      $this->logger->error('Error while sending the application for the first time: ' . $e->getMessage());
+      return new JsonResponse(
+        ['error' => $this->stringTranslation->translate('An error occurred while sending the application. Please try again later.')],
+        500,
+      );
     }
 
     $document_data = $mapper->map($dataSources);
@@ -400,6 +421,11 @@ final class Application extends ResourceBase {
     if ($document->getContent()['events']) {
       $document_data['events'] = $document->getContent()['events'];
     }
+
+    // @todo Add SUBMITTED status here probably.
+    //$document->setStatus('SUBMITTED');
+
+    $this->atvService
 
     // @codingStandardsIgnoreStart
     // Update the atv document before sending to integration.

@@ -206,7 +206,6 @@ final class DraftApplication extends ResourceBase {
     else {
       $response['form_data'] = $document_content['form_data'] ?? $document_content['compensation']['form_data'];
     }
-
     // @todo Only return required user data to frontend
     $response['grants_profile'] = $grants_profile_data->toArray();
     $response['user_data'] = $user_information;
