@@ -1,0 +1,11 @@
+name: Helsinki-profiili
+type: module
+description: Integrate Helsinkiprofiili data to Drupal user
+package: Hel.fi
+core_version_requirement: ^9 || ^10
+dependencies:
+  - helfi_tunnistamo
+  - openid_connect
+
+'interface translation project': helfi_helsinki_profiili
+'interface translation server pattern': modules/contrib/helfi_helsinki_profiili/translations/%language.po

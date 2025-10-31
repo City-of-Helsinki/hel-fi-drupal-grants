@@ -1,0 +1,19 @@
+services:
+  logger.channel.helfi_audit_log:
+    parent: logger.channel_base
+    arguments: [ 'helfi_audit_log' ]
+  helfi_audit_log.audit_log:
+    class: Drupal\helfi_audit_log\AuditLogService
+    arguments: [
+      '@current_user',
+      '@database',
+      '@datetime.time',
+      '@request_stack',
+      '@event_dispatcher',
+      '@logger.channel.helfi_audit_log'
+    ]
+  helfi_audit_log.audit_log_event_subscriber:
+    class: Drupal\helfi_audit_log\EventSubscriber\AuditLogEventSubscriber
+    arguments: [ '@helfi_audit_log.audit_log', '@logger.channel.helfi_audit_log' ]
+    tags:
+      - { name: event_subscriber }

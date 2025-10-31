@@ -119,6 +119,9 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertTrue($mappedData['compensation']['budgetInfo']['hardcoded2'][0]['hardcoded'] == 'object');
   }
 
+  /**
+   * Tests file mapping.
+   */
   public function testFileMapping(): void {
     $defaultMappings = $this->getMapping('mappings.json');
     $dataSources = $this->getAllDatasources('fileFieldForm.json');

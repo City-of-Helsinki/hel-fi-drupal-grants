@@ -1,0 +1,5 @@
+name: Helfi YJDH
+type: module
+description: Integrates YJDH service to Drupal
+package: Custom
+core_version_requirement: ^9 || ^10
