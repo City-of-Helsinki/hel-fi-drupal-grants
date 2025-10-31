@@ -94,9 +94,10 @@
         "location_held_in_provided_space": {
           "title": "location_held_in_provided_space.title",
           "enum": [
-            false,
-            true
-          ]
+            true,
+            false
+          ],
+          "default": true
         }
       },
       "allOf": [
@@ -111,10 +112,17 @@
           "then": {
             "properties": {
               "unprovided_space_details": {
-                "title": "123",
                 "properties": {
-                  "asd": {
-                    "title": "123",
+                  "unprovided_rent_amount": {
+                    "title": "unprovided_rent_amount.title",
+                    "type": "string"
+                  },
+                  "unprovided_rent_time_start": {
+                    "title": "unprovided_rent_time_start.title",
+                    "type": "string"
+                  },
+                  "unprovided_rent_time_end": {
+                    "title": "unprovided_rent_time_end.title",
                     "type": "string"
                   }
                 }

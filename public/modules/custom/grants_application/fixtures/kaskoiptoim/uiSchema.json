@@ -75,12 +75,9 @@
         "items": {
           "location_held_in_provided_space": {
             "ui:enumNames": [
-              "boolean.no",
-              "boolean.yes"
+              "boolean.yes",
+              "boolean.no"
             ],
-            "ui:options": {
-              "affirmativeExpands": true
-            },
             "ui:widget": "radio"
           }
         }

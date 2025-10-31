@@ -110,6 +110,9 @@
       "subventions.1.title": "Operating grant",
       "subventions.title": "Grants",
       "travel.title": "Travel costs (€)",
+      "unprovided_rent_amount.title": "Total Rent (€)",
+      "unprovided_rent_time_start.title": "Rent time begin",
+      "unprovided_rent_time_end.title": "Rent time end",
       "usage_of_benefits_section.title": "Avustuksen käyttö/Palveluiden ostot eriteltyinä",
       "water.title": "Water (€)"
     }
@@ -225,6 +228,9 @@
       "subventions.1.title": "Toiminta-avustus",
       "subventions.title": "Avustukset",
       "travel.title": "Matkakulut (€)",
+      "unprovided_rent_amount.title": "Euroa yhteensä lukuvuoden aikana (€)",
+      "unprovided_rent_time_start.title": "Vuokra-aika lukuvuoden aikana, alkaen",
+      "unprovided_rent_time_end.title": "Vuokra-aika lukuvuoden aikana, päättyen",
       "usage_of_benefits_section.title": "Avustuksen käyttö/Palveluiden ostot eriteltyinä",
       "water.title": "Vesi (€)"
     }
