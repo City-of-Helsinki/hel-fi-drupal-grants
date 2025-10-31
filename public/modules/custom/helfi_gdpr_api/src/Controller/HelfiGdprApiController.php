@@ -159,7 +159,7 @@ class HelfiGdprApiController extends ControllerBase {
     ClientInterface $httpClient,
     CurrentLanguageContext $currentLanguageContext,
     Connection $connection,
-    UserStorageInterface $userStorage
+    UserStorageInterface $userStorage,
   ) {
     $this->request = $request;
     $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;

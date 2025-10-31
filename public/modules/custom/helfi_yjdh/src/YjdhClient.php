@@ -101,7 +101,7 @@ class YjdhClient {
   public function __construct(
     ClientInterface $http_client,
     LoggerChannelFactoryInterface $logger_factory,
-    PrivateTempStoreFactory $tempstore
+    PrivateTempStoreFactory $tempstore,
   ) {
     $this->httpClient = $http_client;
     $this->logger = $logger_factory->get('yjdh_client');

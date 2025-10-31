@@ -22,7 +22,7 @@ class AuditLogService implements AuditLogServiceInterface {
   /**
    * Current user.
    *
-   * @var Drupal\Core\Session\AccountProxyInterface
+   * @var \Drupal\Core\Session\AccountProxyInterface
    */
   protected AccountProxyInterface $currentUser;
 
@@ -48,16 +48,16 @@ class AuditLogService implements AuditLogServiceInterface {
   protected Request $request;
 
   /**
-   * Event dispatcher.
+   * The event dispatcher.
    *
-   * @var \Symfony\Component\Request\EventDispatcherInterface
+   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
    */
   protected EventDispatcherInterface $eventDispatcher;
 
   /**
-   * Logger.
+   * The logger.
    *
-   * @var \Drupal\Core\Logger\LoggerInterface
+   * @var \Psr\Log\LoggerInterface
    */
   protected LoggerInterface $logger;
 
@@ -70,7 +70,7 @@ class AuditLogService implements AuditLogServiceInterface {
     TimeInterface $time,
     RequestStack $requestStack,
     EventDispatcherInterface $eventDispatcher,
-    LoggerInterface $logger
+    LoggerInterface $logger,
   ) {
     $this->currentUser = $accountProxy;
     $this->connection = $connection;
