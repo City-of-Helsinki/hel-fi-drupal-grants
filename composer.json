@@ -62,6 +62,7 @@
         "drupal/webform_views": "^5.2",
         "globalcitizen/php-iban": "^4.1",
         "guzzlehttp/guzzle": "^7",
+        "league/openapi-psr7-validator": "^0.22.0",
         "mglaman/composer-drupal-lenient": "*",
         "nesbot/carbon": "^2.64",
         "npm-asset/select2": "^4.0",
