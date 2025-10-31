@@ -1,0 +1,143 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Helfi Drupal AuditLog module.
+ */
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_schema().
+ */
+function helfi_audit_log_schema() {
+  $schema['helfi_audit_logs'] = [
+    'description' => 'Audit log',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique record ID.',
+      ],
+      'created_at' => [
+        'mysql_type' => 'timestamp',
+        'not null' => TRUE,
+        'description' => 'Timestamp when the record was created.',
+        'default' => '2023-06-28 12:00:00',
+      ],
+      'message' => [
+        'type' => 'text',
+        'not null' => TRUE,
+        'size' => 'normal',
+        'description' => 'JSON data for this event',
+      ],
+      'is_sent' => [
+        'description' => 'Is db entry sent to Elastic.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'created_at' => ['created_at'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Change to date format instead of int for created_at column.
+ */
+function helfi_audit_log_update_9100() {
+  // Default value is needed to avoid NOT NULL errors during update.
+  // Drupal does not offer easy way to use CURRENT_TIMESTAMP.
+  $spec = [
+    'mysql_type' => 'timestamp',
+    'not null' => TRUE,
+    'description' => 'Timestamp when the record was created.',
+    'default' => '2023-06-28 12:00:00',
+  ];
+  $schema = Database::getConnection()->schema();
+  $schema->dropField('helfi_audit_logs', 'created_at');
+  $schema->addField('helfi_audit_logs', 'created_at', $spec);
+  $indexSpec = [
+    'fields' => [
+      'created_at' => [
+        'mysql_type' => 'timestamp',
+        'not null' => TRUE,
+        'description' => 'Timestamp when the record was created.',
+        'default' => '2023-06-28 12:00:00',
+      ],
+    ],
+    'indexes' => [
+      'created_at' => ['created_at'],
+    ],
+  ];
+  $schema->addIndex('helfi_audit_logs', 'created_at', ['created_at'], $indexSpec);
+}
+
+/**
+ * Update older records to use right epoch and datetime formats.
+ */
+function helfi_audit_log_update_9101() {
+  $date = '2023-08-07 23:59:59';
+
+  $query = \Drupal::database()->select('helfi_audit_logs', 'al')
+    ->condition('al.created_at', $date, '<=')
+    ->fields('al', ['id', 'message']);
+
+  $results = $query->execute();
+  $update_count = 0;
+
+  foreach ($results as $record) {
+    $json = json_decode($record->message);
+
+    // Epoch is in wrong field, same as timestamp - Swap them around.
+    $epoch = $json->audit_event->date_time;
+    $timeStamp = $json->audit_event->date_time_epoch;
+
+    // This data is correct. Skip.
+    if (is_numeric($timeStamp)) {
+      continue;
+    }
+
+    $json->audit_event->date_time = $timeStamp;
+    $json->audit_event->date_time_epoch = $epoch;
+
+    $jsonString = json_encode($json);
+
+    $updated = \Drupal::database()->update('helfi_audit_logs')
+      ->condition('id', $record->id)
+      ->fields([
+        'message' => $jsonString,
+      ])
+      ->execute();
+
+    if ($updated) {
+      $update_count++;
+    }
+  }
+
+  return t('Helfi - Audit logs: Fixed %count records', ['%count' => $update_count]);
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function helfi_audit_log_requirements($phase) {
+  $requirements = [];
+
+  if ($phase == 'runtime') {
+    $value = mt_rand(0, 100);
+    $requirements['helfi_audit_log_status'] = [
+      'title' => t('Helfi Drupal AuditLog status'),
+      'value' => t('Helfi Drupal AuditLog value: @value', ['@value' => $value]),
+      'severity' => $value > 50 ? REQUIREMENT_INFO : REQUIREMENT_WARNING,
+    ];
+  }
+
+  return $requirements;
+}

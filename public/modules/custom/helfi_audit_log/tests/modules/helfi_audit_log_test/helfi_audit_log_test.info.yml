@@ -1,0 +1,6 @@
+name: Helfi Drupal AuditLog tests
+type: module
+description: Platta audit log
+package: Helfi
+core: 8.x
+core_version_requirement: ^8 || ^9
