@@ -21,4 +21,4 @@ note: When ATV properly supports Tunnistamo authentication, api key will be obso
 
 This module has unit and kernel tests. You need to have this module inside a working drupal installation.
 
-Command to run the tests: ```vendor/bin/phpunit public/modules/contrib/helfi_atv```
+Command to run the tests: ```vendor/bin/phpunit public/modules/custom/helfi_atv```

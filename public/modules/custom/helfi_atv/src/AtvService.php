@@ -265,6 +265,19 @@ class AtvService {
   }
 
   /**
+   * Checks if we can connect to ATV service.
+   *
+   * @return bool
+   *   TRUE if connection was successful, FALSE if not.
+   */
+  public function ping(): bool {
+    $response = $this->request('GET', $this->buildUrl('schema/'), [
+      'query' => ['format' => 'json'],
+    ]);
+    return !empty($response['info']);
+  }
+
+  /**
    * Check if any role value is in the allowed array.
    *
    * @param array $allowedRoles
@@ -1240,7 +1253,7 @@ class AtvService {
     $useApiKey = TRUE;
     return $this->doRequest(
       'GET',
-      $this->buildUrl('gdpr-api/' . $userId,),
+      $this->buildUrl('gdpr-api/' . $userId),
       [
         'headers' => $this->headers,
       ],
