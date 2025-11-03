@@ -1632,7 +1632,6 @@ function _grants_handler_get_edit_url($webform, $submission, $submissionData): U
   catch (\Exception $e) {
   }
 
-
   if ($react_submission_ids) {
     return Url::fromRoute(
       'helfi_grants.forms_app_edit',

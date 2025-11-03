@@ -882,8 +882,8 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
-          </p><h4>Vaaditut liitteet</h4>
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p>
+          <h4>Vaaditut liitteet</h4>
           <p>Toiminta- ja palkkausavustushakemuksen pakolliset liitteet ovat yhdistyksen voimassa
           olevat säännöt, tilinpäätös edelliseltä päättyneeltä tilikaudelta sisältäen laajan tuloslaskelman,
           toimintakertomus sekä tilin/toiminnantarkastuskertomus allekirjoitettuna ja sen kokouksen pöytäkirja,
@@ -922,7 +922,8 @@ elements: |-
         '#multiple': false
         '#filetype': '43'
         '#help': |-
-          <p>Yhdistyksen tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistyksen kohdalla niiden omissa säännöissä lukee mikä on yhdistyksen tilikausi</p>
+          <p>Yhdistys liittää tähän kohtaan yhdistyksen jäsenkokouksessa vahvistetun ja allekirjoitetun tilinpäätöksen. Tilinpäätöksen täytyy sisältää tuloslaskelma ja tase. Mukana tulee olla myös laaja tuloslaskelma, josta selviää tarkempi kustannusten erittely.</p>
+          <p>Yhteisön tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa säännöissä lukee mikä on yhdistyksen tilikausi.</p>
         '#title_display': before
         '#multiple__no_items_message': 'Ei sy&ouml;tettyj&auml; arvoja. Lis&auml;&auml; uusi sis&auml;lt&ouml; alta.'
         '#description__access': false
