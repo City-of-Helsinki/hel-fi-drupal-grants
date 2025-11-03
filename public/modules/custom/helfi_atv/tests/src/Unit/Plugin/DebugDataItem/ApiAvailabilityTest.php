@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\Tests\helfi_navigation\Unit\Plugin\DebugData;
+namespace Drupal\Tests\helfi_atv\Unit\Plugin\DebugData;
 
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_atv\Plugin\DebugDataItem\ApiAvailability;
@@ -37,14 +37,14 @@ class ApiAvailabilityTest extends UnitTestCase {
    * Test successful check().
    */
   public function testCheck(): void {
-    $this->assertFalse($this->getSut(FALSE)->check());
+    $this->assertTrue($this->getSut(TRUE)->check());
   }
 
   /**
    * Tests failed check.
    */
   public function testFailedCheck(): void {
-    $this->assertTrue($this->getSut(TRUE)->check());
+    $this->assertFalse($this->getSut(FALSE)->check());
   }
 
 }
