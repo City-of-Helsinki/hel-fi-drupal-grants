@@ -228,8 +228,7 @@ elements: |
     '#title': Attachments
   attachments_info:
     '#markup': |-
-      <p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.
-      </p>
+      <p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.</p>
       <h4>Required attachments</h4>
       <p>The required attachments to the application for an operating and hiring grant are the association’s valid rules, the confirmed financial statements for the year preceding the application year, the annual report and the signed audit or performance audit report as well as the minutes of the meeting where the financial statements were confirmed and the discharge from liability processed. In addition, a budget and action plan for the year for which the grant is being applied for are mandatory attachments. The rules must be approved by the Finnish Patent and Registration Office.</p>
       <h4>Submission of several attachments as a single file</h4>

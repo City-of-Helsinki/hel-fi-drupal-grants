@@ -250,9 +250,15 @@ elements: |
     '#title': Bilagor
   attachments_info:
     '#markup': |-
-      <p>De obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens giltiga stadgar, bokslutet från den senaste avslutade räkenskapsperioden inklusive en omfattande resultaträkning, verksamhetsberättelsen och den undertecknade revisionsberättelsen samt protokollet från det möte där bokslutet har godkänts och ansvarsfrihet har behandlats.</p>
+      <p>Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor.</p>
+      <h4>Erforderliga bilagor</h4>
+      <p>De obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens giltiga stadgar, bokslutet från den senaste avslutade räkenskapsperioden inklusive en omfattande resultaträkning, verksamhetsberättelsen och den undertecknade revisionsberättelsen samt protokollet från det möte där bokslutet har godkänts och ansvarsfrihet har behandlats. </p>
       <p>Övriga obligatoriska bilagor är budgeten och verksamhetsplanen för det år för vilket understödet söks. Stadgarna ska godkännas av Patent- och registerstyrelsen.</p>
       <p>Till ansökan om löneunderstöd ska även bifogas namnen på de avdelningar/grupper som hör till distriktsorganisationen eller motsvarande organisation samt deras medlemsantal</p>
+      <h4>Inlämning av flera bilagor i en fil</h4>
+      <p>Om du vill kan du lämna in flera bilagor i en fil. Förklara detta i punkten Ytterligare information om bilagorna.</p>
+      <h4>Bilagor som tidigare lämnats in till Helsingfors stad</h4>
+      <p>Om de obligatoriska bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>
   notification_attachments:
     '#markup': |
       <div class="hds-notification hds-notification--info">
