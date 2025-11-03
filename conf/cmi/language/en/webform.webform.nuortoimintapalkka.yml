@@ -276,7 +276,8 @@ elements: |
   vahvistettu_tilinpaatos:
     '#title': 'Confirmed financial statements (for the previous accounting period)'
     '#help': |-
-      <p>The financial period of the entity may be the calendar year or another defined period. For associations, the financial period is specified in their own rules.</p>
+      <p>The association attaches here the financial statements that have been approved and signed at the association’s general meeting. The financial statements must include an income statement and a balance sheet. A detailed income statement showing a more specific breakdown of costs must also be included.</p>
+      <p>The financial period of the entity may be the calendar year or another defined period. For associations, the financial period is specified in their own rules.</p>"
     '#multiple__no_items_message': '<p>Ei syötettyjä arvoja. Lisää uusi sisältö alta.</p>'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
