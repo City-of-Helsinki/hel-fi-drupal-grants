@@ -231,6 +231,8 @@ elements: |
     '#title': Hyreslokal
   vuokratun_tilan_tiedot:
     '#title': 'Uppgifter om hyreslokal'
+    '#multiple__item_label': 'hyreslokal'
+    '#multiple__add_more_button_label': 'Lägg till en ny hyreslokal'
   lisatiedot_osio:
     '#title': 'Rubrik till tilläggsfrågan'
   lisatiedot:
