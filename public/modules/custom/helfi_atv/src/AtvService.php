@@ -271,10 +271,15 @@ class AtvService {
    *   TRUE if connection was successful, FALSE if not.
    */
   public function ping(): bool {
-    $response = $this->request('GET', $this->buildUrl('schema/'), [
-      'query' => ['format' => 'json'],
-    ]);
-    return !empty($response['info']);
+    try {
+      $response = $this->request('GET', $this->buildUrl('schema/'), [
+        'query' => ['format' => 'json'],
+      ]);
+      return !empty($response['info']);
+    }
+    catch (GuzzleException) {
+    }
+    return FALSE;
   }
 
   /**
