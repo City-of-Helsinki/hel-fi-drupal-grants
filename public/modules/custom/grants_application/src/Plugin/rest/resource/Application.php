@@ -581,9 +581,6 @@ final class Application extends ResourceBase {
 
     $oldDocument = $document->toArray();
 
-    // Hold on to old values.
-    $status = $mapper->getStatusValue($oldDocument);
-    // $attachments = $oldDocument['attachmentsInfo'];
     $events = $oldDocument['events'];
     $messages = $oldDocument['messages'];
     $statusUpdates = $oldDocument['statusUpdates'];
@@ -630,7 +627,13 @@ final class Application extends ResourceBase {
     // to user submitting grants forms.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
-    return new JsonResponse($document->toArray(), 200);
+    return new JsonResponse([
+      'redirect_url' => Url::fromRoute(
+        'grants_handler.completion',
+        ['submission_id' => $application_number],
+        ['absolute' => TRUE],
+      )->toString(),
+    ], 200);
   }
   // phpcs:enabled
 
