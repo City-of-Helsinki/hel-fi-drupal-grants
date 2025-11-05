@@ -1,4 +1,4 @@
-title: 'Ungdomstjänst, ansökan om verksamhets- och anställningsbidrag'
+title: 'Ungdomsverksamhet, ansökan om verksamhets- och löneunderstöd'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Den sökandes uppgifter'
@@ -175,7 +175,15 @@ elements: |
   paikat_joissa_yhdistys_jarjesti_toimintaa_nuorille_edellisen_vuo:
     '#title': 'Platser där föreningen organiserade verksamhet för unga under föregående år'
   info_digitaalinen:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Ett negativt svar öppnar ytterligare en fråga</span></div>\r\n</div>\r\n</div>\r\n"
+    '#markup': |
+      <div class="hds-notification hds-notification--info">
+        <div class="hds-notification__content">
+          <div class="hds-notification__label" role="heading" aria-level="2">
+            <span class="hel-icon hel-icon--alert-circle-fill" aria-hidden="true"></span>
+            <span>Ett negativt svar öppnar ytterligare en fråga</span>
+          </div>
+        </div>
+      </div>
   jarjestimme_toimintaa_vain_digitaalisessa_ymparistossa:
     '#title': 'Vi ordnade endast verksamhet i den digitala miljön'
     '#help': '<p>Välj ”Ja” om ni endast ordnade verksamhet i en digital miljö. Välj ”Nej” om ni endast ordnade verksamhet vid ett fysiskt verksamhetsställe eller ordnade verksamhet både i en digital miljö och vid ett fysiskt verksamhetsställe. Skriv namnen på de fysiska verksamhetsställena och postnumren i fälten som öppnas nedan.</p>'
@@ -223,6 +231,8 @@ elements: |
     '#title': Hyreslokal
   vuokratun_tilan_tiedot:
     '#title': 'Uppgifter om hyreslokal'
+    '#multiple__item_label': 'hyreslokal'
+    '#multiple__add_more_button_label': 'Lägg till en ny hyreslokal'
   lisatiedot_osio:
     '#title': 'Rubrik till tilläggsfrågan'
   lisatiedot:
@@ -240,11 +250,25 @@ elements: |
     '#title': Bilagor
   attachments_info:
     '#markup': |-
-      <p>De obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens giltiga stadgar, bokslutet från den senaste avslutade räkenskapsperioden inklusive en omfattande resultaträkning, verksamhetsberättelsen och den undertecknade revisionsberättelsen samt protokollet från det möte där bokslutet har godkänts och ansvarsfrihet har behandlats.</p>
+      <p>Alla obligatoriska bilagor ska lämnas in för behandling av understödsansökan. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten i ansökan Ytterligare information om bilagor.</p>
+      <h4>Erforderliga bilagor</h4>
+      <p>De obligatoriska bilagorna till ansökan om verksamhets- och löneunderstöd är föreningens giltiga stadgar, bokslutet från den senaste avslutade räkenskapsperioden inklusive en omfattande resultaträkning, verksamhetsberättelsen och den undertecknade revisionsberättelsen samt protokollet från det möte där bokslutet har godkänts och ansvarsfrihet har behandlats. </p>
       <p>Övriga obligatoriska bilagor är budgeten och verksamhetsplanen för det år för vilket understödet söks. Stadgarna ska godkännas av Patent- och registerstyrelsen.</p>
       <p>Till ansökan om löneunderstöd ska även bifogas namnen på de avdelningar/grupper som hör till distriktsorganisationen eller motsvarande organisation samt deras medlemsantal</p>
+      <h4>Inlämning av flera bilagor i en fil</h4>
+      <p>Om du vill kan du lämna in flera bilagor i en fil. Förklara detta i punkten Ytterligare information om bilagorna.</p>
+      <h4>Bilagor som tidigare lämnats in till Helsingfors stad</h4>
+      <p>Om de obligatoriska bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p>
   notification_attachments:
-    '#text': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>\r\n\r\n<p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
+    '#markup': |
+      <div class="hds-notification hds-notification--info">
+      <div class="hds-notification__content">
+      <div class="hds-notification__label"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div>
+
+      <div class="hds-notification__body"><p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p>
+      <p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p></div>
+      </div>
+      </div>
   yhteison_saannot:
     '#title': 'Gemenskapens regler'
     '#attachmentName__title': ''

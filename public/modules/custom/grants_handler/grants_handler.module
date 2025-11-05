@@ -1617,13 +1617,20 @@ function _grants_handler_get_edit_url($webform, $submission, $submissionData): U
     ],
   ];
 
-  $react_submission_ids = \Drupal::entityTypeManager()
-    ->getStorage('application_submission')
-    ->getQuery()
-    ->accessCheck(TRUE)
-    ->condition('sub', $submissionData['sender_user_id'])
-    ->condition('application_number', $submissionData['application_number'])
-    ->execute();
+  $react_submission_ids = FALSE;
+  try {
+    if (\Drupal::moduleHandler()->moduleExists('grants_application')) {
+      $react_submission_ids = \Drupal::entityTypeManager()
+        ->getStorage('application_submission')
+        ->getQuery()
+        ->accessCheck(TRUE)
+        ->condition('sub', $submissionData['sender_user_id'])
+        ->condition('application_number', $submissionData['application_number'])
+        ->execute();
+    }
+  }
+  catch (\Exception $e) {
+  }
 
   if ($react_submission_ids) {
     return Url::fromRoute(

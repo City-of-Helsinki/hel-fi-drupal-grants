@@ -312,7 +312,7 @@ third_party_options:
     RESOLVED: RESOLVED
   subvention_types:
     1: 'Operating grant'
-    2: 'Wage subsidy'
+    2: 'Hiring grant'
     4: 'Project grant'
     5: 'Rent subsidy'
     6: 'General grant'

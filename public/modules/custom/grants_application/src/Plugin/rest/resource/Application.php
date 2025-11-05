@@ -357,7 +357,7 @@ final class Application extends ResourceBase {
     $applicantTypeId = $this->userInformationService->getApplicantTypeId();
 
     $mappingFileName = "ID$application_type_id.json";
-    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/'.$mappingFileName), TRUE);
+    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/' . $mappingFileName), TRUE);
     $mapper = new JsonMapper($mapping);
     try {
       $dataSources = $mapper->getCombinedDataSources(
@@ -555,7 +555,7 @@ final class Application extends ResourceBase {
     }
 
     $mappingFileName = "ID$application_type_id.json";
-    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/'.$mappingFileName), TRUE);
+    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/' . $mappingFileName), TRUE);
     $mapper = new JsonMapper($mapping);
 
     try {

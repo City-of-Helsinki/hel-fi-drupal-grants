@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the helfi_atv module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Remove example table.
+ */
+function helfi_atv_update_9001(): void {
+  \Drupal::database()->schema()->dropTable('helfi_atv_example');
+}
