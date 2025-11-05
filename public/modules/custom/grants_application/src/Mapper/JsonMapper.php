@@ -475,6 +475,7 @@ class JsonMapper {
    * Map all files added to the application.
    *
    * The file data lives outside of compensations in the final data.
+   * The files are mapped in attachmentsInfo.attachmentsArray
    *
    * @param array $dataSources
    *   The datasources.
@@ -595,6 +596,96 @@ class JsonMapper {
         'label' => 'Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä',
       ],
     ];
+  }
+
+  /**
+   * Status is the only field which is altered by someone else after submit.
+   *
+   * @param array $document
+   *   The ATV document as array.
+   *
+   * @return string
+   *   The status.
+   */
+  public function getStatusValue(array $document): string {
+    $applicationInfoArray = $document['content']['compensation']['applicationInfoArray'];
+    $statusArray = array_find($applicationInfoArray, fn($item) => $item['ID'] === 'status');
+    foreach($statusArray as $key =>  $status) {
+      if ($key === 'value') {
+        return $status;
+      }
+    }
+    return '';
+  }
+
+  /**
+   * Status is the only field which is altered by someone else after submit.
+   *
+   * @param array $mappedFiles
+   *   The attachmentsInfo.attachmentsArray from atv document content.
+   *
+   * @return bool
+   *   Bank file exists.
+   */
+  public function hasBankFile(array $mappedFiles): bool {
+    foreach($mappedFiles as $fileArray) {
+      return (bool) array_find($fileArray, fn($item) => $item['fileType'] === 45);
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get complete list of files to send to Avus2.
+   *
+   * When user sends patch-request, the files must be handled correctly.
+   * User may not delete files but may add new files. Also, the bank file must
+   * exist. Therefore, we pick all unique files from both old and new
+   * submission to make sure we have everything.
+   *
+   * @param array $oldFiles
+   *   The mapped files from old atv-document.
+   * @param array $newFiles
+   *   The freshly mapped files.
+   *
+   * @return array
+   *   The files array that should be put to attachmentsInfo.attachmentsArray.
+   */
+  public function patchMappedFiles(array $oldFiles, array $newFiles): array {
+    $uniqueFiles = [];
+
+    if ($bankFile = $this->getMappedBankFile($oldFiles)) {
+      $uniqueFiles[] = $bankFile;
+    }
+
+    foreach ($oldFiles as $fileArray) {
+      if (!array_find($uniqueFiles, fn($item) => $item['integrationID'] === $fileArray['integrationID'])) {
+        $uniqueFiles[] = $fileArray;
+      }
+    }
+
+    foreach ($newFiles as $fileArray) {
+      if (!array_find($uniqueFiles, fn($item) => $item['integrationID'] === $fileArray['integrationID'])) {
+        $uniqueFiles[] = $fileArray;
+      }
+    }
+
+    return $uniqueFiles;
+  }
+
+  /**
+   * @param array $mappedFiles
+   *   Contents of attachmentsInfo.attachmentsArray
+   *
+   * @return array
+   *   The bank file.
+   */
+  private function getMappedBankFile(array $mappedFiles): ?array {
+    foreach($mappedFiles as $fileArray) {
+      if (array_find($fileArray, fn($item) => $item['fileType'] === 45)) {
+        return $fileArray;
+      }
+    }
+    return NULL;
   }
 
 }

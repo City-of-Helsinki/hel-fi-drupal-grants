@@ -263,6 +263,7 @@ final class DraftApplication extends ResourceBase {
     $application_title = $settings->toArray()['settings']['title'];
     $application_type = $settings->toArray()['settings']['application_type'];
 
+    // @todo Save the react form data in separate atv doc.
     $document = $this->atvService->createAtvDocument(
       $application_uuid,
       $application_number,
@@ -384,28 +385,6 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    // @todo Test mapping here.
-    /*
-    $mappingFile = "ID$application_type_id.json";
-    $mappings = json_decode(file_get_contents(
-      __DIR__ . '/../../../Mapper/Mappings/' . $mappingFile
-    ), TRUE);
-
-    $mapper = new JsonMapper($mappings);
-    $dataSources = $mapper->getCombinedDataSources(
-    $form_data,
-    $this->userInformationService->getUserData(),
-    $this->userInformationService->getSelectedCompany(),
-    $this->userInformationService->getUserProfileData(),
-    $grants_profile_data,
-    $this->formSettingsService->getFormSettings($application_type_id),
-    $application_number,
-    $this->userInformationService->getApplicantType(),
-    );
-    $mappedData = $mapper->map($dataSources);
-    die('add breakpoint here');
-     */
-
     // @todo clean this up a bit, unnecessarily duplicated variables.
     $content = $document->getContent();
     // $content['compensation'] = $document_data['compensation'];
@@ -427,6 +406,8 @@ final class DraftApplication extends ResourceBase {
 
     try {
       // @todo Always get the events and messages from atv submission before overwriting.
+      // ^This is not a problem here since we should not have any events at this point.
+      // @todo Save the react form data in separate atv doc.
       $this->atvService->updateExistingDocument($document);
 
       $submission->setChangedTime(time());

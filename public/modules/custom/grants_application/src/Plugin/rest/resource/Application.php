@@ -307,7 +307,10 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // The user has removed bank account from profile.
-      return new JsonResponse(['mismatch in given bank information and profile bank accounts.'], 500);
+      return new JsonResponse(
+        ['Your user profile does not contain the given bank account number. Update your user profile and try again.'],
+        500
+      );
     }
 
     $actual_file = NULL;
@@ -435,6 +438,8 @@ final class Application extends ResourceBase {
     $document->setContent($document_data);
     // @codingStandardsIgnoreEnd
 
+    // @todo Save the form_data in separate atv doc.
+    // Also, on first save we also need to save to the actual ATV document.
     $this->atvService->updateExistingDocument($document);
 
     // @todo Make sure the formUpdate is set properly.
@@ -484,11 +489,13 @@ final class Application extends ResourceBase {
     ], 200);
   }
 
-  // phpcs:disable
   /**
    * Responds to entity PATCH requests.
    *
-   * Update existing submission.
+   * Update existing submission. A few things differ from post-request.
+   * - The status (hidden under compensation) must not change anymore.
+   * - User cannot delete files but can add more files.
+   * - The items added by integration/avus2 must exist(events, messages etc.).
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The HTTP response object.
@@ -500,14 +507,6 @@ final class Application extends ResourceBase {
     int $application_type_id,
     ?string $application_number = NULL,
   ): JsonResponse {
-    // @todo This function is not yet called.
-    // This needs to be refactored to handle patch request.
-    // @todo Sanitize & validate & authorize properly.
-
-    $prevent_duplicate_code_error = $application_number ?: FALSE;
-    return new JsonResponse([$prevent_duplicate_code_error], 200);
-
-    /*
     $content = json_decode($request->getContent(), TRUE);
     [
       'form_data' => $form_data,
@@ -555,13 +554,64 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    $mappingFileName = "ID$application_type_id.json";
+    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/'.$mappingFileName), TRUE);
+    $mapper = new JsonMapper($mapping);
+
+    try {
+      $dataSources = $mapper->getCombinedDataSources(
+        $form_data,
+        $user_data,
+        $selected_company,
+        $this->userInformationService->getUserProfileData(),
+        $this->userInformationService->getGrantsProfileContent(),
+        $settings,
+        $application_number,
+        $this->userInformationService->getApplicantTypeId(),
+      );
+    }
+    catch (\Exception $e) {
+      // Unable to combine datasources, bad atv-connection maybe?
+      $this->logger->error('Error while sending the application for the first time: ' . $e->getMessage());
+      return new JsonResponse(
+        ['error' => $this->stringTranslation->translate('An error occurred while sending the application. Please try again later.')],
+        500,
+      );
+    }
+
+    $oldDocument = $document->toArray();
+
+    // Hold on to old values.
+    $status = $mapper->getStatusValue($oldDocument);
+    // $attachments = $oldDocument['attachmentsInfo'];
+    $events = $oldDocument['events'];
+    $messages = $oldDocument['messages'];
+    $statusUpdates = $oldDocument['statusUpdates'];
+
+    // Map the data again.
+    $document_data = $mapper->map($dataSources);
+    $patchedFiles = $mapper->patchMappedFiles(
+      $oldDocument['attachmentsInfo']['attachmentsArray'],
+      $mapper->mapFiles($dataSources)
+    );
+
+    $document_data['attachmentsInfo']['attachmentsArray'] = $patchedFiles;
+    $document_data['events'] = $events;
+    $document_data['messages'] = $messages;
+    $document_data['statusUpdates'] = $statusUpdates;
+    $document_data['formUpdate'] = TRUE;
+
+    // Status is changed by someone else, we are not allowed to overwrite.
+    $document_data['compensation']['applicationInfoArray'] = $mapper->getStatusValue($oldDocument);
+
     // @todo Add event HANDLER_SEND_INTEGRATION.
     try {
       // @todo Better sanitation.
+      // @todo Save the form_data in separate atv doc.
       $document_data = ['form_data' => $form_data ?? []];
 
       $document->setContent($document_data);
-      // @todo Always get the events and messages from atv submission before overwriting.
+
       $this->atvService->updateExistingDocument($document);
 
       $submission->setChangedTime(time());
@@ -572,17 +622,15 @@ final class Application extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    */
-
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
     // grants_application module when this module is enabled in
     // production.
     //
     // This event lets other parts of the system to react
     // to user submitting grants forms.
-    // $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
+    $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
-    // return new JsonResponse($document->toArray(), 200);
+    return new JsonResponse($document->toArray(), 200);
   }
   // phpcs:enabled
 
