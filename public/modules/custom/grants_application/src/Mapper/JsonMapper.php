@@ -419,7 +419,7 @@ class JsonMapper {
    *   The form settings.
    * @param string $applicationNumber
    *   The application number.
-   * @param string $applicantType
+   * @param string $applicantTypeId
    *   The applicant type.
    *
    * @return array
