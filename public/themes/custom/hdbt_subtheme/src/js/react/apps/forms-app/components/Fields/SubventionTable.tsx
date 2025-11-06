@@ -109,9 +109,10 @@ export const SubventionTable = ({
         <tbody>
           {schema.options.map((item, i) =>  {
             const { id: itemId, label } = item;
+            const key = `${id}-${itemId}`;
 
             return (
-              <tr key={itemId}>
+              <tr key={key}>
                 <td>
                   <div style={{padding: 'var(--spacing-layout-2-xs)'}}>
                     {label}
@@ -119,7 +120,7 @@ export const SubventionTable = ({
                 </td>
                 <td>
                   <NumberInput
-                    id={itemId}
+                    id={key}
                     onChange={handleChange}
                     min={0}
                     required={required}
@@ -127,7 +128,7 @@ export const SubventionTable = ({
                       '--border-width': 0,
                       textAlign: 'right',
                     }}
-                    value={keyedData[itemId] || ''}
+                    value={keyedData[key] || ''}
                   />
                 </td>
               </tr>

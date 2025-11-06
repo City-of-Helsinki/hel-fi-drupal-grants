@@ -23,7 +23,6 @@ third_party_settings:
     applicationTypeSelect: '48'
     applicationIndustry: KUVA
     applicationActingYears:
-      2025: '2025'
       2026: '2026'
     applicationActingYearsType: fixed
     applicationActingYearsNextCount: '1'

@@ -1,15 +1,15 @@
 import { RJSFSchema } from '@rjsf/utils';
 import { useCallback } from 'react';
 import { useAtomCallback } from 'jotai/utils';
-import { useSetAtom } from 'jotai';
+import { useSetAtom, useStore } from 'jotai';
 
-import { RJSFFormContainer } from './RJSFFormContainer';
-import { avus2DataAtom, createFormDataAtom, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom } from '../store';
 import { addApplicantInfoStep, getNestedSchemaProperty, setNestedProperty } from '../utils';
+import { ATVFile } from '../types/ATVFile';
+import { avus2DataAtom, createFormDataAtom, formDataAtomRef, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom } from '../store';
+import { InvalidSchemaBoundary } from '../errors/InvalidSchemaBoundary';
+import { RJSFFormContainer } from './RJSFFormContainer';
 import { SubmitStates } from '../enum/SubmitStates';
 import { useTranslateData } from '../hooks/useTranslateData';
-import { ATVFile } from '../types/ATVFile';
-import { InvalidSchemaBoundary } from '../errors/InvalidSchemaBoundary';
 
 /**
  * Get form paths for dangling arrays in dot notation.
@@ -194,6 +194,7 @@ export const FormWrapper = ({
   data: any;
   token: string;
 }) => {
+  const store = useStore();
   const initializeForm = useSetAtom(initializeFormAtom);
   const pushNotification = useSetAtom(pushNotificationAtom);
   const readApplicationNumber = useAtomCallback(
@@ -242,6 +243,7 @@ export const FormWrapper = ({
     translatedData.form_data?.form_data :
     translatedData?.form_data?.compensation?.form_data || null;
   const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData,  data?.last_changed);
+  store.set(formDataAtomRef, formDataAtom);
 
   if (translatedData.status !== SubmitStates.DRAFT) {
     const {
