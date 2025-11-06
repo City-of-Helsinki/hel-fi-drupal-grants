@@ -50,7 +50,7 @@ export const useTranslateData = (data: any) => {
       }
     });
 
-    ['if', 'then', 'const', 'additionalItems'].forEach((key: string) => {
+    ['if', 'then', 'additionalItems'].forEach((key: string) => {
       if (element?.[key]) {
         result[key] = iterateSchema(element[key]);
       }
@@ -87,10 +87,18 @@ export const useTranslateData = (data: any) => {
       'tooltipText',
       'ui:help',
       'ui:tooltip',
-    ]
+    ];
 
     if (translatableKeys.includes(key)) {
       return t(element);
+    }
+
+    const tranlatableArrays = [
+      'ui:enumNames',
+    ];
+
+    if (tranlatableArrays.includes(key) && Array.isArray(element)) {
+      return element.map((item: string) => isTranslatableString(item) ? t(item) : item);
     }
 
     return element;
@@ -104,7 +112,7 @@ export const useTranslateData = (data: any) => {
     }
 
     Object.entries(uiSchema).forEach(([key, value]) => {
-      if (typeof value === 'object' && value !== null) {
+      if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
         result[key] = iterateUiSchema(value);
       }
       else {
