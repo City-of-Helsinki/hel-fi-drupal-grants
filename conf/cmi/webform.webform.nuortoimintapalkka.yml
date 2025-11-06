@@ -520,7 +520,7 @@ elements: |-
       '#title': 'Aktiivisesti toimintaan osallistuvat/jäsenet'
       jasenmaara_fieldset:
         '#type': fieldset
-        '#title': Jäsenmäärä
+        '#title': 'Aktiivisesti toimintaan osallistuvat/jäsenet'
         '#help': 'Merkitse tähän yhdistyksen aktiivisesti toimintaan osallistuvat ja/tai jäsenet'
         '#attributes':
           class:
@@ -882,8 +882,8 @@ elements: |-
       attachments_info:
         '#type': webform_markup
         '#markup': |-
-          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.
-          </p><h4>Vaaditut liitteet</h4>
+          <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p>
+          <h4>Vaaditut liitteet</h4>
           <p>Toiminta- ja palkkausavustushakemuksen pakolliset liitteet ovat yhdistyksen voimassa
           olevat säännöt, tilinpäätös edelliseltä päättyneeltä tilikaudelta sisältäen laajan tuloslaskelman,
           toimintakertomus sekä tilin/toiminnantarkastuskertomus allekirjoitettuna ja sen kokouksen pöytäkirja,

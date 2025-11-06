@@ -1,0 +1,6 @@
+services:
+  Drupal\helfi_yjdh\YjdhClient: '@helfi_yjdh.client'
+
+  helfi_yjdh.client:
+    class: Drupal\helfi_yjdh\YjdhClient
+    arguments: ['@http_client', '@logger.factory', '@tempstore.private']

@@ -503,7 +503,7 @@ class JsonMapper {
   /**
    * Get the values from the form and map it in correct format.
    *
-   * @param $data
+   * @param mixed $data
    *   The final data.
    * @param array $definition
    *   The file-field definitions from mapping-json.
@@ -517,7 +517,6 @@ class JsonMapper {
     $fileData = $this->createSingleFileData($value);
     $this->setTargetValue($data, $targetPath, $fileData, $definition);
   }
-
 
   /**
    * Create single file mapping.
@@ -539,7 +538,7 @@ class JsonMapper {
       'valueType' => 'string',
     ];
 
-    foreach($data as $key => $value) {
+    foreach ($data as $key => $value) {
       $definition = [
         'ID' => $key,
         'value' => $value,
@@ -576,7 +575,7 @@ class JsonMapper {
 
     $description = "Vahvistus tilinumerolle $selected_bank_account";
     $filename = $bank_file['filename'];
-    $isDeliveredLater =  'false';
+    $isDeliveredLater = 'false';
     $isIncludedInOtherFile = 'false';
     $filetype = "45";
 

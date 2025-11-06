@@ -509,7 +509,7 @@ elements: |-
       '#title': 'Yhdistyksen jäsenmäärä tai aktiivisesti toimintaan osallistuvien määrä'
       jasenmaara_fieldset:
         '#type': fieldset
-        '#title': Jäsenmäärä
+        '#title': 'Aktiivisesti toimintaan osallistuvat/jäsenet'
         '#help': 'Jos yhteisöllä on jäseniä, merkitse ne tähän.'
         '#attributes':
           class:
