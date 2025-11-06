@@ -14,8 +14,8 @@ third_party_settings:
       unregistered_community: unregistered_community
     applicationTypeTerms:
       83: '83'
-    applicationOpen: '2025-08-25T08:00:00'
-    applicationClose: '2025-09-14T23:59:59'
+    applicationOpen: '2026-01-07T00:00:01'
+    applicationClose: '2026-01-30T23:59:59'
     applicationContinuous: 0
     applicationTargetGroup: '27'
     disableCopying: 0
