@@ -63,7 +63,7 @@ const deleteDraftApplication = async (formKey: string, page: Page, formDetails: 
  * This function deletes a draft application by:
  * 1. Navigating to the submission URL.
  * 2. Clicking the "Delete draft" button.
- * 3. Waiting for a possible dialog and accepting it.
+ * 3. Waiting for a confirmation dialog and accepting it.
  * 4. Waiting for a redirect to "Oma asiointi".
  * 5. Checking that a "Luonnos poistettu" message is displayed.
  *
@@ -79,14 +79,7 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string, appli
   await logCurrentUrl(page);
   await page.waitForURL('**/muokkaa');
   await page.locator('#webform-button--delete-draft').click();
-
-  // There has been a dialog to verify the deletion, but it seems to be
-  // removed. However, if it still exists in some cases try to accept it.
-  try {
-    const dialog = await page.waitForEvent('dialog', { timeout: 1000 });
-    await dialog.accept();
-  } catch (error) {}
-
+  await page.locator('#helfi-dialog__action-button').click();
   await logCurrentUrl(page);
   await page.waitForURL('/fi/oma-asiointi');
   await validateDeletionNotification(page, 'Submission URL.', applicationId);
@@ -99,8 +92,9 @@ const deleteUsingSubmissionUrl = async (page: Page, submissionUrl: string, appli
  * 1. Navigating to the "Oma asiointi" page.
  * 2. Clicking the "Delete application" link for the desired application
  *    in the application listing.
- * 3. Waiting for the page to reload.
- * 4. Checking that a "Luonnos poistettu" message is displayed.
+ * 3. Waiting for a confirmation dialog and accepting it.
+ * 4. Waiting for the page to reload.
+ * 5. Checking that a "Luonnos poistettu" message is displayed.
  *
  * @param page
  *   Page object from Playwright.
@@ -112,6 +106,7 @@ const deleteUsingApplicationId = async (page: Page, applicationId: string) => {
   await logCurrentUrl(page);
   await page.waitForURL('**/oma-asiointi');
   await page.locator(`.application-delete-link-${applicationId}`).click();
+  await page.locator('#helfi-dialog__action-button').click();
   await page.waitForLoadState('load');
   await logCurrentUrl(page);
   await validateDeletionNotification(page, 'Application ID on Oma asiointi page.', applicationId);

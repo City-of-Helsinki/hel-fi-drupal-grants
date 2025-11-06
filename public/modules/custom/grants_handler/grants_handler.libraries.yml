@@ -56,7 +56,7 @@ application-timeout-message:
 
 # Grants Dialog
 grants-dialog:
-  version: 1.0.0
+  version: 1.0.1
   js:
     js/grants-dialog.js: { }
   dependencies:
@@ -69,3 +69,11 @@ application-copy-dialog:
     - core/jquery
     - core/drupal
     - core/drupalSettings
+
+application-delete-draft-dialog:
+  version: 1.0.0
+  js:
+    js/application-delete-draft-dialog.js: {}
+  dependencies:
+    - core/drupal
+    - grants_handler/grants-dialog
