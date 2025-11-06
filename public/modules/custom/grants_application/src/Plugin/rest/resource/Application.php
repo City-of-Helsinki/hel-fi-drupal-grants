@@ -354,8 +354,6 @@ final class Application extends ResourceBase {
     // @todo Better sanitation.
     // $document_data = ['form_data' => $form_data];
 
-    $applicantTypeId = $this->userInformationService->getApplicantTypeId();
-
     $mappingFileName = "ID$application_type_id.json";
     $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/' . $mappingFileName), TRUE);
     $mapper = new JsonMapper($mapping);
@@ -368,7 +366,7 @@ final class Application extends ResourceBase {
         $this->userInformationService->getGrantsProfileContent(),
         $settings,
         $application_number,
-        $applicantTypeId,
+        $this->userInformationService->getApplicantTypeId(),
       );
     }
     catch (\Exception $e) {
@@ -581,15 +579,21 @@ final class Application extends ResourceBase {
 
     $oldDocument = $document->toArray();
 
-    $events = $oldDocument['events'];
-    $messages = $oldDocument['messages'];
-    $statusUpdates = $oldDocument['statusUpdates'];
+    $events = $oldDocument['content']['events'];
+    $messages = $oldDocument['content']['messages'];
+    $statusUpdates = $oldDocument['content']['statusUpdates'];
 
     // Map the data again.
     $document_data = $mapper->map($dataSources);
+
+    $oldFiles = $oldDocument['content']['attachmentsInfo']['attachmentsArray'];
+    $newFiles = $mapper->mapFiles($dataSources);
+    $newFiles = $newFiles['attachmentsInfo']['attachmentsArray'] ?? [];
+
+    // uuteen tiedostoon tulee 2x description
     $patchedFiles = $mapper->patchMappedFiles(
-      $oldDocument['attachmentsInfo']['attachmentsArray'],
-      $mapper->mapFiles($dataSources)
+      $oldFiles,
+      $newFiles
     );
 
     $document_data['attachmentsInfo']['attachmentsArray'] = $patchedFiles;
@@ -605,7 +609,7 @@ final class Application extends ResourceBase {
     try {
       // @todo Better sanitation.
       // @todo Save the form_data in separate atv doc.
-      $document_data = ['form_data' => $form_data ?? []];
+      $document_data['form_data'] = $form_data ?? [];
 
       $document->setContent($document_data);
 
