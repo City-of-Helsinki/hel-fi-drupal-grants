@@ -661,15 +661,21 @@ class JsonMapper {
       $uniqueFiles[] = $bankFile;
     }
 
-    foreach ($oldFiles as $fileArray) {
-      if (!array_find($uniqueFiles, fn($item) => $item['integrationID'] === $fileArray['integrationID'])) {
-        $uniqueFiles[] = $fileArray;
-      }
-    }
+    foreach (array_merge($oldFiles, $newFiles) as $fileFieldArray) {
+      $integrationIdValueArray = array_find($fileFieldArray, fn($fa) => $fa['ID'] === 'integrationID');
 
-    foreach ($newFiles as $fileArray) {
-      if (!array_find($uniqueFiles, fn($item) => $item['integrationID'] === $fileArray['integrationID'])) {
-        $uniqueFiles[] = $fileArray;
+      if ($integrationIdValueArray) {
+        $fileFound = FALSE;
+        foreach($uniqueFiles as $uniqueFileFieldArray) {
+          $uniqueIntegrationIdField = array_find($uniqueFileFieldArray, fn($item) => $item['ID'] === 'integrationID');
+          if ($uniqueIntegrationIdField && $uniqueIntegrationIdField['value'] === $integrationIdValueArray['value']) {
+            $fileFound = TRUE;
+          }
+        }
+
+        if (!$fileFound) {
+          $uniqueFiles[] = $fileFieldArray;
+        }
       }
     }
 
