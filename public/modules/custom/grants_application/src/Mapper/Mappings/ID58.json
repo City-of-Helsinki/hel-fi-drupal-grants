@@ -579,18 +579,6 @@
     }
   },
 
-  "attachmentsInfo.attachmentsArray.0.0.description": {
-    "#tip": "file description",
-    "datasource": "form_data",
-    "source": "attachments_step.attachments_section.other_attachment_fieldset.file_description",
-    "mapping_type": "default",
-    "data": {
-      "ID": "description",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-
   "attachmentsInfo.attachmentsArray.0": {
     "#tip": "file mapping",
     "datasource": "form_data",

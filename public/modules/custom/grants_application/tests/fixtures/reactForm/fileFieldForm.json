@@ -3,6 +3,7 @@
     "attachments_section" : {
       "other_attachment_fieldset" : {
         "file" : {
+          "fileDescription" : "kuvaus liitetiedostosta tulee tänne",
           "fileName" : "testfile.pdf",
           "fileType" : 0,
           "integrationID" : "https://example.com/v1/documents/aaaaaaaa-1111-2222-3333-bbbbbbcccccc/attachments/999999/",
@@ -11,8 +12,7 @@
           "isNewAttachment" : true,
           "size" : 13264,
           "fileId" : 323335
-        },
-        "file_description" : "kuvaus liitetiedostosta tulee tänne"
+        }
       }
     }
   }

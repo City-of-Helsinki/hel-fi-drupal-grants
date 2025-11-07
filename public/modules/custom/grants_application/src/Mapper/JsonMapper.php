@@ -526,20 +526,24 @@ class JsonMapper {
    * @return array
    *   Single file mapping.
    */
-  private function createSingleFileData(array $data, string $description = ''): array {
+  private function createSingleFileData(array $data): array {
     $fileData = [];
 
-    $fileData[] = [
-      'ID' => 'description',
-      'value' => $description,
-      'valueType' => 'string',
-    ];
     foreach($data as $key => $value) {
+
+      // Alter key
+      match($key) {
+        'fileDescription' => $key = 'description',
+        default => $key,
+      };
+
+      // kuvaus liitetiedostosta tulee tänne
       $definition = [
         'ID' => $key,
         'value' => $value,
       ];
 
+      // Set value types.
       match($key) {
         'fileType' => $definition['valueType'] = 'int',
         'isNewAttachment',
@@ -550,13 +554,6 @@ class JsonMapper {
 
       $fileData[] = $definition;
     }
-
-    // Set description as first.
-    array_unshift($fileData, [
-      'ID' => 'description',
-      'value' => $description,
-      'valueType' => 'string',
-    ]);
 
     return $fileData;
   }
