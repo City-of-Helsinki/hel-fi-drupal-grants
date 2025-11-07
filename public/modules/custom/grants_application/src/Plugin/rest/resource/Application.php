@@ -7,6 +7,7 @@ use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
@@ -44,6 +45,8 @@ use Symfony\Component\Routing\RouteCollection;
   ]
 )]
 final class Application extends ResourceBase {
+
+  use StringTranslationTrait;
 
   /**
    * Constructs a Drupal\rest\Plugin\rest\resource\EntityResource object.
@@ -161,10 +164,11 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot find form.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     if (!$settings->isApplicationOpen()) {
+      return new JsonResponse(['error' => $this->t('The application is not currently open.')], 400);
       // @todo Uncomment.
       // return new JsonResponse([], 403);
     }
@@ -175,7 +179,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Unable to fetch user information.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment.')], 500);
     }
 
     try {
@@ -184,7 +188,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot get the submission.
-      return new JsonResponse(['Unable to fetch submission'], 500);
+      return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating another one.')], 500);
     }
 
     try {
@@ -193,7 +197,7 @@ final class Application extends ResourceBase {
     }
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment.')], 500);
     }
 
     $changeTime = new DrupalDateTime($document->getUpdatedAt());
@@ -245,7 +249,8 @@ final class Application extends ResourceBase {
     }
 
     if (!$application_number) {
-      return new JsonResponse(['missing application number'], 500);
+      // Should not be possible.
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     try {
@@ -254,7 +259,7 @@ final class Application extends ResourceBase {
       $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment.')], 500);
     }
 
     try {
@@ -266,7 +271,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot find correct draft submission.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     try {
@@ -274,7 +279,7 @@ final class Application extends ResourceBase {
     }
     catch (\Throwable $e) {
       // Cannot fetch the corresponding ATV document.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('We cannot fetch the application. Please try again in a moment.')], 500);
     }
 
     // Here we do the actual work.
@@ -308,7 +313,7 @@ final class Application extends ResourceBase {
     catch (\Exception $e) {
       // The user has removed bank account from profile.
       return new JsonResponse(
-        ['Your user profile does not contain the given bank account number. Update your user profile and try again.'],
+        ['error' => $this->t('Your user profile does not contain the given bank account number. Please update your user profile and try again.')],
         500
       );
     }
@@ -373,7 +378,7 @@ final class Application extends ResourceBase {
       // Unable to combine datasources, bad atv-connection maybe?
       $this->logger->error('Error while sending the application for the first time: ' . $e->getMessage());
       return new JsonResponse(
-        ['error' => $this->stringTranslation->translate('An error occurred while sending the application. Please try again later.')],
+        ['error' => $this->t('An error occurred while sending the application. Please try again later.')],
         500,
       );
     }
@@ -454,6 +459,7 @@ final class Application extends ResourceBase {
       // Log the exception,
       // return success = false to react.
       // @todo Log the failure to send to integration and return.
+      return new JsonResponse(['error' => $this->t('Unable to send the application. Please try again in a moment.')], 500);
     }
 
     if (!$success) {
@@ -467,7 +473,8 @@ final class Application extends ResourceBase {
       $submission->save();
     }
     catch (\Exception $e) {
-      return new JsonResponse([], 500);
+      // This should never happen.
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
@@ -516,11 +523,12 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot find form by application type id.
-      return new JsonResponse([], 404);
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 404);
     }
 
     if (!$application_number) {
-      return new JsonResponse(['missing application number'], 500);
+      // @todo Logging.
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     try {
@@ -529,7 +537,7 @@ final class Application extends ResourceBase {
       $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment.')], 500);
     }
 
     try {
@@ -541,7 +549,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot find correct draft submission.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     try {
@@ -549,7 +557,7 @@ final class Application extends ResourceBase {
     }
     catch (\Throwable $e) {
       // Cannot fetch the corresponding ATV document.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('We cannot fetch the application. Please try again in a moment')], 500);
     }
 
     $mappingFileName = "ID$application_type_id.json";
@@ -572,7 +580,7 @@ final class Application extends ResourceBase {
       // Unable to combine datasources, bad atv-connection maybe?
       $this->logger->error('Error while sending the application for the first time: ' . $e->getMessage());
       return new JsonResponse(
-        ['error' => $this->stringTranslation->translate('An error occurred while sending the application. Please try again later.')],
+        ['error' => $this->t('An error occurred while sending the application. Please try again later.')],
         500,
       );
     }
@@ -590,7 +598,7 @@ final class Application extends ResourceBase {
     $newFiles = $mapper->mapFiles($dataSources);
     $newFiles = $newFiles['attachmentsInfo']['attachmentsArray'] ?? [];
 
-    // uuteen tiedostoon tulee 2x description
+    // @todo Change the file mapping, the description part.
     $patchedFiles = $mapper->patchMappedFiles(
       $oldFiles,
       $newFiles
@@ -620,7 +628,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Unable to find the document.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Unable to send the application. Please try again in a moment')], 500);
     }
 
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
