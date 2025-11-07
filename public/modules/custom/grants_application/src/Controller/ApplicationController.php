@@ -158,7 +158,7 @@ final class ApplicationController extends ControllerBase {
     catch (AntivirusException $e) {
       // @todo Log.
       return new JsonResponse(
-        ['error' => 'File upload failed during antivirus-scan. Please try again in a moment.'],
+        ['error' => $this->t('File upload failed during antivirus-scan. Please try again in a moment')],
         400
       );
     }
@@ -181,7 +181,7 @@ final class ApplicationController extends ControllerBase {
 
     if (!$submission) {
       // @todo Should never happen, log.
-      return new JsonResponse(['error' => 'Unable to find the application'], 400);
+      return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
     }
 
     try {
@@ -193,7 +193,7 @@ final class ApplicationController extends ControllerBase {
     }
     catch (\Exception $e) {
       // @todo Log exception message.
-      return new JsonResponse(['error' => 'Failed to upload the document'], 500);
+      return new JsonResponse(['error' => $this->t('Failed to upload the file. Please try again in a moment')], 500);
     }
 
     if (!$result) {

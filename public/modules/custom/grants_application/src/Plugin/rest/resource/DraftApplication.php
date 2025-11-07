@@ -378,7 +378,7 @@ final class DraftApplication extends ResourceBase {
 
     if (!$document) {
       // Unable to find the document.
-      return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating a new application.')], 500);
+      return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating a new application')], 500);
     }
 
     // @todo clean this up a bit, unnecessarily duplicated variables.
@@ -410,7 +410,7 @@ final class DraftApplication extends ResourceBase {
       $submission->save();
     }
     catch (\Exception $e) {
-      return new JsonResponse([['error' => $this->t('Unable to save the draft. Please try again in a moment.')]], 500);
+      return new JsonResponse([['error' => $this->t('Unable to save the draft. Please try again in a moment')]], 500);
     }
 
     $this->showSavedMessage($application_number);

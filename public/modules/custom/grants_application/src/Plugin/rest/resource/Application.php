@@ -168,7 +168,7 @@ final class Application extends ResourceBase {
     }
 
     if (!$settings->isApplicationOpen()) {
-      return new JsonResponse(['error' => $this->t('The application is not currently open.')], 400);
+      return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
       // @todo Uncomment.
       // return new JsonResponse([], 403);
     }
@@ -179,7 +179,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Unable to fetch user information.
-      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment.')], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment')], 500);
     }
 
     try {
@@ -188,7 +188,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot get the submission.
-      return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating another one.')], 500);
+      return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating another one')], 500);
     }
 
     try {
@@ -197,7 +197,7 @@ final class Application extends ResourceBase {
     }
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
-      return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment.')], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
     }
 
     $changeTime = new DrupalDateTime($document->getUpdatedAt());
@@ -259,7 +259,7 @@ final class Application extends ResourceBase {
       $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
-      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment.')], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment')], 500);
     }
 
     try {
@@ -279,7 +279,7 @@ final class Application extends ResourceBase {
     }
     catch (\Throwable $e) {
       // Cannot fetch the corresponding ATV document.
-      return new JsonResponse(['error' => $this->t('We cannot fetch the application. Please try again in a moment.')], 500);
+      return new JsonResponse(['error' => $this->t('We cannot fetch the application. Please try again in a moment')], 500);
     }
 
     // Here we do the actual work.
@@ -313,7 +313,7 @@ final class Application extends ResourceBase {
     catch (\Exception $e) {
       // The user has removed bank account from profile.
       return new JsonResponse(
-        ['error' => $this->t('Your user profile does not contain the given bank account number. Please update your user profile and try again.')],
+        ['error' => $this->t('Your user profile does not contain the given bank account number. Please update your user profile and try again')],
         500
       );
     }
@@ -378,7 +378,7 @@ final class Application extends ResourceBase {
       // Unable to combine datasources, bad atv-connection maybe?
       $this->logger->error('Error while sending the application for the first time: ' . $e->getMessage());
       return new JsonResponse(
-        ['error' => $this->t('An error occurred while sending the application. Please try again later.')],
+        ['error' => $this->t('An error occurred while sending the application. Please try again later')],
         500,
       );
     }
@@ -459,7 +459,7 @@ final class Application extends ResourceBase {
       // Log the exception,
       // return success = false to react.
       // @todo Log the failure to send to integration and return.
-      return new JsonResponse(['error' => $this->t('Unable to send the application. Please try again in a moment.')], 500);
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
     if (!$success) {
@@ -537,7 +537,7 @@ final class Application extends ResourceBase {
       $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
-      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment.')], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment')], 500);
     }
 
     try {
@@ -557,7 +557,7 @@ final class Application extends ResourceBase {
     }
     catch (\Throwable $e) {
       // Cannot fetch the corresponding ATV document.
-      return new JsonResponse(['error' => $this->t('We cannot fetch the application. Please try again in a moment')], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch the application. Please try again in a moment')], 500);
     }
 
     $mappingFileName = "ID$application_type_id.json";
@@ -580,7 +580,7 @@ final class Application extends ResourceBase {
       // Unable to combine datasources, bad atv-connection maybe?
       $this->logger->error('Error while sending the application for the first time: ' . $e->getMessage());
       return new JsonResponse(
-        ['error' => $this->t('An error occurred while sending the application. Please try again later.')],
+        ['error' => $this->t('An error occurred while sending the application. Please try again later')],
         500,
       );
     }
@@ -628,7 +628,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Unable to find the document.
-      return new JsonResponse(['error' => $this->t('Unable to send the application. Please try again in a moment')], 500);
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
