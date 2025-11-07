@@ -1,3 +1,4 @@
+langcode: en
 third_party_options:
   application_industries:
     KYMP: KYMP
@@ -350,7 +351,6 @@ third_party_options:
     53: 'Special grant for culture and leisure 1'
     54: 'Special grant for culture and leisure 2'
     55: 'Employment grant'
-langcode: en
 config_import_ignore:
   - 53
   - 51
