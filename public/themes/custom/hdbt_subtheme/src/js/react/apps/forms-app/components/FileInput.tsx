@@ -54,7 +54,6 @@ export const FileInput = ({
   accept,
   formData,
   id,
-  idSchema,
   label,
   multiple,
   name,
@@ -121,8 +120,8 @@ export const FileInput = ({
     required={required}
   />;
 
-  if (uiSchema['misc:variant'] === 'simple') {
-    inputElement.className = 'hdbt-form--fileinput';
+  if (uiSchema?.['misc:variant'] === 'simple') {
+    inputElement.props.className = 'hdbt-form--fileinput';
     return inputElement;
   }
 
@@ -131,7 +130,7 @@ export const FileInput = ({
       {inputElement}
       <Checkbox
         checked={isDeliveredLater || false}
-        disabled={defaultValue.length}
+        disabled={Boolean(defaultValue.length)}
         id={`${name}-delivered-later`}
         label={Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' })}
         onChange={(e) => {
@@ -143,7 +142,7 @@ export const FileInput = ({
       />
       <Checkbox
         checked={isIncludedInOtherFile || false}
-        disabled={defaultValue.length}
+        disabled={Boolean(defaultValue.length)}
         id={`${name}-included-in-other-file`}
         label={Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' })}
         onChange={(e) => {
