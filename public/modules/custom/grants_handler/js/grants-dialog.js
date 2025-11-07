@@ -4,6 +4,8 @@
     /**
      * Creates a dialog and appends it to the body.
      *
+     * @todo: The dialog implementation will be refactored in UHF-12503.
+     *
      * @param {string} dialogContent - The title displayed at the top of the
      *   dialog.
      * @param {string} dialogVariant - The variant for the dialog.

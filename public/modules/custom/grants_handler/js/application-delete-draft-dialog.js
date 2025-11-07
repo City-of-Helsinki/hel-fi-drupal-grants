@@ -82,7 +82,7 @@
             },
             actionButtonCallbackIsAsync: true,
             dialogTitle: Drupal.t('Delete application', {}, { context: 'grants_handler_dialog' }),
-            dialogIcon: 'info',
+            dialogIcon: 'alert-circle',
             customSelector: 'dialog--danger',
             enforceWait: true,
           })
