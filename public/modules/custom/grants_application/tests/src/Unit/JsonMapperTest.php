@@ -134,14 +134,17 @@ final class JsonMapperTest extends UnitTestCase {
 
     $descriptionExists = FALSE;
     foreach ($mappedFiles['attachmentsInfo']['attachmentsArray'][0] as $singleFile) {
+
       if (array_find($singleFile, fn($singleField) => $singleField['ID'] === 'description')) {
         $descriptionExists = TRUE;
         break;
       }
     }
-    $this->assertTrue($descriptionExists);
+
+    $this->assertTrue($descriptionExists, 'Description exists.');
+    $this->assertEquals('kuvaus liitetiedostosta tulee tänne', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0][0]['value']);
     $this->assertTrue($mappedFiles['attachmentsInfo']['attachmentsArray'][0][0][1]['ID'] === 'fileName', 'Second field: fileName');
-    $this->assertTrue($mappedFiles['attachmentsInfo']['attachmentsArray'][0][0][1]['value'] === 'testfile.pdf');
+    $this->assertEquals('testfile.pdf', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0][1]['value']);
   }
 
   /**
