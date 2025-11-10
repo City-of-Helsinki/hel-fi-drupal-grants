@@ -507,12 +507,63 @@ class JsonMapper {
    *   The data sources.
    */
   private function handleFile(&$data, array $definition, string $targetPath, array $dataSources): void {
-    $value = $this->getValue($dataSources[$definition['datasource']], $definition['source']);
-    if (!$value) {
-      return;
+
+    $value = $this->getFileData($definition['data'], $dataSources[$definition['datasource']], $definition['source']);
+    $this->setTargetValue($data, $targetPath, $value, $definition);
+  }
+
+  /**
+   * Get all required field values for file.
+   *
+   * There are two cases we must handle here:
+   * 1. When an actual uploaded file is mapped
+   * 2. The file will be sent in future or has already been sent.
+   * Both cases require different amount of fields.
+   * The default values for file-fields must be in mappings-json.
+   *
+   * @param array $defaultData
+   *   Array of default values for file, comes from mapping.json.
+   * @param array $sourceData
+   *   The data sources.
+   * @param string $sourcePath
+   *   The path to data inside datasource.
+   *
+   * @return array
+   *   A mapped file with all required fields.
+   */
+  private function getFileData(array $defaultData, array $sourceData, string $sourcePath): array|null {
+    $formValues = $this->getNestedArrayValue($sourceData, explode('.', $sourcePath));
+
+    // Figure out which fields to send.
+    $defaultFieldsForNoFile = ['description', 'fileType', 'isDeliveredLater', 'isIncludedInOtherFile'];
+    $defaultFieldsForFile = array_keys($defaultData);
+    $fieldNames = isset($formValues['integrationID']) ? $defaultFieldsForFile : $defaultFieldsForNoFile;
+
+    $values = [];
+    foreach($fieldNames as $fieldName) {
+      // Use the default value-array as base for the data.
+
+      $field = $defaultData[$fieldName];
+
+      // And overwrite the value -value if necessary.
+      if (isset($formValues[$fieldName])) {
+        $val = isset($formValues[$fieldName]) ?
+          $formValues[$fieldName] :
+          $defaultData[$fieldName]['value'];
+
+        // And make sure we are adding the boolean as a string.
+        if ($defaultData[$fieldName]['valueType'] === 'bool') {
+          $field['value'] = $val ? 'true' : 'false';
+        }
+        else {
+          $field['value'] = (string) $val;
+        }
+      }
+
+      $values[] = $field;
     }
-    $fileData = $this->createSingleFileData($value);
-    $this->setTargetValue($data, $targetPath, $fileData, $definition);
+
+    return $values;
   }
 
   /**
@@ -529,13 +580,12 @@ class JsonMapper {
 
     foreach ($data as $key => $value) {
 
-      // Alter key.
+      // Alter key. @todo Remove when React side is fixed.
       match($key) {
         'fileDescription' => $key = 'description',
         default => $key,
       };
 
-      // Kuvaus liitetiedostosta tulee tänne.
       $definition = [
         'ID' => $key,
         'value' => $value,

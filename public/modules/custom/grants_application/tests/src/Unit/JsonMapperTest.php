@@ -129,21 +129,21 @@ final class JsonMapperTest extends UnitTestCase {
     $mapper = new JsonMapper($defaultMappings);
     $mappedFiles = $mapper->mapFiles($dataSources);
 
-    $this->assertTrue(isset($mappedFiles['attachmentsInfo']['attachmentsArray'][0][0]), 'File array exists.');
+    $this->assertTrue(count($mappedFiles['attachmentsInfo']['attachmentsArray']) === 2, 'Both files exists.');
 
     $descriptionExists = FALSE;
     foreach ($mappedFiles['attachmentsInfo']['attachmentsArray'][0] as $singleFile) {
-
-      if (array_find($singleFile, fn($singleField) => $singleField['ID'] === 'description')) {
+      if (isset($singleFile['ID']) && $singleFile['ID'] === 'description') {
         $descriptionExists = TRUE;
         break;
       }
     }
 
     $this->assertTrue($descriptionExists, 'Description exists.');
-    $this->assertEquals('kuvaus liitetiedostosta tulee tänne', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0][0]['value']);
-    $this->assertTrue($mappedFiles['attachmentsInfo']['attachmentsArray'][0][0][1]['ID'] === 'fileName', 'Second field: fileName');
-    $this->assertEquals('testfile.pdf', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0][1]['value']);
+    $this->assertEquals('Yhteisön säännöt', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0]['value'], 'default value overwrite works');
+    $this->assertNotEquals('kuvaus liitetiedostosta tulee tänne', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0]['value'], 'default value overwrite works');
+    $this->assertTrue($mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['ID'] === 'fileName', 'Second field: fileName');
+    $this->assertEquals('testfile.pdf', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['value']);
   }
 
   /**
