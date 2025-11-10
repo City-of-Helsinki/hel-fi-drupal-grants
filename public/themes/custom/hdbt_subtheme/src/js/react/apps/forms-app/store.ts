@@ -3,9 +3,9 @@ import { DateTime } from 'luxon';
 import { ReactNode } from 'react';
 import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 
-import { getUrlParts } from './testutils/Helpers';
-import { keyErrorsByStep } from './utils';
+import { findFieldsOfType, keyErrorsByStep } from './utils';
 import { SubmitStates } from './enum/SubmitStates';
+import { getUrlParts } from './testutils/Helpers';
 
 export type FormStep = {
   id: string;
@@ -55,6 +55,7 @@ type FormConfig = {
     [key: string]: string;
   }
   submitState: string;
+  subventionFields: string[];
   translations: {
     [key in 'fi'|'sv'|'en']: {
       [key: string]: string;
@@ -138,7 +139,7 @@ export const createFormDataAtom = (key: string, initialValue: any, timestamp?: n
 
   return derivedAtom;
 };
-
+export const formDataAtomRef = atom<any>(null);
 export const formStateAtom = atom<FormState|undefined>();
 export const formConfigAtom = atom<FormConfig|undefined>();
 export const formStepsAtom = atom<Map<number, FormStep>|undefined>();
@@ -157,6 +158,7 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
     ...rest,
     uiSchema,
     submitState: status || SubmitStates.DRAFT,
+    subventionFields: Array.from(findFieldsOfType(uiSchema, 'subventionTable')),
   }));
   _set(formStateAtom, (state) => ({
       currentStep: [0, steps.get(0)],
@@ -237,6 +239,11 @@ export const getErrorPageIndicesAtom = atom(_get => {
 
   return errors.map(([index]) => index);
 });
+export const getProfileAtom = atom(_get => {
+  const { grantsProfile } = _get(getFormConfigAtom);
+
+  return grantsProfile;
+});
 export const getAddressesAtom = atom(_get => {
   const { grantsProfile } = _get(getFormConfigAtom);
 
@@ -282,7 +289,30 @@ export const getTranslationsAtom = atom(_get => {
   const { translations } = _get(getFormConfigAtom);
 
   return translations;
-})
+});
+export const getSubventionFieldsAtom = atom(_get => {
+  const { subventionFields } = _get(getFormConfigAtom);
+
+  return subventionFields;
+});
+export const getFormDataAtom = atom(_get => {
+  const formDataAtom = _get(formDataAtomRef);
+  
+  if (!formDataAtom) {
+    throw new Error('Trying to read form data before initialization.');
+  }
+  
+  return _get(formDataAtom);
+});
+export const setFormDataAtom = atom(null, (_get, _set, newData: any) => {
+  const formDataAtom = _get(formDataAtomRef);
+  
+  if (!formDataAtom) {
+    throw new Error('Trying to set form data before initialization.');
+  }
+  
+  _set(formDataAtom, newData);
+});
 export const setApplicationNumberAtom = atom(null, (_get, _set, applicationNumber: string) => {
   const formConfig = _get(getFormConfigAtom);
 

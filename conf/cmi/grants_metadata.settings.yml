@@ -350,6 +350,7 @@ third_party_options:
     52: 'Special grant for sports 2'
     53: 'Special grant for culture and leisure 1'
     54: 'Special grant for culture and leisure 2'
+    55: 'Employment grant'
 config_import_ignore:
   - 53
   - 51
