@@ -475,7 +475,7 @@ class JsonMapper {
    * Map all files added to the application.
    *
    * The file data lives outside of compensations in the final data.
-   * The files are mapped in attachmentsInfo.attachmentsArray
+   * The files are mapped in attachmentsInfo.attachmentsArray.
    *
    * @param array $dataSources
    *   The datasources.
@@ -520,8 +520,6 @@ class JsonMapper {
    *
    * @param array $data
    *   The data related to single file mapping.
-   * @param string $description
-   *   The description for the file.
    *
    * @return array
    *   Single file mapping.
@@ -529,15 +527,15 @@ class JsonMapper {
   private function createSingleFileData(array $data): array {
     $fileData = [];
 
-    foreach($data as $key => $value) {
+    foreach ($data as $key => $value) {
 
-      // Alter key
+      // Alter key.
       match($key) {
         'fileDescription' => $key = 'description',
         default => $key,
       };
 
-      // kuvaus liitetiedostosta tulee tänne
+      // Kuvaus liitetiedostosta tulee tänne.
       $definition = [
         'ID' => $key,
         'value' => $value,
@@ -611,7 +609,7 @@ class JsonMapper {
   public function getStatusValue(array $document): string {
     $applicationInfoArray = $document['content']['compensation']['applicationInfoArray'];
     $statusArray = array_find($applicationInfoArray, fn($item) => $item['ID'] === 'status');
-    foreach($statusArray as $key =>  $status) {
+    foreach ($statusArray as $key => $status) {
       if ($key === 'value') {
         return $status;
       }
@@ -628,7 +626,7 @@ class JsonMapper {
    * @param array $document
    *   The document data.
    * @param string $oldStatusValue
-   *   The old status value
+   *   The old status value.
    */
   public function setStatusValue(array &$document, string $oldStatusValue): void {
     $applicationInfoArray = $document['content']['compensation']['applicationInfoArray'];
@@ -651,7 +649,7 @@ class JsonMapper {
    *   Bank file exists.
    */
   public function hasBankFile(array $mappedFiles): bool {
-    foreach($mappedFiles as $fileArray) {
+    foreach ($mappedFiles as $fileArray) {
       return (bool) array_find($fileArray, fn($item) => $item['fileType'] === 45);
     }
     return FALSE;
@@ -685,7 +683,7 @@ class JsonMapper {
 
       if ($integrationIdValueArray) {
         $fileFound = FALSE;
-        foreach($uniqueFiles as $uniqueFileFieldArray) {
+        foreach ($uniqueFiles as $uniqueFileFieldArray) {
           $uniqueIntegrationIdField = array_find($uniqueFileFieldArray, fn($item) => $item['ID'] === 'integrationID');
           if ($uniqueIntegrationIdField && $uniqueIntegrationIdField['value'] === $integrationIdValueArray['value']) {
             $fileFound = TRUE;
@@ -702,14 +700,16 @@ class JsonMapper {
   }
 
   /**
+   * Get the bank file.
+   *
    * @param array $mappedFiles
-   *   Contents of attachmentsInfo.attachmentsArray
+   *   Contents of attachmentsInfo.attachmentsArray.
    *
    * @return array
    *   The bank file.
    */
   private function getMappedBankFile(array $mappedFiles): ?array {
-    foreach($mappedFiles as $fileArray) {
+    foreach ($mappedFiles as $fileArray) {
       if (array_find($fileArray, fn($item) => $item['fileType'] === 45)) {
         return $fileArray;
       }

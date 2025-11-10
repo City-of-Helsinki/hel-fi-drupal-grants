@@ -131,7 +131,6 @@ final class JsonMapperTest extends UnitTestCase {
 
     $this->assertTrue(isset($mappedFiles['attachmentsInfo']['attachmentsArray'][0][0]), 'File array exists.');
 
-
     $descriptionExists = FALSE;
     foreach ($mappedFiles['attachmentsInfo']['attachmentsArray'][0] as $singleFile) {
 

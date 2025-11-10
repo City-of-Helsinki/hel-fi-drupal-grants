@@ -598,7 +598,6 @@ final class Application extends ResourceBase {
     $newFiles = $mapper->mapFiles($dataSources);
     $newFiles = $newFiles['attachmentsInfo']['attachmentsArray'] ?? [];
 
-    // @todo Change the file mapping, the description part.
     $patchedFiles = $mapper->patchMappedFiles(
       $oldFiles,
       $newFiles
