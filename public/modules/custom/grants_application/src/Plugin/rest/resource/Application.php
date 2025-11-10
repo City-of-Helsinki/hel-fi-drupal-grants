@@ -610,8 +610,10 @@ final class Application extends ResourceBase {
     $document_data['statusUpdates'] = $statusUpdates;
     $document_data['formUpdate'] = TRUE;
 
-    // Status is changed by someone else, we are not allowed to overwrite.
-    $document_data['compensation']['applicationInfoArray'] = $mapper->getStatusValue($oldDocument);
+    // Read the status from ATV and copy it.
+    if ($oldStatus = $mapper->getStatusValue($oldDocument)) {
+      $mapper->setStatusValue($document_data, $oldStatus);
+    }
 
     // @todo Add event HANDLER_SEND_INTEGRATION.
     try {

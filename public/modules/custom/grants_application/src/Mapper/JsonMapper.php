@@ -600,7 +600,7 @@ class JsonMapper {
   }
 
   /**
-   * Status is the only field which is altered by someone else after submit.
+   * Get the current status value from document.
    *
    * @param array $document
    *   The ATV document as array.
@@ -617,6 +617,28 @@ class JsonMapper {
       }
     }
     return '';
+  }
+
+  /**
+   * Set the status to a document data.
+   *
+   * Status is special field since it is initialized by us but
+   * updated by external system. We may not overwrite it.
+   *
+   * @param array $document
+   *   The document data.
+   * @param string $oldStatusValue
+   *   The old status value
+   */
+  public function setStatusValue(array &$document, string $oldStatusValue): void {
+    $applicationInfoArray = $document['content']['compensation']['applicationInfoArray'];
+
+    foreach ($applicationInfoArray as $field) {
+      if ($field['ID'] === 'status') {
+        $field['value'] = $oldStatusValue;
+        break;
+      }
+    }
   }
 
   /**
