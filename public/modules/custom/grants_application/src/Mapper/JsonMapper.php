@@ -545,16 +545,16 @@ class JsonMapper {
       $field = $defaultData[$fieldName];
 
       // And overwrite the value -value if necessary.
-      if (isset($formValues[$fieldName])) {
-        $val = $formValues[$fieldName] ??
-          $defaultData[$fieldName]['value'];
+      // @todo Remove filetype-condition once react-form no longer sends it.
+      if (isset($formValues[$fieldName]) && $fieldName !== 'fileType') {
+        $val = $defaultData[$fieldName]['value'];
 
         // And make sure we are adding the boolean as a string.
         if ($defaultData[$fieldName]['valueType'] === 'bool') {
-          $field['value'] = $val ? 'true' : 'false';
+          $field['value'] = isset($formValues[$fieldName]) ? $formValues[$fieldName] ? 'true' : 'false' : $val;
         }
         else {
-          $field['value'] = (string) $val;
+          $field['value'] = isset($formValues[$fieldName]) ? (string) $formValues[$fieldName] : $val;
         }
       }
 
