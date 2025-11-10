@@ -507,7 +507,6 @@ class JsonMapper {
    *   The data sources.
    */
   private function handleFile(&$data, array $definition, string $targetPath, array $dataSources): void {
-
     $value = $this->getFileData($definition['data'], $dataSources[$definition['datasource']], $definition['source']);
     $this->setTargetValue($data, $targetPath, $value, $definition);
   }
@@ -541,6 +540,11 @@ class JsonMapper {
 
     $values = [];
     foreach ($fieldNames as $fieldName) {
+      // @todo Get rid of this once react change has been made.
+      if (isset($formValues['fileDescription'])) {
+        $formValues['description'] = $formValues['fileDescription'];
+      }
+
       // Use the default value-array as base for the data.
       $field = $defaultData[$fieldName];
 

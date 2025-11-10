@@ -133,15 +133,16 @@ final class JsonMapperTest extends UnitTestCase {
 
     $descriptionExists = FALSE;
     foreach ($mappedFiles['attachmentsInfo']['attachmentsArray'][0] as $singleFile) {
-      if (isset($singleFile['ID']) && $singleFile['ID'] === 'description') {
+      // @todo get rid of fileDescription when react change has been made.
+      if (isset($singleFile['ID']) && $singleFile['ID'] === 'description' || $singleFile['ID'] === 'fileDescription') {
         $descriptionExists = TRUE;
         break;
       }
     }
 
     $this->assertTrue($descriptionExists, 'Description exists.');
-    $this->assertEquals('Yhteisön säännöt', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0]['value'], 'default value overwrite works');
-    $this->assertNotEquals('kuvaus liitetiedostosta tulee tänne', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0]['value'], 'default value overwrite works');
+    $this->assertEquals('kuvaus liitetiedostosta tulee tänne', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0]['value'], 'default value overwrite works');
+    $this->assertNotEquals('Yhteisön säännöt', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0]['value'], 'default value overwrite works');
     $this->assertTrue($mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['ID'] === 'fileName', 'Second field: fileName');
     $this->assertEquals('testfile.pdf', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['value']);
   }
