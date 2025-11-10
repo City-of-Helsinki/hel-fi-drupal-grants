@@ -531,7 +531,7 @@ class JsonMapper {
    * @return array
    *   A mapped file with all required fields.
    */
-  private function getFileData(array $defaultData, array $sourceData, string $sourcePath): array|null {
+  private function getFileData(array $defaultData, array $sourceData, string $sourcePath): array {
     $formValues = $this->getNestedArrayValue($sourceData, explode('.', $sourcePath));
 
     // Figure out which fields to send.
@@ -540,15 +540,13 @@ class JsonMapper {
     $fieldNames = isset($formValues['integrationID']) ? $defaultFieldsForFile : $defaultFieldsForNoFile;
 
     $values = [];
-    foreach($fieldNames as $fieldName) {
+    foreach ($fieldNames as $fieldName) {
       // Use the default value-array as base for the data.
-
       $field = $defaultData[$fieldName];
 
       // And overwrite the value -value if necessary.
       if (isset($formValues[$fieldName])) {
-        $val = isset($formValues[$fieldName]) ?
-          $formValues[$fieldName] :
+        $val = $formValues[$fieldName] ??
           $defaultData[$fieldName]['value'];
 
         // And make sure we are adding the boolean as a string.
@@ -564,46 +562,6 @@ class JsonMapper {
     }
 
     return $values;
-  }
-
-  /**
-   * Create single file mapping.
-   *
-   * @param array $data
-   *   The data related to single file mapping.
-   *
-   * @return array
-   *   Single file mapping.
-   */
-  private function createSingleFileData(array $data): array {
-    $fileData = [];
-
-    foreach ($data as $key => $value) {
-
-      // Alter key. @todo Remove when React side is fixed.
-      match($key) {
-        'fileDescription' => $key = 'description',
-        default => $key,
-      };
-
-      $definition = [
-        'ID' => $key,
-        'value' => $value,
-      ];
-
-      // Set value types.
-      match($key) {
-        'fileType' => $definition['valueType'] = 'int',
-        'isNewAttachment',
-        'isIncludedInOtherFile',
-        'isDeliveredLater' => $definition['valueType'] = 'bool',
-        default => $definition['valueType'] = 'string'
-      };
-
-      $fileData[] = $definition;
-    }
-
-    return $fileData;
   }
 
   /**
