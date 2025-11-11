@@ -1,10 +1,14 @@
-import { UiSchema } from '@rjsf/utils';
-import { JSONSchema7Definition, JSONSchema7TypeName } from 'json-schema';
+import type { UiSchema } from '@rjsf/utils';
+import type { JSONSchema7Definition, JSONSchema7TypeName } from 'json-schema';
 
 const objectType: JSONSchema7TypeName = 'object';
 const stringType: JSONSchema7TypeName = 'string';
 
-export const privatePersonSettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
+export const privatePersonSettings: [
+  JSONSchema7Definition,
+  JSONSchema7Definition,
+  UiSchema,
+] = [
   {
     title: 'Omat yhteystiedot',
     type: objectType,
@@ -34,7 +38,7 @@ export const privatePersonSettings: [JSONSchema7Definition, JSONSchema7Definitio
               post_area: {
                 title: 'Toimipaikka',
                 type: stringType,
-                minLength: 1
+                minLength: 1,
               },
             },
           },
@@ -48,19 +52,23 @@ export const privatePersonSettings: [JSONSchema7Definition, JSONSchema7Definitio
             title: 'Henkilökohtainen puhelinnumero',
             type: stringType,
             minLength: 1,
-          }
-        }
-      }
+          },
+        },
+      },
     },
   },
-  {}
+  {},
 ];
 
-export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
+export const communitySettings: [
+  JSONSchema7Definition,
+  JSONSchema7Definition,
+  UiSchema,
+] = [
   {
     title: 'applicant_info.title',
     type: objectType,
-    '$ref': '#/definitions/applicant_info',
+    $ref: '#/definitions/applicant_info',
   },
   {
     type: objectType,
@@ -72,7 +80,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
             format: 'email',
             title: 'applicant_email_email.title',
             type: stringType,
-          }
+          },
         },
         required: ['email'],
         title: 'applicant_email.title',
@@ -89,7 +97,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
             minLength: 1,
             title: 'contact_person_phone_number.title',
             type: stringType,
-          }
+          },
         },
         required: ['contact_person', 'contact_person_phone_number'],
         title: 'contact_person_info.title',
@@ -100,7 +108,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
           community_address: {
             title: 'community_address_community_address.title',
             type: stringType,
-          }
+          },
         },
         required: ['community_address'],
         title: 'community_address.title',
@@ -111,7 +119,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
           bank_account: {
             title: 'bank_account_bank_account.title',
             type: stringType,
-          }
+          },
         },
         required: ['bank_account'],
         title: 'bank_account.title',
@@ -125,7 +133,8 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
               type: objectType,
               properties: {
                 official: {
-                  title: 'community_officials_community_officials_official.title',
+                  title:
+                    'community_officials_community_officials_official.title',
                   type: stringType,
                 },
               },
@@ -134,7 +143,8 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
               {
                 properties: {
                   official: {
-                    title: 'community_officials_community_officials_official.title',
+                    title:
+                      'community_officials_community_officials_official.title',
                     type: stringType,
                   },
                 },
@@ -166,24 +176,24 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
             tooltipLabel: 'applicant_email_email.title',
             tooltipButtonLabel: 'applicant_email.tooltip_button_label',
             tooltipText: 'applicant_email.tooltip_text',
-          }
-        }
+          },
+        },
       },
       bank_account: {
         bank_account: {
           'ui:widget': 'bank_account',
           'ui:options': {
-            printableName: 'bank_account.title'
-          }
-        }
+            printableName: 'bank_account.title',
+          },
+        },
       },
       community_address: {
         community_address: {
           'ui:widget': 'address',
           'ui:options': {
-            printableName: 'community_address.title'
-          }
-        }
+            printableName: 'community_address.title',
+          },
+        },
       },
       community_officials: {
         community_officials: {
@@ -193,14 +203,14 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
             },
             'ui:options': {
               removeText: 'community_officials_community_officials.removeText',
-            }
+            },
           },
           items: {
             official: {
               'ui:widget': 'community_officials',
               'ui:options': {
                 hideNameFromPrint: true,
-              }
+              },
             },
           },
           'ui:options': {
@@ -208,9 +218,9 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
             hideNameFromPrint: true,
             orderable: false,
             removable: true,
-          }
-        }
-      }
+          },
+        },
+      },
     },
-  }
+  },
 ];

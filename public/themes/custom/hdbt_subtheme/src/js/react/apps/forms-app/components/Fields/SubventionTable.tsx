@@ -1,4 +1,6 @@
-import { FieldProps } from '@rjsf/utils';
+// biome-ignore-all lint/a11y/noLabelWithoutControl: @todo UHF-12501
+// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
+import type { FieldProps } from '@rjsf/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { Notification, NumberInput } from 'hds-react';
@@ -32,21 +34,21 @@ export const SubventionTable = ({
     return null;
   }
 
-  const findIndexForData = (elementId, data = formData) => data.findIndex(item => item && item?.[0]?.value === elementId);
+  const findIndexForData = (elementId, data = formData) =>
+    data.findIndex((item) => item && item?.[0]?.value === elementId);
 
   if (shouldRenderPreview) {
     return (
       <ul>
-        {schema.options.map(({label, id: elementId}) => 
+        {schema.options.map(({ label, id: elementId }) => (
           <li key={elementId} style={{ listStyle: 'none' }}>
-            <dt>
-              {label}
-            </dt>
+            <dt>{label}</dt>
             <dd>
-              {formData?.[findIndexForData(elementId.toString())]?.[1].value || '-'}
+              {formData?.[findIndexForData(elementId.toString())]?.[1].value ||
+                '-'}
             </dd>
           </li>
-        )}
+        ))}
       </ul>
     );
   }
@@ -74,8 +76,7 @@ export const SubventionTable = ({
 
     if (index === -1) {
       data.push(newValue);
-    }
-    else {
+    } else {
       data[index] = newValue;
     }
 
@@ -84,7 +85,7 @@ export const SubventionTable = ({
 
   const keyedData = {};
   if (Array.isArray(formData)) {
-    formData.forEach(item => {
+    formData.forEach((item) => {
       keyedData[item[0].value] = item[1].value;
     });
   }
@@ -95,7 +96,7 @@ export const SubventionTable = ({
       <label className='js-form-required form-required'>
         {`${schema.title}`}
       </label>
-      <table id="edit-subventions-items" className='responsive-enabled'>
+      <table id='edit-subventions-items' className='responsive-enabled'>
         <thead>
           <tr>
             <th className='subventions-table--subventionTypeTitle webform-multiple-table--subventionTypeTitle'>
@@ -107,14 +108,14 @@ export const SubventionTable = ({
           </tr>
         </thead>
         <tbody>
-          {schema.options.map((item, i) =>  {
+          {schema.options.map((item, i) => {
             const { id: itemId, label } = item;
             const key = `${id}-${itemId}`;
 
             return (
               <tr key={key}>
                 <td>
-                  <div style={{padding: 'var(--spacing-layout-2-xs)'}}>
+                  <div style={{ padding: 'var(--spacing-layout-2-xs)' }}>
                     {label}
                   </div>
                 </td>
@@ -136,7 +137,9 @@ export const SubventionTable = ({
           })}
         </tbody>
       </table>
-      {rawErrors?.length > 0 && <Notification type="error">{formatErrors(rawErrors)}</Notification>}
+      {rawErrors?.length > 0 && (
+        <Notification type='error'>{formatErrors(rawErrors)}</Notification>
+      )}
     </div>
   );
 };

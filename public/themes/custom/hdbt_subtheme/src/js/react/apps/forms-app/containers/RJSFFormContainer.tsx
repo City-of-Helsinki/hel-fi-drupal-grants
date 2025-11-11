@@ -1,19 +1,52 @@
-import { CustomValidator, ErrorTransformer, RJSFSchema, RJSFValidationError, RegistryWidgetsType, UiSchema } from '@rjsf/utils';
-import { useAtomValue, useSetAtom, WritableAtom } from 'jotai';
+// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
+// biome-ignore-all lint/correctness/noNestedComponentDefinitions: @todo UHF-12501
+// biome-ignore-all lint/correctness/useExhaustiveDependencies: @todo UHF-12501
+// biome-ignore-all lint/complexity/useOptionalChain: @todo UHF-12501
+// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
+import type {
+  CustomValidator,
+  ErrorTransformer,
+  RJSFSchema,
+  RJSFValidationError,
+  RegistryWidgetsType,
+  UiSchema,
+} from '@rjsf/utils';
+import { useAtomValue, useSetAtom, type WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
-import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
-import React, { createRef, useCallback, useState } from 'react';
+import Form, { getDefaultRegistry, type IChangeEvent } from '@rjsf/core';
+import type React from 'react';
+import { createRef, useCallback, useState } from 'react';
 import { customizeValidator } from '@rjsf/validator-ajv8';
 import { useTranslation } from 'react-i18next';
 
-import { AddressSelect, BankAccountSelect, CommunityOfficialsSelect, RadioWidget, SelectWidget, TextArea, TextInput } from '../components/Input';
-import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
+import {
+  AddressSelect,
+  BankAccountSelect,
+  CommunityOfficialsSelect,
+  RadioWidget,
+  SelectWidget,
+  TextArea,
+  TextInput,
+} from '../components/Input';
+import {
+  ArrayFieldTemplate,
+  ObjectFieldTemplate,
+  RemoveButtonTemplate,
+} from '../components/Templates';
 import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
 import { FormActions } from '../components/FormActions/FormActions';
 import { FormSummary } from '../components/FormSummary';
-import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom, getSubventionFieldsAtom, isReadOnlyAtom, isBeingSubmittedAtom } from '../store';
+import {
+  getCurrentStepAtom,
+  getReachedStepAtom,
+  getStepsAtom,
+  setErrorsAtom,
+  getSubventionFieldsAtom,
+  isReadOnlyAtom,
+  isBeingSubmittedAtom,
+} from '../store';
 import { InvalidSchemaError } from '../errors/InvalidSchemaError';
 import { isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
@@ -26,9 +59,9 @@ import { TextParagraph } from '../components/Fields/TextParagraph';
 import { localizeErrors } from '../localizeErrors';
 
 const widgets: RegistryWidgetsType = {
-  'address': AddressSelect,
-  'bank_account': BankAccountSelect,
-  'community_officials': CommunityOfficialsSelect,
+  address: AddressSelect,
+  bank_account: BankAccountSelect,
+  community_officials: CommunityOfficialsSelect,
   EmailWidget: TextInput,
   RadioWidget,
   SelectWidget,
@@ -62,7 +95,8 @@ export const RJSFFormContainer = ({
   uiSchema: UiSchema;
 }) => {
   const { t } = useTranslation();
-  const [invalidSchemaError, setInvalidSchemaError] = useState<InvalidSchemaError | null>(null);
+  const [invalidSchemaError, setInvalidSchemaError] =
+    useState<InvalidSchemaError | null>(null);
   const subventionFields = useAtomValue(getSubventionFieldsAtom);
   const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
@@ -70,22 +104,19 @@ export const RJSFFormContainer = ({
   const setIsSubmitting = useSetAtom(isBeingSubmittedAtom);
   const formRef = createRef<Form>();
   const readCurrentStep = useAtomCallback(
-    useCallback(get =>  get(getCurrentStepAtom), [])
+    useCallback((get) => get(getCurrentStepAtom), []),
   );
   const readReachedStep = useAtomCallback(
-    useCallback(get => get(getReachedStepAtom), [])
+    useCallback((get) => get(getReachedStepAtom), []),
   );
   const readFormData = useAtomCallback(
-    useCallback(get => get(formDataAtom), [])
+    useCallback((get) => get(formDataAtom), []),
   );
   const setErrors = useSetAtom(setErrorsAtom);
 
-  const browserCacheData = useDebounceCallback(
-    (data: IChangeEvent) => {
-      setFormData(data.formData);
-    },
-    2000,
-  );
+  const browserCacheData = useDebounceCallback((data: IChangeEvent) => {
+    setFormData(data.formData);
+  }, 2000);
 
   if (invalidSchemaError) {
     throw invalidSchemaError;
@@ -101,7 +132,9 @@ export const RJSFFormContainer = ({
     const keyedErrors = keyErrorsByStep(errors, steps);
     const [currentStepIndex] = readCurrentStep();
 
-    const currentPageErrors = keyedErrors.filter(([index, error]) => index === currentStepIndex);
+    const currentPageErrors = keyedErrors.filter(
+      ([index, error]) => index === currentStepIndex,
+    );
 
     if (currentPageErrors.length) {
       formRef.current?.focusOnError(currentPageErrors[0][1]);
@@ -147,28 +180,39 @@ export const RJSFFormContainer = ({
       return;
     }
 
-    const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(errors, steps));  
+    const errorsToShow = filterErrorsByReachedStep(
+      keyErrorsByStep(errors, steps),
+    );
     setErrors(errorsToShow);
 
     return errorsToShow;
   };
 
-/**
- * Custom validation rules for RJSF form.
- * 
- * @param {object} formData - Form data
- * @param {object} errors - Form errors
- * @param {object} _uiSchema - Form Ui Schema
- * 
- * @return {object} - Form errors
- */
+  /**
+   * Custom validation rules for RJSF form.
+   *
+   * @param {object} formData - Form data
+   * @param {object} errors - Form errors
+   * @param {object} _uiSchema - Form Ui Schema
+   *
+   * @return {object} - Form errors
+   */
   const customValidate: CustomValidator = (formData, errors, _uiSchema) => {
     const newErrors = [];
 
-    subventionFields.forEach(field => {
-      const values = field.split('.').reduce((acc, curr) => acc && acc[curr], formData);
-      const _field = field.split('.').reduce((acc, curr) => acc && acc[curr], errors);
-      const hasValues = values ? Object.entries(values).reduce((acc, [key, curr]) => acc || Number(curr[1].value) > 0, false) : false;
+    subventionFields.forEach((field) => {
+      const values = field
+        .split('.')
+        .reduce((acc, curr) => acc && acc[curr], formData);
+      const _field = field
+        .split('.')
+        .reduce((acc, curr) => acc && acc[curr], errors);
+      const hasValues = values
+        ? Object.entries(values).reduce(
+            (acc, [key, curr]) => acc || Number(curr[1].value) > 0,
+            false,
+          )
+        : false;
 
       if (_field && !hasValues) {
         _field.addError(t('subvention.greater_than_zero'));
@@ -180,33 +224,31 @@ export const RJSFFormContainer = ({
       }
     });
 
-    const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(newErrors, steps));  
+    const errorsToShow = filterErrorsByReachedStep(
+      keyErrorsByStep(newErrors, steps),
+    );
     setErrors(errorsToShow, true);
 
     return errors;
   };
 
-  return <>
-      {
-       !readOnly && <>
+  return (
+    <>
+      {!readOnly && (
+        <>
           <ErrorsList />
           <Stepper formRef={formRef} />
         </>
-      }
+      )}
       <div className='form-wrapper'>
         {!isDraft() && (
-          <FormSummary
-            formData={readFormData()}
-            schema={schema}
-          />
+          <FormSummary formData={readFormData()} schema={schema} />
         )}
-        {readOnly ?
-          <SubmittedForm formData={readFormData()} schema={schema} /> :
-          <StaticStepsContainer
-            formDataAtom={formDataAtom}
-            schema={schema}
-          />
-        }
+        {readOnly ? (
+          <SubmittedForm formData={readFormData()} schema={schema} />
+        ) : (
+          <StaticStepsContainer formDataAtom={formDataAtom} schema={schema} />
+        )}
         <Form
           className='grants-form'
           customValidate={customValidate}
@@ -235,8 +277,7 @@ export const RJSFFormContainer = ({
 
             if (passes) {
               submitData(data.formData);
-            }
-            else {
+            } else {
               setIsSubmitting(false);
             }
           }}
@@ -272,5 +313,6 @@ export const RJSFFormContainer = ({
           />
         </Form>
       </div>
-    </>;
-}
+    </>
+  );
+};

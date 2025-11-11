@@ -1,6 +1,6 @@
-import { FormState, FormStep } from '../store';
+import type { FormState, FormStep } from '../store';
 
-const initialStep: [number, FormStep] = [0, {label: 'Step 1', id: 'step-1'}];
+const initialStep: [number, FormStep] = [0, { label: 'Step 1', id: 'step-1' }];
 
 const initialState = {
   currentStep: initialStep,
@@ -15,10 +15,12 @@ const initialState = {
  * @param {Object} formState - Partially filled state
  * @return {Object} - Resulting valid state.
  */
-export const initializeFormState = (formState: Partial<FormState>): FormState => ({
-    ...initialState,
-    ...formState
-  });
+export const initializeFormState = (
+  formState: Partial<FormState>,
+): FormState => ({
+  ...initialState,
+  ...formState,
+});
 
 /**
  * Get URL path parts from current URL in an array.
@@ -29,4 +31,4 @@ export const getUrlParts = () => {
   const path = window.location.pathname;
 
   return path.split('/').filter(Boolean);
-}
+};

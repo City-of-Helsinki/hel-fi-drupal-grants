@@ -10,24 +10,32 @@ import { SubmitStates } from '../../enum/SubmitStates';
 
 describe('Stepper.tsx tests', () => {
   render(
-    <TestProvider initialValues={[
-      [formStateAtom, initializeFormState({
-        reachedStep: 1,
-      })],
-      [formStepsAtom, testSteps],
-      [formConfigAtom, {
-        submitState: SubmitStates.DRAFT,
-      }]
-    ]}>
+    <TestProvider
+      initialValues={[
+        [
+          formStateAtom,
+          initializeFormState({
+            reachedStep: 1,
+          }),
+        ],
+        [formStepsAtom, testSteps],
+        [
+          formConfigAtom,
+          {
+            submitState: SubmitStates.DRAFT,
+          },
+        ],
+      ]}
+    >
       {/* @ts-ignore */}
       <Stepper formRef={null} />
-    </TestProvider>
+    </TestProvider>,
   );
 
   it('Renders stepper', () => {
     expect(screen.getByText('Step 1')).toBeTruthy();
     expect(screen.getByText('Step 2')).toBeTruthy();
-  })
+  });
 
   it('Transforms steps correctly', () => {
     expect(transformSteps(undefined, SubmitStates.DRAFT, [])).toEqual([]);
@@ -39,7 +47,7 @@ describe('Stepper.tsx tests', () => {
       {
         label: testSteps.get(1)?.label,
         state: StepState.disabled,
-      }
+      },
     ]);
     expect(transformSteps(testSteps, SubmitStates.DRAFT, [0])).toEqual([
       {
@@ -49,7 +57,7 @@ describe('Stepper.tsx tests', () => {
       {
         label: testSteps.get(1)?.label,
         state: StepState.disabled,
-      }
-    ])
+      },
+    ]);
   });
 });

@@ -1,4 +1,5 @@
-import { FieldProps } from '@rjsf/utils';
+// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
+import type { FieldProps } from '@rjsf/utils';
 import { TextInput } from 'hds-react';
 import { useAtomValue } from 'jotai';
 
@@ -15,13 +16,18 @@ export const SubventionSum = ({
   const formDataAtom = useAtomValue(formDataAtomRef);
   const data = useAtomValue(formDataAtom);
 
-  const sum = getSubventionSum(data, fields.map(field => `.${field}`));
+  const sum = getSubventionSum(
+    data,
+    fields.map((field) => `.${field}`),
+  );
 
-  return <TextInput
-    disabled
-    id={idSchema.$id}
-    label={schema?.title}
-    value={sum}
-    name={name}
-  />;
+  return (
+    <TextInput
+      disabled
+      id={idSchema.$id}
+      label={schema?.title}
+      value={sum}
+      name={name}
+    />
+  );
 };

@@ -7,10 +7,12 @@ const Uninitialized = () => {
   useAtomValue(getFormConfigAtom);
 
   return null;
-}
+};
 
 describe('Store tests', () => {
   test('Accessing form state before initialization throws error', () => {
-    expect(() => render(<Uninitialized />)).toThrow('Trying to read form config before initialization.');
+    expect(() => render(<Uninitialized />)).toThrow(
+      'Trying to read form config before initialization.',
+    );
   });
 });

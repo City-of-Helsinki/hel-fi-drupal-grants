@@ -1,4 +1,4 @@
-(($, Drupal) => {
+((Drupal) => {
   /**
    * The restrictedDatepicker behavior.
    *
@@ -7,7 +7,7 @@
    * on a "start date" field.
    */
   Drupal.behaviors.restrictedDatepicker = {
-    attach(context, settings) {
+    attach(_context, settings) {
       /*
        * A Application type <=> Date fields map.
        *
@@ -67,4 +67,4 @@
       }
     },
   };
-})(jQuery, Drupal);
+})(Drupal);

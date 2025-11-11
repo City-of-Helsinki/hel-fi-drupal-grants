@@ -1,5 +1,10 @@
-import { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
-import { FormStep } from './store';
+// biome-ignore-all lint/suspicious/useIterableCallbackReturn: @todo UHF-12501
+// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
+// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
+// biome-ignore-all lint/suspicious/noPrototypeBuiltins: @todo UHF-12501
+// biome-ignore-all lint/complexity/noBannedTypes: @todo UHF-12501
+import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
+import type { FormStep } from './store';
 import { communitySettings } from './formConstants';
 
 const regex = /^.([^.]+)/;
@@ -13,7 +18,7 @@ const regex = /^.([^.]+)/;
  * @return {Array} - Array of step indices with errors in them
  */
 export const getIndicesWithErrors = (
-  errors: RJSFValidationError[]|undefined,
+  errors: RJSFValidationError[] | undefined,
   steps?: Map<number, FormStep>,
 ) => {
   if (!steps || !errors || !errors?.length) {
@@ -22,7 +27,7 @@ export const getIndicesWithErrors = (
 
   const errorIndices: number[] = [];
   const propertyParentKeys: string[] = [];
-  errors.forEach(error => {
+  errors.forEach((error) => {
     const match = error?.property?.match(regex)?.[0];
 
     if (match) {
@@ -47,7 +52,7 @@ export const getIndicesWithErrors = (
  * @return {Array} - Array of validation errors, keyed by step index
  */
 export const keyErrorsByStep = (
-  errors: RJSFValidationError[]|undefined,
+  errors: RJSFValidationError[] | undefined,
   steps?: Map<number, FormStep>,
 ) => {
   if (!steps || !errors || !errors?.length) {
@@ -57,10 +62,12 @@ export const keyErrorsByStep = (
   const keyedErrors: Array<[number, RJSFValidationError]> = [];
   const stepsArray = Array.from(steps);
 
-  errors.forEach(error => {
+  errors.forEach((error) => {
     const match = error?.property?.match(regex)?.[0];
 
-    const matchedStep = stepsArray.find(([index, step]) => step.id === match?.split('.')[1]);
+    const matchedStep = stepsArray.find(
+      ([index, step]) => step.id === match?.split('.')[1],
+    );
 
     if (matchedStep) {
       const [matchedIndex] = matchedStep;
@@ -79,7 +86,9 @@ export const keyErrorsByStep = (
  *
  * @return {Array} - [isValid, message]
  */
-export const isValidFormResponse = (data: Object): [boolean, string|undefined] => [true, undefined];
+export const isValidFormResponse = (
+  data: Object,
+): [boolean, string | undefined] => [true, undefined];
 
 /**
  * Add static applicant info step to form schema.
@@ -93,7 +102,7 @@ export const isValidFormResponse = (data: Object): [boolean, string|undefined] =
 export const addApplicantInfoStep = (
   schema: RJSFSchema,
   uiSchema: UiSchema,
-  grantsProfile: Array<undefined>|{business_id: string}
+  grantsProfile: Array<undefined> | { business_id: string },
 ): [RJSFSchema, UiSchema] => {
   const { definitions, properties } = schema;
   const [rootProperty, definition, uiSchemaAdditions] = communitySettings;
@@ -135,14 +144,13 @@ export const getNestedSchemaProperty = (obj: RJSFSchema, path: string) => {
     }
     if (index === properties.length - 1) {
       current = current[property];
-    }
-    else {
+    } else {
       current = current[property]?.properties ?? current[property];
     }
   });
 
   return current;
-}
+};
 
 /**
  * Set nested object prroperty with dot notation.
@@ -167,31 +175,39 @@ export const setNestedProperty = (obj: any, path: string, value: any) => {
       current = current[property];
     }
   });
-}
+};
 
 /**
  * Finds field of a given type in the form schema.
- * 
+ *
  * @param {any} element - current element
  * @param {string } type - field type
  * @param { string } prefix - current form element path in dot notation
- * 
+ *
  * @yields {string} - form element path
  */
-export function* findFieldsOfType(element: any, type: string, prefix: string = ''): IterableIterator<string> {
-  const isObject = typeof element === 'object' && !Array.isArray(element) && element !== null;
+export function* findFieldsOfType(
+  element: any,
+  type: string,
+  prefix: string = '',
+): IterableIterator<string> {
+  const isObject =
+    typeof element === 'object' && !Array.isArray(element) && element !== null;
 
   if (isObject && element['ui:field'] && element['ui:field'] === type) {
     yield prefix;
-  }
-  else if (isObject) {
+  } else if (isObject) {
     // Functional loops mess mess up generator function, so use for - of loop here.
     // eslint-disable-next-line no-restricted-syntax
     for (const [key, value] of Object.entries(element)) {
-        yield* findFieldsOfType(value, type, prefix.length ? `${prefix}.${key}`: key);
+      yield* findFieldsOfType(
+        value,
+        type,
+        prefix.length ? `${prefix}.${key}` : key,
+      );
     }
   }
-};
+}
 
 /**
  * Transform raw errors to a more readable format.
@@ -199,7 +215,7 @@ export function* findFieldsOfType(element: any, type: string, prefix: string = '
  * @param {array|undefned} rawErrors - Errors from RJSF form
  * @return {string} - Resulting error messagea
  */
-export const formatErrors = (rawErrors: string[]|undefined) => {
+export const formatErrors = (rawErrors: string[] | undefined) => {
   if (!rawErrors) {
     return undefined;
   }
@@ -214,21 +230,22 @@ export const formatErrors = (rawErrors: string[]|undefined) => {
  * @param {array} subventionFields - Array of subvention field paths
  * @return {number} - Total sum
  */
-export const getSubventionSum = (formData, subventionFields) => subventionFields.reduce((total, field) => {
-  const values = getNestedSchemaProperty(formData, field);
+export const getSubventionSum = (formData, subventionFields) =>
+  subventionFields.reduce((total, field) => {
+    const values = getNestedSchemaProperty(formData, field);
 
-  if (values.length) {
-    Object.entries(values).forEach(([key, curr]) => {
-      const amount = Number(curr[1].value);
+    if (values.length) {
+      Object.entries(values).forEach(([key, curr]) => {
+        const amount = Number(curr[1].value);
 
-      if (!Number.isNaN(amount)) {
-        total += amount;
-      }
-    });
-  }
+        if (!Number.isNaN(amount)) {
+          total += amount;
+        }
+      });
+    }
 
-  return total;
-}, 0);
+    return total;
+  }, 0);
 
 /**
  * Check if the form is in draft mode.

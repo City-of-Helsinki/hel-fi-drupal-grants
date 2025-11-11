@@ -1,4 +1,5 @@
-declare namespace drupalSettings { // eslint-disable-line @typescript-eslint/no-unused-vars
+declare namespace drupalSettings {
+  // eslint-disable-line @typescript-eslint/no-unused-vars
   const path: {
     currentLanguage: 'fi' | 'en' | 'sv';
   };
@@ -18,8 +19,8 @@ declare namespace drupalSettings { // eslint-disable-line @typescript-eslint/no-
       body: string;
       header: string;
       link_title: string;
-    }
+    };
     token: string;
     use_draft: boolean;
   };
-};
+}

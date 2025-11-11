@@ -1,4 +1,4 @@
-import { RJSFValidationError } from '@rjsf/utils';
+import type { RJSFValidationError } from '@rjsf/utils';
 
 export const testErrors: RJSFValidationError[] = [
   {
@@ -12,7 +12,7 @@ export const testErrors: RJSFValidationError[] = [
     schemaPath: 'step-2',
     property: '.step-2.abstract-string',
     stack: '',
-  }
+  },
 ];
 
 export const testKeyedErrors: Array<[number, RJSFValidationError]> = [
@@ -21,14 +21,20 @@ export const testKeyedErrors: Array<[number, RJSFValidationError]> = [
 ];
 
 export const testSteps = new Map([
-  [0, {
-    id: 'step-1',
-    label: 'Step 1',
-  }],
-  [1, {
-    id: 'step-2',
-    label: 'Step 2',
-  }],
+  [
+    0,
+    {
+      id: 'step-1',
+      label: 'Step 1',
+    },
+  ],
+  [
+    1,
+    {
+      id: 'step-2',
+      label: 'Step 2',
+    },
+  ],
 ]);
 
 export const testEmptySchema = {
@@ -51,7 +57,7 @@ export const testGrantsProfile = {
   registrationDate: '2010-01-01',
   officials: [
     { name: 'John Doe', title: 'CEO' },
-    { name: 'Jane Smith', title: 'CTO' }
+    { name: 'Jane Smith', title: 'CTO' },
   ],
   addresses: [
     {
@@ -59,15 +65,15 @@ export const testGrantsProfile = {
       street: '123 Main St',
       postCode: '12345',
       city: 'New York',
-      country: 'USA'
+      country: 'USA',
     },
     {
       address_id: 'addr-2',
       street: '456 Elm St',
       postCode: '67890',
       city: 'Los Angeles',
-      country: 'USA'
-    }
+      country: 'USA',
+    },
   ],
   bankAccounts: [
     {
@@ -75,15 +81,15 @@ export const testGrantsProfile = {
       confirmationFile: 'file.pdf',
       bank_account_id: 'ba-1',
       ownerName: 'John Doe',
-      ownerSsn: '123-45-6789'
+      ownerSsn: '123-45-6789',
     },
     {
       bankAccount: '9876543210',
       confirmationFile: 'file2.pdf',
-      bank_account_id: 'ba-2'
-    }
+      bank_account_id: 'ba-2',
+    },
   ],
-  businessId: 'BUS-12345'
+  businessId: 'BUS-12345',
 };
 
 export const testResponseData = {

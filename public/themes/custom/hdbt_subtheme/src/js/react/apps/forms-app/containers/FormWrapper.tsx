@@ -1,11 +1,25 @@
-import { RJSFSchema } from '@rjsf/utils';
+// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
+// biome-ignore-all lint/suspicious/noPrototypeBuiltins: @todo UHF-12501
+// biome-ignore-all lint/suspicious/noTsIgnore: @todo UHF-12501
+import type { RJSFSchema } from '@rjsf/utils';
 import { useCallback } from 'react';
 import { useAtomCallback } from 'jotai/utils';
 import { useSetAtom, useStore } from 'jotai';
 
-import { addApplicantInfoStep, getNestedSchemaProperty, setNestedProperty } from '../utils';
-import { ATVFile } from '../types/ATVFile';
-import { avus2DataAtom, createFormDataAtom, formDataAtomRef, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom } from '../store';
+import {
+  addApplicantInfoStep,
+  getNestedSchemaProperty,
+  setNestedProperty,
+} from '../utils';
+import type { ATVFile } from '../types/ATVFile';
+import {
+  avus2DataAtom,
+  createFormDataAtom,
+  formDataAtomRef,
+  getApplicationNumberAtom,
+  initializeFormAtom,
+  pushNotificationAtom,
+} from '../store';
 import { InvalidSchemaBoundary } from '../errors/InvalidSchemaBoundary';
 import { RJSFFormContainer } from './RJSFFormContainer';
 import { SubmitStates } from '../enum/SubmitStates';
@@ -19,12 +33,19 @@ import { useTranslateData } from '../hooks/useTranslateData';
  *
  * @yields {string} - form element path
  */
-function* iterateFormData(element: any, prefix: string = ''): IterableIterator<string> {
-  if (typeof element === 'object' && !Array.isArray(element) && element !== null) {
+function* iterateFormData(
+  element: any,
+  prefix: string = '',
+): IterableIterator<string> {
+  if (
+    typeof element === 'object' &&
+    !Array.isArray(element) &&
+    element !== null
+  ) {
     // Functional loops mess mess up generator function, so use for - of loop here.
     // eslint-disable-next-line no-restricted-syntax
     for (const [key, value] of Object.entries(element)) {
-        yield* iterateFormData(value, `${prefix}.${key}`);
+      yield* iterateFormData(value, `${prefix}.${key}`);
     }
   }
 
@@ -42,7 +63,7 @@ function* iterateFormData(element: any, prefix: string = ''): IterableIterator<s
   ) {
     yield prefix;
   }
-};
+}
 
 /**
  * Iterate over all attachments in a form data object.
@@ -81,9 +102,10 @@ const shouldFixArrayField = (schemaDefinition: RJSFSchema) => {
   }
 
   return (
-    schemaDefinition.items[0] &&
-    schemaDefinition.items[0].type === 'object'
-  ) || schemaDefinition.items?.$ref;
+    (schemaDefinition.items[0] &&
+      schemaDefinition.items[0].type === 'object') ||
+    schemaDefinition.items?.$ref
+  );
 };
 
 /**
@@ -97,10 +119,9 @@ const shouldFixArrayField = (schemaDefinition: RJSFSchema) => {
  * @return {object} - Fixed form data
  */
 const fixDanglingArrays = (formData: any, schema: RJSFSchema) => {
-
   const objectPaths = Array.from(iterateFormData(formData));
 
-  objectPaths.forEach(path => {
+  objectPaths.forEach((path) => {
     const schemaDefinition = getNestedSchemaProperty(schema.definitions, path);
 
     if (schemaDefinition && schemaDefinition.type === 'object') {
@@ -132,11 +153,12 @@ const transformData = (data: any) => {
     ui_schema: originalUiSchema,
   } = data;
 
-  const [schema, ui_schema] = addApplicantInfoStep(originalSchema, originalUiSchema, grants_profile)
-  const {
-    definitions,
-    properties,
-  } = schema;
+  const [schema, ui_schema] = addApplicantInfoStep(
+    originalSchema,
+    originalUiSchema,
+    grants_profile,
+  );
+  const { definitions, properties } = schema;
   const transformedProperties: any = {};
 
   // Add _step property to each form step
@@ -156,11 +178,13 @@ const transformData = (data: any) => {
       const [key, definitionValue] = definition;
 
       if (key.charAt(0) !== '_') {
-        Object.entries(definitionValue.properties).forEach((subProperty: any) => {
-          const [subKey] = subProperty;
-          // @ts-ignore
-          definitions[key].properties[subKey]._isSection = true;
-        });
+        Object.entries(definitionValue.properties).forEach(
+          (subProperty: any) => {
+            const [subKey] = subProperty;
+            // @ts-ignore
+            definitions[key].properties[subKey]._isSection = true;
+          },
+        );
       }
     });
   }
@@ -187,7 +211,7 @@ const transformData = (data: any) => {
  */
 export const FormWrapper = ({
   applicationTypeId,
-  data, 
+  data,
   token,
 }: {
   applicationTypeId: string;
@@ -198,7 +222,7 @@ export const FormWrapper = ({
   const initializeForm = useSetAtom(initializeFormAtom);
   const pushNotification = useSetAtom(pushNotificationAtom);
   const readApplicationNumber = useAtomCallback(
-    useCallback(get => get(getApplicationNumberAtom), [])
+    useCallback((get) => get(getApplicationNumberAtom), []),
   );
   const transformedData = transformData(data);
   const translatedData = useTranslateData(transformedData);
@@ -208,25 +232,40 @@ export const FormWrapper = ({
 
   const { currentLanguage } = drupalSettings.path;
   const submitData = async (submittedData: any): void => {
-    const response = await fetch(`/${currentLanguage}/applications/${applicationTypeId}/application/${readApplicationNumber()}`, {
-      body: JSON.stringify({
-        application_number: readApplicationNumber() || '',
-        application_type_id: applicationTypeId,
-        attachments: Array.from(getAttachments(submittedData)),
-        form_data: submittedData,
-        langcode: 'en',
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': token
+    const response = await fetch(
+      `/${currentLanguage}/applications/${applicationTypeId}/application/${readApplicationNumber()}`,
+      {
+        body: JSON.stringify({
+          application_number: readApplicationNumber() || '',
+          application_type_id: applicationTypeId,
+          attachments: Array.from(getAttachments(submittedData)),
+          form_data: submittedData,
+          langcode: 'en',
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': token,
+        },
+        method: 'POST',
       },
-      method: 'POST',
-    });
+    );
 
     if (!response.ok) {
       pushNotification({
-        children: <div>{Drupal.t('Application could not be submitted.', {}, {context: 'Grants application: Submit'})}</div>,
-        label: Drupal.t('Submission failed.', {}, {context: 'Grants application: Submit'}),
+        children: (
+          <div>
+            {Drupal.t(
+              'Application could not be submitted.',
+              {},
+              { context: 'Grants application: Submit' },
+            )}
+          </div>
+        ),
+        label: Drupal.t(
+          'Submission failed.',
+          {},
+          { context: 'Grants application: Submit' },
+        ),
         type: 'error',
       });
 
@@ -239,51 +278,67 @@ export const FormWrapper = ({
     window.location.href = redirect_url;
   };
 
-  const initialData = translatedData.status === SubmitStates.DRAFT ?
-    translatedData.form_data?.form_data :
-    translatedData?.form_data?.compensation?.form_data || null;
-  const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData,  data?.last_changed);
+  const initialData =
+    translatedData.status === SubmitStates.DRAFT
+      ? translatedData.form_data?.form_data
+      : translatedData?.form_data?.compensation?.form_data || null;
+  const formDataAtom = createFormDataAtom(
+    translatedData.applicationNumber,
+    initialData,
+    data?.last_changed,
+  );
   store.set(formDataAtomRef, formDataAtom);
 
   if (translatedData.status !== SubmitStates.DRAFT) {
-    const {
-      attachmentsInfo,
-      statusUpdates,
-      events,
-      messages
-    } = translatedData.form_data;
+    const { attachmentsInfo, statusUpdates, events, messages } =
+      translatedData.form_data;
 
     setAvus2Data({
       attachmentsInfo,
       statusUpdates,
       events,
-      messages
+      messages,
     });
   }
 
   const saveDraft = async (submittedData: any) => {
-    const response = await fetch(`/${currentLanguage}/applications/${applicationTypeId}/${readApplicationNumber()}`, {
-      body: JSON.stringify({
-        application_number: readApplicationNumber() || '',
-        application_type_id: applicationTypeId,
-        attachments: Array.from(getAttachments(submittedData)),
-        form_data: submittedData,
-        langcode: 'en',
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': token,
+    const response = await fetch(
+      `/${currentLanguage}/applications/${applicationTypeId}/${readApplicationNumber()}`,
+      {
+        body: JSON.stringify({
+          application_number: readApplicationNumber() || '',
+          application_type_id: applicationTypeId,
+          attachments: Array.from(getAttachments(submittedData)),
+          form_data: submittedData,
+          langcode: 'en',
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': token,
+        },
+        method: 'PATCH',
       },
-      method: 'PATCH',
-    });
+    );
 
     if (!response.ok) {
       pushNotification({
-        children: <div>{Drupal.t('Application could not be saved as draft.', {}, {context: 'Grants application: Draft'})}</div>,
-        label: Drupal.t('Save failed.', {}, {context: 'Grants application: Draft'}),
+        children: (
+          <div>
+            {Drupal.t(
+              'Application could not be saved as draft.',
+              {},
+              { context: 'Grants application: Draft' },
+            )}
+          </div>
+        ),
+        label: Drupal.t(
+          'Save failed.',
+          {},
+          { context: 'Grants application: Draft' },
+        ),
         type: 'error',
       });
-      
+
       return;
     }
 
