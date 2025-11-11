@@ -752,3 +752,23 @@ msgstr "Suljettu"
 msgctxt "grants_handler"
 msgid "Preview"
 msgstr "Esikatseluun"
+
+msgctxt "grants_handler_dialog"
+msgid "Delete application"
+msgstr "Hakemuksen poistaminen"
+
+msgctxt "grants_handler_dialog"
+msgid "Are you sure you want to delete the application?"
+msgstr "Haluatko varmasti poistaa hakemuksen?"
+
+msgctxt "grants_handler_dialog"
+msgid "Delete"
+msgstr "Poista"
+
+msgctxt "grants_handler_dialog"
+msgid "Cancel"
+msgstr "Peruuta"
+
+msgctxt "grants_handler_dialog"
+msgid "Deleting application failed. Please try again or contact support."
+msgstr "Hakemuksen poistaminen epäonnistui. Yritä uudelleen tai ota yhteyttä tukeen."

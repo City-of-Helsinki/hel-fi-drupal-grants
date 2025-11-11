@@ -76,8 +76,9 @@
       {% endif %}
     </div>
     {% if (statusString == 'DRAFT') %}
+      {{ attach_library('grants_handler/application-delete-draft-dialog') }}
       <div class="application-list__item--delete">
-        <a class="hds-button hds-button--supplementary application-delete-link-{{ applicationNumber }}" href="{{ deleteApplicationUrl }}">
+        <a class="hds-button hds-button--supplementary application-delete-link-{{ applicationNumber }} js-delete-draft-link" href="{{ deleteApplicationUrl }}">
           <span aria-hidden="true" class="hel-icon hel-icon--trash hel-icon--size-s"></span>
           <span class="hds-button__label">{{ "Delete application"|t({}, {'context': 'grants_handler'})}} <span class="visually-hidden">{{ applicationFormName }}</span></span>
         </a>

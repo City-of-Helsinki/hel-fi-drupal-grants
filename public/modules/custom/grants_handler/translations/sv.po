@@ -743,3 +743,23 @@ msgstr "Behandlad"
 msgctxt "grants_handler"
 msgid "Preview"
 msgstr "För förhandsvisning"
+
+msgctxt "grants_handler_dialog"
+msgid "Delete application"
+msgstr "Ta bort ansökan"
+
+msgctxt "grants_handler_dialog"
+msgid "Are you sure you want to delete the application?"
+msgstr "Vill du verkligen ta bort ansökan?"
+
+msgctxt "grants_handler_dialog"
+msgid "Delete"
+msgstr "Ta bort"
+
+msgctxt "grants_handler_dialog"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "grants_handler_dialog"
+msgid "Deleting application failed. Please try again or contact support."
+msgstr "Det gick inte att ta bort utkastet. Försök igen eller kontakta supporten."
