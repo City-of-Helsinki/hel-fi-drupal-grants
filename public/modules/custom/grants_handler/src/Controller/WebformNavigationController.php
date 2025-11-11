@@ -13,7 +13,8 @@ use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Returns responses for Grants Handler routes.
@@ -28,13 +29,6 @@ class WebformNavigationController extends ControllerBase {
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $currentUser;
-
-  /**
-   * The request service.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected RequestStack $request;
 
   /**
    * Access to grants profile.
@@ -78,7 +72,6 @@ class WebformNavigationController extends ControllerBase {
     $instance = parent::create($container);
     $instance->currentUser = $container->get('current_user');
 
-    $instance->request = $container->get('request_stack');
     $instance->grantsProfileService = $container->get('grants_profile.service');
     $instance->formLockService = $container->get('grants_handler.form_lock_service');
     $instance->wfNaviHelper = $container->get('grants_handler.navigation_helper');
@@ -91,18 +84,30 @@ class WebformNavigationController extends ControllerBase {
   /**
    * Clear submission logs for given submission.
    *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request.
    * @param string $submission_id
    *   Submission.
    *
-   * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Drupal\Core\Access\AccessResultInterface
+   * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Drupal\Core\Access\AccessResultInterface
    *   Redirect to form.
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function clearDraftData(string $submission_id): RedirectResponse|AccessResultInterface {
+  public function clearDraftData(Request $request, string $submission_id): JsonResponse|RedirectResponse|AccessResultInterface {
     $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
     $tOpts = ['context' => 'grants_handler'];
+    $method = $request->getMethod();
+
+    // Redirect any non-POST requests.
+    if ($method !== 'POST') {
+      $this->messenger()
+        ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
+      $this->getLogger('grants_handler')
+        ->error('Invalid request method: %method', ['%method' => $method]);
+      return new RedirectResponse($redirectUrl->toString());
+    }
 
     $locked = $this->formLockService->isApplicationFormLocked($submission_id);
     if ($locked) {
@@ -110,7 +115,9 @@ class WebformNavigationController extends ControllerBase {
         ->addError($this->t('Deleting draft failed. This form is currently locked for another person.', [], $tOpts));
       $this->getLogger('grants_handler')
         ->error('Error: Tried to delete draft which is locked to another user.');
-      return new RedirectResponse($redirectUrl->toString());
+      return new JsonResponse([
+        'redirectUrl' => $redirectUrl->toString(),
+      ]);
     }
 
     try {
@@ -121,7 +128,9 @@ class WebformNavigationController extends ControllerBase {
         ->addError($this->t('Deleting draft failed. Error has been logged, please contact support.', [], $tOpts));
       $this->getLogger('grants_handler')
         ->error('Error: %error', ['%error' => $e->getMessage()]);
-      return new RedirectResponse($redirectUrl->toString());
+      return new JsonResponse([
+        'redirectUrl' => $redirectUrl->toString(),
+      ]);
     }
 
     $submissionData = $submission->getData();
@@ -155,7 +164,9 @@ class WebformNavigationController extends ControllerBase {
       }
     }
 
-    return new RedirectResponse($redirectUrl->toString());
+    return new JsonResponse([
+      'redirectUrl' => $redirectUrl->toString(),
+    ]);
 
   }
 
