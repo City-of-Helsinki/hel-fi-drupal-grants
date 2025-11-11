@@ -917,6 +917,9 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
+                    "fileDescription": {
+                      "type": "string"
+                    },
                     "file_id": {
                       "type": "integer"
                     },
@@ -942,10 +945,6 @@
                       "type": "integer"
                     }
                   }
-                },
-                "file_description": {
-                  "title": "file_description.title",
-                  "type": "string"
                 }
               }
             }
