@@ -297,12 +297,7 @@ export const RJSFFormContainer = ({
             ObjectFieldTemplate,
           }}
           transformErrors={transformErrors}
-          uiSchema={{
-            ...uiSchema,
-            'ui:globalOptions': {
-              label: false,
-            },
-          }}
+          uiSchema={{ ...uiSchema, 'ui:globalOptions': { label: false } }}
           validator={customizeValidator({}, localizeErrors)}
           widgets={widgets}
         >

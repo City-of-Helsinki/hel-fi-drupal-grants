@@ -34,10 +34,7 @@ export const transformSteps = (
         : StepState.available;
     }
 
-    return {
-      label,
-      state,
-    };
+    return { label, state };
   });
 };
 

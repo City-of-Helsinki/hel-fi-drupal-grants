@@ -32,9 +32,7 @@ export const ToastStack = () => {
       onClose={handleClose}
       label={currentNotification.label}
       position='bottom-right'
-      style={{
-        zIndex: 100,
-      }}
+      style={{ zIndex: 100 }}
       type={currentNotification.type}
     >
       {currentNotification.children}

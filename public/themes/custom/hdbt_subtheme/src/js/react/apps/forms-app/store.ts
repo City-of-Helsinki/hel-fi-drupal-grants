@@ -9,10 +9,7 @@ import { findFieldsOfType, keyErrorsByStep } from './utils';
 import { SubmitStates } from './enum/SubmitStates';
 import { getUrlParts } from './testutils/Helpers';
 
-export type FormStep = {
-  id: string;
-  label: string;
-};
+export type FormStep = { id: string; label: string };
 
 type GrantsProfile = {
   companyNameShort: string;
@@ -53,15 +50,11 @@ type FormConfig = {
   persistedData: any;
   token: string;
   schema: RJSFSchema;
-  settings: {
-    [key: string]: string;
-  };
+  settings: { [key: string]: string };
   submitState: string;
   subventionFields: string[];
   translations: {
-    [key in 'fi' | 'sv' | 'en']: {
-      [key: string]: string;
-    };
+    [key in 'fi' | 'sv' | 'en']: { [key: string]: string };
   };
   uiSchema: UiSchema;
 };
@@ -81,10 +74,7 @@ const buildFormSteps = ({ schema: { properties } }: any) => {
   Object.entries(properties).forEach((property: any, index: number) => {
     const [key, value] = property;
 
-    steps.set(index, {
-      id: key,
-      label: `${index + 1}. ${value.title}`,
-    });
+    steps.set(index, { id: key, label: `${index + 1}. ${value.title}` });
   });
 
   const previewIndex = steps.size;
@@ -302,19 +292,13 @@ export const setSubmitStatusAtom = atom(
   (_get, _set, submitState: string) => {
     const formConfig = _get(getFormConfigAtom);
 
-    _set(formConfigAtom, (state) => ({
-      ...formConfig,
-      submitState,
-    }));
+    _set(formConfigAtom, (state) => ({ ...formConfig, submitState }));
   },
 );
 export const getSchemasAtom = atom((_get) => {
   const { schema, uiSchema } = _get(getFormConfigAtom);
 
-  return {
-    schema,
-    uiSchema,
-  };
+  return { schema, uiSchema };
 });
 export const getApplicationNumberAtom = atom((_get) => {
   const { applicationNumber } = _get(getFormConfigAtom);
@@ -360,10 +344,7 @@ export const setApplicationNumberAtom = atom(
     currentUrl.pathname = currentParts.join('/');
     window.history.replaceState(null, '', currentUrl.toString());
 
-    _set(formConfigAtom, (state) => ({
-      ...formConfig,
-      applicationNumber,
-    }));
+    _set(formConfigAtom, (state) => ({ ...formConfig, applicationNumber }));
   },
 );
 export type SystemNotification = {
@@ -385,18 +366,9 @@ export const shiftNotificationsAtom = atom(null, (_get, _set) => {
 type avus2Data = {
   attachmentsInfo: {
     attachmentsArray: Array<
-      {
-        ID: string;
-        label: string;
-        value: string;
-        valueType: string;
-      }[]
+      { ID: string; label: string; value: string; valueType: string }[]
     >;
-    generalInfoArray: Array<{
-      ID: string;
-      label: string;
-      valueType: string;
-    }>;
+    generalInfoArray: Array<{ ID: string; label: string; valueType: string }>;
   };
   events: Array<{
     caseId: string;

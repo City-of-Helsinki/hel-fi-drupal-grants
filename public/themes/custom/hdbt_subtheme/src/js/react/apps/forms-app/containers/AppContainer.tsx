@@ -18,10 +18,7 @@ import { getUrlParts } from '../testutils/Helpers';
  */
 const instantiateDocument = async (id: string, token: string) => {
   const response = await fetch(`/applications/${id}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-Token': token,
-    },
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
     method: 'POST',
   });
 
@@ -58,10 +55,7 @@ async function fetchFormData(id: string, token: string) {
     ? `/applications/${id}/${applicationNumber}`
     : `/applications/${id}/application/${applicationNumber}`;
   const formConfigResponse = await fetch(fetchUrl, {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-Token': token,
-    },
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
   });
 
   if (!formConfigResponse.ok) {
@@ -71,11 +65,7 @@ async function fetchFormData(id: string, token: string) {
   const formConfig = await formConfigResponse.json();
   const persistedData = { ...formConfig.form_data };
 
-  return {
-    ...formConfig,
-    persistedData,
-    applicationNumber,
-  };
+  return { ...formConfig, persistedData, applicationNumber };
 }
 
 export const AppContainer = ({

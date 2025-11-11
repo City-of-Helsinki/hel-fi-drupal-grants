@@ -182,25 +182,19 @@ export const communitySettings: [
       bank_account: {
         bank_account: {
           'ui:widget': 'bank_account',
-          'ui:options': {
-            printableName: 'bank_account.title',
-          },
+          'ui:options': { printableName: 'bank_account.title' },
         },
       },
       community_address: {
         community_address: {
           'ui:widget': 'address',
-          'ui:options': {
-            printableName: 'community_address.title',
-          },
+          'ui:options': { printableName: 'community_address.title' },
         },
       },
       community_officials: {
         community_officials: {
           additionalItems: {
-            official: {
-              'ui:widget': 'community_officials',
-            },
+            official: { 'ui:widget': 'community_officials' },
             'ui:options': {
               removeText: 'community_officials_community_officials.removeText',
             },
@@ -208,9 +202,7 @@ export const communitySettings: [
           items: {
             official: {
               'ui:widget': 'community_officials',
-              'ui:options': {
-                hideNameFromPrint: true,
-              },
+              'ui:options': { hideNameFromPrint: true },
             },
           },
           'ui:options': {

@@ -9,9 +9,7 @@ import { InvalidSchemaError } from './InvalidSchemaError';
  * @see https://reactjs.org/docs/error-boundaries.html
  */
 export class InvalidSchemaBoundary extends Component {
-  constructor(props: {
-    children: React.ReactNode;
-  }) {
+  constructor(props: { children: React.ReactNode }) {
     super(props);
     this.state = { errorStack: null };
   }
@@ -49,12 +47,7 @@ export class InvalidSchemaBoundary extends Component {
 
     if (errorStack) {
       return (
-        <div
-          style={{
-            backgroundColor: 'salmon',
-            padding: '28px',
-          }}
-        >
+        <div style={{ backgroundColor: 'salmon', padding: '28px' }}>
           {formatSchemaErrors()}
         </div>
       );

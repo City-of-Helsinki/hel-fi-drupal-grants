@@ -48,10 +48,7 @@
         // Attach a click event handler to the close button.
         $('.information-announcement-close').on('click', () => {
           // Send an AJAX request to the Drupal route.
-          $.ajax({
-            url: '/oma-asiointi/log-close-time/',
-            method: 'GET',
-          });
+          $.ajax({ url: '/oma-asiointi/log-close-time/', method: 'GET' });
         });
       });
     },

@@ -95,9 +95,7 @@ export const TextInput = ({
       onFocus={() => null}
       readOnly={readonly}
       required={required}
-      style={{
-        maxWidth: getMaxWidth(),
-      }}
+      style={{ maxWidth: getMaxWidth() }}
       value={value ?? ''}
     />
   );
@@ -147,21 +145,12 @@ export const TextArea = ({
       }
       onFocus={() => null}
       readOnly={readonly}
-      {...{
-        id,
-        label,
-        maxLength,
-        name,
-        required,
-        value,
-      }}
+      {...{ id, label, maxLength, name, required, value }}
     />
   );
 };
 
-type SelectWidgetProps = WidgetProps & {
-  assistive?: string;
-};
+type SelectWidgetProps = WidgetProps & { assistive?: string };
 
 export const SelectWidget = ({
   assistive,
@@ -221,10 +210,7 @@ export const SelectWidget = ({
 export const AddressSelect = (props: WidgetProps) => {
   const addresses = useAtomValue(getAddressesAtom);
   const options = Object.assign(
-    addresses.map(({ street }) => ({
-      label: street,
-      value: street,
-    })),
+    addresses.map(({ street }) => ({ label: street, value: street })),
   );
 
   return <SelectWidget {...{ ...props, options: { enumOptions: options } }} />;

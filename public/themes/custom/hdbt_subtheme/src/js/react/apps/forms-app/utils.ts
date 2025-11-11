@@ -109,20 +109,11 @@ export const addApplicantInfoStep = (
 
   const transformedSchema: RJSFSchema = {
     ...schema,
-    definitions: {
-      applicant_info: definition,
-      ...definitions,
-    },
-    properties: {
-      applicant_info: rootProperty,
-      ...properties,
-    },
+    definitions: { applicant_info: definition, ...definitions },
+    properties: { applicant_info: rootProperty, ...properties },
   };
 
-  const transformedUiSchema: UiSchema = {
-    ...uiSchema,
-    ...uiSchemaAdditions,
-  };
+  const transformedUiSchema: UiSchema = { ...uiSchema, ...uiSchemaAdditions };
 
   return [transformedSchema, transformedUiSchema];
 };

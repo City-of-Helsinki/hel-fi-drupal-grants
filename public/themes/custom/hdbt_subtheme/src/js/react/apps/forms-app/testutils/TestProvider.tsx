@@ -2,10 +2,7 @@
 import { Provider } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils';
 
-type propType = {
-  initialValues: any;
-  children: JSX.Element;
-};
+type propType = { initialValues: any; children: JSX.Element };
 
 const HydrateAtoms = ({ initialValues, children }: propType) => {
   useHydrateAtoms(initialValues);

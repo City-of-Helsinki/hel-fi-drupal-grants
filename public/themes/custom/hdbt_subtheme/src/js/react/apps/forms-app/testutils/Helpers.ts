@@ -17,10 +17,7 @@ const initialState = {
  */
 export const initializeFormState = (
   formState: Partial<FormState>,
-): FormState => ({
-  ...initialState,
-  ...formState,
-});
+): FormState => ({ ...initialState, ...formState });
 
 /**
  * Get URL path parts from current URL in an array.

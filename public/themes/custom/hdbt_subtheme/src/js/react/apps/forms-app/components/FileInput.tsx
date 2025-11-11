@@ -39,19 +39,14 @@ async function uploadFiles(
   const response = await fetch(`/en/application/${applicationNumber}/upload`, {
     method: 'POST',
     body: formData,
-    headers: {
-      'X-CSRF-Token': token,
-    },
+    headers: { 'X-CSRF-Token': token },
   });
 
   if (!response.ok) {
     throw new Error('Failed to upload file');
   }
 
-  return {
-    ...(await response.json()),
-    fileType,
-  };
+  return { ...(await response.json()), fileType };
 }
 
 const filesFromATVData = (value?: ATVFile): File[] => {
@@ -167,10 +162,7 @@ export const FileInput = ({
           { context: 'grants_attachments' },
         )}
         onChange={(e) => {
-          onChange({
-            ...formData,
-            isDeliveredLater: e.target.checked,
-          });
+          onChange({ ...formData, isDeliveredLater: e.target.checked });
         }}
       />
       <Checkbox
@@ -183,10 +175,7 @@ export const FileInput = ({
           { context: 'grants_attachments' },
         )}
         onChange={(e) => {
-          onChange({
-            ...formData,
-            isIncludedInOtherFile: e.target.checked,
-          });
+          onChange({ ...formData, isIncludedInOtherFile: e.target.checked });
         }}
       />
     </div>

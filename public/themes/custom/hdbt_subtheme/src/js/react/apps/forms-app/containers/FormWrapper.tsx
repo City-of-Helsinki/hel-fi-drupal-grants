@@ -165,10 +165,7 @@ const transformData = (data: any) => {
   if (properties) {
     Object.entries(properties).forEach((property: any) => {
       const [key, value] = property;
-      transformedProperties[key] = {
-        ...value,
-        _step: key,
-      };
+      transformedProperties[key] = { ...value, _step: key };
     });
   }
 
@@ -192,10 +189,7 @@ const transformData = (data: any) => {
   return {
     ...data,
     formData: fixDanglingArrays(formData, schema),
-    schema: {
-      ...schema,
-      properties: transformedProperties,
-    },
+    schema: { ...schema, properties: transformedProperties },
     ui_schema,
   };
 };
@@ -242,10 +236,7 @@ export const FormWrapper = ({
           form_data: submittedData,
           langcode: 'en',
         }),
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': token,
-        },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
         method: 'POST',
       },
     );
@@ -293,12 +284,7 @@ export const FormWrapper = ({
     const { attachmentsInfo, statusUpdates, events, messages } =
       translatedData.form_data;
 
-    setAvus2Data({
-      attachmentsInfo,
-      statusUpdates,
-      events,
-      messages,
-    });
+    setAvus2Data({ attachmentsInfo, statusUpdates, events, messages });
   }
 
   const saveDraft = async (submittedData: any) => {
@@ -312,10 +298,7 @@ export const FormWrapper = ({
           form_data: submittedData,
           langcode: 'en',
         }),
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': token,
-        },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
         method: 'PATCH',
       },
     );

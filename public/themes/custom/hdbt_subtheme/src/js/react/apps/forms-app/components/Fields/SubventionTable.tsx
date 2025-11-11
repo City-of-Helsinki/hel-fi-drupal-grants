@@ -125,10 +125,7 @@ export const SubventionTable = ({
                     onChange={handleChange}
                     min={0}
                     required={required}
-                    style={{
-                      '--border-width': 0,
-                      textAlign: 'right',
-                    }}
+                    style={{ '--border-width': 0, textAlign: 'right' }}
                     value={keyedData[key] || ''}
                   />
                 </td>

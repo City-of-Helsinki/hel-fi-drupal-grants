@@ -21,20 +21,8 @@ export const testKeyedErrors: Array<[number, RJSFValidationError]> = [
 ];
 
 export const testSteps = new Map([
-  [
-    0,
-    {
-      id: 'step-1',
-      label: 'Step 1',
-    },
-  ],
-  [
-    1,
-    {
-      id: 'step-2',
-      label: 'Step 2',
-    },
-  ],
+  [0, { id: 'step-1', label: 'Step 1' }],
+  [1, { id: 'step-2', label: 'Step 2' }],
 ]);
 
 export const testEmptySchema = {

@@ -31,16 +31,10 @@ describe('Utils.ts', () => {
     const result = addApplicantInfoStep({}, {}, { business_id: '123' });
 
     expect(result[0]).toEqual({
-      definitions: {
-        applicant_info: definition,
-      },
-      properties: {
-        applicant_info: rootProperty,
-      },
+      definitions: { applicant_info: definition },
+      properties: { applicant_info: rootProperty },
     });
 
-    expect(result[1]).toEqual({
-      ...uiSchemaAdditions,
-    });
+    expect(result[1]).toEqual({ ...uiSchemaAdditions });
   });
 });

@@ -31,9 +31,7 @@ export const Terms = () => {
           id='final-acceptance'
           label={link_title}
           onClick={() => setFinalAcceptance(!finalAcceptance)}
-          style={{
-            fontWeight: 'bold',
-          }}
+          style={{ fontWeight: 'bold' }}
         />
       </div>
     </div>

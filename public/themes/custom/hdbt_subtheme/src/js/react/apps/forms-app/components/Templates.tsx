@@ -52,12 +52,7 @@ export const ArrayFieldTemplate = ({
       })
       .map((item) => (
         <ArrayFieldItemTemplate
-          {...{
-            ...item,
-            canAdd: false,
-            hasRemove: false,
-            hasToolbar: false,
-          }}
+          {...{ ...item, canAdd: false, hasRemove: false, hasToolbar: false }}
         />
       ));
 
@@ -274,9 +269,7 @@ export const ObjectFieldTemplate = ({
     <Fieldset
       heading={title || ''}
       className='hdbt-form--fieldset'
-      style={{
-        marginInline: '0',
-      }}
+      style={{ marginInline: '0' }}
     >
       {description && (
         <div className='hdbt-form--description'>{description}</div>
@@ -295,10 +288,7 @@ export const ButtonTemplate = ({
 }: IconButtonProps) => (
   <Button
     {...props}
-    style={{
-      marginRight: 'auto',
-      marginTop: 'var(--spacing-m)',
-    }}
+    style={{ marginRight: 'auto', marginTop: 'var(--spacing-m)' }}
     theme={secondaryButtonTheme}
     type='button'
     iconStart={<IconCross />}

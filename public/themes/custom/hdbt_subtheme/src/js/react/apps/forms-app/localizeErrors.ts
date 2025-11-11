@@ -28,13 +28,8 @@ const formatMinLengthError = (error: ErrorObject) => {
 
   return Drupal.t(
     '@field field must be at least @limit characters',
-    {
-      '@field': parentSchema?.title,
-      '@limit': limit,
-    },
-    {
-      context: 'Grants application: Validation',
-    },
+    { '@field': parentSchema?.title, '@limit': limit },
+    { context: 'Grants application: Validation' },
   );
 };
 
@@ -59,12 +54,8 @@ const formatRequiredError = (error: ErrorObject) => {
 
   return Drupal.t(
     '@field field is required',
-    {
-      '@field': title,
-    },
-    {
-      context: 'Grants application: Validation',
-    },
+    { '@field': title },
+    { context: 'Grants application: Validation' },
   );
 };
 
