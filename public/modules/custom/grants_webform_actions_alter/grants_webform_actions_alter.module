@@ -41,9 +41,14 @@ function grants_webform_actions_alter_preprocess_webform_actions(array &$variabl
     '#id' => 'webform-button--delete-draft',
     '#attributes' => [
       'class' => [
-        'webform-button--delete-draft',
         'hds-button',
         'hds-button--supplementary',
+        'js-delete-draft-link',
+      ],
+    ],
+    '#attached' => [
+      'library' => [
+        'grants_handler/application-delete-draft-dialog',
       ],
     ],
   ];

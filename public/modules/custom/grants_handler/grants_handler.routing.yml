@@ -5,6 +5,7 @@ grants_handler.clear-navigations:
     _controller: '\Drupal\grants_handler\Controller\WebformNavigationController::clearDraftData'
   requirements:
     _custom_access: '\Drupal\grants_handler\Controller\ApplicationController::accessByApplicationNumber'
+    _csrf_request_header_token: 'TRUE'
 
 grants_handler.completion:
   path: '/hakemus/{submission_id}/completion'
