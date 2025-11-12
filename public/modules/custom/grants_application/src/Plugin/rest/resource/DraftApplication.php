@@ -7,6 +7,7 @@ use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
@@ -41,6 +42,8 @@ use Symfony\Component\Routing\RouteCollection;
   ]
 )]
 final class DraftApplication extends ResourceBase {
+
+  use StringTranslationTrait;
 
   /**
    * Constructs a Drupal\rest\Plugin\rest\resource\EntityResource object.
@@ -164,7 +167,7 @@ final class DraftApplication extends ResourceBase {
 
     if (!$settings->isApplicationOpen()) {
       // @todo Uncomment.
-      // return new JsonResponse([], 403);
+      // return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
     }
 
     try {
@@ -206,7 +209,6 @@ final class DraftApplication extends ResourceBase {
     else {
       $response['form_data'] = $document_content['form_data'] ?? $document_content['compensation']['form_data'];
     }
-
     // @todo Only return required user data to frontend
     $response['grants_profile'] = $grants_profile_data->toArray();
     $response['user_data'] = $user_information;
@@ -264,6 +266,7 @@ final class DraftApplication extends ResourceBase {
     $application_title = $settings->toArray()['settings']['title'];
     $application_type = $settings->toArray()['settings']['application_type'];
 
+    // @todo Save the react form data in separate atv doc.
     $document = $this->atvService->createAtvDocument(
       $application_uuid,
       $application_number,
@@ -295,9 +298,6 @@ final class DraftApplication extends ResourceBase {
         'changed' => $now,
       ])
         ->save();
-
-      // @todo We must add bank confirmation file to the document at some point.
-      // Either here or when we are doing the actual submission.
     }
     catch (\Exception | GuzzleException $e) {
       // Saving failed.
@@ -337,20 +337,16 @@ final class DraftApplication extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot find form by application type id.
-      return new JsonResponse([], 404);
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 404);
     }
 
     if (!$application_number) {
       // Missing application number.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
-      /*
-      $selected_company = $this->userInformationService->getSelectedCompany();
-      user_data = $this->userInformationService->getUserData();
-       */
     }
     catch (\Exception $e) {
       return new JsonResponse([], 500);
@@ -377,35 +373,13 @@ final class DraftApplication extends ResourceBase {
     }
     catch (\Throwable $e) {
       // Error while fetching the document.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
     }
 
     if (!$document) {
       // Unable to find the document.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating a new application')], 500);
     }
-
-    // @todo Test mapping here.
-    /*
-    $mappingFile = "ID$application_type_id.json";
-    $mappings = json_decode(file_get_contents(
-      __DIR__ . '/../../../Mapper/Mappings/' . $mappingFile
-    ), TRUE);
-
-    $mapper = new JsonMapper($mappings);
-    $dataSources = $mapper->getCombinedDataSources(
-    $form_data,
-    $this->userInformationService->getUserData(),
-    $this->userInformationService->getSelectedCompany(),
-    $this->userInformationService->getUserProfileData(),
-    $grants_profile_data,
-    $this->formSettingsService->getFormSettings($application_type_id),
-    $application_number,
-    $this->userInformationService->getApplicantType(),
-    );
-    $mappedData = $mapper->map($dataSources);
-    die('add breakpoint here');
-     */
 
     // @todo clean this up a bit, unnecessarily duplicated variables.
     $content = $document->getContent();
@@ -428,13 +402,15 @@ final class DraftApplication extends ResourceBase {
 
     try {
       // @todo Always get the events and messages from atv submission before overwriting.
+      // ^This is not a problem here since we should not have any events at this point.
+      // @todo Save the react form data in separate atv doc.
       $this->atvService->updateExistingDocument($document);
 
       $submission->setChangedTime(time());
       $submission->save();
     }
     catch (\Exception $e) {
-      return new JsonResponse([], 500);
+      return new JsonResponse([['error' => $this->t('Unable to save the draft. Please try again in a moment')]], 500);
     }
 
     $this->showSavedMessage($application_number);

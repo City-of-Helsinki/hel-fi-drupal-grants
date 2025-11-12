@@ -1,11 +1,13 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import { Fieldset, TextArea as HDSTextArea, TextInput as HDSTextInput, Notification, RadioButton, Select  } from 'hds-react';
+import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { WidgetProps } from '@rjsf/utils';
+
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
-import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, shouldRenderPreviewAtom } from '../store';
 import { formatErrors } from '../utils';
+import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, getProfileAtom, shouldRenderPreviewAtom } from '../store';
 
 export const PreviewInput = ({
   value,
@@ -91,29 +93,43 @@ export const TextArea = ({
   value,
   uiSchema,
 }: WidgetProps) => {
+  const readGrantsProfile = useAtomCallback(
+    useCallback(get => get(getProfileAtom), [])
+  );
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (shouldRenderPreview) {
     return <PreviewInput value={value} label={label} uiSchema={uiSchema} />
   }
 
+  const getDefaultValue = () => {
+    if (!uiSchema?.['misc:profilePrefill']) {
+      return;
+    }
+    const grantsProfile = readGrantsProfile();
+    return grantsProfile?.[uiSchema?.['misc:profilePrefill']] ?? undefined;
+  };
+
   const maxLength = uiSchema?.['misc:max-length'] ?? 5000;
 
   return <HDSTextArea
+    defaultValue={getDefaultValue()}
     errorText={formatErrors(rawErrors)}
     helperText={`${value?.length || 0}/${maxLength}`}
     hideLabel={false}
-    id={id}
     invalid={Boolean(rawErrors?.length)}
-    label={label}
-    maxLength={maxLength}
-    name={name}
     onBlur={() => null}
     onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
     onFocus={() => null}
     readOnly={readonly}
-    required={required}
-    value={value ?? ''}
+    {...{
+      id,
+      label,
+      maxLength,
+      name,
+      required,
+      value,
+    }}
   />
 };
 
@@ -205,17 +221,17 @@ export const BankAccountSelect = (props: WidgetProps) => {
 }
 
 const roleMap = new Map([
-  [1, Drupal.t('Chairperson', [], { context: 'grants_profile' })],
-  [2, Drupal.t('Contact person', [], { context: 'grants_profile' }),],
-  [3, Drupal.t('Other', [], { context: 'grants_profile' })],
-  [4, Drupal.t('Treasurer', [], { context: 'grants_profile' })],
-  [5, Drupal.t('Auditor', [], { context: 'grants_profile' })],
-  [7, Drupal.t('Secretary', [], { context: 'grants_profile' })],
-  [8, Drupal.t('Deputy chairperson', [], { context: 'grants_profile' }),],
-  [9, Drupal.t('Chief executive officer', [], { context: 'grants_profile' })],
-  [10, Drupal.t('Producer', [], { context: 'grants_profile' })],
-  [11, Drupal.t('Responsible person', [], { context: 'grants_profile' })],
-  [12, Drupal.t('Executive director', [], { context: 'grants_profile' })],
+  [1, Drupal.t('Chairperson', {}, { context: 'grants_profile' })],
+  [2, Drupal.t('Contact person', {}, { context: 'grants_profile' }),],
+  [3, Drupal.t('Other', {}, { context: 'grants_profile' })],
+  [4, Drupal.t('Treasurer', {}, { context: 'grants_profile' })],
+  [5, Drupal.t('Auditor', {}, { context: 'grants_profile' })],
+  [7, Drupal.t('Secretary', {}, { context: 'grants_profile' })],
+  [8, Drupal.t('Deputy chairperson', {}, { context: 'grants_profile' }),],
+  [9, Drupal.t('Chief executive officer', {}, { context: 'grants_profile' })],
+  [10, Drupal.t('Producer', {}, { context: 'grants_profile' })],
+  [11, Drupal.t('Responsible person', {}, { context: 'grants_profile' })],
+  [12, Drupal.t('Executive director', {}, { context: 'grants_profile' })],
 ]);
 
 /**
@@ -302,6 +318,7 @@ export const RadioWidget = ({
   required,
   value,
   uiSchema,
+  ...rest
 }: WidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
@@ -318,18 +335,20 @@ export const RadioWidget = ({
           type="info"
         />
       )}
-      <Fieldset
-        id={id}
-        heading={`${label}${required ? ' *' : ''}`}
-      >
-        {options?.enumOptions?.map((option: any) => <RadioButton
-          checked={option.value === value}
-          id={option.value}
-          key={option.value}
-          label={option.label}
-          name={option.value}
-          onChange={() => onChange(option.value)}
-        />)}
+      <Fieldset heading={`${label}${required ? ' *' : ''}`}>
+        {options?.enumOptions?.map((option: any) => {
+          const optionId = `${id}_${option.value}`;
+
+          return <RadioButton
+            checked={option.value === value}
+            focusable
+            id={optionId}
+            key={optionId}
+            label={option.label}
+            name={optionId}
+            onChange={() => onChange(option.value)}
+          />;
+        })}
         {rawErrors?.length > 0 && <Notification type='error'>{formatErrors(rawErrors)}</Notification>}
       </Fieldset>
     </>

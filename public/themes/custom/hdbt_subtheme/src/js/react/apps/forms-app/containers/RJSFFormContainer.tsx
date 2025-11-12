@@ -3,26 +3,27 @@ import { useAtomValue, useSetAtom, WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
 import Form, { getDefaultRegistry, IChangeEvent } from '@rjsf/core';
-import React, { createRef, useCallback, useMemo, useState } from 'react';
+import React, { createRef, useCallback, useState } from 'react';
 import { customizeValidator } from '@rjsf/validator-ajv8';
 import { useTranslation } from 'react-i18next';
 
+import { AddressSelect, BankAccountSelect, CommunityOfficialsSelect, RadioWidget, SelectWidget, TextArea, TextInput } from '../components/Input';
 import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
 import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
-import { findFieldsOfType, isDraft, keyErrorsByStep } from '../utils';
 import { FormActions } from '../components/FormActions/FormActions';
 import { FormSummary } from '../components/FormSummary';
-import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, isBeingSubmittedAtom, isReadOnlyAtom, setErrorsAtom } from '../store';
+import { getCurrentStepAtom, getReachedStepAtom, getStepsAtom, setErrorsAtom, getSubventionFieldsAtom, isReadOnlyAtom, isBeingSubmittedAtom } from '../store';
 import { InvalidSchemaError } from '../errors/InvalidSchemaError';
-import { localizeErrors } from '../localizeErrors';
+import { isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
 import { SubmittedForm } from '../components/SubmittedForm';
+import { SubventionSum } from '../components/Fields/SubventionSum';
 import { SubventionTable } from '../components/Fields/SubventionTable';
 import { Terms } from '../components/Terms';
-import { TextArea, TextInput, SelectWidget, AddressSelect, BankAccountSelect, CommunityOfficialsSelect, RadioWidget } from '../components/Input';
 import { TextParagraph } from '../components/Fields/TextParagraph';
+import { localizeErrors } from '../localizeErrors';
 
 const widgets: RegistryWidgetsType = {
   'address': AddressSelect,
@@ -62,7 +63,7 @@ export const RJSFFormContainer = ({
 }) => {
   const { t } = useTranslation();
   const [invalidSchemaError, setInvalidSchemaError] = useState<InvalidSchemaError | null>(null);
-  const subventionFields = useMemo(() => Array.from(findFieldsOfType(uiSchema, 'subventionTable')), [uiSchema]); 
+  const subventionFields = useAtomValue(getSubventionFieldsAtom);
   const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
   const readOnly = useAtomValue(isReadOnlyAtom);
@@ -213,6 +214,7 @@ export const RJSFFormContainer = ({
             ...getDefaultRegistry().fields,
             atvFile: FileInput,
             subventionTable: SubventionTable,
+            subventionSum: SubventionSum,
             textParagraph: TextParagraph,
           }}
           formData={readFormData() || {}}

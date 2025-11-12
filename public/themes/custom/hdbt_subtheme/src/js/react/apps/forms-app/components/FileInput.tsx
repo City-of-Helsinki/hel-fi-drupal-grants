@@ -1,14 +1,17 @@
-import React, { useCallback } from "react";
+import { Checkbox, FileInput as HDSFileInput, TextInput } from "hds-react";
 import { FieldProps, UiSchema } from "@rjsf/utils";
-import { Checkbox, FileInput as HDSFileInput } from "hds-react";
 import { useAtomValue } from "jotai";
+import { useCallback } from "react";
+import { useTranslation } from 'react-i18next';
+
 import { formConfigAtom, getApplicationNumberAtom, shouldRenderPreviewAtom } from "../store";
 import { formatErrors } from '../utils';
 
 type ATVFile = {
-  fileType: string;
-  fileName: string;
+  fileDescription?: string;
   fileId: number;
+  fileName: string;
+  fileType: string;
   href: string;
   size: number;
 }
@@ -54,7 +57,6 @@ export const FileInput = ({
   accept,
   formData,
   id,
-  idSchema,
   label,
   multiple,
   name,
@@ -64,6 +66,7 @@ export const FileInput = ({
   required,
   uiSchema,
 }: FieldProps) => {
+  const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const applicationNumber = useAtomValue(getApplicationNumberAtom);
   const { token } = useAtomValue(formConfigAtom)!;
@@ -81,11 +84,11 @@ export const FileInput = ({
     )
   }
 
-  const handleChange = useCallback(async (files: File[]) => {
+  const handleChange = useCallback(async (files: File[], existingData: any) => {
     if (!files.length) {
       onChange(undefined);
       return;
-    } 
+    }
 
     const result = await uploadFiles(name, applicationNumber, token, files, fileType);
 
@@ -95,8 +98,11 @@ export const FileInput = ({
 
     const { href: integrationID, ...rest } = result;
 
+    const fileDescription = existingData?.fileDescription || '';
+
     onChange({
       integrationID,
+      fileDescription,
       isDeliveredLater: false,
       isIncludedInOtherFile: false,
       isNewAttachment: true,
@@ -117,13 +123,31 @@ export const FileInput = ({
     language={drupalSettings.path.currentLanguage}
     // 20mb in bytes
     maxSize={20 * 1024 * 1024}
-    onChange={handleChange}
+    onChange={(files: File[]) => {
+      handleChange(files, formData);
+    }}
     required={required}
   />;
 
-  if (uiSchema['misc:variant'] === 'simple') {
-    inputElement.className = 'hdbt-form--fileinput';
-    return inputElement;
+  const descriptionElement = <TextInput
+    id={`${name}-description`}
+    label={t('file_description.title')}
+    onChange={(e) => {
+      onChange({
+        ...formData,
+        fileDescription: e.target.value,
+      });
+    }}
+    value={formData?.fileDescription || ''}
+  />;
+
+  if (uiSchema?.['misc:variant'] === 'simple') {
+    return (
+      <div className="hdbt-form--fileinput">
+        {inputElement}
+        {descriptionElement}
+      </div>
+    );
   }
 
   return (
@@ -131,7 +155,7 @@ export const FileInput = ({
       {inputElement}
       <Checkbox
         checked={isDeliveredLater || false}
-        disabled={defaultValue.length}
+        disabled={Boolean(defaultValue.length)}
         id={`${name}-delivered-later`}
         label={Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' })}
         onChange={(e) => {
@@ -143,7 +167,7 @@ export const FileInput = ({
       />
       <Checkbox
         checked={isIncludedInOtherFile || false}
-        disabled={defaultValue.length}
+        disabled={Boolean(defaultValue.length)}
         id={`${name}-included-in-other-file`}
         label={Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' })}
         onChange={(e) => {
