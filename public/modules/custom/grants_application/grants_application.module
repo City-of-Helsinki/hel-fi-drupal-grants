@@ -19,6 +19,23 @@ function grants_application_theme(): array {
         'application_number' => NULL,
       ],
     ],
+    'grants_application_completion' => [
+      'variables' => [
+        'submissionId' => NULL,
+        'submissionObject' => NULL,
+        'ownApplicationsLink' => NULL,
+        'viewApplicationLink' => NULL,
+        'printApplicationLink' => NULL,
+      ],
+    ],
+    'grants_application_status_tag' => [
+      'variables' => [
+        'langcode' => NULL,
+        'applicationID' => NULL,
+        'statusString' => '',
+        'statusStringHumanReadable' => NULL,
+      ],
+    ],
   ];
 }
 
