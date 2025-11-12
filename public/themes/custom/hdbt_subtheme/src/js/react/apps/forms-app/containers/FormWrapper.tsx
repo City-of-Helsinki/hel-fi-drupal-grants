@@ -5,7 +5,7 @@ import { useSetAtom, useStore } from 'jotai';
 
 import { addApplicantInfoStep, getNestedSchemaProperty, setNestedProperty } from '../utils';
 import { ATVFile } from '../types/ATVFile';
-import { avus2DataAtom, createFormDataAtom, formDataAtomRef, getApplicationNumberAtom, initializeFormAtom, pushNotificationAtom } from '../store';
+import { avus2DataAtom, createFormDataAtom, formDataAtomRef, getApplicationNumberAtom, getSubmitStatusAtom, initializeFormAtom, pushNotificationAtom } from '../store';
 import { InvalidSchemaBoundary } from '../errors/InvalidSchemaBoundary';
 import { RJSFFormContainer } from './RJSFFormContainer';
 import { SubmitStates } from '../enum/SubmitStates';
@@ -200,6 +200,9 @@ export const FormWrapper = ({
   const readApplicationNumber = useAtomCallback(
     useCallback(get => get(getApplicationNumberAtom), [])
   );
+  const readSubmitStatus = useAtomCallback(
+    useCallback(get => get(getSubmitStatusAtom), [])
+  );
   const transformedData = transformData(data);
   const translatedData = useTranslateData(transformedData);
   const setAvus2Data = useSetAtom(avus2DataAtom);
@@ -207,7 +210,7 @@ export const FormWrapper = ({
   initializeForm(translatedData);
 
   const { currentLanguage } = drupalSettings.path;
-  const submitData = async (submittedData: any): void => {
+  const submitData = async (submittedData: any): Promise<void> => {
     const response = await fetch(`/${currentLanguage}/applications/${applicationTypeId}/application/${readApplicationNumber()}`, {
       body: JSON.stringify({
         application_number: readApplicationNumber() || '',
@@ -220,7 +223,7 @@ export const FormWrapper = ({
         'Content-Type': 'application/json',
         'X-CSRF-Token': token
       },
-      method: 'POST',
+      method: readSubmitStatus() === SubmitStates.DRAFT ? 'POST' : 'PATCH',
     });
 
     if (!response.ok) {

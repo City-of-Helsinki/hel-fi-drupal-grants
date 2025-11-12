@@ -7,14 +7,15 @@ use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2Integration;
-use Drupal\grants_application\Avus2Mapper;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Helper;
+use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_events\EventsService;
@@ -45,6 +46,8 @@ use Symfony\Component\Routing\RouteCollection;
 )]
 final class Application extends ResourceBase {
 
+  use StringTranslationTrait;
+
   /**
    * Constructs a Drupal\rest\Plugin\rest\resource\EntityResource object.
    *
@@ -72,8 +75,6 @@ final class Application extends ResourceBase {
    *   The language manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
-   * @param \Drupal\grants_application\Avus2Mapper $avus2Mapper
-   *   The Avus2-mapper.
    * @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
    *   The event dispatcher.
    * @param \Drupal\grants_application\Avus2Integration $integration
@@ -98,7 +99,6 @@ final class Application extends ResourceBase {
     private CsrfTokenGenerator $csrfTokenGenerator,
     private LanguageManagerInterface $languageManager,
     private EntityTypeManagerInterface $entityTypeManager,
-    private Avus2Mapper $avus2Mapper,
     private EventDispatcherInterface $dispatcher,
     private Avus2Integration $integration,
     private EventsService $eventsService,
@@ -125,7 +125,6 @@ final class Application extends ResourceBase {
       $container->get(CsrfTokenGenerator::class),
       $container->get(LanguageManagerInterface::class),
       $container->get('entity_type.manager'),
-      $container->get(Avus2Mapper::class),
       $container->get(EventDispatcherInterface::class),
       $container->get(Avus2Integration::class),
       $container->get('grants_events.events_service'),
@@ -165,10 +164,11 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot find form.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     if (!$settings->isApplicationOpen()) {
+      return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
       // @todo Uncomment.
       // return new JsonResponse([], 403);
     }
@@ -179,7 +179,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Unable to fetch user information.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment')], 500);
     }
 
     try {
@@ -188,7 +188,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot get the submission.
-      return new JsonResponse(['Unable to fetch submission'], 500);
+      return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating another one')], 500);
     }
 
     try {
@@ -197,7 +197,7 @@ final class Application extends ResourceBase {
     }
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
     }
 
     $changeTime = new DrupalDateTime($document->getUpdatedAt());
@@ -249,7 +249,8 @@ final class Application extends ResourceBase {
     }
 
     if (!$application_number) {
-      return new JsonResponse(['missing application number'], 500);
+      // Should not be possible.
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     try {
@@ -258,7 +259,7 @@ final class Application extends ResourceBase {
       $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment')], 500);
     }
 
     try {
@@ -270,7 +271,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot find correct draft submission.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     try {
@@ -278,7 +279,7 @@ final class Application extends ResourceBase {
     }
     catch (\Throwable $e) {
       // Cannot fetch the corresponding ATV document.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('We cannot fetch the application. Please try again in a moment')], 500);
     }
 
     // Here we do the actual work.
@@ -289,7 +290,7 @@ final class Application extends ResourceBase {
     // Update the ATV document one last time before sending to integration.
     // Send to integration.
     // Update the custom submission entity.
-    // Check if the bank file is already added to the ATV document.
+    // Start: Check if the bank file is already added to the ATV document.
     $selected_bank_account_number = $form_data["applicant_info"]["bank_account"]["bank_account"];
     $bank_file = FALSE;
     // @todo Add file type check as well (filetype = 45 etc).
@@ -311,7 +312,10 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // The user has removed bank account from profile.
-      return new JsonResponse(['mismatch in given bank information and profile bank accounts.'], 500);
+      return new JsonResponse(
+        ['error' => $this->t('Your user profile does not contain the given bank account number. Please update your user profile and try again')],
+        500
+      );
     }
 
     $actual_file = NULL;
@@ -324,9 +328,27 @@ final class Application extends ResourceBase {
         // File does not exist in atv? Should not be possible.
       }
       if ($actual_file) {
-        // @todo Some users may get 403 from this one, ask Jere for more information.
-        $this->atvService->addAttachment($document->getId(), $bank_confirmation_file_array['filename'], $actual_file);
+        $this->atvService->addAttachment(
+          $document->getId(),
+          $bank_confirmation_file_array['filename'],
+          $actual_file,
+        );
         $actual_file->delete();
+        // @todo Add ATT_HANDLER_OK event here probably.
+      }
+
+      // After uploading the bank file, reload the document to verify that it exists.
+      $document = $this->atvService->getDocument($application_number);
+      foreach ($grants_profile_data->getBankAccounts() as $bank_account) {
+        $bank_file = array_find(
+          $document->getAttachments(),
+          fn(array $attachment) => $bank_account['confirmationFile'] === $attachment['filename']);
+      }
+
+      // This should not be possible.
+      if (!$bank_file) {
+        $this->logger->error('User is unable to upload bank file to document or race condition.');
+        // We just uploaded it but
       }
     }
 
@@ -335,35 +357,44 @@ final class Application extends ResourceBase {
     $document = $this->atvService->getDocument($application_number);
 
     // @todo Better sanitation.
-    $document_data = ['form_data' => $form_data];
+    // $document_data = ['form_data' => $form_data];
 
-    $applicantTypeId = $this->userInformationService->getApplicantTypeId();
-    /*
-    $mapper = new JsonMapper();
-    $dataSources = $mapper->getCombinedDataSources(
-    $form_data,
-    $user_data,
-    $selected_company,
-    $this->userInformationService->getUserProfileData(),
-    $this->userInformationService->getGrantsProfileContent(),
-    $settings,
-    $application_number,
-    $applicantTypeId,
-    );
+    $mappingFileName = "ID$application_type_id.json";
+    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/' . $mappingFileName), TRUE);
+    $mapper = new JsonMapper($mapping);
+    try {
+      $dataSources = $mapper->getCombinedDataSources(
+        $form_data,
+        $user_data,
+        $selected_company,
+        $this->userInformationService->getUserProfileData(),
+        $this->userInformationService->getGrantsProfileContent(),
+        $settings,
+        $application_number,
+        $this->userInformationService->getApplicantTypeId(),
+      );
+    }
+    catch (\Exception $e) {
+      // Unable to combine datasources, bad atv-connection maybe?
+      $this->logger->error('Error while sending the application for the first time: ' . $e->getMessage());
+      return new JsonResponse(
+        ['error' => $this->t('An error occurred while sending the application. Please try again later')],
+        500,
+      );
+    }
 
     $document_data = $mapper->map($dataSources);
-     */
 
-    $x = 1;
-    die('not so far.');
+    // Handle all files.
+    $bankFile = $mapper->mapBankFile($selected_bank_account_number, $bank_file);
+    $fileData = $mapper->mapFiles($dataSources);
 
-    // Attachments and general info are outside the compensation.
-    $document_data['attachmentsInfo'] = $this->avus2Mapper
-      ->getAttachmentAndGeneralInfo($attachments, $form_data);
+    $fileData['attachmentsInfo']['attachmentsArray'][] = $bankFile;
 
-    $mapped_bank_confirmation_file = $this->avus2Mapper->createBankFileData($selected_bank_account_number, $bank_confirmation_file_array);
-    $document_data['attachmentsInfo']['attachmentsArray'][] = $mapped_bank_confirmation_file;
+    $document_data = array_merge($document_data, $fileData);
 
+    // Keep the react-form data.
+    $document_data['form_data'] = $form_data;
     $document_data['formUpdate'] = !$submission->get('draft')->value;
 
     if (!isset($document_data['statusUpdates'])) {
@@ -397,6 +428,9 @@ final class Application extends ResourceBase {
       $document_data['events'] = $document->getContent()['events'];
     }
 
+    // @todo Add SUBMITTED status here probably.
+    //$document->setStatus('SUBMITTED');
+
     // @codingStandardsIgnoreStart
     // Update the atv document before sending to integration.
     // Lets try a way to hold on to the document data.
@@ -407,6 +441,8 @@ final class Application extends ResourceBase {
     $document->setContent($document_data);
     // @codingStandardsIgnoreEnd
 
+    // @todo Save the form_data in separate atv doc.
+    // Also, on first save we also need to save to the actual ATV document.
     $this->atvService->updateExistingDocument($document);
 
     // @todo Make sure the formUpdate is set properly.
@@ -423,6 +459,7 @@ final class Application extends ResourceBase {
       // Log the exception,
       // return success = false to react.
       // @todo Log the failure to send to integration and return.
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
     if (!$success) {
@@ -436,7 +473,8 @@ final class Application extends ResourceBase {
       $submission->save();
     }
     catch (\Exception $e) {
-      return new JsonResponse([], 500);
+      // This should never happen.
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
@@ -456,11 +494,13 @@ final class Application extends ResourceBase {
     ], 200);
   }
 
-  // phpcs:disable
   /**
    * Responds to entity PATCH requests.
    *
-   * Update existing submission.
+   * Update existing submission. A few things differ from post-request.
+   * - The status (hidden under compensation) must not change anymore.
+   * - User cannot delete files but can add more files.
+   * - The items added by integration/avus2 must exist(events, messages etc.).
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The HTTP response object.
@@ -472,14 +512,6 @@ final class Application extends ResourceBase {
     int $application_type_id,
     ?string $application_number = NULL,
   ): JsonResponse {
-    // @todo This function is not yet called.
-    // This needs to be refactored to handle patch request.
-    // @todo Sanitize & validate & authorize properly.
-
-    $prevent_duplicate_code_error = $application_number ?: FALSE;
-    return new JsonResponse([$prevent_duplicate_code_error], 200);
-
-    /*
     $content = json_decode($request->getContent(), TRUE);
     [
       'form_data' => $form_data,
@@ -491,11 +523,12 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot find form by application type id.
-      return new JsonResponse([], 404);
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 404);
     }
 
     if (!$application_number) {
-      return new JsonResponse(['missing application number'], 500);
+      // @todo Logging.
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     try {
@@ -504,7 +537,7 @@ final class Application extends ResourceBase {
       $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment')], 500);
     }
 
     try {
@@ -516,7 +549,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Cannot find correct draft submission.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     try {
@@ -524,16 +557,71 @@ final class Application extends ResourceBase {
     }
     catch (\Throwable $e) {
       // Cannot fetch the corresponding ATV document.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('Unable to fetch the application. Please try again in a moment')], 500);
+    }
+
+    $mappingFileName = "ID$application_type_id.json";
+    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/' . $mappingFileName), TRUE);
+    $mapper = new JsonMapper($mapping);
+
+    try {
+      $dataSources = $mapper->getCombinedDataSources(
+        $form_data,
+        $user_data,
+        $selected_company,
+        $this->userInformationService->getUserProfileData(),
+        $this->userInformationService->getGrantsProfileContent(),
+        $settings,
+        $application_number,
+        $this->userInformationService->getApplicantTypeId(),
+      );
+    }
+    catch (\Exception $e) {
+      // Unable to combine datasources, bad atv-connection maybe?
+      $this->logger->error('Error while sending the application for the first time: ' . $e->getMessage());
+      return new JsonResponse(
+        ['error' => $this->t('An error occurred while sending the application. Please try again later')],
+        500,
+      );
+    }
+
+    $oldDocument = $document->toArray();
+
+    $events = $oldDocument['content']['events'];
+    $messages = $oldDocument['content']['messages'];
+    $statusUpdates = $oldDocument['content']['statusUpdates'];
+
+    // Map the data again.
+    $document_data = $mapper->map($dataSources);
+
+    $oldFiles = $oldDocument['content']['attachmentsInfo']['attachmentsArray'];
+    $newFiles = $mapper->mapFiles($dataSources);
+    $newFiles = $newFiles['attachmentsInfo']['attachmentsArray'] ?? [];
+
+    $patchedFiles = $mapper->patchMappedFiles(
+      $oldFiles,
+      $newFiles
+    );
+
+    $document_data['attachmentsInfo']['attachmentsArray'] = $patchedFiles;
+    $document_data['events'] = $events;
+    $document_data['messages'] = $messages;
+    $document_data['statusUpdates'] = $statusUpdates;
+    $document_data['formUpdate'] = TRUE;
+
+    // Read the status from ATV and copy it.
+    if ($oldStatus = $mapper->getStatusValue($oldDocument)) {
+      $mapper->setStatusValue($document_data, $oldStatus);
     }
 
     // @todo Add event HANDLER_SEND_INTEGRATION.
     try {
       // @todo Better sanitation.
-      $document_data = ['form_data' => $form_data ?? []];
+      // @todo Save the form_data in separate atv doc.
+      $document_data['form_data'] = $form_data ?? [];
 
       $document->setContent($document_data);
-      // @todo Always get the events and messages from atv submission before overwriting.
+
       $this->atvService->updateExistingDocument($document);
 
       $submission->setChangedTime(time());
@@ -541,10 +629,8 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Unable to find the document.
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
-
-    */
 
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
     // grants_application module when this module is enabled in
@@ -552,9 +638,15 @@ final class Application extends ResourceBase {
     //
     // This event lets other parts of the system to react
     // to user submitting grants forms.
-    // $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
+    $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
-    // return new JsonResponse($document->toArray(), 200);
+    return new JsonResponse([
+      'redirect_url' => Url::fromRoute(
+        'grants_handler.completion',
+        ['submission_id' => $application_number],
+        ['absolute' => TRUE],
+      )->toString(),
+    ], 200);
   }
   // phpcs:enabled
 

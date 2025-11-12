@@ -148,12 +148,12 @@ class JsonMapper {
 
     $sourceValues = $this->getMultipleValues($dataSources[$definition['datasource']], $sourcePath);
 
-    // Source value contains multiple objects with contains multiple fields.
+    // Source value contains multiple objects which contains multiple fields.
     foreach ($sourceValues as $singleObject) {
       $values = [];
       foreach ($singleObject as $fieldName => $value) {
         $valueArray = $definition['data'][$fieldName];
-        $valueArray['value'] = $value;
+        $valueArray['value'] = (string) $value ?? "";
         $values[] = $valueArray;
       }
       $this->setTargetValue($data, $targetPath, $values, $definition);
@@ -419,7 +419,7 @@ class JsonMapper {
    *   The form settings.
    * @param string $applicationNumber
    *   The application number.
-   * @param string $applicantType
+   * @param string $applicantTypeId
    *   The applicant type.
    *
    * @return array
@@ -433,7 +433,7 @@ class JsonMapper {
     GrantsProfile $grantsProfile,
     FormSettings $formSettings,
     string $applicationNumber,
-    string $applicantType,
+    string $applicantTypeId,
   ): array {
 
     $community_official_uuid = $formData['applicant_info']['community_officials']['community_officials'][0]['official'];
@@ -448,13 +448,6 @@ class JsonMapper {
       // User has deleted the community official and exception occurs.
       throw $e;
     }
-
-    $types = [
-      'unregistered_community' => 1,
-      'registered_community' => 2,
-      'todo_the_third_one' => 3,
-    ];
-    $applicantTypeId = $types[$applicantType] ?? 0;
 
     // Any data can be added here, and it is accessible by the mapper.
     $custom = [
@@ -482,6 +475,7 @@ class JsonMapper {
    * Map all files added to the application.
    *
    * The file data lives outside of compensations in the final data.
+   * The files are mapped in attachmentsInfo.attachmentsArray.
    *
    * @param array $dataSources
    *   The datasources.
@@ -513,49 +507,65 @@ class JsonMapper {
    *   The data sources.
    */
   private function handleFile(&$data, array $definition, string $targetPath, array $dataSources): void {
-    $value = $this->getValue($dataSources[$definition['datasource']], $definition['source']);
-    $fileData = $this->createSingleFileData($value);
-    $this->setTargetValue($data, $targetPath, $fileData, $definition);
+    $value = $this->getFileData($definition['data'], $dataSources[$definition['datasource']], $definition['source']);
+    $this->setTargetValue($data, $targetPath, $value, $definition);
   }
 
   /**
-   * Create single file mapping.
+   * Get all required field values for file.
    *
-   * @param array $data
-   *   The data related to single file mapping.
-   * @param string $description
-   *   The description for the file.
+   * There are two cases we must handle here:
+   * 1. When an actual uploaded file is mapped
+   * 2. The file will be sent in future or has already been sent.
+   * Both cases require different amount of fields.
+   * The default values for file-fields must be in mappings-json.
+   *
+   * @param array $defaultData
+   *   Array of default values for file, comes from mapping.json.
+   * @param array $sourceData
+   *   The data sources.
+   * @param string $sourcePath
+   *   The path to data inside datasource.
    *
    * @return array
-   *   Single file mapping.
+   *   A mapped file with all required fields.
    */
-  private function createSingleFileData(array $data, string $description = ''): array {
-    $fileData = [];
+  private function getFileData(array $defaultData, array $sourceData, string $sourcePath): array {
+    $formValues = $this->getNestedArrayValue($sourceData, explode('.', $sourcePath));
 
-    $fileData[] = [
-      'ID' => 'description',
-      'value' => $description,
-      'valueType' => 'string',
-    ];
+    // Figure out which fields to send.
+    $defaultFieldsForNoFile = ['description', 'fileType', 'isDeliveredLater', 'isIncludedInOtherFile'];
+    $defaultFieldsForFile = array_keys($defaultData);
+    $fieldNames = isset($formValues['integrationID']) ? $defaultFieldsForFile : $defaultFieldsForNoFile;
 
-    foreach ($data as $key => $value) {
-      $definition = [
-        'ID' => $key,
-        'value' => $value,
-      ];
+    $values = [];
+    foreach ($fieldNames as $fieldName) {
+      // @todo Get rid of this once react change has been made.
+      if (isset($formValues['fileDescription'])) {
+        $formValues['description'] = $formValues['fileDescription'];
+      }
 
-      match($key) {
-        'fileType' => $definition['valueType'] = 'int',
-        'isNewAttachment',
-        'isIncludedInOtherFile',
-        'isDeliveredLater' => $definition['valueType'] = 'bool',
-        default => $definition['valueType'] = 'string'
-      };
+      // Use the default value-array as base for the data.
+      $field = $defaultData[$fieldName];
 
-      $fileData[] = $definition;
+      // And overwrite the value -value if necessary.
+      // @todo Remove filetype-condition once react-form no longer sends it.
+      if (isset($formValues[$fieldName]) && $fieldName !== 'fileType') {
+        $val = $defaultData[$fieldName]['value'];
+
+        // And make sure we are adding the boolean as a string.
+        if ($defaultData[$fieldName]['valueType'] === 'bool') {
+          $field['value'] = isset($formValues[$fieldName]) ? $formValues[$fieldName] ? 'true' : 'false' : $val;
+        }
+        else {
+          $field['value'] = isset($formValues[$fieldName]) ? (string) $formValues[$fieldName] : $val;
+        }
+      }
+
+      $values[] = $field;
     }
 
-    return $fileData;
+    return $values;
   }
 
   /**
@@ -597,6 +607,126 @@ class JsonMapper {
         'label' => 'Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä',
       ],
     ];
+  }
+
+  /**
+   * Get the current status value from document.
+   *
+   * @param array $document
+   *   The ATV document as array.
+   *
+   * @return string
+   *   The status.
+   */
+  public function getStatusValue(array $document): string {
+    $applicationInfoArray = $document['content']['compensation']['applicationInfoArray'];
+    $statusArray = array_find($applicationInfoArray, fn($item) => $item['ID'] === 'status');
+    foreach ($statusArray as $key => $status) {
+      if ($key === 'value') {
+        return $status;
+      }
+    }
+    return '';
+  }
+
+  /**
+   * Set the status to a document data.
+   *
+   * Status is special field since it is initialized by us but
+   * updated by external system. We may not overwrite it.
+   *
+   * @param array $document
+   *   The document data.
+   * @param string $oldStatusValue
+   *   The old status value.
+   */
+  public function setStatusValue(array &$document, string $oldStatusValue): void {
+    $applicationInfoArray = $document['content']['compensation']['applicationInfoArray'];
+
+    foreach ($applicationInfoArray as $field) {
+      if ($field['ID'] === 'status') {
+        $field['value'] = $oldStatusValue;
+        break;
+      }
+    }
+  }
+
+  /**
+   * Status is the only field which is altered by someone else after submit.
+   *
+   * @param array $mappedFiles
+   *   The attachmentsInfo.attachmentsArray from atv document content.
+   *
+   * @return bool
+   *   Bank file exists.
+   */
+  public function hasBankFile(array $mappedFiles): bool {
+    foreach ($mappedFiles as $fileArray) {
+      return (bool) array_find($fileArray, fn($item) => $item['fileType'] === 45);
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get complete list of files to send to Avus2.
+   *
+   * When user sends patch-request, the files must be handled correctly.
+   * User may not delete files but may add new files. Also, the bank file must
+   * exist. Therefore, we pick all unique files from both old and new
+   * submission to make sure we have everything.
+   *
+   * @param array $oldFiles
+   *   The mapped files from old atv-document.
+   * @param array $newFiles
+   *   The freshly mapped files.
+   *
+   * @return array
+   *   The files array that should be put to attachmentsInfo.attachmentsArray.
+   */
+  public function patchMappedFiles(array $oldFiles, array $newFiles): array {
+    $uniqueFiles = [];
+
+    if ($bankFile = $this->getMappedBankFile($oldFiles)) {
+      $uniqueFiles[] = $bankFile;
+    }
+
+    foreach (array_merge($oldFiles, $newFiles) as $fileFieldArray) {
+      $integrationIdValueArray = array_find($fileFieldArray, fn($fa) => $fa['ID'] === 'integrationID');
+
+      if ($integrationIdValueArray) {
+        $fileFound = FALSE;
+        foreach ($uniqueFiles as $uniqueFileFieldArray) {
+          $uniqueIntegrationIdField = array_find($uniqueFileFieldArray, fn($item) => $item['ID'] === 'integrationID');
+          if ($uniqueIntegrationIdField && $uniqueIntegrationIdField['value'] === $integrationIdValueArray['value']) {
+            $fileFound = TRUE;
+          }
+        }
+
+        if (!$fileFound) {
+          $uniqueFiles[] = $fileFieldArray;
+        }
+      }
+    }
+
+    return $uniqueFiles;
+  }
+
+  /**
+   * Get the bank file.
+   *
+   * @param array $mappedFiles
+   *   Contents of attachmentsInfo.attachmentsArray.
+   *
+   * @return array
+   *   The bank file.
+   */
+  private function getMappedBankFile(array $mappedFiles): ?array {
+    foreach ($mappedFiles as $fileArray) {
+      if (array_find($fileArray, fn($item) => $item['fileType'] === 45)) {
+        return $fileArray;
+      }
+    }
+    return NULL;
   }
 
 }
