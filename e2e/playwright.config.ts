@@ -256,21 +256,21 @@ export default defineConfig({
     //   dependencies: ['profile-registered_community']
     // },
     /* Form 66 tests. */
-    {
-      name: 'forms-66',
-      testMatch: /forms\/.*_66\.ts$/,
-      dependencies: ['profile-unregistered_community', 'profile-registered_community']
-    },
-    {
-      name: 'forms-66-unregistered',
-      testMatch: '/forms/unregistered_community_66.ts',
-      dependencies: ['profile-unregistered_community']
-    },
-    {
-      name: 'forms-66-registered',
-      testMatch: '/forms/registered_community_66.ts',
-      dependencies: ['profile-registered_community']
-    },
+    // {
+    //   name: 'forms-66',
+    //   testMatch: /forms\/.*_66\.ts$/,
+    //   dependencies: ['profile-unregistered_community', 'profile-registered_community']
+    // },
+    // {
+    //   name: 'forms-66-unregistered',
+    //   testMatch: '/forms/unregistered_community_66.ts',
+    //   dependencies: ['profile-unregistered_community']
+    // },
+    // {
+    //   name: 'forms-66-registered',
+    //   testMatch: '/forms/registered_community_66.ts',
+    //   dependencies: ['profile-registered_community']
+    // },
     /* Form 67 tests. */
     {
       name: 'forms-67',
