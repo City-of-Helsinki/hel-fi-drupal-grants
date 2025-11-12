@@ -15,17 +15,17 @@ third_party_settings:
     applicationTypeTerms:
       45: '45'
       46: '46'
-    applicationOpen: '2025-01-01T00:00:00'
-    applicationClose: '2025-12-30T23:59:59'
+    applicationOpen: '2025-11-07T08:00:00'
+    applicationClose: '2025-12-15T23:59:59'
     applicationContinuous: 0
     applicationTargetGroup: '27'
     disableCopying: 0
-    applicationTypeSelect: '63'
+    applicationTypeSelect: '75'
     applicationIndustry: KUVA
     applicationActingYears: {  }
-    applicationActingYearsType: current_and_next_x_years
+    applicationActingYearsType: next_x_years
     applicationActingYearsNextCount: '1'
-    status: development
+    status: released
     parent: f5ce73c5-6e6c-4acb-bd52-650d09db29c0
     avus2BreakingChange: false
 weight: 0
