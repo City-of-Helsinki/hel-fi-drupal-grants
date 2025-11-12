@@ -188,9 +188,13 @@
           "ui:field": "atvFile"
         }
       },
+      "further_clarification": {
+        "ui:widget": "textarea"
+      },
       "other_attachment_fieldset": {
         "other_attachment_fieldset_file": {
           "misc:file-type": 0,
+          "misc:variant": "simple",
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
