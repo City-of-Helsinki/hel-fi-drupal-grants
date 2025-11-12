@@ -555,6 +555,8 @@ elements: |-
         '#filetype': '38'
         '#title_display': ''
         '#description__access': false
+        '#isDeliveredLater__access': false
+        '#isIncludedInOtherFile__access': false
       extra_info:
         '#type': textarea
         '#title': 'Lisäselvitys liitteistä'
