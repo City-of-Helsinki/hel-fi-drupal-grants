@@ -127,7 +127,7 @@ elements: |
     '#title': 'Total / EUR'
   seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
     '#title': '<b>Significant</b> change in the use of facilities planned for the next year, +/- hours and reason'
-    '#help': '<p>It is possible to include significant changes in the club’s use of sports facilities over the application period for consideration in the amount of the facility usage grant at our discretion. The following are considered significant changes: club mergers, a section(s) joining the club or leaving the club, renting or purchasing a new sports facility (attach the rental agreement to the application) or relinquishing control over or selling a sports facility.</p>'
+    '#help': '<p>When determining the amount of facility usage grant, significant changes in the club’s use of sports facilities during the application year may be considered at discretion. Significant changes may be taken into account if they substantially affect facility usage costs and involve one of the following situations:</p><ul><li>merger of clubs or division into multiple clubs</li><li>sections joining or leaving the club</li><li>renting or purchasing a new sports facility (the rental / lease agreement must be attached to the application)</li><li>ceasing to rent or own a sports facility</li><li>a facility rented or owned by the club becomes eligible for support or ceases to be eligible during the application year</li></ul>'
   seuran_yhdistyksen_saamat_vuokrat_edellisen_kalenterivuoden_ajal:
     '#title': 'Rent received by the club/association in the previous calendar year between 1 January and 31 December'
     '#description': 'If the club/association receives rental income for its premises, report it here'

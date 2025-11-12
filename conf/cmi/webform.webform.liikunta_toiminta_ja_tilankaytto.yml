@@ -539,7 +539,7 @@ elements: |-
         seuraavalle_vuodelle_suunniteltu_muutos_tilojen_kaytossa_tunnit_:
           '#type': textfield
           '#title': 'Seuraavalle vuodelle suunniteltu <b>merkittävä</b> muutos tilojen käytössä +/- tunnit ja vuokrasumma sekä syy muutokseen.'
-          '#help': '<p>Tilankäyttöavustuksen määrässä voidaan harkinnanvaraisesti huomioida hakuvuotta koskevat merkittävät muutokset seuran liikuntatilojen käytössä. Merkittäviksi muutoksiksi katsotaan: seurojen yhteenliittyminen, jaoston tai jaostojen liittyminen seuraan tai irtautuminen seurasta, seuran vuokraama tai omistama uusi liikuntatila (kyseisen tilan vuokrasopimus tulee liittää hakemukseen) tai seuran hallinnoimasta tai omistamasta liikuntatilasta luopuminen.</p>'
+          '#help': '<p>Tilankäyttöavustuksen määrässä voidaan harkinnanvaraisesti huomioida hakuvuotta koskevat merkittävät muutokset seuran liikuntatilojen käytössä. Merkittävät muutokset voidaan ottaa huomioon, jos ne vaikuttavat tilankäyttökustannuksiin oleellisesti ja kyse on jostakin seuraavista tilanteista:</p><ul><li>seurojen yhteenliittyminen tai jakautuminen useammaksi seuraksi</li><li>jaoston tai jaostojen liittyminen seuraan tai irtautuminen seurasta</li><li>seuran vuokraama tai omistama uusi liikuntatila (kyseisen tilan vuokrasopimus tulee liittää hakemukseen)</li><li>seuran vuokraamasta tai omistamasta liikuntatilasta luopuminen</li><li>seuran vuokraama tai omistama tila tulee hakuvuoden aikana avustuskelpoiseksi tai poistuu avustettavuuden piiristä</li></ul>'
           '#states':
             required:
               ':input[name="tilankayttosumma"]':
