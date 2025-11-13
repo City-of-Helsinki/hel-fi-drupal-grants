@@ -12,13 +12,13 @@ third_party_settings:
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
-      2169: '2169'
-    applicationOpen: '2025-05-02T00:00:01'
-    applicationClose: '2026-12-31T16:00:00'
+      2121: '2121'
+    applicationOpen: '2025-12-08T08:00:00'
+    applicationClose: '2025-12-31T16:00:00'
     applicationContinuous: 0
     applicationTargetGroup: '29'
     disableCopying: 0
-    applicationTypeSelect: '71'
+    applicationTypeSelect: '74'
     applicationIndustry: KANSLIA
     applicationActingYears: {  }
     applicationActingYearsType: next_x_years

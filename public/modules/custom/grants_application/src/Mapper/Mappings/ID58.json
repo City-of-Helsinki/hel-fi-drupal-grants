@@ -37,7 +37,7 @@
     }
   },
 
-  "compensation.otherCompensationsInfo.otherCompensationsArray.0": {
+  "compensation.otherCompensationsInfo.otherCompensationsArray": {
     "datasource": "form_data",
     "source": "empty",
     "mapping_type": "empty",
@@ -395,7 +395,7 @@
       "ID": "actingYear",
       "label": "Vuosi, jolle haen avustusta",
       "value": "",
-      "valueType": "int"
+      "valueType": "string"
     }
   },
 
@@ -440,9 +440,9 @@
   },
 
   "compensation.activitiesInfoArray.0": {
-    "tip": "todo todo todo Tää pitää prefillaa react-lomakkeella, se data pitäs tulla jo settarien mukana",
-    "datasource": "form_data",
-    "source": "community_activity_step.community_activity_section.community_activity_description",
+    "datasource": "grants_profile_array",
+    "source": "businessPurpose",
+    "mapping_type": "default",
     "data": {
       "ID": "businessPurpose",
       "label": "Toiminnan kuvaus",
@@ -528,7 +528,7 @@
     }
   },
 
-  "compensation.attachmentsInfo.attachmentsArray.generalInfoArray.extraInfo": {
+  "attachmentsInfo.attachmentsArray.generalInfoArray.extraInfo": {
     "#tip": "attachment extra info",
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.extra_info",
@@ -570,7 +570,7 @@
         "value": "",
         "valueType": "double"
       },
-      "otherCompensation": {
+      "otherCompensations": {
         "ID": "otherCompensations",
         "label": "Muilta saadut avustukset",
         "value": "",
@@ -579,24 +579,19 @@
     }
   },
 
-  "attachmentsInfo.attachmentsArray.0.0.description": {
-    "#tip": "file description",
-    "datasource": "form_data",
-    "source": "attachments_step.attachments_section.other_attachment_fieldset.description",
-    "mapping_type": "default",
-    "data": {
-      "ID": "description",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-
-  "attachmentsInfo.attachmentsArray.0.0": {
+  "attachmentsInfo.attachmentsArray.0": {
     "#tip": "file mapping",
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.other_attachment_fieldset.file",
     "mapping_type": "file",
-    "data": {}
+    "data": {
+      "description": {"ID": "description", "value": "", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "1", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
   }
 
 }

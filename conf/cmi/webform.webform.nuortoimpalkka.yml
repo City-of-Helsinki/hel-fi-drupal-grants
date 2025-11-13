@@ -28,7 +28,7 @@ third_party_settings:
       2027: '2027'
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '1'
-    status: released
+    status: archived
     parent: ''
     avus2BreakingChange: false
 weight: 0

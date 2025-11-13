@@ -139,12 +139,32 @@
     }
   },
 
-  "attachmentsInfo.attachmentsArray.0.0": {
-    "#tip": "file mapping",
+  "attachmentsInfo.attachmentsArray.0": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.other_attachment_fieldset.file",
     "mapping_type": "file",
-    "data": {}
+    "data": {
+      "description": {"ID": "description", "value": "Yhteisön säännöt", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "7", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+
+  "attachmentsInfo.attachmentsArray.1": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.budget.budget_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "Kovakoodattu kentän nimi jos arvoa ei tule frontilta", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "1", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
   }
 
 }
