@@ -808,7 +808,7 @@ elements: |-
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
         '#pattern': '^[0-9 ]*$'
         '#title': 'Joista valmentaja- ja ohjaajakoulutuksen (VOK) 1-5 tason koulutuksen suorittaneita on yhteensä'
-        '#help': 'Liikunnan aluej&auml;rjest&ouml;jen j&auml;rjest&auml;mien VOK 1 &ndash;koulutusten lis&auml;ksi laskennassa huomioidaan niiden ohjaajien ja valmentajien m&auml;&auml;r&auml;, jotka ovat k&auml;yneet v&auml;hint&auml;&auml;n vastaavan tasoisen ja sis&auml;lt&ouml;isen lajiliiton j&auml;rjest&auml;m&auml;n valmentaja- ja ohjaajakoulutuksen tai jotka ovat suorittaneet liikunnanohjauksen perustutkinnon (ao), liikunnanohjaajan tutkinnon (amk) tai liikuntatieteiden maisterin tutkinnon (liikuntapedagogiikka tai liikuntabiologia).'
+        '#help': 'VOK 1 -koulutusten lisäksi huomioidaan niiden ohjaajien ja valmentajien määrä, jotka ovat käyneet vähintään vastaavan tasoisen ja sisältöisen valmentaja- ja ohjaajakoulutuksen  tai jotka ovat suorittaneet liikunnanohjauksen perustutkinnon (ao), liikunnanohjaaja tutkinnon (amk) tai liikuntatieteiden maisterin tutkinnon (liikuntapedagogiikka tai liikuntabiologia).'
         '#required': true
         '#attributes':
           class:
