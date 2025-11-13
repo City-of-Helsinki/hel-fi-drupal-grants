@@ -217,26 +217,26 @@ export default defineConfig({
       dependencies: ['profile-registered_community']
     },
     /* Form 64 tests. */
-    // {
-    //   name: 'forms-64',
-    //   testMatch: /forms\/.*_64\.ts$/,
-    //   dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
-    // },
-    // {
-    //   name: 'forms-64-private',
-    //   testMatch: '/forms/private_person_64.ts',
-    //   dependencies: ['profile-private_person']
-    // },
-    // {
-    //   name: 'forms-64-unregistered',
-    //   testMatch: '/forms/unregistered_community_64.ts',
-    //   dependencies: ['profile-unregistered_community']
-    // },
-    // {
-    //   name: 'forms-64-registered',
-    //   testMatch: '/forms/registered_community_64.ts',
-    //   dependencies: ['profile-registered_community']
-    // },
+    {
+      name: 'forms-64',
+      testMatch: /forms\/.*_64\.ts$/,
+      dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+    },
+    {
+      name: 'forms-64-private',
+      testMatch: '/forms/private_person_64.ts',
+      dependencies: ['profile-private_person']
+    },
+    {
+      name: 'forms-64-unregistered',
+      testMatch: '/forms/unregistered_community_64.ts',
+      dependencies: ['profile-unregistered_community']
+    },
+    {
+      name: 'forms-64-registered',
+      testMatch: '/forms/registered_community_64.ts',
+      dependencies: ['profile-registered_community']
+    },
     /* Form 65 tests. */
     // Disable test for ID65:nuorlomaleir. It is archived form
     // and the form ID73 is the current version of this application.

@@ -1,14 +1,31 @@
 import {Page, test} from '@playwright/test';
-import {FormData, PageHandlers, FormPage} from "../../../utils/data/test_data";
-import {fillHakijanTiedotUnregisteredCommunity,} from "../../../utils/form_helpers";
-import {fillFormField, fillInputField} from "../../../utils/input_helpers";
-import {generateTests} from "../../../utils/test_generator_helpers";
-import {Role, selectRole} from "../../../utils/auth_helpers";
-import {unRegisteredCommunityApplications as applicationData} from '../../../utils/data/application_data';
+import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
+import {fillHakijanTiedotPrivatePerson} from "../../utils/form_helpers";
+import {fillFormField, fillInputField} from "../../utils/input_helpers";
+import {generateTests} from "../../utils/test_generator_helpers";
+import {Role, selectRole} from "../../utils/auth_helpers";
+import {privatePersonApplications as applicationData} from '../../utils/data/application_data';
 
+/**
+ * Create object containing handler functions.
+ */
 const formPages: PageHandlers = {
+
+  /**
+   * Each of the items in this object represents a handler function for given
+   * page that fills form fields with faker data.
+   *
+   * @param page
+   *  Playwright page object
+   *
+   * @param formPageObject
+   *  Form page containing all the items for given form page.
+   *
+   */
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
-    await fillHakijanTiedotUnregisteredCommunity(items, page);
+    // First page is always same, so use function to fill this.
+    await fillHakijanTiedotPrivatePerson(items, page);
+    await page.pause();
   },
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
@@ -35,6 +52,7 @@ const formPages: PageHandlers = {
       await page.getByLabel('Kuvaus tiloihin liittyvästä tuesta', {exact: true})
         .fill(items['edit-benefits-premises'].value ?? '');
     }
+    await page.pause();
   },
   '3_yhteison_tiedot': async (page: Page, {items}: FormPage) => {
 
@@ -120,6 +138,7 @@ const formPages: PageHandlers = {
         'edit-members-applicant-community-local'
       );
     }
+    await page.pause();
   },
   'lisatiedot_ja_liitteet': async (page: Page, {items}: FormPage) => {
 
@@ -136,7 +155,7 @@ const formPages: PageHandlers = {
     if (items['edit-muu-liite']) {
       await fillFormField(page, items['edit-muu-liite'], 'edit-muu-liite')
     }
-
+    await page.pause();
   },
   'webform_preview': async (page: Page, {items}: FormPage) => {
     // Check data on confirmation page
@@ -144,11 +163,11 @@ const formPages: PageHandlers = {
   },
 };
 
-test.describe('ASUKASPIEN(76)', () => {
+test.describe('ASUKASPIEN(64)', () => {
   let page: Page;
 
-  const profileType = 'unregistered_community';
-  const formId = '76';
+  const profileType = 'private_person';
+  const formId = '64';
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage();
@@ -167,4 +186,5 @@ test.describe('ASUKASPIEN(76)', () => {
       await testFunction(page, browser);
     });
   }
+
 });

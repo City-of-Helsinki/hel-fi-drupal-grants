@@ -1,10 +1,10 @@
 import {Page, test} from '@playwright/test';
-import {FormData, PageHandlers, FormPage} from "../../../utils/data/test_data";
-import {fillHakijanTiedotRegisteredCommunity} from "../../../utils/form_helpers";
-import {fillFormField, fillInputField} from "../../../utils/input_helpers";
-import {generateTests} from "../../../utils/test_generator_helpers";
-import {Role, selectRole} from "../../../utils/auth_helpers";
-import {registeredCommunityApplications as applicationData} from '../../../utils/data/application_data';
+import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
+import {fillHakijanTiedotRegisteredCommunity} from "../../utils/form_helpers";
+import {fillFormField, fillInputField} from "../../utils/input_helpers";
+import {generateTests} from "../../utils/test_generator_helpers";
+import {Role, selectRole} from "../../utils/auth_helpers";
+import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
 
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
@@ -147,11 +147,11 @@ const formPages: PageHandlers = {
   },
 };
 
-test.describe('ASUKASPIEN(76)', () => {
+test.describe('ASUKASPIEN(64)', () => {
   let page: Page;
 
   const profileType = 'registered_community';
-  const formId = '76';
+  const formId = '64';
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage();
