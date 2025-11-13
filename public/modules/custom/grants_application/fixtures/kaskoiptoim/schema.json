@@ -661,6 +661,9 @@
                   "title": "file.title",
                   "type": "string",
                   "properties": {
+                    "description": {
+                      "type": "string"
+                    },
                     "file_id": {
                       "type": "integer"
                     },
@@ -697,6 +700,9 @@
                   "title": "file.title",
                   "type": "string",
                   "properties": {
+                    "description": {
+                      "type": "string"
+                    },
                     "file_id": {
                       "type": "integer"
                     },
@@ -733,6 +739,9 @@
                   "title": "file.title",
                   "type": "string",
                   "properties": {
+                    "description": {
+                      "type": "string"
+                    },
                     "file_id": {
                       "type": "integer"
                     },
@@ -769,6 +778,9 @@
                   "title": "file.title",
                   "type": "string",
                   "properties": {
+                    "description": {
+                      "type": "string"
+                    },
                     "file_id": {
                       "type": "integer"
                     },
@@ -805,6 +817,9 @@
                   "title": "file.title",
                   "type": "string",
                   "properties": {
+                    "description": {
+                      "type": "string"
+                    },
                     "file_id": {
                       "type": "integer"
                     },
@@ -841,6 +856,9 @@
                   "title": "file.title",
                   "type": "string",
                   "properties": {
+                    "description": {
+                      "type": "string"
+                    },
                     "file_id": {
                       "type": "integer"
                     },
@@ -877,6 +895,9 @@
                   "title": "file.title",
                   "type": "string",
                   "properties": {
+                    "description": {
+                      "type": "string"
+                    },
                     "file_id": {
                       "type": "integer"
                     },
@@ -917,7 +938,7 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
-                    "fileDescription": {
+                    "description": {
                       "type": "string"
                     },
                     "file_id": {

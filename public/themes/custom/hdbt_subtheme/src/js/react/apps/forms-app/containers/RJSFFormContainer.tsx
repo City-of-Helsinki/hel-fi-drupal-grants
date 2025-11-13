@@ -120,7 +120,7 @@ export const RJSFFormContainer = ({
     return formRef.current?.validate(data);
   };
 
-  const filterErrorsByReachedStep = (errors) => {
+  const filterErrorsByReachedStep = (errors: [number, RJSFValidationError][]) => {
     const reachedStep = readReachedStep();
 
     return errors
