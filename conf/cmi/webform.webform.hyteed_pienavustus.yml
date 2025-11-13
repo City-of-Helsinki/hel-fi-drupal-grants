@@ -35,7 +35,7 @@ template: false
 archive: false
 id: hyteed_pienavustus
 title: 'Hyvinvoinnin ja terveyden edistämisen pienavustus'
-description: ASUKASPIEN
+description: HYTEEDPIEN
 categories:
   - Tuotannossa
 elements: |-

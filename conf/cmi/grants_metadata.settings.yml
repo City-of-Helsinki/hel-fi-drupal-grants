@@ -302,6 +302,16 @@ third_party_options:
         fi: 'Nuorisopalvelu, toiminta- ja palkkausavustushakemus'
         en: 'Youth service, operations and employment grant application'
         sv: 'Ungdomstjänst, ansökan om verksamhets- och anställningsbidrag'
+    76:
+      id: HYTEEDPIEN
+      code: HYTEEDPIEN
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\HyteedPienDefinition
+        definitionId: grants_metadata_hyteedpien
+      labels:
+        fi: 'Asukasosallisuus, pienavustushakemus'
+        en: 'Citizen Participation, small grant application'
+        sv: 'Invånardelaktighet, ansökan om små bidrag'
   application_statuses:
     DRAFT: DRAFT
     SUBMITTED: SUBMITTED
@@ -373,6 +383,7 @@ config_import_ignore:
   - 73
   - 74
   - 75
+  - 76
 overridden_configuration:
   -
     53:
@@ -550,6 +561,11 @@ overridden_configuration:
         disableCopying: 0
   -
     75:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-08-30T11:19:00'
+        disableCopying: 0
+  - 76:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-08-30T11:19:00'
