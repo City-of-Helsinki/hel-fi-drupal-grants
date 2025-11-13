@@ -144,11 +144,11 @@ const formPages: PageHandlers = {
   },
 };
 
-test.describe('ASUKASPIEN(64)', () => {
+test.describe('ASUKASPIEN(76)', () => {
   let page: Page;
 
   const profileType = 'unregistered_community';
-  const formId = '64';
+  const formId = '76';
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage();

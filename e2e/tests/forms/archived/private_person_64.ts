@@ -1,15 +1,31 @@
 import {Page, test} from '@playwright/test';
-import {FormData, PageHandlers, FormPage} from "../../utils/data/test_data";
-import {fillHakijanTiedotRegisteredCommunity} from "../../utils/form_helpers";
-import {fillFormField, fillInputField} from "../../utils/input_helpers";
-import {generateTests} from "../../utils/test_generator_helpers";
-import {Role, selectRole} from "../../utils/auth_helpers";
-import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
+import {FormData, PageHandlers, FormPage} from "../../../utils/data/test_data";
+import {fillHakijanTiedotPrivatePerson} from "../../../utils/form_helpers";
+import {fillFormField, fillInputField} from "../../../utils/input_helpers";
+import {generateTests} from "../../../utils/test_generator_helpers";
+import {Role, selectRole} from "../../../utils/auth_helpers";
+import {privatePersonApplications as applicationData} from '../../../utils/data/application_data';
 
+/**
+ * Create object containing handler functions.
+ */
 const formPages: PageHandlers = {
+
+  /**
+   * Each of the items in this object represents a handler function for given
+   * page that fills form fields with faker data.
+   *
+   * @param page
+   *  Playwright page object
+   *
+   * @param formPageObject
+   *  Form page containing all the items for given form page.
+   *
+   */
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
     // First page is always same, so use function to fill this.
-    await fillHakijanTiedotRegisteredCommunity(items, page);
+    await fillHakijanTiedotPrivatePerson(items, page);
+    await page.pause();
   },
   '2_avustustiedot': async (page: Page, {items}: FormPage) => {
 
@@ -147,11 +163,11 @@ const formPages: PageHandlers = {
   },
 };
 
-test.describe('ASUKASPIEN(64)', () => {
+test.describe('ASUKASPIEN(76)', () => {
   let page: Page;
 
-  const profileType = 'registered_community';
-  const formId = '64';
+  const profileType = 'private_person';
+  const formId = '76';
 
   test.beforeAll(async ({browser}) => {
     page = await browser.newPage();
@@ -170,4 +186,5 @@ test.describe('ASUKASPIEN(64)', () => {
       await testFunction(page, browser);
     });
   }
+
 });

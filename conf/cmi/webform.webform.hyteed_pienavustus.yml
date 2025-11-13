@@ -1,4 +1,3 @@
-uuid: 4dc26305-4235-4375-80ea-30b04c7d75fd
 langcode: fi
 status: open
 dependencies:
@@ -34,7 +33,7 @@ close: null
 uid: 1
 template: false
 archive: false
-id: terveys_hyvinvointi_pienavustus
+id: hyteed_pienavustus
 title: 'Hyvinvoinnin ja terveyden edistämisen pienavustus'
 description: ASUKASPIEN
 categories:
