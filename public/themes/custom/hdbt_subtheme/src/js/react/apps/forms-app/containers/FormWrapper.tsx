@@ -5,7 +5,6 @@ import { useSetAtom, useStore } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useCallback } from 'react';
 import { SubmitStates } from '../enum/SubmitStates';
-import { InvalidSchemaBoundary } from '../errors/InvalidSchemaBoundary';
 import { useTranslateData } from '../hooks/useTranslateData';
 import {
   avus2DataAtom,
@@ -96,15 +95,23 @@ function* getAttachments(element: any): IterableIterator<ATVFile> {
  * @return {boolean} - True if the schema definition should be fixed, false otherwise.
  */
 const shouldFixArrayField = (schemaDefinition: RJSFSchema) => {
-  if (schemaDefinition?.type !== 'array') {
+  if (
+    schemaDefinition?.type !== 'array' ||
+    !schemaDefinition?.items ||
+    schemaDefinition?.items === true
+  ) {
     return false;
   }
 
-  return (
-    (schemaDefinition.items[0] &&
-      schemaDefinition.items[0].type === 'object') ||
-    schemaDefinition.items?.$ref
-  );
+  const isObject =
+    Array.isArray(schemaDefinition?.items) &&
+    typeof schemaDefinition?.items[0] === 'object' &&
+    schemaDefinition?.items[0]?.type === 'object';
+
+  const hasRef =
+    !Array.isArray(schemaDefinition.items) && schemaDefinition.items.$ref;
+
+  return isObject || hasRef;
 };
 
 /**
@@ -121,7 +128,10 @@ const fixDanglingArrays = (formData: any, schema: RJSFSchema) => {
   const objectPaths = Array.from(iterateFormData(formData));
 
   objectPaths.forEach((path) => {
-    const schemaDefinition = getNestedSchemaProperty(schema.definitions, path);
+    const schemaDefinition = getNestedSchemaProperty(
+      schema.definitions as RJSFSchema,
+      path,
+    );
 
     if (schemaDefinition && schemaDefinition.type === 'object') {
       setNestedProperty(formData, path, {});
@@ -331,15 +341,13 @@ export const FormWrapper = ({
   };
 
   return (
-    <InvalidSchemaBoundary>
-      <RJSFFormContainer
-        formDataAtom={formDataAtom}
-        saveDraft={saveDraft}
-        schema={translatedData.schema}
-        submitData={submitData}
-        uiSchema={translatedData.ui_schema}
-      />
-    </InvalidSchemaBoundary>
+    <RJSFFormContainer
+      formDataAtom={formDataAtom}
+      saveDraft={saveDraft}
+      schema={translatedData.schema}
+      submitData={submitData}
+      uiSchema={translatedData.ui_schema}
+    />
   );
 };
 

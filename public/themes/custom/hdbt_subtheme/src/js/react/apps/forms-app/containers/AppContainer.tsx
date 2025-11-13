@@ -5,6 +5,7 @@ import { initReactI18next } from 'react-i18next';
 
 import { FormWrapper } from './FormWrapper';
 import { getUrlParts } from '../testutils/Helpers';
+import { BackendError } from '../errors/BackendError';
 
 /**
  * Instantiates a new application draft for the given form.
@@ -27,6 +28,23 @@ const instantiateDocument = async (id: string, token: string) => {
   }
 
   return response.json();
+};
+
+/**
+ * Handle errors from the server response.
+ *
+ * @param {Response} response - The fetch response object.
+ * @throws {BackendError|Error} - Throws a BackendError if the response contains an error message,
+ *                                otherwise throws a generic Error.
+ */
+const handleErrors = async (response: Response) => {
+  const json = await response.json();
+
+  if (json?.error) {
+    throw new BackendError(json.error);
+  }
+
+  throw new Error('Failed to fetch form config data.');
 };
 
 /**
@@ -59,7 +77,8 @@ async function fetchFormData(id: string, token: string) {
   });
 
   if (!formConfigResponse.ok) {
-    throw new Error('Failed to fetch form data');
+    await handleErrors(formConfigResponse);
+    return;
   }
 
   const formConfig = await formConfigResponse.json();
@@ -75,13 +94,17 @@ export const AppContainer = ({
   applicationTypeId: string;
   token: string;
 }) => {
-  const { data, isLoading, isValidating } = useSWRImmutable(
+  const { data, error, isLoading, isValidating } = useSWRImmutable(
     applicationTypeId,
     (id) => fetchFormData(id, token),
   );
 
   if (isLoading || isValidating) {
     return <LoadingSpinner />;
+  }
+
+  if (error) {
+    throw error;
   }
 
   i18next.use(initReactI18next).init({
