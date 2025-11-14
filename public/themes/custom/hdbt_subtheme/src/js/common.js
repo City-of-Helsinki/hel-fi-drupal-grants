@@ -1,11 +1,13 @@
-// eslint-disable-next-line no-unused-vars
-(($, Drupal, drupalSettings) => {
+(($, Drupal, _drupalSettings) => {
   Drupal.behaviors.themeCommon = {
     attach: function attach() {
       $(document).ready(() => {
-        $('input:not([type="file"]):not(.js-webform-input-mask), textarea').on('change', function fn() {
-          this.value = $.trim($(this).val());
-        });
+        $('input:not([type="file"]):not(.js-webform-input-mask), textarea').on(
+          'change',
+          function fn() {
+            this.value = $.trim($(this).val());
+          },
+        );
 
         const queryString = window.location.search;
         const subString = 'items_per_page=';
@@ -17,8 +19,6 @@
 
           if (selectElement) {
             // Loop through the <option> elements in the <select>
-            // @todo fix this to abide by linter rules if react rework gets canceled
-            // eslint-disable-next-line no-restricted-syntax
             for (const option of selectElement) {
               const characterAfterSubstring = queryString.substring(
                 substringIndex + subString.length,
@@ -48,13 +48,9 @@
         // Attach a click event handler to the close button.
         $('.information-announcement-close').on('click', () => {
           // Send an AJAX request to the Drupal route.
-          $.ajax({
-            url: '/oma-asiointi/log-close-time/',
-            method: 'GET',
-          });
+          $.ajax({ url: '/oma-asiointi/log-close-time/', method: 'GET' });
         });
       });
     },
   };
-  // eslint-disable-next-line no-undef
 })(jQuery, Drupal, drupalSettings);
