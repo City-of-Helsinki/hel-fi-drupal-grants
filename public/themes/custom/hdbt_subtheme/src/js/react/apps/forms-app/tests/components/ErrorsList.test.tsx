@@ -10,7 +10,7 @@ describe('ErrorList.tsx', async () => {
   render(
     <TestProvider initialValues={[[errorsAtom, testKeyedErrors]]}>
       <ErrorsList />
-    </TestProvider>
+    </TestProvider>,
   );
 
   const liElements = document.querySelectorAll('li');

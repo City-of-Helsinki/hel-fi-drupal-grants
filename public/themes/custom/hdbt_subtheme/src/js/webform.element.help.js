@@ -4,14 +4,12 @@
  */
 
 (($, Drupal, once) => {
-
-
-
   // @see https://atomiks.github.io/tippyjs/v5/all-props/
   // @see https://atomiks.github.io/tippyjs/v6/all-props/
   Drupal.webform = Drupal.webform || {};
   Drupal.webform.elementHelpIcon = Drupal.webform.elementHelpIcon || {};
-  Drupal.webform.elementHelpIcon.options = Drupal.webform.elementHelpIcon.options || {};
+  Drupal.webform.elementHelpIcon.options =
+    Drupal.webform.elementHelpIcon.options || {};
 
   /**
    * Element help icon.
@@ -54,7 +52,8 @@
         },
       };
 
-      $(once('webform-element-help', '.js-webform-element-help', context)).each(function fn() {
+      $(once('webform-element-help', '.js-webform-element-help', context)).each(
+        function fn() {
           const $link = $(this);
 
           $link.on('click', (event) => {
@@ -75,8 +74,8 @@
           );
 
           tippy(this, options);
-        });
+        },
+      );
     },
   };
-
 })(jQuery, Drupal, once);

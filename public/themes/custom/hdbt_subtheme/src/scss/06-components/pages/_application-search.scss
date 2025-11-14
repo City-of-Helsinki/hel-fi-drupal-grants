@@ -1,3 +1,4 @@
+/* stylelint-disable max-nesting-depth -- @todo UHF-12501 */
 .view_application_search_search_api {
   .main-content {
     margin-top: 0;
@@ -146,6 +147,7 @@
         width: 100%;
       }
     }
+
     .form-actions {
       align-items: center;
       display: flex;
@@ -193,6 +195,7 @@
       order: 5;
       width: 30%;
     }
+
     [data-drupal-selector='edit-reset'] {
       background-color: transparent;
       border: 0;

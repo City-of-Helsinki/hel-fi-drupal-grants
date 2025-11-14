@@ -1,4 +1,4 @@
-uuid: 4dc26305-4235-4375-80ea-30b04c7d75fd
+uuid: 519668f7-2333-4531-958d-40e612b1c464
 langcode: fi
 status: open
 dependencies:
@@ -7,8 +7,8 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationType: ASUKASPIEN
-    applicationTypeID: '64'
+    applicationType: HYTEEDPIEN
+    applicationTypeID: '76'
     applicantTypes:
       private_person: private_person
       registered_community: registered_community
@@ -25,7 +25,7 @@ third_party_settings:
     applicationActingYears: {  }
     applicationActingYearsType: current_and_next_x_years
     applicationActingYearsNextCount: '0'
-    status: released
+    status: development
     parent: ''
     avus2BreakingChange: false
 weight: 0
@@ -34,11 +34,9 @@ close: null
 uid: 1
 template: false
 archive: false
-id: terveys_hyvinvointi_pienavustus
-title: 'Asukasosallisuus, pienavustushakemus'
-description: ASUKASPIEN
-categories:
-  - Tuotannossa
+id: hyteed_pienavustus
+title: 'Hyvinvoinnin ja terveyden edistämisen pienavustus'
+description: HYTEEDPIEN
 elements: |-
   applicant_type:
     '#type': hidden

@@ -8,25 +8,30 @@ import { testKeyedErrors, testSteps } from '../../testutils/Data';
 
 describe('FormActions.tsx tests', () => {
   render(
-    <TestProvider initialValues={[
-      [errorsAtom, testKeyedErrors],
-      [formStateAtom, initializeFormState({
-        currentStep: [0, {id: 'step-1', label: 'Step 1'}],
-        reachedStep: 0,
-      })],
-      [formStepsAtom, testSteps]
-    ]}>
+    <TestProvider
+      initialValues={[
+        [errorsAtom, testKeyedErrors],
+        [
+          formStateAtom,
+          initializeFormState({
+            currentStep: [0, { id: 'step-1', label: 'Step 1' }],
+            reachedStep: 0,
+          }),
+        ],
+        [formStepsAtom, testSteps],
+      ]}
+    >
       <FormActions
         saveDraft={() => {
           const result: Promise<boolean> = new Promise((resolve) => {
             resolve(true);
-          })
+          });
 
           return result;
         }}
         validatePartialForm={() => undefined}
       />
-    </TestProvider>
+    </TestProvider>,
   );
 
   it('Renders all buttons', () => {

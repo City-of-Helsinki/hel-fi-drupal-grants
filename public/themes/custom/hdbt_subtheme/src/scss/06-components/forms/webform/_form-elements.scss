@@ -1,3 +1,6 @@
+/* stylelint-disable max-nesting-depth -- @todo UHF-12501 */
+/* stylelint-disable declaration-property-value-keyword-no-deprecated -- @todo UHF-12501 */
+/* stylelint-disable scss/at-extend-no-missing-placeholder -- @todo UHF-12501 */
 .js-form-type-webform-table {
   table {
     width: 100%;
@@ -557,8 +560,8 @@ input[type='radio'] + label.form-required::after {
   margin-block-end: $spacing-and-half;
 }
 
-//Target array items that are not in preview section
-//Add same styles to fieldset that are not in array-item
+// Target array items that are not in preview section
+// Add same styles to fieldset that are not in array-item
 .array-item:not(.grants-form--preview-section .array-item),
 .field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
   border: 2px solid $color-black-50;
@@ -591,7 +594,7 @@ input[type='radio'] + label.form-required::after {
   }
 }
 
-//TODO: Remove when HDS supports file input styling
+// TODO: Remove when HDS supports file input styling
 .hdbt-form--fileinput {
   & > div:first-child > div:first-child > div:first-child {
     border-color: $color-black;
