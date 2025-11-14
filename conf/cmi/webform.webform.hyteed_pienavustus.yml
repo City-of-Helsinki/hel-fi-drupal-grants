@@ -1,3 +1,4 @@
+uuid: 519668f7-2333-4531-958d-40e612b1c464
 langcode: fi
 status: open
 dependencies:
@@ -33,11 +34,9 @@ close: null
 uid: 1
 template: false
 archive: false
-id: hyteedpien
+id: hyteed_pienavustus
 title: 'Hyvinvoinnin ja terveyden edistämisen pienavustus'
 description: HYTEEDPIEN
-categories:
-  - Tuotannossa
 elements: |-
   applicant_type:
     '#type': hidden
