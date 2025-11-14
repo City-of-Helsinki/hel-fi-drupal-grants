@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { formConfigAtom, getApplicationNumberAtom, shouldRenderPreviewAtom } from "../store";
 import { formatErrors } from '../utils';
+import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 
 type ATVFile = {
   fileDescription?: string;
@@ -127,6 +128,7 @@ export const FileInput = ({
       handleChange(files, formData);
     }}
     required={required}
+    className="hdbt-form--fileinput"
   />;
 
   const descriptionElement = <TextInput
@@ -164,6 +166,8 @@ export const FileInput = ({
             isDeliveredLater: e.target.checked,
           });
         }}
+        className="hdbt-form--checkbox"
+        style={defaultCheckboxStyle}
       />
       <Checkbox
         checked={isIncludedInOtherFile || false}
@@ -176,6 +180,8 @@ export const FileInput = ({
             isIncludedInOtherFile: e.target.checked,
           });
         }}
+        className="hdbt-form--checkbox"
+        style={defaultCheckboxStyle}
       />
     </div>
   );

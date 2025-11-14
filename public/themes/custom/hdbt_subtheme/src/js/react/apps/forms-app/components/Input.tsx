@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { WidgetProps } from '@rjsf/utils';
 
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
+import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
 import { formatErrors } from '../utils';
 import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, getProfileAtom, shouldRenderPreviewAtom } from '../store';
 
@@ -236,9 +237,9 @@ const roleMap = new Map([
 
 /**
  * Get translated string for community official role.
- * 
+ *
  * @param {number} roleId - Role id
- * 
+ *
  * @return {string|undefined} - Role name or undefined
  */
 const getCommunityOfficialRole = (roleId: number|string) => roleMap.get(Number(roleId));
@@ -271,7 +272,7 @@ export const CommunityOfficialsSelect = ({
         } = officials.find(({ official_id: officialId }) => officialId === official_id);
 
         return `${getCommunityOfficialRole(role)}: ${name} (${email}, ${phone})`;
-      }); 
+      });
     }
 
     const {
@@ -322,34 +323,39 @@ export const RadioWidget = ({
 }: WidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
-  
+
   if (shouldRenderPreview) {
     return <PreviewInput value={value} label={label} uiSchema={uiSchema} />
   }
-  
+
   const { affirmativeExpands } = uiSchema?.['ui:options'] ?? {};
   return <>
       {affirmativeExpands && (
         <Notification
-          label={t('affimative_expands')}
+          label={t('affirmative_expands')}
           type="info"
+          className="hdbt-form--notification"
         />
       )}
-      <Fieldset heading={`${label}${required ? ' *' : ''}`}>
+      <Fieldset
+        heading={`${label}${required ? ' *' : ''}`}
+        className="hdbt-form--fieldset"
+        >
         {options?.enumOptions?.map((option: any) => {
           const optionId = `${id}_${option.value}`;
 
           return <RadioButton
             checked={option.value === value}
-            focusable
             id={optionId}
             key={optionId}
             label={option.label}
             name={optionId}
             onChange={() => onChange(option.value)}
+            style={defaultRadioButtonStyle}
+            className='hdbt-form--radiobutton'
           />;
         })}
-        {rawErrors?.length > 0 && <Notification type='error'>{formatErrors(rawErrors)}</Notification>}
+        {rawErrors?.length > 0 && <Notification type='error' className="hdbt-form--notification">{formatErrors(rawErrors)}</Notification>}
       </Fieldset>
     </>
 };
