@@ -16,12 +16,9 @@ import { getUrlParts } from '../testutils/Helpers';
  *
  * @throws {Error} - If the instantiation request fails.
  */
-const instantiateDocument = async(id: string, token: string) => {
+const instantiateDocument = async (id: string, token: string) => {
   const response = await fetch(`/applications/${id}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-Token': token,
-    },
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
     method: 'POST',
   });
 
@@ -54,14 +51,11 @@ async function fetchFormData(id: string, token: string) {
 
   const { use_draft: useDraft } = drupalSettings.grants_react_form;
   // Uses DraftApplication or Application REST resource based on useDraft flag
-  const fetchUrl = useDraft ? 
-    `/applications/${id}/${applicationNumber}` :
-    `/applications/${id}/application/${applicationNumber}`;
+  const fetchUrl = useDraft
+    ? `/applications/${id}/${applicationNumber}`
+    : `/applications/${id}/application/${applicationNumber}`;
   const formConfigResponse = await fetch(fetchUrl, {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-Token': token,
-    },
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
   });
 
   if (!formConfigResponse.ok) {
@@ -69,14 +63,10 @@ async function fetchFormData(id: string, token: string) {
   }
 
   const formConfig = await formConfigResponse.json();
-  const persistedData = { ...formConfig.form_data};
+  const persistedData = { ...formConfig.form_data };
 
-  return {
-    ...formConfig,
-    persistedData,
-    applicationNumber,
-  };
-};
+  return { ...formConfig, persistedData, applicationNumber };
+}
 
 export const AppContainer = ({
   applicationTypeId,
@@ -85,27 +75,24 @@ export const AppContainer = ({
   applicationTypeId: string;
   token: string;
 }) => {
-  const { data, isLoading, isValidating} = useSWRImmutable(
+  const { data, isLoading, isValidating } = useSWRImmutable(
     applicationTypeId,
     (id) => fetchFormData(id, token),
   );
 
   if (isLoading || isValidating) {
-    return  <LoadingSpinner />
+    return <LoadingSpinner />;
   }
 
-  i18next
-    .use(initReactI18next)
-    .init({
-      // Enable for additional info. Don't use in prod.
-      // debug: true,
-      fallbackLng: 'fi',
-      lng: drupalSettings.path.currentLanguage,
-      resources: data?.translations,
-      parseMissingKeyHandler: (key: string) => null,
-      returnNull: true,
-    });
+  i18next.use(initReactI18next).init({
+    // Enable for additional info. Don't use in prod.
+    // debug: true,
+    fallbackLng: 'fi',
+    lng: drupalSettings.path.currentLanguage,
+    resources: data?.translations,
+    parseMissingKeyHandler: (_key: string) => null,
+    returnNull: true,
+  });
 
-  return <FormWrapper {...{applicationTypeId, token, data}} />
+  return <FormWrapper {...{ applicationTypeId, token, data }} />;
 };
-
