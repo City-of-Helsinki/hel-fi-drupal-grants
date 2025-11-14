@@ -5,7 +5,7 @@ namespace Drupal\grants_metadata\Plugin\DataType;
 use Drupal\Core\TypedData\Plugin\DataType\Map;
 
 /**
- * Address DataType.
+ * Hyteedpien DataType.
  *
  * @DataType(
  * id = "grants_metadata_hyteedpien",
