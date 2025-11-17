@@ -17,14 +17,14 @@ const SUBVENTION_LABEL = 'Avustuslaji';
 const SUBVENTION_VALUE_TYPE = 'string';
 
 export const SubventionTable = ({
-  id,
+  idSchema,
   formData,
   onChange,
   rawErrors,
   required,
   schema,
-  uiSchema,
 }: FieldProps) => {
+  const id = idSchema.$id;
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (!schema.options || !schema.options.length) {
@@ -32,7 +32,7 @@ export const SubventionTable = ({
     return null;
   }
 
-  const findIndexForData = (elementId, data = formData) =>
+  const findIndexForData = (elementId: string, data = formData) =>
     data.findIndex((item) => item && item?.[0]?.value === elementId);
 
   if (shouldRenderPreview) {
@@ -52,14 +52,15 @@ export const SubventionTable = ({
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id: elementId, value } = event.target;
+    const { dataset, id: elementId, value } = event.target;
+    const subventionId = dataset.subventionId as string;
     const data = formData && Array.isArray(formData) ? [...formData] : [];
 
     const newValue = [
       {
         ID: SUBVENTION_ID,
         label: SUBVENTION_LABEL,
-        value: elementId,
+        value: subventionId,
         valueType: SUBVENTION_VALUE_TYPE,
       },
       {
@@ -70,7 +71,7 @@ export const SubventionTable = ({
       },
     ];
 
-    const index = findIndexForData(elementId, data);
+    const index = findIndexForData(subventionId, data);
 
     if (index === -1) {
       data.push(newValue);
@@ -101,15 +102,16 @@ export const SubventionTable = ({
 
             return (
               <NumberInput
+                data-subvention-id={itemId}
+                defaultValue={0}
                 id={key}
                 key={key}
-                onChange={handleChange}
                 label={label}
                 min={0}
+                onChange={handleChange}
                 required={required}
-                value={keyedData[key] || ''}
                 unit='€'
-                defaultValue={0}
+                value={keyedData[itemId] || ''}
               />
             );
           })}
