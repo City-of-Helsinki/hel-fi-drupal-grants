@@ -2,8 +2,7 @@
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import type { FieldProps } from '@rjsf/utils';
 import { useAtomValue } from 'jotai';
-import { useTranslation } from 'react-i18next';
-import { Notification, NumberInput } from 'hds-react';
+import { Notification, NumberInput, Fieldset } from 'hds-react';
 
 import { shouldRenderPreviewAtom } from '../../store';
 import { formatErrors } from '../../utils';
@@ -18,15 +17,14 @@ const SUBVENTION_LABEL = 'Avustuslaji';
 const SUBVENTION_VALUE_TYPE = 'string';
 
 export const SubventionTable = ({
-  id,
+  idSchema,
   formData,
   onChange,
   rawErrors,
   required,
   schema,
-  uiSchema,
 }: FieldProps) => {
-  const { t } = useTranslation();
+  const id = idSchema.$id;
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (!schema.options || !schema.options.length) {
@@ -34,7 +32,7 @@ export const SubventionTable = ({
     return null;
   }
 
-  const findIndexForData = (elementId, data = formData) =>
+  const findIndexForData = (elementId: string, data = formData) =>
     data.findIndex((item) => item && item?.[0]?.value === elementId);
 
   if (shouldRenderPreview) {
@@ -54,14 +52,15 @@ export const SubventionTable = ({
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id: elementId, value } = event.target;
+    const { dataset, id: elementId, value } = event.target;
+    const subventionId = dataset.subventionId as string;
     const data = formData && Array.isArray(formData) ? [...formData] : [];
 
     const newValue = [
       {
         ID: SUBVENTION_ID,
         label: SUBVENTION_LABEL,
-        value: elementId,
+        value: subventionId,
         valueType: SUBVENTION_VALUE_TYPE,
       },
       {
@@ -72,7 +71,7 @@ export const SubventionTable = ({
       },
     ];
 
-    const index = findIndexForData(elementId, data);
+    const index = findIndexForData(subventionId, data);
 
     if (index === -1) {
       data.push(newValue);
@@ -91,52 +90,36 @@ export const SubventionTable = ({
   }
 
   return (
-    <div className='table-layout-form webform-multiple-table'>
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label className='js-form-required form-required'>
-        {`${schema.title}`}
-      </label>
-      <table id='edit-subventions-items' className='responsive-enabled'>
-        <thead>
-          <tr>
-            <th className='subventions-table--subventionTypeTitle webform-multiple-table--subventionTypeTitle'>
-              {t('subvention.type')}
-            </th>
-            <th className='subventions-table--amount webform-multiple-table--amount'>
-              {t('subvention.sum')}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
+    <>
+      <div className='array-item'>
+        <Fieldset
+          className='hdbt-form--fieldset hdbt-form--fieldset--border'
+          heading={`${schema.title}`}
+        >
           {schema.options.map((item, i) => {
             const { id: itemId, label } = item;
             const key = `${id}-${itemId}`;
 
             return (
-              <tr key={key}>
-                <td>
-                  <div style={{ padding: 'var(--spacing-layout-2-xs)' }}>
-                    {label}
-                  </div>
-                </td>
-                <td>
-                  <NumberInput
-                    id={key}
-                    onChange={handleChange}
-                    min={0}
-                    required={required}
-                    style={{ '--border-width': 0, textAlign: 'right' }}
-                    value={keyedData[key] || ''}
-                  />
-                </td>
-              </tr>
+              <NumberInput
+                data-subvention-id={itemId}
+                defaultValue={0}
+                id={key}
+                key={key}
+                label={label}
+                min={0}
+                onChange={handleChange}
+                required={required}
+                unit='€'
+                value={keyedData[itemId] || ''}
+              />
             );
           })}
-        </tbody>
-      </table>
+        </Fieldset>
+      </div>
       {rawErrors?.length > 0 && (
         <Notification type='error'>{formatErrors(rawErrors)}</Notification>
       )}
-    </div>
+    </>
   );
 };

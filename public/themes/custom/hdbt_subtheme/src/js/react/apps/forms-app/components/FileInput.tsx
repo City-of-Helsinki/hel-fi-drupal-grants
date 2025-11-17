@@ -15,6 +15,7 @@ import {
   shouldRenderPreviewAtom,
 } from '../store';
 import { formatErrors } from '../utils';
+import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 
 type ATVFile = {
   fileDescription?: string;
@@ -149,6 +150,7 @@ export const FileInput = ({
         handleChange(files, formData);
       }}
       required={required}
+      className='hdbt-form--fileinput'
     />
   );
 
@@ -187,6 +189,8 @@ export const FileInput = ({
         onChange={(e) => {
           onChange({ ...formData, isDeliveredLater: e.target.checked });
         }}
+        className='hdbt-form--checkbox'
+        style={defaultCheckboxStyle}
       />
       <Checkbox
         checked={isIncludedInOtherFile || false}
@@ -200,6 +204,8 @@ export const FileInput = ({
         onChange={(e) => {
           onChange({ ...formData, isIncludedInOtherFile: e.target.checked });
         }}
+        className='hdbt-form--checkbox'
+        style={defaultCheckboxStyle}
       />
     </div>
   );

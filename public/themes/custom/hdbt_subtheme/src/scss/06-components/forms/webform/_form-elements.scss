@@ -563,18 +563,22 @@ input[type='radio'] + label.form-required::after {
 // Target array items that are not in preview section
 // Add same styles to fieldset that are not in array-item
 .array-item:not(.grants-form--preview-section .array-item),
-.field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset--border {
   border: 2px solid $color-black-50;
   margin-block-end: $spacing-and-half;
   padding: $spacing-double;
 }
 
-.array-item .hdbt-form--fieldset {
+.field .hdbt-form--fieldset {
   padding: 0;
+
+  legend {
+    margin-block: 0 $spacing;
+  }
 }
 
 // Align legend when fieldset is not in array item
-.field-object:not(.array-item .field-object) > .hdbt-form--fieldset {
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset--border {
   legend {
     float: left;
   }
@@ -584,7 +588,7 @@ input[type='radio'] + label.form-required::after {
   }
 }
 
-.hdbt-form--fieldset legend {
+.hdbt-form--fieldset--border legend {
   @include font('h4');
   margin-block-end: $spacing-and-half;
   width: 100%;
@@ -601,8 +605,32 @@ input[type='radio'] + label.form-required::after {
     color: $color-black;
   }
 
+  // These are copied from _button.scss in hdbt
+  // remove when HDS supports file input styling
   button {
-    @extend .hds-button--secondary;
+    --background-color: var(--theme-bg2, transparent);
+    --background-color-hover: var(--theme-bg1, var(--color-bus-light));
+    --background-color-focus: var(--theme-bg2, transparent);
+    --background-color-hover-focus: var(--theme-bg1, var(--color-bus-light));
+    --background-color-disabled: transparent;
+
+    // Borders
+    --border-color: var(--theme-bg1, var(--color-bus));
+    --border-color-hover: var(--theme-bg2, var(--color-bus-dark));
+    --border-color-focus: var(--theme-bg1, var(--color-bus));
+    --border-color-hover-focus: var(--theme-bg2, var(--color-bus-dark));
+    --border-color-disabled: var(--color-black-50);
+
+    // Colors
+    --color: var(--theme-fg2, var(--color-bus));
+    --color-hover: var(--theme-fg1, var(--color-bus-dark));
+    --color-focus: var(--theme-fg2, var(--color-bus));
+    --color-hover-focus: var(--theme-fg1, var(--color-bus-dark));
+    --color-disabled: var(--color-black-40);
+
+    // Focus ring
+    --focus-outline-color: var(--theme-focus, var(--color-coat-of-arms));
+    --submit-input-focus-gutter-color: var(--theme-focus-gutter-color, var(--color-white));
   }
 }
 
@@ -750,4 +778,18 @@ input[type='radio'] + label.form-required::after {
 
 .grants-form---terms {
   margin-block-end: $spacing-triple;
+}
+
+.hdbt-form--fileinput .hdbt-form--checkbox:not(:first-of-type) {
+  // Margin-top to override HDS default margin
+  margin-top: $spacing;
+}
+
+.hdbt-form--fieldset .hdbt-form--radiobutton:not(:first-of-type) {
+  // Margin-top to override HDS default margin
+  margin-top: $spacing;
+}
+
+.hdbt-form--radiobutton + .hdbt-form--notification {
+  margin-block: $spacing 0;
 }
