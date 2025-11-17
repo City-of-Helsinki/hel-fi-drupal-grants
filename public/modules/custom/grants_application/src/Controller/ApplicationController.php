@@ -9,7 +9,6 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
-use Drupal\grants_application\ApplicationRepository;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
@@ -45,7 +44,6 @@ final class ApplicationController extends ControllerBase {
     private readonly FormSettingsService $formSettingsService,
     #[Autowire(service: 'grants_handler.application_status_service')]
     private readonly ApplicationStatusService $applicationStatusService,
-    private readonly ApplicationRepository $applicationRepository,
   ) {
   }
 
@@ -80,7 +78,7 @@ final class ApplicationController extends ControllerBase {
    * @param bool $use_draft
    *   Whether to use the draft version of the form.
    *
-   * @return array
+   * @return array|RedirectResponse
    *   The resulting array
    */
   public function formsApp(string $id, ?string $application_number, bool $use_draft): array|RedirectResponse {
@@ -223,14 +221,25 @@ final class ApplicationController extends ControllerBase {
    * The file cannot be removed if the application has already been submitted.
    *
    * @param string $application_number
-   *   The application number
-   * @param Request $request
+   *   The application number.
+   * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request.
    *
-   * @return JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   The response.
    */
   public function removeFile(string $application_number, string $attachmentId): JsonResponse {
-    if (!$submission = $this->applicationRepository->getApplicationSubmission($application_number)) {
+    $ids = $this->entityTypeManager()
+      ->getStorage('application_submission')
+      ->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('application_number', $application_number)
+      ->execute();
+
+    if (
+      !$ids ||
+      !$submission = ApplicationSubmission::load(reset($ids))
+    ) {
       return new JsonResponse(['error' => $this->t('Application not found')], 404);
     }
 
@@ -241,7 +250,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $deleted = $this->atvService->deleteAttachment($application_number, $attachmentId);
     }
-    catch (\Exception $e) {
+    catch (\throwable $e) {
       $this->getLogger('grants_application')
         ->error("Failed to delete attachment $attachmentId on application $application_number: {$e->getMessage()}");
       return new JsonResponse(['error' => $this->t('Failed to delete attachment')], 500);
