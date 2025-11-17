@@ -1,6 +1,7 @@
-import { FieldProps } from '@rjsf/utils';
+// biome-ignore-all lint/a11y/noLabelWithoutControl: @todo UHF-12501
+// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
+import type { FieldProps } from '@rjsf/utils';
 import { useAtomValue } from 'jotai';
-import { useTranslation } from 'react-i18next';
 import { Notification, NumberInput, Fieldset } from 'hds-react';
 
 import { shouldRenderPreviewAtom } from '../../store';
@@ -31,21 +32,21 @@ export const SubventionTable = ({
     return null;
   }
 
-  const findIndexForData = (elementId, data = formData) => data.findIndex(item => item && item?.[0]?.value === elementId);
+  const findIndexForData = (elementId, data = formData) =>
+    data.findIndex((item) => item && item?.[0]?.value === elementId);
 
   if (shouldRenderPreview) {
     return (
       <ul>
-        {schema.options.map(({label, id: elementId}) => 
+        {schema.options.map(({ label, id: elementId }) => (
           <li key={elementId} style={{ listStyle: 'none' }}>
-            <dt>
-              {label}
-            </dt>
+            <dt>{label}</dt>
             <dd>
-              {formData?.[findIndexForData(elementId.toString())]?.[1].value || '-'}
+              {formData?.[findIndexForData(elementId.toString())]?.[1].value ||
+                '-'}
             </dd>
           </li>
-        )}
+        ))}
       </ul>
     );
   }
@@ -73,8 +74,7 @@ export const SubventionTable = ({
 
     if (index === -1) {
       data.push(newValue);
-    }
-    else {
+    } else {
       data[index] = newValue;
     }
 
@@ -83,19 +83,19 @@ export const SubventionTable = ({
 
   const keyedData = {};
   if (Array.isArray(formData)) {
-    formData.forEach(item => {
+    formData.forEach((item) => {
       keyedData[item[0].value] = item[1].value;
     });
   }
 
   return (
     <>
-      <div className="array-item">
+      <div className='array-item'>
         <Fieldset
-          className="hdbt-form--fieldset hdbt-form--fieldset--border"
+          className='hdbt-form--fieldset hdbt-form--fieldset--border'
           heading={`${schema.title}`}
         >
-          {schema.options.map((item, i) =>  {
+          {schema.options.map((item, i) => {
             const { id: itemId, label } = item;
             const key = `${id}-${itemId}`;
 
@@ -115,7 +115,9 @@ export const SubventionTable = ({
           })}
         </Fieldset>
       </div>
-      {rawErrors?.length > 0 && <Notification type="error">{formatErrors(rawErrors)}</Notification>}
+      {rawErrors?.length > 0 && (
+        <Notification type='error'>{formatErrors(rawErrors)}</Notification>
+      )}
     </>
   );
 };

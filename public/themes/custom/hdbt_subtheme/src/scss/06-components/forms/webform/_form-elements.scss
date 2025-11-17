@@ -1,3 +1,6 @@
+/* stylelint-disable max-nesting-depth -- @todo UHF-12501 */
+/* stylelint-disable declaration-property-value-keyword-no-deprecated -- @todo UHF-12501 */
+/* stylelint-disable scss/at-extend-no-missing-placeholder -- @todo UHF-12501 */
 .js-form-type-webform-table {
   table {
     width: 100%;
@@ -557,8 +560,8 @@ input[type='radio'] + label.form-required::after {
   margin-block-end: $spacing-and-half;
 }
 
-//Target array items that are not in preview section
-//Add same styles to fieldset that are not in array-item
+// Target array items that are not in preview section
+// Add same styles to fieldset that are not in array-item
 .array-item:not(.grants-form--preview-section .array-item),
 .field-object:not(.array-item .field-object) > .hdbt-form--fieldset--border {
   border: 2px solid $color-black-50;
@@ -595,15 +598,15 @@ input[type='radio'] + label.form-required::after {
   }
 }
 
-//TODO: Remove when HDS supports file input styling
+// TODO: Remove when HDS supports file input styling
 .hdbt-form--fileinput {
   & > div:first-child > div:first-child > div:first-child {
     border-color: $color-black;
     color: $color-black;
   }
 
-  //These are copied from _button.scss in hdbt
-  //remove when HDS supports file input styling
+  // These are copied from _button.scss in hdbt
+  // remove when HDS supports file input styling
   button {
     --background-color: var(--theme-bg2, transparent);
     --background-color-hover: var(--theme-bg1, var(--color-bus-light));
@@ -778,12 +781,12 @@ input[type='radio'] + label.form-required::after {
 }
 
 .hdbt-form--fileinput .hdbt-form--checkbox:not(:first-of-type) {
-  //Margin-top to override HDS default margin
+  // Margin-top to override HDS default margin
   margin-top: $spacing;
 }
 
 .hdbt-form--fieldset .hdbt-form--radiobutton:not(:first-of-type) {
-  //Margin-top to override HDS default margin
+  // Margin-top to override HDS default margin
   margin-top: $spacing;
 }
 
