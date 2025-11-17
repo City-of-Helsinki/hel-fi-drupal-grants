@@ -24,7 +24,6 @@ export const SubventionTable = ({
   schema,
   uiSchema,
 }: FieldProps) => {
-  const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (!schema.options || !schema.options.length) {
