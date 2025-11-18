@@ -18,7 +18,7 @@ import { formatErrors } from '../utils';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 
 type ATVFile = {
-  fileDescription?: string;
+  description?: string;
   fileId: number;
   fileName: string;
   fileType: string;
@@ -118,11 +118,11 @@ export const FileInput = ({
 
       const { href: integrationID, ...rest } = result;
 
-      const fileDescription = existingData?.fileDescription || '';
+      const description = existingData?.description || '';
 
       onChange({
         integrationID,
-        fileDescription,
+        description,
         isDeliveredLater: false,
         isIncludedInOtherFile: false,
         isNewAttachment: true,
@@ -159,9 +159,9 @@ export const FileInput = ({
       id={`${name}-description`}
       label={t('file_description.title')}
       onChange={(e) => {
-        onChange({ ...formData, fileDescription: e.target.value });
+        onChange({ ...formData, description: e.target.value });
       }}
-      value={formData?.fileDescription || ''}
+      value={formData?.description || ''}
     />
   );
 
