@@ -26,7 +26,7 @@ helfi_grants.forms_app_upload:
     _role: helsinkiprofiili
 
 helfi_grants.forms_app_delete_file:
-  path: '/application/{id}/delete/{attachmentId}'
+  path: '/application/{application_number}/delete/{attachmentId}'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::removeFile'
   methods: [POST]
