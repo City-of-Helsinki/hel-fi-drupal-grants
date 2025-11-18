@@ -1055,7 +1055,7 @@ elements: |-
       hankkeen_kaytetty_avustuksen_maara:
         '#type': textfield
         '#title': "Selvitys edellisen vuoden erillisavustuksen käytöstä. Ilmoita tässä \Leuroina yhteensä, kuinka paljon myönnettyä avustusta on käytetty."
-        '#help_title': "Selvitys edellisen vuoden erillisavustuksen käytöstä. Ilmoita tässä \Leuroina yhteensä, kuinka paljon myönnettyä avustusta on käy"
+        '#help_title': "Selvitys edellisen vuoden erillisavustuksen käytöstä. Ilmoita tässä \Leuroina yhteensä, kuinka paljon myönnettyä avustusta on käytetty."
         '#help': '<p class="p1">Ilmoitettu luku voi olla osittain arvio, koska tilinpäätös tai tilikausi voi olla kesken.</p>'
         '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
         '#required': true

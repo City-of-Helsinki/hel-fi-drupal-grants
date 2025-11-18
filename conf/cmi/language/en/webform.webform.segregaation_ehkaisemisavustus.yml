@@ -240,8 +240,8 @@ elements: |
     '#help_title': "A report on the use of the previous year's special grant. Please indicate here the total grant amount spent in euros."
     '#help': '<p class="p1">The figure given may be an estimate, as the accounts or financial year may not be complete.</p>'
   hankkeen_edellisen_vuoden_avustuksen_kaytto:
-    '#title': 'Description of the use of the previous year's special grant. Here you can explain in more detail how the grant was used by type of expenditure.'
-    '#help_title': 'Description of the use of the previous year's special grant. Here you can explain in more detail how the grant was used by type of expenditure.'
+    '#title': "Description of the use of the previous year's special grant. Here you can explain in more detail how the grant was used by type of expenditure."
+    '#help_title': "Description of the use of the previous year's special grant. Here you can explain in more detail how the grant was used by type of expenditure."
     '#help': '<p class="p1">Describe the use of the grant by type of expenditure, not at the level of individual income and expenditures.</p>'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_talous_toiminta_aikataulu_muutokset:
