@@ -627,9 +627,26 @@ elements: |-
             - webform--large
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#required': true
+      info_onko_jatkohakemus:
+        '#type': webform_markup
+        '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Myöntävä tai kieltävä vastaus avaa lisäkysymyksen</span></div></div></div>'
+      onko_kyseessa_jatkohakemus:
+        '#type': radios
+        '#title': 'Onko kyseessä jatkohakemus'
+        '#help_title': 'Onko kyseessä jatkohakemus?'
+        '#help': '<p class="p1"><span class="s1">Vastaa kyllä, jos olette saaneet nuorisotoiminnan erillisavustusta samaan hankkeeseen tai projektiin edelliselle vuodelle.</span></p>'
+        '#description_display': before
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#required': true
     hankkeen_aika_kohde_toiminta_section:
       '#type': webform_section
       '#title': 'Projektin aikataulu, kohderyhmä ja toiminta-alue'
+      '#states':
+        invisible:
+          ':input[name="onko_kyseessa_jatkohakemus"]':
+            unchecked: true
       hankkeen_nimi:
         '#type': textarea
         '#title': 'Projektin nimi'
@@ -661,18 +678,58 @@ elements: |-
         '#title': 'Mikä on projektin kohderyhmä/kohderyhmät?'
         '#description_display': after
         '#maxlength': 1250
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '0'
         '#attributes':
           class:
             - webform--large
+      hankkeen_mennyt_tavoite:
+        '#type': textarea
+        '#title': 'Mikä on ollut projektin tavoite?'
+        '#description_display': after
+        '#maxlength': 2500
         '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '1'
+        '#attributes':
+          class:
+            - webform--large
+      hankkeen_kohderyhma_ja_keinot:
+        '#type': textarea
+        '#title': 'Mikä on ollut projektin kohderyhmä ja mitä keinoja kohderyhmän tavoittamiseen on käytetty?'
+        '#description_display': after
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '1'
+        '#attributes':
+          class:
+            - webform--large
       hankkeen_kohderyhmat_tavoittavuus:
         '#type': fieldset
         '#title': 'Arvioi, montako lasta ja nuorta toiminnalla tavoitetaan. Arvioi tavoitettujen lasten ja nuorten määrä yhteensä koko hankkeen aikana.'
         '#help': '<p>Mikäli hankkeessa ei tavoiteta kyseistä ikäryhmää, niin merkitse kenttään "0".</p>'
         '#required': true
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '0'
         hankkeen_kohderyhmat_lapset_9_12:
           '#type': textfield
           '#title': '9–12-vuotiasta helsinkiläistä'
@@ -710,96 +767,330 @@ elements: |-
               - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
+      hankkeen_kohderyhmat_jo_tavoitettu:
+        '#type': fieldset
+        '#title': 'Arvioi montako lasta ja nuorta toiminnalla on tähän saakka tavoitettu.'
+        '#help_title': 'Arvioi montako lasta ja nuorta toiminnalla on tähän saakka tavoitettu.'
+        '#help': '<p class="p1"><span class="s1">Mikäli hankkeessa ei tavoiteta kyseistä ikäryhmää, niin merkitse kenttään "0".&nbsp;</span></p>'
+        '#required': true
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '1'
+        hankkeen_jo_osallistuneet_9_12:
+          '#type': textfield
+          '#title': '9–12-vuotiasta helsinkiläistä'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#required': true
+          '#pattern': '^[0-9 ]*$'
+          '#wrapper_attributes':
+            class:
+              - text-field--inside-fieldset
+          '#attributes':
+            class:
+              - webform--large
+        hankkeen_jo_osallistuneet_18_24:
+          '#type': textfield
+          '#title': '18-24-vuotiasta helsinkiläistä'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#required': true
+          '#pattern': '^[0-9 ]*$'
+          '#wrapper_attributes':
+            class:
+              - text-field--inside-fieldset
+          '#attributes':
+            class:
+              - webform--large
+        hankkeen_jo_osalistuneet_uudet:
+          '#type': textfield
+          '#title': 'Kuinka monta näistä on uusia, eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?'
+          '#help': '<p>Arvioi tähän uusien 9-12 ja 18-24 vuotiaiden helsinkiläisten osallistujien lukumäärä yhteensä.</p>'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#required': true
+          '#pattern': '^[0-9 ]*$'
+          '#wrapper_attributes':
+            class:
+              - text-field--inside-fieldset
+          '#attributes':
+            class:
+              - webform--large
+      hankkeen_kaytetyt_tunnit_per_postinumero:
+        '#type': textarea
+        '#title': "Kuinka monta tuntia harrastustoimintaa projektissa on järjestetty kullakin \Lpostinumeroalueella? Erittele tekstikenttään postinumeroittain pilkulla eroteltuna esimerkiksi näin: 00400: 7h, 00900: 16h."
+        '#description_display': after
+        '#maxlength': 500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 500
+        '#counter_maximum_message': '%d/500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '1'
+        '#attributes':
+          class:
+            - webform--large
       hankkeen_kohderyhmat_postinrot:
         '#type': textarea
         '#title': 'Millä alueilla toiminta toteutetaan? Kirjaa tekstikenttään kaikki tilojen nimet/toimintapaikat ja postinumerot pilkulla eroteltuna.'
         '#maxlength': 500
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 500
         '#counter_maximum_message': '%d/500 merkkiä jäljellä'
+        '#states':
+          invisible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '1'
         '#attributes':
           class:
             - webform--large
-        '#required': true
       hankkeen_kohderyhmat_tarve:
         '#type': textarea
         '#title': 'Mihin alueen tarpeeseen toiminnassa vastataan?'
         '#maxlength': 2500
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          invisible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '1'
         '#attributes':
           class:
             - webform--large
-        '#required': true
     hankkeen_menetelmat_section:
       '#type': webform_section
       '#title': 'Projektin menetelmät'
+      '#states':
+        visible:
+          ':input[name="onko_kyseessa_jatkohakemus"]':
+            checked: true
       hankkeen_kohderyhmat_tavoitus_seg:
         '#type': textarea
         '#title': 'Miten kohderyhmät tavoitetaan ja tunnistetaan?'
         '#description_display': after
         '#maxlength': 2500
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '0'
         '#attributes':
           class:
             - webform--large
-        '#required': true
       hankkeen_kohderyhmat_konkretia_seg:
         '#type': textarea
         '#title': 'Miten toiminnan toivotaan vaikuttavan osallistujien elämään?'
         '#description_display': after
         '#maxlength': 1250
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '0'
         '#attributes':
           class:
             - webform--large
-        '#required': true
       hankkeen_kohderyhmat_osallisuus_seg:
         '#type': textarea
         '#title': 'Miten lapset ja nuoret osallistuvat toiminnan suunnitteluun ja päätöksentekoon?'
         '#description_display': after
         '#maxlength': 2500
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '0'
         '#attributes':
           class:
             - webform--large
-        '#required': true
       hankkeen_keskeisimmat_kumppanit_seg:
         '#type': textarea
         '#title': 'Kenen kanssa hankkeessa tehdään yhteistyötä? Nimeä keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla oleva tahot.'
         '#description_display': after
         '#maxlength': 2500
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '0'
         '#attributes':
           class:
             - webform--large
-        '#required': true
       hankkeen_uudet_kumppanit_seg:
         '#type': textarea
         '#title': 'Kokeillaanko hankkeessa uudenlaisia kumppanuuksia tai kehitetään uusia toimintamalleja? Millaisia?'
         '#description_display': after
         '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '0'
+        '#attributes':
+          class:
+            - webform--large
+      hankkeen_riskit_vakiinnuttaminen:
+        '#type': textarea
+        '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos on, niin kuvaa tekstikenttään, miten ja millä rahoituksella vakiinnuttaminen aiotaan tehdä?'
+        '#description_display': after
+        '#maxlength': 2500
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '0'
+        '#attributes':
+          class:
+            - webform--large
+      hankeen_toteutuneet_tavoitteet:
+        '#type': textarea
+        '#title': 'Miten projektissa on onnistuttu saavuttamaan seuraavia tavoitteita: väestöryhmien välisten positiivisten kohtaamisten ja harrastustoiminnan saavutettavuuden lisääminen, erityisesti maahanmuuttajataustaisille tytöille, sekä nuorten aikuisten työkyvyn edistäminen?'
+        '#help_title': 'Miten projektissa on onnistuttu saavuttamaan seuraavia tavoitteita: väestöryhmien välisten positiivisten kohtaamisten ja harrast'
+        '#help': '<p class="p1">Vastaa niiltä osin, kuin mainitut tavoitteet ovat olleet projektinne tavoitteita.</p>'
+        '#description_display': after
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '1'
+        '#attributes':
+          class:
+            - webform--large
+      hankkeen_tulevan_vuoden_tavoitteet:
+        '#type': textarea
+        '#title': 'Mitä projektissa tullaan tekemään tämän vuoden aikana?'
+        '#description_display': after
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '1'
+        '#attributes':
+          class:
+            - webform--large
+      hankkeen_kumppanuudet_ja_toimintamuodot:
+        '#type': textarea
+        '#title': 'Minkälaisia kumppanuuksia ja uudenlaisia toimintamuotoja projektissa on kokeiltu tai kehitetty?'
+        '#help_title': 'Minkälaisia kumppanuuksia ja uudenlaisia toimintamuotoja projektissa on kokeiltu tai kehitetty?'
+        '#help': '<p class="p1">Vastaa kysymykseen, jos projektissa on ollut tarkoitus kehittää uudenlaisia kumppanuuksia ja toimintamuotoja.</p>'
+        '#description_display': after
+        '#maxlength': 2500
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '1'
+        '#attributes':
+          class:
+            - webform--large
+      hankkeen_vanhat_yhteistyokumppanit:
+        '#type': textarea
+        '#title': 'Mitkä ovat olleet projektin keskeiset yhteistyökumppanit tähän mennessä, ja mikä heidän roolinsa on ollut?'
+        '#description_display': after
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '1'
+        '#attributes':
+          class:
+            - webform--large
+      hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun:
+        '#type': textarea
+        '#title': 'Miten lapset ja nuoret ovat osallistuneet toiminnan suunnitteluun ja päätöksentekoon? Mainitse konkreettisia esimerkkejä.'
+        '#description_display': after
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="onko_kyseessa_jatkohakemus"]':
+              value: '1'
+        '#attributes':
+          class:
+            - webform--large
+    hankkeen_talous_ja_toiminta_section:
+      '#type': webform_section
+      '#title': 'Projektin talous ja toiminta'
+      '#states':
+        visible:
+          ':input[name="onko_kyseessa_jatkohakemus"]':
+            value: '1'
+      hankkeen_kaytetty_avustuksen_maara:
+        '#type': textfield
+        '#title': "Selvitys edellisen vuoden erillisavustuksen käytöstä. Ilmoita tässä \Leuroina yhteensä, kuinka paljon myönnettyä avustusta on käytetty."
+        '#help_title': "Selvitys edellisen vuoden erillisavustuksen käytöstä. Ilmoita tässä \Leuroina yhteensä, kuinka paljon myönnettyä avustusta on käy"
+        '#help': '<p class="p1">Ilmoitettu luku voi olla osittain arvio, koska tilinpäätös tai tilikausi voi olla kesken.</p>'
+        '#input_mask': "'alias': 'currency', 'prefix': '', 'suffix': '€','groupSeparator': ' ','radixPoint':','"
+        '#required': true
+      hankkeen_edellisen_vuoden_avustuksen_kaytto:
+        '#type': textarea
+        '#title': 'Kuvaus edellisen vuoden erillisavustuksen käytöstä. Kerro tässä  tarkemmin avustuksen käytöstä kululajeittain.'
+        '#help_title': 'Kuvaus edellisen vuoden erillisavustuksen käytöstä. Kerro tässä tarkemmin avustuksen käytöstä kululajeittain.'
+        '#help': '<p class="p1">Kuvaa avustuksen käyttöä kululajeittain, ei yksittäisten tulojen ja menojen tasolla.</p>'
+        '#description_display': after
+        '#maxlength': 2500
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#attributes':
           class:
             - webform--large
-        '#required': true
-      hankkeen_riskit_vakiinnuttaminen:
+      hankkeen_talous_toiminta_aikataulu_muutokset:
         '#type': textarea
-        '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos on, niin kuvaa tekstikenttään, miten ja millä rahoituksella vakiinnuttaminen aiotaan tehdä?'
+        '#title': "Onko projektissa tapahtunut merkittäviä muutoksia talouteen, toimintaan\Ltai aikatauluun liittyen, mitä?"
         '#description_display': after
         '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
+      hankkeen_jatkokausi_suunnitelma:
+        '#type': textarea
+        '#title': "Onko projektin jatkokausi/-kaudet tarkoitus toteuttaa alkuperäisen\Lsuunnitelman mukaan? Jos ei, niin miksi?"
+        '#description_display': after
+        '#maxlength': 2500
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
