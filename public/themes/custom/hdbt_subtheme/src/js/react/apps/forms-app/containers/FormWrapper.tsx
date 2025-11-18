@@ -246,25 +246,20 @@ export const FormWrapper = ({
       throw new Error('Unexpected backend error while submitting.');
     }
 
-    pushNotification({
-      children: (
-        <div>
-          {actionType === 'submit'
-            ? Drupal.t(
-                'Application could not be submitted.',
-                {},
-                { context: 'Grants application: Submit' },
-              )
-            : Drupal.t(
-                'Application could not be saved as draft.',
-                {},
-                { context: 'Grants application: Draft' },
-              )}
-        </div>
-      ),
-      label: error,
-      type: 'error',
-    });
+    const label =
+      actionType === 'submit'
+        ? Drupal.t(
+            'Application could not be submitted.',
+            {},
+            { context: 'Grants application: Submit' },
+          )
+        : Drupal.t(
+            'Application could not be saved as draft.',
+            {},
+            { context: 'Grants application: Draft' },
+          );
+
+    pushNotification({ children: <div>{error}</div>, label, type: 'error' });
   };
   const submitData = async (submittedData: any): Promise<void> => {
     const response = await fetch(
