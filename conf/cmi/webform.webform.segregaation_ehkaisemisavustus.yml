@@ -643,10 +643,6 @@ elements: |-
     hankkeen_aika_kohde_toiminta_section:
       '#type': webform_section
       '#title': 'Projektin aikataulu, kohderyhmä ja toiminta-alue'
-      '#states':
-        invisible:
-          ':input[name="onko_kyseessa_jatkohakemus"]':
-            unchecked: true
       hankkeen_nimi:
         '#type': textarea
         '#title': 'Projektin nimi'
@@ -863,10 +859,6 @@ elements: |-
     hankkeen_menetelmat_section:
       '#type': webform_section
       '#title': 'Projektin menetelmät'
-      '#states':
-        visible:
-          ':input[name="onko_kyseessa_jatkohakemus"]':
-            checked: true
       hankkeen_kohderyhmat_tavoitus_seg:
         '#type': textarea
         '#title': 'Miten kohderyhmät tavoitetaan ja tunnistetaan?'

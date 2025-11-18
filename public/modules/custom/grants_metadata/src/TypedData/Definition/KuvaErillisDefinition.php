@@ -35,7 +35,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
 
     $customQuestions = [
       'hankesuunnitelma_avustuksen_kesto' => [
-        // This valueCallback implemets default values.
+        // This valueCallback implements default values.
         //
         // Default values don't actually do anything useful? Default values
         // are only used when value is NULL, but NULL values are sanitized
@@ -166,7 +166,17 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'arviointi_haasteet' => [],
       'arviointi_saavutettavuus' => [],
       'arviointi_avustus_kaytto' => [],
-      'onko_kyseessa_jatkohakemus' => [],
+      'onko_kyseessa_jatkohakemus' => [
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertBooleanToYesNo',
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractBooleanYesNoValue',
+        ],
+      ],
       'hankkeen_mennyt_tavoite' => [],
       'hankkeen_kohderyhma_ja_keinot' => [],
       'hankkeen_jo_osallistuneet_9_12' => [],
