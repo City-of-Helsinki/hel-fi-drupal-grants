@@ -106,14 +106,15 @@ const fixDanglingArrays = (formData: any, schema: RJSFSchema) => {
 
   const objectPaths = Array.from(iterateFormData(formData));
 
-  objectPaths.forEach(path => {
-    const schemaDefinition = getNestedSchemaProperty(schema.definitions as RJSFSchema, path);
+  objectPaths.forEach((path) => {
+    const schemaDefinition =
+      schema?.definitions && getNestedSchemaProperty(schema.definitions, path);
 
     if (schemaDefinition && schemaDefinition.type === 'object') {
       setNestedProperty(formData, path, {});
     }
 
-    if (shouldFixArrayField(schemaDefinition)) {
+    if (schemaDefinition && shouldFixArrayField(schemaDefinition)) {
       setNestedProperty(formData, path, [{}]);
     }
   });
@@ -216,6 +217,38 @@ export const FormWrapper = ({
   initializeForm(translatedData);
 
   const { currentLanguage } = drupalSettings.path;
+
+  const handleResponseError = async (
+    response: Response,
+    actionType: 'submit' | 'draft',
+  ): Promise<void> => {
+    const json = await response.json();
+    const { error } = json;
+
+    if (!error) {
+      throw new Error('Unexpected backend error while submitting.');
+    }
+
+    pushNotification({
+      children: (
+        <div>
+          {actionType === 'submit'
+            ? Drupal.t(
+                'Application could not be submitted.',
+                {},
+                { context: 'Grants application: Submit' },
+              )
+            : Drupal.t(
+                'Application could not be saved as draft.',
+                {},
+                { context: 'Grants application: Draft' },
+              )}
+        </div>
+      ),
+      label: error,
+      type: 'error',
+    });
+  };
   const submitData = async (submittedData: any): Promise<void> => {
     const response = await fetch(`/${currentLanguage}/applications/${applicationTypeId}/application/${readApplicationNumber()}`, {
       body: JSON.stringify({
@@ -233,12 +266,7 @@ export const FormWrapper = ({
     });
 
     if (!response.ok) {
-      pushNotification({
-        children: <div>{Drupal.t('Application could not be submitted.', {}, {context: 'Grants application: Submit'})}</div>,
-        label: Drupal.t('Submission failed.', {}, {context: 'Grants application: Submit'}),
-        type: 'error',
-      });
-
+      await handleResponseError(response, 'submit');
       return;
     }
 
@@ -248,10 +276,7 @@ export const FormWrapper = ({
     window.location.href = redirect_url;
   };
 
-  const initialData = translatedData.status === SubmitStates.DRAFT ?
-    translatedData.form_data?.form_data :
-    translatedData?.form_data?.compensation?.form_data || null;
-  const formDataAtom = createFormDataAtom(translatedData.applicationNumber, initialData,  data?.last_changed);
+  const formDataAtom = createFormDataAtom(translatedData.applicationNumber, translatedData.formData,  data?.last_changed);
   store.set(formDataAtomRef, formDataAtom);
 
   if (translatedData.status !== SubmitStates.DRAFT) {
@@ -287,12 +312,7 @@ export const FormWrapper = ({
     });
 
     if (!response.ok) {
-      pushNotification({
-        children: <div>{Drupal.t('Application could not be saved as draft.', {}, {context: 'Grants application: Draft'})}</div>,
-        label: Drupal.t('Save failed.', {}, {context: 'Grants application: Draft'}),
-        type: 'error',
-      });
-      
+      await handleResponseError(response, 'draft');
       return;
     }
 
