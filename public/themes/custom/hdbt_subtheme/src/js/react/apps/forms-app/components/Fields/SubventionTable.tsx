@@ -52,7 +52,7 @@ export const SubventionTable = ({
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { dataset, id: elementId, value } = event.target;
+    const { dataset, value } = event.target;
     const subventionId = dataset.subventionId as string;
     const data = formData && Array.isArray(formData) ? [...formData] : [];
 
