@@ -2,6 +2,7 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { Checkbox, Notification } from 'hds-react';
 import { finalAcceptanceAtom, getCurrentStepAtom } from '../store';
+import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 
 export const Terms = () => {
   const [finalAcceptance, setFinalAcceptance] = useAtom(finalAcceptanceAtom);
@@ -31,7 +32,7 @@ export const Terms = () => {
           id='final-acceptance'
           label={link_title}
           onClick={() => setFinalAcceptance(!finalAcceptance)}
-          style={{ fontWeight: 'bold' }}
+          style={defaultCheckboxStyle}
         />
       </div>
     </div>

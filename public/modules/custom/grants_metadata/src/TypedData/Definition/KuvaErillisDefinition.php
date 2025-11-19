@@ -35,7 +35,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
 
     $customQuestions = [
       'hankesuunnitelma_avustuksen_kesto' => [
-        // This valueCallback implemets default values.
+        // This valueCallback implements default values.
         //
         // Default values don't actually do anything useful? Default values
         // are only used when value is NULL, but NULL values are sanitized
@@ -166,6 +166,33 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'arviointi_haasteet' => [],
       'arviointi_saavutettavuus' => [],
       'arviointi_avustus_kaytto' => [],
+      'onko_kyseessa_jatkohakemus' => [
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertBooleanToYesNo',
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractBooleanYesNoValue',
+        ],
+      ],
+      'hankkeen_mennyt_tavoite' => [],
+      'hankkeen_kohderyhma_ja_keinot' => [],
+      'hankkeen_jo_osallistuneet_9_12' => [],
+      'hankkeen_jo_osallistuneet_18_24' => [],
+      'hankkeen_jo_osalistuneet_uudet' => [],
+      'hankkeen_kaytetyt_tunnit_per_postinumero' => [],
+      'hankeen_toteutuneet_tavoitteet' => [],
+      'hankkeen_tulevan_vuoden_tavoitteet' => [],
+      'hankkeen_kumppanuudet_ja_toimintamuodot' => [],
+      'hankkeen_vanhat_yhteistyokumppanit' => [],
+      'hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun' => [],
+      'hankkeen_talous_ja_toiminta_section' => [],
+      'hankkeen_kaytetty_avustuksen_maara' => [],
+      'hankkeen_edellisen_vuoden_avustuksen_kaytto' => [],
+      'hankkeen_talous_toiminta_aikataulu_muutokset' => [],
+      'hankkeen_jatkokausi_suunnitelma' => [],
     ];
 
     foreach ($customQuestions as $key => $value) {
