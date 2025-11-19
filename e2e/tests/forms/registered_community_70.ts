@@ -7,7 +7,7 @@ import {Role, selectRole} from "../../utils/auth_helpers";
 import {registeredCommunityApplications as applicationData} from '../../utils/data/application_data';
 
 // ID70 is used on 3 different forms but this test mainly tests
-// "iäkkäiden kulttuuri ja liikunta" -form. Testing any other form.
+// "iäkkäiden kulttuuri ja liikunta" -form.
 const formPages: PageHandlers = {
   '1_hakijan_tiedot': async (page: Page, {items}: FormPage) => {
     await fillHakijanTiedotRegisteredCommunity(items, page);
