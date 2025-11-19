@@ -133,6 +133,7 @@ export const FileInput = ({
     const attachmentId = pathSemgments.pop();
     const response = await fetch(
       `/application/${applicationNumber}/delete/${attachmentId}`,
+      { method: 'POST', headers: { 'X-CSRF-Token': token } },
     );
 
     if (!response.ok) {
