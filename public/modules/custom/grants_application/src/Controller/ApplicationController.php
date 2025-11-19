@@ -78,7 +78,7 @@ final class ApplicationController extends ControllerBase {
    * @param bool $use_draft
    *   Whether to use the draft version of the form.
    *
-   * @return array
+   * @return array|RedirectResponse
    *   The resulting array
    */
   public function formsApp(string $id, ?string $application_number, bool $use_draft): array|RedirectResponse {
@@ -132,7 +132,7 @@ final class ApplicationController extends ControllerBase {
   /**
    * Upload file handler.
    *
-   * @param string $id
+   * @param string $application_number
    *   The application number.
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request.
@@ -140,11 +140,12 @@ final class ApplicationController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
-  public function uploadFile(string $id, Request $request): JsonResponse {
+  public function uploadFile(string $application_number, Request $request): JsonResponse {
     /** @var \Symfony\Component\HttpFoundation\File\File $file */
     $file = $request->files->get('file');
-    if (!$file || !$id) {
-      return new JsonResponse(status: 400);
+    if (!$file || !$application_number) {
+      $this->getLogger('grants_application')->error("Failed to upload file, application number: $application_number");
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 400);
     }
 
     // @phpstan-ignore-next-line
@@ -175,7 +176,7 @@ final class ApplicationController extends ControllerBase {
     /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
     $submission = $this->entityTypeManager()
       ->getStorage('application_submission')
-      ->loadByProperties(['application_number' => $id]);
+      ->loadByProperties(['application_number' => $application_number]);
 
     $submission = reset($submission);
 
@@ -212,6 +213,54 @@ final class ApplicationController extends ControllerBase {
     ];
 
     return new JsonResponse($response);
+  }
+
+  /**
+   * Remove a file from ATV-document.
+   *
+   * The file cannot be removed if the application has already been submitted.
+   *
+   * @param string $application_number
+   *   The application number.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   The response.
+   */
+  public function removeFile(string $application_number, string $attachmentId): JsonResponse {
+    $ids = $this->entityTypeManager()
+      ->getStorage('application_submission')
+      ->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('application_number', $application_number)
+      ->execute();
+
+    if (
+      !$ids ||
+      !$submission = ApplicationSubmission::load(reset($ids))
+    ) {
+      return new JsonResponse(['error' => $this->t('Application not found')], 404);
+    }
+
+    if (!$submission->isDraft()) {
+      return new JsonResponse(['error' => $this->t('You are not allowed to remove the attachments any more.')], 403);
+    }
+
+    try {
+      $deleted = $this->atvService->deleteAttachment($application_number, $attachmentId);
+    }
+    catch (\throwable $e) {
+      $this->getLogger('grants_application')
+        ->error("Failed to delete attachment $attachmentId on application $application_number: {$e->getMessage()}");
+      return new JsonResponse(['error' => $this->t('Failed to delete attachment')], 500);
+    }
+
+    if (!$deleted) {
+      return new JsonResponse(['error' => $this->t('Failed to delete attachment')], 500);
+    }
+
+    return new JsonResponse([], 200);
   }
 
   /**
