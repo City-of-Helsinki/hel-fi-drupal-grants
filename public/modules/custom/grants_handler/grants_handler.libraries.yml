@@ -77,3 +77,10 @@ application-delete-draft-dialog:
   dependencies:
     - core/drupal
     - grants_handler/grants-dialog
+
+servicepage-prevent-multiple-applications:
+  version: 1.0.0
+  js:
+    js/servicepage-prevent-multiple-applications.js: {}
+  dependencies:
+    - core/drupal
