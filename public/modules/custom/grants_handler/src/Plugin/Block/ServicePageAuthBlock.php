@@ -122,6 +122,8 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       return $build;
     }
 
+    $build['#attached']['library'][] = 'grants_handler/servicepage-prevent-multiple-applications';
+
     // Create link for new application.
     $applicationLinkUrl = Url::fromRoute(
       'grants_handler.new_application',
@@ -142,7 +144,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     ];
 
     $applicationLink = Link::fromTextAndUrl($applicationLinkText, $applicationLinkUrl);
-    $descrtiption = $this->t('Please familiarize yourself with the instructions
+    $description = $this->t('Please familiarize yourself with the instructions
 on this page before proceeding to the application.', [], $tOpts);
 
     $webformLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webformId]);
@@ -150,7 +152,7 @@ on this page before proceeding to the application.', [], $tOpts);
     $build['content'] = [
       '#auth' => 'auth',
       '#link' => $applicationLink,
-      '#text' => $descrtiption,
+      '#text' => $description,
       '#reactFormLink' => $this->servicePageBlockService->getReactFormLink(),
       '#theme' => 'grants_service_page_block',
       '#webformLink' => $webformLink,

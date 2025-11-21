@@ -1,7 +1,8 @@
-import { FieldProps, UiSchema } from '@rjsf/utils';
+// biome-ignore-all lint/suspicious/noArrayIndexKey: @todo UHF-12501
+import type { FieldProps, UiSchema } from '@rjsf/utils';
 import { Notification } from 'hds-react';
 import { useAtomValue } from 'jotai';
-import { JSONSchema7Definition } from 'json-schema';
+import type { JSONSchema7Definition } from 'json-schema';
 
 import { shouldRenderPreviewAtom } from '../../store';
 
@@ -30,13 +31,21 @@ export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
   };
 
   return variant === 'infobox' ? (
-    <Notification label={title} className="hdbt-form--notification">
-      {Array.isArray(items) && items?.length && items.map((p, index: number) => <p key={index}>{getTitle(p)}</p>)}
+    <Notification label={title} className='hdbt-form--notification'>
+      {Array.isArray(items) &&
+        items?.length &&
+        items.map((p, index: number) => <p key={index}>{getTitle(p)}</p>)}
     </Notification>
   ) : (
-    <div className="hdbt-form--paragraph">
-      {title && <h4 className="hdbt-form--paragraph__title">{title}</h4>}
-      {Array.isArray(items) && items?.length && items.map((p, index: number) => <p className="hdbt-form--paragraph__content" key={index}>{getTitle(p)}</p>)}
+    <div className='hdbt-form--paragraph'>
+      {title && <h4 className='hdbt-form--paragraph__title'>{title}</h4>}
+      {Array.isArray(items) &&
+        items?.length &&
+        items.map((p, index: number) => (
+          <p className='hdbt-form--paragraph__content' key={index}>
+            {getTitle(p)}
+          </p>
+        ))}
     </div>
-  )
-}
+  );
+};

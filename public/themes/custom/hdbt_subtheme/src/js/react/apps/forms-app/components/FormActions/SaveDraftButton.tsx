@@ -2,25 +2,23 @@ import { Button, IconDownloadCloud } from 'hds-react';
 import { useState } from 'react';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 
-export const SaveDraftButton = ({
-  saveDraft
-}: {
-  saveDraft: () => void;
-}) => {
+export const SaveDraftButton = ({ saveDraft }: { saveDraft: () => void }) => {
   const [submitting, setSubmitting] = useState(false);
 
-  const onClick = async() => {
+  const onClick = async () => {
     setSubmitting(true);
     saveDraft();
-  }
+  };
 
-  return <Button
+  return (
+    <Button
       disabled={submitting}
       iconStart={<IconDownloadCloud />}
       onClick={onClick}
       theme={secondaryButtonTheme}
       type='button'
     >
-      {Drupal.t('Save as draft', {}, {context: 'Grants application: Draft'})}
+      {Drupal.t('Save as draft', {}, { context: 'Grants application: Draft' })}
     </Button>
+  );
 };

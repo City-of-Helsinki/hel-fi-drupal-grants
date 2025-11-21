@@ -185,6 +185,71 @@ elements: |
   hankkeen_riskit_vakiinnuttaminen:
     '#title': 'Will the intended project activity be established as part of the basic activity of the applicant/other operator after the project? If so, indicate in the text field how and through what funding will the project be established.'
     '#counter_maximum_message': '%d/2500 characters remaining'
+  info_onko_jatkohakemus:
+    '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Ett jakande eller negativt svar öppnar ytterligare en fråga</span></div></div></div>'
+  onko_kyseessa_jatkohakemus:
+    '#title': 'Is this a follow-up application?'
+    '#help_title': 'Is this a follow-up application?'
+    '#help': '<p class="p1"><span class="s1">Please answer yes if you have received a special youth activity grant for the same project in the previous year.</span></p>'
+    '#options':
+      1: Yes
+      0: No
+  hankkeen_mennyt_tavoite:
+    '#title': 'What was the aim of the project?'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_kohderyhma_ja_keinot:
+    '#title': 'What was the target group of the project, and what means were used to reach them?'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_kohderyhmat_jo_tavoitettu:
+    '#title': 'Estimate of the number of children and young people reached so far.'
+    '#help_title': 'Estimate of the number of children and young people reached so far.'
+    '#help': '<p class="p1"><span class="s1">If the project does not reach the specified age group, enter "0" in the field.</span></p>'
+  hankkeen_jo_osallistuneet_9_12:
+    '#title': 'Helsinki residents aged 9 to 12 years'
+  hankkeen_jo_osallistuneet_18_24:
+    '#title': 'Helsinki residents aged 18 to 24 years'
+  hankkeen_jo_osalistuneet_uudet:
+    '#title': 'How many of them are new, i.e. have not participated in activities organised by the operator before?'
+    '#help': '<p>Estimate the total number of  new participants aged 9-12 and 18-24 Helsinki residents.</p>'
+  hankkeen_kaytetyt_tunnit_per_postinumero:
+    '#title': "How many hours of recreational activities have been provided in each postcode area in the project? In the text box, please separate by post code, separated by a comma, for example: 00400: 7h, 00900: 16h"
+    '#counter_maximum_message': '%d/500 characters remaining'
+  hankeen_toteutuneet_tavoitteet:
+    '#title': 'How has the project succeeded in achieving the following objectives: increasing positive encounters and accessibility of leisure activities between different population groups, especially for girls with an immigrant background, and promoting the work ability of young adults?'
+    '#help_title': 'How has the project succeeded in achieving the following objectives: increasing positive encounters and accessibility of leisure activities between different population groups, especially for girls with an immigrant background, and promoting the work ability of young adults?'
+    '#help': '<p class="p1">Please answer to the extent that these objectives were the objectives of your project.</p>'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_tulevan_vuoden_tavoitteet:
+    '#title': 'What will the project achieve this year?'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_kumppanuudet_ja_toimintamuodot:
+    '#title': 'What partnerships and new ways of working have been experimented with or developed in the project?'
+    '#help_title': 'What partnerships and new ways of working have been experimented with or developed in the project?'
+    '#help': '<p class="p1">Please answer if the intention of the project was to develop new partnerships and new ways of working.</p>'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_vanhat_yhteistyokumppanit:
+    '#title': 'Who have been the main partners in the project so far, and what role have they played?'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun:
+    '#title': 'How have children and young people been involved in planning and decision-making? Give concrete examples.'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_talous_ja_toiminta_section:
+    '#title': 'Project finances and operations'
+  hankkeen_kaytetty_avustuksen_maara:
+    '#title': "A report on the use of the previous year's special grant. Please indicate here the total grant amount spent in euros."
+    '#help_title': "A report on the use of the previous year's special grant. Please indicate here the total grant amount spent in euros."
+    '#help': '<p class="p1">The figure given may be an estimate, as the accounts or financial year may not be complete.</p>'
+  hankkeen_edellisen_vuoden_avustuksen_kaytto:
+    '#title': "Description of the use of the previous year's special grant. Here you can explain in more detail how the grant was used by type of expenditure."
+    '#help_title': "Description of the use of the previous year's special grant. Here you can explain in more detail how the grant was used by type of expenditure."
+    '#help': '<p class="p1">Describe the use of the grant by type of expenditure, not at the level of individual income and expenditures.</p>'
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_talous_toiminta_aikataulu_muutokset:
+    '#title': "Have there been any significant changes to the project in terms of finances, operations or schedule? If so, please specify."
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_jatkokausi_suunnitelma:
+    '#title': "Will the extension period(s) of the project be carried out according to the original plan? If not, why not?"
+    '#counter_maximum_message': '%d/2500 characters remaining'
   4_talousarvio:
     '#title': '4. Planned budget'
   tulot_section:

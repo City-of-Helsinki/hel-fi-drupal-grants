@@ -7,12 +7,10 @@ import { testResponseData } from '../../testutils/Data';
 
 describe('Applicantinfo.tsx', () => {
   render(
-    <TestProvider initialValues={[
-      [initializeFormAtom, testResponseData]
-    ]}>
+    <TestProvider initialValues={[[initializeFormAtom, testResponseData]]}>
       <ApplicantInfo />
-    </TestProvider>
-  )
+    </TestProvider>,
+  );
 
   it('Renders expected info', () => {
     const inputs = document.querySelectorAll('input');

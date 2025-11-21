@@ -172,7 +172,7 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
-                    "fileDescription": {
+                    "description": {
                       "type": "string"
                     },
                     "file_id": {

@@ -15,6 +15,10 @@ class Mappings {
       'class' => 'Drupal\grants_metadata\TypedData\Definition\AsukasYleisToimDefinition',
       'parameter' => 'grants_metadata_asukasyleistoim',
     ],
+    'hyteedpien' => [
+      'class' => 'Drupal\grants_metadata\TypedData\Definition\HyteedPienDefinition',
+      'parameter' => 'grants_metadata_hyteedpien',
+    ],
     'hyvinyleis' => [
       'class' => 'Drupal\grants_metadata\TypedData\Definition\HyvinYleisDefinition',
       'parameter' => 'grants_metadata_hyvinyleis',

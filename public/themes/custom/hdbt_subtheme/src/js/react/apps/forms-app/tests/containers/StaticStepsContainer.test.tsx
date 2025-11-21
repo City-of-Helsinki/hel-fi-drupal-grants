@@ -6,10 +6,5 @@ import { createFormDataAtom } from '../../store';
 describe('StaticStepsContainer.tsx', () => {
   const formDataAtom = createFormDataAtom('test', {});
 
-  render(
-    <StaticStepsContainer
-      formDataAtom={formDataAtom}
-      schema={{}}
-    />
-  )
+  render(<StaticStepsContainer formDataAtom={formDataAtom} schema={{}} />);
 });

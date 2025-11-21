@@ -1,5 +1,10 @@
 import { describe, expect, test } from 'vitest';
-import { addApplicantInfoStep, getIndicesWithErrors, isValidFormResponse, keyErrorsByStep } from '../utils';
+import {
+  addApplicantInfoStep,
+  getIndicesWithErrors,
+  isValidFormResponse,
+  keyErrorsByStep,
+} from '../utils';
 import { testErrors, testKeyedErrors, testSteps } from '../testutils/Data';
 import { communitySettings } from '../formConstants';
 
@@ -23,19 +28,13 @@ describe('Utils.ts', () => {
 
   test('addApplicantInfoStep', () => {
     const [rootProperty, definition, uiSchemaAdditions] = communitySettings;
-    const result = addApplicantInfoStep({}, {}, {business_id: '123'});
+    const result = addApplicantInfoStep({}, {}, { business_id: '123' });
 
     expect(result[0]).toEqual({
-      definitions: {
-        applicant_info: definition,
-      },
-      properties: {
-        applicant_info: rootProperty,
-      },
+      definitions: { applicant_info: definition },
+      properties: { applicant_info: rootProperty },
     });
 
-    expect(result[1]).toEqual({
-      ...uiSchemaAdditions,
-    });
+    expect(result[1]).toEqual({ ...uiSchemaAdditions });
   });
 });

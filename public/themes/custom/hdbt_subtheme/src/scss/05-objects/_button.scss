@@ -24,3 +24,8 @@
     display:none !important;
   }
 }
+
+// On service page, prevent rage-clicking when creating a new application.
+.hds-button.disabled {
+  pointer-events: none;
+}

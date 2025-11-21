@@ -1,8 +1,8 @@
-import {FormData, FormDataWithRemoveOptionalProps} from "../test_data";
+import {FormData, FormDataWithRemoveOptionalProps} from "../../test_data";
 import {fakerFI as faker} from "@faker-js/faker"
-import {PROFILE_INPUT_DATA} from "../profile_input_data";
-import {ATTACHMENTS} from "../attachment_data";
-import {createFormData} from "../../form_data_helpers";
+import {PROFILE_INPUT_DATA} from "../../profile_input_data";
+import {ATTACHMENTS} from "../../attachment_data";
+import {createFormData} from "../../../form_data_helpers";
 import {
   viewPageFormatAddress,
   viewPageFormatBoolean,
@@ -10,8 +10,8 @@ import {
   viewPageFormatLowerCase,
   viewPageFormatCurrency,
   viewPageFormatNumber,
-} from "../../view_page_formatters";
-import {getFakeEmailAddress} from "../../field_helpers";
+} from "../../../view_page_formatters";
+import {getFakeEmailAddress} from "../../../field_helpers";
 
 /**
  * Basic form data for successful submit to Avus2

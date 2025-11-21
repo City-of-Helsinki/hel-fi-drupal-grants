@@ -185,6 +185,71 @@ elements: |
   hankkeen_riskit_vakiinnuttaminen:
     '#title': 'Är den planerade verksamheten för projektet avsedd att bli en permanent del av den grundläggande verksamheten hos den sökande/en annan aktör efter projektet? Om tillämpligt, beskriv i textfältet hur och med vilken finansiering man ämnar etablera verksamheten?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
+  info_onko_jatkohakemus:
+    '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Ett jakande eller negativt svar öppnar ytterligare en fråga</span></div></div></div>'
+  onko_kyseessa_jatkohakemus:
+    '#title': 'Är det fråga om en fortsatt ansökan?'
+    '#help_title': 'Är det fråga om en fortsatt ansökan?'
+    '#help': '<p class="p1"><span class="s1">Svara ja, om ni har fått specialunderstöd för ungdomsverksamhet för samma projekt eller för projekt under föregående år.</span></p>'
+    '#options':
+      1: Ja
+      0: Nej
+  hankkeen_mennyt_tavoite:
+    '#title': 'Vad har målet för projektet varit?'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_kohderyhma_ja_keinot:
+    '#title': 'Vilken har varit målgruppen för projektet och vilka metoder har använts för att nå den?'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_kohderyhmat_jo_tavoitettu:
+    '#title': 'Uppskattning av antalet barn och ungdomar som hittills har nåtts med verksamheten.'
+    '#help_title': 'Uppskattning av antalet barn och ungdomar som hittills har nåtts med verksamheten.'
+    '#help': '<p class="p1"><span class="s1">Om projektet inte når den aktuella åldersgruppen, markera "0" i fältet.</span></p>'
+  hankkeen_jo_osallistuneet_9_12:
+    '#title': '9–12-åriga helsingforsare'
+  hankkeen_jo_osallistuneet_18_24:
+    '#title': '18–24-åriga helsingforsare'
+  hankkeen_jo_osalistuneet_uudet:
+    '#title': 'Hur många av dessa är nya, det vill säga har inte deltagit i verksamhet som tidigare ordnats av aktören?'
+    '#help': '<p>Uppskatta antalet nya deltagare från Helsingfors i åldrarna 9-12 och 18-24 år sammanlagt.</p>'
+  hankkeen_kaytetyt_tunnit_per_postinumero:
+    '#title': "Hur många timmar av hobbyverksamhet har ordnats inom varje postnummerområde? Specificera i textfältet enligt postnummer med ett kommatecken till exempel på följande sätt: 00400: 7h, 00900: 16 h."
+    '#counter_maximum_message': '%d/500 tecken kvar'
+  hankeen_toteutuneet_tavoitteet:
+    '#title': 'Hur har man lyckats uppnå följande mål inom projektet: ökande av tillgången till positiva möten mellan befolkningsgrupperna och hobbyverksamhet, i synnerhet för flickor med invandrarbakgrund, samt främjande av arbetsförmågan hos unga vuxna?'
+    '#help_title': 'Hur har man lyckats uppnå följande mål inom projektet: ökande av tillgången till positiva möten mellan befolkningsgrupperna och hobbyverksamhet, i synnerhet för flickor med invandrarbakgrund, samt främjande av arbetsförmågan hos unga vuxna?'
+    '#help': '<p class="p1">Vänligen besvara frågan i den mån dessa mål har varit målen för ert projekt.</p>'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_tulevan_vuoden_tavoitteet:
+    '#title': 'Vad kommer man under detta år att göra inom projektet?'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_kumppanuudet_ja_toimintamuodot:
+    '#title': 'Hurdana partnerskap och nya verksamhetsformer har prövats eller utvecklats i projektet?'
+    '#help_title': 'Hurdana partnerskap och nya verksamhetsformer har prövats eller utvecklats i projektet?'
+    '#help': '<p class="p1">Vänligen besvara frågan ifall projektet har haft avsikt att utveckla nya partnerskap och verksamhetssätt.</p>'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_vanhat_yhteistyokumppanit:
+    '#title': 'Vilka har varit projektets viktigaste samarbetspartner hittills och vilken roll har de haft?'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_lasten_ja_nuorten_osallistaminen_suunnitteluun:
+    '#title': 'Hur har barn och ungdomar varit delaktiga i verksamhetsplaneringen och beslutsfattandet? Ge konkreta exempel.'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_talous_ja_toiminta_section:
+    '#title': 'Projektets ekonomi och verksamhet'
+  hankkeen_kaytetty_avustuksen_maara:
+    '#title': "En rapport om användningen av föregående års specialunderstöd. Ange här det totala beloppet i euro som har använts av det beviljade understödet."
+    '#help_title': "En rapport om användningen av föregående års specialunderstöd. Ange här det totala beloppet i euro som har använts av det beviljade understödet."
+    '#help': '<p class="p1">Den angivna siffran kan delvis vara en uppskattning, eftersom bokslutet eller redovisningsperioden kan vara oavslutad.</p>'
+  hankkeen_edellisen_vuoden_avustuksen_kaytto:
+    '#title': 'En beskrivning av användningen av föregående års specialunderstöd. Berätta här närmare om användningen av understödet enligt kostnadsslag.'
+    '#help_title': 'En beskrivning av användningen av föregående års specialunderstöd. Berätta här närmare om användningen av understödet enligt kostnadsslag.'
+    '#help': '<p class="p1">Beskriv användningen av understödet enligt kostnadsslag, inte för enskilda intäkter och utgifter.</p>'
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_talous_toiminta_aikataulu_muutokset:
+    '#title': "Har det skett betydande förändringar i projektet i anslutning till ekonomin, verksamheten eller tidtabellen, vad?"
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_jatkokausi_suunnitelma:
+    '#title': "Kommer projektets förlängningsperiod/-perioder att genomföras enligt den ursprungliga planen? Om inte, varför?"
+    '#counter_maximum_message': '%d/2500 tecken kvar'
   4_talousarvio:
     '#title': '4. Budget'
   tulot_section:
