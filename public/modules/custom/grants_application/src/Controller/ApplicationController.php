@@ -161,7 +161,7 @@ final class ApplicationController extends ControllerBase {
       ]);
     }
     catch (AntivirusException $e) {
-      // @todo Log.
+      $this->getLogger('grants_application')->error('File upload failed to antivirus check: ' . $e->getMessage());
       return new JsonResponse(
         ['error' => $this->t('File upload failed during antivirus-scan. Please try again in a moment')],
         400
@@ -176,7 +176,6 @@ final class ApplicationController extends ControllerBase {
 
     $file_entity->setFileUri($file->getRealPath());
 
-    // @todo Check permission as well?
     /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
     $submission = $this->entityTypeManager()
       ->getStorage('application_submission')
@@ -185,7 +184,8 @@ final class ApplicationController extends ControllerBase {
     $submission = reset($submission);
 
     if (!$submission) {
-      // @todo Should never happen, log.
+      $this->getLogger('grants_application')
+        ->error("Application does not exist in database while uploading a file: $application_number");
       return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
     }
 
@@ -197,7 +197,7 @@ final class ApplicationController extends ControllerBase {
       );
     }
     catch (\Exception $e) {
-      // @todo Log exception message.
+      $this->getLogger('grants_application')->error("Failed to upload file: $file_original_name on application: $application_number");
       return new JsonResponse(['error' => $this->t('Failed to upload the file. Please try again in a moment')], 500);
     }
 
