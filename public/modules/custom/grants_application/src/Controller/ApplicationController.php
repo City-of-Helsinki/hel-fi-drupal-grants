@@ -12,8 +12,10 @@ use Drupal\file\Entity\File;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusException;
 use Drupal\helfi_av\AntivirusService;
@@ -44,6 +46,8 @@ final class ApplicationController extends ControllerBase {
     private readonly FormSettingsService $formSettingsService,
     #[Autowire(service: 'grants_handler.application_status_service')]
     private readonly ApplicationStatusService $applicationStatusService,
+    #[Autowire(service: 'grants_events.events_service')]
+    private readonly EventsService $eventsService,
   ) {
   }
 
@@ -201,9 +205,6 @@ final class ApplicationController extends ControllerBase {
       return new JsonResponse(status: 500);
     }
 
-    // @todo Check that events are added as normally HANDLER_ATT_OK.
-    // Https://helsinkisolutionoffice.atlassian.net/wiki/spaces/KAN/pages/
-    // 8671232440/Hakemuksen+elinkaaren+tapahtumat+Eventit.
     $file_entity->delete();
     $response = [
       'fileName' => $result['filename'],
@@ -211,6 +212,23 @@ final class ApplicationController extends ControllerBase {
       'href' => $result['href'],
       'size' => $result['size'],
     ];
+
+    // Add an upload event to the ATV-document.
+    try {
+      $this->eventsService->logEvent(
+        $application_number,
+        $this->eventsService->getEventTypes()['HANDLER_ATT_OK'],
+        "Uploaded a file $file_original_name",
+        $file_original_name,
+      );
+    }
+    catch (\Exception $e) {
+      // The event system is just a construct for manually tracking the state.
+      // Afaik, failing to add an event does not affect the program itself,
+      // it just helps admin-users to debug by checking the raw data.
+      $this->getLogger('grants_application')
+        ->error("Failed to log an event for file $file_original_name, application number: $application_number. Error: {$e->getMessage()}");
+    }
 
     return new JsonResponse($response);
   }
@@ -222,8 +240,8 @@ final class ApplicationController extends ControllerBase {
    *
    * @param string $application_number
    *   The application number.
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The request.
+   * @param string $attachmentId
+   *   The attachment id.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
@@ -251,6 +269,11 @@ final class ApplicationController extends ControllerBase {
       $deleted = $this->atvService->deleteAttachment($application_number, $attachmentId);
     }
     catch (\throwable $e) {
+      // If file is no more present, we can just continue
+      if ($e instanceof AtvDocumentNotFoundException) {
+        return new JsonResponse([], 200);
+      }
+
       $this->getLogger('grants_application')
         ->error("Failed to delete attachment $attachmentId on application $application_number: {$e->getMessage()}");
       return new JsonResponse(['error' => $this->t('Failed to delete attachment')], 500);
@@ -258,6 +281,21 @@ final class ApplicationController extends ControllerBase {
 
     if (!$deleted) {
       return new JsonResponse(['error' => $this->t('Failed to delete attachment')], 500);
+    }
+
+    // Add an upload event to the ATV-document.
+    try {
+      $this->eventsService->logEvent(
+        $application_number,
+        $this->eventsService->getEventTypes()['HANDLER_ATT_DELETED'],
+        "Deleted a file $attachmentId",
+        $attachmentId,
+      );
+    }
+    catch (\Exception $e) {
+      // Failing to add an event is acceptable situation.
+      $this->getLogger('grants_application')
+        ->error("Failed to log an event for file id $attachmentId, application number: $application_number. Error: {$e->getMessage()}");
     }
 
     return new JsonResponse([], 200);
