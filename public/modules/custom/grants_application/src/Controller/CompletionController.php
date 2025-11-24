@@ -59,7 +59,6 @@ class CompletionController extends ControllerBase {
     $entity->getData();
 
     // @todo viewLink, statustag: statusstring+statushumanreadable+DI
-
     $build = [
       '#theme' => 'grants_application_completion',
       'variables' => [
@@ -80,10 +79,8 @@ class CompletionController extends ControllerBase {
     ];
 
     try {
-
       $submissionObject = $this->applicationGetterService->getAtvDocument($submission_id);
       $build['#submissionObject'] = $submissionObject;
-
     }
     catch (\Throwable $e) {
       throw new NotFoundHttpException('Submission not found');

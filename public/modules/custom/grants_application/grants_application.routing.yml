@@ -33,6 +33,14 @@ helfi_grants.forms_app_remove:
   requirements:
     _role: helsinkiprofiili
 
+helfi_grants.completion:
+  path: '/application/{application_number}/completion'
+  defaults:
+    _title_callback: '\Drupal\grants_application\Controller\CompletionController::getTitle'
+    _controller: '\Drupal\grants_application\Controller\CompletionController::build'
+  requirements:
+    _role: helsinkiprofiili
+
 helfi_grants.print_view:
   path: '/application/{id}/print'
   defaults:

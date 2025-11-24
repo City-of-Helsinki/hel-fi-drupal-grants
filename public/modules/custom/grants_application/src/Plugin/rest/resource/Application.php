@@ -485,13 +485,7 @@ final class Application extends ResourceBase {
     // to user submitting grants forms.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
-    return new JsonResponse([
-      'redirect_url' => Url::fromRoute(
-        'grants_handler.completion',
-        ['submission_id' => $application_number],
-        ['absolute' => TRUE],
-      )->toString(),
-    ], 200);
+    return $this->getSuccessResponse($application_number);
   }
 
   /**
@@ -640,15 +634,19 @@ final class Application extends ResourceBase {
     // to user submitting grants forms.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
+    return $this->getSuccessResponse($application_number);
+  }
+  // phpcs:enabled
+
+  private function getSuccessResponse(string $applicationNumber): JsonResponse {
     return new JsonResponse([
       'redirect_url' => Url::fromRoute(
-        'grants_handler.completion',
-        ['submission_id' => $application_number],
+        'helfi_grants.completion',
+        ['application_number' => $applicationNumber],
         ['absolute' => TRUE],
       )->toString(),
     ], 200);
   }
-  // phpcs:enabled
 
   /**
    * {@inheritDoc}
