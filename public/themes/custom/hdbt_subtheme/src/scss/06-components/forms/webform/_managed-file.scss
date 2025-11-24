@@ -21,7 +21,7 @@ fieldset.grants-attachments--wrapper {
 .grants-applications-managed_file {
   position:relative;
 
-  label.hds-button--secondary:not(:disabled):not(.eu-cookie-compliance-default-button):not(.eu-cookie-compliance-save-preferences-button) {
+  label.hds-button--secondary:not(:disabled, .eu-cookie-compliance-default-button, .eu-cookie-compliance-save-preferences-button) {
     left: 0;
     position: relative;
 

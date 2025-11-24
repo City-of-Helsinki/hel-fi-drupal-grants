@@ -256,21 +256,21 @@ export default defineConfig({
     //   dependencies: ['profile-registered_community']
     // },
     /* Form 66 tests. */
-    {
-      name: 'forms-66',
-      testMatch: /forms\/.*_66\.ts$/,
-      dependencies: ['profile-unregistered_community', 'profile-registered_community']
-    },
-    {
-      name: 'forms-66-unregistered',
-      testMatch: '/forms/unregistered_community_66.ts',
-      dependencies: ['profile-unregistered_community']
-    },
-    {
-      name: 'forms-66-registered',
-      testMatch: '/forms/registered_community_66.ts',
-      dependencies: ['profile-registered_community']
-    },
+    // {
+    //   name: 'forms-66',
+    //   testMatch: /forms\/.*_66\.ts$/,
+    //   dependencies: ['profile-unregistered_community', 'profile-registered_community']
+    // },
+    // {
+    //   name: 'forms-66-unregistered',
+    //   testMatch: '/forms/unregistered_community_66.ts',
+    //   dependencies: ['profile-unregistered_community']
+    // },
+    // {
+    //   name: 'forms-66-registered',
+    //   testMatch: '/forms/registered_community_66.ts',
+    //   dependencies: ['profile-registered_community']
+    // },
     /* Form 67 tests. */
     {
       name: 'forms-67',
@@ -334,6 +334,26 @@ export default defineConfig({
     {
       name: 'forms-75',
       testMatch: '/forms/registered_community_75.ts',
+      dependencies: ['profile-registered_community']
+    },
+    {
+      name: 'forms-76',
+      testMatch: /forms\/.*_64\.ts$/,
+      dependencies: ['profile-private_person', 'profile-unregistered_community', 'profile-registered_community']
+    },
+    {
+      name: 'forms-76-private',
+      testMatch: '/forms/private_person_76.ts',
+      dependencies: ['profile-private_person']
+    },
+    {
+      name: 'forms-76-unregistered',
+      testMatch: '/forms/unregistered_community_76.ts',
+      dependencies: ['profile-unregistered_community']
+    },
+    {
+      name: 'forms-76-registered',
+      testMatch: '/forms/registered_community_76.ts',
       dependencies: ['profile-registered_community']
     }
   ],

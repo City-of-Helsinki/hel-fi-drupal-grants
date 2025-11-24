@@ -63,3 +63,33 @@ msgstr "Poista hakemuksen asetukset"
 
 msgid "Saved the application metadata for %label (ID: %id)."
 msgstr "Tallennettu %label (ID: %id) hakemuksen asetukset."
+
+msgid "Unable to save the draft. Please try again in a moment"
+msgstr "Virhe tallentaessa lomaketta. Yritäthän hetken kuluttua uudelleen"
+
+msgid "Something went wrong"
+msgstr "Jokin meni pieleen"
+
+msgid "The application is not currently open"
+msgstr "Hakemus ei ole avoinna tällä hetkellä"
+
+msgid "Unable to fetch your user information. Please try again in a moment"
+msgstr "Virhe noudettaessa käyttäjätietoja. Yritäthän hetken kuluttua uudelleen"
+
+msgid "We cannot find the application you are trying to open. Please try creating a new application"
+msgstr "Hakemusta ei löytynyt. Yritäthän tehdä uuden hakemuksen"
+
+msgid "Unable to fetch your application. Please try again in a moment"
+msgstr "Hakemuksen nouto epäonnistui. Yritäthän hetken kuluttua uudelleen"
+
+msgid "Your user profile does not contain the given bank account number. Please update your user profile and try again"
+msgstr "Antamaasi pankkitiliä ei löydy profiilistasi. Päivitäthän profiilisi ja yritä uudelleen"
+
+msgid "An error occurred while sending the application. Please try again in a moment"
+msgstr "Hakemuksen lähetys epäonnistui. Yritäthän hetken kuluttua uudelleen"
+
+msgid "File upload failed during antivirus-scan. Please try again in a moment"
+msgstr "Tiedoston tallennus epäonnistui virustarkastuksessa. Yritä hetken kuluttua uudelleen"
+
+msgid "Failed to upload the file. Please try again in a moment"
+msgstr "Tiedoston tallennus epäonnistui. Yritä hetken kuluttua uudelleen"

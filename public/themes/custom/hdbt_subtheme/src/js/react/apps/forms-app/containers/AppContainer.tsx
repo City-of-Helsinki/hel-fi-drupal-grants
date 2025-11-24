@@ -5,6 +5,7 @@ import { initReactI18next } from 'react-i18next';
 
 import { FormWrapper } from './FormWrapper';
 import { getUrlParts } from '../testutils/Helpers';
+import { BackendError } from '../errors/BackendError';
 
 /**
  * Instantiates a new application draft for the given form.
@@ -16,12 +17,9 @@ import { getUrlParts } from '../testutils/Helpers';
  *
  * @throws {Error} - If the instantiation request fails.
  */
-const instantiateDocument = async(id: string, token: string) => {
+const instantiateDocument = async (id: string, token: string) => {
   const response = await fetch(`/applications/${id}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-Token': token,
-    },
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
     method: 'POST',
   });
 
@@ -30,6 +28,23 @@ const instantiateDocument = async(id: string, token: string) => {
   }
 
   return response.json();
+};
+
+/**
+ * Handle errors from the server response.
+ *
+ * @param {Response} response - The fetch response object.
+ * @throws {BackendError|Error} - Throws a BackendError if the response contains an error message,
+ *                                otherwise throws a generic Error.
+ */
+const handleErrors = async (response: Response) => {
+  const json = await response.json();
+
+  if (json?.error) {
+    throw new BackendError(json.error);
+  }
+
+  throw new Error('Failed to fetch form config data.');
 };
 
 /**
@@ -54,29 +69,23 @@ async function fetchFormData(id: string, token: string) {
 
   const { use_draft: useDraft } = drupalSettings.grants_react_form;
   // Uses DraftApplication or Application REST resource based on useDraft flag
-  const fetchUrl = useDraft ? 
-    `/applications/${id}/${applicationNumber}` :
-    `/applications/${id}/application/${applicationNumber}`;
+  const fetchUrl = useDraft
+    ? `/applications/${id}/${applicationNumber}`
+    : `/applications/${id}/application/${applicationNumber}`;
   const formConfigResponse = await fetch(fetchUrl, {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-Token': token,
-    },
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
   });
 
   if (!formConfigResponse.ok) {
-    throw new Error('Failed to fetch form data');
+    await handleErrors(formConfigResponse);
+    return;
   }
 
   const formConfig = await formConfigResponse.json();
-  const persistedData = { ...formConfig.form_data};
+  const persistedData = { ...formConfig.form_data };
 
-  return {
-    ...formConfig,
-    persistedData,
-    applicationNumber,
-  };
-};
+  return { ...formConfig, persistedData, applicationNumber };
+}
 
 export const AppContainer = ({
   applicationTypeId,
@@ -85,27 +94,28 @@ export const AppContainer = ({
   applicationTypeId: string;
   token: string;
 }) => {
-  const { data, isLoading, isValidating} = useSWRImmutable(
+  const { data, error, isLoading, isValidating } = useSWRImmutable(
     applicationTypeId,
     (id) => fetchFormData(id, token),
   );
 
   if (isLoading || isValidating) {
-    return  <LoadingSpinner />
+    return <LoadingSpinner />;
   }
 
-  i18next
-    .use(initReactI18next)
-    .init({
-      // Enable for additional info. Don't use in prod.
-      // debug: true,
-      fallbackLng: 'fi',
-      lng: drupalSettings.path.currentLanguage,
-      resources: data?.translations,
-      parseMissingKeyHandler: (key: string) => null,
-      returnNull: true,
-    });
+  if (error) {
+    throw error;
+  }
 
-  return <FormWrapper {...{applicationTypeId, token, data}} />
+  i18next.use(initReactI18next).init({
+    // Enable for additional info. Don't use in prod.
+    // debug: true,
+    fallbackLng: 'fi',
+    lng: drupalSettings.path.currentLanguage,
+    resources: data?.translations,
+    parseMissingKeyHandler: (_key: string) => null,
+    returnNull: true,
+  });
+
+  return <FormWrapper {...{ applicationTypeId, token, data }} />;
 };
-
