@@ -26,13 +26,10 @@ function grants_application_theme(): array {
         'ownApplicationsLink' => NULL,
         'viewApplicationLink' => NULL,
         'printApplicationLink' => NULL,
-      ],
-    ],
-    'grants_application_status_tag' => [
-      'variables' => [
+        'applicationNumber' => NULL,
         'langcode' => NULL,
         'applicationID' => NULL,
-        'statusString' => '',
+        'statusString' => NULL,
         'statusStringHumanReadable' => NULL,
       ],
     ],

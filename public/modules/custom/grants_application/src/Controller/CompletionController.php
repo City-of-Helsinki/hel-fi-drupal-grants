@@ -70,6 +70,7 @@ class CompletionController extends ControllerBase {
       '#submissionId' => $application_number,
       '#langcode' => $langcode,
       '#applicationID' => $application_number,
+      '#applicationNumber' => $application_number,
       '#statusString' => 'DRAFT',
       '#statusStringHumanReadable' => 'draft',
       '#ownApplicationsLink' => Url::fromRoute('grants_oma_asiointi.front'),
