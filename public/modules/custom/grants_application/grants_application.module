@@ -22,7 +22,7 @@ function grants_application_theme(): array {
     'grants_application_completion' => [
       'variables' => [
         'submissionId' => NULL,
-        'submissionObject' => NULL,
+        'applicationTimestamp' => NULL,
         'ownApplicationsLink' => NULL,
         'viewApplicationLink' => NULL,
         'printApplicationLink' => NULL,

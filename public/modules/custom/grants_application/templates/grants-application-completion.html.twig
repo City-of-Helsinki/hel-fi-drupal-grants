@@ -8,7 +8,6 @@
 #}
 {% set classes = [
   'webform-submission-data',
-  'webform-submission-data--webform-' ~ webform.id()|clean_class,
   view_mode ? 'webform-submission-data--view-mode-' ~ view_mode|clean_class,
 ] %}
 
@@ -28,7 +27,16 @@
         </div>
       </div>
       <div>
-        {{ statusTag }}
+        <div data-status="{{ statusString }}" class="hide-spinner application-list__item--status application-list__item--status--{{ statusString|lower }} applicationStatusCheckable" data-application-number="{{ applicationNumber }}">{{ statusStringHumanReadable }}</div>
+        <div class="hds-loading-spinner hds-loading-spinner--small">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="application-list__item--error">
+          <span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span>
+          <span aria-hidden="true" class="application-list--error-text">{{ 'There has been an error in updating application status, please reload the page.'|t({}, {'context': 'grants_handler'})}}</span>
+        </div>
       </div>
       <div class="grants-handler__completion__longtext">
         <p>
@@ -39,9 +47,25 @@
         </p>
       </div>
       <div class="grants-handler__completion__button-row">
-        {{ ownApplicationsLink }}
-        {{ viewApplicationLink }}
-        {{ printApplicationLink }}
+        {% include '@hdbt/navigation/link-button.html.twig' with {
+            type: 'primary',
+            label: 'My applications'|t,
+            url: ownApplicationsLink,
+          }
+        %}
+
+        {% include '@hdbt/navigation/link-button.html.twig' with {
+          type: 'secondary',
+          label: 'View application'|t,
+          url: viewApplicationLink,
+        }
+        %}
+        {% include '@hdbt/navigation/link-button.html.twig' with {
+            type: 'secondary',
+            label: 'Print application'|t,
+            url: printApplicationLink,
+          }
+        %}
       </div>
     </div>
   </div>

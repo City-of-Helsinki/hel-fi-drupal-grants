@@ -40,46 +40,45 @@ class CompletionController extends ControllerBase {
   /**
    * Build the completion page.
    *
-   * @param string $submission_id
+   * @param string $application_number
    *   The submission id.
    *
    * @return array
    *   The render array.
    */
-  public function build(string $submission_id): array {
+  public function build(string $application_number): array {
     $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
     /** @var \Drupal\grants_application\Entity\ApplicationSubmission $entity */
-    $entity = \Drupal::entityTypeManager()
-      ->getStorage('application_submission')
-      ->load($submission_id);
+    try {
+      $entity = $this->entityTypeManager()
+        ->getStorage('application_submission')
+        ->load($application_number);
+    }
+    catch (\Exception $e) {
+      // redirect to someplace else.
+    }
 
-    $entity->getEditApplicationLink('asd');
-    $entity->getPrintApplicationUrl();
-    $entity->getData();
+    if (!$entity) {
+      // redirect to someplace else.
+    }
 
-    // @todo viewLink, statustag: statusstring+statushumanreadable+DI
+    // @todo Status string, view application link.
     $build = [
       '#theme' => 'grants_application_completion',
-      'variables' => [
-        '#submissionId' => $submission_id,
-        '#langcode' => $langcode,
-        '#statusTag' => [
-          '#theme' => 'grants_application_status_tag',
-          '#langcode' => $langcode,
-          '#applicationID' => $submission_id,
-          '#statusString' => 'DRAFT',
-          '#statusStringHumanReadable' => 'draft',
-        ],
-        '#applicationTimestamp' => date('Y-m-d h:i:s', (int) $entity->get('created')->value),
-        '#ownApplicationsLink' => Url::fromRoute('grants_oma_asiointi.front'),
-        '#viewApplicationLink' => $entity->getViewApplicationLink('TEST'),
-        '#printApplicationLink' => $entity->getPrintApplicationUrl(),
-      ],
+      '#applicationTimestamp' => date('Y-m-d h:i:s', (int) $entity->get('created')->value),
+      '#submissionId' => $application_number,
+      '#langcode' => $langcode,
+      '#applicationID' => $application_number,
+      '#statusString' => 'DRAFT',
+      '#statusStringHumanReadable' => 'draft',
+      '#ownApplicationsLink' => Url::fromRoute('grants_oma_asiointi.front'),
+      '#viewApplicationLink' => $entity->getViewApplicationLink('TEST'),
+      '#printApplicationLink' => $entity->getPrintApplicationUrl(),
     ];
 
     try {
-      $submissionObject = $this->applicationGetterService->getAtvDocument($submission_id);
+      $submissionObject = $this->applicationGetterService->getAtvDocument($application_number);
       $build['#submissionObject'] = $submissionObject;
     }
     catch (\Throwable $e) {
@@ -88,7 +87,7 @@ class CompletionController extends ControllerBase {
 
     // The completion javascript should work as before.
     $base_url = \Drupal::request()->getSchemeAndHttpHost();
-    $currentLanguage = \Drupal::languageManager()->getCurrentLanguage();
+    $currentLanguage = $this->languageManager()->getCurrentLanguage();
 
     $build['#attached']['drupalSettings']['grants_handler']['site_url'] = $base_url . '/' . $currentLanguage->getId() . '/';
     $build['#attached']['library'][] = 'grants_handler/application-status-check';
@@ -104,9 +103,9 @@ class CompletionController extends ControllerBase {
    * @return \Drupal\Core\StringTranslation\TranslatableMarkup
    *   The title.
    */
-  public function getTitle(string $submission_id): TranslatableMarkup {
+  public function getTitle(string $application_number): TranslatableMarkup {
     $tOpts = ['context' => 'grants_handler'];
-    return $this->t('Completion page for @submissionId', ['@submissionId' => $submission_id], $tOpts);
+    return $this->t('Completion page for @submissionId', ['@submissionId' => $application_number], $tOpts);
   }
 
 }
