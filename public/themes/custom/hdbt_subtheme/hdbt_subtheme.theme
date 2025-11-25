@@ -12,9 +12,11 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
+use Drupal\csp\Csp;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\webform\Entity\Webform;
+use Drupal\helfi_platform_config\JsInliner;
 
 /**
  * Implements hook_theme().
@@ -27,6 +29,20 @@ function hdbt_subtheme_theme($existing, $type, $theme, $path): array {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_csp_policy_alter().
+ */
+function hdbt_subtheme_csp_policy_alter(Csp $policy): void {
+  // Rules needed for inline javascript; generate and add hashes to script-src
+  // directive.
+  $inline_javascript = _hdbt_subtheme_get_inline_javascript();
+  $cspHelper = \Drupal::service('csp.policy_helper');
+  foreach ($inline_javascript as $script) {
+    $hash = Csp::calculateHash($script);
+    $cspHelper->appendHash($policy, 'script', 'elem', ['unsafe-inline'], $hash);
+  }
 }
 
 /**
@@ -222,6 +238,14 @@ function hdbt_subtheme_preprocess_grants_handler_print_atv_document(array &$vari
     '#submission' => $submissionObject,
   ];
 
+  $variables['js_print_atv_document'] = [
+    '#type' => 'html_tag',
+    '#tag' => 'script',
+    '#attributes' => [
+      'type' => 'text/javascript',
+    ],
+    '#value' => Markup::create(_hdbt_subtheme_get_inline_javascript('print-atv-document')),
+  ];
 }
 
 /**
@@ -697,4 +721,34 @@ function hdbt_subtheme_preprocess_tpr_service_channel(array &$variables): void {
 
     $rendered = TRUE;
   }
+}
+
+/**
+ * Helper function for inline javascript.
+ *
+ * All scripts announced here will have a CSP hash generated and added to the
+ * script-src CSP directive.
+ *
+ * @param string|null $script_id
+ *   The ID of the script. If not provided, all scripts will be returned.
+ *
+ * @return string|array|null
+ *   The inline javascript. If a script ID is provided, the script will be
+ *   returned as a string. If no script ID is provided, all scripts will be
+ *   returned as an array. If the script ID is not found, NULL will be returned.
+ *
+ * @see hdbt_csp_policy_alter()
+ */
+function _hdbt_subtheme_get_inline_javascript(?string $script_id = NULL): string|array|null {
+  $inliner = \Drupal::service(JsInliner::class);
+
+  $js = [
+    'print-atv-document' => $inliner->getInline('hdbt_subtheme', 'print-atv-document'),
+  ];
+
+  if (!$script_id) {
+    return $js;
+  }
+
+  return $js[$script_id] ?? NULL;
 }

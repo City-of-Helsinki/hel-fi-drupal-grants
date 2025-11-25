@@ -41,3 +41,8 @@ forms-app:
   dependencies:
     - core/drupal
     - core/drupalSettings
+
+print-atv-document:
+  version: 1.0.0
+  js:
+    dist/js/printAtvDocument.min.js: {}
