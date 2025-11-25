@@ -14,6 +14,7 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -107,56 +108,95 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
   public function build(): array {
     $tOpts = ['context' => 'grants_handler'];
 
-    // Load the webform. No need to check if it exists since this
-    // has already been done in the access checks.
-    $webform = $this->servicePageBlockService->loadServicePageWebform();
-    $webformId = $webform->id();
+    $settings = NULL;
+    $useReactForm = FALSE;
 
-    // If the application isn't open, just display a message.
-    if (!$this->applicationStatusService->isApplicationOpen($webform)) {
-      $build['content'] = [
-        '#theme' => 'grants_service_page_block',
-        '#text' => $this->t('This application is not open', [], $tOpts),
-        '#auth' => 'not_open',
-      ];
-      return $build;
+    // phpcs:disable
+    // Start by check if the react-form exists and the react-form application period is on.
+    // In that case, we always render the react-application block.
+    if (
+      \Drupal::moduleHandler()->moduleExists('grants_application') &&
+      $reactFormId = $this->servicePageBlockService->getReactFormId()
+    ) {
+      try {
+        $formSettingsService = \Drupal::service('Drupal\grants_application\Form\FormSettingsService');
+        $settings = $formSettingsService->getFormSettings($reactFormId);
+      }
+      catch (\Exception $e) {
+        // If there are no settings, just use the webform.
+        $useReactForm = FALSE;
+      }
+
+      if ($settings && $settings->isApplicationOpen()) {
+        $useReactForm = TRUE;
+      }
     }
+    // phpcs:enable
 
+    // Block default values.
+    $build = [];
+    $build['content'] = [
+      '#theme' => 'grants_service_page_block',
+      '#text' => $this->t('This application is not open', [], $tOpts),
+      '#auth' => 'not_open',
+    ];
+    $description = $this->t('Please familiarize yourself with the instructions
+  on this page before proceeding to the application.', [], $tOpts);
     $build['#attached']['library'][] = 'grants_handler/servicepage-prevent-multiple-applications';
 
-    // Create link for new application.
-    $applicationLinkUrl = Url::fromRoute(
-      'grants_handler.new_application',
-      [
-        'webform_id' => $webformId,
-      ],
-      [
-        'attributes' => [
-          'class' => ['hds-button', 'hds-button--primary'],
+    // React is always rendered if the settings are set correctly
+    // (application period etc).
+    if ($useReactForm) {
+      // @todo React-production: Fix the button text from template.
+      // @todo Fix the \Drupal calls above.
+      $build['content'] = [
+        '#auth' => 'auth',
+        '#text' => $description,
+        '#reactFormLink' => $this->servicePageBlockService->getReactFormLink(),
+        '#theme' => 'grants_service_page_block',
+      ];
+    }
+    else {
+      // Load the webform. No need to check if it exists since this
+      // has already been done in the access checks.
+      $webform = $this->servicePageBlockService->loadServicePageWebform();
+      $webformId = $webform->id();
+
+      // If the application isn't open, just display a message.
+      if (!$this->applicationStatusService->isApplicationOpen($webform)) {
+        return $build;
+      }
+
+      // Create link for new application.
+      $applicationLinkUrl = Url::fromRoute(
+        'grants_handler.new_application',
+        [
+          'webform_id' => $webformId,
         ],
-      ]
-    );
+        [
+          'attributes' => [
+            'class' => ['hds-button', 'hds-button--primary'],
+          ],
+        ]
+      );
 
-    $applicationLinkText = [
-      '#theme' => 'edit-label-with-icon',
-      '#icon' => 'document',
-      '#text_label' => $this->t('New application', [], $tOpts),
-    ];
+      $applicationLinkText = [
+        '#theme' => 'edit-label-with-icon',
+        '#icon' => 'document',
+        '#text_label' => $this->t('New application', [], $tOpts),
+      ];
 
-    $applicationLink = Link::fromTextAndUrl($applicationLinkText, $applicationLinkUrl);
-    $description = $this->t('Please familiarize yourself with the instructions
-on this page before proceeding to the application.', [], $tOpts);
+      $applicationLink = Link::fromTextAndUrl($applicationLinkText, $applicationLinkUrl);
+      $webformLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webformId]);
 
-    $webformLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webformId]);
-
-    $build['content'] = [
-      '#auth' => 'auth',
-      '#link' => $applicationLink,
-      '#text' => $description,
-      '#reactFormLink' => $this->servicePageBlockService->getReactFormLink(),
-      '#theme' => 'grants_service_page_block',
-      '#webformLink' => $webformLink,
-    ];
+      $build['content'] = [
+        '#auth' => 'auth',
+        '#link' => $applicationLink,
+        '#text' => $description,
+        '#theme' => 'grants_service_page_block',
+        '#webformLink' => $webformLink,
+      ];
+    }
 
     return $build;
   }
