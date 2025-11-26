@@ -65,7 +65,7 @@ final class FormSettings {
       return TRUE;
     }
 
-    if (!$this->settings['application_open'] || $this->settings['application_close']) {
+    if (!$this->settings['application_open'] || !$this->settings['application_close']) {
       return FALSE;
     }
 
