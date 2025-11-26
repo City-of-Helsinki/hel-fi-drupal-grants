@@ -5,6 +5,7 @@
  * Contains site specific overrides.
  */
 
+$config['helfi_av.settings']['base_url'] = getenv('CLAMAV_BASE_URL') ?? '';
 
 $config['openid_connect.client.tunnistamo']['settings']['client_id'] = getenv('TUNNISTAMO_CLIENT_ID');
 $config['openid_connect.client.tunnistamo']['settings']['client_secret'] = getenv('TUNNISTAMO_CLIENT_SECRET');
