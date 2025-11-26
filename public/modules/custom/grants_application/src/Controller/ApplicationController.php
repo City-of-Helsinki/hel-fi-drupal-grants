@@ -269,7 +269,7 @@ final class ApplicationController extends ControllerBase {
       $deleted = $this->atvService->deleteAttachment($application_number, $attachmentId);
     }
     catch (\throwable $e) {
-      // If file is no more present, we can just continue
+      // If file is no more present, we can just continue.
       if ($e instanceof AtvDocumentNotFoundException) {
         return new JsonResponse([], 200);
       }
