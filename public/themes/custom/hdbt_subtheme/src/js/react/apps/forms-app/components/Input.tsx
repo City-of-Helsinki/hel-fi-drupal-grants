@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import type { WidgetProps } from '@rjsf/utils';
 
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
+import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
 import { formatErrors } from '../utils';
 import {
   getAccountsAtom,
@@ -336,26 +337,36 @@ export const RadioWidget = ({
   return (
     <>
       {affirmativeExpands && (
-        <Notification label={t('affimative_expands')} type='info' />
+        <Notification
+          label={t('affirmative_expands')}
+          type='info'
+          className='hdbt-form--notification'
+        />
       )}
-      <Fieldset heading={`${label}${required ? ' *' : ''}`}>
+      <Fieldset
+        heading={`${label}${required ? ' *' : ''}`}
+        className='hdbt-form--fieldset'
+      >
         {options?.enumOptions?.map((option: any) => {
           const optionId = `${id}_${option.value}`;
 
           return (
             <RadioButton
               checked={option.value === value}
-              focusable
               id={optionId}
               key={optionId}
               label={option.label}
               name={optionId}
               onChange={() => onChange(option.value)}
+              style={defaultRadioButtonStyle}
+              className='hdbt-form--radiobutton'
             />
           );
         })}
         {rawErrors?.length > 0 && (
-          <Notification type='error'>{formatErrors(rawErrors)}</Notification>
+          <Notification type='error' className='hdbt-form--notification'>
+            {formatErrors(rawErrors)}
+          </Notification>
         )}
       </Fieldset>
     </>

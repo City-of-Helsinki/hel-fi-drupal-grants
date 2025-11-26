@@ -268,7 +268,7 @@ export const ObjectFieldTemplate = ({
   return (
     <Fieldset
       heading={title || ''}
-      className='hdbt-form--fieldset'
+      className='hdbt-form--fieldset hdbt-form--fieldset--border'
       style={{ marginInline: '0' }}
     >
       {description && (

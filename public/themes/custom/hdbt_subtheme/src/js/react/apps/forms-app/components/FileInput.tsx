@@ -16,9 +16,10 @@ import {
 } from '../store';
 import { formatErrors } from '../utils';
 import { useState } from 'react';
+import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 
 type ATVFile = {
-  fileDescription?: string;
+  description?: string;
   fileId: number;
   fileName: string;
   fileType: string;
@@ -167,11 +168,11 @@ export const FileInput = ({
 
     const { href: integrationID, ...rest } = result;
 
-    const fileDescription = existingData?.fileDescription || '';
+    const description = existingData?.description || '';
 
     onChange({
       integrationID,
-      fileDescription,
+      description,
       isDeliveredLater: false,
       isIncludedInOtherFile: false,
       isNewAttachment: true,
@@ -197,6 +198,7 @@ export const FileInput = ({
         handleChange(files, formData);
       }}
       required={required}
+      className='hdbt-form--fileinput'
     />
   );
 
@@ -205,9 +207,9 @@ export const FileInput = ({
       id={`${name}-description`}
       label={t('file_description.title')}
       onChange={(e) => {
-        onChange({ ...formData, fileDescription: e.target.value });
+        onChange({ ...formData, description: e.target.value });
       }}
-      value={formData?.fileDescription || ''}
+      value={formData?.description || ''}
     />
   );
 
@@ -235,6 +237,8 @@ export const FileInput = ({
         onChange={(e) => {
           onChange({ ...formData, isDeliveredLater: e.target.checked });
         }}
+        className='hdbt-form--checkbox'
+        style={defaultCheckboxStyle}
       />
       <Checkbox
         checked={isIncludedInOtherFile || false}
@@ -248,6 +252,8 @@ export const FileInput = ({
         onChange={(e) => {
           onChange({ ...formData, isIncludedInOtherFile: e.target.checked });
         }}
+        className='hdbt-form--checkbox'
+        style={defaultCheckboxStyle}
       />
     </div>
   );
