@@ -281,7 +281,18 @@ final class DraftApplication extends ResourceBase {
       $this->userInformationService->getApplicantType(),
     );
 
-    $document->setContent([]);
+    // Grants_events requires the events-array to exist.
+    // And compensation must be json-object.
+    $document->setContent([
+      'form_data' => [],
+      'compensation' => [
+        'applicantInfoArray' => []
+      ],
+      'formUpdate' => false,
+      'statusUpdates' => [],
+      'events' => [],
+      'messages' => [],
+    ]);
 
     try {
       $document = $this->atvService->saveNewDocument($document);

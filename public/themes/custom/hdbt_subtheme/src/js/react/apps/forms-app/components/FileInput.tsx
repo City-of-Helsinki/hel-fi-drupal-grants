@@ -5,16 +5,17 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 import type { FieldProps, UiSchema } from '@rjsf/utils';
 import { Checkbox, FileInput as HDSFileInput, TextInput } from 'hds-react';
-import { useAtomValue } from 'jotai';
-import { useCallback } from 'react';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
 
 import {
   formConfigAtom,
   getApplicationNumberAtom,
+  pushNotificationAtom,
   shouldRenderPreviewAtom,
 } from '../store';
 import { formatErrors } from '../utils';
+import { useState } from 'react';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 
 type ATVFile = {
@@ -24,6 +25,13 @@ type ATVFile = {
   fileType: string;
   href: string;
   size: number;
+};
+
+type PersistedFile = ATVFile & {
+  integrationID: string;
+  isDeliveredLater?: boolean;
+  isIncludedInOtherFile?: boolean;
+  isNewAttachment?: boolean;
 };
 
 async function uploadFiles(
@@ -69,7 +77,6 @@ export const FileInput = ({
   formData,
   id,
   label,
-  multiple,
   name,
   onChange,
   rawErrors,
@@ -77,10 +84,12 @@ export const FileInput = ({
   required,
   uiSchema,
 }: FieldProps) => {
+  const [refreshKey, setRefreshKey] = useState(0);
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const applicationNumber = useAtomValue(getApplicationNumberAtom);
   const { token } = useAtomValue(formConfigAtom)!;
+  const pushNotification = useSetAtom(pushNotificationAtom);
   const { 'misc:file-type': fileType } = uiSchema as UiSchema & {
     'misc:file-type': number;
   };
@@ -97,40 +106,79 @@ export const FileInput = ({
     );
   }
 
-  const handleChange = useCallback(
-    async (files: File[], existingData: any) => {
-      if (!files.length) {
-        onChange(undefined);
-        return;
-      }
+  const handleResponseError = async (response: Response) => {
+    const json = await response.json();
 
-      const result = await uploadFiles(
-        name,
-        applicationNumber,
-        token,
-        files,
-        fileType,
-      );
+    if (!json?.error) {
+      throw new Error('Failed to remove file');
+    }
 
-      if (!result) {
-        return;
-      }
+    pushNotification({
+      children: <div>{json.error}</div>,
+      label: t('file_removal_failed.title'),
+      type: 'error',
+    });
 
-      const { href: integrationID, ...rest } = result;
+    // Force re-render to reset the FileInput state
+    setRefreshKey((prevKey) => prevKey + 1);
+  };
 
-      const description = existingData?.description || '';
+  const handleRemoval = async (existingData: PersistedFile | undefined) => {
+    if (!existingData?.integrationID) {
+      onChange(undefined);
+      return;
+    }
 
-      onChange({
-        integrationID,
-        description,
-        isDeliveredLater: false,
-        isIncludedInOtherFile: false,
-        isNewAttachment: true,
-        ...rest,
-      });
-    },
-    [applicationNumber, multiple, onChange, token],
-  );
+    const fileUrl = new URL(existingData.integrationID);
+    const pathSemgments = fileUrl.pathname.split('/').filter(Boolean);
+    const attachmentId = pathSemgments.pop();
+    const response = await fetch(
+      `/application/${applicationNumber}/delete/${attachmentId}`,
+      { method: 'POST', headers: { 'X-CSRF-Token': token } },
+    );
+
+    if (!response.ok) {
+      handleResponseError(response);
+      return;
+    }
+
+    onChange(undefined);
+  };
+
+  const handleChange = async (
+    files: File[],
+    existingData: PersistedFile | undefined,
+  ) => {
+    if (!files.length) {
+      handleRemoval(existingData);
+      return;
+    }
+
+    const result = await uploadFiles(
+      name,
+      applicationNumber,
+      token,
+      files,
+      fileType,
+    );
+
+    if (!result) {
+      return;
+    }
+
+    const { href: integrationID, ...rest } = result;
+
+    const description = existingData?.description || '';
+
+    onChange({
+      integrationID,
+      description,
+      isDeliveredLater: false,
+      isIncludedInOtherFile: false,
+      isNewAttachment: true,
+      ...rest,
+    });
+  };
 
   const inputElement = (
     <HDSFileInput
@@ -167,7 +215,7 @@ export const FileInput = ({
 
   if (uiSchema?.['misc:variant'] === 'simple') {
     return (
-      <div className='hdbt-form--fileinput'>
+      <div className='hdbt-form--fileinput' key={refreshKey}>
         {inputElement}
         {descriptionElement}
       </div>
@@ -175,7 +223,7 @@ export const FileInput = ({
   }
 
   return (
-    <div className='hdbt-form--fileinput'>
+    <div className='hdbt-form--fileinput' key={refreshKey}>
       {inputElement}
       <Checkbox
         checked={isDeliveredLater || false}
