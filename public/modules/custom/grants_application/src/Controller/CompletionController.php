@@ -47,21 +47,25 @@ class CompletionController extends ControllerBase {
    *   The render array.
    */
   public function build(string $application_number): array {
-    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $langcode = $this->languageManager()->getCurrentLanguage()->getId();
 
-    /** @var \Drupal\grants_application\Entity\ApplicationSubmission $entity */
     try {
-      $entity = $this->entityTypeManager()
+      $entities = $this->entityTypeManager()
         ->getStorage('application_submission')
-        ->load($application_number);
+        ->getQuery()
+        ->accessCheck(TRUE)
+        ->condition('application_number', $application_number)
+        ->execute();
     }
     catch (\Exception $e) {
       // redirect to someplace else.
     }
 
-    if (!$entity) {
+    if (!$entities) {
       // redirect to someplace else.
     }
+
+    $entity = ApplicationSubmission::load(reset($entities));
 
     // @todo Status string, view application link.
     $build = [
@@ -74,7 +78,7 @@ class CompletionController extends ControllerBase {
       '#statusString' => 'DRAFT',
       '#statusStringHumanReadable' => 'draft',
       '#ownApplicationsLink' => Url::fromRoute('grants_oma_asiointi.front'),
-      '#viewApplicationLink' => $entity->getViewApplicationLink('TEST'),
+      '#viewApplicationLink' => $entity->getViewApplicationUrl(),
       '#printApplicationLink' => $entity->getPrintApplicationUrl(),
     ];
 
@@ -88,9 +92,7 @@ class CompletionController extends ControllerBase {
 
     // The completion javascript should work as before.
     $base_url = \Drupal::request()->getSchemeAndHttpHost();
-    $currentLanguage = $this->languageManager()->getCurrentLanguage();
-
-    $build['#attached']['drupalSettings']['grants_handler']['site_url'] = $base_url . '/' . $currentLanguage->getId() . '/';
+    $build['#attached']['drupalSettings']['grants_handler']['site_url'] = "$base_url/$langcode/";
     $build['#attached']['library'][] = 'grants_handler/application-status-check';
     return $build;
   }

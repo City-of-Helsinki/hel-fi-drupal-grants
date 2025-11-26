@@ -193,7 +193,12 @@ final class Application extends ResourceBase {
 
     try {
       $document = $this->atvService->getDocument($application_number);
-      $form_data = $document->getContent();
+      $content = $document->getContent();
+
+      // @todo Shadow-document -ticket.
+      // Load the form_data wherever it may be located.
+      // If not in root of content, then it should be under compensation.
+      $form_data = isset($content['form_data']) ? $content['form_data'] : (isset($content['compensation']['form_data']) ? $content['compensation']['form_data'] : []);
     }
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
@@ -202,7 +207,7 @@ final class Application extends ResourceBase {
 
     $changeTime = new DrupalDateTime($document->getUpdatedAt());
 
-    // @todo only return required user data to frontend.
+    // @todo Only return required user data to frontend.
     $response = [
       'form_data' => $form_data,
       'grants_profile' => $grants_profile_data->toArray(),
@@ -615,6 +620,18 @@ final class Application extends ResourceBase {
       $document_data['form_data'] = $form_data ?? [];
 
       $document->setContent($document_data);
+
+      $save_id = Uuid::uuid4()->toString();
+
+      // We don't use the event api to apply this particular event.
+      // instead we just put the event into the document.
+      $event = $this->eventsService->getEventData(
+        'HANDLER_SEND_INTEGRATION',
+        $application_number,
+        'send application to integration.',
+        $save_id
+      );
+      $this->eventsService->addNewEventForApplication($document, $event);
 
       $this->atvService->updateExistingDocument($document);
 

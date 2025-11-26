@@ -99,6 +99,7 @@ final class ApplicationController extends ControllerBase {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
+        // @todo production Should not use grants handler service.
         if (!$this->applicationStatusService->isSubmissionEditable(NULL, $document->getStatus())) {
           $this->messenger()
             ->addError($this->t('The application is being processed. The application cannot be edited or submitted.'));

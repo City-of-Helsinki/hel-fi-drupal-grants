@@ -145,10 +145,22 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
     $url = Url::fromRoute(
       'grants_handler.view_application',
       ['submission_id' => $this->get('application_number')->value],
-
     );
 
     return Link::fromTextAndUrl($markup, $url);
+  }
+
+  /**
+   * Create view -URL for asiointi.
+   *
+   * @return \Drupal\Core\Url
+   *   The url.
+   */
+  public function getViewApplicationUrl(): Url {
+    return Url::fromRoute(
+      'grants_handler.view_application',
+      ['submission_id' => $this->get('application_number')->value],
+    );
   }
 
   /**

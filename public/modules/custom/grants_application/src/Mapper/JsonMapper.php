@@ -539,12 +539,8 @@ class JsonMapper {
     $fieldNames = isset($formValues['integrationID']) ? $defaultFieldsForFile : $defaultFieldsForNoFile;
 
     $values = [];
+    // Loop through the required fields and read the data from formValues.
     foreach ($fieldNames as $fieldName) {
-      // @todo Get rid of this once react change has been made.
-      if (isset($formValues['fileDescription'])) {
-        $formValues['description'] = $formValues['fileDescription'];
-      }
-
       // Use the default value-array as base for the data.
       $field = $defaultData[$fieldName];
 
@@ -555,7 +551,14 @@ class JsonMapper {
 
         // And make sure we are adding the boolean as a string.
         if ($defaultData[$fieldName]['valueType'] === 'bool') {
-          $field['value'] = isset($formValues[$fieldName]) ? $formValues[$fieldName] ? 'true' : 'false' : $val;
+          $field['value'] = isset($formValues[$fieldName]) && $formValues[$fieldName] ? 'true' : 'false';
+        }
+        else if ($defaultData[$fieldName]['ID'] === 'integrationID' && $formValues[$fieldName]) {
+          $field['value'] = '';
+          $urlPath = parse_url($formValues['integrationID'], PHP_URL_PATH);
+          if ($urlPath) {
+            $field['value'] = '/' . getenv('APP_ENV') . $urlPath;
+          }
         }
         else {
           $field['value'] = isset($formValues[$fieldName]) ? (string) $formValues[$fieldName] : $val;
