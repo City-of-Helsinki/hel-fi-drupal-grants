@@ -1,9 +1,17 @@
+// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 import { Button, IconAngleLeft, IconAngleRight } from 'hds-react';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { ValidationData } from '@rjsf/utils';
-import { SyntheticEvent } from 'react';
+import type { ValidationData } from '@rjsf/utils';
+import type { SyntheticEvent } from 'react';
 
-import { getCurrentStepAtom, errorsAtom, getStepsAtom, setStepAtom, finalAcceptanceAtom, isReadOnlyAtom } from '../../store';
+import {
+  getCurrentStepAtom,
+  errorsAtom,
+  getStepsAtom,
+  setStepAtom,
+  finalAcceptanceAtom,
+  isReadOnlyAtom,
+} from '../../store';
 import { isDraft, keyErrorsByStep } from '../../utils';
 import { SaveDraftButton } from './SaveDraftButton';
 import { primaryButtonTheme } from '@/react/common/constants/buttonTheme';
@@ -13,12 +21,13 @@ export const FormActions = ({
   validatePartialForm,
 }: {
   saveDraft: () => Promise<boolean>;
-  validatePartialForm: () => ValidationData<any>|undefined;
+  validatePartialForm: () => ValidationData<any> | undefined;
 }) => {
   const readOnly = useAtomValue(isReadOnlyAtom);
   const finalAcceptance = useAtomValue(finalAcceptanceAtom);
   const steps = useAtomValue(getStepsAtom);
-  const [currentStepIndex, { id: currentStepId }] = useAtomValue(getCurrentStepAtom);
+  const [currentStepIndex, { id: currentStepId }] =
+    useAtomValue(getCurrentStepAtom);
   const errors = useAtomValue(errorsAtom);
   const setStep = useSetAtom(setStepAtom);
 
@@ -51,8 +60,7 @@ export const FormActions = ({
         {Drupal.t('Delete draft')}
       </Button> */}
       {isDraft() && <SaveDraftButton saveDraft={saveDraft} />}
-      {
-        (currentStepIndex > 0 && currentStepId !== 'ready') &&
+      {currentStepIndex > 0 && currentStepId !== 'ready' && (
         <Button
           className='hdbt-form--pager-button'
           disabled={readOnly}
@@ -63,30 +71,30 @@ export const FormActions = ({
         >
           {Drupal.t('Previous')}
         </Button>
-      }
-      {
-        currentStepId !== 'ready' &&
-          (
-            currentStepId === 'preview' ?
-            <Button
-              disabled={Boolean(errors?.length) || !finalAcceptance || readOnly}
-              type='submit'
-              theme={primaryButtonTheme}
-            >
-              {isDraft() ? Drupal.t('Submit') : Drupal.t('Send')}
-            </Button> :
-            <Button
-              className='hdbt-form--pager-button'
-              disabled={readOnly}
-              iconEnd={<IconAngleRight />}
-              onClick={nextPageAction}
-              theme={primaryButtonTheme}
-              type='button'
-            >
-              {currentStepIndex === steps.size - 3 ? Drupal.t('Preview', {}, {context: 'grants_handler'}) : Drupal.t('Next', {}, {context: 'Grants application: Steps'})}
-            </Button>
-          )
-      }
+      )}
+      {currentStepId !== 'ready' &&
+        (currentStepId === 'preview' ? (
+          <Button
+            disabled={Boolean(errors?.length) || !finalAcceptance || readOnly}
+            type='submit'
+            theme={primaryButtonTheme}
+          >
+            {isDraft() ? Drupal.t('Submit') : Drupal.t('Send')}
+          </Button>
+        ) : (
+          <Button
+            className='hdbt-form--pager-button'
+            disabled={readOnly}
+            iconEnd={<IconAngleRight />}
+            onClick={nextPageAction}
+            theme={primaryButtonTheme}
+            type='button'
+          >
+            {currentStepIndex === steps.size - 3
+              ? Drupal.t('Preview', {}, { context: 'grants_handler' })
+              : Drupal.t('Next', {}, { context: 'Grants application: Steps' })}
+          </Button>
+        ))}
     </div>
   );
 };

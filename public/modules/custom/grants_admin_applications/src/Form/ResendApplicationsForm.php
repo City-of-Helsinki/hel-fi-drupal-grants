@@ -531,7 +531,7 @@ class ResendApplicationsForm extends AtvFormBase {
     $attachments = $atvDocument->getAttachments();
     $appEnv = $atvDocument->getMetadata()['appenv'];
     $content = $atvDocument->getContent();
-    $events = $content['events'];
+    $events = $content['events'] ?? [];
     $attachmentInfo = $content['attachmentsInfo']['attachmentsArray'] ?? [];
 
     foreach ($attachments as $attachment) {

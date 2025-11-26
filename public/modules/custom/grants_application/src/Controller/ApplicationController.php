@@ -12,8 +12,10 @@ use Drupal\file\Entity\File;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusException;
 use Drupal\helfi_av\AntivirusService;
@@ -44,6 +46,8 @@ final class ApplicationController extends ControllerBase {
     private readonly FormSettingsService $formSettingsService,
     #[Autowire(service: 'grants_handler.application_status_service')]
     private readonly ApplicationStatusService $applicationStatusService,
+    #[Autowire(service: 'grants_events.events_service')]
+    private readonly EventsService $eventsService,
   ) {
   }
 
@@ -78,7 +82,7 @@ final class ApplicationController extends ControllerBase {
    * @param bool $use_draft
    *   Whether to use the draft version of the form.
    *
-   * @return array
+   * @return array|RedirectResponse
    *   The resulting array
    */
   public function formsApp(string $id, ?string $application_number, bool $use_draft): array|RedirectResponse {
@@ -132,7 +136,7 @@ final class ApplicationController extends ControllerBase {
   /**
    * Upload file handler.
    *
-   * @param string $id
+   * @param string $application_number
    *   The application number.
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request.
@@ -140,11 +144,12 @@ final class ApplicationController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
-  public function uploadFile(string $id, Request $request): JsonResponse {
+  public function uploadFile(string $application_number, Request $request): JsonResponse {
     /** @var \Symfony\Component\HttpFoundation\File\File $file */
     $file = $request->files->get('file');
-    if (!$file || !$id) {
-      return new JsonResponse(status: 400);
+    if (!$file || !$application_number) {
+      $this->getLogger('grants_application')->error("Failed to upload file, application number: $application_number");
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 400);
     }
 
     // @phpstan-ignore-next-line
@@ -156,7 +161,7 @@ final class ApplicationController extends ControllerBase {
       ]);
     }
     catch (AntivirusException $e) {
-      // @todo Log.
+      $this->getLogger('grants_application')->error('File upload failed to antivirus check: ' . $e->getMessage());
       return new JsonResponse(
         ['error' => $this->t('File upload failed during antivirus-scan. Please try again in a moment')],
         400
@@ -171,16 +176,16 @@ final class ApplicationController extends ControllerBase {
 
     $file_entity->setFileUri($file->getRealPath());
 
-    // @todo Check permission as well?
     /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
     $submission = $this->entityTypeManager()
       ->getStorage('application_submission')
-      ->loadByProperties(['application_number' => $id]);
+      ->loadByProperties(['application_number' => $application_number]);
 
     $submission = reset($submission);
 
     if (!$submission) {
-      // @todo Should never happen, log.
+      $this->getLogger('grants_application')
+        ->error("Application does not exist in database while uploading a file: $application_number");
       return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
     }
 
@@ -192,7 +197,7 @@ final class ApplicationController extends ControllerBase {
       );
     }
     catch (\Exception $e) {
-      // @todo Log exception message.
+      $this->getLogger('grants_application')->error("Failed to upload file: $file_original_name on application: $application_number");
       return new JsonResponse(['error' => $this->t('Failed to upload the file. Please try again in a moment')], 500);
     }
 
@@ -200,9 +205,6 @@ final class ApplicationController extends ControllerBase {
       return new JsonResponse(status: 500);
     }
 
-    // @todo Check that events are added as normally HANDLER_ATT_OK.
-    // Https://helsinkisolutionoffice.atlassian.net/wiki/spaces/KAN/pages/
-    // 8671232440/Hakemuksen+elinkaaren+tapahtumat+Eventit.
     $file_entity->delete();
     $response = [
       'fileName' => $result['filename'],
@@ -211,7 +213,92 @@ final class ApplicationController extends ControllerBase {
       'size' => $result['size'],
     ];
 
+    // Add an upload event to the ATV-document.
+    try {
+      $this->eventsService->logEvent(
+        $application_number,
+        $this->eventsService->getEventTypes()['HANDLER_ATT_OK'],
+        "Uploaded a file $file_original_name",
+        $file_original_name,
+      );
+    }
+    catch (\Exception $e) {
+      // The event system is just a construct for manually tracking the state.
+      // Afaik, failing to add an event does not affect the program itself,
+      // it just helps admin-users to debug by checking the raw data.
+      $this->getLogger('grants_application')
+        ->error("Failed to log an event for file $file_original_name, application number: $application_number. Error: {$e->getMessage()}");
+    }
+
     return new JsonResponse($response);
+  }
+
+  /**
+   * Remove a file from ATV-document.
+   *
+   * The file cannot be removed if the application has already been submitted.
+   *
+   * @param string $application_number
+   *   The application number.
+   * @param string $attachmentId
+   *   The attachment id.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   The response.
+   */
+  public function removeFile(string $application_number, string $attachmentId): JsonResponse {
+    $ids = $this->entityTypeManager()
+      ->getStorage('application_submission')
+      ->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('application_number', $application_number)
+      ->execute();
+
+    if (
+      !$ids ||
+      !$submission = ApplicationSubmission::load(reset($ids))
+    ) {
+      return new JsonResponse(['error' => $this->t('Application not found')], 404);
+    }
+
+    if (!$submission->isDraft()) {
+      return new JsonResponse(['error' => $this->t('You are not allowed to remove the attachments any more.')], 403);
+    }
+
+    try {
+      $deleted = $this->atvService->deleteAttachment($application_number, $attachmentId);
+    }
+    catch (\throwable $e) {
+      // If file is no more present, we can just continue.
+      if ($e instanceof AtvDocumentNotFoundException) {
+        return new JsonResponse([], 200);
+      }
+
+      $this->getLogger('grants_application')
+        ->error("Failed to delete attachment $attachmentId on application $application_number: {$e->getMessage()}");
+      return new JsonResponse(['error' => $this->t('Failed to delete attachment')], 500);
+    }
+
+    if (!$deleted) {
+      return new JsonResponse(['error' => $this->t('Failed to delete attachment')], 500);
+    }
+
+    // Add an upload event to the ATV-document.
+    try {
+      $this->eventsService->logEvent(
+        $application_number,
+        $this->eventsService->getEventTypes()['HANDLER_ATT_DELETED'],
+        "Deleted a file $attachmentId",
+        $attachmentId,
+      );
+    }
+    catch (\Exception $e) {
+      // Failing to add an event is acceptable situation.
+      $this->getLogger('grants_application')
+        ->error("Failed to log an event for file id $attachmentId, application number: $application_number. Error: {$e->getMessage()}");
+    }
+
+    return new JsonResponse([], 200);
   }
 
   /**

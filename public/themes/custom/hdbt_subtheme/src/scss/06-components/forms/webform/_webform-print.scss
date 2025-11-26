@@ -1,3 +1,4 @@
+/* stylelint-disable max-nesting-depth -- @todo UHF-12501 */
 .webform-print-header,
 .webform-print-footer {
   display: none;
@@ -265,7 +266,6 @@
       }
 
       &-print {
-
         &-header {
           align-items: center;
           background: var(--color-white);
