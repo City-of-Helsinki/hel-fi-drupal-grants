@@ -186,7 +186,7 @@ elements: |
     '#title': 'Will the intended project activity be established as part of the basic activity of the applicant/other operator after the project? If so, indicate in the text field how and through what funding will the project be established.'
     '#counter_maximum_message': '%d/2500 characters remaining'
   info_onko_jatkohakemus:
-    '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Ett jakande eller negativt svar öppnar ytterligare en fråga</span></div></div></div>'
+    '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>An affirmative or negative answer opens a further question</span></div></div></div>'
   onko_kyseessa_jatkohakemus:
     '#title': 'Is this a follow-up application?'
     '#help_title': 'Is this a follow-up application?'
