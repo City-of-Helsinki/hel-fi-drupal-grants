@@ -68,7 +68,8 @@
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "ramsey/uuid": "^4.3",
-        "symfony/console": "^6.4"
+        "symfony/console": "^6.4",
+        "wikimedia/composer-merge-plugin": "^2.1"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
@@ -90,11 +91,12 @@
             "cweagans/composer-patches": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/core-composer-scaffold": true,
+            "mglaman/composer-drupal-lenient": true,
             "oomphinc/composer-installers-extender": true,
             "php-http/discovery": true,
             "phpstan/extension-installer": true,
             "tbachert/spi": false,
-            "mglaman/composer-drupal-lenient": true
+            "wikimedia/composer-merge-plugin": true
         },
         "audit": {
             "abandoned": "report",
@@ -172,6 +174,19 @@
         },
         "drupal-lenient": {
             "allowed-list": ["drupal/big_pipe_sessionless"]
+        },
+        "merge-plugin": {
+            "include": [
+                "public/modules/contrib/webform/composer.libraries.json"
+            ],
+            "recurse": true,
+            "replace": false,
+            "ignore-duplicates": false,
+            "merge-dev": true,
+            "merge-extra": false,
+            "merge-extra-deep": false,
+            "merge-replace": true,
+            "merge-scripts": false
         }
     },
     "repositories": [
