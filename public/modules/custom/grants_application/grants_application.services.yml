@@ -24,3 +24,5 @@ services:
   Drupal\grants_application\Avus2Integration: ~
 
   Drupal\grants_application\Form\FormValidator: ~
+
+  Drupal\grants_application\ApplicationRepository: ~

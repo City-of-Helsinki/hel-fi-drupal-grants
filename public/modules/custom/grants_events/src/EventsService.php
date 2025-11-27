@@ -128,7 +128,7 @@ class EventsService {
    *   If we have already built-up event data, use this.
    *
    * @return array|null
-   *   EventID if success, otherways NULL
+   *   EventID if success, otherwise NULL
    *
    * @throws \Drupal\grants_events\EventException
    */
