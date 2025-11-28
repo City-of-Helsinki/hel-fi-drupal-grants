@@ -20,10 +20,7 @@ final class JsonSchemaValidatorTest extends KernelTestBase {
   public function testValidator(): void {
     /** @var JsonSchemaValidator $validator */
     $validator = $this->container->get(JsonSchemaValidator::class);
-
-
-    $x = '{"$id": "https://example.com/address.schema.json","$schema": "https://json-schema.org/draft/2020-12/schema","description": "An address similar to http://microformats.org/wiki/h-card","type": "object","properties": {"test": {"type": "string"}}}';
-
-    $result = $validator->validate(json_decode('{"test": "value"}'), json_decode($x));
+    $schema = '{"$id": "https://example.com/address.schema.json","$schema": "https://json-schema.org/draft/2020-12/schema","description": "An address similar to http://microformats.org/wiki/h-card","type": "object","properties": {"test": {"type": "string"}}}';
+    $result = $validator->validate(json_decode('{"test": "value"}'), json_decode($schema));
   }
 }
