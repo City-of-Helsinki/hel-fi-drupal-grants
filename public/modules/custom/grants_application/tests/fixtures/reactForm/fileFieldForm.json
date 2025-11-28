@@ -3,7 +3,7 @@
     "attachments_section" : {
       "other_attachment_fieldset" : {
         "file" : {
-          "fileDescription" : "kuvaus liitetiedostosta tulee tänne",
+          "description" : "kuvaus liitetiedostosta tulee tänne",
           "fileName" : "testfile.pdf",
           "integrationID" : "https://example.com/v1/documents/aaaaaaaa-1111-2222-3333-bbbbbbcccccc/attachments/999999/",
           "isDeliveredLater" : false,
