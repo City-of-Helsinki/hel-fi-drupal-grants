@@ -662,7 +662,7 @@
       "valueType": "double"
     }
   },
-  "compensation.budgetInfo.incomeGroupsArrayStatic.incomeGroupName": {
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeGroupName": {
     "datasource": "form_data",
     "source": null,
     "mapping_type": "hardcoded",
@@ -671,20 +671,20 @@
     }
   },
 
-  "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.0": {
+  "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic": {
     "datasource": "form_data",
     "source": "hardcoded",
     "mapping_type": "hardcoded",
     "data": {
-      "0": {}
+      "costRowsArrayStatic": {}
     }
   },
-  "compensation.budgetInfo.costGroupsArrayStatic.0.otherCostRowsArrayStatic.1": {
+  "compensation.budgetInfo.costGroupsArrayStatic.0.otherCostRowsArrayStatic": {
     "datasource": "form_data",
     "source": "hardcoded",
     "mapping_type": "hardcoded",
     "data": {
-      "0": {}
+      "otherCostRowsArrayStatic": {}
     }
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.costGroupName": {

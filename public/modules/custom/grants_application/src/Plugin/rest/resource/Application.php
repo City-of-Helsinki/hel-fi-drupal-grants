@@ -298,6 +298,7 @@ final class Application extends ResourceBase {
     // Start: Check if the bank file is already added to the ATV document.
     $selected_bank_account_number = $form_data["applicant_info"]["bank_account"]["bank_account"];
     $bank_file = FALSE;
+    $uploadedBankFile = FALSE;
     // @todo Add file type check as well (filetype = 45 etc).
     foreach ($grants_profile_data->getBankAccounts() as $bank_account) {
       $bank_file = array_find($document->getAttachments(), fn(array $attachment) => $bank_account['confirmationFile'] === $attachment['filename']);
@@ -339,7 +340,7 @@ final class Application extends ResourceBase {
           $actual_file,
         );
         $actual_file->delete();
-        // @todo Add ATT_HANDLER_OK event here probably.
+        $uploadedBankFile = TRUE;
       }
 
       // After uploading the bank file, reload the document to verify that it exists.
@@ -419,8 +420,18 @@ final class Application extends ResourceBase {
     // @todo Use drupal uuid service maybe ?
     $save_id = Uuid::uuid4()->toString();
 
-    // We don't use the event api to apply this particular event.
-    // instead we just put the event into the document.
+    // We add the events manually instead of requesting integration.
+    // Requesting integration could possibly cause a race condition.
+    if ($uploadedBankFile) {
+      $event = $this->eventsService->getEventData(
+        'HANDLER_ATT_OK',
+        $application_number,
+        "Attachment uploaded for the IBAN: $selected_bank_account_number.",
+        $save_id
+      );
+      $this->eventsService->addNewEventForApplication($document, $event);
+    }
+
     $event = $this->eventsService->getEventData(
       'HANDLER_SEND_INTEGRATION',
       $application_number,
