@@ -15,6 +15,7 @@ use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Helper;
+use Drupal\grants_application\JsonSchemaValidator;
 use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_attachments\AttachmentHandler;
@@ -104,6 +105,7 @@ final class Application extends ResourceBase {
     private EventsService $eventsService,
     private AttachmentHandler $attachmentHandler,
     private ApplicationStatusService $applicationStatusService,
+    private JsonSchemaValidator $jsonSchemaValidator,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -130,6 +132,7 @@ final class Application extends ResourceBase {
       $container->get('grants_events.events_service'),
       $container->get('grants_attachments.attachment_handler'),
       $container->get('grants_handler.application_status_service'),
+      $container->get(JsonSchemaValidator::class),
     );
   }
 
