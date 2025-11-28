@@ -595,19 +595,19 @@
         "value": "",
         "valueType": "bool"
       },
-      "unprovided_space_details.location_total_rent": {
+      "unprovided_space_details.unprovided_rent_amount": {
         "ID": "totalRent",
         "label": "Euroa yhteensä lukuvuoden aikana €",
         "value": "",
         "valueType": "double"
       },
-      "unprovided_space_details.location_rent_start_time": {
+      "unprovided_space_details.unprovided_rent_time_start": {
         "ID": "rentTimeBegin",
         "label": "Vuokra-aika lukuvuoden aikana, alkaen",
         "value": "",
         "valueType": "datetime"
       },
-      "unprovided_space_details.location_rent_end_time": {
+      "unprovided_space_details.unprovided_rent_time_end": {
         "ID": "rentTimeEnd",
         "label": "Vuokra-aika lukuvuoden aikana, päättyen",
         "value": "",

@@ -154,7 +154,7 @@ class JsonMapper {
     $sourceValues = $this->getMultipleValues($dataSources[$definition['datasource']], $sourcePath);
 
     // Source value contains multiple objects which contains multiple fields.
-    // The object may also contain nested value.
+    // The fields may also contain nested values.
     foreach ($sourceValues as $z => $singleObject) {
       $values = [];
       foreach ($singleObject as $fieldName => $value) {
@@ -168,7 +168,7 @@ class JsonMapper {
         }
         else {
           $valueArray = $definition['data'][$fieldName];
-          $valueArray['value'] = (string) $value ?? "";
+          $valueArray['value'] =  is_bool($value) ? ($value ? "true" : "false") : (string) $value;
           $values[] = $valueArray;
         }
       }
