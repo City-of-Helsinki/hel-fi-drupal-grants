@@ -111,6 +111,11 @@ class JsonMapper {
     $sourcePath = $definition['source'];
 
     $value = $this->getValue($dataSources[$definition['datasource']], $sourcePath);
+
+    if (isset($definition['data']['valueType']) && $definition['data']['valueType'] === 'bool') {
+      $value = $value ? 'true' : 'false';
+    }
+
     $this->setTargetValue($data, $targetPath, $value, $definition);
   }
 
@@ -149,12 +154,23 @@ class JsonMapper {
     $sourceValues = $this->getMultipleValues($dataSources[$definition['datasource']], $sourcePath);
 
     // Source value contains multiple objects which contains multiple fields.
-    foreach ($sourceValues as $singleObject) {
+    // The object may also contain nested value.
+    foreach ($sourceValues as $z => $singleObject) {
       $values = [];
       foreach ($singleObject as $fieldName => $value) {
-        $valueArray = $definition['data'][$fieldName];
-        $valueArray['value'] = (string) $value ?? "";
-        $values[] = $valueArray;
+        if (is_array($value)) {
+          foreach($value as $subfield => $subValue) {
+            $definitionName = $fieldName.'.'.$subfield;
+            $valueArray = $definition['data'][$definitionName];
+            $valueArray['value'] = (string) $subValue ?? "";
+            $values[] = $valueArray;
+          }
+        }
+        else {
+          $valueArray = $definition['data'][$fieldName];
+          $valueArray['value'] = (string) $value ?? "";
+          $values[] = $valueArray;
+        }
       }
       $this->setTargetValue($data, $targetPath, $values, $definition);
     }
@@ -257,7 +273,7 @@ class JsonMapper {
     if (count($indexes) === 1) {
       $value = $sourceData[$indexes[0]];
       if (is_null($value)) {
-        return [];
+        return "";
       }
 
       if (is_array($value)) {
