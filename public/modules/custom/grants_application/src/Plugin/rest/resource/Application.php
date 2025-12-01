@@ -384,7 +384,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Unable to combine datasources, bad atv-connection maybe?
-      $this->logger->critical('Error while during POST-request, unable to combine datasources: ' . $e->getMessage());
+      $this->logger->critical('Error during POST-request, unable to combine datasources: ' . $e->getMessage());
       return new JsonResponse(
         ['error' => $this->t('An error occurred while sending the application. Please try again later')],
         500,
@@ -594,7 +594,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Unable to combine datasources, bad atv-connection maybe?
-      $this->logger->critical('Error while during PATCH-request, unable to combine datasources: ' . $e->getMessage());
+      $this->logger->critical('Error during PATCH-request, unable to combine datasources: ' . $e->getMessage());
       return new JsonResponse(
         ['error' => $this->t('An error occurred while sending the application. Please try again later')],
         500,
