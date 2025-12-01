@@ -232,11 +232,7 @@ final class Application extends ResourceBase {
     int $application_type_id,
     ?string $application_number = NULL,
   ): JsonResponse {
-    // @todo Sanitize & validate & authorize properly.
-    /// phpcs:disable
-    // NOSONAR
     $content = json_decode($request->getContent(), TRUE);
-    // NOSONAR
     [
       'form_data' => $form_data,
       'attachments' => $attachments,
@@ -254,6 +250,11 @@ final class Application extends ResourceBase {
     if (!$application_number) {
       // Should not be possible.
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
+    }
+
+    $errors = $this->validate($application_type_id, $form_data);
+    if (is_array($errors)) {
+      return new JsonResponse(['error' => $errors], 400);
     }
 
     try {
@@ -287,8 +288,8 @@ final class Application extends ResourceBase {
 
     // Here we do the actual work.
     // Handle bank account file upload / other bank account shenanigans.
-    // The bank account file handling causes extra document load and save.
-    // No need to do anything with the document before this has been done.
+    // - The bank account file handling causes extra document load and save.
+    // - No need to do anything with the document before this has been done.
     // Map the React-form data to Avus2-format.
     // Update the ATV document one last time before sending to integration.
     // Send to integration.
@@ -534,6 +535,11 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
+    $errors = $this->validate($application_type_id, $form_data);
+    if (is_array($errors)) {
+      return new JsonResponse(['error' => $errors], 400);
+    }
+
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
@@ -663,6 +669,30 @@ final class Application extends ResourceBase {
     }
 
     return $collection;
+  }
+
+  /**
+   * @param int $applicationTypeId
+   *   The application type id.
+   * @param array $formData
+   *   The form data.
+   *
+   * @return bool|array
+   *   Is valid or array of errors.
+   */
+  private function validate(int $applicationTypeId, array $formData): bool|array {
+    $settings = $this->formSettingsService->getFormSettings($applicationTypeId);
+    $results = $this->jsonSchemaValidator->validate(json_decode(json_encode($formData)), json_decode(json_encode($settings->getSchema())));
+
+    if (is_array($results)) {
+      $errors = [];
+      foreach ($results as $error) {
+        $errors[] = $error['message'];
+      }
+      $results = $errors;
+    }
+
+    return $results;
   }
 
   /**
