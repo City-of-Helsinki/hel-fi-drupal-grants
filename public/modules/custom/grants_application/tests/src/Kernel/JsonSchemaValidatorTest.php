@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel;
 
+use Drupal\grants_application\Form\FormSettings;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\JsonSchemaValidator;
 
 /**
@@ -17,6 +19,9 @@ final class JsonSchemaValidatorTest extends KernelTestBase {
     'grants_application',
   ];
 
+  /**
+   * Test validator.
+   */
   public function testValidator(): void {
     /** @var JsonSchemaValidator $validator */
     $validator = $this->container->get(JsonSchemaValidator::class);
@@ -36,4 +41,19 @@ final class JsonSchemaValidatorTest extends KernelTestBase {
     $this->assertIsArray($result3);
     $this->assertTrue(isset($result3[0]['message']));
   }
+
+  /**
+   * Test ID58 with real schema and real test data.
+   */
+  public function testID58FormValidation(): void {
+    $settingsService = $this->container->get(FormSettingsService::class);
+    $schema = $settingsService->getFormSettings(58)->getSchema();
+    $data = file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58.json');
+
+    $validator = $this->container->get(JsonSchemaValidator::class);
+    $result = $validator->validate(json_decode($data), json_decode(json_encode($schema)));
+
+    $this->assertTrue($result);
+  }
+
 }
