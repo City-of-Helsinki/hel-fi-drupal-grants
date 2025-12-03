@@ -145,9 +145,9 @@ class TypedDataToDocumentContentWithWebform {
           $metaData = [];
 
           // ID70 form shares ID and applicationType between multiple forms.
-          // Some of the fields are set only to one form and if a field 
+          // Some of the fields are set only to one form and if a field
           // has default value, the default value is automatically added to
-          // Avus2-submission. This causes problems since the field does not 
+          // Avus2-submission. This causes problems since the field does not
           // actually exist and won't have a label. Avus2-users won't be able
           // to recognize the data without a label.
           $labelOverwrites = [
