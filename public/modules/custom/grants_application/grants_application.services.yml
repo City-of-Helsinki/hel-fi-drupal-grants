@@ -32,3 +32,5 @@ services:
       - '@JsonSchema\Validator'
 
   JsonSchema\Validator: ~
+
+  Drupal\grants_application\ApplicationService: ~

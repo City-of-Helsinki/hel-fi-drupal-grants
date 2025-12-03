@@ -9,6 +9,7 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
@@ -330,10 +331,20 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    return new JsonResponse([
+    $result = [
       'application_number' => $application_number,
       'document_id' => $document->getId(),
-    ], 200);
+    ];
+
+    if ($copy_from) {
+      $result['redirect_url'] = Url::fromRoute(
+        'helfi_grants.forms_app',
+        ['id' => $application_type_id, 'application_number' => $application_number],
+        ['absolute' => TRUE],
+      )->toString();
+    }
+
+    return new JsonResponse($result, 200);
   }
 
   /**

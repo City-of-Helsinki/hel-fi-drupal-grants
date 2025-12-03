@@ -1607,7 +1607,7 @@ function grants_handler_preprocess_html(array &$variables) {
  * @return \Drupal\Core\Url
  *   URL object.
  */
-function _grants_handler_get_edit_url($webform, $submission, $submissionData): Url {
+function _grants_handler_get_action_urls($webform, $submission, $submissionData): array {
   $attributes = [
     'data-drupal-selector' => 'application-edit-link',
     'class' => [
@@ -1633,28 +1633,47 @@ function _grants_handler_get_edit_url($webform, $submission, $submissionData): U
   }
 
   if ($react_submission_ids) {
-    return Url::fromRoute(
-      'helfi_grants.forms_app_edit',
+    return [
+      Url::fromRoute(
+        'helfi_grants.forms_app_edit',
+        [
+          'application_number' => $submissionData['application_number'],
+          'id' => $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID'),
+        ],
+        [
+          'attributes' => $attributes,
+        ]
+      ),
+      Url::fromRoute(
+        'helfi_grants.forms_app_copy_application',
+        [
+          'original_id' => $submissionData['application_number'],
+          'application_type_id' => $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID'),
+        ],
+      ),
+    ];
+  }
+
+  return [
+    Url::fromRoute(
+      'grants_handler.edit_application',
       [
-        'application_number' => $submissionData['application_number'],
-        'id' => $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID'),
+        'webform' => $webform->id(),
+        'webform_submission' => $submission->id(),
       ],
       [
         'attributes' => $attributes,
       ]
-    );
-  }
-
-  return Url::fromRoute(
-    'grants_handler.edit_application',
-    [
-      'webform' => $webform->id(),
-      'webform_submission' => $submission->id(),
-    ],
-    [
-      'attributes' => $attributes,
-    ]
-  );
+    ),
+    Url::fromRoute(
+      'grants_handler.copy_application',
+      [
+        'webform' => $webform->id(),
+        'webform_submission' => $submission->id(),
+      ],
+      []
+    ),
+  ];
 }
 
 /**
@@ -1699,7 +1718,7 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
   $printApplicationLink = Link::fromTextAndUrl($printApplicationLinkText, $printApplicationUrl);
   $variables['printApplicationLink'] = $printApplicationLink;
 
-  $editApplicationUrl = _grants_handler_get_edit_url($webform, $submission, $submissionData);
+  [$editApplicationUrl, $copyApplicationUrl] = _grants_handler_get_action_urls($webform, $submission, $submissionData);
 
   if ($applicationStatusService->isSubmissionEditable($submission)) {
     $editApplicationLinkText = [
@@ -1727,14 +1746,6 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
     !$isApplicationArchived &&
     $isApplicationOpen
   ) {
-
-    $copyApplicationUrl = Url::fromRoute(
-      'grants_handler.copy_application',
-      [
-        'submission_id' => $submissionData['application_number'],
-      ]
-    );
-
     // Attach the JavaScript file.
     $variables['#attached']['library'][] = 'grants_handler/grants-dialog';
     $variables['#attached']['library'][] = 'grants_handler/application-copy-dialog';

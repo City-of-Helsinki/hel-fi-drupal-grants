@@ -9,6 +9,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
+use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
@@ -48,6 +49,8 @@ final class ApplicationController extends ControllerBase {
     private readonly ApplicationStatusService $applicationStatusService,
     #[Autowire(service: 'grants_events.events_service')]
     private readonly EventsService $eventsService,
+    #[Autowire(service: 'Drupal\grants_application\ApplicationService')]
+    private readonly ApplicationService $applicationService,
   ) {
   }
 
@@ -131,6 +134,21 @@ final class ApplicationController extends ControllerBase {
         ],
       ],
     ];
+  }
+
+  public function copyApplication(int $application_type_id, string $original_id) {
+    $draft = $this->applicationService->createDraft($application_type_id, $original_id);
+
+    return new RedirectResponse(
+      Url::fromRoute(
+        'helfi_grants.forms_app',
+        [
+          'id' => $application_type_id,
+          'application_number' => $draft['application_number'],
+        ],
+        ['absolute' => TRUE],
+      )->toString()
+    );
   }
 
   /**

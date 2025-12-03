@@ -104,19 +104,7 @@ export const createFormDataAtom = (
   const getInitialValue = () => {
     const sessionItem = JSON.parse(sessionStorage.getItem(key));
 
-    if (
-      !sessionItem ||
-      // Handle old style session data without timestamp.
-      // @todo Remove this check after a few months of deployment.
-      !sessionItem?.timestamp
-    ) {
-      sessionStorage.setItem(
-        key,
-        JSON.stringify({
-          timestamp: timestamp || Math.floor(Date.now() / 1000),
-          data: initialValue,
-        }),
-      );
+    if (!sessionItem) {
       return initialValue;
     }
 
@@ -379,6 +367,7 @@ type avus2Data = {
     eventSource: string;
     eventTarget: string;
     eventType: string;
+    timeCreated: string;
     timeUpdated: string;
   }>;
   messages: any[];
@@ -404,12 +393,11 @@ export const isReadOnlyAtom = atom((_get) => {
   const isBeingSubmitted = _get(isBeingSubmittedAtom);
 
   return (
-    submitState ===
-      ![
-        SubmitStates.DRAFT,
-        SubmitStates.RECEIVED,
-        SubmitStates.PREPARING,
-      ].includes(submitState) || isBeingSubmitted
+    ![
+      SubmitStates.DRAFT,
+      SubmitStates.RECEIVED,
+      SubmitStates.PREPARING,
+    ].includes(submitState) || isBeingSubmitted
   );
 });
 
