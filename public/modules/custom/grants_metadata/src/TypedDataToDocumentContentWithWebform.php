@@ -144,6 +144,21 @@ class TypedDataToDocumentContentWithWebform {
           $label = $definition->getLabel();
           $metaData = [];
 
+          // ID70 form shares ID and applicationType between multiple forms.
+          // Some of the field are present only on one application and the
+          // fields have default value which causes them to be added to the
+          // Avus2-submission. Since they don't have actual definition, they
+          // don't have a label. Avus2-users won't be able to recognize the
+          // field without a label.
+          $labelOverwrites = [
+            'hankesuunnitelma_avustuksen_kesto' => 'Hankesuunnitelma avustuksen kesto',
+            'haettava_avustussumma_2025' => 'Haettava avustussumma 2025',
+          ];
+
+          if (!$label && in_array($propertyName, array_keys($labelOverwrites))) {
+            $label = $labelOverwrites[$propertyName];
+          }
+
           if ($propertyStructureCallback) {
             $documentStructure = array_merge_recursive(
               $documentStructure,
