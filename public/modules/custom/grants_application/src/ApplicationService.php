@@ -22,14 +22,24 @@ class ApplicationService {
   public function __construct(
     private readonly ApplicationNumberService $applicationNumberService,
     private readonly HelfiAtvService $atvService,
-    private readonly FormSettingsService $formSettingsService, 
+    private readonly FormSettingsService $formSettingsService,
     private readonly LanguageManagerInterface $languageManager,
     private readonly UserInformationService $userInformationService,
     private readonly UuidInterface $uuid,
-  )
-  {
+  ) {
   }
-  
+
+  /**
+   * Creates a new draft application.
+   *
+   * @param int $application_type_id
+   *   The application type ID.
+   * @param string|null $copy_from
+   *   The application number to copy from.
+   *
+   * @return array
+   *   The created draft application data.
+   */
   public function createDraft(int $application_type_id, string|null $copy_from = NULL): array {
     $settings = $this->formSettingsService->getFormSettings($application_type_id);
 
@@ -42,8 +52,8 @@ class ApplicationService {
 
     $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
     $selected_company = $this->userInformationService->getSelectedCompany();
-    $user_data = $this->userInformationService->getUserData();    
-    
+    $user_data = $this->userInformationService->getUserData();
+
     $application_uuid = $this->uuid->generate();
     $env = Helper::getAppEnv();
 
@@ -79,9 +89,9 @@ class ApplicationService {
     $document->setContent([
       'form_data' => $form_data,
       'compensation' => [
-        'applicantInfoArray' => []
+        'applicantInfoArray' => [],
       ],
-      'formUpdate' => false,
+      'formUpdate' => FALSE,
       'statusUpdates' => [],
       'events' => [],
       'messages' => [],
@@ -100,7 +110,7 @@ class ApplicationService {
       'created' => $now,
       'changed' => $now,
     ])
-    ->save();
+      ->save();
 
     $result = [
       'application_number' => $application_number,

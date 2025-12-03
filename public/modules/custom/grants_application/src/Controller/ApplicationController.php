@@ -136,6 +136,17 @@ final class ApplicationController extends ControllerBase {
     ];
   }
 
+  /**
+   * Copy an existing application to a new draft.
+   *
+   * @param int $application_type_id
+   *   The application type ID.
+   * @param string $original_id
+   *   The original application number to copy from.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   The redirect response.
+   */
   public function copyApplication(int $application_type_id, string $original_id) {
     $draft = $this->applicationService->createDraft($application_type_id, $original_id);
 
