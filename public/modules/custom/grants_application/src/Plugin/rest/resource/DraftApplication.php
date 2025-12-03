@@ -9,6 +9,7 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
@@ -37,7 +38,7 @@ use Symfony\Component\Routing\RouteCollection;
   label: new TranslatableMarkup("Application"),
   uri_paths: [
     "canonical" => "/applications/{application_type_id}/{application_number}",
-    "create" => "/applications/{application_type_id}/{application_number}",
+    "create" => "/applications/{application_type_id}/{application_number}/{copy_from?}",
     "edit" => "/applications/{application_type_id}/{application_number}",
   ]
 )]
@@ -229,17 +230,32 @@ final class DraftApplication extends ResourceBase {
    *
    * @param int $application_type_id
    *   The application type id.
+   * @param string|null $copy_from
+   *   The application number to copy from.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
-  public function post(int $application_type_id): JsonResponse {
+  public function post(int $application_type_id, string|null $copy_from = NULL): JsonResponse {
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
     catch (\Exception $e) {
       // Cannot find form by application type id.
       return new JsonResponse([], 404);
+    }
+
+    $form_data = [];
+    if ($copy_from) {
+      try {
+        $copy_document = $this->atvService->getDocument($copy_from);
+        $copy_content = $copy_document->getContent();
+        $form_data = $copy_content['form_data'] ?? $copy_content['compensation']['form_data'];
+      }
+      catch (\Throwable $e) {
+        // Unable to fetch the document to copy from.
+        return new JsonResponse([], 500);
+      }
     }
 
     try {
@@ -284,7 +300,7 @@ final class DraftApplication extends ResourceBase {
     // Grants_events requires the events-array to exist.
     // And compensation must be json-object.
     $document->setContent([
-      'form_data' => [],
+      'form_data' => $form_data,
       'compensation' => [
         'applicantInfoArray' => []
       ],
@@ -315,10 +331,20 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    return new JsonResponse([
+    $result = [
       'application_number' => $application_number,
       'document_id' => $document->getId(),
-    ], 200);
+    ];
+
+    if ($copy_from) {
+      $result['redirect_url'] = Url::fromRoute(
+        'helfi_grants.forms_app',
+        ['id' => $application_type_id, 'application_number' => $application_number],
+        ['absolute' => TRUE],
+      )->toString();
+    }
+
+    return new JsonResponse($result, 200);
   }
 
   /**

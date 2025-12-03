@@ -1,20 +1,16 @@
 // biome-ignore-all lint/correctness/useJsxKeyInIterable: @todo UHF-12501
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
-import {
-  Button,
-  ButtonPresetTheme,
-  ButtonVariant,
-  IconCopy,
-  IconPrinter,
-} from 'hds-react';
+import { Button, ButtonPresetTheme, ButtonVariant, IconCopy } from 'hds-react';
 import { DateTime } from 'luxon';
 import type { RJSFSchema } from '@rjsf/utils';
 import { useAtomValue } from 'jotai';
 
-import { avus2DataAtom, getFormTitleAtom } from '../store';
+import { avus2DataAtom, getFormConfigAtom, getFormTitleAtom } from '../store';
 import { StatusLabels } from '../enum/StatusLabels';
 import { SubmitStates } from '../enum/SubmitStates';
+import { useState } from 'react';
+import { Requests } from '../Requests';
 
 export const FormSummary = ({
   formData,
@@ -23,8 +19,10 @@ export const FormSummary = ({
   formData: any;
   schema: RJSFSchema;
 }) => {
+  const [disableActions, setDisableActions] = useState(false);
   const avus2Data = useAtomValue(avus2DataAtom);
   const formTitle = useAtomValue(getFormTitleAtom);
+  const { applicationNumber, token } = useAtomValue(getFormConfigAtom);
 
   const getSentDate = () => {
     const date = avus2Data?.statusUpdates?.find(
@@ -48,25 +46,46 @@ export const FormSummary = ({
     return `${StatusLabels[event.eventDescription]}: ${date.setLocale('fi').toLocaleString(DateTime.DATETIME_MED)}`;
   });
 
+  const copyApplication = async () => {
+    setDisableActions(true);
+    const response = await Requests.DRAFT_APPLICATION_CREATE(
+      '58',
+      token,
+      applicationNumber,
+    );
+
+    if (response.ok) {
+      const { redirect_url } = await response.json();
+      window.location.href = redirect_url;
+      return;
+    }
+
+    throw new Error('Failed to copy application');
+  };
+
   return (
     <div className='webform-submission-information'>
       <div className='webform-submission-information__row webform-submission-information__row-top'>
         <h4>{formTitle}</h4>
         <div className='webform-submission-information__supportlinks'>
+          {/* @todo: Enable when print functionality is ready
+            <Button
+              iconStart={<IconPrinter />}
+              theme={ButtonPresetTheme.Black}
+              variant={ButtonVariant.Supplementary}
+            >
+              {Drupal.t(
+                'Print application',
+                {},
+                { context: 'Grants application: Submitted form' },
+              )}
+            </Button>
+          */}
           <Button
-            iconStart={<IconPrinter />}
-            theme={ButtonPresetTheme.Black}
-            variant={ButtonVariant.Supplementary}
-          >
-            {Drupal.t(
-              'Print application',
-              {},
-              { context: 'Grants application: Submitted form' },
-            )}
-          </Button>
-          <Button
+            disabled={disableActions}
             iconStart={<IconCopy />}
             theme={ButtonPresetTheme.Black}
+            onClick={copyApplication}
             variant={ButtonVariant.Supplementary}
           >
             {Drupal.t(
