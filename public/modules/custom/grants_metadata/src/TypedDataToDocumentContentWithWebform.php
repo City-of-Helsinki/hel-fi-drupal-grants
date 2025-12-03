@@ -147,9 +147,10 @@ class TypedDataToDocumentContentWithWebform {
           // ID70 form shares ID and applicationType between multiple forms.
           // Some of the field are present only on one application and the
           // fields have default value which causes them to be added to the
-          // Avus2-submission. Since they don't have actual definition, they
-          // don't have a label. Avus2-users won't be able to recognize the
-          // field without a label.
+          // Avus2-submission even if the field does not actually exist.
+          // Since the field might not have a definition, they might not have
+          // a label. Avus2-users won't be able to recognize a value without
+          // a label.
           $labelOverwrites = [
             'hankesuunnitelma_avustuksen_kesto' => 'Hankesuunnitelma avustuksen kesto',
             'haettava_avustussumma_2025' => 'Haettava avustussumma 2025',
