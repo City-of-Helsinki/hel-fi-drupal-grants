@@ -1604,8 +1604,8 @@ function grants_handler_preprocess_html(array &$variables) {
  * @param array $submissionData
  *   Submission data array.
  *
- * @return \Drupal\Core\Url
- *   URL object.
+ * @return array
+ *   Array of edit and copy URLs.
  */
 function _grants_handler_get_action_urls($webform, $submission, $submissionData): array {
   $attributes = [
