@@ -1602,7 +1602,7 @@ submit the application only after you have provided all the necessary informatio
         $this->submittedFormData
       );
 
-      // If application uploaded succesfully.
+      // If application uploaded successfully.
       if ($applicationUploadStatus) {
         // Erase other messages.
         $this->messenger()->deleteAll();
