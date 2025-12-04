@@ -81,4 +81,14 @@ final class FormSettings {
     return FALSE;
   }
 
+  /**
+   * Get form schema.
+   *
+   * @return array
+   *   The form schema.
+   */
+  public function getSchema(): array {
+    return $this->schema;
+  }
+
 }

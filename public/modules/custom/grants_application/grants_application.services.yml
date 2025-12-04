@@ -26,3 +26,9 @@ services:
   Drupal\grants_application\Form\FormValidator: ~
 
   Drupal\grants_application\ApplicationRepository: ~
+
+  Drupal\grants_application\JsonSchemaValidator:
+    arguments:
+      - '@JsonSchema\Validator'
+
+  JsonSchema\Validator: ~
