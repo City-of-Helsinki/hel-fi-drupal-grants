@@ -40,6 +40,9 @@ function hdbt_subtheme_csp_policy_alter(Csp $policy): void {
   $inline_javascript = _hdbt_subtheme_get_inline_javascript();
   $cspHelper = \Drupal::service('csp.policy_helper');
   foreach ($inline_javascript as $script) {
+    if (!$script) {
+      continue;
+    }
     $hash = Csp::calculateHash($script);
     $cspHelper->appendHash($policy, 'script', 'elem', ['unsafe-inline'], $hash);
   }
@@ -740,6 +743,10 @@ function hdbt_subtheme_preprocess_tpr_service_channel(array &$variables): void {
  * @see hdbt_csp_policy_alter()
  */
 function _hdbt_subtheme_get_inline_javascript(?string $script_id = NULL): string|array|null {
+  if (!class_exists(JsInliner::class)) {
+    return NULL;
+  }
+
   $inliner = \Drupal::service(JsInliner::class);
 
   $js = [
