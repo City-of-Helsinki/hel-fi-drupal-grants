@@ -14,6 +14,8 @@ final readonly class JsonSchemaValidator {
   }
 
   /**
+   * Validate the submission against schema
+   * 
    * @param $value
    *   The value to validate, a result of json_decode function call.
    * @param $schema
