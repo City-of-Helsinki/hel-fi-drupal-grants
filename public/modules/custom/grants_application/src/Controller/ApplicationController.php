@@ -148,7 +148,16 @@ final class ApplicationController extends ControllerBase {
    *   The redirect response.
    */
   public function copyApplication(int $application_type_id, string $original_id) {
-    $draft = $this->applicationService->createDraft($application_type_id, $original_id);
+    try {
+      $draft = $this->applicationService->createDraft($application_type_id, $original_id);
+    } catch (\throwable $e) {
+      $this->messenger()
+        ->addError($this->t('Failed to copy the application. Please try again later.'));
+
+      return new RedirectResponse(
+        Url::fromRoute('grants_oma_asiointi.applications_list')->toString()
+      );
+    }
 
     return new RedirectResponse(
       Url::fromRoute(
