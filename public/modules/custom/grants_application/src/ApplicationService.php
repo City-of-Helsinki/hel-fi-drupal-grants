@@ -53,7 +53,8 @@ class ApplicationService {
         $copy_from,
         $this->userInformationService->getGrantsProfileContent()->getBusinessId(),
       );
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       $this->logger->error('Unable to fetch application to copy: @message', [
         '@message' => $e->getMessage(),
         'application_number' => $copy_from,
@@ -159,21 +160,22 @@ class ApplicationService {
    *
    * @param array $form_data
    *   The form data array.
+   *
    * @return array
-   *  The form data array without attachments.
+   *   The form data array without attachments.
    */
-  private function removeAttachmentsFromCopiedDocument(array $form_data): array { 
+  private function removeAttachmentsFromCopiedDocument(array $form_data): array {
     $removeKeys = function (array $data) use (&$removeKeys) {
       foreach ($data as $key => $value) {
         if ($key === 'file') {
           unset($data[$key]);
-        } elseif (is_array($value)) {
+        }
+        elseif (is_array($value)) {
           $data[$key] = $removeKeys($value);
         }
       }
       return $data;
     };
-
 
     return $removeKeys($form_data);
   }
@@ -219,4 +221,5 @@ class ApplicationService {
 
     throw new \Exception('Application not found');
   }
+
 }
