@@ -241,6 +241,17 @@ final class ApplicationController extends ControllerBase {
   public function view(string $submission_id, string $view_mode = 'full', string $langcode = 'fi'): array {
     $view_mode = 'default';
 
+    // @todo Create templates for react-application.
+    $reactSubmission = FALSE;
+    if (\Drupal::moduleHandler()->moduleExists('grants_application')) {
+      $result = \Drupal::entityTypeManager()->getStorage('application_submission')
+        ->loadByProperties(['application_number' => $submission_id]);
+
+      if ($result) {
+        $reactSubmission = TRUE;
+      }
+    }
+
     try {
       $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($submission_id);
 
@@ -252,8 +263,9 @@ final class ApplicationController extends ControllerBase {
           $submissionData,
           $submissionData['application_number'],
           $submissionData['metadata']['saveid'] ?? '');
-
-        $this->showMessageForDataStatus($saveIdValidates);
+        if (!$reactSubmission) {
+          $this->showMessageForDataStatus($saveIdValidates);
+        }
 
         // Set webform submission template.
         $build = [
@@ -301,7 +313,6 @@ final class ApplicationController extends ControllerBase {
     catch (\Exception $e) {
       throw new NotFoundHttpException($e->getMessage());
     }
-    return [];
   }
 
   /**
