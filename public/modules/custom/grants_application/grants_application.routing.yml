@@ -17,6 +17,13 @@ helfi_grants.forms_app_edit:
   requirements:
     _role: helsinkiprofiili
 
+helfi_grants.debug_controller:
+  path: '/debugmapper'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\MapperDebugController::map'
+  requirements:
+    _access: "TRUE"
+
 helfi_grants.forms_app_upload:
   path: '/application/{application_number}/upload'
   defaults:
