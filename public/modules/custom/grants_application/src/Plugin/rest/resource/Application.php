@@ -288,13 +288,16 @@ final class Application extends ResourceBase {
     }
 
     // Here we do the actual work.
-    // Handle bank account file upload / other bank account shenanigans.
-    // The bank account file handling causes extra document load and save.
-    // No need to do anything with the document before this has been done.
-    // Map the React-form data to Avus2-format.
-    // Update the ATV document one last time before sending to integration.
-    // Send to integration.
-    // Update the custom submission entity.
+    // - Handle bank account file upload / other bank account shenanigans.
+    //   - The bank account file handling causes extra document load and save.
+    //   - No need to do anything with the document before this has been done.
+    // - Map the React-form data to Avus2-format.
+    // - Update the ATV document one last time before sending to integration.
+    //   - The atv document must be updated as 'SUBMITTED' at this point.
+    // - Send to integration.
+    //   - Set 'X-Case-Status'-headed to 'SUBMITTED'.
+    //   - After this point we are no longer allowed to touch the status.
+    // - Update the custom submission entity.
     // Start: Check if the bank file is already added to the ATV document.
     $selected_bank_account_number = $form_data["applicant_info"]["bank_account"]["bank_account"];
     $bank_file = FALSE;
@@ -364,7 +367,7 @@ final class Application extends ResourceBase {
 
     // @todo Better sanitation.
     // $document_data = ['form_data' => $form_data];
-
+    // Prepare the mapper, some of the data comes from external apis.
     $mappingFileName = "ID$application_type_id.json";
     $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/' . $mappingFileName), TRUE);
     $mapper = new JsonMapper($mapping);
@@ -389,6 +392,7 @@ final class Application extends ResourceBase {
       );
     }
 
+    // Do the actual mapping.
     $document_data = $mapper->map($dataSources);
 
     // Handle all files.
@@ -432,20 +436,9 @@ final class Application extends ResourceBase {
       $this->eventsService->addNewEventForApplication($document, $event);
     }
 
-    $event = $this->eventsService->getEventData(
-      'HANDLER_SEND_INTEGRATION',
-      $application_number,
-      'Send application to integration.',
-      $save_id
-    );
-    $this->eventsService->addNewEventForApplication($document, $event);
-
     if ($document->getContent()['events']) {
       $document_data['events'] = $document->getContent()['events'];
     }
-
-    // @todo Add SUBMITTED status here probably.
-    //$document->setStatus('SUBMITTED');
 
     // @codingStandardsIgnoreStart
     // Update the atv document before sending to integration.
@@ -457,24 +450,31 @@ final class Application extends ResourceBase {
     $document->setContent($document_data);
     // @codingStandardsIgnoreEnd
 
-    // @todo Save the form_data in separate atv doc.
-    // Also, on first save we also need to save to the actual ATV document.
-    $this->atvService->updateExistingDocument($document);
+    // Set the submitted -status right before sending to Avus2.
+    // The status is set as request header by integration-service.
+    $document->setStatus('SUBMITTED');
 
-    // @todo Make sure the formUpdate is set properly.
-    // Initial import from ATV MUST have formUpdate FALSE, and
-    // any subsequent update must have it as TRUE. The application status
-    // handling makes this possibly very complicated, hence separate method
-    // figuring it out.
-    // This comment^ is from GrantsHandler::getFormUpdate.
+    // @todo Varjo dokumentti-ticket, save the form_data in separate atv doc.
+    // Save the ATV-document directly one last time.
+    $latestDocument = $this->atvService->updateExistingDocument($document);
+
+    // Add the submit event to the events.
+    $event = $this->eventsService->getEventData(
+      'HANDLER_SEND_INTEGRATION',
+      $application_number,
+      'Send application to integration.',
+      $save_id
+    );
+    $this->eventsService->addNewEventForApplication($latestDocument, $event);
+
+    // On first AVUS2-submit formUpdate = FALSE and afterward only TRUE.
+    // check GrantsHandler::getFormUpdate for more detailed explanation.
     $success = FALSE;
     try {
-      $success = $this->integration->sendToAvus2($document, $application_number, $save_id);
+      $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id);
     }
     catch (\Exception $e) {
-      // Log the exception,
-      // return success = false to react.
-      // @todo Log the failure to send to integration and return.
+      $this->logger->error('Avus2 -POST-request failed: ' . $e->getMessage());
       return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
