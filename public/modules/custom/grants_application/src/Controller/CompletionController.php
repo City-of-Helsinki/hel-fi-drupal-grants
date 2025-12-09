@@ -5,9 +5,10 @@ namespace Drupal\grants_application\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
-use Drupal\grants_handler\ApplicationGetterService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -18,9 +19,9 @@ class CompletionController extends ControllerBase {
   /**
    * Getter service for applications.
    *
-   * @var \Drupal\grants_handler\ApplicationGetterService
+   * @var \Drupal\grants_application\Atv\HelfiAtvService
    */
-  protected ApplicationGetterService $applicationGetterService;
+  protected HelfiAtvService $helfiAtvService;
 
   /**
    * Create.
@@ -33,7 +34,7 @@ class CompletionController extends ControllerBase {
    */
   public static function create(ContainerInterface $container): CompletionController {
     $instance = parent::create($container);
-    $instance->applicationGetterService = $container->get('grants_handler.application_getter_service');
+    $instance->helfiAtvService = $container->get(HelfiAtvService::class);
     return $instance;
   }
 
@@ -46,7 +47,7 @@ class CompletionController extends ControllerBase {
    * @return array
    *   The render array.
    */
-  public function build(string $application_number): array {
+  public function build(string $application_number): array|RedirectResponse {
     $langcode = $this->languageManager()->getCurrentLanguage()->getId();
 
     try {
@@ -58,16 +59,30 @@ class CompletionController extends ControllerBase {
         ->execute();
     }
     catch (\Exception $e) {
-      // redirect to someplace else.
+      return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
     }
 
     if (!$entities) {
-      // redirect to someplace else.
+      return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
     }
 
     $entity = ApplicationSubmission::load(reset($entities));
 
-    // @todo Status string, view application link.
+    try {
+      $document = $this->helfiAtvService->getDocument($entity->get('application_number')->value);
+    }
+    catch (\Exception $e) {
+      \Drupal::messenger()->addError($this->t('Application not found.'));
+      return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
+    }
+
+    $status = $document->getStatus();
+
+    $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $config = \Drupal::config('grants_handler.settings');
+    $statusStrings = $config->get('statusStrings');
+    $humanReadableStatus = $statusStrings[$langCode][$status];
+
     $build = [
       '#theme' => 'grants_application_completion',
       '#applicationTimestamp' => date('Y-m-d h:i:s', (int) $entity->get('created')->value),
@@ -75,22 +90,14 @@ class CompletionController extends ControllerBase {
       '#langcode' => $langcode,
       '#applicationID' => $application_number,
       '#applicationNumber' => $application_number,
-      '#statusString' => 'DRAFT',
-      '#statusStringHumanReadable' => 'draft',
+      '#statusString' => $status,
+      '#statusStringHumanReadable' => $humanReadableStatus,
       '#ownApplicationsLink' => Url::fromRoute('grants_oma_asiointi.front'),
       '#viewApplicationLink' => $entity->getViewApplicationUrl(),
       '#printApplicationLink' => $entity->getPrintApplicationUrl(),
+      '#submissionObject' => $document,
     ];
 
-    try {
-      $submissionObject = $this->applicationGetterService->getAtvDocument($application_number);
-      $build['#submissionObject'] = $submissionObject;
-    }
-    catch (\Throwable $e) {
-      throw new NotFoundHttpException('Submission not found');
-    }
-
-    // The completion javascript should work as before.
     $base_url = \Drupal::request()->getSchemeAndHttpHost();
     $build['#attached']['drupalSettings']['grants_handler']['site_url'] = "$base_url/$langcode/";
     $build['#attached']['library'][] = 'grants_handler/application-status-check';
@@ -100,7 +107,7 @@ class CompletionController extends ControllerBase {
   /**
    * Get the title for the completion page.
    *
-   * @param string $submission_id
+   * @param string $application_number
    *   The submission id.
    *
    * @return \Drupal\Core\StringTranslation\TranslatableMarkup
