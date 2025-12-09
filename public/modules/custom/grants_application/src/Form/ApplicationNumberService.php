@@ -43,7 +43,7 @@ final class ApplicationNumberService {
       $savedSerial += 1000;
     }
 
-    $newSerial = $savedSerial + 4;
+    $newSerial = $savedSerial + 1;
 
     $application_number = self::getApplicationNumberInEnvFormat($env, (string) $application_type_id, (string) $newSerial);
 
