@@ -65,29 +65,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ],
       'haettava_avustussumma_2026' => [],
       'haettava_avustussumma_2027' => [],
-      'hankesuunnitelma_radios' => [
-        'type' => 'string',
-        'valueCallback' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'convertBooleanToYesNo',
-        ],
-        'webformValueExtracter' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'extractBooleanYesNoValue',
-        ],
-      ],
       'ensisijainen_taiteen_ala' => [],
-      'hankesuunnitelma_jatkohakemus' => [
-        'type' => 'string',
-        'valueCallback' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'convertBooleanToYesNo',
-        ],
-        'webformValueExtracter' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'extractBooleanYesNoValue',
-        ],
-      ],
       'avustuksen_kohde_yhdistys_toimintaryhma' => [],
       'avustuksen_kohde_tiivistelma' => [],
       'hankkeen_nimi' => [],

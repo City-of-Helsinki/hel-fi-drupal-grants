@@ -227,7 +227,12 @@ export const FormWrapper = ({
   const readSubmitStatus = useAtomCallback(
     useCallback((get) => get(getSubmitStatusAtom), []),
   );
-  const transformedData = transformData(data);
+  const transformedData = transformData({
+    ...data,
+    form_data: data.form_data?.form_data
+      ? data.form_data.form_data
+      : data.form_data,
+  });
   const translatedData = useTranslateData(transformedData);
   const setAvus2Data = useSetAtom(avus2DataAtom);
 

@@ -9,6 +9,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
+use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
@@ -48,6 +49,8 @@ final class ApplicationController extends ControllerBase {
     private readonly ApplicationStatusService $applicationStatusService,
     #[Autowire(service: 'grants_events.events_service')]
     private readonly EventsService $eventsService,
+    #[Autowire(service: 'Drupal\grants_application\ApplicationService')]
+    private readonly ApplicationService $applicationService,
   ) {
   }
 
@@ -131,6 +134,42 @@ final class ApplicationController extends ControllerBase {
         ],
       ],
     ];
+  }
+
+  /**
+   * Copy an existing application to a new draft.
+   *
+   * @param int $application_type_id
+   *   The application type ID.
+   * @param string $original_id
+   *   The original application number to copy from.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   The redirect response.
+   */
+  public function copyApplication(int $application_type_id, string $original_id) {
+    try {
+      $draft = $this->applicationService->createDraft($application_type_id, $original_id);
+    }
+    catch (\throwable $e) {
+      $this->messenger()
+        ->addError($this->t('Failed to copy the application. Please try again later.'));
+
+      return new RedirectResponse(
+        Url::fromRoute('grants_oma_asiointi.applications_list')->toString()
+          );
+    }
+
+    return new RedirectResponse(
+      Url::fromRoute(
+        'helfi_grants.forms_app',
+        [
+          'id' => $application_type_id,
+          'application_number' => $draft['application_number'],
+        ],
+        ['absolute' => TRUE],
+      )->toString()
+    );
   }
 
   /**
