@@ -1651,6 +1651,7 @@ function _grants_handler_get_action_urls($webform, $submission, $submissionData)
           'application_type_id' => $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID'),
         ],
       ),
+      NULL,
     ];
   }
 
@@ -1668,10 +1669,21 @@ function _grants_handler_get_action_urls($webform, $submission, $submissionData)
     Url::fromRoute(
       'grants_handler.copy_application',
       [
-        'webform' => $webform->id(),
-        'webform_submission' => $submission->id(),
+        'submission_id' => $submission->id(),
       ],
       []
+    ),
+    Url::fromRoute(
+      'grants_webform_print.submission_print',
+      [
+        'submission_id' => $submissionData['application_number'],
+      ],
+      [
+        'attributes' => [
+          'data-drupal-selector' => 'application-print-link',
+          'class' => ['hds-button', 'hds-button--supplementary'],
+        ],
+      ]
     ),
   ];
 }
@@ -1697,28 +1709,15 @@ function grants_handler_preprocess_webform_submission_information(array &$variab
 
   $applicationNumber = $submissionData['application_number'] ?? ApplicationHelpers::createApplicationNumber($submission);
 
-  $printApplicationUrl = Url::fromRoute(
-    'grants_webform_print.submission_print',
-    [
-      'submission_id' => $submissionData['application_number'],
-    ],
-    [
-      'attributes' => [
-        'data-drupal-selector' => 'application-print-link',
-        'class' => ['hds-button', 'hds-button--supplementary'],
-      ],
-    ]
-  );
+  [$editApplicationUrl, $copyApplicationUrl, $printApplicationUrl] = _grants_handler_get_action_urls($webform, $submission, $submissionData);
+
   $printApplicationLinkText = [
     '#theme' => 'edit-label-with-icon',
     '#icon' => 'printer',
     '#text_label' => t('Print application', [], $tOpts),
   ];
-
-  $printApplicationLink = Link::fromTextAndUrl($printApplicationLinkText, $printApplicationUrl);
+  $printApplicationLink = $printApplicationUrl ? Link::fromTextAndUrl($printApplicationLinkText, $printApplicationUrl) : NULL;
   $variables['printApplicationLink'] = $printApplicationLink;
-
-  [$editApplicationUrl, $copyApplicationUrl] = _grants_handler_get_action_urls($webform, $submission, $submissionData);
 
   if ($applicationStatusService->isSubmissionEditable($submission)) {
     $editApplicationLinkText = [
