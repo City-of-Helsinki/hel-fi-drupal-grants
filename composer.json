@@ -9,6 +9,7 @@
     "version": "2024.16",
     "require": {
         "ext-json": "*",
+        "city-of-helsinki/php-resilient-logger": "dev-main",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.6.7",
         "doctrine/lexer": "^2",
@@ -36,6 +37,7 @@
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_platform_config": "^4.4",
         "drupal/helfi_proxy": "^3.0",
+        "drupal/helfi_resilient_logger": "dev-main",
         "drupal/helfi_tpr": "^2.1",
         "drupal/helfi_tunnistamo": "^3.0",
         "drupal/http_client_log": "^1.0",
@@ -203,6 +205,14 @@
         {
             "type": "composer",
             "url": "https://asset-packagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/City-of-Helsinki/php-resilient-logger.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-resilient-logger.git"
         }
     ],
     "scripts": {
