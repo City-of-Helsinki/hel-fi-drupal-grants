@@ -8,6 +8,7 @@ use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 use Drupal\grants_application\ApplicationService;
@@ -53,6 +54,7 @@ final class ApplicationController extends ControllerBase {
     #[Autowire(service: 'Drupal\grants_application\ApplicationService')]
     private readonly ApplicationService $applicationService,
     private readonly ContentLockInterface $contentLock,
+    private readonly AccountProxyInterface $accountProxy,
   ) {
   }
 
@@ -122,7 +124,7 @@ final class ApplicationController extends ControllerBase {
 
     // Handle content locking.
     if ($this->contentLock->isLockable($submission)) {
-      $uid = \Drupal::currentUser()->id();
+      $uid = $this->accountProxy->id();
       $lock = $this->contentLock->fetchLock($submission);
 
       // Lock has different user.
@@ -130,7 +132,9 @@ final class ApplicationController extends ControllerBase {
         return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
       }
 
-      $this->contentLock->locking($submission, '*', (int) $uid, FALSE);
+      if (!$lock) {
+        $this->contentLock->locking($submission, '*', (int) $uid, FALSE);
+      }
     }
 
     return [

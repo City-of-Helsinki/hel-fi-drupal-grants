@@ -9,6 +9,7 @@ use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
@@ -71,6 +72,7 @@ final class Application extends ResourceBase {
     private ApplicationStatusService $applicationStatusService,
     private JsonSchemaValidator $jsonSchemaValidator,
     private ContentLockInterface $contentLock,
+    private AccountProxyInterface $accountProxy,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -98,7 +100,8 @@ final class Application extends ResourceBase {
       $container->get('grants_attachments.attachment_handler'),
       $container->get('grants_handler.application_status_service'),
       $container->get(JsonSchemaValidator::class),
-      $container->get(ContentLock::class),
+      $container->get('content_lock'),
+      $container->get('current_user'),
     );
   }
 
@@ -637,7 +640,6 @@ final class Application extends ResourceBase {
         (int) \Drupal::currentUser()->id()
       );
     }
-
 
     return new JsonResponse([
       'redirect_url' => Url::fromRoute(

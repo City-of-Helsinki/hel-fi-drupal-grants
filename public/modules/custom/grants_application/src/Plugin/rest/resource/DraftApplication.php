@@ -3,10 +3,13 @@
 namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
+use Drupal\content_lock\ContentLock\ContentLock;
+use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
@@ -62,6 +65,8 @@ final class DraftApplication extends ResourceBase {
     private CsrfTokenGenerator $csrfTokenGenerator,
     private EventDispatcherInterface $dispatcher,
     private FormValidator $formValidator,
+    private ContentLockInterface $contentLock,
+    private AccountProxyInterface $accountProxy,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -86,6 +91,8 @@ final class DraftApplication extends ResourceBase {
       $container->get(CsrfTokenGenerator::class),
       $container->get(EventDispatcherInterface::class),
       $container->get(FormValidator::class),
+      $container->get('content_lock'),
+      $container->get('current_user'),
     );
   }
 
@@ -425,6 +432,10 @@ final class DraftApplication extends ResourceBase {
     // This event lets other parts of the system to react
     // to user submitting grants forms.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT_DRAFT));
+
+    if ($this->contentLock->isLockable($submission)) {
+      $this->contentLock->release($submission, $application_number, (int) \Drupal::currentUser()->id());
+    }
 
     return new JsonResponse($document->toArray(), 200);
   }
