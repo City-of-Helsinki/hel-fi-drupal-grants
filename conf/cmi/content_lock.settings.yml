@@ -21,13 +21,28 @@ types:
   tpr_unit:
     '*': '*'
   media: {  }
+  block_content: {  }
+  application_metadata: {  }
+  application_submission:
+    '*': '*'
+  radioactivity: {  }
+  search_api_task: {  }
+  webform_submission: {  }
+  helfi_announcements: {  }
+  helfi_hearings: {  }
+  helfi_news: {  }
+  helfi_news_groups: {  }
+  helfi_news_neighbourhoods: {  }
+  helfi_news_tags: {  }
+  helfi_surveys: {  }
+  linkedevents_event: {  }
 types_translation_lock: {  }
 form_op_lock:
   crop:
     mode: 0
     values: {  }
   file:
-    mode: null
+    mode: 0
     values: {  }
   menu_link_content:
     mode: 0
@@ -71,4 +86,46 @@ form_op_lock:
   media:
     mode: 0
     values: {  }
-timeout: 1800
+  block_content:
+    mode: 0
+    values: {  }
+  application_metadata:
+    mode: 0
+    values: {  }
+  application_submission:
+    mode: null
+    values: {  }
+  radioactivity:
+    mode: null
+    values: {  }
+  search_api_task:
+    mode: null
+    values: {  }
+  webform_submission:
+    mode: 0
+    values: {  }
+  helfi_announcements:
+    mode: 0
+    values: {  }
+  helfi_hearings:
+    mode: 0
+    values: {  }
+  helfi_news:
+    mode: 0
+    values: {  }
+  helfi_news_groups:
+    mode: 0
+    values: {  }
+  helfi_news_neighbourhoods:
+    mode: 0
+    values: {  }
+  helfi_news_tags:
+    mode: 0
+    values: {  }
+  helfi_surveys:
+    mode: 0
+    values: {  }
+  linkedevents_event:
+    mode: 0
+    values: {  }
+timeout: 7200
