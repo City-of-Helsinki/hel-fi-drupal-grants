@@ -129,6 +129,8 @@ final class ApplicationController extends ControllerBase {
 
       // Lock has different user.
       if ($lock && $lock->uid !== $uid) {
+        $msg = $this->contentLock->displayLockOwner($lock, FALSE);
+        $this->messenger()->addMessage($msg);
         return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
       }
 
