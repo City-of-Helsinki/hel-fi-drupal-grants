@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Controller;
 
+use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
@@ -51,6 +52,7 @@ final class ApplicationController extends ControllerBase {
     private readonly EventsService $eventsService,
     #[Autowire(service: 'Drupal\grants_application\ApplicationService')]
     private readonly ApplicationService $applicationService,
+    private readonly ContentLockInterface $contentLock,
   ) {
   }
 
@@ -98,7 +100,8 @@ final class ApplicationController extends ControllerBase {
       throw new NotFoundHttpException();
     }
 
-    if ($submission && !$submission->isDraft()) {
+    // Check the application status, if it's still editable.
+    if (!$submission->isDraft()) {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
@@ -115,6 +118,19 @@ final class ApplicationController extends ControllerBase {
 
         return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
       }
+    }
+
+    // Handle content locking.
+    if ($this->contentLock->isLockable($submission)) {
+      $uid = \Drupal::currentUser()->id();
+      $lock = $this->contentLock->fetchLock($submission);
+
+      // Lock has different user.
+      if ($lock && $lock->uid !== $uid) {
+        return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
+      }
+
+      $this->contentLock->locking($submission, '*', (int) $uid, FALSE);
     }
 
     return [
