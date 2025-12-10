@@ -434,7 +434,7 @@ final class DraftApplication extends ResourceBase {
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT_DRAFT));
 
     if ($this->contentLock->isLockable($submission)) {
-      $this->contentLock->release($submission, $application_number, (int) \Drupal::currentUser()->id());
+      $this->contentLock->release($submission, $application_number, $this->accountProxy->id());
     }
 
     return new JsonResponse($document->toArray(), 200);

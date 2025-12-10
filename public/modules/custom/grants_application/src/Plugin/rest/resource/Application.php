@@ -466,7 +466,7 @@ final class Application extends ResourceBase {
       $this->contentLock->release(
         $submission,
         '*',
-        (int) \Drupal::currentUser()->id()
+        $this->accountProxy->id()
       );
     }
 
@@ -637,7 +637,7 @@ final class Application extends ResourceBase {
       $this->contentLock->release(
         $submission,
         '*',
-        (int) \Drupal::currentUser()->id()
+        $this->accountProxy->id()
       );
     }
 

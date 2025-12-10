@@ -404,6 +404,19 @@ final class ApplicationController extends ControllerBase {
       }
     }
 
+    // No deleting if the application is locked.
+    if ($this->contentLock->isLockable($submission)) {
+      $uid = $this->accountProxy->id();
+      $lock = $this->contentLock->fetchLock($submission);
+
+      // Lock has different user.
+      if ($lock && $lock->uid !== $uid) {
+        $msg = $this->contentLock->displayLockOwner($lock, FALSE);
+        $this->messenger()->addMessage($msg);
+        return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
+      }
+    }
+
     try {
       if ($this->atvService->deleteDocument($document)) {
         $submission->delete();
