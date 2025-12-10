@@ -46,40 +46,6 @@ final class DraftApplication extends ResourceBase {
 
   use StringTranslationTrait;
 
-  /**
-   * Constructs a Drupal\rest\Plugin\rest\resource\EntityResource object.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin ID for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param array $serializer_formats
-   *   The available serialization formats.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   A logger instance.
-   * @param \Drupal\grants_application\Form\FormSettingsService $formSettingsService
-   *   The form settings service.
-   * @param \Drupal\grants_application\User\UserInformationService $userInformationService
-   *   The user information service.
-   * @param \Drupal\grants_application\Atv\HelfiAtvService $atvService
-   *   The helfi atv service.
-   * @param \Drupal\Component\Uuid\UuidInterface $uuid
-   *   The uuid interface.
-   * @param \Drupal\grants_application\Form\ApplicationNumberService $applicationNumberService
-   *   The application number service.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
-   *   The language manager interface.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   The entity type manager.
-   * @param \Drupal\Core\Access\CsrfTokenGenerator $csrfTokenGenerator
-   *   The token generator.
-   * @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
-   *   The event dispatcher.
-   * @param \Drupal\grants_application\Form\FormValidator $formValidator
-   *   The form validator.
-   */
   public function __construct(
     array $configuration,
     $plugin_id,

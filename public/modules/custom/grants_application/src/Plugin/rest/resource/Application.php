@@ -3,6 +3,8 @@
 namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
+use Drupal\content_lock\ContentLock\ContentLock;
+use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -49,44 +51,6 @@ final class Application extends ResourceBase {
 
   use StringTranslationTrait;
 
-  /**
-   * Constructs a Drupal\rest\Plugin\rest\resource\EntityResource object.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin ID for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param array $serializer_formats
-   *   The available serialization formats.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   A logger instance.
-   * @param \Drupal\grants_application\Form\FormSettingsService $formSettingsService
-   *   The form settings service.
-   * @param \Drupal\grants_application\User\UserInformationService $userInformationService
-   *   The user information service.
-   * @param \Drupal\grants_application\Atv\HelfiAtvService $atvService
-   *   The helfi atv service.
-   * @param \Drupal\Component\Uuid\UuidInterface $uuid
-   *   The uuid service.
-   * @param \Drupal\Core\Access\CsrfTokenGenerator $csrfTokenGenerator
-   *   The csrf token generator.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
-   *   The language manager.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   The entity type manager.
-   * @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
-   *   The event dispatcher.
-   * @param \Drupal\grants_application\Avus2Integration $integration
-   *   The integration.
-   * @param \Drupal\grants_events\EventsService $eventsService
-   *   The event service.
-   * @param \Drupal\grants_attachments\AttachmentHandler $attachmentHandler
-   *   The attachment handler.
-   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
-   *   The application status service.
-   */
   public function __construct(
     array $configuration,
     $plugin_id,
@@ -106,6 +70,7 @@ final class Application extends ResourceBase {
     private AttachmentHandler $attachmentHandler,
     private ApplicationStatusService $applicationStatusService,
     private JsonSchemaValidator $jsonSchemaValidator,
+    private ContentLockInterface $contentLock,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -133,6 +98,7 @@ final class Application extends ResourceBase {
       $container->get('grants_attachments.attachment_handler'),
       $container->get('grants_handler.application_status_service'),
       $container->get(JsonSchemaValidator::class),
+      $container->get(ContentLock::class),
     );
   }
 
@@ -493,6 +459,14 @@ final class Application extends ResourceBase {
     // to user submitting grants forms.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
+    if ($this->contentLock->isLockable($submission)) {
+      $this->contentLock->release(
+        $submission,
+        '*',
+        (int) \Drupal::currentUser()->id()
+      );
+    }
+
     return new JsonResponse([
       'redirect_url' => Url::fromRoute(
         'grants_handler.completion',
@@ -655,6 +629,15 @@ final class Application extends ResourceBase {
     // This event lets other parts of the system to react
     // to user submitting grants forms.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
+
+    if ($this->contentLock->isLockable($submission)) {
+      $this->contentLock->release(
+        $submission,
+        '*',
+        (int) \Drupal::currentUser()->id()
+      );
+    }
+
 
     return new JsonResponse([
       'redirect_url' => Url::fromRoute(
