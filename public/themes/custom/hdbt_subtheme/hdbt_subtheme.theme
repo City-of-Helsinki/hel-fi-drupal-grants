@@ -37,7 +37,7 @@ function hdbt_subtheme_theme($existing, $type, $theme, $path): array {
 function hdbt_subtheme_csp_policy_alter(Csp $policy): void {
   // Rules needed for inline javascript; generate and add hashes to script-src
   // directive.
-  $inline_javascript = _hdbt_subtheme_get_inline_javascript();
+  $inline_javascript = _hdbt_subtheme_get_inline_javascript() ?? [];
   $cspHelper = \Drupal::service('csp.policy_helper');
   foreach ($inline_javascript as $script) {
     if (!$script) {
