@@ -15,6 +15,7 @@ class KernelTestBase extends CoreKernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'content_lock',
     'datetime',
     'entity',
     'externalauth',

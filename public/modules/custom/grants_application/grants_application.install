@@ -155,3 +155,10 @@ function grants_application_update_9001() {
   \Drupal::service('config.installer')
     ->installDefaultConfig('module', 'grants_application');
 }
+
+/**
+ * Update content lock config.
+ */
+function grants_application_update_9002() {
+  grants_application_update_content_lock();
+}

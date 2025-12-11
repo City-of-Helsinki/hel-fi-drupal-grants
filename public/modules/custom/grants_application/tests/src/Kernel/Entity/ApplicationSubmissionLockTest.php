@@ -24,7 +24,7 @@ final class ApplicationSubmissionLockTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $modules = ['content_lock', 'block_content', 'node', 'helfi_tunnistamo'];
+  protected static $modules = ['block_content', 'node', 'helfi_tunnistamo'];
 
   /**
    * {@inheritdoc}
