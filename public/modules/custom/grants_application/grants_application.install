@@ -22,6 +22,9 @@ function grants_application_install($is_syncing) : void {
   // Manage permissions.
   grants_application_update_rest_permissions();
   grants_application_manage_application_metadata_permissions();
+
+  // Update content lock configuration
+  grants_application_update_content_lock();
 }
 
 /**
@@ -112,6 +115,19 @@ function grants_application_manage_application_metadata_permissions(bool $revoke
     catch (\Exception $e) {
       Drupal::logger('grants_application')->error($e->getMessage());
     }
+  }
+}
+
+function grants_application_update_content_lock(): void {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('content_lock.settings');
+  $config->set('types.application_submission', ['*' => '*']);
+  $config->set('form_op_lock.application_submission', ['mode' => NULL, 'values' => new \stdClass()]);
+  try {
+    $config->save();
+  }
+  catch (\Exception $e) {
+    Drupal::logger('grants_application')->error($e->getMessage());
   }
 }
 
