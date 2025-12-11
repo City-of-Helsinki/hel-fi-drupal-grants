@@ -23,8 +23,6 @@ types:
   media: {  }
   block_content: {  }
   application_metadata: {  }
-  application_submission:
-    '*': '*'
   radioactivity: {  }
   search_api_task: {  }
   webform_submission: {  }
@@ -88,12 +86,6 @@ form_op_lock:
     values: {  }
   block_content:
     mode: 0
-    values: {  }
-  application_metadata:
-    mode: 0
-    values: {  }
-  application_submission:
-    mode: null
     values: {  }
   radioactivity:
     mode: null
