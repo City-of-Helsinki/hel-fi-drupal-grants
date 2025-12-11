@@ -125,7 +125,7 @@ function grants_application_update_content_lock(): void {
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('content_lock.settings');
   $config->set('types.application_submission', ['*' => '*']);
-  $config->set('form_op_lock.application_submission', ['mode' => NULL, 'values' => new \stdClass()]);
+  $config->set('form_op_lock.application_submission', ['mode' => NULL, 'values' => []]);
   try {
     $config->save();
   }
