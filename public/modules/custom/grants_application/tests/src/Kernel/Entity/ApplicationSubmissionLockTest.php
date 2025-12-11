@@ -80,7 +80,7 @@ final class ApplicationSubmissionLockTest extends KernelTestBase {
 
     $this->installSchema('content_lock', 'content_lock');
 
-    /** @var Drupal\user\Entity\Role $role */
+    /** @var \Drupal\user\Entity\Role $role */
     $role = Role::load('helsinkiprofiili');
     $user = $this->createUser($role->getPermissions(), 'testuser');
     $this->setUpCurrentUser(['id' => $user->id()]);
