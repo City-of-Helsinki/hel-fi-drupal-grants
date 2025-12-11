@@ -23,7 +23,7 @@ function grants_application_install($is_syncing) : void {
   grants_application_update_rest_permissions();
   grants_application_manage_application_metadata_permissions();
 
-  // Update content lock configuration
+  // Update content lock configuration.
   grants_application_update_content_lock();
 }
 
@@ -118,6 +118,9 @@ function grants_application_manage_application_metadata_permissions(bool $revoke
   }
 }
 
+/**
+ * Update content lock configuration.
+ */
 function grants_application_update_content_lock(): void {
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('content_lock.settings');
