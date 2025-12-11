@@ -103,7 +103,7 @@ final class ApplicationController extends ControllerBase {
     }
 
     // Check the application status, if it's still editable.
-    if (!$submission->isDraft()) {
+    if ($submission && !$submission->isDraft()) {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
@@ -123,7 +123,7 @@ final class ApplicationController extends ControllerBase {
     }
 
     // Handle content locking.
-    if ($this->contentLock->isLockable($submission)) {
+    if ($submission && $this->contentLock->isLockable($submission)) {
       $uid = $this->accountProxy->id();
       $lock = $this->contentLock->fetchLock($submission);
 
@@ -139,6 +139,9 @@ final class ApplicationController extends ControllerBase {
       }
     }
 
+    // @todo Refactor, return early instead of skipping.
+    // When the application doesn't exist yet, we skip all the code
+    // and end up here, early return is better.
     return [
       '#theme' => 'forms_app',
       '#attached' => [
