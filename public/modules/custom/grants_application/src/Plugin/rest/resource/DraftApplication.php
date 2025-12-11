@@ -286,7 +286,7 @@ final class DraftApplication extends ResourceBase {
     try {
       $document = $this->atvService->saveNewDocument($document);
       $now = time();
-      ApplicationSubmission::create([
+      $submission = ApplicationSubmission::create([
         'document_id' => $document->getId(),
         'business_id' => $grants_profile_data->getBusinessId(),
         'sub' => $user_data['sub'],
@@ -296,8 +296,8 @@ final class DraftApplication extends ResourceBase {
         'application_number' => $application_number,
         'created' => $now,
         'changed' => $now,
-      ])
-        ->save();
+      ]);
+      $submission->save();
     }
     catch (\Exception | GuzzleException $e) {
       // Saving failed.
@@ -309,12 +309,19 @@ final class DraftApplication extends ResourceBase {
       'document_id' => $document->getId(),
     ];
 
+    $result = [];
     if ($copy_from) {
       $result['redirect_url'] = Url::fromRoute(
         'helfi_grants.forms_app',
         ['id' => $application_type_id, 'application_number' => $application_number],
         ['absolute' => TRUE],
       )->toString();
+    } else {
+      $result = [
+        'application_number' => $application_number,
+        'document_id' => $document->getId(),
+      ];
+      $this->contentLock->locking($submission, '*', $this->accountProxy->id());
     }
 
     return new JsonResponse($result, 200);
