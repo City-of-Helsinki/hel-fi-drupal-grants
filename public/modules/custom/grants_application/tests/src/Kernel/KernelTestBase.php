@@ -28,6 +28,7 @@ class KernelTestBase extends CoreKernelTestBase {
     'grants_mandate',
     'grants_profile',
     'helfi_atv',
+    'helfi_av',
     'helfi_audit_log',
     'helfi_api_base',
     'helfi_helsinki_profiili',
@@ -52,6 +53,12 @@ class KernelTestBase extends CoreKernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
+
+    $config = $this->config('content_lock.settings')
+      ->set('types.application_submission', ['*' => '*'])
+      ->set('verbose', TRUE);
+    $config->save();
+
     $this->installEntitySchema('user');
     $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('application_metadata');

@@ -148,8 +148,8 @@ final class ApplicationController extends ControllerBase {
             'token' => $this->csrfTokenGenerator->get('rest'),
             'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
             'terms' => [
-              'body' => $terms_block->get('body')->getValue()[0]['value'],
-              'link_title' => $terms_block->get('field_link_title')->getValue()[0]['value'],
+              'body' => $terms_block->get('body')->value ?? '',
+              'link_title' => $terms_block->get('field_link_title')->value ?? '',
             ],
             'use_draft' => $use_draft,
           ],
