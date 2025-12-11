@@ -3,7 +3,6 @@
 namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
-use Drupal\content_lock\ContentLock\ContentLock;
 use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Datetime\DrupalDateTime;

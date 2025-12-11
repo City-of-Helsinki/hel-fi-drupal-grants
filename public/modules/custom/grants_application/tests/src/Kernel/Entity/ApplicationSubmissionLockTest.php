@@ -29,17 +29,18 @@ final class ApplicationSubmissionLockTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
+  // phpcs:ignore
   protected $strictConfigSchema = FALSE;
 
   /**
-   * The application number
+   * The application number.
    *
    * @var string
    */
   private string $applicationNumber = 'KERNELT-058-0123456';
 
   /**
-   * The application controller
+   * The application controller.
    *
    * @var \Drupal\grants_application\Controller\ApplicationController
    */
