@@ -91,4 +91,14 @@ final class FormSettings {
     return $this->schema;
   }
 
+  /**
+   * Get copyable status.
+   *
+   * @return bool
+   *   Is copyable.
+   */
+  public function isCopyable(): bool {
+    return !$this->settings['disable_copy'];
+  }
+
 }
