@@ -115,12 +115,16 @@ final class ApplicationSubmissionLockTest extends KernelTestBase {
     );
 
     // Second round should allow entry for same user.
-    $this->controller->formsApp('58', $this->applicationNumber, TRUE);
+    $result = $this->controller->formsApp('58', $this->applicationNumber, TRUE);
+    $this->assertIsArray($result);
 
     // Another user should be redirected.
     $role = Role::load('helsinkiprofiili');
     $user = $this->createUser($role->getPermissions(), 'testuser2');
     $this->setUpCurrentUser(['id' => $user->id()]);
+
+    $result = $this->controller->formsApp('58', $this->applicationNumber, TRUE);
+    $this->assertTrue($result instanceof RedirectResponse);
   }
 
 }
