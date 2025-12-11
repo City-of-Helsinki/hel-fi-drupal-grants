@@ -29,9 +29,7 @@ export const transformSteps = (
     if (index === steps.size - 1) {
       state = StepState.disabled;
     } else {
-      state = errorIndices.includes(index)
-        ? StepState.attention
-        : StepState.available;
+      state = errorIndices.includes(index) ? StepState.attention : StepState.available;
     }
 
     return { label, state };
@@ -54,10 +52,7 @@ export const Stepper = ({ formRef }: { formRef: RefObject<Form> }) => {
     }
   }, [divRef, currentIndex]);
 
-  const onStepClick = (
-    _event: MouseEvent<HTMLButtonElement>,
-    stepIndex: number,
-  ) => {
+  const onStepClick = (_event: MouseEvent<HTMLButtonElement>, stepIndex: number) => {
     formRef.current?.validateForm();
     setStep(stepIndex);
   };
