@@ -85,17 +85,8 @@ async function fetchFormData(id: string, token: string) {
   return { ...formConfig, persistedData, applicationNumber };
 }
 
-export const AppContainer = ({
-  applicationTypeId,
-  token,
-}: {
-  applicationTypeId: string;
-  token: string;
-}) => {
-  const { data, error, isLoading, isValidating } = useSWRImmutable(
-    applicationTypeId,
-    (id) => fetchFormData(id, token),
-  );
+export const AppContainer = ({ applicationTypeId, token }: { applicationTypeId: string; token: string }) => {
+  const { data, error, isLoading, isValidating } = useSWRImmutable(applicationTypeId, (id) => fetchFormData(id, token));
 
   if (isLoading || isValidating) {
     return <LoadingSpinner />;

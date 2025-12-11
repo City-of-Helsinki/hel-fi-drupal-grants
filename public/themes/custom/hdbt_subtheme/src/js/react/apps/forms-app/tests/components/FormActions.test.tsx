@@ -11,13 +11,7 @@ describe('FormActions.tsx tests', () => {
     <TestProvider
       initialValues={[
         [errorsAtom, testKeyedErrors],
-        [
-          formStateAtom,
-          initializeFormState({
-            currentStep: [0, { id: 'step-1', label: 'Step 1' }],
-            reachedStep: 0,
-          }),
-        ],
+        [formStateAtom, initializeFormState({ currentStep: [0, { id: 'step-1', label: 'Step 1' }], reachedStep: 0 })],
         [formStepsAtom, testSteps],
       ]}
     >
