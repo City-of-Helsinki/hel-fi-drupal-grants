@@ -1,10 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import {
-  addApplicantInfoStep,
-  getIndicesWithErrors,
-  isValidFormResponse,
-  keyErrorsByStep,
-} from '../utils';
+import { addApplicantInfoStep, getIndicesWithErrors, isValidFormResponse, keyErrorsByStep } from '../utils';
 import { testErrors, testKeyedErrors, testSteps } from '../testutils/Data';
 import { communitySettings } from '../formConstants';
 

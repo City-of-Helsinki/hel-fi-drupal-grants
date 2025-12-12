@@ -25,6 +25,13 @@ helfi_grants.forms_app_copy_application:
   requirements:
     _role: helsinkiprofiili
 
+helfi_grants.debug_controller:
+  path: '/debugmapper'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\MapperDebugController::map'
+  requirements:
+    _access: "TRUE"
+
 helfi_grants.forms_app_upload:
   path: '/application/{application_number}/upload'
   defaults:
@@ -46,6 +53,14 @@ helfi_grants.forms_app_remove:
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::removeApplication'
   methods: [GET, POST]
+  requirements:
+    _role: helsinkiprofiili
+
+helfi_grants.completion:
+  path: '/application/{application_number}/completion'
+  defaults:
+    _title_callback: '\Drupal\grants_application\Controller\CompletionController::getTitle'
+    _controller: '\Drupal\grants_application\Controller\CompletionController::build'
   requirements:
     _role: helsinkiprofiili
 

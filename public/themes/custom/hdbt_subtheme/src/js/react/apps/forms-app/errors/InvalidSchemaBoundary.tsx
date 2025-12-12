@@ -46,11 +46,7 @@ export class InvalidSchemaBoundary extends Component {
     };
 
     if (errorStack) {
-      return (
-        <div style={{ backgroundColor: 'salmon', padding: '28px' }}>
-          {formatSchemaErrors()}
-        </div>
-      );
+      return <div style={{ backgroundColor: 'salmon', padding: '28px' }}>{formatSchemaErrors()}</div>;
     }
 
     return children;

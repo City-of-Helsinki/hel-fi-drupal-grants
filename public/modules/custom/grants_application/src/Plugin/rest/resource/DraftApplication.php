@@ -512,6 +512,7 @@ final class DraftApplication extends ResourceBase {
       return ApplicationSubmission::load(reset($ids));
     }
 
+    // Check for business id as well.
     $ids = $this->entityTypeManager
       ->getStorage('application_submission')
       ->getQuery()

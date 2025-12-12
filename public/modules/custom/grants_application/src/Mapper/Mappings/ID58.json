@@ -39,9 +39,11 @@
 
   "compensation.otherCompensationsInfo.otherCompensationsArray": {
     "datasource": "form_data",
-    "source": "empty",
-    "mapping_type": "empty",
-    "data": {}
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "otherCompensationsArray": {}
+    }
   },
 
   "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
@@ -590,7 +592,7 @@
       "fileType": {"ID": "fileType", "value": "1", "valueType": "int", "label": "fileType"},
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
-      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   }
 

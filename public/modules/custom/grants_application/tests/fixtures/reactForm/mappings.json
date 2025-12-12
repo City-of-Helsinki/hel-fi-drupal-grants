@@ -64,6 +64,18 @@
         "value": "",
         "label": "Koko km2",
         "valueType": "double"
+      },
+      "creator.firstName": {
+        "ID": "creatorFirstname",
+        "value": "",
+        "label": "Tekijä etunimi",
+        "valueType": "string"
+      },
+      "creator.lastName": {
+        "ID": "creatorLastname",
+        "value": "",
+        "label": "Tekijä etunimi",
+        "valueType": "string"
       }
     }
   },

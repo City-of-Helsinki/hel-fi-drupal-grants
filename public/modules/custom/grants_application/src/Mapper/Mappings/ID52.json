@@ -315,15 +315,15 @@
   },
 
   "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
-    "tip": "todo sum all other compensations",
     "datasource": "form_data",
-    "source": null,
-    "mapping_type": "default",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
     "data": {
-      "ID": "otherCompensationsTotal",
-      "label": null,
-      "value": "",
-      "valueType": "double"
+      "0": {
+        "ID": "otherCompensationsTotal",
+        "value": "0",
+        "valueType": "double"
+      }
     }
   },
   "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
@@ -364,7 +364,7 @@
   },
 
   "compensation.activitiesInfoArray.0": {
-    "tip": "todo react Tää pitää prefillaa react-lomakkeella, se data pitäs tulla jo settarien mukana",
+    "#tip": "!!! tää puuttuu react lähetyksestä",
     "datasource": "form_data",
     "source": "community_activity_step.community_activity_section.community_activity_description",
     "data": {
@@ -375,7 +375,6 @@
     }
   },
   "compensation.activitiesInfoArray.1": {
-    "#tip": "todo boolean react palauttaa 'kyllä', pitää olla 'true', eli boolean stringinä",
     "datasource": "form_data",
     "source": "community_activity_step.community_activity_section.community_practices_business",
     "mapping_type": "default",
@@ -477,7 +476,6 @@
     }
   },
   "compensation.compensationInfo.generalInfoArray.1": {
-    "tip": "todo boolean 'kyllä', tää pitää varmaan kääntää 'true'",
     "datasource": "form_data",
     "source": "grant_info_step.prior_benefits_usage_section.have_received_prior_compensations",
     "mapping_type": "default",
@@ -539,8 +537,6 @@
   },
 
   "compensation.premisesInfo.premisesArray.0.n": {
-    "#tip": "todo boolean must be 'true' instead of 'kyllä'",
-    "#tip2": "todo missing 'totalRent', 'rent start time' and 'rent end time'",
     "datasource": "form_data",
     "source": "community_activity_step.locations_info_section.locations_info",
     "mapping_type": "multiple_values",
@@ -599,19 +595,19 @@
         "value": "",
         "valueType": "bool"
       },
-      "location_total_rent": {
+      "unprovided_space_details.unprovided_rent_amount": {
         "ID": "totalRent",
         "label": "Euroa yhteensä lukuvuoden aikana €",
         "value": "",
         "valueType": "double"
       },
-      "location_rent_start_time": {
+      "unprovided_space_details.unprovided_rent_time_start": {
         "ID": "rentTimeBegin",
         "label": "Vuokra-aika lukuvuoden aikana, alkaen",
         "value": "",
         "valueType": "datetime"
       },
-      "location_rent_end_time": {
+      "unprovided_space_details.unprovided_rent_time_end": {
         "ID": "rentTimeEnd",
         "label": "Vuokra-aika lukuvuoden aikana, päättyen",
         "value": "",
@@ -621,8 +617,9 @@
   },
 
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.0": {
+    "#tip": "todo double check: this used to be budget_step.income_section.applied_benefits",
     "datasource": "form_data",
-    "source": "budget_step.income_section.applied_benefits",
+    "source": "grant_info_step.subventions_section.subventions.1.value",
     "mapping_type": "default",
     "data": {
       "ID": "compensation",
@@ -665,7 +662,7 @@
       "valueType": "double"
     }
   },
-  "compensation.budgetInfo.incomeGroupsArrayStatic.incomeGroupName": {
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeGroupName": {
     "datasource": "form_data",
     "source": null,
     "mapping_type": "hardcoded",
@@ -674,19 +671,21 @@
     }
   },
 
-  "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic.0": {
-    "#tip": "ID52 costrowsarraystatic, othercostrowsarraystatic tyhjiä",
+  "compensation.budgetInfo.costGroupsArrayStatic.0.costRowsArrayStatic": {
     "datasource": "form_data",
-    "source": null,
-    "mapping_type": "empty",
-    "data": {}
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "costRowsArrayStatic": {}
+    }
   },
-  "compensation.budgetInfo.costGroupsArrayStatic.0.otherCostRowsArrayStatic.0": {
-    "#tip": "^",
+  "compensation.budgetInfo.costGroupsArrayStatic.0.otherCostRowsArrayStatic": {
     "datasource": "form_data",
-    "source": null,
-    "mapping_type": "empty",
-    "data": {}
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "otherCostRowsArrayStatic": {}
+    }
   },
   "compensation.budgetInfo.costGroupsArrayStatic.0.costGroupName": {
     "datasource": "form_data",
@@ -1068,7 +1067,7 @@
       "fileType": {"ID": "fileType", "value": "7", "valueType": "int", "label": "fileType"},
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
-      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.1": {
@@ -1081,7 +1080,7 @@
       "fileType": {"ID": "fileType", "value": "43", "valueType": "int", "label": "fileType"},
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
-      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.2": {
@@ -1094,7 +1093,7 @@
       "fileType": {"ID": "fileType", "value": "4", "valueType": "int", "label": "fileType"},
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
-      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.3": {
@@ -1107,7 +1106,7 @@
       "fileType": {"ID": "fileType", "value": "5", "valueType": "int", "label": "fileType"},
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
-      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.4": {
@@ -1120,7 +1119,7 @@
       "fileType": {"ID": "fileType", "value": "1", "valueType": "int", "label": "fileType"},
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
-      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.5": {
@@ -1133,7 +1132,7 @@
       "fileType": {"ID": "fileType", "value": "10", "valueType": "int", "label": "fileType"},
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
-      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.6": {
@@ -1146,7 +1145,7 @@
       "fileType": {"ID": "fileType", "value": "2", "valueType": "int", "label": "fileType"},
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
-      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   }
 

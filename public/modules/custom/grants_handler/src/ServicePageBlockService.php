@@ -130,6 +130,18 @@ class ServicePageBlockService {
   }
 
   /**
+   * React form id value.
+   *
+   * This is also the application type id.
+   *
+   * @return string|null
+   *   The react form id field from service page.
+   */
+  public function getReactFormId(): ?string {
+    return $this->currentNode->get('field_react_form_id')->value;
+  }
+
+  /**
    * The normalizeApplicantTypes function.
    *
    * Normalizes applicant types to ensure compatibility
