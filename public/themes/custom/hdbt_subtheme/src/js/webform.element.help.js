@@ -8,8 +8,7 @@
   // @see https://atomiks.github.io/tippyjs/v6/all-props/
   Drupal.webform = Drupal.webform || {};
   Drupal.webform.elementHelpIcon = Drupal.webform.elementHelpIcon || {};
-  Drupal.webform.elementHelpIcon.options =
-    Drupal.webform.elementHelpIcon.options || {};
+  Drupal.webform.elementHelpIcon.options = Drupal.webform.elementHelpIcon.options || {};
 
   /**
    * Element help icon.
@@ -52,30 +51,28 @@
         },
       };
 
-      $(once('webform-element-help', '.js-webform-element-help', context)).each(
-        function fn() {
-          const $link = $(this);
+      $(once('webform-element-help', '.js-webform-element-help', context)).each(function fn() {
+        const $link = $(this);
 
-          $link.on('click', (event) => {
-            // Prevent click from toggling <label>s wrapped around help.
-            event.preventDefault();
-          });
+        $link.on('click', (event) => {
+          // Prevent click from toggling <label>s wrapped around help.
+          event.preventDefault();
+        });
 
-          const options = $.extend(
-            {
-              content: $link.attr('data-webform-help'),
-              delay: 100,
-              allowHTML: true,
-              interactive: false,
-              trigger: 'click',
-              plugins: [hideOnEsc],
-            },
-            Drupal.webform.elementHelpIcon.options,
-          );
+        const options = $.extend(
+          {
+            content: $link.attr('data-webform-help'),
+            delay: 100,
+            allowHTML: true,
+            interactive: false,
+            trigger: 'click',
+            plugins: [hideOnEsc],
+          },
+          Drupal.webform.elementHelpIcon.options,
+        );
 
-          tippy(this, options);
-        },
-      );
+        tippy(this, options);
+      });
     },
   };
 })(jQuery, Drupal, once);
