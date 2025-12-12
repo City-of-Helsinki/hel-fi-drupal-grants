@@ -22,7 +22,6 @@ types:
     '*': '*'
   media: {  }
   block_content: {  }
-  application_metadata: {  }
   radioactivity: {  }
   search_api_task: {  }
   webform_submission: {  }
