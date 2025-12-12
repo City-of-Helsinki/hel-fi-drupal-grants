@@ -36,7 +36,7 @@ class CompletionController extends ControllerBase {
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    *   Container.
    *
-   * @return \Drupal\grants_handler\Controller\CompletionController
+   * @return \Drupal\grants_application\Controller\CompletionController
    *   Controller object
    */
   public static function create(ContainerInterface $container): CompletionController {
@@ -80,7 +80,7 @@ class CompletionController extends ControllerBase {
       $document = $this->helfiAtvService->getDocument($entity->get('application_number')->value);
     }
     catch (\Exception $e) {
-      $this->messenger()->addError($e->getMessage('Application not found'));
+      $this->messenger()->addError($this->t('Unable to fetch the application. Please try again in a moment.'));
       return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
     }
 

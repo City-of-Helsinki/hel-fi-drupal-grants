@@ -8,6 +8,7 @@ use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Access\AccessResultNeutral;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
@@ -64,6 +65,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     protected AccountProxy $currentUser,
     protected ServicePageBlockService $servicePageBlockService,
     protected ApplicationStatusService $applicationStatusService,
+    protected ModuleHandlerInterface $moduleHandler,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
   }
@@ -80,7 +82,8 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('current_route_match'),
       $container->get('current_user'),
       $container->get('grants_handler.service_page_block_service'),
-      $container->get('grants_handler.application_status_service')
+      $container->get('grants_handler.application_status_service'),
+      $container->get('module_handler'),
     );
   }
 
@@ -114,10 +117,11 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     // Start by check if the react-form exists and the react-form application period is on.
     // In that case, we always render the react-application block.
     if (
-      \Drupal::moduleHandler()->moduleExists('grants_application') &&
+      $this->moduleHandler->moduleExists('grants_application') &&
       $reactFormId = $this->servicePageBlockService->getReactFormId()
     ) {
       try {
+        // @phpstan-ignore-next-line
         $formSettingsService = \Drupal::service('Drupal\grants_application\Form\FormSettingsService');
         $settings = $formSettingsService->getFormSettings($reactFormId);
       }
