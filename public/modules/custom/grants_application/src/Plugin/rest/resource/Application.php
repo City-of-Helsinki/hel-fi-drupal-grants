@@ -73,6 +73,7 @@ final class Application extends ResourceBase {
     private ContentLockInterface $contentLock,
     private AccountProxyInterface $accountProxy,
   ) {
+    // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
 
@@ -80,6 +81,7 @@ final class Application extends ResourceBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
+    // @todo Use autowiretrait.
     return new self(
       $configuration,
       $plugin_id,
