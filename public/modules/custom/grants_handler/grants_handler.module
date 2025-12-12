@@ -1669,9 +1669,8 @@ function _grants_handler_get_action_urls($webform, $submission, $submissionData)
     Url::fromRoute(
       'grants_handler.copy_application',
       [
-        'submission_id' => $submission->id(),
+        'submission_id' => $submissionData['application_number'],
       ],
-      []
     ),
     Url::fromRoute(
       'grants_webform_print.submission_print',
