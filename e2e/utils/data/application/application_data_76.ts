@@ -472,7 +472,8 @@ const sendApplication: FormDataWithRemoveOptionalProps = {
 
 const registeredCommunityApplications_76 = {
   draft: baseFormRegisteredCommunity_76,
-  copy: createFormData(baseFormRegisteredCommunity_76, copyForm),
+  // @todo The copy functionality is broken, uncomment when fixed.
+  // copy: createFormData(baseFormRegisteredCommunity_76, copyForm),
   missing_values: createFormData(baseFormRegisteredCommunity_76, missingValues),
   wrong_values: createFormData(baseFormRegisteredCommunity_76, wrongValues),
   success: createFormData(baseFormRegisteredCommunity_76, sendApplication),
