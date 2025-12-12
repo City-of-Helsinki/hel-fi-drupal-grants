@@ -9,7 +9,7 @@ use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Controller for application completion & thankyou page.
@@ -24,6 +24,13 @@ class CompletionController extends ControllerBase {
   protected HelfiAtvService $helfiAtvService;
 
   /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected RequestStack $requestStack;
+
+  /**
    * Create.
    *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
@@ -35,6 +42,7 @@ class CompletionController extends ControllerBase {
   public static function create(ContainerInterface $container): CompletionController {
     $instance = parent::create($container);
     $instance->helfiAtvService = $container->get(HelfiAtvService::class);
+    $instance->requestStack = $container->get('request_stack');
     return $instance;
   }
 
@@ -72,16 +80,16 @@ class CompletionController extends ControllerBase {
       $document = $this->helfiAtvService->getDocument($entity->get('application_number')->value);
     }
     catch (\Exception $e) {
-      \Drupal::messenger()->addError($this->t('Application not found.'));
+      $this->messenger()->addError($e->getMessage('Application not found'));
       return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
     }
 
     $status = $document->getStatus();
 
-    $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
-    $config = \Drupal::config('grants_handler.settings');
+    $langCode = $this->languageManager()->getCurrentLanguage()->getId();
+    $config = $this->config('grants_handler.settings');
     $statusStrings = $config->get('statusStrings');
-    $humanReadableStatus = $statusStrings[$langCode][$status];
+    $humanReadableStatus = $statusStrings[$langCode][$status] ?? '';
 
     $build = [
       '#theme' => 'grants_application_completion',
@@ -98,7 +106,7 @@ class CompletionController extends ControllerBase {
       '#submissionObject' => $document,
     ];
 
-    $base_url = \Drupal::request()->getSchemeAndHttpHost();
+    $base_url = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
     $build['#attached']['drupalSettings']['grants_handler']['site_url'] = "$base_url/$langcode/";
     $build['#attached']['library'][] = 'grants_handler/application-status-check';
     return $build;
