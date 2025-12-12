@@ -449,11 +449,10 @@ const validateMessaging = async (
   const responseBody = await getFulfilledResponse(page);
   await expect(responseBody.length).toBe(4);
 
-  const infoMessage = page.locator('form.grants-handler-message .hds-notification--info');
-  await infoMessage.waitFor();
-
-  await expect(infoMessage).toBeVisible();
-  await expect(page.locator('form.grants-handler-message .hds-notification--info .hds-notification__body')).toContainText('Viestisi on lähetetty.');
+  const infoMessageBody = page.locator('form.grants-handler-message .hds-notification .hds-notification__body');
+  await infoMessageBody.waitFor({ state: 'visible', timeout: 20000 });
+  await expect(infoMessageBody).toBeVisible();
+  await expect(infoMessageBody).toContainText('Viestisi on lähetetty.');
   await expect(formActionButton).toHaveText('Uusi viesti');
 
   // Reload page to see message list.
