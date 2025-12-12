@@ -15,6 +15,7 @@ use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Helper;
+use Drupal\grants_application\JsonSchemaValidator;
 use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_attachments\AttachmentHandler;
@@ -104,6 +105,7 @@ final class Application extends ResourceBase {
     private EventsService $eventsService,
     private AttachmentHandler $attachmentHandler,
     private ApplicationStatusService $applicationStatusService,
+    private JsonSchemaValidator $jsonSchemaValidator,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
@@ -130,6 +132,7 @@ final class Application extends ResourceBase {
       $container->get('grants_events.events_service'),
       $container->get('grants_attachments.attachment_handler'),
       $container->get('grants_handler.application_status_service'),
+      $container->get(JsonSchemaValidator::class),
     );
   }
 
@@ -234,11 +237,7 @@ final class Application extends ResourceBase {
     int $application_type_id,
     ?string $application_number = NULL,
   ): JsonResponse {
-    // @todo Sanitize & validate & authorize properly.
-    /// phpcs:disable
-    // NOSONAR
     $content = json_decode($request->getContent(), TRUE);
-    // NOSONAR
     [
       'form_data' => $form_data,
       'attachments' => $attachments,
@@ -249,13 +248,20 @@ final class Application extends ResourceBase {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
     catch (\Exception $e) {
-      // Cannot find form by application type id.
-      return new JsonResponse([], 404);
+      $this->logger->info("User failed to open application due to missing form settings, application id: $application_type_id");
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 404);
     }
 
     if (!$application_number) {
-      // Should not be possible.
+      $this->logger->critical('POST-request without application number, application id: ' . $application_type_id);
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
+    }
+
+    $errors = $this->validate($application_type_id, $form_data);
+    if (is_array($errors)) {
+      // Kinda "useless" logging, but for testing purposes this might be relevant.
+      $this->logger->alert("User encountered validation error on application $application_type_id: " . json_encode($errors));
+      return new JsonResponse(['error' => $errors], 400);
     }
 
     try {
@@ -264,6 +270,7 @@ final class Application extends ResourceBase {
       $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
+      $this->logger->error("User failed to fetch the user information during POST-request: {$e->getMessage()}");
       return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment')], 500);
     }
 
@@ -275,7 +282,8 @@ final class Application extends ResourceBase {
       );
     }
     catch (\Exception $e) {
-      // Cannot find correct draft submission.
+      $this->logger->error("During POST-request, failed to query submission
+        entity from database, $application_number: {$e->getMessage()}");
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
@@ -283,7 +291,7 @@ final class Application extends ResourceBase {
       $document = $this->atvService->getDocument($application_number);
     }
     catch (\Throwable $e) {
-      // Cannot fetch the corresponding ATV document.
+      $this->logger->error("During POST-request, failed to fetch ATV-document, $application_number: {$e->getMessage()}");
       return new JsonResponse(['error' => $this->t('We cannot fetch the application. Please try again in a moment')], 500);
     }
 
@@ -385,7 +393,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Unable to combine datasources, bad atv-connection maybe?
-      $this->logger->error('Error while sending the application for the first time: ' . $e->getMessage());
+      $this->logger->critical('Error during POST-request, unable to combine datasources: ' . $e->getMessage());
       return new JsonResponse(
         ['error' => $this->t('An error occurred while sending the application. Please try again later')],
         500,
@@ -532,13 +540,19 @@ final class Application extends ResourceBase {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
     catch (\Exception $e) {
-      // Cannot find form by application type id.
+      $this->logger->info("User failed to open application due to missing form settings, application id: $application_type_id");
       return new JsonResponse(['error' => $this->t('Something went wrong')], 404);
     }
 
     if (!$application_number) {
-      // @todo Logging.
+      $this->logger->critical('PATCH-request without application number, application id: ' . $application_type_id);
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
+    }
+
+    $errors = $this->validate($application_type_id, $form_data);
+    if (is_array($errors)) {
+      $this->logger->alert("User encountered validation error on application $application_type_id: " . json_encode($errors));
+      return new JsonResponse(['error' => $errors], 400);
     }
 
     try {
@@ -547,6 +561,7 @@ final class Application extends ResourceBase {
       $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
+      $this->logger->error("User failed to fetch the user information during POST-request: {$e->getMessage()}");
       return new JsonResponse(['error' => $this->t('Unable to fetch your user information. Please try again in a moment')], 500);
     }
 
@@ -558,7 +573,8 @@ final class Application extends ResourceBase {
       );
     }
     catch (\Exception $e) {
-      // Cannot find correct draft submission.
+      $this->logger->error("During PATCH-request, failed to query submission
+        entity from database, $application_number: {$e->getMessage()}");
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
@@ -566,7 +582,7 @@ final class Application extends ResourceBase {
       $document = $this->atvService->getDocument($application_number);
     }
     catch (\Throwable $e) {
-      // Cannot fetch the corresponding ATV document.
+      $this->logger->error("During PATCH-request, failed to fetch ATV-document, $application_number: {$e->getMessage()}");
       return new JsonResponse(['error' => $this->t('Unable to fetch the application. Please try again in a moment')], 500);
     }
 
@@ -588,7 +604,7 @@ final class Application extends ResourceBase {
     }
     catch (\Exception $e) {
       // Unable to combine datasources, bad atv-connection maybe?
-      $this->logger->error('Error while sending the application for the first time: ' . $e->getMessage());
+      $this->logger->critical('Error during PATCH-request, unable to combine datasources: ' . $e->getMessage());
       return new JsonResponse(
         ['error' => $this->t('An error occurred while sending the application. Please try again later')],
         500,
@@ -686,6 +702,30 @@ final class Application extends ResourceBase {
     }
 
     return $collection;
+  }
+
+  /**
+   * @param int $applicationTypeId
+   *   The application type id.
+   * @param array $formData
+   *   The form data.
+   *
+   * @return bool|array
+   *   Is valid or array of errors.
+   */
+  private function validate(int $applicationTypeId, array $formData): bool|array {
+    $settings = $this->formSettingsService->getFormSettings($applicationTypeId);
+    $results = $this->jsonSchemaValidator->validate(json_decode(json_encode($formData)), json_decode(json_encode($settings->getSchema())));
+
+    if (is_array($results)) {
+      $errors = [];
+      foreach ($results as $error) {
+        $errors[] = $error['message'];
+      }
+      $results = $errors;
+    }
+
+    return $results;
   }
 
   /**

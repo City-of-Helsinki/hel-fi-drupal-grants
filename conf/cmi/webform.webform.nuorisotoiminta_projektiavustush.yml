@@ -7,25 +7,26 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '62'
     applicationType: NUORPROJ
     applicationTypeID: '62'
-    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
       unregistered_community: unregistered_community
     applicationTypeTerms:
       47: '47'
+    applicationOpen: '2025-01-01T00:00:00'
+    applicationClose: '2025-12-31T23:59:59'
+    applicationContinuous: 0
     applicationTargetGroup: '27'
-    applicationOpen: '2022-10-02T11:08:26'
-    applicationClose: '2023-12-22T11:19:00'
-    applicationActingYearsType: current_and_next_x_years
-    applicationActingYears: {  }
-    applicationActingYearsNextCount: '1'
-    applicationContinuous: 1
     disableCopying: 0
+    applicationTypeSelect: '62'
+    applicationIndustry: KUVA
+    applicationActingYears: {  }
+    applicationActingYearsType: current_and_next_x_years
+    applicationActingYearsNextCount: '1'
     status: released
     parent: ''
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null

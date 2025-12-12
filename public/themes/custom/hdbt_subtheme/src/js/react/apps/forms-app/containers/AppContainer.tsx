@@ -6,6 +6,7 @@ import { initReactI18next } from 'react-i18next';
 import { FormWrapper } from './FormWrapper';
 import { getUrlParts } from '../testutils/Helpers';
 import { BackendError } from '../errors/BackendError';
+import { Requests } from '../Requests';
 
 /**
  * Instantiates a new application draft for the given form.
@@ -18,10 +19,7 @@ import { BackendError } from '../errors/BackendError';
  * @throws {Error} - If the instantiation request fails.
  */
 const instantiateDocument = async (id: string, token: string) => {
-  const response = await fetch(`/applications/${id}`, {
-    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
-    method: 'POST',
-  });
+  const response = await Requests.DRAFT_APPLICATION_CREATE(id, token, null);
 
   if (!response.ok) {
     throw new Error('Failed to instantiate application');
@@ -87,17 +85,8 @@ async function fetchFormData(id: string, token: string) {
   return { ...formConfig, persistedData, applicationNumber };
 }
 
-export const AppContainer = ({
-  applicationTypeId,
-  token,
-}: {
-  applicationTypeId: string;
-  token: string;
-}) => {
-  const { data, error, isLoading, isValidating } = useSWRImmutable(
-    applicationTypeId,
-    (id) => fetchFormData(id, token),
-  );
+export const AppContainer = ({ applicationTypeId, token }: { applicationTypeId: string; token: string }) => {
+  const { data, error, isLoading, isValidating } = useSWRImmutable(applicationTypeId, (id) => fetchFormData(id, token));
 
   if (isLoading || isValidating) {
     return <LoadingSpinner />;
