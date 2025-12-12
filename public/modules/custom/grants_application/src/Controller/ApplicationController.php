@@ -102,6 +102,8 @@ final class ApplicationController extends ControllerBase {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
+        // @todo Should not use grants handler service to figure out is submission is editable.
+        // It works but the implementation should live under this module.
         if (!$this->applicationStatusService->isSubmissionEditable(NULL, $document->getStatus())) {
           $this->messenger()
             ->addError($this->t('The application is being processed. The application cannot be edited or submitted.'));
