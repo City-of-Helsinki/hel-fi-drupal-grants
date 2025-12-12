@@ -243,8 +243,9 @@ final class ApplicationController extends ControllerBase {
 
     // @todo Create templates for react-application.
     $reactSubmission = FALSE;
-    if (\Drupal::moduleHandler()->moduleExists('grants_application')) {
-      $result = \Drupal::entityTypeManager()->getStorage('application_submission')
+
+    if ($this->moduleHandler()->moduleExists('grants_application')) {
+      $result = $this->entityTypeManager()->getStorage('application_submission')
         ->loadByProperties(['application_number' => $submission_id]);
 
       if ($result) {
