@@ -481,7 +481,6 @@ const validateMessaging = async (
     console.warn('Timed out waiting for messages list title');
   }
 
-  await reloadWithRetry(page);
   const messages = await page.locator('.webform-submission-messages__messages-list .webform-submission-messages__message-body').all();
 
   // Gracefully catch timeout errors on additional messages.
