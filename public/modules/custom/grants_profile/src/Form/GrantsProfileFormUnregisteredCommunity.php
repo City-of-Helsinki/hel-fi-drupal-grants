@@ -581,7 +581,7 @@ One address is mandatory information in your personal information and on the app
       '#type' => 'submit',
       '#value' => $this
         ->t('Add official', [], $this->tOpts),
-      '#is_supplementary' => TRUE,
+      '#is_secondary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'officialWrapper--1',
       '#submit' => [

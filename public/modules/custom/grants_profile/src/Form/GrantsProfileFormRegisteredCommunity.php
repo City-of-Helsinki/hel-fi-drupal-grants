@@ -502,7 +502,7 @@ later when completing the grant application.',
       '#value' => $this
         ->t('Add address', [], $this->tOpts),
       '#name' => 'addressWrapper--1',
-      '#is_supplementary' => TRUE,
+      '#is_secondary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#submit' => [
         '::addOne',
@@ -662,7 +662,7 @@ later when completing the grant application.',
       '#type' => 'submit',
       '#value' => $this
         ->t('Add official', [], $this->tOpts),
-      '#is_supplementary' => TRUE,
+      '#is_secondary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'officialWrapper--1',
       '#submit' => [

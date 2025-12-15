@@ -541,7 +541,7 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
       '#type' => 'submit',
       '#value' => $this
         ->t('Add bank account', [], $this->tOpts),
-      '#is_supplementary' => TRUE,
+      '#is_secondary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'bankAccountWrapper--1',
       '#submit' => [

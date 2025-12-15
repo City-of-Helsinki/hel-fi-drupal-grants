@@ -1,212 +1,56 @@
-/* stylelint-disable max-nesting-depth -- @todo UHF-12501 */
-.grants-profile {
-  hr {
-    border: 1px solid var(--color-silver);
-    margin: var(--spacing-layout-xs) 0;
+
+.grants-profile--infotext {
+  @include font('body');
+  margin-bottom: $spacing;
+}
+
+.grants-profile--links {
+  display: flex;
+  gap: $spacing-half;
+}
+
+.grants-profile--extrainfo {
+  padding-bottom: $spacing-double;
+  padding-top: $spacing-double;
+
+  .hds-notification {
+    margin-bottom: $spacing-double;
   }
 
-  h3.info-grants {
-    border-bottom: 2px solid var(--color-silver);
-    padding-bottom: var(--spacing-l);
+  fieldset.form-wrapper.inline-error-message {
+    border: 0;
   }
 
-  &--title {
-    align-items: center;
-    display: flex;
-    flex-flow: row nowrap;
+  fieldset.inline-error-message {
+    background-color: unset;
+    padding: 0 0 0 $spacing-half;
 
-    .grants-profile--initials {
-      border-radius: 50%;
-      display: none;
-      font-size: var(--fontsize-body-xl);
-      font-weight: bold;
-      height: var(--spacing-4-xl);
-      line-height: var(--spacing-4-xl);
-      margin-right: var(--spacing-m);
-      text-align: center;
-      vertical-align: middle;
-      width: var(--spacing-4-xl);
-
-      @include breakpoint($breakpoint-l) {
-        display: block;
-      }
-
-      &:hover, &:active, &:focus {
-        text-decoration: underline;
-      }
-
-      &-colorscheme {
-        &-2 {
-          background-color: var(--color-bus);
-          color: var(--color-white);
-        }
-
-        &-1 {
-          background-color: var(--color-engel);
-          color: var(--color-black);
-
-        }
-
-        &-0 {
-          background-color: var(--color-tram);
-          color: var(--color-white);
-        }
-      }
-    }
-
-    h1 {
-      flex-grow: 100;
-    }
-  }
-
-  &--basicinfo {
-    --line-height: 1.5;
-    background-color: var(--color-black-5);
-    border-bottom: 8px solid var(--color-engel-dark);
-    padding-bottom: var(--spacing-2-xs);
-    padding-top: var(--spacing-l);
-
-    h3 {
-      font-size: var(--fontsize-heading-l);
-      margin-top: 0;
-      padding-top: 0;
-    }
-  }
-
-  &--extrainfo {
-    padding-bottom: var(--spacing-l);
-    padding-top: var(--spacing-l);
-
-    .hds-notification {
-      margin-bottom: var(--spacing-xl);
-    }
-
-    fieldset.form-wrapper {
-      background-color: var(--color-black-5);
-      border: 0;
-      padding: var(--spacing-l);
-    }
-
-    fieldset.inline-error-message {
-      background-color: unset;
-      padding: 0 0 0 var(--spacing-2-xs);
-
-      legend {
-        display: none;
-      }
-    }
-  }
-
-  &--update-link {
-    margin-bottom: var(--spacing-layout-2-xs);
-    margin-top: var(--spacing-layout-xs);
-  }
-
-  &--infotext {
-    font-size: var(--fontsize-body-l);
-    margin-bottom: var(--spacing-s);
-  }
-
-  &--wrapper {
-    display: flex;
-    flex-wrap: wrap;
-
-    &-item {
-      margin-bottom: var(--spacing-layout-2-xs);
-      width: 100%;
-
-      @include breakpoint($breakpoint-s) {
-        flex: 1;
-        margin-bottom: 0;
-      }
-    }
-
-    &-item:first-child {
-      flex: auto;
-      margin-bottom: var(--spacing-layout-2-xs);
-      width: 100%;
-    }
-  }
-
-  .profile-add-more {
-    margin-top: 1em;
-  }
-
-  dd {
-    margin-inline-start: 0;
-  }
-
-  &--officials {
-    margin-left: 0;
-    padding-left: 0;
-
-    &-item {
-      border-left: 4px var(--color-copper) solid;
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: space-between;
-      list-style: none;
-      margin-bottom: var(--spacing-layout-s);
-      margin-left: 0;
-      max-width: var(--webform-element-width--input-large);
-      padding-left: var(--spacing-layout-xs);
-      width: 100%;
-
-      &--position {
-        font-size: var(--fontsize-heading-xs);
-        font-weight: bold;
-        margin-bottom: var(--spacing-layout-2-xs);
-        margin-top: 0;
-        padding-top: 0;
-      }
-    }
-  }
-
-  &--officials-edit-wrapper {
-    text-align:right;
-
-    a {
-      display: inline-block;
-    }
-  }
-
-  .hel-icon--check-circle-fill {
-    color: var(--color-success);
-    vertical-align: middle;
-  }
-
-  &-grants-profile {
-    .tabledrag-toggle-weight-wrapper, .field-multiple-drag  {
+    legend {
       display: none;
     }
   }
 
-  .hds-text-input__label {
-    display: inline-block;
-    margin-top: 0;
+  .form-actions .button {
+    margin-right: $spacing-half;
   }
 }
 
-.page--oma-asiointi__private-person {
-  .grants-profile--basicinfo {
-    border-bottom: 8px solid var(--color-copper);
-  }
-
-  .grants-profile--wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
+.info-grants {
+  border-bottom: 2px solid $color-silver;
+  padding-bottom: $spacing-double;
 }
 
-.page--oma-asiointi__unregistered-community {
-  .grants-profile--wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.grants-profile--item--with-border {
+  border-left: 4px $color-copper solid;
+  padding-left: $spacing;
+
+  &:not(:first-of-type) {
+    margin-top: $spacing;
   }
 }
 
 .hds-link .hel-icon {
-  margin-right: var(--spacing-2-xs);
+  margin-right: $spacing-half;
   vertical-align: bottom;
 }
 
@@ -219,6 +63,16 @@
   font-weight: bold;
 }
 
+// Login button when logging in to grants profile
+.openid-connect-login-form.openid-connect-login-form {
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+// Syles below here will be obsolete once the switch to react has been made.
+// These are used in webform forms.
+// TODO: UHF-12685 Remove obsolete styles after switch to react is complete.
 div.applicant-info--from-prh,
 div.applicant-info--from-grants {
   display: grid;
@@ -239,13 +93,15 @@ div.applicant-info--from-grants {
   }
 }
 
+// TODO: UHF-12685 Remove obsolete styles after switch to react is complete.
 div.applicant-info--from-prh {
-  border-bottom: 2px solid var(--color-silver);
+  border-bottom: 2px solid $color-silver;
   margin-bottom: var(--spacing-layout-xs);
   padding-bottom: var(--spacing-layout-2-xs);
 }
 
-div.grants-handler--prefilled-field, .grants-profile-prh-info {
+// TODO: UHF-12685 Remove obsolete styles after switch to react is complete.
+div.grants-handler--prefilled-field {
   .field-prefix {
     display: block;
     position: absolute;
@@ -260,7 +116,7 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
   }
 
   .hel-icon--check-circle-fill {
-    color: var(--color-success);
+    color: $color-success;
     vertical-align: middle;
   }
 
@@ -278,14 +134,12 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
   }
 }
 
+// TODO: UHF-12685 Remove obsolete styles after switch to react is complete.
 .grants-profile--imported-section .webform-section-flex-wrapper {
   background-color: var(--color-black-5);
   border-bottom: 8px solid var(--color-engel-dark);
   display: block;
-  padding-bottom: var(--spacing-2-xs);
-  padding-left: var(--spacing-l);
-  padding-right: var(--spacing-l);
-  padding-top: var(--spacing-l);
+  padding: $spacing-double $spacing-double $spacing-half $spacing-double;
   width: 100%;
 
   h3.webform-section-title {
@@ -327,36 +181,5 @@ div.grants-handler--prefilled-field, .grants-profile-prh-info {
       font-weight: bold;
       margin: 0;
     }
-  }
-
-  .form-item-prh-markup {
-    border-bottom: 2px solid var(--color-silver);
-    padding-bottom: var(--spacing-layout-xs);
-    padding-top: var(--spacing-layout-xs);
-  }
-}
-
-.grants-profile__local-tasks__wrapper {
-  margin-bottom: 0;
-}
-
-.openid-connect-login-form.openid-connect-login-form {
-  border-bottom: 0;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.grants-profile--links {
-  display: flex;
-  justify-content: space-between;
-}
-
-.company-delete-confirm-form {
-  .form-actions {
-    margin-top: var(--spacing-layout-xs);
-  }
-
-  .form-submit {
-    margin-right: var(--spacing-2-xs);
   }
 }

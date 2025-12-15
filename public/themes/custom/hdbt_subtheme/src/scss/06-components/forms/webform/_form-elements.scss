@@ -49,7 +49,7 @@
     font-size: 1.125em;
     height: var(--input-height);
     line-height: normal;
-    padding: 0 var(--spacing-s);
+    padding: 0 $spacing;
     width: 100%;
     will-change: transform,box-shadow;
   }
@@ -147,14 +147,14 @@ fieldset input[type="button"] {
 
     h3 + * > *:first-child > label:first-of-type,
     h3 + * > *:first-child > *:first-child > label:first-of-type {
-      margin-top: var(--spacing-2-xs);
+      margin-top: $spacing-half;
       padding-top: 0;
     }
 
     h3 + * > *:first-child {
       > p {
         line-height: initial;
-        margin-top: var(--spacing-2-xs);
+        margin-top: $spacing-half;
       }
 
       > h4 {
@@ -216,7 +216,7 @@ fieldset input[type="button"] {
     display: block;
     font-size: var(--fontsize-body-m);
     font-weight: 500;
-    margin-bottom: var(--spacing-2-xs);
+    margin-bottom: $spacing-half;
     max-width: fit-content;
     position: relative;
   }
@@ -224,8 +224,8 @@ fieldset input[type="button"] {
   // Set the default values for legend position in a fieldset.
   legend {
     left: auto;
-    margin-left: calc(var(--spacing-2-xs) * -1);
-    padding: 0 var(--spacing-2-xs);
+    margin-left: calc($spacing-half * -1);
+    padding: 0 $spacing-half;
   }
 
   // Set the default right padding for the fieldset legend and label,
@@ -245,7 +245,7 @@ fieldset input[type="button"] {
   // inside the fieldset legend has class fieldset-legend.
   fieldset legend > span.fieldset-legend:has(button.webform-element-help),
   fieldset.fieldgroup legend > span:has(button.webform-element-help):not(.visually-hidden.fieldset-legend) {
-    padding-right: var(--spacing-l);
+    padding-right: $spacing-double;
   }
 
   // Fix the position of the span inside the legend with help button,
@@ -466,7 +466,7 @@ input[type='radio'] + label.form-required::after {
 .club-section__participants {
   @include breakpoint($breakpoint-m) {
     display: flex;
-    gap: var(--spacing-l);
+    gap: $spacing-double;
     justify-content: space-between;
   }
 
@@ -510,12 +510,12 @@ input[type='radio'] + label.form-required::after {
 }
 
 .hds-text-input__input-wrapper:focus-within:has(input[readonly]) {
-  margin-right: var(--spacing-2-xs);
+  margin-right: $spacing-half;
   outline: 2px var(--color-black) solid;
   outline-offset: 2px;
 
   input[readonly] {
-    width: calc(100% - var(--spacing-2-xs));
+    width: calc(100% - $spacing-half);
   }
 }
 
@@ -563,7 +563,8 @@ input[type='radio'] + label.form-required::after {
 // Target array items that are not in preview section
 // Add same styles to fieldset that are not in array-item
 .array-item:not(.grants-form--preview-section .array-item),
-.field-object:not(.array-item .field-object) > .hdbt-form--fieldset--border {
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset--border,
+.grants-profile--form fieldset:not(.inline-error-message) {
   border: 2px solid $color-black-50;
   margin-block-end: $spacing-and-half;
   padding: $spacing-double;
@@ -577,8 +578,10 @@ input[type='radio'] + label.form-required::after {
   }
 }
 
+
 // Align legend when fieldset is not in array item
-.field-object:not(.array-item .field-object) > .hdbt-form--fieldset--border {
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset--borde,
+.grants-profile--form fieldset {
   legend {
     float: left;
   }
@@ -588,7 +591,8 @@ input[type='radio'] + label.form-required::after {
   }
 }
 
-.hdbt-form--fieldset--border legend {
+.hdbt-form--fieldset--border legend,
+.grants-profile--form fieldset legend {
   @include font('h4');
   margin-block-end: $spacing-and-half;
   width: 100%;
@@ -705,6 +709,10 @@ input[type='radio'] + label.form-required::after {
   &:last-child {
     margin-block-end: 0;
   }
+}
+
+.prh-content-block__content-row__link {
+  display: block;
 }
 
 .prh-content-block__item__label {

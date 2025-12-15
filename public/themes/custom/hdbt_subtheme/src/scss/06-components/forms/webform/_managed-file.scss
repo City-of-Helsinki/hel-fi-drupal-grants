@@ -6,7 +6,7 @@ fieldset.grants-attachments--wrapper {
   margin-bottom: var(--spacing-layout-m);
 
   legend {
-    margin-bottom: var(--spacing-2-xs);
+    margin-bottom: $spacing-half;
   }
 
   .form-item--error-message {
@@ -56,7 +56,7 @@ fieldset.grants-attachments--wrapper {
     background-color: var(--color-info-light);
     border-bottom: 2px dotted var(--color-coat-of-arms);
     display: inline-block;
-    padding: var(--spacing-s) var(--spacing-2-xs);
+    padding: $spacing $spacing-half;
   }
 
   > .file-upload-js-error {

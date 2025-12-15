@@ -1,0 +1,73 @@
+<h3 class="info-grants">{{title}}</h3>
+<div class="grants-profile--extrainfo">
+  {% if extra_info%}
+    {% for item in extra_info %}
+      <div class="hdbt-form--section">
+        <h4 class="hdbt-form--section__title" id="{{item.id}}">{{item.title}}</h4>
+        <div class="hdbt-form--section__content">
+          {% if item.border %}
+            <div class="grants-profile--item--with-border">
+              {{ item.value }}
+            </div>
+          {% else %}
+          {{ item.value }}
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+  {% if addresses %}
+    <div class="hdbt-form--section">
+      <h4 class="hdbt-form--section__title" id="{{address.id}}">{{ 'Addresses'|t({}, {'context': 'grants_profile'}) }}</h4>
+      <div class="hdbt-form--section__content">
+          {% for address in addresses %}
+          <div class="grants-profile--item--with-border">
+            <div>{{ address.street }},</div>
+            <div>{{ address.postCode }} {{ address.city }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+  {% if bankAccounts %}
+    <div class="hdbt-form--section">
+      <h4 class="hdbt-form--section__title" id="officials-3">{{ 'Bank account numbers'|t({}, {'context': 'grants_profile'}) }}</h4>
+      <div class="hdbt-form--section__content">
+        {% for bankaccount in bankAccounts %}
+          <div class="grants-profile--item--with-border">
+            {{ bankaccount.bankAccount }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+  {% if officials %}
+    <div class="hdbt-form--section">
+      <h4 class="hdbt-form--section__title" id="officials">{{ 'Persons responsible for operations'|t({}, {'context': 'grants_profile'}) }}</h4>
+      <div class="hdbt-form--section__content">
+        {% for official in officials %}
+          <div class="grants-profile--item--with-border">
+            <strong>
+              {% if official.officialRole is defined %}
+                {{ official.officialRole }}
+              {% else %}
+                {{ roles[official.role] }}
+              {% endif %}
+            </strong>
+            <div>{{ official.name }}</div>
+            <div>{{ official.phone }}</div>
+            <div>{{ official.email }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+<div class="grants-profile--links">
+  {% if editProfileLink %}
+    {{ editProfileLink }}
+  {% endif %}
+  {% if deleteProfileLink %}
+    {{ deleteProfileLink }}
+  {% endif %}
+</div>
