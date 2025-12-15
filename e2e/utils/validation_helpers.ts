@@ -456,7 +456,7 @@ const validateMessaging = async (
   await expect(formActionButton).toHaveText('Uusi viesti');
 
   // Reload page to see message list.
-  await page.reload();
+  await reloadWithRetry(page);
   const messagesList = page.locator('ul.webform-submission-messages__messages-list');
 
   // Gracefully catch timeout errors on messages list.
@@ -481,7 +481,7 @@ const validateMessaging = async (
     console.warn('Timed out waiting for messages list title');
   }
 
-  await page.reload();
+  await reloadWithRetry(page);
   const messages = await page.locator('.webform-submission-messages__messages-list .webform-submission-messages__message-body').all();
 
   // Gracefully catch timeout errors on additional messages.
@@ -506,7 +506,7 @@ const validateMessaging = async (
   await page.locator('input[name="attachmentDescription"]').fill('Attachment test description');
   await formActionButton.click();
 
-  await expect(infoMessage).toBeVisible();
+  await expect(infoMessageBody).toBeVisible();
   await expect(page.locator('form.grants-handler-message .hds-notification--info .hds-notification__body')).toContainText('Viestisi on lähetetty.');
 
   logger('Message validation successful!');
@@ -690,6 +690,30 @@ const logValidationResults = (
   // skipMessages.forEach((msg) => logger(msg));
   // noValueMessages.forEach((msg) => logger(msg));
   // validationSuccesses.forEach((msg) => logger(msg));
+};
+
+/**
+ * Reloads the page with a retry mechanism.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param attempts
+ *   Number of attempts to reload the page.
+ */
+const reloadWithRetry = async (page: Page, attempts: number = 2): Promise<void> => {
+  try {
+    await page.reload({
+      waitUntil: 'domcontentloaded',
+      timeout: 60_000,
+    });
+  } catch (error) {
+    if (attempts <= 1) {
+      throw error;
+    }
+
+    await page.waitForTimeout(1000);
+    await reloadWithRetry(page, attempts - 1);
+  }
 };
 
 export {
