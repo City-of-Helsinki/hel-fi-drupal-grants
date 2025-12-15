@@ -5,3 +5,5 @@ $config['session_limit.settings']['session_limit_roles']['helsinkiprofiili'] = 5
 
 $config['openid_connect.client.tunnistamo']['settings']['environment_url'] = 'https://tunnistus.test.hel.ninja/auth/realms/helsinki-tunnistus'; // NOSONAR
 $config['openid_connect.client.tunnistamoadmin']['settings']['environment_url'] = 'https://tunnistus.test.hel.ninja/auth/realms/helsinki-tunnistus'; //NOSONAR
+
+$config['helfi_av.settings']['base_url'] = 'https://clamav-rest-api-clamav.agw.arodevtest.hel.fi'; //NOSONAR
