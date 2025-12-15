@@ -3,12 +3,16 @@
 namespace Drupal\grants_application\Plugin\rest\resource;
 
 use Drupal\Component\Uuid\UuidInterface;
+use Drupal\content_lock\ContentLock\ContentLock;
+use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
@@ -37,7 +41,7 @@ use Symfony\Component\Routing\RouteCollection;
   label: new TranslatableMarkup("Application"),
   uri_paths: [
     "canonical" => "/applications/{application_type_id}/{application_number}",
-    "create" => "/applications/{application_type_id}/{application_number}",
+    "create" => "/applications/{application_type_id}/{application_number}/{copy_from?}",
     "edit" => "/applications/{application_type_id}/{application_number}",
   ]
 )]
@@ -45,40 +49,6 @@ final class DraftApplication extends ResourceBase {
 
   use StringTranslationTrait;
 
-  /**
-   * Constructs a Drupal\rest\Plugin\rest\resource\EntityResource object.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin ID for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param array $serializer_formats
-   *   The available serialization formats.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   A logger instance.
-   * @param \Drupal\grants_application\Form\FormSettingsService $formSettingsService
-   *   The form settings service.
-   * @param \Drupal\grants_application\User\UserInformationService $userInformationService
-   *   The user information service.
-   * @param \Drupal\grants_application\Atv\HelfiAtvService $atvService
-   *   The helfi atv service.
-   * @param \Drupal\Component\Uuid\UuidInterface $uuid
-   *   The uuid interface.
-   * @param \Drupal\grants_application\Form\ApplicationNumberService $applicationNumberService
-   *   The application number service.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
-   *   The language manager interface.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   The entity type manager.
-   * @param \Drupal\Core\Access\CsrfTokenGenerator $csrfTokenGenerator
-   *   The token generator.
-   * @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
-   *   The event dispatcher.
-   * @param \Drupal\grants_application\Form\FormValidator $formValidator
-   *   The form validator.
-   */
   public function __construct(
     array $configuration,
     $plugin_id,
@@ -95,7 +65,10 @@ final class DraftApplication extends ResourceBase {
     private CsrfTokenGenerator $csrfTokenGenerator,
     private EventDispatcherInterface $dispatcher,
     private FormValidator $formValidator,
+    private ContentLockInterface $contentLock,
+    private AccountProxyInterface $accountProxy,
   ) {
+    // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }
 
@@ -103,6 +76,7 @@ final class DraftApplication extends ResourceBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
+    // @todo Use autowiretrait.
     return new self(
       $configuration,
       $plugin_id,
@@ -119,6 +93,8 @@ final class DraftApplication extends ResourceBase {
       $container->get(CsrfTokenGenerator::class),
       $container->get(EventDispatcherInterface::class),
       $container->get(FormValidator::class),
+      $container->get('content_lock'),
+      $container->get('current_user'),
     );
   }
 
@@ -229,17 +205,32 @@ final class DraftApplication extends ResourceBase {
    *
    * @param int $application_type_id
    *   The application type id.
+   * @param string|null $copy_from
+   *   The application number to copy from.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
-  public function post(int $application_type_id): JsonResponse {
+  public function post(int $application_type_id, string|null $copy_from = NULL): JsonResponse {
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
     catch (\Exception $e) {
       // Cannot find form by application type id.
       return new JsonResponse([], 404);
+    }
+
+    $form_data = [];
+    if ($copy_from) {
+      try {
+        $copy_document = $this->atvService->getDocument($copy_from);
+        $copy_content = $copy_document->getContent();
+        $form_data = $copy_content['form_data'] ?? $copy_content['compensation']['form_data'];
+      }
+      catch (\Throwable $e) {
+        // Unable to fetch the document to copy from.
+        return new JsonResponse([], 500);
+      }
     }
 
     try {
@@ -284,7 +275,7 @@ final class DraftApplication extends ResourceBase {
     // Grants_events requires the events-array to exist.
     // And compensation must be json-object.
     $document->setContent([
-      'form_data' => [],
+      'form_data' => $form_data,
       'compensation' => [
         'applicantInfoArray' => []
       ],
@@ -297,7 +288,7 @@ final class DraftApplication extends ResourceBase {
     try {
       $document = $this->atvService->saveNewDocument($document);
       $now = time();
-      ApplicationSubmission::create([
+      $submission = ApplicationSubmission::create([
         'document_id' => $document->getId(),
         'business_id' => $grants_profile_data->getBusinessId(),
         'sub' => $user_data['sub'],
@@ -307,18 +298,35 @@ final class DraftApplication extends ResourceBase {
         'application_number' => $application_number,
         'created' => $now,
         'changed' => $now,
-      ])
-        ->save();
+      ]);
+      $submission->save();
     }
     catch (\Exception | GuzzleException $e) {
       // Saving failed.
       return new JsonResponse([], 500);
     }
 
-    return new JsonResponse([
+    $result = [
       'application_number' => $application_number,
       'document_id' => $document->getId(),
-    ], 200);
+    ];
+
+    $result = [];
+    if ($copy_from) {
+      $result['redirect_url'] = Url::fromRoute(
+        'helfi_grants.forms_app',
+        ['id' => $application_type_id, 'application_number' => $application_number],
+        ['absolute' => TRUE],
+      )->toString();
+    } else {
+      $result = [
+        'application_number' => $application_number,
+        'document_id' => $document->getId(),
+      ];
+      $this->contentLock->locking($submission, '*', $this->accountProxy->id());
+    }
+
+    return new JsonResponse($result, 200);
   }
 
   /**
@@ -434,6 +442,10 @@ final class DraftApplication extends ResourceBase {
     // to user submitting grants forms.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT_DRAFT));
 
+    if ($this->contentLock->isLockable($submission)) {
+      $this->contentLock->release($submission, $application_number, $this->accountProxy->id());
+    }
+
     return new JsonResponse($document->toArray(), 200);
   }
 
@@ -500,6 +512,7 @@ final class DraftApplication extends ResourceBase {
       return ApplicationSubmission::load(reset($ids));
     }
 
+    // Check for business id as well.
     $ids = $this->entityTypeManager
       ->getStorage('application_submission')
       ->getQuery()

@@ -6,12 +6,7 @@ import { useAtomValue } from 'jotai';
 import { formDataAtomRef, getSubventionFieldsAtom } from '../../store';
 import { getSubventionSum } from '../../utils';
 
-export const SubventionSum = ({
-  idSchema,
-  name,
-  schema,
-  ...rest
-}: FieldProps) => {
+export const SubventionSum = ({ idSchema, name, schema, ...rest }: FieldProps) => {
   const fields = useAtomValue(getSubventionFieldsAtom);
   const formDataAtom = useAtomValue(formDataAtomRef);
   const data = useAtomValue(formDataAtom);
@@ -21,13 +16,5 @@ export const SubventionSum = ({
     fields.map((field) => `.${field}`),
   );
 
-  return (
-    <TextInput
-      disabled
-      id={idSchema.$id}
-      label={schema?.title}
-      value={sum}
-      name={name}
-    />
-  );
+  return <TextInput disabled id={idSchema.$id} label={schema?.title} value={sum} name={name} />;
 };

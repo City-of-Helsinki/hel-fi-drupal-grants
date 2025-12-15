@@ -26,8 +26,7 @@ export const FormActions = ({
   const readOnly = useAtomValue(isReadOnlyAtom);
   const finalAcceptance = useAtomValue(finalAcceptanceAtom);
   const steps = useAtomValue(getStepsAtom);
-  const [currentStepIndex, { id: currentStepId }] =
-    useAtomValue(getCurrentStepAtom);
+  const [currentStepIndex, { id: currentStepId }] = useAtomValue(getCurrentStepAtom);
   const errors = useAtomValue(errorsAtom);
   const setStep = useSetAtom(setStepAtom);
 

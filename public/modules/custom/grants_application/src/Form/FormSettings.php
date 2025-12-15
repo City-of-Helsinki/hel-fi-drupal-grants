@@ -65,6 +65,10 @@ final class FormSettings {
       return TRUE;
     }
 
+    if (!$this->settings['application_open'] || !$this->settings['application_close']) {
+      return FALSE;
+    }
+
     try {
       $open = new \DateTime($this->settings['application_open']);
       $closed = new \DateTime($this->settings['application_close']);
@@ -89,6 +93,16 @@ final class FormSettings {
    */
   public function getSchema(): array {
     return $this->schema;
+  }
+
+  /**
+   * Get copyable status.
+   *
+   * @return bool
+   *   Is copyable.
+   */
+  public function isCopyable(): bool {
+    return !$this->settings['disable_copy'];
   }
 
 }

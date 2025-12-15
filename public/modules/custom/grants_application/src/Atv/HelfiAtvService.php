@@ -75,8 +75,8 @@ class HelfiAtvService {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document.
    */
-  public function updateExistingDocument(AtvDocument $document): void {
-    $this->atvService->patchDocument($document->getId(), $document->toArray());
+  public function updateExistingDocument(AtvDocument $document): bool|AtvDocument|null {
+    return $this->atvService->patchDocument($document->getId(), $document->toArray());
   }
 
   /**

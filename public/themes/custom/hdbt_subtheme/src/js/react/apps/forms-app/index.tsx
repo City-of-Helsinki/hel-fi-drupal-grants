@@ -25,19 +25,14 @@ const formatSchemaErrors = (errors: string) => (
 
 const rootSelector: string = 'grants-react-form';
 const rootElement: HTMLElement | null = document.getElementById(rootSelector);
-const { application_number: applicationTypeId } =
-  drupalSettings.grants_react_form;
+const { application_number: applicationTypeId } = drupalSettings.grants_react_form;
 
 // @todo Implement a better check
 const isDevEnvironment = window.location.hostname.includes('docker.so');
 
 const handleErrorFallback: FallbackRender = ({ error }) => {
   if (error instanceof InvalidSchemaError && isDevEnvironment) {
-    return (
-      <div style={{ backgroundColor: 'salmon', padding: '28px' }}>
-        {formatSchemaErrors(error.message)}
-      </div>
-    );
+    return <div style={{ backgroundColor: 'salmon', padding: '28px' }}>{formatSchemaErrors(error.message)}</div>;
   }
 
   if (error instanceof BackendError) {
@@ -57,10 +52,7 @@ if (rootElement) {
       <ErrorBoundary fallback={handleErrorFallback}>
         <ToastStack />
         <Suspense fallback={<LoadingSpinner />}>
-          <AppContainer
-            applicationTypeId={applicationTypeId}
-            token={drupalSettings.grants_react_form.token}
-          />
+          <AppContainer applicationTypeId={applicationTypeId} token={drupalSettings.grants_react_form.token} />
         </Suspense>
       </ErrorBoundary>
     </React.StrictMode>,

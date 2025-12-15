@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Controller;
 
+use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
+use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
@@ -48,6 +51,10 @@ final class ApplicationController extends ControllerBase {
     private readonly ApplicationStatusService $applicationStatusService,
     #[Autowire(service: 'grants_events.events_service')]
     private readonly EventsService $eventsService,
+    #[Autowire(service: 'Drupal\grants_application\ApplicationService')]
+    private readonly ApplicationService $applicationService,
+    private readonly ContentLockInterface $contentLock,
+    private readonly AccountProxyInterface $accountProxy,
   ) {
   }
 
@@ -95,10 +102,13 @@ final class ApplicationController extends ControllerBase {
       throw new NotFoundHttpException();
     }
 
+    // Check the application status, if it's still editable.
     if ($submission && !$submission->isDraft()) {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
+        // @todo Should not use grants handler service to figure out is submission is editable.
+        // It works but the implementation should live under this module.
         if (!$this->applicationStatusService->isSubmissionEditable(NULL, $document->getStatus())) {
           $this->messenger()
             ->addError($this->t('The application is being processed. The application cannot be edited or submitted.'));
@@ -114,6 +124,26 @@ final class ApplicationController extends ControllerBase {
       }
     }
 
+    // Handle content locking.
+    if ($submission && $this->contentLock->isLockable($submission)) {
+      $uid = $this->accountProxy->id();
+      $lock = $this->contentLock->fetchLock($submission);
+
+      // Lock has different user.
+      if ($lock && $lock->uid !== $uid) {
+        $msg = $this->contentLock->displayLockOwner($lock, FALSE);
+        $this->messenger()->addMessage($msg);
+        return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
+      }
+
+      if (!$lock) {
+        $this->contentLock->locking($submission, '*', (int) $uid, FALSE);
+      }
+    }
+
+    // @todo Refactor, return early instead of skipping.
+    // When the application doesn't exist yet, we skip all the code
+    // and end up here, early return is better.
     return [
       '#theme' => 'forms_app',
       '#attached' => [
@@ -123,14 +153,50 @@ final class ApplicationController extends ControllerBase {
             'token' => $this->csrfTokenGenerator->get('rest'),
             'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
             'terms' => [
-              'body' => $terms_block->get('body')->getValue()[0]['value'],
-              'link_title' => $terms_block->get('field_link_title')->getValue()[0]['value'],
+              'body' => $terms_block->get('body')->value ?? '',
+              'link_title' => $terms_block->get('field_link_title')->value ?? '',
             ],
             'use_draft' => $use_draft,
           ],
         ],
       ],
     ];
+  }
+
+  /**
+   * Copy an existing application to a new draft.
+   *
+   * @param int $application_type_id
+   *   The application type ID.
+   * @param string $original_id
+   *   The original application number to copy from.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   The redirect response.
+   */
+  public function copyApplication(int $application_type_id, string $original_id) {
+    try {
+      $draft = $this->applicationService->createDraft($application_type_id, $original_id);
+    }
+    catch (\throwable $e) {
+      $this->messenger()
+        ->addError($this->t('Failed to copy the application. Please try again later.'));
+
+      return new RedirectResponse(
+        Url::fromRoute('grants_oma_asiointi.applications_list')->toString()
+          );
+    }
+
+    return new RedirectResponse(
+      Url::fromRoute(
+        'helfi_grants.forms_app',
+        [
+          'id' => $application_type_id,
+          'application_number' => $draft['application_number'],
+        ],
+        ['absolute' => TRUE],
+      )->toString()
+    );
   }
 
   /**
@@ -340,6 +406,19 @@ final class ApplicationController extends ControllerBase {
         $this->messenger()
           ->addError($this->t('Only DRAFT status submissions are deletable', [], $tOpts));
         return new RedirectResponse($redirectUrl->toString());
+      }
+    }
+
+    // No deleting if the application is locked.
+    if ($this->contentLock->isLockable($submission)) {
+      $uid = $this->accountProxy->id();
+      $lock = $this->contentLock->fetchLock($submission);
+
+      // Lock has different user.
+      if ($lock && $lock->uid !== $uid) {
+        $msg = $this->contentLock->displayLockOwner($lock, FALSE);
+        $this->messenger()->addMessage($msg);
+        return new RedirectResponse(Url::fromRoute('grants_oma_asiointi.front')->toString());
       }
     }
 

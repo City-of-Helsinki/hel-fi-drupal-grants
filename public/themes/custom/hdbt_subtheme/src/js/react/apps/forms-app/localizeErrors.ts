@@ -43,20 +43,12 @@ const formatRequiredError = (error: ErrorObject) => {
   const missingProperty = Array.isArray(error.schema) && error.schema[0];
 
   if (!missingProperty || !error.parentSchema?.properties?.[missingProperty]) {
-    return Drupal.t(
-      'Field is required',
-      {},
-      { context: 'Grants application: Validation' },
-    );
+    return Drupal.t('Field is required', {}, { context: 'Grants application: Validation' });
   }
 
   const { title } = error.parentSchema.properties[missingProperty];
 
-  return Drupal.t(
-    '@field field is required',
-    { '@field': title },
-    { context: 'Grants application: Validation' },
-  );
+  return Drupal.t('@field field is required', { '@field': title }, { context: 'Grants application: Validation' });
 };
 
 /**
