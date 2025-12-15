@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\grants_application\Mapper;
 
 use Drupal\grants_application\Form\FormSettings;
+use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 
@@ -573,7 +574,13 @@ class JsonMapper {
           $field['value'] = '';
           $urlPath = parse_url($formValues['integrationID'], PHP_URL_PATH);
           if ($urlPath) {
-            $field['value'] = '/' . getenv('APP_ENV') . $urlPath;
+            // Production or local doesn't require the environment name in integrationID.
+            // Original implementation GrantsAttachments::739
+            if (Helper::getAppEnv() === 'PROD') {
+              $field['value'] = $urlPath;
+            } else {
+              $field['value'] = '/' . Helper::getAppEnv() . $urlPath;
+            }
           }
         }
         else {
