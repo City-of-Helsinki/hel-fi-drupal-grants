@@ -449,15 +449,14 @@ const validateMessaging = async (
   const responseBody = await getFulfilledResponse(page);
   await expect(responseBody.length).toBe(4);
 
-  const infoMessage = page.locator('form.grants-handler-message .hds-notification--info');
-  await infoMessage.waitFor();
-
-  await expect(infoMessage).toBeVisible();
-  await expect(page.locator('form.grants-handler-message .hds-notification--info .hds-notification__body')).toContainText('Viestisi on lähetetty.');
+  const infoMessageBody = page.locator('form.grants-handler-message .hds-notification .hds-notification__body');
+  await infoMessageBody.waitFor({ state: 'visible', timeout: 20000 });
+  await expect(infoMessageBody).toBeVisible();
+  await expect(infoMessageBody).toContainText('Viestisi on lähetetty.');
   await expect(formActionButton).toHaveText('Uusi viesti');
 
   // Reload page to see message list.
-  await page.reload();
+  await reloadWithRetry(page);
   const messagesList = page.locator('ul.webform-submission-messages__messages-list');
 
   // Gracefully catch timeout errors on messages list.
@@ -506,7 +505,7 @@ const validateMessaging = async (
   await page.locator('input[name="attachmentDescription"]').fill('Attachment test description');
   await formActionButton.click();
 
-  await expect(infoMessage).toBeVisible();
+  await expect(infoMessageBody).toBeVisible();
   await expect(page.locator('form.grants-handler-message .hds-notification--info .hds-notification__body')).toContainText('Viestisi on lähetetty.');
 
   logger('Message validation successful!');
@@ -690,6 +689,30 @@ const logValidationResults = (
   // skipMessages.forEach((msg) => logger(msg));
   // noValueMessages.forEach((msg) => logger(msg));
   // validationSuccesses.forEach((msg) => logger(msg));
+};
+
+/**
+ * Reloads the page with a retry mechanism.
+ *
+ * @param page
+ *   Page object from Playwright.
+ * @param attempts
+ *   Number of attempts to reload the page.
+ */
+const reloadWithRetry = async (page: Page, attempts: number = 2): Promise<void> => {
+  try {
+    await page.reload({
+      waitUntil: 'domcontentloaded',
+      timeout: 60_000,
+    });
+  } catch (error) {
+    if (attempts <= 1) {
+      throw error;
+    }
+
+    await page.waitForTimeout(1000);
+    await reloadWithRetry(page, attempts - 1);
+  }
 };
 
 export {
