@@ -6,7 +6,6 @@ import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
 import {getFulfilledResponse, logCurrentUrl} from "./helpers";
 import { uploadFile } from './input_helpers';
 import { ATTACHMENTS } from './data/attachment_data';
-import exp from "node:constants";
 
 /**
  *  The pageType type.
