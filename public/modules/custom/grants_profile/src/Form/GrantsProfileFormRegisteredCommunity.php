@@ -378,7 +378,7 @@ later when completing the grant application.',
       '#theme_wrappers' => ['container__form_section'],
     ];
 
-    // Add a container for errors
+    // Add a container for errors,
     $form = $this->addErrorElement('addressWrapper', $form);
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;

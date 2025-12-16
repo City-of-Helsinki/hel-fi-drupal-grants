@@ -324,7 +324,7 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
       '#suffix' => '</div>',
     ];
 
-    // Add a container for errors
+    // Add a container for errors.
     $form = $this->addErrorElement('addressWrapper', $form);
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
@@ -461,7 +461,7 @@ One address is mandatory information in your personal information and on the app
       '#suffix' => '</div>',
     ];
 
-    // Add a container for errors
+    // Add a container for errors.
     $form = $this->addErrorElement('officialWrapper', $form);
 
     if (!$officials) {
