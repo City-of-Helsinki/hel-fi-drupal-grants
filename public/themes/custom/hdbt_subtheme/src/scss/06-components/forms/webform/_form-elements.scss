@@ -580,7 +580,7 @@ input[type='radio'] + label.form-required::after {
 
 
 // Align legend when fieldset is not in array item
-.field-object:not(.array-item .field-object) > .hdbt-form--fieldset--borde,
+.field-object:not(.array-item .field-object) > .hdbt-form--fieldset--border,
 .grants-profile--form fieldset {
   legend {
     float: left;

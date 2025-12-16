@@ -2,49 +2,57 @@
 <div class="grants-profile--extrainfo">
   {% if extra_info%}
     {% for item in extra_info %}
-      <div class="hdbt-form--section">
-        <h4 class="hdbt-form--section__title" id="{{item.id}}">{{item.title}}</h4>
-        <div class="hdbt-form--section__content">
+      {% embed '@hdbt_subtheme/form/components/form-section.twig' with {
+        title: item.title,
+        title_id: item.id,
+      }%}
+        {% block content_container %}
           {% if item.border %}
             <div class="grants-profile--item--with-border">
               {{ item.value }}
             </div>
           {% else %}
-          {{ item.value }}
+            {{ item.value }}
           {% endif %}
-        </div>
-      </div>
+        {% endblock %}
+      {% endembed %}
     {% endfor %}
   {% endif %}
   {% if addresses %}
-    <div class="hdbt-form--section">
-      <h4 class="hdbt-form--section__title" id="{{address.id}}">{{ 'Addresses'|t({}, {'context': 'grants_profile'}) }}</h4>
-      <div class="hdbt-form--section__content">
+    {% embed '@hdbt_subtheme/form/components/form-section.twig' with {
+      title: 'Addresses'|t({}, {'context': 'grants_profile'}),
+        title_id: address.id,
+      }%}
+        {% block content_container %}
           {% for address in addresses %}
-          <div class="grants-profile--item--with-border">
-            <div>{{ address.street }},</div>
-            <div>{{ address.postCode }} {{ address.city }}</div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
+            <div class="grants-profile--item--with-border">
+              <div>{{ address.street }},</div>
+              <div>{{ address.postCode }} {{ address.city }}</div>
+            </div>
+          {% endfor %}
+        {% endblock %}
+      {% endembed %}
   {% endif %}
   {% if bankAccounts %}
-    <div class="hdbt-form--section">
-      <h4 class="hdbt-form--section__title" id="officials-3">{{ 'Bank account numbers'|t({}, {'context': 'grants_profile'}) }}</h4>
-      <div class="hdbt-form--section__content">
+    {% embed '@hdbt_subtheme/form/components/form-section.twig' with {
+      title: 'Bank account numbers'|t({}, {'context': 'grants_profile'}),
+      title_id: 'officials-3',
+    }%}
+      {% block content_container %}
         {% for bankaccount in bankAccounts %}
           <div class="grants-profile--item--with-border">
             {{ bankaccount.bankAccount }}
           </div>
         {% endfor %}
-      </div>
-    </div>
+      {% endblock %}
+    {% endembed %}
   {% endif %}
   {% if officials %}
-    <div class="hdbt-form--section">
-      <h4 class="hdbt-form--section__title" id="officials">{{ 'Persons responsible for operations'|t({}, {'context': 'grants_profile'}) }}</h4>
-      <div class="hdbt-form--section__content">
+    {% embed '@hdbt_subtheme/form/components/form-section.twig' with {
+      title: 'Persons responsible for operations'|t({}, {'context': 'grants_profile'}),
+      title_id: 'officials',
+    }%}
+      {% block content_container %}
         {% for official in officials %}
           <div class="grants-profile--item--with-border">
             <strong>
@@ -59,8 +67,8 @@
             <div>{{ official.email }}</div>
           </div>
         {% endfor %}
-      </div>
-    </div>
+      {% endblock %}
+    {% endembed %}
   {% endif %}
 </div>
 <div class="grants-profile--links">

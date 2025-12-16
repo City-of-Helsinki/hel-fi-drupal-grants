@@ -443,9 +443,10 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
   ): void {
 
     $form['bankAccountWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
       '#title' => $this->t('Bank account numbers', [], $this->tOpts),
       '#title_tag' => 'h4',
+      '#theme_wrappers' => ['container__form_section'],
       '#prefix' => '<div id="bankaccount-wrapper">',
       '#suffix' => '</div>',
     ];

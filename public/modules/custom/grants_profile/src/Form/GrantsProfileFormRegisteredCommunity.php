@@ -140,9 +140,10 @@ you cannot do any modifications while the form is locked for them.',
       '#value' => $isNewGrantsProfile,
     ];
     $form['basicDetailsWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
       '#title' => $this->t('Basic details', [], $this->tOpts),
       '#title_tag' => 'h4',
+      '#theme_wrappers' => ['container__form_section'],
       'foundingYear' => [
         '#type' => 'textfield',
         '#title' => $this->t('Year of establishment', [], $this->tOpts),
@@ -369,15 +370,15 @@ later when completing the grant application.',
   ) {
 
     $form['addressWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
       '#title' => $this->t('Addresses', [], $this->tOpts),
       '#title_tag' => 'h4',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
+      '#theme_wrappers' => ['container__form_section'],
     ];
 
-    // Add a container for errors since the errors don't
-    // show up the webform_section element.
+    // Add a container for errors
     $form = $this->addErrorElement('addressWrapper', $form);
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
@@ -537,9 +538,10 @@ later when completing the grant application.',
   ) {
 
     $form['officialWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
       '#title' => $this->t('Persons responsible for operations', [], $this->tOpts),
       '#title_tag' => 'h4',
+      '#theme_wrappers' => ['container__form_section'],
       '#prefix' => '<div id="officials-wrapper">',
       '#suffix' => '</div>',
     ];

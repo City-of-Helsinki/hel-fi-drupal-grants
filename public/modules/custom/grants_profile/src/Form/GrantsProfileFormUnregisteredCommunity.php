@@ -103,9 +103,13 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       '#value' => $isNewGrantsProfile,
     ];
     $form['companyNameWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
+      '#theme_wrappers' => ['container__form_section'],
       '#title' => $this->t('Basic details', [], $this->tOpts),
       '#title_tag' => 'h4',
+      '#attributes' => [
+        'class' => ['hdbt-form--section'],
+      ],
     ];
     $form['companyNameWrapper']['companyName'] = [
       '#type' => 'textfield',
@@ -312,15 +316,15 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   ) {
 
     $form['addressWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
+      '#theme_wrappers' => ['container__form_section'],
       '#title' => $this->t('Addresses', [], $this->tOpts),
       '#title_tag' => 'h4',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
 
-    // Add a container for errors since the errors don't
-    // show up the webform_section element.
+    // Add a container for errors
     $form = $this->addErrorElement('addressWrapper', $form);
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
@@ -449,15 +453,15 @@ One address is mandatory information in your personal information and on the app
   ) {
 
     $form['officialWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
+      '#theme_wrappers' => ['container__form_section'],
       '#title' => $this->t('Persons responsible for operations', [], $this->tOpts),
       '#title_tag' => 'h4',
       '#prefix' => '<div id="officials-wrapper">',
       '#suffix' => '</div>',
     ];
 
-    // Add a container for errors since the errors don't
-    // show up the webform_section element.
+    // Add a container for errors
     $form = $this->addErrorElement('officialWrapper', $form);
 
     if (!$officials) {
