@@ -6,6 +6,7 @@ import {PROFILE_INPUT_DATA, ProfileInputData} from "./data/profile_input_data";
 import {getFulfilledResponse, logCurrentUrl} from "./helpers";
 import { uploadFile } from './input_helpers';
 import { ATTACHMENTS } from './data/attachment_data';
+import exp from "node:constants";
 
 /**
  *  The pageType type.
@@ -427,11 +428,9 @@ const validateMessaging = async (
   thisStoreData: any
 ) => {
   const { applicationId } = thisStoreData;
-  const viewPageUrl = `/fi/hakemus/${applicationId}/katso`;
 
-  await page.goto(viewPageUrl);
+  await page.goto(`/fi/hakemus/${applicationId}/katso`);
   await logCurrentUrl(page);
-  await page.waitForURL('**/katso');
 
   const formActionButton = page.locator('form.grants-handler-message button.form-submit[name="op"]');
   const textArea = page.locator('textarea[name="message"]');
@@ -458,28 +457,16 @@ const validateMessaging = async (
   // Reload page to see message list.
   await reloadWithRetry(page);
   const messagesList = page.locator('ul.webform-submission-messages__messages-list');
-
-  // Gracefully catch timeout errors on messages list.
-  try {
-    await messagesList.waitFor({ state: 'attached', timeout: 180 * 1000});
-  } catch (error) {
-    console.warn('Timed out waiting for messages list to attach');
-  }
+  await expect(messagesList).toBeVisible();
+  await expect(messagesList).toContainText('Oma viesti');
+  await expect(messagesList).toContainText('Test message');
 
   // Validate sending additional messages.
-  await textArea.fill('Test message 2');
+  const secondTextArea = page.locator('textarea[name="message"]');
+  await secondTextArea.fill('Test message 2');
   await formActionButton.click();
   const secondSubmitBody = await getFulfilledResponse(page);
   expect(secondSubmitBody.length).toBe(4);
-
-  const messagesListTitle = page.locator('ul.webform-submission-messages__messages-list > h5');
-
-  // Gracefully catch timeout errors on messages list title.
-  try {
-    await messagesListTitle.waitFor();
-  } catch (error) {
-    console.warn('Timed out waiting for messages list title');
-  }
 
   const messages = await page.locator('.webform-submission-messages__messages-list .webform-submission-messages__message-body').all();
 
