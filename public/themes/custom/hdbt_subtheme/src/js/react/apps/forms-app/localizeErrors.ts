@@ -43,12 +43,20 @@ const formatRequiredError = (error: ErrorObject) => {
   const missingProperty = Array.isArray(error.schema) && error.schema[0];
 
   if (!missingProperty || !error.parentSchema?.properties?.[missingProperty]) {
-    return Drupal.t('Field is required', {}, { context: 'Grants application: Validation' });
+    return Drupal.t(
+      'Field is required',
+      {},
+      { context: 'Grants application: Validation' },
+    );
   }
 
   const { title } = error.parentSchema.properties[missingProperty];
 
-  return Drupal.t('@field field is required', { '@field': title }, { context: 'Grants application: Validation' });
+  return Drupal.t(
+    '@field field is required',
+    { '@field': title },
+    { context: 'Grants application: Validation' },
+  );
 };
 
 /**
@@ -61,9 +69,38 @@ const formatRequiredError = (error: ErrorObject) => {
 const formatPatternError = (error: ErrorObject) => {
   const { data } = error;
 
+  if (!data || data === '') {
+    return formatRequiredError(error);
+  }
+
   return Drupal.t(
     'The email address @mail is not valid. Use the format user@example.com.',
     { '@mail': data },
+    { context: 'Grants application: Validation' },
+  );
+};
+
+/**
+ * @todo extends to support other types
+ *
+ * @param {ErrorObject} error - The error object containing validation details.
+ *
+ * @return {string} - Translated error message indicating the required field.
+ */
+const formatTypeError = (error: ErrorObject) => {
+  const { schema } = error;
+
+  if (schema === 'integer') {
+    return Drupal.t(
+      'The value must be an integer.',
+      {},
+      { context: 'Grants application: Validation' },
+    );
+  }
+
+  return Drupal.t(
+    'Value is of incorrect type.',
+    {},
     { context: 'Grants application: Validation' },
   );
 };
@@ -95,6 +132,10 @@ export const localizeErrors = (errors?: null | ErrorObject[]) => {
       }
       case 'required': {
         outMessage = formatRequiredError(error);
+        break;
+      }
+      case 'type': {
+        outMessage = formatTypeError(error);
         break;
       }
       default:

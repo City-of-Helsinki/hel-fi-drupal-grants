@@ -520,8 +520,8 @@ msgid "Application could not be saved as draft."
 msgstr "Hakemusta ei voitu tallentaa luonnoksena."
 
 msgctxt "Grants application: Validation"
-msgid "@mail ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com."
-msgstr "Hakemusta ei voitu tallentaa luonnoksena."
+msgid "The email address @mail is not valid. Use the format user@example.com."
+msgstr "@mail ei ole kelvollinen sähköpostiosoite. Täytä sähköpostiosoite muodossa user@example.com."
 
 msgctxt "Grants application: Submitted form"
 msgid "Application number"
@@ -622,3 +622,11 @@ msgstr "Hakemusta ei voitu lähettää."
 msgctxt "Grants application: Submit"
 msgid "Submission failed."
 msgstr "Lähettäminen epäonnistui."
+
+msgctxt "Grants application: Validation"
+msgid "The value must be an integer."
+msgstr "Arvon on oltava numero."
+
+msgctxt "Grants application: Validation"
+msgid "Value is of incorrect type."
+msgstr "Arvo on väärässä muodossa."

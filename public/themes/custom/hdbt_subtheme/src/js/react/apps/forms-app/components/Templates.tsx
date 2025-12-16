@@ -8,11 +8,22 @@ import type {
   ObjectFieldTemplatePropertyType,
   ObjectFieldTemplateProps,
 } from '@rjsf/utils';
-import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus } from 'hds-react';
+import {
+  Accordion,
+  Button,
+  Fieldset,
+  Notification,
+  IconCross,
+  IconPlus,
+} from 'hds-react';
 import type { ReactNode } from 'react';
 import { useAtomValue } from 'jotai';
 
-import { formStepsAtom, getCurrentStepAtom, shouldRenderPreviewAtom } from '../store';
+import {
+  formStepsAtom,
+  getCurrentStepAtom,
+  shouldRenderPreviewAtom,
+} from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 
@@ -39,13 +50,22 @@ export const ArrayFieldTemplate = ({
         const value = item?.children?.props?.formData;
         return value && Object.keys(value).length;
       })
-      .map((item) => <ArrayFieldItemTemplate {...{ ...item, canAdd: false, hasRemove: false, hasToolbar: false }} />);
+      .map((item) => (
+        <ArrayFieldItemTemplate
+          {...{ ...item, canAdd: false, hasRemove: false, hasToolbar: false }}
+        />
+      ));
 
     return (
       <>
         {/* @todo fix when rebuilding styles  */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        {!hideName && (printableName ? <label>{printableName}</label> : <label>{schema.title}</label>)}
+        {!hideName &&
+          (printableName ? (
+            <label>{printableName}</label>
+          ) : (
+            <label>{schema.title}</label>
+          ))}
         {renderableItems.length ? renderableItems : '-'}
       </>
     );
@@ -55,12 +75,19 @@ export const ArrayFieldTemplate = ({
 
   return (
     <div>
-      {description && <div className='hdbt-form--description'>{description}</div>}
+      {description && (
+        <div className='hdbt-form--description'>{description}</div>
+      )}
       {items.map((item) => (
         <ArrayFieldItemTemplate {...item} />
       ))}
       {canAdd && (
-        <Button onClick={onAddClick} theme={secondaryButtonTheme} type='button' iconStart={<IconPlus />}>
+        <Button
+          onClick={onAddClick}
+          theme={secondaryButtonTheme}
+          type='button'
+          iconStart={<IconPlus />}
+        >
           {addText ? (addText as ReactNode & string) : Drupal.t('Add')}
         </Button>
       )}
@@ -80,7 +107,11 @@ const PreviewStep = ({
   const printableName = uiSchema?.['ui:options']?.printableName;
 
   return (
-    <Accordion heading={printableName || title?.toString()} headingLevel={3} initiallyOpen>
+    <Accordion
+      heading={printableName || title?.toString()}
+      headingLevel={3}
+      initiallyOpen
+    >
       {properties.map((field) => field.content)}
     </Accordion>
   );
@@ -100,23 +131,37 @@ const PreviewSection = ({
   return (
     <section className='hdbt-form--section grants-form--preview-section'>
       <h4 className='hdbt-form--section__title'>{printableName || title}</h4>
-      <div className='hdbt-form--section__content'>{properties.map((field) => field.content)}</div>
+      <div className='hdbt-form--section__content'>
+        {properties.map((field) => field.content)}
+      </div>
     </section>
   );
 };
 
-export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: ObjectFieldTemplateProps) => {
+export const ObjectFieldTemplate = ({
+  idSchema,
+  properties,
+  schema,
+  uiSchema,
+}: ObjectFieldTemplateProps) => {
   const { _isSection, _step, description, title } = schema;
   const steps = useAtomValue(formStepsAtom);
-  const [stepIndex, { id: stepId, label: stepLabel }] = useAtomValue(getCurrentStepAtom);
+  const [stepIndex, { id: stepId, label: stepLabel }] =
+    useAtomValue(getCurrentStepAtom);
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (idSchema.$id === 'root') {
-    return <div className='form-wrapper'>{properties.map((field) => field.content)}</div>;
+    return (
+      <div className='form-wrapper'>
+        {properties.map((field) => field.content)}
+      </div>
+    );
   }
 
   if (_step && shouldRenderPreview) {
-    return <PreviewStep title={title} properties={properties} uiSchema={uiSchema} />;
+    return (
+      <PreviewStep title={title} properties={properties} uiSchema={uiSchema} />
+    );
   }
 
   if (_step && _step !== stepId) {
@@ -131,7 +176,9 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
           {stepIndex === 0 && (
             <Notification
               className='hdbt-form--notification'
-              label={Drupal.t('Some information fetched from personal information')}
+              label={Drupal.t(
+                'Some information fetched from personal information',
+              )}
             >
               {Drupal.t(
                 'Check the information on the form before sending the application. You can change your own information from personal information section of the site.',
@@ -141,7 +188,9 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
           {steps && stepIndex < steps.size - 2 && (
             <Notification
               className='hdbt-form--notification'
-              label={Drupal.t('Fill in the fields to all the questions that you can answer.')}
+              label={Drupal.t(
+                'Fill in the fields to all the questions that you can answer.',
+              )}
             >
               {Drupal.t(
                 'Fields marked with * are mandatory information that you must fill in in order to save and send the information.',
@@ -169,7 +218,13 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   }
 
   if (_isSection && shouldRenderPreview) {
-    return <PreviewSection title={title} properties={properties} uiSchema={uiSchema} />;
+    return (
+      <PreviewSection
+        title={title}
+        properties={properties}
+        uiSchema={uiSchema}
+      />
+    );
   }
 
   if (_isSection) {
@@ -177,7 +232,9 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
       <section className='hdbt-form--section'>
         <h3 className='hdbt-form--section__title'>{title}</h3>
         <div className='hdbt-form--section__content'>
-          {description && <div className='hdbt-form--description'>{description}</div>}
+          {description && (
+            <div className='hdbt-form--description'>{description}</div>
+          )}
           {properties.map((field) => field.content)}
         </div>
       </section>
@@ -192,7 +249,11 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
       <>
         {/* @todo fix when rebuilding styles  */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        {!hideName && printableName ? <label>{printableName}</label> : <label>{title}</label>}
+        {!hideName && printableName ? (
+          <label>{printableName}</label>
+        ) : (
+          <label>{title}</label>
+        )}
         {properties.map((field) => {
           if (field.content.props.uiSchema?.['ui:help']) {
             field.content.props.uiSchema['ui:help'] = '';
@@ -210,13 +271,21 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
       className='hdbt-form--fieldset hdbt-form--fieldset--border'
       style={{ marginInline: '0' }}
     >
-      {description && <div className='hdbt-form--description'>{description}</div>}
+      {description && (
+        <div className='hdbt-form--description'>{description}</div>
+      )}
       {properties.map((field) => field.content)}
     </Fieldset>
   );
 };
 
-export const ButtonTemplate = ({ icon, children, registry, uiSchema, ...props }: IconButtonProps) => (
+export const ButtonTemplate = ({
+  icon,
+  children,
+  registry,
+  uiSchema,
+  ...props
+}: IconButtonProps) => (
   <Button
     {...props}
     style={{ marginRight: 'auto', marginTop: 'var(--spacing-m)' }}
@@ -231,5 +300,9 @@ export const ButtonTemplate = ({ icon, children, registry, uiSchema, ...props }:
 export const RemoveButtonTemplate = (props: IconButtonProps) => {
   const { uiSchema } = props;
   const removeText = uiSchema?.['ui:options']?.removeText;
-  return <ButtonTemplate {...props}>{removeText || Drupal.t('Remove')}</ButtonTemplate>;
+  return (
+    <ButtonTemplate {...props}>
+      {removeText || Drupal.t('Remove')}
+    </ButtonTemplate>
+  );
 };
