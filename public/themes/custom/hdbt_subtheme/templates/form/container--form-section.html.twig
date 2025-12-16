@@ -1,32 +1,4 @@
-{#
-/**
- * @file
- * Default theme implementation for a webform section element and its children.
- *
- * Available variables:
- * - attributes: HTML attributes for the <section> element.
- * - errors: (optional) Any errors for this <section> element, may not be set.
- * - required: Boolean indicating whether the <section> element is required.
- * - title: The title/header of the section header.
- * - title_attributes: HTML attributes to apply to the title/header element.
- * - title_tag: The title/header HTML tag.
- * - description: The description element containing the following properties:
- *   - content: The description content of the <fieldset>.
- *   - attributes: HTML attributes to apply to the description container.
- * - children: The rendered child elements of the <fieldset>.
- * - prefix: The content to add before the .section-wrapper children.
- * - suffix: The content to add after the .section-wrapper children.
- *
- * Copied from: fieldset.html.twig
- *
- * @see template_preprocess_webform_section()
- *
- * @ingroup themeable
- */
-#}
-
 {% set title = element['#title'] ?? null %}
-{% set title_tag = element['#title_tag'] ?? 'h3' %}
 
 {% embed '@hdbt_subtheme/form/components/form-section.twig' with {
   title: title,
