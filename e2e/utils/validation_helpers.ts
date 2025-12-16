@@ -455,6 +455,7 @@ const validateMessaging = async (
 
   // Reload page to see message list.
   await reloadWithRetry(page);
+  await page.waitForSelector('ul.webform-submission-messages__messages-list');
   const messagesList = page.locator('ul.webform-submission-messages__messages-list');
   await expect(messagesList).toBeVisible();
   await expect(messagesList).toContainText('Oma viesti');
@@ -467,6 +468,7 @@ const validateMessaging = async (
   const secondSubmitBody = await getFulfilledResponse(page);
   expect(secondSubmitBody.length).toBe(4);
 
+  await page.waitForSelector('ul.webform-submission-messages__messages-list .webform-submission-messages__message-body');
   const messages = await page.locator('.webform-submission-messages__messages-list .webform-submission-messages__message-body').all();
 
   // Gracefully catch timeout errors on additional messages.
