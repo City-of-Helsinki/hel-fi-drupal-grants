@@ -472,7 +472,7 @@ const validateMessaging = async (
       if (retryCount === 3) {
         throw error;
       }
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(2000);
     }
   }
 
