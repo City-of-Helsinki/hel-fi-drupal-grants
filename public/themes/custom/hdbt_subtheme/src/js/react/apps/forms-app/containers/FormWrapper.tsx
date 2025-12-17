@@ -32,7 +32,7 @@ import { RJSFFormContainer } from './RJSFFormContainer';
  *
  * @yields {string} - form element path
  */
-function* iterateFormData(
+function* getDanglingArrayPaths(
   element: any,
   prefix: string = '',
 ): IterableIterator<string> {
@@ -44,7 +44,7 @@ function* iterateFormData(
     // Functional loops mess mess up generator function, so use for - of loop here.
     // eslint-disable-next-line no-restricted-syntax
     for (const [key, value] of Object.entries(element)) {
-      yield* iterateFormData(value, `${prefix}.${key}`);
+      yield* getDanglingArrayPaths(value, `${prefix}.${key}`);
     }
   }
 
@@ -126,11 +126,12 @@ const shouldFixArrayField = (schemaDefinition: RJSFSchema) => {
  * @return {object} - Fixed form data
  */
 const fixDanglingArrays = (formData: any, schema: RJSFSchema) => {
-  const objectPaths = Array.from(iterateFormData(formData));
+  const objectPaths = Array.from(getDanglingArrayPaths(formData));
 
   objectPaths.forEach((path) => {
     const schemaDefinition =
-      schema?.definitions && getNestedSchemaProperty(schema.definitions, path);
+      schema?.definitions &&
+      getNestedSchemaProperty(schema.definitions, path, true);
 
     if (schemaDefinition && schemaDefinition.type === 'object') {
       setNestedProperty(formData, path, {});
@@ -169,6 +170,8 @@ const transformData = (data: any) => {
   const { definitions, properties } = schema;
   const transformedProperties: any = {};
 
+  const fixedFormData = fixDanglingArrays(formData, schema);
+
   // Add _step property to each form step
   if (properties) {
     Object.entries(properties).forEach((property: any) => {
@@ -195,7 +198,7 @@ const transformData = (data: any) => {
 
   return {
     ...data,
-    formData: fixDanglingArrays(formData, schema),
+    formData: fixedFormData,
     schema: { ...schema, properties: transformedProperties },
     ui_schema,
   };

@@ -42,7 +42,7 @@
                     },
                     "voluntaryHours": {
                       "title": "voluntaryHours.title",
-                      "type": "integer" 
+                      "type": "integer"
                     },
                     "cost": {
                       "title": "cost.title",

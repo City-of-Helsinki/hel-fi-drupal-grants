@@ -630,3 +630,7 @@ msgstr "Arvon on oltava numero."
 msgctxt "Grants application: Validation"
 msgid "Value is of incorrect type."
 msgstr "Arvo on väärässä muodossa."
+
+msgctxt "Grants application: Validation"
+msgid "You must insert at least @limit value for field @field"
+msgstr "Sinun on syötettävä vähintään @limit arvo kentälle @field"

@@ -17,7 +17,7 @@ export const ErrorsList = () => {
     >
       <ul>
         {errors.map(([index, error]) => (
-          <li key={error.schemaPath}>
+          <li key={error.property}>
             {Drupal.t(
               'Error on page @page:',
               { '@page': index + 1 },

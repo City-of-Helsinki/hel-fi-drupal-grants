@@ -1,6 +1,28 @@
 import type { ErrorObject } from 'ajv';
 
 /**
+ * Localize the "minItems" error from AJV.
+ *
+ * @param {ErrorObject} error
+ *  The error object.
+ *
+ * @return {string}
+ *   The localized error message.
+ */
+const formatMinItemsError = (error: ErrorObject) => {
+  const {
+    params: { limit },
+    parentSchema,
+  } = error;
+
+  return Drupal.t(
+    'You must insert at least @limit value for field @field',
+    { '@field': parentSchema?.title, '@limit': limit },
+    { context: 'Grants application: Validation' },
+  );
+};
+
+/**
  * Localize the "minLength" error from AJV.
  *
  * If the minimum length is 1, use the "required" error message.
@@ -40,7 +62,9 @@ const formatMinLengthError = (error: ErrorObject) => {
  * @return {string} - Translated error message indicating the required field.
  */
 const formatRequiredError = (error: ErrorObject) => {
-  const missingProperty = Array.isArray(error.schema) && error.schema[0];
+  const missingProperty = error.params?.missingProperty
+    ?.toString()
+    .replace(/^'|'$/g, '');
 
   if (!missingProperty || !error.parentSchema?.properties?.[missingProperty]) {
     return Drupal.t(
@@ -124,6 +148,10 @@ export const localizeErrors = (errors?: null | ErrorObject[]) => {
     switch (error.keyword) {
       case 'format': {
         outMessage = formatPatternError(error);
+        break;
+      }
+      case 'minItems': {
+        outMessage = formatMinItemsError(error);
         break;
       }
       case 'minLength': {

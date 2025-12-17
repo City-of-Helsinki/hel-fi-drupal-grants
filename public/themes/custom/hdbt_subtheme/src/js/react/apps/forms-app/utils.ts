@@ -123,20 +123,30 @@ export const addApplicantInfoStep = (
  *
  * @param {object} obj - Object to traverse
  * @param {string} path - Point to a nested property in string format
+ * @param {boolean} replaceStep - Whether to replace _step occurrences in path
+ *
  * @return {any} - Value of nested property or undefined
  */
-export const getNestedSchemaProperty = (obj: RJSFSchema, path: string) => {
+export const getNestedSchemaProperty = (
+  obj: RJSFSchema,
+  path: string,
+  replaceStep: boolean = false,
+) => {
   const properties = path.split('.').slice(1);
-  let current = obj;
+  let current: RJSFSchema | undefined = obj;
 
   properties.forEach((property, index) => {
-    if (!Object.prototype.hasOwnProperty.call(current, property)) {
-      return undefined;
-    }
-    if (index === properties.length - 1) {
-      current = current[property];
+    const propertyName = replaceStep
+      ? property.toString().replace('_step', '')
+      : property.toString();
+    const hasProperty =
+      current && Object.prototype.hasOwnProperty.call(current, propertyName);
+    if (hasProperty && index === properties.length - 1) {
+      current = current?.[propertyName];
+    } else if (hasProperty) {
+      current = current?.[propertyName]?.properties ?? current?.[propertyName];
     } else {
-      current = current[property]?.properties ?? current[property];
+      current = undefined;
     }
   });
 
@@ -221,12 +231,12 @@ export const formatErrors = (rawErrors: string[] | undefined) => {
  * @param {array} subventionFields - Array of subvention field paths
  * @return {number} - Total sum
  */
-export const getSubventionSum = (formData, subventionFields) =>
+export const getSubventionSum = (formData: any, subventionFields: string[]) =>
   subventionFields.reduce((total, field) => {
     const values = getNestedSchemaProperty(formData, field);
 
-    if (values.length) {
-      Object.entries(values).forEach(([key, curr]) => {
+    if (values?.length) {
+      Object.entries(values).forEach(([, curr]) => {
         const amount = Number(curr[1].value);
 
         if (!Number.isNaN(amount)) {
