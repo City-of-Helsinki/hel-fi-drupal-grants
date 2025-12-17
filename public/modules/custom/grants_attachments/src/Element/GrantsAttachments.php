@@ -1043,18 +1043,4 @@ class GrantsAttachments extends WebformCompositeBase {
     }
   }
 
-  /**
-   * Return allowed files in an array format.
-   *
-   * @param string $allowedFileTypes
-   *   Allowed filetypes in a string format.
-   *
-   * @return array
-   *   Allowed files in an array format.
-   */
-  private static function getAllowedFileTypesInArrayFormat(string $allowedFileTypes) {
-    $filetypeArray = explode(',', $allowedFileTypes);
-    return array_map('trim', $filetypeArray);
-  }
-
 }
