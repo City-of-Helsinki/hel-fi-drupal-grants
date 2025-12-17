@@ -263,8 +263,15 @@ class GrantsAttachments extends WebformCompositeBase {
       // Managed file assumes that this is always in MB.
       '#max_filesize' => 20,
       '#upload_validators' => [
-        'file_validate_extensions' => $allowedFileTypesArray,
-        'file_validate_size' => [$maxFileSizeInBytes],
+        'FileExtension' => [
+          'extensions' => $allowedFileTypesArray,
+        ],
+        'FileSizeLimit' => [
+          'fileLimit' => $maxFileSizeInBytes,
+        ],
+        'FileNameLength' => [
+          'maxLength' => 100,
+        ],
       ],
       '#upload_location' => $uploadLocation,
       '#sanitize' => TRUE,

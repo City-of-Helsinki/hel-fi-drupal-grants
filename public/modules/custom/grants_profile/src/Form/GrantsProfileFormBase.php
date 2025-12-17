@@ -674,10 +674,15 @@ of the account owner or a copy of a bank statement.", [], $this->tOpts),
       '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,
         txt,xls,xlsx,zip',
       '#upload_validators' => [
-        'file_validate_extensions' => [
-          'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
+        'FileExtension' => [
+          'extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
         ],
-        'file_validate_size' => [$maxFileSizeInBytes],
+        'FileSizeLimit' => [
+          'fileLimit' => $maxFileSizeInBytes,
+        ],
+        'FileNameLength' => [
+          'maxLength' => 100,
+        ],
       ],
       '#element_validate' => ['::validateUpload'],
       '#upload_location' => $uploadLocation,
