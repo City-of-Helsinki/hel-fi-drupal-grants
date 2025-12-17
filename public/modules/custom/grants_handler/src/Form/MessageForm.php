@@ -108,7 +108,7 @@ class MessageForm extends FormBase {
         '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
         '#upload_validators' => [
           'FileExtension' => [
-            'extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
+            'extensions' => 'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
           ],
           'FileSizeLimit' => [
             'fileLimit' => $maxFileSizeInBytes,

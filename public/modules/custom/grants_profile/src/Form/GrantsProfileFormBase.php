@@ -675,7 +675,7 @@ of the account owner or a copy of a bank statement.", [], $this->tOpts),
         txt,xls,xlsx,zip',
       '#upload_validators' => [
         'FileExtension' => [
-          'extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
+          'extensions' => 'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
         ],
         'FileSizeLimit' => [
           'fileLimit' => $maxFileSizeInBytes,

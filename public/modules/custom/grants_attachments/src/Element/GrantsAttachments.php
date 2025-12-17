@@ -252,7 +252,6 @@ class GrantsAttachments extends WebformCompositeBase {
     $uniqId = Html::getUniqueId('composite-attachment');
 
     $allowedFileTypes = $element['#allowed_filetypes'] ?? self::DEFAULT_ALLOWED_FILE_TYPES;
-    $allowedFileTypesArray = self::getAllowedFileTypesInArrayFormat($allowedFileTypes);
 
     $elements['attachment'] = [
       '#type' => 'managed_file',
@@ -264,7 +263,7 @@ class GrantsAttachments extends WebformCompositeBase {
       '#max_filesize' => 20,
       '#upload_validators' => [
         'FileExtension' => [
-          'extensions' => $allowedFileTypesArray,
+          'extensions' => $allowedFileTypes,
         ],
         'FileSizeLimit' => [
           'fileLimit' => $maxFileSizeInBytes,
