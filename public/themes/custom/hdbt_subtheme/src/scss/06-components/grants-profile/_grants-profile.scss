@@ -32,18 +32,23 @@
     margin-bottom: $spacing-double;
   }
 
-  fieldset.form-wrapper.inline-error-message {
-    border: 0;
-  }
-
   fieldset.inline-error-message {
     background-color: unset;
-    margin-bottom: 0;
-    padding: 0 0 0 $spacing-half;
+    border: 0;
+    margin: 0;
+    padding: 0;
 
     legend {
       display: none;
     }
+
+    .form-item--error-message {
+      margin-top: 0;
+    }
+  }
+
+  fieldset.inline-error-message:has(.form-item--error-message) {
+    margin-bottom: $spacing-and-half;
   }
 }
 
