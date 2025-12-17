@@ -1,15 +1,14 @@
-.grants-profile--form {
-  .hdbt-form--section__title {
-    @include font('h3');
-  }
+.grants-profile--form .hdbt-form--section__title {
+  @include font('h3');
+}
 
-  .form-actions {
-    border-top: 1px solid $color-black-20;
-    display: flex;
-    gap: $spacing-half;
-    justify-content: flex-end;
-    padding-top: $spacing-double;
-  }
+.grants-profile--form .form-actions,
+.grants-profile--links {
+  border-top: 1px solid $color-black-20;
+  display: flex;
+  gap: $spacing-half;
+  justify-content: flex-end;
+  padding-top: $spacing-double;
 }
 
 .grants-profile .prh-content-block {
