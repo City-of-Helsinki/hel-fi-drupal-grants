@@ -127,18 +127,12 @@ export const addApplicantInfoStep = (
  *
  * @return {any} - Value of nested property or undefined
  */
-export const getNestedSchemaProperty = (
-  obj: RJSFSchema,
-  path: string,
-  replaceStep: boolean = false,
-) => {
+export const getNestedSchemaProperty = (obj: RJSFSchema, path: string) => {
   const properties = path.split('.').slice(1);
   let current: RJSFSchema | undefined = obj;
 
   properties.forEach((property, index) => {
-    const propertyName = replaceStep
-      ? property.toString().replace('_step', '')
-      : property.toString();
+    const propertyName = property.toString();
     const hasProperty =
       current && Object.prototype.hasOwnProperty.call(current, propertyName);
     if (hasProperty && index === properties.length - 1) {
