@@ -810,13 +810,14 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Save own information', [], $this->tOpts),
+      '#weight' => 1,
     ];
 
     $form['actions']['submit_cancel'] = [
       '#type' => 'submit',
       '#value' => $this->t('Cancel'),
       '#attributes' => ['class' => ['button', 'hds-button--secondary']],
-      '#weight' => 10,
+      '#weight' => 0,
       '#limit_validation_errors' => [],
       '#submit' => ['Drupal\grants_profile\Form\GrantsProfileFormBase::formCancelCallback'],
     ];

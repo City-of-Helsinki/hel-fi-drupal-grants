@@ -66,10 +66,10 @@
   {% endif %}
 </div>
 <div class="grants-profile--links">
+ {% if deleteProfileLink %}
+    {{ deleteProfileLink }}
+  {% endif %}
   {% if editProfileLink %}
     {{ editProfileLink }}
-  {% endif %}
-  {% if deleteProfileLink %}
-    {{ deleteProfileLink }}
   {% endif %}
 </div>
