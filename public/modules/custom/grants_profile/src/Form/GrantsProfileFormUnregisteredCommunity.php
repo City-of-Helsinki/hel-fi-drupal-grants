@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Uuid\UuidInterface;
@@ -394,7 +396,7 @@ One address is mandatory information in your personal information and on the app
         'address' => [
           '#type' => 'fieldset',
           '#attributes' => [
-          'class' => [
+            'class' => [
               'hdbt-form--fieldset--border',
             ],
           ],
