@@ -1,7 +1,28 @@
+.grants-profile--form {
+  .hdbt-form--section__title {
+    @include font('h3');
+  }
+
+  .form-actions {
+    border-top: 1px solid $color-black-20;
+    display: flex;
+    gap: $spacing-half;
+    justify-content: flex-end;
+    padding-top: $spacing-double;
+  }
+}
+
+.grants-profile .prh-content-block {
+  margin-top: $spacing-quadruple;
+}
+
+.grants-profile--title {
+  margin-bottom: $spacing-quadruple;
+}
 
 .grants-profile--infotext {
   @include font('body');
-  margin-bottom: $spacing;
+  margin-block: 0 $spacing;
 }
 
 .grants-profile--links {
@@ -30,24 +51,15 @@
       display: none;
     }
   }
-
-  .form-actions .button {
-    margin-right: $spacing-half;
-  }
 }
 
 .info-grants {
-  border-bottom: 2px solid $color-silver;
+  border-bottom: 1px solid $color-black-20;
   padding-bottom: $spacing-double;
 }
 
-.grants-profile--item--with-border {
-  border-left: 4px $color-copper solid;
-  padding-left: $spacing;
-
-  &:not(:first-of-type) {
+.grants-profile--item--multiple:not(:first-of-type)  {
     margin-top: $spacing;
-  }
 }
 
 .hds-link .hel-icon {

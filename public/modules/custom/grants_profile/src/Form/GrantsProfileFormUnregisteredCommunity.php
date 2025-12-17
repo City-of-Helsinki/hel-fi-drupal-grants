@@ -341,6 +341,11 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
       $form['addressWrapper'][$delta]['address'] = [
         '#type' => 'fieldset',
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
         '#description_display' => 'before',
         '#description' => $this->t('The address must be your official address.
 One address is mandatory information in your personal information and on the application.', [], $this->tOpts),
@@ -388,6 +393,11 @@ One address is mandatory information in your personal information and on the app
       $form['addressWrapper'][] = [
         'address' => [
           '#type' => 'fieldset',
+          '#attributes' => [
+          'class' => [
+              'hdbt-form--fieldset--border',
+            ],
+          ],
           '#title' => $this->t('Community or group address', [], $this->tOpts),
           '#help_display' => 'before',
           '#description' => $this->t('The address must be your official address.
@@ -483,6 +493,11 @@ One address is mandatory information in your personal information and on the app
 
       $form['officialWrapper'][$delta]['official'] = [
         '#type' => 'fieldset',
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
         '#title' => $this->t('Community or group official', [], $this->tOpts),
         'name' => [
           '#type' => 'textfield',
@@ -536,6 +551,11 @@ One address is mandatory information in your personal information and on the app
 
       $form['officialWrapper'][$nextDelta]['official'] = [
         '#type' => 'fieldset',
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
         '#title' => $this->t('Community official', [], $this->tOpts),
         'name' => [
           '#type' => 'textfield',

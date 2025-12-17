@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>{{ "Association information"|t({}, {'context': 'grants_profile'}) }}</h2>
+  <h2 class="grants-profile--title">{{ "Association information"|t({}, {'context': 'grants_profile'}) }}</h2>
   <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t({}, {'context': 'grants_profile'}) }}</p>
   <div class="grants-profile">
     {% include '@grants_profile/components/prh-content.twig' with {
@@ -13,7 +13,7 @@
           label: "Business ID"|t({}, {'context': 'grants_profile'}),
           value: profile.businessId,
         },
-         {
+        {
           label: "Date of registration"|t({}, {'context': 'grants_profile'}),
           value: profile.registrationDate|date('d.m.Y'),
         },

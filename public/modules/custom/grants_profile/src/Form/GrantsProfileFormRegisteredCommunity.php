@@ -371,17 +371,18 @@ later when completing the grant application.',
 
     $form['addressWrapper'] = [
       '#type' => 'container',
+      '#theme_wrappers' => ['container__form_section'],
       '#title' => $this->t('Addresses', [], $this->tOpts),
       '#title_tag' => 'h4',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
-      '#theme_wrappers' => ['container__form_section'],
     ];
 
     // Add a container for errors.
     $form = $this->addErrorElement('addressWrapper', $form);
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
+
     unset($addressValues['actions']);
     $deltaindex = 0;
     foreach ($addressValues as $delta => $address) {
@@ -397,6 +398,11 @@ later when completing the grant application.',
       $form['addressWrapper'][$delta]['address'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('Community address', [], $this->tOpts),
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
         '#type' => 'textfield',
@@ -451,6 +457,11 @@ later when completing the grant application.',
       $form['addressWrapper'][] = [
         'address' => [
           '#type' => 'fieldset',
+          '#attributes' => [
+            'class' => [
+              'hdbt-form--fieldset--border',
+            ],
+          ],
           '#title' => $this->t('Community address', [], $this->tOpts),
           'street' => [
             '#type' => 'textfield',
@@ -513,7 +524,7 @@ later when completing the grant application.',
         'disable-refocus' => TRUE,
         'wrapper' => 'addresses-wrapper',
       ],
-      '#prefix' => '<div class="profile-add-more"">',
+      '#prefix' => '<div class="profile-add-more">',
       '#suffix' => '</div>',
     ];
   }
@@ -562,6 +573,11 @@ later when completing the grant application.',
 
       $form['officialWrapper'][$delta]['official'] = [
         '#type' => 'fieldset',
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
         '#title' => $this->t('Community official', [], $this->tOpts),
         'name' => [
           '#type' => 'textfield',
@@ -615,6 +631,11 @@ later when completing the grant application.',
 
       $form['officialWrapper'][$nextDelta]['official'] = [
         '#type' => 'fieldset',
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
         '#title' => $this->t('Community official', [], $this->tOpts),
         'name' => [
           '#type' => 'textfield',

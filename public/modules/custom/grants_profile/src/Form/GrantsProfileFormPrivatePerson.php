@@ -128,6 +128,11 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $form['addressWrapper'][0] = [];
     $form['addressWrapper'][0]['address'] = [
       '#type' => 'fieldset',
+      '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
       '#title' => $this->t('Personal address', [], $this->tOpts),
     ];
     $form['addressWrapper'][0]['address']['street'] = [

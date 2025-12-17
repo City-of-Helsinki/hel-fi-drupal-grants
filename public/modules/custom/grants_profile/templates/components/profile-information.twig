@@ -7,13 +7,7 @@
         title_id: item.id,
       }%}
         {% block content_container %}
-          {% if item.border %}
-            <div class="grants-profile--item--with-border">
-              {{ item.value }}
-            </div>
-          {% else %}
-            {{ item.value }}
-          {% endif %}
+          {{ item.value }}
         {% endblock %}
       {% endembed %}
     {% endfor %}
@@ -21,17 +15,17 @@
   {% if addresses %}
     {% embed '@hdbt_subtheme/form/components/form-section.twig' with {
       title: 'Addresses'|t({}, {'context': 'grants_profile'}),
-        title_id: address.id,
-      }%}
-        {% block content_container %}
-          {% for address in addresses %}
-            <div class="grants-profile--item--with-border">
-              <div>{{ address.street }},</div>
-              <div>{{ address.postCode }} {{ address.city }}</div>
-            </div>
-          {% endfor %}
-        {% endblock %}
-      {% endembed %}
+      title_id: address.id,
+    }%}
+      {% block content_container %}
+        {% for address in addresses %}
+          <div class="grants-profile--item--multiple">
+            <div>{{ address.street }},</div>
+            <div>{{ address.postCode }} {{ address.city }}</div>
+          </div>
+        {% endfor %}
+      {% endblock %}
+    {% endembed %}
   {% endif %}
   {% if bankAccounts %}
     {% embed '@hdbt_subtheme/form/components/form-section.twig' with {
@@ -40,7 +34,7 @@
     }%}
       {% block content_container %}
         {% for bankaccount in bankAccounts %}
-          <div class="grants-profile--item--with-border">
+          <div class="grants-profile--item--multiple">
             {{ bankaccount.bankAccount }}
           </div>
         {% endfor %}
@@ -54,7 +48,7 @@
     }%}
       {% block content_container %}
         {% for official in officials %}
-          <div class="grants-profile--item--with-border">
+          <div class="grants-profile--item--multiple">
             <strong>
               {% if official.officialRole is defined %}
                 {{ official.officialRole }}

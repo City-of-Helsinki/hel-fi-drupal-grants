@@ -622,6 +622,11 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
     $confFilename = $file['confFilename'];
     $fields = [
       '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => [
+          'hdbt-form--fieldset--border',
+        ],
+      ],
       '#title' => $strings['#title'] ?? $this->t('Bank account', [], $this->tOpts),
       '#description_display' => 'before',
       '#description' => $strings['#description'] ?? '',
