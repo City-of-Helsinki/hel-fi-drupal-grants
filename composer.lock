@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b03305147a566663c173896c8760bd11",
+    "content-hash": "e876f02d0c7c3079b755ad61413757cc",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -10463,27 +10463,27 @@
         },
         {
             "name": "drupal/webform_translation_permissions",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/webform_translation_permissions.git",
-                "reference": "2.0.0"
+                "reference": "2.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/webform_translation_permissions-2.0.0.zip",
-                "reference": "2.0.0",
-                "shasum": "352835651c558cf28bf5ddd268444861fe9e1b22"
+                "url": "https://ftp.drupal.org/files/projects/webform_translation_permissions-2.1.0.zip",
+                "reference": "2.1.0",
+                "shasum": "3df074ae7f29fc25a68b6c74ae44021da39fbd19"
             },
             "require": {
-                "drupal/core": "^8 || ^9 || ^10",
+                "drupal/core": "~9.5 || ^10 || ^11",
                 "drupal/webform": "^5.15 || ^6.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.0",
-                    "datestamp": "1674507816",
+                    "version": "2.1.0",
+                    "datestamp": "1735923637",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
