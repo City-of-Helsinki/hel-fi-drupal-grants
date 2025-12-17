@@ -443,9 +443,10 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
   ): void {
 
     $form['bankAccountWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
       '#title' => $this->t('Bank account numbers', [], $this->tOpts),
       '#title_tag' => 'h4',
+      '#theme_wrappers' => ['container__form_section'],
       '#prefix' => '<div id="bankaccount-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -541,7 +542,7 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
       '#type' => 'submit',
       '#value' => $this
         ->t('Add bank account', [], $this->tOpts),
-      '#is_supplementary' => TRUE,
+      '#is_secondary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'bankAccountWrapper--1',
       '#submit' => [
@@ -621,6 +622,11 @@ abstract class GrantsProfileFormBase extends FormBase implements LoggerAwareInte
     $confFilename = $file['confFilename'];
     $fields = [
       '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => [
+          'hdbt-form--fieldset--border',
+        ],
+      ],
       '#title' => $strings['#title'] ?? $this->t('Bank account', [], $this->tOpts),
       '#description_display' => 'before',
       '#description' => $strings['#description'] ?? '',
@@ -804,13 +810,14 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Save own information', [], $this->tOpts),
+      '#weight' => 1,
     ];
 
     $form['actions']['submit_cancel'] = [
       '#type' => 'submit',
       '#value' => $this->t('Cancel'),
       '#attributes' => ['class' => ['button', 'hds-button--secondary']],
-      '#weight' => 10,
+      '#weight' => 0,
       '#limit_validation_errors' => [],
       '#submit' => ['Drupal\grants_profile\Form\GrantsProfileFormBase::formCancelCallback'],
     ];

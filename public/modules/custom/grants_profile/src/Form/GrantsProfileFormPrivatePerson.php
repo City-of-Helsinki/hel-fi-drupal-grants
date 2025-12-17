@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Uuid\UuidInterface;
@@ -118,7 +120,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
       '#value' => $isNewGrantsProfile,
     ];
     $form['addressWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
+      '#theme_wrappers' => ['container__form_section'],
       '#title' => $this->t('Address'),
       '#title_tag' => 'h4',
       '#prefix' => '<div id="addresses-wrapper">',
@@ -127,6 +130,11 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     $form['addressWrapper'][0] = [];
     $form['addressWrapper'][0]['address'] = [
       '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => [
+          'hdbt-form--fieldset--border',
+        ],
+      ],
       '#title' => $this->t('Personal address', [], $this->tOpts),
     ];
     $form['addressWrapper'][0]['address']['street'] = [
@@ -161,7 +169,8 @@ class GrantsProfileFormPrivatePerson extends GrantsProfileFormBase {
     ];
 
     $form['phoneWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
+      '#theme_wrappers' => ['container__form_section'],
       '#title' => $this->t('Telephone', [], $this->tOpts),
       '#title_tag' => 'h4',
       '#prefix' => '<div id="phone-wrapper">',
