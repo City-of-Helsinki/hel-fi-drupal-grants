@@ -279,7 +279,7 @@ final class Application extends ResourceBase {
     // - Update the custom submission entity.
     // Start with the bank file.
     try {
-      $bankFile = $this->jsonMapperService->getSelectedBankFile($form_data, $document);
+      $bankFile = $this->jsonMapperService->getSelectedBankFile($form_data);
     }
     catch (\Exception) {
       return new JsonResponse(

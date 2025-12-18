@@ -109,13 +109,11 @@ final class JsonMapperService {
    *
    * @param array $formData
    *   The form data.
-   * @param AtvDocument $document
-   *   The ATV-document.
    *
-   * @return array|bool
-   *   Bool if this has been done already, otherwise return file data array.
+   * @return array
+   *   File data array.
    */
-  public function getSelectedBankFile(array $formData, AtvDocument $document): array {
+  public function getSelectedBankFile(array $formData): array {
     $selectedBankAccountNumber = $this->getSelectedBankAccount($formData);
     $grantsProfile = $this->userInformationService->getGrantsProfileContent();
     $bankAccounts = $grantsProfile->getBankAccounts();
