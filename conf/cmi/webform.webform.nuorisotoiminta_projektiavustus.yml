@@ -296,6 +296,17 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
+      start_subvention_applied:
+        '#type': radios
+        '#title': 'Tämä on starttiavustushakemus yhdistyksen toiminnan käynnistämiseen'
+        '#help': 'Jos haet tällä lomakkeella starttiavustusta, vastaa tähän kyllä. Jos haet muuta projektiavustusta, vastaa ei.'
+        '#description': 'Starttiavustusta voi saada varhaisnuoriso- ja nuorisoyhdistyksen ja vastaavan toiminnan käynnistämiseen tai uudelleen aloittamiseen. Hakusumma laitetaan avustuslaji laatikkoon projektiavustussumman kohdalle.'
+        '#description_display': after
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#options_display': side_by_side
+        '#options_description_display': help
     muut_samaan_tarkoitukseen_myonnetyt_avustukset:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
@@ -831,6 +842,7 @@ settings:
     community_officials__email: community_officials__email
     community_officials__phone: community_officials__phone
     acting_year: acting_year
+    start_subvention_applied: start_subvention_applied
     subventions: subventions
     subventions__subventionTypeTitle: subventions__subventionTypeTitle
     subventions__subventionType: subventions__subventionType

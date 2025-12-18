@@ -47,6 +47,17 @@ class NuorisotoimiProjektiDefinition extends ComplexDataDefinitionBase {
           'generalInfoArray',
           'targetOfSubvention',
         ]);
+      $info['start_subvention_applied'] = DataDefinition::create('boolean')
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'bool',
+        ])
+        ->setSetting('jsonPath', [
+          'compensation',
+          'compensationInfo',
+          'generalInfoArray',
+          'startSubventionApplied',
+        ]);
 
       $info['jasenet_7_28'] = DataDefinition::create('integer')
         ->setSetting('jsonPath', [

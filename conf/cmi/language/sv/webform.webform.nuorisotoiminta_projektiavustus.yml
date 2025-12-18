@@ -67,6 +67,13 @@ elements: |
   subventions:
     '#title': 'Typ av stöd'
     '#help': 'Ange h&auml;r hur mycket underst&ouml;d ni ans&ouml;ker. Ange beloppet i heltal och i euro.'
+  start_subvention_applied:
+    '#title': 'Detta är en ansökan om startunderstöd för att inleda föreningens verksamhet.'
+    '#help': 'Om du ansöker om startunderstöd med denna blankett, svara ja på denna fråga. Om du ansöker om annat projektunderstöd, svara nej.'
+    '#description': 'Startunderstöd kan beviljas för att initiera eller återuppta verksamhet inom barn- och ungdomsföreningar eller motsvarande organisationer. Det ansökta beloppet ska anges i rutan för bidragstyp under projektbidragets belopp.'
+    '#options':
+      1: Ja
+      0: Nej
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   olemme_saaneet_muita_avustuksia:

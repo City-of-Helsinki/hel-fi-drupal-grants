@@ -64,6 +64,13 @@ elements: |
   subventions:
     '#title': 'Types of grant'
     '#help': 'Indicate here how much you are applying for. Indicate the total amount as an integer and in euros.'
+  start_subvention_applied:
+    '#title': "This is an application for a start grant to initiate the association's activities."
+    '#help': 'If you are applying for a start grant using this form, please answer yes to this question. If you are applying for another type of project grant, please answer no.'
+    '#description': 'Start grants can be awarded for starting or relaunching activities of early youth and youth associations or similar organizations. The requested amount should be entered in the grant type box under the project grant amount.'
+    '#options':
+      1: Yes
+      0: No
   muut_samaan_tarkoitukseen_myonnetyt_avustukset:
     '#title': 'Other grants received for the same purpose'
   olemme_saaneet_muita_avustuksia:
