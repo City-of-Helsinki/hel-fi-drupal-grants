@@ -309,7 +309,7 @@ final class Application extends ResourceBase {
         $uploadedBankFile = TRUE;
       }
 
-      // Reload the document, validate that upload was success.
+      // Reload the document.
       try {
         $document = $this->atvService->getDocument($application_number);
         $bankFileIsSet = $this->jsonMapperService->documentBankFileIsSet($document);
@@ -319,6 +319,7 @@ final class Application extends ResourceBase {
         return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
       }
 
+      // Validate that upload was success.
       if (!$bankFileIsSet) {
         // This should never happen.
         $this->logger->error('User is unable to upload bank file to document or race condition.');

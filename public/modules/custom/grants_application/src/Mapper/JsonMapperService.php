@@ -152,6 +152,7 @@ final class JsonMapperService {
       foreach ($bankAccounts as $bankAccount) {
         $bankFile = array_find($documentAttachments, fn(array $attachment) => $bankAccount['confirmationFile'] === $attachment['filename']);
         if ($bankFile) {
+          // One of the profile bank accounts can be found from the document.
           return TRUE;
         }
       }
