@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\helfi_audit_log\ResilientLoggerTasks;
+
 /**
  * @file
  * Primary module hooks for Helfi Drupal AuditLog module.
@@ -8,3 +10,23 @@
  * This file is no longer required in Drupal 8.
  * @see https://www.drupal.org/node/2217931
  */
+
+/**
+ * Implements hook_cron().
+ *
+ * Add methods here to be executed via cron.
+ */
+function helfi_audit_log_cron() {
+  $now = time();
+
+  /*
+   * Don't even try to run during install.
+   * Settings are not parsed and it will throw exception.
+   */
+  if (!\Drupal::service('kernel') instanceof \Drupal\Core\Installer\InstallerKernel) {
+    $tasks = ResilientLoggerTasks::create();
+    $tasks->handleTasks($now);
+  }
+}
+
+?>

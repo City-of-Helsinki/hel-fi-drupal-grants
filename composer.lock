@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1c38fe958bb77ea15ab823b16ff6314",
+    "content-hash": "59ab564ec9ed4d96a61fc44fc5d707c7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6171,40 +6171,6 @@
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-proxy/issues"
             },
             "time": "2025-11-21T14:03:03+00:00"
-        },
-        {
-            "name": "drupal/helfi_resilient_logger",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/City-of-Helsinki/drupal-module-helfi-resilient-logger.git",
-                "reference": "78373acb357d07547c78c72c52080cc543b3111b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-module-helfi-resilient-logger/zipball/78373acb357d07547c78c72c52080cc543b3111b",
-                "reference": "78373acb357d07547c78c72c52080cc543b3111b",
-                "shasum": ""
-            },
-            "require": {
-                "city-of-helsinki/php-resilient-logger": "dev-main",
-                "drupal/monolog": "^3.0",
-                "php": "^8.1"
-            },
-            "require-dev": {
-                "drupal/core-dev": "^10.2"
-            },
-            "default-branch": true,
-            "type": "drupal-module",
-            "license": [
-                "MIT"
-            ],
-            "description": "Resilient logger module for Drupal utilizing monolog.",
-            "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-module-helfi-resilient-logger/tree/main",
-                "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-resilient-logger/issues"
-            },
-            "time": "2025-12-10T09:26:52+00:00"
         },
         {
             "name": "drupal/helfi_tpr",
@@ -24355,9 +24321,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "city-of-helsinki/php-resilient-logger": 20,
         "drupal/block_field": 5,
         "drupal/helfi_drupal_tools": 20,
-        "drupal/helfi_resilient_logger": 20,
         "drupal/multivalue_form_element": 10,
         "drupal/session_limit": 10
     },
