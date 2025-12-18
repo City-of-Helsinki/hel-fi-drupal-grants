@@ -107,8 +107,15 @@ class MessageForm extends FormBase {
         '#uri_scheme' => 'private',
         '#file_extensions' => 'doc,docx,gif,jpg,jpeg,pdf,png,ppt,pptx,rtf,txt,xls,xlsx,zip',
         '#upload_validators' => [
-          'file_validate_extensions' => ['doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip'],
-          'file_validate_size' => [$maxFileSizeInBytes],
+          'FileExtension' => [
+            'extensions' => 'doc docx gif jpg jpeg pdf png ppt pptx rtf txt xls xlsx zip',
+          ],
+          'FileSizeLimit' => [
+            'fileLimit' => $maxFileSizeInBytes,
+          ],
+          'FileNameLength' => [
+            'maxLength' => 100,
+          ],
         ],
         '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
 Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
