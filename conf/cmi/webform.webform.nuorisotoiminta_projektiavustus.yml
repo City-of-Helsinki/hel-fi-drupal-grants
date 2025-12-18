@@ -725,7 +725,9 @@ elements: |-
         '#markup': |-
           <p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p>
           <h4>Vaaditut liitteet</h4>
-          <p>Projektiavustushakemukseen voi halutessaan liittää projektin tarkemman suunnitelman sekä sen talousarvion. Yhdistysten hakiessa projektiavustusta pakollisena liitteenä on toimitettava yhdistyksen voimassa olevat säännöt. Sääntöjen tulee olla patentti- ja rekisterihallituksen hyväksymiä.</p>
+          <p>Projektiavustushakemukseen voi halutessaan liittää projektin tarkemman suunnitelman sekä sen talousarvion. Yhdistysten hakiessa projektiavustusta pakollisena liitteenä on toimitettava yhdistyksen voimassa olevat säännöt.</p>
+          <p>Starttiavustusta hakiessa tulee hakemukseen liittää yhdistyksen toimintasuunnitelma ja talousarvio vuodelle, jota hakemus koskee, vuokrasopimus ja vuokranmaksukuitti (vuokravustusta haettaessa) sekä yhdistyksen voimassa olevat säännöt.</p>
+          <p>Sääntöjen tulee olla patentti- ja rekisterihallituksen hyväksymiä.</p>
           <h4>Usean liitteen toimittaminen yhtenä tiedostona</h4>
           <p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa.</p>
           <h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4>
