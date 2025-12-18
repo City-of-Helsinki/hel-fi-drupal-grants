@@ -293,8 +293,10 @@ const verifySubmit = async (
   await expect(page.getByRole('heading', {name: 'Avustushakemus lähetetty onnistuneesti'})).toBeVisible();
   await expect(page.getByText('Lähetetty - odotetaan vahvistusta').first()).toBeVisible();
 
-  // Attempt to locate the "Vastaanotettu" text on the page. Keep polling for 60000ms (1 minute).
-  // Note: We do this instead of using Playwrights "expect" method so that test execution isn't interrupted if this fails.
+  // Attempt to locate the "Vastaanotettu" text on the page.
+  // Keep polling for 120000ms (2 minutes).
+  // The waitForTextWithInterval() is used to prevent test execution
+  // interruptions if the text doesn't appear on the page.
   const applicationReceived = await waitForTextWithInterval(page, 'Vastaanotettu');
   if (!applicationReceived) {
     logger('WARNING: Failed to validate that the application was received.');

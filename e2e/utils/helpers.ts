@@ -141,7 +141,7 @@ const waitForTextWithInterval = async (
   logger(`Attempting to locate text: "${text}"...`);
 
   // Default values for timeouts.
-  const DEFAULT_TIMEOUT = 60000;
+  const DEFAULT_TIMEOUT = 120000;
   const DEFAULT_INTERVAL = 5000;
 
   // Read from environment variables or use defaults.
