@@ -1,38 +1,21 @@
 <div class="container">
-<h2>{{ "Personal information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h2>
+<h2 class="grants-profile--title">{{ "Personal information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h2>
   <p class="grants-profile--infotext">{{ "Applying for grants requires completing your own personal information. When applying for a grant the information you have provided in your personal information will automatically be imported into the grant application."|t({}, {'context': 'grants_profile'}) }}</p>
   <div class="grants-profile">
+    {# PRH content #}
     {{ basic_info }}
-    <h3 class="info-grants">{{ "Own contact information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
-    <div class="grants-profile--extrainfo">
-      <dl class="webform-section-grid-wrapper">
-        <dt class="webform-section-title" id="addresses">{{ 'Address'|t }}</dt>
-        <div class="webform-section-wrapper grants-profile--officials">
-          {% for address in profile.addresses %}
-            <dd class="grants-profile--officials-item">
-              {{ address.street }},<br>
-              {{ address.postCode }} {{ address.city }}
-            </dd>
-          {% endfor %}
-        </div>
-
-        <dt class="webform-section-title" id="phone-number">{{ 'Phone number'|t }}</dt>
-        <div class="webform-section-wrapper grants-profile--officials">
-          <dd class="grants-profile--officials-item">
-            {{ profile.phone_number }}
-          </dd>
-        </div>
-
-        <dt class="webform-section-title" id="officials-3">{{ 'Bank account numbers'|t({}, {'context': 'grants_profile'}) }}</dt>
-        <div class="webform-section-wrapper grants-profile--officials">
-          {% for bankaccount in profile.bankAccounts %}
-            <dd class="grants-profile--officials-item">
-              {{ bankaccount.bankAccount }}
-            </dd>
-          {% endfor %}
-        </div>
-      </dl>
-    </div>
-    {{ editProfileLink }}
+    {% include '@grants_profile/components/profile-information.twig' with {
+      title: "Own contact information"|t({}, {'context': 'Yksityishenkilön asiointi'}),
+      extra_info: [
+        {
+          title: 'Phone number'|t,
+          id: "phone-number",
+          value: profile.phone_number,
+        }
+      ],
+      addresses: profile.addresses,
+      bankAccounts: profile.bankAccounts,
+      editProfileLink: editProfileLink,
+    } %}
   </div>
 </div>

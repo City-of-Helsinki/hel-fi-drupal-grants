@@ -1,0 +1,29 @@
+{% set title = element['#title'] ?? null %}
+
+{% embed '@hdbt_subtheme/form/components/form-section.twig' with {
+  title: title,
+}%}
+  {% block content_container %}
+    {% if errors %}
+      <div>
+        {{ errors }}
+      </div>
+    {% endif %}
+    {% if description.content %}
+      <div{{ description.attributes.addClass('description') }}>{{ description.content }}</div>
+    {% endif %}
+    {% if prefix %}
+      <div class="field-prefix">{{ prefix }}</div>
+    {% endif %}
+    {% if view_application_page == true %}
+      <dl>
+    {% endif %}
+    {{ children }}
+    {% if view_application_page == true %}
+      </dl>
+    {% endif %}
+    {% if suffix %}
+      <div class="field-suffix">{{ suffix }}</div>
+    {% endif %}
+  {% endblock %}
+{% endembed %}

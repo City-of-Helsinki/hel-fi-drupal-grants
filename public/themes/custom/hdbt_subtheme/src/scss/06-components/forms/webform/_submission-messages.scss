@@ -17,9 +17,9 @@
     background: var(--color-alert);
     display: inline-flex;
     font-weight: bold;
-    gap: var(--spacing-2-xs);
+    gap: $spacing-half;
     margin-bottom: var(--spacing-m);
-    padding: var(--spacing-2-xs) var(--spacing-xs);
+    padding: $spacing-half var(--spacing-xs);
     text-transform: uppercase;
   }
 
@@ -38,7 +38,7 @@
     }
 
     .hds-button {
-      margin-top: var(--spacing-s);
+      margin-top: $spacing;
     }
   }
 }

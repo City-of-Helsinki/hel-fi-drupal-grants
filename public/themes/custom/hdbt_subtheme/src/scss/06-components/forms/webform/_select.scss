@@ -51,7 +51,7 @@
     margin: 0;
     min-height: var(--menu-item-height);
     outline: none;
-    padding: calc(var(--spacing-s) - var(--border-width) * 2) var(--spacing-s);
+    padding: calc($spacing - var(--border-width) * 2) $spacing;
     width: 100%;
     z-index: 1;
 
@@ -63,8 +63,8 @@
   i.hel-icon {
     pointer-events: none;
     position: absolute;
-    right: calc(var(--spacing-s) - var(--border-width) * 2);
-    top: calc(var(--spacing-s) - var(--border-width) * 2);
+    right: calc($spacing - var(--border-width) * 2);
+    top: calc($spacing - var(--border-width) * 2);
   }
 
   select,
