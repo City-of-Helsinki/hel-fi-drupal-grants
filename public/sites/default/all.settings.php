@@ -182,19 +182,19 @@ $config['openid_connect.client.tunnistamoadmin']['settings']['ad_roles'] = [
 $settings["resilient_logger"] = [
   "sources" => [
     [
-      "class" => 'Drupal\helfi_resilient_logger\Sources\HelfiAuditLogSource'
+      "class" => 'Drupal\helfi_audit_log\Sources\HelfiAuditLogSource'
     ]
   ],
   "targets" => [
     [
       "class" => 'ResilientLogger\Targets\ElasticsearchLogTarget',
-      "es_url" => getenv("AUDIT_LOG_ES_URL"),
-      "es_username" => getenv("AUDIT_LOG_ES_USERNAME"),
-      "es_password" => getenv("AUDIT_LOG_ES_PASSWORD"),
-      "es_index" => getenv("AUDIT_LOG_ES_INDEX"),
+      "es_url" => getenv("AUDIT_LOG_ES_URL") ?: "",
+      "es_username" => getenv("AUDIT_LOG_ES_USERNAME") ?: "",
+      "es_password" => getenv("AUDIT_LOG_ES_PASSWORD") ?: "",
+      "es_index" => getenv("AUDIT_LOG_ES_INDEX") ?: "",
     ]
   ],
-  "environment" => getenv("AUDIT_LOG_ENV"),
+  "environment" => getenv("AUDIT_LOG_ENV") ?? "",
   "origin" => "hel-fi-drupal-grants",
   "store_old_entries_days" => 30,
   "batch_limit" => 5000,
