@@ -59,7 +59,49 @@ class NuorisotoimiProjektiDefinition extends ComplexDataDefinitionBase {
           'startSubventionApplied',
         ]);
 
-      $info['jasenet_7_28'] = DataDefinition::create('integer')
+      $info['jasenet_0_6_vuotiaat'] = DataDefinition::create('integer')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'activitiesInfoArray',
+          'membersAge0to6YearsGlobal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
+      $info['0_6_joista_helsinkilaisia'] = DataDefinition::create('integer')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'activitiesInfoArray',
+          'membersAge0to6YearsLocal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
+      $info['jasenet_7_28_vuotiaat'] = DataDefinition::create('integer')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'activitiesInfoArray',
+          'membersAge7to28YearsGlobal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
+      $info['7_28_joista_helsinkilaisia'] = DataDefinition::create('integer')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
@@ -73,11 +115,25 @@ class NuorisotoimiProjektiDefinition extends ComplexDataDefinitionBase {
           'jsonType' => 'int',
         ]);
 
-      $info['jasenet_kaikki'] = DataDefinition::create('integer')
+      $info['muut_jasenet_tai_aktiiviset_osallistujat'] = DataDefinition::create('integer')
         ->setSetting('jsonPath', [
           'compensation',
           'activitiesInfoArray',
-          'membersSummaryGlobal',
+          'membersOthersGlobal',
+        ])->setSetting('valueCallback', [
+          '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
+          'convertToInt',
+        ])
+        ->setSetting('typeOverride', [
+          'dataType' => 'string',
+          'jsonType' => 'int',
+        ]);
+
+      $info['muut_joista_helsinkilaisia'] = DataDefinition::create('integer')
+        ->setSetting('jsonPath', [
+          'compensation',
+          'activitiesInfoArray',
+          'membersOthersLocal',
         ])->setSetting('valueCallback', [
           '\Drupal\grants_handler\Plugin\WebformHandler\GrantsHandler',
           'convertToInt',

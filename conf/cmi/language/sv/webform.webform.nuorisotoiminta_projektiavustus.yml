@@ -140,18 +140,29 @@ elements: |
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_jasenet_tai_aktiiviset_osallistujat:
     '#title': '3. Medlemmar eller aktiva deltagare'
-  jasenet_tai_aktiiviset_osallistujat:
-    '#title': 'Medlemmar eller aktiva deltagare'
-  jasenet_7_28:
-    '#title': 'Hur många 7–28-åriga helsingforsare har verksamhetsgruppen för unga/föreningen /husklubben som medlemmar eller aktiva deltagare?'
-  jasenet_kaikki:
-    '#title': 'Hur många medlemmar eller aktiva deltagare har verksamhetsgruppen för unga/föreningen /husklubben totalt?'
+  yhdistyksen_jasenmaara_tai_aktiivisesti_toimintaan_osallistuvien:
+    '#title': 'Antal aktiva deltagare eller medlemmar i gruppen / föreningen / husklubben'
+  jasenmaara_fieldset:
+    '#title': 'Aktiva deltagare/medlemmar'
+    '#help': 'Ange här de personer som aktivt deltar i verksamhetsgruppens / föreningens / husklubbens verksamhet och/eller är medlemmar.'
+  jasenet_0_6_vuotiaat:
+    '#title': '0-6-åringar'
+  0_6_joista_helsinkilaisia:
+    '#title': 'varav helsingforsare'
+  jasenet_7_28_vuotiaat:
+    '#title': '7-28- åringar'
+  7_28_joista_helsinkilaisia:
+    '#title': 'varav helsingforsare'
+  muut_jasenet_tai_aktiiviset_osallistujat:
+    '#title': 'Övriga deltagare'
+  muut_joista_helsinkilaisia:
+    '#title': 'varav helsingforsare'
   projektisuunnitelma:
     '#title': '4. Projektplan'
   projektisuunnitelma_osio:
     '#title': Projektplan
   markup_01:
-    '#markup': 'Du kan antingen ange projektplanen i punkterna nedan eller bifoga projektplanen som en bilaga till ans&ouml;kan. Om du skickar in planen som en bilaga, ange &aring;tminstone projektets namn, m&aring;l och inneh&aring;ll.'
+    '#markup': 'Du kan antingen ange projektplanen i punkterna nedan eller bifoga projektplanen som en bilaga till ansökan. Om du skickar in planen som en bilaga, ange åtminstone projektets namn, mål och innehåll. Om du ansöker om startunderstöd med denna blankett, fyll i fälten i tillämpliga delar.'
   projektin_nimi:
     '#title': 'Projektets namn'
     '#counter_maximum_message': '%d/100 tecken kvar'
@@ -170,11 +181,11 @@ elements: |
   projektin_kaikki_osallistujat:
     '#title': 'Alla deltagare i projektet'
   osallistujat_7_28:
-    '#title': 'Hur många 7–28-åriga helsingforsare deltar i projektet?'
-    '#help': 'Uppskattat antal ungdomar som deltar'
+    '#title': 'Hur många Helsingforsbor under 29 år deltar i projektet?'
+    '#help': 'Uppskatta hur många unga Helsingforsbor som kommer att delta i projektet totalt. Antalet kan skilja sig från antalet aktiva deltagare eller medlemmar i gruppen eller föreningen.'
   osallistujat_kaikki:
-    '#title': 'Hur många deltagare har projektet sammanlagt?'
-    '#help': 'Uppskattat totalt antal deltagare'
+    '#title': 'Hur många deltagare finns det totalt i projektet?'
+    '#help': 'Uppskatta det totala antalet deltagare i detta projekt. Antalet kan skilja sig från antalet aktiva medlemmar eller funktionärer i gruppen eller föreningen.'
   projektin_paikka:
     '#title': 'Projektets plats'
   projektin_paikka_2:
