@@ -14,49 +14,94 @@ use Drupal\helfi_atv\AtvDocument;
 final class JsonMapperService {
 
   private JsonMapper $mapper;
-  private array $dataSources;
 
   public function __construct(
-    private UserInformationService $userInformationService,
-    private FormSettingsService $formSettingsService,
+    private readonly UserInformationService $userInformationService,
+    private readonly FormSettingsService $formSettingsService,
   ) {
   }
 
   /**
-   * Map all normal fields, files are excluded.
+   * Map field data.
    *
    * @param string $formTypeId
+   *   The form type id.
    * @param string $applicationNumber
-   * @param array $form_data
+   *   The application number.
+   * @param array $formData
+   *   The form data.
+   *
    * @return array
+   *   Mapped data.
    */
   public function handleMapping(
     string $formTypeId,
     string $applicationNumber,
-    array $formData
+    array $formData,
+    array $bankFile,
+    bool $isDraft,
   ): array {
     $mappingFileName = "ID$formTypeId.json";
     $mapping = json_decode(file_get_contents(__DIR__ . '/Mappings/' . $mappingFileName), TRUE);
+    $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId);
 
     // @todo Fix.
     $mapper = new JsonMapper($mapping);
     $this->mapper = $mapper;
 
-    // @todo Fix.
-    $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId);
-    $this->dataSources = $dataSources;
+    $mappedData = $mapper->map($dataSources);
+    $mappedData = $this->addFileMapping($mappedData, $bankFile, $dataSources);
 
-    return $mapper->map($dataSources);
+    $this->mappedDataPostOperations($mappedData, $isDraft);
+    return $mappedData;
   }
 
-  public function handleFileMapping(array $bankFile): array {
-    $formData = $this->dataSources['form_data'];
+  /**
+   * Add file mappings to correct places.
+   *
+   * @param array $mappedData
+   *   The mapped data.
+   * @param array $bankFile
+   *   The bank file.
+   * @param array $dataSources
+   *   The data sources.
+   *
+   * @return array
+   *   The mapped data with files.
+   */
+  private function addFileMapping(array $mappedData, array $bankFile, array $dataSources): array {
+    $formData = $dataSources['form_data'];
     $mappedBankFile = $this->mapper->mapBankFile($this->getSelectedBankAccount($formData), $bankFile);
-    $mappedFileData = $this->mapper->mapFiles($this->dataSources);
+    $mappedFileData = $this->mapper->mapFiles($dataSources);
+    $mappedData = array_merge($mappedData, $mappedFileData);
 
-    $mappedFileData['attachmentsInfo']['attachmentsArray'][] = $mappedBankFile;
+    $mappedData['attachmentsInfo']['attachmentsArray'][] = $mappedBankFile;
+    return $mappedData;
+  }
 
-    return $mappedFileData;
+  /**
+   * All the things done after the mapping is ready.
+   *
+   * @param $mappedData
+   *   The mapped data.
+   * @param $isDraft
+   *   Has the application been submitted yet.
+   */
+  private function mappedDataPostOperations(&$mappedData, $isDraft): void {
+    // Only on first submission this must be false.
+    $mappedData['formUpdate'] = !$isDraft;
+
+    if (!isset($mappedData['statusUpdates'])) {
+      $mappedData['statusUpdates'] = [];
+    }
+
+    if (!isset($mappedData['events'])) {
+      $mappedData['events'] = [];
+    }
+
+    if (!isset($mappedData['messages'])) {
+      $mappedData['messages'] = [];
+    }
   }
 
   /**
@@ -112,40 +157,6 @@ final class JsonMapperService {
       }
     }
     return FALSE;
-  }
-
-
-  /**
-   * Do something related to bank file.
-   *
-   * @param array $form_data
-   * @param AtvDocument $document
-   * @return void
-   */
-  public function getBankFile(array $form_data, AtvDocument $document) {
-    $selectedBankAccountNumber = $this->getSelectedBankAccount($form_data);
-    $bankFile = FALSE;
-    $uploadedBankFile = FALSE;
-
-    /** @var GrantsProfile $grantsProfile */
-    $grantsProfile = $this->userInformationService->getGrantsProfileContent();
-
-    // @todo Add file type check as well (filetype = 45 etc).
-    // Check user bank files and check if correct one exists on ATV-document.
-    foreach ($grantsProfile->getBankAccounts() as $bank_account) {
-      $bankFile = array_find($document->getAttachments(), fn(array $attachment) => $bank_account['confirmationFile'] === $attachment['filename']);
-    }
-
-    return $bankFile;
-  }
-
-  public function getBankConfirmationFile(array $form_data, AtvDocument $document) {
-
-//    $bank_confirmation_file_array = Helper::findMatchingBankConfirmationFile(
-//      $selectedBankAccountNumber,
-//      $bank_accounts,
-//      $profile_files,
-//    );
   }
 
   /**

@@ -330,29 +330,17 @@ final class Application extends ResourceBase {
         $application_type_id,
         $application_number,
         $form_data,
+        $bankFile,
+        (bool) $submission->get('draft')->value,
       );
-
-      $mappedFiles = $this->jsonMapperService->handleFileMapping($bankFile);
-      $mappedData[] = $mappedFiles;
-
     }
     catch (\Exception $e) {
+      $this->logger->critical("Failed mapping, application type: $application_type_id");
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
+    // @todo Varjo-dokumentti -ticket.
     $mappedData['form_data'] = $form_data;
-    $mappedData['formUpdate'] = !$submission->get('draft')->value;
-
-    if (!isset($mappedData['statusUpdates'])) {
-      $mappedData['statusUpdates'] = [];
-    }
-
-    if (!isset($mappedData['events'])) {
-      $mappedData['events'] = [];
-    }
-
-    if (!isset($mappedData['messages'])) {
-      $mappedData['messages'] = [];
-    }
 
     // Save id has previously been saved to database to track
     // unsuccessful submissions due to integration failures.
@@ -415,7 +403,7 @@ final class Application extends ResourceBase {
     }
 
     if (!$success) {
-      $this->logger->error('Avus2 -POST-request returned non-200 response: ' . $e->getMessage());
+      $this->logger->error('Avus2 -POST-request returned non-200 response');
       return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
@@ -445,13 +433,6 @@ final class Application extends ResourceBase {
       );
     }
 
-    return new JsonResponse([
-      'redirect_url' => Url::fromRoute(
-        'grants_handler.completion',
-        ['submission_id' => $application_number],
-        ['absolute' => TRUE],
-      )->toString(),
-    ], 200);
     return $this->getSuccessResponse($application_number);
   }
 
