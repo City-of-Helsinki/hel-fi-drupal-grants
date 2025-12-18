@@ -17,7 +17,7 @@
     margin-left: 0;
 
     @include breakpoint($breakpoint-m) {
-      margin-left: var(--spacing-2-xs);
+      margin-left: $spacing-half;
     }
   }
 
@@ -41,12 +41,12 @@
   button.webform-button--next span::after,
   button.webform-button--preview span::after {
     content: '\003e';
-    margin-left: var(--spacing-2-xs);
+    margin-left: $spacing-half;
   }
 
   button.webform-button--previous span::before {
     content: '\003c';
-    margin-right: var(--spacing-2-xs);
+    margin-right: $spacing-half;
   }
 
   input.webform-button--previous {
@@ -63,7 +63,7 @@
   display: inline-block;
   flex-shrink: 0;
   height: 24px;
-  margin-right: var(--spacing-2-xs);
+  margin-right: $spacing-half;
   mask-image: var(--hel-icon--download-cloud);
   mask-position: center;
   mask-repeat: no-repeat;

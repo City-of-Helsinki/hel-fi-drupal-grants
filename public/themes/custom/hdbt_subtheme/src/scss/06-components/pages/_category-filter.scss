@@ -12,7 +12,7 @@
     li {
       display: inline-block;
       list-style: none;
-      margin: var(--spacing-m) var(--spacing-s) 0 0;
+      margin: var(--spacing-m) $spacing 0 0;
       padding: 0;
     }
   }
@@ -25,18 +25,18 @@
     display: flex;
 
     .hds-radio-button:is(:first-of-type) {
-      margin-top: var(--spacing-2-xs);
+      margin-top: $spacing-half;
     }
 
     .hds-radio-button .hds-radio-button__input:checked + .hds-radio-button__label {
       background: var(--color-black);
       border-radius: var(--spacing-m);
       color: var(--color-white);
-      padding: var(--spacing-2-xs) var(--spacing-s);
+      padding: $spacing-half $spacing;
     }
 
     .hds-radio-button__label {
-      padding: var(--spacing-2-xs) var(--spacing-s);
+      padding: $spacing-half $spacing;
 
       &::before,
       &::after {
@@ -60,7 +60,7 @@
     border-radius: var(--spacing-m);
     color: var(--color-white);
     display: inline-block;
-    padding: var(--spacing-2-xs) var(--spacing-s);
+    padding: $spacing-half $spacing;
     text-decoration: none;
   }
 

@@ -15,14 +15,14 @@
 
   h5 {
     font-size: var(--fontsize-body-m);
-    margin-top: var(--spacing-s);
+    margin-top: $spacing;
   }
 
   &__row {
     display: flex;
 
     &-edit {
-      margin-top: var(--spacing-s);
+      margin-top: $spacing;
     }
 
     &-top {
