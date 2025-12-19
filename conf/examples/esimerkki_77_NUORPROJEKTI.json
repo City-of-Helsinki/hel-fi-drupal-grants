@@ -168,7 +168,7 @@
         "valueType": "string"
       }
     ],
-    "compensationInfo": { 
+    "compensationInfo": {
       "generalInfoArray": [
         {
           "ID": "targetOfSubvention",
@@ -177,7 +177,7 @@
           "valueType": "string"
         },
 		{
-          "ID": "startSubventionApplied",
+          "ID": " ",
           "label": "Hain starttiavustusta",
           "value": "false",
           "valueType": "bool"
@@ -206,7 +206,7 @@
         "label": "0-6 -vuotiaat",
         "value": "15",
         "valueType": "int"
-      }, 
+      },
       {
         "ID": "membersAge0to6YearsLocal",
         "label": "0-6 -vuotiaat, Helsinki",
@@ -236,7 +236,7 @@
         "label": "Muut jäsenet, Helsinki",
         "value": "2",
         "valueType": "int"
-      } 
+      }
 	],
     "otherCompensationsInfo": {
       "otherCompensationsArray": [
@@ -383,13 +383,13 @@
 			{
 				"incomeGroupName": "general",
 				"otherIncomeRowsArrayStatic": [
-					{			
+					{
 						"ID": "a",
 						"label": "Kioskimyynti",
 						"value": "300.00",
 						"valueType": "double"
 					},
-					{			
+					{
 						"ID": "b",
 						"label": "Parkkitulot",
 						"value": "50.00",
@@ -402,13 +402,13 @@
 			{
 				"costGroupName": "general",
 				"otherCostRowsArrayStatic": [
-					{			
+					{
 						"ID": "a",
 						"label": "Kioskiostot",
 						"value": "100.00",
 						"valueType": "double"
 					},
-					{			
+					{
 						"ID": "b",
 						"label": "Jätemaksut",
 						"value": "50.00",

@@ -136,7 +136,7 @@ elements: |
         '#help': 'Give a brief description, for what purpose has the grant been granted?'
         '#counter_maximum_message': '%d/1000 characters remaining'
   3_jasenet_tai_aktiiviset_osallistujat:
-    '#title': '3. Members or active participants'
+    '#title': '3. Active participants or members'
   yhdistyksen_jasenmaara_tai_aktiivisesti_toimintaan_osallistuvien:
     '#title': 'The number of active participants or members of the group / association / housing association'
   jasenmaara_fieldset:
