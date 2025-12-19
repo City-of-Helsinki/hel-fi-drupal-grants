@@ -80,7 +80,9 @@ interface FormFieldWithRemove extends FormField {
  */
 interface MultiValueField {
   buttonSelector: Selector;
-  items: Array<Array<FormField>>;
+  items: {
+    [key: number]: FormField[];
+  } | FormField[][];
   expectedErrors?: Object;
 }
 

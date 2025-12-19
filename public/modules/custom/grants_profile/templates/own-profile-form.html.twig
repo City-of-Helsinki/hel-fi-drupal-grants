@@ -3,38 +3,32 @@
   <h2>{{ "Association information"|t({}, {'context': 'grants_profile'}) }}</h2>
   <p class="grants-profile--infotext">{{ "To apply for grants, the community data must be completed. When you submit a grant application, the information you have provided will be filled in automatically."|t({}, {'context': 'grants_profile'}) }}</p>
   <div class="grants-profile">
-    <div class="grants-profile--basicinfo">
-      <div class="container">
-        <h3>{{ "Community official information"|t({}, {'context': 'grants_profile'}) }}</h3>
-        <div class="grants-profile-prh-info">
-          <p>{{ "The indicated information has been retrieved from the register of the Finnish Patent and Registration Office (PRH), and changing the information is only possible in the online service in question."|t({}, {'context': 'grants_profile'}) }}</p>
-        </div>
-        <hr />
-        <dl class="grants-profile--wrapper">
-          <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Name of association"|t({}, {'context': 'grants_profile'}) }}</strong></dt>
-            <dd class="grants-profile--item grants-profile-company-name">{{ profile.companyName }}</dd>
-          </div>
-          <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Business ID"|t({}, {'context': 'grants_profile'}) }}</strong></dt>
-            <dd class="grants-profile-item">{{ profile.businessId }}</dd>
-          </div>
-          <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Municipality where the association is based (domicile)"|t({}, {'context': 'grants_profile'}) }}</strong></dt>
-            <dd class="grants-profile-item">{{ profile.companyHome }}</dd>
-          </div>
-          <div class="grants-profile--wrapper-item">
-            <dt><strong>{{ "Date of registration"|t({}, {'context': 'grants_profile'}) }}</strong></dt>
-            <dd class="grants-profile-item">{{ profile.registrationDate|date('d.m.Y') }}</dd>
-          </div>
-        </dl>
-        <div class="grants-profile--update-link">
-          {{ form.updatelink }}
-        </div>
-      </div>
-    </div>
+    {% include '@grants_profile/components/prh-content.twig' with {
+      title: "Community official information"|t({}, {'context': 'grants_profile'}),
+      applicant_info_upper: [
+        {
+          label: "Name of association"|t({}, {'context': 'grants_profile'}),
+          value: profile.companyName,
+        },
+        {
+          label: "Business ID"|t({}, {'context': 'grants_profile'}),
+          value: profile.businessId,
+        },
+        {
+          label: "Date of registration"|t({}, {'context': 'grants_profile'}),
+          value: profile.registrationDate|date('d.m.Y'),
+        },
+      ],
+      applicant_info_lower: [
+        {
+          label: "Municipality where the association is based (domicile)"|t({}, {'context': 'grants_profile'}),
+          value: profile.companyHome,
+        },
+      ],
+      link: form.updatelink,
+    } %}
     <h3 class="info-grants">{{ "Add association information"|t({}, {'context': 'grants_profile'}) }}</h3>
-    <div class="grants-profile--extrainfo">
+    <div class="grants-profile--extrainfo grants-profile--form">
       {{ form|without('updatelink', 'status_messages') }}
     </div>
   </div>

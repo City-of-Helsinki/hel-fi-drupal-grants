@@ -20,13 +20,14 @@ export const FormActions = ({
   saveDraft,
   validatePartialForm,
 }: {
-  saveDraft: () => Promise<boolean>;
+  saveDraft: () => Promise<void>;
   validatePartialForm: () => ValidationData<any> | undefined;
 }) => {
   const readOnly = useAtomValue(isReadOnlyAtom);
   const finalAcceptance = useAtomValue(finalAcceptanceAtom);
   const steps = useAtomValue(getStepsAtom);
-  const [currentStepIndex, { id: currentStepId }] = useAtomValue(getCurrentStepAtom);
+  const [currentStepIndex, { id: currentStepId }] =
+    useAtomValue(getCurrentStepAtom);
   const errors = useAtomValue(errorsAtom);
   const setStep = useSetAtom(setStepAtom);
 

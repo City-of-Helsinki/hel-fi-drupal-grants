@@ -35,7 +35,7 @@
     font-size: 1.125em;
     height: var(--input-height);
     line-height: normal;
-    padding: 0 var(--spacing-s);
+    padding: 0 $spacing;
     width: 100%;
   }
 
@@ -74,11 +74,11 @@
 
     td:last-child {
       border-right: 2px var(--color-black-20) solid;
-      padding: var(--spacing-s);
+      padding: $spacing;
 
       @include breakpoint($breakpoint-m) {
         min-width: 400px;
-        padding: var(--spacing-s) var(--spacing-m);
+        padding: $spacing var(--spacing-m);
       }
     }
   }

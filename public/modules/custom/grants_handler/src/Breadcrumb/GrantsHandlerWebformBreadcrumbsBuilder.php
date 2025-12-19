@@ -6,6 +6,7 @@ namespace Drupal\grants_handler\Breadcrumb;
 
 use Drupal\Core\Breadcrumb\Breadcrumb;
 use Drupal\Core\Breadcrumb\BreadcrumbBuilderInterface;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -45,8 +46,8 @@ class GrantsHandlerWebformBreadcrumbsBuilder implements BreadcrumbBuilderInterfa
   /**
    * {@inheritdoc}
    */
-  public function applies(RouteMatchInterface $attributes) {
-    $parameters = $attributes->getParameters()->all();
+  public function applies(RouteMatchInterface $route_match, ?CacheableMetadata $cacheable_metadata = NULL) {
+    $parameters = $route_match->getParameters()->all();
 
     if (
       isset($parameters['webform']) &&
@@ -54,9 +55,7 @@ class GrantsHandlerWebformBreadcrumbsBuilder implements BreadcrumbBuilderInterfa
     ) {
       return TRUE;
     }
-
     return FALSE;
-
   }
 
   /**

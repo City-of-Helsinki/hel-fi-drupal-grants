@@ -221,7 +221,8 @@
               "enum": [
                 false,
                 true
-              ]
+              ],
+              "default": false
             }
           },
           "required": ["have_received_other_compensations"],
@@ -282,7 +283,8 @@
               "enum": [
                 false,
                 true
-              ]
+              ],
+              "default": false
             }
           },
           "required": ["have_received_prior_compensations"],

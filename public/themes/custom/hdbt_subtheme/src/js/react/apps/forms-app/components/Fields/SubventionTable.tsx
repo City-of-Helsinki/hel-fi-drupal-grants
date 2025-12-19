@@ -16,7 +16,14 @@ const SUBVENTION_ID = 'subventionType';
 const SUBVENTION_LABEL = 'Avustuslaji';
 const SUBVENTION_VALUE_TYPE = 'string';
 
-export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, required, schema }: FieldProps) => {
+export const SubventionTable = ({
+  idSchema,
+  formData,
+  onChange,
+  rawErrors,
+  required,
+  schema,
+}: FieldProps) => {
   const id = idSchema.$id;
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
@@ -34,7 +41,10 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
         {schema.options.map(({ label, id: elementId }) => (
           <li key={elementId} style={{ listStyle: 'none' }}>
             <dt>{label}</dt>
-            <dd>{formData?.[findIndexForData(elementId.toString())]?.[1].value || '-'}</dd>
+            <dd>
+              {formData?.[findIndexForData(elementId.toString())]?.[1].value ||
+                '-'}
+            </dd>
           </li>
         ))}
       </ul>
@@ -47,8 +57,18 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
     const data = formData && Array.isArray(formData) ? [...formData] : [];
 
     const newValue = [
-      { ID: SUBVENTION_ID, label: SUBVENTION_LABEL, value: subventionId, valueType: SUBVENTION_VALUE_TYPE },
-      { ID: AMOUNT_ID, label: AMOUNT_LABEL, value, valueType: AMOUNT_VALUE_TYPE },
+      {
+        ID: SUBVENTION_ID,
+        label: SUBVENTION_LABEL,
+        value: subventionId,
+        valueType: SUBVENTION_VALUE_TYPE,
+      },
+      {
+        ID: AMOUNT_ID,
+        label: AMOUNT_LABEL,
+        value,
+        valueType: AMOUNT_VALUE_TYPE,
+      },
     ];
 
     const index = findIndexForData(subventionId, data);
@@ -72,7 +92,10 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
   return (
     <>
       <div className='array-item'>
-        <Fieldset className='hdbt-form--fieldset hdbt-form--fieldset--border' heading={`${schema.title}`}>
+        <Fieldset
+          className='hdbt-form--fieldset hdbt-form--fieldset--border'
+          heading={`${schema.title}`}
+        >
           {schema.options.map((item, i) => {
             const { id: itemId, label } = item;
             const key = `${id}-${itemId}`;
@@ -94,7 +117,9 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
           })}
         </Fieldset>
       </div>
-      {rawErrors?.length > 0 && <Notification type='error'>{formatErrors(rawErrors)}</Notification>}
+      {rawErrors?.length > 0 && (
+        <Notification type='error'>{formatErrors(rawErrors)}</Notification>
+      )}
     </>
   );
 };

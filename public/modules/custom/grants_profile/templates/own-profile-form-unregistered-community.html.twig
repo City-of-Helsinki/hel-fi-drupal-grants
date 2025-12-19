@@ -8,7 +8,7 @@
   <div class="grants-profile">
     {{ basic_info }}
     <h3 class="info-grants">{{ "Add community or group information"|t({}, {'context': 'grants_profile'}) }}</h3>
-    <div class="grants-profile--extrainfo">
+    <div class="grants-profile--extrainfo grants-profile--form">
       {{ form|without('updatelink', 'status_messages') }}
     </div>
   </div>

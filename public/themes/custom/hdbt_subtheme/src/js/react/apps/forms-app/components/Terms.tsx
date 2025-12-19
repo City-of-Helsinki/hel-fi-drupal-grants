@@ -20,7 +20,11 @@ export const Terms = () => {
         <div dangerouslySetInnerHTML={{ __html: body }} />
       </div>
       <div>
-        <Notification className='hdbt-form--notification' type='alert' label='Huom!'>
+        <Notification
+          className='hdbt-form--notification'
+          type='alert'
+          label='Huom!'
+        >
           Hyväksy ehdot ja lähetä hakemus
         </Notification>
         <Checkbox

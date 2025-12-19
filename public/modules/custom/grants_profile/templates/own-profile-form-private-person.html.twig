@@ -5,7 +5,7 @@
   <div class="grants-profile">
     {{ basic_info }}
     <h3 class="info-grants">{{ "Own contact information"|t({}, {'context': 'Yksityishenkilön asiointi'}) }}</h3>
-    <div class="grants-profile--extrainfo">
+    <div class="grants-profile--extrainfo grants-profile--form">
       {{ form|without('updatelink', 'status_messages') }}
     </div>
   </div>
