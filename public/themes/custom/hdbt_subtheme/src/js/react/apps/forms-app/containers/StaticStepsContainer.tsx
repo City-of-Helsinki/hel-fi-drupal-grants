@@ -18,7 +18,11 @@ export const StaticStepsContainer = ({
     case 'preview':
       return (
         <h2 className='grants-form__page-title'>
-          {Drupal.t('Confirm, preview and submit', {}, { context: 'Grants application: Steps' })}
+          {Drupal.t(
+            'Confirm, preview and submit',
+            {},
+            { context: 'Grants application: Steps' },
+          )}
         </h2>
       );
     //  At least for now, this page is never accessible.

@@ -8,12 +8,24 @@ import { Checkbox, FileInput as HDSFileInput, TextInput } from 'hds-react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
 
-import { formConfigAtom, getApplicationNumberAtom, pushNotificationAtom, shouldRenderPreviewAtom } from '../store';
+import {
+  formConfigAtom,
+  getApplicationNumberAtom,
+  pushNotificationAtom,
+  shouldRenderPreviewAtom,
+} from '../store';
 import { formatErrors } from '../utils';
 import { useState } from 'react';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 
-type ATVFile = { description?: string; fileId: number; fileName: string; fileType: string; href: string; size: number };
+type ATVFile = {
+  description?: string;
+  fileId: number;
+  fileName: string;
+  fileType: string;
+  href: string;
+  size: number;
+};
 
 type PersistedFile = ATVFile & {
   integrationID: string;
@@ -78,7 +90,9 @@ export const FileInput = ({
   const applicationNumber = useAtomValue(getApplicationNumberAtom);
   const { token } = useAtomValue(formConfigAtom)!;
   const pushNotification = useSetAtom(pushNotificationAtom);
-  const { 'misc:file-type': fileType } = uiSchema as UiSchema & { 'misc:file-type': number };
+  const { 'misc:file-type': fileType } = uiSchema as UiSchema & {
+    'misc:file-type': number;
+  };
   const defaultValue = filesFromATVData(formData);
   const { isDeliveredLater, isIncludedInOtherFile } = formData || {};
 
@@ -99,7 +113,11 @@ export const FileInput = ({
       throw new Error('Failed to remove file');
     }
 
-    pushNotification({ children: <div>{json.error}</div>, label: t('file_removal_failed.title'), type: 'error' });
+    pushNotification({
+      children: <div>{json.error}</div>,
+      label: t('file_removal_failed.title'),
+      type: 'error',
+    });
 
     // Force re-render to reset the FileInput state
     setRefreshKey((prevKey) => prevKey + 1);
@@ -114,10 +132,10 @@ export const FileInput = ({
     const fileUrl = new URL(existingData.integrationID);
     const pathSemgments = fileUrl.pathname.split('/').filter(Boolean);
     const attachmentId = pathSemgments.pop();
-    const response = await fetch(`/application/${applicationNumber}/delete/${attachmentId}`, {
-      method: 'POST',
-      headers: { 'X-CSRF-Token': token },
-    });
+    const response = await fetch(
+      `/application/${applicationNumber}/delete/${attachmentId}`,
+      { method: 'POST', headers: { 'X-CSRF-Token': token } },
+    );
 
     if (!response.ok) {
       handleResponseError(response);
@@ -127,13 +145,22 @@ export const FileInput = ({
     onChange(undefined);
   };
 
-  const handleChange = async (files: File[], existingData: PersistedFile | undefined) => {
+  const handleChange = async (
+    files: File[],
+    existingData: PersistedFile | undefined,
+  ) => {
     if (!files.length) {
       handleRemoval(existingData);
       return;
     }
 
-    const result = await uploadFiles(name, applicationNumber, token, files, fileType);
+    const result = await uploadFiles(
+      name,
+      applicationNumber,
+      token,
+      files,
+      fileType,
+    );
 
     if (!result) {
       return;
@@ -202,7 +229,11 @@ export const FileInput = ({
         checked={isDeliveredLater || false}
         disabled={Boolean(defaultValue.length)}
         id={`${name}-delivered-later`}
-        label={Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' })}
+        label={Drupal.t(
+          'Attachment will be delivered at later time',
+          {},
+          { context: 'grants_attachments' },
+        )}
         onChange={(e) => {
           onChange({ ...formData, isDeliveredLater: e.target.checked });
         }}
@@ -213,7 +244,11 @@ export const FileInput = ({
         checked={isIncludedInOtherFile || false}
         disabled={Boolean(defaultValue.length)}
         id={`${name}-included-in-other-file`}
-        label={Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' })}
+        label={Drupal.t(
+          'Attachment already delivered',
+          {},
+          { context: 'grants_attachments' },
+        )}
         onChange={(e) => {
           onChange({ ...formData, isIncludedInOtherFile: e.target.checked });
         }}
