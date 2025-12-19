@@ -177,7 +177,7 @@
           "valueType": "string"
         },
 		{
-          "ID": " ",
+          "ID": "startSubventionApplied",
           "label": "Hain starttiavustusta",
           "value": "false",
           "valueType": "bool"
