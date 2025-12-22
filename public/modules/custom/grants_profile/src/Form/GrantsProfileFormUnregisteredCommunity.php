@@ -539,6 +539,11 @@ One address is mandatory information in your personal information and on the app
           '#submit' => [
             '::removeOne',
           ],
+          '#attributes' => [
+            'class' => [
+              'hds-button--secondary',
+            ],
+          ],
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
@@ -592,6 +597,11 @@ One address is mandatory information in your personal information and on the app
           '#name' => 'officialWrapper--' . $nextDelta,
           '#submit' => [
             '::removeOne',
+          ],
+          '#attributes' => [
+            'class' => [
+              'hds-button--secondary',
+            ],
           ],
           '#ajax' => [
             'callback' => '::addmoreCallback',
