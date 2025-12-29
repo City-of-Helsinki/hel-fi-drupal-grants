@@ -6,7 +6,7 @@
   --tab-font-size: var(--fontsize-body-m);
   --tab-height: 48px;
   --tab-min-width: 148px;
-  --tab-spacing: var(--spacing-s);
+  --tab-spacing: $spacing;
   --tab-active-border-size: 5px;
   --tab-active-border-color: var(--color-black);
   --tab-focus-outline-size: 2px;

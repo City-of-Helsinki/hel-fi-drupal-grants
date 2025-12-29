@@ -21,7 +21,7 @@ div[data-tippy-root] {
   border-left: var(--spacing-xs) var(--color-coat-of-arms) solid;
   border-radius: 0;
   color: var(--hdbt-color-black);
-  padding: var(--spacing-s);
+  padding: $spacing;
 
   .webform-element-help--content {
     white-space: normal;

@@ -13,10 +13,15 @@ import {
   getApplicationNumberAtom,
   getSubmitStatusAtom,
   initializeFormAtom,
+  isBeingSubmittedAtom,
   pushNotificationAtom,
 } from '../store';
 import type { ATVFile } from '../types/ATVFile';
-import { addApplicantInfoStep, getNestedSchemaProperty, setNestedProperty } from '../utils';
+import {
+  addApplicantInfoStep,
+  getNestedSchemaProperty,
+  setNestedProperty,
+} from '../utils';
 import { RJSFFormContainer } from './RJSFFormContainer';
 
 /**
@@ -27,12 +32,19 @@ import { RJSFFormContainer } from './RJSFFormContainer';
  *
  * @yields {string} - form element path
  */
-function* iterateFormData(element: any, prefix: string = ''): IterableIterator<string> {
-  if (typeof element === 'object' && !Array.isArray(element) && element !== null) {
+function* getDanglingArrayPaths(
+  element: any,
+  prefix: string = '',
+): IterableIterator<string> {
+  if (
+    typeof element === 'object' &&
+    !Array.isArray(element) &&
+    element !== null
+  ) {
     // Functional loops mess mess up generator function, so use for - of loop here.
     // eslint-disable-next-line no-restricted-syntax
     for (const [key, value] of Object.entries(element)) {
-      yield* iterateFormData(value, `${prefix}.${key}`);
+      yield* getDanglingArrayPaths(value, `${prefix}.${key}`);
     }
   }
 
@@ -42,7 +54,12 @@ function* iterateFormData(element: any, prefix: string = ''): IterableIterator<s
   }
 
   // Element is array element with empty array as the only element
-  if (Array.isArray(element) && element.length === 1 && Array.isArray(element[0]) && element[0].length === 0) {
+  if (
+    Array.isArray(element) &&
+    element.length === 1 &&
+    Array.isArray(element[0]) &&
+    element[0].length === 0
+  ) {
     yield prefix;
   }
 }
@@ -79,7 +96,11 @@ function* getAttachments(element: any): IterableIterator<ATVFile> {
  * @return {boolean} - True if the schema definition should be fixed, false otherwise.
  */
 const shouldFixArrayField = (schemaDefinition: RJSFSchema) => {
-  if (schemaDefinition?.type !== 'array' || !schemaDefinition?.items || schemaDefinition?.items === true) {
+  if (
+    schemaDefinition?.type !== 'array' ||
+    !schemaDefinition?.items ||
+    schemaDefinition?.items === true
+  ) {
     return false;
   }
 
@@ -88,7 +109,8 @@ const shouldFixArrayField = (schemaDefinition: RJSFSchema) => {
     typeof schemaDefinition?.items[0] === 'object' &&
     schemaDefinition?.items[0]?.type === 'object';
 
-  const hasRef = !Array.isArray(schemaDefinition.items) && schemaDefinition.items.$ref;
+  const hasRef =
+    !Array.isArray(schemaDefinition.items) && schemaDefinition.items.$ref;
 
   return isObject || hasRef;
 };
@@ -104,10 +126,12 @@ const shouldFixArrayField = (schemaDefinition: RJSFSchema) => {
  * @return {object} - Fixed form data
  */
 const fixDanglingArrays = (formData: any, schema: RJSFSchema) => {
-  const objectPaths = Array.from(iterateFormData(formData));
+  const objectPaths = Array.from(getDanglingArrayPaths(formData));
 
   objectPaths.forEach((path) => {
-    const schemaDefinition = schema?.definitions && getNestedSchemaProperty(schema.definitions, path);
+    const schemaDefinition =
+      schema?.definitions &&
+      getNestedSchemaProperty(schema.definitions, path, true);
 
     if (schemaDefinition && schemaDefinition.type === 'object') {
       setNestedProperty(formData, path, {});
@@ -131,11 +155,22 @@ const fixDanglingArrays = (formData: any, schema: RJSFSchema) => {
  * @return {object} - Resulting data
  */
 const transformData = (data: any) => {
-  const { grants_profile, form_data: formData, schema: originalSchema, ui_schema: originalUiSchema } = data;
+  const {
+    grants_profile,
+    form_data: formData,
+    schema: originalSchema,
+    ui_schema: originalUiSchema,
+  } = data;
 
-  const [schema, ui_schema] = addApplicantInfoStep(originalSchema, originalUiSchema, grants_profile);
+  const [schema, ui_schema] = addApplicantInfoStep(
+    originalSchema,
+    originalUiSchema,
+    grants_profile,
+  );
   const { definitions, properties } = schema;
   const transformedProperties: any = {};
+
+  const fixedFormData = fixDanglingArrays(formData, schema);
 
   // Add _step property to each form step
   if (properties) {
@@ -151,17 +186,19 @@ const transformData = (data: any) => {
       const [key, definitionValue] = definition;
 
       if (key.charAt(0) !== '_') {
-        Object.entries(definitionValue.properties).forEach((subProperty: any) => {
-          const [subKey] = subProperty;
-          definitions[key].properties[subKey]._isSection = true;
-        });
+        Object.entries(definitionValue.properties).forEach(
+          (subProperty: any) => {
+            const [subKey] = subProperty;
+            definitions[key].properties[subKey]._isSection = true;
+          },
+        );
       }
     });
   }
 
   return {
     ...data,
-    formData: fixDanglingArrays(formData, schema),
+    formData: fixedFormData,
     schema: { ...schema, properties: transformedProperties },
     ui_schema,
   };
@@ -188,20 +225,30 @@ export const FormWrapper = ({
   const store = useStore();
   const initializeForm = useSetAtom(initializeFormAtom);
   const pushNotification = useSetAtom(pushNotificationAtom);
-  const readApplicationNumber = useAtomCallback(useCallback((get) => get(getApplicationNumberAtom), []));
-  const readSubmitStatus = useAtomCallback(useCallback((get) => get(getSubmitStatusAtom), []));
+  const readApplicationNumber = useAtomCallback(
+    useCallback((get) => get(getApplicationNumberAtom), []),
+  );
+  const readSubmitStatus = useAtomCallback(
+    useCallback((get) => get(getSubmitStatusAtom), []),
+  );
   const transformedData = transformData({
     ...data,
-    form_data: data.form_data?.form_data ? data.form_data.form_data : data.form_data,
+    form_data: data.form_data?.form_data
+      ? data.form_data.form_data
+      : data.form_data,
   });
   const translatedData = useTranslateData(transformedData);
   const setAvus2Data = useSetAtom(avus2DataAtom);
+  const setIsSubmitting = useSetAtom(isBeingSubmittedAtom);
 
   initializeForm(translatedData);
 
   const { currentLanguage } = drupalSettings.path;
 
-  const handleResponseError = async (response: Response, actionType: 'submit' | 'draft'): Promise<void> => {
+  const handleResponseError = async (
+    response: Response,
+    actionType: 'submit' | 'draft',
+  ): Promise<void> => {
     const json = await response.json();
     const { error } = json;
 
@@ -211,12 +258,26 @@ export const FormWrapper = ({
 
     const label =
       actionType === 'submit'
-        ? Drupal.t('Application could not be submitted.', {}, { context: 'Grants application: Submit' })
-        : Drupal.t('Application could not be saved as draft.', {}, { context: 'Grants application: Draft' });
+        ? Drupal.t(
+            'Application could not be submitted.',
+            {},
+            { context: 'Grants application: Submit' },
+          )
+        : Drupal.t(
+            'Application could not be saved as draft.',
+            {},
+            { context: 'Grants application: Draft' },
+          );
 
-    pushNotification({ children: <div>{error}</div>, label, type: 'error' });
+    pushNotification({
+      children: <div>{Array.isArray(error) ? error.join('\n') : error}</div>,
+      label,
+      type: 'error',
+    });
   };
   const submitData = async (submittedData: any): Promise<void> => {
+    setIsSubmitting(true);
+
     const response = await fetch(
       `/${currentLanguage}/applications/${applicationTypeId}/application/${readApplicationNumber()}`,
       {
@@ -234,6 +295,7 @@ export const FormWrapper = ({
 
     if (!response.ok) {
       await handleResponseError(response, 'submit');
+      setIsSubmitting(false);
       return;
     }
 
@@ -251,23 +313,27 @@ export const FormWrapper = ({
   store.set(formDataAtomRef, formDataAtom);
 
   if (translatedData.status !== SubmitStates.DRAFT) {
-    const { attachmentsInfo, statusUpdates, events, messages } = translatedData.form_data;
+    const { attachmentsInfo, statusUpdates, events, messages } =
+      translatedData.form_data;
 
     setAvus2Data({ attachmentsInfo, statusUpdates, events, messages });
   }
 
   const saveDraft = async (submittedData: any) => {
-    const response = await fetch(`/${currentLanguage}/applications/${applicationTypeId}/${readApplicationNumber()}`, {
-      body: JSON.stringify({
-        application_number: readApplicationNumber() || '',
-        application_type_id: applicationTypeId,
-        attachments: Array.from(getAttachments(submittedData)),
-        form_data: submittedData,
-        langcode: 'en',
-      }),
-      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
-      method: 'PATCH',
-    });
+    const response = await fetch(
+      `/${currentLanguage}/applications/${applicationTypeId}/${readApplicationNumber()}`,
+      {
+        body: JSON.stringify({
+          application_number: readApplicationNumber() || '',
+          application_type_id: applicationTypeId,
+          attachments: Array.from(getAttachments(submittedData)),
+          form_data: submittedData,
+          langcode: 'en',
+        }),
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
+        method: 'PATCH',
+      },
+    );
 
     if (!response.ok) {
       await handleResponseError(response, 'draft');

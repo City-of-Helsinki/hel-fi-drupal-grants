@@ -19,12 +19,32 @@ export const SubmittedForm = ({
     <>
       <StatusLabel />
       <div className='webform-submission__application_id'>
-        <h2>{Drupal.t('Application number', {}, { context: 'Grants application: Submitted form' })}</h2>
-        <div className='webform-submission__application_id--body'>{applicationNumber.toString().toUpperCase()}</div>
+        <h2>
+          {Drupal.t(
+            'Application number',
+            {},
+            { context: 'Grants application: Submitted form' },
+          )}
+        </h2>
+        <div className='webform-submission__application_id--body'>
+          {applicationNumber.toString().toUpperCase()}
+        </div>
       </div>
-      <h3>{Drupal.t('Application info', {}, { context: 'Grants application: Submitted form' })}</h3>
+      <h3>
+        {Drupal.t(
+          'Application info',
+          {},
+          { context: 'Grants application: Submitted form' },
+        )}
+      </h3>
       <FormSummary {...{ formData, schema }} />
-      <h3>{Drupal.t('Application', {}, { context: 'Grants application: Submitted form' })}</h3>
+      <h3>
+        {Drupal.t(
+          'Application',
+          {},
+          { context: 'Grants application: Submitted form' },
+        )}
+      </h3>
       <p>
         {Drupal.t(
           'Here you can see details of your application',

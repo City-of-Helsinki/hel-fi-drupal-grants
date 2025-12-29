@@ -140,9 +140,10 @@ you cannot do any modifications while the form is locked for them.',
       '#value' => $isNewGrantsProfile,
     ];
     $form['basicDetailsWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
       '#title' => $this->t('Basic details', [], $this->tOpts),
       '#title_tag' => 'h4',
+      '#theme_wrappers' => ['container__form_section'],
       'foundingYear' => [
         '#type' => 'textfield',
         '#title' => $this->t('Year of establishment', [], $this->tOpts),
@@ -369,18 +370,19 @@ later when completing the grant application.',
   ) {
 
     $form['addressWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
+      '#theme_wrappers' => ['container__form_section'],
       '#title' => $this->t('Addresses', [], $this->tOpts),
       '#title_tag' => 'h4',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
 
-    // Add a container for errors since the errors don't
-    // show up the webform_section element.
+    // Add a container for errors.
     $form = $this->addErrorElement('addressWrapper', $form);
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
+
     unset($addressValues['actions']);
     $deltaindex = 0;
     foreach ($addressValues as $delta => $address) {
@@ -396,6 +398,11 @@ later when completing the grant application.',
       $form['addressWrapper'][$delta]['address'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('Community address', [], $this->tOpts),
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
       ];
       $form['addressWrapper'][$delta]['address']['street'] = [
         '#type' => 'textfield',
@@ -434,6 +441,11 @@ later when completing the grant application.',
         '#value' => $this
           ->t('Delete', [], $this->tOpts),
         '#name' => 'addressWrapper--' . $delta,
+        '#attributes' => [
+          'class' => [
+            'hds-button--secondary',
+          ],
+        ],
         '#submit' => [
           '::removeOne',
         ],
@@ -450,6 +462,11 @@ later when completing the grant application.',
       $form['addressWrapper'][] = [
         'address' => [
           '#type' => 'fieldset',
+          '#attributes' => [
+            'class' => [
+              'hdbt-form--fieldset--border',
+            ],
+          ],
           '#title' => $this->t('Community address', [], $this->tOpts),
           'street' => [
             '#type' => 'textfield',
@@ -486,6 +503,11 @@ later when completing the grant application.',
             '#submit' => [
               '::removeOne',
             ],
+            '#attributes' => [
+              'class' => [
+                'hds-button--secondary',
+              ],
+            ],
             '#ajax' => [
               'callback' => '::addmoreCallback',
               'disable-refocus' => TRUE,
@@ -502,7 +524,7 @@ later when completing the grant application.',
       '#value' => $this
         ->t('Add address', [], $this->tOpts),
       '#name' => 'addressWrapper--1',
-      '#is_supplementary' => TRUE,
+      '#is_secondary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#submit' => [
         '::addOne',
@@ -512,7 +534,7 @@ later when completing the grant application.',
         'disable-refocus' => TRUE,
         'wrapper' => 'addresses-wrapper',
       ],
-      '#prefix' => '<div class="profile-add-more"">',
+      '#prefix' => '<div class="profile-add-more">',
       '#suffix' => '</div>',
     ];
   }
@@ -537,9 +559,10 @@ later when completing the grant application.',
   ) {
 
     $form['officialWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
       '#title' => $this->t('Persons responsible for operations', [], $this->tOpts),
       '#title_tag' => 'h4',
+      '#theme_wrappers' => ['container__form_section'],
       '#prefix' => '<div id="officials-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -560,6 +583,11 @@ later when completing the grant application.',
 
       $form['officialWrapper'][$delta]['official'] = [
         '#type' => 'fieldset',
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
         '#title' => $this->t('Community official', [], $this->tOpts),
         'name' => [
           '#type' => 'textfield',
@@ -599,6 +627,11 @@ later when completing the grant application.',
           '#submit' => [
             '::removeOne',
           ],
+          '#attributes' => [
+            'class' => [
+              'hds-button--secondary',
+            ],
+          ],
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
@@ -613,6 +646,11 @@ later when completing the grant application.',
 
       $form['officialWrapper'][$nextDelta]['official'] = [
         '#type' => 'fieldset',
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
         '#title' => $this->t('Community official', [], $this->tOpts),
         'name' => [
           '#type' => 'textfield',
@@ -648,6 +686,11 @@ later when completing the grant application.',
           '#submit' => [
             '::removeOne',
           ],
+          '#attributes' => [
+            'class' => [
+              'hds-button--secondary',
+            ],
+          ],
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
@@ -662,7 +705,7 @@ later when completing the grant application.',
       '#type' => 'submit',
       '#value' => $this
         ->t('Add official', [], $this->tOpts),
-      '#is_supplementary' => TRUE,
+      '#is_secondary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'officialWrapper--1',
       '#submit' => [

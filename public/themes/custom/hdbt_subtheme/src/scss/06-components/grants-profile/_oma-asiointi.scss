@@ -53,7 +53,7 @@
   padding-top: var(--spacing-l);
 
   h2 {
-    margin-bottom: var(--spacing-s);
+    margin-bottom: $spacing;
     margin-top: 0;
   }
 
@@ -93,21 +93,21 @@
       display: block;
       flex-shrink: 0;
       margin-left: -$spacing-quarter;
-      margin-top: var(--spacing-2-xs);
+      margin-top: $spacing-half;
       position: absolute;
       right: var(--spacing-m);
 
       @include breakpoint($breakpoint-s) {
         --icon-size: 3rem;
         margin-left: -$spacing-half;
-        margin-top: var(--spacing-s);
+        margin-top: $spacing;
       }
     }
 
     &:focus,
     &:hover {
       &::after {
-        transform: translateX(var(--spacing-2-xs));
+        transform: translateX($spacing-half);
 
         @media (prefers-reduced-motion) {
           transform: none;
@@ -120,7 +120,7 @@
     background-color: var(--color-alert);
     display: inline-block;
     font-weight: 500;
-    padding: var(--spacing-2-xs);
+    padding: $spacing-half;
     text-transform: uppercase;
   }
 
@@ -144,7 +144,7 @@
   .content {
     @include breakpoint($breakpoint-m) {
       display: grid;
-      grid-gap: var(--spacing-s);
+      grid-gap: $spacing;
       grid-template-columns: 1fr 1fr;
     }
   }
@@ -152,21 +152,21 @@
   .submission,
   .message {
     background-color: var(--color-white);
-    margin-bottom: var(--spacing-s);
-    margin-top: var(--spacing-s);
+    margin-bottom: $spacing;
+    margin-top: $spacing;
     padding: var(--spacing-m);
 
     .submission-title,
     .message-title {
       font-size: var(--fontsize-heading-s);
       font-weight: 500;
-      margin-bottom: var(--spacing-2-xs);
+      margin-bottom: $spacing-half;
       margin-top: 0;
       text-decoration: underline;
     }
 
     .message-title {
-      margin-top: var(--spacing-s);
+      margin-top: $spacing;
     }
 
     &:hover {
@@ -200,7 +200,7 @@
   }
 
   #oma-asiointi__sent {
-    padding-top: var(--spacing-s);
+    padding-top: $spacing;
   }
 
   .oma-asiointi-infoboxes-container {
@@ -248,7 +248,7 @@
   color: var(--color-white);
   font-weight: 500;
   margin-bottom: $spacing;
-  padding: var(--spacing-2-xs);
+  padding: $spacing-half;
 
   a {
     color: var(--color-white);

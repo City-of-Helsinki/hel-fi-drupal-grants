@@ -29,7 +29,9 @@ export const transformSteps = (
     if (index === steps.size - 1) {
       state = StepState.disabled;
     } else {
-      state = errorIndices.includes(index) ? StepState.attention : StepState.available;
+      state = errorIndices.includes(index)
+        ? StepState.attention
+        : StepState.available;
     }
 
     return { label, state };
@@ -47,12 +49,21 @@ export const Stepper = ({ formRef }: { formRef: RefObject<Form> }) => {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: @todo UHF-12501
   useEffect(() => {
-    if (divRef?.current?.scrollIntoView) {
-      divRef.current.scrollIntoView();
+    if (!divRef?.current) {
+      return;
+    }
+    divRef.current.scrollIntoView();
+
+    const currentStep = divRef.current.querySelector('[aria-current="step"]');
+    if (document.activeElement !== currentStep && currentStep) {
+      (currentStep as HTMLElement).focus();
     }
   }, [divRef, currentIndex]);
 
-  const onStepClick = (_event: MouseEvent<HTMLButtonElement>, stepIndex: number) => {
+  const onStepClick = (
+    _event: MouseEvent<HTMLButtonElement>,
+    stepIndex: number,
+  ) => {
     formRef.current?.validateForm();
     setStep(stepIndex);
   };
@@ -60,12 +71,12 @@ export const Stepper = ({ formRef }: { formRef: RefObject<Form> }) => {
   return (
     <div ref={divRef}>
       <HDSStepper
+        className='hdbt-form--stepper'
         language={drupalSettings.path.currentLanguage}
         onStepClick={onStepClick}
         selectedStep={currentIndex}
         steps={transformedSteps}
         theme={defaultStepperTheme}
-        className='hdbt-form--stepper'
       />
     </div>
   );

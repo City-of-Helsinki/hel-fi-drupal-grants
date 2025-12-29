@@ -6,8 +6,8 @@
   flex-flow: column;
   font-size: var(--fontsize-body-s);
   height: var(--spacing-xl);
-  margin-left: var(--spacing-2-xs);
-  margin-right: var(--spacing-2-xs);
+  margin-left: $spacing-half;
+  margin-right: $spacing-half;
   position: relative;
   text-align: center;
   width: var(--spacing-xl);
@@ -47,8 +47,8 @@
 
 .grants-profile--menuitem {
   height: var(--spacing-m);
-  margin-left: var(--spacing-2-xs);
-  margin-right: var(--spacing-2-xs);
+  margin-left: $spacing-half;
+  margin-right: $spacing-half;
   position: relative;
   width: var(--spacing-m);
 
