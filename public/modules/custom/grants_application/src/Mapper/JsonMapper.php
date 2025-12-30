@@ -641,50 +641,6 @@ class JsonMapper {
   }
 
   /**
-   * Get complete list of files to send to Avus2.
-   *
-   * When user sends patch-request, the files must be handled correctly.
-   * User may not delete files but may add new files. Also, the bank file must
-   * exist. Therefore, we pick all unique files from both old and new
-   * submission to make sure we have everything.
-   *
-   * @param array $oldFiles
-   *   The mapped files from old atv-document.
-   * @param array $newFiles
-   *   The freshly mapped files.
-   *
-   * @return array
-   *   The files array that should be put to attachmentsInfo.attachmentsArray.
-   */
-  public function patchMappedFiles(array $oldFiles, array $newFiles): array {
-    $uniqueFiles = [];
-
-    if ($bankFile = $this->getMappedBankFile($oldFiles)) {
-      $uniqueFiles[] = $bankFile;
-    }
-
-    foreach (array_merge($oldFiles, $newFiles) as $fileFieldArray) {
-      $integrationIdValueArray = array_find($fileFieldArray, fn($fa) => $fa['ID'] === 'integrationID');
-
-      if ($integrationIdValueArray) {
-        $fileFound = FALSE;
-        foreach ($uniqueFiles as $uniqueFileFieldArray) {
-          $uniqueIntegrationIdField = array_find($uniqueFileFieldArray, fn($item) => $item['ID'] === 'integrationID');
-          if ($uniqueIntegrationIdField && $uniqueIntegrationIdField['value'] === $integrationIdValueArray['value']) {
-            $fileFound = TRUE;
-          }
-        }
-
-        if (!$fileFound) {
-          $uniqueFiles[] = $fileFieldArray;
-        }
-      }
-    }
-
-    return $uniqueFiles;
-  }
-
-  /**
    * Get the bank file.
    *
    * @param array $mappedFiles

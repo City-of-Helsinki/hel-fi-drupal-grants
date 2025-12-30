@@ -64,7 +64,71 @@ final class JsonMapperService {
     $mappedData = $this->addFileData($mappedData, $bankFile, $dataSources);
 
     // Make sure the data contains everything we need.
-    $this->mappingPostOperations($mappedData, $isDraft);
+    // Only on first submission this must be false.
+    $mappedData['formUpdate'] = !$isDraft;
+
+    foreach(['statusUpdates', 'events', 'messages'] as $field) {
+      if (!isset($mappedData[$field])) {
+        $mappedData[$field] = [];
+      }
+    }
+
+    return $mappedData;
+  }
+
+  /**
+   * Patch request has enough differences
+   *
+   * @param string $formTypeId
+   * @param string $applicationNumber
+   * @param array $formData
+   * @param string $selectedCompanyType
+   * @param array $oldDocument
+   * @return array
+   * @throws \Exception
+   */
+  public function handleMappingForPatchRequest(
+    string $formTypeId,
+    string $applicationNumber,
+    array $formData,
+    string $selectedCompanyType,
+    array $oldDocument,
+  ): array {
+    $mappingFileName = "ID$formTypeId.json";
+    $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId);
+
+    // @todo Fix.
+    $this->mapper = new JsonMapper();
+
+    // Mappings are divided into common fields (by mandate) and form specific fields.
+    $commonFieldMapping = json_decode(file_get_contents(__DIR__ . '/Mappings/common/' . $selectedCompanyType . '.json'), TRUE);
+    $this->mapper->setMappings($commonFieldMapping);
+    $mappedCommonFields = $this->mapper->map($dataSources);
+
+    $mapping = json_decode(file_get_contents(__DIR__ . '/Mappings/' . $mappingFileName), TRUE);
+    $this->mapper->setMappings($mapping);
+    $mappedData = $this->mapper->map($dataSources);
+
+    $oldFiles = $oldDocument['content']['attachmentsInfo']['attachmentsArray'];
+    $newFiles = $this->mapper->mapFiles($dataSources);
+    $newFiles = $newFiles['attachmentsInfo']['attachmentsArray'] ?? [];
+    $patchedFiles = $this->patchMappedFiles(
+      $oldFiles,
+      $newFiles
+    );
+
+    $mappedData = array_merge_recursive($mappedCommonFields, $mappedData);
+    $mappedData['attachmentsInfo']['attachmentsArray'] = $patchedFiles;
+
+    $mappedData['events'] = $oldDocument['content']['events'];
+    $mappedData['messages'] = $oldDocument['content']['messages'];
+    $mappedData['statusUpdates'] = $oldDocument['content']['statusUpdates'];
+    $mappedData['formUpdate'] = TRUE;
+
+    if ($oldStatus = $this->mapper->getStatusValue($oldDocument)) {
+      $this->mapper->setStatusValue($mappedData, $oldStatus);
+    }
+
     return $mappedData;
   }
 
@@ -89,25 +153,6 @@ final class JsonMapperService {
 
     $mappedData['attachmentsInfo']['attachmentsArray'][] = $mappedBankFile;
     return $mappedData;
-  }
-
-  /**
-   * All the things done after the mapping is ready.
-   *
-   * @param $mappedData
-   *   The mapped data.
-   * @param $isDraft
-   *   Has the application been submitted yet.
-   */
-  private function mappingPostOperations(array &$mappedData, bool $isDraft): void {
-    // Only on first submission this must be false.
-    $mappedData['formUpdate'] = !$isDraft;
-
-    foreach(['statusUpdates', 'events', 'messages'] as $field) {
-      if (!isset($mappedData[$field])) {
-        $mappedData[$field] = [];
-      }
-    }
   }
 
   /**
@@ -228,6 +273,50 @@ final class JsonMapperService {
       'form_settings' => $formSettings->toArray(),
       'custom' => $custom,
     ];
+  }
+
+  /**
+   * Get complete list of files to send to Avus2.
+   *
+   * When user sends patch-request, the files must be handled correctly.
+   * User may not delete files but may add new files. Also, the bank file must
+   * exist. Therefore, we pick all unique files from both old and new
+   * submission to make sure we have everything.
+   *
+   * @param array $oldFiles
+   *   The mapped files from old atv-document.
+   * @param array $newFiles
+   *   The freshly mapped files.
+   *
+   * @return array
+   *   The files array that should be put to attachmentsInfo.attachmentsArray.
+   */
+  public function patchMappedFiles(array $oldFiles, array $newFiles): array {
+    $uniqueFiles = [];
+
+    if ($bankFile = $this->getMappedBankFile($oldFiles)) {
+      $uniqueFiles[] = $bankFile;
+    }
+
+    foreach (array_merge($oldFiles, $newFiles) as $fileFieldArray) {
+      $integrationIdValueArray = array_find($fileFieldArray, fn($fa) => $fa['ID'] === 'integrationID');
+
+      if ($integrationIdValueArray) {
+        $fileFound = FALSE;
+        foreach ($uniqueFiles as $uniqueFileFieldArray) {
+          $uniqueIntegrationIdField = array_find($uniqueFileFieldArray, fn($item) => $item['ID'] === 'integrationID');
+          if ($uniqueIntegrationIdField && $uniqueIntegrationIdField['value'] === $integrationIdValueArray['value']) {
+            $fileFound = TRUE;
+          }
+        }
+
+        if (!$fileFound) {
+          $uniqueFiles[] = $fileFieldArray;
+        }
+      }
+    }
+
+    return $uniqueFiles;
   }
 
 

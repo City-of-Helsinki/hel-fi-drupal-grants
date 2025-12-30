@@ -513,20 +513,14 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Unable to fetch the application. Please try again in a moment')], 500);
     }
 
-    $mappingFileName = "ID$application_type_id.json";
-    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/' . $mappingFileName), TRUE);
-    $mapper = new JsonMapper($mapping);
-
     try {
-      $dataSources = $mapper->getCombinedDataSources(
-        $form_data,
-        $user_data,
-        $selected_company,
-        $this->userInformationService->getUserProfileData(),
-        $this->userInformationService->getGrantsProfileContent(),
-        $settings,
+      $oldDocument = $document->toArray();
+      $mappedData = $this->jsonMapperService->handleMappingForPatchRequest(
+        $application_type_id,
         $application_number,
-        $this->userInformationService->getApplicantTypeId(),
+        $form_data,
+        $selected_company['type'],
+        $oldDocument
       );
     }
     catch (\Exception $e) {
@@ -538,49 +532,12 @@ final class Application extends ResourceBase {
       );
     }
 
-    $oldDocument = $document->toArray();
-
-    $events = $oldDocument['content']['events'];
-    $messages = $oldDocument['content']['messages'];
-    $statusUpdates = $oldDocument['content']['statusUpdates'];
-
-    $mappedData = $this->jsonMapperService->handleMapping(
-      $application_type_id,
-      $application_number,
-      $form_data
-    );
-
-    // Map the data again.
-    /*
-    $document_data = $mapper->map($dataSources);
-
-    $oldFiles = $oldDocument['content']['attachmentsInfo']['attachmentsArray'];
-    $newFiles = $mapper->mapFiles($dataSources);
-    $newFiles = $newFiles['attachmentsInfo']['attachmentsArray'] ?? [];
-
-    $patchedFiles = $mapper->patchMappedFiles(
-      $oldFiles,
-      $newFiles
-    );
-
-    $document_data['attachmentsInfo']['attachmentsArray'] = $patchedFiles;
-    $document_data['events'] = $events;
-    $document_data['messages'] = $messages;
-    $document_data['statusUpdates'] = $statusUpdates;
-    $document_data['formUpdate'] = TRUE;
-    */
-    // Read the status from ATV and copy it.
-    if ($oldStatus = $mapper->getStatusValue($oldDocument)) {
-      $mapper->setStatusValue($document_data, $oldStatus);
-    }
-
     // @todo Add event HANDLER_SEND_INTEGRATION.
     try {
       // @todo Better sanitation.
       // @todo Save the form_data in separate atv doc.
-      $document_data['form_data'] = $form_data ?? [];
-
-      $document->setContent($document_data);
+      $mappedData['form_data'] = $form_data ?? [];
+      $document->setContent($mappedData);
 
       $save_id = Uuid::uuid4()->toString();
 
