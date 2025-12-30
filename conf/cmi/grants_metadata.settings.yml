@@ -312,6 +312,16 @@ third_party_options:
         fi: 'Hyvinvoinnin ja terveyden edistämisen pienavustus'
         en: 'Understöd inom främjandet av välfärd och hälsa: Små understöd'
         sv: 'Allmänt understöd inom främjandet av välfärd och hälsa'
+    77:
+      id: NUORPROJEKTI
+      code: NUORPROJEKTI
+      dataDefinition:
+        definitionClass: Drupal\grants_metadata\TypedData\Definition\NuorisotoimiProjektiDefinition
+        definitionId: grants_metadata_nuorisotoimiprojekti
+      labels:
+        fi: 'Nuorisotoiminnan projektiavustushakemus'
+        en: 'Project grant application for youth activities'
+        sv: 'Ansökan om projektuderstöd för ungdomsverksamhet'
   application_statuses:
     DRAFT: DRAFT
     SUBMITTED: SUBMITTED
@@ -384,6 +394,7 @@ config_import_ignore:
   - 74
   - 75
   - 76
+  - 77
 overridden_configuration:
   -
     53:
@@ -567,6 +578,12 @@ overridden_configuration:
         disableCopying: 0
   -
     76:
+      grants_metadata:
+        applicationOpen: '2022-10-03T11:08:26'
+        applicationClose: '2029-08-30T11:19:00'
+        disableCopying: 0
+  -
+    77:
       grants_metadata:
         applicationOpen: '2022-10-03T11:08:26'
         applicationClose: '2029-08-30T11:19:00'

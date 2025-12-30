@@ -441,6 +441,11 @@ later when completing the grant application.',
         '#value' => $this
           ->t('Delete', [], $this->tOpts),
         '#name' => 'addressWrapper--' . $delta,
+        '#attributes' => [
+          'class' => [
+            'hds-button--secondary',
+          ],
+        ],
         '#submit' => [
           '::removeOne',
         ],
@@ -497,6 +502,11 @@ later when completing the grant application.',
             '#name' => 'addressWrapper--' . ($deltaindex + 1),
             '#submit' => [
               '::removeOne',
+            ],
+            '#attributes' => [
+              'class' => [
+                'hds-button--secondary',
+              ],
             ],
             '#ajax' => [
               'callback' => '::addmoreCallback',
@@ -617,6 +627,11 @@ later when completing the grant application.',
           '#submit' => [
             '::removeOne',
           ],
+          '#attributes' => [
+            'class' => [
+              'hds-button--secondary',
+            ],
+          ],
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
@@ -670,6 +685,11 @@ later when completing the grant application.',
           '#name' => 'officialWrapper--' . $nextDelta,
           '#submit' => [
             '::removeOne',
+          ],
+          '#attributes' => [
+            'class' => [
+              'hds-button--secondary',
+            ],
           ],
           '#ajax' => [
             'callback' => '::addmoreCallback',

@@ -91,7 +91,7 @@ const acceptCookies = async (page: Page) => {
  */
 const hideDialog = async (page: Page) => {
   try {
-    // Wait for the cookie banner to be attached to the DOM
+    // Wait for the dialog to be attached to the DOM
     await page.waitForSelector('.dialog__container', { state: 'attached', timeout: 3000 });
 
     // Wait until the button is available before clicking
@@ -99,6 +99,7 @@ const hideDialog = async (page: Page) => {
     await skipButton.waitFor({ state: 'attached', timeout: 1000 });
     await skipButton.click();
   } catch (error) {
+    logger('No survey dialog found or already closed.')
   }
 };
 

@@ -7,15 +7,15 @@ namespace Drupal\Tests\grants_handler\ExistingSite;
 use Drupal\Core\Url;
 use Drupal\grants_handler\Entity\Node\ServicePage;
 use Drupal\node\NodeInterface;
-use Drupal\Tests\helfi_api_base\Functional\ExistingSiteTestBase;
 use Drupal\webform\Entity\Webform;
+use weitzman\DrupalTestTraits\ExistingSiteBase;
 
 /**
  * Tests service page anon block.
  *
  * @group grants_handler
  */
-class ServicePageAnonBlockDttTest extends ExistingSiteTestBase {
+class ServicePageAnonBlockDttTest extends ExistingSiteBase {
 
   /**
    * Webform entity.

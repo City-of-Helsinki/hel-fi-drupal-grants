@@ -12,16 +12,16 @@
 }
 
 .grants-profile .prh-content-block {
-  margin-top: $spacing-quadruple;
-}
-
-.grants-profile--title {
-  margin-bottom: $spacing-quadruple;
+  margin-top: $spacing-double;
 }
 
 .grants-profile--infotext {
   @include font('body');
   margin-block: 0 $spacing;
+
+  &:first-of-type {
+    margin-top: $spacing-double;
+  }
 }
 
 .grants-profile--extrainfo {

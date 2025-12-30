@@ -710,6 +710,11 @@ rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#submit' => [
         '::removeOne',
       ],
+      '#attributes' => [
+        'class' => [
+          'hds-button--secondary',
+        ],
+      ],
       '#ajax' => [
         'callback' => '::addmoreCallback',
         'wrapper' => 'bankaccount-wrapper',
