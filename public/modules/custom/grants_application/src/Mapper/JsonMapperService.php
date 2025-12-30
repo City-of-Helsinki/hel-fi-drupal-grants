@@ -2,15 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Drupal\grants_application\Form;
+namespace Drupal\grants_application\Mapper;
 
 
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Helper;
-use Drupal\grants_application\Mapper\JsonMapper;
-use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\helfi_atv\AtvDocument;
 
+/**
+ * Mapping related logic.
+ */
 final class JsonMapperService {
 
   private JsonMapper $mapper;
@@ -40,19 +42,29 @@ final class JsonMapperService {
     array $formData,
     array $bankFile,
     bool $isDraft,
+    string $selectedCompanyType
   ): array {
     $mappingFileName = "ID$formTypeId.json";
-    $mapping = json_decode(file_get_contents(__DIR__ . '/Mappings/' . $mappingFileName), TRUE);
     $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId);
 
     // @todo Fix.
-    $mapper = new JsonMapper($mapping);
-    $this->mapper = $mapper;
+    $this->mapper = new JsonMapper();
 
-    $mappedData = $mapper->map($dataSources);
-    $mappedData = $this->addFileMapping($mappedData, $bankFile, $dataSources);
+    // Mappings are divided into common fields (by mandate) and form specific fields.
+    $commonFieldMapping = json_decode(file_get_contents(__DIR__ . '/Mappings/common/' . $selectedCompanyType . '.json'), TRUE);
+    $this->mapper->setMappings($commonFieldMapping);
+    $mappedCommonFields = $this->mapper->map($dataSources);
 
-    $this->mappedDataPostOperations($mappedData, $isDraft);
+    $mapping = json_decode(file_get_contents(__DIR__ . '/Mappings/' . $mappingFileName), TRUE);
+    $this->mapper->setMappings($mapping);
+    $mappedData = $this->mapper->map($dataSources);
+
+    // Files are mapped separately.
+    $mappedData = array_merge_recursive($mappedCommonFields, $mappedData);
+    $mappedData = $this->addFileData($mappedData, $bankFile, $dataSources);
+
+    // Make sure the data contains everything we need.
+    $this->mappingPostOperations($mappedData, $isDraft);
     return $mappedData;
   }
 
@@ -69,7 +81,7 @@ final class JsonMapperService {
    * @return array
    *   The mapped data with files.
    */
-  private function addFileMapping(array $mappedData, array $bankFile, array $dataSources): array {
+  private function addFileData(array $mappedData, array $bankFile, array $dataSources): array {
     $formData = $dataSources['form_data'];
     $mappedBankFile = $this->mapper->mapBankFile($this->getSelectedBankAccount($formData), $bankFile);
     $mappedFileData = $this->mapper->mapFiles($dataSources);
@@ -87,20 +99,14 @@ final class JsonMapperService {
    * @param $isDraft
    *   Has the application been submitted yet.
    */
-  private function mappedDataPostOperations(&$mappedData, $isDraft): void {
+  private function mappingPostOperations(array &$mappedData, bool $isDraft): void {
     // Only on first submission this must be false.
     $mappedData['formUpdate'] = !$isDraft;
 
-    if (!isset($mappedData['statusUpdates'])) {
-      $mappedData['statusUpdates'] = [];
-    }
-
-    if (!isset($mappedData['events'])) {
-      $mappedData['events'] = [];
-    }
-
-    if (!isset($mappedData['messages'])) {
-      $mappedData['messages'] = [];
+    foreach(['statusUpdates', 'events', 'messages'] as $field) {
+      if (!isset($mappedData[$field])) {
+        $mappedData[$field] = [];
+      }
     }
   }
 
@@ -159,9 +165,13 @@ final class JsonMapperService {
   }
 
   /**
+   * Get selected bank account.
    *
    * @param array $form_data
+   *   The form data.
+   *
    * @return string
+   *   The selected bank account number.
    */
   public function getSelectedBankAccount(array $form_data): string {
     return $form_data["applicant_info"]["bank_account"]["bank_account"] ?? '';

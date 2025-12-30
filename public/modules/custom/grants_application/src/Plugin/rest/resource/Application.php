@@ -16,7 +16,7 @@ use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
-use Drupal\grants_application\Form\JsonMapperService;
+use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\JsonSchemaValidator;
 use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\User\UserInformationService;
@@ -326,6 +326,7 @@ final class Application extends ResourceBase {
       }
     }
 
+
     try {
       $mappedData = $this->jsonMapperService->handleMapping(
         $application_type_id,
@@ -333,6 +334,7 @@ final class Application extends ResourceBase {
         $form_data,
         $bankFile,
         (bool) $submission->get('draft')->value,
+        $selected_company['type'],
       );
     }
     catch (\Exception $e) {
@@ -542,7 +544,11 @@ final class Application extends ResourceBase {
     $messages = $oldDocument['content']['messages'];
     $statusUpdates = $oldDocument['content']['statusUpdates'];
 
-    $mappedData = $this->jsonMapperService->handleMapping($application_type_id, $application_number, $form_data);
+    $mappedData = $this->jsonMapperService->handleMapping(
+      $application_type_id,
+      $application_number,
+      $form_data
+    );
 
     // Map the data again.
     /*

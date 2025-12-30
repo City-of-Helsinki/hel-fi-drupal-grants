@@ -20,12 +20,26 @@ class JsonMapper {
   private JsonHandler $customHandler;
 
   /**
+   * The array of mappings to map from react to avus2.
+   */
+  private array $mappings;
+
+  /**
    * The constructor.
    */
   public function __construct(
-    private readonly array $mappings,
   ) {
     $this->customHandler = new JsonHandler();
+  }
+
+  /**
+   * Set the mappings.
+   *
+   * @param array $mappings
+   * @return void
+   */
+  public function setMappings(array $mappings): void {
+    $this->mappings = $mappings;
   }
 
   /**
@@ -39,6 +53,10 @@ class JsonMapper {
    */
   public function map(array $allDataSources): array {
     $data = [];
+
+    if (!$this->mappings) {
+      throw new \Exception('You must call setMappings-method before running the mapper.');
+    }
 
     foreach ($this->mappings as $target => $definition) {
       $sourcePath = $definition['source'];
