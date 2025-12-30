@@ -20,7 +20,7 @@ export const FormActions = ({
   saveDraft,
   validatePartialForm,
 }: {
-  saveDraft: () => Promise<boolean>;
+  saveDraft: () => Promise<void>;
   validatePartialForm: () => ValidationData<any> | undefined;
 }) => {
   const readOnly = useAtomValue(isReadOnlyAtom);

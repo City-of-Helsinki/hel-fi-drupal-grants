@@ -252,7 +252,6 @@ class GrantsAttachments extends WebformCompositeBase {
     $uniqId = Html::getUniqueId('composite-attachment');
 
     $allowedFileTypes = $element['#allowed_filetypes'] ?? self::DEFAULT_ALLOWED_FILE_TYPES;
-    $allowedFileTypesArray = self::getAllowedFileTypesInArrayFormat($allowedFileTypes);
 
     $elements['attachment'] = [
       '#type' => 'managed_file',
@@ -263,8 +262,15 @@ class GrantsAttachments extends WebformCompositeBase {
       // Managed file assumes that this is always in MB.
       '#max_filesize' => 20,
       '#upload_validators' => [
-        'file_validate_extensions' => $allowedFileTypesArray,
-        'file_validate_size' => [$maxFileSizeInBytes],
+        'FileExtension' => [
+          'extensions' => $allowedFileTypes,
+        ],
+        'FileSizeLimit' => [
+          'fileLimit' => $maxFileSizeInBytes,
+        ],
+        'FileNameLength' => [
+          'maxLength' => 100,
+        ],
       ],
       '#upload_location' => $uploadLocation,
       '#sanitize' => TRUE,
@@ -1035,20 +1041,6 @@ class GrantsAttachments extends WebformCompositeBase {
         '@fieldname' => $parent['#title'],
       ], $tOpts));
     }
-  }
-
-  /**
-   * Return allowed files in an array format.
-   *
-   * @param string $allowedFileTypes
-   *   Allowed filetypes in a string format.
-   *
-   * @return array
-   *   Allowed files in an array format.
-   */
-  private static function getAllowedFileTypesInArrayFormat(string $allowedFileTypes) {
-    $filetypeArray = explode(',', $allowedFileTypes);
-    return array_map('trim', $filetypeArray);
   }
 
 }

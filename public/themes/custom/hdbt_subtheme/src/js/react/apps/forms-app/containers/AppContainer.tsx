@@ -19,7 +19,7 @@ import { Requests } from '../Requests';
  * @throws {Error} - If the instantiation request fails.
  */
 const instantiateDocument = async (id: string, token: string) => {
-  const response = await Requests.DRAFT_APPLICATION_CREATE(id, token, null);
+  const response = await Requests.DRAFT_APPLICATION_CREATE(id, token);
 
   if (!response.ok) {
     throw new Error('Failed to instantiate application');

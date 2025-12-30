@@ -65,6 +65,10 @@ final class FormSettings {
       return TRUE;
     }
 
+    if (!$this->settings['application_open'] || !$this->settings['application_close']) {
+      return FALSE;
+    }
+
     try {
       $open = new \DateTime($this->settings['application_open']);
       $closed = new \DateTime($this->settings['application_close']);

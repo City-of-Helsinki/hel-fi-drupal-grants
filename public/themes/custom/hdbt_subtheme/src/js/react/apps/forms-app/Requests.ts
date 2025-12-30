@@ -10,7 +10,7 @@ export const Requests = {
   DRAFT_APPLICATION_CREATE: (
     id: string,
     token: string,
-    copy: string | null,
+    copy: string | null = null,
   ): Promise<Response> =>
     fetch(`/applications/${id}/draft${copy ? `/${copy}` : ''}`, {
       method: 'POST',

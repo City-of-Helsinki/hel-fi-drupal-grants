@@ -49,8 +49,14 @@ export const Stepper = ({ formRef }: { formRef: RefObject<Form> }) => {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: @todo UHF-12501
   useEffect(() => {
-    if (divRef?.current?.scrollIntoView) {
-      divRef.current.scrollIntoView();
+    if (!divRef?.current) {
+      return;
+    }
+    divRef.current.scrollIntoView();
+
+    const currentStep = divRef.current.querySelector('[aria-current="step"]');
+    if (document.activeElement !== currentStep && currentStep) {
+      (currentStep as HTMLElement).focus();
     }
   }, [divRef, currentIndex]);
 
@@ -65,12 +71,12 @@ export const Stepper = ({ formRef }: { formRef: RefObject<Form> }) => {
   return (
     <div ref={divRef}>
       <HDSStepper
+        className='hdbt-form--stepper'
         language={drupalSettings.path.currentLanguage}
         onStepClick={onStepClick}
         selectedStep={currentIndex}
         steps={transformedSteps}
         theme={defaultStepperTheme}
-        className='hdbt-form--stepper'
       />
     </div>
   );

@@ -45,7 +45,6 @@ import {
   setErrorsAtom,
   getSubventionFieldsAtom,
   isReadOnlyAtom,
-  isBeingSubmittedAtom,
 } from '../store';
 import { InvalidSchemaError } from '../errors/InvalidSchemaError';
 import { isDraft, keyErrorsByStep } from '../utils';
@@ -89,7 +88,7 @@ export const RJSFFormContainer = ({
   uiSchema,
 }: {
   formDataAtom: WritableAtom<any, [update: unknown], any>;
-  saveDraft: (data: any) => void;
+  saveDraft: (data: any) => Promise<void>;
   schema: RJSFSchema;
   submitData: (data: IChangeEvent) => void;
   uiSchema: UiSchema;
@@ -101,7 +100,6 @@ export const RJSFFormContainer = ({
   const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
   const readOnly = useAtomValue(isReadOnlyAtom);
-  const setIsSubmitting = useSetAtom(isBeingSubmittedAtom);
   const formRef = createRef<Form>();
   const readCurrentStep = useAtomCallback(
     useCallback((get) => get(getCurrentStepAtom), []),
@@ -133,7 +131,7 @@ export const RJSFFormContainer = ({
     const [currentStepIndex] = readCurrentStep();
 
     const currentPageErrors = keyedErrors.filter(
-      ([index, error]) => index === currentStepIndex,
+      ([index]) => index === currentStepIndex,
     );
 
     if (currentPageErrors.length) {
@@ -160,11 +158,7 @@ export const RJSFFormContainer = ({
 
     return errors
       .filter(([index]) => index <= reachedStep)
-      .filter(([index, error]) => {
-        const { name } = error;
-        return name !== 'type';
-      })
-      .map(([index, error]) => error);
+      .map(([, error]) => error);
   };
 
   /**
@@ -179,11 +173,15 @@ export const RJSFFormContainer = ({
       errors[0]?.stack.includes('schema is invalid')
     ) {
       setInvalidSchemaError(new InvalidSchemaError(errors[0].stack));
-      return;
+      return [];
     }
 
+    const prefilteredErrors = errors.filter(
+      (error) => error.params?.type !== 'null',
+    );
+
     const errorsToShow = filterErrorsByReachedStep(
-      keyErrorsByStep(errors, steps),
+      keyErrorsByStep(prefilteredErrors, steps),
     );
     setErrors(errorsToShow);
 
@@ -268,7 +266,6 @@ export const RJSFFormContainer = ({
           onChange={browserCacheData}
           onError={onError}
           onSubmit={async (data, event: React.FormEvent<HTMLFormElement>) => {
-            setIsSubmitting(true);
             event.preventDefault();
 
             if (readCurrentStep()[1].id !== 'preview') {
@@ -279,8 +276,6 @@ export const RJSFFormContainer = ({
 
             if (passes) {
               submitData(data.formData);
-            } else {
-              setIsSubmitting(false);
             }
           }}
           readonly={readOnly}
@@ -300,7 +295,10 @@ export const RJSFFormContainer = ({
           }}
           transformErrors={transformErrors}
           uiSchema={{ ...uiSchema, 'ui:globalOptions': { label: false } }}
-          validator={customizeValidator({}, localizeErrors)}
+          validator={customizeValidator(
+            { ajvOptionsOverrides: { allErrors: true, coerceTypes: false } },
+            localizeErrors,
+          )}
           widgets={widgets}
         >
           <Terms />

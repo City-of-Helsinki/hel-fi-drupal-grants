@@ -39,7 +39,7 @@
 
     .print-notification--icon {
       height: 22px;
-      margin-right: var(--spacing-2-xs);
+      margin-right: $spacing-half;
       vertical-align: text-top;
       width: 22px;
     }
@@ -66,7 +66,7 @@
 
   .webform-section-wrapper {
     .hds-notification  {
-      margin-top: var(--spacing-s);
+      margin-top: $spacing;
     }
   }
 
@@ -149,7 +149,7 @@
     }
 
     &.hds-notification {
-      padding-top: var(--spacing-s);
+      padding-top: $spacing;
     }
   }
 
@@ -420,7 +420,7 @@
     }
 
     dl {
-      padding-left: var(--spacing-2-xs);
+      padding-left: $spacing-half;
     }
 
     > br {
@@ -434,15 +434,15 @@
   > h4,
   .print-label {
     line-height: 1.5;
-    margin-top: var(--spacing-2-xs);
+    margin-top: $spacing-half;
   }
 
   fieldset {
-    padding: var(--spacing-s);
+    padding: $spacing;
 
     @include breakpoint($breakpoint-m) {
       min-width: 400px;
-      padding: var(--spacing-s) var(--spacing-m);
+      padding: $spacing var(--spacing-m);
     }
   }
 }

@@ -29,7 +29,6 @@ import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 
 export const ArrayFieldTemplate = ({
   canAdd,
-  idSchema,
   items,
   onAddClick,
   registry,

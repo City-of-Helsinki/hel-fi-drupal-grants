@@ -1,12 +1,13 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 // biome-ignore-all lint/a11y/noLabelWithoutControl: @todo UHF-12501
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
-import { type ChangeEvent, useCallback } from 'react';
+import { type ChangeEvent, type FocusEvent, useCallback } from 'react';
 import {
   Fieldset,
   TextArea as HDSTextArea,
   TextInput as HDSTextInput,
   Notification,
+  NumberInput,
   RadioButton,
   Select,
 } from 'hds-react';
@@ -55,6 +56,7 @@ export const TextInput = ({
   rawErrors,
   readonly,
   required,
+  schema,
   uiSchema,
   value,
 }: WidgetProps) => {
@@ -80,6 +82,32 @@ export const TextInput = ({
         return 'auto';
     }
   };
+
+  if (schema.type === 'number' || schema.type === 'integer') {
+    return (
+      <NumberInput
+        errorText={formatErrors(rawErrors)}
+        hideLabel={false}
+        id={id}
+        invalid={Boolean(rawErrors?.length)}
+        label={label}
+        name={name}
+        onBlur={() => null}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          onChange(event.target.value === '' ? undefined : event.target.value);
+        }}
+        onFocus={(event: FocusEvent<HTMLInputElement>) => {
+          if (event.target.value === '0') {
+            event.target.select();
+          }
+        }}
+        readOnly={readonly}
+        required={required}
+        style={{ maxWidth: getMaxWidth() }}
+        value={value ?? 0}
+      />
+    );
+  }
 
   return (
     <HDSTextInput

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\grants_profile\Form;
 
 use Drupal\Component\Uuid\UuidInterface;
@@ -103,9 +105,13 @@ class GrantsProfileFormUnregisteredCommunity extends GrantsProfileFormBase {
       '#value' => $isNewGrantsProfile,
     ];
     $form['companyNameWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
+      '#theme_wrappers' => ['container__form_section'],
       '#title' => $this->t('Basic details', [], $this->tOpts),
       '#title_tag' => 'h4',
+      '#attributes' => [
+        'class' => ['hdbt-form--section'],
+      ],
     ];
     $form['companyNameWrapper']['companyName'] = [
       '#type' => 'textfield',
@@ -312,15 +318,15 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
   ) {
 
     $form['addressWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
+      '#theme_wrappers' => ['container__form_section'],
       '#title' => $this->t('Addresses', [], $this->tOpts),
       '#title_tag' => 'h4',
       '#prefix' => '<div id="addresses-wrapper">',
       '#suffix' => '</div>',
     ];
 
-    // Add a container for errors since the errors don't
-    // show up the webform_section element.
+    // Add a container for errors.
     $form = $this->addErrorElement('addressWrapper', $form);
 
     $addressValues = $formState->getValue('addressWrapper') ?? $addresses;
@@ -337,6 +343,11 @@ you can do that by going to the Helsinki-profile from this link.', [], $this->tO
 
       $form['addressWrapper'][$delta]['address'] = [
         '#type' => 'fieldset',
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
         '#description_display' => 'before',
         '#description' => $this->t('The address must be your official address.
 One address is mandatory information in your personal information and on the application.', [], $this->tOpts),
@@ -384,6 +395,11 @@ One address is mandatory information in your personal information and on the app
       $form['addressWrapper'][] = [
         'address' => [
           '#type' => 'fieldset',
+          '#attributes' => [
+            'class' => [
+              'hdbt-form--fieldset--border',
+            ],
+          ],
           '#title' => $this->t('Community or group address', [], $this->tOpts),
           '#help_display' => 'before',
           '#description' => $this->t('The address must be your official address.
@@ -449,15 +465,15 @@ One address is mandatory information in your personal information and on the app
   ) {
 
     $form['officialWrapper'] = [
-      '#type' => 'webform_section',
+      '#type' => 'container',
+      '#theme_wrappers' => ['container__form_section'],
       '#title' => $this->t('Persons responsible for operations', [], $this->tOpts),
       '#title_tag' => 'h4',
       '#prefix' => '<div id="officials-wrapper">',
       '#suffix' => '</div>',
     ];
 
-    // Add a container for errors since the errors don't
-    // show up the webform_section element.
+    // Add a container for errors.
     $form = $this->addErrorElement('officialWrapper', $form);
 
     if (!$officials) {
@@ -479,6 +495,11 @@ One address is mandatory information in your personal information and on the app
 
       $form['officialWrapper'][$delta]['official'] = [
         '#type' => 'fieldset',
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
         '#title' => $this->t('Community or group official', [], $this->tOpts),
         'name' => [
           '#type' => 'textfield',
@@ -518,6 +539,11 @@ One address is mandatory information in your personal information and on the app
           '#submit' => [
             '::removeOne',
           ],
+          '#attributes' => [
+            'class' => [
+              'hds-button--secondary',
+            ],
+          ],
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
@@ -532,6 +558,11 @@ One address is mandatory information in your personal information and on the app
 
       $form['officialWrapper'][$nextDelta]['official'] = [
         '#type' => 'fieldset',
+        '#attributes' => [
+          'class' => [
+            'hdbt-form--fieldset--border',
+          ],
+        ],
         '#title' => $this->t('Community official', [], $this->tOpts),
         'name' => [
           '#type' => 'textfield',
@@ -567,6 +598,11 @@ One address is mandatory information in your personal information and on the app
           '#submit' => [
             '::removeOne',
           ],
+          '#attributes' => [
+            'class' => [
+              'hds-button--secondary',
+            ],
+          ],
           '#ajax' => [
             'callback' => '::addmoreCallback',
             'wrapper' => 'officials-wrapper',
@@ -581,7 +617,7 @@ One address is mandatory information in your personal information and on the app
       '#type' => 'submit',
       '#value' => $this
         ->t('Add official', [], $this->tOpts),
-      '#is_supplementary' => TRUE,
+      '#is_secondary' => TRUE,
       '#icon_left' => 'plus-circle',
       '#name' => 'officialWrapper--1',
       '#submit' => [

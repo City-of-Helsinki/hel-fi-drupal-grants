@@ -1,0 +1,8 @@
+<section class="hdbt-form--section">
+  <h4 class="hdbt-form--section__title" {% if title_id %}id="{{title_id}}"{% endif %}>{{title}}</h4>
+  <div class="hdbt-form--section__content">
+    {% block content_container %}
+      {{ content }}
+    {% endblock %}
+  </div>
+</section>

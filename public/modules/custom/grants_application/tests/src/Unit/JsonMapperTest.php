@@ -46,7 +46,11 @@ final class JsonMapperTest extends UnitTestCase {
     $mappedData = $mapper->map($dataSources);
 
     $this->assertTrue(isset($mappedData['compensation']['orienteeringMapInfo']['orienteeringMapsArray'][0][0]['ID']), "Assert multiple values");
-    $this->assertTrue($mappedData['compensation']['orienteeringMapInfo']['orienteeringMapsArray'][0][0]['value'] === "Peruskoulun suunnistuskartta");
+    $this->assertEquals("Peruskoulun suunnistuskartta", $mappedData['compensation']['orienteeringMapInfo']['orienteeringMapsArray'][0][0]['value']);
+
+    $this->assertTrue(isset($mappedData['compensation']['orienteeringMapInfo']['orienteeringMapsArray'][0][2]['ID']), "Assert nested multiple values");
+    $this->assertEquals("creatorFirstname", $mappedData['compensation']['orienteeringMapInfo']['orienteeringMapsArray'][0][2]['ID']);
+    $this->assertEquals("Keijo", $mappedData['compensation']['orienteeringMapInfo']['orienteeringMapsArray'][0][2]['value']);
   }
 
   /**
@@ -132,17 +136,18 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertTrue(count($mappedFiles['attachmentsInfo']['attachmentsArray']) === 2, 'Both files exists.');
 
     $descriptionExists = FALSE;
+    $descriptionValue = FALSE;
     foreach ($mappedFiles['attachmentsInfo']['attachmentsArray'][0] as $singleFile) {
-      // @todo get rid of fileDescription when react change has been made.
-      if (isset($singleFile['ID']) && $singleFile['ID'] === 'description' || $singleFile['ID'] === 'fileDescription') {
+      if (isset($singleFile['ID']) && $singleFile['ID'] === 'description') {
         $descriptionExists = TRUE;
+        $descriptionValue = $singleFile['value'];
         break;
       }
     }
 
     $this->assertTrue($descriptionExists, 'Description exists.');
-    $this->assertEquals('kuvaus liitetiedostosta tulee tänne', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0]['value'], 'default value overwrite works');
-    $this->assertNotEquals('Yhteisön säännöt', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][0]['value'], 'default value overwrite works');
+    $this->assertEquals('kuvaus liitetiedostosta tulee tänne', $descriptionValue, 'default value given in mappings should have been overwritten by form value');
+    $this->assertNotEquals('Yhteisön säännöt', $descriptionValue, 'default value overwrite works');
     $this->assertTrue($mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['ID'] === 'fileName', 'Second field: fileName');
     $this->assertEquals('testfile.pdf', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['value']);
   }

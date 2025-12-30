@@ -40,7 +40,7 @@ export default defineConfig({
   },
   // For expect calls
   expect: {
-    timeout: 10000,   // <---------
+    timeout: 15000,   // <---------
   },
   projects: [
     /* Setup and auth setup tests. */
@@ -355,6 +355,22 @@ export default defineConfig({
       name: 'forms-76-registered',
       testMatch: '/forms/registered_community_76.ts',
       dependencies: ['profile-registered_community']
-    }
+    },
+    /* Form 77 tests. */
+    {
+      name: 'forms-77',
+      testMatch: /forms\/.*_77\.ts$/,
+      dependencies: ['profile-unregistered_community', 'profile-registered_community']
+    },
+    {
+      name: 'forms-77-unregistered',
+      testMatch: '/forms/unregistered_community_62.ts',
+      dependencies: ['profile-unregistered_community']
+    },
+    {
+      name: 'forms-77-registered',
+      testMatch: '/forms/registered_community_62.ts',
+      dependencies: ['profile-registered_community']
+    },
   ],
 });

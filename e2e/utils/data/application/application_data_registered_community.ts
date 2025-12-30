@@ -20,6 +20,7 @@ import {registeredCommunityApplications_73} from "./application_data_73";
 import {registeredCommunityApplications_74} from "./application_data_74";
 import {registeredCommunityApplications_75} from "./application_data_75";
 import {registeredCommunityApplications_76} from "./application_data_76";
+import {registeredCommunityApplications_77} from "./application_data_77";
 
 const registeredCommunityApplications = {
   29: registeredCommunityApplications_29,
@@ -44,6 +45,7 @@ const registeredCommunityApplications = {
   74: registeredCommunityApplications_74,
   75: registeredCommunityApplications_75,
   76: registeredCommunityApplications_76,
+  77: registeredCommunityApplications_77,
 }
 
 export {

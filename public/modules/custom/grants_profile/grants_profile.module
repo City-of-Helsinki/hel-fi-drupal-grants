@@ -351,8 +351,8 @@ function grants_profile_preprocess_own_profile_registered_community(&$variables)
  */
 function grants_profile_preprocess_input(&$variables) {
   if ($variables['theme_hook_original'] == 'input__submit') {
-    if (isset($variables['element']['#is_supplementary'])) {
-      $variables['is_supplementary'] = $variables['element']['#is_supplementary'];
+    if (isset($variables['element']['#is_secondary'])) {
+      $variables['is_secondary'] = $variables['element']['#is_secondary'];
     }
     if (isset($variables['element']['#icon_left'])) {
       $variables['icon_left'] = $variables['element']['#icon_left'];

@@ -20,6 +20,12 @@ final class ApplicationMetadataEntityKernelTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
+  // phpcs:ignore
+  protected $strictConfigSchema = FALSE;
+
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
 

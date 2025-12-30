@@ -1,6 +1,6 @@
 {
   "definitions": {
-    "orienteering_maps": {
+    "orienteering_maps_step": {
       "properties": {
         "acting_year_section": {
           "title": "acting_year_section.title",
@@ -42,7 +42,7 @@
                     },
                     "voluntaryHours": {
                       "title": "voluntaryHours.title",
-                      "type": "string"
+                      "type": "integer"
                     },
                     "cost": {
                       "title": "cost.title",
@@ -98,7 +98,7 @@
       "required": ["acting_year_section"],
       "type": "object"
     },
-    "attachments_page": {
+    "attachments_step": {
       "type": "object",
       "properties": {
         "additional_information_section": {
@@ -215,12 +215,12 @@
     "orienteering_maps_step": {
       "title": "orienteering_maps_step.title",
       "type": "object",
-      "$ref": "#/definitions/orienteering_maps"
+      "$ref": "#/definitions/orienteering_maps_step"
     },
     "attachments_step": {
       "title": "attachments_step.title",
       "type": "object",
-      "$ref": "#/definitions/attachments_page"
+      "$ref": "#/definitions/attachments_step"
     }
   }
 }
