@@ -28,7 +28,7 @@ const selectRole = async (page: Page, role: Role, mode: Mode = 'existing') => {
   await page.goto("/fi");
   await acceptCookies(page);
   // There might be a survey dialog open, look for it and skip it.
-  // await hideDialog(page);
+  await hideDialog(page);
 
   // Check login state and login.
   await checkLoginStateAndLogin(page);
