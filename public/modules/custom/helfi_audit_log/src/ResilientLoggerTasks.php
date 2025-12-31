@@ -13,7 +13,6 @@ use Drupal\Core\Site\Settings;
 class ResilientLoggerTasks {
   private const SETTINGS_NAME = "resilient_logger";
   private const LOGGER_CHANNEL = "resilient_logger.tasks";
-  private const SERVICE_NAME = "resilient_logger.service";
 
   private const DEFAULT_OFFSET_SUBMIT = "+15min";
   private const DEFAULT_OFFSET_CLEAR = "first day of next month midnight";
