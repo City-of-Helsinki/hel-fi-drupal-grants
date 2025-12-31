@@ -20,12 +20,26 @@ class JsonMapper {
   private JsonHandler $customHandler;
 
   /**
+   * The array of mappings to map from react to avus2.
+   */
+  private array $mappings;
+
+  /**
    * The constructor.
    */
   public function __construct(
-    private readonly array $mappings,
   ) {
     $this->customHandler = new JsonHandler();
+  }
+
+  /**
+   * Set the mappings.
+   *
+   * @param array $mappings
+   * @return void
+   */
+  public function setMappings(array $mappings): void {
+    $this->mappings = $mappings;
   }
 
   /**
@@ -39,6 +53,10 @@ class JsonMapper {
    */
   public function map(array $allDataSources): array {
     $data = [];
+
+    if (!$this->mappings) {
+      throw new \Exception('You must call setMappings-method before running the mapper.');
+    }
 
     foreach ($this->mappings as $target => $definition) {
       $sourcePath = $definition['source'];
@@ -417,78 +435,6 @@ class JsonMapper {
   }
 
   /**
-   * Combine the data sources required by mapper.
-   *
-   * The application requires data from multiple sources.
-   * For example form settings, grants profile and many more.
-   *
-   * @param array $formData
-   *   The form data.
-   * @param array $userData
-   *   The user data.
-   * @param array $companyData
-   *   The company data.
-   * @param array $userProfileData
-   *   The user profile data.
-   * @param \Drupal\grants_application\User\GrantsProfile $grantsProfile
-   *   The grants profile aka. hakuprofiili.
-   * @param \Drupal\grants_application\Form\FormSettings $formSettings
-   *   The form settings.
-   * @param string $applicationNumber
-   *   The application number.
-   * @param string $applicantTypeId
-   *   The applicant type.
-   *
-   * @return array
-   *   Array of data required by mapper.
-   */
-  public function getCombinedDataSources(
-    array $formData,
-    array $userData,
-    array $companyData,
-    array $userProfileData,
-    GrantsProfile $grantsProfile,
-    FormSettings $formSettings,
-    string $applicationNumber,
-    string $applicantTypeId,
-  ): array {
-
-    $community_official_uuid = $formData['applicant_info']['community_officials']['community_officials'][0]['official'];
-    $street_name = $formData['applicant_info']['community_address']['community_address'];
-
-    try {
-      $community_official = $grantsProfile->getCommunityOfficialByUuid($community_official_uuid);
-      $address = $grantsProfile->getAddressByStreetname($street_name);
-      $address['country'] = $address['country'] ?? 'Suomi';
-    }
-    catch (\Exception $e) {
-      // User has deleted the community official and exception occurs.
-      throw $e;
-    }
-
-    // Any data can be added here, and it is accessible by the mapper.
-    $custom = [
-      'applicant_type_id' => $applicantTypeId,
-      'application_number' => $applicationNumber,
-      'now' => (new \DateTime())->format('Y-m-d\TH:i:s'),
-      'registration_date' => $grantsProfile->getRegistrationDate(TRUE),
-      'selected_address' => $address,
-      'selected_community_official' => $community_official,
-      'status' => 'DRAFT',
-    ];
-
-    return [
-      'form_data' => $formData,
-      'user' => $userData,
-      'company' => $companyData,
-      'user_profile' => $userProfileData,
-      'grants_profile_array' => $grantsProfile->toArray(),
-      'form_settings' => $formSettings->toArray(),
-      'custom' => $custom,
-    ];
-  }
-
-  /**
    * Map all files added to the application.
    *
    * The file data lives outside of compensations in the final data.
@@ -662,17 +608,17 @@ class JsonMapper {
    * Status is special field since it is initialized by us but
    * updated by external system. We may not overwrite it.
    *
-   * @param array $document
+   * @param array $documentData
    *   The document data.
    * @param string $oldStatusValue
    *   The old status value.
    */
-  public function setStatusValue(array &$document, string $oldStatusValue): void {
-    $applicationInfoArray = $document['content']['compensation']['applicationInfoArray'];
+  public function setStatusValue(array &$documentData, string $oldStatusValue): void {
+    $applicationInfoArray = $documentData['compensation']['applicationInfoArray'];
 
-    foreach ($applicationInfoArray as $field) {
+    foreach ($applicationInfoArray as $key => $field) {
       if ($field['ID'] === 'status') {
-        $field['value'] = $oldStatusValue;
+        $documentData['compensation']['applicationInfoArray'][$key]['value'] = $oldStatusValue;
         break;
       }
     }
@@ -695,50 +641,6 @@ class JsonMapper {
   }
 
   /**
-   * Get complete list of files to send to Avus2.
-   *
-   * When user sends patch-request, the files must be handled correctly.
-   * User may not delete files but may add new files. Also, the bank file must
-   * exist. Therefore, we pick all unique files from both old and new
-   * submission to make sure we have everything.
-   *
-   * @param array $oldFiles
-   *   The mapped files from old atv-document.
-   * @param array $newFiles
-   *   The freshly mapped files.
-   *
-   * @return array
-   *   The files array that should be put to attachmentsInfo.attachmentsArray.
-   */
-  public function patchMappedFiles(array $oldFiles, array $newFiles): array {
-    $uniqueFiles = [];
-
-    if ($bankFile = $this->getMappedBankFile($oldFiles)) {
-      $uniqueFiles[] = $bankFile;
-    }
-
-    foreach (array_merge($oldFiles, $newFiles) as $fileFieldArray) {
-      $integrationIdValueArray = array_find($fileFieldArray, fn($fa) => $fa['ID'] === 'integrationID');
-
-      if ($integrationIdValueArray) {
-        $fileFound = FALSE;
-        foreach ($uniqueFiles as $uniqueFileFieldArray) {
-          $uniqueIntegrationIdField = array_find($uniqueFileFieldArray, fn($item) => $item['ID'] === 'integrationID');
-          if ($uniqueIntegrationIdField && $uniqueIntegrationIdField['value'] === $integrationIdValueArray['value']) {
-            $fileFound = TRUE;
-          }
-        }
-
-        if (!$fileFound) {
-          $uniqueFiles[] = $fileFieldArray;
-        }
-      }
-    }
-
-    return $uniqueFiles;
-  }
-
-  /**
    * Get the bank file.
    *
    * @param array $mappedFiles
@@ -747,9 +649,9 @@ class JsonMapper {
    * @return array
    *   The bank file.
    */
-  private function getMappedBankFile(array $mappedFiles): ?array {
+  public function getMappedBankFile(array $mappedFiles): ?array {
     foreach ($mappedFiles as $fileArray) {
-      if (array_find($fileArray, fn($item) => $item['fileType'] === 45)) {
+      if (array_find($fileArray, fn($item) => $item['ID'] === 'fileType' && $item['value'] == 45)) {
         return $fileArray;
       }
     }
