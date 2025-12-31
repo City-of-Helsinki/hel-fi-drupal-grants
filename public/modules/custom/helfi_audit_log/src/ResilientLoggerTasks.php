@@ -7,6 +7,8 @@ namespace Drupal\helfi_audit_log;
 use Psr\Log\LoggerInterface;
 use ResilientLogger\ResilientLogger;
 use Drupal\Core\State\StateInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Site\Settings;
 
 class ResilientLoggerTasks {
   private const SETTINGS_NAME = "resilient_logger";
@@ -22,11 +24,7 @@ class ResilientLoggerTasks {
   private const STATE_KEY_PREV_SUBMIT = "resilient_logger.prev_submit_unsent";
   private const STATE_KEY_PREV_CLEAR = "resilient_logger.prev_clear_sent";
 
-  private string $submitDateOffset;
-  private string $clearDateOffset;
-  private StateInterface $state;
   private LoggerInterface $logger;
-  private ResilientLogger $service;
 
   /**
    * Drupal-specific helper for scheduling ResilientLogger tasks.
@@ -35,44 +33,32 @@ class ResilientLoggerTasks {
    * not on every cron trigger.
    * @see https://www.php.net/manual/en/function.strtotime.php
    * 
-   * @param string $submitDateOffset
-   *   String representation of the next time submit unsent entries task should run.
-   *   Defaults to +15min from previous one.
-   * @param string $clearDateOffset
-   *   String representation of the next time clear old entries task should run.
-   *   Defaults to first day of the next month at 00:00.
-   * 
-   */
-  public function __construct(
-    ?string $submitDateOffset,
-    ?string $clearDateOffset
-  ) {
-    $this->submitDateOffset = $submitDateOffset;
-    $this->clearDateOffset = $clearDateOffset;
-
-    $this->state = \Drupal::state();
-    $this->logger = \Drupal::logger(self::LOGGER_CHANNEL);
-    $this->service = \Drupal::service(self::SERVICE_NAME);
-  }
-
-  /**
-   * Factory method to construct ResilientLoggerTasks instance from optional
-   * parameters from Drupal configuration. 
-   * 
-   * This method looks for parameter block "resilient_logger.tasks" for values 
-   * of "offset_submit" and "offset_clear". If these are not found, defaults
+   * Parameter block "resilient_logger.tasks" is used to read values for
+   * "offset_submit" and "offset_clear". If these are not found, defaults
    * will be used instead.
    */
-  public static function create() {
-    /** @var \Drupal\Core\Site\Settings $settings */
-    $settings = \Drupal::service('settings');
-
+  public function __construct(
+    private StateInterface $state,
+    private ResilientLogger $service,
+    LoggerChannelFactoryInterface $loggerFactory,
+    Settings $settings
+  ) {
     // Retrieve your resilient_logger settings.
     $config = $settings->get(self::SETTINGS_NAME, []);
-    $submitDateOffset = $config[self::PARAM_KEY_OFFSET_SUBMIT] ?? self::DEFAULT_OFFSET_SUBMIT;
-    $clearDateOffset = $config[self::PARAM_KEY_OFFSET_CLEAR] ?? self::DEFAULT_OFFSET_CLEAR;
 
-    return new static($submitDateOffset, $clearDateOffset);
+    $this->logger = $loggerFactory->get(self::LOGGER_CHANNEL);
+
+    /**
+     * String representation of the next time submit unsent entries task should run.
+     * Defaults to +15min from previous one.
+     */ 
+    $this->submitDateOffset = $config[self::PARAM_KEY_OFFSET_SUBMIT] ?? self::DEFAULT_OFFSET_SUBMIT;
+
+    /**
+     * String representation of the next time clear old entries task should run.
+     * Defaults to first day of the next month at 00:00.
+     */
+    $this->clearDateOffset = $config[self::PARAM_KEY_OFFSET_CLEAR] ?? self::DEFAULT_OFFSET_CLEAR;
   }
 
   public function handleTasks(int $currentTime) {
