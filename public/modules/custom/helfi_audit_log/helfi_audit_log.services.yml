@@ -1,4 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
   logger.channel.helfi_audit_log:
     parent: logger.channel_base
     arguments: [ 'helfi_audit_log' ]
@@ -17,3 +21,11 @@ services:
     arguments: [ '@helfi_audit_log.audit_log', '@logger.channel.helfi_audit_log' ]
     tags:
       - { name: event_subscriber }
+
+  ResilientLogger\ResilientLogger:
+    class: ResilientLogger\ResilientLogger
+    factory: ['Drupal\helfi_audit_log\ResilientLogger', 'createFromSettings']
+    arguments:
+      - '@settings'
+
+  Drupal\helfi_audit_log\ResilientLoggerTasks: ~
