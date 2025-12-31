@@ -608,17 +608,17 @@ class JsonMapper {
    * Status is special field since it is initialized by us but
    * updated by external system. We may not overwrite it.
    *
-   * @param array $document
+   * @param array $documentData
    *   The document data.
    * @param string $oldStatusValue
    *   The old status value.
    */
-  public function setStatusValue(array &$document, string $oldStatusValue): void {
-    $applicationInfoArray = $document['content']['compensation']['applicationInfoArray'];
+  public function setStatusValue(array &$documentData, string $oldStatusValue): void {
+    $applicationInfoArray = $documentData['compensation']['applicationInfoArray'];
 
-    foreach ($applicationInfoArray as $field) {
+    foreach ($applicationInfoArray as $key => $field) {
       if ($field['ID'] === 'status') {
-        $field['value'] = $oldStatusValue;
+        $documentData['compensation']['applicationInfoArray'][$key]['value'] = $oldStatusValue;
         break;
       }
     }
@@ -649,9 +649,9 @@ class JsonMapper {
    * @return array
    *   The bank file.
    */
-  private function getMappedBankFile(array $mappedFiles): ?array {
+  public function getMappedBankFile(array $mappedFiles): ?array {
     foreach ($mappedFiles as $fileArray) {
-      if (array_find($fileArray, fn($item) => $item['fileType'] === 45)) {
+      if (array_find($fileArray, fn($item) => $item['ID'] === 'fileType' && $item['value'] == 45)) {
         return $fileArray;
       }
     }

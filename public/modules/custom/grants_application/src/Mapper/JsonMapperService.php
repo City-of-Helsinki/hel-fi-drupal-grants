@@ -44,18 +44,16 @@ final class JsonMapperService {
     bool $isDraft,
     string $selectedCompanyType
   ): array {
-    $mappingFileName = "ID$formTypeId.json";
-    $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId);
-
     // @todo Fix.
     $this->mapper = new JsonMapper();
+    $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId);
 
     // Mappings are divided into common fields (by mandate) and form specific fields.
     $commonFieldMapping = json_decode(file_get_contents(__DIR__ . '/Mappings/common/' . $selectedCompanyType . '.json'), TRUE);
     $this->mapper->setMappings($commonFieldMapping);
     $mappedCommonFields = $this->mapper->map($dataSources);
 
-    $mapping = json_decode(file_get_contents(__DIR__ . '/Mappings/' . $mappingFileName), TRUE);
+    $mapping = json_decode(file_get_contents(__DIR__ . '/Mappings/' . "ID$formTypeId.json"), TRUE);
     $this->mapper->setMappings($mapping);
     $mappedData = $this->mapper->map($dataSources);
 
@@ -125,6 +123,7 @@ final class JsonMapperService {
     $mappedData['statusUpdates'] = $oldDocument['content']['statusUpdates'];
     $mappedData['formUpdate'] = TRUE;
 
+    // After first submit, we must just copy the status value edited by integration.
     if ($oldStatus = $this->mapper->getStatusValue($oldDocument)) {
       $this->mapper->setStatusValue($mappedData, $oldStatus);
     }
@@ -294,7 +293,7 @@ final class JsonMapperService {
   public function patchMappedFiles(array $oldFiles, array $newFiles): array {
     $uniqueFiles = [];
 
-    if ($bankFile = $this->getMappedBankFile($oldFiles)) {
+    if ($bankFile = $this->mapper->getMappedBankFile($oldFiles)) {
       $uniqueFiles[] = $bankFile;
     }
 
