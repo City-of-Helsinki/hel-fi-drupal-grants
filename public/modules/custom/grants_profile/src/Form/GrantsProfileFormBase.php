@@ -693,9 +693,7 @@ of the account owner or a copy of a bank statement.", [], $this->tOpts),
       '#element_validate' => ['::validateUpload'],
       '#upload_location' => $uploadLocation,
       '#sanitize' => TRUE,
-      '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>
-Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx,
-rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
+      '#description' => $this->t('Only one file.<br>Limit: 20 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.', [], $this->tOpts),
       '#access' => $confFilename == NULL || is_array($confFilename),
     ];
     $fields['bank_account_id'] = [

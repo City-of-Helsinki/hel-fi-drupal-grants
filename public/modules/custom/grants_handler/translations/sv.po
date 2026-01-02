@@ -133,7 +133,7 @@ msgid "Edit application"
 msgstr "Uppdatera ansökning"
 
 msgctxt "grants_handler"
-msgid "Your data is safe, but not all the\ninformation in your application has been updated yet. Please wait \nmoment and reload the page."
+msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait  moment and reload the page."
 msgstr "Din information är säker, men all information i din ansökan har inte uppdaterats ännu. Vänligen vänta ett ögonblick och ladda om sidan."
 
 msgctxt "grants_handler"
@@ -442,7 +442,7 @@ msgid "Print application"
 msgstr "Skriv ut ansökan"
 
 msgctxt "grants_handler"
-msgid "Change your role and return to make the\napplication with role which the application is instructed to be made."
+msgid "Change your role and return to make the application with role which the application is instructed to be made."
 msgstr "Byt roll och gå tillbaka för att göra ansökan med roll som ansökan är instruerad att göra."
 
 msgctxt "grants_handler"
@@ -482,7 +482,7 @@ msgid "Log in to the service and do the identification."
 msgstr "Logga in på tjänsten och gör identifieringen."
 
 msgctxt "grants_handler"
-msgid "Please familiarize yourself with the instructions\non this page before proceeding to the application."
+msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
 msgstr "Bekanta dig med instruktionerna på den här sidan innan du går vidare till ansökan."
 
 msgctxt "grants_handler"
@@ -568,15 +568,11 @@ msgid "The application period for this grant has closed."
 msgstr "Ansökningstiden för detta bidrag har löpt ut."
 
 msgctxt "grants_handler"
-msgid "You can no longer submit an application because the\napplication period for this grant has closed."
+msgid "You can no longer submit an application because the application period for this grant has closed."
 msgstr "Du kan inte längre skicka in denna ansökan eftersom att ansökningstiden har löpt ut."
 
 msgctxt "grants_handler"
-msgid ""
-"Only one file.<br>Limit: 20 MB.<br>\n"
-"Allowed file types: doc, docx, "
-"gif, jpg, jpeg, pdf, png, ppt, pptx,\n"
-"rtf, txt, xls, xlsx, zip."
+msgid "Only one file.<br>Limit: 20 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
 msgstr "Bara en fil.<br>Limitation: 20 MB.<br>Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
 
 msgctxt "grants_handler"
@@ -604,7 +600,7 @@ msgid "Additional information concerning the application"
 msgstr "Ytterligare information för ansökan"
 
 msgctxt "grants_handler"
-msgid "The application cannot be submitted because not all\nmandatory questions have been answered. Return to the application form and fill in\nat least those questions and fields that are marked with an asterisk (*). You can\nsubmit the application only after you have provided all the necessary information."
+msgid "The application cannot be submitted because not all mandatory questions have been answered. Return to the application form and fill in at least those questions and fields that are marked with an asterisk (*). You can submit the application only after you have provided all the necessary information."
 msgstr "Ansökan kan inte skickas in eftersom inte alla obligatoriska frågor har besvarats. Gå tillbaka till ansökningsformuläret och fyll i åtminstone de frågor och fält som är markerade med en asterisk (*). Du kan skicka in ansökan först när du har lämnat all nödvändig information."
 
 msgctxt "grants_handler"
