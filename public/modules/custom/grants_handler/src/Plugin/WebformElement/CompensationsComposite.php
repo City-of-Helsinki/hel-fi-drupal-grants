@@ -140,8 +140,10 @@ class CompensationsComposite extends WebformCompositeBase {
 
     $types = self::getOptionsForTypes();
 
+    $amount = $value['amount'] !== '' ? $value['amount'] : '0 €';
+
     return [
-      '<dt>' . $types[$value['subventionType']] . '</dt><dd>' . $value['amount'] . '</dd>',
+      $types[$value['subventionType']] . ' ' . $amount,
     ];
   }
 

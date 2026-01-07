@@ -133,7 +133,7 @@ msgid 'Edit application'
 msgstr 'Muokkaa hakemusta'
 
 msgctxt "grants_handler"
-msgid "Your data is safe, but not all the\ninformation in your application has been updated yet. Please wait a\nmoment and reload the page."
+msgid "Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page."
 msgstr "Tietosi ovat turvassa, mutta kaikkia hakemuksesi tietoja ei ole vielä päivitetty. Odota hetki ja lataa sivu uudelleen."
 
 msgctxt "grants_handler"
@@ -449,7 +449,7 @@ msgid "Print application"
 msgstr "Tulosta hakemus"
 
 msgctxt "grants_handler"
-msgid "Change your role and return to make the\napplication with role which the application is instructed to be made."
+msgid "Change your role and return to make the application with role which the application is instructed to be made."
 msgstr "Vaihda asiointiroolia ja palaa tekemään hakemus palvelukuvauksen ohjeistamalla asiointiroolilla."
 
 msgctxt "grants_handler"
@@ -486,7 +486,7 @@ msgid "Log in to the service and do the identification."
 msgstr "Kirjaudu palveluun ja tee tunnistautuminen."
 
 msgctxt "grants_handler"
-msgid "Please familiarize yourself with the instructions\non this page before proceeding to the application."
+msgid "Please familiarize yourself with the instructions on this page before proceeding to the application."
 msgstr "Tutustuthan ohjeistukseen tällä sivulla ennen hakemukselle siirtymistä."
 
 msgctxt "grants_handler"
@@ -572,15 +572,11 @@ msgid "The application period for this grant has closed."
 msgstr "Tämän avustuksen hakuaika on päättynyt."
 
 msgctxt "grants_handler"
-msgid "You can no longer submit an application because the\napplication period for this grant has closed."
+msgid "You can no longer submit an application because the application period for this grant has closed."
 msgstr "Et voi enää lähettää hakemusta, sillä avustuksen hakuaika on päättynyt."
 
 msgctxt "grants_handler"
-msgid ""
-"Only one file.<br>Limit: 20 MB.<br>\n"
-"Allowed file types: doc, docx, "
-"gif, jpg, jpeg, pdf, png, ppt, pptx,\n"
-"rtf, txt, xls, xlsx, zip."
+msgid "Only one file.<br>Limit: 20 MB.<br>Allowed file types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
 msgstr "Vain yksi tiedosto.<br>Rajoitus: 20 MB.<br>Sallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip."
 
 msgctxt "grants_handler"
@@ -608,7 +604,7 @@ msgid "Additional information concerning the application"
 msgstr "Lisätietoja hakemukseen liittyen"
 
 msgctxt "grants_handler"
-msgid "The application cannot be submitted because not all\nmandatory questions have been answered. Return to the application form and fill in\nat least those questions and fields that are marked with an asterisk (*). You can\nsubmit the application only after you have provided all the necessary information."
+msgid "The application cannot be submitted because not all mandatory questions have been answered. Return to the application form and fill in at least those questions and fields that are marked with an asterisk (*). You can submit the application only after you have provided all the necessary information."
 msgstr "Hakemusta ei voida lähettää, koska kaikkiin pakollisiin kysymyksiin ei ole vastattu. Palaa hakulomakkeeseen ja täytä ainakin ne kysymykset ja kentät, jotka on merkitty tähdellä (*). Voit lähettää hakemuksen vasta, kun olet antanut kaikki pakolliset tiedot."
 
 msgctxt "grants_handler"

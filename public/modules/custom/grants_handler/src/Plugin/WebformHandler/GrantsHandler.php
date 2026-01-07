@@ -799,9 +799,7 @@ final class GrantsHandler extends WebformHandlerBase {
       if ($dataIntegrityStatus != 'OK') {
         $form['#disabled'] = TRUE;
         $this->messenger()
-          ->addWarning($this->t('Your data is safe, but not all the
-information in your application has been updated yet. Please wait a
-moment and reload the page.',
+          ->addWarning($this->t('Your data is safe, but not all the information in your application has been updated yet. Please wait a moment and reload the page.',
             [],
             $tOpts));
       }
