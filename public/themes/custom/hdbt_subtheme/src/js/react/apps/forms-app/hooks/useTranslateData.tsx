@@ -90,11 +90,7 @@ export const useTranslateData = (data: any) => {
     const translatableKeys = [
       'printableName',
       'removeText',
-      'tooltipButtonLabel',
-      'tooltipLabel',
-      'tooltipText',
       'ui:help',
-      'ui:tooltip',
     ];
 
     if (translatableKeys.includes(key)) {
