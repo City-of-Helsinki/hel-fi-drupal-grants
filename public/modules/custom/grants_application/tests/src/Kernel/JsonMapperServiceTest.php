@@ -86,22 +86,6 @@ final class JsonMapperServiceTest extends KernelTestBase {
   }
 
   /**
-   * Test ID58 with real schema and real test data.
-   */
-  // public function testID58FormValidation(): void {
-    /*
-    $settingsService = $this->container->get(FormSettingsService::class);
-    $schema = $settingsService->getFormSettings(58)->getSchema();
-    $data = file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58.json');
-
-    $validator = $this->container->get(JsonSchemaValidator::class);
-    $result = $validator->validate(json_decode($data), json_decode(json_encode($schema)));
-
-    $this->assertTrue($result);
-    */
-  // }
-
-  /**
    * Combine the common data sources and the actual form into one.
    *
    * The end result contains data from react-form, user profile,...
