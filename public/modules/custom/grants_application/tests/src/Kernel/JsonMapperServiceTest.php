@@ -39,7 +39,6 @@ final class JsonMapperServiceTest extends KernelTestBase {
     $settingsService = $this->container->get(FormSettingsService::class);
     $mapperService = new JsonMapperService($mockUserInfoService, $settingsService);
 
-
     // $schema = $settingsService->getFormSettings(58)->getSchema();
     $formData = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58.json'), TRUE);
     $bankFile = $mapperService->getSelectedBankFile($formData);
@@ -64,7 +63,6 @@ final class JsonMapperServiceTest extends KernelTestBase {
     $oldDocument = [
       'content' => $mappedData,
     ];
-
     $oldDocument['content']['messages'] = [['data' => 'test-message1']];
     $oldDocument['content']['statusUpdates'] = [['data' => 'test-status1']];
     $oldDocument['content']['events'] = [['data' => 'test-event1']];
