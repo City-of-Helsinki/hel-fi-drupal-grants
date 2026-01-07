@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel;
 
-use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsService;
-use Drupal\grants_application\JsonSchemaValidator;
-use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_application\User\UserInformationService;
@@ -39,7 +36,6 @@ final class JsonMapperServiceTest extends KernelTestBase {
     $settingsService = $this->container->get(FormSettingsService::class);
     $mapperService = new JsonMapperService($mockUserInfoService, $settingsService);
 
-    // $schema = $settingsService->getFormSettings(58)->getSchema();
     $formData = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58.json'), TRUE);
     $bankFile = $mapperService->getSelectedBankFile($formData);
 
