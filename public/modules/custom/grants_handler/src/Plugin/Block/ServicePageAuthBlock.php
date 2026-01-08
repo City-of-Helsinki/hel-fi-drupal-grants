@@ -145,8 +145,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       '#text' => $this->t('This application is not open', [], $tOpts),
       '#auth' => 'not_open',
     ];
-    $description = $this->t('Please familiarize yourself with the instructions
-  on this page before proceeding to the application.', [], $tOpts);
+    $description = $this->t('Please familiarize yourself with the instructions on this page before proceeding to the application.', [], $tOpts);
     $build['#attached']['library'][] = 'grants_handler/servicepage-prevent-multiple-applications';
 
     // React is always rendered if the settings are set correctly

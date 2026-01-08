@@ -661,7 +661,7 @@
               "properties": {
                 "community_rules_file": {
                   "title": "file.title",
-                  "type": "string",
+                  "type": "object",
                   "properties": {
                     "description": {
                       "type": "string"
@@ -700,7 +700,7 @@
               "properties": {
                 "confirmed_financial_statements_file": {
                   "title": "file.title",
-                  "type": "string",
+                  "type": "object",
                   "properties": {
                     "description": {
                       "type": "string"
@@ -739,7 +739,7 @@
               "properties": {
                 "confirmed_annual_report_file": {
                   "title": "file.title",
-                  "type": "string",
+                  "type": "object",
                   "properties": {
                     "description": {
                       "type": "string"
@@ -778,7 +778,7 @@
               "properties": {
                 "confirmed_audit_report_file": {
                   "title": "file.title",
-                  "type": "string",
+                  "type": "object",
                   "properties": {
                     "description": {
                       "type": "string"
@@ -817,7 +817,7 @@
               "properties": {
                 "action_plan_file": {
                   "title": "file.title",
-                  "type": "string",
+                  "type": "object",
                   "properties": {
                     "description": {
                       "type": "string"
@@ -856,7 +856,7 @@
               "properties": {
                 "lease_agreement_file": {
                   "title": "file.title",
-                  "type": "string",
+                  "type": "object",
                   "properties": {
                     "description": {
                       "type": "string"
@@ -895,7 +895,7 @@
               "properties": {
                 "budget_file": {
                   "title": "file.title",
-                  "type": "string",
+                  "type": "object",
                   "properties": {
                     "description": {
                       "type": "string"
