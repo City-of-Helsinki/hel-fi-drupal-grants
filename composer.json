@@ -39,7 +39,6 @@
         "drupal/menu_admin_per_menu": "^1.5",
         "drupal/multivalue_form_element": "^1.0@beta",
         "drupal/override_node_options": "^2.7",
-        "drupal/potx": "^1.0",
         "drupal/purge_users": "^3.1",
         "drupal/radioactivity": "^4.0",
         "drupal/redis": "^1.7",
