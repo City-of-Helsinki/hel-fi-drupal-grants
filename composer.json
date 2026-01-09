@@ -18,7 +18,6 @@
         "drupal/core-composer-scaffold": "^10|^11",
         "drupal/disable_messages": "^2.1",
         "drupal/draggableviews": "^2.0",
-        "drupal/entity_type_clone": "^4.0",
         "drupal/entityreference_filter": "^2.0",
         "drupal/error_page": "^2.0",
         "drupal/externalauth": "^2.0",
