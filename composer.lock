@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6cc21696269d6634a8a7e87fe0d9d7f",
+    "content-hash": "9447d054d4c99a5caffa5a069eac0b50",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2460,49 +2460,6 @@
                 "source": "https://github.com/dompdf/php-font-lib/tree/1.0.1"
             },
             "time": "2024-12-02T14:37:59+00:00"
-        },
-        {
-            "name": "druidfi/omen",
-            "version": "0.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/druidfi/omen.git",
-                "reference": "914745b5251689ea0fdbdb62f3f47bf0fbd28c1b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/druidfi/omen/zipball/914745b5251689ea0fdbdb62f3f47bf0fbd28c1b",
-                "reference": "914745b5251689ea0fdbdb62f3f47bf0fbd28c1b",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1 || ^8.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.17.0",
-                "phpunit/phpunit": "^8.5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Druidfi\\Omen\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Druid.fi",
-                    "email": "info@druid.fi"
-                }
-            ],
-            "support": {
-                "issues": "https://github.com/druidfi/omen/issues",
-                "source": "https://github.com/druidfi/omen/tree/0.2.1"
-            },
-            "time": "2020-12-19T16:14:47+00:00"
         },
         {
             "name": "drupal/action",
