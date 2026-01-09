@@ -12,7 +12,6 @@
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.6.7",
         "doctrine/lexer": "^2",
-        "drupal/api_tools": "^1.0",
         "drupal/autologout": "^2",
         "drupal/better_exposed_filters": "^7",
         "drupal/block_field": "^1.0@RC",
