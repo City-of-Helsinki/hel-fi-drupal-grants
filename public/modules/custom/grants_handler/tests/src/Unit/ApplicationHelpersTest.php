@@ -96,7 +96,7 @@ class ApplicationHelpersTest extends UnitTestCase {
 
     $webform = $this->createMock(Webform::class);
     $webform->method('getThirdPartySettings')
-      ->will($this->onConsecutiveCalls(
+      ->willReturn(
         [
           'applicationType' => 'TYPE',
           'applicationTypeID' => '001',
@@ -117,10 +117,10 @@ class ApplicationHelpersTest extends UnitTestCase {
           'applicationType' => 'NEWTYPE',
           'applicationTypeID' => '002',
         ]
-      ));
+      );
 
     $submission = $this->createMock(WebformSubmission::class);
-    $submission->method('serial')->will($this->onConsecutiveCalls(123, 123, 456, 456, 456, 456));
+    $submission->method('serial')->willReturn(123, 123, 456, 456, 456, 456);
     $submission->method('getWebform')->willReturn($webform);
 
     // Ensure the method is called with the correct parameters.
@@ -194,7 +194,7 @@ class ApplicationHelpersTest extends UnitTestCase {
     $webform->method('uuid')->willReturn('parent-uuid');
     $webform->method('getThirdPartySettings')
       ->with('grants_metadata')
-      ->will($this->onConsecutiveCalls(
+      ->willReturn(
         [
           'applicationType' => 'test-application-type',
         ],
@@ -214,7 +214,7 @@ class ApplicationHelpersTest extends UnitTestCase {
           'parent' => 'parent-uuid',
           'avus2BreakingChange' => TRUE,
         ]
-      ));
+      );
 
     // Mock the entity type manager and storage.
     $entityTypeManager = $this->createMock('Drupal\Core\Entity\EntityTypeManagerInterface');

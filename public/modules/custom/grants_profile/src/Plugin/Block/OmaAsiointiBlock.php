@@ -166,11 +166,7 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
 
       $applicationDocuments = $this->helfiAtvAtvService->searchDocuments($searchParams);
 
-      /**
-       * Create rows for table.
-       *
-       * @var \Drupal\helfi_atv\AtvDocument $document
-       */
+      /** @var \Drupal\helfi_atv\AtvDocument $document */
       foreach ($applicationDocuments as $document) {
         if (array_key_exists(
           $document->getType(),

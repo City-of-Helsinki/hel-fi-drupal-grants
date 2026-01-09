@@ -2,68 +2,34 @@
 
 namespace Drupal\helfi_helsinki_profiili;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\TempStore\TempStoreException;
 use Drupal\helfi_api_base\Environment\EnvironmentEnum;
 use Drupal\helfi_api_base\Environment\EnvironmentResolverInterface;
 use Drupal\helfi_helsinki_profiili\Event\HelsinkiProfiiliExceptionEvent;
 use Drupal\helfi_helsinki_profiili\Event\HelsinkiProfiiliOperationEvent;
-use Drupal\openid_connect\OpenIDConnectSession;
+use Drupal\openid_connect\OpenIDConnectSessionInterface;
 use Firebase\JWT\JWK;
 use Firebase\JWT\JWT;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Integrate HelsinkiProfiili data to Drupal User.
  */
 class HelsinkiProfiiliUserData {
-
-  /**
-   * The openid_connect.session service.
-   *
-   * @var \Drupal\openid_connect\OpenIDConnectSession
-   */
-  protected OpenIDConnectSession $openidConnectSession;
-
-  /**
-   * The HTTP client.
-   *
-   * @var \GuzzleHttp\ClientInterface
-   */
-  protected ClientInterface $httpClient;
-
-  /**
-   * The logger channel factory.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelInterface
-   */
-  protected LoggerChannelInterface $logger;
-
-  /**
-   * Drupal\Core\Session\AccountProxyInterface definition.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected AccountProxyInterface $currentUser;
-
-  /**
-   * Request stack for session access.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected RequestStack $requestStack;
 
   /**
    * Store user roles for helsinki profile users.
@@ -80,25 +46,11 @@ class HelsinkiProfiiliUserData {
   protected array $hpAdminRoles;
 
   /**
-   * The environment resolver.
-   *
-   * @var \Drupal\helfi_api_base\Environment\EnvironmentResolverInterface
-   */
-  private EnvironmentResolverInterface $environmentResolver;
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  private EntityTypeManagerInterface $entityManager;
-
-  /**
    * Store details about oidc issuer.
    *
    * @var array
    */
-  private array $openIdConfiguration;
+  private array $openIdConfiguration = [];
 
   /**
    * Debug status.
@@ -115,64 +67,25 @@ class HelsinkiProfiiliUserData {
   protected string $apiTokenEndpoint;
 
   /**
-   * The event dispatcher service.
-   *
-   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-   */
-  protected EventDispatcherInterface $eventDispatcher;
-
-  /**
    * The module config.
    *
    * @var \Drupal\Core\Config\Config
    */
   protected Config $config;
 
-  /**
-   * Constructs a HelsinkiProfiiliUser object.
-   *
-   * @param \Drupal\openid_connect\OpenIDConnectSession $openid_connect_session
-   *   The openid_connect.session service.
-   * @param \GuzzleHttp\ClientInterface $http_client
-   *   The HTTP client.
-   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
-   *   The logger channel factory.
-   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
-   *   Current user session.
-   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-   *   The request stack.
-   * @param \Drupal\helfi_api_base\Environment\EnvironmentResolverInterface $environmentResolver
-   *   Where are we?
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   The entity type manager.
-   * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-   *   Dispatch events.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Config factory.
-   */
   public function __construct(
-    OpenIDConnectSession $openid_connect_session,
-    ClientInterface $http_client,
-    LoggerChannelFactoryInterface $logger_factory,
-    AccountProxyInterface $currentUser,
-    RequestStack $requestStack,
-    EnvironmentResolverInterface $environmentResolver,
-    EntityTypeManagerInterface $entityTypeManager,
-    EventDispatcherInterface $eventDispatcher,
+    private readonly OpenIDConnectSessionInterface $openidConnectSession,
+    private readonly ClientInterface $httpClient,
+    #[Autowire(service: 'logger.channel.helsinki_profiili')]
+    private readonly LoggerInterface $logger,
+    private readonly AccountProxyInterface $currentUser,
+    private readonly RequestStack $requestStack,
+    private readonly EnvironmentResolverInterface $environmentResolver,
+    private readonly EntityTypeManagerInterface $entityManager,
+    private readonly EventDispatcherInterface $eventDispatcher,
     ConfigFactoryInterface $configFactory,
+    private readonly TimeInterface $time,
   ) {
-    $this->openidConnectSession = $openid_connect_session;
-    $this->httpClient = $http_client;
-    $this->environmentResolver = $environmentResolver;
-
-    $this->logger = $logger_factory->get('helsinki_profiili');
-    $this->eventDispatcher = $eventDispatcher;
-    $this->currentUser = $currentUser;
-    $this->requestStack = $requestStack;
-    $this->entityManager = $entityTypeManager;
-
-    $this->openIdConfiguration = [];
-
     $this->config = $configFactory->get('helfi_helsinki_profiili.settings');
     $rolesConfig = $this->config->get('roles');
 
@@ -899,7 +812,7 @@ class HelsinkiProfiiliUserData {
       $this->openidConnectSession->saveAccessToken($tokens['access_token']);
 
       if (array_key_exists('expires_in', $response_data)) {
-        $tokens['expire'] = REQUEST_TIME + $response_data['expires_in'];
+        $tokens['expire'] = $this->time->getRequestTime() + $response_data['expires_in'];
         $session->set('openid_connect_expire', $tokens['expire']);
       }
       if (array_key_exists('refresh_token', $response_data)) {

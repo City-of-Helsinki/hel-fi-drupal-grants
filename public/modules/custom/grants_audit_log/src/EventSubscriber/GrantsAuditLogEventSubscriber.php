@@ -99,7 +99,7 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
       if (!isset($structure[$key])) {
         $isValid = FALSE;
         break;
-      };
+      }
       if (is_array($value)) {
         if (!is_array($structure[$key])) {
           $isValid = FALSE;
