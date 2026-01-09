@@ -49,7 +49,6 @@
         "justinrainbow/json-schema": "^6",
         "league/openapi-psr7-validator": "^0.22.0",
         "mglaman/composer-drupal-lenient": "*",
-        "nesbot/carbon": "^2.64",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "symfony/console": "^6.4",
