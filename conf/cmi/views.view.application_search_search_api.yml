@@ -907,6 +907,11 @@ display:
                   collapsible: false
                   collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
+                  open_by_default: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
               field_avustuslaji:
                 plugin_id: default
                 advanced:
@@ -917,6 +922,11 @@ display:
                   collapsible: false
                   collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
+                  open_by_default: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
               field_hakijatyyppi:
                 plugin_id: default
                 advanced:
@@ -927,6 +937,11 @@ display:
                   collapsible: false
                   collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
+                  open_by_default: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
               search_api_fulltext:
                 plugin_id: default
                 advanced:
@@ -937,6 +952,11 @@ display:
                   collapsible: false
                   collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
+                  open_by_default: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
       access:
         type: perm
         options:
@@ -1078,17 +1098,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              json_api_user: '0'
-              read_only: '0'
-              helsinkiprofiili: '0'
-              content_producer_industry: '0'
-              content_producer: '0'
-              grants_producer_industry: '0'
-              grants_producer: '0'
-              ad_user: '0'
-              grants_admin: '0'
-              admin: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1134,15 +1143,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              read_only: '0'
-              helsinkiprofiili: '0'
-              content_producer_industry: '0'
-              content_producer: '0'
-              grants_producer: '0'
-              ad_user: '0'
-              grants_admin: '0'
-              admin: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1188,15 +1188,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              read_only: '0'
-              helsinkiprofiili: '0'
-              content_producer_industry: '0'
-              content_producer: '0'
-              grants_producer: '0'
-              ad_user: '0'
-              grants_admin: '0'
-              admin: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1237,17 +1228,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              json_api_user: '0'
-              read_only: '0'
-              helsinkiprofiili: '0'
-              content_producer_industry: '0'
-              content_producer: '0'
-              grants_producer_industry: '0'
-              grants_producer: '0'
-              ad_user: '0'
-              grants_admin: '0'
-              admin: '0'
             expose_fields: false
             placeholder: 'Search by name or keyword'
             searched_fields_id: search_api_fulltext_searched_fields
