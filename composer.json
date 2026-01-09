@@ -51,7 +51,6 @@
         "mglaman/composer-drupal-lenient": "*",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
-        "symfony/console": "^6.4",
         "wikimedia/composer-merge-plugin": "^2.1"
     },
     "require-dev": {
