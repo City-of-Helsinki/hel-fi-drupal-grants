@@ -32,7 +32,6 @@
         "drupal/helfi_proxy": "^3.0",
         "drupal/helfi_tpr": "^2.1",
         "drupal/helfi_tunnistamo": "^3.0",
-        "drupal/http_client_log": "^1.0",
         "drupal/jquery_ui_draggable": "^2.0",
         "drupal/js_cookie": "^1.0",
         "drupal/jsonapi_extras": "^3.23",

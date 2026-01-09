@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d0f7702abfcbb8c288119facd4b78f4",
+    "content-hash": "afd85468c839610676eb33b5383dc176",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1589,79 +1589,6 @@
                 "source": "https://github.com/consolidation/site-process/tree/5.4.2"
             },
             "time": "2024-12-13T19:25:56+00:00"
-        },
-        {
-            "name": "covergenius/guzzle_logger",
-            "version": "v2.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/CoverGenius/guzzle-log-middleware.git",
-                "reference": "a81991c4abf770edc4b76e1182e1c6c16a4e5c47"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/CoverGenius/guzzle-log-middleware/zipball/a81991c4abf770edc4b76e1182e1c6c16a4e5c47",
-                "reference": "a81991c4abf770edc4b76e1182e1c6c16a4e5c47",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "guzzlehttp/guzzle": "^6.1 || ^7.0.1",
-                "guzzlehttp/promises": "^2",
-                "guzzlehttp/psr7": "^1.7 || ^2.0",
-                "php": "^7.2 || ^8.0",
-                "psr/log": "^1.1 || ^2.0 || ^3.0"
-            },
-            "require-dev": {
-                "colinodell/psr-testlogger": "^1.3",
-                "phpstan/phpstan": "~0.12.32",
-                "phpstan/phpstan-phpunit": "^0.12.11",
-                "phpstan/phpstan-strict-rules": "^0.12.2",
-                "phpunit/phpunit": "^8.5.8 || ^9.2.5",
-                "squizlabs/php_codesniffer": "^3.5.5"
-            },
-            "suggest": {
-                "monolog/monolog": "A PSR-3 logger to send your logs to files, sockets and various web services"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleLogMiddleware\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "George Mponos",
-                    "email": "gmponos@gmail.com"
-                }
-            ],
-            "description": "A Guzzle middleware to log request and responses automatically",
-            "homepage": "https://github.com/covergenius/guzzle-log-middleware",
-            "keywords": [
-                "Guzzle",
-                "PSR3",
-                "log",
-                "logging"
-            ],
-            "support": {
-                "source": "https://github.com/CoverGenius/guzzle-log-middleware/tree/v2.3.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/gmponos",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-07-30T23:53:55+00:00"
         },
         {
             "name": "cweagans/composer-patches",
@@ -5768,64 +5695,6 @@
                 "issues": "https://github.com/City-of-Helsinki/drupal-module-helfi-tunnistamo/issues"
             },
             "time": "2025-11-21T14:04:11+00:00"
-        },
-        {
-            "name": "drupal/http_client_log",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/http_client_log.git",
-                "reference": "1.2.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/http_client_log-1.2.0.zip",
-                "reference": "1.2.0",
-                "shasum": "ae1f3200072dee70300e0de1fc08a1fc002986b4"
-            },
-            "require": {
-                "covergenius/guzzle_logger": "^2.3",
-                "drupal/core": "^8.8 || ^9 || ^10 || ^11"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "1.2.0",
-                    "datestamp": "1733748053",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Bingstats",
-                    "homepage": "https://www.drupal.org/user/914736"
-                },
-                {
-                    "name": "james.williams",
-                    "homepage": "https://www.drupal.org/user/592268"
-                },
-                {
-                    "name": "xiukun.zhou",
-                    "homepage": "https://www.drupal.org/user/2239768"
-                },
-                {
-                    "name": "zterry95",
-                    "homepage": "https://www.drupal.org/user/1952394"
-                }
-            ],
-            "description": "Http Client Logs",
-            "homepage": "https://www.drupal.org/project/http_client_log",
-            "support": {
-                "source": "http://cgit.drupalcode.org/http_client_log",
-                "issues": "https://www.drupal.org/project/issues/http_client_log"
-            }
         },
         {
             "name": "drupal/image_style_quality",
