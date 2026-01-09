@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d8fd69cce4819d4c570418be594c8d5",
+    "content-hash": "4a5459653f057fde2c7a6f6efbabe479",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6162,69 +6162,6 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/linkit",
                 "issues": "http://drupal.org/project/linkit"
-            }
-        },
-        {
-            "name": "drupal/listjs",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/listjs.git",
-                "reference": "2.0.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/listjs-2.0.1.zip",
-                "reference": "2.0.1",
-                "shasum": "bc46e246f14e2771f701e4de99a131780e9edf98"
-            },
-            "require": {
-                "drupal/core": "^9 || ^10 || ^11"
-            },
-            "suggest": {
-                "bower-asset/listjs": "Required for the project, please enable composer third party libraries via https://www.drupal.org/docs/develop/using-composer/manage-dependencies#third-party-libraries or manually download "
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "2.0.1",
-                    "datestamp": "1724322088",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Subhojit Paul",
-                    "homepage": "http://subhojit777.in",
-                    "email": "subhojitpaul21@gmail.com",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "grevil",
-                    "homepage": "https://www.drupal.org/user/3668491"
-                },
-                {
-                    "name": "subhojit777",
-                    "homepage": "https://www.drupal.org/user/1812492"
-                },
-                {
-                    "name": "thomas.frobieter",
-                    "homepage": "https://www.drupal.org/user/409335"
-                }
-            ],
-            "description": "Search, sort, filter HTML lists using listjs library",
-            "homepage": "https://www.drupal.org/project/listjs",
-            "support": {
-                "source": "https://github.com/subhojit777/listjs",
-                "issues": "https://github.com/subhojit777/listjs/issues",
-                "irc": "irc://irc.freenode.org/drupal-contribute"
             }
         },
         {
