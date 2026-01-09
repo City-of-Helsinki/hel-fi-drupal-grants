@@ -15,7 +15,6 @@
         "drupal/autologout": "^2",
         "drupal/better_exposed_filters": "^7",
         "drupal/block_field": "^1.0@RC",
-        "drupal/content_access": "^2.0",
         "drupal/core-composer-scaffold": "^10|^11",
         "drupal/disable_messages": "^2.1",
         "drupal/draggableviews": "^2.0",
