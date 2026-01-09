@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab839227688145503d44fb120d253bc4",
+    "content-hash": "6dc2321f92d337262e600496e181ca41",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6996,26 +6996,26 @@
         },
         {
             "name": "drupal/purge_users",
-            "version": "3.3.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/purge_users.git",
-                "reference": "8.x-3.3"
+                "reference": "4.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/purge_users-8.x-3.3.zip",
-                "reference": "8.x-3.3",
-                "shasum": "19066e66816b61a731eeacf0f89667c6f37dbb07"
+                "url": "https://ftp.drupal.org/files/projects/purge_users-4.0.0.zip",
+                "reference": "4.0.0",
+                "shasum": "7afde65c5b0883a20f8e6af2459694f73a3f645e"
             },
             "require": {
-                "drupal/core": "^8.9 || ^9 || ^10"
+                "drupal/core": "^9.5 || ^10 || ^11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-3.3",
-                    "datestamp": "1683650872",
+                    "version": "4.0.0",
+                    "datestamp": "1745659594",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7041,9 +7041,10 @@
                 }
             ],
             "description": "Purge inactive users after a set interval.",
-            "homepage": "https://www.drupal.org/project/purge_users",
+            "homepage": "https://drupal.org/project/purge_users",
             "support": {
-                "source": "https://git.drupalcode.org/project/purge_users"
+                "source": "https://git.drupalcode.org/project/purge_users",
+                "issues": "https://drupal.org/project/issues/purge_users"
             }
         },
         {

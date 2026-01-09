@@ -35,7 +35,7 @@
         "drupal/menu_admin_per_menu": "^1.5",
         "drupal/multivalue_form_element": "^1.0@beta",
         "drupal/override_node_options": "^2.7",
-        "drupal/purge_users": "^3.1",
+        "drupal/purge_users": "^4.0",
         "drupal/radioactivity": "^4.0",
         "drupal/redis": "^1.7",
         "drupal/remove_http_headers": "^2.0.1",
