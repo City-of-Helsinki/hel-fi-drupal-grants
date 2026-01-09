@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1182400b74aabd317a5a1915b3a1e90f",
+    "content-hash": "792858f5dd9aed89f608459813a726fb",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3757,58 +3757,6 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/ctools",
                 "issues": "https://www.drupal.org/project/issues/ctools"
-            }
-        },
-        {
-            "name": "drupal/datatables",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/datatables.git",
-                "reference": "2.0.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/datatables-2.0.1.zip",
-                "reference": "2.0.1",
-                "shasum": "6985e22f328f6e2a69afaaf5abb86735515a585b"
-            },
-            "require": {
-                "drupal/core": "^9 || ^10"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "2.0.1",
-                    "datestamp": "1705542835",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "arkener",
-                    "homepage": "https://www.drupal.org/user/2284182"
-                },
-                {
-                    "name": "dqd",
-                    "homepage": "https://www.drupal.org/user/1001934"
-                },
-                {
-                    "name": "duellj",
-                    "homepage": "https://www.drupal.org/user/168159"
-                }
-            ],
-            "description": "Provides integration of the jquery DataTables plugin into views.",
-            "homepage": "https://www.drupal.org/project/datatables",
-            "support": {
-                "source": "https://git.drupalcode.org/project/datatables"
             }
         },
         {
