@@ -44,7 +44,6 @@
         "drupal/translated_config": "^1.1",
         "drupal/tvp": "^1.0",
         "drupal/webform": "^6.3",
-        "drupal/webform_rest": "^4.0",
         "drupal/webform_translation_permissions": "^2.1",
         "drupal/webform_views": "^5.2",
         "globalcitizen/php-iban": "^4.1",
