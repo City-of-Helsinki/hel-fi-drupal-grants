@@ -6,6 +6,10 @@
  */
 
 use Drupal\Component\Serialization\Json;
+use Drupal\system\Entity\Action;
+use Drupal\Core\Database\Database;
+use Drupal\node\Entity\Node;
+use Drupal\webform\Entity\Webform;
 
 /**
  * Implements hook_schema().
@@ -269,10 +273,6 @@ function grants_handler_update_9001(&$sandbox) {
     ->createTable('grants_handler_saveids', $schema['grants_handler_saveids']);
 }
 
-use Drupal\Core\Database\Database;
-use Drupal\node\Entity\Node;
-use Drupal\webform\Entity\Webform;
-
 /**
  * Add submission UUID column for handler log.
  */
@@ -385,4 +385,15 @@ function grants_handler_update_9009(&$sandbox): void {
  */
 function grants_handler_update_9010(&$sandbox): void {
   _locale_parse_js_file('modules/custom/grants_handler/js/webform.form.unsaved.js');
+}
+
+/**
+ * Fix D11 update.
+ */
+function grants_handler_update_11001(&$sandbox): void {
+  // This action needs the grants_application module, which is not currently
+  // installed. The config file was moved to the config/install folder of the
+  // grants_application module. The config entity is re-created when the module
+  // is installed.
+  Action::load('application_submission_break_lock_action')->delete();
 }
