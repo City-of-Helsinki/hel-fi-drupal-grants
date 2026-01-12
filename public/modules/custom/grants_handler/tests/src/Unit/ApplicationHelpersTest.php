@@ -211,9 +211,8 @@ class ApplicationHelpersTest extends UnitTestCase {
           'avus2BreakingChange' => TRUE,
         ],
         [
-          'parent' => 'parent-uuid',
           'avus2BreakingChange' => TRUE,
-        ]
+        ],
       );
 
     // Mock the entity type manager and storage.
@@ -235,16 +234,6 @@ class ApplicationHelpersTest extends UnitTestCase {
     $result = ApplicationHelpers::hasBreakingChangesInNewerVersion($webform);
     $this->assertTrue($result);
 
-  }
-
-  /**
-   * Test the getAvailableApplicationNumber method.
-   *
-   * @covers \Drupal\grants_handler\ApplicationHelpers::getAvailableApplicationNumber
-   */
-  public function testGetAvailableApplicationNumber() {
-
-    // Can't get this one to work...
   }
 
 }

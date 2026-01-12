@@ -15,8 +15,8 @@ use Drupal\openid_connect\OpenIDConnectSession;
 use Drupal\Tests\UnitTestCase;
 use GuzzleHttp\ClientInterface;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Tests HelsinkiProfiiliUserData class.
