@@ -171,9 +171,7 @@ final class ApplicationGetterService {
     $applicationDocuments = $this->helfiAtvAtvService->searchDocuments($searchParams);
     $missing_delete_after = FALSE;
 
-    /*
-     * Create rows for table.
-     */
+    // Create rows for table.
     foreach ($applicationDocuments as $document) {
       $submission_entity = NULL;
       $applicationNumber = $document->getTransactionId();

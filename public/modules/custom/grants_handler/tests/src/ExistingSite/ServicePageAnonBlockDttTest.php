@@ -13,6 +13,8 @@ use weitzman\DrupalTestTraits\ExistingSiteBase;
 /**
  * Tests service page anon block.
  *
+ * @see \Drupal\grants_handler\Plugin\Block\ServicePageAnonBlock
+ *
  * @group grants_handler
  */
 class ServicePageAnonBlockDttTest extends ExistingSiteBase {
@@ -82,8 +84,7 @@ class ServicePageAnonBlockDttTest extends ExistingSiteBase {
 
     // Log out and visit the service page. The block should
     // reflect closed state.
-    $this->drupalGet(Url::fromRoute('user.logout.confirm'));
-    $this->submitForm([], 'op', 'user-logout-confirm');
+    $this->drupalGet(Url::fromRoute('user.logout'));
     $this->drupalResetSession();
     $this->drupalGet($this->servicePage->toUrl());
     $this->assertSession()->elementExists('css', '.grants-service-page-block--anon');
