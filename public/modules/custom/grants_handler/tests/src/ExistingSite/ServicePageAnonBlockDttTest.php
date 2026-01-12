@@ -12,6 +12,8 @@ use weitzman\DrupalTestTraits\ExistingSiteBase;
 /**
  * Tests service page anon block.
  *
+ * @see \Drupal\grants_handler\Plugin\Block\ServicePageAnonBlock
+ *
  * @group grants_handler
  */
 class ServicePageAnonBlockDttTest extends ExistingSiteBase {
