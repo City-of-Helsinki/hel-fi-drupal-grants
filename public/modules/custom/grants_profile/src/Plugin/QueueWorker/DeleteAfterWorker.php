@@ -83,7 +83,7 @@ final class DeleteAfterWorker extends QueueWorkerBase implements ContainerFactor
   /**
    * Set the delete after value.
    *
-   * @param AtvDocument $document
+   * @param \Drupal\helfi_atv\AtvDocument $document
    *   The document.
    * @param string $delete_after
    *   The value to set, for example 2030-01-01.
