@@ -9,7 +9,7 @@
     "version": "2024.16",
     "require": {
         "ext-json": "*",
-        "city-of-helsinki/php-resilient-logger": "dev-main",
+        "city-of-helsinki/php-resilient-logger": "^1.0",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.6.7",
         "doctrine/lexer": "^2",
@@ -204,10 +204,6 @@
         {
             "type": "composer",
             "url": "https://asset-packagist.org"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/City-of-Helsinki/php-resilient-logger.git"
         }
     ],
     "scripts": {
