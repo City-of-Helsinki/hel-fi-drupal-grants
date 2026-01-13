@@ -172,7 +172,7 @@ final class ApplicationGetterService {
     $missing_delete_after = FALSE;
     $submitted_missing_delete_after = FALSE;
 
-    // Create rows for table
+    // Create rows for table.
     foreach ($applicationDocuments as $document) {
       $submission_entity = NULL;
       $applicationNumber = $document->getTransactionId();
