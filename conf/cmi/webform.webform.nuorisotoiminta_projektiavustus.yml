@@ -488,7 +488,7 @@ elements: |-
       jasenmaara_fieldset:
         '#type': fieldset
         '#title': 'Aktiivisesti toimintaan osallistuvat/jäsenet'
-        '#help': 'Merkitse tähän yhdistyksen aktiivisesti toimintaan osallistuvat ja/tai jäsenet'
+        '#help': 'Merkitse tähän toimintaryhmän / yhdistyksen / talokerhon aktiivisesti toimintaan osallistuvat ja/tai jäsenet.'
         '#attributes':
           class:
             - grants-fieldset
@@ -619,7 +619,7 @@ elements: |-
         '#input_mask': '''alias'': ''numeric'', ''groupSeparator'': '' '', ''digits'': ''0'''
         '#pattern': '^[0-9 ]*$'
         '#title': 'Kuinka monta alle 29-vuotiasta helsinkiläistä projektiin osallistuu?'
-        '#help': 'Arvioi kuinka monta nuorta helsinkiläistä tähän projektiin osallistuu yhteensä. Määrä voi olla eri kuin ryhmän/yhdistyksen aktiivisten toimijoidentai jäsenten määrä.'
+        '#help': 'Arvioi kuinka monta nuorta helsinkiläistä tähän projektiin osallistuu yhteensä. Määrä voi olla eri kuin ryhmän/yhdistyksen aktiivisten toimijoiden tai jäsenten määrä.'
         '#required': true
         '#attributes':
           class:

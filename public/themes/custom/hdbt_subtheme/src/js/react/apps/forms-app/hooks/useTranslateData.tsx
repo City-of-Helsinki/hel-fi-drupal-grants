@@ -87,15 +87,7 @@ export const useTranslateData = (data: any) => {
   };
 
   const translateUiSchemaElement = (element: string, key: string) => {
-    const translatableKeys = [
-      'printableName',
-      'removeText',
-      'tooltipButtonLabel',
-      'tooltipLabel',
-      'tooltipText',
-      'ui:help',
-      'ui:tooltip',
-    ];
+    const translatableKeys = ['printableName', 'removeText', 'ui:help'];
 
     if (translatableKeys.includes(key)) {
       return t(element);

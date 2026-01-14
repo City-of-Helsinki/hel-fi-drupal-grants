@@ -170,10 +170,9 @@ final class ApplicationGetterService {
 
     $applicationDocuments = $this->helfiAtvAtvService->searchDocuments($searchParams);
     $missing_delete_after = FALSE;
+    $submitted_missing_delete_after = FALSE;
 
-    /*
-     * Create rows for table.
-     */
+    // Create rows for table.
     foreach ($applicationDocuments as $document) {
       $submission_entity = NULL;
       $applicationNumber = $document->getTransactionId();
@@ -185,6 +184,15 @@ final class ApplicationGetterService {
         $document->getDeleteAfter() === NULL
       ) {
         $missing_delete_after = TRUE;
+      }
+
+      // Also check the submitted application for missing delete_after.
+      if (
+        !$missing_delete_after &&
+        $document->getStatus() != 'DRAFT' &&
+        $document->getDeleteAfter() === NULL
+      ) {
+        $submitted_missing_delete_after = TRUE;
       }
 
       if (array_key_exists($document->getType(), Helpers::getApplicationTypes())) {
@@ -281,6 +289,7 @@ final class ApplicationGetterService {
       }
       ksort($applicationsSorted);
       $applicationsSorted['missing_delete_after'] = $missing_delete_after;
+      $applicationsSorted['submitted_missing_delete_after'] = $submitted_missing_delete_after;
       return $applicationsSorted;
     }
     else {

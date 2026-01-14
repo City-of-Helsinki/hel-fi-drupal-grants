@@ -72,9 +72,6 @@ We've added some custom keys to ui:options.
 * **hideNameFromPint** `boolean` Hides field name when viewing a preview or submitted form. See `Templates.tsx`.
 * **printableName** `string` Overrides the field name in preview or submitted form. See `Templates.tsx`.
 * **removeText** `string` Renders a custom text for 'remove item' button (used in array fields). See `Templates.tsx`.
-* **tooltipButtonLabel** `string` Button label for HDS tooltip feature. See `Input.tsx`.
-* **tooltipLabel** `string` Label for HDS tooltip feature. See `Input.tsx`.
-* **tooltipText** `string` Inner text for HDS tooltip feature. See `Input.tsx`.
 
 ### Widgets
 
