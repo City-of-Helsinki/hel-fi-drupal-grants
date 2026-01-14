@@ -118,7 +118,7 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     // Set multi-value fields.
     $form_state->setValueForElement($form['applicant_types']['widget'], ['test_applicant_type']);
     $form_state->setValueForElement($form['application_subvention_type']['widget'], ['1']);
-    // @todo this will fail again 2027 since it is not allowed value.
+    // @todo this will fail again 2027 since this is not allowed value next year.
     $form_state->setValueForElement($form['application_acting_years']['widget'], ['2026']);
 
     // Set date fields.
