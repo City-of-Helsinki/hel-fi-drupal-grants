@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\grants_webform_import\Commands;
+namespace Drupal\grants_webform_import\Drush\Commands;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
@@ -8,6 +8,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\grants_handler\Helpers;
+use Drush\Commands\AutowireTrait;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Yaml\Parser;
@@ -19,40 +20,18 @@ use Symfony\Component\Yaml\Parser;
  */
 class WebformConfigOverrideCommands extends DrushCommands {
 
+  use AutowireTrait;
+
   /**
    * The allowed environments for running the command.
    */
   const ALLOWED_ENVIRONMENTS = ['DEV', 'TEST', 'STAGE'];
 
-  /**
-   * The ConfigFactoryInterface.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  private ConfigFactoryInterface $configFactory;
-
-  /**
-   * Entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * Class constructor.
-   *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   The ConfigFactoryInterface.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   Entity type manager.
-   */
   public function __construct(
-    ConfigFactoryInterface $configFactory,
-    EntityTypeManagerInterface $entityTypeManager,
+    private readonly ConfigFactoryInterface $configFactory,
+    private readonly EntityTypeManagerInterface $entityTypeManager,
   ) {
     parent::__construct();
-    $this->configFactory = $configFactory;
-    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**

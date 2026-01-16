@@ -2,7 +2,7 @@ name: Grants Webform Summation Field
 type: module
 description: Provides a webform summation field to collect the values of other fields.
 package: helfi
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 libraries:
   - grants_webform_summation_field/summation_field
 dependencies:

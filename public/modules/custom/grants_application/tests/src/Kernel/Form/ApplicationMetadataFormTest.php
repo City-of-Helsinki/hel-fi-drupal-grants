@@ -149,11 +149,13 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     // Submit the form.
     $form_builder->submitForm($form_object, $form_state);
 
-    // Check for form validation errors.
+    // Print form validation errors for easier debugging.
+    // PHPUnit does not like this, but the test will fail
+    // anyway if $errors is not empty.
     $errors = $form_state->getErrors();
     if (!empty($errors)) {
       foreach ($errors as $field => $error) {
-        echo "\nForm error on $field: " . (string) $error;
+        echo "\nForm error on $field: " . (string) $error . "\n";
       }
     }
     $this->assertFalse($form_state->hasAnyErrors(), 'Form submit should pass with valid values.');

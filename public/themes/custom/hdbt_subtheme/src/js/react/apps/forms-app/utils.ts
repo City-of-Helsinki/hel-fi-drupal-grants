@@ -17,10 +17,7 @@ const regex = /^.([^.]+)/;
  *
  * @return {Array} - Array of step indices with errors in them
  */
-export const getIndicesWithErrors = (
-  errors: RJSFValidationError[] | undefined,
-  steps?: Map<number, FormStep>,
-) => {
+export const getIndicesWithErrors = (errors: RJSFValidationError[] | undefined, steps?: Map<number, FormStep>) => {
   if (!steps || !errors || !errors?.length) {
     return [];
   }
@@ -51,10 +48,7 @@ export const getIndicesWithErrors = (
  *
  * @return {Array} - Array of validation errors, keyed by step index
  */
-export const keyErrorsByStep = (
-  errors: RJSFValidationError[] | undefined,
-  steps?: Map<number, FormStep>,
-) => {
+export const keyErrorsByStep = (errors: RJSFValidationError[] | undefined, steps?: Map<number, FormStep>) => {
   if (!steps || !errors || !errors?.length) {
     return [];
   }
@@ -65,9 +59,7 @@ export const keyErrorsByStep = (
   errors.forEach((error) => {
     const match = error?.property?.match(regex)?.[0];
 
-    const matchedStep = stepsArray.find(
-      ([index, step]) => step.id === match?.split('.')[1],
-    );
+    const matchedStep = stepsArray.find(([index, step]) => step.id === match?.split('.')[1]);
 
     if (matchedStep) {
       const [matchedIndex] = matchedStep;
@@ -86,9 +78,7 @@ export const keyErrorsByStep = (
  *
  * @return {Array} - [isValid, message]
  */
-export const isValidFormResponse = (
-  data: Object,
-): [boolean, string | undefined] => [true, undefined];
+export const isValidFormResponse = (data: Object): [boolean, string | undefined] => [true, undefined];
 
 /**
  * Add static applicant info step to form schema.
@@ -133,8 +123,7 @@ export const getNestedSchemaProperty = (obj: RJSFSchema, path: string) => {
 
   properties.forEach((property, index) => {
     const propertyName = property.toString();
-    const hasProperty =
-      current && Object.prototype.hasOwnProperty.call(current, propertyName);
+    const hasProperty = current && Object.prototype.hasOwnProperty.call(current, propertyName);
     if (hasProperty && index === properties.length - 1) {
       current = current?.[propertyName];
     } else if (hasProperty) {
@@ -181,13 +170,8 @@ export const setNestedProperty = (obj: any, path: string, value: any) => {
  *
  * @yields {string} - form element path
  */
-export function* findFieldsOfType(
-  element: any,
-  type: string,
-  prefix: string = '',
-): IterableIterator<string> {
-  const isObject =
-    typeof element === 'object' && !Array.isArray(element) && element !== null;
+export function* findFieldsOfType(element: any, type: string, prefix: string = ''): IterableIterator<string> {
+  const isObject = typeof element === 'object' && !Array.isArray(element) && element !== null;
 
   if (isObject && element['ui:field'] && element['ui:field'] === type) {
     yield prefix;
@@ -195,11 +179,7 @@ export function* findFieldsOfType(
     // Functional loops mess mess up generator function, so use for - of loop here.
     // eslint-disable-next-line no-restricted-syntax
     for (const [key, value] of Object.entries(element)) {
-      yield* findFieldsOfType(
-        value,
-        type,
-        prefix.length ? `${prefix}.${key}` : key,
-      );
+      yield* findFieldsOfType(value, type, prefix.length ? `${prefix}.${key}` : key);
     }
   }
 }
