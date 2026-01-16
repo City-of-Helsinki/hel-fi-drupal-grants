@@ -16,7 +16,7 @@ use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
-use Drupal\grants_application\Helper;
+use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\JsonSchemaValidator;
 use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\User\UserInformationService;
@@ -48,7 +48,6 @@ use Symfony\Component\Routing\RouteCollection;
   ]
 )]
 final class Application extends ResourceBase {
-
   use StringTranslationTrait;
 
   public function __construct(
@@ -72,6 +71,7 @@ final class Application extends ResourceBase {
     private JsonSchemaValidator $jsonSchemaValidator,
     private ContentLockInterface $contentLock,
     private AccountProxyInterface $accountProxy,
+    private JsonMapperService $jsonMapperService,
   ) {
     // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
@@ -103,6 +103,7 @@ final class Application extends ResourceBase {
       $container->get(JsonSchemaValidator::class),
       $container->get('content_lock'),
       $container->get('current_user'),
+      $container->get(JsonMapperService::class),
     );
   }
 
@@ -165,7 +166,6 @@ final class Application extends ResourceBase {
     try {
       $document = $this->atvService->getDocument($application_number);
       $sideDocument = $this->atvService->getDocumentById($entity->getSideDocumentId());
-      $form_data = $sideDocument->getContent()['form_data'];
     }
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
@@ -179,7 +179,7 @@ final class Application extends ResourceBase {
 
     // @todo Only return required user data to frontend.
     $response = [
-      'form_data' => $form_data,
+      'form_data' => $sideDocument->getContent()['form_data'],
       'grants_profile' => $grants_profile_data->toArray(),
       'last_changed' => $changeTime->getTimestamp(),
       'status' => $document->getStatus(),
@@ -274,148 +274,92 @@ final class Application extends ResourceBase {
     //   - Set 'X-Case-Status'-headed to 'SUBMITTED'.
     //   - After this point we are no longer allowed to touch the status.
     // - Update the custom submission entity.
-    // Start: Check if the bank file is already added to the ATV document.
-    $selected_bank_account_number = $form_data["applicant_info"]["bank_account"]["bank_account"];
-    $bank_file = FALSE;
-    $uploadedBankFile = FALSE;
-    // @todo Add file type check as well (filetype = 45 etc).
-    foreach ($grants_profile_data->getBankAccounts() as $bank_account) {
-      $bank_file = array_find($document->getAttachments(), fn(array $attachment) => $bank_account['confirmationFile'] === $attachment['filename']);
-    }
-
-    // If not, we must take if from the profile document
-    // and upload to application form document.
-    $bank_accounts = $grants_profile_data->getBankAccounts();
-    $profile_files = $this->userInformationService->getGrantsProfileAttachments();
-
+    // Start with the bank file.
     try {
-      $bank_confirmation_file_array = Helper::findMatchingBankConfirmationFile(
-        $selected_bank_account_number,
-        $bank_accounts,
-        $profile_files,
-      );
+      $bankFile = $this->jsonMapperService->getSelectedBankFile($form_data);
     }
-    catch (\Exception $e) {
-      // The user has removed bank account from profile.
+    catch (\Exception) {
       return new JsonResponse(
         ['error' => $this->t('Your user profile does not contain the given bank account number. Please update your user profile and try again')],
         500
       );
     }
 
-    $actual_file = NULL;
-    if (!$bank_file) {
+    $uploadedBankFile = FALSE;
+    if (!$this->jsonMapperService->documentBankFileIsSet($document)) {
+      // Bank file has not yet been added to the ATV-document.
       try {
-        /** @var \Drupal\file\FileInterface $actual_file */
-        $actual_file = $this->atvService->getAttachment($bank_confirmation_file_array['href']);
+        $actualFile = $this->atvService->getAttachment($bankFile['href']);
       }
-      catch (\Exception $e) {
+      catch (\Exception) {
         // File does not exist in atv? Should not be possible.
+        return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
       }
-      if ($actual_file) {
+
+      if (!is_bool($actualFile)) {
+        // Send file to ATV, is added to the document.
         $this->atvService->addAttachment(
           $document->getId(),
-          $bank_confirmation_file_array['filename'],
-          $actual_file,
+          $bankFile['filename'],
+          $actualFile,
         );
-        $actual_file->delete();
+        $actualFile->delete();
         $uploadedBankFile = TRUE;
       }
 
-      // After uploading the bank file, reload the document to verify that it exists.
-      $document = $this->atvService->getDocument($application_number);
-      foreach ($grants_profile_data->getBankAccounts() as $bank_account) {
-        $bank_file = array_find(
-          $document->getAttachments(),
-          fn(array $attachment) => $bank_account['confirmationFile'] === $attachment['filename']);
+      // Reload the document.
+      try {
+        $document = $this->atvService->getDocument($application_number);
+        $bankFileIsSet = $this->jsonMapperService->documentBankFileIsSet($document);
+      }
+      catch(\throwable) {
+        // Just to be safe.
+        return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
       }
 
-      // This should not be possible.
-      if (!$bank_file) {
+      // Validate that upload was success.
+      if (!$bankFileIsSet) {
+        // This should never happen.
         $this->logger->error('User is unable to upload bank file to document or race condition.');
-        // We just uploaded it but
       }
     }
 
-    // After bank file has been handled, load the ATV document.
-    // Continue with the Avus2-mapping.
-    $document = $this->atvService->getDocument($application_number);
     // Save id has previously been saved to database to track
     // unsuccessful submissions due to integration failures.
     // @todo Use drupal uuid service maybe ?
     $save_id = Uuid::uuid4()->toString();
-    // We add the events manually instead of requesting integration.
     if ($uploadedBankFile) {
+      $bankAccountNumber = $this->jsonMapperService->getSelectedBankAccount($form_data);
       $event = $this->eventsService->getEventData(
         'HANDLER_ATT_OK',
         $application_number,
-        "Attachment uploaded for the IBAN: $selected_bank_account_number.",
+        "Attachment uploaded for the IBAN: $bankAccountNumber.",
         $save_id
       );
       $this->eventsService->addNewEventForApplication($document, $event);
     }
 
-    // @todo Better sanitation.
-    // $document_data = ['form_data' => $form_data];
-    // Prepare the mapper, some of the data comes from external apis.
-    $mappingFileName = "ID$application_type_id.json";
-    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/' . $mappingFileName), TRUE);
-    $mapper = new JsonMapper($mapping);
     try {
-      $dataSources = $mapper->getCombinedDataSources(
-        $form_data,
-        $user_data,
-        $selected_company,
-        $this->userInformationService->getUserProfileData(),
-        $this->userInformationService->getGrantsProfileContent(),
-        $settings,
+      $mappedData = $this->jsonMapperService->handleMapping(
+        $application_type_id,
         $application_number,
-        $this->userInformationService->getApplicantTypeId(),
+        $form_data,
+        $bankFile,
+        (bool) $entity->get('draft')->value,
+        $selected_company['type'],
       );
     }
     catch (\Exception $e) {
-      // Unable to combine datasources, bad atv-connection maybe?
-      $this->logger->critical('Error during POST-request, unable to combine datasources: ' . $e->getMessage());
-      return new JsonResponse(
-        ['error' => $this->t('An error occurred while sending the application. Please try again later')],
-        500,
-      );
-    }
-
-    // Do the actual mapping.
-    $document_data = $mapper->map($dataSources);
-
-    // Handle all files.
-    $bankFile = $mapper->mapBankFile($selected_bank_account_number, $bank_file);
-    $fileData = $mapper->mapFiles($dataSources);
-
-    $fileData['attachmentsInfo']['attachmentsArray'][] = $bankFile;
-
-    $document_data = array_merge($document_data, $fileData);
-
-    $sideDocument->setContent(['form_data' => $form_data]);
-
-    // On first AVUS2-submit formUpdate = FALSE and afterward only TRUE.
-    // check GrantsHandler::getFormUpdate for more detailed explanation.
-    $document_data['formUpdate'] = !$entity->get('draft')->value;
-
-    if (!isset($document_data['statusUpdates'])) {
-      $document_data['statusUpdates'] = [];
-    }
-
-    if (!isset($document_data['events'])) {
-      $document_data['events'] = [];
-    }
-
-    if (!isset($document_data['messages'])) {
-      $document_data['messages'] = [];
+      $this->logger->critical("Failed mapping, application type: $application_type_id");
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
     if ($document->getContent()['events']) {
-      $document_data['events'] = $document->getContent()['events'];
+      $mappedData['events'] = $document->getContent()['events'];
     }
 
-    $document->setContent($document_data);
+    $document->setContent($mappedData);
+    $sideDocument->setContent(['form_data' => $form_data]);
 
     // Set the submitted -status right before sending to Avus2.
     // The status is set as request header by integration-service.
@@ -450,8 +394,8 @@ final class Application extends ResourceBase {
     }
 
     if (!$success) {
-      // Integration returned non-200 code.
-      // Log and return.
+      $this->logger->error('Avus2 -POST-request returned non-200 response');
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
     try {
@@ -474,13 +418,6 @@ final class Application extends ResourceBase {
       );
     }
 
-    return new JsonResponse([
-      'redirect_url' => Url::fromRoute(
-        'grants_handler.completion',
-        ['submission_id' => $application_number],
-        ['absolute' => TRUE],
-      )->toString(),
-    ], 200);
     return $this->getSuccessResponse($application_number);
   }
 
@@ -529,7 +466,6 @@ final class Application extends ResourceBase {
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
-      $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
       $this->logger->error("User failed to fetch the user information during POST-request: {$e->getMessage()}");
@@ -559,20 +495,14 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Unable to fetch the application. Please try again in a moment')], 500);
     }
 
-    $mappingFileName = "ID$application_type_id.json";
-    $mapping = json_decode(file_get_contents(__DIR__ . '/../../../Mapper/Mappings/' . $mappingFileName), TRUE);
-    $mapper = new JsonMapper($mapping);
-
     try {
-      $dataSources = $mapper->getCombinedDataSources(
-        $form_data,
-        $user_data,
-        $selected_company,
-        $this->userInformationService->getUserProfileData(),
-        $this->userInformationService->getGrantsProfileContent(),
-        $settings,
+      $oldDocument = $document->toArray();
+      $mappedData = $this->jsonMapperService->handleMappingForPatchRequest(
+        $application_type_id,
         $application_number,
-        $this->userInformationService->getApplicantTypeId(),
+        $form_data,
+        $selected_company['type'],
+        $oldDocument
       );
     }
     catch (\Exception $e) {
@@ -584,42 +514,12 @@ final class Application extends ResourceBase {
       );
     }
 
-    $oldDocument = $document->toArray();
-
-    $events = $oldDocument['content']['events'];
-    $messages = $oldDocument['content']['messages'];
-    $statusUpdates = $oldDocument['content']['statusUpdates'];
-
-    // Map the data again.
-    $document_data = $mapper->map($dataSources);
-
-    $oldFiles = $oldDocument['content']['attachmentsInfo']['attachmentsArray'];
-    $newFiles = $mapper->mapFiles($dataSources);
-    $newFiles = $newFiles['attachmentsInfo']['attachmentsArray'] ?? [];
-
-    $patchedFiles = $mapper->patchMappedFiles(
-      $oldFiles,
-      $newFiles
-    );
-
-    $document_data['attachmentsInfo']['attachmentsArray'] = $patchedFiles;
-    $document_data['events'] = $events;
-    $document_data['messages'] = $messages;
-    $document_data['statusUpdates'] = $statusUpdates;
-    $document_data['formUpdate'] = TRUE;
-
-    // Read the status from ATV and copy it.
-    if ($oldStatus = $mapper->getStatusValue($oldDocument)) {
-      $mapper->setStatusValue($document_data, $oldStatus);
-    }
-
     try {
       $sideDocument->setContent(['form_data' => $form_data]);
-      $document->setContent($document_data);
+      $document->setContent($mappedData);
 
       $save_id = Uuid::uuid4()->toString();
-      // We don't use the event api to apply this particular event.
-      // instead we just put the event into the document.
+
       $event = $this->eventsService->getEventData(
         'HANDLER_SEND_INTEGRATION',
         $application_number,
@@ -640,11 +540,7 @@ final class Application extends ResourceBase {
     }
 
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
-    // grants_application module when this module is enabled in
-    // production.
-    //
-    // This event lets other parts of the system to react
-    // to user submitting grants forms.
+    // grants_application module when this module is enabled in production.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
     if ($this->contentLock->isLockable($entity)) {
