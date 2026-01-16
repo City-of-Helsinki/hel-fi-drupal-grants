@@ -233,13 +233,3 @@ parameters:
       message: "#^Call to an undefined method Drupal\\\\helfi_tunnistamo\\\\Plugin\\\\OpenIDConnectClient\\\\Tunnistamo\\:\\:getPlugin\\(\\)\\.$#"
       count: 1
       path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-    -
-      message: "#^Call to deprecated constant REQUEST_TIME\\: Deprecated in drupal\\:8\\.3\\.0 and is removed from drupal\\:11\\.0\\.0\\. Use \\\\Drupal\\:\\:time\\(\\)\\-\\>getRequestTime\\(\\); $#"
-      count: 1
-      path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-    -
-      message: "#^in drupal:8.3.0 and is removed from drupal:11.0.0.#"
-      count: 1
-      path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php

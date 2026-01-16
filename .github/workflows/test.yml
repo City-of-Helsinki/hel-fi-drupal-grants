@@ -9,4 +9,5 @@ jobs:
     secrets:
       sonarcloud_token: ${{ secrets.SONAR_TOKEN }}
     with:
-      check_config_language: false
+      check_config_language: true
+      check_config_language_ignore_files: "webform.webform.*,webform.settings,grants_metadata.settings.*"

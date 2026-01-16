@@ -334,14 +334,14 @@ class GrantsBudgetComponentService {
 
       // If found, copy from default component values.
       switch ($propertyDataType) {
-        case 'grants_budget_income_static';
+        case 'grants_budget_income_static':
           $retVal[$propertyKey] = array_intersect_key(
             $dataFromDocument['incomeRowsArrayStatic'][$groupName][0] ?? [],
             $keysToExtract,
           );
           break;
 
-        case 'grants_budget_cost_static';
+        case 'grants_budget_cost_static':
           $retVal[$propertyKey] = array_intersect_key(
             $dataFromDocument['costRowsArrayStatic'][$groupName][0] ?? [],
             $keysToExtract,

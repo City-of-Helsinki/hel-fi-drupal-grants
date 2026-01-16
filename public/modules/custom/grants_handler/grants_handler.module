@@ -1115,7 +1115,6 @@ function grants_handler_preprocess_webform_submission_messages(&$variables) {
   // If submission is ok for messaging.
   if ($messageService->isSubmissionMessageable($submission, NULL)) {
     // Add message form.
-    // @phpstan-ignore-next-line
     $variables['message_form'] = \Drupal::formBuilder()
       ->getForm('Drupal\grants_handler\Form\MessageForm', $submission);
   }
