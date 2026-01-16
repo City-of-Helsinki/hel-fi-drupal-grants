@@ -8,8 +8,7 @@ import { useTranslation } from 'react-i18next';
  * @param {string} value - value to check
  * @return {boolean} - result
  */
-const isTranslatableString = (value: string) =>
-  typeof value === 'string' && value.includes('.');
+const isTranslatableString = (value: string) => typeof value === 'string' && value.includes('.');
 
 /**
  * Translates given data using the provided schema and uiSchema.
@@ -59,15 +58,11 @@ export const useTranslateData = (data: any) => {
     });
 
     if (element?.items && Array.isArray(element.items)) {
-      result.items = element.items.map((item: RJSFSchema) =>
-        iterateSchema(item),
-      );
+      result.items = element.items.map((item: RJSFSchema) => iterateSchema(item));
     }
 
     if (element?.enum && Array.isArray(element.enum)) {
-      result.enum = element.enum.map((item: string) =>
-        isTranslatableString(item) ? t(item) : item,
-      );
+      result.enum = element.enum.map((item: string) => (isTranslatableString(item) ? t(item) : item));
     }
 
     if (element?.options && Array.isArray(element.options)) {
@@ -78,9 +73,7 @@ export const useTranslateData = (data: any) => {
     }
 
     if (element.allOf && Array.isArray(element.allOf)) {
-      result.allOf = element.allOf.map((item: RJSFSchema) =>
-        iterateSchema(item),
-      );
+      result.allOf = element.allOf.map((item: RJSFSchema) => iterateSchema(item));
     }
 
     return result;
@@ -96,9 +89,7 @@ export const useTranslateData = (data: any) => {
     const tranlatableArrays = ['ui:enumNames'];
 
     if (tranlatableArrays.includes(key) && Array.isArray(element)) {
-      return element.map((item: string) =>
-        isTranslatableString(item) ? t(item) : item,
-      );
+      return element.map((item: string) => (isTranslatableString(item) ? t(item) : item));
     }
 
     return element;
@@ -112,11 +103,7 @@ export const useTranslateData = (data: any) => {
     }
 
     Object.entries(uiSchema).forEach(([key, value]) => {
-      if (
-        typeof value === 'object' &&
-        !Array.isArray(value) &&
-        value !== null
-      ) {
+      if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
         result[key] = iterateUiSchema(value);
       } else {
         result[key] = translateUiSchemaElement(value, key);

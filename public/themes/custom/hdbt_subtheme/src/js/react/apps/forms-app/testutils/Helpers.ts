@@ -15,9 +15,7 @@ const initialState = {
  * @param {Object} formState - Partially filled state
  * @return {Object} - Resulting valid state.
  */
-export const initializeFormState = (
-  formState: Partial<FormState>,
-): FormState => ({ ...initialState, ...formState });
+export const initializeFormState = (formState: Partial<FormState>): FormState => ({ ...initialState, ...formState });
 
 /**
  * Get URL path parts from current URL in an array.
