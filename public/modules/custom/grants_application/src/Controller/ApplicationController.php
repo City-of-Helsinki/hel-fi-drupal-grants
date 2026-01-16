@@ -176,7 +176,7 @@ final class ApplicationController extends ControllerBase {
    */
   public function copyApplication(int $application_type_id, string $original_id) {
     try {
-      $draft = $this->applicationService->createDraft($application_type_id, $original_id);
+      $draft = $this->applicationService->createCopy($application_type_id, $original_id);
     }
     catch (\throwable $e) {
       $this->messenger()
