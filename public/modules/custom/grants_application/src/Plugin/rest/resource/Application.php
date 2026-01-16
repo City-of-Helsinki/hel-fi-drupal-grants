@@ -369,7 +369,8 @@ final class Application extends ResourceBase {
       $latestDocument = $this->atvService->updateExistingDocument($document);
     }
     catch (\Exception $e) {
-      // should not happen
+      $this->logger->critical("Failed to update document, application type: $application_type_id, id $application_number: " . $e->getMessage());
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
 
     // Add the submit event to the events.
