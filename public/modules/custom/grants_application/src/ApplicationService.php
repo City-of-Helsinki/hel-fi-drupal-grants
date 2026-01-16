@@ -14,6 +14,7 @@ use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\User\UserInformationService;
+use Drupal\helfi_atv\AtvDocument;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -36,6 +37,114 @@ class ApplicationService {
   }
 
   /**
+   * Create the draft application document.
+   *
+   * @param int $application_type_id
+   *   The application type id.
+   *
+   * @return Drupal\helfi_atv\AtvDocument
+   *   The atv document.
+   */
+  public function createDraft(int $application_type_id): AtvDocument {
+    // @todo Exceptions.
+    try {
+      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+    }
+    catch (\Exception $e) {
+      throw $e;
+      // Cannot find form by application type id.
+      // return new JsonResponse([], 404);.
+    }
+
+    try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $selected_company = $this->userInformationService->getSelectedCompany();
+      $user_data = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
+      throw $e;
+      // Return new JsonResponse([], 500);.
+    }
+
+    // @todo Application number generation must match the existing shenanigans,
+    // or we must start from application number 1000 or something.
+    $application_uuid = $this->uuid->generate();
+    $env = Helper::getAppEnv();
+
+    $application_number = $this->applicationNumberService
+      ->createNewApplicationNumber($env, $application_type_id);
+
+    $langcode = $this->languageManager
+      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+      ->getId();
+    $application_title = $settings->toArray()['settings']['title'];
+    $application_type = $settings->toArray()['settings']['application_type'];
+
+    $document = $this->atvService->createAtvDocument(
+      $application_uuid,
+      $application_number,
+      $application_type,
+      $application_title,
+      $langcode,
+      $user_data['sub'],
+      $selected_company['identifier'],
+      FALSE,
+      $selected_company,
+      $this->userInformationService->getApplicantType(),
+    );
+
+    $document->setContent([
+      'compensation' => [
+        'applicantInfoArray' => [],
+      ],
+      'formUpdate' => FALSE,
+      'statusUpdates' => [],
+      'events' => [],
+      'messages' => [],
+    ]);
+
+    try {
+      $document = $this->atvService->saveNewDocument($document);
+    }
+    catch(\Exception $e) {
+      throw $e;
+    }
+
+    $sideDocument = $this->atvService->createSideDocument(
+      $application_type,
+      $application_title,
+      $user_data['sub'],
+      $selected_company,
+      $document->getId(),
+      $document->getId(),
+    );
+
+    try {
+      $sideDocument = $this->atvService->saveNewDocument($sideDocument);
+    }
+    catch(\Exception $e) {
+      $this->atvService->deleteDocument($document);
+    }
+
+    $now = time();
+    $entity = ApplicationSubmission::create([
+      'document_id' => $document->getId(),
+      'business_id' => $grants_profile_data->getBusinessId(),
+      'sub' => $user_data['sub'],
+      'langcode' => $langcode,
+      'draft' => TRUE,
+      'application_type_id' => $application_type_id,
+      'application_number' => $application_number,
+      'created' => $now,
+      'changed' => $now,
+      'side_document_id' => $sideDocument->getId(),
+    ]);
+    $entity->save();
+
+    return $document;
+  }
+
+  /**
    * Creates a new draft application.
    *
    * @param int $application_type_id
@@ -46,9 +155,9 @@ class ApplicationService {
    * @return array
    *   The created draft application data.
    */
-  public function createDraft(int $application_type_id, string|null $copy_from = NULL): array {
+  public function createCopy(int $application_type_id, string|null $copy_from = NULL): array {
     try {
-      $this->getSubmissionEntity(
+      $entity = $this->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
         $copy_from,
         $this->userInformationService->getGrantsProfileContent()->getBusinessId(),
@@ -72,9 +181,8 @@ class ApplicationService {
 
     $form_data = [];
     if ($copy_from) {
-      $copy_document = $this->atvService->getDocument($copy_from);
-      $copy_content = $copy_document->getContent();
-      $form_data = $copy_content['compensation']['form_data'] ?? [];
+      $copy_document = $this->atvService->getDocumentById($entity->getSideDocumentId());
+      $form_data = $copy_document->getContent() ?? [];
     }
 
     $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
@@ -92,21 +200,18 @@ class ApplicationService {
     $langcode = $this->languageManager
       ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
       ->getId();
-    $application_name = $settings->toArray()['settings']['title'];
     $application_title = $settings->toArray()['settings']['title'];
     $application_type = $settings->toArray()['settings']['application_type'];
 
-    // @todo Save the react form data in separate atv doc.
     $document = $this->atvService->createAtvDocument(
       $application_uuid,
       $application_number,
-      $application_name,
       $application_type,
       $application_title,
       $langcode,
       $user_data['sub'],
       $selected_company['identifier'],
-      FALSE,
+      TRUE,
       $selected_company,
       $this->userInformationService->getApplicantType(),
     );
@@ -114,7 +219,6 @@ class ApplicationService {
     // Grants_events requires the events-array to exist.
     // And compensation must be json-object.
     $document->setContent([
-      'form_data' => $this->removeAttachmentsFromCopiedDocument($form_data),
       'compensation' => [
         'applicantInfoArray' => [],
       ],
@@ -123,8 +227,26 @@ class ApplicationService {
       'events' => [],
       'messages' => [],
     ]);
-
     $document = $this->atvService->saveNewDocument($document);
+
+    // Create a side document which only contains the react-form data.
+    // The original document is set as parent.
+    $sideDocument = $this->atvService->createSideDocument(
+      $application_type,
+      $application_title,
+      $user_data['sub'],
+      $selected_company,
+      $document->getId(),
+      $application_type,
+    );
+
+    $sideDocument->setContent([
+      'messages' => [],
+      'form_data' => $this->removeAttachmentsFromCopiedDocument($form_data),
+    ]);
+    $sideDocument->setTransactionId($document->getId());
+    $sideDocument = $this->atvService->saveNewDocument($sideDocument);
+
     $now = time();
     ApplicationSubmission::create([
       'document_id' => $document->getId(),
@@ -136,6 +258,7 @@ class ApplicationService {
       'application_number' => $application_number,
       'created' => $now,
       'changed' => $now,
+      'side_document_id' => $sideDocument->getId(),
     ])
       ->save();
 
