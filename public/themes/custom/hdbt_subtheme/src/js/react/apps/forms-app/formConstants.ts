@@ -4,11 +4,7 @@ import type { JSONSchema7Definition, JSONSchema7TypeName } from 'json-schema';
 const objectType: JSONSchema7TypeName = 'object';
 const stringType: JSONSchema7TypeName = 'string';
 
-export const privatePersonSettings: [
-  JSONSchema7Definition,
-  JSONSchema7Definition,
-  UiSchema,
-] = [
+export const privatePersonSettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
   {
     title: 'Omat yhteystiedot',
     type: objectType,
@@ -60,11 +56,7 @@ export const privatePersonSettings: [
   {},
 ];
 
-export const communitySettings: [
-  JSONSchema7Definition,
-  JSONSchema7Definition,
-  UiSchema,
-] = [
+export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, UiSchema] = [
   {
     title: 'applicant_info.title',
     type: objectType,
@@ -133,8 +125,7 @@ export const communitySettings: [
               type: objectType,
               properties: {
                 official: {
-                  title:
-                    'community_officials_community_officials_official.title',
+                  title: 'community_officials_community_officials_official.title',
                   type: stringType,
                 },
               },
@@ -143,8 +134,7 @@ export const communitySettings: [
               {
                 properties: {
                   official: {
-                    title:
-                      'community_officials_community_officials_official.title',
+                    title: 'community_officials_community_officials_official.title',
                     type: stringType,
                   },
                 },
@@ -161,12 +151,7 @@ export const communitySettings: [
         type: objectType,
       },
     },
-    required: [
-      'applicant_email',
-      'bank_account',
-      'community_address',
-      'contact_person_info',
-    ],
+    required: ['applicant_email', 'bank_account', 'community_address', 'contact_person_info'],
   },
   {
     applicant_info: {

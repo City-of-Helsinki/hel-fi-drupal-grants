@@ -62,25 +62,15 @@ const formatMinLengthError = (error: ErrorObject) => {
  * @return {string} - Translated error message indicating the required field.
  */
 const formatRequiredError = (error: ErrorObject) => {
-  const missingProperty = error.params?.missingProperty
-    ?.toString()
-    .replace(/^'|'$/g, '');
+  const missingProperty = error.params?.missingProperty?.toString().replace(/^'|'$/g, '');
 
   if (!missingProperty || !error.parentSchema?.properties?.[missingProperty]) {
-    return Drupal.t(
-      'Field is required',
-      {},
-      { context: 'Grants application: Validation' },
-    );
+    return Drupal.t('Field is required', {}, { context: 'Grants application: Validation' });
   }
 
   const { title } = error.parentSchema.properties[missingProperty];
 
-  return Drupal.t(
-    '@field field is required',
-    { '@field': title },
-    { context: 'Grants application: Validation' },
-  );
+  return Drupal.t('@field field is required', { '@field': title }, { context: 'Grants application: Validation' });
 };
 
 /**
@@ -115,18 +105,10 @@ const formatTypeError = (error: ErrorObject) => {
   const { schema } = error;
 
   if (schema === 'integer') {
-    return Drupal.t(
-      'The value must be an integer.',
-      {},
-      { context: 'Grants application: Validation' },
-    );
+    return Drupal.t('The value must be an integer.', {}, { context: 'Grants application: Validation' });
   }
 
-  return Drupal.t(
-    'Value is of incorrect type.',
-    {},
-    { context: 'Grants application: Validation' },
-  );
+  return Drupal.t('Value is of incorrect type.', {}, { context: 'Grants application: Validation' });
 };
 
 /**

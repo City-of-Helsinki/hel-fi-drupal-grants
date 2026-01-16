@@ -16,14 +16,7 @@ const SUBVENTION_ID = 'subventionType';
 const SUBVENTION_LABEL = 'Avustuslaji';
 const SUBVENTION_VALUE_TYPE = 'string';
 
-export const SubventionTable = ({
-  idSchema,
-  formData,
-  onChange,
-  rawErrors,
-  required,
-  schema,
-}: FieldProps) => {
+export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, required, schema }: FieldProps) => {
   const id = idSchema.$id;
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
@@ -41,10 +34,7 @@ export const SubventionTable = ({
         {schema.options.map(({ label, id: elementId }) => (
           <li key={elementId} style={{ listStyle: 'none' }}>
             <dt>{label}</dt>
-            <dd>
-              {formData?.[findIndexForData(elementId.toString())]?.[1].value ||
-                '-'}
-            </dd>
+            <dd>{formData?.[findIndexForData(elementId.toString())]?.[1].value || '-'}</dd>
           </li>
         ))}
       </ul>
@@ -92,10 +82,7 @@ export const SubventionTable = ({
   return (
     <>
       <div className='array-item'>
-        <Fieldset
-          className='hdbt-form--fieldset hdbt-form--fieldset--border'
-          heading={`${schema.title}`}
-        >
+        <Fieldset className='hdbt-form--fieldset hdbt-form--fieldset--border' heading={`${schema.title}`}>
           {schema.options.map((item, i) => {
             const { id: itemId, label } = item;
             const key = `${id}-${itemId}`;
@@ -117,9 +104,7 @@ export const SubventionTable = ({
           })}
         </Fieldset>
       </div>
-      {rawErrors?.length > 0 && (
-        <Notification type='error'>{formatErrors(rawErrors)}</Notification>
-      )}
+      {rawErrors?.length > 0 && <Notification type='error'>{formatErrors(rawErrors)}</Notification>}
     </>
   );
 };
