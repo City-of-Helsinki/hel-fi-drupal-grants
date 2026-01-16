@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Mapper;
 
-use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Helper;
-use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 
 /**
@@ -20,15 +18,14 @@ class JsonMapper {
   private JsonHandler $customHandler;
 
   /**
-   * The array of mappings to map from react to avus2.
+   * The array of mappings to map from React to avus2.
    */
   private array $mappings;
 
   /**
    * The constructor.
    */
-  public function __construct(
-  ) {
+  public function __construct() {
     $this->customHandler = new JsonHandler();
   }
 
@@ -36,7 +33,7 @@ class JsonMapper {
    * Set the mappings.
    *
    * @param array $mappings
-   * @return void
+   *   The mapping file contents.
    */
   public function setMappings(array $mappings): void {
     $this->mappings = $mappings;

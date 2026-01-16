@@ -345,7 +345,6 @@ final class Application extends ResourceBase {
         $application_number,
         $form_data,
         $bankFile,
-        (bool) $entity->get('draft')->value,
         $selected_company['type'],
       );
     }

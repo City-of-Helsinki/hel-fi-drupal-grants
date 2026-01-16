@@ -121,14 +121,8 @@ class HelfiAtvService {
   /**
    * Delete an atv document.
    *
-   * @param AtvDocument $document
+   * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document.
-   *
-   * @return int
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \Drupal\helfi_helsinki_profiili\TokenExpiredException
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function deleteDocument(AtvDocument $document): void {
     $this->atvService->deleteDocument($document);

@@ -106,7 +106,7 @@ class ApplicationService {
     try {
       $document = $this->atvService->saveNewDocument($document);
     }
-    catch(\Exception $e) {
+    catch (\Exception $e) {
       throw $e;
     }
 
@@ -122,7 +122,7 @@ class ApplicationService {
     try {
       $sideDocument = $this->atvService->saveNewDocument($sideDocument);
     }
-    catch(\Exception $e) {
+    catch (\Exception $e) {
       $this->atvService->deleteDocument($document);
     }
 
@@ -182,7 +182,7 @@ class ApplicationService {
     $form_data = [];
     if ($copy_from) {
       $copy_document = $this->atvService->getDocumentById($entity->getSideDocumentId());
-      $form_data = $copy_document->getContent() ?? [];
+      $form_data = $copy_document->getContent()['form_data'] ?? [];
     }
 
     $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
