@@ -9,6 +9,7 @@
     "version": "2024.16",
     "require": {
         "ext-json": "*",
+        "city-of-helsinki/php-resilient-logger": "^1.0",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.6.7",
         "doctrine/lexer": "^2",
@@ -63,7 +64,6 @@
         "drupal/webform_views": "^5.2",
         "globalcitizen/php-iban": "^4.1",
         "guzzlehttp/guzzle": "^7",
-        "justinrainbow/json-schema": "^5.3",
         "league/openapi-psr7-validator": "^0.22.0",
         "mglaman/composer-drupal-lenient": "*",
         "nesbot/carbon": "^2.64",

@@ -6,6 +6,7 @@ namespace Drupal\grants_profile\Plugin\QueueWorker;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_atv\AtvService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -72,11 +73,25 @@ final class DeleteAfterWorker extends QueueWorkerBase implements ContainerFactor
       throw $e;
     }
 
-    if ($document->getStatus() !== "DRAFT" || $document->getDeleteAfter()) {
+    if ($document->getDeleteAfter()) {
       return;
     }
 
+    $this->setDeleteAfter($document, $delete_after);
+  }
+
+  /**
+   * Set the delete after value.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $document
+   *   The document.
+   * @param string $delete_after
+   *   The value to set, for example 2030-01-01.
+   */
+  private function setDeleteAfter(AtvDocument $document, string $delete_after): void {
     $document->setDeleteAfter($delete_after);
+    $document_id = $document->getId();
+
     try {
       $this->atvService->patchDocument($document_id, $document->toArray());
     }
