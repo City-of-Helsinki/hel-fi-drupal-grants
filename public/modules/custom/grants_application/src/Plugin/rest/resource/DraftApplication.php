@@ -146,8 +146,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     if (!$settings->isApplicationOpen()) {
-      // @todo Uncomment.
-      // return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
+      return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
     }
 
     try {
@@ -178,8 +177,6 @@ final class DraftApplication extends ResourceBase {
     }
 
     $response = [];
-
-    // @todo Backward compatibility?
     $response['form_data'] = $sideDocument->getContent()['form_data'];
 
     // @todo Only return required user data to frontend
@@ -208,11 +205,10 @@ final class DraftApplication extends ResourceBase {
    */
   public function post(int $application_type_id): JsonResponse {
     try {
-      /** @var AtvDocument $atvDocument */
       $atvDocument = $this->applicationService->createDraft($application_type_id);
     }
     catch (\Exception $e) {
-      return new JsonResponse([], 500);
+      return new JsonResponse(['error' => 'Something went wrong.'], 500);
     }
 
     // @todo Check lock logic.
@@ -289,12 +285,6 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
     }
 
-    // @todo Backward compatibility?
-    // On testing environment, old applications won't have the side document.
-    if (!$sideDocument) {
-      // Unable to find the document.
-      return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating a new application')], 500);
-    }
     $sideDocument->setContent(['form_data' => $form_data]);
 
     try {

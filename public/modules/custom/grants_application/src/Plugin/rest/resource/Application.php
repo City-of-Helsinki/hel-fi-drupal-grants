@@ -161,7 +161,6 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating another one')], 500);
     }
 
-    // @todo Backward compatibility.
     try {
       $document = $this->atvService->getDocument($application_number);
       $sideDocument = $this->atvService->getDocumentById($entity->getSideDocumentId());
@@ -483,7 +482,6 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-    // @todo Backward compatibility?
     try {
       $document = $this->atvService->getDocument($application_number);
       $sideDocument = $this->atvService->getDocumentById($entity->getSideDocumentId());

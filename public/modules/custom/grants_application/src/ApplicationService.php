@@ -46,14 +46,11 @@ class ApplicationService {
    *   The atv document.
    */
   public function createDraft(int $application_type_id): AtvDocument {
-    // @todo Exceptions.
     try {
       $settings = $this->formSettingsService->getFormSettings($application_type_id);
     }
     catch (\Exception $e) {
       throw $e;
-      // Cannot find form by application type id.
-      // return new JsonResponse([], 404);.
     }
 
     try {
@@ -63,7 +60,6 @@ class ApplicationService {
     }
     catch (\Exception $e) {
       throw $e;
-      // Return new JsonResponse([], 500);.
     }
 
     // @todo Application number generation must match the existing shenanigans,
@@ -124,6 +120,7 @@ class ApplicationService {
     }
     catch (\Exception $e) {
       $this->atvService->deleteDocument($document);
+      throw $e;
     }
 
     $now = time();
