@@ -117,6 +117,7 @@ final class DraftApplication extends ResourceBase {
    * Return initial form data.
    *
    * The atv-document and application number is created in controller.
+   * This is called as long as the application is a draft.
    *
    * @param int $application_type_id
    *   The application type id.
@@ -178,8 +179,7 @@ final class DraftApplication extends ResourceBase {
 
     $response = [];
 
-    // @todo Bc-feature for test environment: if document does not exist,
-    // load the original document and create the side document.
+    // @todo Backward compatibility?
     $response['form_data'] = $sideDocument->getContent()['form_data'];
 
     // @todo Only return required user data to frontend
@@ -281,6 +281,7 @@ final class DraftApplication extends ResourceBase {
     // since an application which is taken into processing
     // should not change.
     try {
+      $document = $this->atvService->getDocument($application_number);
       $sideDocument = $this->atvService->getDocumentById($entity->getSideDocumentId());
     }
     catch (\Throwable $e) {
@@ -288,32 +289,31 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
     }
 
-    // @todo Bc.
+    // @todo Backward compatibility?
+    // On testing environment, old applications won't have the side document.
     if (!$sideDocument) {
       // Unable to find the document.
       return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating a new application')], 500);
     }
-
     $sideDocument->setContent(['form_data' => $form_data]);
 
     try {
-      // @todo gotta check the attachments as well.
-      // Is this relevant any more?
-      // $this->cleanUpAttachments($document, $attachments);
+      // The attachments are always set to the original document
+      // This function actually calls the remove file -endpoint.
+      $this->cleanUpAttachments($document, $attachments);
     }
     catch (\Exception $e) {
-      // @todo log error
+      // Failing to remove file should not matter, most likely not found.
     }
 
     try {
       $this->atvService->updateExistingDocument($sideDocument);
-
-      $entity->setChangedTime(time());
-      $entity->save();
     }
     catch (\Exception $e) {
       return new JsonResponse([['error' => $this->t('Unable to save the draft. Please try again in a moment')]], 500);
     }
+    $entity->setChangedTime(time());
+    $entity->save();
 
     $this->showSavedMessage($application_number);
 
@@ -353,12 +353,12 @@ final class DraftApplication extends ResourceBase {
   /**
    * Remove unused attachments from ATV document.
    *
-   * @param object $document
+   * @param AtvDocument $document
    *   The ATV document.
    * @param array $attachments
    *   The attachments.
    */
-  private function cleanUpAttachments($document, $attachments = []): void {
+  private function cleanUpAttachments(AtvDocument $document, array $attachments = []): void {
     $attachment_ids = array_column($attachments, 'fileId');
 
     foreach ($document->getAttachments() as $attachment) {
