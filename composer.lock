@@ -592,6 +592,53 @@
             "time": "2025-11-25T11:22:47+00:00"
         },
         {
+            "name": "city-of-helsinki/php-resilient-logger",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/City-of-Helsinki/php-resilient-logger.git",
+                "reference": "2381e03f7ead1181860fed4d2373442d37d89d33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/City-of-Helsinki/php-resilient-logger/zipball/2381e03f7ead1181860fed4d2373442d37d89d33",
+                "reference": "2381e03f7ead1181860fed4d2373442d37d89d33",
+                "shasum": ""
+            },
+            "require": {
+                "elasticsearch/elasticsearch": "^8",
+                "monolog/monolog": "^3.9",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "behat/mink": "^1.12",
+                "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+                "phpspec/prophecy": "^1.20",
+                "phpspec/prophecy-phpunit": "^2.3",
+                "phpunit/phpunit": "^10.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ResilientLogger\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "ResilientLogger\\Tests\\": "tests/src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "PHP resilient logger for monolog",
+            "support": {
+                "source": "https://github.com/City-of-Helsinki/php-resilient-logger/tree/1.0.0",
+                "issues": "https://github.com/City-of-Helsinki/php-resilient-logger/issues"
+            },
+            "time": "2025-12-10T14:15:58+00:00"
+        },
+        {
             "name": "codementality/flysystem-stream-wrapper",
             "version": "v1.1.1",
             "source": {
@@ -4895,16 +4942,16 @@
         },
         {
             "name": "drupal/hdbt",
-            "version": "6.16.16",
+            "version": "6.16.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-hdbt.git",
-                "reference": "a78b4a9627ce4f6c70cca9884d50259f5c9d0e05"
+                "reference": "e69c946ce850b33603d4293359dc0b2dade41063"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/a78b4a9627ce4f6c70cca9884d50259f5c9d0e05",
-                "reference": "a78b4a9627ce4f6c70cca9884d50259f5c9d0e05",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/e69c946ce850b33603d4293359dc0b2dade41063",
+                "reference": "e69c946ce850b33603d4293359dc0b2dade41063",
                 "shasum": ""
             },
             "require": {
@@ -4923,10 +4970,10 @@
                 "Drupal"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.16.16",
+                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.16.19",
                 "issues": "https://github.com/City-of-Helsinki/drupal-hdbt/issues"
             },
-            "time": "2026-01-07T12:56:10+00:00"
+            "time": "2026-01-13T09:09:13+00:00"
         },
         {
             "name": "drupal/hdbt_admin",
@@ -5516,17 +5563,17 @@
         },
         {
             "name": "drupal/imagecache_external",
-            "version": "3.0.7",
+            "version": "3.0.8",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/imagecache_external.git",
-                "reference": "3.0.7"
+                "reference": "3.0.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/imagecache_external-3.0.7.zip",
-                "reference": "3.0.7",
-                "shasum": "86b5fe0b2c296ef5f6c1e64444a75a1cfb8681c3"
+                "url": "https://ftp.drupal.org/files/projects/imagecache_external-3.0.8.zip",
+                "reference": "3.0.8",
+                "shasum": "a3cafe1479209b09a29962cabe005200b3894971"
             },
             "require": {
                 "drupal/core": "^10.1 || ^11",
@@ -5535,8 +5582,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.0.7",
-                    "datestamp": "1764066837",
+                    "version": "3.0.8",
+                    "datestamp": "1768219433",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -11809,6 +11856,113 @@
             "time": "2026-01-02T08:56:05+00:00"
         },
         {
+            "name": "nesbot/carbon",
+            "version": "2.72.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CarbonPHP/carbon.git",
+                "reference": "1e9d50601e7035a4c61441a208cb5bed73e108c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CarbonPHP/carbon/zipball/1e9d50601e7035a4c61441a208cb5bed73e108c5",
+                "reference": "1e9d50601e7035a4c61441a208cb5bed73e108c5",
+                "shasum": ""
+            },
+            "require": {
+                "carbonphp/carbon-doctrine-types": "*",
+                "ext-json": "*",
+                "php": "^7.1.8 || ^8.0",
+                "psr/clock": "^1.0",
+                "symfony/polyfill-mbstring": "^1.0",
+                "symfony/polyfill-php80": "^1.16",
+                "symfony/translation": "^3.4 || ^4.0 || ^5.0 || ^6.0"
+            },
+            "provide": {
+                "psr/clock-implementation": "1.0"
+            },
+            "require-dev": {
+                "doctrine/dbal": "^2.0 || ^3.1.4 || ^4.0",
+                "doctrine/orm": "^2.7 || ^3.0",
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "kylekatarnls/multi-tester": "^2.0",
+                "ondrejmirtes/better-reflection": "<6",
+                "phpmd/phpmd": "^2.9",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^0.12.99 || ^1.7.14",
+                "phpunit/php-file-iterator": "^2.0.5 || ^3.0.6",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.26 || ^9.5.20",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "bin": [
+                "bin/carbon"
+            ],
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Carbon\\Laravel\\ServiceProvider"
+                    ]
+                },
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-2.x": "2.x-dev",
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Carbon\\": "src/Carbon/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Nesbitt",
+                    "email": "brian@nesbot.com",
+                    "homepage": "https://markido.com"
+                },
+                {
+                    "name": "kylekatarnls",
+                    "homepage": "https://github.com/kylekatarnls"
+                }
+            ],
+            "description": "An API extension for DateTime that supports 281 different languages.",
+            "homepage": "https://carbon.nesbot.com",
+            "keywords": [
+                "date",
+                "datetime",
+                "time"
+            ],
+            "support": {
+                "docs": "https://carbon.nesbot.com/docs",
+                "issues": "https://github.com/briannesbitt/Carbon/issues",
+                "source": "https://github.com/briannesbitt/Carbon"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/kylekatarnls",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/Carbon#sponsor",
+                    "type": "opencollective"
+                },
+                {
+                    "url": "https://tidelift.com/subscription/pkg/packagist-nesbot-carbon?utm_source=packagist-nesbot-carbon&utm_medium=referral&utm_campaign=readme",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-12-27T09:28:11+00:00"
+        },
+        {
             "name": "nikic/php-parser",
             "version": "v5.7.0",
             "source": {
@@ -14085,16 +14239,16 @@
         },
         {
             "name": "stomp-php/stomp-php",
-            "version": "5.1.3",
+            "version": "5.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stomp-php/stomp-php.git",
-                "reference": "2c9573a54be486b6b8cbfe35e4e6f47779952297"
+                "reference": "a5d00577756c9d9995e725e3271473d24bfc148b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stomp-php/stomp-php/zipball/2c9573a54be486b6b8cbfe35e4e6f47779952297",
-                "reference": "2c9573a54be486b6b8cbfe35e4e6f47779952297",
+                "url": "https://api.github.com/repos/stomp-php/stomp-php/zipball/a5d00577756c9d9995e725e3271473d24bfc148b",
+                "reference": "a5d00577756c9d9995e725e3271473d24bfc148b",
                 "shasum": ""
             },
             "require": {
@@ -14142,7 +14296,7 @@
             ],
             "support": {
                 "issues": "https://github.com/stomp-php/stomp-php/issues",
-                "source": "https://github.com/stomp-php/stomp-php/tree/5.1.3"
+                "source": "https://github.com/stomp-php/stomp-php/tree/5.1.4"
             },
             "funding": [
                 {
@@ -14154,7 +14308,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-21T11:30:43+00:00"
+            "time": "2025-12-01T13:58:26+00:00"
         },
         {
             "name": "svg-pan-zoom/svg-pan-zoom",

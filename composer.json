@@ -9,6 +9,7 @@
     "version": "2024.16",
     "require": {
         "ext-json": "*",
+        "city-of-helsinki/php-resilient-logger": "^1.0",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.6.7",
         "doctrine/lexer": "^2",
