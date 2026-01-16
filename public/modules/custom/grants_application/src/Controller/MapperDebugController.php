@@ -13,9 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MapperDebugController {
 
-  public function __construct() {
-  }
-
   /**
    * Simple endpoint used for testing new mappings & schemas.
    *
@@ -37,7 +34,8 @@ class MapperDebugController {
     $mapping = $requestData['mapping'];
 
     try {
-      $mapper = new JsonMapper($mapping);
+      $mapper = new JsonMapper();
+      $mapper->setMappings($mapping);
       $mappedData = $mapper->map($data);
     }
     catch (\Exception $e) {

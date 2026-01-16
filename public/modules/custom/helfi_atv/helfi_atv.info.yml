@@ -2,6 +2,6 @@ name: helfi_atv
 type: module
 description: Integrates ATV to Drupal
 package: Hel.fi
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - helfi_helsinki_profiili

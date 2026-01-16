@@ -10,6 +10,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
@@ -197,13 +198,13 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
   public function getCacheTags(): array {
     $tags = parent::getCacheTags();
     $node = $this->routeMatch->getParameter('node');
-    if ($node && $node->id()) {
-      $tags = Cache::mergeTags($tags, ["node:{$node->id()}"]);
+    if ($node instanceof EntityInterface && $node->id()) {
+      $tags = Cache::mergeTags($tags, $node->getCacheTags());
     }
 
     $webform = $this->getWebform();
     if ($webform && $webform->id()) {
-      $tags = Cache::mergeTags($tags, ["webform:{$webform->id()}"]);
+      $tags = Cache::mergeTags($tags, $webform->getCacheTags());
     }
     return $tags;
   }
@@ -215,7 +216,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
     // This block's output depends on the current route (e.g., the node)
     // and the current user (anonymous vs authenticated).
     // Add both as cache contexts.
-    return Cache::mergeContexts(parent::getCacheContexts(), ['route', 'user']);
+    return Cache::mergeContexts(parent::getCacheContexts(), ['route', 'user.roles:anonymous']);
   }
 
   /**

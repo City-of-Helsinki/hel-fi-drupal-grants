@@ -18,7 +18,6 @@ use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\JsonSchemaValidator;
-use Drupal\grants_application\Mapper\JsonMapper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_events\EventsService;
@@ -287,6 +286,8 @@ final class Application extends ResourceBase {
         500
       );
     }
+
+    $uploadedBankFile = FALSE;
 
     if (!$this->jsonMapperService->documentBankFileIsSet($document)) {
       // Bank file has not yet been added to the ATV-document.
