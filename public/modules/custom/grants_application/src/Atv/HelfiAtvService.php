@@ -260,7 +260,7 @@ class HelfiAtvService {
    * @param string|null $applicant_type
    *   The applicant type.
    *
-   * @return Drupal\helfi_atv\AtvDocument
+   * @return \Drupal\helfi_atv\AtvDocument
    *   The atv-document.
    */
   public function createSideDocument(

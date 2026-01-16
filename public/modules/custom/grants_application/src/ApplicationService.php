@@ -42,7 +42,7 @@ class ApplicationService {
    * @param int $application_type_id
    *   The application type id.
    *
-   * @return Drupal\helfi_atv\AtvDocument
+   * @return \Drupal\helfi_atv\AtvDocument
    *   The atv document.
    */
   public function createDraft(int $application_type_id): AtvDocument {
