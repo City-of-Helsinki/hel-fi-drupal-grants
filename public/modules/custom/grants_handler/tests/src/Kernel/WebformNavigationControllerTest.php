@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_handler\Kernel;
 
-use DG\BypassFinals;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
@@ -102,7 +101,6 @@ class WebformNavigationControllerTest extends GrantsHandlerKernelTestBase {
    * {@inheritdoc}
    */
   public function setUp(): void {
-    BypassFinals::enable();
     parent::setUp();
 
     $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
