@@ -1,7 +1,13 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 // biome-ignore-all lint/a11y/noLabelWithoutControl: @todo UHF-12501
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
-import { type ChangeEvent, type FocusEvent, useCallback } from 'react';
+import {
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  type WheelEvent,
+  useCallback,
+} from 'react';
 import {
   Fieldset,
   TextArea as HDSTextArea,
@@ -84,6 +90,14 @@ export const TextInput = ({
           if (event.target.value === '0') {
             event.target.select();
           }
+        }}
+        onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
+          if (event.key === 'e' || event.key === 'E') {
+            event.preventDefault();
+          }
+        }}
+        onWheel={(event: WheelEvent<HTMLInputElement>) => {
+          event.currentTarget.blur();
         }}
         readOnly={readonly}
         required={required}
