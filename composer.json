@@ -54,6 +54,7 @@
         "mglaman/composer-drupal-lenient": "*",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
+        "ramsey/uuid": "^4.9",
         "wikimedia/composer-merge-plugin": "^2.1"
     },
     "require-dev": {
