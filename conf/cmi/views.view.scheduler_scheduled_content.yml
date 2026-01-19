@@ -592,7 +592,7 @@ display:
             required: false
             remember: false
             multiple: false
-            remember_roles: { }
+            remember_roles: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -631,7 +631,7 @@ display:
             required: false
             remember: false
             multiple: false
-            remember_roles: { }
+            remember_roles: {  }
             placeholder: ''
           is_grouped: false
           group_info:
@@ -671,7 +671,7 @@ display:
             required: false
             remember: false
             multiple: false
-            remember_roles: { }
+            remember_roles: {  }
             reduce: false
           is_grouped: false
           group_info:
@@ -711,7 +711,7 @@ display:
             required: false
             remember: false
             multiple: false
-            remember_roles: { }
+            remember_roles: {  }
           is_grouped: true
           group_info:
             label: 'Published status'
@@ -758,7 +758,7 @@ display:
             required: false
             remember: false
             multiple: false
-            remember_roles: { }
+            remember_roles: {  }
             reduce: false
           is_grouped: false
           group_info:
@@ -802,7 +802,7 @@ display:
             required: false
             remember: false
             multiple: false
-            remember_roles: { }
+            remember_roles: {  }
             min_placeholder: ''
             max_placeholder: ''
             placeholder: ''
@@ -848,7 +848,7 @@ display:
             required: false
             remember: false
             multiple: false
-            remember_roles: { }
+            remember_roles: {  }
             min_placeholder: ''
             max_placeholder: ''
             placeholder: ''
