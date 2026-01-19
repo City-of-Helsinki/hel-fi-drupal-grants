@@ -128,6 +128,8 @@ services:
     calls:
       - [ setAttachmentHandler, [ '@?grants_attachments.attachment_handler' ] ]
 
+  Drupal\grants_handler\ApplicationGetterService: '@grants_handler.application_getter_service'
+  Drupal\grants_handler\ApplicationGetterServiceInterface: '@grants_handler.application_getter_service'
   grants_handler.application_getter_service:
     class: Drupal\grants_handler\ApplicationGetterService
     arguments: [

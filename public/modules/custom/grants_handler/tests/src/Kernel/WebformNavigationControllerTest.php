@@ -8,7 +8,7 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Routing\UrlGeneratorInterface;
-use Drupal\grants_handler\ApplicationGetterService;
+use Drupal\grants_handler\ApplicationGetterServiceInterface;
 use Drupal\grants_handler\Controller\WebformNavigationController;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
@@ -72,9 +72,9 @@ class WebformNavigationControllerTest extends GrantsHandlerKernelTestBase {
   /**
    * The mocked application getter service.
    *
-   * @var \Prophecy\Prophecy\ObjectProphecy
+   * @var \Prophecy\Prophecy\ObjectProphecy|ApplicationGetterServiceInterface
    */
-  protected ObjectProphecy $applicationGetterService;
+  protected ObjectProphecy|ApplicationGetterServiceInterface $applicationGetterService;
 
   /**
    * The mocked submission.
@@ -82,13 +82,6 @@ class WebformNavigationControllerTest extends GrantsHandlerKernelTestBase {
    * @var \Prophecy\Prophecy\ObjectProphecy
    */
   protected ObjectProphecy $submission;
-
-  /**
-   * The mocked ATV document.
-   *
-   * @var \Prophecy\Prophecy\ObjectProphecy
-   */
-  protected ObjectProphecy $atvDocument;
 
   /**
    * The mocked ATV service.
@@ -120,17 +113,15 @@ class WebformNavigationControllerTest extends GrantsHandlerKernelTestBase {
     $this->submission = $this->prophesize(WebformSubmission::class);
     $this->submission->getData()->willReturn(['status' => 'DRAFT']);
 
-    $this->atvDocument = $this->prophesize(AtvDocument::class);
-
-    $this->applicationGetterService = $this->prophesize(ApplicationGetterService::class);
+    $this->applicationGetterService = $this->prophesize(ApplicationGetterServiceInterface::class);
     $this->applicationGetterService->submissionObjectFromApplicationNumber('123')->willReturn($this->submission->reveal());
-    $this->applicationGetterService->getAtvDocument('123')->willReturn($this->atvDocument->reveal());
+    $this->applicationGetterService->getAtvDocument('123')->willReturn(new AtvDocument());
 
     $navigationHelper = $this->prophesize(GrantsHandlerNavigationHelper::class);
     $navigationHelper->deleteSubmissionLogs($this->submission->reveal())->willReturn(1);
 
     $this->atvService = $this->prophesize(AtvService::class);
-    $this->atvService->deleteDocument($this->atvDocument->reveal())->willReturn(TRUE);
+    $this->atvService->deleteDocument(new AtvDocument())->willReturn(TRUE);
 
     $this->container->set('url_generator', $urlGenerator->reveal());
     $this->container->set('messenger', $this->messenger->reveal());
@@ -248,7 +239,7 @@ class WebformNavigationControllerTest extends GrantsHandlerKernelTestBase {
    * Test redirect with ATV service error.
    */
   public function testRedirectWithAtvServiceError() {
-    $this->atvService->deleteDocument($this->atvDocument->reveal())->willThrow(new \Exception('Error: Test exception'));
+    $this->atvService->deleteDocument(new AtvDocument())->willThrow(new \Exception('Error: Test exception'));
     $this->submission->delete()->shouldNotBeCalled();
     $this->messenger->addError(Argument::any())->shouldBeCalled();
     $this->logger->error(Argument::any(), Argument::any())->shouldBeCalled();
@@ -263,7 +254,7 @@ class WebformNavigationControllerTest extends GrantsHandlerKernelTestBase {
    * Test redirect with successful deletion.
    */
   public function testRedirectWithSuccessfulDeletion() {
-    $this->atvService->deleteDocument($this->atvDocument->reveal())->willReturn(TRUE);
+    $this->atvService->deleteDocument(new AtvDocument())->willReturn(TRUE);
     $this->submission->delete()->shouldBeCalled();
     $this->messenger->addStatus(Argument::any())->shouldBeCalled();
     $this->messenger->addError(Argument::any())->shouldNotBeCalled();

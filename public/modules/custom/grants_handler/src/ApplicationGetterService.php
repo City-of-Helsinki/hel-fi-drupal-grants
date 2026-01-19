@@ -28,7 +28,7 @@ use GuzzleHttp\Exception\GuzzleException;
 /**
  * Class to get things related to applications.
  */
-final class ApplicationGetterService {
+final class ApplicationGetterService implements ApplicationGetterServiceInterface {
 
   /**
    * Access to profile data.
@@ -444,7 +444,7 @@ final class ApplicationGetterService {
    * @param string $type
    *   Type of the application.
    */
-  public function getDataDefinition(string $type) {
+  public function getDataDefinition(string $type): mixed {
     $defClass = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionClass'];
     $defId = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionId'];
     return $defClass::create($defId);
