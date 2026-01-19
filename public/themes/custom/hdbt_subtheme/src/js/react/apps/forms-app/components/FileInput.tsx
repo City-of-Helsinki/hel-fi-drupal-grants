@@ -204,7 +204,11 @@ export const FileInput = ({
         id={`${name}-delivered-later`}
         label={Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' })}
         onChange={(e) => {
-          onChange({ ...formData, isDeliveredLater: e.target.checked });
+          onChange({
+            ...formData,
+            isDeliveredLater: e.target.checked,
+            isIncludedInOtherFile: e.target.checked ? false : isIncludedInOtherFile,
+          });
         }}
         className='hdbt-form--checkbox'
         style={defaultCheckboxStyle}
@@ -215,7 +219,11 @@ export const FileInput = ({
         id={`${name}-included-in-other-file`}
         label={Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' })}
         onChange={(e) => {
-          onChange({ ...formData, isIncludedInOtherFile: e.target.checked });
+          onChange({
+            ...formData,
+            isIncludedInOtherFile: e.target.checked,
+            isDeliveredLater: e.target.checked ? false : isDeliveredLater,
+          });
         }}
         className='hdbt-form--checkbox'
         style={defaultCheckboxStyle}
