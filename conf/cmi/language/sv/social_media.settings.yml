@@ -3,12 +3,12 @@ social_media:
     text: 'Dela på Facebook'
     attributes: "target|_blank\r\nclass|facebook-share"
   linkedin:
-    text: 'Dela på LinkedIn'
     api_url: 'https://www.linkedin.com/sharing/share-offsite/?url=[current-page:url]'
+    text: 'Dela på LinkedIn'
     attributes: "target|_blank\r\nclass|linkedin"
   twitter:
-    text: 'Dela på X'
     api_url: 'https://x.com/intent/post?url=[current-page:url]&status=[current-page:title]+[current-page:url]'
+    text: 'Dela på X'
     attributes: "target|_blank\r\nclass|twitter"
   email:
     text: 'Skicka sidan via e‑post'

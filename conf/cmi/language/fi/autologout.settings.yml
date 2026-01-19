@@ -1,5 +1,5 @@
-message: 'Sinut kirjataan ulos palvelusta epäaktiivisuuden takia.'
-inactivity_message: 'Sinut on kirjattu ulos palvelusta epäaktiivisuuden takia.'
 dialog_title: 'Automaattisen uloskirjauksen ilmoitus'
 yes_button: 'Jatka käyttöä'
 no_button: 'Kirjaudu ulos'
+message: 'Sinut kirjataan ulos palvelusta epäaktiivisuuden takia.'
+inactivity_message: 'Sinut on kirjattu ulos palvelusta epäaktiivisuuden takia.'

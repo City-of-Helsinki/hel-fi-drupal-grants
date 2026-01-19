@@ -277,6 +277,7 @@ permissions:
   - 'link to any page'
   - 'notify of path changes'
   - 'openid connect set own password'
+  - 'rebuild node access permissions'
   - 'revert address revisions'
   - 'revert all revisions'
   - 'revert all tpr_service revisions'
