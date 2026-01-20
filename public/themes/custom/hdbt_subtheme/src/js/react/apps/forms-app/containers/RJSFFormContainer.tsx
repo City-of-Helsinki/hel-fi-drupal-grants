@@ -185,11 +185,7 @@ export const RJSFFormContainer = ({
 
       if (_field && !hasValues) {
         _field.addError(t('subvention.greater_than_zero'));
-        newErrors.push({
-          property: `.${field}`,
-          message: t('subvention.greater_than_zero'),
-          schemaPath: `.${field}`,
-        });
+        newErrors.push({ property: `.${field}`, message: t('subvention.greater_than_zero'), schemaPath: `.${field}` });
       }
     });
 

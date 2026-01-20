@@ -13,14 +13,7 @@ import { formatErrors } from '../utils';
 import { useState } from 'react';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 
-type ATVFile = {
-  description?: string;
-  fileId: number;
-  fileName: string;
-  fileType: string;
-  href: string;
-  size: number;
-};
+type ATVFile = { description?: string; fileId: number; fileName: string; fileType: string; href: string; size: number };
 
 type PersistedFile = ATVFile & {
   integrationID: string;
@@ -85,9 +78,7 @@ export const FileInput = ({
   const applicationNumber = useAtomValue(getApplicationNumberAtom);
   const { token } = useAtomValue(formConfigAtom)!;
   const pushNotification = useSetAtom(pushNotificationAtom);
-  const { 'misc:file-type': fileType } = uiSchema as UiSchema & {
-    'misc:file-type': number;
-  };
+  const { 'misc:file-type': fileType } = uiSchema as UiSchema & { 'misc:file-type': number };
   const defaultValue = filesFromATVData(formData);
   const { isDeliveredLater, isIncludedInOtherFile } = formData || {};
 
@@ -108,11 +99,7 @@ export const FileInput = ({
       throw new Error('Failed to remove file');
     }
 
-    pushNotification({
-      children: <div>{json.error}</div>,
-      label: t('file_removal_failed.title'),
-      type: 'error',
-    });
+    pushNotification({ children: <div>{json.error}</div>, label: t('file_removal_failed.title'), type: 'error' });
 
     // Force re-render to reset the FileInput state
     setRefreshKey((prevKey) => prevKey + 1);
