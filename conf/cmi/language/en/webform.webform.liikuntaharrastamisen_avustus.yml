@@ -130,11 +130,10 @@ elements: |
   tarkemmat_tiedot_section:
     '#title': 'Information in more detail'
   hankesuunnitelma_avustuksen_kesto:
-    '#title': 'Are you applying for a one, two or three year project grant? Enter the grant amounts to be applied for in the subsequent years of the project into the corresponding fields.'
+    '#title': 'Are you applying for a one or two year project grant? Enter the grant amounts to be applied for in the subsequent years of the project into the corresponding fields.'
     '#options':
       1: 'I am applying for a one-year grant'
       2: 'I am applying for a two-year grant'
-      3: 'I am applying for a three-year grant'
   haettava_avustussumma:
     '#title': 'Grant amount requested'
   haettava_avustussumma_2025:

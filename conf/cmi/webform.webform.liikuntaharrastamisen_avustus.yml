@@ -372,7 +372,7 @@ elements: |-
         '#type': select
         '#title': 'Vuosi, jolle haen avustusta'
         '#options':
-          2025: '2025'
+          2026: '2026'
         '#required': true
     avustuslajit:
       '#type': webform_section
@@ -600,12 +600,11 @@ elements: |-
       '#title': 'Tarkemmat tiedot '
       hankesuunnitelma_avustuksen_kesto:
         '#type': radios
-        '#title': 'Haetaanko yksi-, kaksi- vai kolmivuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
+        '#title': 'Haetaanko yksi- vai kaksivuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
         '#description_display': after
         '#options':
           1: 'Haen avustusta yksivuotisena'
           2: 'Haen avustusta kaksivuotisena'
-          3: 'Haen avustusta kolmivuotisena'
         '#required': true
         '#default_value': '1'
       haettava_avustussumma:

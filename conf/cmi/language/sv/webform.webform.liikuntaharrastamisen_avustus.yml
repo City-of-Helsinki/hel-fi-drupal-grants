@@ -130,11 +130,10 @@ elements: |
   tarkemmat_tiedot_section:
     '#title': 'Mer detaljerad information'
   hankesuunnitelma_avustuksen_kesto:
-    '#title': 'Ansöker du om understöd för ett, två eller tre år? Ange de understödsbelopp som ska sökas för projektets kommande år i de öppna fälten.'
+    '#title': 'Ansöker du om understöd för ett eller två år? Ange de understödsbelopp som ska sökas för projektets kommande år i de öppna fälten.'
     '#options':
       1: 'Jag ansöker om understöd för ett år'
       2: 'Jag ansöker om understöd för två år'
-      3: 'Jag ansöker om understöd för tre år'
   haettava_avustussumma:
     '#title': 'Understödsbelopp som ansöks'
   haettava_avustussumma_2025:
