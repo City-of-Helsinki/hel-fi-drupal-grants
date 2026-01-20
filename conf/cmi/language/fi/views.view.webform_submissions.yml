@@ -23,11 +23,11 @@ display:
             offset_label: Offset
       fields:
         sid:
-          separator: ', '
           label: '#'
-        in_draft:
           separator: ', '
+        in_draft:
           label: Keskeneräinen
+          separator: ', '
         created:
           label: Luotu
           separator: ', '
@@ -51,11 +51,11 @@ display:
         webform_submission_bulk_form:
           action_title: Toiminto
         sid:
-          separator: ', '
           label: '#'
-        in_draft:
           separator: ', '
+        in_draft:
           label: Keskeneräinen
+          separator: ', '
         sticky:
           label: Kiinnitetty
           separator: ', '
@@ -66,8 +66,8 @@ display:
           label: Luotu
           separator: ', '
         completed:
-          separator: ', '
           label: Valmis
+          separator: ', '
         remote_addr:
           label: 'IP osoite'
           separator: ', '
@@ -86,11 +86,11 @@ display:
         webform_submission_bulk_form:
           action_title: Toiminto
         sid:
-          separator: ', '
           label: '#'
-        in_draft:
           separator: ', '
+        in_draft:
           label: Keskeneräinen
+          separator: ', '
         sticky:
           label: Kiinnitetty
           separator: ', '
@@ -101,8 +101,8 @@ display:
           label: Luotu
           separator: ', '
         completed:
-          separator: ', '
           label: Valmis
+          separator: ', '
         remote_addr:
           label: 'IP osoite'
           separator: ', '
@@ -123,11 +123,11 @@ display:
     display_options:
       fields:
         sid:
-          separator: ', '
           label: '#'
-        in_draft:
           separator: ', '
+        in_draft:
           label: Keskeneräinen
+          separator: ', '
         sticky:
           label: Kiinnitetty
           separator: ', '
@@ -138,8 +138,8 @@ display:
           label: Luotu
           separator: ', '
         completed:
-          separator: ', '
           label: Valmis
+          separator: ', '
         remote_addr:
           label: 'IP osoite'
           separator: ', '
