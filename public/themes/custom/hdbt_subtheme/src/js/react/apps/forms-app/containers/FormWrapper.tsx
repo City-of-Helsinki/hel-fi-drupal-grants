@@ -162,12 +162,7 @@ const transformData = (data: any) => {
     });
   }
 
-  return {
-    ...data,
-    formData: fixedFormData,
-    schema: { ...schema, properties: transformedProperties },
-    ui_schema,
-  };
+  return { ...data, formData: fixedFormData, schema: { ...schema, properties: transformedProperties }, ui_schema };
 };
 
 /**
@@ -218,11 +213,7 @@ export const FormWrapper = ({
         ? Drupal.t('Application could not be submitted.', {}, { context: 'Grants application: Submit' })
         : Drupal.t('Application could not be saved as draft.', {}, { context: 'Grants application: Draft' });
 
-    pushNotification({
-      children: <div>{Array.isArray(error) ? error.join('\n') : error}</div>,
-      label,
-      type: 'error',
-    });
+    pushNotification({ children: <div>{Array.isArray(error) ? error.join('\n') : error}</div>, label, type: 'error' });
   };
   const submitData = async (submittedData: any): Promise<void> => {
     setIsSubmitting(true);

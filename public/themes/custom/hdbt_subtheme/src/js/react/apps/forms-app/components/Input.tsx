@@ -223,12 +223,7 @@ export const AddressSelect = (props: WidgetProps) => {
 
 export const BankAccountSelect = (props: WidgetProps) => {
   const accounts = useAtomValue(getAccountsAtom);
-  const options = Object.assign(
-    accounts.map(({ bankAccount }) => ({
-      label: bankAccount,
-      value: bankAccount,
-    })),
-  );
+  const options = Object.assign(accounts.map(({ bankAccount }) => ({ label: bankAccount, value: bankAccount })));
 
   return <SelectWidget {...{ ...props, options: { enumOptions: options } }} />;
 };
@@ -286,13 +281,7 @@ export const CommunityOfficialsSelect = ({ label, value, uiSchema, ...rest }: Wi
     return <PreviewInput value={formatPreviewValue()} label={label} uiSchema={uiSchema} />;
   }
 
-  const selectProps: SelectWidgetProps = {
-    label,
-    value,
-    uiSchema,
-    ...rest,
-    options: { enumOptions: options },
-  };
+  const selectProps: SelectWidgetProps = { label, value, uiSchema, ...rest, options: { enumOptions: options } };
 
   if (!options.length) {
     selectProps.assistive = Drupal.t(

@@ -9,9 +9,7 @@ import { shouldRenderPreviewAtom } from '../../store';
 export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const { title, items } = schema;
-  const { 'misc:variant': variant } = uiSchema as UiSchema & {
-    'misc:variant'?: string;
-  };
+  const { 'misc:variant': variant } = uiSchema as UiSchema & { 'misc:variant'?: string };
 
   // Do not render in preview
   if (shouldRenderPreview) {
