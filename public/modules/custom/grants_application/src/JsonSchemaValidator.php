@@ -2,7 +2,6 @@
 
 namespace Drupal\grants_application;
 
-
 use JsonSchema\Validator;
 
 /**
@@ -10,17 +9,17 @@ use JsonSchema\Validator;
  */
 final readonly class JsonSchemaValidator {
 
-  public function __construct(private readonly Validator $validator){
+  public function __construct(private readonly Validator $validator) {
   }
 
   /**
    * Validate the submission against schema.
-   * 
-   * @param $value
+   *
+   * @param object $value
    *   The value to validate, a result of json_decode function call.
-   * @param $schema
+   * @param object $schema
    *   The schema to validate against, a result of json_decode function call.
-
+   *
    * @return array|bool
    *   Return TRUE or array of errors.
    */
@@ -31,7 +30,7 @@ final readonly class JsonSchemaValidator {
       return $this->validator->getErrors();
     }
 
-    return true;
+    return TRUE;
   }
 
 }

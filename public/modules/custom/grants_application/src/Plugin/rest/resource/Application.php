@@ -39,7 +39,7 @@ use Symfony\Component\Routing\RouteCollection;
  */
 #[RestResource(
   id: "application_rest_resource",
-  label: new TranslatableMarkup("Application"),
+  label: new TranslatableMarkup("Application resource"),
   uri_paths: [
     "canonical" => "/applications/{application_type_id}/application/{application_number}",
     "create" => "/applications/{application_type_id}/application/{application_number}",
@@ -117,7 +117,7 @@ final class Application extends ResourceBase {
    *   The unique identifier for the application.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
-   *   The json response.
+   *   The JSON response.
    *
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
@@ -125,7 +125,6 @@ final class Application extends ResourceBase {
     int $application_type_id,
     ?string $application_number,
   ): JsonResponse {
-    // @todo Sanitize & validate & authorize properly.
     if (!$application_number) {
       return new JsonResponse([], 400);
     }
@@ -142,8 +141,6 @@ final class Application extends ResourceBase {
 
     if (!$settings->isApplicationOpen()) {
       return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
-      // @todo Uncomment.
-      // return new JsonResponse([], 403);
     }
 
     try {
@@ -157,7 +154,7 @@ final class Application extends ResourceBase {
 
     try {
       // Make sure it exists in database.
-      $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+      $entity = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception $e) {
       // Cannot get the submission.
@@ -166,12 +163,7 @@ final class Application extends ResourceBase {
 
     try {
       $document = $this->atvService->getDocument($application_number);
-      $content = $document->getContent();
-
-      // @todo Shadow-document -ticket.
-      // Load the form_data wherever it may be located.
-      // If not in root of content, then it should be under compensation.
-      $form_data = isset($content['form_data']) ? $content['form_data'] : (isset($content['compensation']['form_data']) ? $content['compensation']['form_data'] : []);
+      $sideDocument = $this->atvService->getDocumentById($entity->getSideDocumentId());
     }
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
@@ -180,9 +172,11 @@ final class Application extends ResourceBase {
 
     $changeTime = new DrupalDateTime($document->getUpdatedAt());
 
+    $this->contentLock->locking($entity, '*', $this->accountProxy->id(), TRUE);
+
     // @todo Only return required user data to frontend.
     $response = [
-      'form_data' => $form_data,
+      'form_data' => $sideDocument->getContent()['form_data'],
       'grants_profile' => $grants_profile_data->toArray(),
       'last_changed' => $changeTime->getTimestamp(),
       'status' => $document->getStatus(),
@@ -197,10 +191,10 @@ final class Application extends ResourceBase {
   /**
    * Post request.
    *
-   * Send application to Avus2
+   * Send application to Avus2 for the first time.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
-   *   The json response.
+   *   The JSON response.
    */
   public function post(
     Request $request,
@@ -245,7 +239,7 @@ final class Application extends ResourceBase {
     }
 
     try {
-      $submission = $this->getSubmissionEntity(
+      $entity = $this->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
         $application_number,
         $grants_profile_data->getBusinessId(),
@@ -259,6 +253,7 @@ final class Application extends ResourceBase {
 
     try {
       $document = $this->atvService->getDocument($application_number);
+      $sideDocument = $this->atvService->getDocumentById($entity->getSideDocumentId());
     }
     catch (\Throwable $e) {
       $this->logger->error("During POST-request, failed to fetch ATV-document, $application_number: {$e->getMessage()}");
@@ -288,7 +283,6 @@ final class Application extends ResourceBase {
     }
 
     $uploadedBankFile = FALSE;
-
     if (!$this->jsonMapperService->documentBankFileIsSet($document)) {
       // Bank file has not yet been added to the ATV-document.
       try {
@@ -300,13 +294,13 @@ final class Application extends ResourceBase {
       }
 
       if (!is_bool($actualFile)) {
+        // Send file to ATV, is added to the document.
         $this->atvService->addAttachment(
           $document->getId(),
           $bankFile['filename'],
           $actualFile,
         );
         $actualFile->delete();
-        // We don't add the event here since we need to load it once more.
         $uploadedBankFile = TRUE;
       }
 
@@ -327,32 +321,10 @@ final class Application extends ResourceBase {
       }
     }
 
-
-    try {
-      $mappedData = $this->jsonMapperService->handleMapping(
-        $application_type_id,
-        $application_number,
-        $form_data,
-        $bankFile,
-        (bool) $submission->get('draft')->value,
-        $selected_company['type'],
-      );
-    }
-    catch (\Exception $e) {
-      $this->logger->critical("Failed mapping, application type: $application_type_id");
-      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
-    }
-
-    // @todo Varjo-dokumentti -ticket.
-    $mappedData['form_data'] = $form_data;
-
     // Save id has previously been saved to database to track
     // unsuccessful submissions due to integration failures.
     // @todo Use drupal uuid service maybe ?
     $save_id = Uuid::uuid4()->toString();
-
-    // We add the events manually instead of requesting integration.
-    // Requesting integration could possibly cause a race condition.
     if ($uploadedBankFile) {
       $bankAccountNumber = $this->jsonMapperService->getSelectedBankAccount($form_data);
       $event = $this->eventsService->getEventData(
@@ -364,27 +336,41 @@ final class Application extends ResourceBase {
       $this->eventsService->addNewEventForApplication($document, $event);
     }
 
+    try {
+      $mappedData = $this->jsonMapperService->handleMapping(
+        $application_type_id,
+        $application_number,
+        $form_data,
+        $bankFile,
+        $selected_company['type'],
+      );
+    }
+    catch (\Exception $e) {
+      $this->logger->critical("Failed mapping, application type: $application_type_id");
+      return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
+    }
+
     if ($document->getContent()['events']) {
       $mappedData['events'] = $document->getContent()['events'];
     }
 
-    // @codingStandardsIgnoreStart
-    // Update the atv document before sending to integration.
-    // Lets try a way to hold on to the document data.
-    // @todo Sanitize the input.
-    // NOSONAR
-    $mappedData['compensation']['form_data'] = $form_data;
-    // NOSONAR
     $document->setContent($mappedData);
-    // @codingStandardsIgnoreEnd
+    $sideDocument->setContent(['form_data' => $form_data]);
 
     // Set the submitted -status right before sending to Avus2.
     // The status is set as request header by integration-service.
     $document->setStatus('SUBMITTED');
+    $document->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
+    $sideDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
 
-    // @todo Varjo dokumentti-ticket, save the form_data in separate atv doc.
-    // Save the ATV-document directly one last time.
-    $latestDocument = $this->atvService->updateExistingDocument($document);
+    try {
+      $this->atvService->updateExistingDocument($sideDocument);
+      $latestDocument = $this->atvService->updateExistingDocument($document);
+    }
+    catch (\Exception $e) {
+      $this->logger->critical("Failed to update document, application type: $application_type_id, id $application_number: " . $e->getMessage());
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
+    }
 
     // Add the submit event to the events.
     $event = $this->eventsService->getEventData(
@@ -395,8 +381,6 @@ final class Application extends ResourceBase {
     );
     $this->eventsService->addNewEventForApplication($latestDocument, $event);
 
-    // On first AVUS2-submit formUpdate = FALSE and afterward only TRUE.
-    // check GrantsHandler::getFormUpdate for more detailed explanation.
     $success = FALSE;
     try {
       $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id);
@@ -412,26 +396,20 @@ final class Application extends ResourceBase {
     }
 
     try {
-      $submission->setChangedTime(time());
-      $submission->set('draft', FALSE);
-      $submission->save();
+      $entity->setChangedTime(time());
+      $entity->set('draft', FALSE);
+      $entity->save();
     }
     catch (\Exception $e) {
       // This should never happen.
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-    // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
-    // grants_application module when this module is enabled in
-    // production.
-    //
-    // This event lets other parts of the system to react
-    // to user submitting grants forms.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
-    if ($this->contentLock->isLockable($submission)) {
+    if ($this->contentLock->isLockable($entity)) {
       $this->contentLock->release(
-        $submission,
+        $entity,
         '*',
         $this->accountProxy->id()
       );
@@ -461,7 +439,6 @@ final class Application extends ResourceBase {
     $content = json_decode($request->getContent(), TRUE);
     [
       'form_data' => $form_data,
-      'attachments' => $attachments,
     ] = $content;
 
     try {
@@ -486,7 +463,6 @@ final class Application extends ResourceBase {
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
-      $user_data = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
       $this->logger->error("User failed to fetch the user information during POST-request: {$e->getMessage()}");
@@ -494,7 +470,7 @@ final class Application extends ResourceBase {
     }
 
     try {
-      $submission = $this->getSubmissionEntity(
+      $entity = $this->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
         $application_number,
         $grants_profile_data->getBusinessId(),
@@ -508,6 +484,7 @@ final class Application extends ResourceBase {
 
     try {
       $document = $this->atvService->getDocument($application_number);
+      $sideDocument = $this->atvService->getDocumentById($entity->getSideDocumentId());
     }
     catch (\Throwable $e) {
       $this->logger->error("During PATCH-request, failed to fetch ATV-document, $application_number: {$e->getMessage()}");
@@ -533,17 +510,12 @@ final class Application extends ResourceBase {
       );
     }
 
-    // @todo Add event HANDLER_SEND_INTEGRATION.
     try {
-      // @todo Better sanitation.
-      // @todo Save the form_data in separate atv doc.
-      $mappedData['form_data'] = $form_data ?? [];
+      $sideDocument->setContent(['form_data' => $form_data]);
       $document->setContent($mappedData);
 
       $save_id = Uuid::uuid4()->toString();
 
-      // We don't use the event api to apply this particular event.
-      // instead we just put the event into the document.
       $event = $this->eventsService->getEventData(
         'HANDLER_SEND_INTEGRATION',
         $application_number,
@@ -553,9 +525,10 @@ final class Application extends ResourceBase {
       $this->eventsService->addNewEventForApplication($document, $event);
 
       $this->atvService->updateExistingDocument($document);
+      $this->atvService->updateExistingDocument($sideDocument);
 
-      $submission->setChangedTime(time());
-      $submission->save();
+      $entity->setChangedTime(time());
+      $entity->save();
     }
     catch (\Exception $e) {
       // Unable to find the document.
@@ -563,16 +536,12 @@ final class Application extends ResourceBase {
     }
 
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
-    // grants_application module when this module is enabled in
-    // production.
-    //
-    // This event lets other parts of the system to react
-    // to user submitting grants forms.
+    // grants_application module when this module is enabled in production.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT));
 
-    if ($this->contentLock->isLockable($submission)) {
+    if ($this->contentLock->isLockable($entity)) {
       $this->contentLock->release(
-        $submission,
+        $entity,
         '*',
         $this->accountProxy->id()
       );

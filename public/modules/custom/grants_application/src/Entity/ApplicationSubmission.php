@@ -101,6 +101,11 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
       ->setLabel(new TranslatableMarkup('Delete after'))
       ->setDescription(new TranslatableMarkup('The time that the entity must be deleted.'));
 
+    // #UHF-11938 Secondary ATV-document which holds the form data
+    $fields['side_document_id'] = BaseFieldDefinition::create('string')
+      ->setLabel(new TranslatableMarkup('Side document id'))
+      ->setDescription(new TranslatableMarkup('The side document id.'));
+
     return $fields;
   }
 
@@ -112,6 +117,19 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    */
   public function isDraft(): bool {
     return (bool) $this->get('draft')->value;
+  }
+
+  /**
+   * Get the side document id.
+   *
+   * The side document contains only the raw form data.
+   * This is created to help preventing race condition when saving document.
+   *
+   * @return string
+   *   The side document id.
+   */
+  public function getSideDocumentId(): string {
+    return $this->get('side_document_id')->value;
   }
 
   /**

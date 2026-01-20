@@ -16,6 +16,9 @@ use Drupal\grants_application\User\UserInformationService;
  */
 final class JsonMapperServiceTest extends KernelTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected static $modules = [
     'grants_application',
   ];
@@ -44,7 +47,6 @@ final class JsonMapperServiceTest extends KernelTestBase {
       "KERNELTEST-058-0000001",
       $formData,
       $bankFile,
-      TRUE,
       "registered_community",
     );
 
@@ -117,4 +119,5 @@ final class JsonMapperServiceTest extends KernelTestBase {
       ],
     ];
   }
+
 }

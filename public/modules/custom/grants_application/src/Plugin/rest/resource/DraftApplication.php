@@ -13,6 +13,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
@@ -22,6 +23,7 @@ use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_handler\ApplicationSubmitType;
 use Drupal\grants_handler\Event\ApplicationSubmitEvent;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\rest\Attribute\RestResource;
 use Drupal\rest\Plugin\ResourceBase;
 use GuzzleHttp\Exception\GuzzleException;
@@ -38,7 +40,7 @@ use Symfony\Component\Routing\RouteCollection;
  */
 #[RestResource(
   id: "draft_application_rest_resource",
-  label: new TranslatableMarkup("Application"),
+  label: new TranslatableMarkup("Draft application resource"),
   uri_paths: [
     "canonical" => "/applications/{application_type_id}/{application_number}",
     "create" => "/applications/{application_type_id}/{application_number}/{copy_from?}",
@@ -67,6 +69,7 @@ final class DraftApplication extends ResourceBase {
     private FormValidator $formValidator,
     private ContentLockInterface $contentLock,
     private AccountProxyInterface $accountProxy,
+    private ApplicationService $applicationService,
   ) {
     // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
@@ -95,6 +98,7 @@ final class DraftApplication extends ResourceBase {
       $container->get(FormValidator::class),
       $container->get('content_lock'),
       $container->get('current_user'),
+      $container->get(ApplicationService::class)
     );
   }
 
@@ -113,6 +117,7 @@ final class DraftApplication extends ResourceBase {
    * Return initial form data.
    *
    * The atv-document and application number is created in controller.
+   * This is called as long as the application is a draft.
    *
    * @param int $application_type_id
    *   The application type id.
@@ -128,7 +133,6 @@ final class DraftApplication extends ResourceBase {
     int $application_type_id,
     string $application_number,
   ): RedirectResponse|JsonResponse {
-    // @todo Sanitize & validate & authorize properly.
     if (!$application_number) {
       return new JsonResponse([], 400);
     }
@@ -142,8 +146,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     if (!$settings->isApplicationOpen()) {
-      // @todo Uncomment.
-      // return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
+      return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
     }
 
     try {
@@ -157,7 +160,7 @@ final class DraftApplication extends ResourceBase {
 
     try {
       // Make sure it exists in database.
-      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+      $entity = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception $e) {
       // Cannot get the submission.
@@ -166,31 +169,22 @@ final class DraftApplication extends ResourceBase {
 
     try {
       $document = $this->atvService->getDocument($application_number);
-      $document_content = $document->getContent();
+      $sideDocument = $this->atvService->getDocumentById($entity->getSideDocumentId());
     }
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
       return new JsonResponse([], 500);
     }
 
-    // @todo On actual save, we are putting form_data inside
-    // "compensation" to prevent it from getting overwritten by the integration.
-    // This should be done in more clean way. Maybe separate ATV-doc for react
-    // form or something else.
     $response = [];
+    $response['form_data'] = $sideDocument->getContent()['form_data'];
 
-    if (!$document_content['form_data'] && !$document_content['compensation']) {
-      $response['form_data'] = [];
-    }
-    else {
-      $response['form_data'] = $document_content['form_data'] ?? $document_content['compensation']['form_data'];
-    }
     // @todo Only return required user data to frontend
     $response['grants_profile'] = $grants_profile_data->toArray();
     $response['user_data'] = $user_information;
     $response['status'] = $document->getStatus();
     $response['token'] = $this->csrfTokenGenerator->get('rest');
-    $response['last_changed'] = $submission->get('changed')->value;
+    $response['last_changed'] = $entity->get('changed')->value;
     $response = array_merge($response, $settings->toArray());
 
     return new JsonResponse($response);
@@ -201,132 +195,28 @@ final class DraftApplication extends ResourceBase {
    *
    * This is only called when a react-form is opened for the first time.
    * After that the patch-function takes care of submitting the form as draft.
-   * Submitting is handled in Application-resource.
+   * Avus2-submit is handled in Application-resource.
    *
    * @param int $application_type_id
    *   The application type id.
-   * @param string|null $copy_from
-   *   The application number to copy from.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
-  public function post(int $application_type_id, string|null $copy_from = NULL): JsonResponse {
+  public function post(int $application_type_id): JsonResponse {
     try {
-      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+      $atvDocument = $this->applicationService->createDraft($application_type_id);
     }
     catch (\Exception $e) {
-      // Cannot find form by application type id.
-      return new JsonResponse([], 404);
+      return new JsonResponse(['error' => 'Something went wrong.'], 500);
     }
 
-    $form_data = [];
-    if ($copy_from) {
-      try {
-        $copy_document = $this->atvService->getDocument($copy_from);
-        $copy_content = $copy_document->getContent();
-        $form_data = $copy_content['form_data'] ?? $copy_content['compensation']['form_data'];
-      }
-      catch (\Throwable $e) {
-        // Unable to fetch the document to copy from.
-        return new JsonResponse([], 500);
-      }
-    }
-
-    try {
-      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
-      $selected_company = $this->userInformationService->getSelectedCompany();
-      $user_data = $this->userInformationService->getUserData();
-    }
-    catch (\Exception $e) {
-      return new JsonResponse([], 500);
-    }
-
-    $application_uuid = $this->uuid->generate();
-    $env = Helper::getAppEnv();
-
-    // @todo Application number generation must match the existing shenanigans,
-    // or we must start from application number 1000 or something.
-    $application_number = $this->applicationNumberService
-      ->createNewApplicationNumber($env, $application_type_id);
-
-    $langcode = $this->languageManager
-      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
-      ->getId();
-    $application_name = $settings->toArray()['settings']['title'];
-    $application_title = $settings->toArray()['settings']['title'];
-    $application_type = $settings->toArray()['settings']['application_type'];
-
-    // @todo Save the react form data in separate atv doc.
-    $document = $this->atvService->createAtvDocument(
-      $application_uuid,
-      $application_number,
-      $application_name,
-      $application_type,
-      $application_title,
-      $langcode,
-      $user_data['sub'],
-      $selected_company['identifier'],
-      FALSE,
-      $selected_company,
-      $this->userInformationService->getApplicantType(),
-    );
-
-    // Grants_events requires the events-array to exist.
-    // And compensation must be json-object.
-    $document->setContent([
-      'form_data' => $form_data,
-      'compensation' => [
-        'applicantInfoArray' => []
-      ],
-      'formUpdate' => false,
-      'statusUpdates' => [],
-      'events' => [],
-      'messages' => [],
-    ]);
-
-    try {
-      $document = $this->atvService->saveNewDocument($document);
-      $now = time();
-      $submission = ApplicationSubmission::create([
-        'document_id' => $document->getId(),
-        'business_id' => $grants_profile_data->getBusinessId(),
-        'sub' => $user_data['sub'],
-        'langcode' => $langcode,
-        'draft' => TRUE,
-        'application_type_id' => $application_type_id,
-        'application_number' => $application_number,
-        'created' => $now,
-        'changed' => $now,
-      ]);
-      $submission->save();
-    }
-    catch (\Exception | GuzzleException $e) {
-      // Saving failed.
-      return new JsonResponse([], 500);
-    }
-
-    $result = [
-      'application_number' => $application_number,
-      'document_id' => $document->getId(),
-    ];
-
-    $result = [];
-    if ($copy_from) {
-      $result['redirect_url'] = Url::fromRoute(
-        'helfi_grants.forms_app',
-        ['id' => $application_type_id, 'application_number' => $application_number],
-        ['absolute' => TRUE],
-      )->toString();
-    } else {
-      $result = [
-        'application_number' => $application_number,
-        'document_id' => $document->getId(),
-      ];
-      $this->contentLock->locking($submission, '*', $this->accountProxy->id());
-    }
-
-    return new JsonResponse($result, 200);
+    // @todo Check lock logic.
+    // $this->contentLock->locking($submission, '*', $this->accountProxy->id());
+    return new JsonResponse([
+      'application_number' => $atvDocument->getMetadata()['applicationnumber'],
+      'document_id' => $atvDocument->getId(),
+    ], 200);
   }
 
   /**
@@ -344,7 +234,6 @@ final class DraftApplication extends ResourceBase {
     string $application_number,
     Request $request,
   ): JsonResponse {
-    // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);
     [
       'attachments' => $attachments,
@@ -372,7 +261,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
-      $submission = $this->getSubmissionEntity(
+      $entity = $this->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
         $application_number,
         $grants_profile_data->getBusinessId(),
@@ -389,48 +278,32 @@ final class DraftApplication extends ResourceBase {
     // should not change.
     try {
       $document = $this->atvService->getDocument($application_number);
+      $sideDocument = $this->atvService->getDocumentById($entity->getSideDocumentId());
     }
     catch (\Throwable $e) {
       // Error while fetching the document.
       return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
     }
 
-    if (!$document) {
-      // Unable to find the document.
-      return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating a new application')], 500);
-    }
-
-    // @todo clean this up a bit, unnecessarily duplicated variables.
-    $content = $document->getContent();
-    // $content['compensation'] = $document_data['compensation'];
-    $content['form_data'] = $form_data;
-    // Temporary solution since integration removes the root form_data^.
-    /*
-    $document_data['compensation'] = [];
-    $content['compensation']['form_data'] = $form_data;
-    $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
-     */
-    $document->setContent($content);
+    $sideDocument->setContent(['form_data' => $form_data]);
 
     try {
+      // The attachments are always set to the original document
+      // This function actually calls the remove file -endpoint.
       $this->cleanUpAttachments($document, $attachments);
     }
     catch (\Exception $e) {
-      // @todo log error
+      // Failing to remove file should not matter, most likely not found.
     }
 
     try {
-      // @todo Always get the events and messages from atv submission before overwriting.
-      // ^This is not a problem here since we should not have any events at this point.
-      // @todo Save the react form data in separate atv doc.
-      $this->atvService->updateExistingDocument($document);
-
-      $submission->setChangedTime(time());
-      $submission->save();
+      $this->atvService->updateExistingDocument($sideDocument);
     }
     catch (\Exception $e) {
       return new JsonResponse([['error' => $this->t('Unable to save the draft. Please try again in a moment')]], 500);
     }
+    $entity->setChangedTime(time());
+    $entity->save();
 
     $this->showSavedMessage($application_number);
 
@@ -442,11 +315,11 @@ final class DraftApplication extends ResourceBase {
     // to user submitting grants forms.
     $this->dispatcher->dispatch(new ApplicationSubmitEvent(ApplicationSubmitType::SUBMIT_DRAFT));
 
-    if ($this->contentLock->isLockable($submission)) {
-      $this->contentLock->release($submission, $application_number, $this->accountProxy->id());
+    if ($this->contentLock->isLockable($entity)) {
+      $this->contentLock->release($entity, $application_number, $this->accountProxy->id());
     }
 
-    return new JsonResponse($document->toArray(), 200);
+    return new JsonResponse($sideDocument->toArray(), 200);
   }
 
   /**
@@ -470,12 +343,12 @@ final class DraftApplication extends ResourceBase {
   /**
    * Remove unused attachments from ATV document.
    *
-   * @param object $document
+   * @param AtvDocument $document
    *   The ATV document.
    * @param array $attachments
    *   The attachments.
    */
-  private function cleanUpAttachments($document, $attachments = []): void {
+  private function cleanUpAttachments(AtvDocument $document, array $attachments = []): void {
     $attachment_ids = array_column($attachments, 'fileId');
 
     foreach ($document->getAttachments() as $attachment) {

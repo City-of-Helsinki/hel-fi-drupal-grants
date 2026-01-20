@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\user\Entity\Role;
 
 /**
@@ -161,4 +163,17 @@ function grants_application_update_9001() {
  */
 function grants_application_update_9002() {
   grants_application_update_content_lock();
+}
+
+/**
+ * Add side document id to the application submission entity.
+ */
+function grants_application_update_9003() {
+  $storage_definition = BaseFieldDefinition::create("string")
+    ->setLabel(new TranslatableMarkup("Side document id"))
+    ->setSettings(["max_length" => 255])
+    ->setRequired(TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('side_document_id', 'application_submission', 'grants_application', $storage_definition);
 }
