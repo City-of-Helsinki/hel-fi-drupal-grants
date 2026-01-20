@@ -1841,10 +1841,13 @@ function grants_handler_user_logout(AccountInterface $account): void {
   }
 
   // Release application lock on logout.
+  if (!in_array('helsinkiprofiili', \Drupal::currentUser()->getRoles())) {
+    return;
+  }
+
   $lock = \Drupal::service(FormLockService::class);
   $userDataService = \Drupal::service('helfi_helsinki_profiili.userdata');
   $userData = $userDataService->getUserData();
-
   if ($userData && $userData['sub']) {
     $lock->releaseApplicationLocksByUserUuid($userData['sub']);
   }
