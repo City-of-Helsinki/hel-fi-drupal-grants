@@ -103,6 +103,19 @@ class FormLockService {
   }
 
   /**
+   * Release application form locks.
+   *
+   * @param string $user_uuid
+   *   The user sub from profiili.
+   */
+  public function releaseApplicationLocksByUserUuid(string $user_uuid): void {
+    $this->database->delete(self::TABLE)
+      ->condition('form_type', self::LOCK_TYPE_APPLICATION)
+      ->condition('user_uuid', $user_uuid)
+      ->execute();
+  }
+
+  /**
    * Checks if the form is locked for current user.
    */
   private function isFormLocked(string $formId, int $lockType):bool {

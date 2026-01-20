@@ -759,3 +759,7 @@ msgstr "Avbryt"
 msgctxt "grants_handler_dialog"
 msgid "Deleting application failed. Please try again or contact support."
 msgstr "Det gick inte att ta bort utkastet. Försök igen eller kontakta supporten."
+
+msgctxt "grants_handler"
+msgid "This form is being modified by other person currently, you cannot do any modifications while the form is locked for them."
+msgstr "Detta formulär ändras för närvarande av en annan person, du kan inte göra några ändringar medan formuläret är låst för dem."

@@ -47,18 +47,8 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
     const data = formData && Array.isArray(formData) ? [...formData] : [];
 
     const newValue = [
-      {
-        ID: SUBVENTION_ID,
-        label: SUBVENTION_LABEL,
-        value: subventionId,
-        valueType: SUBVENTION_VALUE_TYPE,
-      },
-      {
-        ID: AMOUNT_ID,
-        label: AMOUNT_LABEL,
-        value,
-        valueType: AMOUNT_VALUE_TYPE,
-      },
+      { ID: SUBVENTION_ID, label: SUBVENTION_LABEL, value: subventionId, valueType: SUBVENTION_VALUE_TYPE },
+      { ID: AMOUNT_ID, label: AMOUNT_LABEL, value, valueType: AMOUNT_VALUE_TYPE },
     ];
 
     const index = findIndexForData(subventionId, data);
