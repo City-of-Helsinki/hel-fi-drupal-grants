@@ -132,6 +132,7 @@ permissions:
   - 'edit paragraph library item'
   - 'edit remote entities'
   - 'edit terms in keywords'
+  - 'rebuild node access permissions'
   - 'revert all tpr_service revisions'
   - 'revert all tpr_unit revisions'
   - 'revert announcement revisions'
