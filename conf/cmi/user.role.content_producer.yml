@@ -127,6 +127,7 @@ permissions:
   - 'override landing_page published option'
   - 'override page published option'
   - 'override service published option'
+  - 'rebuild node access permissions'
   - 'revert announcement revisions'
   - 'revert landing_page revisions'
   - 'revert page revisions'
