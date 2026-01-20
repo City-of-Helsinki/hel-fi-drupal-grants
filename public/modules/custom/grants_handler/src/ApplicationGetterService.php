@@ -51,9 +51,6 @@ final class ApplicationGetterService implements ApplicationGetterServiceInterfac
    */
   protected array $submissions = [];
 
-  /**
-   * Constructs an ApplicationGetterService object.
-   */
   public function __construct(
     private readonly AtvService $helfiAtvAtvService,
     private readonly HelsinkiProfiiliUserData $helfiHelsinkiProfiiliUserdata,
@@ -67,25 +64,14 @@ final class ApplicationGetterService implements ApplicationGetterServiceInterfac
   }
 
   /**
-   * Set grants profile service.
-   *
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   Grants profile service.
+   * {@inheritdoc}
    */
   public function setGrantsProfileService(GrantsProfileService $grantsProfileService): void {
     $this->grantsProfileService = $grantsProfileService;
   }
 
   /**
-   * Atv document holding this application.
-   *
-   * @param string $transactionId
-   *   Id of the transaction.
-   * @param bool $refetch
-   *   Force atv document fetch.
-   *
-   * @return \Drupal\helfi_atv\AtvDocument|null
-   *   FEtched document.
+   * {@inheritdoc}
    */
   public function getAtvDocument(string $transactionId, bool $refetch = FALSE): ?AtvDocument {
     $sParams = [
@@ -107,26 +93,7 @@ final class ApplicationGetterService implements ApplicationGetterServiceInterfac
   }
 
   /**
-   * Get company applications, either sorted by finished or all in one array.
-   *
-   * @param array $selectedCompany
-   *   Company data.
-   * @param string $appEnv
-   *   Environment.
-   * @param bool $sortByFinished
-   *   When true, results will be sorted by finished status.
-   * @param bool $sortByStatus
-   *   Sort by application status.
-   * @param string $themeHook
-   *   Use theme hook to render content. Set this to theme hook wanted to use,
-   *   and sen #submission to webform submission.
-   *
-   * @return array
-   *   Submissions in array.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\TokenExpiredException
+   * {@inheritdoc}
    */
   public function getCompanyApplications(
     array $selectedCompany,
@@ -299,25 +266,7 @@ final class ApplicationGetterService implements ApplicationGetterServiceInterfac
   }
 
   /**
-   * Get submission object from local database & fill form data from ATV.
-   *
-   * Or if local submission is not found, create new and set data.
-   *
-   * @param string $applicationNumber
-   *   String to try and parse submission id from. Ie GRANTS-DEV-00000098.
-   * @param \Drupal\helfi_atv\AtvDocument|null $document
-   *   Document to extract values from.
-   * @param bool $refetch
-   *   Force refetch from ATV.
-   * @param bool $skipAccessCheck
-   *   Should the access checks be skipped (For example, when using Admin UI).
-   *
-   * @return \Drupal\webform\Entity\WebformSubmission|null
-   *   Webform submission.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   * @throws \Drupal\grants_mandate\CompanySelectException
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * {@inheritdoc}
    */
   public function submissionObjectFromApplicationNumber(
     string $applicationNumber,
@@ -416,17 +365,11 @@ final class ApplicationGetterService implements ApplicationGetterServiceInterfac
   }
 
   /**
-   * Get the React form submission object.
-   *
-   * @param string $applicationNumber
-   *   The application number.
-   *
-   * @return \Drupal\grants_application\Entity\ApplicationSubmission|null
-   *   The submission object.
+   * {@inheritdoc}
    */
   private function getReactFormApplicationSubmission(
     string $applicationNumber,
-  ):?ApplicationSubmission {
+  ): ?ApplicationSubmission {
     $submissions = $this->entityTypeManager->getStorage('application_submission')
       ->loadByProperties(['application_number' => $applicationNumber]);
 
@@ -439,10 +382,7 @@ final class ApplicationGetterService implements ApplicationGetterServiceInterfac
   }
 
   /**
-   * Get data definition class from application type.
-   *
-   * @param string $type
-   *   Type of the application.
+   * {@inheritdoc}
    */
   public function getDataDefinition(string $type): mixed {
     $defClass = Helpers::getApplicationTypes()[$type]['dataDefinition']['definitionClass'];
@@ -451,15 +391,7 @@ final class ApplicationGetterService implements ApplicationGetterServiceInterfac
   }
 
   /**
-   * Extract webform id from application number string.
-   *
-   * @param string $applicationNumber
-   *   Application number.
-   *
-   * @return \Drupal\webform\Entity\Webform
-   *   Webform object.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * {@inheritdoc}
    */
   public function getWebformFromApplicationNumber(string $applicationNumber): Webform {
     // We need the ATV document to get the form uuid.
