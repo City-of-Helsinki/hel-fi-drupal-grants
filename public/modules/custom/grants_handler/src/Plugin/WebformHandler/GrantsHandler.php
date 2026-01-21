@@ -821,11 +821,12 @@ final class GrantsHandler extends WebformHandlerBase {
         $form['#disabled'] = TRUE;
         $this->messenger()
           ->addWarning(
-            $this->t('This application is being modified by other person
-            currently, you cannot do any modifications while the application
-            is locked for them.',
+            $this->t(
+              'This application is being modified by other person currently, you cannot do any modifications while the application is locked for them.',
               [],
-              $tOpts));
+              $tOpts
+            )
+          );
       }
       else {
         $this->formLockService->createOrRefreshApplicationLock($this->applicationNumber);

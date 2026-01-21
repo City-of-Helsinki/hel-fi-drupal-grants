@@ -22,13 +22,7 @@ type GrantsProfile = {
   foundingYear: string;
   registrationDate: string;
   officials: Array<any>;
-  addresses: Array<{
-    address_id: string;
-    street: string;
-    postCode: string;
-    city: string;
-    country: string;
-  }>;
+  addresses: Array<{ address_id: string; street: string; postCode: string; city: string; country: string }>;
   bankAccounts: Array<{
     bankAccount: string;
     confirmationFile: string;
@@ -39,10 +33,7 @@ type GrantsProfile = {
   businessId: string;
 };
 
-export type FormState = {
-  currentStep: [number, FormStep];
-  reachedStep: number;
-};
+export type FormState = { currentStep: [number, FormStep]; reachedStep: number };
 
 type FormConfig = {
   applicationNumber: string;
@@ -115,13 +106,7 @@ export const createFormDataAtom = (key: string, initialValue: any, timestamp?: n
     (get, set, update) => {
       const newValue = typeof update === 'function' ? update(get(baseAtom)) : update;
       set(baseAtom, newValue);
-      sessionStorage.setItem(
-        key,
-        JSON.stringify({
-          timestamp: Math.floor(Date.now() / 1000),
-          data: newValue,
-        }),
-      );
+      sessionStorage.setItem(key, JSON.stringify({ timestamp: Math.floor(Date.now() / 1000), data: newValue }));
     },
   );
 
@@ -143,10 +128,7 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
     submitState: status || SubmitStates.DRAFT,
     subventionFields: Array.from(findFieldsOfType(uiSchema, 'subventionTable')),
   }));
-  _set(formStateAtom, (state) => ({
-    currentStep: [0, steps.get(0)],
-    reachedStep: 0,
-  }));
+  _set(formStateAtom, (state) => ({ currentStep: [0, steps.get(0)], reachedStep: 0 }));
 
   // Make sure application number is set in url params.
   const { applicationNumber } = formConfig;
