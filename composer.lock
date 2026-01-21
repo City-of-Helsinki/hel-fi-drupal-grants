@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5bd5fd57417773c70e6506078a1a66d3",
+    "content-hash": "c4514053ecfa5010dded5d3e2de95d23",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5233,16 +5233,16 @@
         },
         {
             "name": "drupal/helfi_platform_config",
-            "version": "dev-UHF-12763_list_of_links",
+            "version": "5.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config.git",
-                "reference": "809d14cab1dff47b0625597f0034cbb164b8c05d"
+                "reference": "10e71e2124ba038b8851eb3989458e644c9a13c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/809d14cab1dff47b0625597f0034cbb164b8c05d",
-                "reference": "809d14cab1dff47b0625597f0034cbb164b8c05d",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-helfi-platform-config/zipball/10e71e2124ba038b8851eb3989458e644c9a13c5",
+                "reference": "10e71e2124ba038b8851eb3989458e644c9a13c5",
                 "shasum": ""
             },
             "require": {
@@ -5327,7 +5327,9 @@
                         "[#UHF-9690] Allow updating lists when switching from allowed values to allowed values function (https://www.drupal.org/i/2873353)": "https://www.drupal.org/files/issues/2025-06-27/allow-allowed-values-function-update-2873353-20.patch",
                         "[#UHF-9952, #UHF-9980] Duplicate <br /> tags (https://www.drupal.org/i/3083786)": "./public/modules/contrib/helfi_platform_config/patches/3083786.patch",
                         "[#UHF-11025] Status message templates missing theme when bigpipe is enabled (https://www.drupal.org/i/3396318)": "./public/modules/contrib/helfi_platform_config/patches/3396318.patch",
-                        "[#UHF-11784] Sort the source and target arrays in the configuration storage comparer to avoid false positives": "./public/modules/contrib/helfi_platform_config/patches/drupal-core-sort-storage-comparer-source-and-target-arrays.patch"
+                        "[#UHF-11784] Sort the source and target arrays in the configuration storage comparer to avoid false positives": "./public/modules/contrib/helfi_platform_config/patches/drupal-core-sort-storage-comparer-source-and-target-arrays.patch",
+                        "[#UHF-12709] BigPipe placeholders with identical IDs are not all replaced (https://www.drupal.org/i/3564880)": "https://www.drupal.org/files/issues/2025-12-29/bigpipe.patch",
+                        "[#UHF-12709] ThemeRegistry::getGlobalPreprocess() WSOD (https://www.drupal.org/i/3564510)": "https://www.drupal.org/files/issues/2025-12-22/drupal-prevent-function-null-return-3564510-2.patch"
                     },
                     "drupal/csp": {
                         "[#UHF-11973] Allow installing csp in an install hook": "./public/modules/contrib/helfi_platform_config/patches/csp-uhf-11973.patch"
@@ -5353,10 +5355,10 @@
             ],
             "description": "HELfi platform config",
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/UHF-12763_list_of_links",
+                "source": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/tree/5.1.5",
                 "issues": "https://github.com/City-of-Helsinki/drupal-helfi-platform-config/issues"
             },
-            "time": "2026-01-21T12:20:12+00:00"
+            "time": "2026-01-21T15:25:19+00:00"
         },
         {
             "name": "drupal/helfi_proxy",
@@ -23168,7 +23170,6 @@
         "drupal/block_field": 5,
         "drupal/error_page": 10,
         "drupal/helfi_drupal_tools": 20,
-        "drupal/helfi_platform_config": 20,
         "drupal/multivalue_form_element": 10
     },
     "prefer-stable": true,
