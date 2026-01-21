@@ -66,10 +66,7 @@ export const useTranslateData = (data: any) => {
     }
 
     if (element?.options && Array.isArray(element.options)) {
-      result.options = element.options.map(({ label, ...rest }) => ({
-        ...rest,
-        label: t(label),
-      }));
+      result.options = element.options.map(({ label, ...rest }) => ({ ...rest, label: t(label) }));
     }
 
     if (element.allOf && Array.isArray(element.allOf)) {
@@ -113,9 +110,5 @@ export const useTranslateData = (data: any) => {
     return result;
   };
 
-  return {
-    ...data,
-    schema: iterateSchema(schema),
-    ui_schema: iterateUiSchema(ui_schema),
-  };
+  return { ...data, schema: iterateSchema(schema), ui_schema: iterateUiSchema(ui_schema) };
 };

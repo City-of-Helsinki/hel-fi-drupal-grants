@@ -2,12 +2,7 @@ import type { FormState, FormStep } from '../store';
 
 const initialStep: [number, FormStep] = [0, { label: 'Step 1', id: 'step-1' }];
 
-const initialState = {
-  currentStep: initialStep,
-  data: {},
-  errors: [],
-  reachedStep: 0,
-};
+const initialState = { currentStep: initialStep, data: {}, errors: [], reachedStep: 0 };
 
 /**
  * Returns valid state from partial data.
