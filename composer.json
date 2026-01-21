@@ -25,7 +25,7 @@
         "drupal/hdbt_admin": "^3.0",
         "drupal/helfi_azure_fs": "^2",
         "drupal/helfi_drupal_tools": "dev-main",
-        "drupal/helfi_platform_config": "^5.0.12",
+        "drupal/helfi_platform_config": "dev-UHF-12763_list_of_links",
         "drupal/helfi_proxy": "^3.0",
         "drupal/helfi_tpr": "^2.1",
         "drupal/helfi_tunnistamo": "^3.0",
