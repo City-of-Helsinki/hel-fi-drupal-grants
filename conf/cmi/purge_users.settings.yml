@@ -1,10 +1,10 @@
-user_never_lastlogin_value: '1'
+user_never_lastlogin_value: 1
 user_never_lastlogin_period: days
-user_lastlogin_value: '5'
+user_lastlogin_value: 5
 user_lastlogin_period: hours
-user_inactive_value: '5'
+user_inactive_value: 5
 user_inactive_period: hours
-user_blocked_value: '5'
+user_blocked_value: 5
 user_blocked_period: hours
 enabled_never_loggedin_users: false
 enabled_loggedin_users: true
