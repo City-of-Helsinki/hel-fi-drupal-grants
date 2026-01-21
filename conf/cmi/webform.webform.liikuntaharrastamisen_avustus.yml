@@ -20,7 +20,7 @@ third_party_settings:
     applicationClose: '2025-04-04T16:00:00'
     applicationActingYearsType: fixed
     applicationActingYears:
-      2025: '2025'
+      2026: '2026'
     applicationActingYearsNextCount: ''
     applicationContinuous: 0
     disableCopying: 1
@@ -598,6 +598,15 @@ elements: |-
     tarkemmat_tiedot_section:
       '#type': webform_section
       '#title': 'Tarkemmat tiedot '
+      hankesuunnitelma_jatkohakemus:
+        '#type': radios
+        '#title': 'Valitse seuraavista.'
+        '#description_display': after
+        '#options':
+          1: 'Haen vuonna 2025 ehdollisena myönnettyä avustusta hankkeen toiselle kaudelle'
+          2: 'Haen avustusta uudelle hankkeelle'
+        '#required': true
+        '#default_value': '2'
       hankesuunnitelma_avustuksen_kesto:
         '#type': radios
         '#title': 'Haetaanko yksi- vai kaksivuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
@@ -607,18 +616,26 @@ elements: |-
           2: 'Haen avustusta kaksivuotisena'
         '#required': true
         '#default_value': '1'
+        '#states':
+          visible:
+            - ':input[name="hankesuunnitelma_jatkohakemus"]':
+                value: '2'
       haettava_avustussumma:
         '#type': fieldset
         '#title': 'Haettava avustussumma'
         '#required': true
-        haettava_avustussumma_2025:
+        '#states':
+          visible:
+            - ':input[name="hankesuunnitelma_jatkohakemus"]':
+                value: '2'
+        haettava_avustussumma_2026:
           '#type': grants_budget_income_static
-          '#title': '2025 (euroa)'
+          '#title': '2026 (euroa)'
           '#multiple': false
           '#incomeGroup': general
           '#required': true
-          '#compensation__title': '2025 (euroa)'
-          '#compensation__title_display': none
+          '#compensation__title': '2026 (euroa)'
+          '#compensation__title_display': before
           '#plannedStateOperativeSubvention__access': false
           '#otherCompensationFromCity__access': false
           '#stateOperativeSubvention__access': false
@@ -641,9 +658,10 @@ elements: |-
           '#totalIncomeWithoutSubventions__access': false
           '#totalIncome__access': false
           '#incomeGroupName__access': false
-        haettava_avustussumma_2026:
+        haettava_avustussumma_2027:
           '#type': textfield
-          '#title': '2026 (euroa)'
+          '#title': '2027 (euroa)'
+          '#required': true
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#pattern': '^[0-9 ]*$'
           '#attributes':
@@ -653,26 +671,65 @@ elements: |-
             visible:
               - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
                   value: '2'
-              - or
-              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                  value: '3'
-          '#required': true
-        haettava_avustussumma_2027:
+    valiraportointi_section:
+      '#type': webform_section
+      '#title': 'Monivuotisten hankkeiden väliraportointi'
+      '#states':
+        visible:
+          - ':input[name="hankesuunnitelma_jatkohakemus"]':
+              value: '1'
+      toteutunut_kohderyhma:
+        '#type': textarea
+        '#title': 'Mikä on ollut hankkeen toteutunut kohderyhmä/-ryhmät ja mitä keinoja kohderyhmän/ryhmien tavoittamiseen on käytetty?'
+        '#required': true
+        '#maxlength': 2500
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#attributes':
+          class:
+            - webform--large
+      hankkeen_kohderyhmat_tavoittavuus:
+        '#type': fieldset
+        '#title': 'Arvioi, montako lasta ja nuorta toiminnalla tavoitetaan.'
+        '#required': true
+        markup:
+          '#type': webform_markup
+          '#markup': '<p>Merkitse jokainen tavoitettu henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi tavoitettu). Mikäli hankkessa ei ole tavoitettu kyseistä kohderyhmää, niin merkitse kenttään "0".</p>'
+        hankkeen_kohderyhmat_lapset_9_12:
           '#type': textfield
-          '#title': '2027 (euroa)'
+          '#title': '9–12-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
-          '#required': true
-          '#pattern': '^[0-9 ]*$'
           '#attributes':
             class:
               - webform--large
-          '#states':
-            visible:
-              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                value: '3'
+          '#required': true
+          '#pattern': '^[0-9 ]*$'
+        hankkeen_kohderyhmat_lapset_13_15:
+          '#type': textfield
+          '#title': '13–15-vuotiasta helsinkiläistä'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#attributes':
+            class:
+              - webform--large
+          '#required': true
+          '#pattern': '^[0-9 ]*$'
+        hankkeen_kohderyhmat_lapset_16_18:
+          '#type': textfield
+          '#title': '16–18-vuotiasta helsinkiläistä'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#attributes':
+            class:
+              - webform--large
+          '#required': true
+          '#pattern': '^[0-9 ]*$'
     hankesuunnitelma_section:
       '#type': webform_section
       '#title': 'Hankesuunnitelma ja hankkeen tavoitteet'
+      '#states':
+        visible:
+          - ':input[name="hankesuunnitelma_jatkohakemus"]':
+              value: '2'
       hankkeen_nimi:
         '#type': textarea
         '#title': 'Hankkeen nimi'
@@ -786,6 +843,10 @@ elements: |-
     hankkeen_kohderyhmat_section:
       '#type': webform_section
       '#title': 'Hankkeen kohderyhmä'
+      '#states':
+        visible:
+          - ':input[name="hankesuunnitelma_jatkohakemus"]':
+              value: '2'
       hankkeen_kohderyhmat_kenelle:
         '#type': textarea
         '#title': 'Mikä on hankkeen kohderyhmä/kohderyhmät?'
@@ -820,40 +881,6 @@ elements: |-
         '#attributes':
           class:
             - webform--large
-      hankkeen_kohderyhmat_lapset:
-        '#type': fieldset
-        '#title': 'Arvioi, montako lasta ja nuorta toiminnalla tavoitetaan.'
-        '#required': true
-        markup:
-          '#type': webform_markup
-          '#markup': '<p>Arvioi tavoitettujen lasten ja nuorten määrä yhteensä koko hankkeen aikana. Mikäli hankkeessa ei tavoiteta kyseistä ikäryhmää, niin merkitse kenttään "0".</p>'
-        hankkeen_kohderyhmat_lapset_9_12:
-          '#type': textfield
-          '#title': '9–12-vuotiasta helsinkiläistä'
-          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
-          '#attributes':
-            class:
-              - webform--large
-          '#required': true
-          '#pattern': '^[0-9 ]*$'
-        hankkeen_kohderyhmat_lapset_13_15:
-          '#type': textfield
-          '#title': '13–15-vuotiasta helsinkiläistä'
-          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
-          '#attributes':
-            class:
-              - webform--large
-          '#required': true
-          '#pattern': '^[0-9 ]*$'
-        hankkeen_kohderyhmat_lapset_16_18:
-          '#type': textfield
-          '#title': '16–18-vuotiasta helsinkiläistä'
-          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
-          '#attributes':
-            class:
-              - webform--large
-          '#required': true
-          '#pattern': '^[0-9 ]*$'
       hankkeen_kohderyhmat_uudet_fieldset:
         '#type': fieldset
         '#title': 'Kuinka monta näistä on uusia eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?'
@@ -916,6 +943,10 @@ elements: |-
     hankkeen_menetelmat_section:
       '#type': webform_section
       '#title': 'Hankkeen menetelmät'
+      '#states':
+        visible:
+          - ':input[name="hankesuunnitelma_jatkohakemus"]':
+              value: '2'
       hankkeen_kohderyhmat_tavoitus_liikunta:
         '#type': textarea
         '#title': 'Miten kohderyhmät tavoitetaan ja tunnistetaan?'
@@ -964,6 +995,10 @@ elements: |-
     hankkeen_riskit_section:
       '#type': webform_section
       '#title': 'Riskit & analyysi'
+      '#states':
+        visible:
+          - ':input[name="hankesuunnitelma_jatkohakemus"]':
+              value: '2'
       hankkeen_riskit_keskeisimmat:
         '#type': textarea
         '#title': 'Mitkä ovat hankkeen toteuttamisen näkökulmasta keskeiset riskit?'

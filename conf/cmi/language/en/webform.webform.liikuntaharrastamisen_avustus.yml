@@ -129,6 +129,11 @@ elements: |
     '#title': '3. Information in more detail'
   tarkemmat_tiedot_section:
     '#title': 'Information in more detail'
+  hankesuunnitelma_jatkohakemus:
+    '#title': 'Choose from the following:'
+    '#options':
+      1: 'I am applying for the second phase of a grant conditionally awarded in 2025'
+      2: 'I am applying for a grant for a new project'
   hankesuunnitelma_avustuksen_kesto:
     '#title': 'Are you applying for a one or two year project grant? Enter the grant amounts to be applied for in the subsequent years of the project into the corresponding fields.'
     '#options':

@@ -129,6 +129,11 @@ elements: |
     '#title': '3. Mer detaljerad information'
   tarkemmat_tiedot_section:
     '#title': 'Mer detaljerad information'
+  hankesuunnitelma_jatkohakemus:
+    '#title': 'Välj bland följande:'
+    '#options':
+      1: 'Jag ansöker om det understöd som beviljades villkorligt år 2025 för projektets andra period '
+      2: 'Jag ansöker om understöd för ett nytt projekt'
   hankesuunnitelma_avustuksen_kesto:
     '#title': 'Ansöker du om understöd för ett eller två år? Ange de understödsbelopp som ska sökas för projektets kommande år i de öppna fälten.'
     '#options':
