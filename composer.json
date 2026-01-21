@@ -112,6 +112,9 @@
             },
             "drupal/helfi_helsinki_profiili": {
                 "Pseudonymize logging of user data.": "patches/helfi_helsinki_profiili-0.9.30-gdpr-pseudonymize-logging.patch"
+            },
+            "drupal/varnish_purge": {
+                "Lazyload Varnish purger settings entity type definitions.": "patches/varnish_purge-2.3-lazyload-varnishpurger-entity-type-definitions.patch"
             }
         },
         "drupal-scaffold": {
