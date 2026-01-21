@@ -723,6 +723,174 @@ elements: |-
               - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
+      hankkeen_kohderyhmat_uudet_fieldset:
+        '#type': fieldset
+        '#title': 'Arvioi, kuinka moni näistä on uusia eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?'
+        '#required': true
+        markup:
+          '#type': webform_markup
+          '#markup': '<p>Merkitse jokainen tavoitettu henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi tavoitettu). Mikäli hankkessa ei ole tavoitettu kyseistä kohderyhmää, niin merkitse kenttään "0".</p>'
+        hankkeen_kohderyhmat_uudet:
+          '#type': textfield
+          '#title': '9–18-vuotiasta helsinkiläistä'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#attributes':
+            class:
+              - webform--large
+          '#required': true
+          '#pattern': '^[0-9 ]*$'
+      arvio_perustelu:
+        '#type': textarea
+        '#title': 'Perustuuko edellä antamasi luvut arvioon vai tarkkaan tietoon'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+      toteutuneet_tunnit_eriteltyna:
+        '#type': textarea
+        '#title': 'Kuinka monta tuntia harrastustoimintaa hankkeessa on järjestetty kullakin postinumeroalueella? Erittele tekstikenttään alueet ja tunnit pilkuilla erotettuna (esim. 00400: 7h, 00460: 15h)'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+      hankkeen_harrastuskerta_hinta:
+          '#type': textfield
+          '#title': 'Kuinka paljon yksi harrastuskerta on maksanut osallistujalle (€/h)?'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#attributes':
+            class:
+              - webform--large
+          '#required': true
+          '#pattern': '^[0-9 ]*$'
+      hankkeen_tekeminen_kuvaus:
+        '#type': textarea
+        '#title': 'Mitä hankkeessa on tehty tähän mennessä ja mitä tullaan vielä tekemään tämän hankevuoden aikana (31.5.2026)'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+      hankkeen_muutokset_talous:
+        '#type': textarea
+        '#title': 'Onko hankkeessa tapahtunut merkittäviä muutoksia talouteen liittyen, mitä?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+      hankkeen_muutokset_toiminta:
+        '#type': textarea
+        '#title': 'Onko hankkeessa tapahtunut merkittäviä muutoksia toimintaan liittyen, mitä?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+      hankkeen_muutokset_aikataulu:
+        '#type': textarea
+        '#title': 'Onko hankkeessa tapahtunut merkittäviä muutoksia aikatauluun liittyen, mitä?'
+        '#maxlength': 1250
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+      hankkeen_muutokset_toimintamallit:
+        '#type': textarea
+        '#title': 'Jos hankeessa on ollut tarkoitus kehittää uusia toimintamalleja, mitä niiden osalta on tähän mennessä saatu aikaan?'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+      hankkeen_yhteistyökumppanit:
+        '#type': textarea
+        '#title': 'Mitkä ovat olleet hankkeen keskeisimmät yhteistyökumppanit tähän mennessä, ja mikä heidän roolinsa on ollut'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+      nuorten_osallistuminen_paatoksiin:
+        '#type': textarea
+        '#title': 'Miten lapset ja nuoret ovat osallistuneet toiminnan suunnitteluun ja päätöksentekoon? Mainitse konkreettisia esimerkkejä.'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+      hanke_haasteet:
+        '#type': textarea
+        '#title': 'Onko hankkeen toteutumisen aikana ilmennyt haasteita? Jos on, niin kuvaa millaisia ja miten ne on ratkottu.'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+      hankekaudelle_myonnetyn_avustuksen_kaytto:
+        '#type': textarea
+        '#title': 'Tuleeko ensimmäiselle hankekaudelle myönnetty avustus arvionne mukaan käytettyä määräaikaan mennessä (31.5.2026)? Jos ei, niin avatkaa tähän johtaneita syitä.'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+      jatkokausi_alkuperainen_suunnitelma:
+        '#type': textarea
+        '#title': 'Onko hankkeen jatkokausi/-kaudet tarkoitus toteuttaa alkuperäisen suunnitelman mukaan? Jos ei, niin miksi?'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+      jatkokausi_summa_muutos:
+        '#type': textarea
+        '#title': 'Jos haet avustusta aiemmin myönnettyä ehdollista summaa enemmän tai vähemmän, perustele muutoksen tarve.'
+        '#maxlength': 2500
+        '#required': true
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#attributes':
+          class:
+            - webform--large
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
     hankesuunnitelma_section:
       '#type': webform_section
       '#title': 'Hankesuunnitelma ja hankkeen tavoitteet'
