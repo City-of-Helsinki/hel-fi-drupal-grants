@@ -379,7 +379,7 @@ elements: |-
       '#title': Avustuslajit
       grants_compensations_information:
         '#type': webform_markup
-        '#markup': '<p>Syötä kenttään vuodelle 2025 haettava avustussumma. Monivuotisen hankkeen jatkokausien avustussummat syötetään seuraavalla sivulle.</p>'
+        '#markup': '<p>Syötä kenttään vuodelle 2026 haettava avustussumma. Monivuotisen hankkeen jatkokausien avustussummat syötetään seuraavalla sivulle.</p>'
       subventions:
         '#type': grants_compensations
         '#title': Avustukset
@@ -689,11 +689,11 @@ elements: |-
         '#attributes':
           class:
             - webform--large
-      hankkeen_kohderyhmat_tavoittavuus:
+      hankkeen_kohderyhmat_lapset_arvio:
+        '#title': 'Arvioi, montako lasta ja nuorta toiminnalla on tähän saakka tavoitettu.'
         '#type': fieldset
-        '#title': 'Arvioi, montako lasta ja nuorta toiminnalla tavoitetaan.'
         '#required': true
-        markup:
+        lapset_arvio_markup:
           '#type': webform_markup
           '#markup': '<p>Merkitse jokainen tavoitettu henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi tavoitettu). Mikäli hankkessa ei ole tavoitettu kyseistä kohderyhmää, niin merkitse kenttään "0".</p>'
         hankkeen_kohderyhmat_lapset_9_12:
@@ -723,11 +723,11 @@ elements: |-
               - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
-      hankkeen_kohderyhmat_uudet_fieldset:
+      hankkeen_kohderyhmat_uudet_arvio_fieldset:
         '#type': fieldset
         '#title': 'Arvioi, kuinka moni näistä on uusia eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?'
         '#required': true
-        markup:
+        hankkeen_kohderyhmat_uudet_markup:
           '#type': webform_markup
           '#markup': '<p>Merkitse jokainen tavoitettu henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi tavoitettu). Mikäli hankkessa ei ole tavoitettu kyseistä kohderyhmää, niin merkitse kenttään "0".</p>'
         hankkeen_kohderyhmat_uudet:
@@ -741,7 +741,7 @@ elements: |-
           '#pattern': '^[0-9 ]*$'
       arvio_perustelu:
         '#type': textarea
-        '#title': 'Perustuuko edellä antamasi luvut arvioon vai tarkkaan tietoon'
+        '#title': 'Perustuuko edellä antamasi luvut arvioon vai tarkkaan tietoon?'
         '#maxlength': 1250
         '#required': true
         '#counter_type': character
@@ -912,14 +912,14 @@ elements: |-
       hankkeen_tarkoitus_tavoitteet:
         '#type': textarea
         '#title': 'Hankkeen tarkoitus ja tavoitteet'
-        '#maxlength': 2500
+        '#maxlength': 3000
         '#required': true
         '#counter_type': character
-        '#counter_maximum': 2500
+        '#counter_maximum': 3000
         '#attributes':
           class:
             - webform--large
-        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#counter_maximum_message': '%d/3000 merkkiä jäljellä'
       hankkeen_monivuotisuuden_tarve:
         '#type': textarea
         '#title': 'Perustele monivuotisuuden tarve hankkeen tavoitteiden saavuttamisen näkökulmasta.'
@@ -946,30 +946,15 @@ elements: |-
             - grants-fieldset
         hankkeen_toimenpiteet_aikataulu:
           '#type': textarea
-          '#title': 'Toimenpiteet ja niiden aikataulu vuonna 2025'
-          '#maxlength': 2500
-          '#counter_type': character
-          '#counter_maximum': 2500
-          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-          '#attributes':
-            class:
-              - webform--large
-          '#required': true
-        hankkeen_toimenpiteet_aikataulu_2026:
-          '#type': textarea
           '#title': 'Toimenpiteet ja niiden aikataulu vuonna 2026'
           '#maxlength': 2500
-          '#required': true
           '#counter_type': character
           '#counter_maximum': 2500
           '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
           '#attributes':
             class:
               - webform--large
-          '#states':
-            visible:
-              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                '!value': '1'
+          '#required': true
         hankkeen_toimenpiteet_aikataulu_2027:
           '#type': textarea
           '#title': 'Toimenpiteet ja niiden aikataulu vuonna 2027'
@@ -984,7 +969,7 @@ elements: |-
           '#states':
             visible:
               ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                value: '3'
+                '!value': '1'
       hankkeen_toiminnan_laajuus:
         '#type': textarea
         '#title': 'Missä laajuudessa toimintaa on suunniteltu järjestettävän (h/vko)?'
@@ -1049,6 +1034,40 @@ elements: |-
         '#attributes':
           class:
             - webform--large
+      hankkeen_kohderyhmat_lapset:
+        '#type': fieldset
+        '#title': 'Arvioi, montako lasta ja nuorta toiminnalla tavoitetaan.'
+        '#required': true
+        markup:
+          '#type': webform_markup
+          '#markup': '<p>Arvioi tavoitettujen lasten ja nuorten määrä yhteensä koko hankkeen aikana. Mikäli hankkeessa ei tavoiteta kyseistä ikäryhmää, niin merkitse kenttään "0".</p>'
+        hankkeen_kohderyhmat_lapset_9_12:
+          '#type': textfield
+          '#title': '9–12-vuotiasta helsinkiläistä'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#attributes':
+            class:
+              - webform--large
+          '#required': true
+          '#pattern': '^[0-9 ]*$'
+        hankkeen_kohderyhmat_lapset_13_15:
+          '#type': textfield
+          '#title': '13–15-vuotiasta helsinkiläistä'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#attributes':
+            class:
+              - webform--large
+          '#required': true
+          '#pattern': '^[0-9 ]*$'
+        hankkeen_kohderyhmat_lapset_16_18:
+          '#type': textfield
+          '#title': '16–18-vuotiasta helsinkiläistä'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#attributes':
+            class:
+              - webform--large
+          '#required': true
+          '#pattern': '^[0-9 ]*$'
       hankkeen_kohderyhmat_uudet_fieldset:
         '#type': fieldset
         '#title': 'Kuinka monta näistä on uusia eli eivät ole osallistuneet toimijan aikaisemmin järjestämään toimintaan?'
@@ -1208,7 +1227,7 @@ elements: |-
       '#title': Tulot
       markup_01:
         '#type': webform_markup
-        '#markup': '<p>Monivuotisen hankkeen osalta tässä kohdassa tulee ilmoittaa ensimmäisen hankevuoden talousarvio. Lisäksi hakemuksen liitteenä tulee toimittaa koko hankeajan talousarvio, josta käy ilmi tulojen ja menojen jakautuminen eri hankevuosille.</p>'
+        '#markup': '<p>Monivuotisen hankkeen osalta tässä kohdassa tulee ilmoittaa hankevuoden 2026 talousarvio. Lisäksi hakemuksen liitteenä tulee toimittaa koko hankeajan talousarvio, josta käy ilmi tulojen ja menojen jakautuminen eri hankevuosille.</p>'
       tulot:
         '#type': grants_budget_income_static
         '#title': Tulot
@@ -1284,7 +1303,7 @@ elements: |-
       '#title': Liitteet
       attachments_info:
         '#type': webform_markup
-        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p><h4>Vaaditut liitteet</h4><p>Monivuotisen hankkeen osalta tulee toimittaa hakemuksen liitteenä hankevuosittain eritelty talousarvio koko hankkeen ajalle.</p><p>Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilikaudelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilikautta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä vuosikokouksen pöytäkirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma. Lisäksi hakijan tulee toimittaa yhteisön säännöt ja pankin ilmoitus tilinomistajasta tai tiliotekopio.</p><h4>Usean liitteen toimittaminen yhtenä tiedostona</h4><p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4><p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä.</p>'
+        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu, kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p><h4>Vaaditut liitteet</h4><p>Monivuotisen hankkeen osalta tulee toimittaa hakemuksen liitteenä hankevuosittain eritelty talousarvio koko hankkeen ajalle.</p><p>Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilikaudelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilikautta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä vuosikokouksen pöytäkirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma. Lisäksi hakijan tulee toimittaa yhteisön säännöt ja pankin ilmoitus tilinomistajasta tai tiliotekopio.</p><p>Mikäli haet ehdollisena myönnettyä avustusta, lisää hakemuksen liitteeksi kustannuspaikkaraportti ensimmäisen hankekauden aikana jo toteutuneiden kustannusten osalta. Mikäli hankkeellenne ei ole myönnetty ehdollista avustusta vuodelle 2026, mutta hanke on käynnistynyt vuonna 2025, lisää hakemuksen liitteeksi tiivistelmä ensimmäisen hankevuoden aikana toteutetuista toimenpiteistä ja kustannuspaikkaraportti ensimmäisen hankekauden aikana jo toteutuneiden kustannusten osalta.</p><h4>Usean liitteen toimittaminen yhtenä tiedostona</h4><p>Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4><p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä.</p>'
       notification_attachments:
         '#type': webform_markup
         '#markup': |

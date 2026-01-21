@@ -52,7 +52,7 @@ elements: |
   avustuslajit:
     '#title': 'Types of grant'
   grants_compensations_information:
-    '#markup': '<p data-renderer-start-pos="4356">Pease enter the grant amount requested for the year 2025 in the field. The grant amounts for the subsequent years of a multi-year project are entered on the next page.</p>'
+    '#markup': '<p data-renderer-start-pos="4356">Pease enter the grant amount requested for the year 2026 in the field. The grant amounts for the subsequent years of a multi-year project are entered on the next page.</p>'
   subventions:
     '#title': Grants
   kayttotarkoitus:
@@ -141,13 +141,47 @@ elements: |
       2: 'I am applying for a two-year grant'
   haettava_avustussumma:
     '#title': 'Grant amount requested'
-  haettava_avustussumma_2025:
-    '#title': '2025 (euros)'
-    '#compensation__title': '2025 (euros)'
   haettava_avustussumma_2026:
     '#title': '2026 (euros)'
+    '#compensation__title': '2026 (euros)'
   haettava_avustussumma_2027:
     '#title': '2027 (euros)'
+  valiraportointi_section:
+    '#title': '3.5 Interim reporting of multi-year projects'
+  toteutunut_kohderyhma:
+    '#title': 'What has been the actual target group(s) of the project, and what methods have been used to reach them?'
+  hankkeen_kohderyhmat_lapset_arvio:
+    '#title': 'Estimate how many children and young people have been reached through the activities so far.'
+  lapset_arvio_markup
+    '#markup': '<p>Count each individual only once, even if the same person has participated in multiple events (one person = one reached).</p>'
+  arvio_perustelu:
+    '#title': 'Are the figures you provided above based on an estimate or on actual data?'
+  toteutuneet_tunnit_eriteltyna:
+     '#title': 'How many hours of activities have been organized in the project in each postal code area? Specify the areas and hours in the text field, separated by commas (e.g., 00400: 7 h, 00460: 15 h).'
+  hankkeen_harrastuskerta_hinta:
+    '#title': 'How much has one session cost for the participant (€/h)?'
+  hankkeen_tekeminen_kuvaus:
+    '#title': 'What has been done in the project so far, and what is planned to be done during the remainder of this project year (by 31 May 2026)?'
+  hankkeen_muutokset_talous:
+    '#title': 'Have there been any significant changes in the project's finances? Please specify.'
+  hankkeen_muutokset_toiminta:
+    '#title': 'Have there been any significant changes in the project's activities? Please specify.'
+  hankkeen_muutokset_aikataulu:
+    '#title': 'Have there been any significant changes in the project's schedule? Please specify.'
+  hankkeen_muutokset_toimintamallit:
+    '#title': 'If the project aimed to develop new operating models, what has been achieved so far in that regard?'
+  hankkeen_yhteistyökumppanit:
+    '#title': 'Who have been the project's key partners so far, and what has their role been?'
+  nuorten_osallistuminen_paatoksiin:
+    '#title': 'How have children and young people participated in the planning and decision making of the activities? Please provide concrete examples.'
+  hanke_haasteet:
+    '#title': 'Have any challenges arisen during the implementation of the project? If so, describe what kind and how they have been addressed.'
+  hankekaudelle_myonnetyn_avustuksen_kaytto:
+    '#title': 'In your assessment, will the grant awarded for the first project period be used by the deadline (31 May 2026)? If not, please explain the reasons.'
+  jatkokausi_alkuperainen_suunnitelma:
+    '#title': 'Is the continuation phase(s) of the project intended to be implemented according to the original plan? If not, why?'
+  jatkokausi_summa_muutos:
+    '#title': 'If you intend to apply for a different amount of grant than the conditional grant awarded in 2025, please justify the need for the change'
   hankesuunnitelma_section:
     '#title': 'Project plan and goals'
   hankkeen_nimi:
@@ -162,9 +196,6 @@ elements: |
   hankkeen_toimenpiteet_toteutus:
     '#title': 'What are the concrete measures of the project to promote low-threshold regional physical activities for children and young people aged 9–18 years in Helsinki? What is the timetable for implementing the measures?'
   hankkeen_toimenpiteet_aikataulu:
-    '#title': 'The concrete measures of the project and their timetable in 2025'
-    '#counter_maximum_message': '%d/2500 characters remaining'
-  hankkeen_toimenpiteet_aikataulu_2026:
     '#title': 'The concrete measures of the project and their timetable in 2026'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_toimenpiteet_aikataulu_2027:
@@ -198,6 +229,10 @@ elements: |
     '#title': 'Helsinki residents aged 13 to 15 years'
   hankkeen_kohderyhmat_lapset_16_18:
     '#title': 'Helsinki residents aged 16 to 18 years'
+  hankkeen_kohderyhmat_uudet_arvio_fieldset:
+    '#title': 'Estimate how many of these have been new participants, meaning they have not participated in activities organized by the operator before?'
+  hankkeen_kohderyhmat_uudet_markup:
+    '#markup': '<p>Count each individual only once, even if the same person has participated in multiple events (one person = one reached). If the project has not reached the specified target group, enter "0" in the field.</p>'
   hankkeen_kohderyhmat_uudet_fieldset:
     '#title': 'How many of them are new, i.e. have not participated in activities organised by the operator before?'
   hankkeen_kohderyhmat_uudet:
@@ -248,7 +283,7 @@ elements: |
   tulot_section:
     '#title': Incomes
   markup_01:
-    '#markup': '<p data-renderer-start-pos="34732">For a multi-year project, the budget for the first project year must be provided in this section. Additionally, a budget for the entire project period, showing the distribution of income and expenses across the different project years, must be attached to the application.</p>'
+    '#markup': '<p data-renderer-start-pos="34732">For a multi-year project, the budget for the project year 2026 must be provided in this section. Additionally, a budget for the entire project period, showing the distribution of income and expenses across the different project years, must be attached to the application.</p>'
   tulot:
     '#title': Incomes
     '#compensation__title': 'The applied grant (€)'
@@ -273,7 +308,7 @@ elements: |
   liitteet:
     '#title': Appendices
   attachments_info:
-    '#markup': '<p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.</p><h4>Required attachments</h4><p>For multi-year projects, a budget itemized by project year for the entire duration of the project must be appended to the application.</p><p>For the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan. Additionally, the applicant must the provide rules of association and a confirmation of the account holder from the bank or a copy of the bank statement.</p><h4>Submission of several attachments as a single file</h4><p>If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”</p><h4>Attachments previously submitted to the City of Helsinki</h4><p>If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application”. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another.</p>'
+    '#markup': '<p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.</p><h4>Required attachments</h4><p>For multi-year projects, a budget itemized by project year for the entire duration of the project must be appended to the application.</p><p>For the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan. Additionally, the applicant must the provide rules of association and a confirmation of the account holder from the bank or a copy of the bank statement.</p><p>If you are applying for the conditional grant, please attach a cost center report to the application for the expenses already incurred during the first project period. If your project has not been granted a conditional grant for the year 2026, but the project has started in 2025, please attach to the application a summary of the actions carried out during the first year of the project, as well as a cost center report detailing the expenses already incurred during the first project period.</p><h4>Submission of several attachments as a single file</h4><p>If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”</p><h4>Attachments previously submitted to the City of Helsinki</h4><p>If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application”. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another.</p>'
   notification_attachments:
     '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>The contents of the attachments cannot be viewed afterwards</span></div><div class="hds-notification__body"><p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p><p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p></div></div></div>'
   extra_info:
