@@ -152,7 +152,7 @@ elements: |
     '#title': 'What has been the actual target group(s) of the project, and what methods have been used to reach them?'
   hankkeen_kohderyhmat_lapset_arvio:
     '#title': 'Estimate how many children and young people have been reached through the activities so far.'
-  lapset_arvio_markup
+  lapset_arvio_markup:
     '#markup': '<p>Count each individual only once, even if the same person has participated in multiple events (one person = one reached).</p>'
   arvio_perustelu:
     '#title': 'Are the figures you provided above based on an estimate or on actual data?'
@@ -163,17 +163,17 @@ elements: |
   hankkeen_tekeminen_kuvaus:
     '#title': 'What has been done in the project so far, and what is planned to be done during the remainder of this project year (by 31 May 2026)?'
   hankkeen_muutokset_talous:
-    '#title': 'Have there been any significant changes in the project's finances? Please specify.'
+    '#title': "Have there been any significant changes in the project's finances? Please specify."
   hankkeen_muutokset_toiminta:
-    '#title': 'Have there been any significant changes in the project's activities? Please specify.'
+    '#title': "Have there been any significant changes in the project's activities? Please specify."
   hankkeen_muutokset_aikataulu:
-    '#title': 'Have there been any significant changes in the project's schedule? Please specify.'
+    '#title': "Have there been any significant changes in the project's schedule? Please specify."
   hankkeen_muutokset_toimintamallit:
     '#title': 'If the project aimed to develop new operating models, what has been achieved so far in that regard?'
   hankkeen_yhteistyökumppanit:
-    '#title': 'Who have been the project's key partners so far, and what has their role been?'
+    '#title': "Who have been the project's key partners so far, and what has their role been?"
   nuorten_osallistuminen_paatoksiin:
-    '#title': 'How have children and young people participated in the planning and decision making of the activities? Please provide concrete examples.'
+    '#title': 'How have children and young people participated in the planning and decision making of the activities? Please provide concrete examples.'
   hanke_haasteet:
     '#title': 'Have any challenges arisen during the implementation of the project? If so, describe what kind and how they have been addressed.'
   hankekaudelle_myonnetyn_avustuksen_kaytto:

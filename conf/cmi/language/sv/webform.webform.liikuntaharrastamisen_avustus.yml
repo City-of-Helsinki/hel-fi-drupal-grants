@@ -152,7 +152,7 @@ elements: |
     '#title': 'Vilken/vilka har varit projektets faktiska målgrupp(er), och vilka metoder har använts för att nå dem?'
   hankkeen_kohderyhmat_lapset_arvio:
     '#title': 'Uppskatta hur många barn och unga som hittills har nåtts genom verksamheten.'
-  lapset_arvio_markup
+  lapset_arvio_markup:
     '#markup': '<p>Räkna varje person endast en gång, även om samma person har deltagit i flera evenemang (en person = en nådd).</p>'
   arvio_perustelu:
     '#title': 'Är siffrorna du angav ovan baserade på en uppskattning eller på exakt information?'
