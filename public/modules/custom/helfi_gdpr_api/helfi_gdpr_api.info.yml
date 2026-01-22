@@ -2,7 +2,7 @@ name: helfi_gdpr_api
 type: module
 description: Implement GDPR api for sites
 package: Helfi
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - helfi_atv
   - helfi_tunnistamo

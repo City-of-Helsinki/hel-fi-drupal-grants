@@ -1,0 +1,193 @@
+{
+  "compensation.applicantInfoArray.0": {
+    "datasource": "custom",
+    "source": "applicant_type_id",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicantType",
+      "label": "Hakijan tyyppi",
+      "value": "1",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantInfoArray.1": {
+    "datasource": "custom",
+    "source": "selected_community_official.name",
+    "mapping_type": "default",
+    "data": {
+      "ID": "communityOfficialName",
+      "label": "Nimi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantInfoArray.2": {
+    "datasource": "custom",
+    "source": "selected_community_official.email",
+    "mapping_type": "default",
+    "data": {
+      "ID": "email",
+      "label": "",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.currentAddressInfoArray.0": {
+    "datasource": "form_data",
+    "source": "applicant_info.contact_person_info.contact_person",
+    "mapping_type": "default",
+    "data": {
+      "ID": "contactPerson",
+      "label": "Yhteyshenkilö",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.1": {
+    "datasource": "form_data",
+    "source": "applicant_info.contact_person_info.contact_person_phone_number",
+    "mapping_type": "default",
+    "data": {
+      "ID": "phoneNumber",
+      "label": "Puhelinnumero",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.2": {
+    "datasource": "custom",
+    "source": "selected_address.street",
+    "mapping_type": "default",
+    "data": {
+      "ID": "street",
+      "label": "Lähiosoite",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.3": {
+    "datasource": "custom",
+    "source": "selected_address.city",
+    "mapping_type": "default",
+    "data": {
+      "ID": "city",
+      "label": "Kaupunki",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.4": {
+    "datasource": "custom",
+    "source": "selected_address.postCode",
+    "mapping_type": "default",
+    "data": {
+      "ID": "postCode",
+      "label": "Postinumero",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.currentAddressInfoArray.5": {
+    "datasource": "custom",
+    "source": "selected_address.country",
+    "mapping_type": "default",
+    "data": {
+      "ID": "country",
+      "label": "Maa",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.applicationInfoArray.0": {
+    "datasource": "form_settings",
+    "source": "settings.application_type",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicationType",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicationInfoArray.1": {
+    "datasource": "form_settings",
+    "source": "settings.application_type_id",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicationTypeID",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicationInfoArray.2": {
+    "datasource": "custom",
+    "source": "now",
+    "mapping_type": "default",
+    "data": {
+      "ID": "formTimeStamp",
+      "label": null,
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.applicationInfoArray.3": {
+    "#tip": "check ID52 webform submit.",
+    "datasource": "custom",
+    "source": "now",
+    "mapping_type": "default",
+    "data": {
+      "ID": "createdFormTimeStamp",
+      "label": null,
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.applicationInfoArray.4": {
+    "datasource": "custom",
+    "source": "now",
+    "mapping_type": "default",
+    "data": {
+      "ID": "submittedFormTimeStamp",
+      "label": null,
+      "value": "",
+      "valueType": "datetime"
+    }
+  },
+  "compensation.applicationInfoArray.5": {
+    "datasource": "custom",
+    "source": "application_number",
+    "mapping_type": "default",
+    "data": {
+      "ID": "applicationNumber",
+      "label": null,
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicationInfoArray.6": {
+    "datasource": "custom",
+    "source": "status",
+    "mapping_type": "default",
+    "data": {
+      "ID": "status",
+      "label": "Hakemuksen tila",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicationInfoArray.7": {
+    "datasource": "form_data",
+    "source": "orienteering_maps_step.acting_year_section.acting_year",
+    "mapping_type": "default",
+    "data": {
+      "ID": "actingYear",
+      "label": "Vuosi, jolle haen avustusta",
+      "value": "",
+      "valueType": "string"
+    }
+  }
+}
+

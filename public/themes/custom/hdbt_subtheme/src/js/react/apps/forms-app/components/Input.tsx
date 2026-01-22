@@ -1,7 +1,7 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 // biome-ignore-all lint/a11y/noLabelWithoutControl: @todo UHF-12501
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
-import { type ChangeEvent, type FocusEvent, useCallback } from 'react';
+import { type ChangeEvent, type FocusEvent, type KeyboardEvent, type WheelEvent, useCallback } from 'react';
 import {
   Fieldset,
   TextArea as HDSTextArea,
@@ -19,30 +19,14 @@ import type { WidgetProps } from '@rjsf/utils';
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
 import { formatErrors } from '../utils';
-import {
-  getAccountsAtom,
-  getAddressesAtom,
-  getOfficialsAtom,
-  getProfileAtom,
-  shouldRenderPreviewAtom,
-} from '../store';
+import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, getProfileAtom, shouldRenderPreviewAtom } from '../store';
 
-export const PreviewInput = ({
-  value,
-  label,
-  uiSchema,
-}: {
-  value?: string;
-  label?: string;
-  uiSchema: any;
-}) => (
+export const PreviewInput = ({ value, label, uiSchema }: { value?: string; label?: string; uiSchema: any }) => (
   <>
     {/* @todo fix when rebuilding styles  */}
     {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
     {!uiSchema?.['ui:options']?.hideNameFromPrint && (
-      <label>
-        {uiSchema?.['ui:options']?.printableName?.toString() ?? label}
-      </label>
+      <label>{uiSchema?.['ui:options']?.printableName?.toString() ?? label}</label>
     )}
     {Array.isArray(value) ? value.join(', ') : (value ?? '-')}
   </>
@@ -91,6 +75,7 @@ export const TextInput = ({
         id={id}
         invalid={Boolean(rawErrors?.length)}
         label={label}
+        min={0}
         name={name}
         onBlur={() => null}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -100,6 +85,14 @@ export const TextInput = ({
           if (event.target.value === '0') {
             event.target.select();
           }
+        }}
+        onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
+          if (event.key === 'e' || event.key === 'E') {
+            event.preventDefault();
+          }
+        }}
+        onWheel={(event: WheelEvent<HTMLInputElement>) => {
+          event.currentTarget.blur();
         }}
         readOnly={readonly}
         required={required}
@@ -118,9 +111,7 @@ export const TextInput = ({
       label={label}
       name={name}
       onBlur={() => null}
-      onChange={(event: ChangeEvent<HTMLInputElement>) =>
-        onChange(event.target.value)
-      }
+      onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value)}
       onFocus={() => null}
       readOnly={readonly}
       required={required}
@@ -142,9 +133,7 @@ export const TextArea = ({
   value,
   uiSchema,
 }: WidgetProps) => {
-  const readGrantsProfile = useAtomCallback(
-    useCallback((get) => get(getProfileAtom), []),
-  );
+  const readGrantsProfile = useAtomCallback(useCallback((get) => get(getProfileAtom), []));
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (shouldRenderPreview) {
@@ -169,9 +158,7 @@ export const TextArea = ({
       hideLabel={false}
       invalid={Boolean(rawErrors?.length)}
       onBlur={() => null}
-      onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-        onChange(event.target.value)
-      }
+      onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
       onFocus={() => null}
       readOnly={readonly}
       {...{ id, label, maxLength, name, required, value }}
@@ -238,21 +225,14 @@ export const SelectWidget = ({
 
 export const AddressSelect = (props: WidgetProps) => {
   const addresses = useAtomValue(getAddressesAtom);
-  const options = Object.assign(
-    addresses.map(({ street }) => ({ label: street, value: street })),
-  );
+  const options = Object.assign(addresses.map(({ street }) => ({ label: street, value: street })));
 
   return <SelectWidget {...{ ...props, options: { enumOptions: options } }} />;
 };
 
 export const BankAccountSelect = (props: WidgetProps) => {
   const accounts = useAtomValue(getAccountsAtom);
-  const options = Object.assign(
-    accounts.map(({ bankAccount }) => ({
-      label: bankAccount,
-      value: bankAccount,
-    })),
-  );
+  const options = Object.assign(accounts.map(({ bankAccount }) => ({ label: bankAccount, value: bankAccount })));
 
   return <SelectWidget {...{ ...props, options: { enumOptions: options } }} />;
 };
@@ -278,15 +258,9 @@ const roleMap = new Map([
  *
  * @return {string|undefined} - Role name or undefined
  */
-const getCommunityOfficialRole = (roleId: number | string) =>
-  roleMap.get(Number(roleId));
+const getCommunityOfficialRole = (roleId: number | string) => roleMap.get(Number(roleId));
 
-export const CommunityOfficialsSelect = ({
-  label,
-  value,
-  uiSchema,
-  ...rest
-}: WidgetProps) => {
+export const CommunityOfficialsSelect = ({ label, value, uiSchema, ...rest }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const officials = useAtomValue(getOfficialsAtom);
   const options = Object.assign(
@@ -307,30 +281,16 @@ export const CommunityOfficialsSelect = ({
       });
     }
 
-    const { email, name, phone, role } = officials.find(
-      ({ official_id: officialId }) => officialId === value,
-    );
+    const { email, name, phone, role } = officials.find(({ official_id: officialId }) => officialId === value);
 
     return `${getCommunityOfficialRole(role)}: ${name} (${email}, ${phone})`;
   };
 
   if (shouldRenderPreview) {
-    return (
-      <PreviewInput
-        value={formatPreviewValue()}
-        label={label}
-        uiSchema={uiSchema}
-      />
-    );
+    return <PreviewInput value={formatPreviewValue()} label={label} uiSchema={uiSchema} />;
   }
 
-  const selectProps: SelectWidgetProps = {
-    label,
-    value,
-    uiSchema,
-    ...rest,
-    options: { enumOptions: options },
-  };
+  const selectProps: SelectWidgetProps = { label, value, uiSchema, ...rest, options: { enumOptions: options } };
 
   if (!options.length) {
     selectProps.assistive = Drupal.t(
@@ -365,16 +325,9 @@ export const RadioWidget = ({
   return (
     <>
       {affirmativeExpands && (
-        <Notification
-          label={t('affirmative_expands')}
-          type='info'
-          className='hdbt-form--notification'
-        />
+        <Notification label={t('affirmative_expands')} type='info' className='hdbt-form--notification' />
       )}
-      <Fieldset
-        heading={`${label}${required ? ' *' : ''}`}
-        className='hdbt-form--fieldset'
-      >
+      <Fieldset heading={`${label}${required ? ' *' : ''}`} className='hdbt-form--fieldset'>
         {options?.enumOptions?.map((option: any) => {
           const optionId = `${id}_${option.value}`;
 

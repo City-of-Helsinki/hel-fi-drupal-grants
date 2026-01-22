@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\grants_webform_import\Commands;
+namespace Drupal\grants_webform_import\Drush\Commands;
 
 use Drupal\config\StorageReplaceDataWrapper;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -15,13 +15,17 @@ use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ModuleInstallerInterface;
+use Drupal\Core\Extension\ThemeExtensionList;
 use Drupal\Core\Extension\ThemeHandlerInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\language\ConfigurableLanguageManagerInterface;
+use Drush\Commands\AutowireTrait;
 use Drush\Commands\DrushCommands;
 use GuzzleHttp\ClientInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -35,82 +39,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class WebformImportCommands extends DrushCommands {
 
-  /**
-   * CachedStorage.
-   *
-   * @var \Drupal\Core\Config\StorageInterface
-   */
-  private StorageInterface $storage;
-
-  /**
-   * Event dispatcher.
-   *
-   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
-   */
-  private EventDispatcherInterface $eventDispatcher;
-
-  /**
-   * Config manager.
-   *
-   * @var \Drupal\Core\Config\ConfigManagerInterface
-   */
-  private ConfigManagerInterface $configManager;
-
-  /**
-   * Lock.
-   *
-   * @var \Drupal\Core\Lock\LockBackendInterface
-   */
-  private LockBackendInterface $lock;
-
-  /**
-   * Config typed.
-   *
-   * @var \Drupal\Core\Config\TypedConfigManagerInterface
-   */
-  private TypedConfigManagerInterface $configTyped;
-
-  /**
-   * ModuleHandler.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  private ModuleHandlerInterface $moduleHandler;
-
-  /**
-   * Module installer.
-   *
-   * @var \Drupal\Core\Extension\ModuleInstallerInterface
-   */
-  private ModuleInstallerInterface $moduleInstaller;
-
-  /**
-   * Theme handler.
-   *
-   * @var \Drupal\Core\Extension\ThemeHandlerInterface
-   */
-  private ThemeHandlerInterface $themeHandler;
-
-  /**
-   * String translation.
-   *
-   * @var \Drupal\Core\StringTranslation\TranslationInterface
-   */
-  private TranslationInterface $stringTranslation;
-
-  /**
-   * Extension list module.
-   *
-   * @var \Drupal\Core\Extension\ModuleExtensionList
-   */
-  private ModuleExtensionList $extensionListModule;
-
-  /**
-   * Config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  private ConfigFactoryInterface $configFactory;
+  use AutowireTrait;
 
   /**
    * The force flag.
@@ -133,79 +62,25 @@ class WebformImportCommands extends DrushCommands {
    */
   private string|bool $applicationTypeID;
 
-  /**
-   * The http client.
-   *
-   * @var \GuzzleHttp\ClientInterface
-   */
-  private $httpClient;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\language\ConfigurableLanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
-   * ConfigImportSingleCommands constructor.
-   *
-   * @param \Drupal\Core\Config\StorageInterface $storage
-   *   Storage.
-   * @param \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $eventDispatcher
-   *   Event Dispatcher.
-   * @param \Drupal\Core\Config\ConfigManagerInterface $configManager
-   *   Config Manager.
-   * @param \Drupal\Core\Lock\LockBackendInterface $lock
-   *   Lock.
-   * @param \Drupal\Core\Config\TypedConfigManagerInterface $configTyped
-   *   Config typed.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
-   *   Module handler.
-   * @param \Drupal\Core\Extension\ModuleInstallerInterface $moduleInstaller
-   *   Module Installer.
-   * @param \Drupal\Core\Extension\ThemeHandlerInterface $themeHandler
-   *   Theme handler.
-   * @param \Drupal\Core\StringTranslation\TranslationInterface $stringTranslation
-   *   String Translation.
-   * @param \Drupal\Core\Extension\ModuleExtensionList $extensionListModule
-   *   Extension list module.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Config factory.
-   * @param \GuzzleHttp\ClientInterface $httpClient
-   *   Http client.
-   * @param \Drupal\language\ConfigurableLanguageManagerInterface $languageManager
-   *   Language manager.
-   */
   public function __construct(
-    StorageInterface $storage,
-    EventDispatcherInterface $eventDispatcher,
-    ConfigManagerInterface $configManager,
-    LockBackendInterface $lock,
-    TypedConfigManagerInterface $configTyped,
-    ModuleHandlerInterface $moduleHandler,
-    ModuleInstallerInterface $moduleInstaller,
-    ThemeHandlerInterface $themeHandler,
-    TranslationInterface $stringTranslation,
-    ModuleExtensionList $extensionListModule,
-    ConfigFactoryInterface $configFactory,
-    ClientInterface $httpClient,
-    ConfigurableLanguageManagerInterface $languageManager,
+    #[Autowire(service: 'config.storage')]
+    private readonly StorageInterface $storage,
+    private readonly EventDispatcherInterface $eventDispatcher,
+    private readonly ConfigManagerInterface $configManager,
+    #[Autowire(service: 'lock')]
+    private readonly LockBackendInterface $lock,
+    private readonly TypedConfigManagerInterface $configTyped,
+    private readonly ModuleHandlerInterface $moduleHandler,
+    private readonly ModuleInstallerInterface $moduleInstaller,
+    private readonly ThemeHandlerInterface $themeHandler,
+    private readonly TranslationInterface $stringTranslation,
+    private readonly ModuleExtensionList $extensionListModule,
+    private readonly ThemeExtensionList $themeExtensionList,
+    private readonly ConfigFactoryInterface $configFactory,
+    private readonly ClientInterface $httpClient,
+    private readonly LanguageManagerInterface $languageManager,
   ) {
     parent::__construct();
-    $this->storage = $storage;
-    $this->eventDispatcher = $eventDispatcher;
-    $this->configManager = $configManager;
-    $this->lock = $lock;
-    $this->configTyped = $configTyped;
-    $this->moduleHandler = $moduleHandler;
-    $this->moduleInstaller = $moduleInstaller;
-    $this->themeHandler = $themeHandler;
-    $this->stringTranslation = $stringTranslation;
-    $this->extensionListModule = $extensionListModule;
-    $this->configFactory = $configFactory;
-    $this->httpClient = $httpClient;
-    $this->languageManager = $languageManager;
   }
 
   /**
@@ -460,7 +335,8 @@ class WebformImportCommands extends DrushCommands {
       $this->moduleInstaller,
       $this->themeHandler,
       $this->stringTranslation,
-      $this->extensionListModule
+      $this->extensionListModule,
+      $this->themeExtensionList,
     );
 
     if ($configImporter->alreadyImporting()) {
@@ -536,6 +412,7 @@ class WebformImportCommands extends DrushCommands {
           continue;
         }
 
+        assert($this->languageManager instanceof ConfigurableLanguageManagerInterface);
         /** @var \Drupal\language\Config\LanguageConfigOverride $languageOverride */
         $languageOverride = $this->languageManager->getLanguageConfigOverride($language, $name);
         $languageOverride->setData($configFileValue);

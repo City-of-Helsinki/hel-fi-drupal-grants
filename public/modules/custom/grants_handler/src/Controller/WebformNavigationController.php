@@ -6,7 +6,7 @@ use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
-use Drupal\grants_handler\ApplicationGetterService;
+use Drupal\grants_handler\ApplicationGetterServiceInterface;
 use Drupal\grants_handler\FormLockService;
 use Drupal\grants_handler\GrantsHandlerNavigationHelper;
 use Drupal\grants_profile\GrantsProfileService;
@@ -61,9 +61,9 @@ class WebformNavigationController extends ControllerBase {
   /**
    * Get application data.
    *
-   * @var \Drupal\grants_handler\ApplicationGetterService
+   * @var \Drupal\grants_handler\ApplicationGetterServiceInterface
    */
-  protected ApplicationGetterService $applicationGetterService;
+  protected ApplicationGetterServiceInterface $applicationGetterService;
 
   /**
    * {@inheritdoc}

@@ -297,7 +297,9 @@ class GrantsProfileServiceTest extends UnitTestCase {
     $request->getSession()->willReturn($session->reveal());
 
     $session->get(Argument::any())->will(static fn ($args) => $content[$args[0]] ?? NULL);
-    $session->set(Argument::any(), Argument::any())->will(static fn ($args) => $content[$args[0]] = $args[1]);
+    $session->set(Argument::any(), Argument::any())->will(function ($args) use (&$content) {
+      $content[$args[0]] = $args[1];
+    });
 
     return new GrantsProfileCache($service->reveal());
 

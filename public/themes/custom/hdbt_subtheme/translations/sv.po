@@ -584,3 +584,7 @@ msgstr "Värdet är av felaktig typ."
 msgctxt "Grants application: Validation"
 msgid "You must insert at least @limit value for field @field"
 msgstr "Du måste föra in minst @limit värde för fält @field"
+
+msgctxt "Grants application: Steps"
+msgid "Next"
+msgstr "Nästa"

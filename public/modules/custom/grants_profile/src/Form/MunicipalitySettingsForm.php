@@ -3,10 +3,12 @@
 namespace Drupal\grants_profile\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\grants_profile\MunicipalityService;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Configure municipality config form.
@@ -14,6 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @phpstan-consistent-constructor
  */
 class MunicipalitySettingsForm extends ConfigFormBase {
+
+  use AutowireTrait;
 
   /**
    * Config settings.
@@ -27,9 +31,11 @@ class MunicipalitySettingsForm extends ConfigFormBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
+    TypedConfigManagerInterface $typedConfigManager,
+    #[Autowire('grants_profile.municipality_service')]
     private MunicipalityService $municipalityService,
   ) {
-    parent::__construct($config_factory);
+    parent::__construct($config_factory, $typedConfigManager);
   }
 
   /**
@@ -37,16 +43,6 @@ class MunicipalitySettingsForm extends ConfigFormBase {
    */
   public function getFormId() {
     return 'grants_profile_municipality_settings_form';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('config.factory'),
-      $container->get('grants_profile.municipality_service'),
-    );
   }
 
   /**

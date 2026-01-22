@@ -118,7 +118,8 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     // Set multi-value fields.
     $form_state->setValueForElement($form['applicant_types']['widget'], ['test_applicant_type']);
     $form_state->setValueForElement($form['application_subvention_type']['widget'], ['1']);
-    $form_state->setValueForElement($form['application_acting_years']['widget'], ['2025']);
+    // @todo this will fail again 2027 since this is not allowed value next year.
+    $form_state->setValueForElement($form['application_acting_years']['widget'], ['2026']);
 
     // Set date fields.
     $form_state->setValueForElement($form['application_open']['widget'][0]['value'], [
@@ -148,11 +149,13 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     // Submit the form.
     $form_builder->submitForm($form_object, $form_state);
 
-    // Check for form validation errors.
+    // Print form validation errors for easier debugging.
+    // PHPUnit does not like this, but the test will fail
+    // anyway if $errors is not empty.
     $errors = $form_state->getErrors();
     if (!empty($errors)) {
       foreach ($errors as $field => $error) {
-        echo "\nForm error on $field: " . (string) $error;
+        echo "\nForm error on $field: " . (string) $error . "\n";
       }
     }
     $this->assertFalse($form_state->hasAnyErrors(), 'Form submit should pass with valid values.');

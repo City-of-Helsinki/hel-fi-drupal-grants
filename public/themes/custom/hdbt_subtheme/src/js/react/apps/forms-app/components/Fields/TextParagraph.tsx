@@ -9,9 +9,7 @@ import { shouldRenderPreviewAtom } from '../../store';
 export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const { title, items } = schema;
-  const { 'misc:variant': variant } = uiSchema as UiSchema & {
-    'misc:variant'?: string;
-  };
+  const { 'misc:variant': variant } = uiSchema as UiSchema & { 'misc:variant'?: string };
 
   // Do not render in preview
   if (shouldRenderPreview) {
@@ -32,9 +30,7 @@ export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
 
   return variant === 'infobox' ? (
     <Notification label={title} className='hdbt-form--notification'>
-      {Array.isArray(items) &&
-        items?.length &&
-        items.map((p, index: number) => <p key={index}>{getTitle(p)}</p>)}
+      {Array.isArray(items) && items?.length && items.map((p, index: number) => <p key={index}>{getTitle(p)}</p>)}
     </Notification>
   ) : (
     <div className='hdbt-form--paragraph'>

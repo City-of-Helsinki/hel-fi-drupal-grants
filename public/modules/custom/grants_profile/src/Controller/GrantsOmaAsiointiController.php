@@ -158,32 +158,23 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
     }
 
     $missing_delete_after = $applications['missing_delete_after'] ?? FALSE;
+    $submittedMissingDeleteAfter = $applications['submitted_missing_delete_after'] ?? FALSE;
     unset($applications['missing_delete_after']);
+    unset($applications['submitted_missing_delete_after']);
 
     $drafts = $applications['DRAFT'] ?? [];
     unset($applications['DRAFT']);
     // Parse messages.
     [$other, $unreadMsg] = $this->parseMessages($applications);
 
-    // If any of the drafts are missing deleteAfter value,
+    // If any of the applications are missing deleteAfter value,
     // update the missing values.
     if ($missing_delete_after) {
-      foreach ($drafts as $draft) {
-        $atvDocument = $draft['#document'] ?? NULL;
-        if (!$atvDocument || $atvDocument->getDeleteAfter()) {
-          continue;
-        }
+      $this->queueDeleteAfter($drafts, 1);
+    }
 
-        $this->queueFactory
-          ->get('delete_after_queue')
-          ->createItem(
-          [
-            'document_id' => $atvDocument->getId(),
-            'delete_after' => (new \DateTimeImmutable('+1 years'))->format('Y-m-d'),
-          ]
-        );
-
-      }
+    if ($submittedMissingDeleteAfter) {
+      $this->queueDeleteAfter($other, 6);
     }
 
     return [
@@ -253,6 +244,33 @@ class GrantsOmaAsiointiController extends ControllerBase implements ContainerInj
   public function title() :string {
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
     return $selectedCompany['name'] ?? '';
+  }
+
+  /**
+   * Queue the documents which are missing delete after value.
+   *
+   * @param array $data
+   *   Array of documents.
+   * @param int $years
+   *   How far in future the delete after will be.
+   */
+  private function queueDeleteAfter(array $data, int $years = 1): void {
+    foreach ($data as $document) {
+      $atvDocument = $document['#document'] ?? NULL;
+      if (!$atvDocument || $atvDocument->getDeleteAfter()) {
+        continue;
+      }
+
+      $this->queueFactory
+        ->get('delete_after_queue')
+        ->createItem(
+          [
+            'document_id' => $atvDocument->getId(),
+            'delete_after' => (new \DateTimeImmutable("+$years years"))->format('Y-m-d'),
+          ]
+        );
+
+    }
   }
 
 }
