@@ -696,7 +696,7 @@ elements: |-
         lapset_arvio_markup:
           '#type': webform_markup
           '#markup': '<p>Merkitse jokainen tavoitettu henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi tavoitettu). Mikäli hankkessa ei ole tavoitettu kyseistä kohderyhmää, niin merkitse kenttään "0".</p>'
-        hankkeen_kohderyhmat_lapset_9_12:
+        hankkeen_kohderyhmat_lapset_9_12_arvio:
           '#type': textfield
           '#title': '9–12-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
@@ -705,7 +705,7 @@ elements: |-
               - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
-        hankkeen_kohderyhmat_lapset_13_15:
+        hankkeen_kohderyhmat_lapset_13_15_arvio:
           '#type': textfield
           '#title': '13–15-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
@@ -714,7 +714,7 @@ elements: |-
               - webform--large
           '#required': true
           '#pattern': '^[0-9 ]*$'
-        hankkeen_kohderyhmat_lapset_16_18:
+        hankkeen_kohderyhmat_lapset_16_18_arvio:
           '#type': textfield
           '#title': '16–18-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
@@ -730,7 +730,7 @@ elements: |-
         hankkeen_kohderyhmat_uudet_markup:
           '#type': webform_markup
           '#markup': '<p>Merkitse jokainen tavoitettu henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi tavoitettu). Mikäli hankkessa ei ole tavoitettu kyseistä kohderyhmää, niin merkitse kenttään "0".</p>'
-        hankkeen_kohderyhmat_uudet:
+        hankkeen_kohderyhmat_uudet_arvio:
           '#type': textfield
           '#title': '9–18-vuotiasta helsinkiläistä'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
@@ -934,9 +934,6 @@ elements: |-
           visible:
             - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
                 value: '2'
-            - or
-            - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                value: '3'
         '#required': true
       hankkeen_toimenpiteet_toteutus:
         '#type': fieldset
@@ -968,8 +965,11 @@ elements: |-
               - webform--large
           '#states':
             visible:
-              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                '!value': '1'
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  'value': '2'
+              - and
+              - ':input[name="hankesuunnitelma_jatkohakemus"]':
+                  value: '2'
       hankkeen_toiminnan_laajuus:
         '#type': textarea
         '#title': 'Missä laajuudessa toimintaa on suunniteltu järjestettävän (h/vko)?'
