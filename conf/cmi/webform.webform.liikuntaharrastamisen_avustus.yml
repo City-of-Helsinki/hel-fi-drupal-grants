@@ -695,7 +695,7 @@ elements: |-
         '#required': true
         lapset_arvio_markup:
           '#type': webform_markup
-          '#markup': '<p>Merkitse jokainen tavoitettu henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi tavoitettu). Mikäli hankkessa ei ole tavoitettu kyseistä kohderyhmää, niin merkitse kenttään "0".</p>'
+          '#markup': '<p>Merkitse jokainen tavoitettu henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi tavoitettu).</p>'
         hankkeen_kohderyhmat_lapset_9_12_arvio:
           '#type': textfield
           '#title': '9–12-vuotiasta helsinkiläistä'
