@@ -25,7 +25,7 @@
         "drupal/hdbt_admin": "^3.0",
         "drupal/helfi_azure_fs": "^2",
         "drupal/helfi_drupal_tools": "dev-main",
-        "drupal/helfi_platform_config": "^5.0.12",
+        "drupal/helfi_platform_config": "^5.1",
         "drupal/helfi_proxy": "^3.0",
         "drupal/helfi_tpr": "^2.1",
         "drupal/helfi_tunnistamo": "^3.0",
@@ -112,6 +112,9 @@
             },
             "drupal/helfi_helsinki_profiili": {
                 "Pseudonymize logging of user data.": "patches/helfi_helsinki_profiili-0.9.30-gdpr-pseudonymize-logging.patch"
+            },
+            "drupal/varnish_purge": {
+                "Lazyload Varnish purger settings entity type definitions.": "patches/varnish_purge-2.3-lazyload-varnishpurger-entity-type-definitions.patch"
             }
         },
         "drupal-scaffold": {
