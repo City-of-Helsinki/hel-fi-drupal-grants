@@ -225,9 +225,15 @@ elements: |
     '#markup': '<p data-renderer-start-pos="19563">Estimate the total number of children and young people reached during the whole project. If the project does not reach the specified age group, enter "0" in the field.</p>'
   hankkeen_kohderyhmat_lapset_9_12:
     '#title': 'Helsinki residents aged 9 to 12 years'
+  hankkeen_kohderyhmat_lapset_9_12_arvio:
+    '#title': 'Helsinki residents aged 9 to 12 years'
   hankkeen_kohderyhmat_lapset_13_15:
     '#title': 'Helsinki residents aged 13 to 15 years'
+  hankkeen_kohderyhmat_lapset_13_15_arvio:
+    '#title': 'Helsinki residents aged 13 to 15 years'
   hankkeen_kohderyhmat_lapset_16_18:
+    '#title': 'Helsinki residents aged 16 to 18 years'
+  hankkeen_kohderyhmat_lapset_16_18_arvio:
     '#title': 'Helsinki residents aged 16 to 18 years'
   hankkeen_kohderyhmat_uudet_arvio_fieldset:
     '#title': 'Estimate how many of these have been new participants, meaning they have not participated in activities organized by the operator before?'
@@ -236,6 +242,8 @@ elements: |
   hankkeen_kohderyhmat_uudet_fieldset:
     '#title': 'How many of them are new, i.e. have not participated in activities organised by the operator before?'
   hankkeen_kohderyhmat_uudet:
+    '#title': 'Helsinki residents aged 9 to 18 years'
+  hankkeen_kohderyhmat_uudet_arvio:
     '#title': 'Helsinki residents aged 9 to 18 years'
   hankkeen_kohderyhmat_saavutettavuus:
     '#title': 'How has accessibility been taken into account? What kind of equipment and level of skills are required from participants?'
