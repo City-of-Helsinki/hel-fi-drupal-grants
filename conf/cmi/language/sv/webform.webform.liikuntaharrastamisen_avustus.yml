@@ -165,9 +165,9 @@ elements: |
   hankkeen_muutokset_talous:
     '#title': 'Har det skett några betydande förändringar i projektets ekonomi? I så fall, vad?'
   hankkeen_muutokset_toiminta:
-    '#title': 'Have there been any significant changes in the project's activities? Please specify.'
-  hankkeen_muutokset_aikataulu:
     '#title': 'Har det skett några betydande förändringar i projektets verksamhet? I så fall, vad?'
+  hankkeen_muutokset_aikataulu:
+    '#title': 'Har det skett några betydande förändringar i projektets tidtabell? I så fall, vad?'
   hankkeen_muutokset_toimintamallit:
     '#title': 'Om projektet har haft som mål att utveckla nya verksamhetsmodeller, vad har hittills uppnåtts i detta avseende?'
   hankkeen_yhteistyökumppanit:
