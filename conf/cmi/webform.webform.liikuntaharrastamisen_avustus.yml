@@ -966,9 +966,6 @@ elements: |-
           '#states':
             visible:
               - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                  'value': '2'
-              - and
-              - ':input[name="hankesuunnitelma_jatkohakemus"]':
                   value: '2'
       hankkeen_toiminnan_laajuus:
         '#type': textarea
