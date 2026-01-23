@@ -221,8 +221,8 @@ elements: |
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_lapset:
     '#title': 'Bedöm hur många barn och unga som nås genom verksamheten.'
-  markup:
-    '#markup': '<p>Bedöm det totala antalet barn och unga som nås under hela projektet. Om projektet inte når den aktuella åldersgruppen, markera "0" i fältet.</p>'
+  lapset_arvio_markup:
+    '#markup': '<p>Räkna varje person endast en gång, även om samma person har deltagit i flera evenemang (en person = en nådd). Om projektet inte har nått den angivna målgruppen, markera "0" i fältet.</p>'
   hankkeen_kohderyhmat_lapset_9_12:
     '#title': '9–12-åriga helsingforsare'
   hankkeen_kohderyhmat_lapset_9_12_arvio:
