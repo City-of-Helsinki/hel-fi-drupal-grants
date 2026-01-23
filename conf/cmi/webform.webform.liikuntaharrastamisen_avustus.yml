@@ -762,14 +762,14 @@ elements: |-
             - webform--large
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       hankkeen_harrastuskerta_hinta:
-          '#type': textfield
-          '#title': 'Kuinka paljon yksi harrastuskerta on maksanut osallistujalle (€/h)?'
-          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
-          '#attributes':
-            class:
-              - webform--large
-          '#required': true
-          '#pattern': '^[0-9 ]*$'
+        '#type': textfield
+        '#title': 'Kuinka paljon yksi harrastuskerta on maksanut osallistujalle (€/h)?'
+        '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+        '#attributes':
+          class:
+            - webform--large
+        '#required': true
+        '#pattern': '^[0-9 ]*$'
       hankkeen_tekeminen_kuvaus:
         '#type': textarea
         '#title': 'Mitä hankkeessa on tehty tähän mennessä ja mitä tullaan vielä tekemään tämän hankevuoden aikana (31.5.2026)'

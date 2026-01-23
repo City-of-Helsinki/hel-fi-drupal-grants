@@ -56,14 +56,13 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       // the underlying component does not know how to recalculate its values
       // at that point. This can be removed if computed fields have better
       // support in the future.
-      'haettava_avustussumma_2025' => [
+      'haettava_avustussumma_2026' => [
         'valueCallback' => static fn (mixed $value) => $value['compensation'] ?? $value,
         'webformDataExtracter' => [
           'service' => 'grants_budget_components.service',
           'method' => 'extractToWebformData',
         ],
       ],
-      'haettava_avustussumma_2026' => [],
       'haettava_avustussumma_2027' => [],
       'ensisijainen_taiteen_ala' => [],
       'avustuksen_kohde_yhdistys_toimintaryhma' => [],
@@ -172,6 +171,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_talous_toiminta_aikataulu_muutokset' => [],
       'hankkeen_jatkokausi_suunnitelma' => [],
       'hankesuunnitelma_jatkohakemus' => [],
+      'onko_jatkohakemus' => [],
       'toteutunut_kohderyhma' => [],
       'hankkeen_kohderyhmat_lapset_arvio' => [],
       'arvio_perustelu' => [],
