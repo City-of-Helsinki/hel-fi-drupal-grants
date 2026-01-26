@@ -331,8 +331,16 @@ form .hds-checkbox {
 }
 
 fieldset.webform-composite-hidden-title {
-  border: 0;
   margin-block: 0 var(--spacing-layout-2-xs);
+}
+
+// Remove default fieldset styles from specific components
+// relates most likely to D11 update.
+.applicant-info--wrapper,
+.radios-wrapper,
+.webform-section-wrapper > .fieldgroup,
+.fieldgroup:has(> legend .visually-hidden):not(:has(.hds-button)) {
+  border: 0;
   margin-inline: 0;
   padding: 0;
 }
