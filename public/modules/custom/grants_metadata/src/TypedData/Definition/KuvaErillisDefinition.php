@@ -56,14 +56,13 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       // the underlying component does not know how to recalculate its values
       // at that point. This can be removed if computed fields have better
       // support in the future.
-      'haettava_avustussumma_2025' => [
+      'haettava_avustussumma_2026' => [
         'valueCallback' => static fn (mixed $value) => $value['compensation'] ?? $value,
         'webformDataExtracter' => [
           'service' => 'grants_budget_components.service',
           'method' => 'extractToWebformData',
         ],
       ],
-      'haettava_avustussumma_2026' => [],
       'haettava_avustussumma_2027' => [],
       'ensisijainen_taiteen_ala' => [],
       'avustuksen_kohde_yhdistys_toimintaryhma' => [],
@@ -171,6 +170,28 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_edellisen_vuoden_avustuksen_kaytto' => [],
       'hankkeen_talous_toiminta_aikataulu_muutokset' => [],
       'hankkeen_jatkokausi_suunnitelma' => [],
+      'hankesuunnitelma_jatkohakemus' => [],
+      'onko_jatkohakemus' => [],
+      'toteutunut_kohderyhma' => [],
+      'hankkeen_kohderyhmat_lapset_arvio' => [],
+      'arvio_perustelu' => [],
+      'toteutuneet_tunnit_eriteltyna' => [],
+      'hankkeen_harrastuskerta_hinta' => [],
+      'hankkeen_tekeminen_kuvaus' => [],
+      'hankkeen_muutokset_talous' => [],
+      'hankkeen_muutokset_toiminta' => [],
+      'hankkeen_muutokset_aikataulu' => [],
+      'hankkeen_muutokset_toimintamallit' => [],
+      'hankkeen_yhteistyökumppanit' => [],
+      'nuorten_osallistuminen_paatoksiin' => [],
+      'hanke_haasteet' => [],
+      'hankekaudelle_myonnetyn_avustuksen_kaytto' => [],
+      'jatkokausi_alkuperainen_suunnitelma' => [],
+      'jatkokausi_summa_muutos' => [],
+      'hankkeen_kohderyhmat_lapset_9_12_arvio' => [],
+      'hankkeen_kohderyhmat_lapset_13_15_arvio' => [],
+      'hankkeen_kohderyhmat_lapset_16_18_arvio' => [],
+      'hankkeen_kohderyhmat_uudet_arvio' => [],
     ];
 
     foreach ($customQuestions as $key => $value) {
