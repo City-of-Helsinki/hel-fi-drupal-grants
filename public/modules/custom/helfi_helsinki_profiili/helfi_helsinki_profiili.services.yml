@@ -1,17 +1,14 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  logger.channel.helsinki_profiili:
+    parent: logger.channel_base
+    arguments: [ 'helsinki_profiili' ]
+
   helfi_helsinki_profiili.userdata:
     class: Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-    arguments: [
-      '@openid_connect.session',
-      '@http_client',
-      '@logger.factory',
-      '@current_user',
-      '@request_stack',
-      '@helfi_api_base.environment_resolver',
-      '@entity_type.manager',
-      '@event_dispatcher',
-      '@config.factory'
-    ]
 
   helfi_helsinki_profiili.middleware:
     class: Drupal\helfi_helsinki_profiili\RegisterPageRedirectMiddleware

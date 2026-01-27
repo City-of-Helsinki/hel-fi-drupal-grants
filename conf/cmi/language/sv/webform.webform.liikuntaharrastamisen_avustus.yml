@@ -52,7 +52,7 @@ elements: |
   avustuslajit:
     '#title': Understöd
   grants_compensations_information:
-    '#markup': '<p data-renderer-start-pos="4527">Ange det understödsbelopp som ansöks för år 2025 i fältet. Understödsbeloppen för de följande åren av ett flerårigt projekt anges på nästa sida.</p>'
+    '#markup': '<p data-renderer-start-pos="4527">Ange det understödsbelopp som ansöks för år 2026 i fältet. Understödsbeloppen för de följande åren av ett flerårigt projekt anges på nästa sida.</p>'
   subventions:
     '#title': 'Typ av stöd'
   kayttotarkoitus:
@@ -129,21 +129,61 @@ elements: |
     '#title': '3. Mer detaljerad information'
   tarkemmat_tiedot_section:
     '#title': 'Mer detaljerad information'
+  hankesuunnitelma_jatkohakemus:
+    '#title': 'Välj bland följande:'
+    '#options':
+      1: 'Jag ansöker om det understöd som beviljades villkorligt år 2025 för projektets andra period '
+      2: 'Jag ansöker om understöd för ett nytt projekt'
   hankesuunnitelma_avustuksen_kesto:
-    '#title': 'Ansöker du om understöd för ett, två eller tre år? Ange de understödsbelopp som ska sökas för projektets kommande år i de öppna fälten.'
+    '#title': 'Ansöker du om understöd för ett eller två år? Ange de understödsbelopp som ska sökas för projektets kommande år i de öppna fälten.'
     '#options':
       1: 'Jag ansöker om understöd för ett år'
       2: 'Jag ansöker om understöd för två år'
-      3: 'Jag ansöker om understöd för tre år'
   haettava_avustussumma:
     '#title': 'Understödsbelopp som ansöks'
-  haettava_avustussumma_2025:
-    '#title': '2025 (euro)'
-    '#compensation__title': '2025 (euro)'
   haettava_avustussumma_2026:
     '#title': '2026 (euro)'
+    '#compensation__title': '2026 (euro)'
   haettava_avustussumma_2027:
     '#title': '2027 (euro)'
+  valiraportointi_section:
+    '#title': '3.5 Mellanrapportering för fleråriga projekt'
+  toteutunut_kohderyhma:
+    '#title': 'Vilken/vilka har varit projektets faktiska målgrupp(er), och vilka metoder har använts för att nå dem?'
+  hankkeen_kohderyhmat_lapset_arvio:
+    '#title': 'Uppskatta hur många barn och unga som hittills har nåtts genom verksamheten.'
+  lapset_arvio_markup:
+    '#markup': '<p>Räkna varje person endast en gång, även om samma person har deltagit i flera evenemang (en person = en nådd). Om projektet inte har nått den angivna målgruppen, markera "0" i fältet. <p>'
+  markup:
+    '#markup': '<p>Bedöm det totala antalet barn och unga som nås under hela projektet.</p>'
+  arvio_perustelu:
+    '#title': 'Är siffrorna du angav ovan baserade på en uppskattning eller på exakt information?'
+  toteutuneet_tunnit_eriteltyna:
+    '#title': 'Hur många timmar verksamhet har ordnats inom projektet i respektive postnummerområde? Specificera områdena och timmarna i text fältet,separerade med kommatecken (t.ex. 00400: 7h, 00460: 15 h).'
+  hankkeen_harrastuskerta_hinta:
+    '#title': 'Hur mycket har en gång av hobbyn kostat för deltagaren (€/h)?'
+  hankkeen_tekeminen_kuvaus:
+    '#title': 'Vad har hittills gjorts inom projektet, och vad planeras fortfarande att genomföras under resten av detta projektår (senast 31.5.2026)?'
+  hankkeen_muutokset_talous:
+    '#title': 'Har det skett några betydande förändringar i projektets ekonomi? I så fall, vad?'
+  hankkeen_muutokset_toiminta:
+    '#title': 'Har det skett några betydande förändringar i projektets verksamhet? I så fall, vad?'
+  hankkeen_muutokset_aikataulu:
+    '#title': 'Har det skett några betydande förändringar i projektets tidtabell? I så fall, vad?'
+  hankkeen_muutokset_toimintamallit:
+    '#title': 'Om projektet har haft som mål att utveckla nya verksamhetsmodeller, vad har hittills uppnåtts i detta avseende?'
+  hankkeen_yhteistyökumppanit:
+    '#title': 'Vilka har varit projektets viktigaste samarbetspartner hittills, och vilken roll har de haft?'
+  nuorten_osallistuminen_paatoksiin:
+    '#title': 'Hur har barn och unga deltagit i planeringen och beslutsfattandet av verksamheten? Ge konkreta exempel.'
+  hanke_haasteet:
+    '#title': 'Har det uppstått några utmaningar under genomförandet av projektet? Om ja, beskriv vilka och hur de har hanterats.'
+  hankekaudelle_myonnetyn_avustuksen_kaytto:
+    '#title': 'Kommer det beviljade understöd för den första projektperioden enligt er bedömning att användas inom utsatt tid (31.5.2026)? Om inte, förklara orsakerna till detta.'
+  jatkokausi_alkuperainen_suunnitelma:
+    '#title': 'Är det tänkt att projektets fortsättningsperiod(er) ska genomföras enligt den ursprungliga planen? Om inte, varför?'
+  jatkokausi_summa_muutos:
+    '#title': 'Om du tänker ansöka om ett annat belopp i understöd än det villkorade understöd som beviljades år 2025, motivera behovet av förändringen.'
   hankesuunnitelma_section:
     '#title': 'Projektplan och mål'
   hankkeen_nimi:
@@ -158,9 +198,6 @@ elements: |
   hankkeen_toimenpiteet_toteutus:
     '#title': 'Vilka är de konkreta åtgärderna i projektet för att främja regionala idrottsaktiviteter med låg tröskel för 9–18-åriga barn och ungdomar i Helsingfors? Vilken är tidtabellen för genomförande av åtgärderna?'
   hankkeen_toimenpiteet_aikataulu:
-    '#title': 'Konkreta åtgärder och deras tidtabellen för 2025'
-    '#counter_maximum_message': '%d/2500 tecken kvar'
-  hankkeen_toimenpiteet_aikataulu_2026:
     '#title': 'Konkreta åtgärder och deras tidtabellen för 2026'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_toimenpiteet_aikataulu_2027:
@@ -186,17 +223,27 @@ elements: |
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_lapset:
     '#title': 'Bedöm hur många barn och unga som nås genom verksamheten.'
-  markup:
-    '#markup': '<p>Bedöm det totala antalet barn och unga som nås under hela projektet. Om projektet inte når den aktuella åldersgruppen, markera "0" i fältet.</p>'
   hankkeen_kohderyhmat_lapset_9_12:
+    '#title': '9–12-åriga helsingforsare'
+  hankkeen_kohderyhmat_lapset_9_12_arvio:
     '#title': '9–12-åriga helsingforsare'
   hankkeen_kohderyhmat_lapset_13_15:
     '#title': '13–15-åriga helsingforsare'
+  hankkeen_kohderyhmat_lapset_13_15_arvio:
+    '#title': '13–15-åriga helsingforsare'
   hankkeen_kohderyhmat_lapset_16_18:
     '#title': '16–18-åriga helsingforsare'
+  hankkeen_kohderyhmat_lapset_16_18_arvio:
+    '#title': '16–18-åriga helsingforsare'
+  hankkeen_kohderyhmat_uudet_arvio_fieldset:
+    '#title': 'Uppskatta hur många av dessa som har varit nya deltagare, det vill säga har inte deltagit i verksamhet som tidigare ordnats av aktören?'
+  hankkeen_kohderyhmat_uudet_markup:
+    '#markup': '<p>Räkna varje person endast en gång, även om samma person har deltagit i flera evenemang (en person = en nådd). Om projektet inte har nått den angivna målgruppen, markera "0" i fältet.</p>'
   hankkeen_kohderyhmat_uudet_fieldset:
     '#title': 'Hur många av dessa är nya, det vill säga har inte deltagit i verksamhet som tidigare ordnats av aktören?'
   hankkeen_kohderyhmat_uudet:
+    '#title': '9–18-åriga helsingforsare'
+  hankkeen_kohderyhmat_uudet_arvio:
     '#title': '9–18-åriga helsingforsare'
   hankkeen_kohderyhmat_saavutettavuus:
     '#title': 'Hur har verksamhetens tillgänglighet beaktats? Vilken egen utrustning och kunskapsnivå krävs av deltagarna för verksamheten?'
@@ -244,7 +291,7 @@ elements: |
   tulot_section:
     '#title': Inkomster
   markup_01:
-    '#markup': '<p data-prosemirror-content-type="node" data-prosemirror-node-name="paragraph" data-prosemirror-node-block="true" data-pm-slice="1 1 [&quot;expand&quot;,{&quot;title&quot;:&quot;Tekstit&quot;,&quot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;default&quot;,&quot;localId&quot;:&quot;cf543429-6a36-4e4f-85b9-84c73d93f509&quot;,&quot;width&quot;:760,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;colwidth&quot;:[230],&quot;background&quot;:null}]">För ett flerårigt projekt ska budgeten för det första projektåret anges i detta avsnitt. Dessutom ska en budget för hela projektperioden bifogas ansökan, där intäkter och kostnader fördelas på de olika projektåren.</p>'
+    '#markup': '<p>För ett flerårigt projekt ska budgeten för det projektår 2026 anges i detta avsnitt. Dessutom ska en budget för hela projektperioden bifogas ansökan, där intäkter och kostnader fördelas på de olika projektåren.</p>'
   tulot:
     '#title': Inkomster
     '#compensation__title': 'Ansökt stöd (€)'
@@ -269,7 +316,7 @@ elements: |
   liitteet:
     '#title': Bilagor
   attachments_info:
-    '#markup': '<p>Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.</p><p><strong>Erforderliga bilagor</strong></p><p>Ett flerårigt projekt ska bifoga en budget specificerad per projektår för hela projektperioden till ansökan.</p><p>För behandling av ansökan om understöd behövs styrkta bilagor från den föregående räkenskapsperioden som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från den föregående räkenskapsperioden är: bokslut, verksamhetsberättelse, revisionsberättelse och protokoll från årsstämman. Bilagorna för det år för vilket understödet ansöks är: budget och verksamhetsplan. Dessutom måste sökanden lämna in föreningens stadgar och bankens meddelande om kontoägaren eller en kopia av kontoutdraget.</p><p><strong data-renderer-mark="true">Inlämning av flera bilagor i en fil</strong></p><p>Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p><p><strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong></p><p>Om de obligatoriska bilagorna redan har lämnats in som bilagor till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”. Men samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara sinsemellan olika i bilagor till de olika ansökningarna.</p>'
+    '#markup': '<p>Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.</p><p><strong>Erforderliga bilagor</strong></p><p>Ett flerårigt projekt ska bifoga en budget specificerad per projektår för hela projektperioden till ansökan.</p><p>För behandling av ansökan om understöd behövs styrkta bilagor från den föregående räkenskapsperioden som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från den föregående räkenskapsperioden är: bokslut, verksamhetsberättelse, revisionsberättelse och protokoll från årsstämman. Bilagorna för det år för vilket understödet ansöks är: budget och verksamhetsplan. Dessutom måste sökanden lämna in föreningens stadgar och bankens meddelande om kontoägaren eller en kopia av kontoutdraget.</p><p>Om du ansöker om det villkorligt beviljade understöd, bifoga en kostnadsställerapport till ansökan för de kostnader som redan har uppkommit under den första projektperioden. Om ert projekt inte har beviljats ett villkorligt understöd för år 2026, men projektet har inletts år 2025, bifoga till ansökan en sammanfattning av de åtgärder som genomförts under det första projektåret samt en kostnadsställerapport över de kostnader som redan uppkommit under den första projektperioden.</p><p><strong data-renderer-mark="true">Inlämning av flera bilagor i en fil</strong></p><p>Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.</p><p><strong>Bilagor som tidigare lämnats in till Helsingfors stad</strong></p><p>Om de obligatoriska bilagorna redan har lämnats in som bilagor till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”. Men samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara sinsemellan olika i bilagor till de olika ansökningarna.</p>'
   notification_attachments:
     '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>Innehållet i bilagorna kan inte granskas i efterhand</span></div><div class="hds-notification__body"><p>Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.</p><p>Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.</p></div></div></div>'
   extra_info:

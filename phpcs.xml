@@ -8,6 +8,11 @@
     <exclude name="DrupalPractice.General.OptionsT.TforValue" />
     <exclude name="DrupalPractice.Objects.UnusedPrivateMethod.UnusedMethod" />
   </rule>
+  <rule ref="Drupal">
+    <!-- Legacy code uses invalid enum naming - disable the linter rule -->
+    <exclude name="Drupal.NamingConventions.ValidEnumCase.NoUpperAcronyms" />
+    <exclude name="Drupal.NamingConventions.ValidEnumCase.NoUnderscores" />
+  </rule>
   <!-- TODO enable Generic.PHP.RequireStrictTypes
   <rule ref="Generic.PHP.RequireStrictTypes" />
   -->

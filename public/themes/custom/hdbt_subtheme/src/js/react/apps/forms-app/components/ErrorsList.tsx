@@ -18,13 +18,8 @@ export const ErrorsList = () => {
       <ul>
         {errors.map(([index, error]) => (
           <li key={error.property}>
-            {Drupal.t(
-              'Error on page @page:',
-              { '@page': index + 1 },
-              { context: 'Grants application: Errors' },
-            )}
-            {error?.message &&
-              ` ${error.message.charAt(0).toUpperCase()}${error.message.slice(1)}`}
+            {Drupal.t('Error on page @page:', { '@page': index + 1 }, { context: 'Grants application: Errors' })}
+            {error?.message && ` ${error.message.charAt(0).toUpperCase()}${error.message.slice(1)}`}
           </li>
         ))}
       </ul>

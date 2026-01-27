@@ -768,3 +768,7 @@ msgstr "Peruuta"
 msgctxt "grants_handler_dialog"
 msgid "Deleting application failed. Please try again or contact support."
 msgstr "Hakemuksen poistaminen epäonnistui. Yritä uudelleen tai ota yhteyttä tukeen."
+
+msgctxt "grants_handler"
+msgid "This application is being modified by other person currently, you cannot do any modifications while the application is locked for them."
+msgstr "Toinen henkilö muokkaa tätä lomaketta tällä hetkellä, et voi tehdä mitään muutoksia, kun lomake on lukittu heille."

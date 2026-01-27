@@ -2,7 +2,7 @@ name: grants_admin_applications
 type: module
 description: Provide functionality to delete documents from ATV.
 package: Helfi
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - helfi_atv
   - helfi_helsinki_profiili

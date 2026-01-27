@@ -23,7 +23,8 @@ final class JsonMapperTest extends UnitTestCase {
     $dataSources = $this->getAllDatasources('defaultFieldForm.json');
 
     // Perform mapping from source data to target data.
-    $mapper = new JsonMapper($defaultMappings);
+    $mapper = new JsonMapper();
+    $mapper->setMappings($defaultMappings);
     $mappedData = $mapper->map($dataSources);
 
     // Assert that the source data is mapped properly into target format.
@@ -42,7 +43,8 @@ final class JsonMapperTest extends UnitTestCase {
     $dataSources = $this->getAllDatasources('multipleValueFieldForm.json');
 
     // Perform mapping from source data to target data.
-    $mapper = new JsonMapper($defaultMappings);
+    $mapper = new JsonMapper();
+    $mapper->setMappings($defaultMappings);
     $mappedData = $mapper->map($dataSources);
 
     $this->assertTrue(isset($mappedData['compensation']['orienteeringMapInfo']['orienteeringMapsArray'][0][0]['ID']), "Assert multiple values");
@@ -63,7 +65,8 @@ final class JsonMapperTest extends UnitTestCase {
     $dataSources = $this->getAllDatasources('complexFieldForm.json');
 
     // Perform mapping from source data to target data.
-    $mapper = new JsonMapper($defaultMappings);
+    $mapper = new JsonMapper();
+    $mapper->setMappings($defaultMappings);
     $mappedData = $mapper->map($dataSources);
 
     $this->assertTrue(isset($mappedData['compensation']['costs']['budget']['properties'][0]['ID']), "Assert complex values");
@@ -83,7 +86,8 @@ final class JsonMapperTest extends UnitTestCase {
     $dataSources = $this->getAllDatasources('simpleFieldForm.json');
 
     // Perform mapping from source data to target data.
-    $mapper = new JsonMapper($defaultMappings);
+    $mapper = new JsonMapper();
+    $mapper->setMappings($defaultMappings);
     $mappedData = $mapper->map($dataSources);
 
     $this->assertTrue(isset($mappedData['compensation']['additionalInformation']), "Simple field test.");
@@ -98,7 +102,8 @@ final class JsonMapperTest extends UnitTestCase {
     $dataSources = $this->getAllDatasources('emptyFieldForm.json');
 
     // Perform mapping from source data to target data.
-    $mapper = new JsonMapper($defaultMappings);
+    $mapper = new JsonMapper();
+    $mapper->setMappings($defaultMappings);
     $mappedData = $mapper->map($dataSources);
 
     $this->assertTrue(isset($mappedData['compensation']['budgetInfo']['costGroupsArrayStatic'][0]), "Assert empty value");
@@ -114,7 +119,8 @@ final class JsonMapperTest extends UnitTestCase {
     $dataSources = $this->getAllDatasources('hardcodedFieldForm.json');
 
     // Perform mapping from source data to target data.
-    $mapper = new JsonMapper($defaultMappings);
+    $mapper = new JsonMapper();
+    $mapper->setMappings($defaultMappings);
     $mappedData = $mapper->map($dataSources);
 
     $this->assertTrue(isset($mappedData['compensation']['budgetInfo']['hardcoded']));
@@ -130,7 +136,8 @@ final class JsonMapperTest extends UnitTestCase {
     $defaultMappings = $this->getMapping('mappings.json');
     $dataSources = $this->getAllDatasources('fileFieldForm.json');
 
-    $mapper = new JsonMapper($defaultMappings);
+    $mapper = new JsonMapper();
+    $mapper->setMappings($defaultMappings);
     $mappedFiles = $mapper->mapFiles($dataSources);
 
     $this->assertTrue(count($mappedFiles['attachmentsInfo']['attachmentsArray']) === 2, 'Both files exists.');
