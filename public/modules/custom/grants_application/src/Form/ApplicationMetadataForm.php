@@ -66,6 +66,7 @@ final class ApplicationMetadataForm extends ContentEntityForm {
     $form['label']['widget'][0]['value']['#attributes']['class'][] = 'is-read-only';
     $form['application_type']['widget'][0]['value']['#attributes']['class'][] = 'is-read-only';
     $form['application_type_id']['widget'][0]['value']['#attributes']['class'][] = 'is-read-only';
+    $form['form_identifier']['widget'][0]['value']['#attributes']['class'][] = 'is-read-only';
 
     return $form;
   }

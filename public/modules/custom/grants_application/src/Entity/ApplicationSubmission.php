@@ -84,7 +84,14 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
       ->setLabel(new TranslatableMarkup('Application type id'))
       ->setReadOnly(TRUE);
 
-    // {Env-name}-{application-id}-0000000{number-of-submission}.
+    // Due to Application ID70 being used by multiple applications,
+    // we can't use it to identify form submissions.
+    $fields['form_identifier'] = BaseFieldDefinition::create('string')
+      ->setLabel(new TranslatableMarkup('Form identifier'))
+      ->setReadOnly(TRUE);
+
+    // {Env-name}-{application-id}-0000000{number-of-submission} if not prod.
+    // On production, {application-id}-0000000{number-of-submission}.
     $fields['application_number'] = BaseFieldDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Application number'))
       ->setReadOnly(TRUE);
@@ -271,6 +278,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
     // Values are changed in ApplicationGetterService::getCompanyApplications.
     return [
       'application_type_id' => $this->get('application_type_id')->value,
+      'form_identifier' => $this->get('form_identifier')->value,
       'form_timestamp_created' => date('Y-m-d h:i:s', (int) $this->get('created')->value),
       'form_timestamp' => $this->get('changed')->value,
       'form_timestamp_submitted' => $this->get('created')->value,

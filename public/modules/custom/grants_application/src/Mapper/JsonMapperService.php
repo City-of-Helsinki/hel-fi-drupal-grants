@@ -38,15 +38,16 @@ final class JsonMapperService {
    */
   public function handleMapping(
     string $formTypeId,
+    string $formIdentifier,
     string $applicationNumber,
     array $formData,
     array $bankFile,
     bool $isDraft,
-    string $selectedCompanyType
+    string $selectedCompanyType,
   ): array {
     // @todo Fix.
     $this->mapper = new JsonMapper();
-    $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId);
+    $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId, $formIdentifier);
 
     // Mappings are divided into common fields (by mandate) and form specific fields.
     $commonFieldMapping = json_decode(file_get_contents(__DIR__ . '/Mappings/common/' . $selectedCompanyType . '.json'), TRUE);
@@ -87,13 +88,14 @@ final class JsonMapperService {
    */
   public function handleMappingForPatchRequest(
     string $formTypeId,
+    string $formIdentifier,
     string $applicationNumber,
     array $formData,
     string $selectedCompanyType,
     array $oldDocument,
   ): array {
     $mappingFileName = "ID$formTypeId.json";
-    $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId);
+    $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId, $formIdentifier);
 
     // @todo Fix.
     $this->mapper = new JsonMapper();
@@ -236,11 +238,11 @@ final class JsonMapperService {
    * @return array
    *   All data sources combined
    */
-  private function getDataSources(array $formData, string $applicationNumber, $formTypeId): array {
+  private function getDataSources(array $formData, string $applicationNumber, $formTypeId, $formIdentifier): array {
     $community_official_uuid = $formData['applicant_info']['community_officials']['community_officials'][0]['official'];
     $street_name = $formData['applicant_info']['community_address']['community_address'];
     try {
-      $formSettings = $this->formSettingsService->getFormSettings($formTypeId);
+      $formSettings = $this->formSettingsService->getFormSettings($formTypeId, $formIdentifier);
       $grantsProfile = $this->userInformationService->getGrantsProfileContent();
 
       $community_official = $grantsProfile->getCommunityOfficialByUuid($community_official_uuid);

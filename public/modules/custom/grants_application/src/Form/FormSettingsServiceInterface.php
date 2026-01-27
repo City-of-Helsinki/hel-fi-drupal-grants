@@ -18,6 +18,8 @@ interface FormSettingsServiceInterface extends ContainerFactoryPluginInterface {
    *
    * @param int|string $form_type_id
    *   The id of the application.
+   * @param strint|null $identifier
+   *   The machine name of the form.
    *
    * @return \Drupal\grants_application\Form\FormSettings
    *   Contains json-schema, third party settings and translations etc.
@@ -25,26 +27,26 @@ interface FormSettingsServiceInterface extends ContainerFactoryPluginInterface {
    * @throws \InvalidArgumentException
    *   When application configuration is not found.
    */
-  public function getFormSettings(int|string $form_type_id): FormSettings;
+  public function getFormSettings(int|string $form_type_id, ?string $identifier): FormSettings;
 
   /**
    * Checks if the application is open.
    *
-   * @param int $id
+   * @param int|string $id
    *   The numeric ID of the form.
+   * @param string $identifier
+   *   The identifier of the form.
    *
    * @return bool
    *   TRUE if the application is open, FALSE otherwise.
    */
-  public function isApplicationOpen(int $id): bool;
+  public function isApplicationOpen(int|string $id, string $identifier): bool;
 
   /**
    * Loads and returns configuration data from JSON files.
    *
    * @param string $configName
    *   The name of the configuration file (without .json extension).
-   * @param string|null $sectionName
-   *   (optional) The specific section to return from the configuration.
    *
    * @return array
    *   The requested configuration data.
@@ -52,7 +54,7 @@ interface FormSettingsServiceInterface extends ContainerFactoryPluginInterface {
    * @throws \RuntimeException
    *   If the configuration cannot be loaded or parsed.
    */
-  public function getFormConfig(string $configName, ?string $sectionName = ''): array;
+  public function getFormConfig(string $configName): array;
 
   /**
    * Retrieves translated labels from a configuration section.
