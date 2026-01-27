@@ -120,12 +120,13 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     // In that case, we always render the react-application block.
     if (
       $this->moduleHandler->moduleExists('grants_application') &&
-      $reactFormId = $this->servicePageBlockService->getReactFormId()
+      $reactFormId = $this->servicePageBlockService->getReactFormId() &&
+      $reactFormName = $this->servicePageBlockService->getSelectedReactFormIdName()
     ) {
       try {
         // @phpstan-ignore-next-line
         $formSettingsService = \Drupal::service('Drupal\grants_application\Form\FormSettingsService');
-        $settings = $formSettingsService->getFormSettings($reactFormId);
+        $settings = $formSettingsService->getFormSettings($reactFormId, $reactFormName);
       }
       catch (\Exception $e) {
         // If there are no settings, just use the webform.
