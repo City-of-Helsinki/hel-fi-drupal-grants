@@ -92,8 +92,8 @@ function grants_application_application_industry_allowed_values(
 ): array {
   /** @var \Drupal\grants_application\Form\FormSettingsService $form_settings_service */
   $form_settings_service = \Drupal::service(FormSettingsService::class);
-  $types = $form_settings_service->getFormConfig('form_configuration', 'application_industries');
-  return $form_settings_service->getLabels($types);
+  $types = $form_settings_service->getFormConfig('form_configuration');
+  return $form_settings_service->getLabels($types['application_industries']);
 }
 
 /**
@@ -114,8 +114,8 @@ function grants_application_applicant_types_allowed_values(
 ): array {
   /** @var \Drupal\grants_application\Form\FormSettingsService $form_settings_service */
   $form_settings_service = \Drupal::service(FormSettingsService::class);
-  $types = $form_settings_service->getFormConfig('form_configuration', 'applicant_types');
-  return $form_settings_service->getLabels($types);
+  $types = $form_settings_service->getFormConfig('form_configuration');
+  return $form_settings_service->getLabels($types['applicant_types']);
 }
 
 /**
@@ -136,8 +136,8 @@ function grants_application_application_subvention_types_allowed_values(
 ): array {
   /** @var \Drupal\grants_application\Form\FormSettingsService $form_settings_service */
   $form_settings_service = \Drupal::service(FormSettingsService::class);
-  $types = $form_settings_service->getFormConfig('form_configuration', 'subvention_types');
-  return $form_settings_service->getLabels($types);
+  $types = $form_settings_service->getFormConfig('form_configuration');
+  return $form_settings_service->getLabels($types['subvention_types']);
 }
 
 /**
