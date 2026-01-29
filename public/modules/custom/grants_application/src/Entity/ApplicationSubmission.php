@@ -85,7 +85,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
       ->setReadOnly(TRUE);
 
     // Due to Application ID70 being used by multiple applications,
-    // we can't use it to identify form submissions.
+    // we can't use application type id to identify form submissions.
     $fields['form_identifier'] = BaseFieldDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Form identifier'))
       ->setReadOnly(TRUE);
