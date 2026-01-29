@@ -45,7 +45,7 @@
        * Apply values into the target input fields.
        */
       const apply = (fields, id) => {
-        const { labelInput, typeInput, typeIdInput, identifierInput } = fields;
+        const { labelInput, typeInput, typeIdInput, formIdentifierInput } = fields;
 
         // If a field is missing, do nothing for this select instance.
         if (!(labelInput && typeInput && typeIdInput)) {
@@ -59,15 +59,15 @@
           labelInput.value = '';
           typeInput.value = '';
           typeIdInput.value = '';
-          identifierInput.value = '';
+          formIdentifierInput.value = '';
           return;
         }
 
-        const { label, typeValue, typeIdValue, name } = resolveValues(id);
+        const { label, typeValue, typeIdValue, identifier } = resolveValues(id);
         labelInput.value = label;
         typeInput.value = typeValue;
         typeIdInput.value = typeIdValue;
-        identifierInput.value = name;
+        formIdentifierInput.value = identifier;
       };
 
       // Bind change handlers for each select.

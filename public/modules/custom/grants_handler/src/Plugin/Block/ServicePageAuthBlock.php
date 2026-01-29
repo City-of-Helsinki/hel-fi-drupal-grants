@@ -18,6 +18,7 @@ use Drupal\Core\Url;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -68,6 +69,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     protected ServicePageBlockService $servicePageBlockService,
     protected ApplicationStatusService $applicationStatusService,
     protected ModuleHandlerInterface $moduleHandler,
+    protected LoggerInterface $logger,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
   }
@@ -86,6 +88,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('grants_handler.service_page_block_service'),
       $container->get('grants_handler.application_status_service'),
       $container->get('module_handler'),
+      $container->get('logger.channel.grants_handler'),
     );
   }
 
@@ -118,10 +121,12 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     // phpcs:disable
     // Start by check if the react-form exists and the react-form application period is on.
     // In that case, we always render the react-application block.
+    $reactFormId = $this->servicePageBlockService->getReactFormId();
+    $reactFormName = $this->servicePageBlockService->getSelectedReactFormIdentifier();
     if (
       $this->moduleHandler->moduleExists('grants_application') &&
-      $reactFormId = $this->servicePageBlockService->getReactFormId() &&
-      $reactFormName = $this->servicePageBlockService->getSelectedReactFormIdName()
+      $reactFormId &&
+      $reactFormName
     ) {
       try {
         // @phpstan-ignore-next-line
@@ -130,6 +135,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       }
       catch (\Exception $e) {
         // If there are no settings, just use the webform.
+        $this->logger->error("Unable to render the create application button on service page for application ID$reactFormId");
         $useReactForm = FALSE;
       }
 

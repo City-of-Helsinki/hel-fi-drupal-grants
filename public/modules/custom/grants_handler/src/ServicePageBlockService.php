@@ -113,7 +113,6 @@ class ServicePageBlockService {
    */
   public function getReactFormLink(): ?Url {
     if (
-      getenv('APP_ENV') === 'production' ||
       !$this->moduleHandler->moduleExists('grants_application') ||
       !$this->currentNode ||
       $this->currentNode->bundle() !== 'service'
@@ -121,7 +120,7 @@ class ServicePageBlockService {
       return NULL;
     }
 
-    $formId = $this->currentNode->get('field_react_form_id')->value;
+    $formId = $this->currentNode->get('field_react_form')->entity?->get('application_type_id')->value;
     if (!$formId) {
       return NULL;
     }
@@ -132,25 +131,13 @@ class ServicePageBlockService {
   /**
    * React form id value.
    *
-   * This is also the application type id.
+   * This is the application type id.
    *
    * @return string|null
    *   The react form id field from service page.
    */
   public function getReactFormId(): ?string {
-    return $this->currentNode->get('field_react_form_id')->value;
-  }
-
-  /**
-   * Get selected form type id.
-   *
-   * This is the ID given by Avus2-system.
-   *
-   * @return string
-   *   The form identifier.
-   */
-  public function getSelectedReactFormId() {
-    return $this->currentNode->get('field_react_form')?->getEntity()->get('application_type_id')->value;
+    return $this->currentNode->get('field_react_form')?->entity->get('application_type_id')->value;
   }
 
   /**
@@ -162,8 +149,8 @@ class ServicePageBlockService {
    * @return string
    *   The form identifier.
    */
-  public function getSelectedReactFormIdName(): string {
-    return $this->currentNode->get('field_react_form')?->getEntity()->get('form_identifier')->value;
+  public function getSelectedReactFormIdentifier(): ?string {
+    return $this->currentNode->get('field_react_form')?->entity?->get('form_identifier')->value;
   }
 
   /**

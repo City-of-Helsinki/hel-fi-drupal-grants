@@ -147,7 +147,7 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
         'type' => 'string_textfield',
         'weight' => 10,
       ])
-      ->setLabel(new TranslatableMarkup('Application machine name'))
+      ->setLabel(new TranslatableMarkup('Form identifier'))
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
