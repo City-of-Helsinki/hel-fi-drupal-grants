@@ -1,0 +1,20 @@
+uuid: 6adfbb3c-7974-419d-b935-eed99f1f31e6
+langcode: fi
+status: true
+dependencies:
+  module:
+    - grants_application
+    - node
+id: node.field_react_form
+field_name: field_react_form
+entity_type: node
+type: entity_reference
+settings:
+  target_type: application_metadata
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

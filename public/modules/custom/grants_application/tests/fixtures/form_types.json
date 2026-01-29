@@ -1,7 +1,8 @@
 {
-  "123": {
-    "id": "TEST123APPLICATION",
-    "code": "TESTAPPLICATION",
+  "0": {
+    "id": 123,
+    "form_identifier": "test-application",
+    "code": "TEST123APPLICATION",
     "labels": {
       "fi": "Testi 123 hakemus",
       "en": "Test 123 application",

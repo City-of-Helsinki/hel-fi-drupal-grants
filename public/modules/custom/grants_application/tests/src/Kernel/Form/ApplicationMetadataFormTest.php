@@ -106,7 +106,7 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     $form = $form_builder->buildForm($form_object, $form_state);
 
     // Use the test123application ID from our fixtures.
-    $form_state->setValue('application_type_select', '123');
+    $form_state->setValue('application_type_select', '0');
 
     // These values should be set by the form's JavaScript based on
     // application_type_select. But for the test, we need to set them directly.
@@ -114,12 +114,12 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     $form_state->setValue('application_type', [['value' => 'TEST123APPLICATION']]);
     $form_state->setValue('application_type_id', [['value' => '123']]);
     $form_state->setValue('application_industry', 'TESTINDUSTRY');
+    $form_state->setValue('form_identifier', 'test-application');
 
     // Set multi-value fields.
     $form_state->setValueForElement($form['applicant_types']['widget'], ['test_applicant_type']);
     $form_state->setValueForElement($form['application_subvention_type']['widget'], ['1']);
-    // @todo this will fail again 2027 since this is not allowed value next year.
-    $form_state->setValueForElement($form['application_acting_years']['widget'], ['2026']);
+    $form_state->setValueForElement($form['application_acting_years']['widget'], [(int) date("Y")]);
 
     // Set date fields.
     $form_state->setValueForElement($form['application_open']['widget'][0]['value'], [
@@ -195,9 +195,10 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     // The form should attach application types in the format
     // expected by the frontend.
     $expected_types = [
-      '123' => [
-        'id' => 'TEST123APPLICATION',
-        'code' => 'TESTAPPLICATION',
+      '0' => [
+        'id' => '123',
+        'form_identifier' => 'test-application',
+        'code' => 'TEST123APPLICATION',
         'labels' => [
           'en' => 'Test 123 application',
           'fi' => 'Testi 123 hakemus',

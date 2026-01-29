@@ -142,6 +142,15 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['form_identifier'] = BaseFieldDefinition::create('string')
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => 10,
+      ])
+      ->setLabel(new TranslatableMarkup('Application machine name'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['application_industry'] = BaseFieldDefinition::create('list_string')
       ->setLabel(new TranslatableMarkup('Grants industry'))
       ->setCardinality(1)
@@ -285,6 +294,7 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
       'description' => $this->application_type->value,
       'application_type' => $this->application_type->value,
       'application_type_id' => (int) $this->application_type_id->value,
+      'form_identifier' => $this->form_identifier->value,
       'application_industry' => $this->application_industry->value,
       'application_open' => $this->application_open->value,
       'application_close' => $this->application_close->value,

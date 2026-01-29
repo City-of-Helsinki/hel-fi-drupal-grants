@@ -142,6 +142,31 @@ class ServicePageBlockService {
   }
 
   /**
+   * Get selected form type id.
+   *
+   * This is the ID given by Avus2-system.
+   *
+   * @return string
+   *   The form identifier.
+   */
+  public function getSelectedReactFormId() {
+    return $this->currentNode->get('field_react_form')?->getEntity()->get('application_type_id')->value;
+  }
+
+  /**
+   * Get selected form id name.
+   *
+   * This is used because the ID is not unique. For example ID70 is used by
+   * multiple applications.
+   *
+   * @return string
+   *   The form identifier.
+   */
+  public function getSelectedReactFormIdName(): string {
+    return $this->currentNode->get('field_react_form')?->getEntity()->get('form_identifier')->value;
+  }
+
+  /**
    * The normalizeApplicantTypes function.
    *
    * Normalizes applicant types to ensure compatibility

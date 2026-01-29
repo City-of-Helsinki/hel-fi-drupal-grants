@@ -49,7 +49,7 @@ final class JsonSchemaValidatorTest extends KernelTestBase {
    */
   public function testID58FormValidation(): void {
     $settingsService = $this->container->get(FormSettingsService::class);
-    $schema = $settingsService->getFormSettings(58)->getSchema();
+    $schema = $settingsService->getFormSettings(58, 'liikunta_suunnistuskartta_avustu')->getSchema();
     $data = file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58.json');
 
     $validator = $this->container->get(JsonSchemaValidator::class);
