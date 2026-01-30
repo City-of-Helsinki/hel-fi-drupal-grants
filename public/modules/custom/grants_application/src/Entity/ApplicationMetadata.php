@@ -103,7 +103,7 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
 
     $fields['application_type_select'] = static::listStringField(
       new TranslatableMarkup('Application type'),
-      ['allowed_values_function', 'grants_application_application_type_allowed_values']
+      ['allowed_values_function' => 'grants_application_application_type_allowed_values']
     );
 
     $fields['label'] = static::stringField(
@@ -113,33 +113,30 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
 
     $fields['application_type'] = static::stringField(
       new TranslatableMarkup('Application type code'),
-      ['max_length' => 255],
     );
 
     $fields['application_type_id'] = static::stringField(
       new TranslatableMarkup('Application type ID'),
-      ['max_length' => 255],
     );
 
     $fields['form_identifier'] = static::stringField(
       new TranslatableMarkup('Form identifier'),
-      ['max_length' => 255],
     );
 
     $fields['application_industry'] = static::listStringField(
       new TranslatableMarkup('Grants industry'),
-      ['allowed_values_function', 'grants_application_application_industry_allowed_values']
+      ['allowed_values_function' => 'grants_application_application_industry_allowed_values']
     );
 
     $fields['applicant_types'] = static::listStringField(
       new TranslatableMarkup('Applicant types'),
-      ['allowed_values_function', 'grants_application_applicant_types_allowed_values'],
+      ['allowed_values_function' => 'grants_application_applicant_types_allowed_values'],
       FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
     );
 
     $fields['application_subvention_type'] = static::listStringField(
       new TranslatableMarkup('Subvention type'),
-      ['allowed_values_function', 'grants_application_application_subvention_types_allowed_values'],
+      ['allowed_values_function' => 'grants_application_application_subvention_types_allowed_values'],
       FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
     );
 
@@ -174,7 +171,7 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
 
     $fields['application_acting_years'] = static::listStringField(
       new TranslatableMarkup('Application acting years'),
-      ['allowed_values_function', 'grants_application_application_acting_years_allowed_values'],
+      ['allowed_values_function' => 'grants_application_application_acting_years_allowed_values'],
       FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
     );
 
