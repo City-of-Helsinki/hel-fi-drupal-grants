@@ -259,7 +259,14 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     /** @var ApplicationMetadata $reactFormSettings */
     $reactFormSettings = $node->get('field_react_form')->entity;
     if ($reactFormSettings) {
-      if ($reactFormSettings->get('application_target_group')->value) {
+      $applicantTypes = array_column($reactFormSettings->get('applicant_types')->getValue(), 'value');
+
+      $selectedRole = \Drupal::service('grants_profile.service')->getSelectedRoleData();
+      if (!$selectedRole) {
+        return FALSE;
+      }
+
+      if (in_array($selectedRole['type'], $applicantTypes)) {
         return TRUE;
       }
 
