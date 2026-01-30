@@ -189,14 +189,34 @@ final class FormSettingsService implements FormSettingsServiceInterface {
     return $this->loadApplicationConfig($configName);
   }
 
-  public function getFormConfigById(int|string $id, $identifier): ?array {
+  /**
+   * Get form configuration by application type id.
+   *
+   * @param int|string $id
+   *   The application type id.
+   * @param string $identifier
+   *   The identifier.
+   *
+   * @return array
+   *   The form configuration.
+   */
+  public function getFormConfigById(int|string $id, string $identifier): ?array {
     return array_find(
       $this->loadApplicationConfig('form_types'),
       fn($item) => $item['id'] == $id && $item['form_identifier'] === $identifier
     );
   }
 
-  public function getApplicationLabels(array $section) {
+  /**
+   * Get application labels.
+   *
+   * @param array $section
+   *   The section from configuration.
+   *
+   * @return array|string|null
+   *   The label or array of labels.
+   */
+  public function getApplicationLabels(array $section): array|string|null {
     $language = $this->languageManager
       ->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)
       ->getId();

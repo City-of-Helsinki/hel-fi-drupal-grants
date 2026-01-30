@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Mapper;
 
-
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\UserInformationService;
@@ -15,6 +14,11 @@ use Drupal\helfi_atv\AtvDocument;
  */
 final class JsonMapperService {
 
+  /**
+   * The mapper.
+   *
+   * @var JsonMapper
+   */
   private JsonMapper $mapper;
 
   public function __construct(
@@ -28,10 +32,18 @@ final class JsonMapperService {
    *
    * @param string $formTypeId
    *   The form type id.
+   * @param string $formIdentifier
+   *   The form type id.
    * @param string $applicationNumber
    *   The application number.
    * @param array $formData
    *   The form data.
+   * @param array $bankFile
+   *   The bank file.
+   * @param bool $isDraft
+   *   Is draft.
+   * @param string $selectedCompanyType
+   *   The selected company type.
    *
    * @return array
    *   Mapped data.
@@ -49,7 +61,8 @@ final class JsonMapperService {
     $this->mapper = new JsonMapper();
     $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId, $formIdentifier);
 
-    // Mappings are divided into common fields (by mandate) and form specific fields.
+    // Mappings are divided into common fields (by mandate)
+    // and form specific fields.
     $commonFieldMapping = json_decode(file_get_contents(__DIR__ . '/Mappings/common/' . $selectedCompanyType . '.json'), TRUE);
     $this->mapper->setMappings($commonFieldMapping);
     $mappedCommonFields = $this->mapper->map($dataSources);
@@ -66,7 +79,7 @@ final class JsonMapperService {
     // Only on first submission this must be false.
     $mappedData['formUpdate'] = !$isDraft;
 
-    foreach(['statusUpdates', 'events', 'messages'] as $field) {
+    foreach (['statusUpdates', 'events', 'messages'] as $field) {
       if (!isset($mappedData[$field])) {
         $mappedData[$field] = [];
       }
@@ -76,14 +89,24 @@ final class JsonMapperService {
   }
 
   /**
-   * Patch request has enough differences
+   * Patch request has enough differences.
    *
    * @param string $formTypeId
+   *   The form type id.
+   * @param string $formIdentifier
+   *   The form identifier.
    * @param string $applicationNumber
+   *   The application number.
    * @param array $formData
+   *   The form data.
    * @param string $selectedCompanyType
+   *   The selected company.
    * @param array $oldDocument
+   *   The old document.
+   *
    * @return array
+   *   Mapped data.
+   *
    * @throws \Exception
    */
   public function handleMappingForPatchRequest(
@@ -100,7 +123,8 @@ final class JsonMapperService {
     // @todo Fix.
     $this->mapper = new JsonMapper();
 
-    // Mappings are divided into common fields (by mandate) and form specific fields.
+    // Mappings are divided into common fields (by mandate)
+    // and form specific fields.
     $commonFieldMapping = json_decode(file_get_contents(__DIR__ . '/Mappings/common/' . $selectedCompanyType . '.json'), TRUE);
     $this->mapper->setMappings($commonFieldMapping);
     $mappedCommonFields = $this->mapper->map($dataSources);
@@ -125,7 +149,7 @@ final class JsonMapperService {
     $mappedData['statusUpdates'] = $oldDocument['content']['statusUpdates'];
     $mappedData['formUpdate'] = TRUE;
 
-    // After first submit, we must just copy the status value edited by integration.
+    // After first submit, just copy the status value edited by integration.
     if ($oldStatus = $this->mapper->getStatusValue($oldDocument)) {
       $this->mapper->setStatusValue($mappedData, $oldStatus);
     }
@@ -189,8 +213,9 @@ final class JsonMapperService {
   /**
    * Check if one of the grant profile's files is set to the document.
    *
-   * @param AtvDocument $document
+   * @param \Drupal\helfi_atv\AtvDocument $document
    *   The document.
+   *
    * @return bool
    *   The bank file has been added to the document.
    */
@@ -228,17 +253,17 @@ final class JsonMapperService {
    *
    * @param array $formData
    *   The form data.
-   *
    * @param string $applicationNumber
    *   The application number.
-   *
-   * @param $formTypeId
+   * @param string|int $formTypeId
    *   The form type id.
+   * @param string $formIdentifier
+   *   The form identifier.
    *
    * @return array
    *   All data sources combined
    */
-  private function getDataSources(array $formData, string $applicationNumber, $formTypeId, $formIdentifier): array {
+  private function getDataSources(array $formData, string $applicationNumber, string|int $formTypeId, string $formIdentifier): array {
     $community_official_uuid = $formData['applicant_info']['community_officials']['community_officials'][0]['official'];
     $street_name = $formData['applicant_info']['community_address']['community_address'];
     try {
@@ -319,6 +344,5 @@ final class JsonMapperService {
 
     return $uniqueFiles;
   }
-
 
 }
