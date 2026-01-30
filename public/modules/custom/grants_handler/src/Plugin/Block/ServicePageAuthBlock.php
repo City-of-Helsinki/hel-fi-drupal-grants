@@ -15,6 +15,8 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
+use Drupal\grants_application\Entity\ApplicationMetadata;
+use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
@@ -252,6 +254,18 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   TRUE if access is granted, FALSE otherwise.
    */
   private function checkFormAccess(): bool {
+    $node = $this->routeMatch->getParameter('node');
+
+    /** @var ApplicationMetadata $reactFormSettings */
+    $reactFormSettings = $node->get('field_react_form')->entity;
+    if ($reactFormSettings) {
+      if ($reactFormSettings->get('application_target_group')->value) {
+        return TRUE;
+      }
+
+      return FALSE;
+    }
+
     if (!$webform = $this->servicePageBlockService->loadServicePageWebform()) {
       return FALSE;
     }
