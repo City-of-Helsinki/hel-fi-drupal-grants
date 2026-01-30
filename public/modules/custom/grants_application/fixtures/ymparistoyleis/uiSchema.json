@@ -84,41 +84,6 @@
       }
     }
   },
-  "budget_step": {
-    "income_section": {
-      "incomeGroupName": {
-        "ui:widget": "hidden"
-      },
-      "applied_benefits": {
-        "ui:field": "subventionSum"
-      }
-    },
-    "expenditure_section": {
-      "costGroupName": {
-        "ui:widget": "hidden"
-      }
-    },
-    "other_materials_section": {
-      "costGroupName": {
-        "ui:widget": "hidden"
-      }
-    },
-    "benefit_usage_other_expenditure_section": {
-      "costGroupName": {
-        "ui:widget": "hidden"
-      }
-    },
-    "usage_of_benefits_section": {
-      "costGroupName": {
-        "ui:widget": "hidden"
-      }
-    },
-    "customer_space_usage_section": {
-      "costGroupName": {
-        "ui:widget": "hidden"
-      }
-    }
-  },
   "attachments_step": {
     "additional_info_section": {
       "additional_info": {
