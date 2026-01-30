@@ -36,6 +36,7 @@ class KernelTestBase extends CoreKernelTestBase {
     'helfi_yjdh',
     'language',
     'locale',
+    'node',
     'openid_connect',
     'openid_connect_logout_redirect',
     'options',
