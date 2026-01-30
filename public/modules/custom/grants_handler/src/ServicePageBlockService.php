@@ -113,7 +113,6 @@ class ServicePageBlockService {
    */
   public function getReactFormLink(): ?Url {
     if (
-      getenv('APP_ENV') === 'production' ||
       !$this->moduleHandler->moduleExists('grants_application') ||
       !$this->currentNode ||
       $this->currentNode->bundle() !== 'service'
@@ -121,7 +120,7 @@ class ServicePageBlockService {
       return NULL;
     }
 
-    $formId = $this->currentNode->get('field_react_form_id')->value;
+    $formId = $this->getReactFormId();
     if (!$formId) {
       return NULL;
     }
@@ -132,13 +131,40 @@ class ServicePageBlockService {
   /**
    * React form id value.
    *
-   * This is also the application type id.
+   * This is the application type id.
    *
    * @return string|null
    *   The react form id field from service page.
    */
   public function getReactFormId(): ?string {
-    return $this->currentNode->get('field_react_form_id')->value;
+    return $this->currentNode
+      ?->get('field_react_form')
+      ?->first()
+      ?->get('entity')
+      ?->getTarget()
+      ?->getValue()
+      ?->get('application_type_id')
+      ?->getString();
+  }
+
+  /**
+   * Get selected form id name.
+   *
+   * This is used because the ID is not unique. For example ID70 is used by
+   * multiple applications.
+   *
+   * @return string
+   *   The form identifier.
+   */
+  public function getSelectedReactFormIdentifier(): ?string {
+    return $this->currentNode
+      ?->get('field_react_form')
+      ?->first()
+      ?->get('entity')
+      ?->getTarget()
+      ?->getValue()
+      ?->get('form_identifier')
+      ?->getString();
   }
 
   /**

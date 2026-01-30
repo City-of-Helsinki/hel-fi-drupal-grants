@@ -1,0 +1,26 @@
+uuid: ca4c373a-06fb-474d-90c0-510f6779ddb1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_react_form
+    - node.type.service
+id: node.service.field_react_form
+field_name: field_react_form
+entity_type: node
+bundle: service
+label: 'React form'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:application_metadata'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: label
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

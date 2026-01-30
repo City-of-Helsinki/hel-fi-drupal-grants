@@ -15,9 +15,13 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
+use Drupal\grants_application\Entity\ApplicationMetadata;
+use Drupal\grants_application\Form\FormSettings;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -57,6 +61,10 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The application status service.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
    *   The module handler.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   The logger.
+   * @param \Drupal\grants_application\Form\FormSettingsService $formSettingsService
+   *   The form settings service.
    */
   public function __construct(
     array $configuration,
@@ -68,6 +76,8 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     protected ServicePageBlockService $servicePageBlockService,
     protected ApplicationStatusService $applicationStatusService,
     protected ModuleHandlerInterface $moduleHandler,
+    protected LoggerInterface $logger,
+    protected FormSettingsService $formSettingsService,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
   }
@@ -86,6 +96,8 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('grants_handler.service_page_block_service'),
       $container->get('grants_handler.application_status_service'),
       $container->get('module_handler'),
+      $container->get('logger.channel.grants_application'),
+      $container->get(FormSettingsService::class),
     );
   }
 
@@ -118,17 +130,19 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     // phpcs:disable
     // Start by check if the react-form exists and the react-form application period is on.
     // In that case, we always render the react-application block.
+    $reactFormId = $this->servicePageBlockService->getReactFormId();
+    $reactFormName = $this->servicePageBlockService->getSelectedReactFormIdentifier();
     if (
       $this->moduleHandler->moduleExists('grants_application') &&
-      $reactFormId = $this->servicePageBlockService->getReactFormId()
+      $reactFormId &&
+      $reactFormName
     ) {
       try {
-        // @phpstan-ignore-next-line
-        $formSettingsService = \Drupal::service('Drupal\grants_application\Form\FormSettingsService');
-        $settings = $formSettingsService->getFormSettings($reactFormId);
+        $settings = $this->formSettingsService->getFormSettings($reactFormId, $reactFormName);
       }
       catch (\Exception $e) {
         // If there are no settings, just use the webform.
+        $this->logger->error("Unable to render the create application button on service page for application ID$reactFormId");
         $useReactForm = FALSE;
       }
 
@@ -240,6 +254,25 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   TRUE if access is granted, FALSE otherwise.
    */
   private function checkFormAccess(): bool {
+    $node = $this->routeMatch->getParameter('node');
+
+    /** @var ApplicationMetadata $reactFormSettings */
+    $reactFormSettings = $node->get('field_react_form')->entity;
+    if ($reactFormSettings) {
+      $applicantTypes = array_column($reactFormSettings->get('applicant_types')->getValue(), 'value');
+
+      $selectedRole = \Drupal::service('grants_profile.service')->getSelectedRoleData();
+      if (!$selectedRole) {
+        return FALSE;
+      }
+
+      if (in_array($selectedRole['type'], $applicantTypes)) {
+        return TRUE;
+      }
+
+      return FALSE;
+    }
+
     if (!$webform = $this->servicePageBlockService->loadServicePageWebform()) {
       return FALSE;
     }

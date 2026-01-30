@@ -331,6 +331,7 @@ final class Application extends ResourceBase {
     try {
       $mappedData = $this->jsonMapperService->handleMapping(
         $application_type_id,
+        $submission->get('form_identifier')->value,
         $application_number,
         $form_data,
         $bankFile,
@@ -518,6 +519,7 @@ final class Application extends ResourceBase {
       $oldDocument = $document->toArray();
       $mappedData = $this->jsonMapperService->handleMappingForPatchRequest(
         $application_type_id,
+        $submission->get('form_identifier')->value,
         $application_number,
         $form_data,
         $selected_company['type'],
