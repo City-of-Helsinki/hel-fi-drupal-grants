@@ -47,21 +47,21 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The plugin_id for the plugin instance.
    * @param mixed $pluginDefinition
    *   The plugin implementation definition.
-   * @param HelsinkiProfiiliUserData $helfiHelsinkiProfiili
+   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfiHelsinkiProfiili
    *   The helfi_helsinki_profiili service.
-   * @param CurrentRouteMatch $routeMatch
+   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
    *   Get route params.
-   * @param AccountProxy $currentUser
+   * @param \Drupal\Core\Session\AccountProxy $currentUser
    *   Current user.
-   * @param ServicePageBlockService $servicePageBlockService
+   * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
    *   The service page block service.
-   * @param ApplicationStatusService $applicationStatusService
+   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
    *   The application status service.
-   * @param ModuleHandlerInterface $moduleHandler
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
    *   The module handler.
-   * @param LoggerInterface $logger
+   * @param \Psr\Log\LoggerInterface $logger
    *   The logger.
-   * @param FormSettingsService $formSettingsService
+   * @param \Drupal\grants_application\Form\FormSettingsService $formSettingsService
    *   The form settings service.
    */
   public function __construct(
