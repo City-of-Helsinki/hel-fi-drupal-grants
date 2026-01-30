@@ -137,7 +137,14 @@ class ServicePageBlockService {
    *   The react form id field from service page.
    */
   public function getReactFormId(): ?string {
-    return $this->currentNode->get('field_react_form')->first()?->entity->get('application_type_id')->getString();
+    return $this->currentNode
+      ?->get('field_react_form')
+      ?->first()
+      ?->get('entity')
+      ?->getTarget()
+      ?->getValue()
+      ?->get('application_type_id')
+      ?->getString();
   }
 
   /**
@@ -150,7 +157,14 @@ class ServicePageBlockService {
    *   The form identifier.
    */
   public function getSelectedReactFormIdentifier(): ?string {
-    return $this->currentNode->get('field_react_form')->first()?->entity->get('form_identifier')->getString();
+    return $this->currentNode
+      ?->get('field_react_form')
+      ?->first()
+      ?->get('entity')
+      ?->getTarget()
+      ?->getValue()
+      ?->get('form_identifier')
+      ?->getString();
   }
 
   /**
