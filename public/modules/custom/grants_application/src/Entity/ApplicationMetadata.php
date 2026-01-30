@@ -103,50 +103,42 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
 
     $fields['application_type_select'] = static::listStringField(
       'Application type',
-      TRUE,
       ['allowed_values_function', 'grants_application_application_type_allowed_values']
     );
 
     $fields['label'] = static::stringField(
       'Application name',
-      TRUE,
       ['max_length' => 255],
     );
 
     $fields['application_type'] = static::stringField(
       'Application type code',
-      TRUE,
       ['max_length' => 255],
     );
 
     $fields['application_type_id'] = static::stringField(
       'Application type ID',
-      TRUE,
       ['max_length' => 255],
     );
 
     $fields['form_identifier'] = static::stringField(
       'Form identifier',
-      TRUE,
       ['max_length' => 255],
     );
 
     $fields['application_industry'] = static::listStringField(
       'Grants industry',
-      TRUE,
       ['allowed_values_function', 'grants_application_application_industry_allowed_values']
     );
 
     $fields['applicant_types'] = static::listStringField(
       'Applicant types',
-      TRUE,
       ['allowed_values_function', 'grants_application_applicant_types_allowed_values'],
       FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
     );
 
     $fields['application_subvention_type'] = static::listStringField(
       'Subvention type',
-      TRUE,
       ['allowed_values_function', 'grants_application_application_subvention_types_allowed_values'],
       FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
     );
@@ -182,7 +174,6 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
 
     $fields['application_acting_years'] = static::listStringField(
       'Application acting years',
-      TRUE,
       ['allowed_values_function', 'grants_application_application_acting_years_allowed_values'],
       FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
     );
@@ -320,12 +311,12 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
    *
    * @param string $label
    *   The field label.
-   * @param bool $required
-   *   Should the field be required.
    * @param array $settings
    *   The field settings.
    * @param int $cardinality
    *   The cardinality.
+   * @param bool $required
+   *   Should the field be required.
    * @param string $widget
    *   The field widget.
    * @param int $weight
@@ -336,9 +327,9 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
    */
   private static function listStringField(
     string $label,
-    bool $required = FALSE,
     array $settings = [],
     int $cardinality = 1,
+    bool $required = TRUE,
     string $widget = 'options_select',
     int $weight = 10,
   ): BaseFieldDefinition {
@@ -362,10 +353,10 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
    *
    * @param string $label
    *   The field label.
-   * @param bool $required
-   *   Should the field be required.
    * @param array $settings
    *   The field settings.
+   * @param bool $required
+   * *   Should the field be required.
    * @param string $widget
    *   The field widget.
    * @param int $weight
@@ -376,8 +367,8 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
    */
   private static function stringField(
     string $label,
-    bool $required = FALSE,
     array $settings = [],
+    bool $required = TRUE,
     string $widget = 'string_textfield',
     int $weight = 10,
   ): BaseFieldDefinition {
