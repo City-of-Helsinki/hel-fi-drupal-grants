@@ -113,14 +113,17 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
 
     $fields['application_type'] = static::stringField(
       new TranslatableMarkup('Application type code'),
+      required: FALSE,
     );
 
     $fields['application_type_id'] = static::stringField(
       new TranslatableMarkup('Application type ID'),
+      required: FALSE,
     );
 
     $fields['form_identifier'] = static::stringField(
       new TranslatableMarkup('Form identifier'),
+      required: FALSE,
     );
 
     $fields['application_industry'] = static::listStringField(
@@ -173,6 +176,7 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
       new TranslatableMarkup('Application acting years'),
       ['allowed_values_function' => 'grants_application_application_acting_years_allowed_values'],
       FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
+      FALSE,
     );
 
     $fields['application_continuous'] = BaseFieldDefinition::create('boolean')
@@ -278,8 +282,6 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
    *   The form widget.
    * @param int $weight
    *   The weight.
-   * @param bool $viewConfigurable
-   *   Should the view be configurable.
    * @param array $formOptions
    *   The form options.
    *
@@ -290,17 +292,12 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
     BaseFieldDefinition $field,
     string $formWidget,
     int $weight = 10,
-    bool $viewConfigurable = TRUE,
     array $formOptions = [],
   ): BaseFieldDefinition {
-    $field->setDisplayOptions('form', ['type' => $formWidget, 'weight' => $weight] + $formOptions)
-      ->setDisplayConfigurable('form', TRUE);
-
-    if ($viewConfigurable) {
-      $field->setDisplayConfigurable('view', TRUE);
-    }
-
-    return $field;
+    return $field
+      ->setDisplayOptions('form', ['type' => $formWidget, 'weight' => $weight] + $formOptions)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
   }
 
   /**
