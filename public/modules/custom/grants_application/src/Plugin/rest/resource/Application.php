@@ -294,8 +294,8 @@ final class Application extends ResourceBase {
       try {
         $actualFile = $this->atvService->getAttachment($bankFile['href']);
       }
-      catch (\Exception) {
-        // File does not exist in atv? Should not be possible.
+      catch (\Exception $e) {
+        $this->logger->error("Unable to get bank file: {$e->getMessage()}");
         return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
       }
 
