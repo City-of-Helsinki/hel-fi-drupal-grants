@@ -102,43 +102,43 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
       ->setLabel(new TranslatableMarkup('Changed'));
 
     $fields['application_type_select'] = static::listStringField(
-      'Application type',
+      new TranslatableMarkup('Application type'),
       ['allowed_values_function', 'grants_application_application_type_allowed_values']
     );
 
     $fields['label'] = static::stringField(
-      'Application name',
+      new TranslatableMarkup('Application name'),
       ['max_length' => 255],
     );
 
     $fields['application_type'] = static::stringField(
-      'Application type code',
+      new TranslatableMarkup('Application type code'),
       ['max_length' => 255],
     );
 
     $fields['application_type_id'] = static::stringField(
-      'Application type ID',
+      new TranslatableMarkup('Application type ID'),
       ['max_length' => 255],
     );
 
     $fields['form_identifier'] = static::stringField(
-      'Form identifier',
+      new TranslatableMarkup('Form identifier'),
       ['max_length' => 255],
     );
 
     $fields['application_industry'] = static::listStringField(
-      'Grants industry',
+      new TranslatableMarkup('Grants industry'),
       ['allowed_values_function', 'grants_application_application_industry_allowed_values']
     );
 
     $fields['applicant_types'] = static::listStringField(
-      'Applicant types',
+      new TranslatableMarkup('Applicant types'),
       ['allowed_values_function', 'grants_application_applicant_types_allowed_values'],
       FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
     );
 
     $fields['application_subvention_type'] = static::listStringField(
-      'Subvention type',
+      new TranslatableMarkup('Subvention type'),
       ['allowed_values_function', 'grants_application_application_subvention_types_allowed_values'],
       FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
     );
@@ -173,7 +173,7 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
     );
 
     $fields['application_acting_years'] = static::listStringField(
-      'Application acting years',
+      new TranslatableMarkup('Application acting years'),
       ['allowed_values_function', 'grants_application_application_acting_years_allowed_values'],
       FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
     );
@@ -309,7 +309,7 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
   /**
    * Create a list string field with common settings.
    *
-   * @param string $label
+   * @param \Drupal\Core\StringTranslation\TranslatableMarkup $label
    *   The field label.
    * @param array $settings
    *   The field settings.
@@ -326,7 +326,7 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
    *   Returns the field definition.
    */
   private static function listStringField(
-    string $label,
+    TranslatableMarkup $label,
     array $settings = [],
     int $cardinality = 1,
     bool $required = TRUE,
@@ -334,7 +334,7 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
     int $weight = 10,
   ): BaseFieldDefinition {
     $field = BaseFieldDefinition::create('list_string')
-      ->setLabel(new TranslatableMarkup($label))
+      ->setLabel($label)
       ->setCardinality($cardinality)
       ->setRequired($required);
 
@@ -348,12 +348,12 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
   /**
    * Create a string field with common settings.
    *
-   * @param string $label
+   * @param \Drupal\Core\StringTranslation\TranslatableMarkup $label
    *   The field label.
    * @param array $settings
    *   The field settings.
    * @param bool $required
-   * *   Should the field be required.
+   *   Should the field be required.
    * @param string $widget
    *   The field widget.
    * @param int $weight
@@ -363,14 +363,14 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
    *   Returns the field definition.
    */
   private static function stringField(
-    string $label,
+    TranslatableMarkup $label,
     array $settings = [],
     bool $required = TRUE,
     string $widget = 'string_textfield',
     int $weight = 10,
   ): BaseFieldDefinition {
     $field = BaseFieldDefinition::create('string')
-      ->setLabel(new TranslatableMarkup($label))
+      ->setLabel($label)
       ->setRequired($required);
 
     if ($settings !== []) {
