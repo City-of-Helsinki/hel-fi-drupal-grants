@@ -335,14 +335,11 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
   ): BaseFieldDefinition {
     $field = BaseFieldDefinition::create('list_string')
       ->setLabel(new TranslatableMarkup($label))
-      ->setCardinality($cardinality);
+      ->setCardinality($cardinality)
+      ->setRequired($required);
 
     if ($settings !== []) {
       $field->setSettings($settings);
-    }
-
-    if ($required) {
-      $field->setRequired(TRUE);
     }
 
     return static::applyCommonDisplay($field, $widget, $weight);
@@ -373,11 +370,8 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
     int $weight = 10,
   ): BaseFieldDefinition {
     $field = BaseFieldDefinition::create('string')
-      ->setLabel(new TranslatableMarkup($label));
-
-    if ($required) {
-      $field->setRequired(TRUE);
-    }
+      ->setLabel(new TranslatableMarkup($label))
+      ->setRequired($required);
 
     if ($settings !== []) {
       $field->setSettings($settings);
