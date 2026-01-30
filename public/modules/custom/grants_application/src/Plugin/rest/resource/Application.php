@@ -337,7 +337,6 @@ final class Application extends ResourceBase {
         $bankFile,
         (bool) $submission->get('draft')->value,
         $selected_company['type'],
-        $submission->get('form_identifier')->value
       );
     }
     catch (\Exception $e) {

@@ -18,7 +18,7 @@ interface FormSettingsServiceInterface extends ContainerFactoryPluginInterface {
    *
    * @param int|string $form_type_id
    *   The id of the application.
-   * @param strint|null $identifier
+   * @param string|null $identifier
    *   The machine name of the form.
    *
    * @return \Drupal\grants_application\Form\FormSettings

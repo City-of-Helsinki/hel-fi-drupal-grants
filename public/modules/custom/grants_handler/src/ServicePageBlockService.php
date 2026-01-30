@@ -120,7 +120,7 @@ class ServicePageBlockService {
       return NULL;
     }
 
-    $formId = $this->currentNode->get('field_react_form')->entity?->get('application_type_id')->value;
+    $formId = $this->currentNode->get('field_react_form')->first()?->get('application_type_id')->value;
     if (!$formId) {
       return NULL;
     }
@@ -137,7 +137,7 @@ class ServicePageBlockService {
    *   The react form id field from service page.
    */
   public function getReactFormId(): ?string {
-    return $this->currentNode->get('field_react_form')?->entity->get('application_type_id')->value;
+    return $this->currentNode->get('field_react_form')?->first()->get('application_type_id')->value;
   }
 
   /**
@@ -150,7 +150,7 @@ class ServicePageBlockService {
    *   The form identifier.
    */
   public function getSelectedReactFormIdentifier(): ?string {
-    return $this->currentNode->get('field_react_form')?->entity?->get('form_identifier')->value;
+    return $this->currentNode->get('field_react_form')?->first()?->get('form_identifier')->value;
   }
 
   /**
