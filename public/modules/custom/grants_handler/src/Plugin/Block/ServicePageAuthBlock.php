@@ -18,6 +18,7 @@ use Drupal\Core\Url;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
+use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -35,35 +36,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
-  /**
-   * Constructs a new ServicePageBlock instance.
-   *
-   * @param array $configuration
-   *   The plugin configuration, i.e. an array with configuration values keyed
-   *   by configuration option name. The special key 'context' may be used to
-   *   initialize the defined contexts by setting it to an array of context
-   *   values keyed by context names.
-   * @param string $pluginId
-   *   The plugin_id for the plugin instance.
-   * @param mixed $pluginDefinition
-   *   The plugin implementation definition.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfiHelsinkiProfiili
-   *   The helfi_helsinki_profiili service.
-   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
-   *   Get route params.
-   * @param \Drupal\Core\Session\AccountProxy $currentUser
-   *   Current user.
-   * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
-   *   The service page block service.
-   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
-   *   The application status service.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
-   *   The module handler.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   The logger.
-   * @param \Drupal\grants_application\Form\FormSettingsService $formSettingsService
-   *   The form settings service.
-   */
   public function __construct(
     array $configuration,
     $pluginId,
@@ -76,6 +48,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     protected ModuleHandlerInterface $moduleHandler,
     protected LoggerInterface $logger,
     protected FormSettingsService $formSettingsService,
+    protected GrantsProfileService $grantsProfileService,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
   }
@@ -96,6 +69,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('module_handler'),
       $container->get('logger.channel.grants_application'),
       $container->get(FormSettingsService::class),
+      $container->get('grants_profile.service'),
     );
   }
 
@@ -252,6 +226,24 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   TRUE if access is granted, FALSE otherwise.
    */
   private function checkFormAccess(): bool {
+    $node = $this->routeMatch->getParameter('node');
+
+    $reactFormSettings = $node->get('field_react_form')->entity;
+    if ($reactFormSettings) {
+      $applicantTypes = array_column($reactFormSettings->get('applicant_types')->getValue(), 'value');
+
+      $selectedRole = $this->grantsProfileService->getSelectedRoleData();
+      if (!$selectedRole) {
+        return FALSE;
+      }
+
+      if (in_array($selectedRole['type'], $applicantTypes)) {
+        return TRUE;
+      }
+
+      return FALSE;
+    }
+
     if (!$webform = $this->servicePageBlockService->loadServicePageWebform()) {
       return FALSE;
     }
