@@ -69,7 +69,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('module_handler'),
       $container->get('logger.channel.grants_application'),
       $container->get(FormSettingsService::class),
-      $container->get('grants_profile_service'),
+      $container->get('grants_profile.service'),
     );
   }
 
