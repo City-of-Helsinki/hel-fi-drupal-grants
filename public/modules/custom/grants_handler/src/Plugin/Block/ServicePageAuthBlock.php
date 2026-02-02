@@ -15,11 +15,10 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
-use Drupal\grants_application\Entity\ApplicationMetadata;
-use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
+use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -78,6 +77,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     protected ModuleHandlerInterface $moduleHandler,
     protected LoggerInterface $logger,
     protected FormSettingsService $formSettingsService,
+    protected GrantsProfileService $grantsProfileService,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
   }
@@ -98,6 +98,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('module_handler'),
       $container->get('logger.channel.grants_application'),
       $container->get(FormSettingsService::class),
+      $container->get('grants_profile_service'),
     );
   }
 
@@ -256,12 +257,11 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
   private function checkFormAccess(): bool {
     $node = $this->routeMatch->getParameter('node');
 
-    /** @var ApplicationMetadata $reactFormSettings */
     $reactFormSettings = $node->get('field_react_form')->entity;
     if ($reactFormSettings) {
       $applicantTypes = array_column($reactFormSettings->get('applicant_types')->getValue(), 'value');
 
-      $selectedRole = \Drupal::service('grants_profile.service')->getSelectedRoleData();
+      $selectedRole = $this->grantsProfileService->getSelectedRoleData();
       if (!$selectedRole) {
         return FALSE;
       }
