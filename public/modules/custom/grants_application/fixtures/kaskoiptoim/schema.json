@@ -264,7 +264,7 @@
           }
         },
         "city_premises_benefits_section": {
-          "title": "city_premises_benefits.title",
+          "title": "city_premises_benefits_section.title",
           "type": "object",
           "description": "city_premises_benefits_section.description",
           "properties": {
@@ -315,6 +315,7 @@
       "type": "object",
       "properties": {
         "community_activity_section": {
+          "title": "community_activity_section.title",
           "type": "object",
           "properties": {
             "community_activity_description": {
@@ -930,7 +931,7 @@
             },
             "further_clarification": {
               "title": "further_clarification.title",
-              "type": "string"  
+              "type": "string"
             },
             "other_attachment_fieldset": {
               "title": "other_attachment_fieldset.title",
