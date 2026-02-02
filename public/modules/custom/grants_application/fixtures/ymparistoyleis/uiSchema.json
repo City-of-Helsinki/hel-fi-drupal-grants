@@ -23,7 +23,8 @@
       },
       "other_compensations": {
         "other_compensation_description": {
-          "ui:widget": "textarea"
+          "ui:widget": "textarea",
+          "misc:max-length": 1000
         }
       }
     },
@@ -62,25 +63,15 @@
         "misc:profilePrefill": "businessPurpose",
         "ui:widget": "textarea"
       },
+      "community_activity_description_information": {
+        "ui:field": "textParagraph"
+      },
       "community_practices_business": {
         "ui:enumNames": [
           "boolean.yes",
           "boolean.no"
         ],
         "ui:widget": "radio"
-      }
-    },
-    "locations_info_section": {
-      "locations_info": {
-        "items": {
-          "location_held_in_provided_space": {
-            "ui:enumNames": [
-              "boolean.yes",
-              "boolean.no"
-            ],
-            "ui:widget": "radio"
-          }
-        }
       }
     }
   },

@@ -1,81 +1,5 @@
 {
   "definitions": {
-    "_locations_info_item": {
-      "type": "object",
-      "properties": {
-        "location_name": {
-          "title": "location_name.title",
-          "type": "string"
-        },
-        "location_address": {
-          "title": "location_address.title",
-          "type": "string"
-        },
-        "location_postal_code": {
-          "title": "location_postal_code.title",
-          "type": "string"
-        },
-        "location_pupil_number": {
-          "title": "location_pupil_number.title",
-          "type": "string"
-        },
-        "location_pupil_number_special_needs": {
-          "title": "location_pupil_number_special_needs.title",
-          "type": "string"
-        },
-        "location_number_of_groups": {
-          "title": "location_number_of_groups.title",
-          "type": "string"
-        },
-        "location_number_of_groups_special_needs": {
-          "title": "location_number_of_groups_special_needs.title",
-          "type": "string"
-        },
-        "location_staff": {
-          "title": "location_staff.title",
-          "type": "string"
-        },
-        "location_held_in_provided_space": {
-          "title": "location_held_in_provided_space.title",
-          "enum": [
-            true,
-            false
-          ],
-          "default": true
-        }
-      },
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "location_held_in_provided_space": {
-                "const": false
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "unprovided_space_details": {
-                "properties": {
-                  "unprovided_rent_amount": {
-                    "title": "unprovided_rent_amount.title",
-                    "type": "string"
-                  },
-                  "unprovided_rent_time_start": {
-                    "title": "unprovided_rent_time_start.title",
-                    "type": "string"
-                  },
-                  "unprovided_rent_time_end": {
-                    "title": "unprovided_rent_time_end.title",
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
     "_other_compensation_item": {
       "type": "object",
       "properties": {
@@ -216,7 +140,7 @@
           }
         },
         "city_premises_benefits_section": {
-          "title": "city_premises_benefits.title",
+          "title": "city_premises_benefits_section.title",
           "type": "object",
           "description": "city_premises_benefits_section.description",
           "properties": {
@@ -267,11 +191,21 @@
       "type": "object",
       "properties": {
         "community_activity_section": {
+          "title": "community_activity_section.title",
           "type": "object",
           "properties": {
             "community_activity_description": {
               "title": "community_activity.title",
               "type": "string"
+            },
+            "community_activity_description_information": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "community_activity_information.value",
+                  "type": "null"
+                }
+              ]
             },
             "community_practices_business": {
               "title": "community_practices_business.title",
@@ -282,22 +216,6 @@
             }
           },
           "required": ["community_practices_business"]
-        },
-        "locations_info_section": {
-          "type": "object",
-          "properties": {
-            "locations_info": {
-              "title": "locations_info.title",
-              "description": "locations_info.description",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/_locations_info_item"
-              },
-              "additionalItems": {
-                "$ref": "#/definitions/_locations_info_item"
-              }
-            }
-          }
         }
       }
     },
