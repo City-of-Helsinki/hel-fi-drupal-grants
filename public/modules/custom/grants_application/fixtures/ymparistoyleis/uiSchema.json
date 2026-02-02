@@ -72,6 +72,9 @@
           "boolean.no"
         ],
         "ui:widget": "radio"
+      },
+      "community_fees_section": {
+        "ui:widget": "text-input"
       }
     }
   },

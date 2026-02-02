@@ -216,6 +216,20 @@
             }
           },
           "required": ["community_practices_business"]
+        },
+        "community_fees_section": {
+          "title": "community_fees_section.title",
+          "type": "object",
+          "properties": {
+            "fee_person": {
+              "title": "fee_person.title",
+              "type": "integer"
+            },
+            "fee_community": {
+              "title": "fee_community.title",
+              "type": "integer"
+            }
+          }
         }
       }
     },
