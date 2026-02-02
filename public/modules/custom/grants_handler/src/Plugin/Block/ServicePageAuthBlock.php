@@ -36,35 +36,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
-  /**
-   * Constructs a new ServicePageBlock instance.
-   *
-   * @param array $configuration
-   *   The plugin configuration, i.e. an array with configuration values keyed
-   *   by configuration option name. The special key 'context' may be used to
-   *   initialize the defined contexts by setting it to an array of context
-   *   values keyed by context names.
-   * @param string $pluginId
-   *   The plugin_id for the plugin instance.
-   * @param mixed $pluginDefinition
-   *   The plugin implementation definition.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfiHelsinkiProfiili
-   *   The helfi_helsinki_profiili service.
-   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
-   *   Get route params.
-   * @param \Drupal\Core\Session\AccountProxy $currentUser
-   *   Current user.
-   * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
-   *   The service page block service.
-   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
-   *   The application status service.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
-   *   The module handler.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   The logger.
-   * @param \Drupal\grants_application\Form\FormSettingsService $formSettingsService
-   *   The form settings service.
-   */
   public function __construct(
     array $configuration,
     $pluginId,
