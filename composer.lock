@@ -4392,20 +4392,20 @@
         },
         {
             "name": "drupal/external_entities",
-            "version": "3.0.0-beta7",
+            "version": "3.0.0-rc1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/external_entities.git",
-                "reference": "3.0.0-beta7"
+                "reference": "3.0.0-rc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/external_entities-3.0.0-beta7.zip",
-                "reference": "3.0.0-beta7",
-                "shasum": "8815ba22fab0a750ff18e439a2d8f9408172aa33"
+                "url": "https://ftp.drupal.org/files/projects/external_entities-3.0.0-rc1.zip",
+                "reference": "3.0.0-rc1",
+                "shasum": "7319be341c37a0763a32815edba1a98081efc11e"
             },
             "require": {
-                "drupal/core": "^11.2",
+                "drupal/core": "^10 || ^11",
                 "galbar/jsonpath": "^2.0||^3.0"
             },
             "require-dev": {
@@ -4415,11 +4415,11 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.0.0-beta7",
-                    "datestamp": "1766072368",
+                    "version": "3.0.0-rc1",
+                    "datestamp": "1769878913",
                     "security-coverage": {
                         "status": "not-covered",
-                        "message": "Beta releases are not covered by Drupal security advisories."
+                        "message": "RC releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -4930,16 +4930,16 @@
         },
         {
             "name": "drupal/hdbt",
-            "version": "6.16.31",
+            "version": "6.16.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/City-of-Helsinki/drupal-hdbt.git",
-                "reference": "de93e0584acc1e9e8db79ce2354506e862d2aa18"
+                "reference": "2f6bfdaa845f27f49b77490dcf37c5ebc67ba6c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/de93e0584acc1e9e8db79ce2354506e862d2aa18",
-                "reference": "de93e0584acc1e9e8db79ce2354506e862d2aa18",
+                "url": "https://api.github.com/repos/City-of-Helsinki/drupal-hdbt/zipball/2f6bfdaa845f27f49b77490dcf37c5ebc67ba6c3",
+                "reference": "2f6bfdaa845f27f49b77490dcf37c5ebc67ba6c3",
                 "shasum": ""
             },
             "require": {
@@ -4958,10 +4958,10 @@
                 "Drupal"
             ],
             "support": {
-                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.16.31",
+                "source": "https://github.com/City-of-Helsinki/drupal-hdbt/tree/6.16.32",
                 "issues": "https://github.com/City-of-Helsinki/drupal-hdbt/issues"
             },
-            "time": "2026-01-27T09:07:05+00:00"
+            "time": "2026-01-30T12:09:09+00:00"
         },
         {
             "name": "drupal/hdbt_admin",
@@ -7750,17 +7750,17 @@
         },
         {
             "name": "drupal/role_delegation",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/role_delegation.git",
-                "reference": "8.x-1.5"
+                "reference": "8.x-1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/role_delegation-8.x-1.5.zip",
-                "reference": "8.x-1.5",
-                "shasum": "cdd9d5646708511b893de98c46c8bbf578109961"
+                "url": "https://ftp.drupal.org/files/projects/role_delegation-8.x-1.6.zip",
+                "reference": "8.x-1.6",
+                "shasum": "792971461a3b86cb8f6937d0eecd3745899bb7bf"
             },
             "require": {
                 "drupal/core": "^10.3 || ^11"
@@ -7768,8 +7768,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.5",
-                    "datestamp": "1768413123",
+                    "version": "8.x-1.6",
+                    "datestamp": "1769768673",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -12336,6 +12336,7 @@
                 "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Console_Getopt",
                 "source": "https://github.com/pear/Console_Getopt"
             },
+            "abandoned": true,
             "time": "2019-11-20T18:27:48+00:00"
         },
         {
@@ -13515,16 +13516,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.12.18",
+            "version": "v0.12.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "ddff0ac01beddc251786fe70367cd8bbdb258196"
+                "reference": "a4f766e5c5b6773d8399711019bb7d90875a50ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/ddff0ac01beddc251786fe70367cd8bbdb258196",
-                "reference": "ddff0ac01beddc251786fe70367cd8bbdb258196",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/a4f766e5c5b6773d8399711019bb7d90875a50ee",
+                "reference": "a4f766e5c5b6773d8399711019bb7d90875a50ee",
                 "shasum": ""
             },
             "require": {
@@ -13588,9 +13589,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.12.18"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.12.19"
             },
-            "time": "2025-12-17T14:35:46+00:00"
+            "time": "2026-01-30T17:33:13+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
