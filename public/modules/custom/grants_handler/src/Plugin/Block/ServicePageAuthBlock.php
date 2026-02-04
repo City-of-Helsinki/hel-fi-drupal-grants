@@ -137,8 +137,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     // React is always rendered if the settings are set correctly
     // (application period etc).
     if ($useReactForm) {
-      // @todo React-production: Fix the button text from template.
-      // @todo Fix the \Drupal calls above.
       $build['content'] = [
         '#auth' => 'auth',
         '#text' => $description,
