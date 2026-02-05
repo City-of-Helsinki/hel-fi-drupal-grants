@@ -59,6 +59,11 @@ function grants_application_search_views_query_alter(ViewExecutable $view, Query
       $or_condition->addCondition('field_application_continuous', TRUE, '=');
       $or_condition->addConditionGroup($and_condition);
 
+      $react_or_group = $query->createConditionGroup('OR');
+      $react_or_group->addCondition('application_open', $time, '<=');
+      $react_or_group->addCondition('application_close', $time, '>=');
+      $or_condition->addConditionGroup($react_or_group);
+
       $query->addConditionGroup($or_condition);
     }
   }
