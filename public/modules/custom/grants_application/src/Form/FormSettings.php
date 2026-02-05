@@ -55,6 +55,26 @@ final class FormSettings {
   }
 
   /**
+   * Get the application type id.
+   *
+   * @return int
+   *   The application type id.
+   */
+  public function getFormId(): int {
+    return $this->settings['application_type_id'];
+  }
+
+  /**
+   * Get the form identifier.
+   *
+   * @return string
+   *   The form identifier.
+   */
+  public function getFormIdentifier(): string {
+    return $this->settings['form_identifier'];
+  }
+
+  /**
    * Check if applicant is within allowed applicant types.
    *
    * @param string $applicantType
@@ -64,13 +84,10 @@ final class FormSettings {
    *   Is allowed applicant type.
    */
   public function isAllowedApplicantType(string $applicantType): bool {
-    if (
-      isset($this->settings['applicant_type']) &&
-      in_array($applicantType, $this->settings['applicant_type'] ?? [])
-    ) {
-      return TRUE;
-    }
-    return FALSE;
+    return (
+      isset($this->settings['applicant_types']) &&
+      in_array($applicantType, $this->settings['applicant_types'] ?? [])
+    );
   }
 
   /**
@@ -102,6 +119,26 @@ final class FormSettings {
     }
 
     return FALSE;
+  }
+
+  /**
+   * Get the application open date time.
+   *
+   * @return string
+   *   the open time as string.
+   */
+  public function getApplicationOpen(): string {
+    return $this->settings['application_open'];
+  }
+
+  /**
+   * Get the application close date time.
+   *
+   * @return string
+   *   the close time as string.
+   */
+  public function getApplicationClose(): string {
+    return $this->settings['application_close'];
   }
 
   /**
