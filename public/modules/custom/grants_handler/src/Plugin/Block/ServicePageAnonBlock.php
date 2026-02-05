@@ -325,7 +325,12 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
     if (!$this->webform) {
       // Load the webform. No need to check if it exists since this
       // has already been done in the access checks.
-      $this->webform = $this->servicePageBlockService->loadServicePageWebform();
+      if ($webform = $this->servicePageBlockService->loadServicePageWebform()) {
+        $this->webform = $webform;
+      }
+      else {
+        return NULL;
+      }
     }
     return $this->webform;
   }
