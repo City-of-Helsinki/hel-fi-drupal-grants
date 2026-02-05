@@ -178,7 +178,7 @@ elements: |
     '#title': 'Total number of community members in Helsinki'
     '#help': 'How many community members does the community currently have in Helsinki who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.'
   lisatiedot_ja_liitteet:
-    '#title': '4. Additional information and appendices'
+    '#title': '4. Additional information and attachments'
     '#prev_button_label': 'Previous'
     '#next_button_label': 'Next'
   lisatietoja_hakemukseen_liittyen:
@@ -188,7 +188,7 @@ elements: |
     '#help': 'If necessary, you can write additional information or other justifications related to the application.'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
-    '#title': Appendices
+    '#title': Attachments
   processed_text:
     '#markup': "<div class=\"hds-notification hds-notification--info\">\r\n<div class=\"hds-notification__content\">\r\n<div class=\"hds-notification__label\"><span>The contents of the attachments cannot be viewed afterwards</span></div>\r\n\r\n<div class=\"hds-notification__body\">\r\n<p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p>\r\n\r\n<p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p>\r\n</div>\r\n</div>\r\n</div>\r\n"
   extra_info:
