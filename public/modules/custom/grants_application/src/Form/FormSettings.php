@@ -55,6 +55,25 @@ final class FormSettings {
   }
 
   /**
+   * Check if applicant is within allowed applicant types.
+   *
+   * @param string $applicantType
+   *   The applicant type.
+   *
+   * @return bool
+   *   Is allowed applicant type.
+   */
+  public function isAllowedApplicantType(string $applicantType): bool {
+    if (
+      isset($this->settings['applicant_type']) &&
+      in_array($applicantType, $this->settings['applicant_type'] ?? [])
+    ) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
    * Are we within application period?
    *
    * @return bool

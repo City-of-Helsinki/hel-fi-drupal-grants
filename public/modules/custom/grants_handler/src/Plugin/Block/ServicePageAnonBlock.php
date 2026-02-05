@@ -11,15 +11,19 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\ApplicationStatusServiceInterface;
 use Drupal\grants_handler\ServicePageBlockService;
+use Drupal\grants_profile\GrantsProfileService;
 use Drupal\webform\Entity\Webform;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -40,31 +44,6 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    */
   protected ?Webform $webform = NULL;
 
-  /**
-   * Constructs a new ServicePageBlock instance.
-   *
-   * @param array $configuration
-   *   The plugin configuration, i.e. an array with configuration values keyed
-   *   by configuration option name. The special key 'context' may be used to
-   *   initialize the defined contexts by setting it to an array of context
-   *   values keyed by context names.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
-   *   Get route params.
-   * @param \Drupal\Core\Session\AccountProxy $currentUser
-   *   Current user.
-   * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
-   *   The service page block service.
-   * @param \Drupal\grants_handler\ApplicationStatusServiceInterface $applicationStatusService
-   *   The application status service.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
-   *   The cache.
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   The time.
-   */
   public function __construct(
     array $configuration,
     $plugin_id,
@@ -75,6 +54,10 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
     protected ApplicationStatusServiceInterface $applicationStatusService,
     protected CacheBackendInterface $cache,
     protected TimeInterface $time,
+    protected GrantsProfileService $grantsProfileService,
+    protected ModuleHandlerInterface $moduleHandler,
+    protected LoggerChannelInterface $logger,
+    protected FormSettingsService $formSettingsService,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
@@ -93,6 +76,10 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       $container->get('grants_handler.application_status_service'),
       $container->get('cache.default'),
       $container->get('datetime.time'),
+      $container->get('grants_profile.service'),
+      $container->get('module_handler'),
+      $container->get('logger.channel.grants_application'),
+      $container->get(FormSettingsService::class),
     );
   }
 
@@ -119,9 +106,38 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function build(): array {
-    $webform = $this->getWebform();
+    $webform = NULL;
+    $settings = NULL;
+    $useReactForm = FALSE;
 
-    if (!$this->applicationStatusService->isApplicationOpen($webform)) {
+    // phpcs:disable
+    // Start by check if the react-form exists and the react-form application period is on.
+    // In that case, we always render the react-application block.
+    $reactFormName = $this->servicePageBlockService->getSelectedReactFormIdentifier();
+    $reactFormId = $this->servicePageBlockService->getReactFormId();
+    if (
+      $this->moduleHandler->moduleExists('grants_application') &&
+      $reactFormId &&
+      $reactFormName
+    ) {
+      try {
+        $settings = $this->formSettingsService->getFormSettings($reactFormId, $reactFormName);
+      }
+      catch (\Exception $e) {
+        // If there are no settings, just use the webform.
+        $this->logger->error("Unable to render the create application button on service page for application ID$reactFormId");
+      }
+
+      $isApplicationOpen = $settings->isApplicationOpen();
+      $useReactForm = ($settings && $settings->isApplicationOpen());
+    }
+
+    if (!$useReactForm) {
+      $webform = $this->getWebform();
+      $isApplicationOpen = $this->applicationStatusService->isApplicationOpen($webform);
+    }
+
+    if (!$isApplicationOpen) {
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
         '#text' => $this->t('This application is not open', options: ['context' => 'grants_handler']),
@@ -168,8 +184,14 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
         $title = $this->t('Identification', options: ['context' => 'grants_handler']);
       }
 
-      $webformLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webform->id()]);
-      $isCorrectApplicantType = $this->servicePageBlockService->isCorrectApplicantType($webform);
+      if ($useReactForm && $settings) {
+        $formLink = Url::fromRoute('helfi_grants.print_view', ['id' => $reactFormId]);
+        $selectedRole = $this->grantsProfileService->getSelectedRoleData();
+        $isCorrectApplicantType = $selectedRole ? $settings->isAllowedApplicantType($selectedRole['type']) : FALSE;
+      } else {
+        $formLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webform->id()]);
+        $isCorrectApplicantType = $this->servicePageBlockService->isCorrectApplicantType($webform);
+      }
 
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
@@ -177,7 +199,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
         '#link' => $link,
         '#title' => $title,
         '#text' => $text,
-        '#webformLink' => $webformLink,
+        '#webformLink' => $formLink,
         '#auth' => 'anon',
       ];
     }
