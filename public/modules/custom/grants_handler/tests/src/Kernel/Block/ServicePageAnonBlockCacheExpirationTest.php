@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\grants_handler\Kernel\Block;
 
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_handler\ApplicationStatusServiceInterface;
 use Drupal\grants_handler\ServicePageBlockService;
 use Drupal\Tests\grants_handler\Kernel\GrantsHandlerKernelTestBase;
@@ -58,6 +59,10 @@ class ServicePageAnonBlockCacheExpirationTest extends GrantsHandlerKernelTestBas
       $applicationStatusServiceMock,
       $container->get('cache.default'),
       $container->get('datetime.time'),
+      $container->get('grants_profile.service'),
+      $container->get('module_handler'),
+      $container->get('logger.channel.grants_application'),
+      $container->get(FormSettingsService::class),
     );
 
     // Get the cache max age and assert it is between 290 and 600 seconds.
