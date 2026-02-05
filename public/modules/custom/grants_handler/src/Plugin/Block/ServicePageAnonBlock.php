@@ -94,6 +94,20 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   protected function blockAccess(AccountInterface $account): AccessResultInterface {
+    $formSettings = FALSE;
+    try {
+      $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    }
+    catch (\Exception $e) {
+      $this->logger->error("Unable to render the create application button on service page: " . $e->getMessage());
+    }
+
+    if ($formSettings) {
+      $selectedRole = $this->grantsProfileService->getSelectedRoleData();
+      $isCorrectApplicantType = $selectedRole ? $formSettings->isAllowedApplicantType($selectedRole['type']) : FALSE;
+      return AccessResult::allowedIf(!$isCorrectApplicantType);
+    }
+
     if (!$webform = $this->servicePageBlockService->loadServicePageWebform()) {
       return AccessResult::forbidden('No referenced Webform.');
     }
@@ -106,36 +120,19 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function build(): array {
-    $webform = NULL;
-    $settings = NULL;
-    $useReactForm = FALSE;
-    $isApplicationOpen = FALSE;
-
-    // phpcs:disable
-    // Start by check if the react-form exists and the react-form application period is on.
     // In that case, we always render the react-application block.
-    $reactFormName = $this->servicePageBlockService->getSelectedReactFormIdentifier();
-    $reactFormId = $this->servicePageBlockService->getReactFormId();
-    if (
-      $this->moduleHandler->moduleExists('grants_application') &&
-      $reactFormId &&
-      $reactFormName
-    ) {
-      try {
-        $settings = $this->formSettingsService->getFormSettings($reactFormId, $reactFormName);
-      }
-      catch (\Exception $e) {
-        // If there are no settings, just use the webform.
-        $this->logger->error("Unable to render the create application button on service page for application ID$reactFormId");
-      }
-
-      $isApplicationOpen = $settings->isApplicationOpen();
-      $useReactForm = ($settings && $settings->isApplicationOpen());
+    $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    if ($formSettings) {
+      $isApplicationOpen = $formSettings->isApplicationOpen();
+      $formLink = Url::fromRoute('helfi_grants.print_view', ['id' => $formSettings->getFormId()]);
+      $selectedRole = $this->grantsProfileService->getSelectedRoleData();
+      $isCorrectApplicantType = $selectedRole ? $formSettings->isAllowedApplicantType($selectedRole['type']) : FALSE;
     }
-
-    if (!$useReactForm) {
+    else {
       $webform = $this->getWebform();
       $isApplicationOpen = $this->applicationStatusService->isApplicationOpen($webform);
+      $formLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webform->id()]);
+      $isCorrectApplicantType = $this->servicePageBlockService->isCorrectApplicantType($webform);
     }
 
     if (!$isApplicationOpen) {
@@ -185,15 +182,6 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
         $title = $this->t('Identification', options: ['context' => 'grants_handler']);
       }
 
-      if ($useReactForm && $settings) {
-        $formLink = Url::fromRoute('helfi_grants.print_view', ['id' => $reactFormId]);
-        $selectedRole = $this->grantsProfileService->getSelectedRoleData();
-        $isCorrectApplicantType = $selectedRole ? $settings->isAllowedApplicantType($selectedRole['type']) : FALSE;
-      } else {
-        $formLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webform->id()]);
-        $isCorrectApplicantType = $this->servicePageBlockService->isCorrectApplicantType($webform);
-      }
-
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
         '#applicantType' => $isCorrectApplicantType,
@@ -225,6 +213,12 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       $tags = Cache::mergeTags($tags, $node->getCacheTags());
     }
 
+    $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    if ($formSettings) {
+      $metadata = $this->formSettingsService->getFormSettingsMetadata($formSettings->getFormId());
+      $tags = Cache::mergeTags($tags, $metadata->getCacheTags());
+    }
+
     $webform = $this->getWebform();
     if ($webform && $webform->id()) {
       $tags = Cache::mergeTags($tags, $webform->getCacheTags());
@@ -246,6 +240,10 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function getCacheMaxAge(): int {
+    if ($this->servicePageBlockService->loadServicePageReactFormSettings()) {
+      return $this->getReactCacheInvalidationTime();
+    }
+
     $webform = $this->getWebform();
     if (!$webform) {
       return Cache::PERMANENT;
@@ -284,6 +282,37 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       }
     }
     return !empty($expiry_times) ? min($expiry_times) : Cache::PERMANENT;
+  }
+
+  /**
+   * Get cache invalidation by application time.
+   *
+   * @return int
+   *   Returns the expiration time.
+   */
+  protected function getReactCacheInvalidationTime(): int {
+    $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+
+    // If settings is not set, no cache for the block.
+    if (!$formSettings) {
+      return 0;
+    }
+
+    $open = strtotime($formSettings->getApplicationOpen());
+    $close = strtotime($formSettings->getApplicationClose());
+    $now = $this->time->getCurrentTime();
+
+    // Before application is opened.
+    if ($open > $now) {
+      return $open - $now;
+    }
+    elseif ($close > $now) {
+      // When application is open.
+      return $close - $now;
+    }
+
+    // After the application time.
+    return Cache::PERMANENT;
   }
 
   /**

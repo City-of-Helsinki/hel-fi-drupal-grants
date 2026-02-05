@@ -95,12 +95,9 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    */
   public function build(): array {
     $tOpts = ['context' => 'grants_handler'];
-
     $settings = NULL;
     $useReactForm = FALSE;
 
-    // phpcs:disable
-    // Start by check if the react-form exists and the react-form application period is on.
     // In that case, we always render the react-application block.
     $reactFormId = $this->servicePageBlockService->getReactFormId();
     $reactFormName = $this->servicePageBlockService->getSelectedReactFormIdentifier();
@@ -115,14 +112,12 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       catch (\Exception $e) {
         // If there are no settings, just use the webform.
         $this->logger->error("Unable to render the create application button on service page for application ID$reactFormId");
-        $useReactForm = FALSE;
       }
 
       if ($settings && $settings->isApplicationOpen()) {
         $useReactForm = TRUE;
       }
     }
-    // phpcs:enable
 
     // Block default values.
     $build = [];

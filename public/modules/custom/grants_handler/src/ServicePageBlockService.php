@@ -8,6 +8,8 @@ use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Url;
+use Drupal\grants_application\Form\FormSettings;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\webform\Entity\Webform;
 
@@ -40,6 +42,7 @@ class ServicePageBlockService {
     protected CurrentRouteMatch $routeMatch,
     protected GrantsProfileService $grantsProfileService,
     protected ModuleHandlerInterface $moduleHandler,
+    protected FormSettingsService $formSettingsService,
   ) {
     $this->currentNode = $this->routeMatch->getParameter('node');
   }
@@ -77,6 +80,34 @@ class ServicePageBlockService {
     catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
       return FALSE;
     }
+  }
+
+  /**
+   * Load react form settings set to the service page.
+   *
+   * @return \Drupal\grants_application\Form\FormSettings
+   *   The form settings.
+   */
+  public function loadServicePageReactFormSettings(): ?FormSettings {
+    if (!$this->moduleHandler->moduleExists('grants_application')) {
+      return NULL;
+    }
+
+    $reactFormName = $this->getSelectedReactFormIdentifier();
+    $reactFormId = $this->getReactFormId();
+    if ($reactFormId && $reactFormName) {
+      try {
+        return $this->formSettingsService->getFormSettings($reactFormId, $reactFormName);
+      }
+      catch (\Exception $e) {
+        // If there are no settings, just use the webform.
+        $this->logger->error("Unable to fetch react form $reactFormId");
+      }
+
+      return NULL;
+    }
+
+    return NULL;
   }
 
   /**
