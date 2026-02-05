@@ -72,9 +72,21 @@
           "boolean.no"
         ],
         "ui:widget": "radio"
+      }
+    },
+    "community_fees_section": {
+      "fee_person": {},
+      "fee_community": {}
+    },
+    "community_members_section": {
+      "members_fieldset": {
+        "members_applicant_person_global": {},
+        "members_applicant_person_local": {},
+        "members_applicant_community_global": {},
+        "members_applicant_community_local": {}
       },
-      "community_fees_section": {
-        "ui:widget": "text-input"
+      "ui:options": {
+        "hideNameFromPrint": true
       }
     }
   },
@@ -82,6 +94,9 @@
     "additional_info_section": {
       "additional_info": {
         "ui:widget": "textarea"
+      },
+      "ui:options": {
+        "hideNameFromPrint": true
       }
     },
     "appendices_section": {
@@ -133,8 +148,8 @@
           "ui:field": "atvFile"
         }
       },
-      "lease_agreement": {
-        "lease_agreement_file": {
+      "minutes_of_the_annual_meeting": {
+        "minutes_of_the_annual_meeting_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"

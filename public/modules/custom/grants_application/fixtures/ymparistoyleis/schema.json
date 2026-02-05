@@ -230,6 +230,39 @@
               "type": "integer"
             }
           }
+        },
+        "community_members_section": {
+          "title": "community_members_section.title",
+          "type": "object",
+          "properties": {
+            "members_fieldset": {
+              "type": "object",
+              "title": "members_fieldset.legend",
+              "description": "members_fieldset.description",
+              "properties": {
+                "members_applicant_person_global": {
+                  "title": "members_applicant_person_global.title",
+                  "description": "members_applicant_person_global.description",
+                  "type": "integer"
+                },
+                "members_applicant_person_local": {
+                  "title": "members_applicant_person_local.title",
+                  "description": "members_applicant_person_local.description",
+                  "type": "integer"
+                },
+                "members_applicant_community_global": {
+                  "title": "members_applicant_community_global.title",
+                  "description": "members_applicant_community_global.description",
+                  "type": "integer"
+                },
+                "members_applicant_community_local": {
+                  "title": "members_applicant_community_local.title",
+                  "description": "members_applicant_community_local.description",
+                  "type": "integer"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -237,6 +270,7 @@
       "type": "object",
       "properties": {
         "additional_info_section": {
+          "title": "additional_info_section.title",
           "type": "object",
           "properties": {
             "additional_info": {
@@ -489,11 +523,11 @@
                 }
               }
             },
-            "lease_agreement": {
-              "title": "lease_agreement.title",
+            "minutes_of_the_annual_meeting": {
+              "title": "minutes_of_the_annual_meeting.title",
               "type": "object",
               "properties": {
-                "lease_agreement_file": {
+                "minutes_of_the_annual_meeting_file": {
                   "title": "file.title",
                   "type": "object",
                   "properties": {
