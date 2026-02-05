@@ -99,6 +99,10 @@ class ServicePageAnonBlockCacheExpirationTest extends GrantsHandlerKernelTestBas
       $applicationStatusServiceMock,
       $container->get('cache.default'),
       $container->get('datetime.time'),
+      $container->get('grants_profile.service'),
+      $container->get('module_handler'),
+      $container->get('logger.channel.grants_application'),
+      $container->get(FormSettingsService::class),
     );
 
     $buildClosed = $blockClosed->build();
