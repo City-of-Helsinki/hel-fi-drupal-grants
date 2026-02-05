@@ -109,6 +109,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
     $webform = NULL;
     $settings = NULL;
     $useReactForm = FALSE;
+    $isApplicationOpen = FALSE;
 
     // phpcs:disable
     // Start by check if the react-form exists and the react-form application period is on.
