@@ -41,10 +41,8 @@ class ViewsHooks {
       }
     }
 
-    $date_icon = '<span aria-hidden="true" class="hel-icon hel-icon--calendar-clock hel-icon--size-s"></span>';
-
     foreach ($view->result as $row) {
-      $row->_application_period_override = $this->buildMarkup($view, $row, $date_icon);
+      $row->_application_period_override = $this->buildMarkup($view, $row);
     }
   }
 
@@ -72,8 +70,8 @@ class ViewsHooks {
       return;
     }
 
-    $variables['fields']['field_application_period']->content =
-      $row->_application_period_override;
+    $variables['fields']['field_application_period']->content = $row->_application_period_override;
+    unset($variables['fields']['field_application_continuous']);
   }
 
   /**
@@ -83,15 +81,13 @@ class ViewsHooks {
    *   The view executable.
    * @param \Drupal\views\ResultRow $row
    *   The result row.
-   * @param string $date_icon
-   *   The date icon.
    *
    * @return \Drupal\Component\Render\MarkupInterface
    *   Returns the markup.
    */
-  protected function buildMarkup(ViewExecutable $view, ResultRow $row, string $date_icon): MarkupInterface {
+  protected function buildMarkup(ViewExecutable $view, ResultRow $row): MarkupInterface {
+    $date_icon = '<span aria-hidden="true" class="hel-icon hel-icon--calendar-clock hel-icon--size-s"></span>';
     $continuous_raw = $this->getFieldValue($view, $row, 'field_application_continuous');
-
     $continuous = ($continuous_raw === '1' || $continuous_raw === 'true');
 
     if ($continuous) {
@@ -108,10 +104,10 @@ class ViewsHooks {
       return Markup::create($date_icon . '<span>' . $this->t('Application period') . ' ' . $s . '</span>');
     }
 
-    $period_raw = $this->getFieldValue($view, $row, 'field_application_period');
-    if ($period_raw !== NULL && trim($period_raw) !== '') {
+    $period_rendered = trim((string) $view->field['field_application_period']->advancedRender($row));
+    if ($period_rendered !== '') {
       return Markup::create(
-        $date_icon . '<span>' . $this->t('Application period') . ' ' . $period_raw . '</span>'
+        $date_icon . '<span>' . $this->t('Application period') . ' ' . $period_rendered . '</span>'
       );
     }
 
