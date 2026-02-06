@@ -215,7 +215,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
 
     $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
     if ($formSettings) {
-      $metadata = $this->formSettingsService->getFormSettingsMetadata($formSettings->getFormId());
+      $metadata = $this->formSettingsService->getFormSettingsMetadata($formSettings->getFormId(), $formSettings->getFormIdentifier());
       $tags = Cache::mergeTags($tags, $metadata->getCacheTags());
     }
 
