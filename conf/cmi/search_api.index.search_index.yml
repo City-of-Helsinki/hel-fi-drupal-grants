@@ -20,6 +20,7 @@ dependencies:
     - grants_application
     - helfi_react_search
     - node
+    - taxonomy
 id: search_index
 name: 'Search index'
 description: ''
@@ -45,6 +46,27 @@ field_settings:
         - field.storage.node.field_react_form
       module:
         - grants_application
+  application_subvention_type:
+    label: 'React form - Subvention type'
+    datasource_id: 'entity:node'
+    property_path: 'field_react_form:entity:application_subvention_type'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_react_form
+      module:
+        - grants_application
+  application_target_group_name:
+    label: 'React form - target group - Nimi'
+    datasource_id: 'entity:node'
+    property_path: 'field_react_form:entity:application_target_group:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_react_form
+      module:
+        - grants_application
+        - taxonomy
   created:
     label: Luotu
     datasource_id: 'entity:node'
