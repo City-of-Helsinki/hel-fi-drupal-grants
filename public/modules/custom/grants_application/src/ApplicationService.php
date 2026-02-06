@@ -48,7 +48,7 @@ class ApplicationService {
    */
   public function createDraft(int $application_type_id, string|null $copy_from = NULL): array {
     try {
-      $this->getSubmissionEntity(
+      $entity = $this->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
         $copy_from,
         $this->userInformationService->getGrantsProfileContent()->getBusinessId(),
@@ -64,7 +64,7 @@ class ApplicationService {
       throw $e;
     }
 
-    $settings = $this->formSettingsService->getFormSettings($application_type_id);
+    $settings = $this->formSettingsService->getFormSettings($application_type_id, $entity->get('form_identified')->value);
 
     if (!$settings->isCopyable()) {
       throw new \Exception('Copying applications is disabled for this application type.');

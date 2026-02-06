@@ -121,6 +121,7 @@ final class ApplicationMetadataEntityKernelTest extends KernelTestBase {
         'application_type_select' => $application_type,
         'application_type' => 'Some Type',
         'application_type_id' => '101',
+        'form_identifier' => 'test-application',
         'application_industry' => $industry,
         'application_target_group' => $target_group_tid,
         'application_open' => $open_date,
@@ -150,6 +151,7 @@ final class ApplicationMetadataEntityKernelTest extends KernelTestBase {
     $this->assertSame('Some Type', $metadata['description']);
     $this->assertSame('Some Type', $metadata['application_type']);
     $this->assertSame(101, $metadata['application_type_id']);
+    $this->assertSame('test-application', $metadata['form_identifier']);
     $this->assertSame($industry, $metadata['application_industry']);
     $this->assertSame($open_date, $metadata['application_open']);
     $this->assertSame($close_date, $metadata['application_close']);

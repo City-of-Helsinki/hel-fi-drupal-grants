@@ -16,6 +16,9 @@ use Drupal\grants_application\User\UserInformationService;
  */
 final class JsonMapperServiceTest extends KernelTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected static $modules = [
     'grants_application',
   ];
@@ -40,12 +43,13 @@ final class JsonMapperServiceTest extends KernelTestBase {
     $bankFile = $mapperService->getSelectedBankFile($formData);
 
     $mappedData = $mapperService->handleMapping(
-      "58",
-      "KERNELTEST-058-0000001",
+      '58',
+      'liikunta_suunnistuskartta_avustu',
+      'KERNELTEST-058-0000001',
       $formData,
       $bankFile,
       TRUE,
-      "registered_community",
+      'registered_community',
     );
 
     $this->assertTrue(isset($mappedData['events']));
@@ -65,11 +69,12 @@ final class JsonMapperServiceTest extends KernelTestBase {
     $oldDocument['content']['compensation']['applicationInfoArray'][6]['value'] = 'RECEIVED';
 
     $mappedData = $mapperService->handleMappingForPatchRequest(
-      "58",
-      "KERNELTEST-058-0000001",
+      '58',
+      'liikunta_suunnistuskartta_avustu',
+      'KERNELTEST-058-0000001',
       $formData,
       'registered_community',
-      $oldDocument
+      $oldDocument,
     );
 
     $this->assertEquals('RECEIVED', $mappedData['compensation']['applicationInfoArray'][6]['value']);
@@ -117,4 +122,5 @@ final class JsonMapperServiceTest extends KernelTestBase {
       ],
     ];
   }
+
 }

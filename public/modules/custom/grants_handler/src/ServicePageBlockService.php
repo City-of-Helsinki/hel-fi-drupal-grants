@@ -8,6 +8,8 @@ use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Url;
+use Drupal\grants_application\Form\FormSettings;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\webform\Entity\Webform;
 
@@ -40,6 +42,7 @@ class ServicePageBlockService {
     protected CurrentRouteMatch $routeMatch,
     protected GrantsProfileService $grantsProfileService,
     protected ModuleHandlerInterface $moduleHandler,
+    protected FormSettingsService $formSettingsService,
   ) {
     $this->currentNode = $this->routeMatch->getParameter('node');
   }
@@ -80,6 +83,34 @@ class ServicePageBlockService {
   }
 
   /**
+   * Load react form settings set to the service page.
+   *
+   * @return \Drupal\grants_application\Form\FormSettings
+   *   The form settings.
+   */
+  public function loadServicePageReactFormSettings(): ?FormSettings {
+    if (!$this->moduleHandler->moduleExists('grants_application')) {
+      return NULL;
+    }
+
+    $reactFormName = $this->getSelectedReactFormIdentifier();
+    $reactFormId = $this->getReactFormId();
+    if ($reactFormId && $reactFormName) {
+      try {
+        return $this->formSettingsService->getFormSettings($reactFormId, $reactFormName);
+      }
+      catch (\Exception $e) {
+        // If there are no settings, just use the webform.
+        $this->logger->error("Unable to fetch react form $reactFormId");
+      }
+
+      return NULL;
+    }
+
+    return NULL;
+  }
+
+  /**
    * The isCorrectApplicantType function.
    *
    * This function checks if the current user is of
@@ -113,7 +144,6 @@ class ServicePageBlockService {
    */
   public function getReactFormLink(): ?Url {
     if (
-      getenv('APP_ENV') === 'production' ||
       !$this->moduleHandler->moduleExists('grants_application') ||
       !$this->currentNode ||
       $this->currentNode->bundle() !== 'service'
@@ -121,7 +151,7 @@ class ServicePageBlockService {
       return NULL;
     }
 
-    $formId = $this->currentNode->get('field_react_form_id')->value;
+    $formId = $this->getReactFormId();
     if (!$formId) {
       return NULL;
     }
@@ -132,13 +162,42 @@ class ServicePageBlockService {
   /**
    * React form id value.
    *
-   * This is also the application type id.
+   * This is the application type id.
    *
    * @return string|null
    *   The react form id field from service page.
    */
   public function getReactFormId(): ?string {
-    return $this->currentNode->get('field_react_form_id')->value;
+    // @phpstan-ignore-next-line
+    return $this->currentNode
+      ?->get('field_react_form')
+      ?->first()
+      ?->get('entity')
+      ?->getTarget()
+      ?->getValue()
+      ?->get('application_type_id')
+      ?->getString();
+  }
+
+  /**
+   * Get selected form id name.
+   *
+   * This is used because the ID is not unique. For example ID70 is used by
+   * multiple applications.
+   *
+   * @return string
+   *   The form identifier.
+   */
+  public function getSelectedReactFormIdentifier(): ?string {
+    // @phpstan-ignore-next-line
+    return $this->currentNode
+      ?->get('field_react_form')
+      ?->first()
+      ?->get('entity')
+      ?->getTarget()
+      ?->getValue()
+      ?->get('form_identifier')
+      ?->getString();
   }
 
   /**

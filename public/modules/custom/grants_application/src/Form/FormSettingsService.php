@@ -89,6 +89,8 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    *
    * @param int|string $form_type_id
    *   The unique identifier of the form type to load settings for.
+   * @param string|null $identifier
+   *   The form identifier.
    *
    * @return \Drupal\grants_application\Form\FormSettings
    *   The form settings object containing configuration,
@@ -103,17 +105,19 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    *   When the application_metadata entity type is not valid.
    */
-  public function getFormSettings(int|string $form_type_id): FormSettings {
-    $form_type = $this->formTypes[$form_type_id] ?? NULL;
+  public function getFormSettings(int|string $form_type_id, ?string $identifier = NULL): FormSettings {
+    // ID70 requires identifier.
+    $form_type = array_find($this->formTypes, fn($type) => $type['id'] == $form_type_id && ($type['id'] !== '70' || $type['form_identifier'] === $identifier));
+
     if (!$form_type || !isset($form_type['id'])) {
-      throw new \InvalidArgumentException(sprintf('Unknown form type id: %s', (string) $form_type_id));
+      throw new \InvalidArgumentException(sprintf('Unknown form type id: %s %s', (string) $form_type_id, $identifier ?? 'unknown'));
     }
-    $form_name = $form_type['id'];
+    $form_name = $form_type['form_identifier'];
     $settings = [];
 
     // Load all the required settings from fixtures.
     foreach ($this->getSettingsFiles() as $suffix) {
-      $pathToFile = sprintf('%s/%s/%s.json', $this->fixturesDir, strtolower($form_name), $suffix);
+      $pathToFile = sprintf('%s/%s/%s.json', $this->fixturesDir, $form_name, $suffix);
       $data = file_get_contents($pathToFile) ?: '{}';
 
       if (!isset($settings[$suffix])) {
@@ -143,10 +147,35 @@ final class FormSettingsService implements FormSettingsServiceInterface {
   }
 
   /**
+   * Get the metadata object related to the settings.
+   *
+   * @param int|string $application_type_id
+   *   The application type id.
+   * @param string|null $identifier
+   *   The form identifier.
+   *
+   * @return \Drupal\grants_application\Entity\ApplicationMetadata|null
+   *   The application metadata object.
+   */
+  public function getFormSettingsMetadata(int|string $application_type_id, ?string $identifier = NULL): ?ApplicationMetadata {
+    $storage = $this->entityTypeManager->getStorage('application_metadata');
+    $parameters = ['application_type_id' => $application_type_id];
+
+    if ($identifier) {
+      $parameters['form_identifier'] = $identifier;
+    }
+
+    $matches = $storage->loadByProperties($parameters);
+    return reset($matches) ?: NULL;
+  }
+
+  /**
    * Is the application open?
    *
-   * @param int $id
+   * @param int|string $id
    *   The numeric ID of the form.
+   * @param string $identifier
+   *   The identifier for application.
    *
    * @return bool
    *   Application is open.
@@ -156,8 +185,8 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    *   When the application_metadata entity type is not found.
    */
-  public function isApplicationOpen(int $id): bool {
-    return $this->getFormSettings($id)->isApplicationOpen();
+  public function isApplicationOpen(int|string $id, string $identifier): bool {
+    return $this->getFormSettings($id, $identifier)->isApplicationOpen();
   }
 
   /**
@@ -169,9 +198,6 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    * @param string $configName
    *   The name of the configuration file (without .json extension) to load.
    *   Example: 'form_configuration' loads from 'form_configuration.json'.
-   * @param string|null $sectionName
-   *   (optional) The specific section to return from the configuration.
-   *   If not provided or empty, returns the entire configuration array.
    *
    * @return array
    *   The requested configuration data. If $sectionName is provided and exists,
@@ -182,8 +208,74 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    *
    * @see \Drupal\grants_application\Form\FormSettingsService::loadApplicationConfig()
    */
-  public function getFormConfig(string $configName, ?string $sectionName = ''): array {
-    return $this->loadApplicationConfig($configName, $sectionName);
+  public function getFormConfig(string $configName): array {
+    return $this->loadApplicationConfig($configName);
+  }
+
+  /**
+   * Get form configuration by application type id.
+   *
+   * @param int|string $id
+   *   The application type id.
+   * @param string $identifier
+   *   The identifier.
+   *
+   * @return array
+   *   The form configuration.
+   */
+  public function getFormConfigById(int|string $id, string $identifier): ?array {
+    return array_find(
+      $this->loadApplicationConfig('form_types'),
+      fn($item) => $item['id'] == $id && $item['form_identifier'] === $identifier
+    );
+  }
+
+  /**
+   * Get application labels.
+   *
+   * @param array $section
+   *   The section from configuration.
+   *
+   * @return array|string|null
+   *   The label or array of labels.
+   */
+  public function getApplicationLabels(array $section): array|string|null {
+    $language = $this->languageManager
+      ->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)
+      ->getId();
+
+    // Return empty string if section is not an array.
+    if (!is_array($section)) {
+      return '';
+    }
+
+    // Return single label.
+    if (array_key_exists('labels', $section)) {
+      $labels = $section['labels'];
+      return $labels[$language]
+        ?? $labels['en']
+        ?? $labels[LanguageInterface::LANGCODE_NOT_SPECIFIED]
+        ?? '';
+    }
+
+    // Return the result as array with application type id as key.
+    $result = [];
+    foreach ($section as $s) {
+      $result[$s['id']]['labels'] = $s['labels'];
+    }
+
+    // Go through array of labels and return array of translated strings.
+    return array_map(function ($type) use ($language) {
+      if (!isset($type['labels']) || !is_array($type['labels'])) {
+        return [];
+      }
+
+      $labels = $type['labels'];
+      return $labels[$language]
+        ?? $labels['en']
+        ?? $labels[LanguageInterface::LANGCODE_NOT_SPECIFIED]
+        ?? [];
+    }, $result);
   }
 
   /**
@@ -293,7 +385,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    *
    * @see \Drupal\grants_application\Form\FormSettingsService::getFormConfig()
    */
-  protected function loadApplicationConfig(string $configName, ?string $sectionName): array {
+  protected function loadApplicationConfig(string $configName, ?string $sectionName = NULL): array {
     $filePath = $this->formConfigDir . '/' . $configName . '.json';
 
     if (!file_exists($filePath)) {
