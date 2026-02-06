@@ -3,7 +3,6 @@
     "translation": {
       "form_title": "Sports, grant application for orienteering maps",
       "orienteering_maps_step.title": "Grant details",
-      "attachments_step.title": "Additional information and attachments",
       "acting_year_section.title": "Grant details",
       "acting_year_section.description": "This form is used to apply for a grant for the production costs of orienteering maps. Grants can only be awarded for orienteering and teaching maps reported to the map register of the Finnish Orienteering Federation.",
       "acting_year.title": "Year for which I am applying for a grant",
@@ -15,7 +14,6 @@
       "otherCompensations.title": "Grants received from others in euros",
       "additional_information_section.title" : "Additional information concerning the application",
       "additional_information.title": "Additional information",
-      "attachments_section.title": "Attachments",
       "extra_info.title": "Further clarification on attachments"
     }
   },
@@ -23,7 +21,6 @@
     "translation": {
       "form_title": "Liikunta, suunnistuskartta-avustushakemus",
       "orienteering_maps_step.title": "Avustustiedot",
-      "attachments_step.title": "Lisätiedot ja liitteet",
       "acting_year_section.title": "Avustuksen tiedot",
       "acting_year_section.description": "Tällä lomakkeella haetaan avustusta suunnistuskartan valmistuskustannuksista. Avustusta voidaan myöntää vain Suunnistusliiton karttarekisteriin raportoiduista suunnistus- ja opetuskartoista.",
       "acting_year.title": "Vuosi, jolle avustusta haetaan",
@@ -44,8 +41,6 @@
       "cant_view_after_help.title": "Liitteiden sisältöä ei voi tarkastella jälkikäteen",
       "cant_view_after_help.value": "Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.",
       "cant_view_after_help.value_2": "Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.",
-      "attachments_section.description": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
-      "attachments_section.title": "Liitteet",
       "extra_info.title": "Lisäselvitys liitteistä"
     }
   },
@@ -53,7 +48,6 @@
     "translation": {
       "form_title": "Idrott, ansökan om bidrag för orienteringskarta",
       "orienteering_maps_step.title": "Uppgifter om understödet",
-      "attachments_step.title": "Ytterligare information och bilagor",
       "acting_year_section.title": "Uppgifter om understödet",
       "acting_year_section.description": "Med denna blankett ansöks om understöd för framställningskostnader för en orienteringskarta. Understödet kan endast beviljas för de orienterings- och undervisningskartor som rapporterats till Orienteringsförbundets kartregister.",
       "acting_year.title": "År för vilket jag ansöker om understöd",
@@ -65,7 +59,6 @@
       "otherCompensations.title": "Understöd från tredje part, euro",
       "additional_information_section.title" : "Ytterligare information för ansökan",
       "additional_information.title": "Ytterligare information",
-      "attachments_section.title": "Bilagor",
       "extra_info.title": "Ytterligare information om bilagorna"
     }
   }

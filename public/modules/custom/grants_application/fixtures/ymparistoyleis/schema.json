@@ -29,7 +29,14 @@
           "title": "other_compensation_description.title",
           "type": "string"
         }
-      }
+      },
+      "required": [
+        "other_compensation_issuer",
+        "other_compensation_issuer_name",
+        "other_compensation_issuer_year",
+        "other_compensation_amount",
+        "other_compensation_description"
+      ]
     },
     "grant_info_step": {
       "required": [
@@ -279,10 +286,10 @@
             }
           }
         },
-        "appendices_section": {
-          "title": "appendices_section.title",
+        "attachments_section": {
+          "title": "attachments_section.title",
           "type": "object",
-          "description": "appendices_section.description",
+          "description": "attachments_section.description",
           "properties": {
             "required_attachments_help": {
               "title": "required_attachments_help.title",
@@ -484,11 +491,11 @@
                 }
               }
             },
-            "action_plan": {
-              "title": "action_plan.title",
+            "minutes_of_the_annual_meeting": {
+              "title": "minutes_of_the_annual_meeting.title",
               "type": "object",
               "properties": {
-                "action_plan_file": {
+                "minutes_of_the_annual_meeting_file": {
                   "title": "file.title",
                   "type": "object",
                   "properties": {
@@ -523,11 +530,11 @@
                 }
               }
             },
-            "minutes_of_the_annual_meeting": {
-              "title": "minutes_of_the_annual_meeting.title",
+            "action_plan": {
+              "title": "action_plan.title",
               "type": "object",
               "properties": {
-                "minutes_of_the_annual_meeting_file": {
+                "action_plan_file": {
                   "title": "file.title",
                   "type": "object",
                   "properties": {

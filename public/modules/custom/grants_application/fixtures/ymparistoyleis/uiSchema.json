@@ -99,7 +99,7 @@
         "hideNameFromPrint": true
       }
     },
-    "appendices_section": {
+    "attachments_section": {
       "required_attachments_help": {
         "ui:field": "textParagraph"
       },
@@ -141,15 +141,15 @@
           "ui:field": "atvFile"
         }
       },
-      "action_plan": {
-        "action_plan_file": {
+      "minutes_of_the_annual_meeting": {
+        "minutes_of_the_annual_meeting_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
       },
-      "minutes_of_the_annual_meeting": {
-        "minutes_of_the_annual_meeting_file": {
+      "action_plan": {
+        "action_plan_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
