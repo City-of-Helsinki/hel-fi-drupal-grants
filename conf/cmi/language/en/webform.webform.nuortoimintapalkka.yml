@@ -329,7 +329,7 @@ elements: |
     '#counter_maximum_message': '%d/5000 characters remaining'
   muu_liite:
     '#title': 'Other attachment'
-    '#help': '<p>Add other appendices here, such as the lease agreement and rent payment receipt when applying for the facility rent grant, or financial and operational documents of the youth section or other similar body.</p>'
+    '#help': '<p>Add other attachments here, such as the lease agreement and rent payment receipt when applying for the facility rent grant, or financial and operational documents of the youth section or other similar body.</p>'
     '#multiple__add_more_button_label': 'Add attachment'
     '#attachmentName__title': ''
     '#fileStatus__title': ''
