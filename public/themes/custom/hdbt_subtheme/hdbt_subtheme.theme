@@ -180,69 +180,6 @@ function hdbt_subtheme_preprocess_details(array &$variables): void {
 /**
  * Implements hook_preprocess_HOOK().
  */
-function hdbt_subtheme_preprocess_views_view_fields(array &$variables): void {
-  $view = $variables['view'];
-
-  if ($view->id() === 'application_search_search_api') {
-    $dateIcon = '<span aria-hidden="true" class="hel-icon hel-icon--calendar-clock hel-icon--size-s"></span>';
-
-    $continuous = FALSE;
-    if ($variables['fields']['field_application_continuous']) {
-      $continuous = $variables['fields']['field_application_continuous']->content->__toString();
-      // The script runs out of memory eventually without unset.
-      unset($variables['fields']['field_application_continuous']);
-      $continuous = preg_replace('/<!--(.|\s)*?-->/', '', $continuous);
-      $continuous = str_replace(["\n", "\r"], '', $continuous);
-    }
-
-    if ($variables['fields']['application_open']) {
-      $applicationOpen = (string) $variables['fields']['application_open']->content;
-      unset($variables['fields']['application_open']);
-      $applicationOpen = preg_replace('/<!--(.|\s)*?-->/', '', $applicationOpen);
-      $applicationOpen = str_replace(["\n", "\r"], '', $applicationOpen);
-      $applicationOpen = $applicationOpen ? new \DateTime($applicationOpen) : FALSE;
-    }
-
-    if ($variables['fields']['application_close']) {
-      $applicationClose = (string) $variables['fields']['application_close']->content;
-      unset($variables['fields']['application_close']);
-      $applicationClose = preg_replace('/<!--(.|\s)*?-->/', '', $applicationClose);
-      $applicationClose = str_replace(["\n", "\r"], '', $applicationClose);
-      $applicationClose = $applicationOpen ? new \DateTime($applicationClose) : FALSE;
-    }
-
-    $applicationPeriodString = FALSE;
-    if ($applicationOpen && $applicationClose) {
-      $applicationPeriodString = "{$applicationOpen->format('d.m.Y')} - {$applicationClose->format('d.m.Y')}";
-    }
-
-    $applicationPeriod = $variables['fields']['field_application_period']->content;
-    if (is_object($applicationPeriod)) {
-      $applicationPeriod = $applicationPeriod->__toString();
-    }
-
-    // To get this working on development mode.
-    $applicationPeriod = preg_replace('/<!--(.|\s)*?-->/', '', $applicationPeriod);
-    $applicationPeriod = str_replace(["\n", "\r"], '', $applicationPeriod);
-
-    if ($continuous == "1") {
-      $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('Continuous application') . '</span>');
-    }
-    elseif ($applicationPeriodString) {
-      $variables['fields']['field_application_period']->content = Markup::create("$dateIcon<span>" . t('Application period') . " $applicationPeriodString</span>");
-    }
-    elseif (!empty($applicationPeriod)) {
-      $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('Application period') . ' ' . $variables['fields']['field_application_period']->content . '</span>');
-    }
-    else {
-      $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('The application period will be announced later') . '</span>');
-    }
-  }
-}
-
-/**
- * Implements hook_preprocess_HOOK().
- */
 function hdbt_subtheme_preprocess_grants_handler_print_atv_document(array &$variables): void {
   // Adds webform details to the printing page.
   $language = $variables['document_langcode'];
