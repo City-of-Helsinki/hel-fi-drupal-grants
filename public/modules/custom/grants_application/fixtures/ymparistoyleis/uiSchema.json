@@ -23,7 +23,8 @@
       },
       "other_compensations": {
         "other_compensation_description": {
-          "ui:widget": "textarea"
+          "ui:widget": "textarea",
+          "misc:max-length": 1000
         }
       }
     },
@@ -62,6 +63,9 @@
         "misc:profilePrefill": "businessPurpose",
         "ui:widget": "textarea"
       },
+      "community_activity_description_information": {
+        "ui:field": "textParagraph"
+      },
       "community_practices_business": {
         "ui:enumNames": [
           "boolean.yes",
@@ -70,52 +74,19 @@
         "ui:widget": "radio"
       }
     },
-    "locations_info_section": {
-      "locations_info": {
-        "items": {
-          "location_held_in_provided_space": {
-            "ui:enumNames": [
-              "boolean.yes",
-              "boolean.no"
-            ],
-            "ui:widget": "radio"
-          }
-        }
-      }
-    }
-  },
-  "budget_step": {
-    "income_section": {
-      "incomeGroupName": {
-        "ui:widget": "hidden"
+    "community_fees_section": {
+      "fee_person": {},
+      "fee_community": {}
+    },
+    "community_members_section": {
+      "members_fieldset": {
+        "members_applicant_person_global": {},
+        "members_applicant_person_local": {},
+        "members_applicant_community_global": {},
+        "members_applicant_community_local": {}
       },
-      "applied_benefits": {
-        "ui:field": "subventionSum"
-      }
-    },
-    "expenditure_section": {
-      "costGroupName": {
-        "ui:widget": "hidden"
-      }
-    },
-    "other_materials_section": {
-      "costGroupName": {
-        "ui:widget": "hidden"
-      }
-    },
-    "benefit_usage_other_expenditure_section": {
-      "costGroupName": {
-        "ui:widget": "hidden"
-      }
-    },
-    "usage_of_benefits_section": {
-      "costGroupName": {
-        "ui:widget": "hidden"
-      }
-    },
-    "customer_space_usage_section": {
-      "costGroupName": {
-        "ui:widget": "hidden"
+      "ui:options": {
+        "hideNameFromPrint": true
       }
     }
   },
@@ -123,6 +94,9 @@
     "additional_info_section": {
       "additional_info": {
         "ui:widget": "textarea"
+      },
+      "ui:options": {
+        "hideNameFromPrint": true
       }
     },
     "attachments_section": {
@@ -167,15 +141,15 @@
           "ui:field": "atvFile"
         }
       },
-      "action_plan": {
-        "action_plan_file": {
+      "minutes_of_the_annual_meeting": {
+        "minutes_of_the_annual_meeting_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
       },
-      "lease_agreement": {
-        "lease_agreement_file": {
+      "action_plan": {
+        "action_plan_file": {
           "misc:file-type": 0,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"

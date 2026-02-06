@@ -1,137 +1,5 @@
 {
   "definitions": {
-    "_other_materials_acquired_item": {
-      "type": "object",
-      "title": "other_expenses.title",
-      "properties": {
-        "other_material_acquired_description": {
-          "title": "cost_explanation_expense.title",
-          "type": "string"
-        },
-        "other_material_acquired_amount": {
-          "title": "amount.title",
-          "type": "integer"
-        }
-      }
-    },
-    "_other_services_acquired_item": {
-      "type": "object",
-      "title": "other_expenses.title",
-      "properties": {
-        "other_service_acquired_description": {
-          "title": "cost_explanation_expense.title",
-          "type": "string"
-        },
-        "other_service_acquired_amount": {
-          "title": "amount.title",
-          "type": "integer"
-        }
-      }
-    },
-    "_other_expenditures_item": {
-      "type": "object",
-      "title": "other_expenses.title",
-      "properties": {
-        "other_expenditure_description": {
-          "title": "cost_explanation_expense.title",
-          "type": "string"
-        },
-        "other_expenditure_amount": {
-          "title": "amount.title",
-          "type": "integer"
-        }
-      }
-    },
-    "_other_benefits_item": {
-      "type": "object",
-      "title": "other_benefits_item.title",
-      "properties": {
-        "other_benefit_description": {
-          "title": "cost_explanation_income.title",
-          "type": "string"
-        },
-        "other_benefit_amount": {
-          "title": "amount.title",
-          "type": "integer"
-        }
-      }
-    },
-    "_locations_info_item": {
-      "type": "object",
-      "properties": {
-        "location_name": {
-          "title": "location_name.title",
-          "type": "string"
-        },
-        "location_address": {
-          "title": "location_address.title",
-          "type": "string"
-        },
-        "location_postal_code": {
-          "title": "location_postal_code.title",
-          "type": "string"
-        },
-        "location_pupil_number": {
-          "title": "location_pupil_number.title",
-          "type": "string"
-        },
-        "location_pupil_number_special_needs": {
-          "title": "location_pupil_number_special_needs.title",
-          "type": "string"
-        },
-        "location_number_of_groups": {
-          "title": "location_number_of_groups.title",
-          "type": "string"
-        },
-        "location_number_of_groups_special_needs": {
-          "title": "location_number_of_groups_special_needs.title",
-          "type": "string"
-        },
-        "location_staff": {
-          "title": "location_staff.title",
-          "type": "string"
-        },
-        "location_held_in_provided_space": {
-          "title": "location_held_in_provided_space.title",
-          "enum": [
-            true,
-            false
-          ],
-          "default": true
-        }
-      },
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "location_held_in_provided_space": {
-                "const": false
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "unprovided_space_details": {
-                "properties": {
-                  "unprovided_rent_amount": {
-                    "title": "unprovided_rent_amount.title",
-                    "type": "string"
-                  },
-                  "unprovided_rent_time_start": {
-                    "title": "unprovided_rent_time_start.title",
-                    "type": "string"
-                  },
-                  "unprovided_rent_time_end": {
-                    "title": "unprovided_rent_time_end.title",
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
     "_other_compensation_item": {
       "type": "object",
       "properties": {
@@ -170,6 +38,44 @@
         "other_compensation_description"
       ]
     },
+    "_other_applied_compensation_item": {
+      "type": "object",
+      "properties": {
+        "other_applied_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "other_applied_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "other_applied_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "other_applied_compensation_amount": {
+          "title": "other_applied_compensation_amount.title",
+          "type": "integer"
+        },
+        "other_applied_compensation_description": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "other_applied_compensation_issuer",
+        "other_applied_compensation_issuer_name",
+        "other_applied_compensation_issuer_year",
+        "other_applied_compensation_amount",
+        "other_applied_compensation_description"
+      ]
+    },
     "grant_info_step": {
       "required": [
         "acting_year_section",
@@ -186,7 +92,9 @@
               "title": "acting_year.title",
               "type": "string",
               "enum": [
-                "2025"
+                "2026",
+                "2027",
+                "2028"
               ]
             }
           },
@@ -200,8 +108,8 @@
               "title": "subventions.title",
               "options": [
                 {
-                  "id": 1,
-                  "label": "subventions.1.title"
+                  "id": 6,
+                  "label": "subventions.6.title"
                 }
               ]
             }
@@ -251,6 +159,47 @@
                     },
                     "additionalItems": {
                       "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "other_applied_compensations_section": {
+          "title": "other_applied_compensations_section.title",
+          "description": "other_applied_compensations_section.description",
+          "type": "object",
+          "properties": {
+            "have_applied_other_compensations": {
+              "title": "have_applied_other_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": ["have_applied_other_compensations"],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_applied_other_compensations": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_applied_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/_other_applied_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_other_applied_compensation_item"
                     },
                     "minItems": 1
                   }
@@ -329,6 +278,15 @@
               "title": "community_activity.title",
               "type": "string"
             },
+            "community_activity_description_information": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "community_activity_information.value",
+                  "type": "null"
+                }
+              ]
+            },
             "community_practices_business": {
               "title": "community_practices_business.title",
               "enum": [
@@ -339,263 +297,49 @@
           },
           "required": ["community_practices_business"]
         },
-        "locations_info_section": {
+        "community_fees_section": {
+          "title": "community_fees_section.title",
           "type": "object",
           "properties": {
-            "locations_info": {
-              "title": "locations_info.title",
-              "description": "locations_info.description",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/_locations_info_item"
-              },
-              "additionalItems": {
-                "$ref": "#/definitions/_locations_info_item"
-              }
-            }
-          }
-        }
-      }
-    },
-    "budget_step": {
-      "type": "object",
-      "properties": {
-        "economy_forecast_section": {
-          "type": "object",
-          "title": "economy_forecast_section.title",
-          "properties": {
-            "economy_forecast": {
-              "description": "economy_forecast.description",
-              "type": "null"
-            }
-          }
-        },
-        "income_section": {
-          "title": "income_section.title",
-          "type": "object",
-          "properties": {
-            "incomeGroupName": {
-              "type": "string",
-              "default": "general"
-            },
-            "applied_benefits": {
-              "title": "applied_benefits.title",
+            "fee_person": {
+              "title": "fee_person.title",
               "type": "integer"
             },
-            "customer_sales": {
-              "title": "customer_sales.title",
-              "type": "integer"
-            },
-            "donations": {
-              "title": "donations.title",
+            "fee_community": {
+              "title": "fee_community.title",
               "type": "integer"
             }
           }
         },
-        "other_benefits_section": {
-          "title": "other_benefits_section.title",
+        "community_members_section": {
+          "title": "community_members_section.title",
           "type": "object",
           "properties": {
-            "other_benefits": {
-              "title": "other_benefits_section.title",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/_other_benefits_item"
-              }
-            }
-          }
-        },
-        "expenditure_section": {
-          "title":  "expenditure_section.title",
-          "type": "object",
-          "properties": {
-            "costGroupName": {
-              "type": "string",
-              "default": "subventionUseCosts"
-            },
-            "salaries_and_bonuses": {
-              "title": "salaries_and_bonuses.title",
-              "type": "integer"
-            },
-            "rents": {
-              "title": "rents.title",
-              "type": "integer"
-            },
-            "personnel_side_costs": {
-              "title": "personnel_side_costs.title",
-              "type": "integer"
-            }
-          }
-        },
-        "other_expenditures_section": {
-          "title": "other_expenditures_section.title",
-          "type": "object",
-          "properties": {
-            "other_expenditures": {
-              "title": "other_expenditures_section.title",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/_other_expenditures_item"
-              }
-            }
-          }
-        },
-        "usage_of_benefits_section": {
-          "title": "usage_of_benefits_section.title",
-          "type": "object",
-          "properties": {
-            "costGroupName": {
-              "type": "string",
-              "default": "costsForServicesAcquired"
-            },
-            "snacks": {
-              "title": "snacks.title",
-              "type": "integer"
-            },
-            "cleaning_services": {
-              "title": "cleaning_services.title",
-              "type": "integer"
-            },
-            "property_maintenance": {
-              "title": "property_maintenance.title",
-              "type": "integer"
-            },
-            "travel": {
-              "title": "travel.title",
-              "type": "integer"
-            }
-          }
-        },
-        "other_services_acquired_section": {
-          "title": "other_services_acquired_section.title",
-          "type": "object",
-          "properties": {
-            "other_services_acquired": {
-              "title": "other_services_acquired_section.title",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/_other_services_acquired_item"
-              }
-            }
-          }
-        },
-        "other_materials_section": {
-          "title": "other_materials_section.title",
-          "type": "object",
-          "properties": {
-            "costGroupName": {
-              "type": "string",
-              "default": "costsForMaterialsSuppliesAndGoods"
-            },
-            "snacks": {
-              "title": "snacks.title",
-              "type": "integer"
-            },
-            "heating": {
-              "title": "heating.title",
-              "type": "integer"
-            },
-            "water": {
-              "title": "water.title",
-              "type": "integer"
-            },
-            "electricity": {
-              "title": "electricity.title",
-              "type": "integer"
-            },
-            "operational_materials": {
-              "title": "operational_materials.title",
-              "type": "integer"
-            }
-          }
-        },
-        "other_materials_acquired_section": {
-          "title": "other_materials_acquired_section.title",
-          "type": "object",
-          "properties": {
-            "other_materials_acquired": {
-              "title": "other_materials_acquired_section.title",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/_other_materials_acquired_item"
-              }
-            }
-          }
-        },
-        "benefit_usage_other_expenditure_section": {
-          "title": "benefit_usage_other_expenditure_section.title",
-          "type": "object",
-          "properties": {
-            "costGroupName": {
-              "type": "string",
-              "default": "otherCosts"
-            },
-            "management_office_expenses": {
-              "title": "management_office_expenses.title",
-              "type": "integer"
-            },
-            "accounting_auditing_expenses": {
-              "title": "accounting_auditing_expenses.title",
-              "type": "integer"
-            },
-            "staff_health_expenses": {
-              "title": "staff_health_expenses.title",
-              "type": "integer"
-            }
-          }
-        },
-        "other_expenses_section": {
-          "title": "other_expenditures_section.title",
-          "type": "object",
-          "properties": {
-            "other_expenses": {
-              "title": "other_expenditures_section.title",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/_other_expenditures_item"
-              }
-            }
-          }
-        },
-        "customer_space_usage_section": {
-          "title": "customer_space_usage_section.title",
-          "type": "object",
-          "properties": {
-            "costGroupName": {
-              "type": "string",
-              "default": "useOfCustomerFeeIncome"
-            },
-            "salaries_and_bonuses": {
-              "title": "salaries_and_bonuses.title",
-              "type": "integer"
-            },
-            "rents": {
-              "title": "rents.title",
-              "type": "integer"
-            },
-            "materials": {
-              "title": "materials.title",
-              "type": "integer"
-            },
-            "services": {
-              "title": "services.title",
-              "type": "integer"
-            },
-            "personnel_side_costs": {
-              "title": "personnel_side_costs.title",
-              "type": "integer"
-            }
-          }
-        },
-        "other_expenses_section_1": {
-          "title": "other_expenditures_section.title",
-          "type": "object",
-          "properties": {
-            "other_expenses": {
-              "title": "other_expenditures_section.title",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/_other_expenditures_item"
+            "members_fieldset": {
+              "type": "object",
+              "title": "members_fieldset.legend",
+              "description": "members_fieldset.description",
+              "properties": {
+                "members_applicant_person_global": {
+                  "title": "members_applicant_person_global.title",
+                  "description": "members_applicant_person_global.description",
+                  "type": "integer"
+                },
+                "members_applicant_person_local": {
+                  "title": "members_applicant_person_local.title",
+                  "description": "members_applicant_person_local.description",
+                  "type": "integer"
+                },
+                "members_applicant_community_global": {
+                  "title": "members_applicant_community_global.title",
+                  "description": "members_applicant_community_global.description",
+                  "type": "integer"
+                },
+                "members_applicant_community_local": {
+                  "title": "members_applicant_community_local.title",
+                  "description": "members_applicant_community_local.description",
+                  "type": "integer"
+                }
               }
             }
           }
@@ -820,11 +564,11 @@
                 }
               }
             },
-            "action_plan": {
-              "title": "action_plan.title",
+            "minutes_of_the_annual_meeting": {
+              "title": "minutes_of_the_annual_meeting.title",
               "type": "object",
               "properties": {
-                "action_plan_file": {
+                "minutes_of_the_annual_meeting_file": {
                   "title": "file.title",
                   "type": "object",
                   "properties": {
@@ -859,11 +603,11 @@
                 }
               }
             },
-            "lease_agreement": {
-              "title": "lease_agreement.title",
+            "action_plan": {
+              "title": "action_plan.title",
               "type": "object",
               "properties": {
-                "lease_agreement_file": {
+                "action_plan_file": {
                   "title": "file.title",
                   "type": "object",
                   "properties": {
@@ -997,11 +741,6 @@
     "community_activity_step": {
       "$ref": "#/definitions/community_activity_step",
       "title": "community_activity_step.title"
-    },
-    "budget_step": {
-      "$ref": "#/definitions/budget_step",
-      "title": "budget_step.title",
-      "type": "object"
     },
     "attachments_step": {
       "$ref": "#/definitions/attachments_step",
