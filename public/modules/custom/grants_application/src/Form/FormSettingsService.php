@@ -151,14 +151,22 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    *
    * @param int|string $application_type_id
    *   The application type id.
+   * @param string|null $identifier
+   *   The form identifier.
    *
-   * @return \Drupal\grants_application\Entity\ApplicationMetadata
+   * @return \Drupal\grants_application\Entity\ApplicationMetadata|null
    *   The application metadata object.
    */
-  public function getFormSettingsMetadata(int|string $application_type_id): ApplicationMetadata {
+  public function getFormSettingsMetadata(int|string $application_type_id, ?string $identifier = NULL): ?ApplicationMetadata {
     $storage = $this->entityTypeManager->getStorage('application_metadata');
-    $matches = $storage->loadByProperties(['application_type_id' => $application_type_id]);
-    return reset($matches);
+    $parameters = ['application_type_id' => $application_type_id];
+
+    if ($identifier) {
+      $parameters['form_identifier'] = $identifier;
+    }
+
+    $matches = $storage->loadByProperties($parameters);
+    return reset($matches) ?: NULL;
   }
 
   /**
