@@ -117,35 +117,52 @@ class ViewsHooks {
   }
 
   /**
-   * Get a raw Views field value.
+   * Get a raw Views/Search API field value.
    *
    * @param \Drupal\views\ViewExecutable $view
    *   The view executable.
    * @param \Drupal\views\ResultRow $row
    *   The result row.
    * @param string $field_id
-   *   The field id.
+   *   The field id or the Search API field identifier.
    *
    * @return string|null
    *   Returns the field value.
    */
   protected function getFieldValue(ViewExecutable $view, ResultRow $row, string $field_id): ?string {
-    if (empty($view->field[$field_id])) {
-      return NULL;
+    // Try to get the indexed values via views field handler.
+    if (!empty($view->field[$field_id])) {
+      $value = $view->field[$field_id]->getValue($row);
+
+      if (is_array($value)) {
+        $value = reset($value);
+      }
+
+      if ($value !== NULL && $value !== '') {
+        return (string) $value;
+      }
     }
 
-    $value = $view->field[$field_id]->getValue($row);
+    // If not found, try to get the indexed values via search api.
+    if (isset($row->_item) && is_object($row->_item)) {
+      try {
+        $field = $row->_item->getField($field_id);
+      }
+      catch (\Throwable $e) {
+        $field = NULL;
+      }
 
-    if (is_array($value)) {
-      $value = reset($value);
+      if ($field && method_exists($field, 'getValues')) {
+        $values = $field->getValues();
+        $first = $values[0] ?? NULL;
+        
+        if ($first !== NULL && $first !== '') {
+          return (string) $first;
+        }
+      }
     }
 
-    if ($value === NULL || $value === '') {
-      return NULL;
-    }
-
-    return (string) $value;
-
+    return NULL;
   }
 
   /**
@@ -163,7 +180,7 @@ class ViewsHooks {
     }
 
     try {
-      return new \DateTimeImmutable($value);
+      return new \DateTimeImmutable()->setTimestamp((int) $value);
     }
     catch (\Exception $e) {
       return NULL;
