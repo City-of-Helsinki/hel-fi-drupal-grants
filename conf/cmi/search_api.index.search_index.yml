@@ -45,6 +45,26 @@ field_settings:
         - field.storage.node.field_react_form
       module:
         - grants_application
+  application_subvention_type:
+    label: 'React form - Subvention type'
+    datasource_id: 'entity:node'
+    property_path: 'field_react_form:entity:application_subvention_type'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_react_form
+      module:
+        - grants_application
+  application_target_group:
+    label: 'React form » Application metadata » Application target group'
+    datasource_id: 'entity:node'
+    property_path: 'field_react_form:entity:application_target_group'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_react_form
+      module:
+        - grants_application
   created:
     label: Luotu
     datasource_id: 'entity:node'

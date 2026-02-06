@@ -36,6 +36,8 @@ class ServicePageBlockService {
    *   The grants profile service.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
    *   The module handler.
+   * @param \Drupal\grants_application\Form\FormSettingsService $formSettingsService
+   *   The form settings service.
    */
   public function __construct(
     protected EntityTypeManager $entityTypeManager,
