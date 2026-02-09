@@ -32,6 +32,7 @@ class ServicePageBlockService {
     protected RouteMatchInterface $routeMatch,
     protected GrantsProfileService $grantsProfileService,
     protected ModuleHandlerInterface $moduleHandler,
+    #[Autowire(service: 'Drupal\grants_application\Form\FormSettingsService')]
     protected FormSettingsService $formSettingsService,
     #[Autowire(service: 'logger.channel.grants_application')]
     protected LoggerInterface $logger,
