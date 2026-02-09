@@ -290,6 +290,9 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    *   The configuration section containing label data. Expected to have a
    *   'labels' key with language codes as keys and translations as values.
    *
+   * @param string|null $langcode
+   *   The language code to use for translation.
+   *
    * @return string|array
    *   - If the input is a single label section, returns the translated string
    *   - If the input contains multiple labels, returns an array of translated
@@ -298,10 +301,14 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    *
    * @see \Drupal\Core\Language\LanguageManagerInterface
    */
-  public function getLabels(?array $section): string|array {
-    $language = $this->languageManager
-      ->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)
-      ->getId();
+  public function getLabels(?array $section, ?string $langcode = NULL): string|array {
+    if (empty($langcode)) {
+      $language = $this->languageManager
+        ->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)
+        ->getId();
+    } else {
+      $language = $langcode;
+    }
 
     // Return empty string if section is not an array.
     if (!is_array($section)) {
