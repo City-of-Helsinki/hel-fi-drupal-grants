@@ -1,7 +1,7 @@
 {
   "attachments_step": {
-    "additional_information_section": {
-      "additional_information": {
+    "additional_info_section": {
+      "additional_info": {
         "ui:widget": "textarea"
       }
     },
