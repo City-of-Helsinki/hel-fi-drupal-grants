@@ -84,12 +84,36 @@ final class ViewsHooks implements ContainerInjectionInterface {
 
     // Override webform fields if react form fields are not empty.
     foreach ($view->result as $row) {
+      // If the React form is empty, we can skip the rendering of the empty
+      // fields. Once the webform functionality is deleted, this can be removed.
+      if (empty($this->getFieldValue($view, $row, 'field_react_form'))) {
+        $react_fields = [
+          'application_subvention_type',
+          'application_target_group',
+          'application_close',
+          'application_open',
+          'field_react_form',
+        ];
+        foreach ($react_fields as $react_field) {
+          unset($view->field[$react_field]);
+        }
+      }
+      // If the current result row has a React form,
+      // we should override the webform fields.
+      else {
+        // @phpstan-ignore property.notFound
+        $row->_target_group_override = $this->buildOverride($view, $row, 'application_target_group');
+        // @phpstan-ignore property.notFound
+        $row->_subvention_type_override = $this->buildApplicationSubventionMarkup($view, $row);
+      }
+
+      // Rebuild the application period markup.
       // @phpstan-ignore property.notFound
-      $row->_application_period_override = $this->buildMarkup($view, $row);
-      // @phpstan-ignore property.notFound
-      $row->_target_group_override = $this->buildOverride($view, $row, 'application_target_group');
-      // @phpstan-ignore property.notFound
-      $row->_avustuslaji_override = $this->buildOverride($view, $row, 'application_subvention_type');
+      $row->_application_period_override = $this->buildApplicationPeriodMarkup($view, $row);
+
+      // Clean up obsolete fields.
+      unset($view->field['application_target_group']);
+      unset($view->field['field_react_form']);
     }
   }
 
@@ -122,8 +146,10 @@ final class ViewsHooks implements ContainerInjectionInterface {
 
     if (!empty($row->_application_period_override) && !empty($variables['fields']['field_application_period'])) {
       $variables['fields']['field_application_period']->content = $row->_application_period_override;
-      unset($variables['fields']['field_application_continuous']);
     }
+
+    // Do not render the application continuous field.
+    unset($variables['fields']['field_application_continuous']);
   }
 
   /**
@@ -137,7 +163,7 @@ final class ViewsHooks implements ContainerInjectionInterface {
    * @return \Drupal\Component\Render\MarkupInterface
    *   Returns the markup.
    */
-  protected function buildMarkup(ViewExecutable $view, ResultRow $row): MarkupInterface {
+  protected function buildApplicationPeriodMarkup(ViewExecutable $view, ResultRow $row): MarkupInterface {
     $date_icon = '<span aria-hidden="true" class="hel-icon hel-icon--calendar-clock hel-icon--size-s"></span>';
     $continuous_raw = $this->getFieldValue($view, $row, 'field_application_continuous');
     $continuous = ($continuous_raw === '1' || $continuous_raw === 'true');
@@ -200,25 +226,14 @@ final class ViewsHooks implements ContainerInjectionInterface {
    *   The result row.
    * @param string $field_id
    *   The field id or the Search API field identifier.
+   * @param bool $multivalue
+   *   Whether to return the first value or all values.
    *
-   * @return string|null
+   * @return string|array|null
    *   Returns the field value.
    */
-  protected function getFieldValue(ViewExecutable $view, ResultRow $row, string $field_id): ?string {
-    // Try to get the indexed values via views field handler.
-    if (!empty($view->field[$field_id])) {
-      $value = $view->field[$field_id]->getValue($row);
-
-      if (is_array($value)) {
-        $value = reset($value);
-      }
-
-      if ($value !== NULL && $value !== '') {
-        return (string) $value;
-      }
-    }
-
-    // If not found, try to get the indexed values via search api.
+  protected function getFieldValue(ViewExecutable $view, ResultRow $row, string $field_id, bool $multivalue = FALSE): mixed {
+    // Try to get the indexed values via search api.
     if (isset($row->_item) && is_object($row->_item)) {
       try {
         $field = $row->_item->getField($field_id);
@@ -229,6 +244,9 @@ final class ViewsHooks implements ContainerInjectionInterface {
 
       if ($field && method_exists($field, 'getValues')) {
         $values = $field->getValues();
+        if ($multivalue) {
+          return $values;
+        }
         $first = $values[0] ?? NULL;
 
         if ($first !== NULL && $first !== '') {
