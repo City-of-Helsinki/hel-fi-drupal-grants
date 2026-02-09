@@ -12,6 +12,8 @@ use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\webform\Entity\Webform;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Provides the ServicePageBlockService service.
@@ -25,26 +27,14 @@ class ServicePageBlockService {
    */
   protected $currentNode;
 
-  /**
-   * Constructs a new WebformLoader.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
-   *   The entity type manager.
-   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
-   *   The current route match.
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   The grants profile service.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
-   *   The module handler.
-   * @param \Drupal\grants_application\Form\FormSettingsService $formSettingsService
-   *   The form settings service.
-   */
   public function __construct(
     protected EntityTypeManager $entityTypeManager,
     protected CurrentRouteMatch $routeMatch,
     protected GrantsProfileService $grantsProfileService,
     protected ModuleHandlerInterface $moduleHandler,
     protected FormSettingsService $formSettingsService,
+    #[Autowire(service: 'logger.channel.grants_handler')]
+    protected LoggerInterface $logger,
   ) {
     $this->currentNode = $this->routeMatch->getParameter('node');
   }
