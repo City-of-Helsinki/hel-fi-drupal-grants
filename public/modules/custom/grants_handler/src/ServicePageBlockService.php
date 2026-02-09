@@ -4,9 +4,9 @@ namespace Drupal\grants_handler;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
-use Drupal\Core\Routing\CurrentRouteMatch;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsService;
@@ -28,12 +28,12 @@ class ServicePageBlockService {
   protected $currentNode;
 
   public function __construct(
-    protected EntityTypeManager $entityTypeManager,
-    protected CurrentRouteMatch $routeMatch,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected RouteMatchInterface $routeMatch,
     protected GrantsProfileService $grantsProfileService,
     protected ModuleHandlerInterface $moduleHandler,
     protected FormSettingsService $formSettingsService,
-    #[Autowire(service: 'logger.channel.grants_handler')]
+    #[Autowire(service: 'logger.channel.grants_application')]
     protected LoggerInterface $logger,
   ) {
     $this->currentNode = $this->routeMatch->getParameter('node');
