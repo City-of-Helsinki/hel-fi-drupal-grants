@@ -21,7 +21,6 @@ dependencies:
     - field.field.node.service.field_lower_content
     - field.field.node.service.field_metatags
     - field.field.node.service.field_react_form
-    - field.field.node.service.field_react_form_id
     - field.field.node.service.field_service_channel
     - field.field.node.service.field_sidebar_content
     - field.field.node.service.field_target_group
@@ -307,16 +306,6 @@ content:
     weight: 2
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_react_form_id:
-    type: textfield_character_counter
-    weight: 23
-    region: content
-    settings:
-      counter_step: 0
-      counter_total: 55
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   field_service_channel:
     type: select2_entity_reference
