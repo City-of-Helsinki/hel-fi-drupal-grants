@@ -265,9 +265,11 @@
     padding: 0;
   }
 
+  .views-field-application-subvention-type,
   .views-field-field-avustuslaji {
     padding: var(--spacing-xs) var(--spacing-m) var(--spacing-layout-m) var(--spacing-m);
 
+    .tag--subvention-type,
     .tag_avustuslaji {
       background: var(--color-black);
       border-radius: var(--spacing-m);
