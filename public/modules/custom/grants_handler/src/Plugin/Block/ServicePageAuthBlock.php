@@ -64,7 +64,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('helfi_helsinki_profiili.userdata'),
       $container->get('current_route_match'),
       $container->get('current_user'),
-      $container->get('grants_handler.service_page_block_service'),
+      $container->get(ServicePageBlockService::class),
       $container->get('grants_handler.application_status_service'),
       $container->get('module_handler'),
       $container->get('logger.channel.grants_application'),

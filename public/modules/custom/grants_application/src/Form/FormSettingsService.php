@@ -21,20 +21,6 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    */
   private array $formTypes;
 
-  /**
-   * Constructs a new FormSettingsService object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   The entity type manager.
-   * @param \Drupal\Core\Extension\ModuleExtensionList $moduleExtensionList
-   *   The module extension list service.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
-   *   The language manager service.
-   * @param string|null $formConfigDir
-   *   The directory path for form configuration files.
-   * @param string|null $fixturesDir
-   *   The directory path for fixture files.
-   */
   public function __construct(
     protected readonly EntityTypeManagerInterface $entityTypeManager,
     protected readonly ModuleExtensionList $moduleExtensionList,
@@ -165,6 +151,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
       $parameters['form_identifier'] = $identifier;
     }
 
+    /** @var \Drupal\grants_application\Entity\ApplicationMetadata[] $matches */
     $matches = $storage->loadByProperties($parameters);
     return reset($matches) ?: NULL;
   }

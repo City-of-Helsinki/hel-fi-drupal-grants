@@ -72,7 +72,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       $plugin_definition,
       $container->get('current_route_match'),
       $container->get('current_user'),
-      $container->get('grants_handler.service_page_block_service'),
+      $container->get(ServicePageBlockService::class),
       $container->get('grants_handler.application_status_service'),
       $container->get('cache.default'),
       $container->get('datetime.time'),
