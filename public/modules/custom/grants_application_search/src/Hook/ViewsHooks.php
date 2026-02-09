@@ -8,9 +8,12 @@ use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\views\ResultRow;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\views\ViewExecutable;
@@ -24,10 +27,23 @@ final class ViewsHooks implements ContainerInjectionInterface {
   use AutoWireTrait;
   use StringTranslationTrait;
 
+  /**
+   * The subvention types.
+   *
+   * @var array
+   */
+  protected array $subventionTypes;
+
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
     protected RendererInterface $renderer,
-  ) {}
+    protected FormSettingsService $formSettingsService,
+    protected LanguageManagerInterface $languageManager,
+  ) {
+    $langcode = $languageManager->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+    $types = $formSettingsService->getFormConfig('form_configuration');
+    $this->subventionTypes = $this->formSettingsService->getLabels($types['subvention_types'], $langcode);
+  }
 
   /**
    * {@inheritdoc}
@@ -36,6 +52,8 @@ final class ViewsHooks implements ContainerInjectionInterface {
     return new static(
       $container->get('entity_type.manager'),
       $container->get('renderer'),
+      $container->get('grants_application.form_settings_service'),
+      $container->get('language_manager'),
     );
   }
 
@@ -96,8 +114,10 @@ final class ViewsHooks implements ContainerInjectionInterface {
       $variables['fields']['field_target_group']->content = $row->_target_group_override;
     }
 
-    if (!empty($row->_avustuslaji_override) && !empty($variables['fields']['field_avustuslaji'])) {
-      $variables['fields']['field_avustuslaji']->content = $row->_avustuslaji_override;
+    if (!empty($row->_subvention_type_override) && !empty($variables['fields']['application_subvention_type'])) {
+      $variables['fields']['application_subvention_type']->content = $row->_subvention_type_override;
+      // Do not render the webform field if the React form has been selected.
+      unset($variables['fields']['field_avustuslaji']);
     }
 
     if (!empty($row->_application_period_override) && !empty($variables['fields']['field_application_period'])) {
@@ -146,6 +166,29 @@ final class ViewsHooks implements ContainerInjectionInterface {
     return Markup::create(
       $date_icon . '<span>' . $this->t('The application period will be announced later') . '</span>'
     );
+  }
+
+  /**
+   * Build the final application period markup for one row.
+   *
+   * @param \Drupal\views\ViewExecutable $view
+   *   The view executable.
+   * @param \Drupal\views\ResultRow $row
+   *   The result row.
+   *
+   * @return ?\Drupal\Component\Render\MarkupInterface
+   *   Returns the markup.
+   */
+  protected function buildApplicationSubventionMarkup(ViewExecutable $view, ResultRow $row): ?MarkupInterface {
+    $subvention_types = $this->getFieldValue($view, $row, 'application_subvention_type',TRUE);
+    if (empty($subvention_types)) {
+      return NULL;
+    }
+    $tags = '';
+    foreach ($subvention_types as $subvention_type) {
+      $tags .= "<div class=\"tag--subvention-type\">{$this->subventionTypes[$subvention_type]}</div>";
+    }
+    return Markup::create($tags);
   }
 
   /**
