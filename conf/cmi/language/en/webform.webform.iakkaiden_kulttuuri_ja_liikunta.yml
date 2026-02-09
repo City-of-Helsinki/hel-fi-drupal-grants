@@ -275,7 +275,7 @@ elements: |
     '#help': '<p>Write down the type of expense in question. Expenses can be, for example, rents and personnel costs.</p>'
     '#multiple__add_more_button_label': 'Add new expense'
   lisatiedot_ja_liitteet:
-    '#title': '5. Additional information and appendices'
+    '#title': '5. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -283,9 +283,9 @@ elements: |
     '#help': '<p>If necessary, you can write additional information or other justifications related to the application or report changes to the basic information</p>'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
-    '#title': Appendices
+    '#title': Attachments
   attachments_info:
-    '#markup': '<p>All the appendices listed in the call for applications must be submitted for the processing of the grant application. The grant application may be rejected if the appendices are not submitted. If any of the appendices is missing, let us know in the Further clarification on attachments section of the application.</p><h4>Appendices previously submitted to the City of Helsinki</h4><p>If the required appendices have already been submitted as appendices to another grant application addressed to the City of Helsinki, the same appendices do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted appendices, indicate “The appendix has been submitted as a single file or with another application”.</p>'
+    '#markup': '<p>All the attachments listed in the call for applications must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.</p><h4>attachments previously submitted to the City of Helsinki</h4><p>If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate “The appendix has been submitted as a single file or with another application”.</p>'
   notification_attachments:
     '#markup': '<div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>The contents of the attachments cannot be viewed afterwards</span></div><div class="hds-notification__body"><p>Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.</p><p>Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.</p></div></div></div>'
   extra_info:

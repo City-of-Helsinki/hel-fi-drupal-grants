@@ -306,7 +306,7 @@ elements: |
     '#help': '<p><span class="blob-code-inner blob-code-marker pl-s" data-code-marker="+">Write down the type of expense in question. Expenses can be, for example, rents and personnel costs.</span></p>'
     '#multiple__add_more_button_label': 'Add new expense'
   lisatiedot_ja_liitteet:
-    '#title': '5. Additional information and appendices'
+    '#title': '5. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -314,7 +314,7 @@ elements: |
     '#help': '<p>If necessary, you can write additional information or other justifications related to the application or report changes to the basic information</p>'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
-    '#title': Appendices
+    '#title': Attachments
   attachments_info:
     '#markup': '<p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.</p><h4>Required attachments</h4><p>For multi-year projects, a budget itemized by project year for the entire duration of the project must be appended to the application.</p><p>For the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan. Additionally, the applicant must the provide rules of association and a confirmation of the account holder from the bank or a copy of the bank statement.</p><p>If you are applying for the conditional grant, please attach a cost center report to the application for the expenses already incurred during the first project period. If your project has not been granted a conditional grant for the year 2026, but the project has started in 2025, please attach to the application a summary of the actions carried out during the first year of the project, as well as a cost center report detailing the expenses already incurred during the first project period.</p><h4>Submission of several attachments as a single file</h4><p>If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”</p><h4>Attachments previously submitted to the City of Helsinki</h4><p>If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application”. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another.</p>'
   notification_attachments:
