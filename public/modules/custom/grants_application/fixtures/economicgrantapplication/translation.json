@@ -1,71 +1,17 @@
 {
   "en": {
     "translation": {
-      "action_plan.title": "Action plan (for the year for which you are applying for a grant)",
-      "additional_info.title": "Additional information ",
-      "additional_info_section.title": "Additional information concerning the application",
-      "cant_view_after_help.title": "The contents of the attachments cannot be viewed afterwards",
-      "cant_view_after_help.value_2": "Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.",
-      "cant_view_after_help.value": "Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.",
-      "community_rules.title": " Community Rules ",
-      "confirmed_annual_report.title": "Confirmed annual report (for the previous accounting period)",
-      "confirmed_audit_report.title": "Confirmed audit or performance audit report (for the previous accounting period)",
-      "confirmed_financial_statements.title": "Confirmed financial statements (for the previous accounting period)",
-      "form_title": "City Board, general grant application",
-      "formerly_provided_attachments_help.title": "Attachments previously submitted to the City of Helsinki",
-      "formerly_provided_attachments_help.value": "If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application”.",
-      "further_clarification.title": "Further clarification on attachments",
-      "minutes_of_the_annual_meeting.title": "Minutes of the annual meeting confirming the financial statements for the previous accounting period",
-      "multiple_attachments_help.title": "Submission of several attachments as a single file",
-      "multiple_attachments_help.value": "If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”",
-      "required_attachments_help.title": "Required attachments",
-      "required_attachments_help.value": "For the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan."
+      "form_title": "City Board, general grant application"
     }
   },
   "fi": {
     "translation": {
-      "action_plan.title": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)",
-      "additional_info.title": "Lisätiedot",
-      "additional_info_section.title": "Lisätietoja hakemukseen liittyen",
-      "cant_view_after_help.title": "Liitteiden sisältöä ei voi tarkastella jälkikäteen",
-      "cant_view_after_help.value_2": "Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.",
-      "cant_view_after_help.value": "Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.",
-      "community_rules.title": "Yhteisön säännöt",
-      "confirmed_annual_report.title": "Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)",
-      "confirmed_audit_report.title": "Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)",
-      "confirmed_financial_statements.title": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)",
-      "form_title": "Kaupunginhallitus, yleisavustushakemus",
-      "formerly_provided_attachments_help.title": "Helsingin kaupungille aiemmin toimitetut liitteet",
-      "formerly_provided_attachments_help.value": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
-      "further_clarification.title": "Lisäselvitys liitteistä",
-      "minutes_of_the_annual_meeting.title": "Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös",
-      "multiple_attachments_help.title": "Usean liitteen toimittaminen yhtenä tiedostona",
-      "multiple_attachments_help.value": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”. ",
-      "required_attachments_help.title": "Vaaditut liitteet",
-      "required_attachments_help.value": "Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilikaudelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilikautta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä vuosikokouksen pöytäkirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma."
+      "form_title": "Kaupunginhallitus, yleisavustushakemus"
     }
   },
   "sv": {
     "translation": {
-      "action_plan.title": "Verksamhetsplan (för det år du ansöker om understödet)",
-      "additional_info.title": "Ytterligare information ",
-      "additional_info_section.title": "Ytterligare information för ansökan",
-      "cant_view_after_help.title": "Innehållet i bilagorna kan inte granskas i efterhand",
-      "cant_view_after_help.value_2": "Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.",
-      "cant_view_after_help.value": "Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.",
-      "community_rules.title": "Samfundets stadgar",
-      "confirmed_annual_report.title": "Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)",
-      "confirmed_audit_report.title": "Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)",
-      "confirmed_financial_statements.title": "Fastställt bokslut (för den föregående avslutade räkenskapsperioden)",
-      "form_title": "Stadsstyrelsen, allmän bidragsansökan",
-      "formerly_provided_attachments_help.title": "Bilagor som tidigare lämnats in till Helsingfors stad",
-      "formerly_provided_attachments_help.value": "Om de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.",
-      "further_clarification.title": "Ytterligare information om bilagorna",
-      "minutes_of_the_annual_meeting.title": "Protokoll från årsstämman med det godkända bokslutet för den föregående räkenskapsperioden",
-      "multiple_attachments_help.title": "Inlämning av flera bilagor i en fil",
-      "multiple_attachments_help.value": "Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.",
-      "required_attachments_help.title": "Erforderliga bilagor",
-      "required_attachments_help.value": "För behandling av ansökan om understöd behövs styrkta bilagor från den föregående räkenskapsperioden som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från den föregående räkenskapsperioden är: bokslut, verksamhetsberättelse, revisionsberättelse och protokoll från årsstämman. Bilagorna för det år för vilket understödet ansöks är: budget och verksamhetsplan."
+      "form_title": "Stadsstyrelsen, allmän bidragsansökan"
     }
   }
 }

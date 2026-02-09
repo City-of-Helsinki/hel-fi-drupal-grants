@@ -1,65 +1,44 @@
 {
   "en": {
     "translation": {
-      "form_title": "Sports, grant application for orienteering maps",
-      "orienteering_maps_step.title": "Grant details",
-      "acting_year_section.title": "Grant details",
       "acting_year_section.description": "This form is used to apply for a grant for the production costs of orienteering maps. Grants can only be awarded for orienteering and teaching maps reported to the map register of the Finnish Orienteering Federation.",
-      "acting_year.title": "Year for which I am applying for a grant",
-      "orienteering_subvention.title": "Orienteering map grant",
-      "mapName.title": "Map name, location and map type",
-      "size.title": "Size in km2",
-      "voluntaryHours.title": "Informal voluntary work in hours",
       "cost.title": "Costs in euros",
-      "otherCompensations.title": "Grants received from others in euros",
-      "additional_information_section.title" : "Additional information concerning the application",
-      "additional_information.title": "Additional information",
-      "extra_info.title": "Further clarification on attachments"
+      "form_title": "Sports, grant application for orienteering maps",
+      "map_name.title": "Map name, location and map type",
+      "orienteering_maps_step.title": "Grant details",
+      "orienteering_subvention.title": "Orienteering map grant",
+      "other_compensations.title": "Grants received from others in euros",
+      "required_attachments_help.value": "Invoices and receipts for the cost of producing orienteering maps must be submitted only upon request.",
+      "size.title": "Size in km2",
+      "voluntary_hours.title": "Informal voluntary work in hours"
     }
   },
   "fi": {
     "translation": {
-      "form_title": "Liikunta, suunnistuskartta-avustushakemus",
-      "orienteering_maps_step.title": "Avustustiedot",
-      "acting_year_section.title": "Avustuksen tiedot",
       "acting_year_section.description": "Tällä lomakkeella haetaan avustusta suunnistuskartan valmistuskustannuksista. Avustusta voidaan myöntää vain Suunnistusliiton karttarekisteriin raportoiduista suunnistus- ja opetuskartoista.",
-      "acting_year.title": "Vuosi, jolle avustusta haetaan",
-      "orienteering_subvention.title": "Suunnistuskartta-avustus",
-      "mapName.title": "Kartan nimi, sijainti ja karttatyyppi",
-      "size.title": "Koko km2",
-      "voluntaryHours.title": "Talkootyö tuntia",
       "cost.title": "Kustannukset euroa",
-      "otherCompensations.title": "Muilta saadut avustukset euroa",
-      "additional_information_section.title" : "Lisätietoa hakemukseen liittyen",
-      "additional_information.title": "Lisätiedot",
-      "required_attachments_help.title": "Vaaditut liitteet",
+      "form_title": "Liikunta, suunnistuskartta-avustushakemus",
+      "map_name.title": "Kartan nimi, sijainti ja karttatyyppi",
+      "orienteering_maps_step.title": "Avustustiedot",
+      "orienteering_subvention.title": "Suunnistuskartta-avustus",
+      "other_compensations.title": "Muilta saadut avustukset euroa",
       "required_attachments_help.value": "Suunnistuskarttojen valmistuskustannuksiin liittyvät laskut ja kuitit toimitetaan ainoastaan erikseen pyydettäessä.",
-      "multiple_attachments_help.title": "Usean liitteen toimittaminen yhtenä tiedostona",
-      "multiple_attachments_help.value": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
-      "formerly_provided_attachments_help.title": "Helsingin kaupungille aiemmin toimitetut liitteet",
-      "formerly_provided_attachments_help.value": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
-      "cant_view_after_help.title": "Liitteiden sisältöä ei voi tarkastella jälkikäteen",
-      "cant_view_after_help.value": "Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.",
-      "cant_view_after_help.value_2": "Vaikka et voi tarkastella liitteiden sisältöä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.",
-      "extra_info.title": "Lisäselvitys liitteistä"
+      "size.title": "Koko km2",
+      "voluntary_hours.title": "Talkootyö tuntia"
     }
   },
   "sv": {
     "translation": {
-      "form_title": "Idrott, ansökan om bidrag för orienteringskarta",
-      "orienteering_maps_step.title": "Uppgifter om understödet",
-      "acting_year_section.title": "Uppgifter om understödet",
       "acting_year_section.description": "Med denna blankett ansöks om understöd för framställningskostnader för en orienteringskarta. Understödet kan endast beviljas för de orienterings- och undervisningskartor som rapporterats till Orienteringsförbundets kartregister.",
-      "acting_year.title": "År för vilket jag ansöker om understöd",
-      "orienteering_subvention.title": "Understöd för framställning av orienteringskartor",
-      "mapName.title": "Kartans namn, läge och karttyp",
-      "size.title": "Storlek, km2",
-      "voluntaryHours.title": "Talkoarbete, timmar",
       "cost.title": "Kostnader, euro",
-      "otherCompensations.title": "Understöd från tredje part, euro",
-      "additional_information_section.title" : "Ytterligare information för ansökan",
-      "additional_information.title": "Ytterligare information",
-      "extra_info.title": "Ytterligare information om bilagorna"
+      "form_title": "Idrott, ansökan om bidrag för orienteringskarta",
+      "map_name.title": "Kartans namn, läge och karttyp",
+      "orienteering_maps_step.title": "Uppgifter om understödet",
+      "orienteering_subvention.title": "Understöd för framställning av orienteringskartor",
+      "other_compensations.title": "Understöd från tredje part, euro",
+      "required_attachments_help.value": "Fakturorna och kvittona över kostnaderna för framställning av orienteringskartor ska lämnas endast separat på begäran.",
+      "size.title": "Storlek, km2",
+      "voluntary_hours.title": "Talkoarbete, timmar"
     }
   }
 }

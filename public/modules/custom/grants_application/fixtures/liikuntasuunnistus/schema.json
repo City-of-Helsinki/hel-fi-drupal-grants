@@ -31,8 +31,8 @@
                   "type": "object",
                   "title": "orienteering_subvention.title",
                   "properties": {
-                    "mapName": {
-                      "title": "mapName.title",
+                    "map_name": {
+                      "title": "map_name.title",
                       "type": "string",
                       "minLength": 1
                     },
@@ -40,21 +40,21 @@
                       "title": "size.title",
                       "type": "integer"
                     },
-                    "voluntaryHours": {
-                      "title": "voluntaryHours.title",
+                    "voluntary_hours": {
+                      "title": "voluntary_hours.title",
                       "type": "integer"
                     },
                     "cost": {
                       "title": "cost.title",
                       "type": "integer"
                     },
-                    "otherCompensations": {
-                      "title": "otherCompensations.title",
+                    "other_compensations": {
+                      "title": "other_compensations.title",
                       "type": "integer"
                     }
                   },
                   "required": [
-                    "mapName"
+                    "map_name"
                   ]
                 }
               ],
@@ -62,8 +62,8 @@
                 "type": "object",
                 "title": "orienteering_subvention.title",
                 "properties": {
-                  "mapName": {
-                    "title": "mapName.title",
+                  "map_name": {
+                    "title": "map_name.title",
                     "type": "string",
                     "minLength": 1
                   },
@@ -71,21 +71,21 @@
                     "title": "size.title",
                     "type": "integer"
                   },
-                  "voluntaryHours": {
-                    "title": "voluntaryHours.title",
+                  "voluntary_hours": {
+                    "title": "voluntary_hours.title",
                     "type": "string"
                   },
                   "cost": {
                     "title": "cost.title",
                     "type": "integer"
                   },
-                  "otherCompensations": {
-                    "title": "otherCompensations.title",
+                  "other_compensations": {
+                    "title": "other_compensations.title",
                     "type": "integer"
                   }
                 },
                 "required": [
-                  "mapName"
+                  "map_name"
                 ]
               }
             }
@@ -160,8 +160,8 @@
                 }
               ]
             },
-            "extra_info": {
-              "title": "extra_info.title",
+            "further_clarification": {
+              "title": "further_clarification.title",
               "type": "string"
             },
             "other_attachment_fieldset": {
