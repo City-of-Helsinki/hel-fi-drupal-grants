@@ -7,6 +7,7 @@ services:
     parent: logger.channel_base
     arguments: ['grants_application']
 
+  Drupal\grants_application\Form\FormSettingsServiceInterface: ~
   Drupal\grants_application\Form\FormSettingsService: ~
   Drupal\grants_application\Form\ApplicationNumberService: ~
   Drupal\grants_application\Form\ApplicationMetadataForm: ~
