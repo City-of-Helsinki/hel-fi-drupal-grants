@@ -15,7 +15,7 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\views\ResultRow;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -27,7 +27,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @todo UHF-12853: Review this class when removing the webform functionality.
  */
-final class ViewsHooks implements ContainerInjectionInterface {
+class ViewsHooks implements ContainerInjectionInterface {
 
   use AutoWireTrait;
   use StringTranslationTrait;
@@ -49,7 +49,7 @@ final class ViewsHooks implements ContainerInjectionInterface {
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
     protected RendererInterface $renderer,
-    protected FormSettingsService $formSettingsService,
+    protected FormSettingsServiceInterface $formSettingsService,
     protected LanguageManagerInterface $languageManager,
     protected EntityRepositoryInterface $entityRepository,
   ) {
