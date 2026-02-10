@@ -159,8 +159,6 @@ final class ViewsHooks implements ContainerInjectionInterface {
       // Rebuild the application period markup.
       // @phpstan-ignore property.notFound
       $row->_application_period_override = $this->buildApplicationPeriodMarkup($view, $row);
-
-      // Clean up obsolete fields.
     }
   }
 
