@@ -124,7 +124,8 @@ final class CanonicalFields extends FieldsProcessorPluginBase {
 
     $this->populateCanonicalField($fields, 'canonical_subvention_type', $subvention_sources, $subvention_map);
 
-    // Applicant and target group need no mapping: canonical value equals source value.
+    // Applicant and target group fields do not need mappings.
+    // The canonical value equals source value.
     $this->populateCanonicalField($fields, 'canonical_applicant_type', $applicant_sources);
     $this->populateCanonicalField($fields, 'canonical_target_group', $target_group_sources);
   }
