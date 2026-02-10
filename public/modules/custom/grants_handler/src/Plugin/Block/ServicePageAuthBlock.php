@@ -143,8 +143,11 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       // Load the webform. No need to check if it exists since this
       // has already been done in the access checks.
       $webform = $this->servicePageBlockService->loadServicePageWebform();
-      $webformId = $webform->id();
+      if (!$webform) {
+        return $build;
+      }
 
+      $webformId = $webform->id();
       // If the application isn't open, just display a message.
       if (!$this->applicationStatusService->isApplicationOpen($webform)) {
         return $build;
