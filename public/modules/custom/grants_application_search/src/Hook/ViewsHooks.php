@@ -7,6 +7,7 @@ namespace Drupal\grants_application_search\Hook;
 use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
@@ -15,8 +16,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\grants_application\Form\FormSettingsService;
-use Drupal\grants_application_search\Plugin\search_api\processor\CanonicalFields;
-use Drupal\taxonomy\Entity\Term;
+use Drupal\taxonomy\TermInterface;
 use Drupal\views\ResultRow;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\views\ViewExecutable;
@@ -39,15 +39,24 @@ final class ViewsHooks implements ContainerInjectionInterface {
    */
   protected array $subventionTypes;
 
+  /**
+   * The applicant types.
+   *
+   * @var array
+   */
+  protected array $applicantTypes;
+
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
     protected RendererInterface $renderer,
     protected FormSettingsService $formSettingsService,
     protected LanguageManagerInterface $languageManager,
+    protected EntityRepositoryInterface $entityRepository,
   ) {
     $langcode = $languageManager->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
     $types = $formSettingsService->getFormConfig('form_configuration');
     $this->subventionTypes = $this->formSettingsService->getLabels($types['subvention_types'], $langcode);
+    $this->applicantTypes = $this->formSettingsService->getLabels($types['applicant_types'], $langcode);
   }
 
   /**
@@ -59,6 +68,7 @@ final class ViewsHooks implements ContainerInjectionInterface {
       $container->get('renderer'),
       $container->get('grants_application.form_settings_service'),
       $container->get('language_manager'),
+      $container->get('entity.repository'),
     );
   }
 
@@ -204,67 +214,77 @@ final class ViewsHooks implements ContainerInjectionInterface {
   public function preprocessViewsView(array &$variables): void {
     $view = $variables['view'];
 
-    if ($view->id() !== 'application_search_search_api') {
+    if (!$view instanceof ViewExecutable || $view->id() !== 'application_search_search_api') {
       return;
     }
 
-    $applicationSearchLinkRaw = Url::fromRoute('view.application_search_search_api.search_page');
-    $applicationSearchLink = $applicationSearchLinkRaw->toString();
-    $variables['applicationSearchLink'] = $applicationSearchLink;
-
-    $exposedValues = $view->getExposedInput();
+    $url = Url::fromRoute('view.application_search_search_api.search_page');
+    $variables['applicationSearchLink'] = $url->toString();
     $variables['newExposedFilter'] = [];
+    $allowed = ['applicant', 'subvention_type', 'target_type'];
 
-    foreach ($exposedValues as $exposedValueID => $exposedValue) {
-      // Map specific values for the 'applicant' filter.
-      // It is a filter, not a taxonomy term, that's why it's different.
-      if ($exposedValueID === 'applicant' && $exposedValue !== 'All') {
-        $applicantTranslations = [
-          'private_person' => $this->t('Private person', options: ['context' => 'grants_application_search']),
-          'unregistered_community' => $this->t('Unregistered community or group', options: ['context' => 'grants_application_search']),
-          'registered_community' => $this->t('Registered community', options: ['context' => 'grants_application_search']),
-        ];
-        $variables['newExposedFilter'][$exposedValueID] = $applicantTranslations[$exposedValue];
+    foreach ($view->getExposedInput() as $parameter => $value) {
+      // Handle only applicant, subvention_type and target_type.
+      if (!in_array($parameter, $allowed)) {
         continue;
       }
 
-      // Map the exposed value ID to the term name.
-      $exposedValueTerm = $exposedValueID;
-      if ($exposedValueID === 'activity') {
-        $exposedValueTerm = 'avustuslaji';
+      // Skip "All" or empty selections.
+      if ($value === 'All' || $value === '' || $value === NULL || is_array($value)) {
+        continue;
       }
 
-      $query = \Drupal::entityQuery('taxonomy_term');
-      $query->condition('vid', $exposedValueTerm);
-      $query->accessCheck(FALSE);
-      $tids = $query->execute();
-      $terms = Term::loadMultiple($tids);
-      $language = $this->languageManager->getCurrentLanguage()->getId();
-
-      $termList = [];
-
-      foreach ($terms as $term) {
-        if ($term->hasTranslation($language)) {
-          $translated_term = \Drupal::service('entity.repository')->getTranslationFromContext($term, $language);
-          $tid = $term->id();
-          $termList[$tid] = $translated_term->label();
-        }
+      // Resolve the label.
+      $label = $this->resolveExposedFilterLabel($parameter, $value);
+      if ($label === '') {
+        continue;
       }
 
-      $allTerms = CanonicalFields::SUBVENTION_TYPE_MAP;
-
-      // Map the exposed value to the corresponding term name.
-      foreach ($termList as $term_id => $term_name) {
-        $term_id = strval($term_id);
-        if (
-          isset($exposedValue) &&
-          array_key_exists($exposedValue, $allTerms) &&
-          $term_id === $allTerms[$exposedValue]
-        ) {
-          $variables['newExposedFilter'][$exposedValueID] = $term_name;
-        }
-      }
+      // Set the label to the new exposed filter.
+      $variables['newExposedFilter'][$parameter] = $label;
     }
+  }
+
+  /**
+   * Resolves the label for the exposed filter.
+   *
+   * @param string $parameter
+   *   The query parameter.
+   * @param string $value
+   *   The value.
+   *
+   * @return string
+   *   Returns the appropriate label.
+   */
+  private function resolveExposedFilterLabel(string $parameter, string $value): string {
+    return match ($parameter) {
+      'applicant' => $this->applicantTypes[$value] ?? '',
+      'subvention_type' => $this->subventionTypes[$value] ?? '',
+      'target_type' => $this->resolveTargetTypeLabel($value),
+      default => '',
+    };
+  }
+
+  /**
+   * Resolve a label for the target type.
+   *
+   * @param string $tid
+   *   Taxonomy term ID.
+   *
+   * @return string
+   *   Returns the label as a string.
+   */
+  private function resolveTargetTypeLabel(string $tid): string {
+    $term = $this->entityTypeManager
+      ->getStorage('taxonomy_term')
+      ->load((int) $tid);
+
+    if (!$term instanceof TermInterface) {
+      return '';
+    }
+
+    $translated = $this->entityRepository->getTranslationFromContext($term);
+    return $translated->label() ?: '';
   }
 
   /**
@@ -321,7 +341,7 @@ final class ViewsHooks implements ContainerInjectionInterface {
    *   Returns the markup.
    */
   protected function buildApplicationSubventionMarkup(ViewExecutable $view, ResultRow $row): ?MarkupInterface {
-    $subvention_types = $this->getFieldValue($view, $row, 'application_subvention_type',TRUE);
+    $subvention_types = $this->getFieldValue($view, $row, 'application_subvention_type', TRUE);
     if (empty($subvention_types)) {
       return NULL;
     }
