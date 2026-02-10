@@ -278,6 +278,10 @@
       margin-bottom: $spacing-half;
       padding: var(--spacing-3-xs) var(--spacing-xs);
     }
+
+    .tag--subvention-type {
+      margin-right: $spacing-quarter;
+    }
   }
 
   .views-field-field-application-period .field-content {
