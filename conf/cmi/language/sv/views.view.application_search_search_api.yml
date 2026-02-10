@@ -9,22 +9,22 @@ display:
       empty:
         area:
           content:
-            value: "<h3>Inga resultat hittades</h3>\r\n"
+            value: '<h3>Inga resultat hittades</h3>'
             format: full_html
       filters:
-        field_target_group:
-          expose:
-            label: Målgrupp
-        field_avustuslaji:
-          expose:
-            label: 'Vilken typ av verksamhet ansöker du om understöd?'
-        field_hakijatyyppi:
-          expose:
-            label: Sökande
         search_api_fulltext:
           expose:
             label: Nyckelord
             placeholder: 'Sök på namn eller sökterm, till exempel verksamhetsunderstöd'
+        canonical_target_group_select:
+          expose:
+            label: Målgrupp
+        canonical_subvention_type_select:
+          expose:
+            label: 'Vilken typ av verksamhet ansöker du om understöd?'
+        canonical_applicant_type_select:
+          expose:
+            label: Sökande
       header:
         result:
           content: '<strong>@total</strong> sökresultat'

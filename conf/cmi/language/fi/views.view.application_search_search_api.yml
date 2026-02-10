@@ -9,22 +9,22 @@ display:
       empty:
         area:
           content:
-            value: "<h3>Tuloksia ei löytynyt</h3>\r\n"
+            value: '<h3>Tuloksia ei löytynyt</h3>'
             format: full_html
       filters:
-        field_target_group:
-          expose:
-            label: 'Valitse kohderyhmä'
-        field_avustuslaji:
-          expose:
-            label: 'Millaiseen toimintaan haet avustusta?'
-        field_hakijatyyppi:
-          expose:
-            label: 'Avustuksen hakija'
         search_api_fulltext:
           expose:
             label: 'Tai etsi hakusanalla'
             placeholder: 'Etsi nimellä tai hakusanalla, esim toiminta-avustus'
+        canonical_target_group_select:
+          expose:
+            label: 'Valitse kohderyhmä'
+        canonical_subvention_type_select:
+          expose:
+            label: 'Millaiseen toimintaan haet avustusta?'
+        canonical_applicant_type_select:
+          expose:
+            label: 'Avustuksen hakija'
       header:
         result:
           content: '<strong>@total</strong> hakutulosta'

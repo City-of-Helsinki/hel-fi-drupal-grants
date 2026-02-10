@@ -15,13 +15,12 @@ dependencies:
     - field.storage.node.field_webform
     - search_api.index.search_index
     - system.menu.main
-    - taxonomy.vocabulary.avustuslaji
-    - taxonomy.vocabulary.target_group
   module:
     - better_exposed_filters
     - datetime
     - datetime_range
     - entity_reference_revisions
+    - grants_application_search
     - options
     - search_api
     - user
@@ -1434,33 +1433,32 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        field_target_group:
-          id: field_target_group
+        canonical_target_group_select:
+          id: canonical_target_group_select
           table: search_api_index_search_index
-          field: field_target_group
+          field: canonical_target_group_select
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: search_api_term
-          operator: or
-          value: {  }
+          plugin_id: canonical_target_group_select
+          operator: '='
+          value: ''
           group: 1
           exposed: true
           expose:
-            operator_id: field_target_group_op
+            operator_id: ''
             label: 'Choose a target group'
             description: ''
             use_operator: false
-            operator: field_target_group_op
+            operator: ''
             operator_limit_selection: false
             operator_list: {  }
-            identifier: target_group
+            identifier: target_type
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
-            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -1473,39 +1471,32 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          reduce_duplicates: false
-          vid: target_group
-          type: select
-          hierarchy: false
-          limit: true
-          error_message: true
-        field_avustuslaji:
-          id: field_avustuslaji
+        canonical_subvention_type_select:
+          id: canonical_subvention_type_select
           table: search_api_index_search_index
-          field: field_avustuslaji
+          field: canonical_subvention_type_select
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: search_api_term
-          operator: or
-          value: {  }
+          plugin_id: canonical_subvention_type_select
+          operator: '='
+          value: ''
           group: 1
           exposed: true
           expose:
-            operator_id: field_avustuslaji_op
+            operator_id: ''
             label: 'What kind of activity are you applying grant for?'
             description: ''
             use_operator: false
-            operator: field_avustuslaji_op
+            operator: ''
             operator_limit_selection: false
             operator_list: {  }
-            identifier: activity
+            identifier: subvention_type
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
-            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -1518,30 +1509,24 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          reduce_duplicates: false
-          vid: avustuslaji
-          type: select
-          hierarchy: false
-          limit: true
-          error_message: true
-        field_hakijatyyppi:
-          id: field_hakijatyyppi
+        canonical_applicant_type_select:
+          id: canonical_applicant_type_select
           table: search_api_index_search_index
-          field: field_hakijatyyppi
+          field: canonical_applicant_type_select
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: search_api_options
-          operator: or
-          value: {  }
+          plugin_id: canonical_applicant_type_select
+          operator: '='
+          value: ''
           group: 1
           exposed: true
           expose:
-            operator_id: field_hakijatyyppi_op
+            operator_id: ''
             label: Applicant
             description: ''
             use_operator: false
-            operator: field_hakijatyyppi_op
+            operator: ''
             operator_limit_selection: false
             operator_list: {  }
             identifier: applicant
@@ -1550,7 +1535,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -1563,7 +1547,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          reduce_duplicates: false
         search_api_fulltext:
           id: search_api_fulltext
           table: search_api_index_search_index
