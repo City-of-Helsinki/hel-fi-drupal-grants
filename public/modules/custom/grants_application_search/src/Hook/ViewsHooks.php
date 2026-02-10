@@ -198,6 +198,76 @@ final class ViewsHooks implements ContainerInjectionInterface {
   }
 
   /**
+   * Implements hook_preprocess_views_view().
+   */
+  #[Hook('preprocess_views_view')]
+  public function preprocessViewsView(array &$variables): void {
+    $view = $variables['view'];
+
+    if ($view->id() !== 'application_search_search_api') {
+      return;
+    }
+
+    $applicationSearchLinkRaw = Url::fromRoute('view.application_search_search_api.search_page');
+    $applicationSearchLink = $applicationSearchLinkRaw->toString();
+    $variables['applicationSearchLink'] = $applicationSearchLink;
+
+    $exposedValues = $view->getExposedInput();
+    $variables['newExposedFilter'] = [];
+
+    foreach ($exposedValues as $exposedValueID => $exposedValue) {
+      // Map specific values for the 'applicant' filter.
+      // It is a filter, not a taxonomy term, that's why it's different.
+      if ($exposedValueID === 'applicant' && $exposedValue !== 'All') {
+        $applicantTranslations = [
+          'private_person' => $this->t('Private person', options: ['context' => 'grants_application_search']),
+          'unregistered_community' => $this->t('Unregistered community or group', options: ['context' => 'grants_application_search']),
+          'registered_community' => $this->t('Registered community', options: ['context' => 'grants_application_search']),
+        ];
+        $variables['newExposedFilter'][$exposedValueID] = $applicantTranslations[$exposedValue];
+        continue;
+      }
+
+      // Map the exposed value ID to the term name.
+      $exposedValueTerm = $exposedValueID;
+      if ($exposedValueID === 'activity') {
+        $exposedValueTerm = 'avustuslaji';
+      }
+
+      $query = \Drupal::entityQuery('taxonomy_term');
+      $query->condition('vid', $exposedValueTerm);
+      $query->accessCheck(FALSE);
+      $tids = $query->execute();
+      $terms = Term::loadMultiple($tids);
+      $language = $this->languageManager->getCurrentLanguage()->getId();
+
+      $termList = [];
+
+      foreach ($terms as $term) {
+        if ($term->hasTranslation($language)) {
+          $translated_term = \Drupal::service('entity.repository')->getTranslationFromContext($term, $language);
+          $tid = $term->id();
+          $termList[$tid] = $translated_term->label();
+        }
+      }
+
+      $allTerms = CanonicalFields::SUBVENTION_TYPE_MAP;
+
+      // Map the exposed value to the corresponding term name.
+      foreach ($termList as $term_id => $term_name) {
+        $term_id = strval($term_id);
+        if (
+          isset($exposedValue) &&
+          array_key_exists($exposedValue, $allTerms) &&
+          $term_id === $allTerms[$exposedValue]
+        ) {
+          $variables['newExposedFilter'][$exposedValueID] = $term_name;
+        }
+      }
+    }
+  }
+
+  /**
    * Build the final application period markup for one row.
    *
    * @param \Drupal\views\ViewExecutable $view
