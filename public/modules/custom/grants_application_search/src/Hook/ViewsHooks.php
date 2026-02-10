@@ -20,14 +20,13 @@ use Drupal\taxonomy\TermInterface;
 use Drupal\views\ResultRow;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\views\ViewExecutable;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Views hook implementations for grants_application_search.
  *
  * @todo UHF-12853: Review this class when removing the webform functionality.
  */
-class ViewsHooks implements ContainerInjectionInterface {
+class ViewsHooks {
 
   use AutoWireTrait;
   use StringTranslationTrait;
@@ -57,19 +56,6 @@ class ViewsHooks implements ContainerInjectionInterface {
     $types = $formSettingsService->getFormConfig('form_configuration');
     $this->subventionTypes = $this->formSettingsService->getLabels($types['subvention_types'], $langcode);
     $this->applicantTypes = $this->formSettingsService->getLabels($types['applicant_types'], $langcode);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('entity_type.manager'),
-      $container->get('renderer'),
-      $container->get('grants_application.form_settings_service'),
-      $container->get('language_manager'),
-      $container->get('entity.repository'),
-    );
   }
 
   /**
