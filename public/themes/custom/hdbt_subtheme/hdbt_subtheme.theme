@@ -14,7 +14,6 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
 use Drupal\csp\Csp;
 use Drupal\node\NodeInterface;
-use Drupal\taxonomy\Entity\Term;
 use Drupal\webform\Entity\Webform;
 use Drupal\helfi_platform_config\JsInliner;
 
