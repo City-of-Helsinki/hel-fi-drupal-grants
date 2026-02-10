@@ -13,7 +13,10 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
 use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application_search\Plugin\search_api\processor\CanonicalFields;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\views\ResultRow;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\views\ViewExecutable;
@@ -123,7 +126,6 @@ final class ViewsHooks implements ContainerInjectionInterface {
       // fields. Once the webform functionality is deleted, this can be removed.
       if (empty($this->getFieldValue($view, $row, 'field_react_form'))) {
         $react_fields = [
-          'application_subvention_type',
           'application_target_group',
           'application_close',
           'application_open',
@@ -140,6 +142,8 @@ final class ViewsHooks implements ContainerInjectionInterface {
         $row->_target_group_override = $this->buildOverride($view, $row, 'application_target_group');
         // @phpstan-ignore property.notFound
         $row->_subvention_type_override = $this->buildApplicationSubventionMarkup($view, $row);
+        unset($view->field['field_react_form']);
+        unset($view->field['application_target_group']);
       }
 
       // Rebuild the application period markup.
@@ -147,8 +151,6 @@ final class ViewsHooks implements ContainerInjectionInterface {
       $row->_application_period_override = $this->buildApplicationPeriodMarkup($view, $row);
 
       // Clean up obsolete fields.
-      unset($view->field['application_target_group']);
-      unset($view->field['field_react_form']);
     }
   }
 
@@ -175,12 +177,20 @@ final class ViewsHooks implements ContainerInjectionInterface {
 
     if (!empty($row->_subvention_type_override) && !empty($variables['fields']['application_subvention_type'])) {
       $variables['fields']['application_subvention_type']->content = $row->_subvention_type_override;
-      // Do not render the webform field if the React form has been selected.
+      // Do not render the webform avustuslaji field,
+      // if the React form has been selected.
       unset($variables['fields']['field_avustuslaji']);
+    }
+    else {
+      // Do not render the React subvention type field,
+      // if the webform has been selected.
+      unset($variables['fields']['application_subvention_type']);
     }
 
     if (!empty($row->_application_period_override) && !empty($variables['fields']['field_application_period'])) {
       $variables['fields']['field_application_period']->content = $row->_application_period_override;
+      unset($variables['fields']['application_open']);
+      unset($variables['fields']['application_close']);
     }
 
     // Do not render the application continuous field.
