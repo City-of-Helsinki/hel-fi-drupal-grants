@@ -6,7 +6,6 @@ namespace Drupal\grants_application_search\Hook;
 
 use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
-use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
