@@ -276,7 +276,6 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    * @param array|null $section
    *   The configuration section containing label data. Expected to have a
    *   'labels' key with language codes as keys and translations as values.
-   *
    * @param string|null $langcode
    *   The language code to use for translation.
    *
@@ -293,7 +292,8 @@ final class FormSettingsService implements FormSettingsServiceInterface {
       $language = $this->languageManager
         ->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)
         ->getId();
-    } else {
+    }
+    else {
       $language = $langcode;
     }
 
