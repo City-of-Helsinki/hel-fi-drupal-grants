@@ -21,6 +21,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Views hook implementations for grants_application_search.
+ *
+ * @todo UHF-12853: Review this class when removing the webform functionality.
  */
 final class ViewsHooks implements ContainerInjectionInterface {
 
@@ -55,6 +57,39 @@ final class ViewsHooks implements ContainerInjectionInterface {
       $container->get('grants_application.form_settings_service'),
       $container->get('language_manager'),
     );
+  }
+
+  /**
+   * Implements hook_views_data().
+   */
+  #[Hook('views_data')]
+  public function viewsData(): array {
+    // Match the filters with the search_api_index_search_index table.
+    return [
+      'search_api_index_search_index' => [
+        'canonical_subvention_type_select' => [
+          'title' => $this->t('Canonical subvention type (select)'),
+          'help' => $this->t('Select list filtering canonical_subvention_type.'),
+          'filter' => [
+            'id' => 'canonical_subvention_type_select',
+          ],
+        ],
+        'canonical_applicant_type_select' => [
+          'title' => $this->t('Canonical applicant type (select)'),
+          'help' => $this->t('Select list filtering canonical_applicant_type.'),
+          'filter' => [
+            'id' => 'canonical_applicant_type_select',
+          ],
+        ],
+        'canonical_target_group_select' => [
+          'title' => $this->t('Canonical target group (select)'),
+          'help' => $this->t('Select list filtering canonical_target_group.'),
+          'filter' => [
+            'id' => 'canonical_target_group_select',
+          ],
+        ],
+      ],
+    ];
   }
 
   /**
