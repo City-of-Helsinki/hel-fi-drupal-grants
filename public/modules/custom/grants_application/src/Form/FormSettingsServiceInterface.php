@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Form;
 
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-
 /**
  * Interface for form settings service.
  *
  * Provides methods to retrieve and manage form configurations and settings.
  */
-interface FormSettingsServiceInterface extends ContainerFactoryPluginInterface {
+interface FormSettingsServiceInterface {
 
   /**
    * Retrieves form settings for a specific form type.
