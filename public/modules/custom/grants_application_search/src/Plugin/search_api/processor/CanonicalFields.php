@@ -8,11 +8,13 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\search_api\Attribute\SearchApiProcessor;
 use Drupal\search_api\Datasource\DatasourceInterface;
 use Drupal\search_api\Item\ItemInterface;
-use Drupal\search_api\Processor\ProcessorProperty;
 use Drupal\search_api\Processor\FieldsProcessorPluginBase;
+use Drupal\search_api\Processor\ProcessorProperty;
 
 /**
  * Canonical fields processor.
+ *
+ * @todo UHF-12853: Review this class when removing the webform functionality.
  */
 #[SearchApiProcessor(
   id: 'grants_application_search_canonical_fields',
@@ -71,41 +73,6 @@ final class CanonicalFields extends FieldsProcessorPluginBase {
   ];
 
   /**
-   * Hardcoded mappings for applicant types.
-   */
-  public const array APPLICANT_TYPE_MAP = [
-  // Keskushallinto/Kaupunginhallitus.
-    '20' => '20',
-  // Kasvatus ja koulutus.
-    '21' => '21',
-  // Taide ja kulttuuri.
-    '22' => '22',
-  // Asukasosallisuus.
-    '25' => '25',
-  // Liikunta.
-    '26' => '26',
-  // Nuorisotoiminta.
-    '27' => '27',
-  // Työllisyys.
-    '29' => '29',
-  // Hyvinvointi ja terveys.
-    '30' => '30',
-  // Ympäristöpalvelut.
-    '31' => '31',
-  // Kulttuuri- ja vapaa-aika.
-    '75' => '75',
-  ];
-
-  /**
-   * Hardcoded mappings for target groups.
-   */
-  public const array TARGET_GROUP_MAP = [
-    'registered_community' => 'registered_community',
-    'unregistered_community' => 'unregistered_community',
-    'private_person' => 'private_person',
-  ];
-
-  /**
    * {@inheritdoc}
    */
   public function getPropertyDefinitions(?DatasourceInterface $datasource = NULL): array {
@@ -150,12 +117,16 @@ final class CanonicalFields extends FieldsProcessorPluginBase {
     $applicant_sources = $has_react_form ? ['applicant_types'] : ['field_hakijatyyppi'];
     $target_group_sources = $has_react_form ? ['application_target_group'] : ['field_target_group'];
 
-    // If React form is present, use the reverse mapping for subvention types.
-    $subvention_map = $has_react_form ? array_combine(array_values(self::SUBVENTION_TYPE_MAP), array_values(self::SUBVENTION_TYPE_MAP)) : self::SUBVENTION_TYPE_MAP;
+    // React side already contains canonical IDs; webform side uses term IDs.
+    $subvention_map = $has_react_form
+      ? $this->selfMap(array_values(self::SUBVENTION_TYPE_MAP))
+      : self::SUBVENTION_TYPE_MAP;
 
     $this->populateCanonicalField($fields, 'canonical_subvention_type', $subvention_sources, $subvention_map);
-    $this->populateCanonicalField($fields, 'canonical_applicant_type', $applicant_sources, self::APPLICANT_TYPE_MAP);
-    $this->populateCanonicalField($fields, 'canonical_target_group', $target_group_sources, self::TARGET_GROUP_MAP);
+
+    // Applicant and target group need no mapping: canonical value equals source value.
+    $this->populateCanonicalField($fields, 'canonical_applicant_type', $applicant_sources);
+    $this->populateCanonicalField($fields, 'canonical_target_group', $target_group_sources);
   }
 
   /**
@@ -190,10 +161,15 @@ final class CanonicalFields extends FieldsProcessorPluginBase {
    *   The target canonical field name.
    * @param array $source_field_ids
    *   The source field to collect values from.
-   * @param array $map
+   * @param array|null $map
    *   The mapping array for transforming source values to canonical values.
    */
-  private function populateCanonicalField(array $fields, string $target_property, array $source_field_ids, array $map): void {
+  private function populateCanonicalField(
+    array $fields,
+    string $target_property,
+    array $source_field_ids,
+    ?array $map = NULL,
+  ): void {
     $target_fields = $this->getFieldsHelper()->filterForPropertyPath($fields, NULL, $target_property);
     if ($target_fields === []) {
       return;
@@ -259,6 +235,31 @@ final class CanonicalFields extends FieldsProcessorPluginBase {
     }
 
     return $values;
+  }
+
+  /**
+   * Build a self-mapping array.
+   *
+   * For example: ['a', 'b'] -> ['a' => 'a', 'b' => 'b'].
+   *
+   * @param array $values
+   *   The values to map.
+   *
+   * @return array
+   *   Mapped values.
+   */
+  private function selfMap(array $values): array {
+    $map = [];
+
+    foreach ($values as $value) {
+      $key = (string) $value;
+      if ($key === '') {
+        continue;
+      }
+      $map[$key] = $key;
+    }
+
+    return $map;
   }
 
 }
