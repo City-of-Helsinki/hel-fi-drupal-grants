@@ -74,7 +74,6 @@
   },
 
   "compensation.compensationsInfo.compensationArray.0": {
-    "#tip1": "tää voi olla valinta tai kovakoodattu lomakkeella 58",
     "datasource": "form_data",
     "source": "grant_info_step.subventions_section.subventions.0.0.value",
     "mapping_type": "default",
@@ -86,7 +85,6 @@
     }
   },
   "compensation.compensationsInfo.compensationArray.1": {
-    "#tip": "todo todo todo",
     "datasource": "form_data",
     "source": "grant_info_step.subventions_section.subventions.0.1.value",
     "mapping_type": "default",
@@ -156,7 +154,6 @@
   },
 
   "compensation.bankAccountArray.0": {
-    "#tip": "webform submission ID52 does not contain other bank information",
     "datasource": "form_data",
     "source": "applicant_info.bank_account.bank_account",
     "mapping_type": "default",
@@ -207,7 +204,6 @@
     }
   },
   "compensation.activitiesInfoArray.1": {
-    "#tip": "todo todo todo react palauttaa 'kyllä', pitää olla 'true', eli boolean stringinä",
     "datasource": "form_data",
     "source": "community_activity_step.community_activity_section.community_practices_business",
     "mapping_type": "default",

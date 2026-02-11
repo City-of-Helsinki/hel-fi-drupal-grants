@@ -200,7 +200,6 @@
     }
   },
   "compensation.applicationInfoArray.3": {
-    "#tip": "check ID52 webform submit.",
     "datasource": "custom",
     "source": "now",
     "mapping_type": "default",
@@ -240,6 +239,74 @@
     "data": {
       "ID": "status",
       "label": "Hakemuksen tila",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantOfficialsArray.0.0": {
+    "datasource": "custom",
+    "source": "selected_community_official.name",
+    "mapping_type": "default",
+    "data": {
+      "ID": "name",
+      "label": "Nimi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantOfficialsArray.0.1": {
+    "datasource": "custom",
+    "source": "selected_community_official.role",
+    "mapping_type": "default",
+    "data": {
+      "ID": "role",
+      "label": "Rooli",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.applicantOfficialsArray.0.2": {
+    "datasource": "custom",
+    "source": "selected_community_official.email",
+    "mapping_type": "default",
+    "data": {
+      "ID": "email",
+      "label": "Sähköposti",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.applicantOfficialsArray.0.3": {
+    "datasource": "custom",
+    "source": "selected_community_official.phone",
+    "mapping_type": "default",
+    "data": {
+      "ID": "phone",
+      "label": "Puhelinnumero",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.bankAccountArray.0": {
+    "datasource": "form_data",
+    "source": "applicant_info.bank_account.bank_account",
+    "mapping_type": "default",
+    "data": {
+      "ID": "accountNumber",
+      "label": "Tilinumero",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+
+  "compensation.attachmentsInfo.attachmentsArray.generalInfoArray.extraInfo": {
+    "#tip": "attachment extra info",
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.extra_info",
+    "mapping_type": "default",
+    "data": {
+      "ID": "extraInfo",
+      "label": "Lisäselvitys liitteistä",
       "value": "",
       "valueType": "string"
     }

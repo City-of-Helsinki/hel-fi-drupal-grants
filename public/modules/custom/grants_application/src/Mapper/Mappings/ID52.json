@@ -256,7 +256,6 @@
     }
   },
   "compensation.applicationInfoArray.3": {
-    "#tip": "check ID52 webform submit.",
     "datasource": "custom",
     "source": "now",
     "mapping_type": "default",
@@ -302,7 +301,6 @@
     }
   },
   "compensation.bankAccountArray.0": {
-    "#tip": "webform submission ID52 does not contain other bank information",
     "datasource": "form_data",
     "source": "applicant_info.bank_account.bank_account",
     "mapping_type": "default",
@@ -364,7 +362,6 @@
   },
 
   "compensation.activitiesInfoArray.0": {
-    "#tip": "!!! tää puuttuu react lähetyksestä",
     "datasource": "form_data",
     "source": "community_activity_step.community_activity_section.community_activity_description",
     "data": {
@@ -617,7 +614,6 @@
   },
 
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.0": {
-    "#tip": "todo double check: this used to be budget_step.income_section.applied_benefits",
     "datasource": "form_data",
     "source": "grant_info_step.subventions_section.subventions.1.value",
     "mapping_type": "default",
@@ -863,7 +859,6 @@
     }
   },
   "compensation.budgetInfo.costGroupsArrayStatic.3.costRowsArrayStatic.4": {
-    "#tip": "todo check supplies === operational materials? onko oikein",
     "datasource": "form_data",
     "source": "budget_step.other_materials_section.operational_materials",
     "mapping_type": "default",
@@ -1024,7 +1019,6 @@
     }
   },
   "compensation.budgetInfo.costGroupsArrayStatic.5.costGroupName": {
-    "#tip": "fix",
     "datasource": "form_data",
     "source": "",
     "mapping_type": "hardcoded",

@@ -79,7 +79,12 @@ const PreviewStep = ({
   const printableName = uiSchema?.['ui:options']?.printableName;
 
   return (
-    <Accordion heading={printableName || title?.toString()} headingLevel={3} initiallyOpen>
+    <Accordion
+      heading={printableName || title?.toString()}
+      headingLevel={3}
+      initiallyOpen
+      language={drupalSettings.path.currentLanguage || 'fi'}
+    >
       {properties.map((field) => field.content)}
     </Accordion>
   );
