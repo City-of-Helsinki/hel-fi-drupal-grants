@@ -438,7 +438,7 @@
     }
   },
   "compensation.senderInfoArray.3": {
-    "datasource": "user_profile",
+    "datasource": "user",
     "source": "sub",
     "mapping_type": "default",
     "data": {
@@ -449,7 +449,7 @@
     }
   },
   "compensation.senderInfoArray.4": {
-    "datasource": "user_profile",
+    "datasource": "user",
     "source": "email",
     "mapping_type": "default",
     "data": {
@@ -847,16 +847,18 @@
     "source": "",
     "mapping_type": "hardcoded",
     "data": {
-      "ID": "subventionType",
-      "label": "Avustuslaji",
-      "value": "1",
-      "valueType": "string"
+      "0": {
+        "ID": "subventionType",
+        "label": "Avustuslaji",
+        "value": "1",
+        "valueType": "string"
+      }
     }
   },
   "compensation.compensationInfo.compensationArray.0.1": {
     "datasource": "form_data",
     "source": "grant_info_step.subventions_section.subventions.0.1.value",
-    "mapping_type": "simple",
+    "mapping_type": "default",
     "data": {
       "ID": "amount",
       "label": "Euroa",
@@ -869,16 +871,18 @@
     "source": "",
     "mapping_type": "hardcoded",
     "data": {
-      "ID": "subventionType",
-      "label": "Avustuslaji",
-      "value": "5",
-      "valueType": "string"
+      "0": {
+        "ID": "subventionType",
+        "label": "Avustuslaji",
+        "value": "5",
+        "valueType": "string"
+      }
     }
   },
   "compensation.compensationInfo.compensationArray.1.1": {
     "datasource": "form_data",
     "source": "grant_info_step.subventions_section.subventions.1.1.value",
-    "mapping_type": "simple",
+    "mapping_type": "default",
     "data": {
       "ID": "amount",
       "label": "Euroa",
@@ -891,16 +895,18 @@
     "source": "",
     "mapping_type": "hardcoded",
     "data": {
-      "ID": "subventionType",
-      "label": "Avustuslaji",
-      "value": "9",
-      "valueType": "string"
+      "0": {
+        "ID": "subventionType",
+        "label": "Avustuslaji",
+        "value": "9",
+        "valueType": "string"
+      }
     }
   },
   "compensation.compensationInfo.compensationArray.2.1": {
     "datasource": "form_settings",
     "source": "grant_info_step.subventions_section.subventions.2.1.value",
-    "mapping_type": "simple",
+    "mapping_type": "default",
     "data": {
       "ID": "amount",
       "label": "Euroa",
