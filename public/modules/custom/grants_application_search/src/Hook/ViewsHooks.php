@@ -27,7 +27,7 @@ use Drupal\views\ViewExecutable;
  */
 class ViewsHooks {
 
-  use AutoWireTrait;
+  use AutowireTrait;
   use StringTranslationTrait;
 
   /**
