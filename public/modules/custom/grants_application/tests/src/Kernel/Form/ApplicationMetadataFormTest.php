@@ -50,7 +50,7 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     );
 
     // Override the real service so forms resolve this one.
-    $this->container->set(FormSettingsServiceInterface::class, $this->service);
+    $this->container->set(FormSettingsService::class, $this->service);
     \Drupal::setContainer($this->container);
   }
 
