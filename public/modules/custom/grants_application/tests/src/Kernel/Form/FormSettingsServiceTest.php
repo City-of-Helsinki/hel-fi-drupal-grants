@@ -7,6 +7,7 @@ namespace Drupal\Tests\grants_application\Kernel\Form;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 
 /**
@@ -19,7 +20,7 @@ final class FormSettingsServiceTest extends KernelTestBase {
   /**
    * The form settings service being tested.
    */
-  private FormSettingsService $service;
+  private FormSettingsServiceInterface $service;
 
   /**
    * The directory path containing test fixtures.
@@ -189,7 +190,7 @@ final class FormSettingsServiceTest extends KernelTestBase {
   /**
    * Helper to create the service with a forced interface language.
    */
-  private function createServiceWithLanguage(string $langcode): FormSettingsService {
+  private function createServiceWithLanguage(string $langcode): FormSettingsServiceInterface {
     $language = new Language(['id' => $langcode]);
 
     $languageManager = $this->createMock(LanguageManagerInterface::class);

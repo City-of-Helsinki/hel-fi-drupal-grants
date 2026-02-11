@@ -15,7 +15,7 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
 use Drupal\grants_profile\GrantsProfileService;
@@ -47,7 +47,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     protected ApplicationStatusService $applicationStatusService,
     protected ModuleHandlerInterface $moduleHandler,
     protected LoggerInterface $logger,
-    protected FormSettingsService $formSettingsService,
+    protected FormSettingsServiceInterface $formSettingsService,
     protected GrantsProfileService $grantsProfileService,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
@@ -68,7 +68,7 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('grants_handler.application_status_service'),
       $container->get('module_handler'),
       $container->get('logger.channel.grants_application'),
-      $container->get(FormSettingsService::class),
+      $container->get(FormSettingsServiceInterface::class),
       $container->get('grants_profile.service'),
     );
   }

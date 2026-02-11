@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Mapper;
 
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\helfi_atv\AtvDocument;
@@ -23,7 +23,7 @@ final class JsonMapperService {
 
   public function __construct(
     private readonly UserInformationService $userInformationService,
-    private readonly FormSettingsService $formSettingsService,
+    private readonly FormSettingsServiceInterface $formSettingsService,
   ) {
   }
 

@@ -7,7 +7,7 @@
 
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 
 /**
  * Implements hook_theme().
@@ -68,8 +68,8 @@ function grants_application_application_type_allowed_values(
   FieldStorageDefinitionInterface $definition,
   ?FieldableEntityInterface $entity,
 ): array {
-  /** @var \Drupal\grants_application\Form\FormSettingsService $form_settings_service */
-  $form_settings_service = \Drupal::service(FormSettingsService::class);
+  /** @var \Drupal\grants_application\Form\FormSettingsServiceInterface $form_settings_service */
+  $form_settings_service = \Drupal::service(FormSettingsServiceInterface::class);
   $types = $form_settings_service->getFormConfig('form_types');
   return $form_settings_service->getLabels($types);
 }
@@ -90,8 +90,8 @@ function grants_application_application_industry_allowed_values(
   FieldStorageDefinitionInterface $definition,
   ?FieldableEntityInterface $entity,
 ): array {
-  /** @var \Drupal\grants_application\Form\FormSettingsService $form_settings_service */
-  $form_settings_service = \Drupal::service(FormSettingsService::class);
+  /** @var \Drupal\grants_application\Form\FormSettingsServiceInterface $form_settings_service */
+  $form_settings_service = \Drupal::service(FormSettingsServiceInterface::class);
   $types = $form_settings_service->getFormConfig('form_configuration');
   return $form_settings_service->getLabels($types['application_industries']);
 }
@@ -112,8 +112,8 @@ function grants_application_applicant_types_allowed_values(
   FieldStorageDefinitionInterface $definition,
   ?FieldableEntityInterface $entity,
 ): array {
-  /** @var \Drupal\grants_application\Form\FormSettingsService $form_settings_service */
-  $form_settings_service = \Drupal::service(FormSettingsService::class);
+  /** @var \Drupal\grants_application\Form\FormSettingsServiceInterface $form_settings_service */
+  $form_settings_service = \Drupal::service(FormSettingsServiceInterface::class);
   $types = $form_settings_service->getFormConfig('form_configuration');
   return $form_settings_service->getLabels($types['applicant_types']);
 }
@@ -134,8 +134,8 @@ function grants_application_application_subvention_types_allowed_values(
   FieldStorageDefinitionInterface $definition,
   ?FieldableEntityInterface $entity,
 ): array {
-  /** @var \Drupal\grants_application\Form\FormSettingsService $form_settings_service */
-  $form_settings_service = \Drupal::service(FormSettingsService::class);
+  /** @var \Drupal\grants_application\Form\FormSettingsServiceInterface $form_settings_service */
+  $form_settings_service = \Drupal::service(FormSettingsServiceInterface::class);
   $types = $form_settings_service->getFormConfig('form_configuration');
   return $form_settings_service->getLabels($types['subvention_types']);
 }

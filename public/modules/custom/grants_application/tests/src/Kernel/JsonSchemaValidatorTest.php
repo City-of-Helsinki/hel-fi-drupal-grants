@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel;
 
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\JsonSchemaValidator;
 
 /**
@@ -52,7 +52,7 @@ final class JsonSchemaValidatorTest extends KernelTestBase {
    * Test ID58 with real schema and real test data.
    */
   public function testId58FormValidation(): void {
-    $settingsService = $this->container->get(FormSettingsService::class);
+    $settingsService = $this->container->get(FormSettingsServiceInterface::class);
     $schema = $settingsService->getFormSettings(58, 'liikunta_suunnistuskartta_avustu')->getSchema();
     $data = file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58.json');
 

@@ -20,7 +20,7 @@ final class ApplicationMetadataForm extends ContentEntityForm {
     EntityRepositoryInterface $entity_repository,
     EntityTypeBundleInfoInterface $entity_type_bundle_info,
     TimeInterface $time,
-    protected FormSettingsService $formSettingsService,
+    protected FormSettingsServiceInterface $formSettingsService,
   ) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
   }

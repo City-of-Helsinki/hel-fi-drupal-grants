@@ -6,6 +6,7 @@ namespace Drupal\Tests\grants_application\Kernel\Form;
 
 use Drupal\Core\Form\FormState;
 use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 
 /**
@@ -19,7 +20,7 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
   /**
    * The form settings service being tested.
    */
-  private FormSettingsService $service;
+  private FormSettingsServiceInterface $service;
 
   /**
    * The directory path containing test fixtures.
@@ -49,7 +50,7 @@ final class ApplicationMetadataFormTest extends KernelTestBase {
     );
 
     // Override the real service so forms resolve this one.
-    $this->container->set(FormSettingsService::class, $this->service);
+    $this->container->set(FormSettingsServiceInterface::class, $this->service);
     \Drupal::setContainer($this->container);
   }
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel;
 
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_application\User\UserInformationService;
@@ -36,7 +36,7 @@ final class JsonMapperServiceTest extends KernelTestBase {
     $mockUserInfoService->method('getUserData')->willReturn($testData['user']);
     $mockUserInfoService->method('getSelectedCompany')->willReturn($testData['company']);
     $mockUserInfoService->method('getUserProfileData')->willReturn($testData['user_profile']);
-    $settingsService = $this->container->get(FormSettingsService::class);
+    $settingsService = $this->container->get(FormSettingsServiceInterface::class);
     $mapperService = new JsonMapperService($mockUserInfoService, $settingsService);
 
     $formData = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58.json'), TRUE);

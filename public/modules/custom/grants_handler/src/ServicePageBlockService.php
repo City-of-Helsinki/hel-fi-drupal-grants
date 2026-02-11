@@ -9,11 +9,10 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\grants_application\Form\FormSettings;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\webform\Entity\Webform;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Provides the ServicePageBlockService service.
@@ -32,9 +31,7 @@ class ServicePageBlockService {
     protected RouteMatchInterface $routeMatch,
     protected GrantsProfileService $grantsProfileService,
     protected ModuleHandlerInterface $moduleHandler,
-    #[Autowire(service: 'Drupal\grants_application\Form\FormSettingsService')]
-    protected FormSettingsService $formSettingsService,
-    #[Autowire(service: 'logger.channel.grants_application')]
+    protected FormSettingsServiceInterface $formSettingsService,
     protected LoggerInterface $logger,
   ) {
     $this->currentNode = $this->routeMatch->getParameter('node');
