@@ -7,6 +7,7 @@ namespace Drupal\grants_mandate\Form;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
 use Drupal\grants_mandate\GrantsMandateRedirectService;
@@ -37,6 +38,7 @@ class ApplicantMandateForm extends FormBase {
     protected GrantsMandateService $grantsMandateService,
     #[Autowire(service: 'grants_mandate_redirect.service')]
     protected GrantsMandateRedirectService $redirectService,
+    protected LoggerChannelFactoryInterface $loggerChannelFactory,
   ) {
   }
 
@@ -209,6 +211,16 @@ organization or association', [], $tOpts),
 
         break;
     }
+
+    // UHF-12839 It could be possible that API returns something else than
+    // registered_community as "default".
+    $allowedTypes = ['registered_community', 'unregistered_community', 'private_person'];
+    if (!in_array($selectedType, $allowedTypes)) {
+      $this->loggerChannelFactory
+        ->get('grants_handler')
+        ->critical("User mandated as $selectedType which is not allowed type.");
+    }
+
     $form_state->setResponse($redirect);
   }
 
