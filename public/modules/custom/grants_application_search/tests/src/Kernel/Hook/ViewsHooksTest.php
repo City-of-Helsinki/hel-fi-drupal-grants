@@ -197,7 +197,7 @@ final class ViewsHooksTest extends KernelTestBase {
   }
 
   /**
-   * Tests preprocess_views_view_fields() hook applies overrides and unsets fields.
+   * Tests preprocess_views_view_fields() hook.
    */
   public function testPreprocessViewsViewFieldsAppliesOverridesAndUnsetsFields(): void {
     $view = $this->createMock(ViewExecutable::class);
