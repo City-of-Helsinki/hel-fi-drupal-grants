@@ -4,7 +4,8 @@ description: 'Provides modifications to the application search.'
 package: 'helfi'
 core_version_requirement: ^10 || ^11
 dependencies:
-  - 'webform:webform'
+  - grants_application:grants_application
+  - webform:webform
 
 'interface translation project': grants_application_search
 'interface translation server pattern': modules/custom/grants_application_search/translations/%language.po
