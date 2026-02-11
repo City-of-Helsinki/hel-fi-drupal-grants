@@ -174,12 +174,8 @@ final class ViewsHooksTest extends KernelTestBase {
     }
 
     // Create test rows: one without react form, one with.
-    $row_webform = new ResultRow();
-    $row_webform->_test_has_react_form = FALSE;
-
-    $row_react = new ResultRow();
-    $row_react->_test_has_react_form = TRUE;
-
+    $row_webform = new ResultRow(['_test_has_react_form' => FALSE]);
+    $row_react = new ResultRow(['_test_has_react_form' => TRUE]);
     $view->result = [$row_webform, $row_react];
 
     // Execute the hook.
@@ -192,8 +188,11 @@ final class ViewsHooksTest extends KernelTestBase {
     $this->assertArrayNotHasKey('field_react_form', $view->field);
 
     // Second row: react form present => overrides should be populated.
+    // @phpstan-ignore property.notFound
     $this->assertInstanceOf(MarkupInterface::class, $row_react->_target_group_override);
+    // @phpstan-ignore property.notFound
     $this->assertInstanceOf(MarkupInterface::class, $row_react->_subvention_type_override);
+    // @phpstan-ignore property.notFound
     $this->assertInstanceOf(MarkupInterface::class, $row_react->_application_period_override);
   }
 
@@ -205,10 +204,11 @@ final class ViewsHooksTest extends KernelTestBase {
     $view->method('id')->willReturn('application_search_search_api');
 
     // Create test row with override data.
-    $row = new ResultRow();
-    $row->_target_group_override = Markup::create('<div>target</div>');
-    $row->_subvention_type_override = Markup::create('<div>subvention</div>');
-    $row->_application_period_override = Markup::create('<div>period</div>');
+    $row = new ResultRow([
+      '_target_group_override' => Markup::create('<div>target</div>'),
+      '_subvention_type_override' => Markup::create('<div>subvention</div>'),
+      '_application_period_override' => Markup::create('<div>period</div>'),
+    ]);
 
     // Set up template variables with fields.
     $variables = [
@@ -229,8 +229,11 @@ final class ViewsHooksTest extends KernelTestBase {
     $this->sut->preprocessViewsViewFields($variables);
 
     // Verify overrides were applied.
+    // @phpstan-ignore property.notFound
     $this->assertSame((string) $row->_target_group_override, (string) $variables['fields']['field_target_group']->content);
+    // @phpstan-ignore property.notFound
     $this->assertSame((string) $row->_subvention_type_override, (string) $variables['fields']['application_subvention_type']->content);
+    // @phpstan-ignore property.notFound
     $this->assertSame((string) $row->_application_period_override, (string) $variables['fields']['field_application_period']->content);
 
     // Verify webform subvention field was removed when react override exists.
