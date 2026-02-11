@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Form;
 
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\grants_application\Entity\ApplicationMetadata;
+
 /**
  * Interface for form settings service.
  *
  * Provides methods to retrieve and manage form configurations and settings.
  */
-interface FormSettingsServiceInterface {
+interface FormSettingsServiceInterface extends ContainerFactoryPluginInterface {
 
   /**
    * Retrieves form settings for a specific form type.
@@ -36,6 +39,19 @@ interface FormSettingsServiceInterface {
    *   When the application_metadata entity type is not valid.
    */
   public function getFormSettings(int|string $form_type_id, ?string $identifier): FormSettings;
+
+  /**
+   * Get the metadata object related to the settings.
+   *
+   * @param int|string $application_type_id
+   *   The application type id.
+   * @param string|null $identifier
+   *   The form identifier.
+   *
+   * @return \Drupal\grants_application\Entity\ApplicationMetadata|null
+   *   The application metadata object.
+   */
+  public function getFormSettingsMetadata(int|string $application_type_id, ?string $identifier = NULL): ?ApplicationMetadata;
 
   /**
    * Checks if the application is open.
@@ -75,6 +91,30 @@ interface FormSettingsServiceInterface {
    * @see \Drupal\grants_application\Form\FormSettingsService::loadApplicationConfig()
    */
   public function getFormConfig(string $configName): array;
+
+  /**
+   * Get form configuration by application type id.
+   *
+   * @param int|string $id
+   *   The application type id.
+   * @param string $identifier
+   *   The identifier.
+   *
+   * @return array|null
+   *   The form configuration.
+   */
+  public function getFormConfigById(int|string $id, string $identifier): ?array;
+
+  /**
+   * Get application labels.
+   *
+   * @param array $section
+   *   The section from configuration.
+   *
+   * @return array|string|null
+   *   The label or array of labels.
+   */
+  public function getApplicationLabels(array $section): array|string|null;
 
   /**
    * Retrieves translated labels from a configuration section.

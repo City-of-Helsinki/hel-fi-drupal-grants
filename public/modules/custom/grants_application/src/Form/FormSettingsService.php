@@ -9,6 +9,7 @@ use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\grants_application\Entity\ApplicationMetadata;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * A class for retrieving form specific settings.
@@ -44,6 +45,26 @@ final class FormSettingsService implements FormSettingsServiceInterface {
     if (json_last_error() !== JSON_ERROR_NONE) {
       throw new \RuntimeException(sprintf('Invalid JSON in %s: %s', $formTypesPath, json_last_error_msg()));
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id = '', $plugin_definition = NULL) {
+    $formConfigDir = $container->hasParameter('grants_application.form_config_dir')
+      ? (string) $container->getParameter('grants_application.form_config_dir')
+      : NULL;
+    $fixturesDir = $container->hasParameter('grants_application.fixtures_dir')
+      ? (string) $container->getParameter('grants_application.fixtures_dir')
+      : NULL;
+
+    return new static(
+      $container->get('entity_type.manager'),
+      $container->get('extension.list.module'),
+      $container->get('language_manager'),
+      $formConfigDir,
+      $fixturesDir,
+    );
   }
 
   /**
@@ -91,15 +112,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
   }
 
   /**
-   * Get the metadata object related to the settings.
-   *
-   * @param int|string $application_type_id
-   *   The application type id.
-   * @param string|null $identifier
-   *   The form identifier.
-   *
-   * @return \Drupal\grants_application\Entity\ApplicationMetadata|null
-   *   The application metadata object.
+   * {@inheritdoc}
    */
   public function getFormSettingsMetadata(int|string $application_type_id, ?string $identifier = NULL): ?ApplicationMetadata {
     $storage = $this->entityTypeManager->getStorage('application_metadata');
@@ -129,15 +142,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
   }
 
   /**
-   * Get form configuration by application type id.
-   *
-   * @param int|string $id
-   *   The application type id.
-   * @param string $identifier
-   *   The identifier.
-   *
-   * @return array
-   *   The form configuration.
+   * {@inheritdoc}
    */
   public function getFormConfigById(int|string $id, string $identifier): ?array {
     return array_find(
@@ -147,13 +152,7 @@ final class FormSettingsService implements FormSettingsServiceInterface {
   }
 
   /**
-   * Get application labels.
-   *
-   * @param array $section
-   *   The section from configuration.
-   *
-   * @return array|string|null
-   *   The label or array of labels.
+   * {@inheritdoc}
    */
   public function getApplicationLabels(array $section): array|string|null {
     $language = $this->languageManager
