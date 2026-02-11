@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\Tests\UnitTestCase;
 
@@ -28,7 +29,7 @@ final class FormSettingsServiceLabelsTest extends UnitTestCase {
    *   A configured FormSettingsService instance for testing.
    */
   private function buildService(string $langcode): FormSettingsServiceInterface {
-    $reflectionClass = new \ReflectionClass(FormSettingsServiceInterface::class);
+    $reflectionClass = new \ReflectionClass(FormSettingsService::class);
     /** @var \Drupal\grants_application\Form\FormSettingsServiceInterface $service */
     $service = $reflectionClass->newInstanceWithoutConstructor();
 
