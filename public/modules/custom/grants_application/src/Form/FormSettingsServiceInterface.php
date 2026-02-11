@@ -38,7 +38,7 @@ interface FormSettingsServiceInterface extends ContainerFactoryPluginInterface {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    *   When the application_metadata entity type is not valid.
    */
-  public function getFormSettings(int|string $form_type_id, ?string $identifier): FormSettings;
+  public function getFormSettings(int|string $form_type_id, ?string $identifier = NULL): FormSettings;
 
   /**
    * Get the metadata object related to the settings.
