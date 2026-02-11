@@ -166,7 +166,7 @@
   },
   "compensation.applicationInfoArray.0": {
     "datasource": "form_settings",
-    "source": "settings.application_type",
+    "source": "application_type",
     "mapping_type": "default",
     "data": {
       "ID": "applicationType",
@@ -177,7 +177,7 @@
   },
   "compensation.applicationInfoArray.1": {
     "datasource": "form_settings",
-    "source": "settings.application_type_id",
+    "source": "application_type_id",
     "mapping_type": "default",
     "data": {
       "ID": "applicationTypeID",
@@ -321,6 +321,14 @@
       "label": "Kuvaus tiloihin liittyvästä tuesta"
     }
   },
+  "compensation.additionalInformation": {
+    "datasource": "form_data",
+    "source": "attachments_step.additional_info_section.additional_info",
+    "mapping_type": "simple",
+    "data": {
+      "additionalInformation": ""
+    }
+  },
   "compensation.activitiesInfoArray.0": {
     "datasource": "form_data",
     "source": "grant_info_step.purpose_section.purpose",
@@ -358,7 +366,12 @@
     "datasource": "form_data",
     "source": "community_activity_step.community_members_section.members_fieldset.members_applicant_person_global",
     "mapping_type": "default",
-    "data": {}
+    "data": {
+      "ID": "membersApplicantPersonGlobal",
+      "value": "",
+      "valueType": "string",
+      "label": "Henkilöjäseniä yhteensä"
+    }
   },
   "compensation.activitiesInfoArray.4": {
     "datasource": "form_data",
@@ -545,42 +558,12 @@
     "source": "attachments_step.attachments_section.community_rules.community_rules_file",
     "mapping_type": "file",
     "data": {
-      "description": {
-        "ID": "description",
-        "value": "Yhteisön säännöt",
-        "valueType": "string",
-        "label": "Liitteen kuvaus"
-      },
-      "fileName": {
-        "ID": "fileName",
-        "value": "",
-        "valueType": "string",
-        "label": "Tiedostonimi"
-      },
-      "fileType": {
-        "ID": "fileType",
-        "value": "7",
-        "valueType": "int",
-        "label": "fileType"
-      },
-      "integrationID": {
-        "ID": "integrationID",
-        "value": "",
-        "valueType": "string",
-        "label": "integrationID"
-      },
-      "isDeliveredLater": {
-        "ID": "isDeliveredLater",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite toimitetaan myöhemmin"
-      },
-      "isIncludedInOtherFile": {
-        "ID": "isIncludedInOtherFile",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
-      }
+      "description": {"ID": "description","value": "Yhteisön säännöt","valueType": "string","label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName","value": "","valueType": "string","label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType","value": "7","valueType": "int","label": "fileType"},
+      "integrationID": {"ID": "integrationID","value": "","valueType": "string","label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater","value": "false","valueType": "bool","label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.1.0": {
@@ -588,42 +571,12 @@
     "source": "attachments_step.attachments_section.confirmed_financial_statements.confirmed_financial_statements_file",
     "mapping_type": "file",
     "data": {
-      "description": {
-        "ID": "description",
-        "value": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)",
-        "valueType": "string",
-        "label": "Liitteen kuvaus"
-      },
-      "fileName": {
-        "ID": "fileName",
-        "value": "",
-        "valueType": "string",
-        "label": "Tiedostonimi"
-      },
-      "fileType": {
-        "ID": "fileType",
-        "value": "43",
-        "valueType": "int",
-        "label": "fileType"
-      },
-      "integrationID": {
-        "ID": "integrationID",
-        "value": "",
-        "valueType": "string",
-        "label": "integrationID"
-      },
-      "isDeliveredLater": {
-        "ID": "isDeliveredLater",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite toimitetaan myöhemmin"
-      },
-      "isIncludedInOtherFile": {
-        "ID": "isIncludedInOtherFile",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
-      }
+      "description": {"ID": "description","value": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)","valueType": "string","label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName","value": "","valueType": "string","label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType","value": "43","valueType": "int","label": "fileType"},
+      "integrationID": {"ID": "integrationID","value": "","valueType": "string","label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater","value": "false","valueType": "bool","label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.2.0": {
@@ -631,42 +584,12 @@
     "source": "attachments_step.attachments_section.confirmed_annual_report.confirmed_annual_report_file",
     "mapping_type": "file",
     "data": {
-      "description": {
-        "ID": "description",
-        "value": "Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)",
-        "valueType": "string",
-        "label": "Liitteen kuvaus"
-      },
-      "fileName": {
-        "ID": "fileName",
-        "value": "",
-        "valueType": "string",
-        "label": "Tiedostonimi"
-      },
-      "fileType": {
-        "ID": "fileType",
-        "value": "4",
-        "valueType": "int",
-        "label": "fileType"
-      },
-      "integrationID": {
-        "ID": "integrationID",
-        "value": "",
-        "valueType": "string",
-        "label": "integrationID"
-      },
-      "isDeliveredLater": {
-        "ID": "isDeliveredLater",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite toimitetaan myöhemmin"
-      },
-      "isIncludedInOtherFile": {
-        "ID": "isIncludedInOtherFile",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
-      }
+      "description": {"ID": "description","value": "Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)","valueType": "string","label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName","value": "","valueType": "string","label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType","value": "4","valueType": "int","label": "fileType"},
+      "integrationID": {"ID": "integrationID","value": "","valueType": "string","label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater","value": "false","valueType": "bool","label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.3.0": {
@@ -674,42 +597,12 @@
     "source": "attachments_step.attachments_section.confirmed_audit_report.confirmed_audit_report_file",
     "mapping_type": "file",
     "data": {
-      "description": {
-        "ID": "description",
-        "value": "Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)",
-        "valueType": "string",
-        "label": "Liitteen kuvaus"
-      },
-      "fileName": {
-        "ID": "fileName",
-        "value": "",
-        "valueType": "string",
-        "label": "Tiedostonimi"
-      },
-      "fileType": {
-        "ID": "fileType",
-        "value": "5",
-        "valueType": "int",
-        "label": "fileType"
-      },
-      "integrationID": {
-        "ID": "integrationID",
-        "value": "",
-        "valueType": "string",
-        "label": "integrationID"
-      },
-      "isDeliveredLater": {
-        "ID": "isDeliveredLater",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite toimitetaan myöhemmin"
-      },
-      "isIncludedInOtherFile": {
-        "ID": "isIncludedInOtherFile",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
-      }
+      "description": {"ID": "description","value": "Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)","valueType": "string","label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName","value": "","valueType": "string","label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType","value": "5","valueType": "int","label": "fileType"},
+      "integrationID": {"ID": "integrationID","value": "","valueType": "string","label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater","value": "false","valueType": "bool","label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.4.0": {
@@ -717,42 +610,12 @@
     "source": "attachments_step.attachments_section.minutes_of_the_annual_meeting.minutes_of_the_annual_meeting_file",
     "mapping_type": "file",
     "data": {
-      "description": {
-        "ID": "description",
-        "value": "Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös",
-        "valueType": "string",
-        "label": "Liitteen kuvaus"
-      },
-      "fileName": {
-        "ID": "fileName",
-        "value": "",
-        "valueType": "string",
-        "label": "Tiedostonimi"
-      },
-      "fileType": {
-        "ID": "fileType",
-        "value": "8",
-        "valueType": "int",
-        "label": "fileType"
-      },
-      "integrationID": {
-        "ID": "integrationID",
-        "value": "",
-        "valueType": "string",
-        "label": "integrationID"
-      },
-      "isDeliveredLater": {
-        "ID": "isDeliveredLater",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite toimitetaan myöhemmin"
-      },
-      "isIncludedInOtherFile": {
-        "ID": "isIncludedInOtherFile",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
-      }
+      "description": {"ID": "description","value": "Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös","valueType": "string","label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName","value": "","valueType": "string","label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType","value": "8","valueType": "int","label": "fileType"},
+      "integrationID": {"ID": "integrationID","value": "","valueType": "string","label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater","value": "false","valueType": "bool","label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.5.0": {
@@ -760,42 +623,12 @@
     "source": "attachments_step.attachments_section.action_plan.action_plan_file",
     "mapping_type": "file",
     "data": {
-      "description": {
-        "ID": "description",
-        "value": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)",
-        "valueType": "string",
-        "label": "Liitteen kuvaus"
-      },
-      "fileName": {
-        "ID": "fileName",
-        "value": "",
-        "valueType": "string",
-        "label": "Tiedostonimi"
-      },
-      "fileType": {
-        "ID": "fileType",
-        "value": "1",
-        "valueType": "int",
-        "label": "fileType"
-      },
-      "integrationID": {
-        "ID": "integrationID",
-        "value": "",
-        "valueType": "string",
-        "label": "integrationID"
-      },
-      "isDeliveredLater": {
-        "ID": "isDeliveredLater",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite toimitetaan myöhemmin"
-      },
-      "isIncludedInOtherFile": {
-        "ID": "isIncludedInOtherFile",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
-      }
+      "description": {"ID": "description","value": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)","valueType": "string","label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName","value": "","valueType": "string","label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType","value": "1","valueType": "int","label": "fileType"},
+      "integrationID": {"ID": "integrationID","value": "","valueType": "string","label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater","value": "false","valueType": "bool","label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
   "attachmentsInfo.attachmentsArray.6.0": {
@@ -803,42 +636,12 @@
     "source": "attachments_step.attachments_section.budget.budget_file",
     "mapping_type": "file",
     "data": {
-      "description": {
-        "ID": "description",
-        "value": "Talousarvio (sille vuodelle jolle haet avustusta)",
-        "valueType": "string",
-        "label": "Liitteen kuvaus"
-      },
-      "fileName": {
-        "ID": "fileName",
-        "value": "",
-        "valueType": "string",
-        "label": "Tiedostonimi"
-      },
-      "fileType": {
-        "ID": "fileType",
-        "value": "2",
-        "valueType": "int",
-        "label": "fileType"
-      },
-      "integrationID": {
-        "ID": "integrationID",
-        "value": "",
-        "valueType": "string",
-        "label": "integrationID"
-      },
-      "isDeliveredLater": {
-        "ID": "isDeliveredLater",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite toimitetaan myöhemmin"
-      },
-      "isIncludedInOtherFile": {
-        "ID": "isIncludedInOtherFile",
-        "value": "false",
-        "valueType": "bool",
-        "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"
-      }
+      "description": {"ID": "description","value": "Talousarvio (sille vuodelle jolle haet avustusta)","valueType": "string","label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName","value": "","valueType": "string","label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType","value": "2","valueType": "int","label": "fileType"},
+      "integrationID": {"ID": "integrationID","value": "","valueType": "string","label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater","value": "false","valueType": "bool","label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
 
@@ -904,7 +707,7 @@
     }
   },
   "compensation.compensationInfo.compensationArray.2.1": {
-    "datasource": "form_settings",
+    "datasource": "form_data",
     "source": "grant_info_step.subventions_section.subventions.2.1.value",
     "mapping_type": "default",
     "data": {
