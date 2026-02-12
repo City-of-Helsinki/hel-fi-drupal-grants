@@ -1,32 +1,68 @@
 {
   "en": {
     "translation": {
+      "antiracism_measures.description": "Answer only if the project includes the set of measures \"developing anti-racism measures.\" At least one optional set of measures must be implemented in the project.",
+      "antiracism_measures.title": "Are anti-racism measures developed in the project? If yes, how?",
+      "equality_nondiscrimination_responsibility_plan.description": "Answer only if the project includes the measure set \"drawing up an equality, non-discrimination or responsibility plan and implementing the measures\". At least one optional set of measures must be implemented in the project.",
+      "equality_nondiscrimination_responsibility_plan.title": "Will an equality, non-discrimination, or responsibility plan be prepared in the project, and will its measures be implemented? If yes, how?",
       "form_title": "Grant application for promoting safer club activities",
+      "project_objectives.description": "What are the concrete objectives of the project?",
       "project_objectives.title": "Project objectives",
       "other_applied_compensations_section.description": "Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet. Indicate only the grants applied for the same purpose of use, not all grants your organization has applied for.",
       "other_compensations_section.description": "Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years. Indicate only the grants awarded for the same purpose of use, not all grants awarded to your organization.",
+      "project_increase_competence.description": "Answer only if the project includes the set of measures \"developing the know-how of coaches, instructors and other club staff from the perspective of safer club activities\". At least one optional set of measures must be implemented in the project.",
+      "project_increase_competence.title": "Does the project improve the competence of coaches, instructors, and other club staff? If yes, how?",
+      "project_increase_safety_inclusion.description": "Answer only if the project includes the set of measures \"increasing the safety and participation of children and young people in the club's activities\". At least one optional set of measures must be implemented in the project.",
+      "project_increase_safety_inclusion.title": "Does the project increase the safety and inclusion of children and young people? If yes, how?",
       "reason_for_grant_application.title": "Why are you applying for a grant?",
-      "required_attachments_help.value": "Attachments required for the application: the statutes of the association, the bank’s notice of the account holder or a copy of a bank statement, an extract from the Register of Associations, the latest approved financial statements, annual report and financial or operational audit report, and the action plan and budget for the application year."
+      "required_attachments_help.value": "Attachments required for the application: the statutes of the association, the bank's notice of the account holder or a copy of a bank statement, an extract from the Register of Associations, the latest approved financial statements, annual report and financial or operational audit report, and the action plan and budget for the application year.",
+      "safer_club_practices.description": "What are the concrete measures of the project? Development of safer club practices is a mandatory set of measures.",
+      "safer_club_practices.title": "How will safer club practices be developed in the project?",
+      "safety_practices.title": "What safety-related practices are already in place in the association, or what measures have already been implemented?"
     }
   },
   "fi": {
     "translation": {
+      "antiracism_measures.description": "Vastaa vain, jos hankkeessa toteutetaan toimenpidekokonaisuus \"rasisminvastaisten toimenpiteiden kehittäminen\". Hankkeessa on toteutettava vähintään yksi valinnaisista toimenpidekokonaisuuksista.",
+      "antiracism_measures.title": "Kehitetäänkö hankkeessa rasisminvastaisia toimenpiteitä? Jos kyllä, miten?",
+      "equality_nondiscrimination_responsibility_plan.description": "Vastaa vain, jos hankkeessa toteutetaan toimenpidekokonaisuus \"yhdenvertaisuus-, tasa-arvo- tai vastuullisuussuunnitelman laatiminen ja toimenpiteiden toteuttaminen\". Hankkeessa on toteutettava vähintään yksi valinnaisista toimenpidekokonaisuuksista.",
+      "equality_nondiscrimination_responsibility_plan.title": "Laaditaanko hankkeessa yhdenvertaisuus-, tasa-arvo- tai vastuullisuussuunnitelma ja toteutetaanko sen toimenpiteitä? Jos kyllä, miten?",
       "form_title": "Turvallisemman seuratoiminnan edistämisen avustushakemus",
+      "project_objectives.description": "Mitkä ovat hankkeen konkreettiset tavoitteet?",
       "project_objectives.title": "Hankkeen tavoitteet",
       "other_applied_compensations_section.description": "Ilmoita tähän ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eikä päätöstä ole vielä tehty. Ilmoita vain samaan käyttötarkoitukseen haetut avustukset, ei kaikkia organisaationne hakemia avustuksia.",
       "other_compensations_section.description": "Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisenä verovuotena. Ilmoita vain samaan käyttötarkoitukseen myönnetyt avustukset, ei kaikkia organisaatiollenne myönnettyjä avustuksia.",
+      "project_increase_competence.description": "Vastaa vain, jos hankkeessa toteutetaan toimenpidekokonaisuus \"valmentajien, ohjaajien ja seuran muun henkilöstön osaamisen kehittäminen turvallisemman seuratoiminnan näkökulmasta\". Hankkeessa on toteutettava vähintään yksi valinnaisista toimenpidekokonaisuuksista.",
+      "project_increase_competence.title": "Lisääkö hanke valmentajien, ohjaajien ja seuran muun henkilöstön osaamista? Jos kyllä, miten?",
+      "project_increase_safety_inclusion.description": "Vastaa vain, jos hankkeessa toteutetaan toimenpidekokonaisuus \"lasten ja nuorten turvallisuuden ja osallisuuden lisääminen yhdistyksen toiminnassa\". Hankkeessa on toteutettava vähintään yksi valinnaisista toimenpidekokonaisuuksista.",
+      "project_increase_safety_inclusion.title": "Lisääkö hanke lasten ja nuorten turvallisuutta ja osallisuutta? Jos kyllä, miten?",
       "reason_for_grant_application.title": "Miksi haette avustusta?",
-      "required_attachments_help.value": "Hakemuksen liitteeksi tarvitaan yhdistyksen säännöt, pankin ilmoitus tilinomistajasta tai tiliotekopio, ote yhdistysrekisteristä, viimeisimmät vahvistetut tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä hakuvuotta koskeva toimintasuunnitelma ja talousarvio."
+      "required_attachments_help.value": "Hakemuksen liitteeksi tarvitaan yhdistyksen säännöt, pankin ilmoitus tilinomistajasta tai tiliotekopio, ote yhdistysrekisteristä, viimeisimmät vahvistetut tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä hakuvuotta koskeva toimintasuunnitelma ja talousarvio.",
+      "safer_club_practices.description": "Mitkä ovat hankkeen konkreettiset toimenpiteet? Turvallisemman seuran toimintamallien kehittäminen on pakollinen toimenpidekokonaisuus.",
+      "safer_club_practices.title": "Millä tavoin hankkeessa kehitetään turvallisemman seuran toimintamalleja?",
+      "safety_practices.title": "Millaisia turvallisuuteen liittyviä toimintamalleja yhdistyksessä on jo käytössä tai millaisia toimenpiteitä on jo toteutettu?"
     }
   },
   "sv": {
     "translation": {
+      "antiracism_measures.description": "Svara endast om projektet genomför åtgärdshelheten \"utveckla åtgärder mot rasism\". Projektet måste genomföra minst en valfri åtgärdshelhet.",
+      "antiracism_measures.title": "Utvecklas antirasistiska åtgärder inom projektet? Om ja, hur?",
+      "equality_nondiscrimination_responsibility_plan.description": "Svara endast om projektet genomför åtgärdshelheten \"upprätta en plan för likabehandling, jämlikhet eller ansvar och genomföra åtgärderna i den\". Projektet måste genomföra minst en valfri åtgärdshelhet.",
+      "equality_nondiscrimination_responsibility_plan.title": "Upprättas en plan för likabehandling, jämlikhet eller ansvar inom projektet och genomförs dess åtgärder? Om ja, hur?",
       "form_title": "Ansökan om understöd för främjande av en tryggare föreningsverksamhet",
+      "project_objectives.description": "Vilka är projektets konkreta mål?",
       "project_objectives.title": "Projektets mål",
       "other_applied_compensations_section.description": "Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, men beslut har ännu inte fattats. Ange endast de understöd som sökts för samma användningsändamål, inte alla understöd som er organisation har ansökt om.",
       "other_compensations_section.description": "Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren. Ange endast de understöd som beviljats för samma användningsändamål, inte alla understöd som beviljats er organisation.",
+      "project_increase_competence.description": "Svara endast om projektet genomför åtgärdshelheten \"utveckla kompetensen hos tränare, instruktörer och övrig personal ur perspektivet för en tryggare föreningsverksamhet\". Projektet måste genomföra minst en valfri åtgärdshelhet.",
+      "project_increase_competence.title": "Utvecklar projektet tränarnas, ledarnas och övrig personalens kompetens? Om ja, hur?",
+      "project_increase_safety_inclusion.description": "Svara endast om projektet genomför åtgärdshelheten \"öka barnens och ungdomarnas säkerhet samt delaktighet i föreningens verksamhet\". Projektet måste genomföra minst en valfri åtgärdshelhet.",
+      "project_increase_safety_inclusion.title": "Ökar projektet barns och ungas säkerhet och delaktighet? Om ja, hur?",
       "reason_for_grant_application.title": "Varför ansöker ni om understöd?",
-      "required_attachments_help.value": "Bilagor som krävs för ansökan: föreningens stadgar, ett meddelande från banken om kontoinnehavaren eller en kopia av ett kontoutdrag, ett utdrag ur föreningsregistret, de senast fastställda bokslutet, verksamhetsberättelsen och revisions- eller verksamhetsgranskningsberättelsen samt verksamhetsplan och budget för ansökningsåret."
+      "required_attachments_help.value": "Bilagor som krävs för ansökan: föreningens stadgar, ett meddelande från banken om kontoinnehavaren eller en kopia av ett kontoutdrag, ett utdrag ur föreningsregistret, de senast fastställda bokslutet, verksamhetsberättelsen och revisions- eller verksamhetsgranskningsberättelsen samt verksamhetsplan och budget för ansökningsåret.",
+      "safer_club_practices.description": "Vilka är projektets konkreta åtgärder? Utveckling av verksamhetsmodeller för en tryggare förening är en obligatorisk åtgärdshelhet.",
+      "safer_club_practices.title": "Hur utvecklas verksamhetsmodeller för en tryggare förening inom projektet?",
+      "safety_practices.title": "Vilka säkerhetsrelaterade verksamhetsmodeller används redan i föreningen eller vilka åtgärder har redan genomförts?"
     }
   }
 }

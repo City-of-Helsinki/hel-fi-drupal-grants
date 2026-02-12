@@ -291,10 +291,45 @@
             },
             "project_objectives": {
               "title": "project_objectives.title",
+              "type": "string",
+              "description": "project_objectives.description"
+            },
+            "safety_practices": {
+              "title": "safety_practices.title",
               "type": "string"
+            },
+            "safer_club_practices": {
+              "title": "safer_club_practices.title",
+              "type": "string",
+              "description": "safer_club_practices.description"
+            },
+            "project_increase_safety_inclusion": {
+              "title": "project_increase_safety_inclusion.title",
+              "type": "string",
+              "description": "project_increase_safety_inclusion.description"
+            },
+            "project_increase_competence": {
+              "title": "project_increase_competence.title",
+              "type": "string",
+              "description": "project_increase_competence.description"
+            },
+            "antiracism_measures": {
+              "title": "antiracism_measures.title",
+              "type": "string",
+              "description": "antiracism_measures.description"
+            },
+            "equality_nondiscrimination_responsibility_plan": {
+              "title": "equality_nondiscrimination_responsibility_plan.title",
+              "type": "string",
+              "description": "equality_nondiscrimination_responsibility_plan.description"
             }
           },
-          "required": ["reason_for_grant_application", "project_objectives"]
+          "required": [
+            "reason_for_grant_application",
+            "project_objectives",
+            "safety_practices",
+            "safer_club_practices"
+          ]
         }
       }
     },

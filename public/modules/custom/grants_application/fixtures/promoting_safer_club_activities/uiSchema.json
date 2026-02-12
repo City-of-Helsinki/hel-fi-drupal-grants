@@ -61,6 +61,30 @@
       "project_objectives": {
         "ui:widget": "textarea",
         "misc:max-length": 2000
+      },
+      "safety_practices": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2000
+      },
+      "safer_club_practices": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2000
+      },
+      "project_increase_safety_inclusion": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2000
+      },
+      "project_increase_competence": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2000
+      },
+      "antiracism_measures": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2000
+      },
+      "equality_nondiscrimination_responsibility_plan": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2000
       }
     }
   },
