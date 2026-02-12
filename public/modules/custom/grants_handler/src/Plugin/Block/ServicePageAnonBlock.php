@@ -20,7 +20,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_handler\ApplicationStatusServiceInterface;
 use Drupal\grants_handler\ServicePageBlockService;
 use Drupal\grants_profile\GrantsProfileService;
@@ -57,7 +57,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
     protected GrantsProfileService $grantsProfileService,
     protected ModuleHandlerInterface $moduleHandler,
     protected LoggerChannelInterface $logger,
-    protected FormSettingsService $formSettingsService,
+    protected FormSettingsServiceInterface $formSettingsService,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
@@ -72,14 +72,14 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       $plugin_definition,
       $container->get('current_route_match'),
       $container->get('current_user'),
-      $container->get('grants_handler.service_page_block_service'),
+      $container->get(ServicePageBlockService::class),
       $container->get('grants_handler.application_status_service'),
       $container->get('cache.default'),
       $container->get('datetime.time'),
       $container->get('grants_profile.service'),
       $container->get('module_handler'),
       $container->get('logger.channel.grants_application'),
-      $container->get(FormSettingsService::class),
+      $container->get(FormSettingsServiceInterface::class),
     );
   }
 

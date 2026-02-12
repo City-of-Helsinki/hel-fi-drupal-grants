@@ -164,7 +164,7 @@ elements: |
     '#multiple__add_more_button_label': 'Add new expense'
     '#multiple__item_label': 'expense'
   lisatiedot_ja_liitteet:
-    '#title': '5. Additional information and appendices'
+    '#title': '5. Additional information and attachments'
   lisatietoja_hakemukseen_liittyen:
     '#title': 'Additional information concerning the application'
   additional_information:
@@ -172,7 +172,7 @@ elements: |
     '#help': 'If necessary, you can write additional information or other justifications related to the application.'
     '#counter_maximum_message': '%d/5000 characters remaining'
   liitteet:
-    '#title': Appendices
+    '#title': Attachments
   attachments_info:
     '#markup': |-
       <p>All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.

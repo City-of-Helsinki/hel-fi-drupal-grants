@@ -4,14 +4,15 @@ namespace Drupal\grants_handler;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
-use Drupal\Core\Routing\CurrentRouteMatch;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\grants_application\Form\FormSettings;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_profile\GrantsProfileService;
 use Drupal\webform\Entity\Webform;
+use Psr\Log\LoggerInterface;
 
 /**
  * Provides the ServicePageBlockService service.
@@ -25,24 +26,13 @@ class ServicePageBlockService {
    */
   protected $currentNode;
 
-  /**
-   * Constructs a new WebformLoader.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
-   *   The entity type manager.
-   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
-   *   The current route match.
-   * @param \Drupal\grants_profile\GrantsProfileService $grantsProfileService
-   *   The grants profile service.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
-   *   The module handler.
-   */
   public function __construct(
-    protected EntityTypeManager $entityTypeManager,
-    protected CurrentRouteMatch $routeMatch,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected RouteMatchInterface $routeMatch,
     protected GrantsProfileService $grantsProfileService,
     protected ModuleHandlerInterface $moduleHandler,
-    protected FormSettingsService $formSettingsService,
+    protected FormSettingsServiceInterface $formSettingsService,
+    protected LoggerInterface $logger,
   ) {
     $this->currentNode = $this->routeMatch->getParameter('node');
   }

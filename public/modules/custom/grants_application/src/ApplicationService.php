@@ -12,7 +12,7 @@ use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\UserInformationService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -25,7 +25,7 @@ class ApplicationService {
   public function __construct(
     private readonly ApplicationNumberService $applicationNumberService,
     private readonly EntityTypeManagerInterface $entityTypeManager,
-    private readonly FormSettingsService $formSettingsService,
+    private readonly FormSettingsServiceInterface $formSettingsService,
     private readonly HelfiAtvService $atvService,
     private readonly LanguageManagerInterface $languageManager,
     #[Autowire(service: 'logger.channel.grants_application')]

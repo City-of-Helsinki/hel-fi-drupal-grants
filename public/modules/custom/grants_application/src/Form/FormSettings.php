@@ -128,7 +128,7 @@ final class FormSettings {
    *   the open time as string.
    */
   public function getApplicationOpen(): string {
-    return $this->settings['application_open'];
+    return $this->settings['application_open'] ?? '';
   }
 
   /**
@@ -138,7 +138,7 @@ final class FormSettings {
    *   the close time as string.
    */
   public function getApplicationClose(): string {
-    return $this->settings['application_close'];
+    return $this->settings['application_close'] ?? '';
   }
 
   /**
