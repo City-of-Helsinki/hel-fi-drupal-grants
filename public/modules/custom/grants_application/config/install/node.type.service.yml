@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - menu_ui
+    - scheduler
+third_party_settings: {  }
+name: 'Service page'
+type: service
+description: 'Content type for showing TPR services in customised way.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false
