@@ -14,7 +14,6 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
 use Drupal\csp\Csp;
 use Drupal\node\NodeInterface;
-use Drupal\taxonomy\Entity\Term;
 use Drupal\webform\Entity\Webform;
 use Drupal\helfi_platform_config\JsInliner;
 
@@ -81,86 +80,6 @@ function hdbt_subtheme_preprocess_menu(array &$variables): void {
 /**
  * Implements hook_preprocess_HOOK().
  */
-function hdbt_subtheme_preprocess_views_view(array &$variables): void {
-  $view = $variables['view'];
-
-  // Operate only on ukk view.
-  if ($view->id() === 'ukk') {
-    // Get current exposed filter.
-    $values = $view->getExposedInput();
-    if (isset($values['ukk'])) {
-      // Load term object.
-      /** @var \Drupal\taxonomy\Entity\Term $currentTerm */
-      $currentTerm = Term::load((int) $values['ukk']);
-      // Set description.
-      $variables['currentDescription'] = $currentTerm->getDescription();
-      // Set current filter.
-      $variables['currentFilter'] = $currentTerm->id();
-    }
-    // Set options for links.
-    $variables['exposedOptions'] = $variables["exposed"]["ukk"]["#options"];
-    unset($variables['exposedOptions']['All']);
-  }
-
-  if ($view->id() === 'application_search_search_api') {
-    $applicationSearchLinkRaw = Url::fromRoute('view.application_search_search_api.search_page');
-    $applicationSearchLink = $applicationSearchLinkRaw->toString();
-    $variables['applicationSearchLink'] = $applicationSearchLink;
-
-    $exposedValues = $view->getExposedInput();
-    $variables['newExposedFilter'] = [];
-
-    foreach ($exposedValues as $exposedValueID => $exposedValue) {
-      // Map specific values for the 'applicant' filter.
-      // It is a filter, not a taxonomy term, that's why it's different.
-      if ($exposedValueID === 'applicant' && $exposedValue !== 'All') {
-        $tOpts = ['context' => 'grants_application_search'];
-        $applicantTranslations = [
-          'private_person' => t('Private person', [], $tOpts),
-          'unregistered_community' => t('Unregistered community or group', [], $tOpts),
-          'registered_community' => t('Registered community', [], $tOpts),
-        ];
-        $variables['newExposedFilter'][$exposedValueID] = $applicantTranslations[$exposedValue];
-        continue;
-      }
-
-      // Map the exposed value ID to the term name.
-      $exposedValueTerm = $exposedValueID;
-      if ($exposedValueID === 'activity') {
-        $exposedValueTerm = 'avustuslaji';
-      }
-
-      $query = \Drupal::entityQuery('taxonomy_term');
-      $query->condition('vid', $exposedValueTerm);
-      $query->accessCheck(FALSE);
-      $tids = $query->execute();
-      $terms = Term::loadMultiple($tids);
-      $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
-
-      $termList = [];
-
-      foreach ($terms as $term) {
-        if ($term->hasTranslation($language)) {
-          $translated_term = \Drupal::service('entity.repository')->getTranslationFromContext($term, $language);
-          $tid = $term->id();
-          $termList[$tid] = $translated_term->label();
-        }
-      }
-
-      // Map the exposed value to the corresponding term name.
-      foreach ($termList as $term_id => $term_name) {
-        $term_id = strval($term_id);
-        if (isset($exposedValues[$exposedValueID]) && $term_id === $exposedValues[$exposedValueID]) {
-          $variables['newExposedFilter'][$exposedValueID] = $term_name;
-        }
-      }
-    }
-  }
-}
-
-/**
- * Implements hook_preprocess_HOOK().
- */
 function hdbt_subtheme_preprocess_details(array &$variables): void {
   $uuid_service = \Drupal::service('uuid');
   $uuid = $uuid_service->generate();
@@ -175,44 +94,6 @@ function hdbt_subtheme_preprocess_details(array &$variables): void {
   }
 
   $variables['accordionid'] = $uuid;
-}
-
-/**
- * Implements hook_preprocess_HOOK().
- */
-function hdbt_subtheme_preprocess_views_view_fields(array &$variables): void {
-  $view = $variables['view'];
-
-  if ($view->id() === 'application_search_search_api') {
-    $dateIcon = '<span aria-hidden="true" class="hel-icon hel-icon--calendar-clock hel-icon--size-s"></span>';
-
-    $continuous = $variables['fields']['field_application_continuous']->content->__toString();
-
-    // To get this working on development mode.
-    $continuous = preg_replace('/<!--(.|\s)*?-->/', '', $continuous);
-    $continuous = str_replace(["\n", "\r"], '', $continuous);
-
-    $applicationPeriod = $variables['fields']['field_application_period']->content;
-
-    if (is_object($applicationPeriod)) {
-      $applicationPeriod = $applicationPeriod->__toString();
-    }
-
-    // To get this working on development mode.
-    $applicationPeriod = preg_replace('/<!--(.|\s)*?-->/', '', $applicationPeriod);
-    $applicationPeriod = str_replace(["\n", "\r"], '', $applicationPeriod);
-
-    if ($continuous == "1") {
-      $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('Continuous application') . '</span>');
-    }
-    elseif (!empty($applicationPeriod)) {
-      $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('Application period') . ' ' . $variables['fields']['field_application_period']->content . '</span>');
-    }
-    else {
-      $variables['fields']['field_application_period']->content = Markup::create($dateIcon . '<span>' . t('The application period will be announced later') . '</span>');
-    }
-    unset($variables['fields']['field_application_continuous']);
-  }
 }
 
 /**

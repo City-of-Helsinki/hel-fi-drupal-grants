@@ -16,7 +16,7 @@ use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Form\FormValidator;
 use Drupal\grants_application\Helper;
 use Drupal\grants_application\User\UserInformationService;
@@ -55,7 +55,7 @@ final class DraftApplication extends ResourceBase {
     $plugin_definition,
     array $serializer_formats,
     LoggerInterface $logger,
-    private FormSettingsService $formSettingsService,
+    private FormSettingsServiceInterface $formSettingsService,
     private UserInformationService $userInformationService,
     private HelfiAtvService $atvService,
     private UuidInterface $uuid,
@@ -83,7 +83,7 @@ final class DraftApplication extends ResourceBase {
       $plugin_definition,
       $container->getParameter('serializer.formats'),
       $container->get('logger.channel.grants_application'),
-      $container->get(FormSettingsService::class),
+      $container->get(FormSettingsServiceInterface::class),
       $container->get(UserInformationService::class),
       $container->get(HelfiAtvService::class),
       $container->get(UuidInterface::class),

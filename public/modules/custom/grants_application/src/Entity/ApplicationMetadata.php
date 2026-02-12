@@ -101,82 +101,47 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(new TranslatableMarkup('Changed'));
 
-    $fields['application_type_select'] = BaseFieldDefinition::create('list_string')
-      ->setLabel(new TranslatableMarkup('Application type'))
-      ->setCardinality(1)
-      ->setRequired(TRUE)
-      ->setSetting('allowed_values_function', 'grants_application_application_type_allowed_values')
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['application_type_select'] = static::listStringField(
+      new TranslatableMarkup('Application type'),
+      ['allowed_values_function' => 'grants_application_application_type_allowed_values']
+    );
 
-    $fields['label'] = BaseFieldDefinition::create('string')
-      ->setLabel(new TranslatableMarkup('Application name'))
-      ->setRequired(TRUE)
-      ->setSettings(['max_length' => 255])
-      ->setDisplayOptions('form', [
-        'type' => 'string_textfield',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['label'] = static::stringField(
+      new TranslatableMarkup('Application name'),
+      ['max_length' => 255],
+    );
 
-    $fields['application_type'] = BaseFieldDefinition::create('string')
-      ->setDisplayOptions('form', [
-        'type' => 'string_textfield',
-        'weight' => 10,
-      ])
-      ->setLabel(new TranslatableMarkup('Application type code'))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['application_type'] = static::stringField(
+      new TranslatableMarkup('Application type code'),
+      required: FALSE,
+    );
 
-    $fields['application_type_id'] = BaseFieldDefinition::create('string')
-      ->setDisplayOptions('form', [
-        'type' => 'string_textfield',
-        'weight' => 10,
-      ])
-      ->setLabel(new TranslatableMarkup('Application type ID'))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['application_type_id'] = static::stringField(
+      new TranslatableMarkup('Application type ID'),
+      required: FALSE,
+    );
 
-    $fields['application_industry'] = BaseFieldDefinition::create('list_string')
-      ->setLabel(new TranslatableMarkup('Grants industry'))
-      ->setCardinality(1)
-      ->setRequired(TRUE)
-      ->setSetting('allowed_values_function', 'grants_application_application_industry_allowed_values')
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['form_identifier'] = static::stringField(
+      new TranslatableMarkup('Form identifier'),
+      required: FALSE,
+    );
 
-    $fields['applicant_types'] = BaseFieldDefinition::create('list_string')
-      ->setLabel(new TranslatableMarkup('Applicant types'))
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-      ->setRequired(TRUE)
-      ->setSetting('allowed_values_function', 'grants_application_applicant_types_allowed_values')
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['application_industry'] = static::listStringField(
+      new TranslatableMarkup('Grants industry'),
+      ['allowed_values_function' => 'grants_application_application_industry_allowed_values']
+    );
 
-    $fields['application_subvention_type'] = BaseFieldDefinition::create('list_string')
-      ->setLabel(new TranslatableMarkup('Subvention type'))
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-      ->setRequired(TRUE)
-      ->setSetting('allowed_values_function', 'grants_application_application_subvention_types_allowed_values')
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['applicant_types'] = static::listStringField(
+      new TranslatableMarkup('Applicant types'),
+      ['allowed_values_function' => 'grants_application_applicant_types_allowed_values'],
+      FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
+    );
+
+    $fields['application_subvention_type'] = static::listStringField(
+      new TranslatableMarkup('Subvention type'),
+      ['allowed_values_function' => 'grants_application_application_subvention_types_allowed_values'],
+      FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
+    );
 
     $fields['application_target_group'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Application target group'))
@@ -193,37 +158,26 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['application_open'] = BaseFieldDefinition::create('datetime')
-      ->setLabel(t('Application opens'))
-      ->setSetting('datetime_type', 'datetime')
-      ->setDisplayOptions('form', [
-        'type' => 'datetime_default',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['application_open'] = static::applyCommonDisplay(
+      BaseFieldDefinition::create('datetime')
+        ->setLabel(new TranslatableMarkup('Application opens'))
+        ->setSetting('datetime_type', 'datetime'),
+      'datetime_default',
+    );
 
-    $fields['application_close'] = BaseFieldDefinition::create('datetime')
-      ->setLabel(t('Application closes'))
-      ->setSetting('datetime_type', 'datetime')
-      ->setDisplayOptions('form', [
-        'type' => 'datetime_default',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['application_close'] = static::applyCommonDisplay(
+      BaseFieldDefinition::create('datetime')
+        ->setLabel(new TranslatableMarkup('Application closes'))
+        ->setSetting('datetime_type', 'datetime'),
+      'datetime_default',
+    );
 
-    $fields['application_acting_years'] = BaseFieldDefinition::create('list_string')
-      ->setLabel(new TranslatableMarkup('Application acting years'))
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-      ->setSetting('allowed_values_function', 'grants_application_application_acting_years_allowed_values')
-      ->setRequired(TRUE)
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['application_acting_years'] = static::listStringField(
+      new TranslatableMarkup('Application acting years'),
+      ['allowed_values_function' => 'grants_application_application_acting_years_allowed_values'],
+      FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
+      FALSE,
+    );
 
     $fields['application_continuous'] = BaseFieldDefinition::create('boolean')
       ->setLabel(new TranslatableMarkup('Application continuous'))
@@ -285,6 +239,7 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
       'description' => $this->application_type->value,
       'application_type' => $this->application_type->value,
       'application_type_id' => (int) $this->application_type_id->value,
+      'form_identifier' => $this->form_identifier->value,
       'application_industry' => $this->application_industry->value,
       'application_open' => $this->application_open->value,
       'application_close' => $this->application_close->value,
@@ -316,6 +271,107 @@ final class ApplicationMetadata extends ContentEntityBase implements Revisionabl
         ? $item['value']
         : $item;
     }, $this->$field->getValue());
+  }
+
+  /**
+   * Apply common display settings for fields.
+   *
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
+   *   The base field definition.
+   * @param string $formWidget
+   *   The form widget.
+   * @param int $weight
+   *   The weight.
+   * @param array $formOptions
+   *   The form options.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   Returns the field definition.
+   */
+  private static function applyCommonDisplay(
+    BaseFieldDefinition $field,
+    string $formWidget,
+    int $weight = 10,
+    array $formOptions = [],
+  ): BaseFieldDefinition {
+    return $field
+      ->setDisplayOptions('form', ['type' => $formWidget, 'weight' => $weight] + $formOptions)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+  }
+
+  /**
+   * Create a list string field with common settings.
+   *
+   * @param \Drupal\Core\StringTranslation\TranslatableMarkup $label
+   *   The field label.
+   * @param array $settings
+   *   The field settings.
+   * @param int $cardinality
+   *   The cardinality.
+   * @param bool $required
+   *   Should the field be required.
+   * @param string $widget
+   *   The field widget.
+   * @param int $weight
+   *   The weight.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   Returns the field definition.
+   */
+  private static function listStringField(
+    TranslatableMarkup $label,
+    array $settings = [],
+    int $cardinality = 1,
+    bool $required = TRUE,
+    string $widget = 'options_select',
+    int $weight = 10,
+  ): BaseFieldDefinition {
+    $field = BaseFieldDefinition::create('list_string')
+      ->setLabel($label)
+      ->setCardinality($cardinality)
+      ->setRequired($required);
+
+    if ($settings !== []) {
+      $field->setSettings($settings);
+    }
+
+    return static::applyCommonDisplay($field, $widget, $weight);
+  }
+
+  /**
+   * Create a string field with common settings.
+   *
+   * @param \Drupal\Core\StringTranslation\TranslatableMarkup $label
+   *   The field label.
+   * @param array $settings
+   *   The field settings.
+   * @param bool $required
+   *   Should the field be required.
+   * @param string $widget
+   *   The field widget.
+   * @param int $weight
+   *   The weight.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   Returns the field definition.
+   */
+  private static function stringField(
+    TranslatableMarkup $label,
+    array $settings = [],
+    bool $required = TRUE,
+    string $widget = 'string_textfield',
+    int $weight = 10,
+  ): BaseFieldDefinition {
+    $field = BaseFieldDefinition::create('string')
+      ->setLabel($label)
+      ->setRequired($required);
+
+    if ($settings !== []) {
+      $field->setSettings($settings);
+    }
+
+    return static::applyCommonDisplay($field, $widget, $weight);
   }
 
 }

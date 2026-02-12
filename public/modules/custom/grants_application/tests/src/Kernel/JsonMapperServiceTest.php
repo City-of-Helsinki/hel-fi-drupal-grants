@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel;
 
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_application\User\UserInformationService;
@@ -16,6 +16,9 @@ use Drupal\grants_application\User\UserInformationService;
  */
 final class JsonMapperServiceTest extends KernelTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected static $modules = [
     'grants_application',
   ];
@@ -33,19 +36,20 @@ final class JsonMapperServiceTest extends KernelTestBase {
     $mockUserInfoService->method('getUserData')->willReturn($testData['user']);
     $mockUserInfoService->method('getSelectedCompany')->willReturn($testData['company']);
     $mockUserInfoService->method('getUserProfileData')->willReturn($testData['user_profile']);
-    $settingsService = $this->container->get(FormSettingsService::class);
+    $settingsService = $this->container->get(FormSettingsServiceInterface::class);
     $mapperService = new JsonMapperService($mockUserInfoService, $settingsService);
 
     $formData = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58.json'), TRUE);
     $bankFile = $mapperService->getSelectedBankFile($formData);
 
     $mappedData = $mapperService->handleMapping(
-      "58",
-      "KERNELTEST-058-0000001",
+      '58',
+      'liikunta_suunnistuskartta_avustu',
+      'KERNELTEST-058-0000001',
       $formData,
       $bankFile,
       TRUE,
-      "registered_community",
+      'registered_community',
     );
 
     $this->assertTrue(isset($mappedData['events']));
@@ -65,11 +69,12 @@ final class JsonMapperServiceTest extends KernelTestBase {
     $oldDocument['content']['compensation']['applicationInfoArray'][6]['value'] = 'RECEIVED';
 
     $mappedData = $mapperService->handleMappingForPatchRequest(
-      "58",
-      "KERNELTEST-058-0000001",
+      '58',
+      'liikunta_suunnistuskartta_avustu',
+      'KERNELTEST-058-0000001',
       $formData,
       'registered_community',
-      $oldDocument
+      $oldDocument,
     );
 
     $this->assertEquals('RECEIVED', $mappedData['compensation']['applicationInfoArray'][6]['value']);
@@ -117,4 +122,5 @@ final class JsonMapperServiceTest extends KernelTestBase {
       ],
     ];
   }
+
 }

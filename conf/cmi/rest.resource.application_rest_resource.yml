@@ -1,0 +1,20 @@
+uuid: 5380cf57-a534-4ca9-a828-0efbfd7ad133
+langcode: en
+status: true
+dependencies:
+  module:
+    - grants_application
+    - serialization
+    - user
+id: application_rest_resource
+plugin_id: application_rest_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PATCH
+  formats:
+    - json
+  authentication:
+    - cookie

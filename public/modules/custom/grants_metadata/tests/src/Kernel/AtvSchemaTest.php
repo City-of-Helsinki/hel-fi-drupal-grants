@@ -46,6 +46,7 @@ class AtvSchemaTest extends GrantsKernelTestBase implements ServiceModifierInter
     'helfi_yjdh',
     // Project modules.
     'grants_applicant_info',
+    'grants_application',
     'grants_events',
     'grants_attachments',
     'grants_budget_components',

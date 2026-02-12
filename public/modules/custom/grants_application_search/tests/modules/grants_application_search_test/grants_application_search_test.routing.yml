@@ -1,0 +1,7 @@
+view.application_search_search_api.search_page:
+  path: '/application-search-test'
+  defaults:
+    _controller: '\Drupal\grants_application_search_test\Controller\TestController::ok'
+    _title: 'Application search test'
+  requirements:
+    _access: 'TRUE'

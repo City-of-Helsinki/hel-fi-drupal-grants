@@ -217,8 +217,8 @@ const pageCollection: PageCollection = {
       {
         containerClass: ".application_search--filters",
         elements: [
-          { selector: ".form-item-target-group", countExact: 1, expectedText: ['Valitse kohderyhmä'] },
-          { selector: ".form-item-activity", countExact: 1, expectedText: ['Millaiseen toimintaan haet avustusta?'] },
+          { selector: ".form-item-target-type", countExact: 1, expectedText: ['Valitse kohderyhmä'] },
+          { selector: ".form-item-subvention-type", countExact: 1, expectedText: ['Millaiseen toimintaan haet avustusta?'] },
           { selector: ".form-item-applicant", countExact: 1, expectedText: ['Avustuksen hakija'] },
           { selector: ".form-item-search", countExact: 1, expectedText: ['Tai etsi hakusanalla'] },
           { selector: ".form-item-application-open", countExact: 1, expectedText: ['Näytä vain haettavissa olevat avustukset'] },
