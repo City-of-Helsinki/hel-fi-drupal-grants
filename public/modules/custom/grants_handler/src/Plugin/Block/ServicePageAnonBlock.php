@@ -11,15 +11,19 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_handler\ApplicationStatusServiceInterface;
 use Drupal\grants_handler\ServicePageBlockService;
+use Drupal\grants_profile\GrantsProfileService;
 use Drupal\webform\Entity\Webform;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -40,31 +44,6 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    */
   protected ?Webform $webform = NULL;
 
-  /**
-   * Constructs a new ServicePageBlock instance.
-   *
-   * @param array $configuration
-   *   The plugin configuration, i.e. an array with configuration values keyed
-   *   by configuration option name. The special key 'context' may be used to
-   *   initialize the defined contexts by setting it to an array of context
-   *   values keyed by context names.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
-   *   Get route params.
-   * @param \Drupal\Core\Session\AccountProxy $currentUser
-   *   Current user.
-   * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
-   *   The service page block service.
-   * @param \Drupal\grants_handler\ApplicationStatusServiceInterface $applicationStatusService
-   *   The application status service.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
-   *   The cache.
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   The time.
-   */
   public function __construct(
     array $configuration,
     $plugin_id,
@@ -75,6 +54,10 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
     protected ApplicationStatusServiceInterface $applicationStatusService,
     protected CacheBackendInterface $cache,
     protected TimeInterface $time,
+    protected GrantsProfileService $grantsProfileService,
+    protected ModuleHandlerInterface $moduleHandler,
+    protected LoggerChannelInterface $logger,
+    protected FormSettingsServiceInterface $formSettingsService,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
@@ -89,10 +72,14 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       $plugin_definition,
       $container->get('current_route_match'),
       $container->get('current_user'),
-      $container->get('grants_handler.service_page_block_service'),
+      $container->get(ServicePageBlockService::class),
       $container->get('grants_handler.application_status_service'),
       $container->get('cache.default'),
       $container->get('datetime.time'),
+      $container->get('grants_profile.service'),
+      $container->get('module_handler'),
+      $container->get('logger.channel.grants_application'),
+      $container->get(FormSettingsServiceInterface::class),
     );
   }
 
@@ -107,6 +94,20 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   protected function blockAccess(AccountInterface $account): AccessResultInterface {
+    $formSettings = FALSE;
+    try {
+      $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    }
+    catch (\Exception $e) {
+      $this->logger->error("Unable to render the create application button on service page: " . $e->getMessage());
+    }
+
+    if ($formSettings) {
+      $selectedRole = $this->grantsProfileService->getSelectedRoleData();
+      $isCorrectApplicantType = $selectedRole ? $formSettings->isAllowedApplicantType($selectedRole['type']) : FALSE;
+      return AccessResult::allowedIf(!$isCorrectApplicantType);
+    }
+
     if (!$webform = $this->servicePageBlockService->loadServicePageWebform()) {
       return AccessResult::forbidden('No referenced Webform.');
     }
@@ -119,9 +120,22 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function build(): array {
-    $webform = $this->getWebform();
+    // In that case, we always render the react-application block.
+    $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    if ($formSettings) {
+      $isApplicationOpen = $formSettings->isApplicationOpen();
+      $formLink = Url::fromRoute('helfi_grants.print_view', ['id' => $formSettings->getFormId()]);
+      $selectedRole = $this->grantsProfileService->getSelectedRoleData();
+      $isCorrectApplicantType = $selectedRole ? $formSettings->isAllowedApplicantType($selectedRole['type']) : FALSE;
+    }
+    else {
+      $webform = $this->getWebform();
+      $isApplicationOpen = $this->applicationStatusService->isApplicationOpen($webform);
+      $formLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webform->id()]);
+      $isCorrectApplicantType = $this->servicePageBlockService->isCorrectApplicantType($webform);
+    }
 
-    if (!$this->applicationStatusService->isApplicationOpen($webform)) {
+    if (!$isApplicationOpen) {
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
         '#text' => $this->t('This application is not open', options: ['context' => 'grants_handler']),
@@ -168,16 +182,13 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
         $title = $this->t('Identification', options: ['context' => 'grants_handler']);
       }
 
-      $webformLink = Url::fromRoute('grants_webform_print.print_webform', ['webform' => $webform->id()]);
-      $isCorrectApplicantType = $this->servicePageBlockService->isCorrectApplicantType($webform);
-
       $build['content'] = [
         '#theme' => 'grants_service_page_block',
         '#applicantType' => $isCorrectApplicantType,
         '#link' => $link,
         '#title' => $title,
         '#text' => $text,
-        '#webformLink' => $webformLink,
+        '#webformLink' => $formLink,
         '#auth' => 'anon',
       ];
     }
@@ -202,6 +213,12 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
       $tags = Cache::mergeTags($tags, $node->getCacheTags());
     }
 
+    $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+    if ($formSettings) {
+      $metadata = $this->formSettingsService->getFormSettingsMetadata($formSettings->getFormId(), $formSettings->getFormIdentifier());
+      $tags = Cache::mergeTags($tags, $metadata->getCacheTags());
+    }
+
     $webform = $this->getWebform();
     if ($webform && $webform->id()) {
       $tags = Cache::mergeTags($tags, $webform->getCacheTags());
@@ -223,6 +240,10 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function getCacheMaxAge(): int {
+    if ($this->servicePageBlockService->loadServicePageReactFormSettings()) {
+      return $this->getReactCacheInvalidationTime();
+    }
+
     $webform = $this->getWebform();
     if (!$webform) {
       return Cache::PERMANENT;
@@ -264,6 +285,37 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
   }
 
   /**
+   * Get cache invalidation by application time.
+   *
+   * @return int
+   *   Returns the expiration time.
+   */
+  protected function getReactCacheInvalidationTime(): int {
+    $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
+
+    // If settings is not set, no cache for the block.
+    if (!$formSettings) {
+      return 0;
+    }
+
+    $open = strtotime($formSettings->getApplicationOpen());
+    $close = strtotime($formSettings->getApplicationClose());
+    $now = $this->time->getCurrentTime();
+
+    // Before application is opened.
+    if ($open > $now) {
+      return $open - $now;
+    }
+    elseif ($close > $now) {
+      // When application is open.
+      return $close - $now;
+    }
+
+    // After the application time.
+    return Cache::PERMANENT;
+  }
+
+  /**
    * Get the webform.
    *
    * @return \Drupal\webform\Entity\Webform|null
@@ -273,7 +325,12 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
     if (!$this->webform) {
       // Load the webform. No need to check if it exists since this
       // has already been done in the access checks.
-      $this->webform = $this->servicePageBlockService->loadServicePageWebform();
+      if ($webform = $this->servicePageBlockService->loadServicePageWebform()) {
+        $this->webform = $webform;
+      }
+      else {
+        return NULL;
+      }
     }
     return $this->webform;
   }

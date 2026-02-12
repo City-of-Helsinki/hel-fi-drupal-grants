@@ -1,17 +1,16 @@
-uuid: ddec3d4c-c9fb-48c0-8b41-cb43aa518b8c
+uuid: 6adfbb3c-7974-419d-b935-eed99f1f31e6
 langcode: en
 status: true
 dependencies:
   module:
+    - grants_application
     - node
-id: node.field_react_form_id
-field_name: field_react_form_id
+id: node.field_react_form
+field_name: field_react_form
 entity_type: node
-type: string
+type: entity_reference
 settings:
-  max_length: 128
-  case_sensitive: false
-  is_ascii: false
+  target_type: application_metadata
 module: core
 locked: false
 cardinality: 1

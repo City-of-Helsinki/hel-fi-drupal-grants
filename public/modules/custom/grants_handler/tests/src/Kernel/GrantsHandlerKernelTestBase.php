@@ -18,6 +18,7 @@ abstract class GrantsHandlerKernelTestBase extends KernelTestBase {
     'content_translation',
     'externalauth',
     'entity_reference_revisions',
+    'grants_application',
     'grants_handler',
     'grants_profile',
     'grants_mandate',
