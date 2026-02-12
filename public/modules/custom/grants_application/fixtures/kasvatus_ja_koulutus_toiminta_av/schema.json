@@ -362,7 +362,6 @@
       "properties": {
         "economy_forecast_section": {
           "type": "object",
-          "title": "economy_forecast_section.title",
           "properties": {
             "economy_forecast": {
               "description": "economy_forecast.description",
