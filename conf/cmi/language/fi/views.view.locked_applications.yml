@@ -19,6 +19,9 @@ display:
         application_number:
           expose:
             label: 'Hakemuksen numero'
+      empty:
+        area_text_custom:
+          content: 'Ei lukittuja hakemuksia.'
   page_1:
     display_options:
       menu:
