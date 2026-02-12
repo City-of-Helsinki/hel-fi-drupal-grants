@@ -36,6 +36,7 @@ use Drupal\Core\Url;
  *   admin_permission = "administer content",
  *   handlers = {
  *     "access" = "Drupal\grants_application\ApplicationSubmissionAccessControlHandler",
+ *     "views_data" = "Drupal\views\EntityViewsData",
  *   },
  *   links = {
  *     "canonical" = "/application/{id}/render"
