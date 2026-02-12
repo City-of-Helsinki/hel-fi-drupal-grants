@@ -1,0 +1,25 @@
+label: 'Lukitut hakemukset'
+display:
+  default:
+    display_options:
+      title: 'Lukitut hakemukset'
+      fields:
+        application_number:
+          label: 'Hakemuksen numero'
+        timestamp_1:
+          label: 'Lukituksen ajankohta'
+        draft:
+          label: Luonnos
+        sub:
+          label: 'Profiilin ID'
+      exposed_form:
+        options:
+          submit_button: Suodata
+      filters:
+        application_number:
+          expose:
+            label: 'Hakemuksen numero'
+  page_1:
+    display_options:
+      menu:
+        title: 'Lukitut hakemukset'

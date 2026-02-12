@@ -1,0 +1,11 @@
+uuid: 29fe32b1-8108-4161-8ee8-efdf80373743
+langcode: fi
+status: true
+dependencies:
+  module:
+    - content_lock
+id: application_submission_break_lock_action
+label: 'Break lock application_submission'
+type: application_submission
+plugin: 'entity:break_lock:application_submission'
+configuration: {  }
