@@ -51,7 +51,6 @@ module:
   grant_applications_content: 0
   grant_applications_noscript: 0
   grants_admin_applications: 0
-  grants_application: 0
   grants_applicant_info: 0
   grants_application: 0
   grants_application_search: 0
@@ -79,7 +78,6 @@ module:
   hdbt_cookie_banner: 0
   health_check: 0
   helfi_api_base: 0
-  helfi_av: 0
   helfi_atv: 0
   helfi_atv_audit_logging: 0
   helfi_audit_log: 0
