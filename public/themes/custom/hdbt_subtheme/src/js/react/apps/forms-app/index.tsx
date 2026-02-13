@@ -25,7 +25,7 @@ const formatSchemaErrors = (errors: string) => (
 
 const rootSelector: string = 'grants-react-form';
 const rootElement: HTMLElement | null = document.getElementById(rootSelector);
-const { application_number: applicationTypeId } = drupalSettings.grants_react_form;
+const { application_number: applicationTypeId, form_identifier: formIdentifier } = drupalSettings.grants_react_form;
 
 // @todo Implement a better check
 const isDevEnvironment = window.location.hostname.includes('docker.so');
@@ -52,7 +52,11 @@ if (rootElement) {
       <ErrorBoundary fallback={handleErrorFallback}>
         <ToastStack />
         <Suspense fallback={<LoadingSpinner />}>
-          <AppContainer applicationTypeId={applicationTypeId} token={drupalSettings.grants_react_form.token} />
+          <AppContainer
+            applicationTypeId={applicationTypeId}
+            formIdentifier={formIdentifier}
+            token={drupalSettings.grants_react_form.token}
+          />
         </Suspense>
       </ErrorBoundary>
     </React.StrictMode>,

@@ -5,6 +5,7 @@ declare namespace drupalSettings {
   const helfi_react_search: { elastic_proxy_url: string; sentry_dsn_react: string; hakuvahti_url_set: boolean };
   const grants_react_form: {
     application_number: string;
+    form_identifier: string;
     form: string;
     list_view_path: string;
     terms: { body: string; header: string; link_title: string };
