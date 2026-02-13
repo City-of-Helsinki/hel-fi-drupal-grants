@@ -406,7 +406,7 @@ elements: |-
         '#subvention_amount__title': 'Avustuksen summa'
       grants_compensations_information:
         '#type': webform_markup
-        '#markup': '<p>Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan.</p>'
+        '#markup': '<p>Syötä kenttään vuodelle 2026 haettava avustussumma.</p><p>Monivuotisen hakemuksen jatkokausien avustussummat syötetään seuraavalla sivulla.</p>'
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
