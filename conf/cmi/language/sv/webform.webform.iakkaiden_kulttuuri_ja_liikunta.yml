@@ -67,7 +67,7 @@ elements: |
   other_grants_for_same_purpose:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#markup': '<p>Ange här endast de understöd som beviljats från annanstans<br>än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Ett jakande svar öppnar ytterligare en fråga</span></div></div></div>'
+    '#markup': '<p>Ange här endast de understöd som beviljats från annanstans<br>än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren. Ange endast de understöd som beviljats för samma användningsändamål, inte alla understöd som beviljats er organisation.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>Ett jakande svar öppnar ytterligare en fråga</span></div></div></div>'
   olemme_saaneet_muita_avustuksia:
     '#title': 'Vi har fått andra understöd'
     '#options':

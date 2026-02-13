@@ -67,7 +67,7 @@ elements: |
   other_grants_for_same_purpose:
     '#title': 'Other grants received for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
-    '#markup': '<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>An affirmative answer opens a further question</span></div></div></div>'
+    '#markup': '<p>Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years. Indicate only the grants awarded for the same purpose of use, not all grants awarded to your organization.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label" role="heading" aria-level="2"><span>An affirmative answer opens a further question</span></div></div></div>'
   olemme_saaneet_muita_avustuksia:
     '#title': 'We have received other grants'
     '#options':
