@@ -85,6 +85,53 @@
       "equality_nondiscrimination_responsibility_plan": {
         "ui:widget": "textarea",
         "misc:max-length": 2000
+      },
+      "active_participants_wrapper": {
+        "active_participants_wrapper_help": {
+          "ui:field": "textParagraph"
+        },
+        "active_participants_under_20": {},
+        "active_participants_local": {}
+      },
+      "under_20_affected": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
+      },
+      "key_partners": {
+        "ui:widget": "textarea",
+        "misc:max-length": 3000
+      },
+      "schedule_wrapper": {
+        "start_date": {
+          "ui:widget": "date"
+        },
+        "end_date": {
+          "ui:widget": "date"
+        }
+      },
+      "schedule_of_measures": {
+        "ui:widget": "textarea",
+        "misc:max-length": 3000
+      },
+      "key_risks": {
+        "ui:widget": "textarea",
+        "misc:max-length": 3000
+      },
+      "project_results": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2000
+      },
+      "project_implementation": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2000
+      },
+      "project_indicators": {
+        "ui:widget": "textarea",
+        "misc:max-length": 2000
+      },
+      "project_manager": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000
       }
     }
   },

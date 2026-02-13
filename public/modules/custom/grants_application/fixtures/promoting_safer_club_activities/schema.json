@@ -322,13 +322,103 @@
               "title": "equality_nondiscrimination_responsibility_plan.title",
               "type": "string",
               "description": "equality_nondiscrimination_responsibility_plan.description"
+            },
+            "active_participants_wrapper": {
+              "type": "object",
+              "title": "active_participants_wrapper.legend",
+              "properties": {
+                "active_participants_wrapper_help": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "title": "active_participants_wrapper.help.value",
+                      "type": "null"
+                    }
+                  ]
+                },
+                "active_participants_under_20": {
+                  "title": "active_participants_under_20.title",
+                  "type": "string"
+                },
+                "active_participants_local": {
+                  "title": "active_participants_local.title",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "active_participants_under_20",
+                "active_participants_local"
+              ]
+            },
+            "under_20_affected": {
+              "title": "under_20_affected.title",
+              "type": "string"
+            },
+            "key_partners": {
+              "title": "key_partners.title",
+              "type": "string",
+              "description": "key_partners.description"
+            },
+            "schedule_wrapper": {
+              "type": "object",
+              "title": "schedule_wrapper.legend",
+              "properties": {
+                "start_date": {
+                  "title": "start_date.title",
+                  "type": "string"
+                },
+                "end_date": {
+                  "title": "end_date.title",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "start_date",
+                "end_date"
+              ]
+            },
+            "schedule_of_measures": {
+              "title": "schedule_of_measures.title",
+              "type": "string",
+              "description": "schedule_of_measures.description"
+            },
+            "key_risks": {
+              "title": "key_risks.title",
+              "type": "string",
+              "description": "key_risks.description"
+            },
+            "project_results": {
+              "title": "project_results.title",
+              "type": "string"
+            },
+            "project_implementation": {
+              "title": "project_implementation.title",
+              "type": "string",
+              "description": "project_implementation.description"
+            },
+            "project_indicators": {
+              "title": "project_indicators.title",
+              "type": "string",
+              "description": "project_indicators.description"
+            },
+            "project_manager": {
+              "title": "project_manager.title",
+              "type": "string"
             }
           },
           "required": [
             "reason_for_grant_application",
             "project_objectives",
             "safety_practices",
-            "safer_club_practices"
+            "safer_club_practices",
+            "under_20_affected",
+            "key_partners",
+            "schedule_of_measures",
+            "key_risks",
+            "project_results",
+            "project_implementation",
+            "project_indicators",
+            "project_manager"
           ]
         }
       }
