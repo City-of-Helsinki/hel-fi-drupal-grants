@@ -344,8 +344,8 @@
     }
   },
   "compensation.senderInfoArray.3": {
-    "datasource": "user_profile",
-    "source": "user_profile",
+    "datasource": "user",
+    "source": "sub",
     "mapping_type": "default",
     "data": {
       "ID": "userID",

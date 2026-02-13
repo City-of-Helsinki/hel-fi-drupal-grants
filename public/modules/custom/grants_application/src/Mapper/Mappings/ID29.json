@@ -241,7 +241,7 @@
       "label": "Yhteisöjäsen (€ / vuosi)"
     }
   },
-  "attachmentsInfo.attachmentsArray.0.0": {
+  "attachmentsInfo.attachmentsArray.0": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.community_rules.community_rules_file",
     "mapping_type": "file",
@@ -254,7 +254,7 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
-  "attachmentsInfo.attachmentsArray.1.0": {
+  "attachmentsInfo.attachmentsArray.1": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.confirmed_financial_statements.confirmed_financial_statements_file",
     "mapping_type": "file",
@@ -267,7 +267,7 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
-  "attachmentsInfo.attachmentsArray.2.0": {
+  "attachmentsInfo.attachmentsArray.2": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.confirmed_annual_report.confirmed_annual_report_file",
     "mapping_type": "file",
@@ -280,7 +280,7 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
-  "attachmentsInfo.attachmentsArray.3.0": {
+  "attachmentsInfo.attachmentsArray.3": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.confirmed_audit_report.confirmed_audit_report_file",
     "mapping_type": "file",
@@ -293,7 +293,7 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
-  "attachmentsInfo.attachmentsArray.4.0": {
+  "attachmentsInfo.attachmentsArray.4": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.minutes_of_the_annual_meeting.minutes_of_the_annual_meeting_file",
     "mapping_type": "file",
@@ -306,7 +306,7 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
-  "attachmentsInfo.attachmentsArray.5.0": {
+  "attachmentsInfo.attachmentsArray.5": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.action_plan.action_plan_file",
     "mapping_type": "file",
@@ -319,7 +319,7 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
-  "attachmentsInfo.attachmentsArray.6.0": {
+  "attachmentsInfo.attachmentsArray.6": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.budget.budget_file",
     "mapping_type": "file",
