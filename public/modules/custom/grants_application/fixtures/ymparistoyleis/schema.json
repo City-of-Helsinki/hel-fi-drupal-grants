@@ -89,7 +89,8 @@
           "properties": {
             "purpose": {
               "title": "purpose.title",
-              "type": "string"
+              "type": "string",
+              "description": "purpose.description"
             }
           },
           "required": ["purpose"]
