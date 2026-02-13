@@ -266,7 +266,7 @@ elements: |
     '#ownFunding__title': 'The organizer’s own funding (€)'
   talous_tulon_tyyppi:
     '#title': 'Type of income'
-    '#help': '<p>Write down the type of income in question. Incomes can be, for example, other grants and admission or participation fees. Self financing has to be written down as an income even if the required self financing share is to be funded from the organisations overall operations.</p>'
+    '#help': '<p>Write down the type of income in question. Incomes can be, for example, other grants and admission or participation fees. Self financing has to be written down as an income even if the required self financing share is to be funded from the organisations overall operations. Also include the self financing share in this section if the project’s deficit will be covered from your other financial resources.</p>'
     '#multiple__add_more_button_label': 'Add new income'
   menot_section:
     '#title': '4.2 Expenses'

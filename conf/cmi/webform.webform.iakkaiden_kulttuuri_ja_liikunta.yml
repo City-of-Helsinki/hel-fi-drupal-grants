@@ -1123,7 +1123,7 @@ elements: |-
         '#title': 'Tulon tyyppi'
         '#multiple': true
         '#incomeGroup': general
-        '#help': 'Kerro tässä minkälainen tulo on kyseessä. Toiminnan tuloja voivat olla esimerkiksi muut avustukset ja pääsy- tai osallistumismaksut. Kirjaa tähän kohtaan myös omarahoitusosuus, jos hankkeen alijäämä kuitataan muusta taloudestanne.'
+        '#help': 'Kerro tässä minkälainen tulo on kyseessä. Toiminnan tuloja voivat olla esimerkiksi muut avustukset ja pääsy- tai osallistumismaksut. Kirjaa tähän kohtaan myös omarahoitusosuus, jos hankkeen alijäämä kuitataan muusta taloudestanne. Kirjaa tähän kohtaan myös omarahoitusosuus, jos hankkeen alijäämä kuitataan muusta taloudestanne.'
         '#multiple__min_items': 1
         '#multiple__empty_items': 0
         '#multiple__add_more_input': false
