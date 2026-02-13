@@ -41,9 +41,9 @@ use Symfony\Component\Routing\RouteCollection;
   id: "application_rest_resource",
   label: new TranslatableMarkup("Application"),
   uri_paths: [
-    "canonical" => "/applications/{application_type_id}/application/{application_number}",
-    "create" => "/applications/{application_type_id}/application/{application_number}",
-    "edit" => "/applications/{application_type_id}/application/{application_number}",
+    "canonical" => "/applications/{form_identifier}/application/{application_number}",
+    "create" => "/applications/{form_identifier}/application/{application_number}",
+    "edit" => "/applications/{form_identifier}/application/{application_number}",
   ]
 )]
 final class Application extends ResourceBase {
@@ -111,7 +111,7 @@ final class Application extends ResourceBase {
    *
    * An application that has been saved as a draft or already sent.
    *
-   * @param int $application_type_id
+   * @param string $form_identifier
    *   The application type id.
    * @param string|null $application_number
    *   The unique identifier for the application.
@@ -122,7 +122,7 @@ final class Application extends ResourceBase {
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
   public function get(
-    int $application_type_id,
+    string $form_identifier,
     ?string $application_number,
   ): JsonResponse {
     // @todo Sanitize & validate & authorize properly.
@@ -133,7 +133,7 @@ final class Application extends ResourceBase {
     // @todo Parse the last STATUS_UPDATE event here.
     // It can be used to determinate if this is editable.
     try {
-      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+      $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
     catch (\Exception $e) {
       // Cannot find form.
@@ -204,7 +204,7 @@ final class Application extends ResourceBase {
    */
   public function post(
     Request $request,
-    int $application_type_id,
+    string $form_identifier,
     ?string $application_number = NULL,
   ): JsonResponse {
     $content = json_decode($request->getContent(), TRUE);
@@ -215,22 +215,22 @@ final class Application extends ResourceBase {
 
     // phpcs:enable
     try {
-      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+      $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
     catch (\Exception $e) {
-      $this->logger->info("User failed to open application due to missing form settings, application id: $application_type_id");
+      $this->logger->info("User failed to open application due to missing form settings, form identifier: $form_identifier");
       return new JsonResponse(['error' => $this->t('Something went wrong')], 404);
     }
 
     if (!$application_number) {
-      $this->logger->critical('POST-request without application number, application id: ' . $application_type_id);
+      $this->logger->critical('POST-request without application number, form identifier: ' . $form_identifier);
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-    $errors = $this->validate($application_type_id, $form_data);
+    $errors = $this->validate($form_identifier, $form_data);
     if (is_array($errors)) {
       // Kinda "useless" logging, but for testing purposes this might be relevant.
-      $this->logger->alert("User encountered validation error on application $application_type_id: " . json_encode($errors));
+      $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
       return new JsonResponse(['error' => $errors], 400);
     }
 
@@ -330,7 +330,7 @@ final class Application extends ResourceBase {
 
     try {
       $mappedData = $this->jsonMapperService->handleMapping(
-        $application_type_id,
+        $settings->getFormId(),
         $submission->get('form_identifier')->value,
         $application_number,
         $form_data,
@@ -340,7 +340,7 @@ final class Application extends ResourceBase {
       );
     }
     catch (\Exception $e) {
-      $this->logger->critical("Failed mapping, application type: $application_type_id");
+      $this->logger->critical("Failed mapping, application: $form_identifier");
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
@@ -456,7 +456,7 @@ final class Application extends ResourceBase {
    */
   public function patch(
     Request $request,
-    int $application_type_id,
+    string $form_identifier,
     ?string $application_number = NULL,
   ): JsonResponse {
     $content = json_decode($request->getContent(), TRUE);
@@ -466,21 +466,21 @@ final class Application extends ResourceBase {
     ] = $content;
 
     try {
-      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+      $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
     catch (\Exception $e) {
-      $this->logger->info("User failed to open application due to missing form settings, application id: $application_type_id");
+      $this->logger->info("User failed to open application due to missing form settings: $form_identifier");
       return new JsonResponse(['error' => $this->t('Something went wrong')], 404);
     }
 
     if (!$application_number) {
-      $this->logger->critical('PATCH-request without application number, application id: ' . $application_type_id);
+      $this->logger->critical("PATCH-request without application number for $form_identifier");
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-    $errors = $this->validate($application_type_id, $form_data);
+    $errors = $this->validate($form_identifier, $form_data);
     if (is_array($errors)) {
-      $this->logger->alert("User encountered validation error on application $application_type_id: " . json_encode($errors));
+      $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
       return new JsonResponse(['error' => $errors], 400);
     }
 
@@ -518,7 +518,7 @@ final class Application extends ResourceBase {
     try {
       $oldDocument = $document->toArray();
       $mappedData = $this->jsonMapperService->handleMappingForPatchRequest(
-        $application_type_id,
+        $settings->getFormId(),
         $submission->get('form_identifier')->value,
         $application_number,
         $form_data,
@@ -607,16 +607,16 @@ final class Application extends ResourceBase {
   }
 
   /**
-   * @param int $applicationTypeId
-   *   The application type id.
+   * @param string $form_identifier
+   *   The form identifier.
    * @param array $formData
    *   The form data.
    *
    * @return bool|array
    *   Is valid or array of errors.
    */
-  private function validate(int $applicationTypeId, array $formData): bool|array {
-    $settings = $this->formSettingsService->getFormSettings($applicationTypeId);
+  private function validate(string $formIdentifier, array $formData): bool|array {
+    $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($formIdentifier);
     $results = $this->jsonSchemaValidator->validate(json_decode(json_encode($formData)), json_decode(json_encode($settings->getSchema())));
 
     if (is_array($results)) {

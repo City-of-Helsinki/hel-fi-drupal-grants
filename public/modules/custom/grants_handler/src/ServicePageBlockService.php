@@ -141,12 +141,12 @@ class ServicePageBlockService {
       return NULL;
     }
 
-    $formId = $this->getReactFormId();
-    if (!$formId) {
+    $formIdentifier = $this->getSelectedReactFormIdentifier();
+    if (!$formIdentifier) {
       return NULL;
     }
 
-    return Url::fromRoute('helfi_grants.forms_app', ['id' => $formId]);
+    return Url::fromRoute('helfi_grants.forms_app', ['form_identifier' => $formIdentifier]);
   }
 
   /**

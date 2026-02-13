@@ -40,9 +40,9 @@ use Symfony\Component\Routing\RouteCollection;
   id: "draft_application_rest_resource",
   label: new TranslatableMarkup("Application"),
   uri_paths: [
-    "canonical" => "/applications/{application_type_id}/{application_number}",
-    "create" => "/applications/{application_type_id}/{application_number}/{copy_from?}",
-    "edit" => "/applications/{application_type_id}/{application_number}",
+    "canonical" => "/applications/{form_identifier}/{application_number}",
+    "create" => "/applications/{form_identifier}/{application_number}/{copy_from?}",
+    "edit" => "/applications/{form_identifier}/{application_number}",
   ]
 )]
 final class DraftApplication extends ResourceBase {
@@ -114,7 +114,7 @@ final class DraftApplication extends ResourceBase {
    *
    * The atv-document and application number is created in controller.
    *
-   * @param int $application_type_id
+   * @param string $form_identifier
    *   The application type id.
    * @param string $application_number
    *   The application number.
@@ -125,7 +125,7 @@ final class DraftApplication extends ResourceBase {
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
   public function get(
-    int $application_type_id,
+    string $form_identifier,
     string $application_number,
   ): RedirectResponse|JsonResponse {
     // @todo Sanitize & validate & authorize properly.
@@ -134,7 +134,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
-      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+      $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
     catch (\Exception $e) {
       // Cannot find form by application type id.
@@ -203,7 +203,7 @@ final class DraftApplication extends ResourceBase {
    * After that the patch-function takes care of submitting the form as draft.
    * Submitting is handled in Application-resource.
    *
-   * @param int $application_type_id
+   * @param string $form_identifier
    *   The application type id.
    * @param string|null $copy_from
    *   The application number to copy from.
@@ -211,14 +211,15 @@ final class DraftApplication extends ResourceBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
-  public function post(int $application_type_id, string|null $copy_from = NULL): JsonResponse {
+  public function post(string $form_identifier, string|null $copy_from = NULL): JsonResponse {
     try {
-      $settings = $this->formSettingsService->getFormSettings($application_type_id);
+      $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
     catch (\Exception $e) {
       // Cannot find form by application type id.
       return new JsonResponse([], 404);
     }
+    $application_type_id = $settings->getFormId();
 
     $form_data = [];
     if ($copy_from) {
@@ -296,6 +297,7 @@ final class DraftApplication extends ResourceBase {
         'draft' => TRUE,
         'application_type_id' => $application_type_id,
         'application_number' => $application_number,
+        'form_identifier' => $form_identifier,
         'created' => $now,
         'changed' => $now,
       ]);
@@ -334,13 +336,18 @@ final class DraftApplication extends ResourceBase {
    *
    * Update existing draft submission.
    *
-   * @return \Symfony\Component\HttpFoundation\JsonResponse
-   *   The HTTP response object.
+   * @param string $form_identifier
+   *   The form identifier.
+   * @param string $application_number
+   *   The application number.
+   * @param Request $request
+   *   The request object.
    *
-   * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+   * @return JsonResponse
+   *   The HTTP response object.
    */
   public function patch(
-    int $application_type_id,
+    string $form_identifier,
     string $application_number,
     Request $request,
   ): JsonResponse {
@@ -352,10 +359,10 @@ final class DraftApplication extends ResourceBase {
     ] = $content;
 
     try {
-      $this->formSettingsService->getFormSettings($application_type_id);
+      $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
     catch (\Exception $e) {
-      // Cannot find form by application type id.
+      // Cannot find form settings.
       return new JsonResponse(['error' => $this->t('Something went wrong')], 404);
     }
 

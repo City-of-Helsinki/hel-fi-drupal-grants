@@ -17,6 +17,7 @@ function grants_application_theme(): array {
     'forms_app' => [
       'variables' => [
         'application_number' => NULL,
+        'form_identifier' => NULL,
       ],
     ],
     'grants_application_completion' => [

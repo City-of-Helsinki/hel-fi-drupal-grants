@@ -236,7 +236,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    */
   public function toUrl($rel = NULL, array $options = []): Url {
     $parameters = [
-      'id' => $this->get('application_type_id')->value,
+      'form_identifier' => $this->get('form_identifier')->value,
       'application_number' => $this->get('application_number')->value,
     ];
 

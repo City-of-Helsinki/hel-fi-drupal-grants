@@ -1,5 +1,5 @@
 helfi_grants.forms_app:
-  path: '/application/new/{id}/{application_number}'
+  path: '/application/new/{form_identifier}/{application_number}'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
     _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getFormTitle'
@@ -9,14 +9,14 @@ helfi_grants.forms_app:
     _role: helsinkiprofiili
 
 helfi_grants.forms_app_edit:
-  path: '/application/new/{id}/{application_number}/edit'
+  path: '/application/new/{form_identifier}/{application_number}/edit'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
     _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getFormTitle'
     use_draft: FALSE
   requirements:
     _role: helsinkiprofiili
-  
+
 helfi_grants.forms_app_copy_application:
   path: '/application/new/{application_type_id}/{original_id}/copy'
   defaults:
