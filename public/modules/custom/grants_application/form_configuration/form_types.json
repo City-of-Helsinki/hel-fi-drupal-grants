@@ -328,5 +328,15 @@
       "en": "Project grant application for youth activities",
       "sv": "Ansökan om projektuderstöd för ungdomsverksamhet"
     }
+  },
+  "35": {
+    "id": 70,
+    "form_identifier": "promoting_safer_club_activities",
+    "code": "KUVAERILLIS",
+    "labels": {
+      "fi": "Turvallisemman seuratoiminnan edistämisen avustushakemus",
+      "en": "Grant application for promoting safer club activities",
+      "sv": "Ansökan om understöd för främjande av en tryggare föreningsverksamhet"
+    }
   }
 }
