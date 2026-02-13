@@ -16,7 +16,7 @@ helfi_grants.forms_app_edit:
     use_draft: FALSE
   requirements:
     _role: helsinkiprofiili
-  
+
 helfi_grants.forms_app_copy_application:
   path: '/application/new/{application_type_id}/{original_id}/copy'
   defaults:
@@ -65,7 +65,7 @@ helfi_grants.completion:
     _role: helsinkiprofiili
 
 helfi_grants.print_view:
-  path: '/application/{id}/print'
+  path: '/application/{application_number}/print'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::printApplication'
   requirements:

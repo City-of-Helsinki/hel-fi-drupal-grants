@@ -443,7 +443,9 @@ final class ApplicationController extends ControllerBase {
   /**
    * Print the application.
    */
-  public function printApplication() {
+  public function printApplication($application_number) {
+    // @todo the original implementation can handle react forms but
+    // it should be eventually moved here.
   }
 
   /**
