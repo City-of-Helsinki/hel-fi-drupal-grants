@@ -99,7 +99,7 @@ elements: |
   muut_samaan_tarkoitukseen_haetut_avustukset:
     '#title': 'Other grants applied for to be used for the same purpose'
   info_muut_samaan_tarkoitukseen_haettu:
-    '#markup': '<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>An affirmative answer opens a further question</span></div></div></div>'
+    '#markup': '<p>Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet. Indicate only the grants applied for the same purpose of use, not all grants your organization has applied for.</p><div class="hds-notification hds-notification--info"><div class="hds-notification__content"><div class="hds-notification__label"><span>An affirmative answer opens a further question</span></div></div></div>'
   olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta:
     '#title': 'We have applied for grants from somewhere other than the City of Helsinki'
     '#options':
