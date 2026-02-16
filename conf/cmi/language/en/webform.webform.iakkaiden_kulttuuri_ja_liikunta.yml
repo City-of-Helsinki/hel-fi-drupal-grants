@@ -60,6 +60,8 @@ elements: |
     '#markup': '<p>Only apply for one grant type at a time with each application.</p><p>Enter the grant amount you are applying for the year 2026. The grant amounts for subsequent years of a multiyear application will be entered on the next page.</p>'
   kayttotarkoitus:
     '#title': 'Purpose of use'
+  compensation_purpose_information:
+    '#markup': 'In the “Purpose of Use” field, write a brief project summary that clearly states the project’s purpose, target group, and concrete actions and schedule.'
   compensation_purpose:
     '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
     '#help': '<p>Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.</p>'

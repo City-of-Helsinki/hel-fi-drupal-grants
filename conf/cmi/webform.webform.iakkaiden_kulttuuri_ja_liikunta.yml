@@ -21,7 +21,7 @@ third_party_settings:
     applicationClose: '2025-02-07T16:00:00'
     applicationActingYearsType: fixed
     applicationActingYears:
-      2025: '2025'
+      2026: '2026'
     applicationActingYearsNextCount: ''
     applicationContinuous: 0
     disableCopying: 1
@@ -373,13 +373,14 @@ elements: |-
         '#type': select
         '#title': 'Vuosi, jolle haen avustusta'
         '#options':
-          2024: '2024'
-          2025: '2025'
           2026: '2026'
         '#required': true
     avustuslajit:
       '#type': webform_section
       '#title': Avustuslajit
+      grants_compensations_information:
+        '#type': webform_markup
+        '#markup': '<p>Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan.</p><p>Syötä kenttään vuodelle 2026 haettava avustussumma. Monivuotisen hakemuksen jatkokausien avustussummat syötetään seuraavalla sivulla.</p>'
       subventions:
         '#type': grants_compensations
         '#title': Avustukset
@@ -404,12 +405,12 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      grants_compensations_information:
-        '#type': webform_markup
-        '#markup': '<p>Syötä kenttään vuodelle 2026 haettava avustussumma.</p><p>Monivuotisen hakemuksen jatkokausien avustussummat syötetään seuraavalla sivulla.</p>'
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
+      compensation_purpose_information:
+        '#type': webform_markup
+        '#markup': 'Kirjoita käyttötarkoitus - kenttään lyhyt hanketiivistelmä, josta käy ilmi hankkeen tarkoitus, kohderyhmä sekä konkreettiset toimenpiteet ja aikataulu.'
       compensation_purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'

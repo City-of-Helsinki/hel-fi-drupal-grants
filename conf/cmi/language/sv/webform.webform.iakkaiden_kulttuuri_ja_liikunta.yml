@@ -60,6 +60,8 @@ elements: |
     '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången.</p><p>Ange det bidragsbelopp som ansöks för år 2026. Bidragsbeloppen för fortsättningsåren i en flerårig ansökan anges på nästa sida.</p>'
   kayttotarkoitus:
     '#title': 'Användningsän damål'
+  compensation_purpose_information:
+    '#markup': 'Skriv i fältet för användningsändamål en kort projektbeskrivning som tydligt anger projektets syfte, målgrupp samt konkreta åtgärder och tidtabell.'
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
     '#help': '<p>Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten.</p>'
