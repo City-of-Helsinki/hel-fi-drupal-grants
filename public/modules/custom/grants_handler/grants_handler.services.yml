@@ -94,9 +94,7 @@ services:
     tags:
       - { name: event_subscriber }
 
-  grants_handler.service_page_block_service:
-    class: Drupal\grants_handler\ServicePageBlockService
-    arguments: ['@entity_type.manager', '@current_route_match', '@grants_profile.service']
+  Drupal\grants_handler\ServicePageBlockService: ~
 
   grants_handler.application_validator:
     class: Drupal\grants_handler\ApplicationValidator

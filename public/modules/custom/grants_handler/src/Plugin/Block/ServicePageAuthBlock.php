@@ -15,9 +15,12 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Url;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_handler\ApplicationStatusService;
 use Drupal\grants_handler\ServicePageBlockService;
+use Drupal\grants_profile\GrantsProfileService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -33,31 +36,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
-  /**
-   * Constructs a new ServicePageBlock instance.
-   *
-   * @param array $configuration
-   *   The plugin configuration, i.e. an array with configuration values keyed
-   *   by configuration option name. The special key 'context' may be used to
-   *   initialize the defined contexts by setting it to an array of context
-   *   values keyed by context names.
-   * @param string $pluginId
-   *   The plugin_id for the plugin instance.
-   * @param mixed $pluginDefinition
-   *   The plugin implementation definition.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helfiHelsinkiProfiili
-   *   The helfi_helsinki_profiili service.
-   * @param \Drupal\Core\Routing\CurrentRouteMatch $routeMatch
-   *   Get route params.
-   * @param \Drupal\Core\Session\AccountProxy $currentUser
-   *   Current user.
-   * @param \Drupal\grants_handler\ServicePageBlockService $servicePageBlockService
-   *   The service page block service.
-   * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
-   *   The application status service.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
-   *   The module handler.
-   */
   public function __construct(
     array $configuration,
     $pluginId,
@@ -68,6 +46,9 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     protected ServicePageBlockService $servicePageBlockService,
     protected ApplicationStatusService $applicationStatusService,
     protected ModuleHandlerInterface $moduleHandler,
+    protected LoggerInterface $logger,
+    protected FormSettingsServiceInterface $formSettingsService,
+    protected GrantsProfileService $grantsProfileService,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
   }
@@ -83,9 +64,12 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('helfi_helsinki_profiili.userdata'),
       $container->get('current_route_match'),
       $container->get('current_user'),
-      $container->get('grants_handler.service_page_block_service'),
+      $container->get(ServicePageBlockService::class),
       $container->get('grants_handler.application_status_service'),
       $container->get('module_handler'),
+      $container->get('logger.channel.grants_application'),
+      $container->get(FormSettingsServiceInterface::class),
+      $container->get('grants_profile.service'),
     );
   }
 
@@ -111,32 +95,29 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    */
   public function build(): array {
     $tOpts = ['context' => 'grants_handler'];
-
     $settings = NULL;
     $useReactForm = FALSE;
 
-    // phpcs:disable
-    // Start by check if the react-form exists and the react-form application period is on.
     // In that case, we always render the react-application block.
+    $reactFormId = $this->servicePageBlockService->getReactFormId();
+    $reactFormName = $this->servicePageBlockService->getSelectedReactFormIdentifier();
     if (
       $this->moduleHandler->moduleExists('grants_application') &&
-      $reactFormId = $this->servicePageBlockService->getReactFormId()
+      $reactFormId &&
+      $reactFormName
     ) {
       try {
-        // @phpstan-ignore-next-line
-        $formSettingsService = \Drupal::service('Drupal\grants_application\Form\FormSettingsService');
-        $settings = $formSettingsService->getFormSettings($reactFormId);
+        $settings = $this->formSettingsService->getFormSettings($reactFormId, $reactFormName);
       }
       catch (\Exception $e) {
         // If there are no settings, just use the webform.
-        $useReactForm = FALSE;
+        $this->logger->error("Unable to render the create application button on service page for application ID$reactFormId");
       }
 
       if ($settings && $settings->isApplicationOpen()) {
         $useReactForm = TRUE;
       }
     }
-    // phpcs:enable
 
     // Block default values.
     $build = [];
@@ -151,8 +132,6 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
     // React is always rendered if the settings are set correctly
     // (application period etc).
     if ($useReactForm) {
-      // @todo React-production: Fix the button text from template.
-      // @todo Fix the \Drupal calls above.
       $build['content'] = [
         '#auth' => 'auth',
         '#text' => $description,
@@ -164,8 +143,11 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
       // Load the webform. No need to check if it exists since this
       // has already been done in the access checks.
       $webform = $this->servicePageBlockService->loadServicePageWebform();
-      $webformId = $webform->id();
+      if (!$webform) {
+        return $build;
+      }
 
+      $webformId = $webform->id();
       // If the application isn't open, just display a message.
       if (!$this->applicationStatusService->isApplicationOpen($webform)) {
         return $build;
@@ -240,6 +222,24 @@ class ServicePageAuthBlock extends BlockBase implements ContainerFactoryPluginIn
    *   TRUE if access is granted, FALSE otherwise.
    */
   private function checkFormAccess(): bool {
+    $node = $this->routeMatch->getParameter('node');
+
+    $reactFormSettings = $node->get('field_react_form')->entity;
+    if ($reactFormSettings) {
+      $applicantTypes = array_column($reactFormSettings->get('applicant_types')->getValue(), 'value');
+
+      $selectedRole = $this->grantsProfileService->getSelectedRoleData();
+      if (!$selectedRole) {
+        return FALSE;
+      }
+
+      if (in_array($selectedRole['type'], $applicantTypes)) {
+        return TRUE;
+      }
+
+      return FALSE;
+    }
+
     if (!$webform = $this->servicePageBlockService->loadServicePageWebform()) {
       return FALSE;
     }

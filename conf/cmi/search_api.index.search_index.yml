@@ -12,10 +12,13 @@ dependencies:
     - field.storage.node.field_hakijatyyppi
     - field.storage.node.field_lead_in
     - field.storage.node.field_lower_content
+    - field.storage.node.field_react_form
     - field.storage.node.field_sidebar_content
     - field.storage.node.field_target_group
     - search_api.server.default_server
   module:
+    - grants_application
+    - grants_application_search
     - helfi_react_search
     - node
 id: search_index
@@ -23,6 +26,68 @@ name: 'Search index'
 description: ''
 read_only: false
 field_settings:
+  applicant_types:
+    label: 'React form » Application metadata » Applicant types'
+    datasource_id: 'entity:node'
+    property_path: 'field_react_form:entity:applicant_types'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_react_form
+      module:
+        - grants_application
+  application_close:
+    label: 'Application close'
+    datasource_id: 'entity:node'
+    property_path: 'field_react_form:entity:application_close'
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_react_form
+      module:
+        - grants_application
+  application_open:
+    label: 'Application open'
+    datasource_id: 'entity:node'
+    property_path: 'field_react_form:entity:application_open'
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_react_form
+      module:
+        - grants_application
+  application_subvention_type:
+    label: 'React form - Subvention type'
+    datasource_id: 'entity:node'
+    property_path: 'field_react_form:entity:application_subvention_type'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_react_form
+      module:
+        - grants_application
+  application_target_group:
+    label: 'React form » Application metadata » Application target group'
+    datasource_id: 'entity:node'
+    property_path: 'field_react_form:entity:application_target_group'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_react_form
+      module:
+        - grants_application
+  canonical_applicant_type:
+    label: 'Canonical applicant type'
+    property_path: canonical_applicant_type
+    type: string
+  canonical_subvention_type:
+    label: 'Canonical subvention type'
+    property_path: canonical_subvention_type
+    type: string
+  canonical_target_group:
+    label: 'Canonical target group'
+    property_path: canonical_target_group
+    type: string
   created:
     label: Luotu
     datasource_id: 'entity:node'
@@ -106,6 +171,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_lower_content
+  field_react_form:
+    label: 'React form'
+    datasource_id: 'entity:node'
+    property_path: field_react_form
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_react_form
   field_sidebar_content:
     label: 'Sidebar content'
     datasource_id: 'entity:node'
@@ -215,8 +288,26 @@ processor_settings:
   content_access:
     weights:
       preprocess_query: -30
+  custom_value: {  }
+  district_image_absolute_url: {  }
   entity_status: {  }
   entity_type: {  }
+  grants_application_search_canonical_fields:
+    all_fields: 0
+    fields:
+      - applicant_types
+      - application_subvention_type
+      - field_bottom_content
+      - field_content
+      - field_hakijatyyppi
+      - field_lead_in
+      - field_lower_content
+      - field_sidebar_content
+      - langcode
+      - rendered_item
+      - title
+      - type
+      - url
   highlight:
     weights:
       postprocess_query: 0
@@ -267,6 +358,9 @@ processor_settings:
       - type
       - url
   language_with_fallback: {  }
+  project_execution_schedule: {  }
+  project_image_absolute_url: {  }
+  project_plan_schedule: {  }
   rendered_item: {  }
   tokenizer:
     weights:
@@ -290,6 +384,7 @@ tracker_settings:
     indexing_order: fifo
 options:
   cron_limit: 50
+  delete_on_fail: true
   index_directly: true
   track_changes_in_references: true
 server: default_server

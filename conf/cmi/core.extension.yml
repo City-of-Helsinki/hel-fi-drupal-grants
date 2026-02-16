@@ -52,6 +52,7 @@ module:
   grant_applications_noscript: 0
   grants_admin_applications: 0
   grants_applicant_info: 0
+  grants_application: 0
   grants_application_search: 0
   grants_audit_log: 0
   grants_budget_components: 0
@@ -80,6 +81,7 @@ module:
   helfi_atv: 0
   helfi_atv_audit_logging: 0
   helfi_audit_log: 0
+  helfi_av: 0
   helfi_azure_fs: 0
   helfi_base_content: 0
   helfi_ckeditor: 0
@@ -231,7 +233,6 @@ module:
   paragraphs: 11
   paragraphs_library: 11
   publication_date: 99
-  grants_menu: 300
   minimal: 1000
 theme:
   stable9: 0

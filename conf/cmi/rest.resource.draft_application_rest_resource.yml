@@ -1,0 +1,20 @@
+uuid: 2eaf0830-bf8b-4728-aabd-d8e96c7bd4de
+langcode: en
+status: true
+dependencies:
+  module:
+    - grants_application
+    - serialization
+    - user
+id: draft_application_rest_resource
+plugin_id: draft_application_rest_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PATCH
+  formats:
+    - json
+  authentication:
+    - cookie

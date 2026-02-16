@@ -15,7 +15,7 @@ use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Entity\ApplicationSubmission;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\JsonSchemaValidator;
 use Drupal\grants_application\User\UserInformationService;
@@ -55,7 +55,7 @@ final class Application extends ResourceBase {
     $plugin_definition,
     $serializer_formats,
     LoggerInterface $logger,
-    private FormSettingsService $formSettingsService,
+    private FormSettingsServiceInterface $formSettingsService,
     private UserInformationService $userInformationService,
     private HelfiAtvService $atvService,
     private UuidInterface $uuid,
@@ -87,7 +87,7 @@ final class Application extends ResourceBase {
       $plugin_definition,
       $container->getParameter('serializer.formats'),
       $container->get('logger.channel.grants_application'),
-      $container->get(FormSettingsService::class),
+      $container->get(FormSettingsServiceInterface::class),
       $container->get(UserInformationService::class),
       $container->get(HelfiAtvService::class),
       $container->get(UuidInterface::class),
@@ -331,6 +331,7 @@ final class Application extends ResourceBase {
     try {
       $mappedData = $this->jsonMapperService->handleMapping(
         $application_type_id,
+        $submission->get('form_identifier')->value,
         $application_number,
         $form_data,
         $bankFile,
@@ -518,6 +519,7 @@ final class Application extends ResourceBase {
       $oldDocument = $document->toArray();
       $mappedData = $this->jsonMapperService->handleMappingForPatchRequest(
         $application_type_id,
+        $submission->get('form_identifier')->value,
         $application_number,
         $form_data,
         $selected_company['type'],

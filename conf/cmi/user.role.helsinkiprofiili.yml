@@ -2,11 +2,15 @@ uuid: b81215c2-8134-4132-b93c-aa08338f5331
 langcode: en
 status: true
 dependencies:
+  config:
+    - rest.resource.application_rest_resource
+    - rest.resource.draft_application_rest_resource
   module:
     - file
     - grants_mandate
     - grants_profile
     - raven
+    - rest
     - webform
 id: helsinkiprofiili
 label: HelsinkiProfiili
@@ -18,6 +22,12 @@ permissions:
   - 'delete own files'
   - 'edit own webform submission'
   - 'get mandates from dvv'
+  - 'restful get application_rest_resource'
+  - 'restful get draft_application_rest_resource'
+  - 'restful patch application_rest_resource'
+  - 'restful patch draft_application_rest_resource'
+  - 'restful post application_rest_resource'
+  - 'restful post draft_application_rest_resource'
   - 'send performance traces to sentry'
   - 'view own grants_profile'
   - 'view own webform submission'

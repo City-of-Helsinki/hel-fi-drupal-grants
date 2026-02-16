@@ -16,10 +16,9 @@ use Drupal\webform\Entity\WebformSubmission;
  * Test data conversion from ATVDocument to WebformSubmission.
  */
 class DataConversionTest extends GrantsKernelTestBase implements ServiceModifierInterface {
+
   /**
-   * The modules to load to run the test.
-   *
-   * @var array<string>
+   * {@inheritdoc}
    */
   protected static $modules = [
     // Drupal modules.
@@ -44,6 +43,7 @@ class DataConversionTest extends GrantsKernelTestBase implements ServiceModifier
     'helfi_yjdh',
     // Project modules.
     'grants_applicant_info',
+    'grants_application',
     'grants_events',
     'grants_attachments',
     'grants_budget_components',

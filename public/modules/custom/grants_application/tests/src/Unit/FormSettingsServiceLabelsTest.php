@@ -9,6 +9,7 @@ use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\Tests\UnitTestCase;
 
 /**
@@ -24,12 +25,12 @@ final class FormSettingsServiceLabelsTest extends UnitTestCase {
    * @param string $langcode
    *   The language code to set for the test service.
    *
-   * @return \Drupal\grants_application\Form\FormSettingsService
+   * @return \Drupal\grants_application\Form\FormSettingsServiceInterface
    *   A configured FormSettingsService instance for testing.
    */
-  private function buildService(string $langcode): FormSettingsService {
+  private function buildService(string $langcode): FormSettingsServiceInterface {
     $reflectionClass = new \ReflectionClass(FormSettingsService::class);
-    /** @var \Drupal\grants_application\Form\FormSettingsService $service */
+    /** @var \Drupal\grants_application\Form\FormSettingsServiceInterface $service */
     $service = $reflectionClass->newInstanceWithoutConstructor();
 
     // Mocks.

@@ -14,7 +14,7 @@ use Drupal\file\Entity\File;
 use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationStatusService;
@@ -46,7 +46,7 @@ final class ApplicationController extends ControllerBase {
     private readonly ApplicationGetterService $applicationGetterService,
     #[Autowire(service: 'helfi_atv.atv_service')]
     private readonly AtvService $atvService,
-    private readonly FormSettingsService $formSettingsService,
+    private readonly FormSettingsServiceInterface $formSettingsService,
     #[Autowire(service: 'grants_handler.application_status_service')]
     private readonly ApplicationStatusService $applicationStatusService,
     #[Autowire(service: 'grants_events.events_service')]
@@ -260,6 +260,7 @@ final class ApplicationController extends ControllerBase {
 
     try {
       $result = $this->helfiAtvService->addAttachment(
+        // @phpstan-ignore property.notFound
         $submission->document_id->value,
         $file_original_name,
         $file_entity

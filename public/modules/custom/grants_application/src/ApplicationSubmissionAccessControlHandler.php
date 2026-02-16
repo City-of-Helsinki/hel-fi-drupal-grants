@@ -2,6 +2,7 @@
 
 namespace Drupal\grants_application;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Access\AccessResultInterface;
@@ -42,6 +43,12 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
   public function access(EntityInterface $entity, $operation, ?AccountInterface $account = NULL, $return_as_object = FALSE): AccessResultInterface {
     // Original implementation: ApplicationAccessHandler.php in grants handler.
     assert($entity instanceof ContentEntityInterface);
+
+    // The admins can break content lock.
+    if ($account?->hasPermission('break content lock')) {
+      return AccessResult::allowed()->cachePerPermissions();
+    }
+
     $userInformation = $this->userInformationService->getUserData();
 
     if ($userInformation['sub'] && $userInformation['sub'] === $entity->get('sub')->value) {
