@@ -1,12 +1,12 @@
 {
   "attachments_step": {
-    "additional_information_section": {
-      "additional_information": {
+    "additional_info_section": {
+      "additional_info": {
         "ui:widget": "textarea"
       }
     },
     "attachments_section": {
-      "extra_info": {
+      "further_clarification": {
         "ui:widget": "textarea"
       },
       "required_attachments_help": {
@@ -38,7 +38,7 @@
         "ui:options": {
           "hideNameFromPrint": true
         },
-        "mapName": {
+        "map_name": {
           "ui:widget": "textarea"
         }
       }

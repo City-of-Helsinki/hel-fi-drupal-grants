@@ -24,7 +24,7 @@ export const useTranslateData = (data: any) => {
 
   const translateSchemaElement = (element: any): any => {
     const result: any = { ...element };
-    ['addText', 'description', 'title', 'default'].forEach((key: string) => {
+    ['description', 'title', 'default'].forEach((key: string) => {
       if (element[key] && isTranslatableString(element[key])) {
         result[key] = t(element[key]);
       }
@@ -77,7 +77,7 @@ export const useTranslateData = (data: any) => {
   };
 
   const translateUiSchemaElement = (element: string, key: string) => {
-    const translatableKeys = ['printableName', 'removeText', 'ui:help'];
+    const translatableKeys = ['addText', 'printableName', 'removeText', 'ui:help'];
 
     if (translatableKeys.includes(key)) {
       return t(element);
