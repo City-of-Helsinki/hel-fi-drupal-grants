@@ -45,7 +45,7 @@ final class ApplicationSubmissionTest extends KernelTestBase {
   }
 
   /**
-   * Creates a target group term and returns its ID.
+   * Test application submission entity.
    */
   public function testApplicationSubmissionEntity(): void {
     $viewUrl = $this->applicationSubmission->getViewApplicationLink('Liikuntasuunnistus');
@@ -56,6 +56,9 @@ final class ApplicationSubmissionTest extends KernelTestBase {
 
     $editUrl = $this->applicationSubmission->getEditApplicationLink('Liikuntasuunnistus');
     $this->assertTrue($editUrl->getUrl()->toString() === '/application/new/58/KERNELTEST-058-0000001');
+
+    $printUrl = $this->applicationSubmission->getPrintApplicationUrl();
+    $this->assertTrue($printUrl->getUrl()->toString() === '/application/KERNELTEST-058-0000001/print');
 
     $keys = ['application_type_id', 'form_identifier', 'status', 'application_number', 'language'];
     foreach ($keys as $key) {
