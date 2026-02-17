@@ -336,7 +336,7 @@ final class ApplicationController extends ControllerBase {
     }
 
     try {
-      $deleted = $this->atvService->deleteAttachment($application_number, $attachmentId);
+      $deleted = $this->helfiAtvService->removeAttachment($application_number, $attachmentId);
     }
     catch (\throwable $e) {
       // If file is no more present, we can just continue.
@@ -357,7 +357,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $this->eventsService->logEvent(
         $application_number,
-        $this->eventsService->getEventTypes()['HANDLER_ATT_DELETED'],
+        'HANDLER_ATT_DELETED',
         "Deleted a file $attachmentId",
         $attachmentId,
       );

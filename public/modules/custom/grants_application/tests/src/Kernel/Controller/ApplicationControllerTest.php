@@ -79,6 +79,7 @@ final class ApplicationControllerTest extends KernelTestBase {
       'href' => 'testhref.example.com/file/9595',
       'size' => '999',
     ]);
+    $helfiAtvService->expects($this->any())->method('removeAttachment')->willReturn(TRUE);
 
     $antiVirusService = $this->createMock(AntivirusService::class);
     $antiVirusService->expects($this->any())->method('scan')->willReturn(TRUE);
@@ -103,8 +104,18 @@ final class ApplicationControllerTest extends KernelTestBase {
 
     $response = $controller->uploadFile($this->applicationNumber, $request);
     $responseData = json_decode($response->getContent(), TRUE);
+    $this->assertArrayNotHasKey('error', $responseData);
     $this->assertArrayHasKey('href', $responseData);
     $this->assertEquals('testhref.example.com/file/9595', $responseData['href']);
+  }
+
+  /**
+   * Test file remove.
+   */
+  public function testFileDelete(): void {
+    $controller = ApplicationController::create($this->container);
+    $response = $controller->removeFile($this->applicationNumber, '9595');
+    $this->assertTrue($response->getStatusCode() === 200);
   }
 
 }
