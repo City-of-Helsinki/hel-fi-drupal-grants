@@ -427,7 +427,7 @@ final class ApplicationController extends ControllerBase {
     }
 
     try {
-      if ($this->atvService->deleteDocument($document)) {
+      if ($this->helfiAtvService->deleteDocument($document)) {
         $submission->delete();
       }
     }

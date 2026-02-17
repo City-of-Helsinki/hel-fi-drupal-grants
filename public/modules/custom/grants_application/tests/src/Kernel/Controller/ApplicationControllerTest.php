@@ -8,9 +8,12 @@ use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Controller\ApplicationController;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_events\EventsService;
+use Drupal\grants_handler\ApplicationGetterService;
+use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_av\AntivirusService;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -40,8 +43,13 @@ final class ApplicationControllerTest extends KernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
-
     $this->installEntitySchema('application_submission');
+
+    $config = $this->config('content_lock.settings')
+      ->set('types.application_submission', ['*' => '*'])
+      ->set('verbose', TRUE);
+    $config->save();
+    $this->installSchema('content_lock', 'content_lock');
 
     $request = new Request();
     $request->files->set('file',
@@ -69,6 +77,36 @@ final class ApplicationControllerTest extends KernelTestBase {
     ]);
     $this->applicationSubmission->save();
 
+    $atvDocument = AtvDocument::create([
+      'id' => 'test-id',
+      'type' => 'type',
+      'status' => [
+        'value' => 'DRAFT',
+      ],
+      'status_histories' => [
+        'DRAFT',
+      ],
+      'transaction_id' => '1234567890',
+      'business_id' => '1234567-1',
+      'tos_function_id' => '12345',
+      'tos_record_id' => '54321',
+      'draft' => TRUE,
+      'human_readable_type' => ['humanType'],
+      'metadata' => '{"name": "Name", "value": "Value"}',
+      'content' => '{"data": "content"}',
+      'created_at' => '2024-06-06',
+      'updated_at' => '2024-06-07',
+      'user_id' => 'userId',
+      'locked_after' => '2024-06-08',
+      'deletable' => TRUE,
+      'delete_after' => '2075-01-01',
+      'document_language' => 'fi',
+      'content_schema_url' => 'schemaURL',
+    ]);
+
+    $applicationGetterService = $this->createMock(ApplicationGetterService::class);
+    $applicationGetterService->expects($this->any())->method('getAtvDocument')->willReturn($atvDocument);
+
     $eventService = $this->createMock(EventsService::class);
     $eventService->expects($this->any())->method('logEvent')->withAnyParameters()->willReturn([]);
 
@@ -80,6 +118,7 @@ final class ApplicationControllerTest extends KernelTestBase {
       'size' => '999',
     ]);
     $helfiAtvService->expects($this->any())->method('removeAttachment')->willReturn(TRUE);
+    $helfiAtvService->expects($this->any())->method('deleteDocument')->willReturn(TRUE);
 
     $antiVirusService = $this->createMock(AntivirusService::class);
     $antiVirusService->expects($this->any())->method('scan')->willReturn(TRUE);
@@ -89,6 +128,7 @@ final class ApplicationControllerTest extends KernelTestBase {
       ->method('getCurrentRequest')
       ->willReturn($request);
 
+    $this->container->set('grants_handler.application_getter_service', $applicationGetterService);
     $this->container->set('grants_events.events_service', $eventService);
     $this->container->set(HelfiAtvService::class, $helfiAtvService);
     $this->container->set(AntivirusService::class, $antiVirusService);
@@ -115,7 +155,21 @@ final class ApplicationControllerTest extends KernelTestBase {
   public function testFileDelete(): void {
     $controller = ApplicationController::create($this->container);
     $response = $controller->removeFile($this->applicationNumber, '9595');
+
+    $errors = $this->container->get('messenger')->messagesByType('error');
+    $this->assertCount(0, $errors);
     $this->assertTrue($response->getStatusCode() === 200);
+  }
+
+  /**
+   * Test application removal.
+   */
+  public function testRemoveApplication(): void {
+    $controller = ApplicationController::create($this->container);
+    $controller->removeApplication($this->applicationNumber);
+
+    $errors = $this->container->get('messenger')->messagesByType('error');
+    $this->assertCount(0, $errors);
   }
 
 }

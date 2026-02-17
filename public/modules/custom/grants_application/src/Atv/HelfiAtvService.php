@@ -106,6 +106,19 @@ class HelfiAtvService {
   }
 
   /**
+   * Remove ATV-document.
+   *
+   * @param AtvDocument $document
+   *   The atv document to remove.
+   *
+   * @return mixed
+   *   Can be pretty much anything.
+   */
+  public function deleteDocument(AtvDocument $document): mixed {
+    return $this->atvService->deleteDocument($document);
+  }
+
+  /**
    * Get attachment file from atv document.
    *
    * @param string $href
