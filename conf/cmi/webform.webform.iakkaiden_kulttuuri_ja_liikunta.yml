@@ -602,7 +602,7 @@ elements: |-
     '#title': '3. Tarkemmat tiedot'
     tarkemmat_tiedot_section:
       '#type': webform_section
-      '#title': ''
+      '#title': 'Haettava avustus (2026-2028)'
       hankesuunnitelma_avustuksen_kesto:
         '#type': radios
         '#title': 'Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
@@ -718,6 +718,7 @@ elements: |-
       hankkeen_nimi:
         '#type': textarea
         '#title': 'Hankkeen nimi'
+        '#required': true
         '#maxlength': 300
         '#counter_type': character
         '#counter_maximum': 300
@@ -725,6 +726,7 @@ elements: |-
       hankkeen_tarkoitus_tavoitteet:
         '#type': textarea
         '#title': 'Hankkeen tarkoitus ja tavoitteet'
+        '#required': true
         '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500
@@ -732,6 +734,7 @@ elements: |-
       hankesuunnitelma_jatkohakemus:
         '#type': radios
         '#title': 'Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?'
+        '#required': true
         '#description_display': after
         '#options':
           1: Kyllä
@@ -746,6 +749,7 @@ elements: |-
         hankkeen_toimenpiteet_aikataulu_2026:
           '#type': textarea
           '#title': 'Toimenpiteet kaudella 2026-2027 ja niiden suunnitteltu aikataulutus'
+          '#required': true
           '#maxlength': 2500
           '#counter_type': character
           '#counter_maximum': 2500
@@ -767,51 +771,51 @@ elements: |-
       haun_tavoitteet_fieldset:
         '#type': 'fieldset'
         '#title': 'Haun tavoitteet'
-          tavoitteet_info:
-            '#type': 'textfield'
-            '#title': '<p>Mihin seuraavista iäkkäiden liikkumisen tai kulttuuritoiminnan edistämisen avustuksen tavoitteista hanke vastaa?</p><p> HUOM! Valitse tavoitteista vain ne, joita edistetään hankkeessa konkreettisilla toimenpiteillä<p>'
-          hankkeen_tavoitteet_1:
-            '#type': textarea
-            '#title': 'Lisääkö hanke lähiympäristön tai alueellisia liikkumismahdollisuuksia / taide- ja kulttuuritoimintaa? Miten?'
-            '#maxlength': 1250
-            '#counter_type': character
-            '#counter_maximum': 1250
-            '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-          hankkeen_tavoitteet_2:
-            '#type': textarea
-            '#title': 'Lisääkö hanke vapaaehtois- / vertaistoimintaa ikäihmisten liikkumiseksi / kulttuuritoiminnassa? Miten?'
-            '#maxlength': 1250
-            '#counter_type': character
-            '#counter_maximum': 1250
-            '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-          hankkeen_tavoitteet_3:
-            '#type': textarea
-            '#title': 'Lisääkö hanke digitalista ja etänä toteutettavaa liikkumiseen aktivoivaa toimitaa / kulttuuritoimintaa? Miten?'
-            '#maxlength': 1250
-            '#counter_type': character
-            '#counter_maximum': 1250
-            '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-          hankkeen_tavoitteet_4:
-            '#type': textarea
-            '#title': 'Vähentääkö hanke yksinäisyyttä ja lisääkö mielen hyvinvointia liikkumisen / kulttuuritoiminnan avulla? Miten?'
-            '#maxlength': 1250
-            '#counter_type': character
-            '#counter_maximum': 1250
-            '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-          hankkeen_tavoitteet_5:
-            '#type': textarea
-            '#title': 'Sisältääkö hanke sukupolvia yhdistävää toimintaa ja lisääkö sukupolvien välisiä kohtaamisia liikkumisen / kulttuuritoiminnan kautta? Miten?'
-            '#maxlength': 1250
-            '#counter_type': character
-            '#counter_maximum': 1250
-            '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-          hankkeen_tavoitteet_6:
-            '#type': textarea
-            '#title': 'Edistääkö hanke moninaisuuden tai monikulttuurisuuden huomioon ottamista ikäihmisille suunnatussa liikunta- / kulttuuritoiminnassa? Miten?'
-            '#maxlength': 1250
-            '#counter_type': character
-            '#counter_maximum': 1250
-            '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        tavoitteet_info:
+          '#type': 'textfield'
+          '#title': '<p>Mihin seuraavista iäkkäiden liikkumisen tai kulttuuritoiminnan edistämisen avustuksen tavoitteista hanke vastaa?</p><p> HUOM! Valitse tavoitteista vain ne, joita edistetään hankkeessa konkreettisilla toimenpiteillä<p>'
+        hankkeen_tavoitteet_1:
+          '#type': textarea
+          '#title': 'Lisääkö hanke lähiympäristön tai alueellisia liikkumismahdollisuuksia / taide- ja kulttuuritoimintaa? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        hankkeen_tavoitteet_2:
+          '#type': textarea
+          '#title': 'Lisääkö hanke vapaaehtois- / vertaistoimintaa ikäihmisten liikkumiseksi / kulttuuritoiminnassa? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        hankkeen_tavoitteet_3:
+          '#type': textarea
+          '#title': 'Lisääkö hanke digitalista ja etänä toteutettavaa liikkumiseen aktivoivaa toimitaa / kulttuuritoimintaa? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        hankkeen_tavoitteet_4:
+          '#type': textarea
+          '#title': 'Vähentääkö hanke yksinäisyyttä ja lisääkö mielen hyvinvointia liikkumisen / kulttuuritoiminnan avulla? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        hankkeen_tavoitteet_5:
+          '#type': textarea
+          '#title': 'Sisältääkö hanke sukupolvia yhdistävää toimintaa ja lisääkö sukupolvien välisiä kohtaamisia liikkumisen / kulttuuritoiminnan kautta? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        hankkeen_tavoitteet_6:
+          '#type': textarea
+          '#title': 'Edistääkö hanke moninaisuuden tai monikulttuurisuuden huomioon ottamista ikäihmisille suunnatussa liikunta- / kulttuuritoiminnassa? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
     hankkeen_kohderyhmat_section:
       '#type': webform_section
       '#title': 'Hankkeen kohderyhmät, yhteistyökumppanit ja alue'
@@ -825,6 +829,7 @@ elements: |-
       hankkeen_kohderyhmat_osallisuus:
         '#type': textarea
         '#title': 'Millä tavoin hankkeessa edistetään ikäihmisten osallisuutta?'
+        '#required': true
         '#maxlength': 1250
         '#counter_type': character
         '#counter_maximum': 1250
@@ -833,6 +838,7 @@ elements: |-
       hankkeen_kohderyhmat_osaaminen:
         '#type': textarea
         '#title': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
+        '#required': true
         '#maxlength': 1250
         '#counter_type': character
         '#counter_maximum': 1250
@@ -843,6 +849,7 @@ elements: |-
         tavoitettu_helsingissa:
           '#type': textfield
           '#title': 'Toiminnalla tavoitettavat Helsingissä asuvat iäkkäät ihmiset'
+          '#help': '<p>Toiminnalla tavoitettavat Helsingissä asuvat iäkkäät ihmiset</p><p>Ilmoita tässä tavoitettujen ikäihmisten määrä.</p>'
           '#required': true
           '#attributes':
             class:
@@ -852,6 +859,7 @@ elements: |-
         tapahtumakerrat_yhteensa:
           '#type': textfield
           '#title': 'Tapahtumakertoja / tapaamisten määrä yhteensä'
+          '#help': '<b>Tapahtumakertojen / tapaamisten määrä yhteensä</b><p>Monta kohtaamista toimintaan osallistuville järjestetään hankekauden aikana? Jokainen esimerkiksi viikottaisen liikuntaryhmän kerta tai yksilöasiakastapaaminen lasketaan yhtenä tapahtumakertana tässä.</p>'
           '#required': true
           '#attributes':
             class:
@@ -889,6 +897,7 @@ elements: |-
         hankkeen_kohderyhmat_osaaminen:
           '#type': textarea
           '#title': 'Miksi juuri kyseinen alue / alueet on valittu?'
+          '#required': true
           '#maxlength': 1250
           '#counter_type': character
           '#counter_maximum': 1250
@@ -896,6 +905,7 @@ elements: |-
       hankkeen_keskeisimmat_kumppanit:
         '#type': textarea
         '#title': 'Nimeä keskeisimmät yhteistökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla olevat tahot.'
+        '#required': true
         '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500
@@ -906,6 +916,7 @@ elements: |-
       hankkeen_riskit_keskeisimmat:
         '#type': textarea
         '#title': 'Mitkä ovat hankkeen suunnitelman mukaisen toteuttamisen näkökulmasta keskeisimmät riskit?'
+        '#required': true
         '#maxlength': 1250
         '#counter_type': character
         '#counter_maximum': 1250
@@ -913,6 +924,7 @@ elements: |-
       hankkeen_toteutumisen_seuranta:
         '#type': textarea
         '#title': 'Miten hankkeessa aiotaan seurata tavoitteiden toteutumista ja miten hankkeen vaikuttavuutta aiotaan mitata'
+        '#required': true
         '#maxlength': 1250
         '#counter_type': character
         '#counter_maximum': 1250
@@ -927,6 +939,7 @@ elements: |-
       hankkeen_ratkaisema_ongelma:
         '#type': textarea
         '#title': 'Mihin tarpeeseen tai rakenteelliseen ongelmaan toiminnalla halutaan vastata? Millainen muutos toiminnalla halutaan saada aikaiseksi?'
+        '#required': true
         '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500
