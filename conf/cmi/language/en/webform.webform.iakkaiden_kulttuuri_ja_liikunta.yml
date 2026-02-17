@@ -169,6 +169,8 @@ elements: |
     '#options':
       1: 'Yes'
       0: 'No'
+  toimenpiteet_ja_aikataulu:
+    '#title': 'Project activities and schedule'
   hankkeen_toimenpiteet_aikataulu:
     '#title': 'What are the concrete measures of the project and the schedule for their implementation?'
     '#counter_maximum_message': '%d/4000 characters remaining'

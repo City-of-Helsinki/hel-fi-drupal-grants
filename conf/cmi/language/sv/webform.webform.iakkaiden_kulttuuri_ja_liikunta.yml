@@ -169,6 +169,8 @@ elements: |
     '#options':
       1: Ja
       0: Nej
+  toimenpiteet_ja_aikataulu:
+    '#title': 'Projektets åtgärder och tidtabell'
   hankkeen_toimenpiteet_aikataulu:
     '#title': 'Vilka är de konkreta åtgärderna för projektet och tidtabellen för när de ska genomföras?'
     '#counter_maximum_message': '%d/4000 tecken kvar'

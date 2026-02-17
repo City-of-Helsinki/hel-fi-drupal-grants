@@ -729,7 +729,6 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-
       hankesuunnitelma_jatkohakemus:
         '#type': radios
         '#title': 'Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?'
@@ -738,20 +737,33 @@ elements: |-
           1: Kyllä
           0: Ei
         '#default_value': '0'
-      hankkeen_toimenpiteet_aikataulu:
-        '#type': textarea
-        '#title': 'Mitkä ovat hankkeen konkreettiset toimenpiteet ja niiden toteutusaikataulu?'
-        '#maxlength': 4000
-        '#counter_type': character
-        '#counter_maximum': 4000
-        '#counter_maximum_message': '%d/4000 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
+      toimenpiteet_ja_aikataulu:
+        '#type': 'fieldset'
+        '#title': 'Hankkeen toimenpiteet ja aikataulu'
+        jotain:
+          '#type': 'textfield'
+          '#title': 'jotain'
+        hankkeen_toimenpiteet_aikataulu_2026:
+          '#type': textarea
+          '#title': 'Toimenpiteet kaudella 2026-2027 ja niiden suunnitteltu aikataulutus'
+          '#maxlength': 2500
+          '#counter_type': character
+          '#counter_maximum': 2500
+          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        hankkeen_toimenpiteet_aikataulu_2027:
+          '#type': textarea
+          '#title': 'Toimenpiteet kaudella 2027-2028 ja niiden suunnitteltu aikataulutus'
+          '#maxlength': 2500
+          '#counter_type': character
+          '#counter_maximum': 2500
+          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        hankkeen_toimenpiteet_aikataulu_2028:
+          '#type': textarea
+          '#title': 'Toimenpiteet kaudella 2028-2029 ja niiden suunnitteltu aikataulutus'
+          '#maxlength': 2500
+          '#counter_type': character
+          '#counter_maximum': 2500
+          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
       hankkeen_toimenpiteet_toteutus:
         '#type': fieldset
         '#title': 'Hankkeen konkreettiset toimenpiteet on tarkoitus toteuttaa välillä'
