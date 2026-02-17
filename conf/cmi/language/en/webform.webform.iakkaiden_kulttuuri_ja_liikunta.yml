@@ -148,33 +148,19 @@ elements: |
     '#title': '2027 (euros)'
   haettava_avustussumma_2028:
     '#title': '2028 (euros)'
-  hankesuunnitelma_kuvaus_1:
+  avustus_kuvaus_1:
     '#type': webform_markup
     '#markup': 'Grants of €5,000–€19,999 are awarded for one year at a time. Projects in this category must promote at least one of the alternative objectives listed above, and the self financing share or other funding must be at least 5% of the project costs.'
-  hankesuunnitelma_kuvaus_2:
+  avustus_kuvaus_2:
     '#type': webform_markup
     '#markup': 'Grants of €20,000–€49,999 per year can be applied for projects lasting 1–3 years. Projects in this category must promote at least two of the alternative objectives listed above, and the self financing share or other funding must be at least 10% of the project costs.'
-  hankesuunnitelma_kuvaus_3:
+  avustus_kuvaus_3:
     '#type': webform_markup
     '#markup': 'Grants of €50,000–€80,000 per year can be applied for projects lasting 2–3 years. Projects in this category must promote at least three of the alternative objectives listed above, and the sefinancing share or other funding must be at least 15% of the project costs.'
-  ensisijainen_taiteen_ala:
-    '#title': 'Primary field of art'
-    '#help': '<p>Choose the option that best describes your activities.</p>'
-    '#options':
-      'Design ja käsityö': 'Design and crafts'
-      'Elokuva, valokuva ja media': 'Film, photography and media'
-      Kaupunkikulttuuri: 'Urban art and culture'
-      Kirjallisuus: Literature
-      'Kuvataide ja sarjakuva': 'Visual arts and comics'
-      Monitaide: 'Multidisciplinary art'
-      Museo: Museum
-      Musiikki: Music
-      Muu: Other
-      Sirkus: Circus
-      Tanssi: Dance
-      Teatteri: Theatre
   hankesuunnitelma_section:
     '#title': '3.1 Project plan'
+  hankkeen_nimi:
+    '#title': 'Project name'
   hankkeen_tarkoitus_tavoitteet:
     '#title': 'Purpose and goals of the project'
     '#counter_maximum_message': '%d/2500 characters remaining'

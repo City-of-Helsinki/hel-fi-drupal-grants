@@ -684,7 +684,7 @@ elements: |-
             required:
               - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
                   value: '3'
-      hankesuunnitelma_kuvaus_1:
+      avustus_kuvaus_1:
         '#type': webform_markup
         '#markup': '5000-19999 euron avustukset myönnetään yhdeksi vuodeksi kerrallaan. Hankkeen tulee tässä kategoriassa edistää vähintään yhtä yllä luetelluista vaihtoehdoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 5% hankkeen kuluista'
         '#states':
@@ -692,7 +692,7 @@ elements: |-
             ':input[name="avustukset_summa"]':
               value:
                 less_equal: '19999'
-      hankesuunnitelma_kuvaus_2:
+      avustus_kuvaus_2:
         '#type': webform_markup
         '#markup': '20 000-49 999 euron avustussummaa per vuosi voi hakea 1-3 vuoden mittaisille hankkeilla. Hankkeiden tulee tässä kategoriassa edistää vähintään kahta yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 10% hankkeen kuluista'
         '#states':
@@ -704,7 +704,7 @@ elements: |-
             - ':input[name="avustukset_summa"]':
                 value:
                   less_equal: '49999'
-      hankesuunnitelma_kuvaus_3:
+      avustus_kuvaus_3:
         '#type': webform_markup
         '#markup': '50 000-80 000 euron avustussummaa per vuosi voi hakea 2-3 vuoden mittaisille hankkeille. Hankkeiden tulee tässä kategoriassa edistää vähintään kolmea yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 15% hankkeen kuluista.'
         '#states':
@@ -715,6 +715,13 @@ elements: |-
     hankesuunnitelma_section:
       '#type': webform_section
       '#title': '3.1 Hankesuunnitelma'
+      hankkeen_nimi:
+        '#type': textarea
+        '#title': 'Hankkeen nimi'
+        '#maxlength': 300
+        '#counter_type': character
+        '#counter_maximum': 300
+        '#counter_maximum_message': '%d/300 merkkiä jäljellä'
       hankkeen_tarkoitus_tavoitteet:
         '#type': textarea
         '#title': 'Hankkeen tarkoitus ja tavoitteet'
@@ -722,13 +729,7 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
+
       hankesuunnitelma_jatkohakemus:
         '#type': radios
         '#title': 'Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?'
