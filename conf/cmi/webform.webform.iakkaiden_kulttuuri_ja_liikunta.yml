@@ -18,7 +18,7 @@ third_party_settings:
       81: '81'
     applicationTargetGroup: '75'
     applicationOpen: '2025-01-13T05:00:00'
-    applicationClose: '2025-02-07T16:00:00'
+    applicationClose: '2027-02-07T16:00:00'
     applicationActingYearsType: fixed
     applicationActingYears:
       2026: '2026'
@@ -602,77 +602,119 @@ elements: |-
     '#title': '3. Tarkemmat tiedot'
     tarkemmat_tiedot_section:
       '#type': webform_section
-      '#title': ' '
-      hankesuunnitelma_radios:
+      '#title': ''
+      hankesuunnitelma_avustuksen_kesto:
         '#type': radios
+        '#title': 'Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
+        '#options':
+          1: 'Haen avustusta yksivuotisena'
+          2: 'Haen avustusta kaksivuotisena'
+          3: 'Haen avustusta kolmevuotisena'
         '#required': true
-        '#title': 'Haetaanko nyt vuonna 2024 myönnetyn kaksivuotisen avustuksen 2. osaa?'
-        '#description': '<p data-renderer-start-pos="6773">Vuoden 2024 avustuspäätökset:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="6806">Liikuntajaosto: 11.4.2024 §10</p></li><li><p data-renderer-start-pos="6839">Kulttuuri- ja kirjastojaosto: 16.4.2024 §15</p></li></ul>'
-        '#description_display': after
-        '#options':
-          1: Kyllä
-          0: Ei
-        '#default_value': '0'
-      ensisijainen_taiteen_ala:
-        '#type': select
-        '#title': 'Ensisijainen taiteenala'
-        '#help': 'Valitse pudotusvalikosta toimintaa parhaiten kuvaava vaihtoehto.'
-        '#options':
-          'Design ja käsityö': 'Design ja käsityö'
-          'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
-          Kaupunkikulttuuri: Kaupunkikulttuuri
-          Kirjallisuus: Kirjallisuus
-          'Kuvataide ja sarjakuva': 'Kuvataide ja sarjakuva'
-          Monitaide: Monitaide
-          Museo: Museo
-          Musiikki: Musiikki
-          Muu: Muu
-          Sirkus: Sirkus
-          Tanssi: Tanssi
-          Teatteri: Teatteri
-        '#wrapper_attributes':
-          class:
-            - webform-element-help--wrapper-short
+        '#default_value': '1'
+      haettava_avustussumma:
+        '#type': fieldset
+        '#title': 'Haettava avustussumma'
+        '#required': true
+        haettava_avustussumma_2026:
+          '#type': grants_budget_income_static
+          '#title': '2026 (euroa)'
+          '#multiple': false
+          '#incomeGroup': general
+          '#required': true
+          '#compensation__title': '2026 (euroa)'
+          '#compensation__title_display': before
+          '#plannedStateOperativeSubvention__access': false
+          '#otherCompensationFromCity__access': false
+          '#stateOperativeSubvention__access': false
+          '#plannedOtherCompensations__access': false
+          '#sponsorships__access': false
+          '#entryFees__access': false
+          '#sales__access': false
+          '#financialFundingAndInterests__access': false
+          '#customerFees__access': false
+          '#donations__access': false
+          '#compensationFromCulturalAffairs__access': false
+          '#otherCompensationType__access': false
+          '#incomeWithoutCompensations__access': false
+          '#ownFunding__access': false
+          '#plannedTotalIncome__access': false
+          '#otherCompensations__access': false
+          '#plannedTotalIncomeWithoutSubventions__access': false
+          '#plannedShareOfIncomeWithoutSubventions__access': false
+          '#shareOfIncomeWithoutSubventions__access': false
+          '#totalIncomeWithoutSubventions__access': false
+          '#totalIncome__access': false
+          '#incomeGroupName__access': false
+        haettava_avustussumma_2027:
+          '#type': textfield
+          '#title': '2027 (euroa)'
+          '#required': true
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#pattern': '^[0-9 ]*$'
+          '#attributes':
+            class:
+              - webform--large
+          '#states':
+            visible:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '3'
+            required:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '3'
+        haettava_avustussumma_2028:
+          '#type': textfield
+          '#title': '2028 (euroa)'
+          '#required': true
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#pattern': '^[0-9 ]*$'
+          '#attributes':
+            class:
+              - webform--large
+          '#states':
+            visible:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '3'
+            required:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '3'
+      hankesuunnitelma_kuvaus_1:
+        '#type': webform_markup
+        '#markup': '5000-19999 euron avustukset myönnetään yhdeksi vuodeksi kerrallaan. Hankkeen tulee tässä kategoriassa edistää vähintään yhtä yllä luetelluista vaihtoehdoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 5% hankkeen kuluista'
         '#states':
           visible:
-            - ':input[name="kulttuuri1_summa"]':
+            ':input[name="avustukset_summa"]':
+              value:
+                less_equal: '19999'
+      hankesuunnitelma_kuvaus_2:
+        '#type': webform_markup
+        '#markup': '20 000-49 999 euron avustussummaa per vuosi voi hakea 1-3 vuoden mittaisille hankkeilla. Hankkeiden tulee tässä kategoriassa edistää vähintään kahta yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 10% hankkeen kuluista'
+        '#states':
+          visible:
+            - ':input[name="avustukset_summa"]':
                 value:
-                  greater: '0'
-            - or
-            - ':input[name="kulttuuri2_summa"]':
+                  greater_equal: '20000'
+            - and
+            - ':input[name="avustukset_summa"]':
                 value:
-                  greater: '0'
-          required:
-            - ':input[name="kulttuuri1_summa"]':
-                value:
-                  greater: '0'
-            - or
-            - ':input[name="kulttuuri2_summa"]':
-                value:
-                  greater: '0'
+                  less_equal: '49999'
+      hankesuunnitelma_kuvaus_3:
+        '#type': webform_markup
+        '#markup': '50 000-80 000 euron avustussummaa per vuosi voi hakea 2-3 vuoden mittaisille hankkeille. Hankkeiden tulee tässä kategoriassa edistää vähintään kolmea yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 15% hankkeen kuluista.'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '50000'
     hankesuunnitelma_section:
       '#type': webform_section
       '#title': '3.1 Hankesuunnitelma'
-      '#states':
-        visible:
-          ':input[name="hankesuunnitelma_radios"]':
-            value: '0'
-      hankesuunnitelma_jatkohakemus:
-        '#type': radios
-        '#title': 'Onko haettava avustus käynnissä olevan hankkeen jatkohakemus?'
-        '#description': '<p>Vastaa tähän kysymykseen "kyllä" vain siinä tapauksessa, jos yhteisölläsi on jo käynnissä oleva, samasta avustuksesta rahoitettu hanke ja haet sille jatkorahoitusta.</p>'
-        '#description_display': after
-        '#options':
-          1: Kyllä
-          0: Ei
-        '#default_value': '0'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
       hankkeen_tarkoitus_tavoitteet:
         '#type': textarea
         '#title': 'Hankkeen tarkoitus ja tavoitteet'
@@ -687,6 +729,14 @@ elements: |-
           required:
             ':input[name="hankesuunnitelma_radios"]':
               value: '0'
+      hankesuunnitelma_jatkohakemus:
+        '#type': radios
+        '#title': 'Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?'
+        '#description_display': after
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#default_value': '0'
       hankkeen_toimenpiteet_aikataulu:
         '#type': textarea
         '#title': 'Mitkä ovat hankkeen konkreettiset toimenpiteet ja niiden toteutusaikataulu?'

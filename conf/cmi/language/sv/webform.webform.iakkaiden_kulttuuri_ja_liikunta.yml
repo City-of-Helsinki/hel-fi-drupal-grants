@@ -132,12 +132,31 @@ elements: |
         '#counter_maximum_message': '%d/1000 tecken kvar'
   3_tarkemmat_tiedot:
     '#title': '3. Mer detaljerad information'
-  hankesuunnitelma_radios:
-    '#title': 'Ansöker du nu om den andra delen av ett tvåårigt understöd som beviljades 2024?'
-    '#description': '<p data-renderer-start-pos="7036">Beslut om understöd för 2024:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="7069">Idrottssektionen: 11.4.2024 §10</p></li><li><p data-renderer-start-pos="7104">Kultur- och bibliotekssektionen: 16.4.2024 §15</p></li></ul>'
+  tarkemmat_tiedot_section:
+    '#title': ''
+  hankesuunnitelma_avustuksen_kesto:
+    '#title': 'Ansöks det om ett-, två- eller treårigt understöd? Ange de understödsbelopp som söks för projektets fortsatta år i de fält som öppnas för dem.'
     '#options':
-      1: Ja
-      0: Nej
+      1: 'Jag ansöker om understöd som ettårigt'
+      2: 'Jag ansöker om understöd som tvåårigt'
+      3: 'Jag ansöker om understöd som treårigt'
+  haettava_avustussumma:
+    '#title': 'Ansökt understödsbelopp'
+  haettava_avustussumma_2026:
+    '#title': '2026 (euro)'
+  haettava_avustussumma_2027:
+    '#title': '2027 (euro)'
+  haettava_avustussumma_2028:
+    '#title': '2028 (euro)'
+  hankesuunnitelma_kuvaus_1:
+    '#type': webform_markup
+    '#markup': 'Understöd på 5 000–19 999 euro beviljas för ett år i taget. Projekten i denna kategori ska främja minst ett av de ovan nämnda alternativa målen, och den egna finansieringsandelen eller annan finansiering ska uppgå till minst 5 % av projektets kostnader.'
+  hankesuunnitelma_kuvaus_2:
+    '#type': webform_markup
+    '#markup': 'Understöd på 20 000–49 999 euro per år kan sökas för projekt som varar 1–3 år Projekten i denna kategori ska främja minst två av de ovan nämnda alternativa målen, och den egna finansieringsandelen eller annan finansiering ska uppgå till minst 10 % av projektets kostnader.'
+  hankesuunnitelma_kuvaus_3:
+    '#type': webform_markup
+    '#markup': 'Understöd på 50 000–80 000 euro per år kan sökas för projekt som varar 2–3 år. Projekten i denna kategori ska främja minst tre av de ovan nämnda alternativa målen, och den egna finansieringsandelen eller annan finansiering ska uppgå till minst 15 % av projektets kostnader.'
   ensisijainen_taiteen_ala:
     '#title': 'Huvudsaklig konstart '
     '#help': '<p>Välj det alternativ, som bäst motsvarar er verksamhet.</p>'
@@ -156,15 +175,14 @@ elements: |
       Teatteri: Teater
   hankesuunnitelma_section:
     '#title': '3.1 Projektplan'
-  hankesuunnitelma_jatkohakemus:
-    '#title': 'Är understödet du ansöker om en förlängning av ett pågående projekt?'
-    '#description': '<p>Svara bara ”ja” på den här frågan om din sammanslutning redan har ett pågående projekt som finansieras med samma understöd och du ansöker om fortsatt finansiering.</p>'
-    '#options':
-      1: Ja
-      0: Nej
   hankkeen_tarkoitus_tavoitteet:
     '#title': 'Syfte och mål med projektet'
     '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankesuunnitelma_jatkohakemus:
+    '#title': 'Är detta ett fortsättningsprojekt för ett projekt eller verksamhet som tidigare har fått understöd inomstödhelheten?'
+    '#options':
+      1: Ja
+      0: Nej
   hankkeen_toimenpiteet_aikataulu:
     '#title': 'Vilka är de konkreta åtgärderna för projektet och tidtabellen för när de ska genomföras?'
     '#counter_maximum_message': '%d/4000 tecken kvar'

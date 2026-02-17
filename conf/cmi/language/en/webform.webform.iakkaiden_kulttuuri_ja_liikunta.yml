@@ -132,12 +132,31 @@ elements: |
         '#counter_maximum_message': '%d/1000 characters remaining'
   3_tarkemmat_tiedot:
     '#title': '3. Information in more detail'
-  hankesuunnitelma_radios:
-    '#title': 'Is the 2nd part of the grant awarded in 2024 now being applied for?'
-    '#description': '<p data-renderer-start-pos="6888">Grant decisions for 2024:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="6917">Sports Sub-committee: 11 April 2024 Section 10</p></li><li><p data-renderer-start-pos="6969">Culture and Libraries Sub-committee: 16 April 2024 Section 15</p></li></ul>'
+  tarkemmat_tiedot_section:
+    '#title': ''
+  hankesuunnitelma_avustuksen_kesto:
+    '#title': 'Is the application for a one-, two-, or three-year grant? Enter the grant amounts requested for the project’s subsequent years in the fields that open for them.'
     '#options':
-      1: 'Yes'
-      0: 'No'
+      1: 'I am applying for the grant as a one-year grant'
+      2: 'I am applying for the grant as a two-year grant'
+      3: 'I am applying for the grant as a three-year grant'
+  haettava_avustussumma:
+    '#title': 'Grant amount applied for'
+  haettava_avustussumma_2026:
+    '#title': '2026 (euros)'
+  haettava_avustussumma_2027:
+    '#title': '2027 (euros)'
+  haettava_avustussumma_2028:
+    '#title': '2028 (euros)'
+  hankesuunnitelma_kuvaus_1:
+    '#type': webform_markup
+    '#markup': 'Grants of €5,000–€19,999 are awarded for one year at a time. Projects in this category must promote at least one of the alternative objectives listed above, and the self financing share or other funding must be at least 5% of the project costs.'
+  hankesuunnitelma_kuvaus_2:
+    '#type': webform_markup
+    '#markup': 'Grants of €20,000–€49,999 per year can be applied for projects lasting 1–3 years. Projects in this category must promote at least two of the alternative objectives listed above, and the self financing share or other funding must be at least 10% of the project costs.'
+  hankesuunnitelma_kuvaus_3:
+    '#type': webform_markup
+    '#markup': 'Grants of €50,000–€80,000 per year can be applied for projects lasting 2–3 years. Projects in this category must promote at least three of the alternative objectives listed above, and the sefinancing share or other funding must be at least 15% of the project costs.'
   ensisijainen_taiteen_ala:
     '#title': 'Primary field of art'
     '#help': '<p>Choose the option that best describes your activities.</p>'
@@ -156,15 +175,14 @@ elements: |
       Teatteri: Theatre
   hankesuunnitelma_section:
     '#title': '3.1 Project plan'
-  hankesuunnitelma_jatkohakemus:
-    '#title': 'Is the grant to be applied for a renewal application for an ongoing project?'
-    '#description': '<p>Only answer “yes” to this question if your community already has an ongoing project funded by the same grant and you are applying for additional funding for it.</p>'
-    '#options':
-      1: 'Yes'
-      0: 'No'
   hankkeen_tarkoitus_tavoitteet:
     '#title': 'Purpose and goals of the project'
     '#counter_maximum_message': '%d/2500 characters remaining'
+  hankesuunnitelma_jatkohakemus:
+    '#title': 'Is this a continuation project for a project or an activity that has previously receive funding within the grant scheme?'
+    '#options':
+      1: 'Yes'
+      0: 'No'
   hankkeen_toimenpiteet_aikataulu:
     '#title': 'What are the concrete measures of the project and the schedule for their implementation?'
     '#counter_maximum_message': '%d/4000 characters remaining'
