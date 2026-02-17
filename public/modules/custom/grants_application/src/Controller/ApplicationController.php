@@ -287,7 +287,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $this->eventsService->logEvent(
         $application_number,
-        $this->eventsService->getEventTypes()['HANDLER_ATT_OK'],
+        'HANDLER_ATT_OK',
         "Uploaded a file $file_original_name",
         $file_original_name,
       );
