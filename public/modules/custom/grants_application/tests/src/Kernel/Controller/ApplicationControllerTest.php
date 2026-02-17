@@ -10,6 +10,7 @@ use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\helfi_atv\AtvDocument;
+use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusService;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -36,6 +37,11 @@ final class ApplicationControllerTest extends KernelTestBase {
    * @var string
    */
   private string $applicationNumber = "KERNELTEST-058-0000001";
+
+  /**
+   * {@inheritdoc}
+   */
+  protected static $modules = ['helfi_atv'];
 
   /**
    * {@inheritdoc}
@@ -117,7 +123,9 @@ final class ApplicationControllerTest extends KernelTestBase {
       'size' => '999',
     ]);
     $helfiAtvService->expects($this->any())->method('removeAttachment')->willReturn(TRUE);
-    $helfiAtvService->expects($this->any())->method('deleteDocument')->willReturn(TRUE);
+
+    $atvService = $this->createMock(AtvService::class);
+    $atvService->expects($this->any())->method('deleteAttachment')->willReturn(TRUE);
 
     $antiVirusService = $this->createMock(AntivirusService::class);
     $antiVirusService->expects($this->any())->method('scan')->willReturn(TRUE);
@@ -130,6 +138,7 @@ final class ApplicationControllerTest extends KernelTestBase {
     $this->container->set('grants_handler.application_getter_service', $applicationGetterService);
     $this->container->set('grants_events.events_service', $eventService);
     $this->container->set(HelfiAtvService::class, $helfiAtvService);
+    $this->container->set('helfi_atv.atv_service', $atvService);
     $this->container->set(AntivirusService::class, $antiVirusService);
     $this->container->set('request_stack', $requestStack);
   }
