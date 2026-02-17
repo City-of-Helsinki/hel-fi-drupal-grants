@@ -58,7 +58,7 @@ final class ApplicationSubmissionTest extends KernelTestBase {
     $this->assertTrue($editUrl->getUrl()->toString() === '/application/new/58/KERNELTEST-058-0000001');
 
     $printUrl = $this->applicationSubmission->getPrintApplicationUrl();
-    $this->assertTrue($printUrl->getUrl()->toString() === '/application/KERNELTEST-058-0000001/print');
+    $this->assertTrue($printUrl->toString() === '/application/KERNELTEST-058-0000001/print');
 
     $keys = ['application_type_id', 'form_identifier', 'status', 'application_number', 'language'];
     foreach ($keys as $key) {
