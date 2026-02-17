@@ -11,7 +11,7 @@ The fixtures folder contains everything that is needed for react forms.
 ### schema.json
 - Contains react rjsf-library schema definition. [Rjsf-documentation](https://rjsf-team.github.io/react-jsonschema-form/docs/)
 
-### uischema.json
+### uiSchema.json
 - Contains react rjsf-library UI-schema definition
 
 ### translation.json
