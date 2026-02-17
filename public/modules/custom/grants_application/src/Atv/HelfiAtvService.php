@@ -108,7 +108,7 @@ class HelfiAtvService {
   /**
    * Remove ATV-document.
    *
-   * @param AtvDocument $document
+   * @param \Drupal\helfi_atv\AtvDocument $document
    *   The atv document to remove.
    *
    * @return mixed

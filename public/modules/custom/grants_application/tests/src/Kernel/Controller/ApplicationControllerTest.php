@@ -13,7 +13,6 @@ use Drupal\helfi_atv\AtvDocument;
 use Drupal\helfi_av\AntivirusService;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
