@@ -174,37 +174,37 @@ elements: |
   toimenpiteet_aikataulu_info:
     '#markup': '<p></p><p></p>'
   hankkeen_toimenpiteet_aikataulu_2026:
-    '#title': ''
+    '#title': 'Åtgärder under perioden 2026–2027 och deras planerade tidtabell'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_toimenpiteet_aikataulu_2027:
-    '#title': ''
+    '#title': 'Åtgärder under perioden 2027–2028 och deras planerade tidtabell'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_toimenpiteet_aikataulu_2028:
-    '#title': ''
+    '#title': 'Åtgärder under perioden 2028–2029 och deras planerade tidtabell'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_valiraportti_2025:
-    '#title': ''
+    '#title': 'Mellanrapport om projektets genomförda verksamhet under perioden 2025–2026'
   haun_tavoitteet_fieldset:
-    '#title': ''
+    '#title': 'Målen med ansökan'
   tavoitteet_info:
-    '#markup': '<p></p><p></p>'
+    '#markup': '<p>Vilka av följande mål för att främja äldre personers rörelse eller kulturverksamhet svarar projektet mot?</p><p>OBS! Välj endast de mål som främjas i projektet genom konkreta åtgärder.</p>'
   hankkeen_tavoitteet_1:
-    '#title':
+    '#title': 'Ökar projektet möjligheterna till rörelse eller konst- och kulturverksamhet i närområdet eller regionalt? Hur?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_tavoitteet_2:
-    '#title':
+    '#title': 'Ökar projektet frivillig- eller kamratverksamhet för att främja äldre personers rörelse eller kulturverksamhet? Hur?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_tavoitteet_3:
-    '#title':
+    '#title': 'Ökar projektet digital och distansbaserad verksamhet som aktiverar till rörelse eller kulturverksamhet? Hur?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_tavoitteet_4:
-    '#title':
+    '#title': 'Minskar projektet ensamhet  och ökar det psykiska  välbefinnandet genom  rörelse eller  kulturverksamhet? Hur?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_tavoitteet_5:
-    '#title':
+    '#title': 'Minskar projektet ensamhet och ökar det psykiska välbefinnandet genom rörelse eller kulturverksamhet? Hur?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_tavoitteet_6:
-    '#title':
+    '#title': 'Innehåller projektet verksamhet som förenar generationer och ökar möten mellan generationer genom rörelse eller kulturverksamhet? Hur?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_section:
     '#title': 'Project target groups'

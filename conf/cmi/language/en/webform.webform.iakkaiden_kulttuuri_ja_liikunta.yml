@@ -174,37 +174,37 @@ elements: |
   toimenpiteet_aikataulu_info:
     '#markup': '<p></p><p></p>'
   hankkeen_toimenpiteet_aikataulu_2026:
-    '#title': ''
+    '#title': 'Activities during the 2026-2027 period and their planned scheduling'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_toimenpiteet_aikataulu_2027:
-    '#title': ''
+    '#title': 'Activities during the 2027-2028 period and their planned scheduling'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_toimenpiteet_aikataulu_2028:
-    '#title': ''
+    '#title': 'Activities during the 2028-2029 period and their planned scheduling'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_valiraportti_2025:
-    '#title': ''
+    '#title': 'Interim report on the activities carried out in the project during the 2025–2026 period'
   haun_tavoitteet_fieldset:
-    '#title': ''
+    '#title': 'objectives of the call for applications'
   tavoitteet_info:
-    '#markup': '<p></p><p></p>'
+    '#markup': '<p>Which of the following objectives for promoting physical activity or cultural activities among the elderly does the project address?</p><p>NOTE! Select only those objectives that are advanced through concrete measures in the project.</p>'
   hankkeen_tavoitteet_1:
-    '#title':
+    '#title': 'Does the project increase local or regional opportunities for physical activity or art and cultural activities? How?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_tavoitteet_2:
-    '#title':
+    '#title': 'Does the project increase volunteer or peer activities to promote physical activity or cultural activity among older adults? How?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_tavoitteet_3:
-    '#title':
+    '#title': 'Does the project increase digital and remote activities that encourage physical activity or cultural participation? How?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_tavoitteet_4:
-    '#title':
+    '#title': 'Does the project reduce loneliness and improve mental well-being through physical activity or cultural activities? How?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_tavoitteet_5:
-    '#title':
+    '#title': 'Does the project reduce loneliness and improve mental well-being through physical activity or cultural activities? How?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_tavoitteet_6:
-    '#title':
+    '#title': 'Does the project include intergenerational activities and increase encounters between generations through physical activity or cultural activities? How?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_kohderyhmat_section:
     '#title': 'Project target groups'
