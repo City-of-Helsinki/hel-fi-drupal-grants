@@ -89,7 +89,7 @@ export const AppContainer = ({ applicationTypeId, token }: { applicationTypeId: 
   const { data, error, isLoading, isValidating } = useSWRImmutable(applicationTypeId, (id) => fetchFormData(id, token));
 
   if (isLoading || isValidating) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner className='hdbt-react-form__loading-spinner' />;
   }
 
   if (error) {

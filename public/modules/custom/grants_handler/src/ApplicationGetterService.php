@@ -28,7 +28,7 @@ use GuzzleHttp\Exception\GuzzleException;
 /**
  * Class to get things related to applications.
  */
-final class ApplicationGetterService implements ApplicationGetterServiceInterface {
+class ApplicationGetterService implements ApplicationGetterServiceInterface {
 
   /**
    * Access to profile data.

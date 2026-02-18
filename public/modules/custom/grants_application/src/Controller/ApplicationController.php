@@ -287,7 +287,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $this->eventsService->logEvent(
         $application_number,
-        $this->eventsService->getEventTypes()['HANDLER_ATT_OK'],
+        'HANDLER_ATT_OK',
         "Uploaded a file $file_original_name",
         $file_original_name,
       );
@@ -357,7 +357,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $this->eventsService->logEvent(
         $application_number,
-        $this->eventsService->getEventTypes()['HANDLER_ATT_DELETED'],
+        'HANDLER_ATT_DELETED',
         "Deleted a file $attachmentId",
         $attachmentId,
       );
@@ -444,7 +444,9 @@ final class ApplicationController extends ControllerBase {
   /**
    * Print the application.
    */
-  public function printApplication() {
+  public function printApplication($application_number) {
+    // @todo UHF-12685 the original implementation can handle react forms but
+    // it should be eventually moved here.
   }
 
   /**

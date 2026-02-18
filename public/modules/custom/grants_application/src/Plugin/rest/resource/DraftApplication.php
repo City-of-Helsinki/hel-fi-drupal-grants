@@ -125,7 +125,7 @@ final class DraftApplication extends ResourceBase {
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
   public function get(
-    int $application_type_id,
+    int|string $application_type_id,
     string $application_number,
   ): RedirectResponse|JsonResponse {
     // @todo Sanitize & validate & authorize properly.
