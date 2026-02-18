@@ -7,27 +7,27 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '70'
     applicationType: KUVAERILLIS
     applicationTypeID: '70'
-    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
       76: '76'
       81: '81'
-    applicationTargetGroup: '75'
     applicationOpen: '2025-01-13T05:00:00'
     applicationClose: '2027-02-07T16:00:00'
-    applicationActingYearsType: fixed
+    applicationContinuous: 0
+    applicationTargetGroup: '75'
+    disableCopying: 1
+    applicationTypeSelect: '70'
+    applicationIndustry: KUVA
     applicationActingYears:
       2026: '2026'
+    applicationActingYearsType: fixed
     applicationActingYearsNextCount: ''
-    applicationContinuous: 0
-    disableCopying: 1
-    status: released
+    status: development
     parent: ''
-    avus2BreakingChange: 0
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null
@@ -57,63 +57,51 @@ elements: |-
       bank_account: 0
       community_officials: 0
       acting_year: 0
-      subventions%%subventionTypeTitle: 0
-      subventions%%subventionType: 0
-      ensisijainen_taiteen_ala: 0
-      hankkeen_nimi: 0
-      kyseessa_on_festivaali_tai_tapahtuma: 0
-      hankkeen_tai_toiminnan_lyhyt_esittelyteksti: 0
+      compensation_purpose: 0
       olemme_saaneet_muita_avustuksia: 0
       myonnetty_avustus: 0
-      members_applicant_person_global: 0
-      members_applicant_person_local: 0
-      members_applicant_community_global: 0
-      members_applicant_community_local: 0
-      kokoaikainen_henkilosto: 0
-      kokoaikainen_henkilotyovuosia: 0
-      osa_aikainen_henkilosto: 0
-      osa_aikainen_henkilotyovuosia: 0
-      vapaaehtoinen_henkilosto: 0
-      tapahtuma_tai_esityspaivien_maara_helsingissa: 0
-      esitykset_maara_helsingissa: 0
-      nayttelyt_maara_helsingissa: 0
-      tyopaja_maara_helsingissa: 0
-      esitykset_maara_kaikkiaan: 0
-      nayttelyt_maara_kaikkiaan: 0
-      tyopaja_maara_kaikkiaan: 0
-      esitykset_kavijamaara_helsingissa: 0
-      nayttelyt_kavijamaara_helsingissa: 0
-      tyopaja_kavijamaara_helsingissa: 0
-      esitykset_kavijamaara_kaikkiaan: 0
-      nayttelyt_kavijamaara_kaikkiaan: 0
-      tyopaja_kavijamaara_kaikkiaan: 0
-      kantaesitysten_maara: 0
-      ensi_iltojen_maara_helsingissa: 0
-      ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa: 0
-      postinumero: 0
-      kyseessa_on_kaupungin_omistama_tila: 0
-      tila: 0
-      ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara: 0
-      festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat: 0
-      hanke_alkaa: 0
-      hanke_loppuu: 0
-      laajempi_hankekuvaus: 0
-      toiminta_taiteelliset_lahtokohdat: 0
-      toiminta_tasa_arvo: 0
-      toiminta_saavutettavuus: 0
-      toiminta_yhteisollisyys: 0
-      toiminta_kohderyhmat: 0
-      toiminta_ammattimaisuus: 0
-      toiminta_ekologisuus: 0
-      toiminta_yhteistyokumppanit: 0
-      organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_: 0
-      budget_static_income: 0
-      budget_static_cost: 0
-      budget_other_cost: 0
-      muu_huomioitava_panostus: 0
+      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      haettu_avustus_tieto: 0
+      hankesuunnitelma_avustuksen_kesto: 0
+      haettava_avustussumma_2026: 0
+      haettava_avustussumma_2027: 0
+      haettava_avustussumma_2028: 0
+      hankkeen_nimi: 0
+      hankkeen_tarkoitus_tavoitteet: 0
+      hankesuunnitelma_jatkohakemus: 0
+      hankkeen_toimenpiteet_aikataulu_2026: 0
+      hankkeen_toimenpiteet_aikataulu_2027: 0
+      hankkeen_toimenpiteet_aikataulu_2028: 0
+      hankkeen_valiraportti_2025: 0
+      hankkeen_tavoitteet_1: 0
+      hankkeen_tavoitteet_2: 0
+      hankkeen_tavoitteet_3: 0
+      hankkeen_tavoitteet_4: 0
+      hankkeen_tavoitteet_5: 0
+      hankkeen_tavoitteet_6: 0
+      hankkeen_kohderyhmat_kenelle: 0
+      hankkeen_kohderyhmat_osallisuus: 0
+      hankkeen_kohderyhmat_osaaminen: 0
+      tavoitettu_helsingissa: 0
+      tapahtumakerrat_yhteensa: 0
+      toimintapaikka_1: 0
+      toimintapaikka_2: 0
+      toimintapaikka_3: 0
+      toimintapaikka_4: 0
+      toimintapaikka_5: 0
+      hankkeen_alue_valintaperuste: 0
+      hankkeen_keskeisimmat_kumppanit: 0
+      hankkeen_riskit_keskeisimmat: 0
+      hankkeen_toteutumisen_seuranta: 0
+      hankkeen_vakiinnuttaminen: 0
+      hankkeen_ratkaisema_ongelma: 0
+      tulot: 0
+      talous_tulon_tyyppi: 0
+      talous_menon_tyyppi: 0
       additional_information: 0
       extra_info: 0
       muu_liite: 0
+    '#subvention_type': ''
     '#data_type': euro
     '#form_item': hidden
   applicant_type:
@@ -649,7 +637,6 @@ elements: |-
         haettava_avustussumma_2027:
           '#type': textfield
           '#title': '2027 (euroa)'
-          '#required': true
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#pattern': '^[0-9 ]*$'
           '#attributes':
@@ -671,7 +658,6 @@ elements: |-
         haettava_avustussumma_2028:
           '#type': textfield
           '#title': '2028 (euroa)'
-          '#required': true
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#pattern': '^[0-9 ]*$'
           '#attributes':
@@ -686,35 +672,35 @@ elements: |-
                   value: '3'
       avustus_kuvaus_1:
         '#type': webform_markup
-        '#markup': '5000-19999 euron avustukset myönnetään yhdeksi vuodeksi kerrallaan. Hankkeen tulee tässä kategoriassa edistää vähintään yhtä yllä luetelluista vaihtoehdoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 5% hankkeen kuluista'
         '#states':
           visible:
             ':input[name="avustukset_summa"]':
               value:
                 less_equal: '19999'
+        '#markup': '<p>5000-19999 euron avustukset myönnetään yhdeksi vuodeksi kerrallaan. Hankkeen tulee tässä kategoriassa edistää vähintään yhtä yllä luetelluista vaihtoehdoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 5% hankkeen kuluista</p>'
       avustus_kuvaus_2:
         '#type': webform_markup
-        '#markup': '20 000-49 999 euron avustussummaa per vuosi voi hakea 1-3 vuoden mittaisille hankkeilla. Hankkeiden tulee tässä kategoriassa edistää vähintään kahta yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 10% hankkeen kuluista'
         '#states':
           visible:
-            - ':input[name="avustukset_summa"]':
-                value:
-                  greater_equal: '20000'
-            - and
-            - ':input[name="avustukset_summa"]':
-                value:
-                  less_equal: '49999'
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '20000'
+          invisible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '49999'
+        '#markup': '<p>20 000-49 999 euron avustussummaa per vuosi voi hakea 1-3 vuoden mittaisille hankkeilla. Hankkeiden tulee tässä kategoriassa edistää vähintään kahta yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 10% hankkeen kuluista</p>'
       avustus_kuvaus_3:
         '#type': webform_markup
-        '#markup': '50 000-80 000 euron avustussummaa per vuosi voi hakea 2-3 vuoden mittaisille hankkeille. Hankkeiden tulee tässä kategoriassa edistää vähintään kolmea yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 15% hankkeen kuluista.'
         '#states':
           visible:
             ':input[name="avustukset_summa"]':
               value:
                 greater_equal: '50000'
+        '#markup': '<p>50 000-80 000 euron avustussummaa per vuosi voi hakea 2-3 vuoden mittaisille hankkeille. Hankkeiden tulee tässä kategoriassa edistää vähintään kolmea yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 15% hankkeen kuluista.</p>'
     hankesuunnitelma_section:
       '#type': webform_section
-      '#title': 'Hankesuunnitelma'
+      '#title': Hankesuunnitelma
       hankkeen_nimi:
         '#type': textarea
         '#title': 'Hankkeen nimi'
@@ -741,7 +727,7 @@ elements: |-
           0: Ei
         '#default_value': '0'
       toimenpiteet_ja_aikataulu:
-        '#type': 'fieldset'
+        '#type': fieldset
         '#title': 'Hankkeen toimenpiteet ja aikataulu'
         toimenpiteet_aikataulu_info:
           '#type': webform_markup
@@ -771,15 +757,15 @@ elements: |-
           '#counter_maximum': 2500
           '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
       hankkeen_valiraportti_2025:
-          '#type': textarea
-          '#title': 'Väliraportti hankkeen toteutuneesta toiminnasta kaudella 2025-2026'
-          '#required': true
-          '#maxlength': 2500
-          '#counter_type': character
-          '#counter_maximum': 2500
-          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#type': textarea
+        '#title': 'Väliraportti hankkeen toteutuneesta toiminnasta kaudella 2025-2026'
+        '#required': true
+        '#maxlength': 2500
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
       haun_tavoitteet_fieldset:
-        '#type': 'fieldset'
+        '#type': fieldset
         '#title': 'Haun tavoitteet'
         tavoitteet_info:
           '#type': webform_markup
@@ -853,7 +839,7 @@ elements: |-
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       arvio_1_fieldset:
-        '#type': 'fieldset'
+        '#type': fieldset
         '#title': 'Arvioi hankekauden 2026-2027 osalta tavoitellut toiminnan numeeriset mittarit'
         tavoitettu_helsingissa:
           '#type': textfield
@@ -880,39 +866,39 @@ elements: |-
           '#maxlength': 50
           '#size': 16
       arvio_2_fieldset:
-        '#type': 'fieldset'
+        '#type': fieldset
         '#title': 'Millä alueella tai alueilla Helsingissä toimintaa tullaan toteuttamaan kaudella 2026-2027? Valitse enintään viisi (5) aluetta.'
         toimintapaikka_1:
           '#type': select
           '#title': 'Toimintapaikka 1'
           '#options':
-            0: 'test1'
-            1: 'test2'
+            - test1
+            - test2
         toimintapaikka_2:
           '#type': select
           '#title': 'Toimintapaikka 2'
           '#options':
-            0: 'test1'
-            1: 'test2'
+            - test1
+            - test2
         toimintapaikka_3:
           '#type': select
           '#title': 'Toimintapaikka 3'
           '#options':
-            0: 'test1'
-            1: 'test2'
+            - test1
+            - test2
         toimintapaikka_4:
           '#type': select
           '#title': 'Toimintapaikka 4'
           '#options':
-            0: 'test1'
-            1: 'test2'
+            - test1
+            - test2
         toimintapaikka_5:
           '#type': select
           '#title': 'Toimintapaikka 5'
           '#options':
-            0: 'test1'
-            1: 'test2'
-        hankkeen_kohderyhmat_osaaminen:
+            - test1
+            - test2
+        hankkeen_alue_valintaperuste:
           '#type': textarea
           '#title': 'Miksi juuri kyseinen alue / alueet on valittu?'
           '#required': true
@@ -1138,6 +1124,7 @@ settings:
   form_access_denied_message: ''
   form_access_denied_attributes: {  }
   form_file_limit: ''
+  form_file_limit_message: ''
   form_attributes: {  }
   form_method: ''
   form_action: ''
