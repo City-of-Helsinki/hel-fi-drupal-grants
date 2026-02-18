@@ -172,7 +172,7 @@ elements: |
   toimenpiteet_ja_aikataulu:
     '#title': 'Project activities and schedule'
   toimenpiteet_aikataulu_info:
-    '#markup': '<p></p><p></p>'
+    '#markup': '<p>Describe the activities to be organized within the project in as much detail as possible for each year for which support is requested.</p><p>For the possible second and third project years, describe the activities and schedule in as much detail as possible at the time of application.</p>'
   hankkeen_toimenpiteet_aikataulu_2026:
     '#title': 'Activities during the 2026-2027 period and their planned scheduling'
     '#counter_maximum_message': '%d/2500 characters remaining'

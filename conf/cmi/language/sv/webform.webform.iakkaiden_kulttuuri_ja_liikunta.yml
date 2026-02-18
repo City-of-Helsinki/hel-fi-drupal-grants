@@ -172,7 +172,7 @@ elements: |
   toimenpiteet_ja_aikataulu:
     '#title': 'Projektets åtgärder och tidtabell'
   toimenpiteet_aikataulu_info:
-    '#markup': '<p></p><p></p>'
+    '#markup': '<p>Beskriv den verksamhet som ska ordnas inom projektet så detaljerat som möjligt för varje år som understöd söks för.</p><p>För det möjliga andra och tredje projektåret, anteckna åtgärderna och tidtabellen så noggrant som möjligt vid ansökningstillfället.</p>'
   hankkeen_toimenpiteet_aikataulu_2026:
     '#title': 'Åtgärder under perioden 2026–2027 och deras planerade tidtabell'
     '#counter_maximum_message': '%d/2500 tecken kvar'
