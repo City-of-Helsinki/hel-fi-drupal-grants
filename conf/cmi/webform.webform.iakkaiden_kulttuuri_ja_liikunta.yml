@@ -882,31 +882,31 @@ elements: |-
       arvio_2_fieldset:
         '#type': 'fieldset'
         '#title': 'Millä alueella tai alueilla Helsingissä toimintaa tullaan toteuttamaan kaudella 2026-2027? Valitse enintään viisi (5) aluetta.'
-        Toimintapaikka_1:
+        toimintapaikka_1:
           '#type': select
           '#title': 'Toimintapaikka 1'
           '#options':
             0: 'test1'
             1: 'test2'
-        Toimintapaikka_2:
+        toimintapaikka_2:
           '#type': select
           '#title': 'Toimintapaikka 2'
           '#options':
             0: 'test1'
             1: 'test2'
-        Toimintapaikka_3:
+        toimintapaikka_3:
           '#type': select
           '#title': 'Toimintapaikka 3'
           '#options':
             0: 'test1'
             1: 'test2'
-        Toimintapaikka_4:
+        toimintapaikka_4:
           '#type': select
           '#title': 'Toimintapaikka 4'
           '#options':
             0: 'test1'
             1: 'test2'
-        Toimintapaikka_5:
+        toimintapaikka_5:
           '#type': select
           '#title': 'Toimintapaikka 5'
           '#options':
