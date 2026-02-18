@@ -158,7 +158,7 @@ elements: |
     '#type': webform_markup
     '#markup': 'Grants of €50,000–€80,000 per year can be applied for projects lasting 2–3 years. Projects in this category must promote at least three of the alternative objectives listed above, and the sefinancing share or other funding must be at least 15% of the project costs.'
   hankesuunnitelma_section:
-    '#title': '3.1 Project plan'
+    '#title': 'Project plan'
   hankkeen_nimi:
     '#title': 'Project name'
   hankkeen_tarkoitus_tavoitteet:
@@ -171,97 +171,91 @@ elements: |
       0: 'No'
   toimenpiteet_ja_aikataulu:
     '#title': 'Project activities and schedule'
-  hankkeen_toimenpiteet_aikataulu:
-    '#title': 'What are the concrete measures of the project and the schedule for their implementation?'
-    '#counter_maximum_message': '%d/4000 characters remaining'
-  hankkeen_toimenpiteet_toteutus:
-    '#title': 'The concrete measures of the project are to be implemented between'
-  hankkeen_toimenpiteet_alkupvm:
-    '#title': 'Start date'
-  hankkeen_toimenpiteet_loppupvm:
-    '#title': 'End date'
-  hankkeen_keskeisimmat_kumppanit:
-    '#title': 'Specify the main partners of the project and their role in the project'
+  toimenpiteet_aikataulu_info:
+    '#markup': '<p></p><p></p>'
+  hankkeen_toimenpiteet_aikataulu_2026:
+    '#title': ''
     '#counter_maximum_message': '%d/2500 characters remaining'
-  haun_painopisteet_section:
-    '#title': '3.2 Emphases of the grant program'
-  haun_painopisteet_ohje:
-    '#markup': '<p data-renderer-start-pos="16291"><strong data-renderer-mark="true">Which of the following areas of emphasis of the grant for the promotion of sport and physical activity for the elderly does the project cover?</strong></p><p data-renderer-start-pos="16435">One or more areas must be implemented in the project. PLEASE NOTE: Only select the areas that you will contribute to in the project in a concrete way.</p>'
-  haun_painopisteet_liikkumis_kehitys:
-    '#title': 'Does the project develop sport and physical activity opportunities or art and cultural activities in the immediate environment / area? How?'
+  hankkeen_toimenpiteet_aikataulu_2027:
+    '#title': ''
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_toimenpiteet_aikataulu_2028:
+    '#title': ''
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_valiraportti_2025:
+    '#title': ''
+  haun_tavoitteet_fieldset:
+    '#title': ''
+  tavoitteet_info:
+    '#markup': '<p></p><p></p>'
+  hankkeen_tavoitteet_1:
+    '#title':
     '#counter_maximum_message': '%d/1250 characters remaining'
-  haun_painopisteet_digi_kehitys:
-    '#title': 'Does the project develop digital / remote cultural activities or activities that encourage people to exercise? How?'
+  hankkeen_tavoitteet_2:
+    '#title':
     '#counter_maximum_message': '%d/1250 characters remaining'
-  haun_painopisteet_vertais_kehitys:
-    '#title': 'Does the project develop volunteering / peer activities? How?'
+  hankkeen_tavoitteet_3:
+    '#title':
     '#counter_maximum_message': '%d/1250 characters remaining'
-  haun_painopisteet_kulttuuri_kehitys:
-    '#title': 'Does the project develop the skills of art and cultural operators or create new working methods / structures? How?'
+  hankkeen_tavoitteet_4:
+    '#title':
+    '#counter_maximum_message': '%d/1250 characters remaining'
+  hankkeen_tavoitteet_5:
+    '#title':
+    '#counter_maximum_message': '%d/1250 characters remaining'
+  hankkeen_tavoitteet_6:
+    '#title':
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_kohderyhmat_section:
-    '#title': '3.3 Project target groups'
+    '#title': 'Project target groups'
   hankkeen_kohderyhmat_kenelle:
+    'todo': 'todo'
     '#title': 'Who is the project primarily aimed at?'
     '#counter_maximum_message': '%d/1250 characters remaining'
-  hankkeen_kohderyhmat_erityisryhmat:
-    '#title': 'Does the project target a special group? For which special group? If not implemented, leave the field blank.'
+  hankkeen_kohderyhmat_osallisuus
+    '#title': ''
     '#counter_maximum_message': '%d/1250 characters remaining'
-  hankkeen_kohderyhmat_tavoitus:
-    '#title': 'How will the target groups of the project be reached?'
+  hankkeen_kohderyhmat_osaaminen
+    '#title': ''
     '#counter_maximum_message': '%d/1250 characters remaining'
-  hankkeen_kohderyhmat_konkretia:
-    '#title': 'How will the project promote the functional capacity and well-being of the selected target group with concrete measures?'
+  arvio_1_fieldset:
+    '#title': ''
+  tavoitettu_helsingissa:
+    '#title': ''
+  tapahtumakerrat_yhteensa:
+    '#title': ''
+  arvio_2_fieldset:
+    '#title': ''
+  toimintapaikka_1:
+    '#title': ''
+  toimintapaikka_2:
+    '#title': ''
+  toimintapaikka_3:
+    '#title': ''
+  toimintapaikka_4:
+    '#title': ''
+  toimintapaikka_5:
+    '#title': ''
+  hankkeen_alue_valintaperuste:
+    '#title': ''
     '#counter_maximum_message': '%d/1250 characters remaining'
-  hankkeen_kohderyhmat_osallisuus:
-    '#title': 'How does the project promote inclusion? What is the role of elderly people in the project?'
-    '#counter_maximum_message': '%d/1250 characters remaining'
-  hankkeen_kohderyhmat_osaaminen:
-    '#title': 'What kind of expertise do the project operators already have in working with the target group(s) in question?'
-    '#counter_maximum_message': '%d/1250 characters remaining'
-  hankkeen_kohderyhmat_postinrot:
-    '#title': 'In which postal code area(s) in Helsinki will the project be implemented? Please enter up to three (3) postal code areas in the field and separate them with a comma (,).'
-  hankkeen_kohderyhmat_miksi_alue:
-    '#title': 'Why is/are that particular area(s) selected?'
-    '#counter_maximum_message': '%d/1250 characters remaining'
-  hankkeen_riskit_section:
-    '#title': '3.4 Risks and analysis'
+  hankkeen_keskeisimmat_kumppanit:
+    '#title': ''
+    '#counter_maximum_message': '%d/2500 characters remaining'
+  hankkeen_riskit_section
+    '#title': ''
   hankkeen_riskit_keskeisimmat:
-    '#title': 'What are the main risks from the point of view of project implementation?'
+    '#title': ''
     '#counter_maximum_message': '%d/2500 characters remaining'
-  hankkeen_riskit_seuranta:
-    '#title': 'How will monitoring and evaluation be carried out in the project?'
+  hankkeen_toteutumisen_seuranta:
+    '#title': ''
     '#counter_maximum_message': '%d/2500 characters remaining'
-  hankkeen_riskit_vakiinnuttaminen:
-    '#title': 'Will the intended project activity be established as part of the basic activity of the applicant/other operator after the project? If yes, please describe in the text field how it will be established, otherwise leave the field blank.'
+  hankkeen_vakiinnuttaminen:
+    '#title': ''
     '#counter_maximum_message': '%d/2500 characters remaining'
-  hankkeen_valiarviointi_section:
-    '#title': '3.5 Mid-term evaluation of 2-year projects'
-  arviointi_markup:
-    '#markup': '<p>In this section, evaluate the activities of the project so far using the following questions. Applicants for the 2nd part of the grant must also attach to the application a cost centre report under “Other appendix” for the period 1 June - 31 December 2024.</p>'
-  arviointi_toteuma:
-    '#title': 'Has the project progressed according to plan? Please rate the project implementation so far on a scale of 1- 100% and justify your response.'
-    '#counter_maximum_message': '%d/1250 characters remaining'
-    '#description': 'Have there been significant changes in the project?'
-  arviointi_muutokset_talous:
-    '#title': 'In terms of economy; please specify'
-    '#counter_maximum_message': '%d/1250 characters remaining'
-  arviointi_muutokset_toiminta:
-    '#title': 'In terms of activity; please specify'
-    '#counter_maximum_message': '%d/1250 characters remaining'
-  arviointi_muutokset_aikataulu:
-    '#title': 'In terms of schedule; please specify'
-    '#counter_maximum_message': '%d/1250 characters remaining'
-  arviointi_haasteet:
-    '#title': 'Has the project faced operational challenges? If so, what type of challenges?'
-    '#counter_maximum_message': '%d/1250 characters remaining'
-  arviointi_saavutettavuus:
-    '#title': 'How have the activities reached the participants in relation to the goals?'
-    '#counter_maximum_message': '%d/1250 characters remaining'
-  arviointi_avustus_kaytto:
-    '#help': '<p>Grant conditions, section 10e: “A grant that has been granted must be returned to the City of Helsinki, the grant has not been used within the period as set down in the grant decision.”</p>'
-    '#title': 'Is the grant for the first project period expected to be used by the deadline of 31 May 2025? If not, please explain the reasons that led to this.'
-    '#counter_maximum_message': '%d/1250 characters remaining'
+  hankkeen_ratkaisema_ongelma:
+    '#title': ''
+    '#counter_maximum_message': '%d/2500 characters remaining'
   4_talousarvio:
     '#title': '4. Planned budget'
   tulot_section:

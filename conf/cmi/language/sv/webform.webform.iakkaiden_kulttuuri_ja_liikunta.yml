@@ -158,7 +158,7 @@ elements: |
     '#type': webform_markup
     '#markup': 'Understöd på 50 000–80 000 euro per år kan sökas för projekt som varar 2–3 år. Projekten i denna kategori ska främja minst tre av de ovan nämnda alternativa målen, och den egna finansieringsandelen eller annan finansiering ska uppgå till minst 15 % av projektets kostnader.'
   hankesuunnitelma_section:
-    '#title': '3.1 Projektplan'
+    '#title': 'Projektplan'
   hankkeen_nimi:
     '#title': 'Projektets namn'
   hankkeen_tarkoitus_tavoitteet:
@@ -171,97 +171,91 @@ elements: |
       0: Nej
   toimenpiteet_ja_aikataulu:
     '#title': 'Projektets åtgärder och tidtabell'
-  hankkeen_toimenpiteet_aikataulu:
-    '#title': 'Vilka är de konkreta åtgärderna för projektet och tidtabellen för när de ska genomföras?'
-    '#counter_maximum_message': '%d/4000 tecken kvar'
-  hankkeen_toimenpiteet_toteutus:
-    '#title': 'Enligt planen ska de konkreta åtgärderna i projektet genomföras mellan'
-  hankkeen_toimenpiteet_alkupvm:
-    '#title': Startdatum
-  hankkeen_toimenpiteet_loppupvm:
-    '#title': Slutdatum
-  hankkeen_keskeisimmat_kumppanit:
-    '#title': 'Namnge de viktigaste samarbetspartnerna och deras roll i projektet'
+  toimenpiteet_aikataulu_info:
+    '#markup': '<p></p><p></p>'
+  hankkeen_toimenpiteet_aikataulu_2026:
+    '#title': ''
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  haun_painopisteet_section:
-    '#title': '3.2 Tyngdpunkter för ansökan'
-  haun_painopisteet_ohje:
-    '#markup': '<p data-renderer-start-pos="16591"><strong data-renderer-mark="true">Vilken av följande tyngdpunkter för understödet för främjande av idrott hos äldre är projektet inriktat på?</strong></p><p data-renderer-start-pos="16700">Projektet ska arbeta för en eller flera tyngdpunkter. OBS! Välj bara de tyngdpunkter som ni kommer att bidra till på ett konkret sätt genom projektet.</p>'
-  haun_painopisteet_liikkumis_kehitys:
-    '#title': 'Bidrar projektet till att utveckla möjligheter till idrott eller konst- och kulturverksamhet i närområdet/regionalt? På vilket sätt?'
+  hankkeen_toimenpiteet_aikataulu_2027:
+    '#title': ''
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_toimenpiteet_aikataulu_2028:
+    '#title': ''
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_valiraportti_2025:
+    '#title': ''
+  haun_tavoitteet_fieldset:
+    '#title': ''
+  tavoitteet_info:
+    '#markup': '<p></p><p></p>'
+  hankkeen_tavoitteet_1:
+    '#title':
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  haun_painopisteet_digi_kehitys:
-    '#title': 'Bidrar projektet till att utveckla kulturaktiviteter eller verksamhet som uppmuntrar till idrott som ordnas digitalt/på distans? På vilket sätt?'
+  hankkeen_tavoitteet_2:
+    '#title':
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  haun_painopisteet_vertais_kehitys:
-    '#title': 'Bidrar projektet till att utveckla frivillig- /kamratverksamhet? På vilket sätt?'
+  hankkeen_tavoitteet_3:
+    '#title':
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  haun_painopisteet_kulttuuri_kehitys:
-    '#title': 'Bidrar projektet till att utveckla kompetensen hos konst- och kulturaktörer eller skapa nya arbetssätt/strukturer? På vilket sätt?'
+  hankkeen_tavoitteet_4:
+    '#title':
+    '#counter_maximum_message': '%d/1250 tecken kvar'
+  hankkeen_tavoitteet_5:
+    '#title':
+    '#counter_maximum_message': '%d/1250 tecken kvar'
+  hankkeen_tavoitteet_6:
+    '#title':
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_section:
-    '#title': '3.3 Projektets målgrupper'
+    '#title': 'Project target groups'
   hankkeen_kohderyhmat_kenelle:
-    '#title': 'Vem är den huvudsakliga målgruppen för projektet?'
+    'todo': 'todo'
+    '#title': 'Who is the project primarily aimed at?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  hankkeen_kohderyhmat_erityisryhmat:
-    '#title': 'Riktar sig projektet till någon särskild grupp? Till vilken särskild grupp? Om svaret är ”nej”, lämna tomt.'
+  hankkeen_kohderyhmat_osallisuus
+    '#title': ''
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  hankkeen_kohderyhmat_tavoitus:
-    '#title': 'Hur ska ni nå ut med projektet till målgrupperna?'
+  hankkeen_kohderyhmat_osaaminen
+    '#title': ''
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  hankkeen_kohderyhmat_konkretia:
-    '#title': 'På vilket sätt bidrar projektet till att främja den valda målgruppens funktionsförmåga och välbefinnande genom konkreta åtgärder?'
+  arvio_1_fieldset:
+    '#title': ''
+  tavoitettu_helsingissa:
+    '#title': ''
+  tapahtumakerrat_yhteensa:
+    '#title': ''
+  arvio_2_fieldset:
+    '#title': ''
+  toimintapaikka_1:
+    '#title': ''
+  toimintapaikka_2:
+    '#title': ''
+  toimintapaikka_3:
+    '#title': ''
+  toimintapaikka_4:
+    '#title': ''
+  toimintapaikka_5:
+    '#title': ''
+  hankkeen_alue_valintaperuste:
+    '#title': ''
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  hankkeen_kohderyhmat_osallisuus:
-    '#title': 'På vilket sätt främjar projektet delaktighet? Vilken roll har äldre personer i projektet?'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
-  hankkeen_kohderyhmat_osaaminen:
-    '#title': 'Vilken kompetens har aktörerna i projektet i förväg att arbeta med målgruppen/- grupperna?'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
-  hankkeen_kohderyhmat_postinrot:
-    '#title': 'Inom vilket/vilka postnummerområden i Helsingfors kommer projektet att genomföras? Ange upp till tre (3) postnummerområden och separera dem med kommatecken (,).'
-  hankkeen_kohderyhmat_miksi_alue:
-    '#title': 'Varför har ni valt just det/de områdena?'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
-  hankkeen_riskit_section:
-    '#title': '3.4 Risker och analys'
+  hankkeen_keskeisimmat_kumppanit:
+    '#title': ''
+    '#counter_maximum_message': '%d/2500 tecken kvar'
+  hankkeen_riskit_section
+    '#title': ''
   hankkeen_riskit_keskeisimmat:
-    '#title': 'Vilka är de största riskerna när det gäller genomförande av projektet?'
+    '#title': ''
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  hankkeen_riskit_seuranta:
-    '#title': 'Hur kommer ni att följa upp och utvärdera projektet?'
+  hankkeen_toteutumisen_seuranta:
+    '#title': ''
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  hankkeen_riskit_vakiinnuttaminen:
-    '#title': 'Är den planerade verksamheten för projektet avsedd att bli en permanent del av den grundläggande verksamheten hos den sökande/en annan aktör efter projektet? Om ja, beskriv i textrutan hur det här kommer att ske, lämna annars tomt.'
+  hankkeen_vakiinnuttaminen:
+    '#title': ''
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  hankkeen_valiarviointi_section:
-    '#title': '3.5 Mellanutvärderin g av tvååriga projekt'
-  arviointi_markup:
-    '#markup': '<p>I den här delen ska du använda följande frågor för att utvärdera verksamheten inom projektet hittills. Om du ansöker om andra delen av understödet ska du även bifoga en<br>kostnadsställesrapport för perioden 1.6–31.12.2024 under Övriga bilagor.</p>'
-  arviointi_toteuma:
-    '#title': 'Har projektet framskridit enligt planen? Bedöm projektets resultat hittills på en skala 1–100 procent och motivera ditt svar.'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
-    '#description': 'Har det skett några väsentliga förändringar i projektet?'
-  arviointi_muutokset_talous:
-    '#title': 'Gällande ekonomin; vilka?'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
-  arviointi_muutokset_toiminta:
-    '#title': 'Gällande verksamheten; vilka?'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
-  arviointi_muutokset_aikataulu:
-    '#title': 'Gällande tidsplanen; vilka?'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
-  arviointi_haasteet:
-    '#title': 'Har projektet stött på utmaningar som har påverkat verksamheten? Om ja, vilka utmaningar?'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
-  arviointi_saavutettavuus:
-    '#title': 'Hur har verksamheten nått ut till deltagarna i förhållande till målen?'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
-  arviointi_avustus_kaytto:
-    '#help': '<p>Understödsvillkor, punkt 10 e: ”Beviljat understöd ska återbetalas till Helsingfors stad om understödet inte har använts inom den tid då det<br>enligt understödsbeslutet borde ha förbrukats.”</p>'
-    '#title': 'Kommer understödet för den första projektperioden att användas inom tidsfristen (31.5.2025)? Om inte, förklara orsakerna här.'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
+  hankkeen_ratkaisema_ongelma:
+    '#title': ''
+    '#counter_maximum_message': '%d/2500 tecken kvar'
   4_talousarvio:
     '#title': '4. Budget'
   tulot_section:
