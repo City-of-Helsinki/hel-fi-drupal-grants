@@ -15,7 +15,7 @@ third_party_settings:
       76: '76'
       81: '81'
     applicationOpen: '2025-01-13T05:00:00'
-    applicationClose: '2027-02-07T16:00:00'
+    applicationClose: '2025-02-07T16:00:00'
     applicationContinuous: 0
     applicationTargetGroup: '75'
     disableCopying: 1
