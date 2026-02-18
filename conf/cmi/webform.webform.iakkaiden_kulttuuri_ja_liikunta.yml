@@ -398,7 +398,7 @@ elements: |-
       '#title': Käyttötarkoitus
       compensation_purpose_information:
         '#type': webform_markup
-        '#markup': 'Kirjoita käyttötarkoitus - kenttään lyhyt hanketiivistelmä, josta käy ilmi hankkeen tarkoitus, kohderyhmä sekä konkreettiset toimenpiteet ja aikataulu.'
+        '#markup': 'Kirjoita käyttötarkoitus -kenttään lyhyt hanketiivistelmä, josta käy ilmi hankkeen tarkoitus, kohderyhmä sekä konkreettiset toimenpiteet ja aikataulu.'
       compensation_purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
