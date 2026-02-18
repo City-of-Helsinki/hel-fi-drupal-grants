@@ -201,60 +201,63 @@ elements: |
     '#title': 'Does the project reduce loneliness and improve mental well-being through physical activity or cultural activities? How?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_tavoitteet_5:
-    '#title': 'Does the project reduce loneliness and improve mental well-being through physical activity or cultural activities? How?'
-    '#counter_maximum_message': '%d/1250 characters remaining'
-  hankkeen_tavoitteet_6:
     '#title': 'Does the project include intergenerational activities and increase encounters between generations through physical activity or cultural activities? How?'
     '#counter_maximum_message': '%d/1250 characters remaining'
+  hankkeen_tavoitteet_6:
+    '#title': 'Does the project promote consideration of diversity or multiculturalism in physical activity or cultural activities aimed at the elderly? How?'
+    '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_kohderyhmat_section:
-    '#title': 'Project target groups'
+    '#title': 'Project target groups, partners, and area'
   hankkeen_kohderyhmat_kenelle:
-    'todo': 'todo'
-    '#title': 'Who is the project primarily aimed at?'
+    '#title': 'Does the project have a more specifically defined target group or groups? Which one(s)?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_kohderyhmat_osallisuus
-    '#title': ''
+    '#title': 'In what ways does the project promote the inclusion of the elderly?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_kohderyhmat_osaaminen
-    '#title': ''
+    '#title': 'What experience do the organization already have in working with the target group(s)?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   arvio_1_fieldset:
-    '#title': ''
+    '#title': 'Estimate the numerical output target of the planned activities during the 2026– 2027 project period:'
   tavoitettu_helsingissa:
-    '#title': ''
+    '#title': 'Older people living in Helsinki to be reached through the activities of the project'
+    '#help': '<p>Indicate here the target number of older adults to be reached.</p>'
   tapahtumakerrat_yhteensa:
-    '#title': ''
+    '#title': 'Total number of events/meetings'
+    '#help': 'How many encounters will be organized for participants during the project period? Each instance, such as a weekly exercise group session or an individual client meeting, is counted as one event here.'
   arvio_2_fieldset:
-    '#title': ''
+    '#title': 'In which area or areas of Helsinki will the activities be carried out during the 2026–2027 period? Select up to  five (5) areas.'
+  arvio_2_info:
+    '#markup': 'Select based on the exact location of the activity venues from the list of Helsinki sub-areas (Sub area, postal code).'
   toimintapaikka_1:
-    '#title': ''
+    '#title': 'Venue 1'
   toimintapaikka_2:
-    '#title': ''
+    '#title': 'Venue 2'
   toimintapaikka_3:
-    '#title': ''
+    '#title': 'Venue 3'
   toimintapaikka_4:
-    '#title': ''
+    '#title': 'Venue 4'
   toimintapaikka_5:
-    '#title': ''
+    '#title': 'Venue 5'
   hankkeen_alue_valintaperuste:
-    '#title': ''
+    '#title': 'Why was this particular are or these areas chosen?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_keskeisimmat_kumppanit:
-    '#title': ''
+    '#title': 'Name the key partners and their roles in the project. Specify separately the partnerships already agreed upon and those still under consideration.'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_riskit_section
-    '#title': ''
+    '#title': 'Risks, evaluation, and integrating the activities'
   hankkeen_riskit_keskeisimmat:
-    '#title': ''
+    '#title': 'What are the key risks from the perspective of implementing the project according to the plan?'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_toteutumisen_seuranta:
-    '#title': ''
+    '#title': 'How will the project monitor the achievement of its objectives, and how will the impact of the project be measured?'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_vakiinnuttaminen:
-    '#title': ''
+    '#title': 'Is the planned activity of the project intended to be integrated into the applicant’s or another actor’s core operations after the project ends? If yes, describe the plan for implementing this integration.'
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_ratkaisema_ongelma:
-    '#title': ''
+    '#title': 'What need or structural problem does the activity aim to address? What kind of change is the activity intended to achieve?'
     '#counter_maximum_message': '%d/2500 characters remaining'
   4_talousarvio:
     '#title': '4. Planned budget'

@@ -858,10 +858,10 @@ elements: |-
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
       arvio_1_fieldset:
         '#type': fieldset
-        '#title': 'Arvioi hankekauden 2026-2027 osalta tavoitellut toiminnan numeeriset mittarit'
+        '#title': 'Arvioi hankekauden 2026-2027 osalta tavoitellut toiminnan numeeriset mittarit:'
         tavoitettu_helsingissa:
           '#type': textfield
-          '#title': 'Toiminnalla tavoitettavat Helsingissä asuvat iäkkäät ihmiset'
+          '#title': 'Hankkeen toiminnalla tavoitettavat Helsingissä asuvat iäkkäät ihmiset'
           '#help': '<p>Ilmoita tässä tavoitettujen ikäihmisten määrä.</p>'
           '#required': true
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
@@ -886,6 +886,9 @@ elements: |-
       arvio_2_fieldset:
         '#type': fieldset
         '#title': 'Millä alueella tai alueilla Helsingissä toimintaa tullaan toteuttamaan kaudella 2026-2027? Valitse enintään viisi (5) aluetta.'
+        arvio_2_info:
+          '#type': webform_markup
+          '#markup': 'Valitse toimintapaikkojen tarkan sijainnin perusteella Helsingin osa-alueiden luettelosta (Osa-alue, postinumero).'
         toimintapaikka_1:
           '#type': select
           '#title': 'Toimintapaikka 1'

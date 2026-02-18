@@ -201,60 +201,63 @@ elements: |
     '#title': 'Minskar projektet ensamhet  och ökar det psykiska  välbefinnandet genom  rörelse eller  kulturverksamhet? Hur?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_tavoitteet_5:
-    '#title': 'Minskar projektet ensamhet och ökar det psykiska välbefinnandet genom rörelse eller kulturverksamhet? Hur?'
-    '#counter_maximum_message': '%d/1250 tecken kvar'
-  hankkeen_tavoitteet_6:
     '#title': 'Innehåller projektet verksamhet som förenar generationer och ökar möten mellan generationer genom rörelse eller kulturverksamhet? Hur?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
+  hankkeen_tavoitteet_6:
+    '#title': 'Främjar projektet beaktande av mångfald eller mångkulturalism i rörels eller kulturverksamhet som riktas till äldre personer? Hur?'
+    '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_section:
-    '#title': 'Project target groups'
+    '#title': 'Projektets målgrupper, samarbetspartner och område'
   hankkeen_kohderyhmat_kenelle:
-    'todo': 'todo'
-    '#title': 'Who is the project primarily aimed at?'
+    '#title': 'Har projektet en mer specifikt definierad målgrupp eller målgrupper? Vilken/vilka?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_osallisuus
-    '#title': ''
+    '#title': 'På vilket sätt främjar projektet äldre personers delaktighet?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_osaaminen
-    '#title': ''
+    '#title': 'Vilken kompetens har organisationen sedan tidigare i att arbeta med målgruppen/målgrupperna?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   arvio_1_fieldset:
-    '#title': ''
+    '#title': 'Bedöm målsättningen för de numeriska indikatorerna för den planerade verksamheten under projektperioden 2026–2027:'
   tavoitettu_helsingissa:
-    '#title': ''
+    '#title': 'Äldre personer som bor i Helsingfors och nås genom verksamheten i projektet.'
+    '#help': '<p>Ange här det målsatta antalet äldre personer som ska nås.</p>'
   tapahtumakerrat_yhteensa:
-    '#title': ''
+    '#title': 'Det totala antalet evenemang/möten'
+    '#help': 'Hur många möten ordnas för deltagarna under projektperioden? Varje tillfälle, till exempel ett veckovis motionsgruppstillfälle eller ett individuellt kundmöte,  räknas som ett evenemang här.'
   arvio_2_fieldset:
-    '#title': ''
+    '#title': 'På vilket område eller vilka områden i Helsingfors kommer verksamheten att genomföras under perioden 2026–2027? Välj högst fem (5) områden.'
+  arvio_2_info:
+    '#markup': 'Välj utifrån verksamhetsplatsernas exakta läge från förteckningen över Helsingfors delområden (Delområde, postnummer).'
   toimintapaikka_1:
-    '#title': ''
+    '#title': 'Verksamhetsplats 1'
   toimintapaikka_2:
-    '#title': ''
+    '#title': 'Verksamhetsplats 2'
   toimintapaikka_3:
-    '#title': ''
+    '#title': 'Verksamhetsplats 3'
   toimintapaikka_4:
-    '#title': ''
+    '#title': 'Verksamhetsplats 4'
   toimintapaikka_5:
-    '#title': ''
+    '#title': 'Verksamhetsplats 5'
   hankkeen_alue_valintaperuste:
-    '#title': ''
+    '#title': 'Varför har just detta område eller dessa områden valts?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_keskeisimmat_kumppanit:
-    '#title': ''
+    '#title': 'Namnge de viktigaste samarbetspartnerna och deras roller i projektet. Ange separat de redan överenskomna samarbetena och de samarbeten som fortfarande är under planering.'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_riskit_section
-    '#title': ''
+    '#title': 'Risker, utvärdering och förankring av verksamheten'
   hankkeen_riskit_keskeisimmat:
-    '#title': ''
+    '#title': 'Vilka är de viktigaste riskerna ur perspektivet att genomföra projektet enligt planen?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_toteutumisen_seuranta:
-    '#title': ''
+    '#title': 'Hur ska projektet följa upp måluppfyllelsen och hur ska projektets påverkan mätas?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_vakiinnuttaminen:
-    '#title': ''
+    '#title': 'Är det planerade arbetet i projektet avsett att integreras i den sökandes eller någon annan aktörs ordinarie verksamhet efter projektets slut? Om ja, beskriv planen för att genomföra denna förankring.'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_ratkaisema_ongelma:
-    '#title': ''
+    '#title': 'Vilket behov eller strukturellt problem vill verksamheten svara på? Vilken förändring vill man åstadkomma med verksamheten?'
     '#counter_maximum_message': '%d/2500 tecken kvar'
   4_talousarvio:
     '#title': '4. Budget'
