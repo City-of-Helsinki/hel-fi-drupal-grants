@@ -743,27 +743,39 @@ elements: |-
         hankkeen_toimenpiteet_aikataulu_2027:
           '#type': textarea
           '#title': 'Toimenpiteet kaudella 2027-2028 ja niiden suunnitteltu aikataulutus'
-          '#required': true
           '#maxlength': 2500
+          '#required': true
           '#counter_type': character
           '#counter_maximum': 2500
           '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+          '#states':
+            visible:
+              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                '!value': '1'
         hankkeen_toimenpiteet_aikataulu_2028:
           '#type': textarea
           '#title': 'Toimenpiteet kaudella 2028-2029 ja niiden suunnitteltu aikataulutus'
-          '#required': true
           '#maxlength': 2500
+          '#required': true
           '#counter_type': character
           '#counter_maximum': 2500
           '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+          '#states':
+            visible:
+              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                value: '3'
       hankkeen_valiraportti_2025:
         '#type': textarea
         '#title': 'Väliraportti hankkeen toteutuneesta toiminnasta kaudella 2025-2026'
-        '#required': true
         '#maxlength': 2500
+        '#required': true
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="hankesuunnitelma_jatkohakemus"]':
+              value: '1'
       haun_tavoitteet_fieldset:
         '#type': fieldset
         '#title': 'Haun tavoitteet'
@@ -948,6 +960,11 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '50000'
   4_talousarvio:
     '#type': webform_wizard_page
     '#title': '4. Talousarvio'
