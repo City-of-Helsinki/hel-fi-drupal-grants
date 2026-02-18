@@ -165,7 +165,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    *   The url.
    */
   public function getViewApplicationUrl(): Url {
-    // @todo create view_application for react.
+    // @todo UHF-12685 create view_application for react.
     return Url::fromRoute(
       'grants_handler.view_application',
       ['submission_id' => $this->get('application_number')->value],
