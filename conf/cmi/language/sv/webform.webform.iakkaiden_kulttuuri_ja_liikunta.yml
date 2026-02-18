@@ -262,6 +262,9 @@ elements: |
     '#counter_maximum_message': '%d/2500 tecken kvar'
   4_talousarvio:
     '#title': '4. Budget'
+  talousarvio_info:
+    '#type': 'webform_markup'
+    '#markup': 'Specificera budgeten för projektperioden 2026–2027. Vid ansökan om flerårigt understöd ska budgetarna för 2027–2028 och 2028– 2029 bifogas som bilagor till ansökan.'
   tulot_section:
     '#title': '4.1 Inkomster'
   tulot:

@@ -262,6 +262,9 @@ elements: |
     '#counter_maximum_message': '%d/2500 characters remaining'
   4_talousarvio:
     '#title': '4. Planned budget'
+  talousarvio_info:
+    '#type': 'webform_markup'
+    '#markup': 'Break down the budget for the project period 2026– 2027. When applying for multi-year support, the budgets for 2027–2028 and 2028–2029 must be attached as appendices to the application.'
   tulot_section:
     '#title': '4.1 Incomes'
   tulot:
