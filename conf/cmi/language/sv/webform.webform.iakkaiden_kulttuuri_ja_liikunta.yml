@@ -133,7 +133,7 @@ elements: |
   3_tarkemmat_tiedot:
     '#title': '3. Mer detaljerad information'
   tarkemmat_tiedot_section:
-    '#title': ''
+    '#title': 'Ansökt understöds (2026-2028)'
   hankesuunnitelma_avustuksen_kesto:
     '#title': 'Ansöks det om ett-, två- eller treårigt understöd? Ange de understödsbelopp som söks för projektets fortsatta år i de fält som öppnas för dem.'
     '#options':
@@ -211,10 +211,10 @@ elements: |
   hankkeen_kohderyhmat_kenelle:
     '#title': 'Har projektet en mer specifikt definierad målgrupp eller målgrupper? Vilken/vilka?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  hankkeen_kohderyhmat_osallisuus
+  hankkeen_kohderyhmat_osallisuus:
     '#title': 'På vilket sätt främjar projektet äldre personers delaktighet?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
-  hankkeen_kohderyhmat_osaaminen
+  hankkeen_kohderyhmat_osaaminen:
     '#title': 'Vilken kompetens har organisationen sedan tidigare i att arbeta med målgruppen/målgrupperna?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   arvio_1_fieldset:
@@ -245,7 +245,7 @@ elements: |
   hankkeen_keskeisimmat_kumppanit:
     '#title': 'Namnge de viktigaste samarbetspartnerna och deras roller i projektet. Ange separat de redan överenskomna samarbetena och de samarbeten som fortfarande är under planering.'
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  hankkeen_riskit_section
+  hankkeen_riskit_section:
     '#title': 'Risker, utvärdering och förankring av verksamheten'
   hankkeen_riskit_keskeisimmat:
     '#title': 'Vilka är de viktigaste riskerna ur perspektivet att genomföra projektet enligt planen?'

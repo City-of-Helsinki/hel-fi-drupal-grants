@@ -133,7 +133,7 @@ elements: |
   3_tarkemmat_tiedot:
     '#title': '3. Information in more detail'
   tarkemmat_tiedot_section:
-    '#title': ''
+    '#title': 'Applied grant (2026-2028)'
   hankesuunnitelma_avustuksen_kesto:
     '#title': 'Is the application for a one-, two-, or three-year grant? Enter the grant amounts requested for the project’s subsequent years in the fields that open for them.'
     '#options':
@@ -185,7 +185,7 @@ elements: |
   hankkeen_valiraportti_2025:
     '#title': 'Interim report on the activities carried out in the project during the 2025–2026 period'
   haun_tavoitteet_fieldset:
-    '#title': 'objectives of the call for applications'
+    '#title': 'Objectives of the call for applications'
   tavoitteet_info:
     '#markup': '<p>Which of the following objectives for promoting physical activity or cultural activities among the elderly does the project address?</p><p>NOTE! Select only those objectives that are advanced through concrete measures in the project.</p>'
   hankkeen_tavoitteet_1:
@@ -211,10 +211,10 @@ elements: |
   hankkeen_kohderyhmat_kenelle:
     '#title': 'Does the project have a more specifically defined target group or groups? Which one(s)?'
     '#counter_maximum_message': '%d/1250 characters remaining'
-  hankkeen_kohderyhmat_osallisuus
+  hankkeen_kohderyhmat_osallisuus:
     '#title': 'In what ways does the project promote the inclusion of the elderly?'
     '#counter_maximum_message': '%d/1250 characters remaining'
-  hankkeen_kohderyhmat_osaaminen
+  hankkeen_kohderyhmat_osaaminen:
     '#title': 'What experience do the organization already have in working with the target group(s)?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   arvio_1_fieldset:
@@ -245,7 +245,7 @@ elements: |
   hankkeen_keskeisimmat_kumppanit:
     '#title': 'Name the key partners and their roles in the project. Specify separately the partnerships already agreed upon and those still under consideration.'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  hankkeen_riskit_section
+  hankkeen_riskit_section:
     '#title': 'Risks, evaluation, and integrating the activities'
   hankkeen_riskit_keskeisimmat:
     '#title': 'What are the key risks from the perspective of implementing the project according to the plan?'
