@@ -771,6 +771,7 @@ elements: |-
       hankkeen_valiraportti_2025:
         '#type': textarea
         '#title': 'Väliraportti hankkeen toteutuneesta toiminnasta kaudella 2025-2026'
+        '#help': 'Miten hankkeessa on kaudella 2025–2026 onnistuttu suhteessa hankesuunnitelmaan? Paljonko toimintaa on järjestetty ja montako helsinkiläistä ikäihmistä on tavoitettu? Onko suunnitelmaa jouduttu muuttamaan loppuvuoden 2025 aikana?'
         '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500

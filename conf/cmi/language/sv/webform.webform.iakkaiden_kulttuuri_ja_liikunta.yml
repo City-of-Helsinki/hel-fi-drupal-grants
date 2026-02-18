@@ -184,6 +184,7 @@ elements: |
     '#counter_maximum_message': '%d/2500 tecken kvar'
   hankkeen_valiraportti_2025:
     '#title': 'Mellanrapport om projektets genomförda verksamhet under perioden 2025–2026'
+    '#help': 'Hur har projektet under perioden 2025–2026 lyckats i förhållande till projektplanen? Hur mycket verksamhet har ordnats och hur många äldre Helsingforsbor har nåtts? Har planen behövt ändras under slutet av år 2025?'
   haun_tavoitteet_fieldset:
     '#title': 'Målen med ansökan'
   tavoitteet_info:

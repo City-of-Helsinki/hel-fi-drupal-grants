@@ -184,6 +184,7 @@ elements: |
     '#counter_maximum_message': '%d/2500 characters remaining'
   hankkeen_valiraportti_2025:
     '#title': 'Interim report on the activities carried out in the project during the 2025–2026 period'
+    '#help': 'How successful was the project during the 2025–2026 period in relation to the project plan? How much activity has been organized, and how many elderly residents of Helsinki have been reached? Has there been a need to alter the plan during the latter part of 2025?'
   haun_tavoitteet_fieldset:
     '#title': 'Objectives of the call for applications'
   tavoitteet_info:
