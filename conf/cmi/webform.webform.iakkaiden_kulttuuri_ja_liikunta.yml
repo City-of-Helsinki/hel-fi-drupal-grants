@@ -744,8 +744,8 @@ elements: |-
         '#type': 'fieldset'
         '#title': 'Hankkeen toimenpiteet ja aikataulu'
         toimenpiteet_aikataulu_info:
-          '#type': 'textfield'
-          '#title': '<p>Kuvaa hankeessa järjestettävä toiminta mahdollisimman yksityiskohtaisesti jokaisen vuoden osalta, jolle haetaan avustusta.</p><p>Mahdollisen toisen ja kolmannen hankevuoden osalta kirjaa toimenpiteet ja aikataulu niin tarkalla tasolla kuin se on hakuhetkellä mahdollista.</p>'
+          '#type': webform_markup
+          '#markup': '<p>Kuvaa hankeessa järjestettävä toiminta mahdollisimman yksityiskohtaisesti jokaisen vuoden osalta, jolle haetaan avustusta.</p><p>Mahdollisen toisen ja kolmannen hankevuoden osalta kirjaa toimenpiteet ja aikataulu niin tarkalla tasolla kuin se on hakuhetkellä mahdollista.</p>'
         hankkeen_toimenpiteet_aikataulu_2026:
           '#type': textarea
           '#title': 'Toimenpiteet kaudella 2026-2027 ja niiden suunnitteltu aikataulutus'
@@ -757,6 +757,7 @@ elements: |-
         hankkeen_toimenpiteet_aikataulu_2027:
           '#type': textarea
           '#title': 'Toimenpiteet kaudella 2027-2028 ja niiden suunnitteltu aikataulutus'
+          '#required': true
           '#maxlength': 2500
           '#counter_type': character
           '#counter_maximum': 2500
@@ -764,6 +765,15 @@ elements: |-
         hankkeen_toimenpiteet_aikataulu_2028:
           '#type': textarea
           '#title': 'Toimenpiteet kaudella 2028-2029 ja niiden suunnitteltu aikataulutus'
+          '#required': true
+          '#maxlength': 2500
+          '#counter_type': character
+          '#counter_maximum': 2500
+          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+      hankkeen_valiraportti_2025:
+          '#type': textarea
+          '#title': 'Väliraportti hankkeen toteutuneesta toiminnasta kaudella 2025-2026'
+          '#required': true
           '#maxlength': 2500
           '#counter_type': character
           '#counter_maximum': 2500
@@ -772,8 +782,8 @@ elements: |-
         '#type': 'fieldset'
         '#title': 'Haun tavoitteet'
         tavoitteet_info:
-          '#type': 'textfield'
-          '#title': '<p>Mihin seuraavista iäkkäiden liikkumisen tai kulttuuritoiminnan edistämisen avustuksen tavoitteista hanke vastaa?</p><p> HUOM! Valitse tavoitteista vain ne, joita edistetään hankkeessa konkreettisilla toimenpiteillä<p>'
+          '#type': webform_markup
+          '#markup': '<p>Mihin seuraavista iäkkäiden liikkumisen tai kulttuuritoiminnan edistämisen avustuksen tavoitteista hanke vastaa?</p><p> HUOM! Valitse tavoitteista vain ne, joita edistetään hankkeessa konkreettisilla toimenpiteillä<p>'
         hankkeen_tavoitteet_1:
           '#type': textarea
           '#title': 'Lisääkö hanke lähiympäristön tai alueellisia liikkumismahdollisuuksia / taide- ja kulttuuritoimintaa? Miten?'
@@ -834,7 +844,6 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#required': 'true'
       hankkeen_kohderyhmat_osaaminen:
         '#type': textarea
         '#title': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
@@ -849,8 +858,10 @@ elements: |-
         tavoitettu_helsingissa:
           '#type': textfield
           '#title': 'Toiminnalla tavoitettavat Helsingissä asuvat iäkkäät ihmiset'
-          '#help': '<p>Toiminnalla tavoitettavat Helsingissä asuvat iäkkäät ihmiset</p><p>Ilmoita tässä tavoitettujen ikäihmisten määrä.</p>'
+          '#help': '<p>Ilmoita tässä tavoitettujen ikäihmisten määrä.</p>'
           '#required': true
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#pattern': '^[0-9 ]*$'
           '#attributes':
             class:
               - webform--small
@@ -859,7 +870,9 @@ elements: |-
         tapahtumakerrat_yhteensa:
           '#type': textfield
           '#title': 'Tapahtumakertoja / tapaamisten määrä yhteensä'
-          '#help': '<b>Tapahtumakertojen / tapaamisten määrä yhteensä</b><p>Monta kohtaamista toimintaan osallistuville järjestetään hankekauden aikana? Jokainen esimerkiksi viikottaisen liikuntaryhmän kerta tai yksilöasiakastapaaminen lasketaan yhtenä tapahtumakertana tässä.</p>'
+          '#help': '<p>Monta kohtaamista toimintaan osallistuville järjestetään hankekauden aikana? Jokainen esimerkiksi viikottaisen liikuntaryhmän kerta tai yksilöasiakastapaaminen lasketaan yhtenä tapahtumakertana tässä.</p>'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#pattern': '^[0-9 ]*$'
           '#required': true
           '#attributes':
             class:
@@ -870,30 +883,35 @@ elements: |-
         '#type': 'fieldset'
         '#title': 'Millä alueella tai alueilla Helsingissä toimintaa tullaan toteuttamaan kaudella 2026-2027? Valitse enintään viisi (5) aluetta.'
         Toimintapaikka_1:
+          '#type': select
           '#title': 'Toimintapaikka 1'
           '#options':
-            'test1'
-            'test2'
+            0: 'test1'
+            1: 'test2'
         Toimintapaikka_2:
+          '#type': select
           '#title': 'Toimintapaikka 2'
           '#options':
-            'test1'
-            'test2'
+            0: 'test1'
+            1: 'test2'
         Toimintapaikka_3:
+          '#type': select
           '#title': 'Toimintapaikka 3'
           '#options':
-            'test1'
-            'test2'
+            0: 'test1'
+            1: 'test2'
         Toimintapaikka_4:
+          '#type': select
           '#title': 'Toimintapaikka 4'
           '#options':
-            'test1'
-            'test2'
+            0: 'test1'
+            1: 'test2'
         Toimintapaikka_5:
+          '#type': select
           '#title': 'Toimintapaikka 5'
           '#options':
-            'test1'
-            'test2'
+            0: 'test1'
+            1: 'test2'
         hankkeen_kohderyhmat_osaaminen:
           '#type': textarea
           '#title': 'Miksi juuri kyseinen alue / alueet on valittu?'
