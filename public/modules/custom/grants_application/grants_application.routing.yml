@@ -67,7 +67,7 @@ helfi_grants.completion:
 helfi_grants.print_view:
   path: '/application/{form_identifier}/print'
   defaults:
-    _controller: '\Drupal\grants_application\Controller\ApplicationController::printApplication'
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::printApplicationUrl'
   requirements:
     _permission: 'access content'
 

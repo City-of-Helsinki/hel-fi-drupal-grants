@@ -453,7 +453,7 @@ final class ApplicationController extends ControllerBase {
   /**
    * Get the application submission entity.
    *
-   * @param string $application_number
+   * @param string|null $application_number
    *   The application number.
    *
    * @return \Drupal\grants_application\Entity\ApplicationSubmission|null
