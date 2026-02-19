@@ -442,9 +442,12 @@ final class ApplicationController extends ControllerBase {
   }
 
   /**
-   * Print the application.
+   * Physically print the empty/filled application.
+   *
+   * @param string $application_number
+   *   The application number.
    */
-  public function printApplication($application_number) {
+  public function printApplication(string $application_number) {
     // @todo UHF-12685 the original implementation can handle react forms but
     // it should be eventually moved here.
   }
@@ -452,7 +455,7 @@ final class ApplicationController extends ControllerBase {
   /**
    * Get the application submission entity.
    *
-   * @param string $application_number
+   * @param string|null $application_number
    *   The application number.
    *
    * @return \Drupal\grants_application\Entity\ApplicationSubmission|null

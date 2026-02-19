@@ -124,7 +124,8 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
     $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
     if ($formSettings) {
       $isApplicationOpen = $formSettings->isApplicationOpen();
-      $formLink = Url::fromRoute('helfi_grants.print_view', ['form_identifier' => $formSettings->getFormIdentifier()]);
+      # This is the actual physical print url, paper&ink.
+      $formLink = '';
       $selectedRole = $this->grantsProfileService->getSelectedRoleData();
       $isCorrectApplicantType = $selectedRole ? $formSettings->isAllowedApplicantType($selectedRole['type']) : FALSE;
     }
