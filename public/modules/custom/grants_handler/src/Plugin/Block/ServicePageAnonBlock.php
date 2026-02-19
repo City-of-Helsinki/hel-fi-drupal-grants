@@ -124,7 +124,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
     $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
     if ($formSettings) {
       $isApplicationOpen = $formSettings->isApplicationOpen();
-      # This is the actual physical print url, paper&ink.
+      // This is the actual physical print url, paper&ink.
       $formLink = '';
       $selectedRole = $this->grantsProfileService->getSelectedRoleData();
       $isCorrectApplicantType = $selectedRole ? $formSettings->isAllowedApplicantType($selectedRole['type']) : FALSE;
