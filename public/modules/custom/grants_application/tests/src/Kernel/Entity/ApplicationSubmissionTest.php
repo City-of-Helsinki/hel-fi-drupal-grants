@@ -37,6 +37,7 @@ final class ApplicationSubmissionTest extends KernelTestBase {
       'draft' => TRUE,
       'langcode' => 'fi',
       'application_type_id' => 58,
+      'form_identifier' => 'liikunta_suunnistuskartta_avustu',
       'application_number' => 'KERNELTEST-058-0000001',
       'created' => '1765430954',
       'changed' => '1765430954',
