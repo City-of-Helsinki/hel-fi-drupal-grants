@@ -453,6 +453,16 @@ final class ApplicationController extends ControllerBase {
   }
 
   /**
+   * Preview the form.
+   *
+   * @param string $form_identifier
+   *   The form identifier.
+   */
+  public function formPreview(string $form_identifier): void {
+    // @todo UHF-12923 the form preview for application.
+  }
+
+  /**
    * Get the application submission entity.
    *
    * @param string|null $application_number

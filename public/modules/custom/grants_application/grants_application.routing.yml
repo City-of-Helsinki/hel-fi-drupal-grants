@@ -70,7 +70,7 @@ helfi_grants.print_view:
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::printApplication'
   requirements:
-    _permission: 'access content'
+    _role: helsinkiprofiili
 
 entity.application_metadata.collection:
   path: '/admin/tools/application-metadata'
