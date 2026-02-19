@@ -255,7 +255,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    *   The url.
    */
   public function getPrintApplicationUrl(): Url {
-    $parameters = ['form_identifier' => $this->get('form_identifier')->value];
+    $parameters = ['application_number' => $this->get('application_number')->value];
     $attributes = [
       'attributes' => [
         'data-drupal-selector' => 'application-print-link',
