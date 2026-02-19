@@ -7,27 +7,27 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
-    applicationTypeSelect: '70'
     applicationType: KUVAERILLIS
     applicationTypeID: '70'
-    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
       76: '76'
       81: '81'
-    applicationTargetGroup: '75'
     applicationOpen: '2025-01-13T05:00:00'
     applicationClose: '2025-02-07T16:00:00'
-    applicationActingYearsType: fixed
-    applicationActingYears:
-      2025: '2025'
-    applicationActingYearsNextCount: ''
     applicationContinuous: 0
+    applicationTargetGroup: '75'
     disableCopying: 1
-    status: released
+    applicationTypeSelect: '70'
+    applicationIndustry: KUVA
+    applicationActingYears:
+      2026: '2026'
+    applicationActingYearsType: fixed
+    applicationActingYearsNextCount: ''
+    status: development
     parent: ''
-    avus2BreakingChange: 0
+    avus2BreakingChange: false
 weight: 0
 open: null
 close: null
@@ -57,63 +57,51 @@ elements: |-
       bank_account: 0
       community_officials: 0
       acting_year: 0
-      subventions%%subventionTypeTitle: 0
-      subventions%%subventionType: 0
-      ensisijainen_taiteen_ala: 0
-      hankkeen_nimi: 0
-      kyseessa_on_festivaali_tai_tapahtuma: 0
-      hankkeen_tai_toiminnan_lyhyt_esittelyteksti: 0
+      compensation_purpose: 0
       olemme_saaneet_muita_avustuksia: 0
       myonnetty_avustus: 0
-      members_applicant_person_global: 0
-      members_applicant_person_local: 0
-      members_applicant_community_global: 0
-      members_applicant_community_local: 0
-      kokoaikainen_henkilosto: 0
-      kokoaikainen_henkilotyovuosia: 0
-      osa_aikainen_henkilosto: 0
-      osa_aikainen_henkilotyovuosia: 0
-      vapaaehtoinen_henkilosto: 0
-      tapahtuma_tai_esityspaivien_maara_helsingissa: 0
-      esitykset_maara_helsingissa: 0
-      nayttelyt_maara_helsingissa: 0
-      tyopaja_maara_helsingissa: 0
-      esitykset_maara_kaikkiaan: 0
-      nayttelyt_maara_kaikkiaan: 0
-      tyopaja_maara_kaikkiaan: 0
-      esitykset_kavijamaara_helsingissa: 0
-      nayttelyt_kavijamaara_helsingissa: 0
-      tyopaja_kavijamaara_helsingissa: 0
-      esitykset_kavijamaara_kaikkiaan: 0
-      nayttelyt_kavijamaara_kaikkiaan: 0
-      tyopaja_kavijamaara_kaikkiaan: 0
-      kantaesitysten_maara: 0
-      ensi_iltojen_maara_helsingissa: 0
-      ensimmainen_yleisolle_avoimen_tilaisuuden_paikka_helsingissa: 0
-      postinumero: 0
-      kyseessa_on_kaupungin_omistama_tila: 0
-      tila: 0
-      ensimmaisen_yleisolle_avoimen_tilaisuuden_paivamaara: 0
-      festivaalin_tai_tapahtuman_kohdalla_tapahtuman_paivamaarat: 0
-      hanke_alkaa: 0
-      hanke_loppuu: 0
-      laajempi_hankekuvaus: 0
-      toiminta_taiteelliset_lahtokohdat: 0
-      toiminta_tasa_arvo: 0
-      toiminta_saavutettavuus: 0
-      toiminta_yhteisollisyys: 0
-      toiminta_kohderyhmat: 0
-      toiminta_ammattimaisuus: 0
-      toiminta_ekologisuus: 0
-      toiminta_yhteistyokumppanit: 0
-      organisaatio_kuuluu_valtionosuusjarjestelmaan_vos_: 0
-      budget_static_income: 0
-      budget_static_cost: 0
-      budget_other_cost: 0
-      muu_huomioitava_panostus: 0
+      olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
+      haettu_avustus_tieto: 0
+      hankesuunnitelma_avustuksen_kesto: 0
+      haettava_avustussumma_2026: 0
+      haettava_avustussumma_2027: 0
+      haettava_avustussumma_2028: 0
+      hankkeen_nimi: 0
+      hankkeen_tarkoitus_tavoitteet: 0
+      hankesuunnitelma_jatkohakemus: 0
+      hankkeen_toimenpiteet_aikataulu_2026: 0
+      hankkeen_toimenpiteet_aikataulu_2027: 0
+      hankkeen_toimenpiteet_aikataulu_2028: 0
+      hankkeen_valiraportti_2025: 0
+      hankkeen_tavoitteet_1: 0
+      hankkeen_tavoitteet_2: 0
+      hankkeen_tavoitteet_3: 0
+      hankkeen_tavoitteet_4: 0
+      hankkeen_tavoitteet_5: 0
+      hankkeen_tavoitteet_6: 0
+      hankkeen_kohderyhmat_kenelle: 0
+      hankkeen_kohderyhmat_osallisuus: 0
+      hankkeen_kohderyhmat_osaaminen: 0
+      tavoitettu_helsingissa: 0
+      tapahtumakerrat_yhteensa: 0
+      toimintapaikka_1: 0
+      toimintapaikka_2: 0
+      toimintapaikka_3: 0
+      toimintapaikka_4: 0
+      toimintapaikka_5: 0
+      hankkeen_alue_valintaperuste: 0
+      hankkeen_keskeisimmat_kumppanit: 0
+      hankkeen_riskit_keskeisimmat: 0
+      hankkeen_toteutumisen_seuranta: 0
+      hankkeen_vakiinnuttaminen: 0
+      hankkeen_ratkaisema_ongelma: 0
+      tulot: 0
+      talous_tulon_tyyppi: 0
+      talous_menon_tyyppi: 0
       additional_information: 0
       extra_info: 0
       muu_liite: 0
+    '#subvention_type': ''
     '#data_type': euro
     '#form_item': hidden
   applicant_type:
@@ -373,13 +361,14 @@ elements: |-
         '#type': select
         '#title': 'Vuosi, jolle haen avustusta'
         '#options':
-          2024: '2024'
-          2025: '2025'
           2026: '2026'
         '#required': true
     avustuslajit:
       '#type': webform_section
       '#title': Avustuslajit
+      grants_compensations_information:
+        '#type': webform_markup
+        '#markup': '<p>Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan.</p><p>Syötä kenttään vuodelle 2026 haettava avustussumma. Monivuotisen hakemuksen jatkokausien avustussummat syötetään seuraavalla sivulla.</p>'
       subventions:
         '#type': grants_compensations
         '#title': Avustukset
@@ -404,12 +393,12 @@ elements: |-
         '#subvention_type_id__access': false
         '#subvention_type__title': Avustuslaji
         '#subvention_amount__title': 'Avustuksen summa'
-      grants_compensations_information:
-        '#type': webform_markup
-        '#markup': '<p>Hae yhdellä hakemuksella aina vain yhtä avustuslajia kerrallaan.</p>'
     kayttotarkoitus:
       '#type': webform_section
       '#title': Käyttötarkoitus
+      compensation_purpose_information:
+        '#type': webform_markup
+        '#markup': 'Kirjoita käyttötarkoitus -kenttään lyhyt hanketiivistelmä, josta käy ilmi hankkeen tarkoitus, kohderyhmä sekä konkreettiset toimenpiteet ja aikataulu.'
       compensation_purpose:
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
@@ -425,7 +414,7 @@ elements: |-
       info_muut_samaan_tarkoitukseen_myonnetty:
         '#type': webform_markup
         '#markup': |
-          Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on my&ouml;nnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisen&auml; verovuotena.
+          Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisenä verovuotena. Ilmoita vain samaan käyttötarkoitukseen myönnetyt avustukset, ei kaikkia organisaatiollenne myönnettyjä avustuksia.
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
               <div class="hds-notification__label" role="heading" aria-level="2">
@@ -514,7 +503,7 @@ elements: |-
       info_muut_samaan_tarkoitukseen_haettu:
         '#type': webform_markup
         '#markup': |
-          Ilmoita t&auml;h&auml;n ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eik&auml; p&auml;&auml;t&ouml;st&auml; ole viel&auml; tehty.
+          Ilmoita tähän ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eikä päätöstä ole vielä tehty. Ilmoita vain samaan käyttötarkoitukseen haetut avustukset, ei kaikkia organisaationne hakemia avustuksia.
           <div class="hds-notification hds-notification--info">
             <div class="hds-notification__content">
               <div class="hds-notification__label" role="heading" aria-level="2">
@@ -601,496 +590,1123 @@ elements: |-
     '#title': '3. Tarkemmat tiedot'
     tarkemmat_tiedot_section:
       '#type': webform_section
-      '#title': ' '
-      hankesuunnitelma_radios:
+      '#title': 'Haettava avustus (2026-2028)'
+      hankesuunnitelma_avustuksen_kesto:
         '#type': radios
+        '#title': 'Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
+        '#options':
+          1: 'Haen avustusta yksivuotisena'
+          2: 'Haen avustusta kaksivuotisena'
+          3: 'Haen avustusta kolmevuotisena'
         '#required': true
-        '#title': 'Haetaanko nyt vuonna 2024 myönnetyn kaksivuotisen avustuksen 2. osaa?'
-        '#description': '<p data-renderer-start-pos="6773">Vuoden 2024 avustuspäätökset:</p><ul class="ak-ul" data-indent-level="1"><li><p data-renderer-start-pos="6806">Liikuntajaosto: 11.4.2024 §10</p></li><li><p data-renderer-start-pos="6839">Kulttuuri- ja kirjastojaosto: 16.4.2024 §15</p></li></ul>'
-        '#description_display': after
-        '#options':
-          1: Kyllä
-          0: Ei
-        '#default_value': '0'
-      ensisijainen_taiteen_ala:
-        '#type': select
-        '#title': 'Ensisijainen taiteenala'
-        '#help': 'Valitse pudotusvalikosta toimintaa parhaiten kuvaava vaihtoehto.'
-        '#options':
-          'Design ja käsityö': 'Design ja käsityö'
-          'Elokuva, valokuva ja media': 'Elokuva, valokuva ja media'
-          Kaupunkikulttuuri: Kaupunkikulttuuri
-          Kirjallisuus: Kirjallisuus
-          'Kuvataide ja sarjakuva': 'Kuvataide ja sarjakuva'
-          Monitaide: Monitaide
-          Museo: Museo
-          Musiikki: Musiikki
-          Muu: Muu
-          Sirkus: Sirkus
-          Tanssi: Tanssi
-          Teatteri: Teatteri
-        '#wrapper_attributes':
-          class:
-            - webform-element-help--wrapper-short
+        '#default_value': '1'
+      haettava_avustussumma:
+        '#type': fieldset
+        '#title': 'Haettava avustussumma'
+        '#required': true
+        haettava_avustussumma_2026:
+          '#type': grants_budget_income_static
+          '#title': '2026 (euroa)'
+          '#multiple': false
+          '#incomeGroup': general
+          '#required': true
+          '#compensation__title': '2026 (euroa)'
+          '#compensation__title_display': before
+          '#plannedStateOperativeSubvention__access': false
+          '#otherCompensationFromCity__access': false
+          '#stateOperativeSubvention__access': false
+          '#plannedOtherCompensations__access': false
+          '#sponsorships__access': false
+          '#entryFees__access': false
+          '#sales__access': false
+          '#financialFundingAndInterests__access': false
+          '#customerFees__access': false
+          '#donations__access': false
+          '#compensationFromCulturalAffairs__access': false
+          '#otherCompensationType__access': false
+          '#incomeWithoutCompensations__access': false
+          '#ownFunding__access': false
+          '#plannedTotalIncome__access': false
+          '#otherCompensations__access': false
+          '#plannedTotalIncomeWithoutSubventions__access': false
+          '#plannedShareOfIncomeWithoutSubventions__access': false
+          '#shareOfIncomeWithoutSubventions__access': false
+          '#totalIncomeWithoutSubventions__access': false
+          '#totalIncome__access': false
+          '#incomeGroupName__access': false
+        haettava_avustussumma_2027:
+          '#type': textfield
+          '#title': '2027 (euroa)'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#pattern': '^[0-9 ]*$'
+          '#attributes':
+            class:
+              - webform--large
+          '#states':
+            visible:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '3'
+            required:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '3'
+        haettava_avustussumma_2028:
+          '#type': textfield
+          '#title': '2028 (euroa)'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#pattern': '^[0-9 ]*$'
+          '#attributes':
+            class:
+              - webform--large
+          '#states':
+            visible:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '3'
+            required:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                  value: '3'
+      avustus_kuvaus_1:
+        '#type': webform_markup
         '#states':
           visible:
-            - ':input[name="kulttuuri1_summa"]':
-                value:
-                  greater: '0'
-            - or
-            - ':input[name="kulttuuri2_summa"]':
-                value:
-                  greater: '0'
-          required:
-            - ':input[name="kulttuuri1_summa"]':
-                value:
-                  greater: '0'
-            - or
-            - ':input[name="kulttuuri2_summa"]':
-                value:
-                  greater: '0'
+            ':input[name="avustukset_summa"]':
+              value:
+                less_equal: '19999'
+        '#markup': '<p>5000-19999 euron avustukset myönnetään yhdeksi vuodeksi kerrallaan. Hankkeen tulee tässä kategoriassa edistää vähintään yhtä yllä luetelluista vaihtoehdoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 5% hankkeen kuluista</p>'
+      avustus_kuvaus_2:
+        '#type': webform_markup
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '20000'
+          invisible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '49999'
+        '#markup': '<p>20 000-49 999 euron avustussummaa per vuosi voi hakea 1-3 vuoden mittaisille hankkeilla. Hankkeiden tulee tässä kategoriassa edistää vähintään kahta yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 10% hankkeen kuluista</p>'
+      avustus_kuvaus_3:
+        '#type': webform_markup
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '50000'
+        '#markup': '<p>50 000-80 000 euron avustussummaa per vuosi voi hakea 2-3 vuoden mittaisille hankkeille. Hankkeiden tulee tässä kategoriassa edistää vähintään kolmea yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 15% hankkeen kuluista.</p>'
     hankesuunnitelma_section:
       '#type': webform_section
-      '#title': '3.1 Hankesuunnitelma'
-      '#states':
-        visible:
-          ':input[name="hankesuunnitelma_radios"]':
-            value: '0'
-      hankesuunnitelma_jatkohakemus:
-        '#type': radios
-        '#title': 'Onko haettava avustus käynnissä olevan hankkeen jatkohakemus?'
-        '#description': '<p>Vastaa tähän kysymykseen "kyllä" vain siinä tapauksessa, jos yhteisölläsi on jo käynnissä oleva, samasta avustuksesta rahoitettu hanke ja haet sille jatkorahoitusta.</p>'
-        '#description_display': after
-        '#options':
-          1: Kyllä
-          0: Ei
-        '#default_value': '0'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
+      '#title': Hankesuunnitelma
+      hankkeen_nimi:
+        '#type': textarea
+        '#title': 'Hankkeen nimi'
+        '#required': true
+        '#maxlength': 300
+        '#counter_type': character
+        '#counter_maximum': 300
+        '#counter_maximum_message': '%d/300 merkkiä jäljellä'
       hankkeen_tarkoitus_tavoitteet:
         '#type': textarea
         '#title': 'Hankkeen tarkoitus ja tavoitteet'
+        '#required': true
         '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      hankkeen_toimenpiteet_aikataulu:
-        '#type': textarea
-        '#title': 'Mitkä ovat hankkeen konkreettiset toimenpiteet ja niiden toteutusaikataulu?'
-        '#maxlength': 4000
-        '#counter_type': character
-        '#counter_maximum': 4000
-        '#counter_maximum_message': '%d/4000 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      hankkeen_toimenpiteet_toteutus:
+      hankesuunnitelma_jatkohakemus:
+        '#type': radios
+        '#title': 'Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?'
+        '#required': true
+        '#description_display': after
+        '#options':
+          1: Kyllä
+          0: Ei
+        '#default_value': '0'
+      toimenpiteet_ja_aikataulu:
         '#type': fieldset
-        '#title': 'Hankkeen konkreettiset toimenpiteet on tarkoitus toteuttaa välillä'
-        '#attributes':
-          class:
-            - grants-fieldset
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-        hankkeen_toimenpiteet_alkupvm:
-          '#type': date
-          '#title': Alkupäivämäärä
+        '#title': 'Hankkeen toimenpiteet ja aikataulu'
+        toimenpiteet_aikataulu_info:
+          '#type': webform_markup
+          '#markup': '<p>Kuvaa hankeessa järjestettävä toiminta mahdollisimman yksityiskohtaisesti jokaisen vuoden osalta, jolle haetaan avustusta.</p><p>Mahdollisen toisen ja kolmannen hankevuoden osalta kirjaa toimenpiteet ja aikataulu niin tarkalla tasolla kuin se on hakuhetkellä mahdollista.</p>'
+        hankkeen_toimenpiteet_aikataulu_2026:
+          '#type': textarea
+          '#title': 'Toimenpiteet kaudella 2026-2027 ja niiden suunnitteltu aikataulutus'
+          '#required': true
+          '#maxlength': 2500
+          '#counter_type': character
+          '#counter_maximum': 2500
+          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+        hankkeen_toimenpiteet_aikataulu_2027:
+          '#type': textarea
+          '#title': 'Toimenpiteet kaudella 2027-2028 ja niiden suunnitteltu aikataulutus'
+          '#maxlength': 2500
+          '#counter_type': character
+          '#counter_maximum': 2500
+          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
           '#states':
             visible:
-              ':input[name="hankesuunnitelma_radios"]':
-                value: '0'
+              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                '!value': '1'
             required:
-              ':input[name="hankesuunnitelma_radios"]':
-                value: '0'
-        hankkeen_toimenpiteet_loppupvm:
-          '#type': date
-          '#title': Loppupäivämäärä
+              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                '!value': '1'
+        hankkeen_toimenpiteet_aikataulu_2028:
+          '#type': textarea
+          '#title': 'Toimenpiteet kaudella 2028-2029 ja niiden suunnitteltu aikataulutus'
+          '#maxlength': 2500
+          '#counter_type': character
+          '#counter_maximum': 2500
+          '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
           '#states':
             visible:
-              ':input[name="hankesuunnitelma_radios"]':
-                value: '0'
+              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                value: '3'
             required:
-              ':input[name="hankesuunnitelma_radios"]':
-                value: '0'
-      hankkeen_keskeisimmat_kumppanit:
+              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
+                value: '3'
+      hankkeen_valiraportti_2025:
         '#type': textarea
-        '#title': 'Nimeä hankkeen keskeisimmät yhteistyökumppanit ja heidän roolinsa hankkeessa'
+        '#title': 'Väliraportti hankkeen toteutuneesta toiminnasta kaudella 2025-2026'
+        '#help': 'Miten hankkeessa on kaudella 2025–2026 onnistuttu suhteessa hankesuunnitelmaan? Paljonko toimintaa on järjestetty ja montako helsinkiläistä ikäihmistä on tavoitettu? Onko suunnitelmaa jouduttu muuttamaan loppuvuoden 2025 aikana?'
         '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#states':
           visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
+            ':input[name="hankesuunnitelma_jatkohakemus"]':
+              value: '1'
           required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-    haun_painopisteet_section:
-      '#type': webform_section
-      '#title': '3.2 Haun painopisteet'
-      '#states':
-        visible:
-          ':input[name="hankesuunnitelma_radios"]':
-            value: '0'
-      haun_painopisteet_ohje:
-        '#type': webform_markup
-        '#markup': '<b>Mihin seuraavista iäkkäiden liikkumisen ja kulttuuritoiminnan edistämisen avustuksen painopisteistä hanke vastaa?</b><p>Hankkeessa tulee toteuttaa yhtä tai useampaa painopistettä. HUOM! Valitse vain ne painopisteet, joita edistätte hankkeessa konkreettisella tavalla. Jos hanke ei toteuta jotakin painopistettä, jätä tekstikenttä tyhjäksi.</p>'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      haun_painopisteet_liikkumis_kehitys:
-        '#type': textarea
-        '#title': 'Kehitetäänkö hankkeessa liikkumismahdollisuuksia tai taide- ja kulttuuritoimintaa lähiympäristössä / alueellisesti? Miten?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      haun_painopisteet_digi_kehitys:
-        '#type': textarea
-        '#title': 'Kehitetäänkö hankkeessa digitaalisesti / etänä toteutettavia kulttuuritoimintoja tai liikkumiseen aktivoivaa toimintaa? Miten?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      haun_painopisteet_vertais_kehitys:
-        '#type': textarea
-        '#title': 'Kehitetäänkö hankkeessa vapaaehtois- / vertaistoimintaa? Miten?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      haun_painopisteet_kulttuuri_kehitys:
-        '#type': textarea
-        '#title': 'Kehitetäänkö hankkeessa taide- ja kulttuuritoimijoiden osaamista tai luodaanko uusia työtapoja / rakenteita? Miten?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="kulttuuri1_summa"]':
-              value:
-                greater: '0'
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
+              ':input[name="hankesuunnitelma_jatkohakemus"]':
+                value: '1'
+      haun_tavoitteet_fieldset:
+        '#type': fieldset
+        '#title': 'Haun tavoitteet'
+        tavoitteet_info:
+          '#type': webform_markup
+          '#markup': '<p>Mihin seuraavista iäkkäiden liikkumisen tai kulttuuritoiminnan edistämisen avustuksen tavoitteista hanke vastaa?</p><p> HUOM! Valitse tavoitteista vain ne, joita edistetään hankkeessa konkreettisilla toimenpiteillä<p>'
+        hankkeen_tavoitteet_1:
+          '#type': textarea
+          '#title': 'Lisääkö hanke lähiympäristön tai alueellisia liikkumismahdollisuuksia / taide- ja kulttuuritoimintaa? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        hankkeen_tavoitteet_2:
+          '#type': textarea
+          '#title': 'Lisääkö hanke vapaaehtois- / vertaistoimintaa ikäihmisten liikkumiseksi / kulttuuritoiminnassa? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        hankkeen_tavoitteet_3:
+          '#type': textarea
+          '#title': 'Lisääkö hanke digitalista ja etänä toteutettavaa liikkumiseen aktivoivaa toimitaa / kulttuuritoimintaa? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        hankkeen_tavoitteet_4:
+          '#type': textarea
+          '#title': 'Vähentääkö hanke yksinäisyyttä ja lisääkö mielen hyvinvointia liikkumisen / kulttuuritoiminnan avulla? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        hankkeen_tavoitteet_5:
+          '#type': textarea
+          '#title': 'Sisältääkö hanke sukupolvia yhdistävää toimintaa ja lisääkö sukupolvien välisiä kohtaamisia liikkumisen / kulttuuritoiminnan kautta? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+        hankkeen_tavoitteet_6:
+          '#type': textarea
+          '#title': 'Edistääkö hanke moninaisuuden tai monikulttuurisuuden huomioon ottamista ikäihmisille suunnatussa liikunta- / kulttuuritoiminnassa? Miten?'
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
     hankkeen_kohderyhmat_section:
       '#type': webform_section
-      '#title': '3.3 Hankkeen kohderyhmät'
-      '#states':
-        visible:
-          ':input[name="hankesuunnitelma_radios"]':
-            value: '0'
+      '#title': 'Hankkeen kohderyhmät, yhteistyökumppanit ja alue'
       hankkeen_kohderyhmat_kenelle:
         '#type': textarea
-        '#title': 'Kenelle hankkeen toiminta on pääasiallisesti suunnattu?'
+        '#title': 'Onko hankkeelle tarkempaa määriteltyä kohderyhmää / kohderyhmiä? Mikä / mitä?'
         '#maxlength': 1250
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      hankkeen_kohderyhmat_erityisryhmat:
-        '#type': textarea
-        '#title': 'Kohdennetaanko hankkeessa toimintaa jollekin erityisryhmälle? Mille erityisryhmälle? Jos ei toteuteta, niin jätetään tyhjäksi.'
-        '#description_display': after
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      hankkeen_kohderyhmat_tavoitus:
-        '#type': textarea
-        '#title': 'Kuinka hankkeen kohderyhmät aiotaan tavoittaa?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      hankkeen_kohderyhmat_konkretia:
-        '#type': textarea
-        '#title': 'Miten hankkeessa edistetään konkreettisin toimenpitein valitun kohderyhmän toimintakykyä ja hyvinvointia?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
       hankkeen_kohderyhmat_osallisuus:
         '#type': textarea
-        '#title': 'Millä tavoin hankkeessa edistetään osallisuutta? Mikä ikäihmisten rooli hankkeessa on?'
+        '#title': 'Millä tavoin hankkeessa edistetään ikäihmisten osallisuutta?'
+        '#required': true
         '#maxlength': 1250
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
       hankkeen_kohderyhmat_osaaminen:
         '#type': textarea
         '#title': 'Millaista osaamista kyseisen kohderyhmän/-ryhmien kanssa työskentelystä hanketoimijoilla on ennestään?'
+        '#required': true
         '#maxlength': 1250
         '#counter_type': character
         '#counter_maximum': 1250
         '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      hankkeen_kohderyhmat_postinrot:
-        '#type': textfield
-        '#title': 'Millä postinumeroalueella tai -alueilla Helsingissä hanke toteutetaan? Kirjaa kenttään enintään kolme (3) postinumeroaluetta ja erottele ne toisistaan pilkulla (,)'
-        '#description_display': after
-        '#autocomplete': 'off'
-        '#attributes':
-          class:
-            - webform--medium
-        '#size': 32
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      hankkeen_kohderyhmat_miksi_alue:
+      arvio_1_fieldset:
+        '#type': fieldset
+        '#title': 'Arvioi hankekauden 2026-2027 osalta tavoitellut toiminnan numeeriset mittarit:'
+        tavoitettu_helsingissa:
+          '#type': textfield
+          '#title': 'Hankkeen toiminnalla tavoitettavat Helsingissä asuvat iäkkäät ihmiset'
+          '#help': '<p>Ilmoita tässä tavoitettujen ikäihmisten määrä.</p>'
+          '#required': true
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#pattern': '^[0-9 ]*$'
+          '#attributes':
+            class:
+              - webform--small
+          '#maxlength': 50
+          '#size': 16
+        tapahtumakerrat_yhteensa:
+          '#type': textfield
+          '#title': 'Tapahtumakertoja / tapaamisten määrä yhteensä'
+          '#help': '<p>Monta kohtaamista toimintaan osallistuville järjestetään hankekauden aikana? Jokainen esimerkiksi viikottaisen liikuntaryhmän kerta tai yksilöasiakastapaaminen lasketaan yhtenä tapahtumakertana tässä.</p>'
+          '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
+          '#pattern': '^[0-9 ]*$'
+          '#required': true
+          '#attributes':
+            class:
+              - webform--small
+          '#maxlength': 50
+          '#size': 16
+      arvio_2_fieldset:
+        '#type': fieldset
+        '#title': 'Millä alueella tai alueilla Helsingissä toimintaa tullaan toteuttamaan kaudella 2026-2027? Valitse enintään viisi (5) aluetta.'
+        arvio_2_info:
+          '#type': webform_markup
+          '#markup': 'Valitse toimintapaikkojen tarkan sijainnin perusteella Helsingin osa-alueiden luettelosta (Osa-alue, postinumero).'
+        toimintapaikka_1:
+          '#type': select
+          '#title': 'Toimintapaikka 1'
+          '#options':
+            'Kluuvi, 00100': 'Kluuvi, 00100'
+            'Etu-Töölö, 00100': 'Etu-Töölö, 00100'
+            'Punavuori, 00120': 'Punavuori, 00120'
+            'Kaartinkaupunki, 00130': 'Kaartinkaupunki, 00130'
+            'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
+            'Eira, 00150': 'Eira, 00150'
+            'Hernesaari, 00150': 'Hernesaari, 00150'
+            'Katajanokka, 00160': 'Hernesaari, 00150'
+            'Kruununhaka, 00170': 'Kruununhaka, 00170'
+            'Kamppi, 00180': 'Kamppi, 00180'
+            'Ruoholahti, 00180': 'Ruoholahti, 00180'
+            'Lapinlahti, 00180': 'Lapinlahti, 00180'
+            'Kaivopuisto, 00190': 'Kaivopuisto, 00190'
+            'Suomenlinna, 00190': 'Suomenlinna, 00190'
+            'Kotkavuori, 00200': 'Kotkavuori, 00200'
+            'Myllykallio, 00200': 'Myllykallio, 00200'
+            'Koivusaari, 00200': 'Koivusaari, 00200'
+            'Vattuniemi, 00210': 'Vattuniemi, 00210'
+            'Jätkäsaari, 00220': 'Jätkäsaari, 00220'
+            'Länsi-Pasila, 00240': 'Länsi-Pasila, 00240'
+            'Pohjois-Pasila, 00240': 'Pohjois-Pasila, 00240'
+            'Keski-Pasila, 00240': 'Keski-Pasila, 00240'
+            'Taka-Töölö, 00250': 'Taka-Töölö, 00250'
+            'Meilahti, 00250': 'Meilahti, 00250'
+            'Laakso, 00270': 'Laakso, 00270'
+            'Vanha Ruskeasuo, 00280': 'Vanha Ruskeasuo, 00280'
+            'Pikku Huopalahti, 00300': 'Pikku Huopalahti, 00300'
+            'Kivihaka, 00310': 'Kivihaka, 00310'
+            'Etelä-Haaga, 00320': 'Etelä-Haaga, 00320'
+            'Vanha Munkkiniemi, 00330': 'Vanha Munkkiniemi, 00330'
+            'Kuusisaari, 00340': 'Kuusisaari, 00340'
+            'Lehtisaari, 00340': 'Lehtisaari, 00340'
+            'Munkkivuori, 00350': 'Munkkivuori, 00350'
+            'Niemenmäki, 00350': 'Niemenmäki, 00350'
+            'Talinranta, 00350': 'Talinranta, 00350'
+            'Tali, 00350': 'Tali, 00350'
+            'Pajamäki, 00360': 'Pajamäki, 00360'
+            'Reimarla, 00370': 'Reimarla, 00370'
+            'Marttila, 00370': 'Marttila, 00370'
+            'Pitäjänmäen yritysalue, 00380': 'Pitäjänmäen yritysalue, 00380'
+            'Konala, 00390': 'Konala, 00390'
+            'Honkasuo, 00390': 'Honkasuo, 00390'
+            'Pohjois-Haaga, 00400': 'Pohjois-Haaga, 00400'
+            'Malminkartano, 00410': 'Malminkartano, 00410'
+            'Kannelmäki, 004': 'Kannelmäki, 004'
+            'Maununneva, 00430': 'Maununneva, 00430'
+            'Hakuninmaa, 00430': 'Hakuninmaa, 00430'
+            'Kuninkaantammi, 00430': 'Kuninkaantammi, 00430'
+            'Lassila, 00440': 'Lassila, 00440'
+            'Torkkelinmäki, 00500': 'Torkkelinmäki, 00500'
+            'Harju, 00510': 'Harju, 00510'
+            'Alppila, 00510': 'Alppila, 00510'
+            'Vallila, 00510': 'Vallila, 00510'
+            'Itä-Pasila, 00520': 'Itä-Pasila, 00520'
+            'Vilhonvuori, 00530': 'Vilhonvuori, 00530'
+            'Siltasaari, 00530': 'Siltasaari, 00530'
+            'Linjat, 00530': 'Linjat, 00530'
+            'Sompasaari, 00540': 'Sompasaari, 00540'
+            'Hanasaari, 00540': 'Hanasaari, 00540'
+            'Toukola, 00560': 'Toukola, 00560'
+            'Arabianranta, 00560': 'Arabianranta, 00560'
+            'Kumpula, 00560': 'Kumpula, 00560'
+            'Vanhakaupunki, 00560': 'Vanhakaupunki, 00560'
+            'Viikinranta, 00560': 'Viikinranta, 00560'
+            'Mustikkamaa-Korkeasaari, 00570': 'Mustikkamaa-Korkeasaari, 00570'
+            'Kulosaari, 00570': 'Kulosaari, 00570'
+            'Kalasatama, 00580': 'Kalasatama, 00580'
+            'Hermanninmäki, 00580': 'Hermanninmäki, 00580'
+            'Hermanninranta, 00580': 'Hermanninranta, 00580'
+            'Kyläsaari, 00580': 'Kyläsaari, 00580'
+            'Tullisaari, 00590': 'Tullisaari, 00590'
+            'Kruunuvuorenranta, 00590': 'Kruunuvuorenranta, 00590'
+            'Koskela, 00600': 'Koskela, 00600'
+            'Käpylä, 00610': 'Käpylä, 00610'
+            'Metsälä, 00620': 'Metsälä, 00620'
+            'Pirkkola, 00630': 'Pirkkola, 00630'
+            'Maunula, 00630': 'Maunula, 00630'
+            'Maunulanpuisto, 00630': 'Maunulanpuisto, 00630'
+            'Patola, 00640': 'Patola, 00640'
+            'Veräjämäki, 00650': 'Veräjämäki, 00650'
+            'Veräjälaakso, 00650': 'Veräjälaakso, 00650'
+            'Länsi-Pakila, 00660': 'Länsi-Pakila, 00660'
+            'Paloheinä, 00670': 'Paloheinä, 00670'
+            'Itä-Pakila, 00680': 'Itä-Pakila, 00680'
+            'Torpparinmäki, 00690': 'Torpparinmäki, 00690'
+            'Haltiala, 00690': 'Haltiala, 00690'
+            'Tuomarinkartano, 00690': 'Tuomarinkartano, 00690'
+            'Ylä-Malmi, 00700': 'Ylä-Malmi, 00700'
+            'Ala-Malmi, 00700': 'Ala-Malmi, 00700'
+            'Tattariharju, 00700': 'Tattariharju, 00700'
+            'Malmin lentokenttä, 00700': 'Malmin lentokenttä, 00700'
+            'Viikinmäki, 00710': 'Viikinmäki, 00710'
+            'Pihlajamäki, 00710': 'Pihlajamäki, 00710'
+            'Pihlajisto, 00710': 'Pihlajisto, 00710'
+            'Pukinmäki, 00720': 'Pukinmäki, 00720'
+            'Tapanila, 00730': 'Tapanila, 00730'
+            'Töyrynummi, 00730': 'Töyrynummi, 00730'
+            'Siltamäki, 00740': 'Siltamäki, 00740'
+            'Tapulikaupunki, 00750': 'Tapulikaupunki, 00750'
+            'Puistola, 00760': 'Puistola, 00760'
+            'Heikinlaakso, 00760': 'Heikinlaakso, 00760'
+            'Tattarisuo, 00770': 'Tattarisuo, 00770'
+            'Alppikylä, 00770': 'Alppikylä, 00770'
+            'Jakomäki, 00770': 'Jakomäki, 00770'
+            'Tapaninvainio, 00780': 'Tapaninvainio, 00780'
+            'Latokartano, 00790': 'Latokartano, 00790'
+            'Viikin tiedepuisto, 00790': 'Viikin tiedepuisto, 00790'
+            'Länsi-Herttoniemi, 00800': 'Länsi-Herttoniemi, 00800'
+            'Herttoniemenranta, 00810': 'Herttoniemenranta, 00810'
+            'Roihuvuori, 00820': 'Roihuvuori, 00820'
+            'Tammisalo, 00830': 'Tammisalo, 00830'
+            'Vartiosaari, 00830': 'Vartiosaari, 00830'
+            'Yliskylä, 00840': 'Yliskylä, 00840'
+            'Jollas, 00850': 'Jollas, 00850'
+            'Villinki, 00850': 'Villinki, 00850'
+            'Itäsaaret, 00850': 'Itäsaaret, 00850'
+            'Santahamina, 00860': 'Santahamina, 00860'
+            'Hevossalmi, 00870': 'Hevossalmi, 00870'
+            'Herttoniemen yritysalue, 00880': 'Herttoniemen yritysalue, 00880'
+            'Roihupelto, 00880': 'Roihupelto, 00880'
+            'Östersundom, 00890': 'Östersundom, 00890'
+            'Salmenkallio, 00890': 'Salmenkallio, 00890'
+            'Talosaari, 00890': 'Talosaari, 00890'
+            'Karhusaari, 00890': 'Karhusaari, 00890'
+            'Landbo, 00890': 'Landbo, 00890'
+            'Puroniitty, 00890': 'Puroniitty, 00890'
+            'Puotinharju, 00900': 'Puotinharju, 00900'
+            'Puotila, 00910': 'Puotila, 00910'
+            'Myllypuro, 00920': 'Myllypuro, 00920'
+            'Marjaniemi, 00930': 'Marjaniemi, 00930'
+            'Itäkeskus, 00930': 'Itäkeskus, 00930'
+            'Kontula, 00940': 'Kontula, 00940'
+            'Vesala, 00940': 'Vesala, 00940'
+            'Kivikko, 00940': 'Kivikko, 00940'
+            'Kurkimäki, 00940': 'Kurkimäki, 00940'
+            'Vartioharju, 00950': 'Vartioharju, 00950'
+            'Mustavuori, 00960': 'Mustavuori, 00960'
+            'Mellunmäki, 00970': 'Mellunmäki, 00970'
+            'Keski-Vuosaari, 00980': 'Keski-Vuosaari, 00980'
+            'Nordsjön kartano, 00980': 'Nordsjön kartano, 00980'
+            'Meri-Rastila, 00980': 'Meri-Rastila, 00980'
+            'Kallahti, 00980': 'Kallahti, 00980'
+            'Rastila, 00980': 'Rastila, 00980'
+            'Niinisaari, 00980': 'Niinisaari, 00980'
+            'Uutela, 00990': 'Uutela, 00990'
+            'Aurinkolahti, 00990': 'Aurinkolahti, 00990'
+        toimintapaikka_2:
+          '#type': select
+          '#title': 'Toimintapaikka 2'
+          '#options':
+            'Kluuvi, 00100': 'Kluuvi, 00100'
+            'Etu-Töölö, 00100': 'Etu-Töölö, 00100'
+            'Punavuori, 00120': 'Punavuori, 00120'
+            'Kaartinkaupunki, 00130': 'Kaartinkaupunki, 00130'
+            'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
+            'Eira, 00150': 'Eira, 00150'
+            'Hernesaari, 00150': 'Hernesaari, 00150'
+            'Katajanokka, 00160': 'Hernesaari, 00150'
+            'Kruununhaka, 00170': 'Kruununhaka, 00170'
+            'Kamppi, 00180': 'Kamppi, 00180'
+            'Ruoholahti, 00180': 'Ruoholahti, 00180'
+            'Lapinlahti, 00180': 'Lapinlahti, 00180'
+            'Kaivopuisto, 00190': 'Kaivopuisto, 00190'
+            'Suomenlinna, 00190': 'Suomenlinna, 00190'
+            'Kotkavuori, 00200': 'Kotkavuori, 00200'
+            'Myllykallio, 00200': 'Myllykallio, 00200'
+            'Koivusaari, 00200': 'Koivusaari, 00200'
+            'Vattuniemi, 00210': 'Vattuniemi, 00210'
+            'Jätkäsaari, 00220': 'Jätkäsaari, 00220'
+            'Länsi-Pasila, 00240': 'Länsi-Pasila, 00240'
+            'Pohjois-Pasila, 00240': 'Pohjois-Pasila, 00240'
+            'Keski-Pasila, 00240': 'Keski-Pasila, 00240'
+            'Taka-Töölö, 00250': 'Taka-Töölö, 00250'
+            'Meilahti, 00250': 'Meilahti, 00250'
+            'Laakso, 00270': 'Laakso, 00270'
+            'Vanha Ruskeasuo, 00280': 'Vanha Ruskeasuo, 00280'
+            'Pikku Huopalahti, 00300': 'Pikku Huopalahti, 00300'
+            'Kivihaka, 00310': 'Kivihaka, 00310'
+            'Etelä-Haaga, 00320': 'Etelä-Haaga, 00320'
+            'Vanha Munkkiniemi, 00330': 'Vanha Munkkiniemi, 00330'
+            'Kuusisaari, 00340': 'Kuusisaari, 00340'
+            'Lehtisaari, 00340': 'Lehtisaari, 00340'
+            'Munkkivuori, 00350': 'Munkkivuori, 00350'
+            'Niemenmäki, 00350': 'Niemenmäki, 00350'
+            'Talinranta, 00350': 'Talinranta, 00350'
+            'Tali, 00350': 'Tali, 00350'
+            'Pajamäki, 00360': 'Pajamäki, 00360'
+            'Reimarla, 00370': 'Reimarla, 00370'
+            'Marttila, 00370': 'Marttila, 00370'
+            'Pitäjänmäen yritysalue, 00380': 'Pitäjänmäen yritysalue, 00380'
+            'Konala, 00390': 'Konala, 00390'
+            'Honkasuo, 00390': 'Honkasuo, 00390'
+            'Pohjois-Haaga, 00400': 'Pohjois-Haaga, 00400'
+            'Malminkartano, 00410': 'Malminkartano, 00410'
+            'Kannelmäki, 004': 'Kannelmäki, 004'
+            'Maununneva, 00430': 'Maununneva, 00430'
+            'Hakuninmaa, 00430': 'Hakuninmaa, 00430'
+            'Kuninkaantammi, 00430': 'Kuninkaantammi, 00430'
+            'Lassila, 00440': 'Lassila, 00440'
+            'Torkkelinmäki, 00500': 'Torkkelinmäki, 00500'
+            'Harju, 00510': 'Harju, 00510'
+            'Alppila, 00510': 'Alppila, 00510'
+            'Vallila, 00510': 'Vallila, 00510'
+            'Itä-Pasila, 00520': 'Itä-Pasila, 00520'
+            'Vilhonvuori, 00530': 'Vilhonvuori, 00530'
+            'Siltasaari, 00530': 'Siltasaari, 00530'
+            'Linjat, 00530': 'Linjat, 00530'
+            'Sompasaari, 00540': 'Sompasaari, 00540'
+            'Hanasaari, 00540': 'Hanasaari, 00540'
+            'Toukola, 00560': 'Toukola, 00560'
+            'Arabianranta, 00560': 'Arabianranta, 00560'
+            'Kumpula, 00560': 'Kumpula, 00560'
+            'Vanhakaupunki, 00560': 'Vanhakaupunki, 00560'
+            'Viikinranta, 00560': 'Viikinranta, 00560'
+            'Mustikkamaa-Korkeasaari, 00570': 'Mustikkamaa-Korkeasaari, 00570'
+            'Kulosaari, 00570': 'Kulosaari, 00570'
+            'Kalasatama, 00580': 'Kalasatama, 00580'
+            'Hermanninmäki, 00580': 'Hermanninmäki, 00580'
+            'Hermanninranta, 00580': 'Hermanninranta, 00580'
+            'Kyläsaari, 00580': 'Kyläsaari, 00580'
+            'Tullisaari, 00590': 'Tullisaari, 00590'
+            'Kruunuvuorenranta, 00590': 'Kruunuvuorenranta, 00590'
+            'Koskela, 00600': 'Koskela, 00600'
+            'Käpylä, 00610': 'Käpylä, 00610'
+            'Metsälä, 00620': 'Metsälä, 00620'
+            'Pirkkola, 00630': 'Pirkkola, 00630'
+            'Maunula, 00630': 'Maunula, 00630'
+            'Maunulanpuisto, 00630': 'Maunulanpuisto, 00630'
+            'Patola, 00640': 'Patola, 00640'
+            'Veräjämäki, 00650': 'Veräjämäki, 00650'
+            'Veräjälaakso, 00650': 'Veräjälaakso, 00650'
+            'Länsi-Pakila, 00660': 'Länsi-Pakila, 00660'
+            'Paloheinä, 00670': 'Paloheinä, 00670'
+            'Itä-Pakila, 00680': 'Itä-Pakila, 00680'
+            'Torpparinmäki, 00690': 'Torpparinmäki, 00690'
+            'Haltiala, 00690': 'Haltiala, 00690'
+            'Tuomarinkartano, 00690': 'Tuomarinkartano, 00690'
+            'Ylä-Malmi, 00700': 'Ylä-Malmi, 00700'
+            'Ala-Malmi, 00700': 'Ala-Malmi, 00700'
+            'Tattariharju, 00700': 'Tattariharju, 00700'
+            'Malmin lentokenttä, 00700': 'Malmin lentokenttä, 00700'
+            'Viikinmäki, 00710': 'Viikinmäki, 00710'
+            'Pihlajamäki, 00710': 'Pihlajamäki, 00710'
+            'Pihlajisto, 00710': 'Pihlajisto, 00710'
+            'Pukinmäki, 00720': 'Pukinmäki, 00720'
+            'Tapanila, 00730': 'Tapanila, 00730'
+            'Töyrynummi, 00730': 'Töyrynummi, 00730'
+            'Siltamäki, 00740': 'Siltamäki, 00740'
+            'Tapulikaupunki, 00750': 'Tapulikaupunki, 00750'
+            'Puistola, 00760': 'Puistola, 00760'
+            'Heikinlaakso, 00760': 'Heikinlaakso, 00760'
+            'Tattarisuo, 00770': 'Tattarisuo, 00770'
+            'Alppikylä, 00770': 'Alppikylä, 00770'
+            'Jakomäki, 00770': 'Jakomäki, 00770'
+            'Tapaninvainio, 00780': 'Tapaninvainio, 00780'
+            'Latokartano, 00790': 'Latokartano, 00790'
+            'Viikin tiedepuisto, 00790': 'Viikin tiedepuisto, 00790'
+            'Länsi-Herttoniemi, 00800': 'Länsi-Herttoniemi, 00800'
+            'Herttoniemenranta, 00810': 'Herttoniemenranta, 00810'
+            'Roihuvuori, 00820': 'Roihuvuori, 00820'
+            'Tammisalo, 00830': 'Tammisalo, 00830'
+            'Vartiosaari, 00830': 'Vartiosaari, 00830'
+            'Yliskylä, 00840': 'Yliskylä, 00840'
+            'Jollas, 00850': 'Jollas, 00850'
+            'Villinki, 00850': 'Villinki, 00850'
+            'Itäsaaret, 00850': 'Itäsaaret, 00850'
+            'Santahamina, 00860': 'Santahamina, 00860'
+            'Hevossalmi, 00870': 'Hevossalmi, 00870'
+            'Herttoniemen yritysalue, 00880': 'Herttoniemen yritysalue, 00880'
+            'Roihupelto, 00880': 'Roihupelto, 00880'
+            'Östersundom, 00890': 'Östersundom, 00890'
+            'Salmenkallio, 00890': 'Salmenkallio, 00890'
+            'Talosaari, 00890': 'Talosaari, 00890'
+            'Karhusaari, 00890': 'Karhusaari, 00890'
+            'Landbo, 00890': 'Landbo, 00890'
+            'Puroniitty, 00890': 'Puroniitty, 00890'
+            'Puotinharju, 00900': 'Puotinharju, 00900'
+            'Puotila, 00910': 'Puotila, 00910'
+            'Myllypuro, 00920': 'Myllypuro, 00920'
+            'Marjaniemi, 00930': 'Marjaniemi, 00930'
+            'Itäkeskus, 00930': 'Itäkeskus, 00930'
+            'Kontula, 00940': 'Kontula, 00940'
+            'Vesala, 00940': 'Vesala, 00940'
+            'Kivikko, 00940': 'Kivikko, 00940'
+            'Kurkimäki, 00940': 'Kurkimäki, 00940'
+            'Vartioharju, 00950': 'Vartioharju, 00950'
+            'Mustavuori, 00960': 'Mustavuori, 00960'
+            'Mellunmäki, 00970': 'Mellunmäki, 00970'
+            'Keski-Vuosaari, 00980': 'Keski-Vuosaari, 00980'
+            'Nordsjön kartano, 00980': 'Nordsjön kartano, 00980'
+            'Meri-Rastila, 00980': 'Meri-Rastila, 00980'
+            'Kallahti, 00980': 'Kallahti, 00980'
+            'Rastila, 00980': 'Rastila, 00980'
+            'Niinisaari, 00980': 'Niinisaari, 00980'
+            'Uutela, 00990': 'Uutela, 00990'
+            'Aurinkolahti, 00990': 'Aurinkolahti, 00990'
+        toimintapaikka_3:
+          '#type': select
+          '#title': 'Toimintapaikka 3'
+          '#options':
+            'Kluuvi, 00100': 'Kluuvi, 00100'
+            'Etu-Töölö, 00100': 'Etu-Töölö, 00100'
+            'Punavuori, 00120': 'Punavuori, 00120'
+            'Kaartinkaupunki, 00130': 'Kaartinkaupunki, 00130'
+            'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
+            'Eira, 00150': 'Eira, 00150'
+            'Hernesaari, 00150': 'Hernesaari, 00150'
+            'Katajanokka, 00160': 'Hernesaari, 00150'
+            'Kruununhaka, 00170': 'Kruununhaka, 00170'
+            'Kamppi, 00180': 'Kamppi, 00180'
+            'Ruoholahti, 00180': 'Ruoholahti, 00180'
+            'Lapinlahti, 00180': 'Lapinlahti, 00180'
+            'Kaivopuisto, 00190': 'Kaivopuisto, 00190'
+            'Suomenlinna, 00190': 'Suomenlinna, 00190'
+            'Kotkavuori, 00200': 'Kotkavuori, 00200'
+            'Myllykallio, 00200': 'Myllykallio, 00200'
+            'Koivusaari, 00200': 'Koivusaari, 00200'
+            'Vattuniemi, 00210': 'Vattuniemi, 00210'
+            'Jätkäsaari, 00220': 'Jätkäsaari, 00220'
+            'Länsi-Pasila, 00240': 'Länsi-Pasila, 00240'
+            'Pohjois-Pasila, 00240': 'Pohjois-Pasila, 00240'
+            'Keski-Pasila, 00240': 'Keski-Pasila, 00240'
+            'Taka-Töölö, 00250': 'Taka-Töölö, 00250'
+            'Meilahti, 00250': 'Meilahti, 00250'
+            'Laakso, 00270': 'Laakso, 00270'
+            'Vanha Ruskeasuo, 00280': 'Vanha Ruskeasuo, 00280'
+            'Pikku Huopalahti, 00300': 'Pikku Huopalahti, 00300'
+            'Kivihaka, 00310': 'Kivihaka, 00310'
+            'Etelä-Haaga, 00320': 'Etelä-Haaga, 00320'
+            'Vanha Munkkiniemi, 00330': 'Vanha Munkkiniemi, 00330'
+            'Kuusisaari, 00340': 'Kuusisaari, 00340'
+            'Lehtisaari, 00340': 'Lehtisaari, 00340'
+            'Munkkivuori, 00350': 'Munkkivuori, 00350'
+            'Niemenmäki, 00350': 'Niemenmäki, 00350'
+            'Talinranta, 00350': 'Talinranta, 00350'
+            'Tali, 00350': 'Tali, 00350'
+            'Pajamäki, 00360': 'Pajamäki, 00360'
+            'Reimarla, 00370': 'Reimarla, 00370'
+            'Marttila, 00370': 'Marttila, 00370'
+            'Pitäjänmäen yritysalue, 00380': 'Pitäjänmäen yritysalue, 00380'
+            'Konala, 00390': 'Konala, 00390'
+            'Honkasuo, 00390': 'Honkasuo, 00390'
+            'Pohjois-Haaga, 00400': 'Pohjois-Haaga, 00400'
+            'Malminkartano, 00410': 'Malminkartano, 00410'
+            'Kannelmäki, 004': 'Kannelmäki, 004'
+            'Maununneva, 00430': 'Maununneva, 00430'
+            'Hakuninmaa, 00430': 'Hakuninmaa, 00430'
+            'Kuninkaantammi, 00430': 'Kuninkaantammi, 00430'
+            'Lassila, 00440': 'Lassila, 00440'
+            'Torkkelinmäki, 00500': 'Torkkelinmäki, 00500'
+            'Harju, 00510': 'Harju, 00510'
+            'Alppila, 00510': 'Alppila, 00510'
+            'Vallila, 00510': 'Vallila, 00510'
+            'Itä-Pasila, 00520': 'Itä-Pasila, 00520'
+            'Vilhonvuori, 00530': 'Vilhonvuori, 00530'
+            'Siltasaari, 00530': 'Siltasaari, 00530'
+            'Linjat, 00530': 'Linjat, 00530'
+            'Sompasaari, 00540': 'Sompasaari, 00540'
+            'Hanasaari, 00540': 'Hanasaari, 00540'
+            'Toukola, 00560': 'Toukola, 00560'
+            'Arabianranta, 00560': 'Arabianranta, 00560'
+            'Kumpula, 00560': 'Kumpula, 00560'
+            'Vanhakaupunki, 00560': 'Vanhakaupunki, 00560'
+            'Viikinranta, 00560': 'Viikinranta, 00560'
+            'Mustikkamaa-Korkeasaari, 00570': 'Mustikkamaa-Korkeasaari, 00570'
+            'Kulosaari, 00570': 'Kulosaari, 00570'
+            'Kalasatama, 00580': 'Kalasatama, 00580'
+            'Hermanninmäki, 00580': 'Hermanninmäki, 00580'
+            'Hermanninranta, 00580': 'Hermanninranta, 00580'
+            'Kyläsaari, 00580': 'Kyläsaari, 00580'
+            'Tullisaari, 00590': 'Tullisaari, 00590'
+            'Kruunuvuorenranta, 00590': 'Kruunuvuorenranta, 00590'
+            'Koskela, 00600': 'Koskela, 00600'
+            'Käpylä, 00610': 'Käpylä, 00610'
+            'Metsälä, 00620': 'Metsälä, 00620'
+            'Pirkkola, 00630': 'Pirkkola, 00630'
+            'Maunula, 00630': 'Maunula, 00630'
+            'Maunulanpuisto, 00630': 'Maunulanpuisto, 00630'
+            'Patola, 00640': 'Patola, 00640'
+            'Veräjämäki, 00650': 'Veräjämäki, 00650'
+            'Veräjälaakso, 00650': 'Veräjälaakso, 00650'
+            'Länsi-Pakila, 00660': 'Länsi-Pakila, 00660'
+            'Paloheinä, 00670': 'Paloheinä, 00670'
+            'Itä-Pakila, 00680': 'Itä-Pakila, 00680'
+            'Torpparinmäki, 00690': 'Torpparinmäki, 00690'
+            'Haltiala, 00690': 'Haltiala, 00690'
+            'Tuomarinkartano, 00690': 'Tuomarinkartano, 00690'
+            'Ylä-Malmi, 00700': 'Ylä-Malmi, 00700'
+            'Ala-Malmi, 00700': 'Ala-Malmi, 00700'
+            'Tattariharju, 00700': 'Tattariharju, 00700'
+            'Malmin lentokenttä, 00700': 'Malmin lentokenttä, 00700'
+            'Viikinmäki, 00710': 'Viikinmäki, 00710'
+            'Pihlajamäki, 00710': 'Pihlajamäki, 00710'
+            'Pihlajisto, 00710': 'Pihlajisto, 00710'
+            'Pukinmäki, 00720': 'Pukinmäki, 00720'
+            'Tapanila, 00730': 'Tapanila, 00730'
+            'Töyrynummi, 00730': 'Töyrynummi, 00730'
+            'Siltamäki, 00740': 'Siltamäki, 00740'
+            'Tapulikaupunki, 00750': 'Tapulikaupunki, 00750'
+            'Puistola, 00760': 'Puistola, 00760'
+            'Heikinlaakso, 00760': 'Heikinlaakso, 00760'
+            'Tattarisuo, 00770': 'Tattarisuo, 00770'
+            'Alppikylä, 00770': 'Alppikylä, 00770'
+            'Jakomäki, 00770': 'Jakomäki, 00770'
+            'Tapaninvainio, 00780': 'Tapaninvainio, 00780'
+            'Latokartano, 00790': 'Latokartano, 00790'
+            'Viikin tiedepuisto, 00790': 'Viikin tiedepuisto, 00790'
+            'Länsi-Herttoniemi, 00800': 'Länsi-Herttoniemi, 00800'
+            'Herttoniemenranta, 00810': 'Herttoniemenranta, 00810'
+            'Roihuvuori, 00820': 'Roihuvuori, 00820'
+            'Tammisalo, 00830': 'Tammisalo, 00830'
+            'Vartiosaari, 00830': 'Vartiosaari, 00830'
+            'Yliskylä, 00840': 'Yliskylä, 00840'
+            'Jollas, 00850': 'Jollas, 00850'
+            'Villinki, 00850': 'Villinki, 00850'
+            'Itäsaaret, 00850': 'Itäsaaret, 00850'
+            'Santahamina, 00860': 'Santahamina, 00860'
+            'Hevossalmi, 00870': 'Hevossalmi, 00870'
+            'Herttoniemen yritysalue, 00880': 'Herttoniemen yritysalue, 00880'
+            'Roihupelto, 00880': 'Roihupelto, 00880'
+            'Östersundom, 00890': 'Östersundom, 00890'
+            'Salmenkallio, 00890': 'Salmenkallio, 00890'
+            'Talosaari, 00890': 'Talosaari, 00890'
+            'Karhusaari, 00890': 'Karhusaari, 00890'
+            'Landbo, 00890': 'Landbo, 00890'
+            'Puroniitty, 00890': 'Puroniitty, 00890'
+            'Puotinharju, 00900': 'Puotinharju, 00900'
+            'Puotila, 00910': 'Puotila, 00910'
+            'Myllypuro, 00920': 'Myllypuro, 00920'
+            'Marjaniemi, 00930': 'Marjaniemi, 00930'
+            'Itäkeskus, 00930': 'Itäkeskus, 00930'
+            'Kontula, 00940': 'Kontula, 00940'
+            'Vesala, 00940': 'Vesala, 00940'
+            'Kivikko, 00940': 'Kivikko, 00940'
+            'Kurkimäki, 00940': 'Kurkimäki, 00940'
+            'Vartioharju, 00950': 'Vartioharju, 00950'
+            'Mustavuori, 00960': 'Mustavuori, 00960'
+            'Mellunmäki, 00970': 'Mellunmäki, 00970'
+            'Keski-Vuosaari, 00980': 'Keski-Vuosaari, 00980'
+            'Nordsjön kartano, 00980': 'Nordsjön kartano, 00980'
+            'Meri-Rastila, 00980': 'Meri-Rastila, 00980'
+            'Kallahti, 00980': 'Kallahti, 00980'
+            'Rastila, 00980': 'Rastila, 00980'
+            'Niinisaari, 00980': 'Niinisaari, 00980'
+            'Uutela, 00990': 'Uutela, 00990'
+            'Aurinkolahti, 00990': 'Aurinkolahti, 00990'
+        toimintapaikka_4:
+          '#type': select
+          '#title': 'Toimintapaikka 4'
+          '#options':
+            'Kluuvi, 00100': 'Kluuvi, 00100'
+            'Etu-Töölö, 00100': 'Etu-Töölö, 00100'
+            'Punavuori, 00120': 'Punavuori, 00120'
+            'Kaartinkaupunki, 00130': 'Kaartinkaupunki, 00130'
+            'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
+            'Eira, 00150': 'Eira, 00150'
+            'Hernesaari, 00150': 'Hernesaari, 00150'
+            'Katajanokka, 00160': 'Hernesaari, 00150'
+            'Kruununhaka, 00170': 'Kruununhaka, 00170'
+            'Kamppi, 00180': 'Kamppi, 00180'
+            'Ruoholahti, 00180': 'Ruoholahti, 00180'
+            'Lapinlahti, 00180': 'Lapinlahti, 00180'
+            'Kaivopuisto, 00190': 'Kaivopuisto, 00190'
+            'Suomenlinna, 00190': 'Suomenlinna, 00190'
+            'Kotkavuori, 00200': 'Kotkavuori, 00200'
+            'Myllykallio, 00200': 'Myllykallio, 00200'
+            'Koivusaari, 00200': 'Koivusaari, 00200'
+            'Vattuniemi, 00210': 'Vattuniemi, 00210'
+            'Jätkäsaari, 00220': 'Jätkäsaari, 00220'
+            'Länsi-Pasila, 00240': 'Länsi-Pasila, 00240'
+            'Pohjois-Pasila, 00240': 'Pohjois-Pasila, 00240'
+            'Keski-Pasila, 00240': 'Keski-Pasila, 00240'
+            'Taka-Töölö, 00250': 'Taka-Töölö, 00250'
+            'Meilahti, 00250': 'Meilahti, 00250'
+            'Laakso, 00270': 'Laakso, 00270'
+            'Vanha Ruskeasuo, 00280': 'Vanha Ruskeasuo, 00280'
+            'Pikku Huopalahti, 00300': 'Pikku Huopalahti, 00300'
+            'Kivihaka, 00310': 'Kivihaka, 00310'
+            'Etelä-Haaga, 00320': 'Etelä-Haaga, 00320'
+            'Vanha Munkkiniemi, 00330': 'Vanha Munkkiniemi, 00330'
+            'Kuusisaari, 00340': 'Kuusisaari, 00340'
+            'Lehtisaari, 00340': 'Lehtisaari, 00340'
+            'Munkkivuori, 00350': 'Munkkivuori, 00350'
+            'Niemenmäki, 00350': 'Niemenmäki, 00350'
+            'Talinranta, 00350': 'Talinranta, 00350'
+            'Tali, 00350': 'Tali, 00350'
+            'Pajamäki, 00360': 'Pajamäki, 00360'
+            'Reimarla, 00370': 'Reimarla, 00370'
+            'Marttila, 00370': 'Marttila, 00370'
+            'Pitäjänmäen yritysalue, 00380': 'Pitäjänmäen yritysalue, 00380'
+            'Konala, 00390': 'Konala, 00390'
+            'Honkasuo, 00390': 'Honkasuo, 00390'
+            'Pohjois-Haaga, 00400': 'Pohjois-Haaga, 00400'
+            'Malminkartano, 00410': 'Malminkartano, 00410'
+            'Kannelmäki, 004': 'Kannelmäki, 004'
+            'Maununneva, 00430': 'Maununneva, 00430'
+            'Hakuninmaa, 00430': 'Hakuninmaa, 00430'
+            'Kuninkaantammi, 00430': 'Kuninkaantammi, 00430'
+            'Lassila, 00440': 'Lassila, 00440'
+            'Torkkelinmäki, 00500': 'Torkkelinmäki, 00500'
+            'Harju, 00510': 'Harju, 00510'
+            'Alppila, 00510': 'Alppila, 00510'
+            'Vallila, 00510': 'Vallila, 00510'
+            'Itä-Pasila, 00520': 'Itä-Pasila, 00520'
+            'Vilhonvuori, 00530': 'Vilhonvuori, 00530'
+            'Siltasaari, 00530': 'Siltasaari, 00530'
+            'Linjat, 00530': 'Linjat, 00530'
+            'Sompasaari, 00540': 'Sompasaari, 00540'
+            'Hanasaari, 00540': 'Hanasaari, 00540'
+            'Toukola, 00560': 'Toukola, 00560'
+            'Arabianranta, 00560': 'Arabianranta, 00560'
+            'Kumpula, 00560': 'Kumpula, 00560'
+            'Vanhakaupunki, 00560': 'Vanhakaupunki, 00560'
+            'Viikinranta, 00560': 'Viikinranta, 00560'
+            'Mustikkamaa-Korkeasaari, 00570': 'Mustikkamaa-Korkeasaari, 00570'
+            'Kulosaari, 00570': 'Kulosaari, 00570'
+            'Kalasatama, 00580': 'Kalasatama, 00580'
+            'Hermanninmäki, 00580': 'Hermanninmäki, 00580'
+            'Hermanninranta, 00580': 'Hermanninranta, 00580'
+            'Kyläsaari, 00580': 'Kyläsaari, 00580'
+            'Tullisaari, 00590': 'Tullisaari, 00590'
+            'Kruunuvuorenranta, 00590': 'Kruunuvuorenranta, 00590'
+            'Koskela, 00600': 'Koskela, 00600'
+            'Käpylä, 00610': 'Käpylä, 00610'
+            'Metsälä, 00620': 'Metsälä, 00620'
+            'Pirkkola, 00630': 'Pirkkola, 00630'
+            'Maunula, 00630': 'Maunula, 00630'
+            'Maunulanpuisto, 00630': 'Maunulanpuisto, 00630'
+            'Patola, 00640': 'Patola, 00640'
+            'Veräjämäki, 00650': 'Veräjämäki, 00650'
+            'Veräjälaakso, 00650': 'Veräjälaakso, 00650'
+            'Länsi-Pakila, 00660': 'Länsi-Pakila, 00660'
+            'Paloheinä, 00670': 'Paloheinä, 00670'
+            'Itä-Pakila, 00680': 'Itä-Pakila, 00680'
+            'Torpparinmäki, 00690': 'Torpparinmäki, 00690'
+            'Haltiala, 00690': 'Haltiala, 00690'
+            'Tuomarinkartano, 00690': 'Tuomarinkartano, 00690'
+            'Ylä-Malmi, 00700': 'Ylä-Malmi, 00700'
+            'Ala-Malmi, 00700': 'Ala-Malmi, 00700'
+            'Tattariharju, 00700': 'Tattariharju, 00700'
+            'Malmin lentokenttä, 00700': 'Malmin lentokenttä, 00700'
+            'Viikinmäki, 00710': 'Viikinmäki, 00710'
+            'Pihlajamäki, 00710': 'Pihlajamäki, 00710'
+            'Pihlajisto, 00710': 'Pihlajisto, 00710'
+            'Pukinmäki, 00720': 'Pukinmäki, 00720'
+            'Tapanila, 00730': 'Tapanila, 00730'
+            'Töyrynummi, 00730': 'Töyrynummi, 00730'
+            'Siltamäki, 00740': 'Siltamäki, 00740'
+            'Tapulikaupunki, 00750': 'Tapulikaupunki, 00750'
+            'Puistola, 00760': 'Puistola, 00760'
+            'Heikinlaakso, 00760': 'Heikinlaakso, 00760'
+            'Tattarisuo, 00770': 'Tattarisuo, 00770'
+            'Alppikylä, 00770': 'Alppikylä, 00770'
+            'Jakomäki, 00770': 'Jakomäki, 00770'
+            'Tapaninvainio, 00780': 'Tapaninvainio, 00780'
+            'Latokartano, 00790': 'Latokartano, 00790'
+            'Viikin tiedepuisto, 00790': 'Viikin tiedepuisto, 00790'
+            'Länsi-Herttoniemi, 00800': 'Länsi-Herttoniemi, 00800'
+            'Herttoniemenranta, 00810': 'Herttoniemenranta, 00810'
+            'Roihuvuori, 00820': 'Roihuvuori, 00820'
+            'Tammisalo, 00830': 'Tammisalo, 00830'
+            'Vartiosaari, 00830': 'Vartiosaari, 00830'
+            'Yliskylä, 00840': 'Yliskylä, 00840'
+            'Jollas, 00850': 'Jollas, 00850'
+            'Villinki, 00850': 'Villinki, 00850'
+            'Itäsaaret, 00850': 'Itäsaaret, 00850'
+            'Santahamina, 00860': 'Santahamina, 00860'
+            'Hevossalmi, 00870': 'Hevossalmi, 00870'
+            'Herttoniemen yritysalue, 00880': 'Herttoniemen yritysalue, 00880'
+            'Roihupelto, 00880': 'Roihupelto, 00880'
+            'Östersundom, 00890': 'Östersundom, 00890'
+            'Salmenkallio, 00890': 'Salmenkallio, 00890'
+            'Talosaari, 00890': 'Talosaari, 00890'
+            'Karhusaari, 00890': 'Karhusaari, 00890'
+            'Landbo, 00890': 'Landbo, 00890'
+            'Puroniitty, 00890': 'Puroniitty, 00890'
+            'Puotinharju, 00900': 'Puotinharju, 00900'
+            'Puotila, 00910': 'Puotila, 00910'
+            'Myllypuro, 00920': 'Myllypuro, 00920'
+            'Marjaniemi, 00930': 'Marjaniemi, 00930'
+            'Itäkeskus, 00930': 'Itäkeskus, 00930'
+            'Kontula, 00940': 'Kontula, 00940'
+            'Vesala, 00940': 'Vesala, 00940'
+            'Kivikko, 00940': 'Kivikko, 00940'
+            'Kurkimäki, 00940': 'Kurkimäki, 00940'
+            'Vartioharju, 00950': 'Vartioharju, 00950'
+            'Mustavuori, 00960': 'Mustavuori, 00960'
+            'Mellunmäki, 00970': 'Mellunmäki, 00970'
+            'Keski-Vuosaari, 00980': 'Keski-Vuosaari, 00980'
+            'Nordsjön kartano, 00980': 'Nordsjön kartano, 00980'
+            'Meri-Rastila, 00980': 'Meri-Rastila, 00980'
+            'Kallahti, 00980': 'Kallahti, 00980'
+            'Rastila, 00980': 'Rastila, 00980'
+            'Niinisaari, 00980': 'Niinisaari, 00980'
+            'Uutela, 00990': 'Uutela, 00990'
+            'Aurinkolahti, 00990': 'Aurinkolahti, 00990'
+        toimintapaikka_5:
+          '#type': select
+          '#title': 'Toimintapaikka 5'
+          '#options':
+            'Kluuvi, 00100': 'Kluuvi, 00100'
+            'Etu-Töölö, 00100': 'Etu-Töölö, 00100'
+            'Punavuori, 00120': 'Punavuori, 00120'
+            'Kaartinkaupunki, 00130': 'Kaartinkaupunki, 00130'
+            'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
+            'Eira, 00150': 'Eira, 00150'
+            'Hernesaari, 00150': 'Hernesaari, 00150'
+            'Katajanokka, 00160': 'Hernesaari, 00150'
+            'Kruununhaka, 00170': 'Kruununhaka, 00170'
+            'Kamppi, 00180': 'Kamppi, 00180'
+            'Ruoholahti, 00180': 'Ruoholahti, 00180'
+            'Lapinlahti, 00180': 'Lapinlahti, 00180'
+            'Kaivopuisto, 00190': 'Kaivopuisto, 00190'
+            'Suomenlinna, 00190': 'Suomenlinna, 00190'
+            'Kotkavuori, 00200': 'Kotkavuori, 00200'
+            'Myllykallio, 00200': 'Myllykallio, 00200'
+            'Koivusaari, 00200': 'Koivusaari, 00200'
+            'Vattuniemi, 00210': 'Vattuniemi, 00210'
+            'Jätkäsaari, 00220': 'Jätkäsaari, 00220'
+            'Länsi-Pasila, 00240': 'Länsi-Pasila, 00240'
+            'Pohjois-Pasila, 00240': 'Pohjois-Pasila, 00240'
+            'Keski-Pasila, 00240': 'Keski-Pasila, 00240'
+            'Taka-Töölö, 00250': 'Taka-Töölö, 00250'
+            'Meilahti, 00250': 'Meilahti, 00250'
+            'Laakso, 00270': 'Laakso, 00270'
+            'Vanha Ruskeasuo, 00280': 'Vanha Ruskeasuo, 00280'
+            'Pikku Huopalahti, 00300': 'Pikku Huopalahti, 00300'
+            'Kivihaka, 00310': 'Kivihaka, 00310'
+            'Etelä-Haaga, 00320': 'Etelä-Haaga, 00320'
+            'Vanha Munkkiniemi, 00330': 'Vanha Munkkiniemi, 00330'
+            'Kuusisaari, 00340': 'Kuusisaari, 00340'
+            'Lehtisaari, 00340': 'Lehtisaari, 00340'
+            'Munkkivuori, 00350': 'Munkkivuori, 00350'
+            'Niemenmäki, 00350': 'Niemenmäki, 00350'
+            'Talinranta, 00350': 'Talinranta, 00350'
+            'Tali, 00350': 'Tali, 00350'
+            'Pajamäki, 00360': 'Pajamäki, 00360'
+            'Reimarla, 00370': 'Reimarla, 00370'
+            'Marttila, 00370': 'Marttila, 00370'
+            'Pitäjänmäen yritysalue, 00380': 'Pitäjänmäen yritysalue, 00380'
+            'Konala, 00390': 'Konala, 00390'
+            'Honkasuo, 00390': 'Honkasuo, 00390'
+            'Pohjois-Haaga, 00400': 'Pohjois-Haaga, 00400'
+            'Malminkartano, 00410': 'Malminkartano, 00410'
+            'Kannelmäki, 004': 'Kannelmäki, 004'
+            'Maununneva, 00430': 'Maununneva, 00430'
+            'Hakuninmaa, 00430': 'Hakuninmaa, 00430'
+            'Kuninkaantammi, 00430': 'Kuninkaantammi, 00430'
+            'Lassila, 00440': 'Lassila, 00440'
+            'Torkkelinmäki, 00500': 'Torkkelinmäki, 00500'
+            'Harju, 00510': 'Harju, 00510'
+            'Alppila, 00510': 'Alppila, 00510'
+            'Vallila, 00510': 'Vallila, 00510'
+            'Itä-Pasila, 00520': 'Itä-Pasila, 00520'
+            'Vilhonvuori, 00530': 'Vilhonvuori, 00530'
+            'Siltasaari, 00530': 'Siltasaari, 00530'
+            'Linjat, 00530': 'Linjat, 00530'
+            'Sompasaari, 00540': 'Sompasaari, 00540'
+            'Hanasaari, 00540': 'Hanasaari, 00540'
+            'Toukola, 00560': 'Toukola, 00560'
+            'Arabianranta, 00560': 'Arabianranta, 00560'
+            'Kumpula, 00560': 'Kumpula, 00560'
+            'Vanhakaupunki, 00560': 'Vanhakaupunki, 00560'
+            'Viikinranta, 00560': 'Viikinranta, 00560'
+            'Mustikkamaa-Korkeasaari, 00570': 'Mustikkamaa-Korkeasaari, 00570'
+            'Kulosaari, 00570': 'Kulosaari, 00570'
+            'Kalasatama, 00580': 'Kalasatama, 00580'
+            'Hermanninmäki, 00580': 'Hermanninmäki, 00580'
+            'Hermanninranta, 00580': 'Hermanninranta, 00580'
+            'Kyläsaari, 00580': 'Kyläsaari, 00580'
+            'Tullisaari, 00590': 'Tullisaari, 00590'
+            'Kruunuvuorenranta, 00590': 'Kruunuvuorenranta, 00590'
+            'Koskela, 00600': 'Koskela, 00600'
+            'Käpylä, 00610': 'Käpylä, 00610'
+            'Metsälä, 00620': 'Metsälä, 00620'
+            'Pirkkola, 00630': 'Pirkkola, 00630'
+            'Maunula, 00630': 'Maunula, 00630'
+            'Maunulanpuisto, 00630': 'Maunulanpuisto, 00630'
+            'Patola, 00640': 'Patola, 00640'
+            'Veräjämäki, 00650': 'Veräjämäki, 00650'
+            'Veräjälaakso, 00650': 'Veräjälaakso, 00650'
+            'Länsi-Pakila, 00660': 'Länsi-Pakila, 00660'
+            'Paloheinä, 00670': 'Paloheinä, 00670'
+            'Itä-Pakila, 00680': 'Itä-Pakila, 00680'
+            'Torpparinmäki, 00690': 'Torpparinmäki, 00690'
+            'Haltiala, 00690': 'Haltiala, 00690'
+            'Tuomarinkartano, 00690': 'Tuomarinkartano, 00690'
+            'Ylä-Malmi, 00700': 'Ylä-Malmi, 00700'
+            'Ala-Malmi, 00700': 'Ala-Malmi, 00700'
+            'Tattariharju, 00700': 'Tattariharju, 00700'
+            'Malmin lentokenttä, 00700': 'Malmin lentokenttä, 00700'
+            'Viikinmäki, 00710': 'Viikinmäki, 00710'
+            'Pihlajamäki, 00710': 'Pihlajamäki, 00710'
+            'Pihlajisto, 00710': 'Pihlajisto, 00710'
+            'Pukinmäki, 00720': 'Pukinmäki, 00720'
+            'Tapanila, 00730': 'Tapanila, 00730'
+            'Töyrynummi, 00730': 'Töyrynummi, 00730'
+            'Siltamäki, 00740': 'Siltamäki, 00740'
+            'Tapulikaupunki, 00750': 'Tapulikaupunki, 00750'
+            'Puistola, 00760': 'Puistola, 00760'
+            'Heikinlaakso, 00760': 'Heikinlaakso, 00760'
+            'Tattarisuo, 00770': 'Tattarisuo, 00770'
+            'Alppikylä, 00770': 'Alppikylä, 00770'
+            'Jakomäki, 00770': 'Jakomäki, 00770'
+            'Tapaninvainio, 00780': 'Tapaninvainio, 00780'
+            'Latokartano, 00790': 'Latokartano, 00790'
+            'Viikin tiedepuisto, 00790': 'Viikin tiedepuisto, 00790'
+            'Länsi-Herttoniemi, 00800': 'Länsi-Herttoniemi, 00800'
+            'Herttoniemenranta, 00810': 'Herttoniemenranta, 00810'
+            'Roihuvuori, 00820': 'Roihuvuori, 00820'
+            'Tammisalo, 00830': 'Tammisalo, 00830'
+            'Vartiosaari, 00830': 'Vartiosaari, 00830'
+            'Yliskylä, 00840': 'Yliskylä, 00840'
+            'Jollas, 00850': 'Jollas, 00850'
+            'Villinki, 00850': 'Villinki, 00850'
+            'Itäsaaret, 00850': 'Itäsaaret, 00850'
+            'Santahamina, 00860': 'Santahamina, 00860'
+            'Hevossalmi, 00870': 'Hevossalmi, 00870'
+            'Herttoniemen yritysalue, 00880': 'Herttoniemen yritysalue, 00880'
+            'Roihupelto, 00880': 'Roihupelto, 00880'
+            'Östersundom, 00890': 'Östersundom, 00890'
+            'Salmenkallio, 00890': 'Salmenkallio, 00890'
+            'Talosaari, 00890': 'Talosaari, 00890'
+            'Karhusaari, 00890': 'Karhusaari, 00890'
+            'Landbo, 00890': 'Landbo, 00890'
+            'Puroniitty, 00890': 'Puroniitty, 00890'
+            'Puotinharju, 00900': 'Puotinharju, 00900'
+            'Puotila, 00910': 'Puotila, 00910'
+            'Myllypuro, 00920': 'Myllypuro, 00920'
+            'Marjaniemi, 00930': 'Marjaniemi, 00930'
+            'Itäkeskus, 00930': 'Itäkeskus, 00930'
+            'Kontula, 00940': 'Kontula, 00940'
+            'Vesala, 00940': 'Vesala, 00940'
+            'Kivikko, 00940': 'Kivikko, 00940'
+            'Kurkimäki, 00940': 'Kurkimäki, 00940'
+            'Vartioharju, 00950': 'Vartioharju, 00950'
+            'Mustavuori, 00960': 'Mustavuori, 00960'
+            'Mellunmäki, 00970': 'Mellunmäki, 00970'
+            'Keski-Vuosaari, 00980': 'Keski-Vuosaari, 00980'
+            'Nordsjön kartano, 00980': 'Nordsjön kartano, 00980'
+            'Meri-Rastila, 00980': 'Meri-Rastila, 00980'
+            'Kallahti, 00980': 'Kallahti, 00980'
+            'Rastila, 00980': 'Rastila, 00980'
+            'Niinisaari, 00980': 'Niinisaari, 00980'
+            'Uutela, 00990': 'Uutela, 00990'
+            'Aurinkolahti, 00990': 'Aurinkolahti, 00990'
+        hankkeen_alue_valintaperuste:
+          '#type': textarea
+          '#title': 'Miksi juuri kyseinen alue / alueet on valittu?'
+          '#required': true
+          '#maxlength': 1250
+          '#counter_type': character
+          '#counter_maximum': 1250
+          '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+      hankkeen_keskeisimmat_kumppanit:
         '#type': textarea
-        '#title': 'Miksi juuri kyseinen alue / alueet on valittu?'
-        '#maxlength': 1250
+        '#title': 'Nimeä keskeisimmät yhteistökumppanit ja heidän roolinsa hankkeessa. Nimeä erikseen jo sovitut yhteistyökumppanit ja vielä suunnitteilla olevat tahot.'
+        '#required': true
+        '#maxlength': 2500
         '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
     hankkeen_riskit_section:
       '#type': webform_section
-      '#title': '3.4 Riskit & analyysi'
-      '#states':
-        visible:
-          ':input[name="hankesuunnitelma_radios"]':
-            value: '0'
+      '#title': 'Riskit, arviointi ja toiminnan juurruttaminen'
       hankkeen_riskit_keskeisimmat:
         '#type': textarea
-        '#title': 'Mitkä ovat hankkeen toteuttamisen näkökulmasta keskeisimmät riskit?'
+        '#title': 'Mitkä ovat hankkeen suunnitelman mukaisen toteuttamisen näkökulmasta keskeisimmät riskit?'
+        '#required': true
+        '#maxlength': 1250
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+      hankkeen_toteutumisen_seuranta:
+        '#type': textarea
+        '#title': 'Miten hankkeessa aiotaan seurata tavoitteiden toteutumista ja miten hankkeen vaikuttavuutta aiotaan mitata'
+        '#required': true
+        '#maxlength': 1250
+        '#counter_type': character
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
+      hankkeen_vakiinnuttaminen:
+        '#type': textarea
+        '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa suunnitelma vakiinnuttamisen toteuttamiseksi'
+        '#maxlength': 2500
+        '#counter_type': character
+        '#counter_maximum': 2500
+        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
+      hankkeen_ratkaisema_ongelma:
+        '#type': textarea
+        '#title': 'Mihin tarpeeseen tai rakenteelliseen ongelmaan toiminnalla halutaan vastata? Millainen muutos toiminnalla halutaan saada aikaiseksi?'
         '#maxlength': 2500
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#states':
           visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '50000'
           required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      hankkeen_riskit_seuranta:
-        '#type': textarea
-        '#title': 'Miten hankkeessa aiotaan toteuttaa seurantaa ja arviointia?'
-        '#maxlength': 2500
-        '#counter_type': character
-        '#counter_maximum': 2500
-        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-      hankkeen_riskit_vakiinnuttaminen:
-        '#type': textarea
-        '#title': 'Onko hankkeen suunniteltu toiminta aikomus vakiinnuttaa osaksi hakijan/jonkun muun toimijan perustoimintaa hankkeen jälkeen? Jos kyllä, niin kuvaa tekstikenttään kuinka vakiinnuttaminen aiotaan tehdä, muuten jätä tyhjäksi.'
-        '#maxlength': 2500
-        '#counter_type': character
-        '#counter_maximum': 2500
-        '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '0'
-    hankkeen_valiarviointi_section:
-      '#type': webform_section
-      '#title': '3.5 2-vuotisten hankkeiden väliarviointi'
-      '#states':
-        visible:
-          ':input[name="hankesuunnitelma_radios"]':
-            value: '1'
-      arviointi_markup:
-        '#type': webform_markup
-        '#markup': 'Arvioi tässä osiossa hankkeen tähänastista toimintaa seuraavien kysymysten avulla. Avustuksen 2. osaa hakevien tulee liittää hakemukselle Muu liite-kohtaan niin ikään kustannuspaikkaraportti ajanjaksolta 1.6.-31.12.2024'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-      arviointi_toteuma:
-        '#type': textarea
-        '#title': 'Onko hanke edennyt suunnitelman mukaisesti? Arvioikaa hankkeen toteumaa tähän asti asteikolla 1-100% ja perustelkaa vastauksenne.'
-        '#description': 'Onko hankkeessa tapahtunut merkittäviä muutoksia?'
-        '#description_display': after
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-      arviointi_muutokset_talous:
-        '#type': textarea
-        '#title': 'Talouteen liittyen; mitä?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-      arviointi_muutokset_toiminta:
-        '#type': textarea
-        '#title': 'Toimintaan liittyen; mitä?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-      arviointi_muutokset_aikataulu:
-        '#type': textarea
-        '#title': 'Aikatauluun liittyen; mitä?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-      arviointi_haasteet:
-        '#type': textarea
-        '#title': 'Onko hanke kohdannut toimintaan vaikuttaneita haasteita? Jos, niin millaisia?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-      arviointi_saavutettavuus:
-        '#type': textarea
-        '#title': 'Miten toiminta on tavoittanut osallistujia suhteessa tavoitteisiin?'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-      arviointi_avustus_kaytto:
-        '#type': textarea
-        '#help': 'Avustusehdot, kohta 10e: "Myönnetty avustus on palautettava Helsingin kaupungille, jos avustusta ei ole käytetty sinä aikana, jona se on avustuspäätöksen mukaan tullut käyttää.'
-        '#title': 'Tuleeko ensimmäiselle hankekaudelle myönnetty avustus käytettyä näillä näkymin määräaikaan (31.5.2025) mennessä? Jos ei, niin avatkaa tähän johtaneita syitä.'
-        '#maxlength': 1250
-        '#counter_type': character
-        '#counter_maximum': 1250
-        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
-        '#states':
-          visible:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
-          required:
-            ':input[name="hankesuunnitelma_radios"]':
-              value: '1'
+            ':input[name="avustukset_summa"]':
+              value:
+                greater_equal: '50000'
   4_talousarvio:
     '#type': webform_wizard_page
     '#title': '4. Talousarvio'
     tulot_section:
       '#type': webform_section
       '#title': '4.1 Tulot'
+      talousarvio_info:
+        '#type': 'webform_markup'
+        '#markup': 'Erittele tässä hankekauden 2026-2027 talousarvio. Monivuotista avustusta haettaessa budjetti vuosilla 2027-2028 ja 2028-2029 tulee liittää hakemuksen liitteeksi.'
       tulot:
         '#type': grants_budget_income_static
         '#title': Tulot
@@ -1166,7 +1782,7 @@ elements: |-
       '#title': Liitteet
       attachments_info:
         '#type': webform_markup
-        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki hakuilmoituksessa luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4><p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.</p>'
+        '#markup': '<p>Avustushakemuksen käsittelyä varten tulee toimittaa kaikki hakuilmoituksessa luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.</p><h4>Vaaditut liitteet</h4><p>Mikäli hakija ei ole aiemmin hakenut Helsingin kaupungin avustuksia tai tiedot ovat muuttuneet, hakemuksen liitteenä tulee hakijan toimittaa seuraavat liitteet:</p><ul><li>yhteisön säännöt</li><li>pankin ilmoitus tilinomistajasta tai tiliotekopio (hakijalla tulee olla oma suomalainen pankkitili, jolle avustus maksetaan)</li><li>ote yhdistys-/säätiörekisteristä</li><li>viimeisin vahvistettu tilinpäätös ja toimintakertomus</li><li>toimintasuunnitelma ja budjetti avustusvuodelle</li></ul><p>Useammalle vuodelle avustusta haettaessa hakemuksen liitteeksi tulee Muu liite -kohdassa liittää tulevia vuosia koskevat talousarviot. Talousarviot voidaan liittää yhtenä tiedostona.</p><p>Muu liite -kohdassa hakemusta voi täydentää myös esimerkiksi vapaamuotoisella hankesuunnitelmalla, jos sellaisen liittäminen on olennaista hakemuksen sisältämien tietojen täydentämiseksi.</p><h4>Helsingin kaupungille aiemmin toimitetut liitteet</h4><p>Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä.</p>'
       notification_attachments:
         '#type': webform_markup
         '#markup': |
@@ -1261,6 +1877,7 @@ settings:
   form_access_denied_message: ''
   form_access_denied_attributes: {  }
   form_file_limit: ''
+  form_file_limit_message: ''
   form_attributes: {  }
   form_method: ''
   form_action: ''
