@@ -33,6 +33,8 @@ types:
   helfi_news_tags: {  }
   helfi_surveys: {  }
   linkedevents_event: {  }
+  application_submission:
+    '*': '*'
 types_translation_lock: {  }
 form_op_lock:
   crop:
@@ -118,5 +120,8 @@ form_op_lock:
     values: {  }
   linkedevents_event:
     mode: 0
+    values: {  }
+  application_submission:
+    mode: null
     values: {  }
 timeout: 7200

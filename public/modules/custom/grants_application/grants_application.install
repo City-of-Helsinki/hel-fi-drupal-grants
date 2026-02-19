@@ -184,3 +184,67 @@ function grants_application_update_9003() {
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('form_identifier', 'application_submission', 'grants_application', $storage_definition);
 }
+
+/**
+ * Helper function to create menu links.
+ *
+ * @param array $links
+ *   Links as an array.
+ */
+function _grants_application_create_menu_links(array $links): void {
+  foreach ($links as $link) {
+    $storage = Drupal::entityTypeManager()->getStorage('menu_link_content');
+    $id = $storage->getQuery()
+      ->condition('link.uri', $link['uri'])
+      ->accessCheck(FALSE)
+      ->range(0, 1)
+      ->execute();
+
+    if (empty($id)) {
+      /** @var \Drupal\menu_link_content\MenuLinkContentInterface $menuLink */
+      $menuLink = $storage->create([
+        'title' => $link['en'],
+        'link' => ['uri' => $link['uri']],
+        'menu_name' => 'admin',
+        'weight' => 0,
+        'expanded' => FALSE,
+        'enabled' => TRUE,
+        'parent' => $link['parent'],
+        'langcode' => 'en',
+      ]);
+      $menuLink
+        ->addTranslation('fi', [
+          'title' => $link['fi'],
+          'link' => ['uri' => $link['uri']],
+          'menu_name' => 'admin',
+          'weight' => 0,
+          'expanded' => FALSE,
+          'enabled' => TRUE,
+          'parent' => $link['parent'],
+          'langcode' => 'fi',
+        ])
+        ->save();
+    }
+  }
+}
+
+/**
+ * Add content lock menu links.
+ */
+function grants_application_update_11001() {
+  // Create locked content admin menu links.
+  _grants_application_create_menu_links([
+    1 => [
+      'uri' => 'internal:/admin/content/locked-content',
+      'parent' => 'system.admin_content',
+      'en' => 'Locked content',
+      'fi' => 'Lukitut sisällöt',
+    ],
+    2 => [
+      'uri' => 'internal:/admin/tools/locked-applications',
+      'parent' => 'hdbt_admin_tools.overview',
+      'en' => 'Locked applications',
+      'fi' => 'Lukitut hakemukset',
+    ],
+  ]);
+}
