@@ -607,7 +607,7 @@ final class Application extends ResourceBase {
   }
 
   /**
-   * @param string $form_identifier
+   * @param string $formIdentifier
    *   The form identifier.
    * @param array $formData
    *   The form data.
