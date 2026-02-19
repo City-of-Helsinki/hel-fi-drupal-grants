@@ -249,7 +249,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
   }
 
   /**
-   * Get the print url.
+   * Get the physical paper&ink print url.
    *
    * @return \Drupal\Core\Url
    *   The url.
