@@ -64,6 +64,7 @@ helfi_grants.completion:
   requirements:
     _role: helsinkiprofiili
 
+# This is the physical print view.
 helfi_grants.print_view:
   path: '/application/{application_number}/print'
   defaults:
