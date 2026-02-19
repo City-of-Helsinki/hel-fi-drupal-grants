@@ -119,7 +119,7 @@ final class ApplicationSubmissionLockTest extends KernelTestBase {
    */
   public function testApplicationLock(): void {
     // First round should set the lock.
-    $this->controller->formsApp('58', $this->applicationNumber, TRUE);
+    $this->controller->formsApp('liikunta_suunnistuskartta_avustu', $this->applicationNumber, TRUE);
 
     $contentLock = $this->container->get('content_lock');
     $this->assertTrue(
@@ -131,7 +131,7 @@ final class ApplicationSubmissionLockTest extends KernelTestBase {
     );
 
     // Second round should allow entry for same user.
-    $result = $this->controller->formsApp('58', $this->applicationNumber, TRUE);
+    $result = $this->controller->formsApp('liikunta_suunnistuskartta_avustu', $this->applicationNumber, TRUE);
     $this->assertIsArray($result);
 
     // Another user should be redirected.
@@ -139,7 +139,7 @@ final class ApplicationSubmissionLockTest extends KernelTestBase {
     $user = $this->createUser($role->getPermissions(), 'testuser2');
     $this->setUpCurrentUser(['id' => $user->id()]);
 
-    $result = $this->controller->formsApp('58', $this->applicationNumber, TRUE);
+    $result = $this->controller->formsApp('liikunta_suunnistuskartta_avustu', $this->applicationNumber, TRUE);
     $this->assertTrue($result instanceof RedirectResponse);
   }
 
