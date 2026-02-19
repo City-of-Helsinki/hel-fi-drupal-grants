@@ -99,6 +99,7 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
 
             return (
               <NumberInput
+                className='form-group field field-integer'
                 data-subvention-id={itemId}
                 id={key}
                 key={key}

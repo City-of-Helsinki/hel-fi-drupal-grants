@@ -11,7 +11,7 @@ import { Requests } from '../Requests';
 /**
  * Instantiates a new application draft for the given form.
  *
- * @param {string} id - The form id.
+ * @param {string} form_identifier - The form id.
  * @param {string} token - The CSRF token.
  *
  * @return {Promise<Object>} - The response from the server.
@@ -99,7 +99,7 @@ export const AppContainer = ({
   );
 
   if (isLoading || isValidating) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner className='hdbt-react-form__loading-spinner' />;
   }
 
   if (error) {

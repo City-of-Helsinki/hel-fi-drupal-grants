@@ -65,7 +65,7 @@ helfi_grants.completion:
     _role: helsinkiprofiili
 
 helfi_grants.print_view:
-  path: '/application/{id}/print'
+  path: '/application/{application_number}/print'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::printApplication'
   requirements:

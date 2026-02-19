@@ -128,7 +128,6 @@ final class DraftApplication extends ResourceBase {
     string $form_identifier,
     string $application_number,
   ): RedirectResponse|JsonResponse {
-    // @todo Sanitize & validate & authorize properly.
     if (!$application_number) {
       return new JsonResponse([], 400);
     }

@@ -1,7 +1,7 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 // biome-ignore-all lint/a11y/noLabelWithoutControl: @todo UHF-12501
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
-import { type ChangeEvent, type FocusEvent, type KeyboardEvent, type WheelEvent, useCallback } from 'react';
+import { type ChangeEvent, type FocusEvent, type KeyboardEvent, type WheelEvent, useCallback, useEffect } from 'react';
 import {
   Fieldset,
   TextArea as HDSTextArea,
@@ -136,10 +136,6 @@ export const TextArea = ({
   const readGrantsProfile = useAtomCallback(useCallback((get) => get(getProfileAtom), []));
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
-  if (shouldRenderPreview) {
-    return <PreviewInput value={value} label={label} uiSchema={uiSchema} />;
-  }
-
   const getDefaultValue = () => {
     if (!uiSchema?.['misc:profilePrefill']) {
       return;
@@ -148,11 +144,21 @@ export const TextArea = ({
     return grantsProfile?.[uiSchema?.['misc:profilePrefill']] ?? undefined;
   };
 
+  const defaultValue = getDefaultValue();
   const maxLength = uiSchema?.['misc:max-length'] ?? 5000;
+
+  useEffect(() => {
+    if (!value && defaultValue) {
+      onChange(defaultValue);
+    }
+  }, [value, defaultValue, onChange]);
+
+  if (shouldRenderPreview) {
+    return <PreviewInput value={value} label={label} uiSchema={uiSchema} />;
+  }
 
   return (
     <HDSTextArea
-      defaultValue={getDefaultValue()}
       errorText={formatErrors(rawErrors)}
       helperText={`${value?.length || 0}/${maxLength}`}
       hideLabel={false}
