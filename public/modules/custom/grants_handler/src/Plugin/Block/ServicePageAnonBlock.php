@@ -124,9 +124,7 @@ final class ServicePageAnonBlock extends BlockBase implements ContainerFactoryPl
     $formSettings = $this->servicePageBlockService->loadServicePageReactFormSettings();
     if ($formSettings) {
       $isApplicationOpen = $formSettings->isApplicationOpen();
-      // @todo UHF-12923 The preview view & link to anon block.
-      // $formLink = Url::fromRoute('helfi_grants.print_view', ['id' => $formSettings->getFormId()]);
-      $formLink = '';
+      $formLink = Url::fromRoute('helfi_grants.print_view', ['form_identifier' => $formSettings->getFormIdentifier()]);
       $selectedRole = $this->grantsProfileService->getSelectedRoleData();
       $isCorrectApplicantType = $selectedRole ? $formSettings->isAllowedApplicantType($selectedRole['type']) : FALSE;
     }

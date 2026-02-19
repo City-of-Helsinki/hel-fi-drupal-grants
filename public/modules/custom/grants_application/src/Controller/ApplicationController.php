@@ -442,11 +442,12 @@ final class ApplicationController extends ControllerBase {
   }
 
   /**
-   * Print the application.
+   * Print the disabled preview-application url.
    */
-  public function printApplication($application_number) {
-    // @todo UHF-12685 the original implementation can handle react forms but
-    // it should be eventually moved here.
+  public function printApplicationUrl($form_identifier): string {
+    // @todo UHF-12923 Cannot use the old implementation
+    // instead of string, return Url-object or something.
+    return '';
   }
 
   /**

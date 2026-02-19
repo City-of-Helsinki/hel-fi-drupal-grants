@@ -65,11 +65,11 @@ helfi_grants.completion:
     _role: helsinkiprofiili
 
 helfi_grants.print_view:
-  path: '/application/{application_number}/print'
+  path: '/application/{form_identifier}/print'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::printApplication'
   requirements:
-    _role: helsinkiprofiili
+    _permission: 'access content'
 
 entity.application_metadata.collection:
   path: '/admin/tools/application-metadata'
