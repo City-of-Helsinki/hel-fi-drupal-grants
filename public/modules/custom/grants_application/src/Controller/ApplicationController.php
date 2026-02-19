@@ -453,13 +453,15 @@ final class ApplicationController extends ControllerBase {
   }
 
   /**
-   * Preview the form.
+   * Preview the form as anonymous or logged in user.
    *
    * @param string $form_identifier
    *   The form identifier.
    */
   public function formPreview(string $form_identifier): void {
-    // @todo UHF-12923 the form preview for application.
+    // @todo UHF-12923 the form preview for application,
+    // this is similar to ApplicationController::formsApp,
+    // needs route.
   }
 
   /**
