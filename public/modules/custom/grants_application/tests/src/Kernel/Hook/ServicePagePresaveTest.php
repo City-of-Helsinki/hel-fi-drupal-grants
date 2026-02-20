@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\grants_application\Kernel\Hook;
 
-use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
@@ -16,6 +15,9 @@ use Drupal\Tests\grants_application\Kernel\KernelTestBase;
  */
 final class ServicePagePresaveTest extends KernelTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected static $modules = ['block'];
 
   /**
@@ -122,6 +124,12 @@ final class ServicePagePresaveTest extends KernelTestBase {
     return $values === [] ? '0' : (string) array_key_first($values);
   }
 
+  /**
+   * Create a target group term.
+   *
+   * @return int
+   *   Entity id.
+   */
   private function createTargetGroupTerm(): int {
     $term = Term::create([
       'vid' => 'target_group',
