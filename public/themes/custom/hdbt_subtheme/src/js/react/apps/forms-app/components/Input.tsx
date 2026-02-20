@@ -3,6 +3,7 @@
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import { type ChangeEvent, type FocusEvent, type KeyboardEvent, type WheelEvent, useCallback, useEffect } from 'react';
 import {
+  DateInput,
   Fieldset,
   TextArea as HDSTextArea,
   TextInput as HDSTextInput,
@@ -11,6 +12,7 @@ import {
   RadioButton,
   Select,
 } from 'hds-react';
+import { DateTime } from 'luxon';
 import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +22,7 @@ import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
 import { formatErrors } from '../utils';
 import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, getProfileAtom, shouldRenderPreviewAtom } from '../store';
+import { HDS_DATE_FORMAT } from '@/react/common/enum/HDSDateFormat';
 
 export const PreviewInput = ({ value, label, uiSchema }: { value?: string; label?: string; uiSchema: any }) => (
   <>
@@ -350,12 +353,49 @@ export const RadioWidget = ({
             />
           );
         })}
-        {rawErrors?.length > 0 && (
+        {rawErrors?.length && (
           <Notification type='error' className='hdbt-form--notification'>
             {formatErrors(rawErrors)}
           </Notification>
         )}
       </Fieldset>
     </>
+  );
+};
+
+export const DateWidget = ({ id, label, onChange, rawErrors, required, value }: WidgetProps) => {
+  const { currentLanguage } = drupalSettings.path;
+
+  let date: DateTime | undefined;
+  const handleChange = (dateStr: string, dateObject: Date) => {
+    try {
+      date = DateTime.fromJSDate(dateObject);
+    } catch (_error) {
+      return;
+    }
+
+    onChange(date?.toISODate());
+  };
+
+  let formattedValue: string | undefined;
+  try {
+    formattedValue = value ? DateTime.fromISO(value).toFormat(HDS_DATE_FORMAT) : undefined;
+  } catch (_error) {
+    formattedValue = undefined;
+  }
+
+  return (
+    <DateInput
+      errorText={formatErrors(rawErrors)}
+      invalid={Boolean(rawErrors?.length)}
+      language={currentLanguage}
+      onChange={handleChange}
+      value={formattedValue}
+      {...{
+        id,
+        label,
+        required,
+      }}
+    />
   );
 };

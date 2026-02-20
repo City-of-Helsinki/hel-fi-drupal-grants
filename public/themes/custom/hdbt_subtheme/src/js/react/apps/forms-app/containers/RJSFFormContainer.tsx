@@ -24,6 +24,7 @@ import {
   AddressSelect,
   BankAccountSelect,
   CommunityOfficialsSelect,
+  DateWidget,
   RadioWidget,
   SelectWidget,
   TextArea,
@@ -57,6 +58,7 @@ const widgets: RegistryWidgetsType = {
   address: AddressSelect,
   bank_account: BankAccountSelect,
   community_officials: CommunityOfficialsSelect,
+  DateWidget,
   EmailWidget: TextInput,
   RadioWidget,
   SelectWidget,
@@ -192,7 +194,7 @@ export const RJSFFormContainer = ({
     const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(newErrors, steps));
     setErrors(errorsToShow, true);
 
-    return errors;
+    return errorsToShow;
   };
 
   return (
