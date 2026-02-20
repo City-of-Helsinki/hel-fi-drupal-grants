@@ -194,7 +194,7 @@ export const RJSFFormContainer = ({
     const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(newErrors, steps));
     setErrors(errorsToShow, true);
 
-    return errorsToShow;
+    return errors;
   };
 
   return (

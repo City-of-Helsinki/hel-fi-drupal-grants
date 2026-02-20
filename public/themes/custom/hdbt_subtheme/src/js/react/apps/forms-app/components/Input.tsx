@@ -11,12 +11,13 @@ import {
   NumberInput,
   RadioButton,
   Select,
+  Tooltip,
 } from 'hds-react';
 import { DateTime } from 'luxon';
 import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import type { WidgetProps } from '@rjsf/utils';
+import type { UiSchema, WidgetProps } from '@rjsf/utils';
 
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
@@ -34,6 +35,21 @@ export const PreviewInput = ({ value, label, uiSchema }: { value?: string; label
     {Array.isArray(value) ? value.join(', ') : (value ?? '-')}
   </>
 );
+
+const getTooltip = (uiSchema: UiSchema | undefined) => {
+  if (!uiSchema || !uiSchema?.['ui:options']?.tooltipText) {
+    return undefined;
+  }
+
+  return (
+    <Tooltip
+      buttonLabel={uiSchema?.['ui:options']?.tooltipButtonLabel?.toString()}
+      tooltipLabel={uiSchema?.['ui:options']?.tooltipLabel?.toString()}
+    >
+      {uiSchema['ui:options'].tooltipText.toString()}
+    </Tooltip>
+  );
+};
 
 export const TextInput = ({
   id,
@@ -100,6 +116,7 @@ export const TextInput = ({
         readOnly={readonly}
         required={required}
         style={{ maxWidth: getMaxWidth() }}
+        tooltip={getTooltip(uiSchema)}
         value={value ?? 0}
       />
     );
@@ -119,6 +136,7 @@ export const TextInput = ({
       readOnly={readonly}
       required={required}
       style={{ maxWidth: getMaxWidth() }}
+      tooltip={getTooltip(uiSchema)}
       value={value ?? ''}
     />
   );
@@ -132,7 +150,6 @@ export const TextArea = ({
   rawErrors,
   readonly,
   required,
-  schema,
   value,
   uiSchema,
 }: WidgetProps) => {
@@ -170,6 +187,7 @@ export const TextArea = ({
       onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
       onFocus={() => null}
       readOnly={readonly}
+      tooltip={getTooltip(uiSchema)}
       {...{ id, label, maxLength, name, required, value }}
     />
   );
@@ -199,8 +217,9 @@ export const SelectWidget = ({
 
   return (
     <Select
-      id={id}
+      className='hdbt-form--select'
       disabled={readonly}
+      id={id}
       invalid={Boolean(rawErrors?.length)}
       multiSelect={multiple}
       onBlur={() => null}
@@ -225,9 +244,9 @@ export const SelectWidget = ({
         label: label ?? '',
         placeholder: '- Valitse -',
       }}
-      value={value}
       theme={defaultSelectTheme}
-      className='hdbt-form--select'
+      tooltip={getTooltip(uiSchema)}
+      value={value}
     />
   );
 };
@@ -336,7 +355,11 @@ export const RadioWidget = ({
       {affirmativeExpands && (
         <Notification label={t('affirmative_expands')} type='info' className='hdbt-form--notification' />
       )}
-      <Fieldset heading={`${label}${required ? ' *' : ''}`} className='hdbt-form--fieldset'>
+      <Fieldset
+        heading={`${label}${required ? ' *' : ''}`}
+        className='hdbt-form--fieldset'
+        tooltip={getTooltip(uiSchema)}
+      >
         {options?.enumOptions?.map((option: any) => {
           const optionId = `${id}_${option.value}`;
 
@@ -363,7 +386,7 @@ export const RadioWidget = ({
   );
 };
 
-export const DateWidget = ({ id, label, onChange, rawErrors, required, value }: WidgetProps) => {
+export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema, value }: WidgetProps) => {
   const { currentLanguage } = drupalSettings.path;
 
   let date: DateTime | undefined;
@@ -390,6 +413,7 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, value }: 
       invalid={Boolean(rawErrors?.length)}
       language={currentLanguage}
       onChange={handleChange}
+      tooltip={getTooltip(uiSchema)}
       value={formattedValue}
       {...{
         id,
