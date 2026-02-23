@@ -76,6 +76,7 @@ final class ApplicationControllerTest extends KernelTestBase {
       'draft' => TRUE,
       'langcode' => 'fi',
       'application_type_id' => 58,
+      'form_identifier' => 'liikunta_suunnistuskartta_avustu',
       'application_number' => $this->applicationNumber,
       'created' => '1765430954',
       'changed' => '1765430954',

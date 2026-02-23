@@ -176,10 +176,12 @@ const transformData = (data: any) => {
  */
 export const FormWrapper = ({
   applicationTypeId,
+  formIdentifier,
   data,
   token,
 }: {
   applicationTypeId: string;
+  formIdentifier: string;
   data: any;
   token: string;
 }) => {
@@ -219,7 +221,7 @@ export const FormWrapper = ({
     setIsSubmitting(true);
 
     const response = await fetch(
-      `/${currentLanguage}/applications/${applicationTypeId}/application/${readApplicationNumber()}`,
+      `/${currentLanguage}/applications/${formIdentifier}/application/${readApplicationNumber()}`,
       {
         body: JSON.stringify({
           application_number: readApplicationNumber() || '',
@@ -259,7 +261,7 @@ export const FormWrapper = ({
   }
 
   const saveDraft = async (submittedData: any) => {
-    const response = await fetch(`/${currentLanguage}/applications/${applicationTypeId}/${readApplicationNumber()}`, {
+    const response = await fetch(`/${currentLanguage}/applications/${formIdentifier}/${readApplicationNumber()}`, {
       body: JSON.stringify({
         application_number: readApplicationNumber() || '',
         application_type_id: applicationTypeId,

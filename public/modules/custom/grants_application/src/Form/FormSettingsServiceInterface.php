@@ -21,9 +21,9 @@ interface FormSettingsServiceInterface extends ContainerFactoryPluginInterface {
    * files if no metadata is available.
    *
    * @param int|string $form_type_id
-   *   The unique identifier of the form type to load settings for.
+   *   The numberic id of the form type to load settings for.
    * @param string|null $identifier
-   *   The form identifier.
+   *   The form identifier, used primarily for ID70 forms.
    *
    * @return \Drupal\grants_application\Form\FormSettings
    *   The form settings object containing configuration,
@@ -39,6 +39,20 @@ interface FormSettingsServiceInterface extends ContainerFactoryPluginInterface {
    *   When the application_metadata entity type is not valid.
    */
   public function getFormSettings(int|string $form_type_id, ?string $identifier = NULL): FormSettings;
+
+  /**
+   * Get the form settings by form identifier.
+   *
+   * Identifier is actually unique for each form where ID can be shared between
+   * multiple applications.
+   *
+   * @param string $form_identifier
+   *   The form identifier.
+   *
+   * @return FormSettings
+   *   The form settings
+   */
+  public function getFormSettingsByFormIdentifier(string $form_identifier): FormSettings;
 
   /**
    * Get the metadata object related to the settings.
