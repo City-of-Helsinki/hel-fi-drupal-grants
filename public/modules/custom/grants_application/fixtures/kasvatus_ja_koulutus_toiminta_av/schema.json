@@ -605,12 +605,12 @@
     "attachments_step": {
       "type": "object",
       "properties": {
-        "additional_info_section": {
-          "title": "additional_info_section.title",
+        "additional_information_section": {
+          "title": "additional_information_section.title",
           "type": "object",
           "properties": {
-            "additional_info": {
-              "title": "additional_info.title",
+            "additional_information": {
+              "title": "additional_information.title",
               "type": "string"
             }
           }

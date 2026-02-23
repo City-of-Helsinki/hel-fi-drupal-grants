@@ -134,7 +134,6 @@
     }
   },
   "compensation.applicationInfoArray.3": {
-    "#tip": "check ID52 webform submit.",
     "datasource": "custom",
     "source": "now",
     "mapping_type": "default",

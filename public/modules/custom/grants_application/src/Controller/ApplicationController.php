@@ -287,7 +287,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $this->eventsService->logEvent(
         $application_number,
-        $this->eventsService->getEventTypes()['HANDLER_ATT_OK'],
+        'HANDLER_ATT_OK',
         "Uploaded a file $file_original_name",
         $file_original_name,
       );
@@ -357,7 +357,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $this->eventsService->logEvent(
         $application_number,
-        $this->eventsService->getEventTypes()['HANDLER_ATT_DELETED'],
+        'HANDLER_ATT_DELETED',
         "Deleted a file $attachmentId",
         $attachmentId,
       );
@@ -442,15 +442,32 @@ final class ApplicationController extends ControllerBase {
   }
 
   /**
-   * Print the application.
+   * Physically print the empty/filled application.
+   *
+   * @param string $application_number
+   *   The application number.
    */
-  public function printApplication() {
+  public function printApplication(string $application_number) {
+    // @todo UHF-12685 the original implementation can handle react forms but
+    // it should be eventually moved here.
+  }
+
+  /**
+   * Preview the form as anonymous or logged in user.
+   *
+   * @param string $form_identifier
+   *   The form identifier.
+   */
+  public function formPreview(string $form_identifier): void {
+    // @todo UHF-12923 the form preview for application,
+    // this is similar to ApplicationController::formsApp,
+    // needs route.
   }
 
   /**
    * Get the application submission entity.
    *
-   * @param string $application_number
+   * @param string|null $application_number
    *   The application number.
    *
    * @return \Drupal\grants_application\Entity\ApplicationSubmission|null

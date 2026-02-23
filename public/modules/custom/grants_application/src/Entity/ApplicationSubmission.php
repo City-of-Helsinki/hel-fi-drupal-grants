@@ -165,6 +165,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    *   The url.
    */
   public function getViewApplicationUrl(): Url {
+    // @todo UHF-12685 create view_application for react.
     return Url::fromRoute(
       'grants_handler.view_application',
       ['submission_id' => $this->get('application_number')->value],
@@ -248,13 +249,13 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
   }
 
   /**
-   * Get the print url.
+   * Get the physical paper&ink print url.
    *
    * @return \Drupal\Core\Url
    *   The url.
    */
   public function getPrintApplicationUrl(): Url {
-    $parameters = ['id' => $this->get('application_number')->value];
+    $parameters = ['application_number' => $this->get('application_number')->value];
     $attributes = [
       'attributes' => [
         'data-drupal-selector' => 'application-print-link',

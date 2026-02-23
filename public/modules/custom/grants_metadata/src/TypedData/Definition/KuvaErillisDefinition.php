@@ -64,6 +64,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         ],
       ],
       'haettava_avustussumma_2027' => [],
+      'haettava_avustussumma_2028' => [],
       'ensisijainen_taiteen_ala' => [],
       'avustuksen_kohde_yhdistys_toimintaryhma' => [],
       'avustuksen_kohde_tiivistelma' => [],
@@ -73,6 +74,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_toimenpiteet_aikataulu' => [],
       'hankkeen_toimenpiteet_aikataulu_2026' => [],
       'hankkeen_toimenpiteet_aikataulu_2027' => [],
+      'hankkeen_toimenpiteet_aikataulu_2028' => [],
       'hankkeen_toimenpiteet_alkupvm' => [
         'typeOverride' => [
           'dataType' => 'string',
@@ -192,6 +194,24 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_kohderyhmat_lapset_13_15_arvio' => [],
       'hankkeen_kohderyhmat_lapset_16_18_arvio' => [],
       'hankkeen_kohderyhmat_uudet_arvio' => [],
+      'hankkeen_valiraportti_2025' => [],
+      'hankkeen_tavoitteet_1' => [],
+      'hankkeen_tavoitteet_2' => [],
+      'hankkeen_tavoitteet_3' => [],
+      'hankkeen_tavoitteet_4' => [],
+      'hankkeen_tavoitteet_5' => [],
+      'hankkeen_tavoitteet_6' => [],
+      'tavoitettu_helsingissa' => [],
+      'tapahtumakerrat_yhteensa' => [],
+      'toimintapaikka_1' => [],
+      'toimintapaikka_2' => [],
+      'toimintapaikka_3' => [],
+      'toimintapaikka_4' => [],
+      'toimintapaikka_5' => [],
+      'hankkeen_alue_valintaperuste' => [],
+      'hankkeen_toteutumisen_seuranta' => [],
+      'hankkeen_vakiinnuttaminen' => [],
+      'hankkeen_ratkaisema_ongelma' => [],
     ];
 
     foreach ($customQuestions as $key => $value) {
