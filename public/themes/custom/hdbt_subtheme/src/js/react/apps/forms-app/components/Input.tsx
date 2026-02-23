@@ -376,7 +376,7 @@ export const RadioWidget = ({
             />
           );
         })}
-        {rawErrors?.length && (
+        {!!rawErrors?.length && (
           <Notification type='error' className='hdbt-form--notification'>
             {formatErrors(rawErrors)}
           </Notification>
