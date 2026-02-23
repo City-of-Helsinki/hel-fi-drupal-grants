@@ -30,8 +30,20 @@
         "ui:options": {
           "addText": "other_compensation.add"
         },
+        "other_compensation_issuer": {
+          "ui:options": {
+            "tooltipLabel": "other_compensation_issuer.title",
+            "tooltipButtonLabel": "other_compensation_issuer.title",
+            "tooltipText": "other_compensation_issuer.description"
+          }
+        },
         "other_compensation_description": {
-          "ui:widget": "textarea"
+          "ui:widget": "textarea",
+          "ui:options": {
+            "tooltipLabel": "other_compensation_description.title",
+            "tooltipButtonLabel": "other_compensation_description.title",
+            "tooltipText": "other_compensation_description.description"
+          }
         }
       }
     },
@@ -50,9 +62,21 @@
         "ui:options": {
           "addText": "other_applied_compensations.add"
         },
+        "other_applied_compensation_issuer": {
+          "ui:options": {
+            "tooltipLabel": "other_compensation_issuer.title",
+            "tooltipButtonLabel": "other_compensation_issuer.title",
+            "tooltipText": "other_compensation_issuer.description"
+          }
+        },
         "other_applied_compensation_description": {
           "ui:widget": "textarea",
-          "misc:max-length": 1000
+          "misc:max-length": 1000,
+          "ui:options": {
+            "tooltipLabel": "other_compensation_description.title",
+            "tooltipButtonLabel": "other_compensation_description.title",
+            "tooltipText": "other_compensation_description.description"
+          }
         }
       }
     }
