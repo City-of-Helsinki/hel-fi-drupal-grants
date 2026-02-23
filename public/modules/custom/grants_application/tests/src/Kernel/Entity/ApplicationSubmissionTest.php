@@ -37,6 +37,7 @@ final class ApplicationSubmissionTest extends KernelTestBase {
       'draft' => TRUE,
       'langcode' => 'fi',
       'application_type_id' => 58,
+      'form_identifier' => 'liikunta_suunnistuskartta_avustu',
       'application_number' => 'KERNELTEST-058-0000001',
       'created' => '1765430954',
       'changed' => '1765430954',
@@ -55,7 +56,7 @@ final class ApplicationSubmissionTest extends KernelTestBase {
     $this->assertTrue($deleteUrl->toString() === '/application/KERNELTEST-058-0000001/remove');
 
     $editUrl = $this->applicationSubmission->getEditApplicationLink('Liikuntasuunnistus');
-    $this->assertTrue($editUrl->getUrl()->toString() === '/application/new/58/KERNELTEST-058-0000001');
+    $this->assertTrue($editUrl->getUrl()->toString() === '/application/new/liikunta_suunnistuskartta_avustu/KERNELTEST-058-0000001');
 
     $printUrl = $this->applicationSubmission->getPrintApplicationUrl();
     $this->assertTrue($printUrl->toString() === '/application/KERNELTEST-058-0000001/print');

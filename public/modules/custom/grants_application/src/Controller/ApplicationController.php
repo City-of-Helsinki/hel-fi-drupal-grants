@@ -61,15 +61,15 @@ final class ApplicationController extends ControllerBase {
   /**
    * Return appropriate translation for form title.
    *
-   * @param string $id
+   * @param string $form_identifier
    *   The application number.
    *
    * @return string
    *   The form title
    */
-  public function getFormTitle(string $id): string {
+  public function getFormTitle(string $form_identifier): string {
     try {
-      $formSettings = $this->formSettingsService->getFormSettings($id);
+      $formSettings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
     catch (\Exception $e) {
       return '';
@@ -82,8 +82,8 @@ final class ApplicationController extends ControllerBase {
   /**
    * Render the forms react app.
    *
-   * @param string $id
-   *   The application number.
+   * @param string $form_identifier
+   *   The form identifier.
    * @param string|null $application_number
    *   The application number to use for the form.
    * @param bool $use_draft
@@ -92,7 +92,7 @@ final class ApplicationController extends ControllerBase {
    * @return array|RedirectResponse
    *   The resulting array
    */
-  public function formsApp(string $id, ?string $application_number, bool $use_draft): array|RedirectResponse {
+  public function formsApp(string $form_identifier, ?string $application_number, bool $use_draft): array|RedirectResponse {
     // Grant terms are stored in block.
     $blockStorage = $this->entityTypeManager()->getStorage('block_content');
     $terms_block = $blockStorage->load(1);
@@ -141,6 +141,8 @@ final class ApplicationController extends ControllerBase {
       }
     }
 
+    $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
+
     // @todo Refactor, return early instead of skipping.
     // When the application doesn't exist yet, we skip all the code
     // and end up here, early return is better.
@@ -149,7 +151,8 @@ final class ApplicationController extends ControllerBase {
       '#attached' => [
         'drupalSettings' => [
           'grants_react_form' => [
-            'application_number' => $id,
+            'application_number' => $settings->getFormId(),
+            'form_identifier' => $form_identifier,
             'token' => $this->csrfTokenGenerator->get('rest'),
             'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
             'terms' => [

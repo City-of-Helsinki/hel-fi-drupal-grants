@@ -72,7 +72,10 @@ final class FormSettingsService implements FormSettingsServiceInterface {
    */
   public function getFormSettings(int|string $form_type_id, ?string $identifier = NULL): FormSettings {
     // ID70 requires identifier.
-    $form_type = array_find($this->formTypes, fn($type) => $type['id'] == $form_type_id && ($type['id'] !== '70' || $type['form_identifier'] === $identifier));
+    $form_type = array_find($this->formTypes, fn($type) =>
+      $type['id'] == $form_type_id &&
+      ($form_type_id != 70 || (isset($type['form_identifier']) && $type['form_identifier'] === $identifier))
+    );
 
     if (!$form_type || !isset($form_type['id'])) {
       throw new \InvalidArgumentException(sprintf('Unknown form type id: %s %s', (string) $form_type_id, $identifier ?? 'unknown'));
@@ -109,6 +112,21 @@ final class FormSettingsService implements FormSettingsServiceInterface {
     $settings['translation'] = $this->combineTranslations($settings['translation']);
 
     return new FormSettings(...$settings);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFormSettingsByFormIdentifier(string $form_identifier): FormSettings {
+    $form_type = array_find($this->formTypes, fn($type) => $type['form_identifier'] === $form_identifier);
+    if (!$form_type || !isset($form_type['id'])) {
+      throw new \InvalidArgumentException(sprintf('Unknown form type id: %s', $form_identifier));
+    }
+
+    $id = $form_type['id'];
+    $formIdentifier = $form_type['form_identifier'];
+
+    return $this->getFormSettings($id, $formIdentifier);
   }
 
   /**
