@@ -133,6 +133,7 @@ class ApplicationService {
       'langcode' => $langcode,
       'draft' => TRUE,
       'application_type_id' => $application_type_id,
+      'form_identifier' => $entity->get('form_identified')->value,
       'application_number' => $application_number,
       'created' => $now,
       'changed' => $now,
