@@ -15,7 +15,7 @@ third_party_settings:
       76: '76'
       81: '81'
     applicationOpen: '2025-01-13T05:00:00'
-    applicationClose: '2025-02-07T16:00:00'
+    applicationClose: '2027-02-07T16:00:00'
     applicationContinuous: 0
     applicationTargetGroup: '75'
     disableCopying: 1
@@ -591,7 +591,23 @@ elements: |-
     tarkemmat_tiedot_section:
       '#type': webform_section
       '#title': 'Haettava avustus (2026-2028)'
-      hankesuunnitelma_avustuksen_kesto:
+      hankesuunnitelma_avustuksen_kesto_1:
+        '#type': radios
+        '#title': 'Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
+        '#options':
+          1: 'Haen avustusta yksivuotisena'
+        '#required': true
+        '#default_value': '1'
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                less: '20000'
+          required:
+            ':input[name="avustukset_summa"]':
+              value:
+                less: '20000'
+      hankesuunnitelma_avustuksen_kesto_2:
         '#type': radios
         '#title': 'Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
         '#options':
@@ -599,7 +615,33 @@ elements: |-
           2: 'Haen avustusta kaksivuotisena'
           3: 'Haen avustusta kolmevuotisena'
         '#required': true
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                between: '20000:50000'
+          required:
+            ':input[name="avustukset_summa"]':
+              value:
+                between: '20000:50000'
         '#default_value': '1'
+      hankesuunnitelma_avustuksen_kesto_3:
+        '#type': radios
+        '#title': 'Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
+        '#options':
+          2: 'Haen avustusta kaksivuotisena'
+          3: 'Haen avustusta kolmevuotisena'
+        '#required': true
+        '#states':
+          visible:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater: '50000'
+          required:
+            ':input[name="avustukset_summa"]':
+              value:
+                greater: '50000'
+        '#default_value': '2'
       haettava_avustussumma:
         '#type': fieldset
         '#title': 'Haettava avustussumma'
@@ -639,37 +681,55 @@ elements: |-
           '#title': '2027 (euroa)'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#pattern': '^[0-9 ]*$'
+          '#states':
+            visible:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '3'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '3'
+            required:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '3'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '3'
           '#attributes':
             class:
               - webform--large
-          '#states':
-            visible:
-              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                  value: '2'
-              - or
-              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                  value: '3'
-            required:
-              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                  value: '2'
-              - or
-              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                  value: '3'
         haettava_avustussumma_2028:
           '#type': textfield
           '#title': '2028 (euroa)'
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#pattern': '^[0-9 ]*$'
+          '#states':
+            visible:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '3'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '3'
+            required:
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '3'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '3'
           '#attributes':
             class:
               - webform--large
-          '#states':
-            visible:
-              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                  value: '3'
-            required:
-              - ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                  value: '3'
       avustus_kuvaus_1:
         '#type': webform_markup
         '#states':
@@ -781,8 +841,8 @@ elements: |-
             ':input[name="hankesuunnitelma_jatkohakemus"]':
               value: '1'
           required:
-              ':input[name="hankesuunnitelma_jatkohakemus"]':
-                value: '1'
+            ':input[name="hankesuunnitelma_jatkohakemus"]':
+              value: '1'
       haun_tavoitteet_fieldset:
         '#type': fieldset
         '#title': 'Haun tavoitteet'
@@ -1705,7 +1765,7 @@ elements: |-
       '#type': webform_section
       '#title': '4.1 Tulot'
       talousarvio_info:
-        '#type': 'webform_markup'
+        '#type': webform_markup
         '#markup': 'Erittele tässä hankekauden 2026-2027 talousarvio. Monivuotista avustusta haettaessa budjetti vuosilla 2027-2028 ja 2028-2029 tulee liittää hakemuksen liitteeksi.'
       tulot:
         '#type': grants_budget_income_static

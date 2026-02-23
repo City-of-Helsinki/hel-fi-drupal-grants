@@ -134,10 +134,19 @@ elements: |
     '#title': '3. Mer detaljerad information'
   tarkemmat_tiedot_section:
     '#title': 'Ansökt understöds (2026-2028)'
-  hankesuunnitelma_avustuksen_kesto:
+  hankesuunnitelma_avustuksen_kesto_1:
     '#title': 'Ansöks det om ett-, två- eller treårigt understöd? Ange de understödsbelopp som söks för projektets fortsatta år i de fält som öppnas för dem.'
     '#options':
       1: 'Jag ansöker om understöd som ettårigt'
+  hankesuunnitelma_avustuksen_kesto_2:
+    '#title': 'Ansöks det om ett-, två- eller treårigt understöd? Ange de understödsbelopp som söks för projektets fortsatta år i de fält som öppnas för dem.'
+    '#options':
+      1: 'Jag ansöker om understöd som ettårigt'
+      2: 'Jag ansöker om understöd som tvåårigt'
+      3: 'Jag ansöker om understöd som treårigt'
+  hankesuunnitelma_avustuksen_kesto_3:
+    '#title': 'Ansöks det om ett-, två- eller treårigt understöd? Ange de understödsbelopp som söks för projektets fortsatta år i de fält som öppnas för dem.'
+    '#options':
       2: 'Jag ansöker om understöd som tvåårigt'
       3: 'Jag ansöker om understöd som treårigt'
   haettava_avustussumma:
