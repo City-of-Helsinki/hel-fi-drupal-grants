@@ -15,7 +15,7 @@ third_party_settings:
       76: '76'
       81: '81'
     applicationOpen: '2025-01-13T05:00:00'
-    applicationClose: '2025-02-07T16:00:00'
+    applicationClose: '2027-02-07T16:00:00'
     applicationContinuous: 0
     applicationTargetGroup: '75'
     disableCopying: 1
@@ -809,11 +809,29 @@ elements: |-
           '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
           '#states':
             visible:
-              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                '!value': '1'
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '3'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '3'
             required:
-              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                '!value': '1'
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '3'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '2'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '3'
         hankkeen_toimenpiteet_aikataulu_2028:
           '#type': textarea
           '#title': 'Toimenpiteet kaudella 2028-2029 ja niiden suunnitteltu aikataulutus'
@@ -823,11 +841,17 @@ elements: |-
           '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
           '#states':
             visible:
-              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                value: '3'
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '3'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '3'
             required:
-              ':input[name="hankesuunnitelma_avustuksen_kesto"]':
-                value: '3'
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_2"]':
+                  value: '3'
+              - or
+              - ':input[name="hankesuunnitelma_avustuksen_kesto_3"]':
+                  value: '3'
       hankkeen_valiraportti_2025:
         '#type': textarea
         '#title': 'Väliraportti hankkeen toteutuneesta toiminnasta kaudella 2025-2026'
@@ -961,7 +985,7 @@ elements: |-
             'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
             'Eira, 00150': 'Eira, 00150'
             'Hernesaari, 00150': 'Hernesaari, 00150'
-            'Katajanokka, 00160': 'Hernesaari, 00150'
+            'Katajanokka, 00160': 'Katajanokka, 00150'
             'Kruununhaka, 00170': 'Kruununhaka, 00170'
             'Kamppi, 00180': 'Kamppi, 00180'
             'Ruoholahti, 00180': 'Ruoholahti, 00180'
@@ -1111,7 +1135,7 @@ elements: |-
             'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
             'Eira, 00150': 'Eira, 00150'
             'Hernesaari, 00150': 'Hernesaari, 00150'
-            'Katajanokka, 00160': 'Hernesaari, 00150'
+            'Katajanokka, 00160': 'Katajanokka, 00150'
             'Kruununhaka, 00170': 'Kruununhaka, 00170'
             'Kamppi, 00180': 'Kamppi, 00180'
             'Ruoholahti, 00180': 'Ruoholahti, 00180'
@@ -1261,7 +1285,7 @@ elements: |-
             'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
             'Eira, 00150': 'Eira, 00150'
             'Hernesaari, 00150': 'Hernesaari, 00150'
-            'Katajanokka, 00160': 'Hernesaari, 00150'
+            'Katajanokka, 00160': 'Katajanokka, 00150'
             'Kruununhaka, 00170': 'Kruununhaka, 00170'
             'Kamppi, 00180': 'Kamppi, 00180'
             'Ruoholahti, 00180': 'Ruoholahti, 00180'
@@ -1411,7 +1435,7 @@ elements: |-
             'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
             'Eira, 00150': 'Eira, 00150'
             'Hernesaari, 00150': 'Hernesaari, 00150'
-            'Katajanokka, 00160': 'Hernesaari, 00150'
+            'Katajanokka, 00160': 'Katajanokka, 00150'
             'Kruununhaka, 00170': 'Kruununhaka, 00170'
             'Kamppi, 00180': 'Kamppi, 00180'
             'Ruoholahti, 00180': 'Ruoholahti, 00180'
@@ -1561,7 +1585,7 @@ elements: |-
             'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
             'Eira, 00150': 'Eira, 00150'
             'Hernesaari, 00150': 'Hernesaari, 00150'
-            'Katajanokka, 00160': 'Hernesaari, 00150'
+            'Katajanokka, 00160': 'Katajanokka, 00150'
             'Kruununhaka, 00170': 'Kruununhaka, 00170'
             'Kamppi, 00180': 'Kamppi, 00180'
             'Ruoholahti, 00180': 'Ruoholahti, 00180'
