@@ -403,11 +403,11 @@ elements: |-
         '#type': textarea
         '#title': 'Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista'
         '#help': 'Kerro mit&auml; tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri k&auml;ytt&ouml;kohteet. Kerro my&ouml;s mit&auml; avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.'
-        '#maxlength': 5000
+        '#maxlength': 1250
         '#required': true
         '#counter_type': character
-        '#counter_maximum': 5000
-        '#counter_maximum_message': '%d/5000 merkkiä jäljellä'
+        '#counter_maximum': 1250
+        '#counter_maximum_message': '%d/1250 merkkiä jäljellä'
     other_grants_for_same_purpose:
       '#type': webform_section
       '#title': 'Muut samaan tarkoitukseen myönnetyt avustukset'
@@ -998,7 +998,7 @@ elements: |-
             'Honkasuo, 00390': 'Honkasuo, 00390'
             'Pohjois-Haaga, 00400': 'Pohjois-Haaga, 00400'
             'Malminkartano, 00410': 'Malminkartano, 00410'
-            'Kannelmäki, 00420': 'Kannelmäki, 004'
+            'Kannelmäki, 00420': 'Kannelmäki, 00420'
             'Maununneva, 00430': 'Maununneva, 00430'
             'Hakuninmaa, 00430': 'Hakuninmaa, 00430'
             'Kuninkaantammi, 00430': 'Kuninkaantammi, 00430'
@@ -1298,7 +1298,7 @@ elements: |-
             'Honkasuo, 00390': 'Honkasuo, 00390'
             'Pohjois-Haaga, 00400': 'Pohjois-Haaga, 00400'
             'Malminkartano, 00410': 'Malminkartano, 00410'
-            'Kannelmäki, 00420': 'Kannelmäki, 004'
+            'Kannelmäki, 00420': 'Kannelmäki, 00420'
             'Maununneva, 00430': 'Maununneva, 00430'
             'Hakuninmaa, 00430': 'Hakuninmaa, 00430'
             'Kuninkaantammi, 00430': 'Kuninkaantammi, 00430'
@@ -1448,7 +1448,7 @@ elements: |-
             'Honkasuo, 00390': 'Honkasuo, 00390'
             'Pohjois-Haaga, 00400': 'Pohjois-Haaga, 00400'
             'Malminkartano, 00410': 'Malminkartano, 00410'
-            'Kannelmäki, 00420': 'Kannelmäki, 004'
+            'Kannelmäki, 00420': 'Kannelmäki, 00420'
             'Maununneva, 00430': 'Maununneva, 00430'
             'Hakuninmaa, 00430': 'Hakuninmaa, 00430'
             'Kuninkaantammi, 00430': 'Kuninkaantammi, 00430'
@@ -1598,7 +1598,7 @@ elements: |-
             'Honkasuo, 00390': 'Honkasuo, 00390'
             'Pohjois-Haaga, 00400': 'Pohjois-Haaga, 00400'
             'Malminkartano, 00410': 'Malminkartano, 00410'
-            'Kannelmäki, 00420': 'Kannelmäki, 004'
+            'Kannelmäki, 00420': 'Kannelmäki, 00420'
             'Maununneva, 00430': 'Maununneva, 00430'
             'Hakuninmaa, 00430': 'Hakuninmaa, 00430'
             'Kuninkaantammi, 00430': 'Kuninkaantammi, 00430'

@@ -152,7 +152,11 @@ class TypedDataToDocumentContentWithWebform {
           // to recognize the data without a label.
           $labelOverwrites = [
             'hankesuunnitelma_avustuksen_kesto' => 'Hankesuunnitelma avustuksen kesto',
+            'hankesuunnitelma_avustuksen_kesto_1' => 'Hankesuunnitelma avustuksen kesto',
+            'hankesuunnitelma_avustuksen_kesto_2' => 'Hankesuunnitelma avustuksen kesto',
+            'hankesuunnitelma_avustuksen_kesto_3' => 'Hankesuunnitelma avustuksen kesto',
             'haettava_avustussumma_2025' => 'Haettava avustussumma 2025',
+            'haettava_avustussumma_2026' => 'Haettava avustussumma 2026',
           ];
 
           if (!$label && in_array($propertyName, array_keys($labelOverwrites))) {
@@ -292,6 +296,57 @@ class TypedDataToDocumentContentWithWebform {
     if (empty($documentStructure['attachmentsInfo'])) {
       $documentStructure['attachmentsInfo']['attachmentsArray'] = [];
     }
+
+    // #UHF-12674 on iäkkäät-form, we must have 3 conditional duration
+    // radiobuttons instead of one due to complex requirements.
+    if (isset($documentStructure['compensation']['compensationInfo']['compensationArray'][0][1]['value'])) {
+      if ($webform->id() === 'iakkaiden_kulttuuri_ja_liikunta') {
+
+        $compensation = (int) str_replace(' ', '',$documentStructure['compensation']['compensationInfo']['compensationArray'][0][1]['value']);
+
+        // Unset the original field.
+        foreach ($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] as $key => $valueArray) {
+          if ($valueArray['ID'] === 'hankesuunnitelma_avustuksen_kesto') {
+            unset($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'][$key]);
+          }
+        }
+
+        if ($compensation < 20000) {
+          foreach ($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] as $key => $valueArray) {
+            if (
+              str_contains($valueArray['ID'], 'hankesuunnitelma_avustuksen_kesto_2') ||
+              str_contains($valueArray['ID'], 'hankesuunnitelma_avustuksen_kesto_3')
+            ) {
+              unset($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'][$key]);
+            }
+          }
+        }
+        elseif ($compensation > 20000 && $compensation < 50000) {
+          foreach ($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] as $key => $valueArray) {
+            if (
+              str_contains($valueArray['ID'], 'hankesuunnitelma_avustuksen_kesto_1') ||
+              str_contains($valueArray['ID'], 'hankesuunnitelma_avustuksen_kesto_3')
+            ) {
+              unset($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'][$key]);
+            }
+          }
+        }
+        elseif ($compensation > 50000) {
+          foreach ($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] as $key => $valueArray) {
+            if (
+              str_contains($valueArray['ID'], 'hankesuunnitelma_avustuksen_kesto_1') ||
+              str_contains($valueArray['ID'], 'hankesuunnitelma_avustuksen_kesto_2')
+            ) {
+              unset($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'][$key]);
+            }
+          }
+        }
+
+        // Reset the keys after unset.
+        $documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] = array_values($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray']);
+      }
+    }
+
     // Optionally writ the data to a .json file. Used for testing.
     return $documentStructure;
   }
