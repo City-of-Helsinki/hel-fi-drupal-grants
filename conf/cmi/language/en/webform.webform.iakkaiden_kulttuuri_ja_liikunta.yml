@@ -134,10 +134,19 @@ elements: |
     '#title': '3. Information in more detail'
   tarkemmat_tiedot_section:
     '#title': 'Applied grant (2026-2028)'
-  hankesuunnitelma_avustuksen_kesto:
+  hankesuunnitelma_avustuksen_kesto_1:
     '#title': 'Is the application for a one-, two-, or three-year grant? Enter the grant amounts requested for the project’s subsequent years in the fields that open for them.'
     '#options':
       1: 'I am applying for the grant as a one-year grant'
+  hankesuunnitelma_avustuksen_kesto_2:
+    '#title': 'Is the application for a one-, two-, or three-year grant? Enter the grant amounts requested for the project’s subsequent years in the fields that open for them.'
+    '#options':
+      1: 'I am applying for the grant as a one-year grant'
+      2: 'I am applying for the grant as a two-year grant'
+      3: 'I am applying for the grant as a three-year grant'
+  hankesuunnitelma_avustuksen_kesto_3:
+    '#title': 'Is the application for a one-, two-, or three-year grant? Enter the grant amounts requested for the project’s subsequent years in the fields that open for them.'
+    '#options':
       2: 'I am applying for the grant as a two-year grant'
       3: 'I am applying for the grant as a three-year grant'
   haettava_avustussumma:
