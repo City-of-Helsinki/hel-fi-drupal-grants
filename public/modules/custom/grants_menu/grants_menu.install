@@ -5,9 +5,13 @@
  * Install hooks for grants_menu.
  */
 
+declare(strict_types=1);
+
+use Drupal\Core\Extension\ModuleInstallerInterface;
+
 /**
- * Implements hook_install().
+ * Remove the module.
  */
-function grants_menu_install(): void {
-  module_set_weight('grants_menu', 300);
+function grants_menu_update_9001(): void {
+  \Drupal::service(ModuleInstallerInterface::class)->uninstall(['grants_menu']);
 }

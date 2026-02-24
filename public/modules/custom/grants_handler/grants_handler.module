@@ -18,7 +18,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHelpers;
 use Drupal\grants_handler\Entity\Node\ServicePage;
@@ -2219,7 +2219,7 @@ function _grants_handler_handle_webform_application(array &$variables, array $tO
  */
 function _grants_handler_handle_react_application(array &$variables) {
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
-  $formSettingsService = \Drupal::service(FormSettingsService::class);
+  $formSettingsService = \Drupal::service(FormSettingsServiceInterface::class);
 
   // @todo add Archived to the settings ?
   $settings = $formSettingsService

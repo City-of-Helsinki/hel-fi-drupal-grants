@@ -1,0 +1,17 @@
+{
+  "en": {
+    "translation": {
+      "form_title": "City Board, general grant application"
+    }
+  },
+  "fi": {
+    "translation": {
+      "form_title": "Kaupunginhallitus, yleisavustushakemus"
+    }
+  },
+  "sv": {
+    "translation": {
+      "form_title": "Stadsstyrelsen, allmän bidragsansökan"
+    }
+  }
+}

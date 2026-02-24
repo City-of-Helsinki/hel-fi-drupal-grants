@@ -20,7 +20,7 @@ final class ApplicationMetadataForm extends ContentEntityForm {
     EntityRepositoryInterface $entity_repository,
     EntityTypeBundleInfoInterface $entity_type_bundle_info,
     TimeInterface $time,
-    protected FormSettingsService $formSettingsService,
+    protected FormSettingsServiceInterface $formSettingsService,
   ) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
   }
@@ -66,6 +66,7 @@ final class ApplicationMetadataForm extends ContentEntityForm {
     $form['label']['widget'][0]['value']['#attributes']['class'][] = 'is-read-only';
     $form['application_type']['widget'][0]['value']['#attributes']['class'][] = 'is-read-only';
     $form['application_type_id']['widget'][0]['value']['#attributes']['class'][] = 'is-read-only';
+    $form['form_identifier']['widget'][0]['value']['#attributes']['class'][] = 'is-read-only';
 
     return $form;
   }

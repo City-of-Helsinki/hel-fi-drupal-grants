@@ -36,6 +36,7 @@ use Drupal\Core\Url;
  *   admin_permission = "administer content",
  *   handlers = {
  *     "access" = "Drupal\grants_application\ApplicationSubmissionAccessControlHandler",
+ *     "views_data" = "Drupal\views\EntityViewsData",
  *   },
  *   links = {
  *     "canonical" = "/application/{id}/render"
@@ -84,7 +85,14 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
       ->setLabel(new TranslatableMarkup('Application type id'))
       ->setReadOnly(TRUE);
 
-    // {Env-name}-{application-id}-0000000{number-of-submission}.
+    // Due to Application ID70 being used by multiple applications,
+    // we can't use application type id to identify form submissions.
+    $fields['form_identifier'] = BaseFieldDefinition::create('string')
+      ->setLabel(new TranslatableMarkup('Form identifier'))
+      ->setReadOnly(TRUE);
+
+    // {Env-name}-{application-id}-0000000{number-of-submission} if not prod.
+    // On production, {application-id}-0000000{number-of-submission}.
     $fields['application_number'] = BaseFieldDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Application number'))
       ->setReadOnly(TRUE);
@@ -157,6 +165,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    *   The url.
    */
   public function getViewApplicationUrl(): Url {
+    // @todo UHF-12685 create view_application for react.
     return Url::fromRoute(
       'grants_handler.view_application',
       ['submission_id' => $this->get('application_number')->value],
@@ -229,7 +238,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    */
   public function toUrl($rel = NULL, array $options = []): Url {
     $parameters = [
-      'id' => $this->get('application_type_id')->value,
+      'form_identifier' => $this->get('form_identifier')->value,
       'application_number' => $this->get('application_number')->value,
     ];
 
@@ -240,13 +249,13 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
   }
 
   /**
-   * Get the print url.
+   * Get the physical paper&ink print url.
    *
    * @return \Drupal\Core\Url
    *   The url.
    */
   public function getPrintApplicationUrl(): Url {
-    $parameters = ['id' => $this->get('application_number')->value];
+    $parameters = ['application_number' => $this->get('application_number')->value];
     $attributes = [
       'attributes' => [
         'data-drupal-selector' => 'application-print-link',
@@ -271,6 +280,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
     // Values are changed in ApplicationGetterService::getCompanyApplications.
     return [
       'application_type_id' => $this->get('application_type_id')->value,
+      'form_identifier' => $this->get('form_identifier')->value,
       'form_timestamp_created' => date('Y-m-d h:i:s', (int) $this->get('created')->value),
       'form_timestamp' => $this->get('changed')->value,
       'form_timestamp_submitted' => $this->get('created')->value,

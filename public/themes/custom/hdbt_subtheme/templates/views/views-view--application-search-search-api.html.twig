@@ -42,29 +42,21 @@
 %}
 {% set design = 'with-search' %}
 {% set description = content.field_hero_desc %}
-
-
 {% set design_class = "hero--with-searchs" %}
-
-{%
-  set hero_classes = [
-  'hero',
-  design_class ? design_class,
-]
-%}
+{% set hero_classes = ['hero', design_class ? design_class ] %}
 
 {% set filterArray = view.getExposedInput %}
 
-{% if not view.getExposedInput.target_group %}
-  {% set filterArray = filterArray|merge({'target_group': 'All'}) %}
+{% if not view.getExposedInput.target_type %}
+  {% set filterArray = filterArray|merge({'target_type': ''}) %}
 {% endif %}
 
-{% if not view.getExposedInput.activity %}
-  {% set filterArray = filterArray|merge({'activity': 'All'}) %}
+{% if not view.getExposedInput.subvention_type %}
+  {% set filterArray = filterArray|merge({'subvention_type': ''}) %}
 {% endif %}
 
 {% if not view.getExposedInput.applicant %}
-  {% set filterArray = filterArray|merge({'applicant': 'All'}) %}
+  {% set filterArray = filterArray|merge({'applicant': ''}) %}
 {% endif %}
 
 <div{{ attributes.addClass(classes) }}>
@@ -76,13 +68,11 @@
             <h1 class="hero__title">
               {{ "Search for application"|t }}
             </h1>
-
             {{ title_prefix }}
-            {% if title %}
-              {{ title }}
-            {% endif %}
+              {% if title %}
+                {{ title }}
+              {% endif %}
             {{ title_suffix }}
-
           </div>
         {% endblock %}
       {% endembed %}
@@ -94,19 +84,16 @@
         {% if exposed %}
           <div class="view-filters">
             {{ exposed }}
-
             {% for key, value in newExposedFilter %}
               {% if key not in ['search', 'items_per_page'] and value is not same as('All') %}
                 <button class="reset-search search-filter-button" data-field="{{ 'edit-' ~ key }}" aria-label="{{ 'Delete'|t }} {{ value }}"><span class="hel-icon hel-icon--cross-circle" aria-hidden="true"></span> <span>{{ value }}</span></button>
               {% endif %}
             {% endfor %}
-
           </div>
         {% endif %}
       </div>
     </div>
   </div>
-
   <div class="main-content">
     <div class="layout-content">
       <div class="container">
@@ -118,11 +105,10 @@
             <div class="search-result-amount--wrapper">
               <label for="search-result-amount" class="visually-hidden">{{ 'Items per page'|t({}, {'context': 'grants_theme'}) }}</label>
               <select id="search-result-amount" class="search-result-amount" name="search-result-amount" onchange="location = this.value;">
-                <option label="9" value="{{ applicationSearchLink }}?target_group={{filterArray.target_group}}&activity={{filterArray.activity}}&applicant={{filterArray.applicant}}&search={{filterArray.search}}&items_per_page=9">9</option>
-                <option label="15" value="{{ applicationSearchLink }}?target_group={{filterArray.target_group}}&activity={{filterArray.activity}}&applicant={{filterArray.applicant}}&search={{filterArray.search}}&items_per_page=15">15</option>
-                <option label="30" value="{{ applicationSearchLink }}?target_group={{filterArray.target_group}}&activity={{filterArray.activity}}&applicant={{filterArray.applicant}}&search={{filterArray.search}}&items_per_page=30">30</option>
+                <option label="9" value="{{ applicationSearchLink }}?target_type={{filterArray.target_type}}&applicant={{filterArray.applicant}}&subvention_type={{filterArray.subvention_type}}&search={{filterArray.search}}&items_per_page=9">9</option>
+                <option label="15" value="{{ applicationSearchLink }}?target_type={{filterArray.target_type}}&applicant={{filterArray.applicant}}&subvention_type={{filterArray.subvention_type}}&search={{filterArray.search}}&items_per_page=15">15</option>
+                <option label="30" value="{{ applicationSearchLink }}?target_type={{filterArray.target_type}}&applicant={{filterArray.applicant}}&subvention_type={{filterArray.subvention_type}}&search={{filterArray.search}}&items_per_page=30">30</option>
               </select>
-
               <p>{{ 'items per page'|t({}, {'context': 'grants_theme'}) }}</p>
             </div>
           </div>
@@ -165,3 +151,6 @@
           </div>
         {% endif %}
       </div>
+    </div>
+  </div>
+</div>

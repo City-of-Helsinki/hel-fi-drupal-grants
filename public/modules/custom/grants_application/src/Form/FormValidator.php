@@ -9,7 +9,7 @@ namespace Drupal\grants_application\Form;
  */
 class FormValidator {
 
-  public function __construct(private FormSettingsService $formSettingsService) {
+  public function __construct(private FormSettingsServiceInterface $formSettingsService) {
   }
 
   /**

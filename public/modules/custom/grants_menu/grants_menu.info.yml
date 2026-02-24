@@ -1,8 +1,5 @@
-name: Grants Menu
+name: Grants Menu (DEPRECATED)
 type: module
 description: Provides functionality related to menus.
 package: Helfi
 core_version_requirement: ^10 || ^11
-
-'interface translation project': grants_menu
-'interface translation server pattern': modules/custom/grants_menu/translations/%language.po

@@ -14,7 +14,7 @@ use Drupal\file\Entity\File;
 use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
-use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationStatusService;
@@ -46,7 +46,7 @@ final class ApplicationController extends ControllerBase {
     private readonly ApplicationGetterService $applicationGetterService,
     #[Autowire(service: 'helfi_atv.atv_service')]
     private readonly AtvService $atvService,
-    private readonly FormSettingsService $formSettingsService,
+    private readonly FormSettingsServiceInterface $formSettingsService,
     #[Autowire(service: 'grants_handler.application_status_service')]
     private readonly ApplicationStatusService $applicationStatusService,
     #[Autowire(service: 'grants_events.events_service')]
@@ -61,15 +61,15 @@ final class ApplicationController extends ControllerBase {
   /**
    * Return appropriate translation for form title.
    *
-   * @param string $id
+   * @param string $form_identifier
    *   The application number.
    *
    * @return string
    *   The form title
    */
-  public function getFormTitle(string $id): string {
+  public function getFormTitle(string $form_identifier): string {
     try {
-      $formSettings = $this->formSettingsService->getFormSettings($id);
+      $formSettings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
     catch (\Exception $e) {
       return '';
@@ -82,8 +82,8 @@ final class ApplicationController extends ControllerBase {
   /**
    * Render the forms react app.
    *
-   * @param string $id
-   *   The application number.
+   * @param string $form_identifier
+   *   The form identifier.
    * @param string|null $application_number
    *   The application number to use for the form.
    * @param bool $use_draft
@@ -92,7 +92,7 @@ final class ApplicationController extends ControllerBase {
    * @return array|RedirectResponse
    *   The resulting array
    */
-  public function formsApp(string $id, ?string $application_number, bool $use_draft): array|RedirectResponse {
+  public function formsApp(string $form_identifier, ?string $application_number, bool $use_draft): array|RedirectResponse {
     // Grant terms are stored in block.
     $blockStorage = $this->entityTypeManager()->getStorage('block_content');
     $terms_block = $blockStorage->load(1);
@@ -141,6 +141,8 @@ final class ApplicationController extends ControllerBase {
       }
     }
 
+    $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
+
     // @todo Refactor, return early instead of skipping.
     // When the application doesn't exist yet, we skip all the code
     // and end up here, early return is better.
@@ -149,7 +151,8 @@ final class ApplicationController extends ControllerBase {
       '#attached' => [
         'drupalSettings' => [
           'grants_react_form' => [
-            'application_number' => $id,
+            'application_number' => $settings->getFormId(),
+            'form_identifier' => $form_identifier,
             'token' => $this->csrfTokenGenerator->get('rest'),
             'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
             'terms' => [
@@ -260,6 +263,7 @@ final class ApplicationController extends ControllerBase {
 
     try {
       $result = $this->helfiAtvService->addAttachment(
+        // @phpstan-ignore property.notFound
         $submission->document_id->value,
         $file_original_name,
         $file_entity
@@ -286,7 +290,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $this->eventsService->logEvent(
         $application_number,
-        $this->eventsService->getEventTypes()['HANDLER_ATT_OK'],
+        'HANDLER_ATT_OK',
         "Uploaded a file $file_original_name",
         $file_original_name,
       );
@@ -356,7 +360,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $this->eventsService->logEvent(
         $application_number,
-        $this->eventsService->getEventTypes()['HANDLER_ATT_DELETED'],
+        'HANDLER_ATT_DELETED',
         "Deleted a file $attachmentId",
         $attachmentId,
       );
@@ -441,15 +445,32 @@ final class ApplicationController extends ControllerBase {
   }
 
   /**
-   * Print the application.
+   * Physically print the empty/filled application.
+   *
+   * @param string $application_number
+   *   The application number.
    */
-  public function printApplication() {
+  public function printApplication(string $application_number) {
+    // @todo UHF-12685 the original implementation can handle react forms but
+    // it should be eventually moved here.
+  }
+
+  /**
+   * Preview the form as anonymous or logged in user.
+   *
+   * @param string $form_identifier
+   *   The form identifier.
+   */
+  public function formPreview(string $form_identifier): void {
+    // @todo UHF-12923 the form preview for application,
+    // this is similar to ApplicationController::formsApp,
+    // needs route.
   }
 
   /**
    * Get the application submission entity.
    *
-   * @param string $application_number
+   * @param string|null $application_number
    *   The application number.
    *
    * @return \Drupal\grants_application\Entity\ApplicationSubmission|null

@@ -50,6 +50,27 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         },
         'defaultValue' => '1',
       ],
+      'hankesuunnitelma_avustuksen_kesto_1' => [
+        'valueCallback' => static fn (mixed $value) => match($value) {
+          "" => '1',
+          default => $value
+        },
+        // 'defaultValue' => '1',
+      ],
+      'hankesuunnitelma_avustuksen_kesto_2' => [
+        'valueCallback' => static fn (mixed $value) => match($value) {
+          "" => '1',
+          default => $value
+        },
+        // 'defaultValue' => '1',
+      ],
+      'hankesuunnitelma_avustuksen_kesto_3' => [
+        'valueCallback' => static fn (mixed $value) => match($value) {
+          "" => '1',
+          default => $value
+        },
+        // 'defaultValue' => '2',
+      ],
       // This field is read only / fully computed. However, the field must
       // be sent to ATV / avust2 or else the preview feature breaks. Field
       // values are saved/loaded from ATV when draft is saved/opened, and
@@ -64,6 +85,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         ],
       ],
       'haettava_avustussumma_2027' => [],
+      'haettava_avustussumma_2028' => [],
       'ensisijainen_taiteen_ala' => [],
       'avustuksen_kohde_yhdistys_toimintaryhma' => [],
       'avustuksen_kohde_tiivistelma' => [],
@@ -73,6 +95,7 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_toimenpiteet_aikataulu' => [],
       'hankkeen_toimenpiteet_aikataulu_2026' => [],
       'hankkeen_toimenpiteet_aikataulu_2027' => [],
+      'hankkeen_toimenpiteet_aikataulu_2028' => [],
       'hankkeen_toimenpiteet_alkupvm' => [
         'typeOverride' => [
           'dataType' => 'string',
@@ -192,6 +215,24 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_kohderyhmat_lapset_13_15_arvio' => [],
       'hankkeen_kohderyhmat_lapset_16_18_arvio' => [],
       'hankkeen_kohderyhmat_uudet_arvio' => [],
+      'hankkeen_valiraportti_2025' => [],
+      'hankkeen_tavoitteet_1' => [],
+      'hankkeen_tavoitteet_2' => [],
+      'hankkeen_tavoitteet_3' => [],
+      'hankkeen_tavoitteet_4' => [],
+      'hankkeen_tavoitteet_5' => [],
+      'hankkeen_tavoitteet_6' => [],
+      'tavoitettu_helsingissa' => [],
+      'tapahtumakerrat_yhteensa' => [],
+      'toimintapaikka_1' => [],
+      'toimintapaikka_2' => [],
+      'toimintapaikka_3' => [],
+      'toimintapaikka_4' => [],
+      'toimintapaikka_5' => [],
+      'hankkeen_alue_valintaperuste' => [],
+      'hankkeen_toteutumisen_seuranta' => [],
+      'hankkeen_vakiinnuttaminen' => [],
+      'hankkeen_ratkaisema_ongelma' => [],
     ];
 
     foreach ($customQuestions as $key => $value) {

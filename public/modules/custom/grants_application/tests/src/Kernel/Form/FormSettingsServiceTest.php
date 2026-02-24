@@ -7,6 +7,7 @@ namespace Drupal\Tests\grants_application\Kernel\Form;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\grants_application\Form\FormSettingsService;
+use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 
 /**
@@ -19,7 +20,7 @@ final class FormSettingsServiceTest extends KernelTestBase {
   /**
    * The form settings service being tested.
    */
-  private FormSettingsService $service;
+  private FormSettingsServiceInterface $service;
 
   /**
    * The directory path containing test fixtures.
@@ -51,20 +52,17 @@ final class FormSettingsServiceTest extends KernelTestBase {
     // Test getting the entire form types configuration.
     $config = $this->service->getFormConfig('form_types');
     $this->assertIsArray($config);
-    $this->assertArrayHasKey('123', $config);
+    $this->assertCount(1, $config);
 
     // Test getting a specific section from the configuration.
-    $section = $this->service->getFormConfig('form_types', '123');
-    $this->assertIsArray($section);
-    $this->assertSame('TESTAPPLICATION', $section['code']);
-    $this->assertSame('TEST123APPLICATION', $section['id']);
-    $this->assertArrayHasKey('labels', $section);
-    $this->assertIsArray($section['labels']);
+    $config = $this->service->getFormConfigById(123, 'test-application');
 
-    // Test the fallback to entire config if section is not found.
-    $this->assertArrayHasKey('123',
-      $this->service->getFormConfig('form_types', 'non_existing_section')
-    );
+    $this->assertIsArray($config);
+    $this->assertSame(123, $config['id']);
+    $this->assertSame('test-application', $config['form_identifier']);
+    $this->assertSame('TEST123APPLICATION', $config['code']);
+    $this->assertArrayHasKey('labels', $config);
+    $this->assertIsArray($config['labels']);
   }
 
   /**
@@ -72,7 +70,7 @@ final class FormSettingsServiceTest extends KernelTestBase {
    */
   public function testIsApplicationOpenFromFixtures(): void {
     $this->assertTrue(
-      $this->service->isApplicationOpen(123),
+      $this->service->isApplicationOpen(123, 'test-application'),
       'Application window should be open according to test fixture configuration'
     );
   }
@@ -82,7 +80,7 @@ final class FormSettingsServiceTest extends KernelTestBase {
    */
   public function testGetFormSettingsUnknownIdThrows(): void {
     $this->expectException(\InvalidArgumentException::class);
-    $this->service->getFormSettings(999999);
+    $this->service->getFormSettings(999999, 'test-application');
   }
 
   /**
@@ -91,8 +89,7 @@ final class FormSettingsServiceTest extends KernelTestBase {
   public function testGetLabelsSingleSectionDefaultLanguage(): void {
     $serviceEn = $this->createServiceWithLanguage('en');
 
-    $applicationTypes = $serviceEn->getFormConfig('form_types', 'application_types');
-    $single = $applicationTypes['123'];
+    $single = $serviceEn->getFormConfigById(123, 'test-application');
 
     $label = $serviceEn->getLabels($single);
     $this->assertSame('Test 123 application', $label);
@@ -104,8 +101,8 @@ final class FormSettingsServiceTest extends KernelTestBase {
   public function testGetLabelsMultipleItemsReturnsMappedArray(): void {
     $serviceEn = $this->createServiceWithLanguage('en');
 
-    $applicationTypes = $serviceEn->getFormConfig('form_types', 'application_types');
-    $labels = $serviceEn->getLabels($applicationTypes);
+    $applicationTypes = $serviceEn->getFormConfig('form_types');
+    $labels = $serviceEn->getApplicationLabels($applicationTypes);
 
     $this->assertIsArray($labels);
     $this->assertArrayHasKey('123', $labels);
@@ -118,8 +115,7 @@ final class FormSettingsServiceTest extends KernelTestBase {
   public function testGetLabelsFallsBackToEnglish(): void {
     $serviceIt = $this->createServiceWithLanguage('it');
 
-    $applicationTypes = $serviceIt->getFormConfig('form_types', 'application_types');
-    $single = $applicationTypes['123'];
+    $single = $serviceIt->getFormConfigById(123, 'test-application');
 
     $label = $serviceIt->getLabels($single);
     $this->assertSame('Test 123 application', $label);
@@ -158,7 +154,7 @@ final class FormSettingsServiceTest extends KernelTestBase {
   protected function testFormSettingsLoadsSettingsWhenNotProduction(): void {
     putenv('APP_ENV=dev');
     $this->createApplicationMetadataEntity();
-    $settings = $this->service->getFormSettings(123)->toArray();
+    $settings = $this->service->getFormSettings(123, 'test-application')->toArray();
 
     // In non-production, settings.json fixture should be read.
     $this->assertArrayHasKey('title', $settings['settings']);
@@ -172,7 +168,7 @@ final class FormSettingsServiceTest extends KernelTestBase {
   public function testFormSettingsDoesNotLoadSettingsInProduction(): void {
     putenv('APP_ENV=production');
     $this->createApplicationMetadataEntity();
-    $settings = $this->service->getFormSettings(123)->toArray();
+    $settings = $this->service->getFormSettings(123, 'test-application')->toArray();
 
     // In production, settings.json should NOT be included.
     $this->assertArrayHasKey('title', $settings['settings']);
@@ -187,14 +183,14 @@ final class FormSettingsServiceTest extends KernelTestBase {
     putenv('APP_ENV=production');
     $this->expectException(\Exception::class);
     $this->expectExceptionMessage('Unable to load settings for form 123.');
-    $this->service->getFormSettings(123);
+    $this->service->getFormSettings(123, 'test-application');
     putenv('APP_ENV');
   }
 
   /**
    * Helper to create the service with a forced interface language.
    */
-  private function createServiceWithLanguage(string $langcode): FormSettingsService {
+  private function createServiceWithLanguage(string $langcode): FormSettingsServiceInterface {
     $language = new Language(['id' => $langcode]);
 
     $languageManager = $this->createMock(LanguageManagerInterface::class);
@@ -225,6 +221,7 @@ final class FormSettingsServiceTest extends KernelTestBase {
         'status' => TRUE,
         'uid' => 1,
         'application_type_id' => 123,
+        'form_identifier' => 'test-application',
       ]);
     $entity->save();
   }

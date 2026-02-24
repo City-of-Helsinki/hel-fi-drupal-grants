@@ -1,0 +1,7 @@
+name: 'Grants application search test'
+type: module
+description: 'Test module for grants_application_search kernel tests.'
+package: Testing
+core_version_requirement: ^11
+dependencies:
+  - drupal:system

@@ -6,9 +6,9 @@
  */
 
 use Drupal\Component\Serialization\Json;
-use Drupal\system\Entity\Action;
 use Drupal\Core\Database\Database;
 use Drupal\node\Entity\Node;
+use Drupal\system\Entity\Action;
 use Drupal\webform\Entity\Webform;
 
 /**
@@ -396,4 +396,14 @@ function grants_handler_update_11001(&$sandbox): void {
   // grants_application module. The config entity is re-created when the module
   // is installed.
   Action::load('application_submission_break_lock_action')->delete();
+}
+
+/**
+ * UHF-12796 Install grants_application module.
+ */
+function grants_handler_update_11002(): void {
+  // Install the grants_application module, if it's not installed.
+  if (!Drupal::moduleHandler()->moduleExists('grants_application')) {
+    Drupal::service('module_installer')->install(['grants_application']);
+  }
 }
