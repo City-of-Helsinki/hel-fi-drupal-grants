@@ -619,7 +619,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                between: '20000:50000'
+                between: '20000:49999'
           required:
             ':input[name="avustukset_summa"]':
               value:
@@ -985,7 +985,7 @@ elements: |-
             'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
             'Eira, 00150': 'Eira, 00150'
             'Hernesaari, 00150': 'Hernesaari, 00150'
-            'Katajanokka, 00160': 'Katajanokka, 00150'
+            'Katajanokka, 00160': 'Katajanokka, 00160'
             'Kruununhaka, 00170': 'Kruununhaka, 00170'
             'Kamppi, 00180': 'Kamppi, 00180'
             'Ruoholahti, 00180': 'Ruoholahti, 00180'
@@ -1135,7 +1135,7 @@ elements: |-
             'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
             'Eira, 00150': 'Eira, 00150'
             'Hernesaari, 00150': 'Hernesaari, 00150'
-            'Katajanokka, 00160': 'Katajanokka, 00150'
+            'Katajanokka, 00160': 'Katajanokka, 00160'
             'Kruununhaka, 00170': 'Kruununhaka, 00170'
             'Kamppi, 00180': 'Kamppi, 00180'
             'Ruoholahti, 00180': 'Ruoholahti, 00180'
@@ -1285,7 +1285,7 @@ elements: |-
             'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
             'Eira, 00150': 'Eira, 00150'
             'Hernesaari, 00150': 'Hernesaari, 00150'
-            'Katajanokka, 00160': 'Katajanokka, 00150'
+            'Katajanokka, 00160': 'Katajanokka, 00160'
             'Kruununhaka, 00170': 'Kruununhaka, 00170'
             'Kamppi, 00180': 'Kamppi, 00180'
             'Ruoholahti, 00180': 'Ruoholahti, 00180'
@@ -1435,7 +1435,7 @@ elements: |-
             'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
             'Eira, 00150': 'Eira, 00150'
             'Hernesaari, 00150': 'Hernesaari, 00150'
-            'Katajanokka, 00160': 'Katajanokka, 00150'
+            'Katajanokka, 00160': 'Katajanokka, 00160'
             'Kruununhaka, 00170': 'Kruununhaka, 00170'
             'Kamppi, 00180': 'Kamppi, 00180'
             'Ruoholahti, 00180': 'Ruoholahti, 00180'
@@ -1585,7 +1585,7 @@ elements: |-
             'Ullanlinna, 00140': 'Kaartinkaupunki, 00130'
             'Eira, 00150': 'Eira, 00150'
             'Hernesaari, 00150': 'Hernesaari, 00150'
-            'Katajanokka, 00160': 'Katajanokka, 00150'
+            'Katajanokka, 00160': 'Katajanokka, 00160'
             'Kruununhaka, 00170': 'Kruununhaka, 00170'
             'Kamppi, 00180': 'Kamppi, 00180'
             'Ruoholahti, 00180': 'Ruoholahti, 00180'

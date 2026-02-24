@@ -321,7 +321,7 @@ class TypedDataToDocumentContentWithWebform {
             }
           }
         }
-        elseif ($compensation > 20000 && $compensation < 50000) {
+        elseif ($compensation >= 20000 && $compensation < 50000) {
           foreach ($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] as $key => $valueArray) {
             if (
               str_contains($valueArray['ID'], 'hankesuunnitelma_avustuksen_kesto_1') ||
@@ -331,7 +331,7 @@ class TypedDataToDocumentContentWithWebform {
             }
           }
         }
-        elseif ($compensation > 50000) {
+        elseif ($compensation >= 50000) {
           foreach ($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] as $key => $valueArray) {
             if (
               str_contains($valueArray['ID'], 'hankesuunnitelma_avustuksen_kesto_1') ||

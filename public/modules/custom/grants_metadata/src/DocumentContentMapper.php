@@ -118,13 +118,13 @@ class DocumentContentMapper {
         unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_3']);
       }
       elseif (
-        $compensation > 20000 &&
+        $compensation >= 20000 &&
         $compensation < 50000
       ) {
         unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_1']);
         unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_3']);
       }
-      elseif ($compensation > 50000) {
+      elseif ($compensation >= 50000) {
         unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_1']);
         unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_2']);
       }
