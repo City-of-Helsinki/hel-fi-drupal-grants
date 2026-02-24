@@ -99,15 +99,6 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
   },
   {
     applicant_info: {
-      applicant_email: {
-        email: {
-          'ui:options': {
-            tooltipLabel: 'applicant_email.title',
-            tooltipButtonLabel: 'applicant_email.title',
-            tooltipText: 'applicant_email.tooltip',
-          },
-        },
-      },
       bank_account: {
         bank_account: {
           'ui:widget': 'bank_account',

@@ -153,7 +153,7 @@
         "ui:options": {
           "tooltipLabel": "active_participants_wrapper.legend",
           "tooltipButtonLabel": "active_participants_wrapper.legend",
-          "tooltipText": "active_participants_wrapper.help.value"
+          "tooltipText": "active_participants_wrapper.tooltip"
         },
         "active_participants_wrapper_help": {
           "ui:field": "textParagraph"
@@ -238,10 +238,7 @@
       },
       "income_rows": {
         "ui:options": {
-          "addText": "income_rows.add",
-          "tooltipLabel": "income_rows.title",
-          "tooltipButtonLabel": "income_rows.title",
-          "tooltipText": "income_rows.description"
+          "addText": "income_rows.add"
         }
       }
     },
@@ -251,10 +248,7 @@
       },
       "expenditure_rows": {
         "ui:options": {
-          "addText": "expenditure_rows.add",
-          "tooltipLabel": "expenditure_rows.title",
-          "tooltipButtonLabel": "expenditure_rows.title",
-          "tooltipText": "expenditure_rows.description"
+          "addText": "expenditure_rows.add"
         }
       }
     }

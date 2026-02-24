@@ -1,10 +1,11 @@
 {
   "en": {
     "translation": {
-      "active_participants_wrapper.legend": "Active participants",
-      "active_participants_wrapper.help.value": "Number of active participants under 20 years old in the association",
-      "active_participants_under_20.title": "Number of active participants under 20 years old in the association",
       "active_participants_local.title": "Of which residents of Helsinki",
+      "active_participants_under_20.title": "Number of active participants under 20 years old in the association",
+      "active_participants_wrapper.help.value": "Number of active participants under 20 years old in the association",
+      "active_participants_wrapper.legend": "Active participants",
+      "active_participants_wrapper.tooltip": "If the information has been provided in the 2026 operational grant application, these fields can be left blank. Active participants are members who, during the previous year, have participated at least ten times within a continuous three-month period in guided sports activities with at least four participants. Those born in 2006 or later are considered under 20 years old.",
       "antiracism_measures.description": "Answer only if the project includes the set of measures \"developing anti-racism measures.\" At least one optional set of measures must be implemented in the project.",
       "antiracism_measures.title": "Are anti-racism measures developed in the project? If yes, how?",
       "end_date.title": "End date",
@@ -43,10 +44,11 @@
   },
   "fi": {
     "translation": {
-      "active_participants_wrapper.legend": "Aktiiviharrastajat",
-      "active_participants_wrapper.help.value": "Alle 20-vuotiaiksi luetaan 2006 tai myöhemmin syntyneet.",
-      "active_participants_under_20.title": "Yhdistyksen alle 20-vuotiaiden aktiiviharrastajien määrä",
       "active_participants_local.title": "Joista helsinkiläisiä",
+      "active_participants_under_20.title": "Yhdistyksen alle 20-vuotiaiden aktiiviharrastajien määrä",
+      "active_participants_wrapper.help.value": "Alle 20-vuotiaiksi luetaan 2006 tai myöhemmin syntyneet.",
+      "active_participants_wrapper.legend": "Aktiiviharrastajat",
+      "active_participants_wrapper.tooltip": "Jos tiedot on ilmoitettu vuoden 2026 toiminta-avustushakemuksella, kentät voi jättää tyhjiksi. Aktiiviharrastajiksi luetaan edellisen vuoden aikana vähintään kymmenen kertaa kolmen kuukauden yhtäjaksoisen ajan sisällä vähintään neljän harrastajan ohjattuun liikuntatoimintaan osallistunut jäsen. Alle 20-vuotiaiksi luetaan 2006 tai myöhemmin syntyneet.",
       "antiracism_measures.description": "Vastaa vain, jos hankkeessa toteutetaan toimenpidekokonaisuus \"rasisminvastaisten toimenpiteiden kehittäminen\". Hankkeessa on toteutettava vähintään yksi valinnaisista toimenpidekokonaisuuksista.",
       "antiracism_measures.title": "Kehitetäänkö hankkeessa rasisminvastaisia toimenpiteitä? Jos kyllä, miten?",
       "end_date.title": "Loppupäivämäärä",
@@ -85,10 +87,11 @@
   },
   "sv": {
     "translation": {
-      "active_participants_wrapper.legend": "Aktiva deltagare ",
-      "active_participants_wrapper.help.value": "Som under 20 år räknas personer födda 2006 eller senare. ",
-      "active_participants_under_20.title": "Antal aktiva deltagare under 20 år i föreningen",
       "active_participants_local.title": "Varav bosatta i Helsingfors",
+      "active_participants_under_20.title": "Antal aktiva deltagare under 20 år i föreningen",
+      "active_participants_wrapper.help.value": "Som under 20 år räknas personer födda 2006 eller senare. ",
+      "active_participants_wrapper.legend": "Aktiva deltagare ",
+      "active_participants_wrapper.tooltip": "Om uppgifterna har angetts i ansökan om verksamhetsunderstöd för år 2026 kan fälten lämnas tomma. Som aktiva deltagare räknas medlemmar som under föregående år har deltagit minst tio gånger under en sammanhängande tremånadersperiod i ledd idrottsverksamhet med minst fyra deltagare. Som under 20 år räknas personer födda 2006 eller senare.",
       "antiracism_measures.description": "Svara endast om projektet genomför åtgärdshelheten \"utveckla åtgärder mot rasism\". Projektet måste genomföra minst en valfri åtgärdshelhet.",
       "antiracism_measures.title": "Utvecklas antirasistiska åtgärder inom projektet? Om ja, hur?",
       "end_date.title": "Slutdatum",
