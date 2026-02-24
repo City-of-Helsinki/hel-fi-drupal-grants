@@ -302,7 +302,7 @@ class TypedDataToDocumentContentWithWebform {
     if (isset($documentStructure['compensation']['compensationInfo']['compensationArray'][0][1]['value'])) {
       if ($webform->id() === 'iakkaiden_kulttuuri_ja_liikunta') {
 
-        $compensation = (int) str_replace(' ', '',$documentStructure['compensation']['compensationInfo']['compensationArray'][0][1]['value']);
+        $compensation = (int) str_replace(' ', '', $documentStructure['compensation']['compensationInfo']['compensationArray'][0][1]['value']);
 
         // Unset the original field.
         foreach ($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] as $key => $valueArray) {
