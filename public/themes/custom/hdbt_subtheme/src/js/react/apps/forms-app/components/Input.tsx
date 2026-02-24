@@ -11,17 +11,16 @@ import {
   NumberInput,
   RadioButton,
   Select,
-  Tooltip,
 } from 'hds-react';
 import { DateTime } from 'luxon';
 import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import type { UiSchema, WidgetProps } from '@rjsf/utils';
+import type { WidgetProps } from '@rjsf/utils';
 
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
-import { formatErrors } from '../utils';
+import { formatErrors, getTooltip } from '../utils';
 import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, getProfileAtom, shouldRenderPreviewAtom } from '../store';
 import { HDS_DATE_FORMAT } from '@/react/common/enum/HDSDateFormat';
 
@@ -35,21 +34,6 @@ export const PreviewInput = ({ value, label, uiSchema }: { value?: string; label
     {Array.isArray(value) ? value.join(', ') : (value ?? '-')}
   </>
 );
-
-const getTooltip = (uiSchema: UiSchema | undefined) => {
-  if (!uiSchema || !uiSchema?.['ui:options']?.tooltipText) {
-    return undefined;
-  }
-
-  return (
-    <Tooltip
-      buttonLabel={uiSchema?.['ui:options']?.tooltipButtonLabel?.toString()}
-      tooltipLabel={uiSchema?.['ui:options']?.tooltipLabel?.toString()}
-    >
-      {uiSchema['ui:options'].tooltipText.toString()}
-    </Tooltip>
-  );
-};
 
 export const TextInput = ({
   id,

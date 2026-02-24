@@ -15,6 +15,7 @@ import { useAtomValue } from 'jotai';
 import { formStepsAtom, getCurrentStepAtom, shouldRenderPreviewAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
+import { getTooltip } from '../utils';
 
 export const ArrayFieldTemplate = ({
   canAdd,
@@ -213,6 +214,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
       heading={title || ''}
       className='hdbt-form--fieldset hdbt-form--fieldset--border'
       style={{ marginInline: '0' }}
+      tooltip={getTooltip(uiSchema)}
     >
       {description && <div className='hdbt-form--description'>{description}</div>}
       {properties.map((field) => field.content)}
