@@ -623,7 +623,7 @@ elements: |-
           required:
             ':input[name="avustukset_summa"]':
               value:
-                between: '20000:50000'
+                between: '20000:49999'
         '#default_value': '1'
       hankesuunnitelma_avustuksen_kesto_3:
         '#type': radios
