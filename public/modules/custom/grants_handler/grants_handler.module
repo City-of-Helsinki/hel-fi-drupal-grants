@@ -2221,9 +2221,8 @@ function _grants_handler_handle_react_application(array &$variables) {
   $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $formSettingsService = \Drupal::service(FormSettingsServiceInterface::class);
 
-  // @todo add Archived to the settings ?
   $settings = $formSettingsService
-    ->getFormSettings($variables['submission']['application_type_id'])
+    ->getFormSettings($variables['submission']['application_type_id'], $variables['submission']['form_identifier'])
     ->toArray();
 
   $submission = $variables['submission'];
