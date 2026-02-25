@@ -148,7 +148,7 @@
       "ID": "start_date",
       "label": "Aikataulu alkupäivämäärä",
       "value": "",
-      "valueType": "date"
+      "valueType": "datetime"
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.13": {
@@ -159,7 +159,7 @@
       "ID": "end_date",
       "label": "Aikataulu loppupäivämäärä",
       "value": "",
-      "valueType": "date"
+      "valueType": "datetime"
     }
   },
   "compensation.customQuestionsInfo.customQuestionsArray.14": {
@@ -240,6 +240,49 @@
       "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
       "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeGroupName": {
+    "#tip": "income component hardcoded value 'general'",
+    "datasource": "form_data",
+    "source": null,
+    "mapping_type": "hardcoded",
+    "data": {
+      "incomeGroupName": "general"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.otherIncomeRowsArrayStatic": {
+    "#tip": "The income component values",
+    "datasource": "form_data",
+    "source": "budget_step.income_section.income_rows",
+    "mapping_type": "custom",
+    "custom_handler": "income",
+    "data": {
+      "ID": "tulot_field_0",
+      "label": "Kuvausta tulosta tähän",
+      "value": "",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.costGroupsArrayStatic.0.costGroupName": {
+    "datasource": "form_data",
+    "source": null,
+    "mapping_type": "hardcoded",
+    "data": {
+      "costGroupName": "general"
+    }
+  },
+  "compensation.budgetInfo.costGroupsArrayStatic.0.otherCostRowsArrayStatic": {
+    "#tip": "The income component values",
+    "datasource": "form_data",
+    "source": "budget_step.expenditure_section.expenditure_rows",
+    "mapping_type": "custom",
+    "custom_handler": "income",
+    "data": {
+      "ID": "menot_field_0",
+      "label": "Kuvausta menosta tähän",
+      "value": "",
+      "valueType": "double"
     }
   }
 }
