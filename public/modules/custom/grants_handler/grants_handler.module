@@ -18,6 +18,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_attachments\AttachmentHandlerHelper;
 use Drupal\grants_handler\ApplicationHelpers;
@@ -1633,12 +1634,13 @@ function _grants_handler_get_action_urls($webform, $submission, $submissionData)
   }
 
   if ($react_submission_ids) {
+    $submission = ApplicationSubmission::load(reset($react_submission_ids));
     return [
       Url::fromRoute(
         'helfi_grants.forms_app_edit',
         [
+          'form_identifier' => $submission->get('form_identifier')->getString(),
           'application_number' => $submissionData['application_number'],
-          'id' => $webform->getThirdPartySetting('grants_metadata', 'applicationTypeID'),
         ],
         [
           'attributes' => $attributes,

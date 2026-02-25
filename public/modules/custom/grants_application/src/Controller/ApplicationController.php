@@ -146,6 +146,8 @@ final class ApplicationController extends ControllerBase {
     // @todo Refactor, return early instead of skipping.
     // When the application doesn't exist yet, we skip all the code
     // and end up here, early return is better.
+    // @todo Rename the application number: It is actually form id or
+    // application type id, it should be changed on both react side and here.
     return [
       '#theme' => 'forms_app',
       '#attached' => [
