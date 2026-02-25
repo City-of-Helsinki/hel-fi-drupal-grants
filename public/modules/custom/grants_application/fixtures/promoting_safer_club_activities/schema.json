@@ -111,7 +111,7 @@
         "acting_year_section",
         "purpose_section",
         "other_compensations_section",
-        "prior_benefits_usage_section"
+        "other_applied_compensations_section"
       ],
       "properties": {
         "acting_year_section": {
