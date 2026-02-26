@@ -1,4 +1,4 @@
-title: 'KUVA: ansökan om understöd för främjande av motion och kulturverksamhet hos äldre'
+title: 'KUVA: ansökan om understöd för främjande av idrott och kulturverksamhet hosäldre'
 elements: |
   1_hakijan_tiedot:
     '#title': '1. Sökandens uppgifter'
@@ -56,16 +56,16 @@ elements: |
     '#title': Understöd
   subventions:
     '#title': 'Typ av stöd'
+  kayttotarkoitus:
+    '#title': ' '
   grants_compensations_information:
     '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången.</p><p>Ange det bidragsbelopp som ansöks för år 2026. Bidragsbeloppen för fortsättningsåren i en flerårig ansökan anges på nästa sida.</p>'
-  kayttotarkoitus:
-    '#title': 'Användningsän damål'
   compensation_purpose_information:
     '#markup': 'Skriv i fältet för användningsändamål en kort projektbeskrivning som tydligt anger projektets syfte, målgrupp samt konkreta åtgärder och tidtabell.'
   compensation_purpose:
     '#title': 'En kort beskrivning av användningsändamålet för det/de understöd som ansöks'
     '#help': '<p>Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten.</p>'
-    '#counter_maximum_message': '%d/5000 tecken kvar'
+    '#counter_maximum_message': '%d/1250 tecken kvar'
   other_grants_for_same_purpose:
     '#title': 'Övriga understöd som beviljats för samma ändamål'
   info_muut_samaan_tarkoitukseen_myonnetty:
@@ -125,7 +125,7 @@ elements: |
         '#title': År
         '#pattern_error': 'Ange ett årtal'
       amount:
-        '#title': 'Beviljat bidragsbelopp'
+        '#title': 'Ansökt bidragsbelopp'
       purpose:
         '#title': 'Beskrivning av avsedd användning'
         '#help': '<p>Ge en kort beskrivning, i vilket syfte har bidraget beviljats?</p>'
@@ -133,11 +133,20 @@ elements: |
   3_tarkemmat_tiedot:
     '#title': '3. Mer detaljerad information'
   tarkemmat_tiedot_section:
-    '#title': 'Ansökt understöds (2026-2028)'
-  hankesuunnitelma_avustuksen_kesto:
+    '#title': ' '
+  hankesuunnitelma_avustuksen_kesto_1:
     '#title': 'Ansöks det om ett-, två- eller treårigt understöd? Ange de understödsbelopp som söks för projektets fortsatta år i de fält som öppnas för dem.'
     '#options':
       1: 'Jag ansöker om understöd som ettårigt'
+  hankesuunnitelma_avustuksen_kesto_2:
+    '#title': 'Ansöks det om ett-, två- eller treårigt understöd? Ange de understödsbelopp som söks för projektets fortsatta år i de fält som öppnas för dem.'
+    '#options':
+      1: 'Jag ansöker om understöd som ettårigt'
+      2: 'Jag ansöker om understöd som tvåårigt'
+      3: 'Jag ansöker om understöd som treårigt'
+  hankesuunnitelma_avustuksen_kesto_3:
+    '#title': 'Ansöks det om ett-, två- eller treårigt understöd? Ange de understödsbelopp som söks för projektets fortsatta år i de fält som öppnas för dem.'
+    '#options':
       2: 'Jag ansöker om understöd som tvåårigt'
       3: 'Jag ansöker om understöd som treårigt'
   haettava_avustussumma:

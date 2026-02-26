@@ -50,6 +50,27 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         },
         'defaultValue' => '1',
       ],
+      'hankesuunnitelma_avustuksen_kesto_1' => [
+        'valueCallback' => static fn (mixed $value) => match($value) {
+          "" => '1',
+          default => $value
+        },
+        // 'defaultValue' => '1',
+      ],
+      'hankesuunnitelma_avustuksen_kesto_2' => [
+        'valueCallback' => static fn (mixed $value) => match($value) {
+          "" => '1',
+          default => $value
+        },
+        // 'defaultValue' => '1',
+      ],
+      'hankesuunnitelma_avustuksen_kesto_3' => [
+        'valueCallback' => static fn (mixed $value) => match($value) {
+          "" => '1',
+          default => $value
+        },
+        // 'defaultValue' => '2',
+      ],
       // This field is read only / fully computed. However, the field must
       // be sent to ATV / avust2 or else the preview feature breaks. Field
       // values are saved/loaded from ATV when draft is saved/opened, and

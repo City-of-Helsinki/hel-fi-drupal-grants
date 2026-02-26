@@ -56,16 +56,16 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
+  kayttotarkoitus:
+    '#title': ' '
   grants_compensations_information:
     '#markup': '<p>Only apply for one grant type at a time with each application.</p><p>Enter the grant amount you are applying for the year 2026. The grant amounts for subsequent years of a multiyear application will be entered on the next page.</p>'
-  kayttotarkoitus:
-    '#title': 'Purpose of use'
   compensation_purpose_information:
     '#markup': 'In the “Purpose of Use” field, write a brief project summary that clearly states the project’s purpose, target group, and concrete actions and schedule.'
   compensation_purpose:
     '#title': 'Brief description of the purpose(s) of the grant(s) applied for'
     '#help': '<p>Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.</p>'
-    '#counter_maximum_message': '%d/5000 characters remaining'
+    '#counter_maximum_message': '%d/1250 characters remaining'
   other_grants_for_same_purpose:
     '#title': 'Other grants received for the same purpose'
   info_muut_samaan_tarkoitukseen_myonnetty:
@@ -133,11 +133,20 @@ elements: |
   3_tarkemmat_tiedot:
     '#title': '3. Information in more detail'
   tarkemmat_tiedot_section:
-    '#title': 'Applied grant (2026-2028)'
-  hankesuunnitelma_avustuksen_kesto:
+    '#title': ' '
+  hankesuunnitelma_avustuksen_kesto_1:
     '#title': 'Is the application for a one-, two-, or three-year grant? Enter the grant amounts requested for the project’s subsequent years in the fields that open for them.'
     '#options':
       1: 'I am applying for the grant as a one-year grant'
+  hankesuunnitelma_avustuksen_kesto_2:
+    '#title': 'Is the application for a one-, two-, or three-year grant? Enter the grant amounts requested for the project’s subsequent years in the fields that open for them.'
+    '#options':
+      1: 'I am applying for the grant as a one-year grant'
+      2: 'I am applying for the grant as a two-year grant'
+      3: 'I am applying for the grant as a three-year grant'
+  hankesuunnitelma_avustuksen_kesto_3:
+    '#title': 'Is the application for a one-, two-, or three-year grant? Enter the grant amounts requested for the project’s subsequent years in the fields that open for them.'
+    '#options':
       2: 'I am applying for the grant as a two-year grant'
       3: 'I am applying for the grant as a three-year grant'
   haettava_avustussumma:

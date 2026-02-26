@@ -104,6 +104,32 @@ class DocumentContentMapper {
           $documentContent, $jsonPath, $elementName, $definition);
       }
     }
+
+    // #UHF-12674
+    // The default field for duration is hankesuunnitelma_avustuksen_kesto.
+    // On "iäkkäiden liikunta&kulttuuri"-form, we need a radio button set
+    // where a single radiobutton is only shown if coditions are met.
+    // Workaround: added 3 radiobutton sets.
+    if (array_key_exists('hankesuunnitelma_avustuksen_kesto_3', $typedDataValues)) {
+      $compensation = (int) str_replace(' ', '', $typedDataValues['haettava_avustussumma_2026']);
+
+      if ($compensation < 20000) {
+        unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_2']);
+        unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_3']);
+      }
+      elseif (
+        $compensation >= 20000 &&
+        $compensation < 50000
+      ) {
+        unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_1']);
+        unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_3']);
+      }
+      elseif ($compensation >= 50000) {
+        unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_1']);
+        unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_2']);
+      }
+    }
+
     return $typedDataValues;
   }
 
