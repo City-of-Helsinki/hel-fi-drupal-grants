@@ -3,6 +3,7 @@
   "description": "KASKOIPTOIM",
   "application_type": "KASKOIPTOIM",
   "application_type_id": 52,
+  "application_industry": "KASKO",
   "application_open": "2025-01-10T00:00:00",
   "application_close": "2026-12-15T23:59:59",
   "applicant_types": [

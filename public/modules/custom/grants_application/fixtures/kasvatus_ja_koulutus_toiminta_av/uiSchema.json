@@ -120,12 +120,12 @@
     }
   },
   "attachments_step": {
-    "additional_info_section": {
-      "additional_info": {
+    "additional_information_section": {
+      "additional_information": {
         "ui:widget": "textarea"
       }
     },
-    "appendices_section": {
+    "attachments_section": {
       "required_attachments_help": {
         "ui:field": "textParagraph"
       },

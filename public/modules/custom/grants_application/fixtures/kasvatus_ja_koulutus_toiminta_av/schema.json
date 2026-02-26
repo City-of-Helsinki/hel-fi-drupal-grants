@@ -161,7 +161,14 @@
           "title": "other_compensation_description.title",
           "type": "string"
         }
-      }
+      },
+      "required": [
+        "other_compensation_issuer",
+        "other_compensation_issuer_name",
+        "other_compensation_issuer_year",
+        "other_compensation_amount",
+        "other_compensation_description"
+      ]
     },
     "grant_info_step": {
       "required": [
@@ -264,7 +271,7 @@
           }
         },
         "city_premises_benefits_section": {
-          "title": "city_premises_benefits.title",
+          "title": "city_premises_benefits_section.title",
           "type": "object",
           "description": "city_premises_benefits_section.description",
           "properties": {
@@ -315,6 +322,7 @@
       "type": "object",
       "properties": {
         "community_activity_section": {
+          "title": "community_activity_section.title",
           "type": "object",
           "properties": {
             "community_activity_description": {
@@ -597,19 +605,20 @@
     "attachments_step": {
       "type": "object",
       "properties": {
-        "additional_info_section": {
+        "additional_information_section": {
+          "title": "additional_information_section.title",
           "type": "object",
           "properties": {
-            "additional_info": {
-              "title": "additional_info.title",
+            "additional_information": {
+              "title": "additional_information.title",
               "type": "string"
             }
           }
         },
-        "appendices_section": {
-          "title": "appendices_section.title",
+        "attachments_section": {
+          "title": "attachments_section.title",
           "type": "object",
-          "description": "appendices_section.description",
+          "description": "attachments_section.description",
           "properties": {
             "required_attachments_help": {
               "title": "required_attachments_help.title",
@@ -930,7 +939,7 @@
             },
             "further_clarification": {
               "title": "further_clarification.title",
-              "type": "string"  
+              "type": "string"
             },
             "other_attachment_fieldset": {
               "title": "other_attachment_fieldset.title",

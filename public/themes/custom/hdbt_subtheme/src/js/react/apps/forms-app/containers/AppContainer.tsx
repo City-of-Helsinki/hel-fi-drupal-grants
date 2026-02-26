@@ -11,15 +11,15 @@ import { Requests } from '../Requests';
 /**
  * Instantiates a new application draft for the given form.
  *
- * @param {string} id - The form id.
+ * @param {string} form_identifier - The form id.
  * @param {string} token - The CSRF token.
  *
  * @return {Promise<Object>} - The response from the server.
  *
  * @throws {Error} - If the instantiation request fails.
  */
-const instantiateDocument = async (id: string, token: string) => {
-  const response = await Requests.DRAFT_APPLICATION_CREATE(id, token);
+const instantiateDocument = async (form_identifier: string, token: string) => {
+  const response = await Requests.DRAFT_APPLICATION_CREATE(form_identifier, token);
 
   if (!response.ok) {
     throw new Error('Failed to instantiate application');
@@ -50,26 +50,26 @@ const handleErrors = async (response: Response) => {
  * Queries form data from the server.
  * Checks IndexedDB for existing form data.
  *
- * @param {string} id - The form id
+ * @param {string} form_identifier - The form identifier
  * @param {string} token - CSRF token
  *
  * @return {Promise<object>} - Form settings and existing cached form data
  *
  * @throws {Error} - If the request fails
  */
-async function fetchFormData(id: string, token: string) {
+async function fetchFormData(form_identifier: string, token: string) {
   let applicationNumber = getUrlParts()?.[4];
 
   if (!applicationNumber) {
-    const { application_number } = await instantiateDocument(id, token);
+    const { application_number } = await instantiateDocument(form_identifier, token);
     applicationNumber = application_number;
   }
 
   const { use_draft: useDraft } = drupalSettings.grants_react_form;
   // Uses DraftApplication or Application REST resource based on useDraft flag
   const fetchUrl = useDraft
-    ? `/applications/${id}/${applicationNumber}`
-    : `/applications/${id}/application/${applicationNumber}`;
+    ? `/applications/${form_identifier}/${applicationNumber}`
+    : `/applications/${form_identifier}/application/${applicationNumber}`;
   const formConfigResponse = await fetch(fetchUrl, {
     headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
   });
@@ -85,11 +85,21 @@ async function fetchFormData(id: string, token: string) {
   return { ...formConfig, persistedData, applicationNumber };
 }
 
-export const AppContainer = ({ applicationTypeId, token }: { applicationTypeId: string; token: string }) => {
-  const { data, error, isLoading, isValidating } = useSWRImmutable(applicationTypeId, (id) => fetchFormData(id, token));
+export const AppContainer = ({
+  applicationTypeId,
+  formIdentifier,
+  token,
+}: {
+  applicationTypeId: string;
+  formIdentifier: string;
+  token: string;
+}) => {
+  const { data, error, isLoading, isValidating } = useSWRImmutable(formIdentifier, (formIdentifier) =>
+    fetchFormData(formIdentifier, token),
+  );
 
   if (isLoading || isValidating) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner className='hdbt-react-form__loading-spinner' />;
   }
 
   if (error) {
@@ -106,5 +116,5 @@ export const AppContainer = ({ applicationTypeId, token }: { applicationTypeId: 
     returnNull: true,
   });
 
-  return <FormWrapper {...{ applicationTypeId, token, data }} />;
+  return <FormWrapper {...{ applicationTypeId, formIdentifier, token, data }} />;
 };
