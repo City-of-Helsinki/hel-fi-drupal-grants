@@ -1,6 +1,3 @@
-// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
-// biome-ignore-all lint/a11y/noLabelWithoutControl: @todo UHF-12501
-// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import { type ChangeEvent, type FocusEvent, type KeyboardEvent, type WheelEvent, useCallback, useEffect } from 'react';
 import {
   DateInput,
@@ -24,12 +21,20 @@ import { formatErrors, getTooltip } from '../utils';
 import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, getProfileAtom, shouldRenderPreviewAtom } from '../store';
 import { HDS_DATE_FORMAT } from '@/react/common/enum/HDSDateFormat';
 
-export const PreviewInput = ({ value, label, uiSchema }: { value?: string; label?: string; uiSchema: any }) => (
+export const PreviewInput = ({
+  value,
+  label,
+  uiSchema,
+}: {
+  value?: string | string[];
+  label?: string;
+  uiSchema: any;
+}) => (
   <>
-    {/* @todo fix when rebuilding styles  */}
-    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
     {!uiSchema?.['ui:options']?.hideNameFromPrint && (
-      <label>{uiSchema?.['ui:options']?.printableName?.toString() ?? label}</label>
+      <span className='grants-form--preview-section__label'>
+        {uiSchema?.['ui:options']?.printableName?.toString() ?? label}
+      </span>
     )}
     {Array.isArray(value) ? value.join(', ') : (value ?? '-')}
   </>
@@ -145,7 +150,7 @@ export const TextArea = ({
       return;
     }
     const grantsProfile = readGrantsProfile();
-    return grantsProfile?.[uiSchema?.['misc:profilePrefill']] ?? undefined;
+    return grantsProfile?.[uiSchema?.['misc:profilePrefill'] as keyof typeof grantsProfile] ?? undefined;
   };
 
   const defaultValue = getDefaultValue();
@@ -184,7 +189,6 @@ export const SelectWidget = ({
   id,
   label,
   multiple,
-  name,
   onChange,
   options,
   rawErrors,
@@ -315,17 +319,7 @@ export const CommunityOfficialsSelect = ({ label, value, uiSchema, ...rest }: Wi
   return <SelectWidget {...{ ...selectProps }} />;
 };
 
-export const RadioWidget = ({
-  id,
-  label,
-  onChange,
-  options,
-  rawErrors,
-  required,
-  value,
-  uiSchema,
-  ...rest
-}: WidgetProps) => {
+export const RadioWidget = ({ id, label, onChange, options, rawErrors, required, value, uiSchema }: WidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
@@ -344,7 +338,7 @@ export const RadioWidget = ({
         className='hdbt-form--fieldset'
         tooltip={getTooltip(uiSchema)}
       >
-        {options?.enumOptions?.map((option: any) => {
+        {options?.enumOptions?.map((option) => {
           const optionId = `${id}_${option.value}`;
 
           return (
@@ -374,7 +368,7 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
   const { currentLanguage } = drupalSettings.path;
 
   let date: DateTime | undefined;
-  const handleChange = (dateStr: string, dateObject: Date) => {
+  const handleChange = (_dateStr: string, dateObject: Date) => {
     try {
       date = DateTime.fromJSDate(dateObject);
     } catch (_error) {

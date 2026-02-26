@@ -1,6 +1,3 @@
-// biome-ignore-all lint/correctness/useJsxKeyInIterable: @todo UHF-12501
-// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
-// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 import { Button, ButtonPresetTheme, ButtonVariant, IconCopy } from 'hds-react';
 import { DateTime } from 'luxon';
 import type { RJSFSchema } from '@rjsf/utils';
@@ -12,7 +9,7 @@ import { SubmitStates } from '../enum/SubmitStates';
 import { useState } from 'react';
 import { Requests } from '../Requests';
 
-export const FormSummary = ({ formData, schema }: { formData: any; schema: RJSFSchema }) => {
+export const FormSummary = ({ formData }: { formData: any; schema: RJSFSchema }) => {
   const [disableActions, setDisableActions] = useState(false);
   const avus2Data = useAtomValue(avus2DataAtom);
   const formTitle = useAtomValue(getFormTitleAtom);
