@@ -181,4 +181,22 @@ final class ApplicationControllerTest extends KernelTestBase {
     $this->assertCount(0, $errors);
   }
 
+  /**
+   * Test application print route.
+   */
+  public function testPrintApplication(): void {
+    $controller = ApplicationController::create($this->container);
+    $value = $controller->printApplication($this->applicationNumber);
+    $this->assertEquals([], $value);
+  }
+
+  /**
+   * Test form preview view.
+   */
+  public function testFormPreview(): void {
+    $controller = ApplicationController::create($this->container);
+    $value = $controller->formPreview($this->applicationNumber);
+    $this->assertEquals([], $value);
+  }
+
 }

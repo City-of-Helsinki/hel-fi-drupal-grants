@@ -452,9 +452,10 @@ final class ApplicationController extends ControllerBase {
    * @param string $application_number
    *   The application number.
    */
-  public function printApplication(string $application_number) {
-    // @todo UHF-12685 the original implementation can handle react forms but
-    // it should be eventually moved here.
+  public function printApplication(string $application_number): array {
+    // @todo UHF-12685 the original implementation can handle react forms
+    // mediocre at best and it should be eventually moved here.
+    return [];
   }
 
   /**
