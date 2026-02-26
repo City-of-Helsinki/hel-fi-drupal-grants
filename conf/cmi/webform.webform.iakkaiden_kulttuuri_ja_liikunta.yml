@@ -395,6 +395,7 @@ elements: |-
         '#subvention_amount__title': 'Avustuksen summa'
     kayttotarkoitus:
       '#type': webform_section
+      '#title': ' '
       compensation_purpose_information:
         '#type': webform_markup
         '#markup': 'Kirjoita käyttötarkoitus -kenttään lyhyt hanketiivistelmä, josta käy ilmi hankkeen tarkoitus, kohderyhmä sekä konkreettiset toimenpiteet ja aikataulu.'

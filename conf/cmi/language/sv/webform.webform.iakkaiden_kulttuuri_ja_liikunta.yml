@@ -56,6 +56,8 @@ elements: |
     '#title': Understöd
   subventions:
     '#title': 'Typ av stöd'
+  kayttotarkoitus:
+    '#title': ' '
   grants_compensations_information:
     '#markup': '<p>Ansök alltid endast om en typ av understöd åt gången.</p><p>Ange det bidragsbelopp som ansöks för år 2026. Bidragsbeloppen för fortsättningsåren i en flerårig ansökan anges på nästa sida.</p>'
   compensation_purpose_information:

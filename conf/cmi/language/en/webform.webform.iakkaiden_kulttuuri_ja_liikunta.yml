@@ -56,6 +56,8 @@ elements: |
     '#title': 'Types of grant'
   subventions:
     '#title': Grants
+  kayttotarkoitus:
+    '#title': ' '
   grants_compensations_information:
     '#markup': '<p>Only apply for one grant type at a time with each application.</p><p>Enter the grant amount you are applying for the year 2026. The grant amounts for subsequent years of a multiyear application will be entered on the next page.</p>'
   compensation_purpose_information:
