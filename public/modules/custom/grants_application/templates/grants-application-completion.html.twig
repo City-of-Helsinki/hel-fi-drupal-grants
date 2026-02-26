@@ -53,19 +53,22 @@
             url: ownApplicationsLink,
           }
         %}
-
-        {% include '@hdbt/navigation/link-button.html.twig' with {
-          type: 'secondary',
-          label: 'View application'|t,
-          url: viewApplicationLink,
-        }
-        %}
-        {% include '@hdbt/navigation/link-button.html.twig' with {
+        {% if viewApplicationLink %}
+          {% include '@hdbt/navigation/link-button.html.twig' with {
             type: 'secondary',
-            label: 'Print application'|t,
-            url: printApplicationLink,
+            label: 'View application'|t,
+            url: viewApplicationLink,
           }
         %}
+        {% endif %}
+        {% if printApplicationLink %}
+          {% include '@hdbt/navigation/link-button.html.twig' with {
+              type: 'secondary',
+              label: 'Print application'|t,
+              url: printApplicationLink,
+            }
+          %}
+        {% endif %}
       </div>
     </div>
   </div>

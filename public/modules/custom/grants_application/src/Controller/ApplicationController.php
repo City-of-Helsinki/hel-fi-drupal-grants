@@ -464,10 +464,11 @@ final class ApplicationController extends ControllerBase {
    * @param string $form_identifier
    *   The form identifier.
    */
-  public function formPreview(string $form_identifier): void {
+  public function formPreview(string $form_identifier): array {
     // @todo UHF-12923 the form preview for application,
     // this is similar to ApplicationController::formsApp,
     // needs route.
+    return [];
   }
 
   /**
