@@ -13,7 +13,7 @@ import { DateTime } from 'luxon';
 import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import type { UiSchema, WidgetProps } from '@rjsf/utils';
+import type { RJSFSchema, UiSchema, WidgetProps } from '@rjsf/utils';
 
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
@@ -28,7 +28,7 @@ export const PreviewInput = ({
 }: {
   value?: string | string[];
   label?: string;
-  uiSchema: UiSchema;
+  uiSchema: UiSchema<any, RJSFSchema, any> | undefined;
 }) => (
   <>
     {!uiSchema?.['ui:options']?.hideNameFromPrint && (
@@ -366,6 +366,7 @@ export const RadioWidget = ({ id, label, onChange, options, rawErrors, required,
 
 export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema, value }: WidgetProps) => {
   const { currentLanguage } = drupalSettings.path;
+  const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   let date: DateTime | undefined;
   const handleChange = (_dateStr: string, dateObject: Date) => {
@@ -383,6 +384,10 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
     formattedValue = value ? DateTime.fromISO(value).toFormat(HDS_DATE_FORMAT) : undefined;
   } catch (_error) {
     formattedValue = undefined;
+  }
+
+  if (shouldRenderPreview) {
+    return <PreviewInput value={formattedValue} label={label} uiSchema={uiSchema} />;
   }
 
   return (
