@@ -9,6 +9,7 @@ import { SubmitStates } from '../enum/SubmitStates';
 import { useState } from 'react';
 import { Requests } from '../Requests';
 
+// biome-ignore lint/suspicious/noExplicitAny: No better type available
 export const FormSummary = ({ formData }: { formData: any; schema: RJSFSchema }) => {
   const [disableActions, setDisableActions] = useState(false);
   const avus2Data = useAtomValue(avus2DataAtom);
@@ -90,7 +91,7 @@ export const FormSummary = ({ formData }: { formData: any; schema: RJSFSchema })
           {statuses?.length && (
             <ul className='application-status-history'>
               {statuses.map((status) => (
-                <li>{status}</li>
+                <li key={status}>{status}</li>
               ))}
             </ul>
           )}
@@ -101,7 +102,11 @@ export const FormSummary = ({ formData }: { formData: any; schema: RJSFSchema })
             <ul className='application-attachment-list'>
               {avus2Data.attachmentsInfo.attachmentsArray.map((attachment) => {
                 const [description, name] = attachment;
-                return <li>{`${description.value ? `${description.value}, ` : ''}${name.value}`}</li>;
+                return (
+                  <li
+                    key={name.value.toString()}
+                  >{`${description.value ? `${description.value}, ` : ''}${name.value}`}</li>
+                );
               })}
             </ul>
           )}

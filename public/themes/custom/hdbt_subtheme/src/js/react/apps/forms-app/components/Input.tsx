@@ -13,7 +13,7 @@ import { DateTime } from 'luxon';
 import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import type { WidgetProps } from '@rjsf/utils';
+import type { UiSchema, WidgetProps } from '@rjsf/utils';
 
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
@@ -28,7 +28,7 @@ export const PreviewInput = ({
 }: {
   value?: string | string[];
   label?: string;
-  uiSchema: any;
+  uiSchema: UiSchema;
 }) => (
   <>
     {!uiSchema?.['ui:options']?.hideNameFromPrint && (
