@@ -34,6 +34,37 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $customQuestions = [
+      'onko_jatkohakemus' => [],
+      'onko_kyseessa_jatkohakemus' => [
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertBooleanToYesNo',
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractBooleanYesNoValue',
+        ],
+      ],
+      'hankesuunnitelma_jatkohakemus' => [
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'formatOptionValues',
+          'arguments' => [
+            1 => 'Haen vuonna 2025 ehdollisena myönnettyä avustusta hankkeen toiselle kaudelle',
+            2 => 'Haen avustusta uudelle hankkeelle',
+          ],
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractOptionValues',
+          'arguments' => [
+            'Haen vuonna 2025 ehdollisena myönnettyä avustusta hankkeen toiselle kaudelle' => 1,
+            'Haen avustusta uudelle hankkeelle' => 2,
+          ],
+        ],
+      ],
       'hankesuunnitelma_avustuksen_kesto' => [
         'type' => 'string',
         'valueCallback' => [
@@ -169,17 +200,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'arviointi_haasteet' => [],
       'arviointi_saavutettavuus' => [],
       'arviointi_avustus_kaytto' => [],
-      'onko_kyseessa_jatkohakemus' => [
-        'type' => 'string',
-        'valueCallback' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'convertBooleanToYesNo',
-        ],
-        'webformValueExtracter' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'extractBooleanYesNoValue',
-        ],
-      ],
       'hankkeen_mennyt_tavoite' => [],
       'hankkeen_kohderyhma_ja_keinot' => [],
       'hankkeen_jo_osallistuneet_9_12' => [],
@@ -196,26 +216,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_edellisen_vuoden_avustuksen_kaytto' => [],
       'hankkeen_talous_toiminta_aikataulu_muutokset' => [],
       'hankkeen_jatkokausi_suunnitelma' => [],
-      'hankesuunnitelma_jatkohakemus' => [
-        'type' => 'string',
-        'valueCallback' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'formatOptionValues',
-          'arguments' => [
-            1 => 'Haen vuonna 2025 ehdollisena myönnettyä avustusta hankkeen toiselle kaudelle',
-            2 => 'Haen avustusta uudelle hankkeelle',
-          ],
-        ],
-        'webformValueExtracter' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'extractOptionValues',
-          'arguments' => [
-            'Haen vuonna 2025 ehdollisena myönnettyä avustusta hankkeen toiselle kaudelle' => 1,
-            'Haen avustusta uudelle hankkeelle' => 2,
-          ],
-        ],
-      ],
-      'onko_jatkohakemus' => [],
       'toteutunut_kohderyhma' => [],
       'hankkeen_kohderyhmat_lapset_arvio' => [],
       'hankkeen_kohderyhmat_lapset_9_12_arvio' => [],

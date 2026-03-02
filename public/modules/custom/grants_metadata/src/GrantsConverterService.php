@@ -157,7 +157,10 @@ class GrantsConverterService {
    * @return string
    *   The hard coded 'Yes' ('Kyllä') or 'No' ('Ei') string.
    */
-  public function convertBooleanToYesNo(string $value): string {
+  public function convertBooleanToYesNo(?string $value = NULL): string {
+    if ($value === NULL) {
+      return '';
+    }
     return match ($value) {
       'Kyllä', 'Ei' => $value,
       '1' => 'Kyllä',
@@ -200,20 +203,18 @@ class GrantsConverterService {
   public function formatOptionValues(mixed $value, array $arguments): string {
     // If no arguments defined, return 1.
     if (empty($arguments)) {
-      return 1;
+      return '1';
     }
 
-    // Normalize key.
-    $key = (string) ($value ?? '');
-
-    if (array_key_exists($key, $arguments)) {
-      return (string) $arguments[$key];
+    if (array_key_exists($value, $arguments)) {
+      return (string) $arguments[$value];
     }
 
-    // Default to key 1 if it exists.
-    return isset($arguments[1])
-      ? (string) $arguments[1]
-      : (string) reset($arguments);
+    if(array_key_exists($value, array_flip($arguments))) {
+      return (string) $value;
+    }
+
+    return '1';
   }
 
   /**
@@ -228,7 +229,7 @@ class GrantsConverterService {
    *   Mapping array where key = stored value and value = label.
    *
    * @return int
-   *   Stored value as string.
+   *   Stored value as integer.
    */
   public function extractOptionValues(mixed $value, ?array $arguments = NULL): int {
     if (empty($arguments)) {
@@ -237,9 +238,8 @@ class GrantsConverterService {
 
     $value = trim((string) $value);
 
-
     if (array_key_exists($value, $arguments)) {
-      return $arguments[$value];
+      return (int) $arguments[$value];
     }
 
     // Default to 1
