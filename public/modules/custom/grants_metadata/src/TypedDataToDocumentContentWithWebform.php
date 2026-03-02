@@ -342,12 +342,38 @@ class TypedDataToDocumentContentWithWebform {
           }
         }
 
+        foreach ($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] as $key => $valueArray) {
+          if (
+            str_contains($valueArray['ID'], 'hankesuunnitelma_jatkohakemus')
+          ) {
+            unset($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'][$key]);
+          }
+        }
+
         // Reset the keys after unset.
         $documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] = array_values($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray']);
       }
     }
 
-    // Optionally writ the data to a .json file. Used for testing.
+    // UHF-12859 Remove extra boolean fields from liikuntaharrastamisen_avustus
+    // form.
+    if ($webform->id() === 'liikuntaharrastamisen_avustus') {
+      foreach ($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] as $key => $valueArray) {
+        if (
+          str_contains($valueArray['ID'], 'onko_kyseessa_jatkohakemus') ||
+          str_contains($valueArray['ID'], 'hankesuunnitelma_avustuksen_kesto_1') ||
+          str_contains($valueArray['ID'], 'hankesuunnitelma_avustuksen_kesto_2') ||
+          str_contains($valueArray['ID'], 'hankesuunnitelma_avustuksen_kesto_3')
+        ) {
+          unset($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'][$key]);
+        }
+      }
+
+      // Reset the keys after unset.
+      $documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] = array_values($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray']);
+    }
+
+    // Optionally write the data to a .json file. Used for testing.
     return $documentStructure;
   }
 

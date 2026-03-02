@@ -34,42 +34,101 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ]);
 
     $customQuestions = [
+      'onko_jatkohakemus' => [],
+      'hankesuunnitelma_jatkohakemus' => [
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'formatOptionValues',
+          'arguments' => [
+            1 => 'Haen vuonna 2025 ehdollisena myönnettyä avustusta hankkeen toiselle kaudelle',
+            2 => 'Haen avustusta uudelle hankkeelle',
+          ],
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractOptionValues',
+          'arguments' => [
+            'Haen vuonna 2025 ehdollisena myönnettyä avustusta hankkeen toiselle kaudelle' => 1,
+            'Haen avustusta uudelle hankkeelle' => 2,
+          ],
+        ],
+      ],
       'hankesuunnitelma_avustuksen_kesto' => [
-        // This valueCallback implements default values.
-        //
-        // Default values don't actually do anything useful? Default values
-        // are only used when value is NULL, but NULL values are sanitized
-        // to empty string before that. Default values in Webform config do
-        // nothing, since the fields are always initialized from typed data,
-        // when the form is opened.
-        //
-        // @see \Drupal\grants_metadata\AtvSchema::getItemValue.
-        'valueCallback' => static fn (mixed $value) => match($value) {
-          "" => '1',
-          default => $value
-        },
-        'defaultValue' => '1',
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'formatOptionValues',
+          'arguments' => [
+            1 => 'Haen avustusta yksivuotisena',
+            2 => 'Haen avustusta kaksivuotisena',
+          ],
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractOptionValues',
+          'arguments' => [
+            'Haen avustusta yksivuotisena' => 1,
+            'Haen avustusta kaksivuotisena' => 2,
+          ],
+        ],
       ],
       'hankesuunnitelma_avustuksen_kesto_1' => [
-        'valueCallback' => static fn (mixed $value) => match($value) {
-          "" => '1',
-          default => $value
-        },
-        // 'defaultValue' => '1',
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'formatOptionValues',
+          'arguments' => [
+            1 => 'Haen avustusta yksivuotisena',
+          ],
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractOptionValues',
+          'arguments' => [
+            'Haen avustusta yksivuotisena' => 1,
+          ],
+        ],
       ],
       'hankesuunnitelma_avustuksen_kesto_2' => [
-        'valueCallback' => static fn (mixed $value) => match($value) {
-          "" => '1',
-          default => $value
-        },
-        // 'defaultValue' => '1',
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'formatOptionValues',
+          'arguments' => [
+            1 => 'Haen avustusta yksivuotisena',
+            2 => 'Haen avustusta kaksivuotisena',
+            3 => 'Haen avustusta kolmevuotisena',
+          ],
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractOptionValues',
+          'arguments' => [
+            'Haen avustusta yksivuotisena' => 1,
+            'Haen avustusta kaksivuotisena' => 2,
+            'Haen avustusta kolmevuotisena' => 3,
+          ],
+        ],
       ],
       'hankesuunnitelma_avustuksen_kesto_3' => [
-        'valueCallback' => static fn (mixed $value) => match($value) {
-          "" => '1',
-          default => $value
-        },
-        // 'defaultValue' => '2',
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'formatOptionValues',
+          'arguments' => [
+            2 => 'Haen avustusta kaksivuotisena',
+            3 => 'Haen avustusta kolmevuotisena',
+          ],
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractOptionValues',
+          'arguments' => [
+            'Haen avustusta kaksivuotisena' => 2,
+            'Haen avustusta kolmevuotisena' => 3,
+          ],
+        ],
       ],
       // This field is read only / fully computed. However, the field must
       // be sent to ATV / avust2 or else the preview feature breaks. Field
@@ -86,6 +145,17 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ],
       'haettava_avustussumma_2027' => [],
       'haettava_avustussumma_2028' => [],
+      'onko_kyseessa_jatkohakemus' => [
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertBooleanToYesNo',
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractBooleanYesNoValue',
+        ],
+      ],
       'ensisijainen_taiteen_ala' => [],
       'avustuksen_kohde_yhdistys_toimintaryhma' => [],
       'avustuksen_kohde_tiivistelma' => [],
@@ -166,17 +236,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'arviointi_haasteet' => [],
       'arviointi_saavutettavuus' => [],
       'arviointi_avustus_kaytto' => [],
-      'onko_kyseessa_jatkohakemus' => [
-        'type' => 'string',
-        'valueCallback' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'convertBooleanToYesNo',
-        ],
-        'webformValueExtracter' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'extractBooleanYesNoValue',
-        ],
-      ],
       'hankkeen_mennyt_tavoite' => [],
       'hankkeen_kohderyhma_ja_keinot' => [],
       'hankkeen_jo_osallistuneet_9_12' => [],
@@ -193,11 +252,13 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankkeen_edellisen_vuoden_avustuksen_kaytto' => [],
       'hankkeen_talous_toiminta_aikataulu_muutokset' => [],
       'hankkeen_jatkokausi_suunnitelma' => [],
-      'hankesuunnitelma_jatkohakemus' => [],
-      'onko_jatkohakemus' => [],
       'toteutunut_kohderyhma' => [],
       'hankkeen_kohderyhmat_lapset_arvio' => [],
+      'hankkeen_kohderyhmat_lapset_9_12_arvio' => [],
+      'hankkeen_kohderyhmat_lapset_13_15_arvio' => [],
+      'hankkeen_kohderyhmat_lapset_16_18_arvio' => [],
       'arvio_perustelu' => [],
+      'hankkeen_kohderyhmat_uudet_arvio' => [],
       'toteutuneet_tunnit_eriteltyna' => [],
       'hankkeen_harrastuskerta_hinta' => [],
       'hankkeen_tekeminen_kuvaus' => [],
@@ -211,10 +272,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       'hankekaudelle_myonnetyn_avustuksen_kaytto' => [],
       'jatkokausi_alkuperainen_suunnitelma' => [],
       'jatkokausi_summa_muutos' => [],
-      'hankkeen_kohderyhmat_lapset_9_12_arvio' => [],
-      'hankkeen_kohderyhmat_lapset_13_15_arvio' => [],
-      'hankkeen_kohderyhmat_lapset_16_18_arvio' => [],
-      'hankkeen_kohderyhmat_uudet_arvio' => [],
       'hankkeen_valiraportti_2025' => [],
       'hankkeen_tavoitteet_1' => [],
       'hankkeen_tavoitteet_2' => [],

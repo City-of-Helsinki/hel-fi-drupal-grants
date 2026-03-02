@@ -157,7 +157,10 @@ class GrantsConverterService {
    * @return string
    *   The hard coded 'Yes' ('Kyllä') or 'No' ('Ei') string.
    */
-  public function convertBooleanToYesNo(string $value): string {
+  public function convertBooleanToYesNo(?string $value = NULL): string {
+    if ($value === NULL) {
+      return '';
+    }
     return match ($value) {
       'Kyllä', 'Ei' => $value,
       '1' => 'Kyllä',
@@ -181,6 +184,66 @@ class GrantsConverterService {
   public function extractBooleanYesNoValue(string $value): int {
     // Return 1 if the value is 'Kyllä', otherwise return 0.
     return $value === 'Kyllä' ? 1 : 0;
+  }
+
+  /**
+   * Format option values to string.
+   *
+   * Converts a stored value (e.g. 1/0) into its configured label string.
+   * Defaults to key 1 if value is not found.
+   *
+   * @param mixed $value
+   *   Input value.
+   * @param array $arguments
+   *   Mapping array where key = stored value and value = label.
+   *
+   * @return string
+   *   Formatted option label.
+   */
+  public function formatOptionValues(mixed $value, array $arguments): string {
+    // If no arguments defined, return 1.
+    if (empty($arguments)) {
+      return '1';
+    }
+
+    if (array_key_exists($value, $arguments)) {
+      return (string) $arguments[$value];
+    }
+
+    if (array_key_exists($value, array_flip($arguments))) {
+      return (string) $value;
+    }
+
+    return '1';
+  }
+
+  /**
+   * Extract option values from string.
+   *
+   * Converts a label string back to its stored value.
+   * Defaults to '1' if label is not found.
+   *
+   * @param mixed $value
+   *   Input label string.
+   * @param array $arguments
+   *   Mapping array where key = stored value and value = label.
+   *
+   * @return int
+   *   Stored value as integer.
+   */
+  public function extractOptionValues(mixed $value, ?array $arguments = NULL): int {
+    if (empty($arguments)) {
+      return 1;
+    }
+
+    $value = trim((string) $value);
+
+    if (array_key_exists($value, $arguments)) {
+      return (int) $arguments[$value];
+    }
+
+    // Default to 1.
+    return 1;
   }
 
 }
