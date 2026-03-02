@@ -151,11 +151,11 @@ elements: |
   toteutunut_kohderyhma:
     '#title': 'Vilken/vilka har varit projektets faktiska målgrupp(er), och vilka metoder har använts för att nå dem?'
   hankkeen_kohderyhmat_lapset_arvio:
-    '#title': 'Uppskatta hur många barn och unga som hittills har nåtts genom verksamheten.'
+    '#title': 'Uppskatta hur många barn och unga som hittills har deltagit i verksamheten.'
   lapset_arvio_markup:
-    '#markup': '<p>Räkna varje person endast en gång, även om samma person har deltagit i flera evenemang (en person = en nådd). Om projektet inte har nått den angivna målgruppen, markera "0" i fältet. <p>'
+    '#markup': '<p>Räkna varje deltagare endast en gång, även om samma person har deltagit i flera evenemang (en person = en deltagare). Om ingen från den angivna åldersgruppen har deltagit i projektets verksamhet, ange ”0”.</p>'
   markup:
-    '#markup': '<p>Bedöm det totala antalet barn och unga som nås under hela projektet.</p>'
+    '#markup': '<p>Uppskatta det totala antalet barn och unga som deltar i verksamheten under hela projektets gång.</p>'
   arvio_perustelu:
     '#title': 'Är siffrorna du angav ovan baserade på en uppskattning eller på exakt information?'
   toteutuneet_tunnit_eriteltyna:
@@ -222,7 +222,7 @@ elements: |
     '#title': 'Vilken existerande kompetens har aktörerna i projektet att arbeta med målgruppen/-grupperna?'
     '#counter_maximum_message': '%d/1250 tecken kvar'
   hankkeen_kohderyhmat_lapset:
-    '#title': 'Bedöm hur många barn och unga som nås genom verksamheten.'
+    '#title': 'Uppskatta hur många barn och unga som deltar i verksamheten.'
   hankkeen_kohderyhmat_lapset_9_12:
     '#title': '9–12-åriga helsingforsare'
   hankkeen_kohderyhmat_lapset_9_12_arvio:
@@ -238,7 +238,7 @@ elements: |
   hankkeen_kohderyhmat_uudet_arvio_fieldset:
     '#title': 'Uppskatta hur många av dessa som har varit nya deltagare, det vill säga har inte deltagit i verksamhet som tidigare ordnats av aktören?'
   hankkeen_kohderyhmat_uudet_markup:
-    '#markup': '<p>Räkna varje person endast en gång, även om samma person har deltagit i flera evenemang (en person = en nådd). Om projektet inte har nått den angivna målgruppen, markera "0" i fältet.</p>'
+    '#markup': '<p>Räkna varje deltagare endast en gång, även om samma person har deltagit i flera evenemang (en person = en deltagare). Om ingen från den angivna åldersgruppen har deltagit i projektets verksamhet, ange "0".</p>'
   hankkeen_kohderyhmat_uudet_fieldset:
     '#title': 'Hur många av dessa är nya, det vill säga har inte deltagit i verksamhet som tidigare ordnats av aktören?'
   hankkeen_kohderyhmat_uudet:

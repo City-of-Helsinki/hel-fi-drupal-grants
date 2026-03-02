@@ -347,6 +347,11 @@ class TypedDataToDocumentContentWithWebform {
       }
     }
 
+    //UHF_12859 Remove extra boolean field from liikuntaharrastamisen_avustus form.
+    if ($webform->id() === 'liikuntaharrastamisen_avustus') {
+      unset($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray']['onko_kyseessa_jatkohakemus']);
+    }
+
     // Optionally writ the data to a .json file. Used for testing.
     return $documentStructure;
   }

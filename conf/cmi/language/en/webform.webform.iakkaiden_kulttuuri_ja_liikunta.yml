@@ -173,7 +173,7 @@ elements: |
   hankkeen_tarkoitus_tavoitteet:
     '#title': 'Purpose and goals of the project'
     '#counter_maximum_message': '%d/2500 characters remaining'
-  hankesuunnitelma_jatkohakemus:
+  onko_kyseessa_jatkohakemus:
     '#title': 'Is this a continuation project for a project or an activity that has previously receive funding within the grant scheme?'
     '#options':
       1: 'Yes'

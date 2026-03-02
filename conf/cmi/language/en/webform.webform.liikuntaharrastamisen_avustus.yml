@@ -52,7 +52,7 @@ elements: |
   avustuslajit:
     '#title': 'Types of grant'
   grants_compensations_information:
-    '#markup': '<p data-renderer-start-pos="4356">Pease enter the grant amount requested for the year 2026 in the field. The grant amounts for the subsequent years of a multi-year project are entered on the next page.</p>'
+    '#markup': '<p data-renderer-start-pos="4356">Please enter the grant amount requested for the year 2026 in the field. The grant amounts for the subsequent years of a multi-year project are entered on the next page.</p>'
   subventions:
     '#title': Grants
   kayttotarkoitus:
@@ -151,7 +151,7 @@ elements: |
   toteutunut_kohderyhma:
     '#title': 'What has been the actual target group(s) of the project, and what methods have been used to reach them?'
   hankkeen_kohderyhmat_lapset_arvio:
-    '#title': 'Estimate how many children and young people have been reached through the activities so far.'
+    '#title': 'Estimate how many children and young people have participated in the activity so far.'
   arvio_perustelu:
     '#title': 'Are the figures you provided above based on an estimate or on actual data?'
   toteutuneet_tunnit_eriteltyna:
@@ -218,11 +218,11 @@ elements: |
     '#title': 'What kind of expertise do the project operators already have in working with the target group(s) in question?'
     '#counter_maximum_message': '%d/1250 characters remaining'
   hankkeen_kohderyhmat_lapset:
-    '#title': 'Estimate how many children and young people are reached through the activities.'
+    '#title': 'Estimate how many children and young people participate in the activity.'
   lapset_arvio_markup:
-    '#markup': '<p>Count each individual only once, even if the same person has participated in multiple events (one person = one reached). If the project has not reached the specified target group, enter "0" in the field.</p>'
+    '#markup': '<p>Count each participant only once, even if the same person has participated in multiple events (one person = one participant). If no one from the specified age group has participated in the project activities, enter "0"</p>'
   markup:
-    '#markup': '<p>Estimate the total number of children and young people reached during the whole project.</p>'
+    '#markup': '<p>Estimate the total number of participating children and young people during the whole project.</p>'
   hankkeen_kohderyhmat_lapset_9_12:
     '#title': 'Helsinki residents aged 9 to 12 years'
   hankkeen_kohderyhmat_lapset_9_12_arvio:
@@ -238,7 +238,7 @@ elements: |
   hankkeen_kohderyhmat_uudet_arvio_fieldset:
     '#title': 'Estimate how many of these have been new participants, meaning they have not participated in activities organized by the operator before?'
   hankkeen_kohderyhmat_uudet_markup:
-    '#markup': '<p>Count each individual only once, even if the same person has participated in multiple events (one person = one reached). If the project has not reached the specified target group, enter "0" in the field.</p>'
+    '#markup': '<p>Count each participant only once, even if the same person has participated in multiple events (one person = one participant). If no one from the specified age group has participated in the project activities, enter "0".</p>'
   hankkeen_kohderyhmat_uudet_fieldset:
     '#title': 'How many of them are new, i.e. have not participated in activities organised by the operator before?'
   hankkeen_kohderyhmat_uudet:

@@ -183,4 +183,67 @@ class GrantsConverterService {
     return $value === 'Kyllä' ? 1 : 0;
   }
 
+  /**
+   * Format option values to string.
+   *
+   * Converts a stored value (e.g. 1/0) into its configured label string.
+   * Defaults to key 1 if value is not found.
+   *
+   * @param mixed $value
+   *   Input value.
+   * @param array $arguments
+   *   Mapping array where key = stored value and value = label.
+   *
+   * @return string
+   *   Formatted option label.
+   */
+  public function formatOptionValues(mixed $value, array $arguments): string {
+    // If no arguments defined, return 1.
+    if (empty($arguments)) {
+      return 1;
+    }
+
+    // Normalize key.
+    $key = (string) ($value ?? '');
+
+    if (array_key_exists($key, $arguments)) {
+      return (string) $arguments[$key];
+    }
+
+    // Default to key 1 if it exists.
+    return isset($arguments[1])
+      ? (string) $arguments[1]
+      : (string) reset($arguments);
+  }
+
+  /**
+   * Extract option values from string.
+   *
+   * Converts a label string back to its stored value.
+   * Defaults to '1' if label is not found.
+   *
+   * @param mixed $value
+   *   Input label string.
+   * @param array $arguments
+   *   Mapping array where key = stored value and value = label.
+   *
+   * @return int
+   *   Stored value as string.
+   */
+  public function extractOptionValues(mixed $value, ?array $arguments = NULL): int {
+    if (empty($arguments)) {
+      return 1;
+    }
+
+    $value = trim((string) $value);
+
+
+    if (array_key_exists($value, $arguments)) {
+      return $arguments[$value];
+    }
+
+    // Default to 1
+    return 1;
+  }
+
 }
