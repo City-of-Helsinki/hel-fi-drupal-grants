@@ -22,5 +22,5 @@ export const SubventionSum = ({ idSchema, name, schema, uiSchema }: FieldProps) 
     return <PreviewInput label={schema?.title} value={sum.toString()} uiSchema={uiSchema} />;
   }
 
-  return <TextInput disabled id={idSchema.$id} label={schema?.title} value={sum.toString()} name={name} />;
+  return <TextInput disabled id={idSchema.$id} label={schema?.title} name={name} value={sum.toString()} />;
 };

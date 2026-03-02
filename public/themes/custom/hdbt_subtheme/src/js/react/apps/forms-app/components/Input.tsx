@@ -1,8 +1,6 @@
-// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
-// biome-ignore-all lint/a11y/noLabelWithoutControl: @todo UHF-12501
-// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import { type ChangeEvent, type FocusEvent, type KeyboardEvent, type WheelEvent, useCallback, useEffect } from 'react';
 import {
+  DateInput,
   Fieldset,
   TextArea as HDSTextArea,
   TextInput as HDSTextInput,
@@ -11,22 +9,32 @@ import {
   RadioButton,
   Select,
 } from 'hds-react';
+import { DateTime } from 'luxon';
 import { useAtomCallback } from 'jotai/utils';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import type { WidgetProps } from '@rjsf/utils';
+import type { RJSFSchema, UiSchema, WidgetProps } from '@rjsf/utils';
 
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
-import { formatErrors } from '../utils';
+import { formatErrors, getTooltip } from '../utils';
 import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, getProfileAtom, shouldRenderPreviewAtom } from '../store';
+import { HDS_DATE_FORMAT } from '@/react/common/enum/HDSDateFormat';
 
-export const PreviewInput = ({ value, label, uiSchema }: { value?: string; label?: string; uiSchema: any }) => (
+export const PreviewInput = ({
+  value,
+  label,
+  uiSchema,
+}: {
+  value?: string | string[];
+  label?: string;
+  uiSchema: UiSchema<any, RJSFSchema, any> | undefined;
+}) => (
   <>
-    {/* @todo fix when rebuilding styles  */}
-    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
     {!uiSchema?.['ui:options']?.hideNameFromPrint && (
-      <label>{uiSchema?.['ui:options']?.printableName?.toString() ?? label}</label>
+      <span className='grants-form--preview-section__label'>
+        {uiSchema?.['ui:options']?.printableName?.toString() ?? label}
+      </span>
     )}
     {Array.isArray(value) ? value.join(', ') : (value ?? '-')}
   </>
@@ -97,6 +105,7 @@ export const TextInput = ({
         readOnly={readonly}
         required={required}
         style={{ maxWidth: getMaxWidth() }}
+        tooltip={getTooltip(uiSchema)}
         value={value ?? 0}
       />
     );
@@ -116,6 +125,7 @@ export const TextInput = ({
       readOnly={readonly}
       required={required}
       style={{ maxWidth: getMaxWidth() }}
+      tooltip={getTooltip(uiSchema)}
       value={value ?? ''}
     />
   );
@@ -129,7 +139,6 @@ export const TextArea = ({
   rawErrors,
   readonly,
   required,
-  schema,
   value,
   uiSchema,
 }: WidgetProps) => {
@@ -141,7 +150,7 @@ export const TextArea = ({
       return;
     }
     const grantsProfile = readGrantsProfile();
-    return grantsProfile?.[uiSchema?.['misc:profilePrefill']] ?? undefined;
+    return grantsProfile?.[uiSchema?.['misc:profilePrefill'] as keyof typeof grantsProfile] ?? undefined;
   };
 
   const defaultValue = getDefaultValue();
@@ -167,6 +176,7 @@ export const TextArea = ({
       onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
       onFocus={() => null}
       readOnly={readonly}
+      tooltip={getTooltip(uiSchema)}
       {...{ id, label, maxLength, name, required, value }}
     />
   );
@@ -179,7 +189,6 @@ export const SelectWidget = ({
   id,
   label,
   multiple,
-  name,
   onChange,
   options,
   rawErrors,
@@ -196,8 +205,9 @@ export const SelectWidget = ({
 
   return (
     <Select
-      id={id}
+      className='hdbt-form--select'
       disabled={readonly}
+      id={id}
       invalid={Boolean(rawErrors?.length)}
       multiSelect={multiple}
       onBlur={() => null}
@@ -222,9 +232,9 @@ export const SelectWidget = ({
         label: label ?? '',
         placeholder: '- Valitse -',
       }}
-      value={value}
       theme={defaultSelectTheme}
-      className='hdbt-form--select'
+      tooltip={getTooltip(uiSchema)}
+      value={value}
     />
   );
 };
@@ -309,17 +319,7 @@ export const CommunityOfficialsSelect = ({ label, value, uiSchema, ...rest }: Wi
   return <SelectWidget {...{ ...selectProps }} />;
 };
 
-export const RadioWidget = ({
-  id,
-  label,
-  onChange,
-  options,
-  rawErrors,
-  required,
-  value,
-  uiSchema,
-  ...rest
-}: WidgetProps) => {
+export const RadioWidget = ({ id, label, onChange, options, rawErrors, required, value, uiSchema }: WidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
@@ -333,8 +333,12 @@ export const RadioWidget = ({
       {affirmativeExpands && (
         <Notification label={t('affirmative_expands')} type='info' className='hdbt-form--notification' />
       )}
-      <Fieldset heading={`${label}${required ? ' *' : ''}`} className='hdbt-form--fieldset'>
-        {options?.enumOptions?.map((option: any) => {
+      <Fieldset
+        heading={`${label}${required ? ' *' : ''}`}
+        className='hdbt-form--fieldset'
+        tooltip={getTooltip(uiSchema)}
+      >
+        {options?.enumOptions?.map((option) => {
           const optionId = `${id}_${option.value}`;
 
           return (
@@ -350,12 +354,55 @@ export const RadioWidget = ({
             />
           );
         })}
-        {rawErrors?.length > 0 && (
+        {!!rawErrors?.length && (
           <Notification type='error' className='hdbt-form--notification'>
             {formatErrors(rawErrors)}
           </Notification>
         )}
       </Fieldset>
     </>
+  );
+};
+
+export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema, value }: WidgetProps) => {
+  const { currentLanguage } = drupalSettings.path;
+  const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+
+  let date: DateTime | undefined;
+  const handleChange = (_dateStr: string, dateObject: Date) => {
+    try {
+      date = DateTime.fromJSDate(dateObject);
+    } catch (_error) {
+      return;
+    }
+
+    onChange(date?.toISODate());
+  };
+
+  let formattedValue: string | undefined;
+  try {
+    formattedValue = value ? DateTime.fromISO(value).toFormat(HDS_DATE_FORMAT) : undefined;
+  } catch (_error) {
+    formattedValue = undefined;
+  }
+
+  if (shouldRenderPreview) {
+    return <PreviewInput value={formattedValue} label={label} uiSchema={uiSchema} />;
+  }
+
+  return (
+    <DateInput
+      errorText={formatErrors(rawErrors)}
+      invalid={Boolean(rawErrors?.length)}
+      language={currentLanguage}
+      onChange={handleChange}
+      tooltip={getTooltip(uiSchema)}
+      value={formattedValue}
+      {...{
+        id,
+        label,
+        required,
+      }}
+    />
   );
 };

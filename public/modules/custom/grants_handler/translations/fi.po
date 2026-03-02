@@ -372,7 +372,7 @@ msgid "There may be a delay in changing the status. For example, due to maintena
 msgstr "Tilan vaihtumisessa voi olla viivettä. Esimerkiksi huoltokatkoista johtuen viive voi olla normaaliakin pidempi."
 
 msgid "The application is being processed. The application cannot be edited or submitted."
-msgstr "Hakemus on käsittelyssä tai hakuaika päättynyt. Hakemusta ei voi enää lähettää."
+msgstr "Hakemusta ollaan lähettämässä tai hakuaika on päättynyt. Hakemusta ei voi muokata tällä hetkellä."
 
 msgid "The application form has changed, make a new application."
 msgstr "Hakemuspohja muuttunut, tee uusi hakemus."

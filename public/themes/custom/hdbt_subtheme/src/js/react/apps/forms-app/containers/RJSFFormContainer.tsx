@@ -24,6 +24,7 @@ import {
   AddressSelect,
   BankAccountSelect,
   CommunityOfficialsSelect,
+  DateWidget,
   RadioWidget,
   SelectWidget,
   TextArea,
@@ -41,6 +42,7 @@ import {
   setErrorsAtom,
   getSubventionFieldsAtom,
   isReadOnlyAtom,
+  setStepAtom,
 } from '../store';
 import { InvalidSchemaError } from '../errors/InvalidSchemaError';
 import { isDraft, keyErrorsByStep } from '../utils';
@@ -57,6 +59,7 @@ const widgets: RegistryWidgetsType = {
   address: AddressSelect,
   bank_account: BankAccountSelect,
   community_officials: CommunityOfficialsSelect,
+  DateWidget,
   EmailWidget: TextInput,
   RadioWidget,
   SelectWidget,
@@ -94,6 +97,7 @@ export const RJSFFormContainer = ({
   const subventionFields = useAtomValue(getSubventionFieldsAtom);
   const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
+  const setStep = useSetAtom(setStepAtom);
   const readOnly = useAtomValue(isReadOnlyAtom);
   const formRef = createRef<Form>();
   const readCurrentStep = useAtomCallback(useCallback((get) => get(getCurrentStepAtom), []));
@@ -107,6 +111,10 @@ export const RJSFFormContainer = ({
 
   if (invalidSchemaError) {
     throw invalidSchemaError;
+  }
+
+  if (drupalSettings.grants_react_form.use_preview) {
+    setStep(steps.size - 2);
   }
 
   /**
@@ -185,7 +193,11 @@ export const RJSFFormContainer = ({
 
       if (_field && !hasValues) {
         _field.addError(t('subvention.greater_than_zero'));
-        newErrors.push({ property: `.${field}`, message: t('subvention.greater_than_zero'), schemaPath: `.${field}` });
+        newErrors.push({
+          property: `.${field}`,
+          message: t('subvention.greater_than_zero'),
+          schemaPath: `.${field}`,
+        });
       }
     });
 
@@ -262,8 +274,10 @@ export const RJSFFormContainer = ({
           )}
           widgets={widgets}
         >
-          <Terms />
-          <FormActions saveDraft={() => saveDraft(readFormData())} validatePartialForm={validatePartialForm} />
+          {!drupalSettings.grants_react_form.use_preview && <Terms />}
+          {!drupalSettings.grants_react_form.use_preview && (
+            <FormActions saveDraft={() => saveDraft(readFormData())} validatePartialForm={validatePartialForm} />
+          )}
         </Form>
       </div>
     </>

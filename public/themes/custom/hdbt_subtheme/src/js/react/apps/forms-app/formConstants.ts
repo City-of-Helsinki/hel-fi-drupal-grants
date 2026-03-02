@@ -100,19 +100,54 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
   {
     applicant_info: {
       bank_account: {
-        bank_account: { 'ui:widget': 'bank_account', 'ui:options': { printableName: 'bank_account.title' } },
+        bank_account: {
+          'ui:widget': 'bank_account',
+          'ui:options': {
+            printableName: 'bank_account.title',
+            tooltipLabel: 'bank_account.title',
+            tooltipButtonLabel: 'bank_account.title',
+            tooltipText: 'bank_account.tooltip',
+          },
+        },
       },
       community_address: {
-        community_address: { 'ui:widget': 'address', 'ui:options': { printableName: 'community_address.title' } },
+        community_address: {
+          'ui:widget': 'address',
+          'ui:options': {
+            printableName: 'community_address.title',
+            tooltipLabel: 'community_address.title',
+            tooltipButtonLabel: 'community_address.title',
+            tooltipText: 'community_address.tooltip',
+          },
+        },
       },
       community_officials: {
         community_officials: {
           additionalItems: {
-            official: { 'ui:widget': 'community_officials' },
-            'ui:options': { removeText: 'community_officials_community_officials.removeText' },
+            official: {
+              'ui:widget': 'community_officials',
+            },
+            'ui:options': {
+              removeText: 'community_officials_community_officials.removeText',
+            },
           },
-          items: { official: { 'ui:widget': 'community_officials', 'ui:options': { hideNameFromPrint: true } } },
-          'ui:options': { addable: true, hideNameFromPrint: true, orderable: false, removable: true },
+          items: {
+            official: {
+              'ui:widget': 'community_officials',
+              'ui:options': {
+                hideNameFromPrint: true,
+              },
+            },
+            'ui:options': {
+              addable: true,
+              hideNameFromPrint: true,
+              orderable: false,
+              removable: true,
+              tooltipLabel: 'community_officials.title',
+              tooltipButtonLabel: 'community_officials.title',
+              tooltipText: 'community_officials.tooltip',
+            },
+          },
         },
       },
     },

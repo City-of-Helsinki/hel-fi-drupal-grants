@@ -1,6 +1,3 @@
-// biome-ignore-all lint/correctness/useJsxKeyInIterable: @todo UHF-12501
-// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
-// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 import { Button, ButtonPresetTheme, ButtonVariant, IconCopy } from 'hds-react';
 import { DateTime } from 'luxon';
 import type { RJSFSchema } from '@rjsf/utils';
@@ -12,7 +9,8 @@ import { SubmitStates } from '../enum/SubmitStates';
 import { useState } from 'react';
 import { Requests } from '../Requests';
 
-export const FormSummary = ({ formData, schema }: { formData: any; schema: RJSFSchema }) => {
+// biome-ignore lint/suspicious/noExplicitAny: No better type available
+export const FormSummary = ({ formData }: { formData: any; schema: RJSFSchema }) => {
   const [disableActions, setDisableActions] = useState(false);
   const avus2Data = useAtomValue(avus2DataAtom);
   const formTitle = useAtomValue(getFormTitleAtom);
@@ -93,7 +91,7 @@ export const FormSummary = ({ formData, schema }: { formData: any; schema: RJSFS
           {statuses?.length && (
             <ul className='application-status-history'>
               {statuses.map((status) => (
-                <li>{status}</li>
+                <li key={status}>{status}</li>
               ))}
             </ul>
           )}
@@ -104,7 +102,11 @@ export const FormSummary = ({ formData, schema }: { formData: any; schema: RJSFS
             <ul className='application-attachment-list'>
               {avus2Data.attachmentsInfo.attachmentsArray.map((attachment) => {
                 const [description, name] = attachment;
-                return <li>{`${description.value ? `${description.value}, ` : ''}${name.value}`}</li>;
+                return (
+                  <li
+                    key={name.value.toString()}
+                  >{`${description.value ? `${description.value}, ` : ''}${name.value}`}</li>
+                );
               })}
             </ul>
           )}

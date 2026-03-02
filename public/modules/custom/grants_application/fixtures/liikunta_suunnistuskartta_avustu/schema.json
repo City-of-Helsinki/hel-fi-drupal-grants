@@ -168,7 +168,7 @@
               "title": "other_attachment_fieldset.title",
               "type": "object",
               "properties": {
-                "file": {
+                "other_attachment_fieldset_file": {
                   "title": "file.title",
                   "type": "object",
                   "properties": {
