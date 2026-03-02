@@ -8,6 +8,7 @@ use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
+use Drupal\Core\Link;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
@@ -236,10 +237,73 @@ final class ApplicationController extends ControllerBase {
     $langcode = $submission->get('langcode')->value;
     $application_name = $document->getHumanReadableType()[$langcode];
 
-    // @todo The message system cannot be used.
-    // @todo Application number should be named application type id.
+    // Get submitted time from status history.
+    $documentContent = $document->getContent();
+    $statusHistory = $document->getStatusHistory();
+    $submitted = array_find($statusHistory, fn($item) => $item['value'] === 'SUBMITTED') ?? FALSE;
+    if ($submitted) {
+      $submitted = new \DateTime($submitted['timestamp'])->format('Y-m-d H:i:s');
+    }
+
+    // Get event history by reverting the statusUpdates.
+    $history = [];
+    if (isset($documentContent["statusUpdates"]) && is_array($documentContent['statusUpdates'])) {
+      $config = \Drupal::config('grants_handler.settings');
+      $statusStrings = $config->get('statusStrings');
+      $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+      foreach (array_reverse($documentContent["statusUpdates"]) as $event) {
+        if ($event["citizenCaseStatus"] != 'SUBMITTED') {
+          $eventDate = new \DateTime($event['timeCreated']);
+          $eventDate->setTimezone(new \DateTimeZone('Europe/Helsinki'));
+          $translatedStatus = $statusStrings[$langCode][$event['citizenCaseStatus']];
+          $history[] = $translatedStatus . ': ' . $eventDate->format('d.m.Y H:i');
+        }
+      }
+    }
+
+    $events = $document->getContent()['events'];
+    $attachment_data = [];
+    foreach ($document->getAttachments() as $att) {
+      // $description = $att['description'] . ', ' ?? '';
+      $filename = $att['filename'];
+      $event = array_find($events, fn($event) => $event['eventTarget'] === $filename);
+      $documentContentAttachment = array_find($documentContent['attachmentsInfo']['attachmentsArray'], fn($a) => $a[2]['ID'] === 'fileType' && $a[1]['value'] === $filename);
+      $description = $documentContentAttachment[0]['value'] . ', ' ?? '';
+      $submitted = $event['timeCreated'];
+      $submitted = new \DateTime($submitted)->format('d.m.Y H:i');
+
+      $submitted = !$submitted ? '' : $submitted . ': ';
+
+      // Create a string: "file description, submitted: filename".
+      $attachment_data[] = "$description$submitted$filename";
+    }
+
+    // Get the "käsittelijä" from events.
+    $handlerEvents = array_filter($documentContent['events'], fn($event) => $event['eventType'] == 'EVENT_INFO');
+
+    // Test the handler
+    // $handlerEvents = [['eventDescription' => 'Henkilö Testi;040 123 123 12;test.henkilo@example.com']];
+    $handlers = [];
+    foreach ($handlerEvents as $handlerEvent) {
+      $handlers[] = explode(";", $handlerEvent['eventDescription']);
+    }
+    $isEditable = in_array($document->getStatus(), ['DRAFT', 'RECEIVED']);
+
     $build = [
       '#theme' => 'grants_application_view',
+      '#application_name' => $application_name,
+      '#print_application_link' => Link::fromTextAndUrl($this->t('Print application'), $submission->getPrintApplicationUrl()),
+      '#copy_text' => 'Copy application',
+      '#submission_id' => $application_number,
+      '#application_submit_date' => $submitted,
+      '#history' => $history,
+      '#attachments' => $attachment_data,
+      '#is_editable' => $isEditable,
+      '#form_identifier' => $form_identifier,
+      '#application_handlers' => $handlers,
+      '#is_copyable' => $settings->isCopyable(),
+      // React has this one named in wrong way.
+      // The application number should be application type id.
       '#application_number' => $submission->get('application_type_id')->value,
       '#submissionId' => $application_number,
       '#langcode' => $submission->get('langcode')->value,

@@ -1,0 +1,55 @@
+<div class="webform-submission-information">
+  <div class="webform-submission-information__row webform-submission-information__row-top">
+    <h4>
+      {{ application_name }}
+    </h4>
+    <div class="webform-submission-information__supportlinks">
+      {{ print_application_link }}
+    </div>
+  </div>
+  <div class="webform-submission-information__row webform-submission-information__row-main">
+    <div>
+      <h5>{{ "Application number"|t }}</h5>
+      {{ submission_id }}
+      <h5>{{ 'Sent date'|t }}</h5>
+      {{ application_submit_date }}
+      <h5>{{ 'Handler information'|t }}</h5>
+      {% if application_handlers is empty %}
+        <em>{{ "No handler information set"|t }}</em>
+      {% else %}
+        {% for handler in application_handlers %}
+          {% for string in handler %}
+            <div>
+              {{ string }}
+            </div>
+          {% endfor %}
+        {% endfor %}
+      {% endif %}
+    </div>
+    <div>
+      <h5>{{ "Application statuses"|t }}</h5>
+      {% for event in history %}
+        {{ event }}
+      {% endfor %}
+    </div>
+    <div>
+      <h5>{{ "Application attachments"|t }}</h5>
+      {% for attachment in attachments %}
+        {{ attachment }}
+      {% endfor %}
+    </div>
+  </div>
+  {% if is_editable %}
+    <div class="webform-submission-information__row webform-submission-information__row-edit">
+      {% include '@hdbt/navigation/link-button.html.twig' with {
+        type: 'primary',
+        label: 'Edit application'|t,
+        url: editApplicationLink,
+      }
+      %}
+    </div>
+  {% endif %}
+
+</div>
+
+

@@ -63,16 +63,19 @@ export const Stepper = ({ formRef }: { formRef: RefObject<Form> }) => {
     setStep(stepIndex);
   };
 
+  // @todo bad use_preview.
   return (
-    <div ref={divRef}>
-      <HDSStepper
-        className='hdbt-form--stepper'
-        language={drupalSettings.path.currentLanguage}
-        onStepClick={onStepClick}
-        selectedStep={currentIndex}
-        steps={transformedSteps}
-        theme={defaultStepperTheme}
-      />
-    </div>
+    !drupalSettings.grants_react_form.use_preview && (
+      <div ref={divRef}>
+        <HDSStepper
+          className='hdbt-form--stepper'
+          language={drupalSettings.path.currentLanguage}
+          onStepClick={onStepClick}
+          selectedStep={currentIndex}
+          steps={transformedSteps}
+          theme={defaultStepperTheme}
+        />
+      </div>
+    )
   );
 };
