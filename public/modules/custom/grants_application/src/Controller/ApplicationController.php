@@ -171,17 +171,17 @@ final class ApplicationController extends ControllerBase {
   /**
    * Copy an existing application to a new draft.
    *
-   * @param int $application_type_id
+   * @param string $form_identifier
    *   The application type ID.
-   * @param string $original_id
+   * @param string $original_application_number
    *   The original application number to copy from.
    *
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   The redirect response.
    */
-  public function copyApplication(int $application_type_id, string $original_id) {
+  public function copyApplication(string $form_identifier, string $original_application_number): RedirectResponse {
     try {
-      $draft = $this->applicationService->createDraft($application_type_id, $original_id);
+      $draft = $this->applicationService->createDraft($form_identifier, $original_application_number);
     }
     catch (\throwable $e) {
       $this->messenger()
@@ -196,7 +196,7 @@ final class ApplicationController extends ControllerBase {
       Url::fromRoute(
         'helfi_grants.forms_app',
         [
-          'id' => $application_type_id,
+          'form_identifier' => $form_identifier,
           'application_number' => $draft['application_number'],
         ],
         ['absolute' => TRUE],
@@ -445,7 +445,7 @@ final class ApplicationController extends ControllerBase {
   /**
    * Remove an application.
    */
-  public function removeApplication(string $id) {
+  public function removeApplication(string $id): RedirectResponse {
     // @todo The original implementation and this must be done properly.
     $redirectUrl = Url::fromRoute('grants_oma_asiointi.front');
     $tOpts = ['context' => 'grants_handler'];
