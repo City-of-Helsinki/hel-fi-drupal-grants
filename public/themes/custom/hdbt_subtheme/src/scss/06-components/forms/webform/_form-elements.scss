@@ -796,7 +796,7 @@ input[type='radio'] + label.form-required::after {
     flex-direction: column;
   }
 
-  label {
+  label, .grants-form--preview-section__label {
     font-weight: $font-weight-medium;
     margin-block-end: $spacing;
   }
