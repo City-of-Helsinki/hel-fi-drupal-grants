@@ -55,7 +55,7 @@ final class FormSettings {
   }
 
   /**
-   * Get the application type id.
+   * Get the application type id aka form id.
    *
    * @return int
    *   The application type id.

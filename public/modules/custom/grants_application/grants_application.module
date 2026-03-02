@@ -34,6 +34,14 @@ function grants_application_theme(): array {
         'statusStringHumanReadable' => NULL,
       ],
     ],
+    'grants_application_view' => [
+      'variables' => [
+        'application_number' => NULL,
+        'form_identifier' => NULL,
+        'ownApplicationsLink' => NULL,
+        'editApplicationLink' => NULL,
+      ],
+    ],
   ];
 }
 

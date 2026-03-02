@@ -205,6 +205,72 @@ final class ApplicationController extends ControllerBase {
   }
 
   /**
+   * A preview page for filled react application.
+   *
+   * @param string $application_number
+   *   The application number.
+   *
+   * @return array|RedirectResponse
+   *   Build array or redirect response.
+   */
+  public function viewApplication(string $application_number): array|RedirectResponse {
+    $submission = $this->getApplicationSubmission($application_number);
+
+    if ($application_number && !$submission) {
+      throw new NotFoundHttpException();
+    }
+
+    if ($submission) {
+      try {
+        $document = $this->helfiAtvService->getDocument($application_number);
+      }
+      catch (\Throwable $e) {
+        $this->messenger()
+          ->addError($this->t('Your request was not fulfilled due to network error.', [], ['context' => 'grants_handler']));
+        return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
+      }
+    }
+
+    $form_identifier = $submission->get('form_identifier')->value;
+    $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($submission->get('form_identifier')->value);
+    $langcode = $submission->get('langcode')->value;
+    $application_name = $document->getHumanReadableType()[$langcode];
+
+    // @todo The message system cannot be used.
+    // @todo Application number should be named application type id.
+    $build = [
+      '#theme' => 'grants_application_view',
+      '#application_number' => $submission->get('application_type_id')->value,
+      '#submissionId' => $application_number,
+      '#langcode' => $submission->get('langcode')->value,
+      '#applicationID' => $application_number,
+      '#applicationNumber' => $application_number,
+      '#ownApplicationsLink' => Url::fromRoute('grants_oma_asiointi.front'),
+      '#editApplicationLink' => $submission->getEditApplicationLink($application_name)->getUrl(),
+      '#submissionObject' => $document,
+      '#attached' => [
+        'drupalSettings' => [
+          'grants_react_form' => [
+            'application_number' => $settings->getFormId(),
+            'real_application_number' => $submission->get('application_number')->value,
+            'form_identifier' => $form_identifier,
+            'token' => $this->csrfTokenGenerator->get('rest'),
+            'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
+            'terms' => [
+              'body' => '',
+              'link_title' => '',
+            ],
+            'use_draft' => TRUE,
+            'use_preview' => TRUE,
+          ],
+        ],
+      ],
+    ];
+
+    return $build;
+  }
+
+  /**
    * Upload file handler.
    *
    * @param string $application_number
@@ -504,7 +570,7 @@ final class ApplicationController extends ControllerBase {
    */
   private function getRedirectBackUrl(?string $application_number): Url {
     if ($application_number) {
-      return Url::fromRoute('grants_handler.view_application', ['submission_id' => $application_number]);
+      return Url::fromRoute('helfi_grants.view_application', ['application_number' => $application_number]);
     }
     return Url::fromRoute('grants_oma_asiointi.front');
   }

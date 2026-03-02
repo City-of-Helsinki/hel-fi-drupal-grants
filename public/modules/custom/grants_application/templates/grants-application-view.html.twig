@@ -1,0 +1,27 @@
+<div class="container">
+  {{ attach_library('hdbt_subtheme/forms-app') }}
+  <div id="grants-react-form">
+  </div>
+
+  <div class="grants-handler__completion__button-row">
+    {% if editApplicationLink %}
+      {% include '@hdbt/navigation/link-button.html.twig' with {
+        type: 'primary',
+        label: 'Edit application'|t,
+        url: editApplicationLink,
+      }
+      %}
+    {% endif %}
+
+    {% if ownApplicationsLink %}
+      {% include '@hdbt/navigation/link-button.html.twig' with {
+        type: 'primary',
+        label: 'My applications'|t,
+        url: ownApplicationsLink,
+      }
+      %}
+    {% endif %}
+  </div>
+
+</div>
+
