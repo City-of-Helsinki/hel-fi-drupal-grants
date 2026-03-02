@@ -17,8 +17,15 @@ helfi_grants.forms_app_edit:
   requirements:
     _role: helsinkiprofiili
 
+helfi_grants.view_application:
+  path: '/application/view/{application_number}'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::viewApplication'
+  requirements:
+    _role: helsinkiprofiili
+
 helfi_grants.forms_app_copy_application:
-  path: '/application/new/{application_type_id}/{original_id}/copy'
+  path: '/application/new/{form_identifier}/{original_application_number}/copy'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::copyApplication'
     _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getFormTitle'
