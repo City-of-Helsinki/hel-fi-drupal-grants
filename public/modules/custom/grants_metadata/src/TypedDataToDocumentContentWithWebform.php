@@ -355,7 +355,8 @@ class TypedDataToDocumentContentWithWebform {
       }
     }
 
-    //UHF-12859 Remove extra boolean fields from liikuntaharrastamisen_avustus form.
+    // UHF-12859 Remove extra boolean fields from liikuntaharrastamisen_avustus
+    // form.
     if ($webform->id() === 'liikuntaharrastamisen_avustus') {
       foreach ($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] as $key => $valueArray) {
         if (

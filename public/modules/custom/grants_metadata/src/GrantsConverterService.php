@@ -210,7 +210,7 @@ class GrantsConverterService {
       return (string) $arguments[$value];
     }
 
-    if(array_key_exists($value, array_flip($arguments))) {
+    if (array_key_exists($value, array_flip($arguments))) {
       return (string) $value;
     }
 
@@ -242,7 +242,7 @@ class GrantsConverterService {
       return (int) $arguments[$value];
     }
 
-    // Default to 1
+    // Default to 1.
     return 1;
   }
 
