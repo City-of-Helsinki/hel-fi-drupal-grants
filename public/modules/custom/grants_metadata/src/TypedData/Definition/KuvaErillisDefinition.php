@@ -35,17 +35,6 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
 
     $customQuestions = [
       'onko_jatkohakemus' => [],
-      'onko_kyseessa_jatkohakemus' => [
-        'type' => 'string',
-        'valueCallback' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'convertBooleanToYesNo',
-        ],
-        'webformValueExtracter' => [
-          'service' => 'grants_metadata.converter',
-          'method' => 'extractBooleanYesNoValue',
-        ],
-      ],
       'hankesuunnitelma_jatkohakemus' => [
         'type' => 'string',
         'valueCallback' => [
@@ -85,25 +74,61 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
         ],
       ],
       'hankesuunnitelma_avustuksen_kesto_1' => [
-        'valueCallback' => static fn (mixed $value) => match($value) {
-          "" => '1',
-          default => $value
-        },
-        // 'defaultValue' => '1',
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'formatOptionValues',
+          'arguments' => [
+            1 => 'Haen avustusta yksivuotisena',
+          ],
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractOptionValues',
+          'arguments' => [
+            'Haen avustusta yksivuotisena' => 1,
+          ],
+        ],
       ],
       'hankesuunnitelma_avustuksen_kesto_2' => [
-        'valueCallback' => static fn (mixed $value) => match($value) {
-          "" => '1',
-          default => $value
-        },
-        // 'defaultValue' => '1',
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'formatOptionValues',
+          'arguments' => [
+            1 => 'Haen avustusta yksivuotisena',
+            2 => 'Haen avustusta kaksivuotisena',
+            3 => 'Haen avustusta kolmevuotisena',
+          ],
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractOptionValues',
+          'arguments' => [
+            'Haen avustusta yksivuotisena' => 1,
+            'Haen avustusta kaksivuotisena' => 2,
+            'Haen avustusta kolmevuotisena' => 3,
+          ],
+        ],
       ],
       'hankesuunnitelma_avustuksen_kesto_3' => [
-        'valueCallback' => static fn (mixed $value) => match($value) {
-          "" => '1',
-          default => $value
-        },
-        // 'defaultValue' => '2',
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'formatOptionValues',
+          'arguments' => [
+            2 => 'Haen avustusta kaksivuotisena',
+            3 => 'Haen avustusta kolmevuotisena',
+          ],
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractOptionValues',
+          'arguments' => [
+            'Haen avustusta kaksivuotisena' => 2,
+            'Haen avustusta kolmevuotisena' => 3,
+          ],
+        ],
       ],
       // This field is read only / fully computed. However, the field must
       // be sent to ATV / avust2 or else the preview feature breaks. Field
@@ -120,6 +145,17 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
       ],
       'haettava_avustussumma_2027' => [],
       'haettava_avustussumma_2028' => [],
+      'onko_kyseessa_jatkohakemus' => [
+        'type' => 'string',
+        'valueCallback' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'convertBooleanToYesNo',
+        ],
+        'webformValueExtracter' => [
+          'service' => 'grants_metadata.converter',
+          'method' => 'extractBooleanYesNoValue',
+        ],
+      ],
       'ensisijainen_taiteen_ala' => [],
       'avustuksen_kohde_yhdistys_toimintaryhma' => [],
       'avustuksen_kohde_tiivistelma' => [],

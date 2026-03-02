@@ -342,6 +342,14 @@ class TypedDataToDocumentContentWithWebform {
           }
         }
 
+        foreach ($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] as $key => $valueArray) {
+          if (
+            str_contains($valueArray['ID'], 'hankesuunnitelma_jatkohakemus')
+          ) {
+            unset($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'][$key]);
+          }
+        }
+
         // Reset the keys after unset.
         $documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray'] = array_values($documentStructure['compensation']['customQuestionsInfo']['customQuestionsArray']);
       }
