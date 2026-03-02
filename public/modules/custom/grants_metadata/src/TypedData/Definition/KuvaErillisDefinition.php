@@ -48,8 +48,8 @@ class KuvaErillisDefinition extends ComplexDataDefinitionBase {
           'service' => 'grants_metadata.converter',
           'method' => 'extractOptionValues',
           'arguments' => [
-            1 => 'Haen avustusta yksivuotisena',
-            2 => 'Haen avustusta kaksivuotisena',
+            'Haen avustusta yksivuotisena' => 1,
+            'Haen avustusta kaksivuotisena' => 2,
           ],
         ],
       ],
