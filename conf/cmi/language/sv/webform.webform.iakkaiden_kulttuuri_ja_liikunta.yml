@@ -173,7 +173,7 @@ elements: |
   hankkeen_tarkoitus_tavoitteet:
     '#title': 'Syfte och mål med projektet'
     '#counter_maximum_message': '%d/2500 tecken kvar'
-  hankesuunnitelma_jatkohakemus:
+  onko_kyseessa_jatkohakemus:
     '#title': 'Är detta ett fortsättningsprojekt för ett projekt eller verksamhet som tidigare har fått understöd inomstödhelheten?'
     '#options':
       1: Ja

@@ -690,12 +690,12 @@ elements: |-
           class:
             - webform--large
       hankkeen_kohderyhmat_lapset_arvio:
-        '#title': 'Arvioi, montako lasta ja nuorta toiminnalla on tähän saakka tavoitettu.'
+        '#title': 'Arvioi, montako lasta ja nuorta toimintaan on tähän saakka osallistunut.'
         '#type': fieldset
         '#required': true
         lapset_arvio_markup:
           '#type': webform_markup
-          '#markup': '<p>Merkitse jokainen tavoitettu henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi tavoitettu). Mikäli hankkessa ei ole tavoitettu kyseistä kohderyhmää, niin merkitse kenttään "0".</p>'
+          '#markup': '<p>Merkitse jokainen osallistunut henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi osallistuja). Mikäli hankkeen toimintaan ei osallistunut ketään kyseisestä ikäryhmästä, merkitse kenttään "0".</p>'
         hankkeen_kohderyhmat_lapset_9_12_arvio:
           '#type': textfield
           '#title': '9–12-vuotiasta helsinkiläistä'
@@ -729,7 +729,7 @@ elements: |-
         '#required': true
         hankkeen_kohderyhmat_uudet_markup:
           '#type': webform_markup
-          '#markup': '<p>Merkitse jokainen tavoitettu henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi tavoitettu). Mikäli hankkessa ei ole tavoitettu kyseistä kohderyhmää, niin merkitse kenttään "0".</p>'
+          '#markup': '<p>Merkitse jokainen osallistunut henkilö vain kerran laskentaan, vaikka sama henkilö olisi osallistunut useampaan tapahtumaan (yksi henkilö=yksi osallistuja). Mikäli hankkeen toimintaan ei osallistunut ketään kyseisestä ikäryhmästä, merkitse kenttään "0".</p>'
         hankkeen_kohderyhmat_uudet_arvio:
           '#type': textfield
           '#title': '9–18-vuotiasta helsinkiläistä'
@@ -1033,11 +1033,11 @@ elements: |-
             - webform--large
       hankkeen_kohderyhmat_lapset:
         '#type': fieldset
-        '#title': 'Arvioi, montako lasta ja nuorta toiminnalla tavoitetaan.'
+        '#title': 'Arvioi, montako lasta ja nuorta toimintaan osallistuu.'
         '#required': true
         markup:
           '#type': webform_markup
-          '#markup': '<p>Arvioi tavoitettujen lasten ja nuorten määrä yhteensä koko hankkeen aikana. Mikäli hankkeessa ei tavoiteta kyseistä ikäryhmää, niin merkitse kenttään "0".</p>'
+          '#markup': '<p>Arvioi toimintaan osallistuvien lasten ja nuorten määrä yhteensä koko hankkeen aikana. Mikäli hankkeen toimintaan ei osallistu ketään kyseisestä ikäryhmästä, merkitse kenttään "0".</p>'
         hankkeen_kohderyhmat_lapset_9_12:
           '#type': textfield
           '#title': '9–12-vuotiasta helsinkiläistä'

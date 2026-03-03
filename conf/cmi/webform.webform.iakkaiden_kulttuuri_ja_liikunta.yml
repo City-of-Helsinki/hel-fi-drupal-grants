@@ -774,7 +774,7 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-      hankesuunnitelma_jatkohakemus:
+      onko_kyseessa_jatkohakemus:
         '#type': radios
         '#title': 'Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?'
         '#required': true
@@ -859,10 +859,10 @@ elements: |-
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#states':
           visible:
-            ':input[name="hankesuunnitelma_jatkohakemus"]':
+            ':input[name="onko_kyseessa_jatkohakemus"]':
               value: '1'
           required:
-            ':input[name="hankesuunnitelma_jatkohakemus"]':
+            ':input[name="onko_kyseessa_jatkohakemus"]':
               value: '1'
       haun_tavoitteet_fieldset:
         '#type': fieldset
