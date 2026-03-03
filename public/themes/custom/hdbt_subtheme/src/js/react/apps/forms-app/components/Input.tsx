@@ -28,6 +28,7 @@ export const PreviewInput = ({
 }: {
   value?: string | string[];
   label?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: This is the type that RJSF uses
   uiSchema: UiSchema<any, RJSFSchema, any> | undefined;
 }) => (
   <>
@@ -53,6 +54,7 @@ export const TextInput = ({
   value,
 }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isNumberInput = schema.type === 'number' || schema.type === 'integer';
 
   if (shouldRenderPreview) {
     return <PreviewInput value={value} label={label} uiSchema={uiSchema} />;
@@ -75,7 +77,7 @@ export const TextInput = ({
     }
   };
 
-  if (schema.type === 'number' || schema.type === 'integer') {
+  if (isNumberInput) {
     return (
       <NumberInput
         errorText={formatErrors(rawErrors)}
@@ -95,7 +97,8 @@ export const TextInput = ({
           }
         }}
         onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
-          if (event.key === 'e' || event.key === 'E') {
+          const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+          if (Number.isNaN(Number(event.key)) && !allowedKeys.includes(event.key) && event.ctrlKey === false) {
             event.preventDefault();
           }
         }}
@@ -106,7 +109,7 @@ export const TextInput = ({
         required={required}
         style={{ maxWidth: getMaxWidth() }}
         tooltip={getTooltip(uiSchema)}
-        value={value ?? 0}
+        value={value || ''}
       />
     );
   }
