@@ -344,7 +344,6 @@ class MessageForm extends FormBase {
     $application_number = $storage['application_number'] ?? NULL;
     $nextMessageId = Uuid::uuid4()->toString();
 
-
     if (!$application_number) {
       $this->messenger()
         ->addError($this->t('webformSubmission not found!', [], $tOpts));

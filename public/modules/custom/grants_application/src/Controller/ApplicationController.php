@@ -250,14 +250,13 @@ final class ApplicationController extends ControllerBase {
     // Get event history.
     $history = [];
     if (isset($documentContent["statusUpdates"]) && is_array($documentContent['statusUpdates'])) {
-      $config = \Drupal::config('grants_handler.settings');
-      $statusStrings = $config->get('statusStrings');
-      $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+      $langCode = $this->languageManager()->getCurrentLanguage()->getId();
+      $statusStrings = $this->getStatusStrings($langCode);
       foreach (array_reverse($documentContent["statusUpdates"]) as $event) {
         if ($event["citizenCaseStatus"] != 'SUBMITTED') {
           $eventDate = new \DateTime($event['timeCreated']);
           $eventDate->setTimezone(new \DateTimeZone('Europe/Helsinki'));
-          $translatedStatus = $statusStrings[$langCode][$event['citizenCaseStatus']];
+          $translatedStatus = $statusStrings[$event['citizenCaseStatus']];
           $history[] = $translatedStatus . ': ' . $eventDate->format('d.m.Y H:i');
         }
       }
@@ -288,7 +287,7 @@ final class ApplicationController extends ControllerBase {
 
     // Test the handler
     // $handlerEvents = [['eventDescription' =>
-    // 'Henkilö Testi;040 123 123 12;test.henkilo@example.com']];
+    // 'Henkilö Testi;040 123 123 12;test.henkilo@example.com']];.
     $handlers = [];
     foreach ($handlerEvents as $handlerEvent) {
       $handlers[] = explode(";", $handlerEvent['eventDescription']);
@@ -314,8 +313,6 @@ final class ApplicationController extends ControllerBase {
     $messages = [];
     if (isset($documentContent['messages']) && is_array($documentContent['messages'])) {
       $submissionMessages = $this->messageService->parseMessages($documentContent);
-      // Data for debugging.
-      // $submissionMessages = json_decode('{"1772527851":{"caseId":"LOCALK-070-0000282","messageId":"ff535a2c-a007-4e26-9533-bbdbc6dc7221","body":"Testiviesti","sentBy":"Nordea Demo","sendDateTime":"2026-03-03T10:50:51","attachments":[{"description":"Liitteen kuvaus","fileName":"testi1-viides.pdf","integrationID":"\/LOCALK\/v1\/documents\/94847d02-cc54-4521-9686-82db640e35f2\/attachments\/401172\/"}],"avus2received":true,"messageStatus":"UNREAD"}}',TRUE);
       foreach ($submissionMessages as $message) {
         $messages[] = $message;
       }
@@ -346,7 +343,7 @@ final class ApplicationController extends ControllerBase {
       '#editApplicationLink' => $submission->getEditApplicationLink($application_name)->getUrl(),
       '#submissionObject' => $document,
       '#messages' => $messages,
-      '#message_form' => \Drupal::formBuilder()->getForm('Drupal\grants_handler\Form\MessageForm'),
+      '#message_form' => $this->formBuilder()->getForm('Drupal\grants_handler\Form\MessageForm'),
       '#attached' => [
         'drupalSettings' => [
           'grants_react_form' => [
@@ -672,6 +669,72 @@ final class ApplicationController extends ControllerBase {
       return Url::fromRoute('helfi_grants.view_application', ['application_number' => $application_number]);
     }
     return Url::fromRoute('grants_oma_asiointi.front');
+  }
+
+  /**
+   * Get status string.
+   *
+   * @param string $langcode
+   *   The langcode.
+   *
+   * @return array|null
+   *   The status string array or null.
+   */
+  private function getStatusStrings(string $langcode): ?array {
+    $statuses = [
+      'en' => [
+        'DRAFT' => 'Draft',
+        'SENT' => 'Sent',
+        'SUBMITTED' => 'Sent - waiting for confirmation',
+        'RECEIVED' => 'Received',
+        'PREPARING' => 'In Preparation',
+        'PENDING' => 'Pending',
+        'PROCESSING' => 'Processing',
+        'READY' => 'Ready',
+        'DONE' => 'Processed',
+        'REJECTED' => 'Rejected',
+        'DELETED' => 'Deleted',
+        'CANCELED' => 'Cancelled',
+        'CANCELLED' => 'Cancelled',
+        'CLOSED' => 'Closed',
+        'RESOLVED' => 'Processed',
+      ],
+      'fi' => [
+        'DRAFT' => 'Luonnos',
+        'SENT' => 'Lähetetty',
+        'SUBMITTED' => 'Lähetetty - odotetaan vahvistusta',
+        'RECEIVED' => 'Vastaanotettu',
+        'PREPARING' => ' Valmistelussa',
+        'PENDING' => ' Odottaa',
+        'PROCESSING' => ' Käsittelyssä',
+        'READY' => ' Valmiina',
+        'RESOLVED' => ' Ratkaistu',
+        'DONE' => ' Ratkaistu',
+        'REJECTED' => ' Hylätty',
+        'DELETED' => ' Poistettu',
+        'CANCELED' => ' Peruttu',
+        'CANCELLED' => ' Peruttu',
+        'CLOSED' => ' Suljettu',
+      ],
+      'sv' => [
+        'DRAFT' => 'Utkast',
+        'SENT' => 'Skickad',
+        'SUBMITTED' => 'Skickad - väntar på bekräftelse',
+        'RECEIVED' => 'Mottagen',
+        'PREPARING' => 'Förbereds',
+        'PENDING' => 'I väntan på',
+        'PROCESSING' => 'Behandlas',
+        'READY' => 'Redo',
+        'DONE' => 'Behandlad',
+        'REJECTED' => 'Avvisade',
+        'DELETED' => 'Raderade',
+        'CANCELED' => 'Annullerad',
+        'CANCELLED' => 'Annullerad',
+        'CLOSED' => 'Stängd',
+        'RESOLVED' => 'Behandlad',
+      ],
+    ];
+    return $statuses[$langcode] ?? NULL;
   }
 
 }

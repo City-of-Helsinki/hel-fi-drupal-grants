@@ -162,7 +162,7 @@ final class FormSettings {
   }
 
   /**
-   * Get the application name
+   * Get the application name.
    *
    * @return string
    *   The application name.

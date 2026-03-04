@@ -147,6 +147,8 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    *
    * @param string $application_form_name
    *   Application name.
+   * @param bool $to_url
+   *   Return a URL instead of a Link.
    *
    * @return \Drupal\Core\Link|\Drupal\Core\Url
    *   The link.

@@ -54,7 +54,7 @@ function grants_application_theme(): array {
       ],
     ],
     'grants_application_view_status_information' => [
-      'variables' => []
+      'variables' => [],
     ],
     'grants_application_view_messages' => [
       'variables' => [
