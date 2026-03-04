@@ -2,3 +2,30 @@
   margin-block-start: $spacing-sextuple;
   margin-inline: auto;
 }
+
+.hdbt-react-form__preview-accordion-item {
+  padding-inline: $spacing;
+
+  @include breakpoint($breakpoint-m) {
+    padding-inline: $spacing-and-half;
+  }
+}
+
+// Accordion button/header styles
+.hdbt-react-form__preview-accordion-item [role='heading'] {
+  @include font('h3');
+}
+
+// Accordion content styles
+.hdbt-react-form__preview-accordion-item [role='region'] {
+  padding-block: $spacing-and-half $spacing;
+}
+
+.hdbt-react-form__preview-accordion-item--first {
+  border-top: 1px solid var(--color-black-20);
+  margin-block-start: $spacing-double;
+}
+
+.hdbt-react-form__preview-accordion-item .grants-form--preview-section__label {
+  margin-block-end: $spacing-half;
+}

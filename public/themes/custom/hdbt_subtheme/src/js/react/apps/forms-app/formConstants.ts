@@ -99,11 +99,25 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
   },
   {
     applicant_info: {
+      applicant_email: {
+        email: {
+          'ui:options': {
+            hideNameFromPrint: true,
+          },
+        },
+      },
+      contact_person_info: {
+        contact_person: {
+          'ui:options': {
+            hideNameFromPrint: true,
+          },
+        },
+      },
       bank_account: {
         bank_account: {
           'ui:widget': 'bank_account',
           'ui:options': {
-            printableName: 'bank_account.title',
+            hideNameFromPrint: true,
             tooltipLabel: 'bank_account.title',
             tooltipButtonLabel: 'bank_account.title',
             tooltipText: 'bank_account.tooltip',
@@ -114,7 +128,7 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
         community_address: {
           'ui:widget': 'address',
           'ui:options': {
-            printableName: 'community_address.title',
+            hideNameFromPrint: true,
             tooltipLabel: 'community_address.title',
             tooltipButtonLabel: 'community_address.title',
             tooltipText: 'community_address.tooltip',
@@ -123,6 +137,9 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
       },
       community_officials: {
         community_officials: {
+          'ui:options': {
+            hideNameFromPrint: true,
+          },
           additionalItems: {
             official: {
               'ui:widget': 'community_officials',
@@ -133,10 +150,10 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
           },
           items: {
             official: {
-              'ui:widget': 'community_officials',
               'ui:options': {
                 hideNameFromPrint: true,
               },
+              'ui:widget': 'community_officials',
             },
             'ui:options': {
               addable: true,
