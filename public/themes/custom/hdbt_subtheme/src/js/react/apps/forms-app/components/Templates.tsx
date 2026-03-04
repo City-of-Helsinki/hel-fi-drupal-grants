@@ -45,7 +45,13 @@ export const ArrayFieldTemplate = ({
       <>
         {/* @todo fix when rebuilding styles  */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        {!hideName && (printableName ? <label>{printableName}</label> : <label>{schema.title}</label>)}
+        {!hideName &&
+          (printableName || schema.title) &&
+          (printableName ? (
+            <span className='grants-form--preview-section__label'>{printableName}</span>
+          ) : (
+            <span className='grants-form--preview-section__label'>{schema.title}</span>
+          ))}
         {renderableItems.length ? renderableItems : '-'}
       </>
     );
@@ -210,7 +216,13 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
       <>
         {/* @todo fix when rebuilding styles  */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        {!hideName && (printableName ? <label>{printableName}</label> : <label>{title}</label>)}
+        {!hideName &&
+          (printableName || title) &&
+          (printableName ? (
+            <span className='grants-form--preview-section__label'>{printableName}</span>
+          ) : (
+            <span className='grants-form--preview-section__label'>{title}</span>
+          ))}
         {properties.map((field) => {
           if (field.content.props.uiSchema?.['ui:help']) {
             field.content.props.uiSchema['ui:help'] = '';

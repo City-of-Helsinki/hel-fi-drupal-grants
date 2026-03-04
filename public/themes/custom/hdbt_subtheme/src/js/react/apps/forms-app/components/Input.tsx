@@ -1,5 +1,6 @@
 import { type ChangeEvent, type FocusEvent, type KeyboardEvent, type WheelEvent, useCallback, useEffect } from 'react';
 import {
+  Checkbox,
   DateInput,
   Fieldset,
   TextArea as HDSTextArea,
@@ -327,7 +328,8 @@ export const RadioWidget = ({ id, label, onChange, options, rawErrors, required,
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (shouldRenderPreview) {
-    return <PreviewInput value={value} label={label} uiSchema={uiSchema} />;
+    const selectedLabel = options?.enumOptions?.find((opt) => opt.value === value)?.label ?? value;
+    return <PreviewInput value={selectedLabel} label={label} uiSchema={uiSchema} />;
   }
 
   const { affirmativeExpands } = uiSchema?.['ui:options'] ?? {};
@@ -406,6 +408,24 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
         label,
         required,
       }}
+    />
+  );
+};
+
+export const CheckboxWidget = ({ id, label, onChange, value, uiSchema }: WidgetProps) => {
+  const { t } = useTranslation();
+  const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+
+  if (shouldRenderPreview) {
+    return <PreviewInput value={value ? t('Yes') : t('No')} label={label} uiSchema={uiSchema} />;
+  }
+
+  return (
+    <Checkbox
+      id={id}
+      label={label ?? ''}
+      checked={Boolean(value)}
+      onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.checked)}
     />
   );
 };

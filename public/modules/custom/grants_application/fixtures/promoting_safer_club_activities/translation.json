@@ -2,6 +2,7 @@
   "en": {
     "translation": {
       "active_participants_local.title": "Of which residents of Helsinki",
+      "active_participants_local.printable_title": "Number of active participants under 20 years old in the association, of which residents of Helsinki",
       "active_participants_under_20.title": "Number of active participants under 20 years old in the association",
       "active_participants_wrapper.help.value": "Number of active participants under 20 years old in the association",
       "active_participants_wrapper.legend": "Active participants",
@@ -9,6 +10,7 @@
       "antiracism_measures.description": "Answer only if the project includes the set of measures \"developing anti-racism measures.\" At least one optional set of measures must be implemented in the project.",
       "antiracism_measures.title": "Are anti-racism measures developed in the project? If yes, how?",
       "end_date.title": "End date",
+      "end_date.printable_title": "Project end date",
       "equality_nondiscrimination_responsibility_plan.description": "Answer only if the project includes the measure set \"drawing up an equality, non-discrimination or responsibility plan and implementing the measures\". At least one optional set of measures must be implemented in the project.",
       "equality_nondiscrimination_responsibility_plan.title": "Will an equality, non-discrimination, or responsibility plan be prepared in the project, and will its measures be implemented? If yes, how?",
       "form_title": "Grant application for promoting safer club activities",
@@ -39,12 +41,14 @@
       "schedule_of_measures.title": "Schedule of measures",
       "schedule_wrapper.legend": "Project schedule",
       "start_date.title": "Start date",
+      "start_date.printable_title": "Project start date",
       "under_20_affected.title": "Describe who or what proportion of the club's under-20 participants the project measures will affect"
     }
   },
   "fi": {
     "translation": {
       "active_participants_local.title": "Joista helsinkiläisiä",
+      "active_participants_local.printable_title": "Yhdistyksen alle 20-vuotiaiden helsinkiläisten aktiiviharrastajien määrä",
       "active_participants_under_20.title": "Yhdistyksen alle 20-vuotiaiden aktiiviharrastajien määrä",
       "active_participants_wrapper.help.value": "Alle 20-vuotiaiksi luetaan 2006 tai myöhemmin syntyneet.",
       "active_participants_wrapper.legend": "Aktiiviharrastajat",
@@ -52,6 +56,7 @@
       "antiracism_measures.description": "Vastaa vain, jos hankkeessa toteutetaan toimenpidekokonaisuus \"rasisminvastaisten toimenpiteiden kehittäminen\". Hankkeessa on toteutettava vähintään yksi valinnaisista toimenpidekokonaisuuksista.",
       "antiracism_measures.title": "Kehitetäänkö hankkeessa rasisminvastaisia toimenpiteitä? Jos kyllä, miten?",
       "end_date.title": "Loppupäivämäärä",
+      "end_date.printable_title": "Hankkeen loppupäivämäärä",
       "equality_nondiscrimination_responsibility_plan.description": "Vastaa vain, jos hankkeessa toteutetaan toimenpidekokonaisuus \"yhdenvertaisuus-, tasa-arvo- tai vastuullisuussuunnitelman laatiminen ja toimenpiteiden toteuttaminen\". Hankkeessa on toteutettava vähintään yksi valinnaisista toimenpidekokonaisuuksista.",
       "equality_nondiscrimination_responsibility_plan.title": "Laaditaanko hankkeessa yhdenvertaisuus-, tasa-arvo- tai vastuullisuussuunnitelma ja toteutetaanko sen toimenpiteitä? Jos kyllä, miten?",
       "form_title": "Turvallisemman seuratoiminnan edistämisen avustushakemus",
@@ -82,19 +87,22 @@
       "schedule_of_measures.title": "Toimenpiteiden aikataulu",
       "schedule_wrapper.legend": "Hankkeen aikataulu",
       "start_date.title": "Alkupäivämäärä",
+      "start_date.printable_title": "Hankkeen alkupäivämäärä",
       "under_20_affected.title": "Kuvaile, keitä tai kuinka suurta osaa seuran alle 20-vuotiaista harrastajista hankkeen toimenpiteet koskettavat"
     }
   },
   "sv": {
     "translation": {
       "active_participants_local.title": "Varav bosatta i Helsingfors",
+      "active_participants_local.printable_title": "Antal aktiva deltagare under 20 år i föreningen, varav bosatta i Helsingfors",
       "active_participants_under_20.title": "Antal aktiva deltagare under 20 år i föreningen",
-      "active_participants_wrapper.help.value": "Som under 20 år räknas personer födda 2006 eller senare. ",
-      "active_participants_wrapper.legend": "Aktiva deltagare ",
+      "active_participants_wrapper.help.value": "Som under 20 år räknas personer födda 2006 eller senare.",
+      "active_participants_wrapper.legend": "Aktiva deltagare",
       "active_participants_wrapper.tooltip": "Om uppgifterna har angetts i ansökan om verksamhetsunderstöd för år 2026 kan fälten lämnas tomma. Som aktiva deltagare räknas medlemmar som under föregående år har deltagit minst tio gånger under en sammanhängande tremånadersperiod i ledd idrottsverksamhet med minst fyra deltagare. Som under 20 år räknas personer födda 2006 eller senare.",
       "antiracism_measures.description": "Svara endast om projektet genomför åtgärdshelheten \"utveckla åtgärder mot rasism\". Projektet måste genomföra minst en valfri åtgärdshelhet.",
       "antiracism_measures.title": "Utvecklas antirasistiska åtgärder inom projektet? Om ja, hur?",
       "end_date.title": "Slutdatum",
+      "end_date.printable_title": "Projektets slutdatum",
       "equality_nondiscrimination_responsibility_plan.description": "Svara endast om projektet genomför åtgärdshelheten \"upprätta en plan för likabehandling, jämlikhet eller ansvar och genomföra åtgärderna i den\". Projektet måste genomföra minst en valfri åtgärdshelhet.",
       "equality_nondiscrimination_responsibility_plan.title": "Upprättas en plan för likabehandling, jämlikhet eller ansvar inom projektet och genomförs dess åtgärder? Om ja, hur?",
       "form_title": "Ansökan om understöd för främjande av en tryggare föreningsverksamhet",
@@ -125,8 +133,8 @@
       "schedule_of_measures.title": "Tidtabell för åtgärder",
       "schedule_wrapper.legend": "Projektets tidtabell",
       "start_date.title": "Startdatum",
+      "start_date.printable_title": "Projektets startdatum",
       "under_20_affected.title": "Beskriv vilka eller hur stor del av föreningens deltagare under 20 år som projektets åtgärder berör."
     }
   }
 }
-

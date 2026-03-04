@@ -38,8 +38,10 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
       <ul className='hdbt-react-form__subvention-table'>
         {(schema.options as SubventionOption[]).map(({ label, id: elementId }) => (
           <li key={elementId} className='hdbt-react-form__subvention-table__item'>
-            <span className='grants-form--preview-section__label'>{label}</span>
-            {`${formData?.[findIndexForData(elementId.toString())]?.[1].value}€` || '-'}
+            <span className='grants-form--preview-section__label'>{label} (€)</span>
+            {formData?.[findIndexForData(elementId.toString())]?.[1].value != null
+              ? formData[findIndexForData(elementId.toString())][1].value
+              : '-'}
           </li>
         ))}
       </ul>

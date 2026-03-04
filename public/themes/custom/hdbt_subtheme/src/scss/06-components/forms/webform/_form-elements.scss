@@ -538,7 +538,8 @@ input[type='radio']+label.form-required::after {
 
 .form-group:not(:last-child) {
   &.field-string,
-  &.field-integer {
+  &.field-integer,
+  &.field-object {
     margin-block-end: $spacing-and-half;
   }
 }

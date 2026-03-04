@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import {
   AddressSelect,
   BankAccountSelect,
+  CheckboxWidget,
   CommunityOfficialsSelect,
   DateWidget,
   RadioWidget,
@@ -65,6 +66,7 @@ const widgets: RegistryWidgetsType = {
   SelectWidget,
   TextareaWidget: TextArea,
   TextWidget: TextInput,
+  CheckboxWidget,
 };
 
 /**

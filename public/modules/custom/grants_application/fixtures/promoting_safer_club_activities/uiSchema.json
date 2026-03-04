@@ -151,6 +151,7 @@
       },
       "active_participants_wrapper": {
         "ui:options": {
+          "hideNameFromPrint": true,
           "tooltipLabel": "active_participants_wrapper.legend",
           "tooltipButtonLabel": "active_participants_wrapper.legend",
           "tooltipText": "active_participants_wrapper.tooltip"
@@ -159,7 +160,11 @@
           "ui:field": "textParagraph"
         },
         "active_participants_under_20": {},
-        "active_participants_local": {}
+        "active_participants_local": {
+          "ui:options": {
+            "printableName": "active_participants_local.printable_title"
+          }
+        }
       },
       "under_20_affected": {
         "ui:widget": "textarea",
@@ -175,10 +180,19 @@
         }
       },
       "schedule_wrapper": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
         "start_date": {
+          "ui:options": {
+            "printableName": "start_date.printable_title"
+          },
           "ui:widget": "date"
         },
         "end_date": {
+          "ui:options": {
+            "printableName": "end_date.printable_title"
+          },
           "ui:widget": "date"
         }
       },
@@ -239,6 +253,11 @@
       "income_rows": {
         "ui:options": {
           "addText": "income_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
         }
       }
     },
@@ -249,6 +268,11 @@
       "expenditure_rows": {
         "ui:options": {
           "addText": "expenditure_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
         }
       }
     }
@@ -258,6 +282,7 @@
       "additional_information": {
         "ui:widget": "textarea",
         "ui:options": {
+          "hideNameFromPrint": true,
           "tooltipLabel": "additional_information.title",
           "tooltipButtonLabel": "additional_information.title",
           "tooltipText": "additional_information.description"
