@@ -1417,10 +1417,6 @@ submit the application only after you have provided all the necessary informatio
       // let's make sure no file entities get left behind.
       $this->attachmentRemover->removeGrantAttachments(
         $fileIds,
-        $fileIdsArray,
-        $this->applicationNumber,
-        $this->isDebug(),
-        0
       );
     }
     catch (\Throwable $e) {

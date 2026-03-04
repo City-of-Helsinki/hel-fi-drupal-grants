@@ -19,6 +19,7 @@ use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationStatusService;
+use Drupal\grants_handler\MessageService;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_av\AntivirusException;
@@ -56,6 +57,8 @@ final class ApplicationController extends ControllerBase {
     private readonly ApplicationService $applicationService,
     private readonly ContentLockInterface $contentLock,
     private readonly AccountProxyInterface $accountProxy,
+    #[Autowire(service: 'grants_handler.message_service')]
+    private readonly MessageService $messageService,
   ) {
   }
 
@@ -245,7 +248,7 @@ final class ApplicationController extends ControllerBase {
       $submitted = new \DateTime($submitted['timestamp'])->format('Y-m-d H:i:s');
     }
 
-    // Get event history by reverting the statusUpdates.
+    // Get event history.
     $history = [];
     if (isset($documentContent["statusUpdates"]) && is_array($documentContent['statusUpdates'])) {
       $config = \Drupal::config('grants_handler.settings');
@@ -261,21 +264,24 @@ final class ApplicationController extends ControllerBase {
       }
     }
 
+    // Get the attachments, formatted description, submitted time: filename.
     $events = $document->getContent()['events'];
     $attachment_data = [];
     foreach ($document->getAttachments() as $att) {
       // $description = $att['description'] . ', ' ?? '';
       $filename = $att['filename'];
-      $event = array_find($events, fn($event) => $event['eventTarget'] === $filename);
-      $documentContentAttachment = array_find($documentContent['attachmentsInfo']['attachmentsArray'], fn($a) => $a[2]['ID'] === 'fileType' && $a[1]['value'] === $filename);
-      $description = $documentContentAttachment[0]['value'] . ', ' ?? '';
-      $submitted = $event['timeCreated'];
-      $submitted = new \DateTime($submitted)->format('d.m.Y H:i');
+      $event = array_find($events, fn($event) => isset($event['eventTarget']) && $event['eventTarget'] === $filename);
+      if ($event) {
+        $documentContentAttachment = array_find($documentContent['attachmentsInfo']['attachmentsArray'], fn($a) => $a[2]['ID'] === 'fileType' && $a[1]['value'] === $filename);
+        $description = $documentContentAttachment[0]['value'] . ', ' ?? '';
+        $submitted = $event['timeCreated'];
+        $submitted = new \DateTime($submitted)->format('d.m.Y H:i');
 
-      $submitted = !$submitted ? '' : $submitted . ': ';
+        $submitted = !$submitted ? '' : $submitted . ': ';
 
-      // Create a string: "file description, submitted: filename".
-      $attachment_data[] = "$description$submitted$filename";
+        // Create a string: "file description, submitted: filename".
+        $attachment_data[] = "$description$submitted$filename";
+      }
     }
 
     // Get the "käsittelijä" from events.
@@ -289,6 +295,35 @@ final class ApplicationController extends ControllerBase {
     }
     $isEditable = in_array($document->getStatus(), ['DRAFT', 'RECEIVED']);
 
+    // Messages
+    // grants_handler_preprocess_webform_submission_messages.
+    $other = [];
+    $unreadMsg = [];
+
+    foreach ($documentContent['messages'] as $msg) {
+      if (!isset($msg["messageStatus"]) || !$msg["messageStatus"]) {
+        continue;
+      }
+
+      if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
+        $unreadMsg[] = [
+          '#theme' => 'message_notification_item',
+          '#message' => $msg,
+        ];
+      }
+    }
+
+    $messages = [];
+    if (isset($documentContent['messages']) && is_array($documentContent['messages'])) {
+      $submissionMessages = $this->messageService->parseMessages($documentContent);
+      // Data for debugging.
+      // $submissionMessages = json_decode('{"1772527851":{"caseId":"LOCALK-070-0000282","messageId":"ff535a2c-a007-4e26-9533-bbdbc6dc7221","body":"Testiviesti","sentBy":"Nordea Demo","sendDateTime":"2026-03-03T10:50:51","attachments":[{"description":"Liitteen kuvaus","fileName":"testi1-viides.pdf","integrationID":"\/LOCALK\/v1\/documents\/94847d02-cc54-4521-9686-82db640e35f2\/attachments\/401172\/"}],"avus2received":true,"messageStatus":"UNREAD"}}',TRUE);
+      foreach ($submissionMessages as $message) {
+        $messages[] = $message;
+      }
+    }
+
+    // @todo Replace the grants handler message form with a better one.
     $build = [
       '#theme' => 'grants_application_view',
       '#application_name' => $application_name,
@@ -312,6 +347,8 @@ final class ApplicationController extends ControllerBase {
       '#ownApplicationsLink' => Url::fromRoute('grants_oma_asiointi.front'),
       '#editApplicationLink' => $submission->getEditApplicationLink($application_name)->getUrl(),
       '#submissionObject' => $document,
+      '#messages' => $messages,
+      '#message_form' => \Drupal::formBuilder()->getForm('Drupal\grants_handler\Form\MessageForm'),
       '#attached' => [
         'drupalSettings' => [
           'grants_react_form' => [
