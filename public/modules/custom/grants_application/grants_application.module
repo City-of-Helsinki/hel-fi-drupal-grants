@@ -41,7 +41,6 @@ function grants_application_theme(): array {
         'form_identifier' => NULL,
         'ownApplicationsLink' => NULL,
         'editApplicationLink' => NULL,
-        'application_name' => NULL,
         'print_application_link' => NULL,
         'copy_text' => NULL,
         'application_submit_date' => NULL,

@@ -21,6 +21,7 @@ helfi_grants.view_application:
   path: '/application/view/{application_number}'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::viewApplication'
+    _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getViewApplicationTitle'
   requirements:
     _role: helsinkiprofiili
 

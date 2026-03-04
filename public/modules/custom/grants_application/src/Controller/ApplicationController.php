@@ -71,6 +71,20 @@ final class ApplicationController extends ControllerBase {
    * @return string
    *   The form title
    */
+  public function getViewApplicationTitle(string $application_number): string {
+    $submission = $this->getApplicationSubmission($application_number);
+    if (!$submission) {
+      return '';
+    }
+    try {
+      $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($submission->get('form_identifier')->value);
+    }
+    catch (\Exception $e) {
+      return '';
+    }
+    return $settings->getApplicationName();
+  }
+
   public function getFormTitle(string $form_identifier): string {
     try {
       $formSettings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
@@ -325,7 +339,6 @@ final class ApplicationController extends ControllerBase {
     // @todo Replace the grants handler message form with a better one.
     $build = [
       '#theme' => 'grants_application_view',
-      '#application_name' => $application_name,
       '#print_application_link' => $submission->getPrintApplicationUrl(),
       '#copy_text' => 'Copy application',
       '#submission_id' => $application_number,

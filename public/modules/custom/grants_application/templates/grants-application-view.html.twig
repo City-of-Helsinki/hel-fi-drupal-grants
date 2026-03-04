@@ -2,7 +2,7 @@
 
   <div 
     data-status="{{ status }}" 
-    class="hide-spinner application-list__item--status application-list__item--status--{{ status|lower }} applicationStatusCheckable" 
+    class="hide-spinner application-list__item--status application-list__item--status--{{ status|lower }} applicationStatusCheckable hdbt-react-form__form-status" 
     data-application-number="{{ submission_id }}"
   >
     {{ statusLocalized }}
@@ -16,8 +16,6 @@
     <span class="hel-icon hel-icon--alert-circle hel-icon--size-s" aria-hidden="true"></span>
     <span aria-hidden="true" class="application-list--error-text">{{ 'There has been an error in updating application status, please reload the page.'|t({}, {'context': 'grants_handler'})}}</span>
   </div>
-
-  <h1>{{ application_name }}</h1>
 
   <div class="webform-submission__application_id">
     <h2 class="webform-submission__application_id--header">{{ "Application number"|t }}</h2>
