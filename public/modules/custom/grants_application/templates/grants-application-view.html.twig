@@ -1,23 +1,13 @@
 <div class="container">
 
+  <h1>{{ application_name }}</h1>
+
+  {% include 'grants-application-view-messages.html.twig' %}
+
   {% include 'grants-application-view-status-information.html.twig' %}
 
   {{ attach_library('hdbt_subtheme/forms-app') }}
   <div id="grants-react-form">
   </div>
-
-  <div class="grants-handler__completion__button-row">
-    {#
-    {% if ownApplicationsLink %}
-      {% include '@hdbt/navigation/link-button.html.twig' with {
-        type: 'primary',
-        label: 'My applications'|t,
-        url: ownApplicationsLink,
-      }
-      %}
-    {% endif %}
-    #}
-  </div>
-
 </div>
 

@@ -49,11 +49,23 @@ function grants_application_theme(): array {
         'attachments' => NULL,
         'is_editable' => NULL,
         'application_handlers' => NULL,
+        'messages' => NULL,
+        'message_form' => NULL,
       ],
     ],
     'grants_application_view_status_information' => [
       'variables' => []
-    ]
+    ],
+    'grants_application_view_messages' => [
+      'variables' => [
+        'messages' => NULL,
+        'message_form' => NULL,
+        'submission' => NULL,
+        'isDraft' => NULL,
+        'hideMessageText' => NULL,
+      ],
+    ],
+    'message_form' => ['variables' => []],
   ];
 }
 

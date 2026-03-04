@@ -1,0 +1,42 @@
+<div class="webform-submission-messages__wrapper">
+  <h2>{{ 'Messages'|t({}, {'context': 'grants_handler'})}}</h2>
+  {% if not hideMessageText and not isDraft %}
+    <p>{{ 'You can send a message to the handler of the application or provide a missing attachment'|t({}, {'context': 'grants_handler'})}}</p>
+  {% endif %}
+  <div class="webform-submission-messages">
+    <h4>{{ 'Sent messages'|t({}, {'context': 'grants_handler'})}}</h4>
+    <hr/>
+    <div{{ attributes.addClass(classes) }}>
+      {% if isDraft %}
+        <p>{{ 'You cannot send messages to an incomplete application.'|t({}, {'context': 'grants_handler'}) }}</p>
+      {% endif %}
+      {% if isResolved %}
+        <p>{{ 'Messages cannot be sent to a resolved application.'|t({}, {'context': 'grants_handler'}) }}</p>
+      {% endif %}
+      {% if messages %}
+        {% for message in messages %}
+          {% if (message.messageStatus == 'UNREAD' and message.sentBy == 'Avustusten kasittelyjarjestelma') %}
+            <div class="webform-submission-messages__new-message">
+              <i class="hds-icon icon hds-icon--alert-circle hel-icon--size-s vertical-align-small-or-medium-icon" aria-hidden="true"></i>
+              <span>{{ "New message"|t({}, {'context': 'grants_handler'})}}</span>
+            </div>
+          {% endif %}
+          <h5 class="webform-submission-messages__message-sender"><strong>{{ message.sentBy }}</strong> - {{ message.sendDateTime|date('d.m.Y H:i:s') }}</h5>
+          <div class="webform-submission-messages__message-body">{{ message.body }}</div>
+          {{ markReadLink }}
+          {% if message.attachments %}
+            <ul class="webform-submission-messages__message__attachments">
+              {% for attachment in message.attachments %}
+                <li class="webform-submission-messages__message__attachment"><i class="hds-icon icon hds-icon--paperclip hel-icon--size-xs vertical-align-small-or-medium-icon" aria-hidden="true"></i> <strong>{{ attachment.fileName }}</strong> - {{ attachment.description }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endfor %}
+        <hr/>
+      {% endif %}
+    </div>
+    <div{{ attributes.addClass(classes) }}>
+      {{ message_form }}
+    </div>
+  </div>
+</div>

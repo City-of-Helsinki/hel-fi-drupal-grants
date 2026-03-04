@@ -82,6 +82,12 @@ class MessageForm extends FormBase {
     $storage = $form_state->getStorage();
     $storage['webformSubmission'] = $webform_submission;
 
+    $application_number = \Drupal::routeMatch()->getParameters()->get('submission_id');
+    if (!$application_number) {
+      $application_number = \Drupal::routeMatch()->getParameters()->get('application_number');
+      $storage['application_number'] = $application_number;
+    }
+
     $messageSent = $storage['message_sent'] ?? FALSE;
 
     $form['status_messages'] = [
@@ -189,13 +195,11 @@ class MessageForm extends FormBase {
    * @throws \Exception
    */
   public function ajaxSubmit(array &$form, FormStateInterface $formState): AjaxResponse {
-
     $storage = $formState->getStorage();
     $messageSent = $storage['message_sent'] ?? NULL;
     $ajaxResponse = new AjaxResponse();
 
     if ($messageSent) {
-
       // Minimal data required to display the message immediately.
       $messageBuild = [
         '#theme' => 'message_list_item',
@@ -285,9 +289,7 @@ class MessageForm extends FormBase {
     }
 
     $storage = $formState->getStorage();
-    $webformSubmission = $storage['webformSubmission'];
-    $webformData = $webformSubmission->getData();
-    $applicationNumber = $webformData['application_number'];
+    $applicationNumber = $storage['application_number'];
 
     /** @var \Drupal\helfi_atv\AtvService $atvService */
     $atvService = \Drupal::service('helfi_atv.atv_service');
@@ -335,20 +337,19 @@ class MessageForm extends FormBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $storage = $form_state->getStorage();
     $form_state->setRebuild();
     $tOpts = ['context' => 'grants_handler'];
 
-    $storage = $form_state->getStorage();
-    if (!isset($storage['webformSubmission'])) {
+    $application_number = $storage['application_number'] ?? NULL;
+    $nextMessageId = Uuid::uuid4()->toString();
+
+
+    if (!$application_number) {
       $this->messenger()
         ->addError($this->t('webformSubmission not found!', [], $tOpts));
       return;
     }
-
-    /** @var \Drupal\webform\Entity\WebformSubmission $submission */
-    $submission = $storage['webformSubmission'];
-    $submissionData = $submission->getData();
-    $nextMessageId = Uuid::uuid4()->toString();
 
     $attachment = $storage['messageAttachment'] ?? [];
     $data = [
@@ -357,7 +358,6 @@ class MessageForm extends FormBase {
     ];
 
     if (!empty($attachment)) {
-
       $response = $attachment['response'];
       $file = $attachment['file'];
 
@@ -375,14 +375,10 @@ class MessageForm extends FormBase {
       // Remove file attachment directly after upload.
       $this->attachmentRemover->removeGrantAttachments(
         [$file->id()],
-        [$file->id() => ['upload' => TRUE]],
-        $submissionData['application_number'],
-        getenv('DEBUG'),
-        $submission->id()
       );
     }
 
-    if ($this->messageService->sendMessage($data, $submission, $nextMessageId)) {
+    if ($this->messageService->sendMessage($data, $application_number, $nextMessageId)) {
       $storage['message_sent'] = $data;
       $this->messenger()
         ->addStatus($this->t('Your message has been sent.', [], $tOpts));
