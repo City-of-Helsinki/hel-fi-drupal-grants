@@ -162,6 +162,38 @@ function hdbt_subtheme_preprocess_webform_element_base_html(array &$variables): 
 /**
  * Implements hook_preprocess_HOOK().
  */
+function hdbt_subtheme_preprocess_webform_container_base_html(array &$variables): void {
+  if(!str_contains($variables['element']['#webform_id'], 'iakkaiden_kulttuuri_ja_liikunta')) {
+    return;
+  }
+
+  if(!isset($variables['value']['#id'])) {
+    return;
+  }
+
+  if($variables['value']['#id'] === 'iakkaiden_kulttuuri_ja_liikunta--haettava_avustussumma') {
+    if(
+      isset($variables['value']['#children']['haettava_avustussumma_2028']) &&
+      $variables['value']['#children']['haettava_avustussumma_2028']['#value']['#plain_text']
+      ) {
+
+      $variables['value']['#children']['haettava_avustussumma_2028']['#access'] = TRUE;
+    }
+  }
+
+  if($variables['value']['#id'] === 'iakkaiden_kulttuuri_ja_liikunta--toimenpiteet_ja_aikataulu') {
+     if(
+      isset($variables['value']['#children']['hankkeen_toimenpiteet_aikataulu_2028']) &&
+      $variables['value']['#children']['hankkeen_toimenpiteet_aikataulu_2028']['#value']['#markup'] !== '-'
+      ) {
+      $variables['value']['#children']['hankkeen_toimenpiteet_aikataulu_2028']['#access'] = TRUE;
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
 function hdbt_subtheme_preprocess_field(array &$variables): void {
   $route_name = \Drupal::routeMatch()->getRouteName();
 
