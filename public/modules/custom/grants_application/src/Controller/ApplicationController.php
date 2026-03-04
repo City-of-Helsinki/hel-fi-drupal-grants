@@ -237,8 +237,7 @@ final class ApplicationController extends ControllerBase {
 
     $form_identifier = $submission->get('form_identifier')->value;
     $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($submission->get('form_identifier')->value);
-    $langcode = $submission->get('langcode')->value;
-    $application_name = $document->getHumanReadableType()[$langcode];
+    $application_name = $settings->getApplicationName();
 
     // Get submitted time from status history.
     $documentContent = $document->getContent();
@@ -288,7 +287,8 @@ final class ApplicationController extends ControllerBase {
     $handlerEvents = array_filter($documentContent['events'], fn($event) => $event['eventType'] == 'EVENT_INFO');
 
     // Test the handler
-    // $handlerEvents = [['eventDescription' => 'Henkilö Testi;040 123 123 12;test.henkilo@example.com']];
+    // $handlerEvents = [['eventDescription' =>
+    // 'Henkilö Testi;040 123 123 12;test.henkilo@example.com']];
     $handlers = [];
     foreach ($handlerEvents as $handlerEvent) {
       $handlers[] = explode(";", $handlerEvent['eventDescription']);
@@ -297,9 +297,7 @@ final class ApplicationController extends ControllerBase {
 
     // Messages
     // grants_handler_preprocess_webform_submission_messages.
-    $other = [];
     $unreadMsg = [];
-
     foreach ($documentContent['messages'] as $msg) {
       if (!isset($msg["messageStatus"]) || !$msg["messageStatus"]) {
         continue;

@@ -161,4 +161,14 @@ final class FormSettings {
     return !$this->settings['disable_copy'];
   }
 
+  /**
+   * Get the application name
+   *
+   * @return string
+   *   The application name.
+   */
+  public function getApplicationName(): string {
+    return $this->settings['title'] ?? '';
+  }
+
 }
