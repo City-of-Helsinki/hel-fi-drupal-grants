@@ -38,6 +38,11 @@
               "tooltipText": "other_compensation_issuer.description"
             }
           },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
           "other_compensation_description": {
             "ui:widget": "textarea",
             "ui:options": {
