@@ -51,6 +51,8 @@ function grants_application_theme(): array {
         'application_handlers' => NULL,
         'messages' => NULL,
         'message_form' => NULL,
+        'status' => NULL,
+        'statusLocalized' => NULL,
       ],
     ],
     'grants_application_view_status_information' => [

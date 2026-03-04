@@ -318,11 +318,15 @@ final class ApplicationController extends ControllerBase {
       }
     }
 
+    $langCode = $this->languageManager()->getCurrentLanguage()->getId();
+    $statusStrings = $this->getStatusStrings($langCode);
+    $statusLocalized = $statusStrings[$document->getStatus()] ?? ucfirst(strtolower($document->getStatus()));
+
     // @todo Replace the grants handler message form with a better one.
     $build = [
       '#theme' => 'grants_application_view',
       '#application_name' => $application_name,
-      '#print_application_link' => Link::fromTextAndUrl($this->t('Print application'), $submission->getPrintApplicationUrl()),
+      '#print_application_link' => $submission->getPrintApplicationUrl(),
       '#copy_text' => 'Copy application',
       '#submission_id' => $application_number,
       '#application_submit_date' => $submitted,
@@ -332,6 +336,8 @@ final class ApplicationController extends ControllerBase {
       '#form_identifier' => $form_identifier,
       '#application_handlers' => $handlers,
       '#is_copyable' => $settings->isCopyable(),
+      '#status' => $document->getStatus(),
+      '#statusLocalized' => $statusLocalized,
       // React has this one named in wrong way.
       // The application number should be application type id.
       '#application_number' => $submission->get('application_type_id')->value,

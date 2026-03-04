@@ -1,10 +1,15 @@
+<h2>{{ 'Application info'|t }}</h2>
+<p>{{ 'Summary about your application and processing details.'|t }}</p>
 <div class="webform-submission-information">
   <div class="webform-submission-information__row webform-submission-information__row-top">
     <h4>
       {{ application_name }}
     </h4>
     <div class="webform-submission-information__supportlinks">
-      {{ print_application_link }}
+      <a class="hds-button hds-button--supplementary" href="{{ print_application_link }}">
+        <span aria-hidden="true" class="hel-icon hel-icon--printer"></span>
+        <span class="hds-button__label">{{ "Print application"|t }}</span>
+      </a>
     </div>
   </div>
   <div class="webform-submission-information__row webform-submission-information__row-main">
@@ -51,5 +56,3 @@
   {% endif %}
 
 </div>
-
-
