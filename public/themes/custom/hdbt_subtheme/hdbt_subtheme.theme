@@ -169,21 +169,21 @@ function hdbt_subtheme_preprocess_webform_container_base_html(array &$variables)
     return;
   }
 
-  if(!str_contains($variables['element']['#webform_id'], 'iakkaiden_kulttuuri_ja_liikunta')) {
+  if (!str_contains($variables['element']['#webform_id'], 'iakkaiden_kulttuuri_ja_liikunta')) {
     return;
   }
 
-  if(!isset($variables['value']['#id'])) {
+  if (!isset($variables['value']['#id'])) {
     return;
   }
 
   // First radio button value (yksi kaksi kolmivuotisena) is not visible.
-   if ($variables['value']['#id'] === 'iakkaiden_kulttuuri_ja_liikunta--3_tarkemmat_tiedot') {
+  if ($variables['value']['#id'] === 'iakkaiden_kulttuuri_ja_liikunta--3_tarkemmat_tiedot') {
     _hdbt_subtheme_iakkaat_sum_condition($variables['value']['#children']['tarkemmat_tiedot_section']);
   }
 
-  if($variables['value']['#id'] === 'iakkaiden_kulttuuri_ja_liikunta--haettava_avustussumma') {
-    if(
+  if ($variables['value']['#id'] === 'iakkaiden_kulttuuri_ja_liikunta--haettava_avustussumma') {
+    if (
       isset($variables['value']['#children']['haettava_avustussumma_2028']) &&
       $variables['value']['#children']['haettava_avustussumma_2028']['#value']['#plain_text']
       ) {
@@ -191,8 +191,8 @@ function hdbt_subtheme_preprocess_webform_container_base_html(array &$variables)
     }
   }
 
-  if($variables['value']['#id'] === 'iakkaiden_kulttuuri_ja_liikunta--toimenpiteet_ja_aikataulu') {
-     if(
+  if ($variables['value']['#id'] === 'iakkaiden_kulttuuri_ja_liikunta--toimenpiteet_ja_aikataulu') {
+    if (
       isset($variables['value']['#children']['hankkeen_toimenpiteet_aikataulu_2028']) &&
       $variables['value']['#children']['hankkeen_toimenpiteet_aikataulu_2028']['#value']['#markup'] !== '-'
       ) {
@@ -208,7 +208,7 @@ function hdbt_subtheme_preprocess_webform_container_base_html(array &$variables)
  *   Page 3 object.
  */
 function _hdbt_subtheme_iakkaat_sum_condition(array &$array) {
-  $sumString =  $array['#value']['haettava_avustussumma']['#value']['#children']['haettava_avustussumma_2026']['#value']['compensation']['#context']['value']['#plain_text'];
+  $sumString = $array['#value']['haettava_avustussumma']['#value']['#children']['haettava_avustussumma_2026']['#value']['compensation']['#context']['value']['#plain_text'];
   $sum = (int) str_replace(' ', '', $sumString);
 
   if ($sum < 20000) {
