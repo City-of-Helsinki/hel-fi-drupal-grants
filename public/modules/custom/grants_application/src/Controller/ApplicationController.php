@@ -65,7 +65,7 @@ final class ApplicationController extends ControllerBase {
   /**
    * Return appropriate translation for form title.
    *
-   * @param string $form_identifier
+   * @param string $application_number
    *   The application number.
    *
    * @return string
@@ -85,6 +85,15 @@ final class ApplicationController extends ControllerBase {
     return $settings->getApplicationName();
   }
 
+  /**
+   * Get the form title.
+   *
+   * @param string $form_identifier
+   *   The form identifier.
+   *
+   * @return string
+   *   The form title.
+   */
   public function getFormTitle(string $form_identifier): string {
     try {
       $formSettings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
@@ -238,6 +247,7 @@ final class ApplicationController extends ControllerBase {
       throw new NotFoundHttpException();
     }
 
+    $document = NULL;
     if ($submission) {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
@@ -249,6 +259,12 @@ final class ApplicationController extends ControllerBase {
       }
     }
 
+    if (!$document) {
+      $this->messenger()
+        ->addError($this->t('Your request was not fulfilled due to network error.', [], ['context' => 'grants_handler']));
+      return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
+    }
+
     $form_identifier = $submission->get('form_identifier')->value;
     $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($submission->get('form_identifier')->value);
     $application_name = $settings->getApplicationName();
@@ -258,7 +274,7 @@ final class ApplicationController extends ControllerBase {
     $statusHistory = $document->getStatusHistory();
     $submitted = array_find($statusHistory, fn($item) => $item['value'] === 'SUBMITTED') ?? FALSE;
     if ($submitted) {
-      $submitted = new \DateTime($submitted['timestamp'])->format('Y-m-d H:i:s');
+      $submitted = (new \DateTime($submitted['timestamp']))->format('Y-m-d H:i:s');
     }
 
     // Get event history.
@@ -287,7 +303,7 @@ final class ApplicationController extends ControllerBase {
         $documentContentAttachment = array_find($documentContent['attachmentsInfo']['attachmentsArray'], fn($a) => $a[2]['ID'] === 'fileType' && $a[1]['value'] === $filename);
         $description = $documentContentAttachment[0]['value'] . ', ' ?? '';
         $submitted = $event['timeCreated'];
-        $submitted = new \DateTime($submitted)->format('d.m.Y H:i');
+        $submitted = (new \DateTime($submitted))->format('d.m.Y H:i');
 
         $submitted = !$submitted ? '' : $submitted . ': ';
 

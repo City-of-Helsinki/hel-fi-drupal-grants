@@ -53,6 +53,7 @@ function grants_application_theme(): array {
         'message_form' => NULL,
         'status' => NULL,
         'statusLocalized' => NULL,
+        'submissionObject' => NULL,
       ],
     ],
     'grants_application_view_status_information' => [
