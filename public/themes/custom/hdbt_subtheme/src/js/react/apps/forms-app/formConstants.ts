@@ -143,8 +143,12 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
           additionalItems: {
             official: {
               'ui:widget': 'community_officials',
+              'ui:options': {
+                hideNameFromPrint: true,
+              },
             },
             'ui:options': {
+              hideNameFromPrint: true,
               removeText: 'community_officials_community_officials.removeText',
             },
           },

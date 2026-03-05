@@ -32,6 +32,10 @@
 
 .hdbt-react-form__preview-accordion-item .hdbt-form--section__content {
   padding-block-start: $spacing-quarter;
+
+  .array-item:not(:only-child) {
+    margin-block-end: $spacing-and-half;
+  }
 }
 
 .hdbt-react-form__subvention-table {
