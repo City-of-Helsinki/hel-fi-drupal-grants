@@ -57,17 +57,19 @@ final class JsonMapperService {
     bool $isDraft,
     string $selectedCompanyType,
   ): array {
-    // @todo Fix.
     $this->mapper = new JsonMapper();
     $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId, $formIdentifier);
 
     // Mappings are divided into common fields (by mandate)
-    // and form specific fields.
+    // and form specific fields, lets run the mapping in multiple stages.
+    // Start with common fields.
     $commonFieldMapping = json_decode(file_get_contents(__DIR__ . '/Mappings/common/' . $selectedCompanyType . '.json'), TRUE);
     $this->mapper->setMappings($commonFieldMapping);
     $mappedCommonFields = $this->mapper->map($dataSources);
 
-    $mapping = json_decode(file_get_contents(__DIR__ . '/Mappings/' . "ID$formTypeId.json"), TRUE);
+    // Then map the form specific fields.
+    $filePath = sprintf('%s/%s/ID%s/%s.json', __DIR__, 'Mappings', $formTypeId, $formIdentifier);
+    $mapping = json_decode(file_get_contents($filePath), TRUE);
     $this->mapper->setMappings($mapping);
     $mappedData = $this->mapper->map($dataSources);
 
@@ -129,7 +131,8 @@ final class JsonMapperService {
     $this->mapper->setMappings($commonFieldMapping);
     $mappedCommonFields = $this->mapper->map($dataSources);
 
-    $mapping = json_decode(file_get_contents(__DIR__ . '/Mappings/' . $mappingFileName), TRUE);
+    $filePath = sprintf('%s/%s/ID%s/%s.json', __DIR__, 'Mappings', $formTypeId, $formIdentifier);
+    $mapping = json_decode(file_get_contents($filePath), TRUE);
     $this->mapper->setMappings($mapping);
     $mappedData = $this->mapper->map($dataSources);
 

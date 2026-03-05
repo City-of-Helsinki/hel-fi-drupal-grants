@@ -111,8 +111,8 @@ class MessageService {
    *
    * @param array $unSanitizedMessageData
    *   Message data to be sanitized & used.
-   * @param \Drupal\webform\Entity\WebformSubmission $submission
-   *   Submission entity.
+   * @param string $application_number
+   *   The application number.
    * @param string $nextMessageId
    *   Next message id for logging.
    *
@@ -121,17 +121,14 @@ class MessageService {
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function sendMessage(array $unSanitizedMessageData, WebformSubmission $submission, string $nextMessageId): bool {
+  public function sendMessage(array $unSanitizedMessageData, string $application_number, string $nextMessageId): bool {
     $tOpts = ['context' => 'grants_handler'];
-
-    $submissionData = $submission->getData();
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
 
     // Make sure data from user is sanitized.
     $messageData = AtvSchema::sanitizeInput($unSanitizedMessageData);
-
-    if (!empty($submissionData["application_number"])) {
-      $messageData['caseId'] = $submissionData["application_number"];
+    if ($application_number) {
+      $messageData['caseId'] = $application_number;
 
       if ($userData === NULL) {
         $currentUser = $this->currentUser;
@@ -163,10 +160,10 @@ class MessageService {
         try {
           $this->atvService->clearCache($messageData['caseId']);
           $event = $this->eventsService->logEvent(
-            $submissionData["application_number"],
+            $application_number,
             'MESSAGE_APP',
             $this->t('New message for @applicationNumber.',
-              ['@applicationNumber' => $submissionData["application_number"]],
+              ['@applicationNumber' => $application_number],
               $tOpts
             ),
             $nextMessageId

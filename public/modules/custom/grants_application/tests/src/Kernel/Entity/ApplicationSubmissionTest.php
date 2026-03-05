@@ -50,7 +50,7 @@ final class ApplicationSubmissionTest extends KernelTestBase {
    */
   public function testApplicationSubmissionEntity(): void {
     $viewUrl = $this->applicationSubmission->getViewApplicationLink('Liikuntasuunnistus');
-    $this->assertTrue($viewUrl->getUrl()->toString() === '/hakemus/KERNELTEST-058-0000001/katso');
+    $this->assertTrue($viewUrl->getUrl()->toString() === '/application/view/KERNELTEST-058-0000001');
 
     $deleteUrl = $this->applicationSubmission->getDeleteApplicationUrl();
     $this->assertTrue($deleteUrl->toString() === '/application/KERNELTEST-058-0000001/remove');

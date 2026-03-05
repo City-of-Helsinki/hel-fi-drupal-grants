@@ -17,7 +17,7 @@ const formatMinItemsError = (error: ErrorObject) => {
 
   return Drupal.t(
     'You must insert at least @limit value for field @field',
-    { '@field': parentSchema?.title, '@limit': limit },
+    { '@field': parentSchema?.title || '', '@limit': limit.toString() },
     { context: 'Grants application: Validation' },
   );
 };

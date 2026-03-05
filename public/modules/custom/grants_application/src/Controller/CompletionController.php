@@ -91,6 +91,10 @@ class CompletionController extends ControllerBase {
     $statusStrings = $config->get('statusStrings');
     $humanReadableStatus = $statusStrings[$langCode][$status] ?? '';
 
+    // @todo UHF-12685 viewApplicationLink requires a separate page.
+    // The react form opened on preview page would be optimal (no controls).
+    // @todo UHF-12987 printApplication requires the physical print feature.
+    // It could also be the preview page.
     $build = [
       '#theme' => 'grants_application_completion',
       '#applicationTimestamp' => date('Y-m-d h:i:s', (int) $entity->get('created')->value),
@@ -101,8 +105,8 @@ class CompletionController extends ControllerBase {
       '#statusString' => $status,
       '#statusStringHumanReadable' => $humanReadableStatus,
       '#ownApplicationsLink' => Url::fromRoute('grants_oma_asiointi.front'),
-      '#viewApplicationLink' => $entity->getViewApplicationUrl(),
-      '#printApplicationLink' => $entity->getPrintApplicationUrl(),
+      '#viewApplicationLink' => $entity->getViewApplicationLink($document->getHumanReadableType()[$langcode])->getUrl(),
+      '#printApplicationLink' => '',
       '#submissionObject' => $document,
     ];
 

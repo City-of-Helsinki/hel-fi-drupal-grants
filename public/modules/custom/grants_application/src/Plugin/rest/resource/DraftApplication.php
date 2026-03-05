@@ -141,8 +141,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     if (!$settings->isApplicationOpen()) {
-      // @todo Uncomment.
-      // return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
+      return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
     }
 
     try {

@@ -176,10 +176,15 @@ class DocumentContentMapper {
     }
 
     foreach ($typedDataValues["attachments"] as $key => $attachment) {
+      $newValues = $attachment;
       $fileType = $attachment["fileType"];
       // Get fieldname for the attachment.
       $fieldName = array_search($fileType, self::$attachmentFileTypes[$applicationNumber]);
-      $newValues = $attachment;
+
+      // Get fieldname for the attachment.
+      if ($fileType) {
+        $fieldName = array_search($fileType, self::$attachmentFileTypes[$applicationNumber]);
+      }
 
       if (!empty($attachment["fileName"])) {
         $newValues["isNewAttachment"] = 'false';

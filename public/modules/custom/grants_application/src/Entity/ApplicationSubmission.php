@@ -140,40 +140,35 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
   }
 
   /**
-   * Create view -link for oma asiointi.
+   * Create a view link.
+   *
+   * The link is used in oma-asiointi and completion page.
+   * The link should lead to a page with the filled application preview.
    *
    * @param string $application_form_name
    *   Application name.
+   * @param bool $to_url
+   *   Return a URL instead of a Link.
    *
-   * @return \Drupal\Core\Link
+   * @return \Drupal\Core\Link|\Drupal\Core\Url
    *   The link.
    */
-  public function getViewApplicationLink(string $application_form_name): Link {
+  public function getViewApplicationLink(string $application_form_name, bool $to_url = FALSE): Link|Url {
     $markup = $this->createMarkup('View application', $application_form_name);
+
     $url = Url::fromRoute(
-      'grants_handler.view_application',
-      ['submission_id' => $this->get('application_number')->value],
+      'helfi_grants.view_application',
+      ['application_number' => $this->get('application_number')->value],
     );
 
-    return Link::fromTextAndUrl($markup, $url);
+    $link = Link::fromTextAndUrl($markup, $url);
+    return $to_url ? $link->getUrl() : $link;
   }
 
   /**
-   * Create view -URL for asiointi.
+   * Create an edit link.
    *
-   * @return \Drupal\Core\Url
-   *   The url.
-   */
-  public function getViewApplicationUrl(): Url {
-    // @todo UHF-12685 create view_application for react.
-    return Url::fromRoute(
-      'grants_handler.view_application',
-      ['submission_id' => $this->get('application_number')->value],
-    );
-  }
-
-  /**
-   * Create edit link for oma-asiointi.
+   * The link is used in oma-asiointi and completion page.
    *
    * @param string $application_form_name
    *   Application name.

@@ -35,11 +35,13 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
 
   if (shouldRenderPreview) {
     return (
-      <ul>
+      <ul className='hdbt-react-form__subvention-table'>
         {(schema.options as SubventionOption[]).map(({ label, id: elementId }) => (
-          <li key={elementId} style={{ listStyle: 'none' }}>
-            <dt>{label}</dt>
-            <dd>{formData?.[findIndexForData(elementId.toString())]?.[1].value || '-'}</dd>
+          <li key={elementId} className='hdbt-react-form__subvention-table__item'>
+            <span className='grants-form--preview-section__label'>{label} (€)</span>
+            {formData?.[findIndexForData(elementId.toString())]?.[1].value != null
+              ? formData[findIndexForData(elementId.toString())][1].value
+              : '-'}
           </li>
         ))}
       </ul>

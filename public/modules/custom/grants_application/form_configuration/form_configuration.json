@@ -369,6 +369,13 @@
         "fi": "Työllisyysavustus",
         "sv": "Sysselsättningsstöd"
       }
+    },
+    "56": {
+      "labels": {
+        "en": "Special grant for sports 3",
+        "fi": "Liikunnan erityisavustus 3",
+        "sv": "Specialunderstöd för idrott 3"
+      }
     }
   }
 }

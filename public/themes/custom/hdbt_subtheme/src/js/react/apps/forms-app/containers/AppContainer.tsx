@@ -58,7 +58,11 @@ const handleErrors = async (response: Response) => {
  * @throws {Error} - If the request fails
  */
 async function fetchFormData(form_identifier: string, token: string) {
-  let applicationNumber = getUrlParts()?.[4];
+  // Allow using the React on view-route.
+  let applicationNumber = drupalSettings.grants_react_form.real_application_number;
+  if (!applicationNumber) {
+    applicationNumber = getUrlParts()?.[4];
+  }
 
   if (!applicationNumber) {
     const { application_number } = await instantiateDocument(form_identifier, token);

@@ -38,41 +38,42 @@ class ApplicationService {
   /**
    * Creates a new draft application.
    *
-   * @param int $application_type_id
+   * @param string $form_identifier
    *   The application type ID.
-   * @param string|null $copy_from
+   * @param string|null $original_application_number
    *   The application number to copy from.
    *
    * @return array
    *   The created draft application data.
    */
-  public function createDraft(int $application_type_id, string|null $copy_from = NULL): array {
+  public function createDraft(string $form_identifier, string|null $original_application_number = NULL): array {
     try {
       $entity = $this->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
-        $copy_from,
+        $original_application_number,
         $this->userInformationService->getGrantsProfileContent()->getBusinessId(),
       );
     }
     catch (\Exception $e) {
       $this->logger->error('Unable to fetch application to copy: @message', [
         '@message' => $e->getMessage(),
-        'application_number' => $copy_from,
+        'application_number' => $original_application_number,
         'user_id' => $this->userInformationService->getUserData()['sub'],
       ]);
 
       throw $e;
     }
 
-    $settings = $this->formSettingsService->getFormSettings($application_type_id, $entity->get('form_identified')->value);
+    $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
 
     if (!$settings->isCopyable()) {
       throw new \Exception('Copying applications is disabled for this application type.');
     }
 
+    $application_type_id = $settings->getFormId();
     $form_data = [];
-    if ($copy_from) {
-      $copy_document = $this->atvService->getDocument($copy_from);
+    if ($original_application_number) {
+      $copy_document = $this->atvService->getDocument($original_application_number);
       $copy_content = $copy_document->getContent();
       $form_data = $copy_content['compensation']['form_data'] ?? [];
     }
@@ -145,10 +146,10 @@ class ApplicationService {
       'document_id' => $document->getId(),
     ];
 
-    if ($copy_from) {
+    if ($original_application_number) {
       $result['redirect_url'] = Url::fromRoute(
         'helfi_grants.forms_app',
-        ['id' => $application_type_id, 'application_number' => $application_number],
+        ['form_identifier' => $form_identifier, 'application_number' => $application_number],
         ['absolute' => TRUE],
       )->toString();
     }

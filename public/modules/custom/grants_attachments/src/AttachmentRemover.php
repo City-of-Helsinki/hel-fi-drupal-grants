@@ -68,13 +68,6 @@ class AttachmentRemover {
   private $fileSystem;
 
   /**
-   * Debug prints?
-   *
-   * @var bool
-   */
-  protected bool $debug;
-
-  /**
    * Constructs an AttachmentRemover object.
    *
    * @param \Drupal\file\FileUsage\FileUsageInterface $file_usage
@@ -114,38 +107,10 @@ class AttachmentRemover {
   }
 
   /**
-   * If debug is on or not.
-   *
-   * @return bool
-   *   TRue or false depending on if debug is on or not.
-   */
-  public function isDebug(): bool {
-    return $this->debug;
-  }
-
-  /**
-   * Set debug.
-   *
-   * @param bool $debug
-   *   True or false.
-   */
-  public function setDebug(bool $debug): void {
-    $this->debug = $debug;
-  }
-
-  /**
    * Remove given fileIds from filesystem & database.
    *
    * @param array $attachments
    *   List of file ifs to remove.
-   * @param array $uploadResults
-   *   Array containing status of each file uploaded.
-   * @param string $applicationNumber
-   *   Generated application number.
-   * @param bool $debug
-   *   Is debug mode on or off.
-   * @param int $webFormSubmissionId
-   *   Submission id.
    *
    * @return bool
    *   Return status.
@@ -154,13 +119,7 @@ class AttachmentRemover {
    */
   public function removeGrantAttachments(
     array $attachments,
-    array $uploadResults,
-    string $applicationNumber,
-    bool $debug,
-    int $webFormSubmissionId,
   ): bool {
-    $this->setDebug($debug);
-
     // If no attachments are passed, just return true.
     if (empty($attachments)) {
       return TRUE;
@@ -175,13 +134,7 @@ class AttachmentRemover {
       if ($file == NULL) {
         continue;
       }
-
-      if ($uploadResults[$fileId]['upload'] === TRUE) {
-        $retval = $this->deleteFile($file) || $retval;
-      }
-      else {
-        $this->saveFailedUpload($file, $applicationNumber, $webFormSubmissionId);
-      }
+      $retval = $this->deleteFile($file) || $retval;
     }
 
     return $retval;
@@ -200,19 +153,12 @@ class AttachmentRemover {
    */
   private function deleteFile(File $file): bool {
     try {
-      $filename = $file->getFilename();
       $file->delete();
 
       // Make sure that no rows remain for this FID.
       $this->connection->delete('grants_attachments')
         ->condition('fid', $file->id())
         ->execute();
-
-      if ($this->isDebug()) {
-        $this->loggerChannel->notice('Removed file entity & db log row: @filename', [
-          '@filename' => $filename,
-        ]);
-      }
 
       return TRUE;
     }
@@ -235,7 +181,7 @@ class AttachmentRemover {
   private function saveFailedUpload(
     File $file,
     string $applicationNumber,
-    int $webFormSubmissionId,
+    ?int $webFormSubmissionId,
   ): void {
     try {
       $this->connection->insert('grants_attachments')
