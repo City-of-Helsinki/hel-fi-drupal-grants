@@ -346,6 +346,7 @@ final class ApplicationController extends ControllerBase {
       '#history' => $history,
       '#attachments' => $attachment_data,
       '#is_editable' => $isEditable,
+      '#application_name' => $application_name,
       '#form_identifier' => $form_identifier,
       '#application_handlers' => $handlers,
       '#is_copyable' => $settings->isCopyable(),

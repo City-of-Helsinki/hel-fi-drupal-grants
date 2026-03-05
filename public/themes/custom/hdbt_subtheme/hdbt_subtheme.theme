@@ -488,6 +488,10 @@ function hdbt_subtheme_preprocess_html(array &$variables): void {
     $variables['attributes']['class'][] = "page--oma-asiointi__{$selectedRoleData['type']}";
     $variables['attributes']['class'][] = "grants-role-{$selectedRoleData['type']}";
   }
+
+  if ($route_name == 'helfi_grants.completion') {
+    $variables['attributes']['class'][] = 'hdbt-react-form__completion-page';
+  }
 }
 
 /**

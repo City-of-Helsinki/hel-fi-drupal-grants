@@ -52,3 +52,16 @@
 .hdbt-react-form__form-status {
   margin-block-start: $spacing-and-half;
 }
+
+.hdbt-react-form__completion-page .page-title {
+  display: none;
+}
+
+.hdbt-react-form__message__sender:not(:first-child) {
+  margin-block-start: $spacing-and-half;
+}
+
+.hdbt-react-form__message__attachments {
+  margin: $spacing-half 0 0;
+  padding: 0;
+}

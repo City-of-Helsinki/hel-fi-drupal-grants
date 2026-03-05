@@ -49,6 +49,8 @@
       <div class="grants-handler__completion__button-row">
         {% include '@hdbt/navigation/link-button.html.twig' with {
             type: 'primary',
+            icon: true,
+            icon_type: 'arrow-right', 
             label: 'My applications'|t,
             url: ownApplicationsLink,
           }
@@ -56,6 +58,8 @@
         {% if viewApplicationLink %}
           {% include '@hdbt/navigation/link-button.html.twig' with {
             type: 'secondary',
+            icon: true,
+            icon_type: 'eye', 
             label: 'View application'|t,
             url: viewApplicationLink,
           }
