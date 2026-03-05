@@ -7,27 +7,27 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
+    applicationTypeSelect: '70'
     applicationType: KUVAERILLIS
     applicationTypeID: '70'
+    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
       76: '76'
       81: '81'
-    applicationOpen: '2025-01-13T05:00:00'
-    applicationClose: '2027-02-07T16:00:00'
-    applicationContinuous: 0
     applicationTargetGroup: '75'
-    disableCopying: 1
-    applicationTypeSelect: '70'
-    applicationIndustry: KUVA
-    applicationActingYears:
-      2026: '2026'
+    applicationOpen: '2025-01-13T05:00:00'
+    applicationClose: '2025-02-07T16:00:00'
     applicationActingYearsType: fixed
+    applicationActingYears:
+      2025: '2025'
     applicationActingYearsNextCount: ''
-    status: development
+    applicationContinuous: 0
+    disableCopying: 1
+    status: released
     parent: ''
-    avus2BreakingChange: false
+    avus2BreakingChange: 0
 weight: 0
 open: null
 close: null
