@@ -131,7 +131,8 @@ final class JsonMapperService {
     $this->mapper->setMappings($commonFieldMapping);
     $mappedCommonFields = $this->mapper->map($dataSources);
 
-    $mapping = json_decode(file_get_contents(__DIR__ . '/Mappings/' . $mappingFileName), TRUE);
+    $filePath = sprintf('%s/%s/ID%s/%s.json', __DIR__, 'Mappings', $formTypeId, $formIdentifier);
+    $mapping = json_decode(file_get_contents($filePath), TRUE);
     $this->mapper->setMappings($mapping);
     $mappedData = $this->mapper->map($dataSources);
 
