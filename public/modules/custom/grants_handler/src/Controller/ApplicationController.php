@@ -241,7 +241,6 @@ final class ApplicationController extends ControllerBase {
   public function view(string $submission_id, string $view_mode = 'full', string $langcode = 'fi'): array {
     $view_mode = 'default';
 
-    // @todo Create templates for react-application.
     $reactSubmission = FALSE;
 
     if ($this->moduleHandler()->moduleExists('grants_application')) {

@@ -657,7 +657,7 @@ elements: |-
         visible:
           ':input[name="hankesuunnitelma_radios"]':
             value: '0'
-      hankesuunnitelma_jatkohakemus:
+      onko_kyseessa_jatkohakemus:
         '#type': radios
         '#title': 'Onko haettava avustus käynnissä olevan hankkeen jatkohakemus?'
         '#description': '<p>Vastaa tähän kysymykseen "kyllä" vain siinä tapauksessa, jos yhteisölläsi on jo käynnissä oleva, samasta avustuksesta rahoitettu hanke ja haet sille jatkorahoitusta.</p>'

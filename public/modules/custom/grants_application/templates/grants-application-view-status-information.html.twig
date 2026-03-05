@@ -1,0 +1,58 @@
+<h2>{{ 'Application info'|t }}</h2>
+<p>{{ 'Summary about your application and processing details.'|t }}</p>
+<div class="webform-submission-information">
+  <div class="webform-submission-information__row webform-submission-information__row-top hdbt-react-form__submission-info_top">
+    <h4>
+      {{ application_name }}
+    </h4>
+    {# <div class="webform-submission-information__supportlinks">
+      <a class="hds-button hds-button--supplementary" href="{{ print_application_link }}">
+        <span aria-hidden="true" class="hel-icon hel-icon--printer"></span>
+        <span class="hds-button__label">{{ "Print application"|t }}</span>
+      </a>
+    </div> #}
+  </div>
+  <div class="webform-submission-information__row webform-submission-information__row-main">
+    <div>
+      <h5>{{ "Application number"|t }}</h5>
+      {{ submission_id }}
+      <h5>{{ 'Sent date'|t }}</h5>
+      {{ application_submit_date }}
+      <h5>{{ 'Handler information'|t }}</h5>
+      {% if application_handlers is empty %}
+        <em>{{ "No handler information set"|t }}</em>
+      {% else %}
+        {% for handler in application_handlers %}
+          {% for string in handler %}
+            <div>
+              {{ string }}
+            </div>
+          {% endfor %}
+        {% endfor %}
+      {% endif %}
+    </div>
+    <div>
+      <h5>{{ "Application statuses"|t }}</h5>
+      {% for event in history %}
+        {{ event }}
+      {% endfor %}
+    </div>
+    <div>
+      <h5>{{ "Application attachments"|t }}</h5>
+      {% for attachment in attachments %}
+        {{ attachment }}
+      {% endfor %}
+    </div>
+  </div>
+  {% if is_editable %}
+    <div class="webform-submission-information__row webform-submission-information__row-edit">
+      {% include '@hdbt/navigation/link-button.html.twig' with {
+        type: 'primary',
+        label: 'Edit application'|t,
+        url: editApplicationLink,
+      }
+      %}
+    </div>
+  {% endif %}
+
+</div>

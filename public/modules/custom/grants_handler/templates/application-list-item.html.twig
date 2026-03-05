@@ -83,7 +83,7 @@
           <span class="hds-button__label">{{ "Delete application"|t({}, {'context': 'grants_handler'})}} <span class="visually-hidden">{{ applicationFormName }}</span></span>
         </a>
       </div>
-    {% else %}
+    {% elseif (printApplicationUrl) %}
       <div class="application-list__item--print">
         <a class="hds-button hds-button--supplementary" href="{{ printApplicationUrl }}">
           <span aria-hidden="true" class="hel-icon hel-icon--printer hel-icon--size-s"></span>

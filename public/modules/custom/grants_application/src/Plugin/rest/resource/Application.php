@@ -172,6 +172,12 @@ final class Application extends ResourceBase {
       // Load the form_data wherever it may be located.
       // If not in root of content, then it should be under compensation.
       $form_data = isset($content['form_data']) ? $content['form_data'] : (isset($content['compensation']['form_data']) ? $content['compensation']['form_data'] : []);
+
+      foreach (['events', 'messages', 'attachmentsInfo', 'statusUpdates'] as $item) {
+        if (isset($content[$item])) {
+          $form_data[$item] = $content[$item];
+        }
+      }
     }
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.

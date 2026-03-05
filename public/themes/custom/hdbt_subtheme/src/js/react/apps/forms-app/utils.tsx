@@ -6,6 +6,7 @@
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import type { FormStep } from './store';
 import { communitySettings } from './formConstants';
+import { Tooltip } from 'hds-react';
 
 const regex = /^.([^.]+)/;
 
@@ -228,3 +229,18 @@ export const getSubventionSum = (formData: any, subventionFields: string[]) =>
  * @return {boolean} - Whether form is a draft
  */
 export const isDraft = () => drupalSettings.grants_react_form.use_draft;
+
+export const getTooltip = (uiSchema: UiSchema | undefined) => {
+  if (!uiSchema || !uiSchema?.['ui:options']?.tooltipText) {
+    return undefined;
+  }
+
+  return (
+    <Tooltip
+      buttonLabel={uiSchema?.['ui:options']?.tooltipButtonLabel?.toString()}
+      tooltipLabel={uiSchema?.['ui:options']?.tooltipLabel?.toString()}
+    >
+      {uiSchema['ui:options'].tooltipText.toString()}
+    </Tooltip>
+  );
+};

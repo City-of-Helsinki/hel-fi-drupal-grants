@@ -55,7 +55,7 @@ final class FormSettings {
   }
 
   /**
-   * Get the application type id.
+   * Get the application type id aka form id.
    *
    * @return int
    *   The application type id.
@@ -159,6 +159,16 @@ final class FormSettings {
    */
   public function isCopyable(): bool {
     return !$this->settings['disable_copy'];
+  }
+
+  /**
+   * Get the application name.
+   *
+   * @return string
+   *   The application name.
+   */
+  public function getApplicationName(): string {
+    return $this->settings['title'] ?? '';
   }
 
 }

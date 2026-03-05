@@ -7,27 +7,27 @@ dependencies:
     - grants_metadata
 third_party_settings:
   grants_metadata:
+    applicationTypeSelect: '70'
     applicationType: KUVAERILLIS
     applicationTypeID: '70'
+    applicationIndustry: KUVA
     applicantTypes:
       registered_community: registered_community
     applicationTypeTerms:
       76: '76'
       81: '81'
-    applicationOpen: '2025-01-13T05:00:00'
-    applicationClose: '2027-02-07T16:00:00'
-    applicationContinuous: 0
     applicationTargetGroup: '75'
-    disableCopying: 1
-    applicationTypeSelect: '70'
-    applicationIndustry: KUVA
-    applicationActingYears:
-      2026: '2026'
+    applicationOpen: '2025-01-13T05:00:00'
+    applicationClose: '2025-02-07T16:00:00'
     applicationActingYearsType: fixed
+    applicationActingYears:
+      2025: '2025'
     applicationActingYearsNextCount: ''
-    status: development
+    applicationContinuous: 0
+    disableCopying: 1
+    status: released
     parent: ''
-    avus2BreakingChange: false
+    avus2BreakingChange: 0
 weight: 0
 open: null
 close: null
@@ -68,7 +68,6 @@ elements: |-
       haettava_avustussumma_2028: 0
       hankkeen_nimi: 0
       hankkeen_tarkoitus_tavoitteet: 0
-      hankesuunnitelma_jatkohakemus: 0
       hankkeen_toimenpiteet_aikataulu_2026: 0
       hankkeen_toimenpiteet_aikataulu_2027: 0
       hankkeen_toimenpiteet_aikataulu_2028: 0
@@ -129,7 +128,6 @@ elements: |-
       olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
       haettu_avustus_tieto: 0
       hankesuunnitelma_radios: 0
-      hankesuunnitelma_jatkohakemus: 0
       hankkeen_tarkoitus_tavoitteet: 0
       hankkeen_toimenpiteet_aikataulu: 0
       hankkeen_toimenpiteet_alkupvm: 0
@@ -188,7 +186,6 @@ elements: |-
       olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
       haettu_avustus_tieto: 0
       hankesuunnitelma_radios: 0
-      hankesuunnitelma_jatkohakemus: 0
       hankkeen_tarkoitus_tavoitteet: 0
       hankkeen_toimenpiteet_aikataulu: 0
       hankkeen_toimenpiteet_alkupvm: 0
@@ -395,7 +392,7 @@ elements: |-
         '#subvention_amount__title': 'Avustuksen summa'
     kayttotarkoitus:
       '#type': webform_section
-      '#title': Käyttötarkoitus
+      '#title': ' '
       compensation_purpose_information:
         '#type': webform_markup
         '#markup': 'Kirjoita käyttötarkoitus -kenttään lyhyt hanketiivistelmä, josta käy ilmi hankkeen tarkoitus, kohderyhmä sekä konkreettiset toimenpiteet ja aikataulu.'
@@ -590,23 +587,22 @@ elements: |-
     '#title': '3. Tarkemmat tiedot'
     tarkemmat_tiedot_section:
       '#type': webform_section
-      '#title': 'Haettava avustus (2026-2028)'
+      '#title': ' '
       hankesuunnitelma_avustuksen_kesto_1:
         '#type': radios
         '#title': 'Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
         '#options':
           1: 'Haen avustusta yksivuotisena'
-        '#required': true
         '#default_value': '1'
         '#states':
           visible:
-            ':input[name="avustukset_summa"]':
+            ':input[name="haettava_avustussumma_2026[compensation]"]':
               value:
-                less: '20000'
+                pattern: '^[1]?[0-9]{0,4}(?:,\d{1,2})?$'
           required:
-            ':input[name="avustukset_summa"]':
+            ':input[name="haettava_avustussumma_2026[compensation]"]':
               value:
-                less: '20000'
+                pattern: '^[1]?[0-9]{0,4}(?:,\d{1,2})?$'
       hankesuunnitelma_avustuksen_kesto_2:
         '#type': radios
         '#title': 'Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
@@ -614,34 +610,32 @@ elements: |-
           1: 'Haen avustusta yksivuotisena'
           2: 'Haen avustusta kaksivuotisena'
           3: 'Haen avustusta kolmevuotisena'
-        '#required': true
+        '#default_value': '1'
         '#states':
           visible:
-            ':input[name="avustukset_summa"]':
+            ':input[name="haettava_avustussumma_2026[compensation]"]':
               value:
-                between: '20000:49999'
+                pattern: '^[2-4][0-9]{4,4}(?:,\d{1,2})?$'
           required:
-            ':input[name="avustukset_summa"]':
+            ':input[name="haettava_avustussumma_2026[compensation]"]':
               value:
-                between: '20000:49999'
-        '#default_value': '1'
+                pattern: '^[2-4][0-9]{4,4}(?:,\d{1,2})?$'
       hankesuunnitelma_avustuksen_kesto_3:
         '#type': radios
         '#title': 'Haetaanko yksi-, kaksi- vai kolmevuotista avustusta? Merkitse hankkeen jatkovuosille haettavat avustussummat niille aukeaviin kenttiin.'
         '#options':
           2: 'Haen avustusta kaksivuotisena'
           3: 'Haen avustusta kolmevuotisena'
-        '#required': true
+        '#default_value': '2'
         '#states':
           visible:
-            ':input[name="avustukset_summa"]':
+            ':input[name="haettava_avustussumma_2026[compensation]"]':
               value:
-                greater: '50000'
+                pattern: ^(?:50000|[5-9]\d{4}|\d{6,})(?:,\d{1,2})?$
           required:
-            ':input[name="avustukset_summa"]':
+            ':input[name="haettava_avustussumma_2026[compensation]"]':
               value:
-                greater: '50000'
-        '#default_value': '2'
+                pattern: ^(?:50000|[5-9]\d{4}|\d{6,})(?:,\d{1,2})?$
       haettava_avustussumma:
         '#type': fieldset
         '#title': 'Haettava avustussumma'
@@ -736,7 +730,7 @@ elements: |-
           visible:
             ':input[name="avustukset_summa"]':
               value:
-                less_equal: '19999'
+                less: '20000'
         '#markup': '<p>5000-19999 euron avustukset myönnetään yhdeksi vuodeksi kerrallaan. Hankkeen tulee tässä kategoriassa edistää vähintään yhtä yllä luetelluista vaihtoehdoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 5% hankkeen kuluista</p>'
       avustus_kuvaus_2:
         '#type': webform_markup
@@ -748,7 +742,7 @@ elements: |-
           invisible:
             ':input[name="avustukset_summa"]':
               value:
-                greater_equal: '49999'
+                greater_equal: '50000'
         '#markup': '<p>20 000-49 999 euron avustussummaa per vuosi voi hakea 1-3 vuoden mittaisille hankkeilla. Hankkeiden tulee tässä kategoriassa edistää vähintään kahta yllä luetelluista vaihtoehtoisista tavoitteista ja omarahoitusosuuden tai muun rahoitusosuuden tulee olla vähintään 10% hankkeen kuluista</p>'
       avustus_kuvaus_3:
         '#type': webform_markup
@@ -777,7 +771,7 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-      hankesuunnitelma_jatkohakemus:
+      onko_kyseessa_jatkohakemus:
         '#type': radios
         '#title': 'Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?'
         '#required': true
@@ -862,10 +856,10 @@ elements: |-
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#states':
           visible:
-            ':input[name="hankesuunnitelma_jatkohakemus"]':
+            ':input[name="onko_kyseessa_jatkohakemus"]':
               value: '1'
           required:
-            ':input[name="hankesuunnitelma_jatkohakemus"]':
+            ':input[name="onko_kyseessa_jatkohakemus"]':
               value: '1'
       haun_tavoitteet_fieldset:
         '#type': fieldset
@@ -947,7 +941,7 @@ elements: |-
         tavoitettu_helsingissa:
           '#type': textfield
           '#title': 'Hankkeen toiminnalla tavoitettavat Helsingissä asuvat iäkkäät ihmiset'
-          '#help': '<p>Ilmoita tässä tavoitettujen ikäihmisten määrä.</p>'
+          '#help': '<p>Ilmoita tässä tavoitettujen ikäihmisten tavoiteltu määrä.</p>'
           '#required': true
           '#input_mask': "'alias': 'numeric', 'groupSeparator': ' ', 'digits': '0'"
           '#pattern': '^[0-9 ]*$'
@@ -1790,7 +1784,7 @@ elements: |-
       '#title': '4.1 Tulot'
       talousarvio_info:
         '#type': webform_markup
-        '#markup': 'Erittele tässä hankekauden 2026-2027 talousarvio. Monivuotista avustusta haettaessa budjetti vuosilla 2027-2028 ja 2028-2029 tulee liittää hakemuksen liitteeksi.'
+        '#markup': 'Erittele tässä hankekauden 2026-2027 talousarvio. Monivuotista avustusta haettaessa budjetti vuosille 2027-2028 ja 2028-2029 tulee liittää hakemuksen liitteeksi.'
       tulot:
         '#type': grants_budget_income_static
         '#title': Tulot

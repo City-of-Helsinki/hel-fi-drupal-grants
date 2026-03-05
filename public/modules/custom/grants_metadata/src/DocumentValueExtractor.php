@@ -212,7 +212,8 @@ class DocumentValueExtractor {
     if ($valueExtractorConfig) {
       $valueExtractorService = self::getDynamicService($valueExtractorConfig['service']);
       $method = $valueExtractorConfig['method'];
-      return htmlspecialchars_decode($valueExtractorService->$method($item));
+      $arguments = $valueExtractorConfig['arguments'] ?? [];
+      return htmlspecialchars_decode($valueExtractorService->$method($item, $arguments));
     }
     return NULL;
   }
@@ -241,7 +242,8 @@ class DocumentValueExtractor {
       if ($valueExtractorConfig) {
         $valueExtractorService = self::getDynamicService($valueExtractorConfig['service']);
         $method = $valueExtractorConfig['method'];
-        return htmlspecialchars_decode($valueExtractorService->$method($item));
+        $arguments = $valueExtractorConfig['arguments'] ?? [];
+        return htmlspecialchars_decode($valueExtractorService->$method($item, $arguments));
       }
     }
     return NULL;
@@ -307,7 +309,8 @@ class DocumentValueExtractor {
     if ($valueExtractorConfig) {
       $valueExtractorService = self::getDynamicService($valueExtractorConfig['service']);
       $method = $valueExtractorConfig['method'];
-      $retval = $valueExtractorService->$method($retval);
+      $arguments = $valueExtractorConfig['arguments'] ?? [];
+      $retval = $valueExtractorService->$method($retval, $arguments);
     }
 
     return $retval;

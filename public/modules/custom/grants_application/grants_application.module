@@ -34,6 +34,41 @@ function grants_application_theme(): array {
         'statusStringHumanReadable' => NULL,
       ],
     ],
+    'grants_application_view' => [
+      'variables' => [
+        'application_name' => NULL,
+        'application_number' => NULL,
+        'submission_id' => NULL,
+        'form_identifier' => NULL,
+        'ownApplicationsLink' => NULL,
+        'editApplicationLink' => NULL,
+        'print_application_link' => NULL,
+        'copy_text' => NULL,
+        'application_submit_date' => NULL,
+        'history' => NULL,
+        'attachments' => NULL,
+        'is_editable' => NULL,
+        'application_handlers' => NULL,
+        'messages' => NULL,
+        'message_form' => NULL,
+        'status' => NULL,
+        'statusLocalized' => NULL,
+        'submissionObject' => NULL,
+      ],
+    ],
+    'grants_application_view_status_information' => [
+      'variables' => [],
+    ],
+    'grants_application_view_messages' => [
+      'variables' => [
+        'messages' => NULL,
+        'message_form' => NULL,
+        'submission' => NULL,
+        'isDraft' => NULL,
+        'hideMessageText' => NULL,
+      ],
+    ],
+    'message_form' => ['variables' => []],
   ];
 }
 

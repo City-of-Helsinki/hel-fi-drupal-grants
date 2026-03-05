@@ -15,6 +15,7 @@ import { useAtomValue } from 'jotai';
 import { formStepsAtom, getCurrentStepAtom, shouldRenderPreviewAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
+import { getTooltip } from '../utils';
 
 export const ArrayFieldTemplate = ({
   canAdd,
@@ -44,7 +45,13 @@ export const ArrayFieldTemplate = ({
       <>
         {/* @todo fix when rebuilding styles  */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        {!hideName && (printableName ? <label>{printableName}</label> : <label>{schema.title}</label>)}
+        {!hideName &&
+          (printableName || schema.title) &&
+          (printableName ? (
+            <span className='grants-form--preview-section__label'>{printableName}</span>
+          ) : (
+            <span className='grants-form--preview-section__label'>{schema.title}</span>
+          ))}
         {renderableItems.length ? renderableItems : '-'}
       </>
     );
@@ -71,19 +78,30 @@ const PreviewStep = ({
   title,
   properties,
   uiSchema,
+  stepNumber,
 }: {
   title?: string;
   properties: ObjectFieldTemplatePropertyType[];
   uiSchema: any;
+  stepNumber?: number;
 }) => {
   const printableName = uiSchema?.['ui:options']?.printableName;
+  const headingText = printableName || title?.toString();
+  const heading = stepNumber !== undefined ? `${stepNumber}. ${headingText}` : headingText;
 
   return (
     <Accordion
-      heading={printableName || title?.toString()}
+      className={
+        'hdbt-react-form__preview-accordion-item' +
+        (stepNumber === 1 ? ' hdbt-react-form__preview-accordion-item--first' : '')
+      }
+      heading={heading}
       headingLevel={3}
       initiallyOpen
       language={drupalSettings.path.currentLanguage || 'fi'}
+      theme={{
+        '--border-color': ' var(--color-black-20)',
+      }}
     >
       {properties.map((field) => field.content)}
     </Accordion>
@@ -120,7 +138,9 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   }
 
   if (_step && shouldRenderPreview) {
-    return <PreviewStep title={title} properties={properties} uiSchema={uiSchema} />;
+    const stepEntry = steps && [...steps.entries()].find(([, s]) => s.id === _step);
+    const stepNumber = stepEntry ? stepEntry[0] + 1 : undefined;
+    return <PreviewStep title={title} properties={properties} uiSchema={uiSchema} stepNumber={stepNumber} />;
   }
 
   if (_step && _step !== stepId) {
@@ -196,7 +216,13 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
       <>
         {/* @todo fix when rebuilding styles  */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        {!hideName && printableName ? <label>{printableName}</label> : <label>{title}</label>}
+        {!hideName &&
+          (printableName || title) &&
+          (printableName ? (
+            <span className='grants-form--preview-section__label'>{printableName}</span>
+          ) : (
+            <span className='grants-form--preview-section__label'>{title}</span>
+          ))}
         {properties.map((field) => {
           if (field.content.props.uiSchema?.['ui:help']) {
             field.content.props.uiSchema['ui:help'] = '';
@@ -213,6 +239,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
       heading={title || ''}
       className='hdbt-form--fieldset hdbt-form--fieldset--border'
       style={{ marginInline: '0' }}
+      tooltip={getTooltip(uiSchema)}
     >
       {description && <div className='hdbt-form--description'>{description}</div>}
       {properties.map((field) => field.content)}

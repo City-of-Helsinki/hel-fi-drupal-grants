@@ -23,7 +23,7 @@
         "ui:field": "textParagraph"
       },
       "other_attachment_fieldset": {
-        "file": {
+        "other_attachment_fieldset_file": {
           "misc:file-type": 0,
           "misc:variant": "simple",
           "ui:help": "other_attachment_fieldset.ui_help",

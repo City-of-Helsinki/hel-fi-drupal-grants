@@ -86,7 +86,7 @@ export const FileInput = ({
     return (
       <>
         {defaultValue.map((file) => (
-          <p key={file.name}>{file.name}</p>
+          <>{file.name}</>
         ))}
       </>
     );

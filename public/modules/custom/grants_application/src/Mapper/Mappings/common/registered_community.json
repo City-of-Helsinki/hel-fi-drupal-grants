@@ -368,7 +368,7 @@
   "attachmentsInfo.attachmentsArray.generalInfoArray.extraInfo": {
     "#tip": "attachment extra info",
     "datasource": "form_data",
-    "source": "attachments_step.attachments_section.extra_info",
+    "source": "attachments_step.attachments_section.further_clarification",
     "mapping_type": "default",
     "data": {
       "ID": "extraInfo",

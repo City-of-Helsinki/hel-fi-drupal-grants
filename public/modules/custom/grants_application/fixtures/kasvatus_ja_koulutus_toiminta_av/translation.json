@@ -3,7 +3,6 @@
     "translation": {
       "accounting_auditing_expenses.title": "Accounting (€)",
       "amount.title": "Amount (€)",
-      "applied_benefits.title": "Requested grants (€)",
       "benefit_usage_other_expenditure_section.title": "Other expenses",
       "budget_step.title": "Budget",
       "cleaning_services.title": "Cleaning (€)",
@@ -17,7 +16,6 @@
       "expenditure_section.title": "Expenses",
       "form_title": "Education, grant application for organisers of afternoon activities for school children",
       "heating.title": "Heating (€)",
-      "income_section.title": "Income",
       "lease_agreement.title": "Leasing agreement (when applying for rent grant)",
       "location_address.title": "Street Address",
       "location_held_in_provided_space.title": "Is premise free",
@@ -61,7 +59,6 @@
     "translation": {
       "accounting_auditing_expenses.title": "Kirjanpito ja titiltarkastuspalvelut (€)",
       "amount.title": "Summa (€)",
-      "applied_benefits.title": "Haettu avustus (€)",
       "benefit_usage_other_expenditure_section.title": "Avustuksen käyttö/Muut kulut eriteltyinä",
       "budget_step.title": "Talous",
       "cleaning_services.title": "Siivouspalvelut (€)",
@@ -76,7 +73,6 @@
       "expenditure_section.title": "Menot",
       "form_title": "Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille",
       "heating.title": "Lämpö (€)",
-      "income_section.title": "Tulot",
       "lease_agreement.title": "Vuokrasopimus (haettaessa vuokra-avustusta)",
       "location_address.title": "Osoite",
       "location_held_in_provided_space.title": "Toimintaa järjestetään kaupungin opetus-, sosiaali- tai nuorisotoimelta saaduissa maksuttomissa tiloissa",
@@ -119,7 +115,6 @@
     "translation": {
       "accounting_auditing_expenses.title": "Bokföring och revision (€)",
       "amount.title": "Belopp (€)",
-      "applied_benefits.title": "Önskat understöd (€)",
       "benefit_usage_other_expenditure_section.title": "Användning av understödet/Specifikation av övriga kostnader",
       "budget_step.title": "Budget",
       "cleaning_services.title": "Städning (€)",
@@ -134,7 +129,6 @@
       "expenditure_section.title": "Utgifter",
       "form_title": "Fostran och utbildning, ansökan om verksamhetsbidrag för organisatörer av eftermiddagsverksamhet för skolbarn",
       "heating.title": "Värme (€)",
-      "income_section.title": "Inkomster",
       "lease_agreement.title": "Hyresavtalet (om du söker hyresunderstöd",
       "location_address.title": "Adress",
       "location_held_in_provided_space.title": " Verksamheten ordnas i lokaler som hyresfritt ställs till förfogande av stadens utbildnings-, social- eller ungdomsväsende ",

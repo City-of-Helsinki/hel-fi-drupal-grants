@@ -54,7 +54,6 @@
     "react-i18next": "^15.5.1",
     "react-popper": "^2.2.5",
     "swr": "2.2.5",
-    "ts-loader": "^9.4.2",
     "typescript": "^5.1.6",
     "usehooks-ts": "^3.1.1",
     "vitest": "^3.0.8"
@@ -85,7 +84,6 @@
     "stylelint-high-performance-animation": "^1.10.0",
     "stylelint-order": "^6.0.0",
     "stylelint-scss": "^6.0.0",
-    "ts-loader": "^9.4.2",
     "typescript": "^5.1.6",
     "vitest": "^3.0.8"
   }

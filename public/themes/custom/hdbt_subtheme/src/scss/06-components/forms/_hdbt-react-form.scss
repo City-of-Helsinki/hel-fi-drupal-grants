@@ -2,3 +2,70 @@
   margin-block-start: $spacing-sextuple;
   margin-inline: auto;
 }
+
+.hdbt-react-form__preview-accordion-item {
+  padding-inline: $spacing;
+
+  @include breakpoint($breakpoint-m) {
+    padding-inline: $spacing-and-half;
+  }
+}
+
+// Accordion button/header styles
+.hdbt-react-form__preview-accordion-item [role='heading'] {
+  @include font('h3');
+}
+
+// Accordion content styles
+.hdbt-react-form__preview-accordion-item [role='region'] {
+  padding-block: $spacing-and-half $spacing;
+}
+
+.hdbt-react-form__preview-accordion-item--first {
+  border-top: 1px solid var(--color-black-20);
+  margin-block-start: $spacing-double;
+}
+
+.hdbt-react-form__preview-accordion-item .grants-form--preview-section__label {
+  margin-block-end: $spacing-half;
+}
+
+.hdbt-react-form__preview-accordion-item .hdbt-form--section__content {
+  padding-block-start: $spacing-quarter;
+
+  .array-item:not(:only-child) {
+    margin-block-end: $spacing-and-half;
+  }
+}
+
+.hdbt-react-form__subvention-table {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hdbt-react-form__subvention-table__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.hdbt-react-form__form-status {
+  margin-block-start: $spacing-and-half;
+}
+
+.hdbt-react-form__completion-page .page-title {
+  display: none;
+}
+
+.hdbt-react-form__message__sender:not(:first-child) {
+  margin-block-start: $spacing-and-half;
+}
+
+.hdbt-react-form__message__attachments {
+  margin: $spacing-half 0 0;
+  padding: 0;
+}
+
+.hdbt-react-form__submission-info_top {
+  padding-block-end: $spacing;
+}
