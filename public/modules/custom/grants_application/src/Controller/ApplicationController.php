@@ -8,7 +8,6 @@ use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
-use Drupal\Core\Link;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
@@ -92,7 +91,7 @@ final class ApplicationController extends ControllerBase {
    *   The form identifier.
    *
    * @return string
-   *   The form title.
+   *   Returns the form title.
    */
   public function getFormTitle(string $form_identifier): string {
     try {

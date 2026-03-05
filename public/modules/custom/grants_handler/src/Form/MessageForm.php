@@ -82,9 +82,9 @@ class MessageForm extends FormBase {
     $storage = $form_state->getStorage();
     $storage['webformSubmission'] = $webform_submission;
 
-    $application_number = \Drupal::routeMatch()->getParameters()->get('submission_id');
+    $application_number = $this->getRouteMatch()->getParameters()->get('submission_id');
     if (!$application_number) {
-      $application_number = \Drupal::routeMatch()->getParameters()->get('application_number');
+      $application_number = $this->getRouteMatch()->getParameters()->get('application_number');
       $storage['application_number'] = $application_number;
     }
 
