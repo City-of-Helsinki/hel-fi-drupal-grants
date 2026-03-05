@@ -68,7 +68,6 @@ elements: |-
       haettava_avustussumma_2028: 0
       hankkeen_nimi: 0
       hankkeen_tarkoitus_tavoitteet: 0
-      hankesuunnitelma_jatkohakemus: 0
       hankkeen_toimenpiteet_aikataulu_2026: 0
       hankkeen_toimenpiteet_aikataulu_2027: 0
       hankkeen_toimenpiteet_aikataulu_2028: 0
@@ -129,7 +128,6 @@ elements: |-
       olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
       haettu_avustus_tieto: 0
       hankesuunnitelma_radios: 0
-      hankesuunnitelma_jatkohakemus: 0
       hankkeen_tarkoitus_tavoitteet: 0
       hankkeen_toimenpiteet_aikataulu: 0
       hankkeen_toimenpiteet_alkupvm: 0
@@ -188,7 +186,6 @@ elements: |-
       olemme_hakeneet_avustuksia_muualta_kuin_helsingin_kaupungilta: 0
       haettu_avustus_tieto: 0
       hankesuunnitelma_radios: 0
-      hankesuunnitelma_jatkohakemus: 0
       hankkeen_tarkoitus_tavoitteet: 0
       hankkeen_toimenpiteet_aikataulu: 0
       hankkeen_toimenpiteet_alkupvm: 0
@@ -774,7 +771,7 @@ elements: |-
         '#counter_type': character
         '#counter_maximum': 2500
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
-      hankesuunnitelma_jatkohakemus:
+      onko_kyseessa_jatkohakemus:
         '#type': radios
         '#title': 'Onko kyseessä jatkohanke avustuskokonaisuudessa aikaisemmin avustetulle hankkeelle / toiminnalle?'
         '#required': true
@@ -859,10 +856,10 @@ elements: |-
         '#counter_maximum_message': '%d/2500 merkkiä jäljellä'
         '#states':
           visible:
-            ':input[name="hankesuunnitelma_jatkohakemus"]':
+            ':input[name="onko_kyseessa_jatkohakemus"]':
               value: '1'
           required:
-            ':input[name="hankesuunnitelma_jatkohakemus"]':
+            ':input[name="onko_kyseessa_jatkohakemus"]':
               value: '1'
       haun_tavoitteet_fieldset:
         '#type': fieldset

@@ -108,10 +108,12 @@ class DocumentContentMapper {
     // #UHF-12674
     // The default field for duration is hankesuunnitelma_avustuksen_kesto.
     // On "iäkkäiden liikunta&kulttuuri"-form, we need a radio button set
-    // where a single radiobutton is only shown if coditions are met.
+    // where a single radiobutton is only shown if conditions are met.
     // Workaround: added 3 radiobutton sets.
     if (array_key_exists('hankesuunnitelma_avustuksen_kesto_3', $typedDataValues)) {
       $compensation = (int) str_replace(' ', '', $typedDataValues['haettava_avustussumma_2026']);
+      unset($typedDataValues['hankesuunnitelman_kesto']);
+      unset($typedDataValues['onko_jatkohakemus']);
 
       if ($compensation < 20000) {
         unset($typedDataValues['hankesuunnitelma_avustuksen_kesto_2']);
