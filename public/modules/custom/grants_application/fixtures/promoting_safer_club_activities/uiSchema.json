@@ -365,6 +365,7 @@
         "other_attachment_fieldset_file": {
           "misc:file-type": 0,
           "misc:variant": "simple",
+          "misc:multiple": "true",
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
