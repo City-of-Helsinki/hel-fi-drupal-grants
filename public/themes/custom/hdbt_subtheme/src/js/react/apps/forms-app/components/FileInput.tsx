@@ -60,6 +60,27 @@ const filesFromATVData = (value?: ATVFile): File[] => {
   return [new File([data], value.fileName)];
 };
 
+/**
+ * Allow uploading multiple files using Muu-liite-field.
+ *
+ * Add 'misc:multiple': 'true' to uiSchema to enable the feature.
+ */
+const multipleFilesFromATVData = (value?: ATVFile[] | [], multipleValues: boolean = false): any => {
+  if (!value) {
+    return [];
+  }
+
+  const files: File[] = [];
+
+  value.forEach((item) => {
+    const data = new Uint8Array(item.size);
+    const file = new File([data], item.fileName);
+    files.push(file);
+  });
+
+  return files;
+};
+
 export const FileInput = ({
   accept,
   formData,
@@ -79,8 +100,9 @@ export const FileInput = ({
   const { token } = useAtomValue(formConfigAtom)!;
   const pushNotification = useSetAtom(pushNotificationAtom);
   const { 'misc:file-type': fileType } = uiSchema as UiSchema & { 'misc:file-type': number };
-  const defaultValue = filesFromATVData(formData);
   const { isDeliveredLater, isIncludedInOtherFile } = formData || {};
+  const multipleFiles = uiSchema?.['misc:multiple'] ?? false;
+  const defaultValue = multipleFiles ? multipleFilesFromATVData(formData) : filesFromATVData(formData);
 
   if (shouldRenderPreview) {
     return (
@@ -105,7 +127,7 @@ export const FileInput = ({
     setRefreshKey((prevKey) => prevKey + 1);
   };
 
-  const handleRemoval = async (existingData: PersistedFile | undefined) => {
+  const handleRemoval = async (existingData: PersistedFile | undefined, multiple: boolean = false) => {
     if (!existingData?.integrationID) {
       onChange(undefined);
       return;
@@ -124,7 +146,10 @@ export const FileInput = ({
       return;
     }
 
-    onChange(undefined);
+    // Remove all if only one file can be added.
+    if (!multiple) {
+      onChange(undefined);
+    }
   };
 
   const handleChange = async (files: File[], existingData: PersistedFile | undefined) => {
@@ -153,7 +178,78 @@ export const FileInput = ({
     });
   };
 
-  const inputElement = (
+  /**
+   * Upload/delete handler for a file upload field accepting multiple file uploads.
+   */
+  const handleMultiple = async (files: File[], existingData: PersistedFile[] | undefined) => {
+    const existingFileCount = existingData?.length ?? 0;
+
+    // Remove a file from rjsf-data.
+    if (existingFileCount > files?.length) {
+      const existingFiles: PersistedFile[] = [];
+      existingData?.forEach((existingItem) => {
+        const file = files.find((file) => file.name === existingItem.fileName);
+        if (!file) {
+          handleRemoval(existingItem, true);
+        } else {
+          existingFiles.push(existingItem);
+        }
+      });
+
+      // Readd the existing files to the json.
+      onChange(existingFiles);
+      return;
+    }
+
+    const result = await uploadFiles(name, applicationNumber, token, files, fileType);
+
+    if (!result) {
+      return;
+    }
+
+    const { href: integrationID, ...rest } = result;
+    const description = '';
+    const newFile = {
+      integrationID,
+      description,
+      isDeliveredLater: false,
+      isIncludedInOtherFile: false,
+      isNewAttachment: true,
+      ...rest,
+    };
+
+    // Add old&new files to the rjsf-data.
+    const allFiles: any = [];
+    existingData?.forEach((item) => {
+      allFiles.push(item);
+    });
+    allFiles.push(newFile);
+
+    onChange(allFiles);
+  };
+
+  const inputElement = multipleFiles ? (
+    <HDSFileInput
+      multiple
+      accept={accept}
+      defaultValue={defaultValue}
+      disabled={readonly}
+      dragAndDrop
+      errorText={formatErrors(rawErrors)}
+      hideLabel={false}
+      id={id || ''}
+      invalid={Boolean(rawErrors?.length)}
+      label={label}
+      language={drupalSettings.path.currentLanguage}
+      // 20mb in bytes
+      maxSize={20 * 1024 * 1024}
+      onChange={(files: File[]) => {
+        handleMultiple(files, formData);
+      }}
+      required={required}
+      className='hdbt-form--fileinput'
+    />
+  ) : (
     <HDSFileInput
       accept={accept}
       defaultValue={defaultValue}

@@ -8,6 +8,7 @@
     "purpose_section": {
       "purpose": {
         "ui:widget": "textarea",
+        "misc:max-length": 2500,
         "ui:options": {
           "tooltipLabel": "purpose.title",
           "tooltipButtonLabel": "purpose.title",
