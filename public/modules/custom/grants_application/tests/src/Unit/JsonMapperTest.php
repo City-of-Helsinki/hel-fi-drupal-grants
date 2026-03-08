@@ -160,6 +160,36 @@ final class JsonMapperTest extends UnitTestCase {
   }
 
   /**
+   * Tests Multiple files from single field mapping.
+   */
+  public function testMultipleFilesMapping(): void {
+    $defaultMappings = $this->getMapping('filemappings.json');
+    $dataSources = $this->getAllDatasources('multipleFilesFieldForm.json');
+
+    $mapper = new JsonMapper();
+    $mapper->setMappings($defaultMappings);
+    $mappedFiles = $mapper->mapFiles($dataSources);
+
+    $this->assertTrue(count($mappedFiles['attachmentsInfo']['attachmentsArray']) === 2, 'All files exist.');
+
+    $descriptionExists = FALSE;
+    $descriptionValue = FALSE;
+    foreach ($mappedFiles['attachmentsInfo']['attachmentsArray'][0] as $singleFile) {
+      if (isset($singleFile['ID']) && $singleFile['ID'] === 'description') {
+        $descriptionExists = TRUE;
+        $descriptionValue = $singleFile['value'];
+        break;
+      }
+    }
+
+    $this->assertTrue($descriptionExists, 'Description exists.');
+    $this->assertEquals('kuvaus liitetiedostosta tulee tänne', $descriptionValue, 'default value given in mappings should have been overwritten by form value');
+    $this->assertNotEquals('Yhteisön säännöt', $descriptionValue, 'default value overwrite works');
+    $this->assertTrue($mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['ID'] === 'fileName', 'Second field: fileName');
+    $this->assertEquals('file1.pdf', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['value']);
+  }
+
+  /**
    * Combine the common data sources and the actual form into one.
    *
    * The end result contains data from react-form, user profile,...
