@@ -63,3 +63,36 @@ msgstr "Radera ansöknings inställningar"
 
 msgid "Saved the application metadata for %label (ID: %id)."
 msgstr "Sparade ansöknings inställningar för %label (ID: %id)."
+
+msgid "Saving the draft failed. Please try again in a moment."
+msgstr "Det gick inte att spara utkastet. Försök igen om en stund."
+
+msgid "The application is not currently open. Please check the grant application period."
+msgstr "Denna ansökan är inte tillgänglig. Se över ansökningstiden."
+
+msgid "Failed to retrieve your user information. Please try again later."
+msgstr "Dina uppgifter kunde inte hämtas. Försök igen om en stund."
+
+msgid "No application was found for the given number. Please check the number or create a new application."
+msgstr "Ingen ansökan hittades med det angivna ansökningsnumret. Kontrollera numret eller skapa en ny ansökan."
+
+msgid "Failed to load the application. Please try again later."
+msgstr "Ansökan kunde inte laddas. Försök igen om en stund."
+
+msgid "Unable to process the submission. Please try again later."
+msgstr "Ansökan kunde inte behandlas för sändning. Försök igen om en stund. "
+
+msgid "The selected bank account is missing from your profile. Please update your profile and try again."
+msgstr "Det valda bankkontot finns inte i din profil. Lägg till kontot i din profil och försök igen."
+
+msgid "An error occurred while submitting the application. Please try again later."
+msgstr "Ett fel inträffade vid sändningen av ansökan. Försök igen om en stund."
+
+msgid "Failed to submit the application. Please try again later."
+msgstr "Sändningen av ansökan misslyckades. Försök igen om en stund."
+
+msgid "The file could not be uploaded. Please ensure the file is safe and try again."
+msgstr "Det gick inte att lägga till filen. Kontrollera att filen är säker och försök igen."
+
+msgid "The file could not be uploaded. Please try again later."
+msgstr "Ett fel uppstod vid tillägg av filen. "
