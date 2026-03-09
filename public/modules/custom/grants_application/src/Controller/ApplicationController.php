@@ -125,24 +125,9 @@ final class ApplicationController extends ControllerBase {
     $blockStorage = $this->entityTypeManager()->getStorage('block_content');
     $terms_block = $blockStorage->load(1);
 
-    try {
-      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
-      $user_information = $this->userInformationService->getUserData();
-    }
-    catch (\Exception $e) {
-      // Unable to fetch user information.
-      throw new NotFoundHttpException();
-    }
-
-    try {
-      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
-    }
-    catch (\Exception) {
-      throw new NotFoundHttpException();
-    }
-
+    $submission = $this->getApplicationSubmission($application_number);
     // Check the application status, if it's still editable.
-    if (!$submission->isDraft()) {
+    if ($submission && !$submission->isDraft()) {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
