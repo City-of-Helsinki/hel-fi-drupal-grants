@@ -15,6 +15,7 @@ use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
+use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\grants_handler\ApplicationStatusService;
@@ -58,6 +59,7 @@ final class ApplicationController extends ControllerBase {
     private readonly AccountProxyInterface $accountProxy,
     #[Autowire(service: 'grants_handler.message_service')]
     private readonly MessageService $messageService,
+    private readonly UserInformationService $userInformationService,
   ) {
   }
 
@@ -123,13 +125,24 @@ final class ApplicationController extends ControllerBase {
     $blockStorage = $this->entityTypeManager()->getStorage('block_content');
     $terms_block = $blockStorage->load(1);
 
-    $submission = $this->getApplicationSubmission($application_number);
-    if ($application_number && !$submission) {
+    try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $user_information = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
+      // Unable to fetch user information.
+      throw new NotFoundHttpException();
+    }
+
+    try {
+      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+    }
+    catch (\Exception) {
       throw new NotFoundHttpException();
     }
 
     // Check the application status, if it's still editable.
-    if ($submission && !$submission->isDraft()) {
+    if (!$submission->isDraft()) {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
@@ -240,6 +253,26 @@ final class ApplicationController extends ControllerBase {
    *   Build array or redirect response.
    */
   public function viewApplication(string $application_number): array|RedirectResponse {
+    if (!$application_number) {
+      throw new NotFoundHttpException();
+    }
+
+    try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $user_information = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
+      // Unable to fetch user information.
+      throw new NotFoundHttpException();
+    }
+
+    try {
+      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+    }
+    catch (\Exception) {
+      throw new NotFoundHttpException();
+    }
+
     $submission = $this->getApplicationSubmission($application_number);
 
     if ($application_number && !$submission) {
@@ -299,6 +332,9 @@ final class ApplicationController extends ControllerBase {
       $filename = $att['filename'];
       $event = array_find($events, fn($event) => isset($event['eventTarget']) && $event['eventTarget'] === $filename);
       if ($event) {
+        if (!isset($documentContent['attachmentsInfo']['attachmentsArray'])) {
+          continue;
+        }
         $documentContentAttachment = array_find($documentContent['attachmentsInfo']['attachmentsArray'], fn($a) => $a[2]['ID'] === 'fileType' && $a[1]['value'] === $filename);
         $description = $documentContentAttachment[0]['value'] . ', ' ?? '';
         $submitted = $event['timeCreated'];
@@ -669,28 +705,6 @@ final class ApplicationController extends ControllerBase {
   }
 
   /**
-   * Get the application submission entity.
-   *
-   * @param string|null $application_number
-   *   The application number.
-   *
-   * @return \Drupal\grants_application\Entity\ApplicationSubmission|null
-   *   The application submission entity or null if not found.
-   */
-  private function getApplicationSubmission(?string $application_number): ?ApplicationSubmission {
-    if (!$application_number) {
-      return NULL;
-    }
-
-    /** @var \Drupal\grants_application\Entity\ApplicationSubmission[] $submissions */
-    $submissions = $this->entityTypeManager()
-      ->getStorage('application_submission')
-      ->loadByProperties(['application_number' => $application_number]);
-
-    return $submissions ? reset($submissions) : NULL;
-  }
-
-  /**
    * Get the redirect back url.
    *
    * @param string|null $application_number
@@ -770,6 +784,71 @@ final class ApplicationController extends ControllerBase {
       ],
     ];
     return $statuses[$langcode] ?? NULL;
+  }
+
+  /**
+   * Get the application submission entity.
+   *
+   * @param string|null $application_number
+   *   The application number.
+   *
+   * @return \Drupal\grants_application\Entity\ApplicationSubmission|null
+   *   The application submission entity or null if not found.
+   */
+  private function getApplicationSubmission(?string $application_number): ?ApplicationSubmission {
+    if (!$application_number) {
+      return NULL;
+    }
+
+    /** @var \Drupal\grants_application\Entity\ApplicationSubmission[] $submissions */
+    $submissions = $this->entityTypeManager()
+      ->getStorage('application_submission')
+      ->loadByProperties(['application_number' => $application_number]);
+
+    return $submissions ? reset($submissions) : NULL;
+  }
+
+  /**
+   * Get the submission entity with permission checking.
+   *
+   * @param string $sub
+   *   User sub.
+   * @param string $application_number
+   *   The application number.
+   * @param string $business_id
+   *   The business id.
+   *
+   * @return \Drupal\grants_application\Entity\ApplicationSubmission
+   *   The application submission.
+   */
+  private function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
+    // @todo Duplicated, put this functionality in better place.
+    $ids = $this->entityTypeManager()
+      ->getStorage('application_submission')
+      ->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('sub', $sub)
+      ->condition('application_number', $application_number)
+      ->execute();
+
+    if ($ids) {
+      return ApplicationSubmission::load(reset($ids));
+    }
+
+    // Check for business id as well.
+    $ids = $this->entityTypeManager()
+      ->getStorage('application_submission')
+      ->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('business_id', $business_id)
+      ->condition('application_number', $application_number)
+      ->execute();
+
+    if ($ids) {
+      return ApplicationSubmission::load(reset($ids));
+    }
+
+    throw new \Exception('Application not found');
   }
 
 }
