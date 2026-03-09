@@ -178,5 +178,4 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFiles", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   }
-
 }

@@ -1,0 +1,35 @@
+{
+  "attachments_step" : {
+    "attachments_section" : {
+      "other_attachment_fieldset" : {
+        "files" : [
+          {
+            "description" : "kuvaus liitetiedostosta tulee tänne",
+            "fileName" : "file1.pdf",
+            "integrationID" : "https://example.com/v1/documents/aaaaaaaa-1111-2222-3333-bbbbbbcccccc/attachments/999999/",
+            "isDeliveredLater" : false,
+            "isIncludedInOtherFile" : false,
+            "isNewAttachment" : true,
+            "size" : 13264,
+            "fileId" : 323335
+          },
+          {
+            "description" : "kuvaus liitetiedostosta tulee tänne",
+            "fileName" : "file2.pdf",
+            "integrationID" : "https://example.com/v1/documents/aaaaaaaa-1111-2222-3333-bbbbbbcccccc/attachments/979797/",
+            "isDeliveredLater" : false,
+            "isIncludedInOtherFile" : false,
+            "isNewAttachment" : true,
+            "size" : 65432,
+            "fileId" : 444444
+          }
+        ]
+      },
+      "budget": {
+        "budget_file": {
+          "isDeliveredLater": true
+        }
+      }
+    }
+  }
+}

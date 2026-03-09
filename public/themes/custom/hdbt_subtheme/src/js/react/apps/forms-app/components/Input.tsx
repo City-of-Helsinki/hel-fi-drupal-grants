@@ -56,6 +56,7 @@ export const TextInput = ({
 }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isNumberInput = schema.type === 'number' || schema.type === 'integer';
+  const phone = uiSchema?.['misc:phone'] ?? false;
 
   if (shouldRenderPreview) {
     return <PreviewInput value={value} label={label} uiSchema={uiSchema} />;
@@ -124,6 +125,13 @@ export const TextInput = ({
       label={label}
       name={name}
       onBlur={() => null}
+      onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
+        // Phone number rather a string of numbers than a number field.
+        const allowedKeys = ['Backspace', 'Space', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+        if (phone && !allowedKeys.includes(event.key) && Number.isNaN(Number(event.key))) {
+          event.preventDefault();
+        }
+      }}
       onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value)}
       onFocus={() => null}
       readOnly={readonly}

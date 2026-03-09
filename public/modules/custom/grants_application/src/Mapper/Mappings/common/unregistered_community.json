@@ -187,6 +187,27 @@
       "value": "",
       "valueType": "string"
     }
+  },
+
+  "compensation.additionalInformation": {
+    "datasource": "form_data",
+    "source": "attachments_step.additional_information_section.additional_information",
+    "mapping_type": "simple",
+    "data": {
+      "additionalInformation": ""
+    }
+  },
+  "attachmentsInfo.attachmentsArray.generalInfoArray.extraInfo": {
+    "#tip": "attachment extra info",
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.further_clarification",
+    "mapping_type": "default",
+    "data": {
+      "ID": "extraInfo",
+      "label": "Lisäselvitys liitteistä",
+      "value": "",
+      "valueType": "string"
+    }
   }
 }
 
