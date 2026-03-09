@@ -27,8 +27,30 @@
         "ui:widget": "radio"
       },
       "other_compensations": {
-        "other_compensation_description": {
-          "ui:widget": "textarea"
+        "ui:options": {
+          "addText": "other_compensation.add"
+        },
+        "items": {
+          "other_compensation_issuer": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
+          "other_compensation_description": {
+            "ui:widget": "textarea",
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
         }
       }
     },
@@ -65,7 +87,10 @@
     "community_activity_section": {
       "community_activity_description": {
         "misc:profilePrefill": "businessPurpose",
-        "ui:widget": "textarea"
+        "ui:widget": "textarea",
+        "ui:options": {
+          "hideNameFromPrint": true
+        }
       },
       "community_practices_business": {
         "ui:enumNames": [
@@ -77,6 +102,9 @@
     },
     "locations_info_section": {
       "locations_info": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
         "items": {
           "location_held_in_provided_space": {
             "ui:enumNames": [

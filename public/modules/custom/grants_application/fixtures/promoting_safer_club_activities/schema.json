@@ -89,7 +89,11 @@
           "title": "income_row_amount.title",
           "type": "integer"
         }
-      }
+      },
+      "required": [
+        "income_row_description",
+        "income_row_amount"
+      ]
     },
     "_expenditure_row_item": {
       "type": "object",
@@ -104,7 +108,11 @@
           "title": "expenditure_row_amount.title",
           "type": "integer"
         }
-      }
+      },
+      "required": [
+        "expenditure_row_description",
+        "expenditure_row_amount"
+      ]
     },
     "grant_info_step": {
       "required": [
