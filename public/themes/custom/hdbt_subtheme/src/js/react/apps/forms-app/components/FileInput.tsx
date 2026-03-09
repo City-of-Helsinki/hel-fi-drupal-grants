@@ -65,20 +65,16 @@ const filesFromATVData = (value?: ATVFile): File[] => {
  *
  * Add 'misc:multiple': 'true' to uiSchema to enable the feature.
  */
-const multipleFilesFromATVData = (value?: ATVFile[] | [], multipleValues: boolean = false): any => {
-  if (!value) {
+const multipleFilesFromATVData = (value?: { files: ATVFile[]; description: string } | []): any => {
+  if (!value?.files.length) {
     return [];
   }
 
-  const files: File[] = [];
-
-  value.forEach((item) => {
-    const data = new Uint8Array(item.size);
-    const file = new File([data], item.fileName);
-    files.push(file);
+  return value?.files?.map((file: ATVFile) => {
+    const data = new Uint8Array(file.size);
+    const f = new File([data], file.fileName);
+    return f;
   });
-
-  return files;
 };
 
 export const FileInput = ({
@@ -105,9 +101,19 @@ export const FileInput = ({
   const defaultValue = multipleFiles ? multipleFilesFromATVData(formData) : filesFromATVData(formData);
 
   if (shouldRenderPreview) {
+    if (!multipleFiles) {
+      return (
+        <>
+          {defaultValue.map((file) => (
+            <>{file.name}</>
+          ))}
+        </>
+      );
+    }
+    // @todo Print multiple files properly.
     return (
       <>
-        {defaultValue.map((file) => (
+        {defaultValue?.files?.map((file) => (
           <>{file.name}</>
         ))}
       </>
@@ -181,13 +187,17 @@ export const FileInput = ({
   /**
    * Upload/delete handler for a file upload field accepting multiple file uploads.
    */
-  const handleMultiple = async (files: File[], existingData: PersistedFile[] | undefined) => {
-    const existingFileCount = existingData?.length ?? 0;
+  const handleMultiple = async (
+    files: File[],
+    existingData: { files: PersistedFile[]; description: string } | undefined,
+  ) => {
+    const existingFileCount = existingData?.files?.length ?? 0;
+    const description = existingData?.description || '';
 
     // Remove a file from rjsf-data.
     if (existingFileCount > files?.length) {
       const existingFiles: PersistedFile[] = [];
-      existingData?.forEach((existingItem) => {
+      existingData?.files?.forEach((existingItem) => {
         const file = files.find((file) => file.name === existingItem.fileName);
         if (!file) {
           handleRemoval(existingItem, true);
@@ -197,7 +207,7 @@ export const FileInput = ({
       });
 
       // Readd the existing files to the json.
-      onChange(existingFiles);
+      onChange({ files: existingFiles });
       return;
     }
 
@@ -208,7 +218,6 @@ export const FileInput = ({
     }
 
     const { href: integrationID, ...rest } = result;
-    const description = '';
     const newFile = {
       integrationID,
       description,
@@ -220,12 +229,12 @@ export const FileInput = ({
 
     // Add old&new files to the rjsf-data.
     const allFiles: any = [];
-    existingData?.forEach((item) => {
+    existingData?.files?.forEach((item) => {
       allFiles.push(item);
     });
     allFiles.push(newFile);
 
-    onChange(allFiles);
+    onChange({ files: allFiles, description });
   };
 
   const inputElement = multipleFiles ? (
