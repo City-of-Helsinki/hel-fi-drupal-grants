@@ -501,32 +501,40 @@
                   "title": "file.title",
                   "type": "object",
                   "properties": {
+                    "files": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "file_id": {
+                            "type": "integer"
+                          },
+                          "fileName": {
+                            "type": "string"
+                          },
+                          "fileType": {
+                            "type": "integer"
+                          },
+                          "integrationID": {
+                            "type": "string"
+                          },
+                          "isDeliveredLater": {
+                            "type": "boolean"
+                          },
+                          "isIncludedInOtherFile": {
+                            "type": "boolean"
+                          },
+                          "isNewAttachment": {
+                            "type": "boolean"
+                          },
+                          "size": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
                     "description": {
                       "type": "string"
-                    },
-                    "file_id": {
-                      "type": "integer"
-                    },
-                    "fileName": {
-                      "type": "string"
-                    },
-                    "fileType": {
-                      "type": "integer"
-                    },
-                    "integrationID": {
-                      "type": "string"
-                    },
-                    "isDeliveredLater": {
-                      "type": "boolean"
-                    },
-                    "isIncludedInOtherFile": {
-                      "type": "boolean"
-                    },
-                    "isNewAttachment": {
-                      "type": "boolean"
-                    },
-                    "size": {
-                      "type": "integer"
                     }
                   }
                 }

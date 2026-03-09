@@ -93,3 +93,36 @@ msgstr "Tiedoston tallennus epäonnistui virustarkastuksessa. Yritä hetken kulu
 
 msgid "Failed to upload the file. Please try again in a moment"
 msgstr "Tiedoston tallennus epäonnistui. Yritä hetken kuluttua uudelleen"
+
+msgid "Saving the draft failed. Please try again in a moment."
+msgstr "Luonnoksen tallennus epäonnistui. Yritä hetken kuluttua uudelleen."
+
+msgid "The application is not currently open. Please check the grant application period."
+msgstr "Tämä hakemus ei ole käytettävissä. Tarkista hakuaika."
+
+msgid "Failed to retrieve your user information. Please try again later."
+msgstr "Tietojasi ei saatu haettua. Yritä hetken kuluttua uudelleen. "
+
+msgid "No application was found for the given number. Please check the number or create a new application."
+msgstr "Hakemusnumerolla ei löydy hakemusta. Tarkista hakemusnumero tai luo uusi hakemus."
+
+msgid "Failed to load the application. Please try again later."
+msgstr "Hakemusta ei voitu ladata. Yritä hetken kuluttua uudelleen."
+
+msgid "Unable to process the submission. Please try again later."
+msgstr "Hakemuksen lähetystä ei voitu käsitellä. Yritä hetken kuluttua uudelleen."
+
+msgid "The selected bank account is missing from your profile. Please update your profile and try again."
+msgstr "Valitsemasi pankkitili ei löydy profiilistasi. Lisää tili profiiliisi ja yritä uudelleen. "
+
+msgid "An error occurred while submitting the application. Please try again later."
+msgstr "Hakemuksen lähettämisessä tapahtui virhe. Yritä hetken kuluttua uudelleen."
+
+msgid "Failed to submit the application. Please try again later."
+msgstr "Hakemuksen lähettäminen epäonnistui. Yritä hetken kuluttua uudelleen. "
+
+msgid "The file could not be uploaded. Please ensure the file is safe and try again."
+msgstr "Tiedostoa ei voitu lisätä. Varmista, että tiedosto on turvallinen ja yritä uudelleen. "
+
+msgid "The file could not be uploaded. Please try again later."
+msgstr "Tiedoston lisäämisessä tapahtui virhe. Yritä hetken kuluttua uudelleen."

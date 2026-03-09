@@ -8,6 +8,118 @@
     "data": {
     }
   },
+  "compensation.compensationInfo.compensationArray.0.0": {
+    "datasource": "form_data",
+    "source": "",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "subventionType",
+        "label": "Avustuslaji",
+        "value": "56",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.compensationInfo.compensationArray.0.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Euroa",
+      "value": "",
+      "valueType": "double"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.purpose_section.purpose",
+    "mapping_type": "default",
+    "data": {
+      "ID": "purpose",
+      "value": "",
+      "valueType": "string",
+      "label": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista"
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherCompensationsArray.0.n": {
+    "datasource": "form_data",
+    "source": "grant_info_step.other_compensations_section.other_compensations",
+    "mapping_type": "multiple_values",
+    "data": {
+      "other_compensation_issuer": {
+        "ID": "issuer",
+        "label": "Avustuksen myöntäjä",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_issuer_name": {
+        "ID": "issuerName",
+        "label": "Myöntäjän nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_issuer_year": {
+        "ID": "year",
+        "label": "Vuosi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_amount": {
+        "ID": "amount",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_description": {
+        "ID": "purpose",
+        "label": "Kuvaus käyttötarkoituksesta",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherAppliedCompensationsArray.0.n": {
+    "datasource": "form_data",
+    "source": "grant_info_step.other_applied_compensations_section.other_applied_compensations",
+    "mapping_type": "multiple_values",
+    "data": {
+      "other_applied_compensation_issuer": {
+        "ID": "issuer",
+        "label": "Avustuksen myöntäjä",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_applied_compensation_issuer_name": {
+        "ID": "issuerName",
+        "label": "Myöntäjän nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_applied_compensation_issuer_year": {
+        "ID": "year",
+        "label": "Vuosi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_applied_compensation_amount": {
+        "ID": "amount",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_applied_compensation_description": {
+        "ID": "purpose",
+        "label": "Kuvaus käyttötarkoituksesta",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+
   "compensation.customQuestionsInfo.customQuestionsArray.0": {
     "datasource": "form_data",
     "source": "information_in_more_detail_step.grant_target_section.reason_for_grant_application",
@@ -228,11 +340,11 @@
       "valueType": "string"
     }
   },
-  "attachmentsInfo.attachmentsArray.0": {
-    "#tip": "file mapping",
+  "attachmentsInfo.attachmentsArray.n": {
+    "#tip": "file mapping, multiple files from one field",
     "datasource": "form_data",
-    "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file",
-    "mapping_type": "file",
+    "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
+    "mapping_type": "multiple_files",
     "data": {
       "description": {"ID": "description", "value": "", "valueType": "string", "label": "Liitteen kuvaus"},
       "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},

@@ -8,6 +8,7 @@
     "purpose_section": {
       "purpose": {
         "ui:widget": "textarea",
+        "misc:max-length": 2500,
         "ui:options": {
           "tooltipLabel": "purpose.title",
           "tooltipButtonLabel": "purpose.title",
@@ -364,6 +365,7 @@
         "other_attachment_fieldset_file": {
           "misc:file-type": 0,
           "misc:variant": "simple",
+          "misc:multiple": "true",
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }

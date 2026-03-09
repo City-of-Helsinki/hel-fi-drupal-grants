@@ -112,6 +112,9 @@ export const communitySettings: [JSONSchema7Definition, JSONSchema7Definition, U
             hideNameFromPrint: true,
           },
         },
+        contact_person_phone_number: {
+          'misc:phone': true,
+        },
       },
       bank_account: {
         bank_account: {
