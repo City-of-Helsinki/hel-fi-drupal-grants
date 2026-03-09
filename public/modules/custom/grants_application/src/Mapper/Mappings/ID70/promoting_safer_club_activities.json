@@ -343,7 +343,7 @@
   "attachmentsInfo.attachmentsArray.n": {
     "#tip": "file mapping, multiple files from one field",
     "datasource": "form_data",
-    "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file",
+    "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
     "mapping_type": "multiple_files",
     "data": {
       "description": {"ID": "description", "value": "", "valueType": "string", "label": "Liitteen kuvaus"},
