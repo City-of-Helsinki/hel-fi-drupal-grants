@@ -83,9 +83,16 @@ class MessageForm extends FormBase {
     $storage['webformSubmission'] = $webform_submission;
 
     $application_number = $this->getRouteMatch()->getParameters()->get('submission_id');
-    if (!$application_number) {
+    if ($application_number) {
+      $storage['application_number'] = $application_number;
+    }
+    else {
       $application_number = $this->getRouteMatch()->getParameters()->get('application_number');
       $storage['application_number'] = $application_number;
+    }
+
+    if (!$application_number) {
+      $this->logger('grants_handler')->warning('No application number found from message submission form');
     }
 
     $messageSent = $storage['message_sent'] ?? FALSE;
