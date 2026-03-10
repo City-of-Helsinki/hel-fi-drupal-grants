@@ -31,7 +31,7 @@ import {
   TextArea,
   TextInput,
 } from '../components/Input';
-import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
+import { ArrayFieldTemplate, FieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
 import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
 import { FormActions } from '../components/FormActions/FormActions';
@@ -266,6 +266,7 @@ export const RJSFFormContainer = ({
               MoveUpButton: () => null,
             },
             FieldErrorTemplate: () => null,
+            FieldTemplate,
             ObjectFieldTemplate,
           }}
           transformErrors={transformErrors}
