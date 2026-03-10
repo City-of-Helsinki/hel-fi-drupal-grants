@@ -195,8 +195,7 @@ class ApplicationService {
    * @return \Drupal\grants_application\Entity\ApplicationSubmission
    *   The application submission entity.
    */
-  private function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
-    // @todo Duplicated, put this in better place.
+  public function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
     $ids = $this->entityTypeManager
       ->getStorage('application_submission')
       ->getQuery()

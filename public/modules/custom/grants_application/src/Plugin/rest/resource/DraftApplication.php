@@ -13,6 +13,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
@@ -67,6 +68,7 @@ final class DraftApplication extends ResourceBase {
     private FormValidator $formValidator,
     private ContentLockInterface $contentLock,
     private AccountProxyInterface $accountProxy,
+    private ApplicationService $applicationService,
   ) {
     // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
@@ -95,6 +97,7 @@ final class DraftApplication extends ResourceBase {
       $container->get(FormValidator::class),
       $container->get('content_lock'),
       $container->get('current_user'),
+      $container->get(ApplicationService::class),
     );
   }
 
@@ -155,7 +158,7 @@ final class DraftApplication extends ResourceBase {
 
     try {
       // Make sure it exists in database.
-      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+      $submission = $this->applicationService->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception $e) {
       // Cannot get the submission.
@@ -377,7 +380,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
-      $submission = $this->getSubmissionEntity(
+      $submission = $this->applicationService->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
         $application_number,
         $grants_profile_data->getBusinessId(),
@@ -488,49 +491,6 @@ final class DraftApplication extends ResourceBase {
         $this->atvService->removeAttachment($document->getId(), $attachment['id']);
       }
     }
-  }
-
-  /**
-   * Get the application submission.
-   *
-   * @param string $sub
-   *   User uuid.
-   * @param string $application_number
-   *   The application number.
-   * @param string $business_id
-   *   The business id.
-   *
-   * @return \Drupal\grants_application\Entity\ApplicationSubmission
-   *   The application submission entity.
-   */
-  private function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
-    // @todo Duplicated, put this in better place.
-    $ids = $this->entityTypeManager
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('sub', $sub)
-      ->condition('application_number', $application_number)
-      ->execute();
-
-    if ($ids) {
-      return ApplicationSubmission::load(reset($ids));
-    }
-
-    // Check for business id as well.
-    $ids = $this->entityTypeManager
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('business_id', $business_id)
-      ->condition('application_number', $application_number)
-      ->execute();
-
-    if ($ids) {
-      return ApplicationSubmission::load(reset($ids));
-    }
-
-    throw new \Exception('Application not found');
   }
 
 }
