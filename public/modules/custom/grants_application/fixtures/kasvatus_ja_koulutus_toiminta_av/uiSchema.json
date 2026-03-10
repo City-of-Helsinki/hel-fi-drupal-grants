@@ -126,9 +126,30 @@
         "ui:field": "subventionSum"
       }
     },
+    "other_benefits_section": {
+      "other_benefits": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        }
+      }
+    },
     "expenditure_section": {
       "costGroupName": {
         "ui:widget": "hidden"
+      }
+    },
+    "other_expenditures_section": {
+      "other_expenditures": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        }
+      }
+    },
+    "other_services_acquired_section": {
+      "other_services_acquired": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        }
       }
     },
     "other_materials_section": {
@@ -136,9 +157,23 @@
         "ui:widget": "hidden"
       }
     },
+    "other_materials_acquired_section": {
+      "other_materials_acquired": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        }
+      }
+    },
     "benefit_usage_other_expenditure_section": {
       "costGroupName": {
         "ui:widget": "hidden"
+      }
+    },
+    "other_expenses_section": {
+      "other_expenses": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        }
       }
     },
     "usage_of_benefits_section": {
@@ -150,12 +185,25 @@
       "costGroupName": {
         "ui:widget": "hidden"
       }
+    },
+    "other_expenses_section_1": {
+      "other_expenses": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        }
+      }
     }
   },
   "attachments_step": {
     "additional_information_section": {
       "additional_information": {
-        "ui:widget": "textarea"
+        "ui:widget": "textarea",
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "additional_information.title",
+          "tooltipButtonLabel": "additional_information.title",
+          "tooltipText": "additional_information.description"
+        }
       }
     },
     "attachments_section": {
