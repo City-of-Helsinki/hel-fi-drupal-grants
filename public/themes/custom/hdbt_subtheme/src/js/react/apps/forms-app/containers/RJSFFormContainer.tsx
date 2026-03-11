@@ -49,7 +49,6 @@ import { InvalidSchemaError } from '../errors/InvalidSchemaError';
 import { isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
-import { SubmittedForm } from '../components/SubmittedForm';
 import { SubventionSum } from '../components/Fields/SubventionSum';
 import { SubventionTable } from '../components/Fields/SubventionTable';
 import { Terms } from '../components/Terms';
@@ -224,11 +223,7 @@ export const RJSFFormContainer = ({
       )}
       <div className='form-wrapper'>
         {!isDraft() && <FormSummary formData={readFormData()} schema={schema} />}
-        {readOnly ? (
-          <SubmittedForm formData={readFormData()} schema={schema} />
-        ) : (
-          <StaticStepsContainer formDataAtom={formDataAtom} schema={schema} />
-        )}
+        {!readOnly && <StaticStepsContainer formDataAtom={formDataAtom} schema={schema} />}
         <Form
           className='grants-form'
           customValidate={customValidate}
