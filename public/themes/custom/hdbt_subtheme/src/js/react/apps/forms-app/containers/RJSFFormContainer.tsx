@@ -184,13 +184,17 @@ export const RJSFFormContainer = ({
    * @return {object} - Form errors
    */
   const customValidate: CustomValidator = (formData, errors, _uiSchema) => {
-    const newErrors = [];
+    const newErrors: RJSFValidationError[] = [];
 
     subventionFields.forEach((field) => {
-      const values = field.split('.').reduce((acc, curr) => acc && acc[curr], formData);
-      const _field = field.split('.').reduce((acc, curr) => acc && acc[curr], errors);
+      const values = field.split('.').reduce((acc: any, curr) => acc && acc[curr], formData) as
+        | Record<string, [unknown, { value: unknown }]>
+        | undefined;
+      const _field = field.split('.').reduce((acc: any, curr) => acc && acc[curr], errors) as
+        | { addError: (msg: string) => void }
+        | undefined;
       const hasValues = values
-        ? Object.entries(values).reduce((acc, [key, curr]) => acc || Number(curr[1].value) > 0, false)
+        ? Object.entries(values).reduce((acc, [, curr]) => acc || Number(curr[1].value) > 0, false)
         : false;
 
       if (_field && !hasValues) {
@@ -199,6 +203,7 @@ export const RJSFFormContainer = ({
           property: `.${field}`,
           message: t('subvention.greater_than_zero'),
           schemaPath: `.${field}`,
+          stack: `.${field} ${t('subvention.greater_than_zero')}`,
         });
       }
     });

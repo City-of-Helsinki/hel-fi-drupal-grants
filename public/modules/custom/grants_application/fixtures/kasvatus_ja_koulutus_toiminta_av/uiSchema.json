@@ -130,6 +130,11 @@
       "other_benefits": {
         "ui:options": {
           "hideNameFromPrint": true
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
         }
       }
     },
@@ -142,6 +147,11 @@
       "other_expenditures": {
         "ui:options": {
           "hideNameFromPrint": true
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
         }
       }
     },
@@ -149,6 +159,11 @@
       "other_services_acquired": {
         "ui:options": {
           "hideNameFromPrint": true
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
         }
       }
     },
@@ -161,6 +176,11 @@
       "other_materials_acquired": {
         "ui:options": {
           "hideNameFromPrint": true
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
         }
       }
     },
@@ -173,6 +193,11 @@
       "other_expenses": {
         "ui:options": {
           "hideNameFromPrint": true
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
         }
       }
     },
@@ -190,6 +215,11 @@
       "other_expenses": {
         "ui:options": {
           "hideNameFromPrint": true
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
         }
       }
     }
