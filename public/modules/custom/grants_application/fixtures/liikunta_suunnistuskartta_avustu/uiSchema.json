@@ -1,4 +1,21 @@
 {
+  "orienteering_maps_step": {
+    "orienteering_subvention": {
+      "orienteering_maps": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
+        "map_name": {
+          "ui:widget": "textarea"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
+        }
+      }
+    }
+  },
   "attachments_step": {
     "additional_information_section": {
       "additional_information": {
@@ -28,18 +45,6 @@
           "misc:variant": "simple",
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
-        }
-      }
-    }
-  },
-  "orienteering_maps_step": {
-    "orienteering_subvention": {
-      "orienteering_maps": {
-        "ui:options": {
-          "hideNameFromPrint": true
-        },
-        "map_name": {
-          "ui:widget": "textarea"
         }
       }
     }
