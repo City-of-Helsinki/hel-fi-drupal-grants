@@ -235,9 +235,9 @@ final class Application extends ResourceBase {
 
     $errors = $this->validate($form_identifier, $form_data);
     if (is_array($errors)) {
-      // Kinda "useless" logging, but for testing purposes this might be relevant.
+      // RJSF turns array into object for some reason.
       $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
-      return new JsonResponse(['error' => $errors], 400);
+      // return new JsonResponse(['error' => $errors], 400);
     }
 
     try {
@@ -484,14 +484,13 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-    // RJSF turns array into object for some reason.
-    /*
+
     $errors = $this->validate($form_identifier, $form_data);
     if (is_array($errors)) {
       $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
-      return new JsonResponse(['error' => $errors], 400);
+      // RJSF turns array into object for some reason.
+      // return new JsonResponse(['error' => $errors], 400);
     }
-    */
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
