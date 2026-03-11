@@ -112,6 +112,14 @@
               "boolean.no"
             ],
             "ui:widget": "radio"
+          },
+          "unprovided_space_details": {
+            "unprovided_rent_time_start": {
+              "ui:widget": "date"
+            },
+            "unprovided_rent_time_end": {
+              "ui:widget": "date"
+            }
           }
         }
       }
