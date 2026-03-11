@@ -89,7 +89,10 @@
         "misc:profilePrefill": "businessPurpose",
         "ui:widget": "textarea",
         "ui:options": {
-          "hideNameFromPrint": true
+          "hideNameFromPrint": true,
+          "tooltipLabel": "community_activity.title",
+          "tooltipButtonLabel": "community_activity.title",
+          "tooltipText": "community_activity.description"
         }
       },
       "community_practices_business": {
