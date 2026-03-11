@@ -183,9 +183,6 @@ class HelfiAtvService {
     $atvDocument = AtvDocument::create([]);
     $atvDocument->setTransactionId($application_number);
 
-    // @todo Application state logic..
-    // $draft = $isDraft ? 'DRAFT' : 'SUBMITTED';
-    // @todo Load this from module settings config.
     $atvDocument->setStatus('DRAFT');
 
     $atvDocument->setType($application_type);
@@ -207,11 +204,10 @@ class HelfiAtvService {
     $atvDocument->setDeletable(FALSE);
     $atvDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
 
-    // @todo Translate the title somehow.
     $humanReadableTypes = [
-      'en' => $application_title . '_EN',
-      'fi' => $application_title . '_FI',
-      'sv' => $application_title . '_SV',
+      'en' => $application_title,
+      'fi' => $application_title,
+      'sv' => $application_title,
     ];
     $atvDocument->setHumanReadableType($humanReadableTypes);
 

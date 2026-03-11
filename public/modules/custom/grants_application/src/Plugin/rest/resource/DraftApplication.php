@@ -13,6 +13,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
@@ -67,6 +68,7 @@ final class DraftApplication extends ResourceBase {
     private FormValidator $formValidator,
     private ContentLockInterface $contentLock,
     private AccountProxyInterface $accountProxy,
+    private ApplicationService $applicationService,
   ) {
     // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
@@ -95,6 +97,7 @@ final class DraftApplication extends ResourceBase {
       $container->get(FormValidator::class),
       $container->get('content_lock'),
       $container->get('current_user'),
+      $container->get(ApplicationService::class),
     );
   }
 
@@ -155,7 +158,7 @@ final class DraftApplication extends ResourceBase {
 
     try {
       // Make sure it exists in database.
-      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+      $submission = $this->applicationService->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception $e) {
       // Cannot get the submission.
@@ -220,6 +223,8 @@ final class DraftApplication extends ResourceBase {
     $application_type_id = $settings->getFormId();
 
     $form_data = [];
+
+    // If copying, new application is created and old data is added to it.
     if ($copy_from) {
       try {
         $copy_document = $this->atvService->getDocument($copy_from);
@@ -233,95 +238,30 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
-      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
-      $selected_company = $this->userInformationService->getSelectedCompany();
-      $user_data = $this->userInformationService->getUserData();
+      $submission = $this->applicationService->createDraft(
+        $application_type_id,
+        $form_identifier,
+        $settings,
+        $form_data,
+      );
     }
     catch (\Exception $e) {
+      // Unable to create.
       return new JsonResponse([], 500);
     }
 
-    $application_uuid = $this->uuid->generate();
-    $env = Helper::getAppEnv();
-
-    // @todo Application number generation must match the existing shenanigans,
-    // or we must start from application number 1000 or something.
-    $application_number = $this->applicationNumberService
-      ->createNewApplicationNumber($env, $application_type_id);
-
-    $langcode = $this->languageManager
-      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
-      ->getId();
-    $application_name = $settings->toArray()['settings']['title'];
-    $application_title = $settings->toArray()['settings']['title'];
-    $application_type = $settings->toArray()['settings']['application_type'];
-
-    // @todo Save the react form data in separate atv doc.
-    $document = $this->atvService->createAtvDocument(
-      $application_uuid,
-      $application_number,
-      $application_name,
-      $application_type,
-      $application_title,
-      $langcode,
-      $user_data['sub'],
-      $selected_company['identifier'],
-      FALSE,
-      $selected_company,
-      $this->userInformationService->getApplicantType(),
-    );
-
-    // Grants_events requires the events-array to exist.
-    // And compensation must be json-object.
-    $document->setContent([
-      'form_data' => $form_data,
-      'compensation' => [
-        'applicantInfoArray' => []
-      ],
-      'formUpdate' => false,
-      'statusUpdates' => [],
-      'events' => [],
-      'messages' => [],
-    ]);
-
-    try {
-      $document = $this->atvService->saveNewDocument($document);
-      $now = time();
-      $submission = ApplicationSubmission::create([
-        'document_id' => $document->getId(),
-        'business_id' => $grants_profile_data->getBusinessId(),
-        'sub' => $user_data['sub'],
-        'langcode' => $langcode,
-        'draft' => TRUE,
-        'application_type_id' => $application_type_id,
-        'application_number' => $application_number,
-        'form_identifier' => $form_identifier,
-        'created' => $now,
-        'changed' => $now,
-      ]);
-      $submission->save();
-    }
-    catch (\Exception | GuzzleException $e) {
-      // Saving failed.
-      return new JsonResponse([], 500);
-    }
-
-    $result = [
-      'application_number' => $application_number,
-      'document_id' => $document->getId(),
-    ];
-
-    $result = [];
+    $application_number = $submission->get('application_number')->value;
+    $document_id = $submission->get('document_id')->value;
     if ($copy_from) {
       $result['redirect_url'] = Url::fromRoute(
         'helfi_grants.forms_app',
-        ['id' => $application_type_id, 'application_number' => $application_number],
+        ['id' => $application_type_id, 'application_number' => $submission->get('application_number')->value],
         ['absolute' => TRUE],
       )->toString();
     } else {
       $result = [
         'application_number' => $application_number,
-        'document_id' => $document->getId(),
+        'document_id' => $document_id,
       ];
       $this->contentLock->locking($submission, '*', $this->accountProxy->id());
     }
@@ -377,7 +317,7 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
-      $submission = $this->getSubmissionEntity(
+      $submission = $this->applicationService->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
         $application_number,
         $grants_profile_data->getBusinessId(),
@@ -405,16 +345,8 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating a new application')], 500);
     }
 
-    // @todo clean this up a bit, unnecessarily duplicated variables.
     $content = $document->getContent();
-    // $content['compensation'] = $document_data['compensation'];
     $content['form_data'] = $form_data;
-    // Temporary solution since integration removes the root form_data^.
-    /*
-    $document_data['compensation'] = [];
-    $content['compensation']['form_data'] = $form_data;
-    $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
-     */
     $document->setContent($content);
 
     try {
@@ -488,49 +420,6 @@ final class DraftApplication extends ResourceBase {
         $this->atvService->removeAttachment($document->getId(), $attachment['id']);
       }
     }
-  }
-
-  /**
-   * Get the application submission.
-   *
-   * @param string $sub
-   *   User uuid.
-   * @param string $application_number
-   *   The application number.
-   * @param string $business_id
-   *   The business id.
-   *
-   * @return \Drupal\grants_application\Entity\ApplicationSubmission
-   *   The application submission entity.
-   */
-  private function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
-    // @todo Duplicated, put this in better place.
-    $ids = $this->entityTypeManager
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('sub', $sub)
-      ->condition('application_number', $application_number)
-      ->execute();
-
-    if ($ids) {
-      return ApplicationSubmission::load(reset($ids));
-    }
-
-    // Check for business id as well.
-    $ids = $this->entityTypeManager
-      ->getStorage('application_submission')
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('business_id', $business_id)
-      ->condition('application_number', $application_number)
-      ->execute();
-
-    if ($ids) {
-      return ApplicationSubmission::load(reset($ids));
-    }
-
-    throw new \Exception('Application not found');
   }
 
 }

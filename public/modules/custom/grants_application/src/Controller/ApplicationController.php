@@ -205,7 +205,7 @@ final class ApplicationController extends ControllerBase {
    */
   public function copyApplication(string $form_identifier, string $original_application_number): RedirectResponse {
     try {
-      $draft = $this->applicationService->createDraft($form_identifier, $original_application_number);
+      $draft = $this->applicationService->createCopy($form_identifier, $original_application_number);
     }
     catch (\throwable $e) {
       $this->messenger()

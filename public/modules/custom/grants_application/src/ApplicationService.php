@@ -12,8 +12,10 @@ use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\ApplicationNumberService;
+use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\UserInformationService;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -36,7 +38,98 @@ class ApplicationService {
   }
 
   /**
-   * Creates a new draft application.
+   * Create an ATV document and application submission for a new application.
+   *
+   * @param string|int $application_type_id
+   *   The application type id.
+   * @param string $form_identifier
+   *   The unique readable name for the application.
+   * @param \Drupal\grants_application\Form\FormSettings $settings
+   *   The application settings.
+   * @param array $form_data
+   *   The form data if copying.
+   *
+   * @return \Drupal\grants_application\Entity\ApplicationSubmission
+   *   The application submission.
+   */
+  public function createDraft(string|int $application_type_id, string $form_identifier, FormSettings $settings, array $form_data = []): ApplicationSubmission {
+    try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $selected_company = $this->userInformationService->getSelectedCompany();
+      $user_data = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
+      throw $e;
+    }
+
+    $application_uuid = $this->uuid->generate();
+    $env = Helper::getAppEnv();
+
+    $application_number = $this->applicationNumberService
+      ->createNewApplicationNumber($env, $application_type_id);
+
+    $langcode = $this->languageManager
+      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+      ->getId();
+    $application_name = $settings->toArray()['settings']['title'];
+    $application_title = $settings->toArray()['settings']['title'];
+    $application_type = $settings->toArray()['settings']['application_type'];
+
+    // @todo Save the react form data in separate atv doc.
+    $document = $this->atvService->createAtvDocument(
+      $application_uuid,
+      $application_number,
+      $application_name,
+      $application_type,
+      $application_title,
+      $langcode,
+      $user_data['sub'],
+      $selected_company['identifier'],
+      FALSE,
+      $selected_company,
+      $this->userInformationService->getApplicantType(),
+    );
+
+    // Grants_events requires the events-array to exist.
+    // And compensation must be json-object.
+    $document->setContent([
+      'form_data' => $form_data,
+      'compensation' => [
+        'applicantInfoArray' => [],
+      ],
+      'formUpdate' => FALSE,
+      'statusUpdates' => [],
+      'events' => [],
+      'messages' => [],
+    ]);
+
+    try {
+      $document = $this->atvService->saveNewDocument($document);
+      $now = time();
+      $submission = ApplicationSubmission::create([
+        'document_id' => $document->getId(),
+        'business_id' => $grants_profile_data->getBusinessId(),
+        'sub' => $user_data['sub'],
+        'langcode' => $langcode,
+        'draft' => TRUE,
+        'application_type_id' => $application_type_id,
+        'application_number' => $application_number,
+        'form_identifier' => $form_identifier,
+        'created' => $now,
+        'changed' => $now,
+      ]);
+      $submission->save();
+    }
+    catch (\Exception | GuzzleException $e) {
+      // Saving failed.
+      throw $e;
+    }
+
+    return $submission;
+  }
+
+  /**
+   * Creates a new draft application copy from existing application.
    *
    * @param string $form_identifier
    *   The application type ID.
@@ -46,9 +139,10 @@ class ApplicationService {
    * @return array
    *   The created draft application data.
    */
-  public function createDraft(string $form_identifier, string|null $original_application_number = NULL): array {
+  public function createCopy(string $form_identifier, string|null $original_application_number = NULL): array {
     try {
-      $entity = $this->getSubmissionEntity(
+      // Exception is thrown if user doesn't have an access right.
+      $this->getSubmissionEntity(
         $this->userInformationService->getUserData()['sub'],
         $original_application_number,
         $this->userInformationService->getGrantsProfileContent()->getBusinessId(),
@@ -78,72 +172,18 @@ class ApplicationService {
       $form_data = $copy_content['compensation']['form_data'] ?? [];
     }
 
-    $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
-    $selected_company = $this->userInformationService->getSelectedCompany();
-    $user_data = $this->userInformationService->getUserData();
+    try {
+      $submission = $this->createDraft($application_type_id, $form_identifier, $settings, $form_data);
+    }
+    catch (\Exception | GuzzleException $e) {
+      // Draft creation fails.
+      throw $e;
+    }
 
-    $application_uuid = $this->uuid->generate();
-    $env = Helper::getAppEnv();
-
-    // @todo Application number generation must match the existing shenanigans,
-    // or we must start from application number 1000 or something.
-    $application_number = $this->applicationNumberService
-      ->createNewApplicationNumber($env, $application_type_id);
-
-    $langcode = $this->languageManager
-      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
-      ->getId();
-    $application_name = $settings->toArray()['settings']['title'];
-    $application_title = $settings->toArray()['settings']['title'];
-    $application_type = $settings->toArray()['settings']['application_type'];
-
-    // @todo Save the react form data in separate atv doc.
-    $document = $this->atvService->createAtvDocument(
-      $application_uuid,
-      $application_number,
-      $application_name,
-      $application_type,
-      $application_title,
-      $langcode,
-      $user_data['sub'],
-      $selected_company['identifier'],
-      FALSE,
-      $selected_company,
-      $this->userInformationService->getApplicantType(),
-    );
-
-    // Grants_events requires the events-array to exist.
-    // And compensation must be json-object.
-    $document->setContent([
-      'form_data' => $this->removeAttachmentsFromCopiedDocument($form_data),
-      'compensation' => [
-        'applicantInfoArray' => [],
-      ],
-      'formUpdate' => FALSE,
-      'statusUpdates' => [],
-      'events' => [],
-      'messages' => [],
-    ]);
-
-    $document = $this->atvService->saveNewDocument($document);
-    $now = time();
-    ApplicationSubmission::create([
-      'document_id' => $document->getId(),
-      'business_id' => $grants_profile_data->getBusinessId(),
-      'sub' => $user_data['sub'],
-      'langcode' => $langcode,
-      'draft' => TRUE,
-      'application_type_id' => $application_type_id,
-      'form_identifier' => $entity->get('form_identified')->value,
-      'application_number' => $application_number,
-      'created' => $now,
-      'changed' => $now,
-    ])
-      ->save();
-
+    $application_number = $submission->get('application_number')->getValue();
     $result = [
       'application_number' => $application_number,
-      'document_id' => $document->getId(),
+      'document_id' => $submission->get('document_id')->getValue(),
     ];
 
     if ($original_application_number) {
@@ -195,8 +235,7 @@ class ApplicationService {
    * @return \Drupal\grants_application\Entity\ApplicationSubmission
    *   The application submission entity.
    */
-  private function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
-    // @todo Duplicated, put this in better place.
+  public function getSubmissionEntity(string $sub, string $application_number, string $business_id): ApplicationSubmission {
     $ids = $this->entityTypeManager
       ->getStorage('application_submission')
       ->getQuery()
