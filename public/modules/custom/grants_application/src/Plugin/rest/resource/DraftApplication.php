@@ -223,6 +223,8 @@ final class DraftApplication extends ResourceBase {
     $application_type_id = $settings->getFormId();
 
     $form_data = [];
+
+    // If copying, new application is created and old data is added to it.
     if ($copy_from) {
       try {
         $copy_document = $this->atvService->getDocument($copy_from);
@@ -236,95 +238,30 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
-      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
-      $selected_company = $this->userInformationService->getSelectedCompany();
-      $user_data = $this->userInformationService->getUserData();
+      $submission = $this->applicationService->createDraft(
+        $application_type_id,
+        $form_identifier,
+        $settings,
+        $form_data,
+      );
     }
     catch (\Exception $e) {
+      // Unable to create.
       return new JsonResponse([], 500);
     }
 
-    $application_uuid = $this->uuid->generate();
-    $env = Helper::getAppEnv();
-
-    // @todo Application number generation must match the existing shenanigans,
-    // or we must start from application number 1000 or something.
-    $application_number = $this->applicationNumberService
-      ->createNewApplicationNumber($env, $application_type_id);
-
-    $langcode = $this->languageManager
-      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
-      ->getId();
-    $application_name = $settings->toArray()['settings']['title'];
-    $application_title = $settings->toArray()['settings']['title'];
-    $application_type = $settings->toArray()['settings']['application_type'];
-
-    // @todo Save the react form data in separate atv doc.
-    $document = $this->atvService->createAtvDocument(
-      $application_uuid,
-      $application_number,
-      $application_name,
-      $application_type,
-      $application_title,
-      $langcode,
-      $user_data['sub'],
-      $selected_company['identifier'],
-      FALSE,
-      $selected_company,
-      $this->userInformationService->getApplicantType(),
-    );
-
-    // Grants_events requires the events-array to exist.
-    // And compensation must be json-object.
-    $document->setContent([
-      'form_data' => $form_data,
-      'compensation' => [
-        'applicantInfoArray' => []
-      ],
-      'formUpdate' => false,
-      'statusUpdates' => [],
-      'events' => [],
-      'messages' => [],
-    ]);
-
-    try {
-      $document = $this->atvService->saveNewDocument($document);
-      $now = time();
-      $submission = ApplicationSubmission::create([
-        'document_id' => $document->getId(),
-        'business_id' => $grants_profile_data->getBusinessId(),
-        'sub' => $user_data['sub'],
-        'langcode' => $langcode,
-        'draft' => TRUE,
-        'application_type_id' => $application_type_id,
-        'application_number' => $application_number,
-        'form_identifier' => $form_identifier,
-        'created' => $now,
-        'changed' => $now,
-      ]);
-      $submission->save();
-    }
-    catch (\Exception | GuzzleException $e) {
-      // Saving failed.
-      return new JsonResponse([], 500);
-    }
-
-    $result = [
-      'application_number' => $application_number,
-      'document_id' => $document->getId(),
-    ];
-
-    $result = [];
+    $application_number = $submission->get('application_number')->value;
+    $document_id = $submission->get('document_id')->value;
     if ($copy_from) {
       $result['redirect_url'] = Url::fromRoute(
         'helfi_grants.forms_app',
-        ['id' => $application_type_id, 'application_number' => $application_number],
+        ['id' => $application_type_id, 'application_number' => $submission->get('application_number')->value],
         ['absolute' => TRUE],
       )->toString();
     } else {
       $result = [
         'application_number' => $application_number,
-        'document_id' => $document->getId(),
+        'document_id' => $document_id,
       ];
       $this->contentLock->locking($submission, '*', $this->accountProxy->id());
     }
@@ -408,16 +345,8 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating a new application')], 500);
     }
 
-    // @todo clean this up a bit, unnecessarily duplicated variables.
     $content = $document->getContent();
-    // $content['compensation'] = $document_data['compensation'];
     $content['form_data'] = $form_data;
-    // Temporary solution since integration removes the root form_data^.
-    /*
-    $document_data['compensation'] = [];
-    $content['compensation']['form_data'] = $form_data;
-    $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
-     */
     $document->setContent($content);
 
     try {
