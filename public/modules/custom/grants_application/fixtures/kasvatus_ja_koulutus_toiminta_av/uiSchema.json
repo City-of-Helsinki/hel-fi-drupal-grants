@@ -31,7 +31,7 @@
           "addText": "other_compensation.add"
         },
         "items": {
-          "other_compensation_issuer": {
+          "other_compensation_issuer_name": {
             "ui:options": {
               "tooltipLabel": "other_compensation_issuer.title",
               "tooltipButtonLabel": "other_compensation_issuer.title",
@@ -76,7 +76,12 @@
         }
       },
       "prior_compensations": {
-        "ui:widget": "textarea"
+        "ui:widget": "textarea",
+        "ui:options": {
+          "tooltipLabel": "prior_compensations.title",
+          "tooltipButtonLabel": "prior_compensations.title",
+          "tooltipText": "prior_compensations.tooltip"
+        }
       },
       "prior_compensations_help": {
         "ui:field": "textParagraph"

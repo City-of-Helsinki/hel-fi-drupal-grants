@@ -27,9 +27,31 @@
         "ui:widget": "radio"
       },
       "other_compensations": {
-        "other_compensation_description": {
-          "ui:widget": "textarea",
-          "misc:max-length": 1000
+        "ui:options": {
+          "addText": "other_compensation.add"
+        },
+        "items": {
+          "other_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
+          "other_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
         }
       }
     },
@@ -45,9 +67,31 @@
         "ui:widget": "radio"
       },
       "other_applied_compensations": {
-        "other_applied_compensation_description": {
-          "ui:widget": "textarea",
-          "misc:max-length": 1000
+        "ui:options": {
+          "addText": "other_applied_compensations.add"
+        },
+        "items": {
+          "other_applied_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_applied_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_applied_compensation_amount.printable_title"
+            }
+          },
+          "other_applied_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
         }
       }
     },
@@ -73,7 +117,12 @@
         }
       },
       "prior_compensations": {
-        "ui:widget": "textarea"
+        "ui:widget": "textarea",
+        "ui:options": {
+          "tooltipLabel": "prior_compensations.title",
+          "tooltipButtonLabel": "prior_compensations.title",
+          "tooltipText": "prior_compensations.tooltip"
+        }
       },
       "prior_compensations_help": {
         "ui:field": "textParagraph"
