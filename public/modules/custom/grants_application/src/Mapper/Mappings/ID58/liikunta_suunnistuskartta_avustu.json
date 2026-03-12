@@ -170,15 +170,6 @@
     }
   },
 
-  "compensation.additionalInformation": {
-    "datasource": "form_data",
-    "source": "attachments_step.additional_information_section.additional_information",
-    "mapping_type": "simple",
-    "data": {
-      "additionalInformation": ""
-    }
-  },
-
   "compensation.senderInfoArray.0": {
     "datasource": "user_profile",
     "source": "myProfile.verifiedPersonalInformation.firstName",

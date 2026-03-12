@@ -296,15 +296,13 @@
     }
   },
   "attachmentsInfo": {
-    "attachmentsArray": {
-      "generalInfoArray": [
-        {
-          "ID": "extraInfo",
-          "label": "Lis\u00e4selvitys liitteist\u00e4",
-          "value": "lis\u00e4selvitys",
-          "valueType": "string"
-        }
-      ]
-    }
+    "generalInfoArray": [
+      {
+        "ID": "extraInfo",
+        "label": "Lis\u00e4selvitys liitteist\u00e4",
+        "value": "lis\u00e4selvitys",
+        "valueType": "string"
+      }
+    ]
   }
 }
