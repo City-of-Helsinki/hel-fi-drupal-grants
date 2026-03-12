@@ -240,7 +240,7 @@
     "source": "orienteering_maps_step.orienteering_subvention.orienteering_maps",
     "mapping_type": "multiple_values",
     "data": {
-      "mapName": {
+      "map_name": {
         "ID": "mapName",
         "label": "Kartan nimi",
         "value": "",
@@ -252,7 +252,7 @@
         "value": "",
         "valueType": "double"
       },
-      "voluntaryHours": {
+      "voluntary_hours": {
         "ID": "voluntaryHours",
         "label": "Talkootyö",
         "value": "",
@@ -264,7 +264,7 @@
         "value": "",
         "valueType": "double"
       },
-      "otherCompensations": {
+      "other_compensations": {
         "ID": "otherCompensations",
         "label": "Muilta saadut avustukset",
         "value": "",

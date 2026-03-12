@@ -83,6 +83,7 @@ class JsonMapper {
         'simple' => $this->handleSimple($data, $definition, $target, $allDataSources),
         'hardcoded' => $this->handleHardcoded($data, $definition, $target),
         'empty' => $this->handleEmpty($data, $definition, $target),
+        'file', 'multiple_files' => NULL,
         default => $this->handleDefault($data, $definition, $target, $allDataSources),
       };
     }
@@ -479,6 +480,15 @@ class JsonMapper {
   private function handleFile(&$data, array $definition, string $targetPath, array $dataSources): void {
     $values = $this->getFileData($definition['data'], $dataSources[$definition['datasource']], $definition['source']);
 
+    // Skip if file not given.
+    if (
+      !$this->findFileFieldValue($values[0], 'isDeliveredLater') &&
+      !$this->findFileFieldValue($values[0], 'isIncludedInOtherFile') &&
+      !$this->findFileFieldValue($values[0], 'integrationID')
+    ) {
+      return;
+    }
+
     foreach ($values as $value) {
       $this->setTargetValue($data, $targetPath, $value, $definition);
     }
@@ -488,6 +498,14 @@ class JsonMapper {
     $values = $this->getFileData($definition['data'], $dataSources[$definition['datasource']], $definition['source']);
 
     foreach ($values as $value) {
+      if (
+        !$this->findFileFieldValue($value, 'isDeliveredLater') &&
+        !$this->findFileFieldValue($value, 'isIncludedInOtherFile') &&
+        !$this->findFileFieldValue($value, 'integrationID')
+      ) {
+        continue;
+      }
+
       $this->setTargetValue($data, $targetPath, $value, $definition);
     }
   }
@@ -688,6 +706,15 @@ class JsonMapper {
     foreach ($mappedFiles as $fileArray) {
       if (array_find($fileArray, fn($item) => $item['ID'] === 'fileType' && $item['value'] == 45)) {
         return $fileArray;
+      }
+    }
+    return NULL;
+  }
+
+  private function findFileFieldValue(array $singleFileFields, string $fieldName): ?string {
+    foreach($singleFileFields as $field) {
+      if ($field['ID'] === $fieldName) {
+        return $field['value'];
       }
     }
     return NULL;
