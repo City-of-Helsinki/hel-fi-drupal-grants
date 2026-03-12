@@ -243,7 +243,18 @@ final class JsonMapperTest extends UnitTestCase {
     return json_decode($mappingFixtures, TRUE);
   }
 
-  private function getRealMapping(string $form_id, string $form_identifier) {
+  /**
+   * Get the real mappings.
+   *
+   * @param string $form_id
+   *   Form type id.
+   * @param string $form_identifier
+   *   Form identifier.
+   *
+   * @return mixed
+   *
+   */
+  private function getRealMapping(string $form_id, string $form_identifier): array {
     $mappingFixtures = file_get_contents(__DIR__ . "/../../../src/Mapper/Mappings/$form_id/$form_identifier.json");
     return json_decode($mappingFixtures, TRUE);
   }
