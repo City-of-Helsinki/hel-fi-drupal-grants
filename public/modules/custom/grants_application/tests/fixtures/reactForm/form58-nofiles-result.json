@@ -1,0 +1,310 @@
+{
+  "compensation": {
+    "applicantInfoArray": [
+      {
+        "ID": "applicantType",
+        "label": "Hakijan tyyppi",
+        "value": "2",
+        "valueType": "string"
+      },
+      {
+        "ID": "companyNumber",
+        "label": "Y-Tunnus",
+        "value": "7769480-5",
+        "valueType": "string"
+      },
+      {
+        "ID": "registrationDate",
+        "label": "Rekister\u00f6imisp\u00e4iv\u00e4",
+        "value": "21.5.2023",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "foundingYear",
+        "label": "Perustamisvuosi",
+        "value": "2020",
+        "valueType": "string"
+      },
+      {
+        "ID": "home",
+        "label": "Kotipaikka",
+        "value": "HELSINKI",
+        "valueType": "string"
+      },
+      {
+        "ID": "homePage",
+        "label": "www-sivut",
+        "value": "www.google.com",
+        "valueType": "string"
+      },
+      {
+        "ID": "communityOfficialName",
+        "label": "Yhteis\u00f6n nimi",
+        "value": "Activenakusteri Oy",
+        "valueType": "string"
+      },
+      {
+        "ID": "communityOfficialNameShort",
+        "label": "Yhteis\u00f6n lyhenne",
+        "value": "Akt",
+        "valueType": "string"
+      },
+      {
+        "ID": "email",
+        "label": "S\u00e4hk\u00f6postiosoite",
+        "value": "test@example.com",
+        "valueType": "string"
+      }
+    ],
+    "currentAddressInfoArray": [
+      {
+        "ID": "contactPerson",
+        "label": "Yhteyshenkil\u00f6",
+        "value": "Joku Henkil\u00f6",
+        "valueType": "string"
+      },
+      {
+        "ID": "phoneNumber",
+        "label": "Puhelinnumero",
+        "value": "040 123 123 12",
+        "valueType": "string"
+      },
+      {
+        "ID": "street",
+        "label": "L\u00e4hiosoite",
+        "value": "Mannerheimintie 12",
+        "valueType": "string"
+      },
+      {
+        "ID": "city",
+        "label": "Kaupunki",
+        "value": "Helsinki",
+        "valueType": "string"
+      },
+      {
+        "ID": "postCode",
+        "label": "Postinumero",
+        "value": "00100",
+        "valueType": "string"
+      },
+      {
+        "ID": "country",
+        "label": "Maa",
+        "value": "Suomi",
+        "valueType": "string"
+      }
+    ],
+    "applicationInfoArray": [
+      {
+        "ID": "formTimeStamp",
+        "label": null,
+        "value": "2025-10-06T13:13:13",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "createdFormTimeStamp",
+        "label": null,
+        "value": "2025-10-06T13:13:13",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "submittedFormTimeStamp",
+        "label": null,
+        "value": "2025-10-06T13:13:13",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "applicationNumber",
+        "label": null,
+        "value": "ABCDE-123-0001009",
+        "valueType": "string"
+      },
+      {
+        "ID": "status",
+        "label": "Hakemuksen tila",
+        "value": "DRAFT",
+        "valueType": "string"
+      },
+      {
+        "ID": "actingYear",
+        "label": "Vuosi, jolle haen avustusta",
+        "value": "2025",
+        "valueType": "string"
+      }
+    ],
+    "applicantOfficialsArray": [
+      [
+        {
+          "ID": "name",
+          "label": "Nimi",
+          "value": "Teppo Testaaja",
+          "valueType": "string"
+        },
+        {
+          "ID": "role",
+          "label": "Rooli",
+          "value": "2",
+          "valueType": "int"
+        },
+        {
+          "ID": "email",
+          "label": "S\u00e4hk\u00f6posti",
+          "value": "teppo.testaaja@noreply.com",
+          "valueType": "string"
+        },
+        {
+          "ID": "phone",
+          "label": "Puhelinnumero",
+          "value": "+358451234657",
+          "valueType": "string"
+        }
+      ]
+    ],
+    "bankAccountArray": [
+      {
+        "ID": "accountNumber",
+        "label": "Tilinumero",
+        "value": "FI4950009420028730",
+        "valueType": "string"
+      }
+    ],
+    "senderInfoArray": [
+      {
+        "ID": "firstname",
+        "label": null,
+        "value": "Nordea",
+        "valueType": "string"
+      },
+      {
+        "ID": "lastname",
+        "label": null,
+        "value": "Demo",
+        "valueType": "string"
+      },
+      {
+        "ID": "personID",
+        "label": null,
+        "value": "010101A0101",
+        "valueType": "string"
+      },
+      {
+        "ID": "userID",
+        "label": null,
+        "value": "123345678-abcd-1234-ab12-abcdefgh",
+        "valueType": "string"
+      },
+      {
+        "ID": "email",
+        "label": null,
+        "value": "user_no_mail@hel.fi",
+        "valueType": "string"
+      }
+    ],
+    "additionalInformation": "Lis\u00e4tietoa",
+    "compensationInfo": {
+      "compensationArray": [
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "15",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "value": "0",
+            "valueType": "float",
+            "label": null
+          }
+        ]
+      ]
+    },
+    "otherCompensationsInfo": {
+      "otherCompensationsArray": [],
+      "otherCompensationsInfoArray": [
+        {
+          "ID": "otherCompensationsTotal",
+          "value": "0",
+          "valueType": "double",
+          "label": null
+        },
+        {
+          "ID": "otherAppliedCompensationsTotal",
+          "value": "0",
+          "valueType": "double",
+          "label": null
+        }
+      ]
+    },
+    "benefitsInfoArray": [
+      {
+        "ID": "loans",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "ID": "premises",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    ],
+    "activitiesInfoArray": [
+      {
+        "ID": "businessPurpose",
+        "label": "Toiminnan kuvaus",
+        "value": "T\u00e4m\u00e4 on hakuprofiilin tietoa",
+        "valueType": "string"
+      }
+    ],
+    "orienteeringMapInfo": {
+      "orienteeringMapsArray": [
+        [
+          {
+            "ID": "mapName",
+            "label": "Kartan nimi",
+            "value": "Kartan nimi",
+            "valueType": "string"
+          },
+          {
+            "ID": "size",
+            "label": "Koko",
+            "value": "20",
+            "valueType": "double"
+          },
+          {
+            "ID": "voluntaryHours",
+            "label": "Talkooty\u00f6",
+            "value": "123",
+            "valueType": "float"
+          },
+          {
+            "ID": "cost",
+            "label": "Kustannukset",
+            "value": "123",
+            "valueType": "double"
+          },
+          {
+            "ID": "otherCompensations",
+            "label": "Muilta saadut avustukset",
+            "value": "123",
+            "valueType": "double"
+          }
+        ]
+      ]
+    }
+  },
+  "attachmentsInfo": {
+    "attachmentsArray": {
+      "generalInfoArray": [
+        {
+          "ID": "extraInfo",
+          "label": "Lis\u00e4selvitys liitteist\u00e4",
+          "value": "lis\u00e4selvitys",
+          "valueType": "string"
+        }
+      ]
+    }
+  }
+}
