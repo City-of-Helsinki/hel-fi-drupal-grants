@@ -333,7 +333,7 @@ final class ApplicationController extends ControllerBase {
         }
         $documentContentAttachment = array_find($documentContent['attachmentsInfo']['attachmentsArray'], fn($a) => $a[2]['ID'] === 'fileType' && $a[1]['value'] === $filename);
         $description = $documentContentAttachment[0]['value'] . ', ' ?? '';
-        $submitted = $event['timeCreated'];
+        $submitted = $event['timeCreated'] ?? $event['eventCreated'];
         $submitted = (new \DateTime($submitted))->format('d.m.Y H:i');
 
         $submitted = !$submitted ? '' : $submitted . ': ';

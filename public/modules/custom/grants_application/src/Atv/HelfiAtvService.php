@@ -178,6 +178,7 @@ class HelfiAtvService {
     array $selected_company,
     ?string $applicant_type = NULL,
     bool $isDraft = TRUE,
+    string $schemaVersion = '1',
   ): AtvDocument {
 
     $atvDocument = AtvDocument::create([]);
@@ -223,6 +224,7 @@ class HelfiAtvService {
       'applicant_type' => $selected_company['type'],
       'applicant_id' => $selected_company['identifier'],
       'form_uuid' => $application_uuid,
+      'schema_version' => $schemaVersion,
     ]);
 
     return $atvDocument;

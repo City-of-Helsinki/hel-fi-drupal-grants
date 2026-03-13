@@ -110,6 +110,8 @@ class ApplicationService {
       FALSE,
       $selected_company,
       $this->userInformationService->getApplicantType(),
+      TRUE,
+      $settings->getSchema()['x-schema-version'] ?? '1',
     );
 
     // Grants_events requires the events-array to exist.
