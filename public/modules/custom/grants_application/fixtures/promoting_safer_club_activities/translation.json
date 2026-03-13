@@ -16,7 +16,7 @@
       "sv": "Antal aktiva deltagare under 20 år i föreningen"
     },
     "active_participants_wrapper.help.value": {
-      "en": "Number of active participants under 20 years old in the association",
+      "en": "Those born in 2006 or later are considered under 20 years old.",
       "fi": "Alle 20-vuotiaiksi luetaan 2006 tai myöhemmin syntyneet.",
       "sv": "Som under 20 år räknas personer födda 2006 eller senare."
     },
