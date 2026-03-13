@@ -251,8 +251,8 @@ final class JsonMapperTest extends UnitTestCase {
    * @param string $form_identifier
    *   Form identifier.
    *
-   * @return mixed
-   *
+   * @return array
+   *   A real mapping.
    */
   private function getRealMapping(string $form_id, string $form_identifier): array {
     $mappingFixtures = file_get_contents(__DIR__ . "/../../../src/Mapper/Mappings/$form_id/$form_identifier.json");

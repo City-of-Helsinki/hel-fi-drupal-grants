@@ -92,7 +92,7 @@ final class FormTest extends UnitTestCase {
    * @param string $form_identifier
    *   Form identifier.
    *
-   * @return mixed
+   * @return array
    *   The real mapping from module mappings.
    */
   private function getRealMapping(string $form_id, string $form_identifier): array {
