@@ -373,7 +373,7 @@
       "additionalInformation": ""
     }
   },
-  "attachmentsInfo.attachmentsArray.generalInfoArray.extraInfo": {
+  "attachmentsInfo.generalInfoArray.0": {
     "#tip": "attachment extra info",
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.further_clarification",
