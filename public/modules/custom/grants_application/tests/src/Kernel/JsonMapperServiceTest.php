@@ -27,7 +27,7 @@ final class JsonMapperServiceTest extends KernelTestBase {
    * A simple validator test.
    */
   public function testMapperService(): void {
-    $testData = $this->getAllDatasources('form58.json');
+    $testData = $this->getAllDatasources('form58-nofiles-formdata.json');
 
     $mockUserInfoService = $this->createMock(UserInformationService::class);
     $mockUserInfoService->method('getGrantsProfileContent')->willReturn(new GrantsProfile($testData['grants_profile_array']));
@@ -39,7 +39,7 @@ final class JsonMapperServiceTest extends KernelTestBase {
     $settingsService = $this->container->get(FormSettingsServiceInterface::class);
     $mapperService = new JsonMapperService($mockUserInfoService, $settingsService);
 
-    $formData = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58.json'), TRUE);
+    $formData = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58-nofiles-formdata.json'), TRUE);
     $bankFile = $mapperService->getSelectedBankFile($formData);
 
     $mappedData = $mapperService->handleMapping(
