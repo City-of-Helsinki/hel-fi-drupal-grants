@@ -116,6 +116,8 @@ final class ApplicationController extends ControllerBase {
    *   The application number to use for the form.
    * @param bool $use_draft
    *   Whether to use the draft version of the form.
+   * @param bool $use_empty_preview
+   *   Whether to use the empty preview version of the form.
    *
    * @return array|RedirectResponse
    *   The resulting array
@@ -683,7 +685,7 @@ final class ApplicationController extends ControllerBase {
   }
 
   /**
-   * Return empty form data for anonymous preview
+   * Return empty form data for anonymous preview.
    *
    * @param string $form_identifier
    *   The form identifier.
