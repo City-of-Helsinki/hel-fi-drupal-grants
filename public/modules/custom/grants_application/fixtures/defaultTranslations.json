@@ -1,5 +1,15 @@
 {
   "translations": {
+    "acting_year.title": {
+      "en": "Year for which I am applying for a grant",
+      "fi": "Vuosi, jolle haen avustusta",
+      "sv": "År för vilket jag ansöker om understöd"
+    },
+    "acting_year_section.title": {
+      "en": "Grant details",
+      "fi": "Avustuksen tiedot",
+      "sv": "Uppgifter om understödet"
+    },
     "action_plan.description": {
       "en": "Attach here the action plan for the whole community.",
       "fi": "Liitä tähän koko yhteisön toimintasuunnitelma.",
@@ -9,16 +19,6 @@
       "en": "Action plan (for the year for which you are applying for a grant)",
       "fi": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)",
       "sv": "Verksamhetsplan (för det år du ansöker om understödet)"
-    },
-    "acting_year_section.title": {
-      "en": "Grant details",
-      "fi": "Avustuksen tiedot",
-      "sv": "Uppgifter om understödet"
-    },
-    "acting_year.title": {
-      "en": "Year for which I am applying for a grant",
-      "fi": "Vuosi, jolle haen avustusta",
-      "sv": "År för vilket jag ansöker om understöd"
     },
     "additional_information.description": {
       "en": "If necessary, you can write additional information or other justifications related to the application.",
@@ -40,11 +40,6 @@
       "fi": "Myöntävä vastaus avaa lisäkysymyksen",
       "sv": "Ett jakande svar öppnar ytterligare en fråga"
     },
-    "applicant_email_email.title": {
-      "en": "Email address",
-      "fi": "Sähköpostiosoite",
-      "sv": "E-postadress"
-    },
     "applicant_email.description": {
       "en": "Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.",
       "fi": "Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.",
@@ -54,6 +49,11 @@
       "en": "Email",
       "fi": "Sähköpostiosoite",
       "sv": "E-post"
+    },
+    "applicant_email_email.title": {
+      "en": "Email address",
+      "fi": "Sähköpostiosoite",
+      "sv": "E-postadress"
     },
     "applicant_info.title": {
       "en": "Applicant details",
@@ -80,11 +80,6 @@
       "fi": "Lisätiedot ja liitteet",
       "sv": "Ytterligare information och bilagor"
     },
-    "bank_account_bank_account.title": {
-      "en": "Select the account number",
-      "fi": "Tilinumero",
-      "sv": "Välj ett kontonummer"
-    },
     "bank_account.title": {
       "en": "Account number",
       "fi": "Tilinumero",
@@ -94,6 +89,11 @@
       "en": "If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.",
       "fi": "Jos haluat lisätä, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään tilinumerotietoa omiin tietoihin.",
       "sv": "Om du vill lägga till, radera eller ändra kontonummerinformation, spara applikationen som ett utkast och gå till att behålla kontonummerinformationen i din egen data."
+    },
+    "bank_account_bank_account.title": {
+      "en": "Select the account number",
+      "fi": "Tilinumero",
+      "sv": "Välj ett kontonummer"
     },
     "boolean.no": {
       "en": "No",
@@ -105,11 +105,6 @@
       "fi": "Kyllä",
       "sv": "Ja"
     },
-    "budget_step.title": {
-      "en": "Planned budget",
-      "fi": "Talousarvio",
-      "sv": "Budget"
-    },
     "budget.description": {
       "en": "Attach here the budget for the whole community.",
       "fi": "Liitä tähän koko yhteisön talousarvio.",
@@ -119,6 +114,11 @@
       "en": "Budget (for the year for which you are applying for a grant)",
       "fi": "Talousarvio (sille vuodelle jolle haet avustusta)",
       "sv": "Budget (för det år du ansöker om understödet)"
+    },
+    "budget_step.title": {
+      "en": "Planned budget",
+      "fi": "Talousarvio",
+      "sv": "Budget"
     },
     "cant_view_after_help.title": {
       "en": "The contents of the attachments cannot be viewed afterwards",
@@ -135,6 +135,11 @@
       "fi": "Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.",
       "sv": "Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd."
     },
+    "city_benefits_loans.title": {
+      "en": "Description of loans and guarantees",
+      "fi": "Kuvaus lainoista ja takauksista",
+      "sv": "Beskrivning av lån och borgen"
+    },
     "city_benefits_loans_section.description": {
       "en": "For loans received from the city, indicate the original loan amount, remaining loan amount, loan period, interest rate and purpose for which the loan was granted. For guarantees, indicate the monetary value and purpose.",
       "fi": "Kaupungilta saaduista lainoista on mainittava alkuperäinen lainamäärä, jäljellä oleva lainamäärä, laina-aika, korkoprosentti ja mihin tarkoitukseen laina on myönnetty. Takauksista ilmoitetaan niiden raha-arvo ja tarkoitus.",
@@ -145,10 +150,10 @@
       "fi": "Kaupungilta saadut lainat ja takaukset",
       "sv": "Lån och borgen som fåtts från staden"
     },
-    "city_benefits_loans.title": {
-      "en": "Description of loans and guarantees",
-      "fi": "Kuvaus lainoista ja takauksista",
-      "sv": "Beskrivning av lån och borgen"
+    "city_premises_benefits.title": {
+      "en": "Description of the support related to facilities",
+      "fi": "Kuvaus tiloihin liittyvästä tuesta",
+      "sv": "Beskrivning av understödet för lokalerna"
     },
     "city_premises_benefits_section.description": {
       "en": "Facilities that the city has given free of charge or rented to the applicant (name or address of the facility, rent amount €/month)",
@@ -160,10 +165,15 @@
       "fi": "Kaupungilta saatu tiloihin liittyvä tuki",
       "sv": "Understöd för lokaler som fåtts från staden"
     },
-    "city_premises_benefits.title": {
-      "en": "Description of the support related to facilities",
-      "fi": "Kuvaus tiloihin liittyvästä tuesta",
-      "sv": "Beskrivning av understödet för lokalerna"
+    "community_activity.description": {
+      "en": "The description of activities is maintained in your data",
+      "fi": "Tieto haetaan omat tiedot -osiosta",
+      "sv": "Informationen hämtas från avsnittet med personuppgifter"
+    },
+    "community_activity.title": {
+      "en": "Description of activities",
+      "fi": "Toiminnan kuvaus",
+      "sv": "Verksamhetsbeskrivning"
     },
     "community_activity_section.title": {
       "en": "Description of activities",
@@ -175,21 +185,6 @@
       "fi": "Yhteisön toiminta",
       "sv": "Samfundets verksamhet"
     },
-    "community_activity.description": {
-      "en": "The description of activities is maintained in your data",
-      "fi": "Tieto haetaan omat tiedot -osiosta",
-      "sv": "Informationen hämtas från avsnittet med personuppgifter"
-    },
-    "community_activity.title": {
-      "en": "Description of activities",
-      "fi": "Toiminnan kuvaus",
-      "sv": "Verksamhetsbeskrivning"
-    },
-    "community_address_community_address.title": {
-      "en": "Select the address",
-      "fi": "Valitse osoite",
-      "sv": "Välj en adress"
-    },
     "community_address.title": {
       "en": "Address",
       "fi": "Osoite",
@@ -199,6 +194,11 @@
       "en": "If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.",
       "fi": "Jos haluat lisätä, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään osoitetietoa omiin tietoihin.",
       "sv": "Om du vill lägga till, ta bort eller ändra adressuppgifter, spara ansökan som ett utkast och gå till att behålla adressuppgifterna i dina egna uppgifter."
+    },
+    "community_address_community_address.title": {
+      "en": "Select the address",
+      "fi": "Valitse osoite",
+      "sv": "Välj en adress"
     },
     "community_fees_section.title": {
       "en": "Membership fees",
@@ -210,10 +210,15 @@
       "fi": "Jäsenmäärä",
       "sv": "Antal medlemmar"
     },
-    "community_officials_community_officials_official.title": {
-      "en": "Select official",
-      "fi": "Toiminnasta vastaava henkilö",
-      "sv": "Välj motsvarande person"
+    "community_officials.title": {
+      "en": "Persons responsible for operations",
+      "fi": "Toiminnasta vastaavat henkilöt",
+      "sv": "Personer som ansvarar för verksamheten"
+    },
+    "community_officials.tooltip": {
+      "en": "If you want to add, delete or change people, save the application as a draft and go to maintain the people's information in your own data.",
+      "fi": "Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.",
+      "sv": "Om du vill lägga till, ta bort eller ändra personer, spara applikationen som ett utkast och gå till att underhålla personernas information i din egen data."
     },
     "community_officials_community_officials.addText": {
       "en": "Add person",
@@ -230,15 +235,10 @@
       "fi": "Valitse toiminnasta vastaavat henkilöt",
       "sv": "Personer som ansvarar för verksamheten"
     },
-    "community_officials.title": {
-      "en": "Persons responsible for operations",
-      "fi": "Toiminnasta vastaavat henkilöt",
-      "sv": "Personer som ansvarar för verksamheten"
-    },
-    "community_officials.tooltip": {
-      "en": "If you want to add, delete or change people, save the application as a draft and go to maintain the people's information in your own data.",
-      "fi": "Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.",
-      "sv": "Om du vill lägga till, ta bort eller ändra personer, spara applikationen som ett utkast och gå till att underhålla personernas information i din egen data."
+    "community_officials_community_officials_official.title": {
+      "en": "Select official",
+      "fi": "Toiminnasta vastaava henkilö",
+      "sv": "Välj motsvarande person"
     },
     "community_practices_business.title": {
       "en": "Is the entity engaged in business?",
@@ -285,6 +285,11 @@
       "fi": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)",
       "sv": "Fastställt bokslut (för den föregående avslutade räkenskapsperioden)"
     },
+    "contact_person.title": {
+      "en": "Contact person",
+      "fi": "Yhteyshenkilö",
+      "sv": "Kontaktperson"
+    },
     "contact_person_info.title": {
       "en": "Contact person for the application",
       "fi": "Hakemuksen yhteyshenkilö",
@@ -294,11 +299,6 @@
       "en": "Phone number",
       "fi": "Puhelinnumero",
       "sv": "Telefonnummer"
-    },
-    "contact_person.title": {
-      "en": "Contact person",
-      "fi": "Yhteyshenkilö",
-      "sv": "Kontaktperson"
     },
     "economy_forecast.description": {
       "en": "Specify the project's income and expenses as accurately as possible.",
@@ -345,15 +345,15 @@
       "fi": "Henkilöjäsenen jäsenmaksu (€/vuosi)",
       "sv": "Medlemsavgift för personmedlemmar (€/år)"
     },
-    "file_description.title": {
-      "en": "Attachment description",
-      "fi": "Liitteen kuvaus",
-      "sv": "Beskrivning av bilagan"
-    },
     "file.title": {
       "en": "Attachment",
       "fi": "Liitetiedosto",
       "sv": "Bilaga"
+    },
+    "file_description.title": {
+      "en": "Attachment description",
+      "fi": "Liitteen kuvaus",
+      "sv": "Beskrivning av bilagan"
     },
     "file_removal_failed.title": {
       "en": "File removal failed",
@@ -395,6 +395,11 @@
       "fi": "Olemme saaneet muita avustuksia",
       "sv": "Vi har fått andra understöd"
     },
+    "have_received_prior_compensations.no": {
+      "en": "I have not received a grant from the City of Helsinki for the same purpose in the previous year.",
+      "fi": "En ole saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
+      "sv": "Jag har inte fått bidrag från Helsingfors stad för samma ändamål föregående år."
+    },
     "have_received_prior_compensations.title": {
       "en": "Report on the use of the grant I received in the previous year",
       "fi": "Käyttöselvitys edellisenä vuonna saamastani avustuksesta",
@@ -404,11 +409,6 @@
       "en": "I received a grant from the city of Helsinki for the same purpose last year.",
       "fi": "Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
       "sv": "Jag fick ett bidrag från Helsingfors stad för samma ändamål förra året."
-    },
-    "have_received_prior_compensations.no": {
-      "en": "I have not received a grant from the City of Helsinki for the same purpose in the previous year.",
-      "fi": "En ole saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
-      "sv": "Jag har inte fått bidrag från Helsingfors stad för samma ändamål föregående år."
     },
     "income_row_amount.title": {
       "en": "Amount (€)",
@@ -420,15 +420,15 @@
       "fi": "Kuvaus tulosta",
       "sv": "Inkomstförklaring"
     },
-    "income_row_item.title": {
-      "en": "Type of income",
-      "fi": "Tulon tyyppi",
-      "sv": "Typ av inkomst"
-    },
     "income_row_item.description": {
       "en": "Write down the type of income in question. Incomes can be, for example, other grants and admission or participation fees. Self financing has to be written down as an income even if the required self financing share is to be funded from the organisations overall operations.",
       "fi": "Kerro tässä minkälainen tulo on kyseessä. Toiminnan tuloja voivat olla esimerkiksi muut avustukset ja pääsy- tai osallistumismaksut. Kirjaa tähän kohtaan myös omarahoitusosuus, jos hankkeen alijäämä kuitataan muusta taloudestanne.",
       "sv": "Skriv ner vilken typ av inkomst det gäller. Inkomster kan till exempel vara andra understöd och inträdes- eller deltagaravgifter. Självfinansiering måste uppges som en inkomst även om den självfinansierade delen finansieras med sökandes övrig verksamhet."
+    },
+    "income_row_item.title": {
+      "en": "Type of income",
+      "fi": "Tulon tyyppi",
+      "sv": "Typ av inkomst"
     },
     "income_rows.add": {
       "en": "Add new income",
@@ -445,55 +445,55 @@
       "fi": "Tarkemmat tiedot",
       "sv": "Mer detaljerad information"
     },
-    "members_applicant_community_global.title": {
-      "en": "Community members",
-      "fi": "Yhteisöjäseniä yhteensä",
-      "sv": "Samfundsmedlemmar sammanlagt"
-    },
-    "members_applicant_community_local.title": {
-      "en": "Total number of community members in Helsinki",
-      "fi": "Helsinkiläisiä yhteisöjäseniä yhteensä",
-      "sv": "Samfundsmedlemmar från Helsingfors sammanlagt"
-    },
     "members_applicant_community_global.description": {
       "en": "How many community members does the community currently have who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.",
       "fi": "Kuinka monta jäsenmaksun maksanutta yhteisöjäsentä yhteisöllä on tällä hetkellä? Yhteisöjäsentä ovat muut kuin henkilöjäsenet, esimerkiksi yhdistykset, säätiöt, yritykset tai kunnat.",
       "sv": "Hur många samfundsmedlemmar som har betalat medlemsavgiften har samfundet för närvarande? Samfundsmedlemmar är andra än personmedlemmar, såsom föreningar, stiftelser, företag eller kommuner."
+    },
+    "members_applicant_community_global.title": {
+      "en": "Community members",
+      "fi": "Yhteisöjäseniä yhteensä",
+      "sv": "Samfundsmedlemmar sammanlagt"
     },
     "members_applicant_community_local.description": {
       "en": "How many community members does the community currently have in Helsinki who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.",
       "fi": "Kuinka monta jäsenmaksun maksanutta helsinkiläistä yhteisöjäsentä yhteisöllä on tällä hetkellä? Yhteisöjäsentä ovat muut kuin henkilöjäsenet, esimerkiksi yhdistykset, säätiöt, yritykset tai kunnat.",
       "sv": "Hur många samfundsmedlemmar från Helsingfors som har betalat medlemsavgiften har samfundet för närvarande? Samfundsmedlemmar är andra än personmedlemmar, såsom föreningar, stiftelser, företag eller kommuner."
     },
+    "members_applicant_community_local.title": {
+      "en": "Total number of community members in Helsinki",
+      "fi": "Helsinkiläisiä yhteisöjäseniä yhteensä",
+      "sv": "Samfundsmedlemmar från Helsingfors sammanlagt"
+    },
     "members_applicant_person_global.description": {
       "en": "How many individual members does the community currently have who have paid the membership fee?",
       "fi": "Kuinka monta jäsenmaksun maksanutta henkilöjäsentä yhteisöllä on tällä hetkellä?",
       "sv": "Hur många personmedlemmar som har betalat medlemsavgiften har samfundet för närvarande?"
-    },
-    "members_applicant_person_local.description": {
-      "en": "How many individual members does the community currently have in Helsinki who have paid the membership fee?",
-      "fi": "Kuinka monta jäsenmaksun maksanutta helsinkiläistä henkilöjäsentä yhteisöllä on tällä hetkellä?",
-      "sv": "Hur många personmedlemmar från Helsingfors som har betalat medlemsavgiften har samfundet för närvarande?"
     },
     "members_applicant_person_global.title": {
       "en": "Total number of individual members",
       "fi": "Henkilöjäseniä yhteensä",
       "sv": "Personmedlemmar sammanlagt"
     },
+    "members_applicant_person_local.description": {
+      "en": "How many individual members does the community currently have in Helsinki who have paid the membership fee?",
+      "fi": "Kuinka monta jäsenmaksun maksanutta helsinkiläistä henkilöjäsentä yhteisöllä on tällä hetkellä?",
+      "sv": "Hur många personmedlemmar från Helsingfors som har betalat medlemsavgiften har samfundet för närvarande?"
+    },
     "members_applicant_person_local.title": {
       "en": "Total number of individual members in Helsinki",
       "fi": "Helsinkiläisiä henkilöjäseniä yhteensä",
       "sv": "Personmedlemmar från Helsingfors sammanlagt"
     },
-    "members_fieldset.legend": {
-      "en": "Numbers of members",
-      "fi": "Jäsenmäärä",
-      "sv": "Medlemskap"
-    },
     "members_fieldset.description": {
       "en": "If the community has members, please list them here.",
       "fi": "Jos yhteisöllä on jäseniä, merkitse ne tähän.",
       "sv": "Om gruppen har medlemmar, vänligen ange dem här."
+    },
+    "members_fieldset.legend": {
+      "en": "Numbers of members",
+      "fi": "Jäsenmäärä",
+      "sv": "Medlemskap"
     },
     "minutes_of_the_annual_meeting.description": {
       "en": "Attach here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association’s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this attachment does not need to be submitted.",
@@ -515,6 +515,11 @@
       "fi": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”. ",
       "sv": "Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
     },
+    "other_applied_compensation_amount.printable_title": {
+      "en": "The amount of the grant applied for (€)",
+      "fi": "Haetun avustuksen summa (€)",
+      "sv": "Beviljat bidragsbelopp (€)"
+    },
     "other_applied_compensation_amount.title": {
       "en": "The amount of the grant applied for",
       "fi": "Haetun avustuksen summa",
@@ -524,11 +529,6 @@
       "en": "Add new grant applied for",
       "fi": "Lisää uusi haettu avustus",
       "sv": "Lägg till nytt understöd som ansökts"
-    },
-    "other_applied_compensation_amount.printable_title": {
-      "en": "The amount of the grant applied for (€)",
-      "fi": "Haetun avustuksen summa (€)",
-      "sv": "Beviljat bidragsbelopp (€)"
     },
     "other_applied_compensations_section.description": {
       "en": "Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.",
@@ -555,15 +555,15 @@
       "fi": "Lisää uusi myönnetty avustus",
       "sv": "Lägg till understöd som beviljats"
     },
-    "other_compensation_amount.title": {
-      "en": "Amount of grant granted",
-      "fi": "Myönnetyn avustuksen summa",
-      "sv": "Beviljat bidragsbelopp"
-    },
     "other_compensation_amount.printable_title": {
       "en": "Amount of grant granted (€)",
       "fi": "Myönnetyn avustuksen summa (€)",
       "sv": "Beviljat bidragsbelopp (€)"
+    },
+    "other_compensation_amount.title": {
+      "en": "Amount of grant granted",
+      "fi": "Myönnetyn avustuksen summa",
+      "sv": "Beviljat bidragsbelopp"
     },
     "other_compensation_description.description": {
       "en": "Give a brief description, for what purpose has the grant been granted?",
@@ -575,15 +575,10 @@
       "fi": "Kuvaus käyttötarkoituksesta",
       "sv": "Beskrivning av avsedd användning"
     },
-    "other_compensation_issuer_name.title": {
-      "en": "Issuer's name",
-      "fi": "Myöntäjän nimi",
-      "sv": "Emittentens namn"
-    },
-    "other_compensation_issuer_year.title": {
-      "en": "Year",
-      "fi": "Vuosi",
-      "sv": "År"
+    "other_compensation_issuer.description": {
+      "en": "Which entity has granted the grant (e.g. name of the ministry)",
+      "fi": "Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)",
+      "sv": "Vilket organ har beviljat bidraget (t.ex. namnet på departementet)"
     },
     "other_compensation_issuer.eu": {
       "en": "EU",
@@ -610,10 +605,15 @@
       "fi": "Avustuksen myöntäjä",
       "sv": "Bidragsgivare"
     },
-    "other_compensation_issuer.description": {
-      "en": "Which entity has granted the grant (e.g. name of the ministry)",
-      "fi": "Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)",
-      "sv": "Vilket organ har beviljat bidraget (t.ex. namnet på departementet)"
+    "other_compensation_issuer_name.title": {
+      "en": "Issuer's name",
+      "fi": "Myöntäjän nimi",
+      "sv": "Emittentens namn"
+    },
+    "other_compensation_issuer_year.title": {
+      "en": "Year",
+      "fi": "Vuosi",
+      "sv": "År"
     },
     "other_compensations_section.description": {
       "en": "Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.",
@@ -650,15 +650,15 @@
       "fi": "Kerro, millaiseen hankkeeseen avustusta haetaan. Kerro myös, mitä avustuksella on tavoitteena saada aikaiseksi.",
       "sv": "Beskriv projektet som understödet söks för. Berätta också vad ni vill uppnå med understödet."
     },
-    "purpose_section.title": {
-      "en": "Purpose of use",
-      "fi": "Käyttötarkoitus",
-      "sv": "Användningsändamål"
-    },
     "purpose.title": {
       "en": "Brief description of the purpose(s) of the grant(s) applied for",
       "fi": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista",
       "sv": "En kort beskrivning av användningsändamålet för det/de understöd som ansöks"
+    },
+    "purpose_section.title": {
+      "en": "Purpose of use",
+      "fi": "Käyttötarkoitus",
+      "sv": "Användningsändamål"
     },
     "required_attachments_help.title": {
       "en": "Required attachments",
@@ -675,11 +675,6 @@
       "fi": "Sinun on syötettävä vähintään yhdelle avustuslajille summa",
       "sv": "Du måste föra in minst ett subventionsbelopp"
     },
-    "subventions_section.title": {
-      "en": "Types of grant",
-      "fi": "Avustuslajit",
-      "sv": "Understödskategorier"
-    },
     "subventions.1.title": {
       "en": "Operating grant",
       "fi": "Toiminta-avustus",
@@ -689,6 +684,11 @@
       "en": "Rent subsidy",
       "fi": "Vuokra-avustus",
       "sv": "Hyresunderstöd"
+    },
+    "subventions.56.title": {
+      "en": "Special grant for sports 3",
+      "fi": "Liikunnan erityisavustus 3",
+      "sv": "Specialunderstöd för idrott 3"
     },
     "subventions.6.title": {
       "en": "General grant",
@@ -700,15 +700,15 @@
       "fi": "Muu",
       "sv": "Annan"
     },
-    "subventions.56.title": {
-      "en": "Special grant for sports 3",
-      "fi": "Liikunnan erityisavustus 3",
-      "sv": "Specialunderstöd för idrott 3"
-    },
     "subventions.title": {
       "en": "Grants",
       "fi": "Avustukset",
       "sv": "Understöd"
+    },
+    "subventions_section.title": {
+      "en": "Types of grant",
+      "fi": "Avustuslajit",
+      "sv": "Understödskategorier"
     }
   }
 }

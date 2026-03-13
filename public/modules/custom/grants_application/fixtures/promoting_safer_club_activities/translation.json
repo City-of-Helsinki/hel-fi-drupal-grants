@@ -1,14 +1,14 @@
 {
   "translations": {
-    "active_participants_local.title": {
-      "en": "Of which residents of Helsinki",
-      "fi": "Joista helsinkiläisiä",
-      "sv": "Varav bosatta i Helsingfors"
-    },
     "active_participants_local.printable_title": {
       "en": "Number of active participants under 20 years old in the association, of which residents of Helsinki",
       "fi": "Yhdistyksen alle 20-vuotiaiden helsinkiläisten aktiiviharrastajien määrä",
       "sv": "Antal aktiva deltagare under 20 år i föreningen, varav bosatta i Helsingfors"
+    },
+    "active_participants_local.title": {
+      "en": "Of which residents of Helsinki",
+      "fi": "Joista helsinkiläisiä",
+      "sv": "Varav bosatta i Helsingfors"
     },
     "active_participants_under_20.title": {
       "en": "Number of active participants under 20 years old in the association",
@@ -40,15 +40,15 @@
       "fi": "Kehitetäänkö hankkeessa rasisminvastaisia toimenpiteitä? Jos kyllä, miten?",
       "sv": "Utvecklas antirasistiska åtgärder inom projektet? Om ja, hur?"
     },
-    "end_date.title": {
-      "en": "End date",
-      "fi": "Loppupäivämäärä",
-      "sv": "Slutdatum"
-    },
     "end_date.printable_title": {
       "en": "Project end date",
       "fi": "Hankkeen loppupäivämäärä",
       "sv": "Projektets slutdatum"
+    },
+    "end_date.title": {
+      "en": "End date",
+      "fi": "Loppupäivämäärä",
+      "sv": "Slutdatum"
     },
     "equality_nondiscrimination_responsibility_plan.description": {
       "en": "Answer only if the project includes the measure set \"drawing up an equality, non-discrimination or responsibility plan and implementing the measures\". At least one optional set of measures must be implemented in the project.",
@@ -195,15 +195,15 @@
       "fi": "Hankkeen aikataulu",
       "sv": "Projektets tidtabell"
     },
-    "start_date.title": {
-      "en": "Start date",
-      "fi": "Alkupäivämäärä",
-      "sv": "Startdatum"
-    },
     "start_date.printable_title": {
       "en": "Project start date",
       "fi": "Hankkeen alkupäivämäärä",
       "sv": "Projektets startdatum"
+    },
+    "start_date.title": {
+      "en": "Start date",
+      "fi": "Alkupäivämäärä",
+      "sv": "Startdatum"
     },
     "under_20_affected.title": {
       "en": "Describe who or what proportion of the club's under-20 participants the project measures will affect",

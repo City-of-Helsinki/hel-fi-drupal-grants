@@ -50,15 +50,15 @@
       "fi": "Lahjoitukset (€)",
       "sv": "Donationer (€)"
     },
-    "economy_forecast_section.title": {
-      "en": "Budget",
-      "fi": "Talousarvio",
-      "sv": "Budget"
-    },
     "economy_forecast.description": {
       "en": "Only apply for one grant type at a time with each application.",
       "fi": " Iltapäivätoiminnan talousarvio sisältää tulot ja menot. Tulot eritellään haettavaan avustukseen, asiakasmaksuihin ja mahdollisiin lahjoituksiin. Menot eritellään avustuksen ja asiakasmaksujen käytön osalta erikseen. Mahdolliset lahjoitukset syötetään asiakasmaksujen menoihin. ",
       "sv": "I eftermiddagsverksamhetens budget fastställs inkomster och utgifter. Inkomsterna specificeras för understödet som söks, klientavgifter och eventuella donationer. Utgifterna specificeras separat för användningen av understödet respektive klientavgifterna. Eventuella donationer bokförs som utgifter för klientavgifterna."
+    },
+    "economy_forecast_section.title": {
+      "en": "Budget",
+      "fi": "Talousarvio",
+      "sv": "Budget"
     },
     "electricity.title": {
       "en": "Electricity (€)",
@@ -105,40 +105,35 @@
       "fi": "Toimintapaikka",
       "sv": "Verksamhetsplats"
     },
-    "location_number_of_groups_special_needs.title": {
-      "en": "Special Groups",
-      "fi": "Joista erityisoppilaiden pienryhmiä",
-      "sv": "Varav små grupper för elever med särskilda behov"
-    },
     "location_number_of_groups.title": {
       "en": "Group Count",
       "fi": "Ryhmien lukumäärä",
       "sv": "Antal grupper"
+    },
+    "location_number_of_groups_special_needs.title": {
+      "en": "Special Groups",
+      "fi": "Joista erityisoppilaiden pienryhmiä",
+      "sv": "Varav små grupper för elever med särskilda behov"
     },
     "location_postal_code.title": {
       "en": "Postal code",
       "fi": "Postinumero",
       "sv": "Postnummer"
     },
-    "location_pupil_number_special_needs.title": {
-      "en": "Special Students",
-      "fi": "Joista erityisoppilaita",
-      "sv": "Varav elever med särskilda utbildningsbehov"
-    },
     "location_pupil_number.title": {
       "en": "Student Count",
       "fi": "Oppilaiden lukumäärä",
       "sv": "Antal elever"
     },
+    "location_pupil_number_special_needs.title": {
+      "en": "Special Students",
+      "fi": "Joista erityisoppilaita",
+      "sv": "Varav elever med särskilda utbildningsbehov"
+    },
     "location_staff.title": {
       "en": "Personnel Count",
       "fi": "Henkilöstön lukumäärä",
       "sv": "Antal anställda"
-    },
-    "locations_info_section.title": {
-      "en": "Basic information about the locations",
-      "fi": "Toimintapaikkojen perustiedot",
-      "sv": "Verksamhetsställets uppgifter"
     },
     "locations_info.description": {
       "en": "Please provide here the contact details and group structure information for the different locations. The form will calculate the reported information together.",
@@ -149,6 +144,11 @@
       "en": "Location",
       "fi": "Toimintapaikka",
       "sv": "Verksamhetsställen"
+    },
+    "locations_info_section.title": {
+      "en": "Basic information about the locations",
+      "fi": "Toimintapaikkojen perustiedot",
+      "sv": "Verksamhetsställets uppgifter"
     },
     "management_office_expenses.title": {
       "en": "Admin (€)",
@@ -247,13 +247,13 @@
       "en": "Total Rent (€)",
       "fi": "Euroa yhteensä lukuvuoden aikana (€)"
     },
-    "unprovided_rent_time_start.title": {
-      "en": "Rent time begin",
-      "fi": "Vuokra-aika lukuvuoden aikana, alkaen"
-    },
     "unprovided_rent_time_end.title": {
       "en": "Rent time end",
       "fi": "Vuokra-aika lukuvuoden aikana, päättyen"
+    },
+    "unprovided_rent_time_start.title": {
+      "en": "Rent time begin",
+      "fi": "Vuokra-aika lukuvuoden aikana, alkaen"
     },
     "usage_of_benefits_section.title": {
       "en": "Grant usage / Services purchased",
