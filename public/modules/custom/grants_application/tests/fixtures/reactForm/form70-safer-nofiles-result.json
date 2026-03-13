@@ -10,19 +10,19 @@
       {
         "ID": "companyNumber",
         "label": "Y-Tunnus",
-        "value": "7011030-1",
+        "value": "7769480-5",
         "valueType": "string"
       },
       {
         "ID": "registrationDate",
         "label": "Rekister\u00f6imisp\u00e4iv\u00e4",
-        "value": "05.04.2023",
+        "value": "21.5.2023",
         "valueType": "datetime"
       },
       {
         "ID": "foundingYear",
         "label": "Perustamisvuosi",
-        "value": "2025",
+        "value": "2020",
         "valueType": "string"
       },
       {
@@ -34,19 +34,19 @@
       {
         "ID": "homePage",
         "label": "www-sivut",
-        "value": "https:\/\/example.com",
+        "value": "www.google.com",
         "valueType": "string"
       },
       {
         "ID": "communityOfficialName",
         "label": "Yhteis\u00f6n nimi",
-        "value": "\u00d6svald Testifirma",
+        "value": "Activenakusteri Oy",
         "valueType": "string"
       },
       {
         "ID": "communityOfficialNameShort",
         "label": "Yhteis\u00f6n lyhenne",
-        "value": "OSVT",
+        "value": "Akt",
         "valueType": "string"
       },
       {
@@ -60,7 +60,7 @@
       {
         "ID": "contactPerson",
         "label": "Yhteyshenkil\u00f6",
-        "value": "Test test",
+        "value": "Joku Henkilö",
         "valueType": "string"
       },
       {
@@ -72,7 +72,7 @@
       {
         "ID": "street",
         "label": "L\u00e4hiosoite",
-        "value": "Kauppakatu 20",
+        "value": "Mannerheimintie 12",
         "valueType": "string"
       },
       {

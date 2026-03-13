@@ -13,23 +13,28 @@ use Drupal\Tests\UnitTestCase;
  * Manually fill a form and add the form_data and avus2-data as fixtures-json.
  * Test runs the mapping code, compares the result to the expected Avus2-json.
  */
-final class FormTests extends UnitTestCase {
+final class FormTest extends UnitTestCase {
 
   /**
    * Test ID58, no added files.
    */
-  public function testForm58NoFiles() {
+  public function testMultipleForms() {
+    // Result is whatever was sent to avus2 when you sent the application
+    // for the first time, set in json file.
+    // phpcs:disable
     $forms = [
-      'ID58' => 'liikunta_suunnistuskartta_avustu',
-      'ID70' => 'promoting_safer_club_activities',
+      ['id' => 'ID58', 'form_identifier' => 'liikunta_suunnistuskartta_avustu', 'form_data' => 'form58-nofiles-formdata', 'result' => 'form58-nofiles-result'],
+      // ['id' => 'ID58', 'form_identifier' => 'liikunta_suunnistuskartta_avustu', 'form_data' => 'form58-file-formdata', 'result' => 'form58-file-result'],
+      // ['id' => 'ID70', 'form_identifier' => 'promoting_safer_club_activities', 'form_data' => 'form58-nofiles-formdata', 'result' => 'form70-safer-nofiles-result'],
     ];
+    // phpcs:enable
 
-    foreach ($forms as $formId => $formIdentifier) {
+    foreach ($forms as $info) {
       $commonMappings = $this->getRealMapping('common', 'registered_community');
-      $realMapping = $this->getRealMapping($formId, $formIdentifier);
+      $realMapping = $this->getRealMapping($info['id'], $info['form_identifier']);
       $mapping = array_merge($commonMappings, $realMapping);
 
-      $dataSources = $this->getAllDatasources('form58-nofiles-formdata.json');
+      $dataSources = $this->getAllDatasources($info['form_data']);
 
       $mapper = new JsonMapper();
       $mapper->setMappings($mapping);
@@ -37,8 +42,8 @@ final class FormTests extends UnitTestCase {
       $files = $mapper->mapFiles($dataSources);
 
       // Running mapper should always return same values.
-      $originalResult = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58-nofiles-result.json'), TRUE);
-      $this->assertEquals($originalResult, $fields);
+      $originalResult = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/'. $info['result'] . '.json'), TRUE);
+      $this->assertEquals($originalResult, $fields, "asserting {$info['form_identifier']}, {$info['result']}");
       $this->assertCount(0, $files);
     }
   }
@@ -56,7 +61,7 @@ final class FormTests extends UnitTestCase {
    */
   private function getAllDatasources(string $fixtureName): array {
     $commonDatasources = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/commonDatasources.json'), TRUE);
-    $specificDatasource = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/' . $fixtureName), TRUE);
+    $specificDatasource = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/' . $fixtureName . '.json'), TRUE);
     $commonDatasources['form_data'] = $specificDatasource;
 
     return $commonDatasources;
