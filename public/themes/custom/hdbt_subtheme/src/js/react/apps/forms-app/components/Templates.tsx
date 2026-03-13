@@ -1,7 +1,3 @@
-// biome-ignore-all lint/a11y/noLabelWithoutControl: @todo UHF-12501
-// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
-// biome-ignore-all lint/correctness/useJsxKeyInIterable: @todo UHF-12501
-// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 import type {
   ArrayFieldTemplateProps,
   IconButtonProps,
@@ -12,10 +8,11 @@ import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus } from '
 import type { ReactNode } from 'react';
 import { useAtomValue } from 'jotai';
 
-import { formStepsAtom, getCurrentStepAtom, shouldRenderPreviewAtom } from '../store';
+import { formStepsAtom, getCurrentStepAtom, isEmptyPreviewAtom, shouldRenderPreviewAtom } from '../store';
 import { ApplicantInfo } from './ApplicantInfo';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 import { getTooltip } from '../utils';
+import type { UiSchema } from '../types/UiSchema';
 
 export const ArrayFieldTemplate = ({
   canAdd,
@@ -28,6 +25,7 @@ export const ArrayFieldTemplate = ({
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const { description } = schema;
   const { ArrayFieldItemTemplate } = registry.templates;
+  const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
 
   if (shouldRenderPreview) {
     const hideName = uiSchema?.['ui:options']?.hideNameFromPrint;
@@ -39,12 +37,11 @@ export const ArrayFieldTemplate = ({
         const value = item?.children?.props?.formData;
         return value && Object.keys(value).length;
       })
+      // biome-ignore lint/correctness/useJsxKeyInIterable: Item contains key already
       .map((item) => <ArrayFieldItemTemplate {...{ ...item, canAdd: false, hasRemove: false, hasToolbar: false }} />);
 
     return (
       <>
-        {/* @todo fix when rebuilding styles  */}
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         {!hideName &&
           (printableName || schema.title) &&
           (printableName ? (
@@ -63,9 +60,10 @@ export const ArrayFieldTemplate = ({
     <div>
       {description && <div className='hdbt-form--description'>{description}</div>}
       {items.map((item) => (
+        // biome-ignore lint/correctness/useJsxKeyInIterable: Item contains key already
         <ArrayFieldItemTemplate {...item} />
       ))}
-      {canAdd && (
+      {canAdd && !isEmptyPreview && (
         <Button onClick={onAddClick} theme={secondaryButtonTheme} type='button' iconStart={<IconPlus />}>
           {addText ? (addText as ReactNode & string) : Drupal.t('Add')}
         </Button>
@@ -82,7 +80,7 @@ const PreviewStep = ({
 }: {
   title?: string;
   properties: ObjectFieldTemplatePropertyType[];
-  uiSchema: any;
+  uiSchema: UiSchema;
   stepNumber?: number;
 }) => {
   const printableName = uiSchema?.['ui:options']?.printableName;
@@ -95,7 +93,7 @@ const PreviewStep = ({
         'hdbt-react-form__preview-accordion-item' +
         (stepNumber === 1 ? ' hdbt-react-form__preview-accordion-item--first' : '')
       }
-      heading={heading}
+      heading={heading?.toString()}
       headingLevel={3}
       initiallyOpen
       language={drupalSettings.path.currentLanguage || 'fi'}
@@ -115,7 +113,7 @@ const PreviewSection = ({
 }: {
   title?: string;
   properties: ObjectFieldTemplatePropertyType[];
-  uiSchema: any;
+  uiSchema: UiSchema;
 }) => {
   const printableName = uiSchema?.['ui:options']?.printableName;
 
@@ -130,6 +128,7 @@ const PreviewSection = ({
 export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: ObjectFieldTemplateProps) => {
   const { _isSection, _step, description, title } = schema;
   const steps = useAtomValue(formStepsAtom);
+  const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
   const [stepIndex, { id: stepId, label: stepLabel }] = useAtomValue(getCurrentStepAtom);
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
@@ -140,19 +139,19 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   if (_step && shouldRenderPreview) {
     const stepEntry = steps && [...steps.entries()].find(([, s]) => s.id === _step);
     const stepNumber = stepEntry ? stepEntry[0] + 1 : undefined;
-    return <PreviewStep title={title} properties={properties} uiSchema={uiSchema} stepNumber={stepNumber} />;
+    return <PreviewStep title={title} properties={properties} uiSchema={uiSchema || {}} stepNumber={stepNumber} />;
   }
 
-  if (_step && _step !== stepId) {
+  if (_step && _step !== stepId && !isEmptyPreview) {
     return null;
   }
 
-  if (_step && _step === stepId) {
+  if ((_step && _step === stepId) || (isEmptyPreview && !_isSection)) {
     return (
       <>
         {title && <h2 className='grants-form__page-title'>{title}</h2>}
         <div className='grants-form__notification-container'>
-          {stepIndex === 0 && (
+          {stepIndex === 0 && !isEmptyPreview && (
             <Notification
               className='hdbt-form--notification'
               label={Drupal.t('Some information fetched from personal information')}
@@ -162,7 +161,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
               )}
             </Notification>
           )}
-          {steps && stepIndex < steps.size - 2 && (
+          {steps && stepIndex < steps.size - 2 && !isEmptyPreview && (
             <Notification
               className='hdbt-form--notification'
               label={Drupal.t('Fill in the fields to all the questions that you can answer.')}
@@ -173,7 +172,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
             </Notification>
           )}
         </div>
-        {stepId === 'applicant_info' && (
+        {stepId === 'applicant_info' && !isEmptyPreview && (
           <section className='prh-content-block'>
             <h3 className='prh-content-block__title'>{stepLabel}</h3>
             <p>
@@ -193,7 +192,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   }
 
   if (_isSection && shouldRenderPreview) {
-    return <PreviewSection title={title} properties={properties} uiSchema={uiSchema} />;
+    return <PreviewSection title={title} properties={properties} uiSchema={uiSchema || {}} />;
   }
 
   if (_isSection) {

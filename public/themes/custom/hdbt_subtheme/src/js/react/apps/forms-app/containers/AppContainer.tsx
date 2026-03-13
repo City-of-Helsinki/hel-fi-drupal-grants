@@ -64,16 +64,22 @@ async function fetchFormData(form_identifier: string, token: string) {
     applicationNumber = getUrlParts()?.[4];
   }
 
-  if (!applicationNumber) {
+  const { use_draft: useDraft, use_empty_preview: useEmptyPreview } = drupalSettings.grants_react_form;
+
+  if (!applicationNumber && !useEmptyPreview) {
     const { application_number } = await instantiateDocument(form_identifier, token);
     applicationNumber = application_number;
   }
 
-  const { use_draft: useDraft } = drupalSettings.grants_react_form;
   // Uses DraftApplication or Application REST resource based on useDraft flag
-  const fetchUrl = useDraft
-    ? `/applications/${form_identifier}/${applicationNumber}`
-    : `/applications/${form_identifier}/application/${applicationNumber}`;
+  let fetchUrl = '';
+  if (useEmptyPreview) {
+    fetchUrl = `/application/preview/${form_identifier}`;
+  } else if (useDraft) {
+    fetchUrl = `/applications/${form_identifier}/${applicationNumber}`;
+  } else {
+    fetchUrl = `/applications/${form_identifier}/application/${applicationNumber}`;
+  }
   const formConfigResponse = await fetch(fetchUrl, {
     headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
   });

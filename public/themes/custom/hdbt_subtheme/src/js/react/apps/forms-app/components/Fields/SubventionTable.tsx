@@ -4,7 +4,7 @@ import type { FieldProps } from '@rjsf/utils';
 import { useAtomValue } from 'jotai';
 import { Notification, NumberInput, Fieldset } from 'hds-react';
 
-import { shouldRenderPreviewAtom } from '../../store';
+import { isReadOnlyAtom, shouldRenderPreviewAtom } from '../../store';
 import { formatErrors } from '../../utils';
 import type { FocusEvent, KeyboardEvent, WheelEvent } from 'react';
 
@@ -24,6 +24,7 @@ const SUBVENTION_VALUE_TYPE = 'string';
 export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, required, schema }: FieldProps) => {
   const id = idSchema.$id;
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   if (!schema.options || !schema.options.length) {
     console.error('Tried to render subvention table without items');
@@ -103,12 +104,12 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
               <NumberInput
                 className='form-group field field-integer'
                 data-subvention-id={itemId}
+                disabled={isReadOnly}
                 id={key}
                 key={key}
                 label={label}
                 min={0}
                 onChange={handleChange}
-                required={required}
                 onFocus={(event: FocusEvent<HTMLInputElement>) => {
                   if (event.target.value === '0') {
                     event.target.select();
@@ -122,6 +123,7 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
                 onWheel={(event: WheelEvent<HTMLInputElement>) => {
                   event.currentTarget.blur();
                 }}
+                required={required}
                 value={Number(keyedData[itemId]) || 0}
                 unit='€'
               />

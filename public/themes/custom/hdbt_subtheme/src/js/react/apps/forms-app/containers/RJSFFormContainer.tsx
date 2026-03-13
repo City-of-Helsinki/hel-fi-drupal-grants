@@ -1,4 +1,4 @@
-// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
+// biome-ignore-all lint/suspicious/noExplicitAny: RJSF uses any for form data.
 // biome-ignore-all lint/correctness/noNestedComponentDefinitions: @todo UHF-12501
 // biome-ignore-all lint/correctness/useExhaustiveDependencies: @todo UHF-12501
 // biome-ignore-all lint/complexity/useOptionalChain: @todo UHF-12501
@@ -15,7 +15,7 @@ import { useAtomValue, useSetAtom, type WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
 import Form, { getDefaultRegistry, type IChangeEvent } from '@rjsf/core';
-import type React from 'react';
+import type { ReactNode, FormEvent } from 'react';
 import { createRef, useCallback, useState } from 'react';
 import { customizeValidator } from '@rjsf/validator-ajv8';
 import { useTranslation } from 'react-i18next';
@@ -44,6 +44,7 @@ import {
   getSubventionFieldsAtom,
   isReadOnlyAtom,
   setStepAtom,
+  isEmptyPreviewAtom,
 } from '../store';
 import { InvalidSchemaError } from '../errors/InvalidSchemaError';
 import { isDraft, keyErrorsByStep } from '../utils';
@@ -55,6 +56,7 @@ import { SubventionTable } from '../components/Fields/SubventionTable';
 import { Terms } from '../components/Terms';
 import { TextParagraph } from '../components/Fields/TextParagraph';
 import { localizeErrors } from '../localizeErrors';
+import { Notification, NotificationSize } from 'hds-react';
 
 const widgets: RegistryWidgetsType = {
   address: AddressSelect,
@@ -106,6 +108,7 @@ export const RJSFFormContainer = ({
   const readReachedStep = useAtomCallback(useCallback((get) => get(getReachedStepAtom), []));
   const readFormData = useAtomCallback(useCallback((get) => get(formDataAtom), []));
   const setErrors = useSetAtom(setErrorsAtom);
+  const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
 
   const browserCacheData = useDebounceCallback((data: IChangeEvent) => {
     setFormData(data.formData);
@@ -209,6 +212,42 @@ export const RJSFFormContainer = ({
     return errors;
   };
 
+  const getFormTopArea = () => {
+    const components: ReactNode[] = [];
+
+    if (isEmptyPreview) {
+      components.push(
+        <Notification
+          className='hdbt-form--notification empty-preview-notification'
+          key='preview-notification'
+          label={Drupal.t('Preview mode', {}, { context: 'grants_webform_print' })}
+          size={NotificationSize.Small}
+          type='alert'
+        >
+          {Drupal.t(
+            'This printout is only for previewing the application and cannot be used when applying for a grant',
+            {},
+            { context: 'grants_webform_print' },
+          )}
+        </Notification>,
+      );
+    }
+
+    if (!isDraft()) {
+      components.push(<FormSummary key='summary' formData={readFormData()} schema={schema} />);
+    }
+
+    if (readOnly && !isEmptyPreview) {
+      components.push(<SubmittedForm key='submitted' formData={readFormData()} schema={schema} />);
+    }
+
+    if (!readOnly && !isEmptyPreview) {
+      components.push(<StaticStepsContainer key='static-steps' formDataAtom={formDataAtom} schema={schema} />);
+    }
+
+    return components;
+  };
+
   return (
     <>
       {!readOnly && (
@@ -218,12 +257,7 @@ export const RJSFFormContainer = ({
         </>
       )}
       <div className='form-wrapper'>
-        {!isDraft() && <FormSummary formData={readFormData()} schema={schema} />}
-        {readOnly ? (
-          <SubmittedForm formData={readFormData()} schema={schema} />
-        ) : (
-          <StaticStepsContainer formDataAtom={formDataAtom} schema={schema} />
-        )}
+        {getFormTopArea()}
         <Form
           className='grants-form'
           customValidate={customValidate}
@@ -240,7 +274,7 @@ export const RJSFFormContainer = ({
           noHtml5Validate
           onChange={browserCacheData}
           onError={onError}
-          onSubmit={async (data, event: React.FormEvent<HTMLFormElement>) => {
+          onSubmit={async (data, event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
 
             if (readCurrentStep()[1].id !== 'preview') {
@@ -276,9 +310,11 @@ export const RJSFFormContainer = ({
           )}
           widgets={widgets}
         >
-          {!drupalSettings.grants_react_form.use_preview && <Terms />}
-          {!drupalSettings.grants_react_form.use_preview && (
-            <FormActions saveDraft={() => saveDraft(readFormData())} validatePartialForm={validatePartialForm} />
+          {!drupalSettings.grants_react_form.use_preview && !isEmptyPreview && (
+            <>
+              <Terms />
+              <FormActions saveDraft={() => saveDraft(readFormData())} validatePartialForm={validatePartialForm} />
+            </>
           )}
         </Form>
       </div>
