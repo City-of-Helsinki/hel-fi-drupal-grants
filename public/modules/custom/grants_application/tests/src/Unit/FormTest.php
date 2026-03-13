@@ -42,7 +42,7 @@ final class FormTest extends UnitTestCase {
       $files = $mapper->mapFiles($dataSources);
 
       // Running mapper should always return same values.
-      $originalResult = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/'. $info['result'] . '.json'), TRUE);
+      $originalResult = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/' . $info['result'] . '.json'), TRUE);
       $this->assertEquals($originalResult, $fields, "asserting {$info['form_identifier']}, {$info['result']}");
       $this->assertCount(0, $files);
     }
@@ -93,7 +93,7 @@ final class FormTest extends UnitTestCase {
    *   Form identifier.
    *
    * @return mixed
-   *
+   *   The real mapping from module mappings.
    */
   private function getRealMapping(string $form_id, string $form_identifier): array {
     $mappingFixtures = file_get_contents(__DIR__ . "/../../../src/Mapper/Mappings/$form_id/$form_identifier.json");
