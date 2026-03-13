@@ -670,6 +670,11 @@
       "fi": "Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilikaudelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilikautta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä vuosikokouksen pöytäkirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.",
       "sv": "För behandling av ansökan om understöd behövs styrkta bilagor från den föregående räkenskapsperioden som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från den föregående räkenskapsperioden är: bokslut, verksamhetsberättelse, revisionsberättelse och protokoll från årsstämman. Bilagorna för det år för vilket understödet ansöks är: budget och verksamhetsplan."
     },
+    "select.placeholder": {
+      "en": "- Select -",
+      "fi": "- Valitse -",
+      "sv": "- Välj -"
+    },
     "subvention.greater_than_zero": {
       "en": "You must insert at least one subvention amount ",
       "fi": "Sinun on syötettävä vähintään yhdelle avustuslajille summa",

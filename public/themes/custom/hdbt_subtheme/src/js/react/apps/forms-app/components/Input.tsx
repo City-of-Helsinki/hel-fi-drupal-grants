@@ -213,6 +213,7 @@ export const SelectWidget = ({
   value,
   uiSchema,
 }: SelectWidgetProps) => {
+  const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (shouldRenderPreview) {
@@ -246,7 +247,7 @@ export const SelectWidget = ({
         assistive,
         error: rawErrors ? formatErrors(rawErrors) : undefined,
         label: label ?? '',
-        placeholder: '- Valitse -',
+        placeholder: t('select.placeholder'),
       }}
       theme={defaultSelectTheme}
       tooltip={getTooltip(uiSchema)}
