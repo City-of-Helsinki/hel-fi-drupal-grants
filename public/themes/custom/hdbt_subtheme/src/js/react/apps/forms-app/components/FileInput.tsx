@@ -110,12 +110,11 @@ export const FileInput = ({
         </>
       );
     }
-    // @todo Print multiple files properly.
     return (
       <>
-        {defaultValue?.files?.map((file) => (
-          <>{file.name}</>
-        ))}
+        {defaultValue?.map((file: File) => {
+          return file.name && <>{file.name}</>;
+        })}
       </>
     );
   }

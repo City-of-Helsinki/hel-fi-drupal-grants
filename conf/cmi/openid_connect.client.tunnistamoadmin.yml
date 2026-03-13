@@ -8,12 +8,170 @@ id: tunnistamoadmin
 label: TunnistamoAdmin
 plugin: tunnistamo
 settings:
-  client_id: admin
-  client_secret: admin
+  client_id: ''
+  client_secret: ''
   iss_allowed_domains: ''
-  is_production: 0
+  prompt:
+    login: login
   auto_login: 0
   environment_url: ''
-  client_scopes: 'openid,email'
-  client_roles: {  }
-  debug_log: false
+  client_scopes: ''
+  client_roles:
+    - ad_user
+  ad_roles:
+    -
+      ad_role: sl_avustustest_paakayttajat
+      roles:
+        - grants_admin
+    -
+      ad_role: sl_avustustest_pk_kanslia_kayttajat
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_avustustest_ta_kasko_kayttajat
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_avustustest_pk_pel_kayttajat
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_avustustest_ta_kymp_kayttajat
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_avustustest_ta_kuva_kayttajat
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_avustustest_ta_sote_kayttajat
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_avustus_kanslia_paakayttajat
+      roles:
+        - grants_admin
+    -
+      ad_role: sl_avustus_pk_kanslia
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_avustus_ta_kasko
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_avustus_ta_kymp
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_avustus_pk_pel
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_avustus_ta_kuva
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_avustus_ta_sote
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sl_kanslia_owakayttajat
+      roles:
+        - content_producer_industry
+    -
+      ad_role: sg_kanslia_kayttajat
+      roles:
+        - content_producer_industry
+    -
+      ad_role: 947058f4-697e-41bb-baf5-f69b49e5579a
+      roles:
+        - super_administrator
+        - grants_admin
+    -
+      ad_role: Drupal_Helfi_kaupunkitaso_paakayttajat
+      roles:
+        - grants_admin
+    -
+      ad_role: Drupal_Helfi_Avustukset_paakayttajat
+      roles:
+        - grants_admin
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_suppea
+      roles:
+        - content_producer
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kanslia
+      roles:
+        - content_producer
+        - grants_producer_industry
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kanslia
+      roles:
+        - content_producer
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kasko
+      roles:
+        - content_producer
+        - grants_producer_industry
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kasko
+      roles:
+        - content_producer
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kuva
+      roles:
+        - content_producer
+        - grants_producer_industry
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kuva
+      roles:
+        - content_producer
+    -
+      ad_role: Drupal_Helfi_kaupunkitaso_paakayttajat
+      roles:
+        - ad_user
+        - grants_admin
+    -
+      ad_role: Drupal_Helfi_Avustukset_paakayttajat
+      roles:
+        - ad_user
+        - grants_admin
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_suppea
+      roles:
+        - ad_user
+        - content_producer
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kanslia
+      roles:
+        - ad_user
+        - content_producer
+        - grants_producer_industry
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kanslia
+      roles:
+        - ad_user
+        - content_producer
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kasko
+      roles:
+        - ad_user
+        - content_producer
+        - grants_producer_industry
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kasko
+      roles:
+        - ad_user
+        - content_producer
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_laaja_Kuva
+      roles:
+        - ad_user
+        - content_producer
+        - grants_producer_industry
+    -
+      ad_role: Drupal_Helfi_Avustukset_sisallontuottajat_suppea_Kuva
+      roles:
+        - ad_user
+        - content_producer

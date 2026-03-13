@@ -189,6 +189,24 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertEquals('file1.pdf', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['value']);
   }
 
+  public function testForm58NoFiles() {
+    $commonMappings = $this->getRealMapping('common', 'registered_community');
+    $realMapping = $this->getRealMapping('ID58', 'liikunta_suunnistuskartta_avustu');
+    $mapping = array_merge($commonMappings, $realMapping);
+
+    $dataSources = $this->getAllDatasources('form58-nofiles-formdata.json');
+
+    $mapper = new JsonMapper();
+    $mapper->setMappings($mapping);
+    $fields = $mapper->map($dataSources);
+    $files = $mapper->mapFiles($dataSources);
+
+    // Mapping the same form values should always result in similar Avus2-json-data.
+    $originalResult = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58-nofiles-result.json'), TRUE);
+    $this->assertEquals($originalResult, $fields);
+    $this->assertCount(0, $files);
+  }
+
   /**
    * Combine the common data sources and the actual form into one.
    *
@@ -222,6 +240,22 @@ final class JsonMapperTest extends UnitTestCase {
    */
   private function getMapping(string $fixtureName): array {
     $mappingFixtures = file_get_contents(__DIR__ . '/../../fixtures/reactForm/' . $fixtureName);
+    return json_decode($mappingFixtures, TRUE);
+  }
+
+  /**
+   * Get the real mappings.
+   *
+   * @param string $form_id
+   *   Form type id.
+   * @param string $form_identifier
+   *   Form identifier.
+   *
+   * @return array
+   *   A real mapping.
+   */
+  private function getRealMapping(string $form_id, string $form_identifier): array {
+    $mappingFixtures = file_get_contents(__DIR__ . "/../../../src/Mapper/Mappings/$form_id/$form_identifier.json");
     return json_decode($mappingFixtures, TRUE);
   }
 

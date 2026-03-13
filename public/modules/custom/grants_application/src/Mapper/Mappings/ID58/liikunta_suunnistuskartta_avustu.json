@@ -170,15 +170,6 @@
     }
   },
 
-  "compensation.additionalInformation": {
-    "datasource": "form_data",
-    "source": "attachments_step.additional_information_section.additional_information",
-    "mapping_type": "simple",
-    "data": {
-      "additionalInformation": ""
-    }
-  },
-
   "compensation.senderInfoArray.0": {
     "datasource": "user_profile",
     "source": "myProfile.verifiedPersonalInformation.firstName",
@@ -240,7 +231,7 @@
     "source": "orienteering_maps_step.orienteering_subvention.orienteering_maps",
     "mapping_type": "multiple_values",
     "data": {
-      "mapName": {
+      "map_name": {
         "ID": "mapName",
         "label": "Kartan nimi",
         "value": "",
@@ -252,7 +243,7 @@
         "value": "",
         "valueType": "double"
       },
-      "voluntaryHours": {
+      "voluntary_hours": {
         "ID": "voluntaryHours",
         "label": "Talkootyö",
         "value": "",
@@ -264,7 +255,7 @@
         "value": "",
         "valueType": "double"
       },
-      "otherCompensations": {
+      "other_compensations": {
         "ID": "otherCompensations",
         "label": "Muilta saadut avustukset",
         "value": "",
