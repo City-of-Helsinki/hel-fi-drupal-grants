@@ -1,440 +1,714 @@
 {
-  "en": {
-    "translation": {
-      "action_plan.description": "Attach here the action plan for the whole community.",
-      "action_plan.title": "Action plan (for the year for which you are applying for a grant)",
-      "acting_year_section.title": "Grant details",
-      "acting_year.title": "Year for which I am applying for a grant",
-      "additional_information.description": "If necessary, you can write additional information or other justifications related to the application.",
-      "additional_information.title": "Additional information ",
-      "additional_information_section.title": "Additional information concerning the application",
-      "affirmative_expands": "An affirmative answer opens a further question",
-      "applicant_email_email.title": "Email address",
-      "applicant_email.description": "Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.",
-      "applicant_email.title": "Email",
-      "applicant_info.title": "Applicant details",
-      "applied_benefits.title": "Requested grants (€)",
-      "attachments_section.description": "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.",
-      "attachments_section.title": "Attachments",
-      "attachments_step.title": "Additional information and attachments",
-      "bank_account_bank_account.title": "Select the account number",
-      "bank_account.title": "Account number",
-      "bank_account.tooltip": "If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.",
-      "boolean.no": "No",
-      "boolean.yes": "Yes",
-      "budget_step.title": "Planned budget",
-      "budget.description": "Attach here the budget for the whole community.",
-      "budget.title": "Budget (for the year for which you are applying for a grant)",
-      "cant_view_after_help.title": "The contents of the attachments cannot be viewed afterwards",
-      "cant_view_after_help.value": "Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.",
-      "cant_view_after_help.value_2": "Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.",
-      "city_benefits_loans_section.description": "For loans received from the city, indicate the original loan amount, remaining loan amount, loan period, interest rate and purpose for which the loan was granted. For guarantees, indicate the monetary value and purpose.",
-      "city_benefits_loans_section.title": "Loans and guarantees received from the city",
-      "city_benefits_loans.title": "Description of loans and guarantees",
-      "city_premises_benefits_section.description": "Facilities that the city has given free of charge or rented to the applicant (name or address of the facility, rent amount €/month)",
-      "city_premises_benefits_section.title": "Support from the city related to facilities",
-      "city_premises_benefits.title": "Description of the support related to facilities",
-      "community_activity_section.title": "Description of activities",
-      "community_activity_step.title": "Activities of the community",
-      "community_activity.description": "The description of activities is maintained in your data",
-      "community_activity.title": "Description of activities",
-      "community_address_community_address.title": "Select the address",
-      "community_address.title": "Address",
-      "community_address.tooltip": "If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.",
-      "community_fees_section.title": "Membership fees",
-      "community_members_section.title": "Numbers of members",
-      "community_officials_community_officials_official.title": "Select official",
-      "community_officials_community_officials.addText": "Add person",
-      "community_officials_community_officials.removeText": "Remove",
-      "community_officials_community_officials.title": "Persons responsible for operations",
-      "community_officials.title": "Persons responsible for operations",
-      "community_officials.tooltip": "If you want to add, delete or change people, save the application as a draft and go to maintain the people's information in your own data.",
-      "community_practices_business.title": "Is the entity engaged in business?",
-      "community_rules.description": "New applicant or changed rules.",
-      "community_rules.title": "Community Rules",
-      "confirmed_annual_report.description": "An association must append to this section the annual report confirmed at the association's annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.",
-      "confirmed_annual_report.title": "Confirmed annual report (for the previous accounting period)",
-      "confirmed_audit_report.description": "An association must append to this section the annual report confirmed at the association's annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.",
-      "confirmed_audit_report.title": "Confirmed audit or performance audit report (for the previous accounting period)",
-      "confirmed_financial_statements.description": "The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association's annual meeting. The community's accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association's accounting period is.",
-      "confirmed_financial_statements.title": "Confirmed financial statements (for the previous accounting period)",
-      "contact_person_info.title": "Contact person for the application",
-      "contact_person_phone_number.title": "Phone number",
-      "contact_person.title": "Contact person",
-      "economy_forecast.description": "Specify the project's income and expenses as accurately as possible.",
-      "expenditure_row_amount.title": "Amount (€)",
-      "expenditure_row_description.title": "Cost explanation",
-      "expenditure_row_item.description": "Write down the type of expense in question. Expenses can be, for example, rents and personnel costs.",
-      "expenditure_row_item.title": "Type of expense",
-      "expenditure_rows.add": "Add new expense",
-      "expenditure_section.title": "Expenses",
-      "fee_community.title": "Community member (€/year)",
-      "fee_person.title": "Individual membership fee (€/year)",
-      "file_description.title": "Attachment description",
-      "file.title": "Attachment",
-      "file_removal_failed.title": "File removal failed",
-      "formerly_provided_attachments_help.title": "Attachments previously submitted to the City of Helsinki",
-      "formerly_provided_attachments_help.value": "If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application”.",
-      "further_clarification.title": "Further clarification on attachments",
-      "grant_info_step.title": "Grant details",
-      "grant_target_section.title": "Target of the grant",
-      "have_applied_other_compensations.title": "We have applied for grants from somewhere other than the City of Helsinki",
-      "have_received_other_compensations.title": "We have received other grants",
-      "have_received_prior_compensations.title": "Report on the use of the grant I received in the previous year",
-      "have_received_prior_compensations.yes": "I received a grant from the city of Helsinki for the same purpose last year.",
-      "have_received_prior_compensations.no": "I have not received a grant from the City of Helsinki for the same purpose in the previous year.",
-      "income_row_amount.title": "Amount (€)",
-      "income_row_description.title": "Income explanation",
-      "income_row_item.title": "Type of income",
-      "income_row_item.description": "Write down the type of income in question. Incomes can be, for example, other grants and admission or participation fees. Self financing has to be written down as an income even if the required self financing share is to be funded from the organisations overall operations.",
-      "income_rows.add": "Add new income",
-      "income_section.title": "Income",
-      "information_in_more_detail_step.title": "Information in more detail",
-      "members_applicant_community_global.title": "Community members",
-      "members_applicant_community_local.title": "Total number of community members in Helsinki",
-      "members_applicant_community_global.description": "How many community members does the community currently have who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.",
-      "members_applicant_community_local.description": "How many community members does the community currently have in Helsinki who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.",
-      "members_applicant_person_global.description": "How many individual members does the community currently have who have paid the membership fee?",
-      "members_applicant_person_local.description": "How many individual members does the community currently have in Helsinki who have paid the membership fee?",
-      "members_applicant_person_global.title": "Total number of individual members",
-      "members_applicant_person_local.title": "Total number of individual members in Helsinki",
-      "members_fieldset.legend": "Numbers of members",
-      "members_fieldset.description": "If the community has members, please list them here.",
-      "minutes_of_the_annual_meeting.description": "Attach here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association’s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this attachment does not need to be submitted.",
-      "minutes_of_the_annual_meeting.title": "Minutes of the annual meeting confirming the financial statements for the previous accounting period",
-      "multiple_attachments_help.title": "Submission of several attachments as a single file",
-      "multiple_attachments_help.value": "If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”",
-      "other_applied_compensation_amount.title": "The amount of the grant applied for",
-      "other_applied_compensations.add": "Add new grant applied for",
-      "other_applied_compensation_amount.printable_title": "The amount of the grant applied for (€)",
-      "other_applied_compensations_section.description": "Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.",
-      "other_applied_compensations_section.title": "Other grants applied for to be used for the same purpose",
-      "other_attachment_fieldset.title": "Other attachment",
-      "other_attachment_fieldset.ui_help": "One file only.\nAllowed types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
-      "other_compensation.add": "Add new received grant",
-      "other_compensation_amount.title": "Amount of grant granted",
-      "other_compensation_amount.printable_title": "Amount of grant granted (€)",
-      "other_compensation_description.description": "Give a brief description, for what purpose has the grant been granted?",
-      "other_compensation_description.title": "Description of intended use",
-      "other_compensation_issuer_name.title": "Issuer's name",
-      "other_compensation_issuer_year.title": "Year",
-      "other_compensation_issuer.eu": "EU",
-      "other_compensation_issuer.insitute": "Foundation",
-      "other_compensation_issuer.other": "Other",
-      "other_compensation_issuer.state": "State",
-      "other_compensation_issuer.title": "Grant issuer",
-      "other_compensation_issuer.description": "Which entity has granted the grant (e.g. name of the ministry)",
-      "other_compensations_section.description": "Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.",
-      "other_compensations_section.title": "Other grants received for the same purpose",
-      "prior_benefits_usage_section.title": "Report on the use of the previous grant",
-      "prior_compensations.description": "Provide a report on the use of the grant received from the City of Helsinki. A report on the use of the grant must be drawn up for the grant concerning the previous accounting period. A report on the use should not be drawn up for the current accounting period. Providing the report on the use is a prerequisite for receiving the next grant. If no report on the use is provided, the grant will not be awarded or paid. A grant awarded may be recovered if the use of the previous grant has not been satisfactorily reported.",
-      "prior_compensations.title": "Report on the use of the grant",
-      "prior_compensations.tooltip": "The report on the use must briefly describe how the received grant has been used. The recipient must arrange its accounting in such a way that it is possible to monitor the use of the grant. For example, if a community has received a lease grant, the profit and loss account in the financial statements must show the grant in both income and expenses. Further information on the use of the grant can also be written in a separate attachment, which can be returned under Report on the use.",
-      "purpose.description": "Describe the project for which the grant is being applied. Also explain what you aim to achieve with the grant.",
-      "purpose_section.title": "Purpose of use",
-      "purpose.title": "Brief description of the purpose(s) of the grant(s) applied for",
-      "required_attachments_help.title": "Required attachments",
-      "required_attachments_help.value": "For the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan.",
-      "subvention.greater_than_zero": "You must insert at least one subvention amount ",
-      "subventions_section.title": "Types of grant",
-      "subventions.1.title": "Operating grant",
-      "subventions.5.title": "Rent subsidy",
-      "subventions.6.title": "General grant",
-      "subventions.9.title": "Other",
-      "subventions.56.title": "Special grant for sports 3",
-      "subventions.title": "Grants"
-    }
-  },
-  "fi": {
-    "translation": {
-      "action_plan.description": "Liitä tähän koko yhteisön toimintasuunnitelma.",
-      "action_plan.title": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)",
-      "acting_year_section.title": "Avustuksen tiedot",
-      "acting_year.title": "Vuosi, jolle haen avustusta",
-      "additional_information.description": "Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen.",
-      "additional_information.title": "Lisätiedot",
-      "additional_information_section.title": "Lisätietoja hakemukseen liittyen",
-      "affirmative_expands": "Myöntävä vastaus avaa lisäkysymyksen",
-      "applicant_email_email.title": "Sähköpostiosoite",
-      "applicant_email.description": "Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.",
-      "applicant_email.title": "Sähköpostiosoite",
-      "applicant_info.title": "Yhteisö, jolle haetaan avustusta",
-      "applied_benefits.title": "Haettu avustus (€)",
-      "attachments_step.title": "Lisätiedot ja liitteet",
-      "attachments_section.description": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa. ",
-      "attachments_section.title": "Liitteet",
-      "bank_account_bank_account.title": "Tilinumero",
-      "bank_account.title": "Tilinumero",
-      "bank_account.tooltip": "Jos haluat lisätä, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään tilinumerotietoa omiin tietoihin.",
-      "boolean.no": "Ei",
-      "boolean.yes": "Kyllä",
-      "budget_step.title": "Talousarvio",
-      "budget.description": "Liitä tähän koko yhteisön talousarvio.",
-      "budget.title": "Talousarvio (sille vuodelle jolle haet avustusta)",
-      "cant_view_after_help.title": "Liitteiden sisältöä ei voi tarkastella jälkikäteen",
-      "cant_view_after_help.value": "Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.",
-      "cant_view_after_help.value_2": "Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.",
-      "city_benefits_loans_section.description": "Kaupungilta saaduista lainoista on mainittava alkuperäinen lainamäärä, jäljellä oleva lainamäärä, laina-aika, korkoprosentti ja mihin tarkoitukseen laina on myönnetty. Takauksista ilmoitetaan niiden raha-arvo ja tarkoitus.",
-      "city_benefits_loans_section.title": "Kaupungilta saadut lainat ja takaukset",
-      "city_benefits_loans.title": "Kuvaus lainoista ja takauksista",
-      "city_premises_benefits_section.description": "Tilat, jotka kaupunki on antanut korvauksetta tai vuokrannut hakijan käyttöön (tilan nimi tai osoite, vuokran määrä €/kk)",
-      "city_premises_benefits_section.title": "Kaupungilta saatu tiloihin liittyvä tuki",
-      "city_premises_benefits.title": "Kuvaus tiloihin liittyvästä tuesta",
-      "community_activity_section.title": "Toiminnan kuvaus",
-      "community_activity_step.title": "Yhteisön toiminta",
-      "community_activity.description": "Tieto haetaan omat tiedot -osiosta",
-      "community_activity.title": "Toiminnan kuvaus",
-      "community_address_community_address.title": "Valitse osoite",
-      "community_address.title": "Osoite",
-      "community_address.tooltip": "Jos haluat lisätä, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään osoitetietoa omiin tietoihin.",
-      "community_fees_section.title": "Jäsenmaksut",
-      "community_members_section.title": "Jäsenmäärä",
-      "community_officials_community_officials_official.title": "Toiminnasta vastaava henkilö",
-      "community_officials_community_officials.addText": "Lisää henkilö",
-      "community_officials_community_officials.removeText": "Poista henkilö",
-      "community_officials_community_officials.title": "Valitse toiminnasta vastaavat henkilöt",
-      "community_officials.title": "Toiminnasta vastaavat henkilöt",
-      "community_officials.tooltip": "Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.",
-      "community_practices_business.title": "Harjoittaako yhteisö liiketoimintaa",
-      "community_rules.description": "Uusi hakija tai säännöt muuttuneet.",
-      "community_rules.title": "Yhteisön säännöt",
-      "confirmed_annual_report.description": "Yhdistys liittää tähän kohtaan yhdistyksen jäsenkokouksessa vahvistetun toimintakertomuksen. Jos toimintakertomus on osana tilinpäätöstä ja liititte sen jo tilinpäätöksen mukana lomakkeelle, sitä ei tarvitse liittää tähän erikseen. Valitse tällaisessa tilanteessa toimintakertomuksen kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
-      "confirmed_annual_report.title": "Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)",
-      "confirmed_audit_report.description": "Liitä tähän allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteisön edelliseltä päättyneeltä tilikaudelta. Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteisönne tilinpäätöstä ja liitit sen jo lomakkeelle tilinpäätöksen kohdalla, valitse tässä kohdassa ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
-      "confirmed_audit_report.title": "Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)",
-      "confirmed_financial_statements.description": "Tilinpäätöksen täytyy sisältää vähintään tuloslaskelma ja tase. Yhdistys liittää tähän kohtaan yhdistyksen jäsenkokouksessa vahvistetun ja allekirjoitetun tilinpäätöksen. Yhteisön tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa säännöissä lukee, mikä on yhdistyksen tilikausi.",
-      "confirmed_financial_statements.title": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)",
-      "contact_person_info.title": "Hakemuksen yhteyshenkilö",
-      "contact_person_phone_number.title": "Puhelinnumero",
-      "contact_person.title": "Yhteyshenkilö",
-      "economy_forecast.description": "Erittele hankkeen tulot ja menot mahdollisimman tarkasti.",
-      "expenditure_row_amount.title": "Määrä (€)",
-      "expenditure_row_description.title": "Kuvaus menosta",
-      "expenditure_row_item.description": "Kerro tässä minkälainen meno on kyseessä. Toiminnan menoja voivat olla esimerkiksi tilavuokrat ja henkilöstökulut.",
-      "expenditure_row_item.title": "Meno",
-      "expenditure_rows.add": "Lisää uusi meno",
-      "expenditure_section.title": "Menot",
-      "fee_community.title": "Yhteisöjäsen (€/vuosi)",
-      "fee_person.title": "Henkilöjäsenen jäsenmaksu (€/vuosi)",
-      "file_description.title": "Liitteen kuvaus",
-      "file.title": "Liitetiedosto",
-      "file_removal_failed.title": "Liitteen poistaminen epäonnistui",
-      "formerly_provided_attachments_help.title": "Helsingin kaupungille aiemmin toimitetut liitteet",
-      "formerly_provided_attachments_help.value": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
-      "further_clarification.title": "Lisäselvitys liitteistä",
-      "grant_info_step.title": "Avustustiedot",
-      "grant_target_section.title": "Avustuksen kohde",
-      "have_applied_other_compensations.title": "Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta",
-      "have_received_other_compensations.title": "Olemme saaneet muita avustuksia",
-      "have_received_prior_compensations.title": "Käyttöselvitys edellisenä vuonna saamastani avustuksesta",
-      "have_received_prior_compensations.yes": "Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
-      "have_received_prior_compensations.no": "En ole saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
-      "income_row_amount.title": "Määrä (€)",
-      "income_row_description.title": "Kuvaus tulosta",
-      "income_row_item.description": "Kerro tässä minkälainen tulo on kyseessä. Toiminnan tuloja voivat olla esimerkiksi muut avustukset ja pääsy- tai osallistumismaksut. Kirjaa tähän kohtaan myös omarahoitusosuus, jos hankkeen alijäämä kuitataan muusta taloudestanne.",
-      "income_row_item.title": "Tulon tyyppi",
-      "income_rows.add": "Lisää uusi tulo",
-      "income_section.title": "Tulot",
-      "information_in_more_detail_step.title": "Tarkemmat tiedot",
-      "members_applicant_community_global.title": "Yhteisöjäseniä yhteensä",
-      "members_applicant_community_local.title": "Helsinkiläisiä yhteisöjäseniä yhteensä",
-      "members_applicant_community_global.description": "Kuinka monta jäsenmaksun maksanutta yhteisöjäsentä yhteisöllä on tällä hetkellä? Yhteisöjäsentä ovat muut kuin henkilöjäsenet, esimerkiksi yhdistykset, säätiöt, yritykset tai kunnat.",
-      "members_applicant_community_local.description": "Kuinka monta jäsenmaksun maksanutta helsinkiläistä yhteisöjäsentä yhteisöllä on tällä hetkellä? Yhteisöjäsentä ovat muut kuin henkilöjäsenet, esimerkiksi yhdistykset, säätiöt, yritykset tai kunnat.",
-      "members_applicant_person_global.description": "Kuinka monta jäsenmaksun maksanutta henkilöjäsentä yhteisöllä on tällä hetkellä?",
-      "members_applicant_person_local.description": "Kuinka monta jäsenmaksun maksanutta helsinkiläistä henkilöjäsentä yhteisöllä on tällä hetkellä?",
-      "members_applicant_person_global.title": "Henkilöjäseniä yhteensä",
-      "members_applicant_person_local.title": "Helsinkiläisiä henkilöjäseniä yhteensä",
-      "members_fieldset.legend": "Jäsenmäärä",
-      "members_fieldset.description": "Jos yhteisöllä on jäseniä, merkitse ne tähän.",
-      "minutes_of_the_annual_meeting.description": "Liitä tähän yhteisön kokouksen pöytäkirja, jossa edellisen päättyneen tilikauden tilinpäätös on vahvistettu ja vastuuvapaus myönnetty. Yhdistyksillä tilinpäätös vahvistetaan aina yhdistyksen jäsenkokouksessa. Mikäli yhteisöltä ei edellytetä vuosikokousta tai muuta yhteisön kokousta, jossa tilinpäätös tulisi vahvistaa ja vastuuvapaus myöntää, ei tätä liitettä tarvitse toimittaa.",
-      "minutes_of_the_annual_meeting.title": "Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös",
-      "multiple_attachments_help.title": "Usean liitteen toimittaminen yhtenä tiedostona",
-      "multiple_attachments_help.value": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”. ",
-      "other_applied_compensations.add": "Lisää uusi haettu avustus",
-      "other_applied_compensation_amount.title": "Haetun avustuksen summa",
-      "other_applied_compensation_amount.printable_title": "Haetun avustuksen summa (€)",
-      "other_applied_compensations_section.description": "Ilmoita tähän ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eikä päätöstä ole vielä tehty.",
-      "other_applied_compensations_section.title": "Muut samaan tarkoitukseen haetut avustukset",
-      "other_attachment_fieldset.title": "Muu liite",
-      "other_attachment_fieldset.ui_help": "Vain yksi tiedosto.\nSuositus alle 2 Mt, enintään 20 Mt.\nSallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
-      "other_compensation.add": "Lisää uusi myönnetty avustus",
-      "other_compensation_amount.title": "Myönnetyn avustuksen summa",
-      "other_compensation_amount.printable_title": "Myönnetyn avustuksen summa (€)",
-      "other_compensation_description.description": "Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?",
-      "other_compensation_description.title": "Kuvaus käyttötarkoituksesta",
-      "other_compensation_issuer_name.title": "Myöntäjän nimi",
-      "other_compensation_issuer_year.title": "Vuosi",
-      "other_compensation_issuer.eu": "EU",
-      "other_compensation_issuer.insitute": "Säätiö",
-      "other_compensation_issuer.other": "Muu",
-      "other_compensation_issuer.state": "Valtio",
-      "other_compensation_issuer.title": "Avustuksen myöntäjä",
-      "other_compensation_issuer.description": "Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)",
-      "other_compensations_section.description": "Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisenä verovuotena.",
-      "other_compensations_section.title": "Muut samaan tarkoitukseen myönnetyt avustukset",
-      "prior_benefits_usage_section.title": "Edellisen avustuksen käyttöselvitys",
-      "prior_compensations.description": "Anna käyttöselvitys Helsingin kaupungilta saadusta avustuksesta. Avustuksen käyttöselvitys tehdään avustuksesta, joka koskee viimeisintä päättynyttä tilikautta. Käyttöselvitystä ei tehdä käynnissä olevalta tilikaudelta. Käyttöselvityksen antaminen on seuraavan avustuksen saamisen ehtona. Mikäli käyttöselvitystä ei tehdä, avustusta ei myönnetä eikä makseta. Myönnetty avustus voidaan periä takaisin, jos edellisen avustuksen käyttöä ei ole hyväksyttävästi selvitetty.",
-      "prior_compensations.title": "Selvitys avustuksen käytöstä",
-      "prior_compensations.tooltip": "Käyttöselvityksessä tulee kuvata lyhyesti, miten myönnetty avustus on käytetty. Avustuksen saajan on järjestettävä kirjanpitonsa niin, että avustuksen käyttöä voidaan sieltä seurata. Esimerkiksi jos yhteisö on saanut vuokra-avustusta, tilinpäätöksen tuloslaskelmasta tulee käydä ilmi avustuksen toteutuminen sekä tuloissa että menoissa. Lisää tietoja avustuksen käytöstä voi myös kirjoittaa erilliseen liitteeseen, jonka voi palauttaa Käyttöselvitys-liite kohdasta.",
-      "purpose_section.title": "Käyttötarkoitus",
-      "purpose.description": "Kerro, millaiseen hankkeeseen avustusta haetaan. Kerro myös, mitä avustuksella on tavoitteena saada aikaiseksi.",
-      "purpose.title": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista",
-      "required_attachments_help.title": "Vaaditut liitteet",
-      "required_attachments_help.value": "Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilikaudelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilikautta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä vuosikokouksen pöytäkirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.",
-      "subvention.greater_than_zero": "Sinun on syötettävä vähintään yhdelle avustuslajille summa",
-      "subventions_section.title": "Avustuslajit",
-      "subventions.1.title": "Toiminta-avustus",
-      "subventions.5.title": "Vuokra-avustus",
-      "subventions.6.title": "Yleisavustus",
-      "subventions.9.title": "Muu",
-      "subventions.56.title": "Liikunnan erityisavustus 3",
-      "subventions.title": "Avustukset"
-    }
-  },
-  "sv": {
-    "translation": {
-      "action_plan.description": "Bifoga verksamhetsplanen för hela för samfundet här.",
-      "action_plan.title": "Verksamhetsplan (för det år du ansöker om understödet)",
-      "acting_year_section.title": "Uppgifter om understödet",
-      "acting_year.title": "År för vilket jag ansöker om understöd",
-      "additional_information.description": "Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan.",
-      "additional_information.title": "Ytterligare information ",
-      "additional_information_section.title": "Ytterligare information för ansökan",
-      "affirmative_expands": "Ett jakande svar öppnar ytterligare en fråga",
-      "applicant_email_email.title": "E-postadress",
-      "applicant_email.description": "Ange här samfundets e-postadress som läses aktivt. Till e-postadressen skickas kontaktförfrågningar som är relaterade till ansökan om understöd, såsom begäranden om tilläggsutredning och komplettering.",
-      "applicant_email.title": "E-post",
-      "applicant_info.title": "Den sökandes uppgifter",
-      "applied_benefits.title": "Önskat understöd (€)",
-      "attachments_step.title": "Ytterligare information och bilagor",
-      "attachments_section.description": "Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan.",
-      "attachments_section.title": "Bilagor",
-      "bank_account_bank_account.title": "Välj ett kontonummer",
-      "bank_account.title": "Kontonummer",
-      "bank_account.tooltip": "Om du vill lägga till, radera eller ändra kontonummerinformation, spara applikationen som ett utkast och gå till att behålla kontonummerinformationen i din egen data.",
-      "boolean.no": "Nej",
-      "boolean.yes": "Ja",
-      "budget_step.title": "Budget",
-      "budget.description": "Budget (för det år du ansöker om understödet)",
-      "budget.title": "Budget (för det år du ansöker om understödet)",
-      "cant_view_after_help.title": "Innehållet i bilagorna kan inte granskas i efterhand",
-      "cant_view_after_help.value": "Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn.",
-      "cant_view_after_help.value_2": "Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd.",
-      "city_benefits_loans_section.description": "Gällande de lån som fåtts från staden ska man ange det ursprungliga lånebeloppet, det återstående lånebeloppet, lånetiden, räntesatsen och ändamålet för vilket lånet beviljades. Om borgen anges deras penningvärde och ändamål.",
-      "city_benefits_loans_section.title": "Lån och borgen som fåtts från staden",
-      "city_benefits_loans.title": "Beskrivning av lån och borgen",
-      "city_premises_benefits_section.description": "Lokaler som staden har gett gratis eller hyrt till den sökande (lokalens namn eller adress, hyresbelopp €/månad)",
-      "city_premises_benefits_section.title": "Understöd för lokaler som fåtts från staden",
-      "city_premises_benefits.title": "Beskrivning av understödet för lokalerna",
-      "community_activity_section.title": "Verksamhetsbeskrivning",
-      "community_activity_step.title": "Samfundets verksamhet",
-      "community_activity.description": "Informationen hämtas från avsnittet med personuppgifter",
-      "community_activity.title": "Verksamhetsbeskrivning",
-      "community_address_community_address.title": "Välj en adress",
-      "community_address.title": "Adress",
-      "community_address.tooltip": "Om du vill lägga till, ta bort eller ändra adressuppgifter, spara ansökan som ett utkast och gå till att behålla adressuppgifterna i dina egna uppgifter.",
-      "community_fees_section.title": "Medlemsavgifter",
-      "community_members_section.title": "Antal medlemmar",
-      "community_officials_community_officials_official.title": "Välj motsvarande person",
-      "community_officials_community_officials.addText": "Lägg till en person",
-      "community_officials_community_officials.removeText": "Ta bort",
-      "community_officials_community_officials.title": "Personer som ansvarar för verksamheten",
-      "community_officials.title": "Personer som ansvarar för verksamheten",
-      "community_officials.tooltip": "Om du vill lägga till, ta bort eller ändra personer, spara applikationen som ett utkast och gå till att underhålla personernas information i din egen data.",
-      "community_practices_business.title": "Bedriver samfundet affärsverksamhet",
-      "community_rules.description": "Ny sökande eller stadgar som ändrats.",
-      "community_rules.title": "Samfundets stadgar",
-      "confirmed_annual_report.description": "Samfundet ska till denna punkt bifoga verksamhetsberättelsen som godkänts och undertecknats vid samfundets medlemsmöte. Om verksamhetsberättelsen ingår i bokslutet och du redan har bifogat den blanketten, behöver den inte bifogas separat. Ange i detta fall vid verksamhetsberättelsen att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.",
-      "confirmed_annual_report.title": "Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)",
-      "confirmed_audit_report.description": "Bifoga den undertecknade revisionsberättelsen för samfundets senaste avslutade räkenskapsperiod här. Om den undertecknade revisionsberättelsen ingår i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan” här.",
-      "confirmed_audit_report.title": "Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)",
-      "confirmed_financial_statements.description": "Bokslutet ska innehålla minst resultaträkningen och balansräkningen. Samfundet ska till denna punkt lägga till bokslutet som godkänts och undertecknats vid samfundets medlemsmöte. Samfundets räkenskapsperiod kan vara ett kalenderår eller en annan period. Vad gäller samfund anges det i deras egna stadgar vad samfundets räkenskapsperiod är.",
-      "confirmed_financial_statements.title": "Fastställt bokslut (för den föregående avslutade räkenskapsperioden)",
-      "contact_person_info.title": "Kontaktperson för ansökan",
-      "contact_person_phone_number.title": "Telefonnummer",
-      "contact_person.title": "Kontaktperson",
-      "economy_forecast.description": "Specificera projektets inkomster och utgifter så noggrant som möjligt.",
-      "expenditure_row_amount.title": "Belopp (€)",
-      "expenditure_row_description.title": "Kostnadsförklaring",
-      "expenditure_row_item.description": "Skriv ner vilken typ av utgift det gäller. Utgifter kan till exempel vara andra lokalhyror och personalkostnader.",
-      "expenditure_row_item.title": "Typ av utgift",
-      "expenditure_rows.add": "Lägg till en utgift",
-      "expenditure_section.title": "Utgifter",
-      "fee_community.title": "Samfundsmedlem (€/år)",
-      "fee_person.title": "Medlemsavgift för personmedlemmar (€/år)",
-      "file_description.title": "Beskrivning av bilagan",
-      "file.title": "Bilaga",
-      "file_removal_failed.title": "Borttagning av filen misslyckades",
-      "formerly_provided_attachments_help.title": "Bilagor som tidigare lämnats in till Helsingfors stad",
-      "formerly_provided_attachments_help.value": "Om de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.",
-      "further_clarification.title": "Ytterligare information om bilagorna",
-      "grant_info_step.title": "Uppgifter om understödet",
-      "grant_target_section.title": "Understödets ändamål",
-      "have_applied_other_compensations.title": "Vi har ansökt om understöd från annanstans än Helsingfors stad",
-      "have_received_other_compensations.title": "Vi har fått andra understöd",
-      "have_received_prior_compensations.title": "Redovisning om understödet som jag fick under det föregående året ",
-      "have_received_prior_compensations.yes": "Jag fick ett bidrag från Helsingfors stad för samma ändamål förra året.",
-      "have_received_prior_compensations.no": "Jag har inte fått bidrag från Helsingfors stad för samma ändamål föregående år.",
-      "income_row_amount.title": "Belopp (€)",
-      "income_row_description.title": "Inkomstförklaring",
-      "income_row_item.description": "Skriv ner vilken typ av inkomst det gäller. Inkomster kan till exempel vara andra understöd och inträdes- eller deltagaravgifter. Självfinansiering måste uppges som en inkomst även om den självfinansierade delen finansieras med sökandes övrig verksamhet.",
-      "income_row_item.title": "Typ av inkomst",
-      "income_rows.add": "Lägg till en intäkt",
-      "income_section.title": "Inkomster",
-      "information_in_more_detail_step.title": "Mer detaljerad information",
-      "members_applicant_community_global.title": "Samfundsmedlemmar sammanlagt",
-      "members_applicant_community_local.title": "Samfundsmedlemmar från Helsingfors sammanlagt",
-      "members_applicant_community_global.description": "Hur många samfundsmedlemmar som har betalat medlemsavgiften har samfundet för närvarande? Samfundsmedlemmar är andra än personmedlemmar, såsom föreningar, stiftelser, företag eller kommuner.",
-      "members_applicant_community_local.description": "Hur många samfundsmedlemmar från Helsingfors som har betalat medlemsavgiften har samfundet för närvarande? Samfundsmedlemmar är andra än personmedlemmar, såsom föreningar, stiftelser, företag eller kommuner.",
-      "members_applicant_person_global.description": "Hur många personmedlemmar som har betalat medlemsavgiften har samfundet för närvarande?",
-      "members_applicant_person_local.description": "Hur många personmedlemmar från Helsingfors som har betalat medlemsavgiften har samfundet för närvarande?",
-      "members_applicant_person_global.title": "Personmedlemmar sammanlagt",
-      "members_applicant_person_local.title": "Personmedlemmar från Helsingfors sammanlagt",
-      "members_fieldset.legend": "Medlemskap",
-      "members_fieldset.description": "Om gruppen har medlemmar, vänligen ange dem här.",
-      "minutes_of_the_annual_meeting.description": "Bifoga protokollet från samfundets möte här, där bokslutet för den föregående avslutade räkenskapsperioden har godkänts och ansvarsfrihet beviljats. Samfundens bokslut fastställs alltid vid samfundets medlemsmöte. Om samfundet inte är skyldigt att ha ett årsmöte eller annat samfundsmöte där bokslutet bör godkännas och ansvarsfrihet beviljas, behöver denna bilaga inte lämnas in.",
-      "minutes_of_the_annual_meeting.title": "Protokoll från årsstämman med det godkända bokslutet för den föregående räkenskapsperioden",
-      "multiple_attachments_help.title": "Inlämning av flera bilagor i en fil",
-      "multiple_attachments_help.value": "Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”.",
-      "other_applied_compensations.add": "Lägg till nytt understöd som ansökts",
-      "other_applied_compensation_amount.title": "Beviljat bidragsbelopp",
-      "other_applied_compensation_amount.printable_title": "Beviljat bidragsbelopp (€)",
-      "other_applied_compensations_section.description": "Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, men beslut har ännu inte fattats.",
-      "other_applied_compensations_section.title": "Övriga understöd som ansökts för samma ändamål",
-      "other_attachment_fieldset.title": "Annan bilaga",
-      "other_attachment_fieldset.ui_help": "Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip. ",
-      "other_compensation.add": "Lägg till understöd som beviljats",
-      "other_compensation_amount.title": "Beviljat bidragsbelopp",
-      "other_compensation_amount.printable_title": "Beviljat bidragsbelopp (€)",
-      "other_compensation_description.description": "Ge en kort beskrivning, i vilket syfte har bidraget beviljats?",
-      "other_compensation_description.title": "Beskrivning av avsedd användning",
-      "other_compensation_issuer_name.title": "Emittentens namn",
-      "other_compensation_issuer_year.title": "År",
-      "other_compensation_issuer.eu": "EU",
-      "other_compensation_issuer.insitute": "Fundament",
-      "other_compensation_issuer.other": "Övrig",
-      "other_compensation_issuer.state": "Stat",
-      "other_compensation_issuer.title": "Bidragsgivare",
-      "other_compensation_issuer.description": "Vilket organ har beviljat bidraget (t.ex. namnet på departementet)",
-      "other_compensations_section.description": "Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren.",
-      "other_compensations_section.title": "Övriga understöd som beviljats för samma ändamål",
-      "prior_benefits_usage_section.title": "Redovisning om det tidigare understödet",
-      "prior_compensations.description": "Ge en redovisning om understödet som fåtts från Helsingfors stad. Redovisningen görs om understödet som beviljats för den senaste avslutade räkenskapsperioden. Redovisning görs inte om den innevarande räkenskapsperioden. Redovisningen krävs för att få ett nytt understöd. Om en redovisning inte görs, kommer ett understöd inte att beviljas eller betalas ut. Det beviljade understödet kan återkrävas om användningen av det tidigare understödet inte har redogjorts för på ett tillfredsställande sätt.",
-      "prior_compensations.title": "Redovisning om användningen av understödet",
-      "prior_compensations.tooltip": "I redovisningen ska det kortfattat anges hur det beviljade understödet har använts. Understödstagaren ska ordna sin bokföring så att användningen av understödet kan följas där. Om samfundet till exempel har fått hyresunderstöd ska det av resultaträkningen i bokslutet framgå både intäkter och utgifter vad gäller understödet. Mer information om användningen av understödet kan också skrivas i en separat bilaga som kan lämnas som Redovisning-bilaga.",
-      "purpose_section.title": "Användningsändamål",
-      "purpose.description": "Beskriv projektet som understödet söks för. Berätta också vad ni vill uppnå med understödet.",
-      "purpose.title": "En kort beskrivning av användningsändamålet för det/de understöd som ansöks",
-      "required_attachments_help.title": "Erforderliga bilagor",
-      "required_attachments_help.value": "För behandling av ansökan om understöd behövs styrkta bilagor från den föregående räkenskapsperioden som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från den föregående räkenskapsperioden är: bokslut, verksamhetsberättelse, revisionsberättelse och protokoll från årsstämman. Bilagorna för det år för vilket understödet ansöks är: budget och verksamhetsplan.",
-      "subvention.greater_than_zero": "Du måste föra in minst ett subventionsbelopp",
-      "subventions_section.title": "Understödskategorier",
-      "subventions.1.title": "Verksamhetsunderstöd",
-      "subventions.5.title": "Hyresunderstöd",
-      "subventions.6.title": "Allmänt understöd",
-      "subventions.9.title": "Annan",
-      "subventions.56.title": "Specialunderstöd för idrott 3",
-      "subventions.title": "Understöd"
+  "translations": {
+    "action_plan.description": {
+      "en": "Attach here the action plan for the whole community.",
+      "fi": "Liitä tähän koko yhteisön toimintasuunnitelma.",
+      "sv": "Bifoga verksamhetsplanen för hela för samfundet här."
+    },
+    "action_plan.title": {
+      "en": "Action plan (for the year for which you are applying for a grant)",
+      "fi": "Toimintasuunnitelma (sille vuodelle jolle haet avustusta)",
+      "sv": "Verksamhetsplan (för det år du ansöker om understödet)"
+    },
+    "acting_year_section.title": {
+      "en": "Grant details",
+      "fi": "Avustuksen tiedot",
+      "sv": "Uppgifter om understödet"
+    },
+    "acting_year.title": {
+      "en": "Year for which I am applying for a grant",
+      "fi": "Vuosi, jolle haen avustusta",
+      "sv": "År för vilket jag ansöker om understöd"
+    },
+    "additional_information.description": {
+      "en": "If necessary, you can write additional information or other justifications related to the application.",
+      "fi": "Tähän voit tarvittaessa kirjoittaa lisätietoja tai muita perusteluja hakemukseen liittyen.",
+      "sv": "Här kan du vid behov skriva ytterligare information eller andra motiveringar som rör ansökan."
+    },
+    "additional_information.title": {
+      "en": "Additional information ",
+      "fi": "Lisätiedot",
+      "sv": "Ytterligare information "
+    },
+    "additional_information_section.title": {
+      "en": "Additional information concerning the application",
+      "fi": "Lisätietoja hakemukseen liittyen",
+      "sv": "Ytterligare information för ansökan"
+    },
+    "affirmative_expands": {
+      "en": "An affirmative answer opens a further question",
+      "fi": "Myöntävä vastaus avaa lisäkysymyksen",
+      "sv": "Ett jakande svar öppnar ytterligare en fråga"
+    },
+    "applicant_email_email.title": {
+      "en": "Email address",
+      "fi": "Sähköpostiosoite",
+      "sv": "E-postadress"
+    },
+    "applicant_email.description": {
+      "en": "Provide here a community email address that is actively read. Contact requests related to the grant application, such as requests for further clarification and completion, will be sent to the email address.",
+      "fi": "Ilmoita tässä sellainen yhteisön sähköpostiosoite, jota luetaan aktiivisesti. Sähköpostiin lähetetään avustushakemukseen liittyviä yhteydenottoja esim. lisäselvitys- ja täydennyspyyntöjä.",
+      "sv": "Ange här samfundets e-postadress som läses aktivt. Till e-postadressen skickas kontaktförfrågningar som är relaterade till ansökan om understöd, såsom begäranden om tilläggsutredning och komplettering."
+    },
+    "applicant_email.title": {
+      "en": "Email",
+      "fi": "Sähköpostiosoite",
+      "sv": "E-post"
+    },
+    "applicant_info.title": {
+      "en": "Applicant details",
+      "fi": "Yhteisö, jolle haetaan avustusta",
+      "sv": "Den sökandes uppgifter"
+    },
+    "applied_benefits.title": {
+      "en": "Requested grants (€)",
+      "fi": "Haettu avustus (€)",
+      "sv": "Önskat understöd (€)"
+    },
+    "attachments_section.description": {
+      "en": "All the attachments listed below must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.",
+      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki alla luetellut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa. ",
+      "sv": "Alla bilagor som anges nedan måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagor i ansökan."
+    },
+    "attachments_section.title": {
+      "en": "Attachments",
+      "fi": "Liitteet",
+      "sv": "Bilagor"
+    },
+    "attachments_step.title": {
+      "en": "Additional information and attachments",
+      "fi": "Lisätiedot ja liitteet",
+      "sv": "Ytterligare information och bilagor"
+    },
+    "bank_account_bank_account.title": {
+      "en": "Select the account number",
+      "fi": "Tilinumero",
+      "sv": "Välj ett kontonummer"
+    },
+    "bank_account.title": {
+      "en": "Account number",
+      "fi": "Tilinumero",
+      "sv": "Kontonummer"
+    },
+    "bank_account.tooltip": {
+      "en": "If you want to add, delete or change account number information, save the application as a draft and go to maintain the account number information in your own data.",
+      "fi": "Jos haluat lisätä, poistaa tai muuttaa tilinumerotietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään tilinumerotietoa omiin tietoihin.",
+      "sv": "Om du vill lägga till, radera eller ändra kontonummerinformation, spara applikationen som ett utkast och gå till att behålla kontonummerinformationen i din egen data."
+    },
+    "boolean.no": {
+      "en": "No",
+      "fi": "Ei",
+      "sv": "Nej"
+    },
+    "boolean.yes": {
+      "en": "Yes",
+      "fi": "Kyllä",
+      "sv": "Ja"
+    },
+    "budget_step.title": {
+      "en": "Planned budget",
+      "fi": "Talousarvio",
+      "sv": "Budget"
+    },
+    "budget.description": {
+      "en": "Attach here the budget for the whole community.",
+      "fi": "Liitä tähän koko yhteisön talousarvio.",
+      "sv": "Budget (för det år du ansöker om understödet)"
+    },
+    "budget.title": {
+      "en": "Budget (for the year for which you are applying for a grant)",
+      "fi": "Talousarvio (sille vuodelle jolle haet avustusta)",
+      "sv": "Budget (för det år du ansöker om understödet)"
+    },
+    "cant_view_after_help.title": {
+      "en": "The contents of the attachments cannot be viewed afterwards",
+      "fi": "Liitteiden sisältöä ei voi tarkastella jälkikäteen",
+      "sv": "Innehållet i bilagorna kan inte granskas i efterhand"
+    },
+    "cant_view_after_help.value": {
+      "en": "Please note that you will not be able to open the attachments after you have attached them to the form. You will only see the file name of the attachment.",
+      "fi": "Huomioithan, että et pysty avaamaan liitteitä sen jälkeen, kun olet liittänyt ne lomakkeelle. Näet liitteestä ainoastaan sen tiedostonimen.",
+      "sv": "Observera att du inte kan öppna bilagorna efter att du har bifogat dem blanketten. Du ser bara bilagans filnamn."
+    },
+    "cant_view_after_help.value_2": {
+      "en": "Although you cannot view the attachments afterwards, the attachments to the form are sent along with the other information on the form to the grant application processor.",
+      "fi": "Vaikka et voi tarkastella liitteiden sisältä jälkikäteen, lomakkeelle liitetyt liitteet lähtevät lomakkeen muiden tietojen mukana avustushakemuksen käsittelijälle.",
+      "sv": "Även om du inte kan granska innehållet i bilagorna i efterhand skickas bilagorna som bifogats blanketten med övriga uppgifter till personen som behandlar ansökan om understöd."
+    },
+    "city_benefits_loans_section.description": {
+      "en": "For loans received from the city, indicate the original loan amount, remaining loan amount, loan period, interest rate and purpose for which the loan was granted. For guarantees, indicate the monetary value and purpose.",
+      "fi": "Kaupungilta saaduista lainoista on mainittava alkuperäinen lainamäärä, jäljellä oleva lainamäärä, laina-aika, korkoprosentti ja mihin tarkoitukseen laina on myönnetty. Takauksista ilmoitetaan niiden raha-arvo ja tarkoitus.",
+      "sv": "Gällande de lån som fåtts från staden ska man ange det ursprungliga lånebeloppet, det återstående lånebeloppet, lånetiden, räntesatsen och ändamålet för vilket lånet beviljades. Om borgen anges deras penningvärde och ändamål."
+    },
+    "city_benefits_loans_section.title": {
+      "en": "Loans and guarantees received from the city",
+      "fi": "Kaupungilta saadut lainat ja takaukset",
+      "sv": "Lån och borgen som fåtts från staden"
+    },
+    "city_benefits_loans.title": {
+      "en": "Description of loans and guarantees",
+      "fi": "Kuvaus lainoista ja takauksista",
+      "sv": "Beskrivning av lån och borgen"
+    },
+    "city_premises_benefits_section.description": {
+      "en": "Facilities that the city has given free of charge or rented to the applicant (name or address of the facility, rent amount €/month)",
+      "fi": "Tilat, jotka kaupunki on antanut korvauksetta tai vuokrannut hakijan käyttöön (tilan nimi tai osoite, vuokran määrä €/kk)",
+      "sv": "Lokaler som staden har gett gratis eller hyrt till den sökande (lokalens namn eller adress, hyresbelopp €/månad)"
+    },
+    "city_premises_benefits_section.title": {
+      "en": "Support from the city related to facilities",
+      "fi": "Kaupungilta saatu tiloihin liittyvä tuki",
+      "sv": "Understöd för lokaler som fåtts från staden"
+    },
+    "city_premises_benefits.title": {
+      "en": "Description of the support related to facilities",
+      "fi": "Kuvaus tiloihin liittyvästä tuesta",
+      "sv": "Beskrivning av understödet för lokalerna"
+    },
+    "community_activity_section.title": {
+      "en": "Description of activities",
+      "fi": "Toiminnan kuvaus",
+      "sv": "Verksamhetsbeskrivning"
+    },
+    "community_activity_step.title": {
+      "en": "Activities of the community",
+      "fi": "Yhteisön toiminta",
+      "sv": "Samfundets verksamhet"
+    },
+    "community_activity.description": {
+      "en": "The description of activities is maintained in your data",
+      "fi": "Tieto haetaan omat tiedot -osiosta",
+      "sv": "Informationen hämtas från avsnittet med personuppgifter"
+    },
+    "community_activity.title": {
+      "en": "Description of activities",
+      "fi": "Toiminnan kuvaus",
+      "sv": "Verksamhetsbeskrivning"
+    },
+    "community_address_community_address.title": {
+      "en": "Select the address",
+      "fi": "Valitse osoite",
+      "sv": "Välj en adress"
+    },
+    "community_address.title": {
+      "en": "Address",
+      "fi": "Osoite",
+      "sv": "Adress"
+    },
+    "community_address.tooltip": {
+      "en": "If you want to add, delete or change address information, save the application as a draft and go to maintain the address information in your own data.",
+      "fi": "Jos haluat lisätä, poistaa tai muuttaa osoitetietoa tallenna hakemus luonnokseksi ja siirry ylläpitämään osoitetietoa omiin tietoihin.",
+      "sv": "Om du vill lägga till, ta bort eller ändra adressuppgifter, spara ansökan som ett utkast och gå till att behålla adressuppgifterna i dina egna uppgifter."
+    },
+    "community_fees_section.title": {
+      "en": "Membership fees",
+      "fi": "Jäsenmaksut",
+      "sv": "Medlemsavgifter"
+    },
+    "community_members_section.title": {
+      "en": "Numbers of members",
+      "fi": "Jäsenmäärä",
+      "sv": "Antal medlemmar"
+    },
+    "community_officials_community_officials_official.title": {
+      "en": "Select official",
+      "fi": "Toiminnasta vastaava henkilö",
+      "sv": "Välj motsvarande person"
+    },
+    "community_officials_community_officials.addText": {
+      "en": "Add person",
+      "fi": "Lisää henkilö",
+      "sv": "Lägg till en person"
+    },
+    "community_officials_community_officials.removeText": {
+      "en": "Remove",
+      "fi": "Poista henkilö",
+      "sv": "Ta bort"
+    },
+    "community_officials_community_officials.title": {
+      "en": "Persons responsible for operations",
+      "fi": "Valitse toiminnasta vastaavat henkilöt",
+      "sv": "Personer som ansvarar för verksamheten"
+    },
+    "community_officials.title": {
+      "en": "Persons responsible for operations",
+      "fi": "Toiminnasta vastaavat henkilöt",
+      "sv": "Personer som ansvarar för verksamheten"
+    },
+    "community_officials.tooltip": {
+      "en": "If you want to add, delete or change people, save the application as a draft and go to maintain the people's information in your own data.",
+      "fi": "Jos haluat lisätä, poistaa tai muuttaa henkilöitä tallenna hakemus luonnokseksi ja siirry ylläpitämään henkilöiden tietoja omiin tietoihin.",
+      "sv": "Om du vill lägga till, ta bort eller ändra personer, spara applikationen som ett utkast och gå till att underhålla personernas information i din egen data."
+    },
+    "community_practices_business.title": {
+      "en": "Is the entity engaged in business?",
+      "fi": "Harjoittaako yhteisö liiketoimintaa",
+      "sv": "Bedriver samfundet affärsverksamhet"
+    },
+    "community_rules.description": {
+      "en": "New applicant or changed rules.",
+      "fi": "Uusi hakija tai säännöt muuttuneet.",
+      "sv": "Ny sökande eller stadgar som ändrats."
+    },
+    "community_rules.title": {
+      "en": "Community Rules",
+      "fi": "Yhteisön säännöt",
+      "sv": "Samfundets stadgar"
+    },
+    "confirmed_annual_report.description": {
+      "en": "An association must append to this section the annual report confirmed at the association's annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.",
+      "fi": "Yhdistys liittää tähän kohtaan yhdistyksen jäsenkokouksessa vahvistetun toimintakertomuksen. Jos toimintakertomus on osana tilinpäätöstä ja liititte sen jo tilinpäätöksen mukana lomakkeelle, sitä ei tarvitse liittää tähän erikseen. Valitse tällaisessa tilanteessa toimintakertomuksen kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
+      "sv": "Samfundet ska till denna punkt bifoga verksamhetsberättelsen som godkänts och undertecknats vid samfundets medlemsmöte. Om verksamhetsberättelsen ingår i bokslutet och du redan har bifogat den blanketten, behöver den inte bifogas separat. Ange i detta fall vid verksamhetsberättelsen att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
+    },
+    "confirmed_annual_report.title": {
+      "en": "Confirmed annual report (for the previous accounting period)",
+      "fi": "Vahvistettu toimintakertomus (edelliseltä päättyneeltä tilikaudelta)",
+      "sv": "Fastställd verksamhetsberättelse (för den föregående avslutade räkenskapsperioden)"
+    },
+    "confirmed_audit_report.description": {
+      "en": "An association must append to this section the annual report confirmed at the association's annual meeting. If the annual report is part of the financial statements and you have already appended it to the form with the financial statements, it does not need to be appended here separately. In this case, under the annual report, indicate “The attachment has been submitted as a single file or with another application”.",
+      "fi": "Liitä tähän allekirjoitettu tilin- tai toiminnantarkastuskertomus yhteisön edelliseltä päättyneeltä tilikaudelta. Jos allekirjoitettu tilin- tai toiminnantarkastuskertomus on osa yhteisönne tilinpäätöstä ja liitit sen jo lomakkeelle tilinpäätöksen kohdalla, valitse tässä kohdassa ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
+      "sv": "Bifoga den undertecknade revisionsberättelsen för samfundets senaste avslutade räkenskapsperiod här. Om den undertecknade revisionsberättelsen ingår i samfundets bokslut och du redan bifogat den till blanketten i samband med bokslutet, ange ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan” här."
+    },
+    "confirmed_audit_report.title": {
+      "en": "Confirmed audit or performance audit report (for the previous accounting period)",
+      "fi": "Vahvistettu tilin- tai toiminnantarkastuskertomus (edelliseltä päättyneeltä tilikaudelta)",
+      "sv": "Fastställd revisionsberättelse (för det föregående avslutade räkenskapsåret)"
+    },
+    "confirmed_financial_statements.description": {
+      "en": "The financial statements must include at least the profit and loss account and the balance sheet. An association must append to this section the financial statements confirmed and signed at the association's annual meeting. The community's accounting period may be a calendar year or some other period. In the case of associations, their own rules state what the association's accounting period is.",
+      "fi": "Tilinpäätöksen täytyy sisältää vähintään tuloslaskelma ja tase. Yhdistys liittää tähän kohtaan yhdistyksen jäsenkokouksessa vahvistetun ja allekirjoitetun tilinpäätöksen. Yhteisön tilikausi voi olla kalenterivuosi tai jokin muu kausi. Yhdistysten kohdalla niiden omissa säännöissä lukee, mikä on yhdistyksen tilikausi.",
+      "sv": "Bokslutet ska innehålla minst resultaträkningen och balansräkningen. Samfundet ska till denna punkt lägga till bokslutet som godkänts och undertecknats vid samfundets medlemsmöte. Samfundets räkenskapsperiod kan vara ett kalenderår eller en annan period. Vad gäller samfund anges det i deras egna stadgar vad samfundets räkenskapsperiod är."
+    },
+    "confirmed_financial_statements.title": {
+      "en": "Confirmed financial statements (for the previous accounting period)",
+      "fi": "Vahvistettu tilinpäätös (edelliseltä päättyneeltä tilikaudelta)",
+      "sv": "Fastställt bokslut (för den föregående avslutade räkenskapsperioden)"
+    },
+    "contact_person_info.title": {
+      "en": "Contact person for the application",
+      "fi": "Hakemuksen yhteyshenkilö",
+      "sv": "Kontaktperson för ansökan"
+    },
+    "contact_person_phone_number.title": {
+      "en": "Phone number",
+      "fi": "Puhelinnumero",
+      "sv": "Telefonnummer"
+    },
+    "contact_person.title": {
+      "en": "Contact person",
+      "fi": "Yhteyshenkilö",
+      "sv": "Kontaktperson"
+    },
+    "economy_forecast.description": {
+      "en": "Specify the project's income and expenses as accurately as possible.",
+      "fi": "Erittele hankkeen tulot ja menot mahdollisimman tarkasti.",
+      "sv": "Specificera projektets inkomster och utgifter så noggrant som möjligt."
+    },
+    "expenditure_row_amount.title": {
+      "en": "Amount (€)",
+      "fi": "Määrä (€)",
+      "sv": "Belopp (€)"
+    },
+    "expenditure_row_description.title": {
+      "en": "Cost explanation",
+      "fi": "Kuvaus menosta",
+      "sv": "Kostnadsförklaring"
+    },
+    "expenditure_row_item.description": {
+      "en": "Write down the type of expense in question. Expenses can be, for example, rents and personnel costs.",
+      "fi": "Kerro tässä minkälainen meno on kyseessä. Toiminnan menoja voivat olla esimerkiksi tilavuokrat ja henkilöstökulut.",
+      "sv": "Skriv ner vilken typ av utgift det gäller. Utgifter kan till exempel vara andra lokalhyror och personalkostnader."
+    },
+    "expenditure_row_item.title": {
+      "en": "Type of expense",
+      "fi": "Meno",
+      "sv": "Typ av utgift"
+    },
+    "expenditure_rows.add": {
+      "en": "Add new expense",
+      "fi": "Lisää uusi meno",
+      "sv": "Lägg till en utgift"
+    },
+    "expenditure_section.title": {
+      "en": "Expenses",
+      "fi": "Menot",
+      "sv": "Utgifter"
+    },
+    "fee_community.title": {
+      "en": "Community member (€/year)",
+      "fi": "Yhteisöjäsen (€/vuosi)",
+      "sv": "Samfundsmedlem (€/år)"
+    },
+    "fee_person.title": {
+      "en": "Individual membership fee (€/year)",
+      "fi": "Henkilöjäsenen jäsenmaksu (€/vuosi)",
+      "sv": "Medlemsavgift för personmedlemmar (€/år)"
+    },
+    "file_description.title": {
+      "en": "Attachment description",
+      "fi": "Liitteen kuvaus",
+      "sv": "Beskrivning av bilagan"
+    },
+    "file.title": {
+      "en": "Attachment",
+      "fi": "Liitetiedosto",
+      "sv": "Bilaga"
+    },
+    "file_removal_failed.title": {
+      "en": "File removal failed",
+      "fi": "Liitteen poistaminen epäonnistui",
+      "sv": "Borttagning av filen misslyckades"
+    },
+    "formerly_provided_attachments_help.title": {
+      "en": "Attachments previously submitted to the City of Helsinki",
+      "fi": "Helsingin kaupungille aiemmin toimitetut liitteet",
+      "sv": "Bilagor som tidigare lämnats in till Helsingfors stad"
+    },
+    "formerly_provided_attachments_help.value": {
+      "en": "If the required attachments have already been submitted as attachments to another grant application addressed to the City of Helsinki, the same attachments do not need to be submitted again. The confirmed financial statements, annual report, action plan and budget of the community cannot be different from one application to another. In this case, under the submitted attachments, indicate “The attachment has been submitted as a single file or with another application”.",
+      "fi": "Jos vaaditut liitteet on jo toimitettu toisen Helsingin kaupungille osoitetun avustushakemuksen liitteenä, samoja liitteitä ei tarvitse toimittaa uudelleen. Yhteisön vahvistettu tilinpäätös, toimintakertomus, toimintasuunnitelma ja talousarvio eivät voi olla erilaisia eri hakemusten liitteenä. Merkitse tällöin toimitettujen liitteiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”.",
+      "sv": "Om de erforderliga bilagorna redan har lämnats in som bilaga till en annan ansökan om understöd till Helsingfors stad, behöver samma bilagor inte lämnas in igen. Samfundets fastställda bokslut, verksamhetsberättelse, verksamhetsplan och budget får inte vara olika i bilagor till de olika ansökningarna. Ange i detta fall vid de inlämnade bilagorna att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
+    },
+    "further_clarification.title": {
+      "en": "Further clarification on attachments",
+      "fi": "Lisäselvitys liitteistä",
+      "sv": "Ytterligare information om bilagorna"
+    },
+    "grant_info_step.title": {
+      "en": "Grant details",
+      "fi": "Avustustiedot",
+      "sv": "Uppgifter om understödet"
+    },
+    "grant_target_section.title": {
+      "en": "Target of the grant",
+      "fi": "Avustuksen kohde",
+      "sv": "Understödets ändamål"
+    },
+    "have_applied_other_compensations.title": {
+      "en": "We have applied for grants from somewhere other than the City of Helsinki",
+      "fi": "Olemme hakeneet avustuksia muualta kuin Helsingin kaupungilta",
+      "sv": "Vi har ansökt om understöd från annanstans än Helsingfors stad"
+    },
+    "have_received_other_compensations.title": {
+      "en": "We have received other grants",
+      "fi": "Olemme saaneet muita avustuksia",
+      "sv": "Vi har fått andra understöd"
+    },
+    "have_received_prior_compensations.title": {
+      "en": "Report on the use of the grant I received in the previous year",
+      "fi": "Käyttöselvitys edellisenä vuonna saamastani avustuksesta",
+      "sv": "Redovisning om understödet som jag fick under det föregående året "
+    },
+    "have_received_prior_compensations.yes": {
+      "en": "I received a grant from the city of Helsinki for the same purpose last year.",
+      "fi": "Olen saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
+      "sv": "Jag fick ett bidrag från Helsingfors stad för samma ändamål förra året."
+    },
+    "have_received_prior_compensations.no": {
+      "en": "I have not received a grant from the City of Helsinki for the same purpose in the previous year.",
+      "fi": "En ole saanut Helsingin kaupungilta avustusta samaan käyttötarkoitukseen edellisenä vuonna.",
+      "sv": "Jag har inte fått bidrag från Helsingfors stad för samma ändamål föregående år."
+    },
+    "income_row_amount.title": {
+      "en": "Amount (€)",
+      "fi": "Määrä (€)",
+      "sv": "Belopp (€)"
+    },
+    "income_row_description.title": {
+      "en": "Income explanation",
+      "fi": "Kuvaus tulosta",
+      "sv": "Inkomstförklaring"
+    },
+    "income_row_item.title": {
+      "en": "Type of income",
+      "fi": "Tulon tyyppi",
+      "sv": "Typ av inkomst"
+    },
+    "income_row_item.description": {
+      "en": "Write down the type of income in question. Incomes can be, for example, other grants and admission or participation fees. Self financing has to be written down as an income even if the required self financing share is to be funded from the organisations overall operations.",
+      "fi": "Kerro tässä minkälainen tulo on kyseessä. Toiminnan tuloja voivat olla esimerkiksi muut avustukset ja pääsy- tai osallistumismaksut. Kirjaa tähän kohtaan myös omarahoitusosuus, jos hankkeen alijäämä kuitataan muusta taloudestanne.",
+      "sv": "Skriv ner vilken typ av inkomst det gäller. Inkomster kan till exempel vara andra understöd och inträdes- eller deltagaravgifter. Självfinansiering måste uppges som en inkomst även om den självfinansierade delen finansieras med sökandes övrig verksamhet."
+    },
+    "income_rows.add": {
+      "en": "Add new income",
+      "fi": "Lisää uusi tulo",
+      "sv": "Lägg till en intäkt"
+    },
+    "income_section.title": {
+      "en": "Income",
+      "fi": "Tulot",
+      "sv": "Inkomster"
+    },
+    "information_in_more_detail_step.title": {
+      "en": "Information in more detail",
+      "fi": "Tarkemmat tiedot",
+      "sv": "Mer detaljerad information"
+    },
+    "members_applicant_community_global.title": {
+      "en": "Community members",
+      "fi": "Yhteisöjäseniä yhteensä",
+      "sv": "Samfundsmedlemmar sammanlagt"
+    },
+    "members_applicant_community_local.title": {
+      "en": "Total number of community members in Helsinki",
+      "fi": "Helsinkiläisiä yhteisöjäseniä yhteensä",
+      "sv": "Samfundsmedlemmar från Helsingfors sammanlagt"
+    },
+    "members_applicant_community_global.description": {
+      "en": "How many community members does the community currently have who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.",
+      "fi": "Kuinka monta jäsenmaksun maksanutta yhteisöjäsentä yhteisöllä on tällä hetkellä? Yhteisöjäsentä ovat muut kuin henkilöjäsenet, esimerkiksi yhdistykset, säätiöt, yritykset tai kunnat.",
+      "sv": "Hur många samfundsmedlemmar som har betalat medlemsavgiften har samfundet för närvarande? Samfundsmedlemmar är andra än personmedlemmar, såsom föreningar, stiftelser, företag eller kommuner."
+    },
+    "members_applicant_community_local.description": {
+      "en": "How many community members does the community currently have in Helsinki who have paid the membership fee? Community members are non-individual members, such as associations, foundations, companies or municipalities.",
+      "fi": "Kuinka monta jäsenmaksun maksanutta helsinkiläistä yhteisöjäsentä yhteisöllä on tällä hetkellä? Yhteisöjäsentä ovat muut kuin henkilöjäsenet, esimerkiksi yhdistykset, säätiöt, yritykset tai kunnat.",
+      "sv": "Hur många samfundsmedlemmar från Helsingfors som har betalat medlemsavgiften har samfundet för närvarande? Samfundsmedlemmar är andra än personmedlemmar, såsom föreningar, stiftelser, företag eller kommuner."
+    },
+    "members_applicant_person_global.description": {
+      "en": "How many individual members does the community currently have who have paid the membership fee?",
+      "fi": "Kuinka monta jäsenmaksun maksanutta henkilöjäsentä yhteisöllä on tällä hetkellä?",
+      "sv": "Hur många personmedlemmar som har betalat medlemsavgiften har samfundet för närvarande?"
+    },
+    "members_applicant_person_local.description": {
+      "en": "How many individual members does the community currently have in Helsinki who have paid the membership fee?",
+      "fi": "Kuinka monta jäsenmaksun maksanutta helsinkiläistä henkilöjäsentä yhteisöllä on tällä hetkellä?",
+      "sv": "Hur många personmedlemmar från Helsingfors som har betalat medlemsavgiften har samfundet för närvarande?"
+    },
+    "members_applicant_person_global.title": {
+      "en": "Total number of individual members",
+      "fi": "Henkilöjäseniä yhteensä",
+      "sv": "Personmedlemmar sammanlagt"
+    },
+    "members_applicant_person_local.title": {
+      "en": "Total number of individual members in Helsinki",
+      "fi": "Helsinkiläisiä henkilöjäseniä yhteensä",
+      "sv": "Personmedlemmar från Helsingfors sammanlagt"
+    },
+    "members_fieldset.legend": {
+      "en": "Numbers of members",
+      "fi": "Jäsenmäärä",
+      "sv": "Medlemskap"
+    },
+    "members_fieldset.description": {
+      "en": "If the community has members, please list them here.",
+      "fi": "Jos yhteisöllä on jäseniä, merkitse ne tähän.",
+      "sv": "Om gruppen har medlemmar, vänligen ange dem här."
+    },
+    "minutes_of_the_annual_meeting.description": {
+      "en": "Attach here the minutes of the community meeting in which the financial statements for the previous accounting period are confirmed and discharge from liability granted. For associations, the financial statements are always confirmed at the association’s annual meeting. If the community is not required to have an annual meeting or other community meeting at which the financial statements should be approved and discharge from liability granted, this attachment does not need to be submitted.",
+      "fi": "Liitä tähän yhteisön kokouksen pöytäkirja, jossa edellisen päättyneen tilikauden tilinpäätös on vahvistettu ja vastuuvapaus myönnetty. Yhdistyksillä tilinpäätös vahvistetaan aina yhdistyksen jäsenkokouksessa. Mikäli yhteisöltä ei edellytetä vuosikokousta tai muuta yhteisön kokousta, jossa tilinpäätös tulisi vahvistaa ja vastuuvapaus myöntää, ei tätä liitettä tarvitse toimittaa.",
+      "sv": "Bifoga protokollet från samfundets möte här, där bokslutet för den föregående avslutade räkenskapsperioden har godkänts och ansvarsfrihet beviljats. Samfundens bokslut fastställs alltid vid samfundets medlemsmöte. Om samfundet inte är skyldigt att ha ett årsmöte eller annat samfundsmöte där bokslutet bör godkännas och ansvarsfrihet beviljas, behöver denna bilaga inte lämnas in."
+    },
+    "minutes_of_the_annual_meeting.title": {
+      "en": "Minutes of the annual meeting confirming the financial statements for the previous accounting period",
+      "fi": "Vuosikokouksen pöytäkirja, jossa on vahvistettu edellisen päättyneen tilikauden tilinpäätös",
+      "sv": "Protokoll från årsstämman med det godkända bokslutet för den föregående räkenskapsperioden"
+    },
+    "multiple_attachments_help.title": {
+      "en": "Submission of several attachments as a single file",
+      "fi": "Usean liitteen toimittaminen yhtenä tiedostona",
+      "sv": "Inlämning av flera bilagor i en fil"
+    },
+    "multiple_attachments_help.value": {
+      "en": "If you wish, you can submit several attachments as a single file under Financial statements or Budget. In this case, under the other attachment headings, indicate “The attachment has been submitted as a single file or with another application.”",
+      "fi": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona Tilinpäätös tai talousarvio -liitekohdassa. Merkitse tällöin muiden liiteotsikoiden kohdalla ”Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä”. ",
+      "sv": "Om du vill kan du lämna in flera bilagor i en fil i punkten Bokslut eller budget. Ange i detta fall vid andra bilagor att ”Bilagan har lämnats in som en fil eller i samband med en annan ansökan”."
+    },
+    "other_applied_compensation_amount.title": {
+      "en": "The amount of the grant applied for",
+      "fi": "Haetun avustuksen summa",
+      "sv": "Beviljat bidragsbelopp"
+    },
+    "other_applied_compensations.add": {
+      "en": "Add new grant applied for",
+      "fi": "Lisää uusi haettu avustus",
+      "sv": "Lägg till nytt understöd som ansökts"
+    },
+    "other_applied_compensation_amount.printable_title": {
+      "en": "The amount of the grant applied for (€)",
+      "fi": "Haetun avustuksen summa (€)",
+      "sv": "Beviljat bidragsbelopp (€)"
+    },
+    "other_applied_compensations_section.description": {
+      "en": "Indicate here only the grants that have been applied for from somewhere other than the City of Helsinki and for which the decisions have not been made yet.",
+      "fi": "Ilmoita tähän ainoastaan avustukset, jotka on haettu muualta kuin Helsingin kaupungilta, eikä päätöstä ole vielä tehty.",
+      "sv": "Ange här endast de understöd som har ansökts från annanstans än Helsingfors stad, men beslut har ännu inte fattats."
+    },
+    "other_applied_compensations_section.title": {
+      "en": "Other grants applied for to be used for the same purpose",
+      "fi": "Muut samaan tarkoitukseen haetut avustukset",
+      "sv": "Övriga understöd som ansökts för samma ändamål"
+    },
+    "other_attachment_fieldset.title": {
+      "en": "Other attachment",
+      "fi": "Muu liite",
+      "sv": "Annan bilaga"
+    },
+    "other_attachment_fieldset.ui_help": {
+      "en": "One file only.\nAllowed types: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
+      "fi": "Vain yksi tiedosto.\nSuositus alle 2 Mt, enintään 20 Mt.\nSallitut tiedostotyypit: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip.",
+      "sv": "Tillåtna filtyper: doc, docx, gif, jpg, jpeg, pdf, png, ppt, pptx, rtf, txt, xls, xlsx, zip. "
+    },
+    "other_compensation.add": {
+      "en": "Add new received grant",
+      "fi": "Lisää uusi myönnetty avustus",
+      "sv": "Lägg till understöd som beviljats"
+    },
+    "other_compensation_amount.title": {
+      "en": "Amount of grant granted",
+      "fi": "Myönnetyn avustuksen summa",
+      "sv": "Beviljat bidragsbelopp"
+    },
+    "other_compensation_amount.printable_title": {
+      "en": "Amount of grant granted (€)",
+      "fi": "Myönnetyn avustuksen summa (€)",
+      "sv": "Beviljat bidragsbelopp (€)"
+    },
+    "other_compensation_description.description": {
+      "en": "Give a brief description, for what purpose has the grant been granted?",
+      "fi": "Anna lyhyt kuvaus, mihin tarkoitukseen avustus on myönnetty?",
+      "sv": "Ge en kort beskrivning, i vilket syfte har bidraget beviljats?"
+    },
+    "other_compensation_description.title": {
+      "en": "Description of intended use",
+      "fi": "Kuvaus käyttötarkoituksesta",
+      "sv": "Beskrivning av avsedd användning"
+    },
+    "other_compensation_issuer_name.title": {
+      "en": "Issuer's name",
+      "fi": "Myöntäjän nimi",
+      "sv": "Emittentens namn"
+    },
+    "other_compensation_issuer_year.title": {
+      "en": "Year",
+      "fi": "Vuosi",
+      "sv": "År"
+    },
+    "other_compensation_issuer.eu": {
+      "en": "EU",
+      "fi": "EU",
+      "sv": "EU"
+    },
+    "other_compensation_issuer.insitute": {
+      "en": "Foundation",
+      "fi": "Säätiö",
+      "sv": "Fundament"
+    },
+    "other_compensation_issuer.other": {
+      "en": "Other",
+      "fi": "Muu",
+      "sv": "Övrig"
+    },
+    "other_compensation_issuer.state": {
+      "en": "State",
+      "fi": "Valtio",
+      "sv": "Stat"
+    },
+    "other_compensation_issuer.title": {
+      "en": "Grant issuer",
+      "fi": "Avustuksen myöntäjä",
+      "sv": "Bidragsgivare"
+    },
+    "other_compensation_issuer.description": {
+      "en": "Which entity has granted the grant (e.g. name of the ministry)",
+      "fi": "Mikä taho avustusta on myöntänyt (esim. ministeriön nimi)",
+      "sv": "Vilket organ har beviljat bidraget (t.ex. namnet på departementet)"
+    },
+    "other_compensations_section.description": {
+      "en": "Indicate here only the grants received from somewhere other than the City of Helsinki in the current and two previous tax years.",
+      "fi": "Ilmoita tähän ainoastaan avustukset, jotka on myönnetty muualta kuin Helsingin kaupungilta kuluvana tai kahtena edellisenä verovuotena.",
+      "sv": "Ange här endast de understöd som beviljats från annanstans än Helsingfors stad under det innevarande beskattningsåret eller de föregående två beskattningsåren."
+    },
+    "other_compensations_section.title": {
+      "en": "Other grants received for the same purpose",
+      "fi": "Muut samaan tarkoitukseen myönnetyt avustukset",
+      "sv": "Övriga understöd som beviljats för samma ändamål"
+    },
+    "prior_benefits_usage_section.title": {
+      "en": "Report on the use of the previous grant",
+      "fi": "Edellisen avustuksen käyttöselvitys",
+      "sv": "Redovisning om det tidigare understödet"
+    },
+    "prior_compensations.description": {
+      "en": "Provide a report on the use of the grant received from the City of Helsinki. A report on the use of the grant must be drawn up for the grant concerning the previous accounting period. A report on the use should not be drawn up for the current accounting period. Providing the report on the use is a prerequisite for receiving the next grant. If no report on the use is provided, the grant will not be awarded or paid. A grant awarded may be recovered if the use of the previous grant has not been satisfactorily reported.",
+      "fi": "Anna käyttöselvitys Helsingin kaupungilta saadusta avustuksesta. Avustuksen käyttöselvitys tehdään avustuksesta, joka koskee viimeisintä päättynyttä tilikautta. Käyttöselvitystä ei tehdä käynnissä olevalta tilikaudelta. Käyttöselvityksen antaminen on seuraavan avustuksen saamisen ehtona. Mikäli käyttöselvitystä ei tehdä, avustusta ei myönnetä eikä makseta. Myönnetty avustus voidaan periä takaisin, jos edellisen avustuksen käyttöä ei ole hyväksyttävästi selvitetty.",
+      "sv": "Ge en redovisning om understödet som fåtts från Helsingfors stad. Redovisningen görs om understödet som beviljats för den senaste avslutade räkenskapsperioden. Redovisning görs inte om den innevarande räkenskapsperioden. Redovisningen krävs för att få ett nytt understöd. Om en redovisning inte görs, kommer ett understöd inte att beviljas eller betalas ut. Det beviljade understödet kan återkrävas om användningen av det tidigare understödet inte har redogjorts för på ett tillfredsställande sätt."
+    },
+    "prior_compensations.title": {
+      "en": "Report on the use of the grant",
+      "fi": "Selvitys avustuksen käytöstä",
+      "sv": "Redovisning om användningen av understödet"
+    },
+    "prior_compensations.tooltip": {
+      "en": "The report on the use must briefly describe how the received grant has been used. The recipient must arrange its accounting in such a way that it is possible to monitor the use of the grant. For example, if a community has received a lease grant, the profit and loss account in the financial statements must show the grant in both income and expenses. Further information on the use of the grant can also be written in a separate attachment, which can be returned under Report on the use.",
+      "fi": "Käyttöselvityksessä tulee kuvata lyhyesti, miten myönnetty avustus on käytetty. Avustuksen saajan on järjestettävä kirjanpitonsa niin, että avustuksen käyttöä voidaan sieltä seurata. Esimerkiksi jos yhteisö on saanut vuokra-avustusta, tilinpäätöksen tuloslaskelmasta tulee käydä ilmi avustuksen toteutuminen sekä tuloissa että menoissa. Lisää tietoja avustuksen käytöstä voi myös kirjoittaa erilliseen liitteeseen, jonka voi palauttaa Käyttöselvitys-liite kohdasta.",
+      "sv": "I redovisningen ska det kortfattat anges hur det beviljade understödet har använts. Understödstagaren ska ordna sin bokföring så att användningen av understödet kan följas där. Om samfundet till exempel har fått hyresunderstöd ska det av resultaträkningen i bokslutet framgå både intäkter och utgifter vad gäller understödet. Mer information om användningen av understödet kan också skrivas i en separat bilaga som kan lämnas som Redovisning-bilaga."
+    },
+    "purpose.description": {
+      "en": "Describe the project for which the grant is being applied. Also explain what you aim to achieve with the grant.",
+      "fi": "Kerro, millaiseen hankkeeseen avustusta haetaan. Kerro myös, mitä avustuksella on tavoitteena saada aikaiseksi.",
+      "sv": "Beskriv projektet som understödet söks för. Berätta också vad ni vill uppnå med understödet."
+    },
+    "purpose_section.title": {
+      "en": "Purpose of use",
+      "fi": "Käyttötarkoitus",
+      "sv": "Användningsändamål"
+    },
+    "purpose.title": {
+      "en": "Brief description of the purpose(s) of the grant(s) applied for",
+      "fi": "Lyhyt kuvaus haettavan / haettavien avustusten käyttötarkoituksista",
+      "sv": "En kort beskrivning av användningsändamålet för det/de understöd som ansöks"
+    },
+    "required_attachments_help.title": {
+      "en": "Required attachments",
+      "fi": "Vaaditut liitteet",
+      "sv": "Erforderliga bilagor"
+    },
+    "required_attachments_help.value": {
+      "en": "For the processing of the grant application, the required attachments are the confirmed attachments approved and signed by the community at its meeting for the previous accounting period and for the operating year for which the grant is being applied for. The attachments concerning the previous accounting period are the financial statements, the annual report, the audit or performance audit report and the minutes of the annual meeting. The attachments for the year for which the grant is being applied for are the budget and action plan.",
+      "fi": "Avustushakemuksen käsittelyä varten tarvitaan vahvistettuja, yhteisön kokouksessaan hyväksymiä ja allekirjoittamia, liitteitä edelliseltä päättyneeltä tilikaudelta sekä liitteitä sille toimintavuodelle, jolle avustusta haetaan. Edellistä tilikautta koskevat liitteet ovat: tilinpäätös, toimintakertomus ja tilin- tai toiminnantarkastuskertomus sekä vuosikokouksen pöytäkirja. Liitteet vuodelle, jolle avustusta haetaan ovat: talousarvio ja toimintasuunnitelma.",
+      "sv": "För behandling av ansökan om understöd behövs styrkta bilagor från den föregående räkenskapsperioden som samfundet har godkänt och undertecknat vid sitt möte samt bilagor för det verksamhetsår för vilket understödet ansöks. Bilagorna från den föregående räkenskapsperioden är: bokslut, verksamhetsberättelse, revisionsberättelse och protokoll från årsstämman. Bilagorna för det år för vilket understödet ansöks är: budget och verksamhetsplan."
+    },
+    "subvention.greater_than_zero": {
+      "en": "You must insert at least one subvention amount ",
+      "fi": "Sinun on syötettävä vähintään yhdelle avustuslajille summa",
+      "sv": "Du måste föra in minst ett subventionsbelopp"
+    },
+    "subventions_section.title": {
+      "en": "Types of grant",
+      "fi": "Avustuslajit",
+      "sv": "Understödskategorier"
+    },
+    "subventions.1.title": {
+      "en": "Operating grant",
+      "fi": "Toiminta-avustus",
+      "sv": "Verksamhetsunderstöd"
+    },
+    "subventions.5.title": {
+      "en": "Rent subsidy",
+      "fi": "Vuokra-avustus",
+      "sv": "Hyresunderstöd"
+    },
+    "subventions.6.title": {
+      "en": "General grant",
+      "fi": "Yleisavustus",
+      "sv": "Allmänt understöd"
+    },
+    "subventions.9.title": {
+      "en": "Other",
+      "fi": "Muu",
+      "sv": "Annan"
+    },
+    "subventions.56.title": {
+      "en": "Special grant for sports 3",
+      "fi": "Liikunnan erityisavustus 3",
+      "sv": "Specialunderstöd för idrott 3"
+    },
+    "subventions.title": {
+      "en": "Grants",
+      "fi": "Avustukset",
+      "sv": "Understöd"
     }
   }
 }
