@@ -712,7 +712,7 @@ class JsonMapper {
   }
 
   private function findFileFieldValue(array $singleFileFields, string $fieldName): ?string {
-    foreach($singleFileFields as $field) {
+    foreach ($singleFileFields as $field) {
       if ($field['ID'] === $fieldName) {
         return $field['value'];
       }

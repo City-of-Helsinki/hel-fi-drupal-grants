@@ -235,9 +235,8 @@ final class Application extends ResourceBase {
 
     $errors = $this->validate($form_identifier, $form_data);
     if (is_array($errors)) {
-      // RJSF turns array into object for some reason.
+      // Encode changes (empty)array into object in some cases
       $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
-      // return new JsonResponse(['error' => $errors], 400);
     }
 
     try {
@@ -487,9 +486,8 @@ final class Application extends ResourceBase {
 
     $errors = $this->validate($form_identifier, $form_data);
     if (is_array($errors)) {
+      // Encode changes (empty)array into object in some cases
       $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
-      // RJSF turns array into object for some reason.
-      // return new JsonResponse(['error' => $errors], 400);
     }
 
     try {
