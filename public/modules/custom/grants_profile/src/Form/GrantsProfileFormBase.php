@@ -784,6 +784,12 @@ of the account owner or a copy of a bank statement.", [], $this->tOpts),
       $grantsProfile = $this->grantsProfileService->createNewProfile($selectedRoleData);
     }
 
+    // GetGrantsProfile & createNewProfile methods can return null/false.
+    if (!$grantsProfile instanceof AtvDocument) {
+      $this->logger->error('User failed to fetch or create the grants profile document from ATV.');
+      throw new \Exception('Unable to fetch or create a profile.');
+    }
+
     $isRegisteredCommunity = $selectedRoleData['type'] === 'registered_community';
 
     // In some cases GDPR data deletions may leave grant profiles
