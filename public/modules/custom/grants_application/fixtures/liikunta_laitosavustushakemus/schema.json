@@ -241,6 +241,29 @@
           }
         }
       }
+    },
+    "community_activity_step": {
+      "type": "object",
+      "properties": {
+        "community_activity_section": {
+          "title": "community_activity_section.title",
+          "type": "object",
+          "properties": {
+            "community_activity_description": {
+              "title": "community_activity.title",
+              "type": "string"
+            },
+            "community_practices_business": {
+              "title": "community_practices_business.title",
+              "enum": [
+                true,
+                false
+              ]
+            }
+          },
+          "required": ["community_practices_business"]
+        }
+      }
     }
   },
   "description": "",
@@ -251,6 +274,11 @@
       "title": "grant_info_step.title",
       "type": "object",
       "$ref": "#/definitions/grant_info_step"
+    },
+    "community_activity_step": {
+      "title": "community_activity_step.title",
+      "type": "object",
+      "$ref": "#/definitions/community_activity_step"
     }
   }
 }

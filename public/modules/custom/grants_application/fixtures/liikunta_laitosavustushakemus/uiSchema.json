@@ -105,5 +105,27 @@
         "ui:widget": "textarea"
       }
     }
+  },
+  "community_activity_step": {
+    "community_activity_section": {
+      "community_activity_description": {
+        "misc:profilePrefill": "businessPurpose",
+        "misc:max-length": 500,
+        "ui:widget": "textarea",
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "community_activity.title",
+          "tooltipButtonLabel": "community_activity.title",
+          "tooltipText": "community_activity.description"
+        }
+      },
+      "community_practices_business": {
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:widget": "radio"
+      }
+    }
   }
 }
