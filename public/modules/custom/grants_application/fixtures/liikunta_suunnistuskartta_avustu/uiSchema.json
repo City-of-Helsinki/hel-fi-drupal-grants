@@ -1,8 +1,36 @@
 {
+  "orienteering_maps_step": {
+    "orienteering_subvention": {
+      "orienteering_maps": {
+        "ui:options": {
+          "hideNameFromPrint": true
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          },
+          "map_name": {
+            "ui:widget": "textarea",
+            "ui:options": {
+              "tooltipLabel": "map_name.title",
+              "tooltipButtonLabel": "map_name.title",
+              "tooltipText": "map_name.description"
+            }
+          }
+        }
+      }
+    }
+  },
   "attachments_step": {
     "additional_information_section": {
       "additional_information": {
-        "ui:widget": "textarea"
+        "ui:widget": "textarea",
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "additional_information.title",
+          "tooltipButtonLabel": "additional_information.title",
+          "tooltipText": "additional_information.description"
+        }
       }
     },
     "attachments_section": {
@@ -28,18 +56,6 @@
           "misc:variant": "simple",
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
-        }
-      }
-    }
-  },
-  "orienteering_maps_step": {
-    "orienteering_subvention": {
-      "orienteering_maps": {
-        "ui:options": {
-          "hideNameFromPrint": true
-        },
-        "map_name": {
-          "ui:widget": "textarea"
         }
       }
     }

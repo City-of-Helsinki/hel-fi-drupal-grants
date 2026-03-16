@@ -1,167 +1,269 @@
 {
-  "en": {
-    "translation": {
-      "accounting_auditing_expenses.title": "Accounting (€)",
-      "amount.title": "Amount (€)",
-      "benefit_usage_other_expenditure_section.title": "Other expenses",
-      "budget_step.title": "Budget",
-      "cleaning_services.title": "Cleaning (€)",
-      "cost_explanation_expense.title": "Cost explanation",
-      "cost_explanation_income.title": "Cost explanation",
-      "customer_sales.title": "Customer fees (€)",
-      "donations.title": "Donations (€)",
-      "economy_forecast_section.title": "Budget",
-      "economy_forecast.description": "Only apply for one grant type at a time with each application.",
-      "electricity.title": "Electricity (€)",
-      "expenditure_section.title": "Expenses",
-      "form_title": "Education, grant application for organisers of afternoon activities for school children",
-      "heating.title": "Heating (€)",
-      "lease_agreement.title": "Leasing agreement (when applying for rent grant)",
-      "location_address.title": "Street Address",
-      "location_held_in_provided_space.title": "Is premise free",
-      "location_name.title": "Location",
-      "location_number_of_groups_special_needs.title": "Special Groups",
-      "location_number_of_groups.title": "Group Count",
-      "location_postal_code.title": "Postal code",
-      "location_pupil_number_special_needs.title": "Special Students",
-      "location_pupil_number.title": "Student Count",
-      "location_staff.title": "Personnel Count",
-      "locations_info_section.title": "Basic information about the locations",
-      "locations_info.description": "Please provide here the contact details and group structure information for the different locations. The form will calculate the reported information together.",
-      "locations_info.title": "Location",
-      "management_office_expenses.title": "Admin (€)",
-      "materials.title": "Materials (€)",
-      "operational_materials.title": "Supplies (€)",
-      "other_benefit_description.title": "Income explanation",
-      "other_benefits_item.title": "Other benefits",
-      "other_benefits_section.title": "Other benefits",
-      "other_expenditures_section.title": "Other expenses",
-      "other_expenses.title": "Other expenses",
-      "other_materials_acquired_section.title": "Other acquired materials",
-      "other_materials_section.title": "Other materials",
-      "other_services_acquired_section.title": "Other acquired services",
-      "personnel_side_costs.title": "Personnel costs from salaries and fees (approx. 30%) (€)",
-      "property_maintenance.title": "Premises Service (€)",
-      "rents.title": "Rents (€)",
-      "salaries_and_bonuses.title": "Salaries (€)",
-      "services.title": "Services (€)",
-      "snacks.title": "Snacks (€)",
-      "staff_health_expenses.title": "Health (€)",
-      "travel.title": "Travel costs (€)",
-      "unprovided_rent_amount.title": "Total Rent (€)",
-      "unprovided_rent_time_start.title": "Rent time begin",
-      "unprovided_rent_time_end.title": "Rent time end",
-      "usage_of_benefits_section.title": "Grant usage / Services purchased",
-      "water.title": "Water (€)"
-    }
-  },
-  "fi": {
-    "translation": {
-      "accounting_auditing_expenses.title": "Kirjanpito ja titiltarkastuspalvelut (€)",
-      "amount.title": "Summa (€)",
-      "benefit_usage_other_expenditure_section.title": "Avustuksen käyttö/Muut kulut eriteltyinä",
-      "budget_step.title": "Talous",
-      "cleaning_services.title": "Siivouspalvelut (€)",
-      "cost_explanation_expense.title": "Kuvaus menosta",
-      "cost_explanation_income.title": "Kuvaus tulosta",
-      "customer_sales.title": "Asiakasmaksut (€)",
-      "customer_space_usage_section.title": "Asiakasmaksutulojen käyttö (ja mahdolliset lahjoitukset)",
-      "donations.title": "Lahjoitukset (€)",
-      "economy_forecast_section.title": "Talousarvio",
-      "economy_forecast.description": " Iltapäivätoiminnan talousarvio sisältää tulot ja menot. Tulot eritellään haettavaan avustukseen, asiakasmaksuihin ja mahdollisiin lahjoituksiin. Menot eritellään avustuksen ja asiakasmaksujen käytön osalta erikseen. Mahdolliset lahjoitukset syötetään asiakasmaksujen menoihin. ",
-      "electricity.title": "Sähkö (€)",
-      "expenditure_section.title": "Menot",
-      "form_title": "Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille",
-      "heating.title": "Lämpö (€)",
-      "lease_agreement.title": "Vuokrasopimus (haettaessa vuokra-avustusta)",
-      "location_address.title": "Osoite",
-      "location_held_in_provided_space.title": "Toimintaa järjestetään kaupungin opetus-, sosiaali- tai nuorisotoimelta saaduissa maksuttomissa tiloissa",
-      "location_name.title": "Toimintapaikka",
-      "location_number_of_groups_special_needs.title": "Joista erityisoppilaiden pienryhmiä",
-      "location_number_of_groups.title": "Ryhmien lukumäärä",
-      "location_postal_code.title": "Postinumero",
-      "location_pupil_number_special_needs.title": "Joista erityisoppilaita",
-      "location_pupil_number.title": "Oppilaiden lukumäärä",
-      "location_staff.title": "Henkilöstön lukumäärä",
-      "locations_info_section.title": "Toimintapaikkojen perustiedot",
-      "locations_info.description": "Ilmoita tässä kohdassa eri osoitteissa toimivien toimintapaikkojen yhteystiedot ja ryhmärakennetiedot. Lomake laskee ilmoitetut tiedot yhteensä.",
-      "locations_info.title": "Toimintapaikka",
-      "management_office_expenses.title": "Hallinto- ja toimistokulut (€)",
-      "materials.title": "Aineet, tarvikkeet ja tavarat (€)",
-      "operational_materials.title": "Toiminnan materiaalit (€)",
-      "other_benefits_item.title": " Muut avustukset",
-      "other_benefits_section.title": "Muut avustukset",
-      "other_expenditures_section.title": "Muut menot",
-      "other_expenses.title": "Muut kulut",
-      "other_materials_acquired_section.title": "Muut aineet, tarvikkeet ja tavarat",
-      "other_materials_section.title": "Muut aineet, tarvikkeet ja tavarat",
-      "other_services_acquired_section.title": "Muut palveluiden ostot",
-      "personnel_side_costs.title": "Henkilöstösivukulut palkoista ja palkkioista (n. 30%) (€)",
-      "property_maintenance.title": "Kiinteistön huoltokustannukset (€)",
-      "rents.title": "Vuokrat (€)",
-      "salaries_and_bonuses.title": "Palkat ja palkkiot (€)",
-      "services.title": "Palveluiden ostot (€)",
-      "snacks.title": "Välipala (€)",
-      "staff_health_expenses.title": "Henkilökunnan työterveyspalvelut (€)",
-      "travel.title": "Matkakulut (€)",
-      "unprovided_rent_amount.title": "Euroa yhteensä lukuvuoden aikana (€)",
-      "unprovided_rent_time_start.title": "Vuokra-aika lukuvuoden aikana, alkaen",
-      "unprovided_rent_time_end.title": "Vuokra-aika lukuvuoden aikana, päättyen",
-      "usage_of_benefits_section.title": "Avustuksen käyttö/Palveluiden ostot eriteltyinä",
-      "water.title": "Vesi (€)"
-    }
-  },
-  "sv": {
-    "translation": {
-      "accounting_auditing_expenses.title": "Bokföring och revision (€)",
-      "amount.title": "Belopp (€)",
-      "benefit_usage_other_expenditure_section.title": "Användning av understödet/Specifikation av övriga kostnader",
-      "budget_step.title": "Budget",
-      "cleaning_services.title": "Städning (€)",
-      "cost_explanation_expense.title": "Kostnadsförklaring",
-      "cost_explanation_income.title": "Inkomstförklaring",
-      "customer_sales.title": "Användaravgifter (€)",
-      "customer_space_usage_section.title": "Användning av klientavgiftsinkomster (och eventuella donationer)",
-      "donations.title": "Donationer (€)",
-      "economy_forecast_section.title": "Budget",
-      "economy_forecast.description": "I eftermiddagsverksamhetens budget fastställs inkomster och utgifter. Inkomsterna specificeras för understödet som söks, klientavgifter och eventuella donationer. Utgifterna specificeras separat för användningen av understödet respektive klientavgifterna. Eventuella donationer bokförs som utgifter för klientavgifterna.",
-      "electricity.title": "Elektricitet (€)",
-      "expenditure_section.title": "Utgifter",
-      "form_title": "Fostran och utbildning, ansökan om verksamhetsbidrag för organisatörer av eftermiddagsverksamhet för skolbarn",
-      "heating.title": "Värme (€)",
-      "lease_agreement.title": "Hyresavtalet (om du söker hyresunderstöd",
-      "location_address.title": "Adress",
-      "location_held_in_provided_space.title": " Verksamheten ordnas i lokaler som hyresfritt ställs till förfogande av stadens utbildnings-, social- eller ungdomsväsende ",
-      "location_name.title": "Verksamhetsplats",
-      "location_number_of_groups_special_needs.title": "Varav små grupper för elever med särskilda behov",
-      "location_number_of_groups.title": "Antal grupper",
-      "location_postal_code.title": "Postnummer",
-      "location_pupil_number_special_needs.title": "Varav elever med särskilda utbildningsbehov",
-      "location_pupil_number.title": "Antal elever",
-      "location_staff.title": "Antal anställda",
-      "locations_info_section.title": "Verksamhetsställets uppgifter",
-      "locations_info.description": " Fyll i kontaktinformation, gruppstrukturer och uppgifter om eventuell hyra för respektive verksamhetsställe. Blanketten räknar ihop uppgifterna automatiskt. ",
-      "locations_info.title": "Verksamhetsställen",
-      "management_office_expenses.title": "Administrations- och kanslikostnader (€)",
-      "materials.title": "Material, förnödenheter och varor (€)",
-      "operational_materials.title": "Material för verksamheten (€)",
-      "other_benefits_item.title": " Andra understöd ",
-      "other_benefits_section.title": "Andra understöd",
-      "other_expenditures_section.title": "Andra kostnader",
-      "other_expenses.title": "Andra kostnader",
-      "other_materials_acquired_section.title": "Övriga material, förnödenheter och varor",
-      "other_materials_section.title": "Användning av understödet/Specifikation av material, förnödenheter och varor",
-      "other_services_acquired_section.title": "Köp av övriga tjänster",
-      "personnel_side_costs.title": "Lönebikostnader (€)",
-      "property_maintenance.title": "Fastighetsskötsel (€)",
-      "rents.title": "Hyror (€)",
-      "salaries_and_bonuses.title": "Löner och arvoden (€)",
-      "services.title": "Köp av tjänster (€)",
-      "snacks.title": "Mellanmål (€)",
-      "staff_health_expenses.title": "Företagshälsovård ",
-      "travel.title": "Resor (€)",
-      "usage_of_benefits_section.title": "Användning av understödet/Specifikation av köpta tjänster",
-      "water.title": "Vatten (€)"
+  "translations": {
+    "accounting_auditing_expenses.title": {
+      "en": "Accounting (€)",
+      "fi": "Kirjanpito ja titiltarkastuspalvelut (€)",
+      "sv": "Bokföring och revision (€)"
+    },
+    "amount.title": {
+      "en": "Amount (€)",
+      "fi": "Summa (€)",
+      "sv": "Belopp (€)"
+    },
+    "benefit_usage_other_expenditure_section.title": {
+      "en": "Other expenses",
+      "fi": "Avustuksen käyttö/Muut kulut eriteltyinä",
+      "sv": "Användning av understödet/Specifikation av övriga kostnader"
+    },
+    "budget_step.title": {
+      "en": "Budget",
+      "fi": "Talous",
+      "sv": "Budget"
+    },
+    "cleaning_services.title": {
+      "en": "Cleaning (€)",
+      "fi": "Siivouspalvelut (€)",
+      "sv": "Städning (€)"
+    },
+    "cost_explanation_expense.title": {
+      "en": "Cost explanation",
+      "fi": "Kuvaus menosta",
+      "sv": "Kostnadsförklaring"
+    },
+    "cost_explanation_income.title": {
+      "en": "Cost explanation",
+      "fi": "Kuvaus tulosta",
+      "sv": "Inkomstförklaring"
+    },
+    "customer_sales.title": {
+      "en": "Customer fees (€)",
+      "fi": "Asiakasmaksut (€)",
+      "sv": "Användaravgifter (€)"
+    },
+    "customer_space_usage_section.title": {
+      "en": "Use of customer fee income (and possible donations)",
+      "fi": "Asiakasmaksutulojen käyttö (ja mahdolliset lahjoitukset)",
+      "sv": "Användning av klientavgiftsinkomster (och eventuella donationer)"
+    },
+    "donations.title": {
+      "en": "Donations (€)",
+      "fi": "Lahjoitukset (€)",
+      "sv": "Donationer (€)"
+    },
+    "economy_forecast.description": {
+      "en": "Only apply for one grant type at a time with each application.",
+      "fi": " Iltapäivätoiminnan talousarvio sisältää tulot ja menot. Tulot eritellään haettavaan avustukseen, asiakasmaksuihin ja mahdollisiin lahjoituksiin. Menot eritellään avustuksen ja asiakasmaksujen käytön osalta erikseen. Mahdolliset lahjoitukset syötetään asiakasmaksujen menoihin. ",
+      "sv": "I eftermiddagsverksamhetens budget fastställs inkomster och utgifter. Inkomsterna specificeras för understödet som söks, klientavgifter och eventuella donationer. Utgifterna specificeras separat för användningen av understödet respektive klientavgifterna. Eventuella donationer bokförs som utgifter för klientavgifterna."
+    },
+    "economy_forecast_section.title": {
+      "en": "Budget",
+      "fi": "Talousarvio",
+      "sv": "Budget"
+    },
+    "electricity.title": {
+      "en": "Electricity (€)",
+      "fi": "Sähkö (€)",
+      "sv": "Elektricitet (€)"
+    },
+    "expenditure_section.title": {
+      "en": "Expenses",
+      "fi": "Menot",
+      "sv": "Utgifter"
+    },
+    "form_title": {
+      "en": "Education, grant application for organisers of afternoon activities for school children",
+      "fi": "Kasvatus ja koulutus, toiminta-avustushakemus koululaisten iltapäivätoiminnan järjestäjille",
+      "sv": "Fostran och utbildning, ansökan om verksamhetsbidrag för organisatörer av eftermiddagsverksamhet för skolbarn"
+    },
+    "heating.title": {
+      "en": "Heating (€)",
+      "fi": "Lämpö (€)",
+      "sv": "Värme (€)"
+    },
+    "lease_agreement.description": {
+      "en": "Attach the lease agreement if you are applying for a rent grant",
+      "fi": "Liitä vuokrasopimus, jos haet vuokra-avustusta",
+      "sv": "Bifoga hyresavtalet, om du söker hyresunderstöd"
+    },
+    "lease_agreement.title": {
+      "en": "Leasing agreement (when applying for rent grant)",
+      "fi": "Vuokrasopimus (haettaessa vuokra-avustusta)",
+      "sv": "Hyresavtalet (om du söker hyresunderstöd"
+    },
+    "location_address.title": {
+      "en": "Street Address",
+      "fi": "Osoite",
+      "sv": "Adress"
+    },
+    "location_held_in_provided_space.title": {
+      "en": "Is premise free",
+      "fi": "Toimintaa järjestetään kaupungin opetus-, sosiaali- tai nuorisotoimelta saaduissa maksuttomissa tiloissa",
+      "sv": " Verksamheten ordnas i lokaler som hyresfritt ställs till förfogande av stadens utbildnings-, social- eller ungdomsväsende "
+    },
+    "location_name.title": {
+      "en": "Location",
+      "fi": "Toimintapaikka",
+      "sv": "Verksamhetsplats"
+    },
+    "location_number_of_groups.title": {
+      "en": "Group Count",
+      "fi": "Ryhmien lukumäärä",
+      "sv": "Antal grupper"
+    },
+    "location_number_of_groups_special_needs.title": {
+      "en": "Special Groups",
+      "fi": "Joista erityisoppilaiden pienryhmiä",
+      "sv": "Varav små grupper för elever med särskilda behov"
+    },
+    "location_postal_code.title": {
+      "en": "Postal code",
+      "fi": "Postinumero",
+      "sv": "Postnummer"
+    },
+    "location_pupil_number.title": {
+      "en": "Student Count",
+      "fi": "Oppilaiden lukumäärä",
+      "sv": "Antal elever"
+    },
+    "location_pupil_number_special_needs.title": {
+      "en": "Special Students",
+      "fi": "Joista erityisoppilaita",
+      "sv": "Varav elever med särskilda utbildningsbehov"
+    },
+    "location_staff.title": {
+      "en": "Personnel Count",
+      "fi": "Henkilöstön lukumäärä",
+      "sv": "Antal anställda"
+    },
+    "locations_info.description": {
+      "en": "Please provide here the contact details and group structure information for the different locations. The form will calculate the reported information together.",
+      "fi": "Ilmoita tässä kohdassa eri osoitteissa toimivien toimintapaikkojen yhteystiedot ja ryhmärakennetiedot. Lomake laskee ilmoitetut tiedot yhteensä.",
+      "sv": " Fyll i kontaktinformation, gruppstrukturer och uppgifter om eventuell hyra för respektive verksamhetsställe. Blanketten räknar ihop uppgifterna automatiskt. "
+    },
+    "locations_info.title": {
+      "en": "Location",
+      "fi": "Toimintapaikka",
+      "sv": "Verksamhetsställen"
+    },
+    "locations_info_section.title": {
+      "en": "Basic information about the locations",
+      "fi": "Toimintapaikkojen perustiedot",
+      "sv": "Verksamhetsställets uppgifter"
+    },
+    "management_office_expenses.title": {
+      "en": "Admin (€)",
+      "fi": "Hallinto- ja toimistokulut (€)",
+      "sv": "Administrations- och kanslikostnader (€)"
+    },
+    "materials.title": {
+      "en": "Materials (€)",
+      "fi": "Aineet, tarvikkeet ja tavarat (€)",
+      "sv": "Material, förnödenheter och varor (€)"
+    },
+    "operational_materials.title": {
+      "en": "Supplies (€)",
+      "fi": "Toiminnan materiaalit (€)",
+      "sv": "Material för verksamheten (€)"
+    },
+    "other_benefit_description.title": {
+      "en": "Income explanation"
+    },
+    "other_benefits_item.title": {
+      "en": "Other benefits",
+      "fi": " Muut avustukset",
+      "sv": " Andra understöd "
+    },
+    "other_benefits_section.title": {
+      "en": "Other benefits",
+      "fi": "Muut avustukset",
+      "sv": "Andra understöd"
+    },
+    "other_expenditures_section.title": {
+      "en": "Other expenses",
+      "fi": "Muut menot",
+      "sv": "Andra kostnader"
+    },
+    "other_expenses.title": {
+      "en": "Other expenses",
+      "fi": "Muut kulut",
+      "sv": "Andra kostnader"
+    },
+    "other_materials_acquired_section.title": {
+      "en": "Other acquired materials",
+      "fi": "Muut aineet, tarvikkeet ja tavarat",
+      "sv": "Övriga material, förnödenheter och varor"
+    },
+    "other_materials_section.title": {
+      "en": "Other materials",
+      "fi": "Muut aineet, tarvikkeet ja tavarat",
+      "sv": "Användning av understödet/Specifikation av material, förnödenheter och varor"
+    },
+    "other_services_acquired_section.title": {
+      "en": "Other acquired services",
+      "fi": "Muut palveluiden ostot",
+      "sv": "Köp av övriga tjänster"
+    },
+    "personnel_side_costs.title": {
+      "en": "Personnel costs from salaries and fees (approx. 30%) (€)",
+      "fi": "Henkilöstösivukulut palkoista ja palkkioista (n. 30%) (€)",
+      "sv": "Lönebikostnader (€)"
+    },
+    "property_maintenance.title": {
+      "en": "Premises Service (€)",
+      "fi": "Kiinteistön huoltokustannukset (€)",
+      "sv": "Fastighetsskötsel (€)"
+    },
+    "rents.title": {
+      "en": "Rents (€)",
+      "fi": "Vuokrat (€)",
+      "sv": "Hyror (€)"
+    },
+    "salaries_and_bonuses.title": {
+      "en": "Salaries (€)",
+      "fi": "Palkat ja palkkiot (€)",
+      "sv": "Löner och arvoden (€)"
+    },
+    "services.title": {
+      "en": "Services (€)",
+      "fi": "Palveluiden ostot (€)",
+      "sv": "Köp av tjänster (€)"
+    },
+    "snacks.title": {
+      "en": "Snacks (€)",
+      "fi": "Välipala (€)",
+      "sv": "Mellanmål (€)"
+    },
+    "staff_health_expenses.title": {
+      "en": "Health (€)",
+      "fi": "Henkilökunnan työterveyspalvelut (€)",
+      "sv": "Företagshälsovård "
+    },
+    "travel.title": {
+      "en": "Travel costs (€)",
+      "fi": "Matkakulut (€)",
+      "sv": "Resor (€)"
+    },
+    "unprovided_rent_amount.title": {
+      "en": "Total Rent (€)",
+      "fi": "Euroa yhteensä lukuvuoden aikana (€)"
+    },
+    "unprovided_rent_time_end.title": {
+      "en": "Rent time end",
+      "fi": "Vuokra-aika lukuvuoden aikana, päättyen"
+    },
+    "unprovided_rent_time_start.title": {
+      "en": "Rent time begin",
+      "fi": "Vuokra-aika lukuvuoden aikana, alkaen"
+    },
+    "usage_of_benefits_section.title": {
+      "en": "Grant usage / Services purchased",
+      "fi": "Avustuksen käyttö/Palveluiden ostot eriteltyinä",
+      "sv": "Användning av understödet/Specifikation av köpta tjänster"
+    },
+    "water.title": {
+      "en": "Water (€)",
+      "fi": "Vesi (€)",
+      "sv": "Vatten (€)"
     }
   }
 }

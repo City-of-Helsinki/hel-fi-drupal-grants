@@ -4,10 +4,12 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 import type {
   ArrayFieldTemplateProps,
+  FieldTemplateProps,
   IconButtonProps,
   ObjectFieldTemplatePropertyType,
   ObjectFieldTemplateProps,
 } from '@rjsf/utils';
+import { getDefaultRegistry } from '@rjsf/core';
 import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus } from 'hds-react';
 import type { ReactNode } from 'react';
 import { useAtomValue } from 'jotai';
@@ -119,10 +121,16 @@ const PreviewSection = ({
 }) => {
   const printableName = uiSchema?.['ui:options']?.printableName;
 
+  const visibleProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
+
+  if (!visibleProperties.length) {
+    return null;
+  }
+
   return (
     <section className='hdbt-form--section grants-form--preview-section'>
       <h4 className='hdbt-form--section__title'>{printableName || title}</h4>
-      <div className='hdbt-form--section__content'>{properties.map((field) => field.content)}</div>
+      <div className='hdbt-form--section__content'>{visibleProperties.map((field) => field.content)}</div>
     </section>
   );
 };
@@ -134,7 +142,8 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (idSchema.$id === 'root') {
-    return <div className='form-wrapper'>{properties.map((field) => field.content)}</div>;
+    const className = shouldRenderPreview ? 'hdbt-form__preview form-wrapper' : 'form-wrapper';
+    return <div className={className}>{properties.map((field) => field.content)}</div>;
   }
 
   if (_step && shouldRenderPreview) {
@@ -223,13 +232,15 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
           ) : (
             <span className='grants-form--preview-section__label'>{title}</span>
           ))}
-        {properties.map((field) => {
-          if (field.content.props.uiSchema?.['ui:help']) {
-            field.content.props.uiSchema['ui:help'] = '';
-          }
+        {properties
+          .filter((p) => !p.hidden)
+          .map((field) => {
+            if (field.content.props.uiSchema?.['ui:help']) {
+              field.content.props.uiSchema['ui:help'] = '';
+            }
 
-          return field.content;
-        })}
+            return field.content;
+          })}
       </>
     );
   }
@@ -245,6 +256,28 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
       {properties.map((field) => field.content)}
     </Fieldset>
   );
+};
+
+const {
+  templates: { FieldTemplate: DefaultFieldTemplate },
+} = getDefaultRegistry();
+
+export const FieldTemplate = (props: FieldTemplateProps) => {
+  const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const { schema } = props;
+
+  // Don't render wrapping divs around preview items.
+  if (shouldRenderPreview && (schema as any)._step) {
+    return <>{props.children}</>;
+  }
+
+  // Don't render empty sections in preview.
+  if (shouldRenderPreview && (schema as any)._isSection) {
+    const allNull = Object.values((schema.properties || {}) as Record<string, any>).every((p) => p.type === 'null');
+    if (allNull) return null;
+  }
+
+  return <DefaultFieldTemplate {...props} />;
 };
 
 export const ButtonTemplate = ({ icon, children, registry, uiSchema, ...props }: IconButtonProps) => (

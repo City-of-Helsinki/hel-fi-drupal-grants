@@ -1,11 +1,9 @@
 {
-  "common": {
-    "submit": {
-      "labels": {
-        "en": "Submit",
-        "fi": "Lähetä",
-        "sv": "Skicka"
-      }
+  "translations": {
+    "submit.label": {
+      "en": "Submit",
+      "fi": "Lähetä",
+      "sv": "Skicka"
     }
   }
 }

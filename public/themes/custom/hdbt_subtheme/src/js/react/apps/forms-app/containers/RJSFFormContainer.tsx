@@ -31,7 +31,7 @@ import {
   TextArea,
   TextInput,
 } from '../components/Input';
-import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
+import { ArrayFieldTemplate, FieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
 import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
 import { FormActions } from '../components/FormActions/FormActions';
@@ -49,7 +49,6 @@ import { InvalidSchemaError } from '../errors/InvalidSchemaError';
 import { isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
-import { SubmittedForm } from '../components/SubmittedForm';
 import { SubventionSum } from '../components/Fields/SubventionSum';
 import { SubventionTable } from '../components/Fields/SubventionTable';
 import { Terms } from '../components/Terms';
@@ -184,13 +183,17 @@ export const RJSFFormContainer = ({
    * @return {object} - Form errors
    */
   const customValidate: CustomValidator = (formData, errors, _uiSchema) => {
-    const newErrors = [];
+    const newErrors: RJSFValidationError[] = [];
 
     subventionFields.forEach((field) => {
-      const values = field.split('.').reduce((acc, curr) => acc && acc[curr], formData);
-      const _field = field.split('.').reduce((acc, curr) => acc && acc[curr], errors);
+      const values = field.split('.').reduce((acc: any, curr) => acc && acc[curr], formData) as
+        | Record<string, [unknown, { value: unknown }]>
+        | undefined;
+      const _field = field.split('.').reduce((acc: any, curr) => acc && acc[curr], errors) as
+        | { addError: (msg: string) => void }
+        | undefined;
       const hasValues = values
-        ? Object.entries(values).reduce((acc, [key, curr]) => acc || Number(curr[1].value) > 0, false)
+        ? Object.entries(values).reduce((acc, [, curr]) => acc || Number(curr[1].value) > 0, false)
         : false;
 
       if (_field && !hasValues) {
@@ -199,6 +202,7 @@ export const RJSFFormContainer = ({
           property: `.${field}`,
           message: t('subvention.greater_than_zero'),
           schemaPath: `.${field}`,
+          stack: `.${field} ${t('subvention.greater_than_zero')}`,
         });
       }
     });
@@ -219,11 +223,7 @@ export const RJSFFormContainer = ({
       )}
       <div className='form-wrapper'>
         {!isDraft() && <FormSummary formData={readFormData()} schema={schema} />}
-        {readOnly ? (
-          <SubmittedForm formData={readFormData()} schema={schema} />
-        ) : (
-          <StaticStepsContainer formDataAtom={formDataAtom} schema={schema} />
-        )}
+        {!readOnly && <StaticStepsContainer formDataAtom={formDataAtom} schema={schema} />}
         <Form
           className='grants-form'
           customValidate={customValidate}
@@ -266,6 +266,7 @@ export const RJSFFormContainer = ({
               MoveUpButton: () => null,
             },
             FieldErrorTemplate: () => null,
+            FieldTemplate,
             ObjectFieldTemplate,
           }}
           transformErrors={transformErrors}

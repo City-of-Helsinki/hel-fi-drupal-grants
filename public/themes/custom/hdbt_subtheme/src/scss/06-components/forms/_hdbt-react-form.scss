@@ -69,3 +69,11 @@
 .hdbt-react-form__submission-info_top {
   padding-block-end: $spacing;
 }
+
+.hdbt-form__preview {
+  margin-block-end: $spacing-quadruple;
+
+  .form-group {
+    width: 100%;
+  }
+}
