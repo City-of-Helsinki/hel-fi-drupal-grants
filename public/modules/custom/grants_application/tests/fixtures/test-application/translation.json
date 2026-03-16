@@ -1,17 +1,9 @@
 {
-  "en": {
-    "translation": {
-      "form_title": "Test 123 application"
-    }
-  },
-  "fi": {
-    "translation": {
-      "form_title": "Testi 123 hakemus"
-    }
-  },
-  "sv": {
-    "translation": {
-      "form_title": "Test 123 ansöknings"
+  "translations": {
+    "form_title": {
+      "en": "Test 123 application",
+      "fi": "Testi 123 hakemus",
+      "sv": "Test 123 ansöknings"
     }
   }
 }

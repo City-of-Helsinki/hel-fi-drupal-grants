@@ -58,7 +58,7 @@ final class FormSettings {
    */
   private function convertToI18nextFormat(array $translations): array {
     $result = [];
-    foreach ($translations['translations'] as $key => $langs) {
+    foreach ($translations['translations'] ?? [] as $key => $langs) {
       foreach ($langs as $lang => $value) {
         $result[$lang]['translation'][$key] = $value;
       }
