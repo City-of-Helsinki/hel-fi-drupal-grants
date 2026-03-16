@@ -646,9 +646,9 @@
       "sv": "I redovisningen ska det kortfattat anges hur det beviljade understödet har använts. Understödstagaren ska ordna sin bokföring så att användningen av understödet kan följas där. Om samfundet till exempel har fått hyresunderstöd ska det av resultaträkningen i bokslutet framgå både intäkter och utgifter vad gäller understödet. Mer information om användningen av understödet kan också skrivas i en separat bilaga som kan lämnas som Redovisning-bilaga."
     },
     "purpose.description": {
-      "en": "Describe the project for which the grant is being applied. Also explain what you aim to achieve with the grant.",
-      "fi": "Kerro, millaiseen hankkeeseen avustusta haetaan. Kerro myös, mitä avustuksella on tavoitteena saada aikaiseksi.",
-      "sv": "Beskriv projektet som understödet söks för. Berätta också vad ni vill uppnå med understödet."
+      "en": "Indicate the purpose for which the grant is applied for. If necessary, specify the different uses. Also tell us what is intended to be achieved with the grant and what goals are associated with the activities to be supported.",
+      "fi": "Kerro mitä tarkoitusta varten avustusta haetaan, erittele tarvittaessa eri käyttökohteet. Kerro myös mitä avustuksella on tarkoitus saada aikaiseksi ja millaisia tavoitteita avustettavaan toimintaan liittyy.",
+      "sv": "Ange för vilket ändamål understödet ansöks och vid behov specificera de olika ändamålen. Ange också vad understödet är avsett för och vilka mål som är relaterade till den understödda verksamheten."
     },
     "purpose.title": {
       "en": "Brief description of the purpose(s) of the grant(s) applied for",
@@ -699,6 +699,11 @@
       "en": "General grant",
       "fi": "Yleisavustus",
       "sv": "Allmänt understöd"
+    },
+    "subventions.8.title": {
+      "en": "Interests and installments",
+      "fi": "Korot ja lyhennykset",
+      "sv": "Räntor och amorteringar"
     },
     "subventions.9.title": {
       "en": "Other",

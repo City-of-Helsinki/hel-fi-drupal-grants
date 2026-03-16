@@ -1,0 +1,256 @@
+{
+  "definitions": {
+    "_other_compensation_item": {
+      "type": "object",
+      "properties": {
+        "other_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "other_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "other_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "other_compensation_amount": {
+          "title": "other_compensation_amount.title",
+          "type": "integer"
+        },
+        "other_compensation_description": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "other_compensation_issuer",
+        "other_compensation_issuer_name",
+        "other_compensation_issuer_year",
+        "other_compensation_amount",
+        "other_compensation_description"
+      ]
+    },
+    "_other_applied_compensation_item": {
+      "type": "object",
+      "properties": {
+        "other_applied_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "other_applied_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "other_applied_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "other_applied_compensation_amount": {
+          "title": "other_applied_compensation_amount.title",
+          "type": "integer"
+        },
+        "other_applied_compensation_description": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "other_applied_compensation_issuer",
+        "other_applied_compensation_issuer_name",
+        "other_applied_compensation_issuer_year",
+        "other_applied_compensation_amount",
+        "other_applied_compensation_description"
+      ]
+    },
+    "grant_info_step": {
+      "required": [
+        "acting_year_section",
+        "purpose_section",
+        "other_compensations_section",
+        "other_applied_compensations_section"
+      ],
+      "properties": {
+        "acting_year_section": {
+          "title": "acting_year_section.title",
+          "type": "object",
+          "properties": {
+            "acting_year": {
+              "title": "acting_year.title",
+              "type": "string",
+              "enum": [
+                "2026"
+              ]
+            }
+          },
+          "required": ["acting_year"]
+        },
+        "subventions_section": {
+          "title": "subventions_section.title",
+          "type": "object",
+          "properties": {
+            "subventions": {
+              "title": "subventions.title",
+              "options": [
+                {
+                  "id": 1,
+                  "label": "subventions.1.title"
+                },
+                {
+                  "id": 5,
+                  "label": "subventions.5.title"
+                },
+                {
+                  "id": 8,
+                  "label": "subventions.8.title"
+                },
+                {
+                  "id": 9,
+                  "label": "subventions.9.title"
+                }
+              ]
+            }
+          }
+        },
+        "purpose_section": {
+          "title": "purpose_section.title",
+          "type": "object",
+          "properties": {
+            "purpose": {
+              "title": "purpose.title",
+              "type": "string"
+            }
+          },
+          "required": ["purpose"]
+        },
+        "other_compensations_section": {
+          "title": "other_compensations_section.title",
+          "description": "other_compensations_section.description",
+          "type": "object",
+          "properties": {
+            "have_received_other_compensations": {
+              "title": "have_received_other_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": ["have_received_other_compensations"],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_received_other_compensations": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "other_applied_compensations_section": {
+          "title": "other_applied_compensations_section.title",
+          "description": "other_applied_compensations_section.description",
+          "type": "object",
+          "properties": {
+            "have_applied_other_compensations": {
+              "title": "have_applied_other_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": ["have_applied_other_compensations"],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_applied_other_compensations": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_applied_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/_other_applied_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_other_applied_compensation_item"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "city_benefits_loans_section": {
+          "title": "city_benefits_loans_section.title",
+          "description": "city_benefits_loans_section.description",
+          "type": "object",
+          "properties": {
+            "city_benefits_loans": {
+              "title": "city_benefits_loans.title",
+              "type": "string"
+            }
+          }
+        },
+        "city_premises_benefits_section": {
+          "title": "city_premises_benefits_section.title",
+          "description": "city_premises_benefits_section.description",
+          "type": "object",
+          "properties": {
+            "city_premises_benefits": {
+              "title": "city_premises_benefits.title",
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "",
+  "title": "form_title",
+  "type": "object",
+  "properties": {
+    "grant_info_step": {
+      "title": "grant_info_step.title",
+      "type": "object",
+      "$ref": "#/definitions/grant_info_step"
+    }
+  }
+}
