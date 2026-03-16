@@ -157,8 +157,7 @@
           "properties": {
             "purpose": {
               "title": "purpose.title",
-              "type": "string",
-              "description": "purpose.description"
+              "type": "string"
             }
           },
           "required": ["purpose"]
@@ -432,8 +431,7 @@
           "properties": {
             "additional_information": {
               "title": "additional_information.title",
-              "type": "string",
-              "description": "additional_information.description"
+              "type": "string"
             }
           }
         },
