@@ -8,6 +8,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_mandate\GrantsMandateRedirectService;
 use Drupal\grants_mandate\GrantsMandateService;
@@ -110,7 +111,7 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
       $roles = $this->grantsMandateService->getRoles();
     }
     catch (\Exception $e) {
-      $this->logger->error('Authentication failed: Get roles failed');
+      Error::logException($this->logger, $e, 'Authentication failed: Get roles failed');
       $this->messenger()->addMessage($this->t('Mandate process was interrupted or there was an error. Please try again.'));
       $redirect = new RedirectResponse(Url::fromRoute('grants_profile.edit')->toString());
       return $this->redirectService->getRedirect($redirect);
