@@ -374,6 +374,244 @@
           }
         }
       }
+    },
+    "attachments_step": {
+      "type": "object",
+      "properties": {
+        "additional_information_section": {
+          "title": "additional_information_section.title",
+          "type": "object",
+          "properties": {
+            "additional_information": {
+              "title": "additional_information.title",
+              "type": "string"
+            }
+          }
+        },
+        "attachments_section": {
+          "title": "attachments_section.title",
+          "type": "object",
+          "description": "attachments_section.description",
+          "properties": {
+            "required_attachments_help": {
+              "title": "required_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "required_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "multiple_attachments_help": {
+              "title": "multiple_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "multiple_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "formerly_provided_attachments_help": {
+              "title": "formerly_provided_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "formerly_provided_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "cant_view_after_help": {
+              "title": "cant_view_after_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "cant_view_after_help.value",
+                  "type": "null"
+                },
+                {
+                  "title": "cant_view_after_help.value_2",
+                  "type": "null"
+                }
+              ]
+            },
+            "community_rules": {
+              "title": "community_rules.title",
+              "type": "object",
+              "properties": {
+                "community_rules_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "confirmed_financial_statements": {
+              "title": "confirmed_financial_statements.title",
+              "type": "object",
+              "properties": {
+                "confirmed_financial_statements_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "confirmed_annual_report": {
+              "title": "confirmed_annual_report.title",
+              "type": "object",
+              "properties": {
+                "confirmed_annual_report_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "confirmed_audit_report": {
+              "title": "confirmed_audit_report.title",
+              "type": "object",
+              "properties": {
+                "confirmed_audit_report_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "minutes_of_the_annual_meeting": {
+              "title": "minutes_of_the_annual_meeting.title",
+              "type": "object",
+              "properties": {
+                "minutes_of_the_annual_meeting_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "action_plan": {
+              "title": "action_plan.title",
+              "type": "object",
+              "properties": {
+                "action_plan_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "budget": {
+              "title": "budget.title",
+              "type": "object",
+              "properties": {
+                "budget_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "further_clarification": {
+              "title": "further_clarification.title",
+              "type": "string"
+            },
+            "other_attachment_fieldset": {
+              "title": "other_attachment_fieldset.title",
+              "type": "object",
+              "properties": {
+                "other_attachment_fieldset_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "description": "",
@@ -388,6 +626,11 @@
     "community_activity_step": {
       "$ref": "#/definitions/community_activity_step",
       "title": "community_activity_step.title"
+    },
+    "attachments_step": {
+      "$ref": "#/definitions/attachments_step",
+      "title": "attachments_step.title",
+      "type": "object"
     }
   }
 }
