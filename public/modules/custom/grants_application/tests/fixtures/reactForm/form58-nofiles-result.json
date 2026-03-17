@@ -204,8 +204,7 @@
           {
             "ID": "amount",
             "value": "0",
-            "valueType": "float",
-            "label": null
+            "valueType": "float"
           }
         ]
       ]
@@ -216,14 +215,12 @@
         {
           "ID": "otherCompensationsTotal",
           "value": "0",
-          "valueType": "double",
-          "label": null
+          "valueType": "double"
         },
         {
           "ID": "otherAppliedCompensationsTotal",
           "value": "0",
-          "valueType": "double",
-          "label": null
+          "valueType": "double"
         }
       ]
     },
