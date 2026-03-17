@@ -40,8 +40,30 @@ final class FormSettings {
       'settings' => $this->settings,
       'schema' => $this->schema,
       'ui_schema' => $this->uiSchema,
-      'translations' => $this->translation,
+      'translations' => $this->convertToI18nextFormat($this->translation),
     ];
+  }
+
+  /**
+   * Convert translations from key-first format to i18next resource format.
+   *
+   * Input:  ['translations' => ['key' => ['en' => 'val', 'fi' => 'val']]]
+   * Output: ['en' => ['translation' => ['key' => 'val']], 'fi' => [...]]
+   *
+   * @param array $translations
+   *   Translations in key-first format.
+   *
+   * @return array
+   *   Translations in i18next resource format.
+   */
+  private function convertToI18nextFormat(array $translations): array {
+    $result = [];
+    foreach ($translations['translations'] ?? [] as $key => $langs) {
+      foreach ($langs as $lang => $value) {
+        $result[$lang]['translation'][$key] = $value;
+      }
+    }
+    return $result;
   }
 
   /**

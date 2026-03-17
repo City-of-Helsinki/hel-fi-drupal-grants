@@ -66,7 +66,7 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
       return;
     }
 
-    const numericValue = value === '' ? '0' : value;
+    const numericValue = value;
     const data = formData && Array.isArray(formData) ? [...formData] : [];
 
     const newValue = [
@@ -123,8 +123,7 @@ export const SubventionTable = ({ idSchema, formData, onChange, rawErrors, requi
                 onWheel={(event: WheelEvent<HTMLInputElement>) => {
                   event.currentTarget.blur();
                 }}
-                required={required}
-                value={Number(keyedData[itemId]) || 0}
+                value={keyedData[itemId] ? Number(keyedData[itemId]) : ''}
                 unit='€'
               />
             );

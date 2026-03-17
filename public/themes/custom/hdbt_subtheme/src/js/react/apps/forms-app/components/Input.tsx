@@ -160,6 +160,7 @@ export const TextArea = ({
   required,
   value,
   uiSchema,
+  schema,
 }: WidgetProps) => {
   const readGrantsProfile = useAtomCallback(useCallback((get) => get(getProfileAtom), []));
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
@@ -186,18 +187,21 @@ export const TextArea = ({
   }
 
   return (
-    <HDSTextArea
-      errorText={formatErrors(rawErrors)}
-      disabled={readonly}
-      helperText={`${value?.length || 0}/${maxLength}`}
-      hideLabel={false}
-      invalid={Boolean(rawErrors?.length)}
-      onBlur={() => null}
-      onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
-      onFocus={() => null}
-      tooltip={getTooltip(uiSchema)}
-      {...{ id, label, maxLength, name, required, value }}
-    />
+    <>
+      {schema.description && <div className='hdbt-form--description'>{schema.description}</div>}
+      <HDSTextArea
+        disabled={readonly}
+        errorText={formatErrors(rawErrors)}
+        helperText={`${value?.length || 0}/${maxLength}`}
+        hideLabel={false}
+        invalid={Boolean(rawErrors?.length)}
+        onBlur={() => null}
+        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
+        onFocus={() => null}
+        tooltip={getTooltip(uiSchema)}
+        {...{ id, label, maxLength, name, required, value }}
+      />
+    </>
   );
 };
 
@@ -216,6 +220,7 @@ export const SelectWidget = ({
   value,
   uiSchema,
 }: SelectWidgetProps) => {
+  const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
 
   if (shouldRenderPreview) {
@@ -249,7 +254,7 @@ export const SelectWidget = ({
         assistive,
         error: rawErrors ? formatErrors(rawErrors) : undefined,
         label: label ?? '',
-        placeholder: '- Valitse -',
+        placeholder: t('select.placeholder'),
       }}
       theme={defaultSelectTheme}
       tooltip={getTooltip(uiSchema)}

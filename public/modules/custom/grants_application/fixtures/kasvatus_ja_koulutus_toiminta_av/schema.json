@@ -362,13 +362,9 @@
       "type": "object",
       "properties": {
         "economy_forecast_section": {
-          "type": "object",
-          "properties": {
-            "economy_forecast": {
-              "description": "economy_forecast.description",
-              "type": "null"
-            }
-          }
+          "title": "economy_forecast_section.title",
+          "description": "economy_forecast.description",
+          "type": "object"
         },
         "income_section": {
           "title": "income_section.title",

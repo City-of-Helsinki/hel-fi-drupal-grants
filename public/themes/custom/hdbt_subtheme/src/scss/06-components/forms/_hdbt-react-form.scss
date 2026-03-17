@@ -73,3 +73,11 @@
 .empty-preview-notification {
   margin-block-start: $spacing-double;
 }
+
+.hdbt-form__preview {
+  margin-block-end: $spacing-quadruple;
+
+  .form-group {
+    width: 100%;
+  }
+}
