@@ -288,7 +288,7 @@ class JsonMapper {
   private function getNestedArrayValue(array $sourceData, array $indexes): array|string|null {
     // When we reach the end of source path, get the value.
     if (count($indexes) === 1) {
-      $value = $sourceData[$indexes[0]];
+      $value = $sourceData[$indexes[0]] ?? NULL;
       if (is_null($value)) {
         return "";
       }

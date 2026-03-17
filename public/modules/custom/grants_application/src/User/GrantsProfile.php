@@ -97,8 +97,8 @@ class GrantsProfile {
    * email: string,
    * phone: string.
    *
-   * @param string $uuid
-   *   The uuid.
+   * @param array $selected_official
+   *   Array of selected officials.
    *
    * @return array
    *   The official-array.
