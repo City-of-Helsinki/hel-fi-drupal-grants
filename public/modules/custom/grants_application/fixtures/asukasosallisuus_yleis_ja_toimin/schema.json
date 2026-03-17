@@ -309,6 +309,71 @@
           ]
         }
       }
+    },
+    "community_activity_step": {
+      "type": "object",
+      "properties": {
+        "community_activity_section": {
+          "title": "community_activity_section.title",
+          "type": "object",
+          "properties": {
+            "community_activity_description": {
+              "title": "community_activity.title",
+              "type": "string"
+            },
+            "community_practices_business": {
+              "title": "community_practices_business.title",
+              "enum": [
+                true,
+                false
+              ]
+            }
+          },
+          "required": ["community_practices_business"]
+        },
+        "community_fees_section": {
+          "title": "community_fees_section.title",
+          "type": "object",
+          "properties": {
+            "fee_person": {
+              "title": "fee_person.title",
+              "type": "integer"
+            },
+            "fee_community": {
+              "title": "fee_community.title",
+              "type": "integer"
+            }
+          }
+        },
+        "community_members_section": {
+          "title": "community_members_section.title",
+          "type": "object",
+          "properties": {
+            "members_fieldset": {
+              "type": "object",
+              "title": "members_fieldset.legend",
+              "properties": {
+                "members_applicant_person_global": {
+                  "title": "members_applicant_person_global.title",
+                  "type": "integer"
+                },
+                "members_applicant_person_local": {
+                  "title": "members_applicant_person_local.title",
+                  "type": "integer"
+                },
+                "members_applicant_community_global": {
+                  "title": "members_applicant_community_global.title",
+                  "type": "integer"
+                },
+                "members_applicant_community_local": {
+                  "title": "members_applicant_community_local.title",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "description": "",
@@ -319,6 +384,10 @@
       "title": "grant_info_step.title",
       "type": "object",
       "$ref": "#/definitions/grant_info_step"
+    },
+    "community_activity_step": {
+      "$ref": "#/definitions/community_activity_step",
+      "title": "community_activity_step.title"
     }
   }
 }
