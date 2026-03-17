@@ -274,9 +274,15 @@ final class JsonMapperService {
     $grantsProfile = $this->userInformationService->getGrantsProfileContent();
 
     foreach ($community_official_uuids as $community_official_uuid) {
-      $community_official = $grantsProfile->getCommunityOfficialByUuid($community_official_uuid);
+      try {
+        $community_official = $grantsProfile->getCommunityOfficialByUuid($community_official_uuid);
+      }
+      catch (\Exception $e) {
+        continue;
+      }
       if ($community_official) {
-        $community_officials[]=$community_official;
+        unset($community_official['official_id']);
+        $community_officials[] = $community_official;
       }
     }
 
