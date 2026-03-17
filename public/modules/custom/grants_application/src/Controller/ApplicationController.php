@@ -127,26 +127,26 @@ final class ApplicationController extends ControllerBase {
 
     $submission = $this->getApplicationSubmission($application_number);
     // Check the application status, if it's still editable.
-    // if ($submission && !$submission->isDraft()) {
-    //   try {
-    //     $document = $this->helfiAtvService->getDocument($application_number);
+    if ($submission && !$submission->isDraft()) {
+      try {
+        $document = $this->helfiAtvService->getDocument($application_number);
 
-    //     // @todo Should not use grants handler service to figure out is submission is editable.
-    //     // It works but the implementation should live under this module.
-    //     if (!$this->applicationStatusService->isSubmissionEditable(NULL, $document->getStatus())) {
-    //       $this->messenger()
-    //         ->addError($this->t('The application is being processed. The application cannot be edited or submitted.'));
+        // @todo Should not use grants handler service to figure out is submission is editable.
+        // It works but the implementation should live under this module.
+        if (!$this->applicationStatusService->isSubmissionEditable(NULL, $document->getStatus())) {
+          $this->messenger()
+            ->addError($this->t('The application is being processed. The application cannot be edited or submitted.'));
 
-    //       return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
-    //     }
-    //   }
-    //   catch (\Throwable $e) {
-    //     $this->messenger()
-    //       ->addError($this->t('Your request was not fulfilled due to network error.', [], ['context' => 'grants_handler']));
+          return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
+        }
+      }
+      catch (\Throwable $e) {
+        $this->messenger()
+          ->addError($this->t('Your request was not fulfilled due to network error.', [], ['context' => 'grants_handler']));
 
-    //     return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
-    //   }
-    // }
+        return new RedirectResponse($this->getRedirectBackUrl($application_number)->toString());
+      }
+    }
 
     // Handle content locking.
     if ($submission && $this->contentLock->isLockable($submission)) {
