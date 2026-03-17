@@ -25,7 +25,7 @@ final class FormTest extends UnitTestCase {
     $forms = [
       ['id' => 'ID58', 'form_identifier' => 'liikunta_suunnistuskartta_avustu', 'form_data' => 'form58-nofiles-formdata', 'result' => 'form58-nofiles-result'],
       // ['id' => 'ID58', 'form_identifier' => 'liikunta_suunnistuskartta_avustu', 'form_data' => 'form58-file-formdata', 'result' => 'form58-file-result'],
-      ['id' => 'ID70', 'form_identifier' => 'promoting_safer_club_activities', 'form_data' => 'form70-safer-nofiles-formdata', 'result' => 'form70-safer-nofiles-result'],
+      ['id' => 'ID70', 'form_identifier' => 'promoting_safer_club_activities', 'form_data' => 'form70-safer-nofiles-formdata', 'result' => 'form70-safer-nofiles-result', 'settings' => 'form70-settings'],
     ];
     // phpcs:enable
 
@@ -35,6 +35,10 @@ final class FormTest extends UnitTestCase {
       $mapping = array_merge($commonMappings, $realMapping);
 
       $dataSources = $this->getAllDatasources($info['form_data']);
+      if (isset($info['settings'])) {
+        $settings = json_decode(file_get_contents(__DIR__ . "/../../fixtures/reactForm/{$info['settings']}.json"), TRUE);
+        $dataSources['form_settings']['settings'] = $settings;
+      }
 
       $mapper = new JsonMapper();
       $mapper->setMappings($mapping);

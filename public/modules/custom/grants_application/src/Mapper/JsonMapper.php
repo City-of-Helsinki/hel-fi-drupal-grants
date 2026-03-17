@@ -133,6 +133,10 @@ class JsonMapper {
       $value = $value ? 'true' : 'false';
     }
 
+    if (key_exists('label', $definition['data']) && $definition['data']['label'] == NULL) {
+      unset($definition['data']['label']);
+    }
+
     $this->setTargetValue($data, $targetPath, $value, $definition);
   }
 
