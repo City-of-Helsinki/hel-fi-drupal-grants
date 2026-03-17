@@ -269,15 +269,6 @@
     }
   },
 
-  "compensation.additionalInformation": {
-    "datasource": "form_data",
-    "source": "attachments_step.additional_information_section.additional_information",
-    "mapping_type": "simple",
-    "data": {
-      "additionalInformation": ""
-    }
-  },
-
   "attachmentsInfo.attachmentsArray.0": {
     "datasource": "form_data",
     "source": "attachments_step.attachments_section.confirmed_financial_statements.confirmed_financial_statements_file",

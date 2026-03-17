@@ -103,13 +103,13 @@ class GrantsProfile {
    * @return array
    *   The official-array.
    */
-  public function getCommunityOfficialByUuid(?string $uuid): array|null {
-    if (empty($uuid)) {
+  public function getCommunityOfficialByUuid(?array $selected_official): array|null {
+    if (empty($selected_official)) {
       return NULL;
     }
 
     foreach ($this->grantsProfileData['officials'] as $official) {
-      if ($official['official_id'] === $uuid) {
+      if ($official['official_id'] === $selected_official['official']) {
         return $official;
       }
     }
