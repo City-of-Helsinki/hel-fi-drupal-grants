@@ -1,0 +1,14 @@
+{
+  "title": "Asukasosallisuus, yleis- ja toiminta-avustushakemus",
+  "description": "ASUKASYLEISTOIM",
+  "application_type": "ASUKASYLEISTOIM",
+  "application_type_id": 67,
+  "application_industry": "KANSLIA",
+  "application_open": "2026-01-01T00:00:00",
+  "application_close": "2026-06-04T23:59:59",
+  "applicant_types": ["registered_community"],
+  "subvention_type": [1, 6],
+  "acting_years": [2026],
+  "continuous": false,
+  "disable_copy": false
+}

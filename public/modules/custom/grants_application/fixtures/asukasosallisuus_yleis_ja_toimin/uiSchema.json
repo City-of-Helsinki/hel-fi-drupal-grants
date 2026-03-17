@@ -1,0 +1,136 @@
+{
+  "grant_info_step": {
+    "subventions_section": {
+      "subventions": {
+        "ui:field": "subventionTable"
+      }
+    },
+    "purpose_section": {
+      "purpose_help_general_grant": {
+        "ui:field": "textParagraph"
+      },
+      "purpose_help_operating_grant": {
+        "ui:field": "textParagraph"
+      },
+      "purpose": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000,
+        "ui:options": {
+          "tooltipLabel": "purpose.title",
+          "tooltipButtonLabel": "purpose.title",
+          "tooltipText": "purpose.description"
+        }
+      }
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_compensations": {
+        "ui:options": {
+          "addText": "other_compensation.add"
+        },
+        "items": {
+          "other_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
+          "other_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    },
+    "other_applied_compensations_section": {
+      "have_applied_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_applied_compensations": {
+        "ui:options": {
+          "addText": "other_applied_compensations.add"
+        },
+        "items": {
+          "other_applied_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_applied_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_applied_compensation_amount.printable_title"
+            }
+          },
+          "other_applied_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    },
+    "city_benefits_loans_section": {
+      "city_benefits_loans": {
+        "ui:widget": "textarea"
+      }
+    },
+    "city_premises_benefits_section": {
+      "city_premises_benefits": {
+        "ui:widget": "textarea"
+      }
+    },
+    "prior_benefits_usage_section": {
+      "have_received_prior_compensations": {
+        "ui:enumNames": [
+          "have_received_prior_compensations.no",
+          "have_received_prior_compensations.yes"
+        ],
+        "ui:widget": "radio",
+        "ui:options": {
+          "affirmativeExpands": true
+        }
+      },
+      "prior_compensations": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "tooltipLabel": "prior_compensations.title",
+          "tooltipButtonLabel": "prior_compensations.title",
+          "tooltipText": "prior_compensations.tooltip"
+        }
+      }
+    }
+  }
+}

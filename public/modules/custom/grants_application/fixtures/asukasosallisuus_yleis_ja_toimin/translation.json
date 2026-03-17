@@ -1,0 +1,54 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "Citizen Participation, general and operational grant application",
+      "fi": "Asukasosallisuus, yleis- ja toiminta-avustushakemus",
+      "sv": "Invånardelaktighet, ansökan om allmänna och verksamhetsbidrag"
+    },
+    "purpose_section_modified.title": {
+      "en": "For what purpose will the grant be used?",
+      "fi": "Mihin avustus käytetään?",
+      "sv": "Vad kommer understödet att användas till?"
+    },
+    "purpose_help_general_grant.title": {
+      "en": "General grant for resident participation:",
+      "fi": "Asukasosallisuuden yleisavustus:",
+      "sv": "Allmänt understöd för invånardelaktighet:"
+    },
+    "purpose_help_general_grant.value": {
+      "en": "Describe the intended use of the free-of-charge activities open to all for which the grant is sought and, if necessary, specify the general grant sought by type of expense.",
+      "fi": "Kuvaa haetun avustuksen kaikille aivoimen ja maksuttoman toiminnan käyttötarkoitus ja erittele tarvittaessa haettava yleisavustus kululajeittain.",
+      "sv": "Beskriv användningsändamålet för understödet för verksamhet som är öppen för alla och kostnadsfri och specificera vid behov det allmänna understöd som ansöks per kostnadsslag."
+    },
+    "purpose_help_operating_grant.title": {
+      "en": "Operating grant for resident participation:",
+      "fi": "Asukasosallisuuden toiminta-avustus:",
+      "sv": "Verksamhetsunderstöd för invånardelaktighet:"
+    },
+    "purpose_help_operating_grant.value": {
+      "en": "A description of the free-of-charge activities open to all for which the grant is being sought and a budget for the allocation of costs.",
+      "fi": "Kuvaus kaikille avoimesta maksuttomasta toiminnasta, johon avusta haetaan sekä talousarvio kustannusten kohdentumisesta.",
+      "sv": "Beskrivning av verksamhet som är öppen för alla och kostnadsfri och för vilket understöd ansöks samt budgeten för allokering av kostnaderna."
+    },
+    "purpose_help_general_grant_step_1.value": {
+      "en": "1. Grant sought for the salary costs of coordinating resident facilities",
+      "fi": "1. Haettava avustus asukastilan koordinoinnin palkkakustannuksiin",
+      "sv": "1. Understöd som ansöks för lönekostnaderna för samordning av invånarlokalen"
+    },
+    "purpose_help_general_grant_step_2.value": {
+      "en": "2. Grant sought for the rent of resident facilities",
+      "fi": "2. Haettava avustus asukastilan vuokraan",
+      "sv": "2. Understöd som ansöks för hyran av invånarlokalen"
+    },
+    "purpose_help_general_grant_step_3.value": {
+      "en": "3. Grant sought for the maintenance costs of resident facilities, specified (e.g. electricity, water, network connections, insurance, cleaning)",
+      "fi": "3. Haettava avustus asukastilan ylläpitokustannuksiin eriteltynä (esim. sähkö, vesi, verkkoyhteydet, vakuutus, siivous)",
+      "sv": "3. Understöd som ansöks för underhållskostnaderna för invånarlokalen specificerat (t.ex. el, vatten, nätuppkoppling, försäkring, städning)"
+    },
+    "purpose_help_general_grant_step_4.value": {
+      "en": "4. Grant sought for other costs related to the maintenance and coordination of resident facilities",
+      "fi": "4. Haettava avustus asukastilan ylläpidosta ja koordinoinnista aiheutuviin muihin kustannuksiin",
+      "sv": "4. Understöd som ansöks för de övriga kostnader som orsakas av upprätthållandet och samordningen av invånarlokalen"
+    }
+  }
+}
