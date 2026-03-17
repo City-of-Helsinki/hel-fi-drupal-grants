@@ -332,7 +332,6 @@ final class Application extends ResourceBase {
       }
     }
 
-
     try {
       $mappedData = $this->jsonMapperService->handleMapping(
         $settings->getFormId(),

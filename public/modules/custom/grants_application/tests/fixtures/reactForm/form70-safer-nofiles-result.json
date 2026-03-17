@@ -161,7 +161,7 @@
         {
           "ID": "phone",
           "label": "Puhelinnumero",
-          "value": "040 11233 45 ",
+          "value": "+358451234657",
           "valueType": "string"
         }
       ]
@@ -170,7 +170,7 @@
       {
         "ID": "accountNumber",
         "label": "Tilinumero",
-        "value": "FI9133437423819388",
+        "value": "FI4950009420028730",
         "valueType": "string"
       }
     ],
@@ -201,7 +201,7 @@
         "valueType": "string"
       }
     ],
-    "additionalInformation": "Lis\u00e4tietokentt\u00e4 liitesivun alussa",
+    "additionalInformation": "lis\u00e4tiedot",
     "compensationInfo": {
       "compensationArray": [
         [
@@ -214,7 +214,7 @@
           {
             "ID": "amount",
             "label": "Euroa",
-            "value": "1110",
+            "value": "11110",
             "valueType": "double"
           }
         ]
@@ -222,7 +222,7 @@
       "generalInfoArray": [
         {
           "ID": "purpose",
-          "value": "asd",
+          "value": "lyhyt kuvaus",
           "valueType": "string",
           "label": "Lyhyt kuvaus haettavan \/ haettavien avustusten k\u00e4ytt\u00f6tarkoituksista"
         }
@@ -240,25 +240,25 @@
           {
             "ID": "issuerName",
             "label": "My\u00f6nt\u00e4j\u00e4n nimi",
-            "value": "Aasd",
+            "value": "aaa",
             "valueType": "string"
           },
           {
             "ID": "year",
             "label": "Vuosi",
-            "value": "2025",
+            "value": "2021",
             "valueType": "string"
           },
           {
             "ID": "amount",
             "label": "",
-            "value": "100",
+            "value": "1000",
             "valueType": "string"
           },
           {
             "ID": "purpose",
             "label": "Kuvaus k\u00e4ytt\u00f6tarkoituksesta",
-            "value": "Avustuksen k\u00e4ytt\u00f6tarkoitus",
+            "value": "Lyhyt kuvaus my\u00f6nnetyn avustuksen k\u00e4ytt\u00f6tarkoituksesta",
             "valueType": "string"
           }
         ]
@@ -268,31 +268,31 @@
           {
             "ID": "issuer",
             "label": "Avustuksen my\u00f6nt\u00e4j\u00e4",
-            "value": "Muu",
+            "value": "S\u00e4\u00e4ti\u00f6",
             "valueType": "string"
           },
           {
             "ID": "issuerName",
             "label": "My\u00f6nt\u00e4j\u00e4n nimi",
-            "value": "Muu haettu nimi",
+            "value": "Haetttu avustus s\u00e4\u00e4ti\u00f6",
             "valueType": "string"
           },
           {
             "ID": "year",
             "label": "Vuosi",
-            "value": "2025",
+            "value": "2022",
             "valueType": "string"
           },
           {
             "ID": "amount",
             "label": "",
-            "value": "100",
+            "value": "2000",
             "valueType": "string"
           },
           {
             "ID": "purpose",
             "label": "Kuvaus k\u00e4ytt\u00f6tarkoituksesta",
-            "value": "Kuvaus kuvaus kuvaus",
+            "value": "haetun avustuksen k\u00e4ytt\u00f6tarkoitus",
             "valueType": "string"
           }
         ]
@@ -351,13 +351,13 @@
         {
           "ID": "active_participants_under_20",
           "label": "Yhdistyksen alle 20-vuotiaiden aktiiviharrastajien m\u00e4\u00e4r\u00e4",
-          "value": "100",
+          "value": "10",
           "valueType": "string"
         },
         {
           "ID": "active_participants_local",
           "label": "Joista helsinkil\u00e4isi\u00e4",
-          "value": "100",
+          "value": "20",
           "valueType": "string"
         },
         {
@@ -429,8 +429,8 @@
           "otherIncomeRowsArrayStatic": [
             {
               "ID": "tulot_field_0_0",
-              "label": "Kuvaus tulosta",
-              "value": 100,
+              "label": "tulon tyyppi",
+              "value": 1111,
               "valueType": "double"
             }
           ]
@@ -442,8 +442,8 @@
           "otherCostRowsArrayStatic": [
             {
               "ID": "menot_field_0_0",
-              "label": "Kuvaus menosta",
-              "value": 200,
+              "label": "Menon tyyppi",
+              "value": 2222,
               "valueType": "double"
             }
           ]
@@ -451,4 +451,4 @@
       ]
     }
   }
-}
+  }

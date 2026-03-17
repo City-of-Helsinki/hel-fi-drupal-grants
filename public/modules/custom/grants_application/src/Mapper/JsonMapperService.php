@@ -270,7 +270,7 @@ final class JsonMapperService {
     $community_official_uuids = $formData['applicant_info']['community_officials']['community_officials'];
     $street_name = $formData['applicant_info']['community_address']['community_address'];
 
-    $community_officials=[];
+    $community_officials = [];
     $grantsProfile = $this->userInformationService->getGrantsProfileContent();
 
     foreach ($community_official_uuids as $community_official_uuid) {

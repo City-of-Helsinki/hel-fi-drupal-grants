@@ -184,6 +184,9 @@ class JsonMapper {
           }
         }
         else {
+          if (!in_array($fieldName, array_keys($definition['data']))){
+            continue;
+          }
           $valueArray = $definition['data'][$fieldName];
           $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
           $values[] = $valueArray;

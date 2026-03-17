@@ -25,7 +25,7 @@ final class FormTest extends UnitTestCase {
     $forms = [
       ['id' => 'ID58', 'form_identifier' => 'liikunta_suunnistuskartta_avustu', 'form_data' => 'form58-nofiles-formdata', 'result' => 'form58-nofiles-result'],
       // ['id' => 'ID58', 'form_identifier' => 'liikunta_suunnistuskartta_avustu', 'form_data' => 'form58-file-formdata', 'result' => 'form58-file-result'],
-      // ['id' => 'ID70', 'form_identifier' => 'promoting_safer_club_activities', 'form_data' => 'form58-nofiles-formdata', 'result' => 'form70-safer-nofiles-result'],
+      ['id' => 'ID70', 'form_identifier' => 'promoting_safer_club_activities', 'form_data' => 'form70-safer-nofiles-formdata', 'result' => 'form70-safer-nofiles-result'],
     ];
     // phpcs:enable
 
