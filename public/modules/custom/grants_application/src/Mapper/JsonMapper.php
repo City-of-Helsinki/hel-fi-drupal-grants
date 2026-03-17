@@ -60,7 +60,7 @@ class JsonMapper {
       $dataSourceType = $definition['datasource'];
 
       // @todo Refactor empty & hardcoded maybe.
-      if (!isset($definition['skip']) && ($definition['mapping_type'] === 'empty' || $definition['mapping_type'] === 'hardcoded')) {
+      if (!isset($definition['skip']) && (isset($definition['mapping_type']) && $definition['mapping_type'] === 'empty' || $definition['mapping_type'] === 'hardcoded')) {
         match($definition['mapping_type']) {
           'empty' => $this->handleEmpty($data, $definition, $target),
           'hardcoded' => $this->handleHardcoded($data, $definition, $target),
@@ -381,6 +381,10 @@ class JsonMapper {
     $key = NULL;
     if ($definition['mapping_type'] == 'hardcoded') {
       $key = array_key_first($definition['data']);
+    }
+
+    if (is_array($targetValue) && array_key_exists('label', $targetValue) && $targetValue['label'] === NULL) {
+      unset($targetValue['label']);
     }
 
     $this->setTargetValueRecursively(
