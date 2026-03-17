@@ -97,25 +97,21 @@
     "applicationInfoArray": [
       {
         "ID": "formTimeStamp",
-        "label": null,
         "value": "2025-10-06T13:13:13",
         "valueType": "datetime"
       },
       {
         "ID": "createdFormTimeStamp",
-        "label": null,
         "value": "2025-10-06T13:13:13",
         "valueType": "datetime"
       },
       {
         "ID": "submittedFormTimeStamp",
-        "label": null,
         "value": "2025-10-06T13:13:13",
         "valueType": "datetime"
       },
       {
         "ID": "applicationNumber",
-        "label": null,
         "value": "ABCDE-123-0001009",
         "valueType": "string"
       },
@@ -171,31 +167,26 @@
     "senderInfoArray": [
       {
         "ID": "firstname",
-        "label": null,
         "value": "Nordea",
         "valueType": "string"
       },
       {
         "ID": "lastname",
-        "label": null,
         "value": "Demo",
         "valueType": "string"
       },
       {
         "ID": "personID",
-        "label": null,
         "value": "010101A0101",
         "valueType": "string"
       },
       {
         "ID": "userID",
-        "label": null,
         "value": "123345678-abcd-1234-ab12-abcdefgh",
         "valueType": "string"
       },
       {
         "ID": "email",
-        "label": null,
         "value": "user_no_mail@hel.fi",
         "valueType": "string"
       }
@@ -213,8 +204,7 @@
           {
             "ID": "amount",
             "value": "0",
-            "valueType": "float",
-            "label": null
+            "valueType": "float"
           }
         ]
       ]
@@ -225,14 +215,12 @@
         {
           "ID": "otherCompensationsTotal",
           "value": "0",
-          "valueType": "double",
-          "label": null
+          "valueType": "double"
         },
         {
           "ID": "otherAppliedCompensationsTotal",
           "value": "0",
-          "valueType": "double",
-          "label": null
+          "valueType": "double"
         }
       ]
     },

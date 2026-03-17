@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Controller;
 
+use Drupal\Component\Transliteration\TransliterationInterface;
 use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
@@ -60,6 +61,8 @@ final class ApplicationController extends ControllerBase {
     #[Autowire(service: 'grants_handler.message_service')]
     private readonly MessageService $messageService,
     private readonly UserInformationService $userInformationService,
+    #[Autowire(service: 'transliteration')]
+    private readonly TransliterationInterface $transliteration,
   ) {
   }
 
@@ -443,6 +446,7 @@ final class ApplicationController extends ControllerBase {
 
     // @phpstan-ignore-next-line
     $file_original_name = $file->getClientOriginalName();
+    $file_original_name = $this->transliteration->transliterate($file_original_name);
     if (strlen($file_original_name) >= 100) {
       return new JsonResponse(['error' => $this->t('File name is too long. Please rename the file and try again.')], 500);
     }

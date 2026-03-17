@@ -60,7 +60,7 @@ class JsonMapper {
       $dataSourceType = $definition['datasource'];
 
       // @todo Refactor empty & hardcoded maybe.
-      if (!isset($definition['skip']) && ($definition['mapping_type'] === 'empty' || $definition['mapping_type'] === 'hardcoded')) {
+      if (!isset($definition['skip']) && (isset($definition['mapping_type']) && $definition['mapping_type'] === 'empty' || $definition['mapping_type'] === 'hardcoded')) {
         match($definition['mapping_type']) {
           'empty' => $this->handleEmpty($data, $definition, $target),
           'hardcoded' => $this->handleHardcoded($data, $definition, $target),
@@ -184,6 +184,9 @@ class JsonMapper {
           }
         }
         else {
+          if (!in_array($fieldName, array_keys($definition['data']))){
+            continue;
+          }
           $valueArray = $definition['data'][$fieldName];
           $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
           $values[] = $valueArray;
@@ -288,7 +291,7 @@ class JsonMapper {
   private function getNestedArrayValue(array $sourceData, array $indexes): array|string|null {
     // When we reach the end of source path, get the value.
     if (count($indexes) === 1) {
-      $value = $sourceData[$indexes[0]];
+      $value = $sourceData[$indexes[0]] ?? NULL;
       if (is_null($value)) {
         return "";
       }
@@ -378,6 +381,10 @@ class JsonMapper {
     $key = NULL;
     if ($definition['mapping_type'] == 'hardcoded') {
       $key = array_key_first($definition['data']);
+    }
+
+    if (is_array($targetValue) && array_key_exists('label', $targetValue) && $targetValue['label'] === NULL) {
+      unset($targetValue['label']);
     }
 
     $this->setTargetValueRecursively(

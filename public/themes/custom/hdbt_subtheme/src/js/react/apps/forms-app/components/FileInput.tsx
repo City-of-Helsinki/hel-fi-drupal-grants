@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 import { formConfigAtom, getApplicationNumberAtom, pushNotificationAtom, shouldRenderPreviewAtom } from '../store';
 import { formatErrors } from '../utils';
+import { PreviewInput } from './Input';
 import { useState } from 'react';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 
@@ -101,20 +102,22 @@ export const FileInput = ({
   const defaultValue = multipleFiles ? multipleFilesFromATVData(formData) : filesFromATVData(formData);
 
   if (shouldRenderPreview) {
-    if (!multipleFiles) {
-      return (
-        <>
-          {defaultValue.map((file) => (
-            <>{file.name}</>
-          ))}
-        </>
-      );
+    const isSimple = uiSchema?.['misc:variant'] === 'simple';
+    const fileNames = defaultValue.map((file: File) => file.name).filter(Boolean);
+    let previewValue: string | undefined;
+    if (fileNames.length) {
+      previewValue = fileNames.join(', ');
+    } else if (!isSimple && isDeliveredLater) {
+      previewValue = Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' });
+    } else if (!isSimple && isIncludedInOtherFile) {
+      previewValue = Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' });
     }
     return (
       <>
-        {defaultValue?.map((file: File) => {
-          return file.name && <>{file.name}</>;
-        })}
+        <PreviewInput value={previewValue} label={label} uiSchema={uiSchema} />
+        {isSimple && (
+          <PreviewInput value={formData?.description} label={t('file_description.title')} uiSchema={undefined} />
+        )}
       </>
     );
   }

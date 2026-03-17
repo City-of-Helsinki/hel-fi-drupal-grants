@@ -267,13 +267,27 @@ final class JsonMapperService {
    *   All data sources combined
    */
   private function getDataSources(array $formData, string $applicationNumber, string|int $formTypeId, string $formIdentifier): array {
-    $community_official_uuid = $formData['applicant_info']['community_officials']['community_officials'][0]['official'];
+    $community_official_uuids = $formData['applicant_info']['community_officials']['community_officials'];
     $street_name = $formData['applicant_info']['community_address']['community_address'];
+
+    $community_officials = [];
+    $grantsProfile = $this->userInformationService->getGrantsProfileContent();
+
+    foreach ($community_official_uuids as $community_official_uuid) {
+      try {
+        $community_official = $grantsProfile->getCommunityOfficialByUuid($community_official_uuid);
+      }
+      catch (\Exception $e) {
+        continue;
+      }
+      if ($community_official) {
+        unset($community_official['official_id']);
+        $community_officials[] = $community_official;
+      }
+    }
+
     try {
       $formSettings = $this->formSettingsService->getFormSettings($formTypeId, $formIdentifier);
-      $grantsProfile = $this->userInformationService->getGrantsProfileContent();
-
-      $community_official = $grantsProfile->getCommunityOfficialByUuid($community_official_uuid);
       $address = $grantsProfile->getAddressByStreetname($street_name);
       $address['country'] = $address['country'] ?? 'Suomi';
     }
@@ -289,7 +303,7 @@ final class JsonMapperService {
       'now' => (new \DateTime())->format('Y-m-d\TH:i:s'),
       'registration_date' => $grantsProfile->getRegistrationDate(TRUE),
       'selected_address' => $address,
-      'selected_community_official' => $community_official,
+      'selected_community_officials' => $community_officials,
       'status' => 'DRAFT',
     ];
 
