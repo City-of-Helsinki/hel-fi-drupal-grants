@@ -391,8 +391,23 @@ class ResendApplicationsForm extends AtvFormBase {
 
     try {
       $applicationId = trim($formState->getValue('applicationId'));
-      $this->logApplicationResendInit($applicationId);
+      $entities = \Drupal::entityTypeManager()
+        ->getStorage('application_submission')
+        ->loadByProperties(['application_number' => $applicationId]);
 
+      if ($entities) {
+        $atvDoc = $this->getDocument($applicationId);
+        if (!$atvDoc) {
+          $this->handleApplicationNotFound($applicationId, $formState);
+          return;
+        }
+
+        $this->messenger()
+          ->addError('Resending react-application is currently disabled.');
+        return;
+      }
+
+      $this->logApplicationResendInit($applicationId);
       $atvDoc = $this->getDocument($applicationId);
 
       if (!$atvDoc) {
