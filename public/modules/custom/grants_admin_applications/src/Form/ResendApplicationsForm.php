@@ -391,7 +391,7 @@ class ResendApplicationsForm extends AtvFormBase {
 
     try {
       $applicationId = trim($formState->getValue('applicationId'));
-      $entities = \Drupal::entityTypeManager()
+      $entities = $this->entityTypeManager
         ->getStorage('application_submission')
         ->loadByProperties(['application_number' => $applicationId]);
 
