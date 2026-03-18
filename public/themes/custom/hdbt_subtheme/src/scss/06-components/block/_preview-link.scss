@@ -5,3 +5,28 @@
     padding: $spacing var(--spacing-m);
   }
 }
+
+.sidebar-text {
+  @include font('body');
+}
+
+.sidebar-text__title {
+  @include font('h4');
+  color: $color-black;
+  margin-top: 0;
+
+  & + .sidebar-text__text-content {
+    margin-top: $spacing-and-half;
+  }
+}
+
+.sidebar-text__text-content {
+  @include font('small');
+  color: var(--hdbt-color-palette-text--secondary);
+
+  > p {
+    background-color: var(--color-black-5);
+    margin: 0;
+    padding: $spacing-and-half $spacing;
+  }
+}
