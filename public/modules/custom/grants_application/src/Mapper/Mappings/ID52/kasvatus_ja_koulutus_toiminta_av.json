@@ -9,96 +9,6 @@
     }
   },
 
-  "compensation.applicationInfoArray.0": {
-    "datasource": "form_settings",
-    "source": "settings.application_type",
-    "mapping_type": "default",
-    "data": {
-      "ID": "applicationType",
-      "label": null,
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.applicationInfoArray.1": {
-    "datasource": "form_settings",
-    "source": "settings.application_type_id",
-    "mapping_type": "default",
-    "data": {
-      "ID": "applicationTypeID",
-      "label": null,
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.applicationInfoArray.2": {
-    "datasource": "custom",
-    "source": "now",
-    "mapping_type": "default",
-    "data": {
-      "ID": "formTimeStamp",
-      "label": null,
-      "value": "",
-      "valueType": "datetime"
-    }
-  },
-  "compensation.applicationInfoArray.3": {
-    "datasource": "custom",
-    "source": "now",
-    "mapping_type": "default",
-    "data": {
-      "ID": "createdFormTimeStamp",
-      "label": null,
-      "value": "",
-      "valueType": "datetime"
-    }
-  },
-  "compensation.applicationInfoArray.4": {
-    "datasource": "custom",
-    "source": "application_number",
-    "mapping_type": "default",
-    "data": {
-      "ID": "applicationNumber",
-      "label": null,
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.applicationInfoArray.5": {
-    "datasource": "custom",
-    "source": "status",
-    "mapping_type": "default",
-    "data": {
-      "ID": "status",
-      "label": "Hakemuksen tila",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.applicationInfoArray.6": {
-    "#tip": "acting year",
-    "datasource": "form_data",
-    "source": "grant_info_step.acting_year_section.acting_year",
-    "mapping_type": "default",
-    "data": {
-      "ID": "actingYear",
-      "label": "Vuosi, jolle haen avustusta",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-  "compensation.bankAccountArray.0": {
-    "datasource": "form_data",
-    "source": "applicant_info.bank_account.bank_account",
-    "mapping_type": "default",
-    "data": {
-      "ID": "accountNumber",
-      "label": "Tilinumero",
-      "value": "",
-      "valueType": "string"
-    }
-  },
-
   "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
     "datasource": "form_data",
     "source": "hardcoded",
@@ -151,6 +61,7 @@
   "compensation.activitiesInfoArray.0": {
     "datasource": "form_data",
     "source": "community_activity_step.community_activity_section.community_activity_description",
+    "mapping_type": "default",
     "data": {
       "ID": "businessPurpose",
       "label": "Toiminnan kuvaus",
@@ -240,7 +151,7 @@
         "ID": "amount",
         "label": "",
         "value": "",
-        "valueType": "string"
+        "valueType": "float"
       },
       "other_compensation_description": {
         "ID": "purpose",
@@ -257,7 +168,7 @@
     "mapping_type": "multiple_values",
     "data": {
       "location_name": {
-        "ID": "purpose",
+        "ID": "location",
         "label": "Toimintapaikka",
         "value": "",
         "valueType": "string"
@@ -333,12 +244,12 @@
 
   "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeRowsArrayStatic.0": {
     "datasource": "form_data",
-    "source": "grant_info_step.subventions_section.subventions.1.value",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
     "mapping_type": "default",
     "data": {
       "ID": "compensation",
       "label": null,
-      "value": "",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -349,7 +260,7 @@
     "data": {
       "ID": "customerFees",
       "label": null,
-      "value": "",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -360,7 +271,7 @@
     "data": {
       "ID": "donations",
       "label": null,
-      "value": "",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -372,7 +283,7 @@
     "data": {
       "ID": "muut_avustukset_field_0",
       "label": "Kuvausta tulosta tähän",
-      "value": "",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -416,8 +327,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "salaries",
-      "label": "",
-      "value": "",
+      "label": "Palkat ja palkkiot euroina",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -427,8 +338,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "rentSum",
-      "label": "",
-      "value": "",
+      "label": "Vuokrat euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -437,9 +348,9 @@
     "source": "budget_step.expenditure_section.personnel_side_costs",
     "mapping_type": "default",
     "data": {
-      "ID": "personnel_side_costs",
-      "label": "",
-      "value": "",
+      "ID": "personnelSideCosts",
+      "label": "Henkilöstönsivukulut euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -472,8 +383,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "snacks",
-      "label": "",
-      "value": "",
+      "label": "Välipalat euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -483,8 +394,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "cleaning",
-      "label": "",
-      "value": "",
+      "label": "Siivouspalvelut euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -494,8 +405,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "premisesService",
-      "label": "",
-      "value": "",
+      "label": "Kiinteistön huoltukustannukset euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -505,8 +416,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "travelCosts",
-      "label": "",
-      "value": "",
+      "label": "Matkat euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -538,8 +449,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "snacks",
-      "label": "",
-      "value": "",
+      "label": "Välipalat euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -549,8 +460,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "heating",
-      "label": "",
-      "value": "",
+      "label": "Lämpö euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -560,8 +471,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "water",
-      "label": "",
-      "value": "",
+      "label": "Vesi euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -571,8 +482,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "electricity",
-      "label": "",
-      "value": "",
+      "label": "Sähkö euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -582,8 +493,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "supplies",
-      "label": "",
-      "value": "",
+      "label": "Toiminnan materiaalit euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -609,41 +520,37 @@
   },
 
   "compensation.budgetInfo.costGroupsArrayStatic.4.costRowsArrayStatic.0": {
-    "skip": true,
-    "#tip": "todo missing react",
     "datasource": "form_data",
-    "source": "missing",
+    "source": "budget_step.benefit_usage_other_expenditure_section.management_office_expenses",
     "mapping_type": "default",
     "data": {
       "ID": "admin",
-      "label": "",
-      "value": "",
+      "label": "Hallinto- ja toimistokulut euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
+
   "compensation.budgetInfo.costGroupsArrayStatic.4.costRowsArrayStatic.1": {
-    "skip": true,
-    "#tip": "todo missing react",
     "datasource": "form_data",
-    "source": "missing",
+    "source": "budget_step.benefit_usage_other_expenditure_section.accounting_auditing_expenses",
     "mapping_type": "default",
     "data": {
       "ID": "accounting",
-      "label": "",
-      "value": "",
+      "label": "Kirjanpito- ja tilintarkastuspalvelut euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
+
   "compensation.budgetInfo.costGroupsArrayStatic.4.costRowsArrayStatic.2": {
-    "skip": true,
-    "#tip": "todo missing react",
     "datasource": "form_data",
-    "source": "missing",
+    "source": "budget_step.benefit_usage_other_expenditure_section.staff_health_expenses",
     "mapping_type": "default",
     "data": {
       "ID": "health",
-      "label": "",
-      "value": "",
+      "label": "Henkilökunnan työterveyspalvelut euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -675,8 +582,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "salaries",
-      "label": null,
-      "value": "",
+      "label": "Palkat ja palkkiot euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -686,8 +593,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "rentSum",
-      "label": null,
-      "value": "",
+      "label": "Vuokrat euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -697,8 +604,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "materials",
-      "label": null,
-      "value": "",
+      "label": "Aineet, tarvikkeet ja tavarat euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -708,8 +615,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "services",
-      "label": null,
-      "value": "",
+      "label": "Palvelujen ostot euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
@@ -719,8 +626,8 @@
     "mapping_type": "default",
     "data": {
       "ID": "personnelSideCosts",
-      "label": null,
-      "value": "",
+      "label": "Henkilöstönsivukulut euroa",
+      "value": "0",
       "valueType": "double"
     }
   },
