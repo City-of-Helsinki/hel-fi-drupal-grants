@@ -131,22 +131,6 @@
                 {
                   "title": "purpose_help_general_grant.value",
                   "type": "null"
-                },
-                {
-                  "title": "purpose_help_general_grant_step_1.value",
-                  "type": "null"
-                },
-                {
-                  "title": "purpose_help_general_grant_step_2.value",
-                  "type": "null"
-                },
-                {
-                  "title": "purpose_help_general_grant_step_3.value",
-                  "type": "null"
-                },
-                {
-                  "title": "purpose_help_general_grant_step_4.value",
-                  "type": "null"
                 }
               ]
             },

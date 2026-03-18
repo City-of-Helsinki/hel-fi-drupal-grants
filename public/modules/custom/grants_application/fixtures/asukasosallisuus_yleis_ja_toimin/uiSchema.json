@@ -18,7 +18,7 @@
         "ui:options": {
           "tooltipLabel": "purpose.title",
           "tooltipButtonLabel": "purpose.title",
-          "tooltipText": "purpose.description"
+          "tooltipText": "purpose.custom_description"
         }
       }
     },

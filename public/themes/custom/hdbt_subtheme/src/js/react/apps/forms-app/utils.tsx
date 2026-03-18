@@ -7,6 +7,7 @@ import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import type { FormStep } from './store';
 import { communitySettings } from './formConstants';
 import { Tooltip } from 'hds-react';
+import parse, { type DOMNode, type Element, domToReact } from 'html-react-parser';
 
 const regex = /^.([^.]+)/;
 
@@ -230,6 +231,30 @@ export const getSubventionSum = (formData: any, subventionFields: string[]) =>
  */
 export const isDraft = () => drupalSettings.grants_react_form.use_draft;
 
+const ALLOWED_TAGS = new Set(['p', 'ul', 'ol', 'li', 'strong']);
+
+/**
+ * Parse HTML content for textParagraphs and tooltips.
+ *
+ * @param {string} html - HTML content to parse
+ * @return {React.ReactNode} - Parsed HTML content
+ */
+export const parseAllowedHtml = (html: string) =>
+  parse(html, {
+    replace(node) {
+      const el = node as Element;
+      if (el.type === 'tag' && !ALLOWED_TAGS.has(el.name)) {
+        return <>{domToReact(el.children as DOMNode[])}</>;
+      }
+    },
+  });
+
+/**
+ * Get the tooltip component.
+ *
+ * @param {object} uiSchema - uiSchema
+ * @return {React.ReactNode} - Tooltip component
+ */
 export const getTooltip = (uiSchema: UiSchema | undefined) => {
   if (!uiSchema || !uiSchema?.['ui:options']?.tooltipText) {
     return undefined;
@@ -237,10 +262,11 @@ export const getTooltip = (uiSchema: UiSchema | undefined) => {
 
   return (
     <Tooltip
+      className='hdbt-react-form__tooltip-container'
       buttonLabel={uiSchema?.['ui:options']?.tooltipButtonLabel?.toString()}
       tooltipLabel={uiSchema?.['ui:options']?.tooltipLabel?.toString()}
     >
-      {uiSchema['ui:options'].tooltipText.toString()}
+      {parseAllowedHtml(uiSchema['ui:options'].tooltipText.toString())}
     </Tooltip>
   );
 };
