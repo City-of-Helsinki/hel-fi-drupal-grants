@@ -38,7 +38,7 @@ final class ApplicationNumberService {
     $savedSerial = $store->get($last_serial_key, 0);
 
     if ($savedSerial < 1000) {
-      $savedSerial += 1400;
+      $savedSerial += 1000;
     }
 
     $newSerial = $savedSerial + 1;
