@@ -332,6 +332,19 @@
       "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile","value": "false","valueType": "bool","label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
     }
   },
+  "attachmentsInfo.attachmentsArray.7": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "1", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
   "compensation.additionalInformation": {
     "datasource": "form_data",
     "source": "attachments_step.additional_info_section.additional_info",

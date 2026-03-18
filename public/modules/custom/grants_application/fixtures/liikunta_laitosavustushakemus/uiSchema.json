@@ -1,0 +1,242 @@
+{
+  "grant_info_step": {
+    "subventions_section": {
+      "subventions": {
+        "ui:field": "subventionTable"
+      }
+    },
+    "purpose_section": {
+      "purpose": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "tooltipLabel": "purpose.title",
+          "tooltipButtonLabel": "purpose.title",
+          "tooltipText": "purpose.description"
+        }
+      }
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_compensations": {
+        "ui:options": {
+          "addText": "other_compensation.add"
+        },
+        "items": {
+          "other_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
+          "other_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    },
+    "other_applied_compensations_section": {
+      "have_applied_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_applied_compensations": {
+        "ui:options": {
+          "addText": "other_applied_compensations.add"
+        },
+        "items": {
+          "other_applied_compensation_issuer_name": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_applied_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_applied_compensation_amount.printable_title"
+            }
+          },
+          "other_applied_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    },
+    "city_benefits_loans_section": {
+      "city_benefits_loans": {
+        "ui:widget": "textarea"
+      }
+    },
+    "city_premises_benefits_section": {
+      "city_premises_benefits": {
+        "ui:widget": "textarea"
+      }
+    }
+  },
+  "community_activity_step": {
+    "community_activity_section": {
+      "community_activity_description": {
+        "misc:profilePrefill": "businessPurpose",
+        "misc:max-length": 500,
+        "ui:widget": "textarea",
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "community_activity.title",
+          "tooltipButtonLabel": "community_activity.title",
+          "tooltipText": "community_activity.description"
+        }
+      },
+      "community_practices_business": {
+        "ui:enumNames": [
+          "boolean.yes",
+          "boolean.no"
+        ],
+        "ui:widget": "radio"
+      }
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "additional_information.title",
+          "tooltipButtonLabel": "additional_information.title",
+          "tooltipText": "additional_information.description"
+        }
+      }
+    },
+    "attachments_section": {
+      "required_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "multiple_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "formerly_provided_attachments_help": {
+        "ui:field": "textParagraph"
+      },
+      "cant_view_after_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "confirmed_financial_statements": {
+        "ui:options": {
+          "tooltipLabel": "confirmed_financial_statements.title",
+          "tooltipButtonLabel": "confirmed_financial_statements.title",
+          "tooltipText": "confirmed_financial_statements.description"
+        },
+        "confirmed_financial_statements_file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "confirmed_annual_report": {
+        "ui:options": {
+          "tooltipLabel": "confirmed_annual_report.title",
+          "tooltipButtonLabel": "confirmed_annual_report.title",
+          "tooltipText": "confirmed_annual_report.description"
+        },
+        "confirmed_annual_report_file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "confirmed_audit_report": {
+        "ui:options": {
+          "tooltipLabel": "confirmed_audit_report.title",
+          "tooltipButtonLabel": "confirmed_audit_report.title",
+          "tooltipText": "confirmed_audit_report.description"
+        },
+        "confirmed_audit_report_file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "minutes_of_the_annual_meeting": {
+        "ui:options": {
+          "tooltipLabel": "minutes_of_the_annual_meeting.title",
+          "tooltipButtonLabel": "minutes_of_the_annual_meeting.title",
+          "tooltipText": "minutes_of_the_annual_meeting.description"
+        },
+        "minutes_of_the_annual_meeting_file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "action_plan": {
+        "ui:options": {
+          "tooltipLabel": "action_plan.title",
+          "tooltipButtonLabel": "action_plan.title",
+          "tooltipText": "action_plan.description"
+        },
+        "action_plan_file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "budget": {
+        "ui:options": {
+          "tooltipLabel": "budget.title",
+          "tooltipButtonLabel": "budget.title",
+          "tooltipText": "budget.description"
+        },
+        "budget_file": {
+          "misc:file-type": 0,
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      },
+      "further_clarification": {
+        "ui:widget": "textarea"
+      },
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "misc:file-type": 0,
+          "misc:variant": "simple",
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
+        }
+      }
+    }
+  }
+}
