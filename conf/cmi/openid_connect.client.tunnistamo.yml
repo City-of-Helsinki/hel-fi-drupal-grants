@@ -12,7 +12,6 @@ settings:
   client_secret: dev
   iss_allowed_domains: ''
   is_production: 0
-  auto_login: 0
   environment_url: ''
   client_scopes: 'openid,email'
   client_roles:
@@ -21,4 +20,5 @@ settings:
     content_producer: '0'
     read_only: '0'
     helsinkiprofiili: '0'
+  auto_login: 0
   debug_log: false
