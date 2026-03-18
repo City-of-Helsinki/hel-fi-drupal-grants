@@ -189,6 +189,9 @@ final class JsonMapperTest extends UnitTestCase {
     $this->assertEquals('file1.pdf', $mappedFiles['attachmentsInfo']['attachmentsArray'][0][1]['value']);
   }
 
+  /**
+   * Test ID58, no uploaded files.
+   */
   public function testForm58NoFiles() {
     $commonMappings = $this->getRealMapping('common', 'registered_community');
     $realMapping = $this->getRealMapping('ID58', 'liikunta_suunnistuskartta_avustu');
@@ -201,7 +204,8 @@ final class JsonMapperTest extends UnitTestCase {
     $fields = $mapper->map($dataSources);
     $files = $mapper->mapFiles($dataSources);
 
-    // Mapping the same form values should always result in similar Avus2-json-data.
+    // Mapping the same form values should always result in
+    // similar Avus2-json-data.
     $originalResult = json_decode(file_get_contents(__DIR__ . '/../../fixtures/reactForm/form58-nofiles-result.json'), TRUE);
     $this->assertEquals($originalResult, $fields);
     $this->assertCount(0, $files);

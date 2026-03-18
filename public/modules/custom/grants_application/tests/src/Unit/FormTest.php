@@ -72,23 +72,6 @@ final class FormTest extends UnitTestCase {
   }
 
   /**
-   * Get the mapping definitions.
-   *
-   * The mapping definition contains the data, how to turn the source data into
-   * target data.
-   *
-   * @param string $fixtureName
-   *   The fixture name.
-   *
-   * @return array
-   *   The mapping file.
-   */
-  private function getMapping(string $fixtureName): array {
-    $mappingFixtures = file_get_contents(__DIR__ . '/../../fixtures/reactForm/' . $fixtureName);
-    return json_decode($mappingFixtures, TRUE);
-  }
-
-  /**
    * Get the real mappings.
    *
    * @param string $form_id

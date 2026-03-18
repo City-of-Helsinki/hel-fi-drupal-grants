@@ -334,7 +334,13 @@ export const isReadOnlyAtom = atom((_get) => {
   const { submitState } = _get(getFormConfigAtom);
   const isBeingSubmitted = _get(isBeingSubmittedAtom);
 
-  return ![SubmitStates.DRAFT, SubmitStates.RECEIVED, SubmitStates.PREPARING].includes(submitState) || isBeingSubmitted;
+  // @todo Refactor: allow editing application if it has errors and locked
+  // in submitted state.
+  return (
+    ![SubmitStates.DRAFT, SubmitStates.SUBMITTED, SubmitStates.RECEIVED, SubmitStates.PREPARING].includes(
+      submitState,
+    ) || isBeingSubmitted
+  );
 });
 
 export const getFormTitleAtom = atom((_get) => {

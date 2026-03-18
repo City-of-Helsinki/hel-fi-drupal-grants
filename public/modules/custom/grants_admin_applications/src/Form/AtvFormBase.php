@@ -6,6 +6,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -48,6 +49,7 @@ abstract class AtvFormBase extends FormBase {
     protected AccountProxyInterface $current_user,
     protected TimeInterface $time,
     protected AttachmentFixerService $attachmentFixerService,
+    protected EntityTypeManagerInterface $entityTypeManager,
   ) {
     $this->config = $this->configFactory()->get('grants_metadata.settings');
   }
@@ -67,7 +69,8 @@ abstract class AtvFormBase extends FormBase {
       $container->get('grants_handler.message_service'),
       $container->get('current_user'),
       $container->get('datetime.time'),
-      $container->get('grants_attachments.attachment_fixer_service')
+      $container->get('grants_attachments.attachment_fixer_service'),
+      $container->get('entity_type.manager'),
     );
   }
 
