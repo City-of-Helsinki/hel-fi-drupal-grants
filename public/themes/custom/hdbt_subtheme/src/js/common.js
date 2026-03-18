@@ -43,6 +43,14 @@
           // Send an AJAX request to the Drupal route.
           $.ajax({ url: '/oma-asiointi/log-close-time/', method: 'GET' });
         });
+
+        // Add HDS attributes to autologout dialog buttons
+        const autologoutButtons = $('.ui-widget-content.ui-dialog-buttonpane .button');
+        autologoutButtons.attr('data-hds-component', 'button');
+        // First button is primary, second is secondary
+        autologoutButtons.first().attr('data-hds-variant', 'primary');
+        autologoutButtons.last().attr('data-hds-variant', 'secondary');
+        autologoutButtons.removeClass();
       });
     },
   };
