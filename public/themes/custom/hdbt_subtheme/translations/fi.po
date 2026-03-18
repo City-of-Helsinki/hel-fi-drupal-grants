@@ -638,3 +638,6 @@ msgstr "Sinun on syötettävä vähintään @limit arvo kentälle @field"
 msgctxt "Grants application: Steps"
 msgid "Next"
 msgstr "Seuraava"
+
+msgid "Are you sure you want to log out?"
+msgstr "Haluatko varmasti kirjautua ulos?"
