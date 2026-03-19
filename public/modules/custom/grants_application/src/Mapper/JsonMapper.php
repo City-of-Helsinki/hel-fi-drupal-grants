@@ -170,6 +170,11 @@ class JsonMapper {
 
     $sourceValues = $this->getMultipleValues($dataSources[$definition['datasource']], $sourcePath);
 
+    // The field has not been filled.
+    if (!$sourceValues) {
+      return;
+    }
+
     // Source value contains multiple objects which contains multiple fields.
     // The fields may also contain nested values.
     foreach ($sourceValues as $singleObject) {
@@ -346,6 +351,9 @@ class JsonMapper {
    */
   private function getMultipleNestedArrayValues(array $sourceData, array $indexes) {
     if (count($indexes) === 1) {
+      if (!isset($sourceData[$indexes[0]])) {
+        return NULL;
+      }
       return $sourceData[$indexes[0]];
     }
 
