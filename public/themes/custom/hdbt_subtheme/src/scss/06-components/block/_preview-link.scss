@@ -10,7 +10,7 @@
   @include font('body');
 }
 
-h2 {
+.sidebar-second h2 {
   @include font('h4');
   color: $color-black;
   margin-top: 0;
