@@ -250,12 +250,18 @@ class JsonMapper {
     $sourcePath = $definition['source'];
 
     $sourceValue = $this->getValue($dataSources[$definition['datasource']], $sourcePath);
-    $definition['data'] = $this->customHandler
+    $val = $this->customHandler
       ->handleDefinitionUpdate(
         $definition['custom_handler'],
         $sourceValue,
         $definition
       );
+
+    if (!$val) {
+      return;
+    }
+
+    $definition['data'] = $val;
     $sourceValue = $definition['data'];
 
     $this->setTargetValue($data, $targetPath, $sourceValue, $definition);
