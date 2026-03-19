@@ -101,9 +101,7 @@
                 "Add ability to delete all from tempstore": "https://www.drupal.org/files/issues/2020-10-23/get_delete_all_temp-2475719-31.patch"
             },
             "drupal/autologout": {
-                "Modal related issues": "https://www.drupal.org/files/issues/2023-04-25/autologout.2023-04-25.patch",
-                "Pseudonymize logging of user data.": "patches/autologout_2.0.0-gdpr-pseudonymize-logging.patch",
-                "https://www.drupal.org/project/autologout/issues/3469258": "patches/3469258-multiple-dialogs-open-38.patch"
+                "Pseudonymize logging of user data.": "patches/autologout_2.0.0-gdpr-pseudonymize-logging.patch"
             },
             "drupal/crop": {
                 "Fix encoded paths for files": "patches/AU-2225-fix-encoded-paths.patch"
