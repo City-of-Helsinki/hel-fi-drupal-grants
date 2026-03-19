@@ -334,7 +334,11 @@ export const isReadOnlyAtom = atom((_get) => {
   const { submitState } = _get(getFormConfigAtom);
   const isBeingSubmitted = _get(isBeingSubmittedAtom);
 
-  return ![SubmitStates.DRAFT, SubmitStates.RECEIVED, SubmitStates.PREPARING].includes(submitState) || isBeingSubmitted;
+  return (
+    _get(isEmptyPreviewAtom) ||
+    ![SubmitStates.DRAFT, SubmitStates.RECEIVED, SubmitStates.PREPARING].includes(submitState) ||
+    isBeingSubmitted
+  );
 });
 
 export const getFormTitleAtom = atom((_get) => {
@@ -345,4 +349,8 @@ export const getFormTitleAtom = atom((_get) => {
   }
 
   return settings?.title ?? '';
+});
+
+export const isEmptyPreviewAtom = atom((_get) => {
+  return drupalSettings.grants_react_form.use_empty_preview;
 });

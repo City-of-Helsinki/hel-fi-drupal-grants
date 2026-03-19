@@ -19,7 +19,14 @@ import type { RJSFSchema, UiSchema, WidgetProps } from '@rjsf/utils';
 import { defaultSelectTheme } from '@/react/common/constants/selectTheme';
 import { defaultRadioButtonStyle } from '@/react/common/constants/radioButtonStyle';
 import { formatErrors, getTooltip } from '../utils';
-import { getAccountsAtom, getAddressesAtom, getOfficialsAtom, getProfileAtom, shouldRenderPreviewAtom } from '../store';
+import {
+  getAccountsAtom,
+  getAddressesAtom,
+  getOfficialsAtom,
+  getProfileAtom,
+  isReadOnlyAtom,
+  shouldRenderPreviewAtom,
+} from '../store';
 import { HDS_DATE_FORMAT } from '@/react/common/enum/HDSDateFormat';
 
 export const PreviewInput = ({
@@ -82,6 +89,7 @@ export const TextInput = ({
   if (isNumberInput) {
     return (
       <NumberInput
+        disabled={readonly}
         errorText={formatErrors(rawErrors)}
         hideLabel={false}
         id={id}
@@ -107,7 +115,6 @@ export const TextInput = ({
         onWheel={(event: WheelEvent<HTMLInputElement>) => {
           event.currentTarget.blur();
         }}
-        readOnly={readonly}
         required={required}
         style={{ maxWidth: getMaxWidth() }}
         tooltip={getTooltip(uiSchema)}
@@ -119,6 +126,7 @@ export const TextInput = ({
   return (
     <HDSTextInput
       errorText={formatErrors(rawErrors)}
+      disabled={readonly}
       hideLabel={false}
       id={id}
       invalid={Boolean(rawErrors?.length)}
@@ -134,7 +142,6 @@ export const TextInput = ({
       }}
       onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value)}
       onFocus={() => null}
-      readOnly={readonly}
       required={required}
       style={{ maxWidth: getMaxWidth() }}
       tooltip={getTooltip(uiSchema)}
@@ -183,6 +190,7 @@ export const TextArea = ({
     <>
       {schema.description && <div className='hdbt-form--description'>{schema.description}</div>}
       <HDSTextArea
+        disabled={readonly}
         errorText={formatErrors(rawErrors)}
         helperText={`${value?.length || 0}/${maxLength}`}
         hideLabel={false}
@@ -190,7 +198,6 @@ export const TextArea = ({
         onBlur={() => null}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
         onFocus={() => null}
-        readOnly={readonly}
         tooltip={getTooltip(uiSchema)}
         {...{ id, label, maxLength, name, required, value }}
       />
@@ -258,14 +265,18 @@ export const SelectWidget = ({
 
 export const AddressSelect = (props: WidgetProps) => {
   const addresses = useAtomValue(getAddressesAtom);
-  const options = Object.assign(addresses.map(({ street }) => ({ label: street, value: street })));
+  const options = addresses?.length
+    ? Object.assign(addresses.map(({ street }) => ({ label: street, value: street })))
+    : [];
 
   return <SelectWidget {...{ ...props, options: { enumOptions: options } }} />;
 };
 
 export const BankAccountSelect = (props: WidgetProps) => {
   const accounts = useAtomValue(getAccountsAtom);
-  const options = Object.assign(accounts.map(({ bankAccount }) => ({ label: bankAccount, value: bankAccount })));
+  const options = accounts?.length
+    ? Object.assign(accounts.map(({ bankAccount }) => ({ label: bankAccount, value: bankAccount })))
+    : [];
 
   return <SelectWidget {...{ ...props, options: { enumOptions: options } }} />;
 };
@@ -296,12 +307,14 @@ const getCommunityOfficialRole = (roleId: number | string) => roleMap.get(Number
 export const CommunityOfficialsSelect = ({ label, value, uiSchema, ...rest }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const officials = useAtomValue(getOfficialsAtom);
-  const options = Object.assign(
-    officials.map(({ name, role, official_id }) => ({
-      label: `${name} (${getCommunityOfficialRole(role)})`,
-      value: official_id,
-    })),
-  );
+  const options = officials?.length
+    ? Object.assign(
+        officials.map(({ name, role, official_id }) => ({
+          label: `${name} (${getCommunityOfficialRole(role)})`,
+          value: official_id,
+        })),
+      )
+    : [];
 
   const formatPreviewValue = () => {
     if (Array.isArray(value)) {
@@ -339,6 +352,7 @@ export const CommunityOfficialsSelect = ({ label, value, uiSchema, ...rest }: Wi
 export const RadioWidget = ({ id, label, onChange, options, rawErrors, required, value, uiSchema }: WidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   if (shouldRenderPreview) {
     const selectedLabel = options?.enumOptions?.find((opt) => opt.value === value)?.label ?? value;
@@ -362,6 +376,7 @@ export const RadioWidget = ({ id, label, onChange, options, rawErrors, required,
           return (
             <RadioButton
               checked={option.value === value}
+              disabled={isReadOnly}
               id={optionId}
               key={optionId}
               label={option.label}
@@ -385,6 +400,7 @@ export const RadioWidget = ({ id, label, onChange, options, rawErrors, required,
 export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema, value }: WidgetProps) => {
   const { currentLanguage } = drupalSettings.path;
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   let date: DateTime | undefined;
   const handleChange = (_dateStr: string, dateObject: Date) => {
@@ -410,6 +426,7 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
 
   return (
     <DateInput
+      disabled={isReadOnly}
       errorText={formatErrors(rawErrors)}
       invalid={Boolean(rawErrors?.length)}
       language={currentLanguage}
@@ -428,6 +445,7 @@ export const DateWidget = ({ id, label, onChange, rawErrors, required, uiSchema,
 export const CheckboxWidget = ({ id, label, onChange, value, uiSchema }: WidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+  const isReadOnly = useAtomValue(isReadOnlyAtom);
 
   if (shouldRenderPreview) {
     return <PreviewInput value={value ? t('Yes') : t('No')} label={label} uiSchema={uiSchema} />;
@@ -435,6 +453,7 @@ export const CheckboxWidget = ({ id, label, onChange, value, uiSchema }: WidgetP
 
   return (
     <Checkbox
+      disabled={isReadOnly}
       id={id}
       label={label ?? ''}
       checked={Boolean(value)}
