@@ -65,7 +65,7 @@ class JsonHandler {
    * @param array $definition
    *   Mapping definition.
    *
-   * @return array|FALSE
+   * @return array|false
    *   The income field data.
    */
   public static function income(array $data, array $definition): array|FALSE {
