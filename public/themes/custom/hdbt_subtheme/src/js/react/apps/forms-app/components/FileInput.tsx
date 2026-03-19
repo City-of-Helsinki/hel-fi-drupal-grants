@@ -67,7 +67,7 @@ const filesFromATVData = (value?: ATVFile): File[] => {
  * Add 'misc:multiple': 'true' to uiSchema to enable the feature.
  */
 const multipleFilesFromATVData = (value?: { files: ATVFile[]; description: string } | []): any => {
-  if (!value?.files.length) {
+  if (!value?.files?.length) {
     return [];
   }
 
