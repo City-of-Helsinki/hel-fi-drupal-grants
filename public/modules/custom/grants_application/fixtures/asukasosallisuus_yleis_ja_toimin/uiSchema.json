@@ -233,6 +233,7 @@
         },
         "community_rules_file": {
           "misc:file-type": 7,
+          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
@@ -245,6 +246,7 @@
         },
         "confirmed_financial_statements_file": {
           "misc:file-type": 43,
+          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
@@ -257,6 +259,7 @@
         },
         "confirmed_annual_report_file": {
           "misc:file-type": 4,
+          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
@@ -269,6 +272,7 @@
         },
         "confirmed_audit_report_file": {
           "misc:file-type": 5,
+          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
@@ -281,6 +285,7 @@
         },
         "minutes_of_the_annual_meeting_file": {
           "misc:file-type": 8,
+          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
@@ -293,6 +298,7 @@
         },
         "action_plan_file": {
           "misc:file-type": 1,
+          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }
@@ -305,6 +311,7 @@
         },
         "budget_file": {
           "misc:file-type": 2,
+          "misc:required": true,
           "ui:help": "other_attachment_fieldset.ui_help",
           "ui:field": "atvFile"
         }

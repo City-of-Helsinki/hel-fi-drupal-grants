@@ -187,6 +187,29 @@ export function* findFieldsOfType(element: any, type: string, prefix: string = '
 }
 
 /**
+ * Finds fields that have a specific uiSchema option set to true.
+ *
+ * @param {any} element - current element
+ * @param {string} option - uiSchema option key to look for
+ * @param {string} prefix - current form element path in dot notation
+ *
+ * @yields {string} - form element path
+ */
+export function* findFieldsWithOption(element: any, option: string, prefix: string = ''): IterableIterator<string> {
+  const isObject = typeof element === 'object' && !Array.isArray(element) && element !== null;
+
+  if (isObject && element[option]) {
+    yield prefix;
+  } else if (isObject) {
+    // Functional loops mess up generator function, so use for - of loop here.
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, value] of Object.entries(element)) {
+      yield* findFieldsWithOption(value, option, prefix.length ? `${prefix}.${key}` : key);
+    }
+  }
+}
+
+/**
  * Transform raw errors to a more readable format.
  *
  * @param {array|undefned} rawErrors - Errors from RJSF form

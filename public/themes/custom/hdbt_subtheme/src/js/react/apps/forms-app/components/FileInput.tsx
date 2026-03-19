@@ -96,7 +96,11 @@ export const FileInput = ({
   const applicationNumber = useAtomValue(getApplicationNumberAtom);
   const { token } = useAtomValue(formConfigAtom)!;
   const pushNotification = useSetAtom(pushNotificationAtom);
-  const { 'misc:file-type': fileType } = uiSchema as UiSchema & { 'misc:file-type': number };
+  const { 'misc:file-type': fileType, 'misc:required': miscRequired } = uiSchema as UiSchema & {
+    'misc:file-type': number;
+    'misc:required'?: boolean;
+  };
+  const isRequired = required || miscRequired;
   const { isDeliveredLater, isIncludedInOtherFile } = formData || {};
   const multipleFiles = uiSchema?.['misc:multiple'] ?? false;
   const defaultValue = multipleFiles ? multipleFilesFromATVData(formData) : filesFromATVData(formData);
@@ -257,7 +261,7 @@ export const FileInput = ({
       onChange={(files: File[]) => {
         handleMultiple(files, formData);
       }}
-      required={required}
+      required={isRequired}
       className='hdbt-form--fileinput'
     />
   ) : (
@@ -277,7 +281,7 @@ export const FileInput = ({
       onChange={(files: File[]) => {
         handleChange(files, formData);
       }}
-      required={required}
+      required={isRequired}
       className='hdbt-form--fileinput'
     />
   );
