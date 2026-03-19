@@ -16,5 +16,7 @@ declare namespace drupalSettings {
     real_application_number: string;
     use_empty_preview: boolean;
     use_preview: boolean;
+    use_print?: boolean;
+    print_url?: string;
   };
 }

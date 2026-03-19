@@ -26,6 +26,12 @@
 
   {% include 'grants-application-view-status-information.html.twig' %}
 
+  {% if print_application_link %}
+    <a href="{{ print_application_link }}" class="hds-button hds-button--supplementary">
+      {{ 'Print application'|t({}, {'context': 'grants_handler'}) }}
+    </a>
+  {% endif %}
+
   <h2>{{ 'Application'|t }}</h2>
   <p>{{ 'Here you can see details of your application'|t }}</p>
 

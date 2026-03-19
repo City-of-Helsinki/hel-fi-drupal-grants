@@ -425,6 +425,7 @@ final class ApplicationController extends ControllerBase {
             ],
             'use_draft' => TRUE,
             'use_preview' => TRUE,
+            'print_url' => $submission->getPrintApplicationUrl()->toString(),
           ],
         ],
       ],
@@ -683,9 +684,58 @@ final class ApplicationController extends ControllerBase {
    *   The application number.
    */
   public function printApplication(string $application_number): array {
-    // @todo UHF-12685 the original implementation can handle react forms
-    // mediocre at best and it should be eventually moved here.
-    return [];
+    if (!$application_number) {
+      throw new NotFoundHttpException();
+    }
+
+    try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $user_information = $this->userInformationService->getUserData();
+    }
+    catch (\Exception $e) {
+      throw new NotFoundHttpException();
+    }
+
+    try {
+      $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+    }
+    catch (\Exception) {
+      throw new NotFoundHttpException();
+    }
+
+    $submission = $this->getApplicationSubmission($application_number);
+    if (!$submission) {
+      throw new NotFoundHttpException();
+    }
+
+    $form_identifier = $submission->get('form_identifier')->value;
+    $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
+
+    return [
+      '#theme' => 'grants_application_print',
+      '#submission_id' => $application_number,
+      '#application_number' => $submission->get('application_type_id')->value,
+      '#attached' => [
+        'library' => ['hdbt_subtheme/print-atv-document'],
+        'drupalSettings' => [
+          'grants_react_form' => [
+            'application_number' => $settings->getFormId(),
+            'real_application_number' => $submission->get('application_number')->value,
+            'form_identifier' => $form_identifier,
+            'token' => $this->csrfTokenGenerator->get('rest'),
+            'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
+            'terms' => [
+              'body' => '',
+              'link_title' => '',
+            ],
+            'use_draft' => TRUE,
+            'use_preview' => TRUE,
+            'use_print' => TRUE,
+            'print_url' => $submission->getPrintApplicationUrl()->toString(),
+          ],
+        ],
+      ],
+    ];
   }
 
   /**

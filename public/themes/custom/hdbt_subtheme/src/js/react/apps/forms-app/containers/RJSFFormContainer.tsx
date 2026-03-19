@@ -1,8 +1,3 @@
-// biome-ignore-all lint/suspicious/noExplicitAny: RJSF uses any for form data.
-// biome-ignore-all lint/correctness/noNestedComponentDefinitions: @todo UHF-12501
-// biome-ignore-all lint/correctness/useExhaustiveDependencies: @todo UHF-12501
-// biome-ignore-all lint/complexity/useOptionalChain: @todo UHF-12501
-// biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import type {
   CustomValidator,
   ErrorTransformer,
@@ -16,7 +11,7 @@ import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
 import Form, { getDefaultRegistry, type IChangeEvent } from '@rjsf/core';
 import type { ReactNode, FormEvent } from 'react';
-import { createRef, useCallback, useState } from 'react';
+import { createRef, useCallback, useEffect, useState } from 'react';
 import { customizeValidator } from '@rjsf/validator-ajv8';
 import { useTranslation } from 'react-i18next';
 
@@ -56,6 +51,7 @@ import { Terms } from '../components/Terms';
 import { TextParagraph } from '../components/Fields/TextParagraph';
 import { localizeErrors } from '../localizeErrors';
 import { Notification, NotificationSize } from 'hds-react';
+import type { RJSFFormData } from '../types/RJSFFormData';
 
 const widgets: RegistryWidgetsType = {
   address: AddressSelect,
@@ -69,6 +65,11 @@ const widgets: RegistryWidgetsType = {
   TextWidget: TextInput,
   CheckboxWidget,
 };
+
+const SubmitButton = () => null;
+const MoveDownButton = () => null;
+const MoveUpButton = () => null;
+const FieldErrorTemplate = () => null;
 
 /**
  * Container for the RJSF form.
@@ -89,8 +90,8 @@ export const RJSFFormContainer = ({
   submitData,
   uiSchema,
 }: {
-  formDataAtom: WritableAtom<any, [update: unknown], any>;
-  saveDraft: (data: any) => Promise<void>;
+  formDataAtom: WritableAtom<RJSFFormData, [update: unknown], RJSFFormData>;
+  saveDraft: (data: RJSFFormData) => Promise<void>;
   schema: RJSFSchema;
   submitData: (data: IChangeEvent) => void;
   uiSchema: UiSchema;
@@ -105,7 +106,7 @@ export const RJSFFormContainer = ({
   const formRef = createRef<Form>();
   const readCurrentStep = useAtomCallback(useCallback((get) => get(getCurrentStepAtom), []));
   const readReachedStep = useAtomCallback(useCallback((get) => get(getReachedStepAtom), []));
-  const readFormData = useAtomCallback(useCallback((get) => get(formDataAtom), []));
+  const readFormData = useAtomCallback(useCallback((get) => get(formDataAtom), [formDataAtom]));
   const setErrors = useSetAtom(setErrorsAtom);
   const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
 
@@ -120,6 +121,12 @@ export const RJSFFormContainer = ({
   if (drupalSettings.grants_react_form.use_preview) {
     setStep(steps.size - 2);
   }
+
+  useEffect(() => {
+    if (drupalSettings.grants_react_form.use_print) {
+      document.dispatchEvent(new Event('grants:print-ready'));
+    }
+  }, []);
 
   /**
    * React to errors in the form.
@@ -189,10 +196,10 @@ export const RJSFFormContainer = ({
     const newErrors: RJSFValidationError[] = [];
 
     subventionFields.forEach((field) => {
-      const values = field.split('.').reduce((acc: any, curr) => acc && acc[curr], formData) as
+      const values = field.split('.').reduce((acc: RJSFFormData, curr) => acc?.[curr], formData) as
         | Record<string, [unknown, { value: unknown }]>
         | undefined;
-      const _field = field.split('.').reduce((acc: any, curr) => acc && acc[curr], errors) as
+      const _field = field.split('.').reduce((acc: RJSFFormData, curr) => acc?.[curr], errors) as
         | { addError: (msg: string) => void }
         | undefined;
       const hasValues = values
@@ -295,11 +302,11 @@ export const RJSFFormContainer = ({
             ArrayFieldTemplate,
             ButtonTemplates: {
               RemoveButton: RemoveButtonTemplate,
-              SubmitButton: () => null,
-              MoveDownButton: () => null,
-              MoveUpButton: () => null,
+              SubmitButton,
+              MoveDownButton,
+              MoveUpButton,
             },
-            FieldErrorTemplate: () => null,
+            FieldErrorTemplate,
             FieldTemplate,
             ObjectFieldTemplate,
           }}

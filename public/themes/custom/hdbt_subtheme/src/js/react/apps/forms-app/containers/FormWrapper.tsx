@@ -95,6 +95,37 @@ const shouldFixArrayField = (schemaDefinition: RJSFSchema) => {
 };
 
 /**
+ * Recursively remove empty arrays from form data so that array fields the user
+ * left untouched are omitted from the payload entirely.  This prevents the
+ * backend from storing e.g. `expenditure_rows: []`, which would later be
+ * converted to `[{}]` by fixDanglingArrays and rendered as an open empty row.
+ *
+ * @param {any} data - Form data (mutated in-place and returned)
+ *
+ * @return {any} - Cleaned form data
+ */
+const stripEmptyArrays = (data: any): any => {
+  if (!data || typeof data !== 'object') {
+    return data;
+  }
+
+  if (Array.isArray(data)) {
+    return data;
+  }
+
+  for (const key of Object.keys(data)) {
+    const value = data[key];
+    if (Array.isArray(value) && value.length === 0) {
+      delete data[key];
+    } else {
+      stripEmptyArrays(value);
+    }
+  }
+
+  return data;
+};
+
+/**
  * Fix issue with backend returning arrays instead of empty objects.
  *
  * @todo see if this can be done in a less overengineered way
@@ -220,14 +251,15 @@ export const FormWrapper = ({
   const submitData = async (submittedData: any): Promise<void> => {
     setIsSubmitting(true);
 
+    const cleanedData = stripEmptyArrays(submittedData);
     const response = await fetch(
       `/${currentLanguage}/applications/${formIdentifier}/application/${readApplicationNumber()}`,
       {
         body: JSON.stringify({
           application_number: readApplicationNumber() || '',
           application_type_id: applicationTypeId,
-          attachments: Array.from(getAttachments(submittedData)),
-          form_data: submittedData,
+          attachments: Array.from(getAttachments(cleanedData)),
+          form_data: cleanedData,
           langcode: 'en',
         }),
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
@@ -261,12 +293,13 @@ export const FormWrapper = ({
   }
 
   const saveDraft = async (submittedData: any) => {
+    const cleanedData = stripEmptyArrays(submittedData);
     const response = await fetch(`/${currentLanguage}/applications/${formIdentifier}/${readApplicationNumber()}`, {
       body: JSON.stringify({
         application_number: readApplicationNumber() || '',
         application_type_id: applicationTypeId,
-        attachments: Array.from(getAttachments(submittedData)),
-        form_data: submittedData,
+        attachments: Array.from(getAttachments(cleanedData)),
+        form_data: cleanedData,
         langcode: 'en',
       }),
       headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
