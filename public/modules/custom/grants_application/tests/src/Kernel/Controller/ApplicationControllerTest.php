@@ -195,8 +195,9 @@ final class ApplicationControllerTest extends KernelTestBase {
    */
   public function testFormPreview(): void {
     $controller = ApplicationController::create($this->container);
-    $value = $controller->formPreview($this->applicationNumber);
-    $this->assertEquals([], $value);
+    $response = $controller->formPreview($this->applicationNumber);
+    $this->assertEquals(404, $response->getStatusCode());
+    $this->assertEquals([], json_decode($response->getContent(), TRUE));
   }
 
 }

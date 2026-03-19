@@ -17,6 +17,24 @@ helfi_grants.forms_app_edit:
   requirements:
     _role: helsinkiprofiili
 
+helfi_grants.forms_app_preview_data:
+  path: '/application/preview/{form_identifier}'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::formPreview'
+  methods: [GET]
+  requirements:
+    _permission: 'access content'
+
+helfi_grants.forms_app_empty_preview:
+  path: '/application/new/{form_identifier}/preview'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
+    _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getFormTitle'
+    use_empty_preview: TRUE
+    use_draft: TRUE
+  requirements:
+    _permission: 'access content'
+
 helfi_grants.view_application:
   path: '/application/view/{application_number}'
   defaults:
