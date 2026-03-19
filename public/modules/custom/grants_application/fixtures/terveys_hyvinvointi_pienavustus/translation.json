@@ -1,0 +1,14 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "Citizen Participation, small grant application",
+      "fi": "Asukasosallisuus, pienavustushakemus",
+      "sv": "Invånardelaktighet, ansökan om små bidrag"
+    },
+    "purpose_intro_text.value": {
+      "en": "Description of the free-of-charge activities open to all for which the grant is being sought and a budget for the allocation of costs.",
+      "fi": "Kuvaus kaikille avoimesta maksuttomasta toiminnasta, johon avustusta haetaan sekä talousarvio kustannusten kohdentumisesta.",
+      "sv": "Beskrivning av verksamhet som är öppen för alla och kostnadsfri och för vilket understöd ansöks samt budgeten för allokering av kostnaderna."
+    }
+  }
+}
