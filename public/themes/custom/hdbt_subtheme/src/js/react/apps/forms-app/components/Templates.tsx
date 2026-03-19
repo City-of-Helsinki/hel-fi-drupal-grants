@@ -246,9 +246,13 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
     );
   }
 
+  const hasRequiredChild = Object.values(uiSchema || {}).some(
+    (child) => typeof child === 'object' && child !== null && (child as any)['misc:required'],
+  );
+
   return (
     <Fieldset
-      heading={title || ''}
+      heading={hasRequiredChild ? `${title} *` : title || ''}
       className='hdbt-form--fieldset hdbt-form--fieldset--border'
       style={{ marginInline: '0' }}
       tooltip={getTooltip(uiSchema)}

@@ -65,11 +65,15 @@ class JsonHandler {
    * @param array $definition
    *   Mapping definition.
    *
-   * @return array
+   * @return array|false
    *   The income field data.
    */
-  public static function income(array $data, array $definition): array {
+  public static function income(array $data, array $definition): array|FALSE {
     $result = [];
+
+    if (!$data) {
+      return FALSE;
+    }
 
     foreach ($data as $key => $item) {
       $mappedItem = self::setLabelAndValue($item, $definition);

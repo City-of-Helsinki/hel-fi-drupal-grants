@@ -119,7 +119,6 @@ final class JsonMapperService {
     string $selectedCompanyType,
     array $oldDocument,
   ): array {
-    $mappingFileName = "ID$formTypeId.json";
     $dataSources = $this->getDataSources($formData, $applicationNumber, $formTypeId, $formIdentifier);
 
     // @todo Fix.
