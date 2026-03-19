@@ -10,7 +10,7 @@
   @include font('body');
 }
 
-.sidebar-text__title {
+h2 {
   @include font('h4');
   color: $color-black;
   margin-top: 0;
@@ -24,7 +24,7 @@
   @include font('small');
   color: var(--hdbt-color-palette-text--secondary);
 
-  > p {
+  p {
     background-color: var(--color-black-5);
     margin: 0;
     padding: $spacing-and-half $spacing;
