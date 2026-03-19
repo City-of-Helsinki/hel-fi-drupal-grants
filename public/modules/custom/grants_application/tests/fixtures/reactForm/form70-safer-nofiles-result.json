@@ -107,28 +107,28 @@
       },
       {
         "ID": "formTimeStamp",
-        "value": "2026-03-12T16:25:39",
+        "value": "2025-10-06T13:13:13",
         "valueType": "datetime"
       },
       {
         "ID": "createdFormTimeStamp",
-        "value": "2026-03-12T16:25:39",
+        "value": "2025-10-06T13:13:13",
         "valueType": "datetime"
       },
       {
         "ID": "submittedFormTimeStamp",
-        "value": "2026-03-12T16:25:39",
+        "value": "2025-10-06T13:13:13",
         "valueType": "datetime"
       },
       {
         "ID": "applicationNumber",
-        "value": "LOCALK-070-0002026",
+        "value": "ABCDE-123-0001009",
         "valueType": "string"
       },
       {
         "ID": "status",
         "label": "Hakemuksen tila",
-        "value": "RECEIVED",
+        "value": "DRAFT",
         "valueType": "string"
       },
       {
@@ -143,25 +143,25 @@
         {
           "ID": "name",
           "label": "Nimi",
-          "value": "Ville Vallaton",
+          "value": "Teppo Testaaja",
           "valueType": "string"
         },
         {
           "ID": "role",
           "label": "Rooli",
-          "value": "11",
+          "value": "2",
           "valueType": "int"
         },
         {
           "ID": "email",
           "label": "S\u00e4hk\u00f6posti",
-          "value": "ville@example.com",
+          "value": "teppo.testaaja@noreply.com",
           "valueType": "string"
         },
         {
           "ID": "phone",
           "label": "Puhelinnumero",
-          "value": "040 11233 45 ",
+          "value": "+358451234657",
           "valueType": "string"
         }
       ]
@@ -170,7 +170,7 @@
       {
         "ID": "accountNumber",
         "label": "Tilinumero",
-        "value": "FI9133437423819388",
+        "value": "FI4950009420028730",
         "valueType": "string"
       }
     ],
@@ -187,21 +187,21 @@
       },
       {
         "ID": "personID",
-        "value": "210281-9988",
+        "value": "010101A0101",
         "valueType": "string"
       },
       {
         "ID": "userID",
-        "value": "280f75c5-6a20-4091-b22d-dfcdce7fef60",
+        "value": "123345678-abcd-1234-ab12-abcdefgh",
         "valueType": "string"
       },
       {
         "ID": "email",
-        "value": "profiilitesti@mailinator.com",
+        "value": "user_no_mail@hel.fi",
         "valueType": "string"
       }
     ],
-    "additionalInformation": "Lis\u00e4tietokentt\u00e4 liitesivun alussa",
+    "additionalInformation": "lis\u00e4tiedot",
     "compensationInfo": {
       "compensationArray": [
         [
@@ -214,7 +214,7 @@
           {
             "ID": "amount",
             "label": "Euroa",
-            "value": "1110",
+            "value": "11110",
             "valueType": "double"
           }
         ]
@@ -222,7 +222,7 @@
       "generalInfoArray": [
         {
           "ID": "purpose",
-          "value": "asd",
+          "value": "lyhyt kuvaus",
           "valueType": "string",
           "label": "Lyhyt kuvaus haettavan \/ haettavien avustusten k\u00e4ytt\u00f6tarkoituksista"
         }
@@ -240,25 +240,25 @@
           {
             "ID": "issuerName",
             "label": "My\u00f6nt\u00e4j\u00e4n nimi",
-            "value": "Aasd",
+            "value": "aaa",
             "valueType": "string"
           },
           {
             "ID": "year",
             "label": "Vuosi",
-            "value": "2025",
+            "value": "2021",
             "valueType": "string"
           },
           {
             "ID": "amount",
             "label": "",
-            "value": "100",
+            "value": "1000",
             "valueType": "string"
           },
           {
             "ID": "purpose",
             "label": "Kuvaus k\u00e4ytt\u00f6tarkoituksesta",
-            "value": "Avustuksen k\u00e4ytt\u00f6tarkoitus",
+            "value": "Lyhyt kuvaus my\u00f6nnetyn avustuksen k\u00e4ytt\u00f6tarkoituksesta",
             "valueType": "string"
           }
         ]
@@ -268,31 +268,31 @@
           {
             "ID": "issuer",
             "label": "Avustuksen my\u00f6nt\u00e4j\u00e4",
-            "value": "Muu",
+            "value": "S\u00e4\u00e4ti\u00f6",
             "valueType": "string"
           },
           {
             "ID": "issuerName",
             "label": "My\u00f6nt\u00e4j\u00e4n nimi",
-            "value": "Muu haettu nimi",
+            "value": "Haetttu avustus s\u00e4\u00e4ti\u00f6",
             "valueType": "string"
           },
           {
             "ID": "year",
             "label": "Vuosi",
-            "value": "2025",
+            "value": "2022",
             "valueType": "string"
           },
           {
             "ID": "amount",
             "label": "",
-            "value": "100",
+            "value": "2000",
             "valueType": "string"
           },
           {
             "ID": "purpose",
             "label": "Kuvaus k\u00e4ytt\u00f6tarkoituksesta",
-            "value": "Kuvaus kuvaus kuvaus",
+            "value": "haetun avustuksen k\u00e4ytt\u00f6tarkoitus",
             "valueType": "string"
           }
         ]
@@ -351,13 +351,13 @@
         {
           "ID": "active_participants_under_20",
           "label": "Yhdistyksen alle 20-vuotiaiden aktiiviharrastajien m\u00e4\u00e4r\u00e4",
-          "value": "100",
+          "value": "10",
           "valueType": "string"
         },
         {
           "ID": "active_participants_local",
           "label": "Joista helsinkil\u00e4isi\u00e4",
-          "value": "100",
+          "value": "20",
           "valueType": "string"
         },
         {
@@ -429,8 +429,8 @@
           "otherIncomeRowsArrayStatic": [
             {
               "ID": "tulot_field_0_0",
-              "label": "Kuvaus tulosta",
-              "value": 100,
+              "label": "tulon tyyppi",
+              "value": 1111,
               "valueType": "double"
             }
           ]
@@ -442,13 +442,23 @@
           "otherCostRowsArrayStatic": [
             {
               "ID": "menot_field_0_0",
-              "label": "Kuvaus menosta",
-              "value": 200,
+              "label": "Menon tyyppi",
+              "value": 2222,
               "valueType": "double"
             }
           ]
         }
       ]
     }
+  },
+  "attachmentsInfo": {
+    "generalInfoArray": [
+      {
+        "ID": "extraInfo",
+        "label": "Lisäselvitys liitteistä",
+        "value": "Liitteiden lisäselvitys",
+        "valueType": "string"
+      }
+    ]
   }
 }

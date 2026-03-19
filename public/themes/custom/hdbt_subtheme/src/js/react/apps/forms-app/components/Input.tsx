@@ -40,7 +40,7 @@ export const PreviewInput = ({
   uiSchema: UiSchema<any, RJSFSchema, any> | undefined;
 }) => (
   <>
-    {!uiSchema?.['ui:options']?.hideNameFromPrint && (
+    {!uiSchema?.['ui:options']?.hideNameFromPrint && (uiSchema?.['ui:options']?.printableName || label) && (
       <span className='grants-form--preview-section__label'>
         {uiSchema?.['ui:options']?.printableName?.toString() ?? label}
       </span>

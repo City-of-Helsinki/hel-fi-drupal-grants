@@ -1,0 +1,44 @@
+.js .ui-dialog {
+  &:not(.ui-dialog-off-canvas) {
+    background-color: $color-white !important;
+    border-top: $spacing-half solid $color-bus !important;
+    padding: $spacing-double !important;
+  }
+  
+  .ui-dialog-titlebar-close {
+    display: none;
+  }
+
+  .ui-dialog-content:not(.ui-dialog-buttonpane) {
+    margin-top: $spacing;
+    padding: 0;
+
+    @include font('body');
+  }
+
+  .ui-dialog-titlebar {
+    background: $color-white !important;
+    padding: 0 !important;
+  }
+
+  .ui-dialog-title {
+    @include font('h3');
+    color: $color-black;
+    text-wrap: auto;
+  }
+
+  .ui-widget-content.ui-dialog-buttonpane {
+    margin-top: $spacing-and-half;
+
+    .ui-dialog-buttonset {
+      justify-content: left;
+      margin: 0;
+      width: 100%;
+    }
+  }
+}
+
+
+.ui-widget-overlay {
+  background: rgba($color-black, 0.3) !important;
+}

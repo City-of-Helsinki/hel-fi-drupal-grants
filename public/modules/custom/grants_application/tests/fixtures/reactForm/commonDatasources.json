@@ -10,7 +10,7 @@
     "now": "2025-10-06T13:13:13",
     "registration_date": "21.5.2023",
     "selected_address": {"address_id":"a59e8ddf-1f4f-404d-9076-3495ce95f284","street":"Mannerheimintie 12","postCode":"00100","city":"Helsinki","country":"Suomi"},
-    "selected_community_official": {"official_id":"b0dcbf65-9035-41bb-8282-2b38982a262e","name":"Teppo Testaaja","role":"2","email":"teppo.testaaja@noreply.com","phone":"+358451234657"},
+    "selected_community_officials": [{"official_id":"b0dcbf65-9035-41bb-8282-2b38982a262e","name":"Teppo Testaaja","role":"2","email":"teppo.testaaja@noreply.com","phone":"+358451234657"}],
     "status": "DRAFT"
   }
 }

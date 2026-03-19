@@ -4,19 +4,19 @@
       "email": "test@example.com"
     },
     "contact_person_info": {
-      "contact_person": "Test test",
+      "contact_person": "Joku Henkilö",
       "contact_person_phone_number": "040 123 123 12"
     },
     "community_address": {
       "community_address": "Kauppakatu 20"
     },
     "bank_account": {
-      "bank_account": "FI9133437423819388"
+      "bank_account": "FI4950009420028730"
     },
     "community_officials": {
       "community_officials": [
         {
-          "official": "b0dcbf65-9035-41bb-8282-2b38982a262e"
+          "official": "a464c2d0-a79a-400e-a9cf-32f583675194"
         }
       ]
     }
@@ -37,24 +37,24 @@
           {
             "ID": "amount",
             "label": "Euroa",
-            "value": "1110",
+            "value": "11110",
             "valueType": "double"
           }
         ]
       ]
     },
     "purpose_section": {
-      "purpose": "asd"
+      "purpose": "lyhyt kuvaus"
     },
     "other_compensations_section": {
       "have_received_other_compensations": true,
       "other_compensations": [
         {
           "other_compensation_issuer": "Valtio",
-          "other_compensation_issuer_name": "Aasd",
-          "other_compensation_issuer_year": "2025",
-          "other_compensation_amount": 100,
-          "other_compensation_description": "Avustuksen k\u00e4ytt\u00f6tarkoitus"
+          "other_compensation_issuer_name": "aaa",
+          "other_compensation_issuer_year": "2021",
+          "other_compensation_amount": 1000,
+          "other_compensation_description": "Lyhyt kuvaus myönnetyn avustuksen käyttötarkoituksesta"
         }
       ]
     },
@@ -62,11 +62,11 @@
       "have_applied_other_compensations": true,
       "other_applied_compensations": [
         {
-          "other_applied_compensation_issuer": "Muu",
-          "other_applied_compensation_issuer_name": "Muu haettu nimi",
-          "other_applied_compensation_issuer_year": "2025",
-          "other_applied_compensation_amount": 100,
-          "other_applied_compensation_description": "Kuvaus kuvaus kuvaus"
+          "other_applied_compensation_issuer": "Säätiö",
+          "other_applied_compensation_issuer_name": "Haetttu avustus säätiö",
+          "other_applied_compensation_issuer_year": "2022",
+          "other_applied_compensation_amount": 2000,
+          "other_applied_compensation_description": "haetun avustuksen käyttötarkoitus"
         }
       ]
     }
@@ -85,8 +85,8 @@
         "active_participants_wrapper_help": [
           null
         ],
-        "active_participants_under_20": "100",
-        "active_participants_local": "100"
+        "active_participants_under_20": "10",
+        "active_participants_local": "20"
       },
       "under_20_affected": "Lorem ipsum 8",
       "key_partners": "Lorem ipsum 9",
@@ -107,8 +107,8 @@
       "incomeGroupName": "general",
       "income_rows": [
         {
-          "income_row_description": "Kuvaus tulosta",
-          "income_row_amount": 100
+          "income_row_description": "tulon tyyppi",
+          "income_row_amount": 1111
         }
       ]
     },
@@ -116,15 +116,15 @@
       "costGroupName": "subventionUseCosts",
       "expenditure_rows": [
         {
-          "expenditure_row_description": "Kuvaus menosta",
-          "expenditure_row_amount": 200
+          "expenditure_row_description": "Menon tyyppi",
+          "expenditure_row_amount": 2222
         }
       ]
     }
   },
   "attachments_step": {
     "additional_information_section": {
-      "additional_information": "Lis\u00e4tietokentt\u00e4 liitesivun alussa"
+      "additional_information": "lisätiedot"
     },
     "attachments_section": {
       "required_attachments_help": [
@@ -140,10 +140,11 @@
         null,
         null
       ],
-      "further_clarification": "Liitteiden lis\u00e4selvitys",
+      "further_clarification": "Liitteiden lisäselvitys",
       "other_attachment_fieldset": {
         "other_attachment_fieldset_file": {
-          "files": []
+          "files": [],
+          "description": ""
         }
       }
     }

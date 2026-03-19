@@ -79,5 +79,10 @@
 
   .form-group {
     width: 100%;
+
+    // Labels inside another form-group need margin on top to avoid being too close to the previous field value.
+    .form-group .form-group .grants-form--preview-section__label {
+      margin-block-start: $spacing;
+    }
   }
 }
