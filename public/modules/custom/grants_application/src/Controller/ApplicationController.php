@@ -311,7 +311,7 @@ final class ApplicationController extends ControllerBase {
     $statusHistory = $document->getStatusHistory();
     $submitted = array_find($statusHistory, fn($item) => $item['value'] === 'SUBMITTED') ?? FALSE;
     if ($submitted) {
-      $submitted = (new \DateTime($submitted['timestamp']))->format('Y-m-d H:i:s');
+      $submitted = (new \DateTime($submitted['timestamp']))->format('d.m.Y H:i');
     }
 
     // Get event history.
