@@ -245,7 +245,6 @@ export const FileInput = ({
 
   const inputElement = multipleFiles ? (
     <HDSFileInput
-      multiple
       accept={accept}
       defaultValue={defaultValue}
       disabled={readonly}
@@ -258,6 +257,7 @@ export const FileInput = ({
       language={drupalSettings.path.currentLanguage}
       // 20mb in bytes
       maxSize={20 * 1024 * 1024}
+      multiple
       onChange={(files: File[]) => {
         handleMultiple(files, formData);
       }}
@@ -288,6 +288,7 @@ export const FileInput = ({
 
   const descriptionElement = (
     <TextInput
+      disabled={readonly}
       id={`${name}-description`}
       label={t('file_description.title')}
       onChange={(e) => {
@@ -311,7 +312,7 @@ export const FileInput = ({
       {inputElement}
       <Checkbox
         checked={isDeliveredLater || false}
-        disabled={Boolean(defaultValue.length)}
+        disabled={readonly || Boolean(defaultValue.length)}
         id={`${name}-delivered-later`}
         label={Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' })}
         onChange={(e) => {
@@ -326,7 +327,7 @@ export const FileInput = ({
       />
       <Checkbox
         checked={isIncludedInOtherFile || false}
-        disabled={Boolean(defaultValue.length)}
+        disabled={readonly || Boolean(defaultValue.length)}
         id={`${name}-included-in-other-file`}
         label={Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' })}
         onChange={(e) => {

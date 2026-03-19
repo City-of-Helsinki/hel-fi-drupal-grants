@@ -600,6 +600,12 @@ function hdbt_subtheme_preprocess_page(&$variables): void {
     // (service) content type.
     if ($entity->getType() === 'service') {
       $variables['has_sidebar_second'] = TRUE;
+
+      // Remove sidebar content block from service page, since the field is
+      // hidden in the form display.
+      if (isset($variables['page']['sidebar_second']['sidebarcontentblock'])) {
+        unset($variables['page']['sidebar_second']['sidebarcontentblock']);
+      }
     }
   }
 }

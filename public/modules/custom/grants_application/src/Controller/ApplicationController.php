@@ -119,11 +119,18 @@ final class ApplicationController extends ControllerBase {
    *   The application number to use for the form.
    * @param bool $use_draft
    *   Whether to use the draft version of the form.
+   * @param bool $use_empty_preview
+   *   Whether to use the empty preview version of the form.
    *
    * @return array|RedirectResponse
    *   The resulting array
    */
-  public function formsApp(string $form_identifier, ?string $application_number, bool $use_draft): array|RedirectResponse {
+  public function formsApp(
+    string $form_identifier,
+    ?string $application_number,
+    bool $use_draft,
+    bool $use_empty_preview = FALSE,
+  ): array|RedirectResponse {
     // Grant terms are stored in block.
     $blockStorage = $this->entityTypeManager()->getStorage('block_content');
     $terms_block = $blockStorage->load(1);
@@ -206,6 +213,7 @@ final class ApplicationController extends ControllerBase {
               'link_title' => $terms_block->get('field_link_title')->value ?? '',
             ],
             'use_draft' => $use_draft,
+            'use_empty_preview' => $use_empty_preview,
           ],
         ],
       ],
@@ -711,16 +719,32 @@ final class ApplicationController extends ControllerBase {
   }
 
   /**
-   * Preview the form as anonymous or logged in user.
+   * Return empty form data for anonymous preview.
    *
    * @param string $form_identifier
    *   The form identifier.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   The JSON response.
    */
-  public function formPreview(string $form_identifier): array {
-    // @todo UHF-12923 the form preview for application,
-    // this is similar to ApplicationController::formsApp,
-    // needs route.
-    return [];
+  public function formPreview(string $form_identifier): JsonResponse {
+    try {
+      $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
+    }
+    catch (\Exception $e) {
+      return new JsonResponse([], 404);
+    }
+
+    $response = [
+      'form_data' => [],
+      'grants_profile' => [],
+      'user_data' => [],
+      'status' => 'draft',
+      'token' => $this->csrfTokenGenerator->get('rest'),
+      'last_changed' => NULL,
+    ] + $settings->toArray();
+
+    return new JsonResponse($response);
   }
 
   /**

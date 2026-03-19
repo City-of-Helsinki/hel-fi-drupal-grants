@@ -344,9 +344,11 @@ export const isReadOnlyAtom = atom((_get) => {
   // @todo Refactor: allow editing application if it has errors and locked
   // in submitted state.
   return (
+    _get(isEmptyPreviewAtom) ||
     ![SubmitStates.DRAFT, SubmitStates.SUBMITTED, SubmitStates.RECEIVED, SubmitStates.PREPARING].includes(
       submitState,
-    ) || isBeingSubmitted
+    ) ||
+    isBeingSubmitted
   );
 });
 
@@ -358,4 +360,8 @@ export const getFormTitleAtom = atom((_get) => {
   }
 
   return settings?.title ?? '';
+});
+
+export const isEmptyPreviewAtom = atom((_get) => {
+  return drupalSettings.grants_react_form.use_empty_preview;
 });
