@@ -28,6 +28,10 @@
   &--auth {
     background-color: var(--color-info-light);
   }
+
+  .hds-button {
+    margin-top: $spacing-and-half;
+  }
 }
 
 .hel-icon.hel-icon--swap-user {

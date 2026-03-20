@@ -1,9 +1,38 @@
 .user-login__text-container {
-  background: var(--color-white);
+  background: $color-white;
   max-width: 500px;
   padding: var(--spacing-m);
 
   p:first-of-type {
     margin-top: 0;
+  }
+}
+
+.user-login-page-content__container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing;
+  
+  @include breakpoint($breakpoint-m) {
+    flex-direction: row;
+    gap: $spacing-double;
+  }
+}
+
+.user-logout-confirm {
+  margin-top: $spacing-double;
+
+  .form-actions {
+    display: flex;
+    gap: $spacing;
+  }
+
+  .dialog-cancel {
+    align-items: center;
+    border: 2px solid $color-black;
+    display: flex;
+    justify-content: center;
+    min-width: 120px;
+    padding: $spacing-half $spacing;
   }
 }

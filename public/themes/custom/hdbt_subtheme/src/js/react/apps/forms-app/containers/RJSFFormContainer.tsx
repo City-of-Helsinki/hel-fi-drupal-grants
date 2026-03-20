@@ -1,4 +1,4 @@
-// biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
+// biome-ignore-all lint/suspicious/noExplicitAny: RJSF uses any for form data.
 // biome-ignore-all lint/correctness/noNestedComponentDefinitions: @todo UHF-12501
 // biome-ignore-all lint/correctness/useExhaustiveDependencies: @todo UHF-12501
 // biome-ignore-all lint/complexity/useOptionalChain: @todo UHF-12501
@@ -15,7 +15,7 @@ import { useAtomValue, useSetAtom, type WritableAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useDebounceCallback } from 'usehooks-ts';
 import Form, { getDefaultRegistry, type IChangeEvent } from '@rjsf/core';
-import type React from 'react';
+import type { ReactNode, FormEvent } from 'react';
 import { createRef, useCallback, useState } from 'react';
 import { customizeValidator } from '@rjsf/validator-ajv8';
 import { useTranslation } from 'react-i18next';
@@ -31,7 +31,7 @@ import {
   TextArea,
   TextInput,
 } from '../components/Input';
-import { ArrayFieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
+import { ArrayFieldTemplate, FieldTemplate, ObjectFieldTemplate, RemoveButtonTemplate } from '../components/Templates';
 import { ErrorsList } from '../components/ErrorsList';
 import { FileInput } from '../components/FileInput';
 import { FormActions } from '../components/FormActions/FormActions';
@@ -42,19 +42,21 @@ import {
   getStepsAtom,
   setErrorsAtom,
   getSubventionFieldsAtom,
+  getRequiredFileFieldsAtom,
   isReadOnlyAtom,
   setStepAtom,
+  isEmptyPreviewAtom,
 } from '../store';
 import { InvalidSchemaError } from '../errors/InvalidSchemaError';
 import { isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
-import { SubmittedForm } from '../components/SubmittedForm';
 import { SubventionSum } from '../components/Fields/SubventionSum';
 import { SubventionTable } from '../components/Fields/SubventionTable';
 import { Terms } from '../components/Terms';
 import { TextParagraph } from '../components/Fields/TextParagraph';
 import { localizeErrors } from '../localizeErrors';
+import { Notification, NotificationSize } from 'hds-react';
 
 const widgets: RegistryWidgetsType = {
   address: AddressSelect,
@@ -97,6 +99,7 @@ export const RJSFFormContainer = ({
   const { t } = useTranslation();
   const [invalidSchemaError, setInvalidSchemaError] = useState<InvalidSchemaError | null>(null);
   const subventionFields = useAtomValue(getSubventionFieldsAtom);
+  const requiredFileFields = useAtomValue(getRequiredFileFieldsAtom);
   const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
   const setStep = useSetAtom(setStepAtom);
@@ -106,6 +109,7 @@ export const RJSFFormContainer = ({
   const readReachedStep = useAtomCallback(useCallback((get) => get(getReachedStepAtom), []));
   const readFormData = useAtomCallback(useCallback((get) => get(formDataAtom), []));
   const setErrors = useSetAtom(setErrorsAtom);
+  const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
 
   const browserCacheData = useDebounceCallback((data: IChangeEvent) => {
     setFormData(data.formData);
@@ -184,13 +188,17 @@ export const RJSFFormContainer = ({
    * @return {object} - Form errors
    */
   const customValidate: CustomValidator = (formData, errors, _uiSchema) => {
-    const newErrors = [];
+    const newErrors: RJSFValidationError[] = [];
 
     subventionFields.forEach((field) => {
-      const values = field.split('.').reduce((acc, curr) => acc && acc[curr], formData);
-      const _field = field.split('.').reduce((acc, curr) => acc && acc[curr], errors);
+      const values = field.split('.').reduce((acc: any, curr) => acc && acc[curr], formData) as
+        | Record<string, [unknown, { value: unknown }]>
+        | undefined;
+      const _field = field.split('.').reduce((acc: any, curr) => acc && acc[curr], errors) as
+        | { addError: (msg: string) => void }
+        | undefined;
       const hasValues = values
-        ? Object.entries(values).reduce((acc, [key, curr]) => acc || Number(curr[1].value) > 0, false)
+        ? Object.entries(values).reduce((acc, [, curr]) => acc || Number(curr[1].value) > 0, false)
         : false;
 
       if (_field && !hasValues) {
@@ -199,7 +207,35 @@ export const RJSFFormContainer = ({
           property: `.${field}`,
           message: t('subvention.greater_than_zero'),
           schemaPath: `.${field}`,
+          stack: `.${field} ${t('subvention.greater_than_zero')}`,
         });
+      }
+    });
+
+    const reachedStep = readReachedStep();
+    requiredFileFields.forEach((field) => {
+      const stepId = field.split('.')[0];
+      const stepEntry = Array.from(steps).find(([, step]) => step.id === stepId);
+      const stepIndex = stepEntry?.[0] ?? 0;
+
+      const fileData = field.split('.').reduce((acc: any, curr) => acc && acc[curr], formData);
+      const isFulfilled = fileData?.fileName || fileData?.isDeliveredLater || fileData?.isIncludedInOtherFile;
+
+      if (!isFulfilled) {
+        newErrors.push({
+          property: `.${field}`,
+          message: t('file.required'),
+          schemaPath: `.${field}`,
+          stack: `.${field} ${t('file.required')}`,
+        });
+
+        // Only show inline error on the field itself if the user has reached this step
+        if (stepIndex <= reachedStep) {
+          const _field = field.split('.').reduce((acc: any, curr) => acc && acc[curr], errors) as
+            | { addError: (msg: string) => void }
+            | undefined;
+          _field?.addError(t('file.required'));
+        }
       }
     });
 
@@ -207,6 +243,38 @@ export const RJSFFormContainer = ({
     setErrors(errorsToShow, true);
 
     return errors;
+  };
+
+  const getFormTopArea = () => {
+    const components: ReactNode[] = [];
+
+    if (isEmptyPreview) {
+      components.push(
+        <Notification
+          className='hdbt-form--notification empty-preview-notification'
+          key='preview-notification'
+          label={Drupal.t('Preview mode', {}, { context: 'grants_webform_print' })}
+          size={NotificationSize.Small}
+          type='alert'
+        >
+          {Drupal.t(
+            'This printout is only for previewing the application and cannot be used when applying for a grant',
+            {},
+            { context: 'grants_webform_print' },
+          )}
+        </Notification>,
+      );
+    }
+
+    if (!isDraft()) {
+      components.push(<FormSummary key='summary' formData={readFormData()} schema={schema} />);
+    }
+
+    if (!readOnly && !isEmptyPreview) {
+      components.push(<StaticStepsContainer key='static-steps' formDataAtom={formDataAtom} schema={schema} />);
+    }
+
+    return components;
   };
 
   return (
@@ -218,12 +286,7 @@ export const RJSFFormContainer = ({
         </>
       )}
       <div className='form-wrapper'>
-        {!isDraft() && <FormSummary formData={readFormData()} schema={schema} />}
-        {readOnly ? (
-          <SubmittedForm formData={readFormData()} schema={schema} />
-        ) : (
-          <StaticStepsContainer formDataAtom={formDataAtom} schema={schema} />
-        )}
+        {getFormTopArea()}
         <Form
           className='grants-form'
           customValidate={customValidate}
@@ -240,7 +303,7 @@ export const RJSFFormContainer = ({
           noHtml5Validate
           onChange={browserCacheData}
           onError={onError}
-          onSubmit={async (data, event: React.FormEvent<HTMLFormElement>) => {
+          onSubmit={async (data, event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
 
             if (readCurrentStep()[1].id !== 'preview') {
@@ -266,6 +329,7 @@ export const RJSFFormContainer = ({
               MoveUpButton: () => null,
             },
             FieldErrorTemplate: () => null,
+            FieldTemplate,
             ObjectFieldTemplate,
           }}
           transformErrors={transformErrors}
@@ -276,9 +340,11 @@ export const RJSFFormContainer = ({
           )}
           widgets={widgets}
         >
-          {!drupalSettings.grants_react_form.use_preview && <Terms />}
-          {!drupalSettings.grants_react_form.use_preview && (
-            <FormActions saveDraft={() => saveDraft(readFormData())} validatePartialForm={validatePartialForm} />
+          {!drupalSettings.grants_react_form.use_preview && !isEmptyPreview && (
+            <>
+              <Terms />
+              <FormActions saveDraft={() => saveDraft(readFormData())} validatePartialForm={validatePartialForm} />
+            </>
           )}
         </Form>
       </div>

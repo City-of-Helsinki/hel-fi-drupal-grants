@@ -206,15 +206,6 @@
               "title": "community_activity.title",
               "type": "string"
             },
-            "community_activity_description_information": {
-              "type": "array",
-              "items": [
-                {
-                  "title": "community_activity_information.value",
-                  "type": "null"
-                }
-              ]
-            },
             "community_practices_business": {
               "title": "community_practices_business.title",
               "enum": [
@@ -246,26 +237,21 @@
             "members_fieldset": {
               "type": "object",
               "title": "members_fieldset.legend",
-              "description": "members_fieldset.description",
               "properties": {
                 "members_applicant_person_global": {
                   "title": "members_applicant_person_global.title",
-                  "description": "members_applicant_person_global.description",
                   "type": "integer"
                 },
                 "members_applicant_person_local": {
                   "title": "members_applicant_person_local.title",
-                  "description": "members_applicant_person_local.description",
                   "type": "integer"
                 },
                 "members_applicant_community_global": {
                   "title": "members_applicant_community_global.title",
-                  "description": "members_applicant_community_global.description",
                   "type": "integer"
                 },
                 "members_applicant_community_local": {
                   "title": "members_applicant_community_local.title",
-                  "description": "members_applicant_community_local.description",
                   "type": "integer"
                 }
               }

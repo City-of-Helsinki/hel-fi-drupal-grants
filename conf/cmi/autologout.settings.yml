@@ -27,6 +27,6 @@ yes_button: 'Continue session'
 no_button: 'Log out'
 whitelisted_ip_addresses: ''
 cookie_secure: true
-cookie_httponly: true
+cookie_httponly: false
 cookie_samesite: Lax
 cookie_lifetime: 31536000

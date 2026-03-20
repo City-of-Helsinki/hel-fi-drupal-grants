@@ -1,17 +1,9 @@
 {
-  "en": {
-    "translation": {
-      "form_title": "Environmental services, general grant application"
-    }
-  },
-  "fi": {
-    "translation": {
-      "form_title": "Ympäristöpalvelut, yleisavustushakemus"
-    }
-  },
-  "sv": {
-    "translation": {
-      "form_title": "Miljötjänster, allmän bidragsansökan"
+  "translations": {
+    "form_title": {
+      "en": "Environmental services, general grant application",
+      "fi": "Ympäristöpalvelut, yleisavustushakemus",
+      "sv": "Miljötjänster, allmän bidragsansökan"
     }
   }
 }
