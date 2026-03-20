@@ -311,10 +311,10 @@
   },
   "33": {
     "id": 76,
-    "form_identifier": "asukasosallisuus_yleis_ja_toimin",
-    "code": "ASUKASYLEISTOIM",
+    "form_identifier": "hyteed_pienavustus",
+    "code": "HYTEEDPIEN",
     "labels": {
-      "fi": "Asukasosallisuus, yleis- ja toiminta-avustushakemus",
+      "fi": "Hyvinvoinnin ja terveyden edistämisen pienavustus",
       "en": "Grants for welfare and health promotion: Small grants",
       "sv": "Understöd inom främjandet av välfärd och hälsa: Små understöd"
     }
