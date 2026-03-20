@@ -30,10 +30,20 @@
       "fi": "Talokerho",
       "sv": "Husklubben"
     },
+    "start_subvention_section.title": {
+      "en": "Start grant",
+      "fi": "Starttiavustus",
+      "sv": "Startunderstöd"
+    },
     "start_subvention_applied.title": {
       "en": "This is an application for a start grant to initiate the association's activities.",
       "fi": "Tämä on starttiavustushakemus yhdistyksen toiminnan käynnistämiseen",
       "sv": "Detta är en ansökan om startunderstöd för att inleda föreningens verksamhet."
+    },
+    "start_subvention_help.value": {
+      "en": "Start grants can be awarded for starting or relaunching activities of early youth and youth associations or similar organizations. The requested amount should be entered in the grant type box under the project grant amount.",
+      "fi": "Starttiavustusta voi saada varhaisnuoriso- ja nuorisoyhdistyksen ja vastaavan toiminnan käynnistämiseen tai uudelleen aloittamiseen. Hakusumma laitetaan avustuslaji laatikkoon projektiavustussumman kohdalle.",
+      "sv": "Startunderstöd kan beviljas för att initiera eller återuppta verksamhet inom barn- och ungdomsföreningar eller motsvarande organisationer. Det ansökta beloppet ska anges i rutan för bidragstyp under projektbidragets belopp."
     }
   }
 }

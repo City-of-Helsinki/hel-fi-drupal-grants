@@ -8,13 +8,18 @@
     "subventions_section": {
       "subventions": {
         "ui:field": "subventionTable"
-      },
+      }
+    },
+    "start_subvention_section": {
       "start_subvention_applied": {
         "ui:enumNames": [
           "boolean.no",
           "boolean.yes"
         ],
         "ui:widget": "radio"
+      },
+      "start_subvention_help": {
+        "ui:field": "textParagraph"
       }
     },
     "other_compensations_section": {

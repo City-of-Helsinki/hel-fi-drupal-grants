@@ -127,7 +127,12 @@
                   "label": "subventions.4.title"
                 }
               ]
-            },
+            }
+          }
+        },
+        "start_subvention_section": {
+          "type": "object",
+          "properties": {
             "start_subvention_applied": {
               "title": "start_subvention_applied.title",
               "enum": [
@@ -135,6 +140,15 @@
                 true
               ],
               "default": false
+            },
+            "start_subvention_help": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "start_subvention_help.value",
+                  "type": "null"
+                }
+              ]
             }
           }
         },
