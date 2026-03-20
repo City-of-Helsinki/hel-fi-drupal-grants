@@ -1,0 +1,14 @@
+{
+  "title": "Nuorisotoiminnan projektiavustushakemus",
+  "description": "NUORPROJEKTI",
+  "application_type": "NUORPROJEKTI",
+  "application_type_id": 77,
+  "application_industry": "KUVA",
+  "application_open": "2026-01-19T00:00:00",
+  "application_close": "2026-12-31T23:59:59",
+  "applicant_types": ["registered_community", "unregistered_community"],
+  "subvention_type": [4],
+  "acting_years": [2026, 2027, 2028],
+  "continuous": true,
+  "disable_copy": false
+}

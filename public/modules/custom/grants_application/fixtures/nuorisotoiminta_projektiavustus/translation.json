@@ -1,0 +1,39 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "Project grant application for youth activities",
+      "fi": "Nuorisotoiminnan projektiavustushakemus",
+      "sv": "Ansökan om projektunderstöd för ungdomsverksamhet"
+    },
+    "grant_target_section.title": {
+      "en": "Object of the grant",
+      "fi": "Avustuksen kohde",
+      "sv": "Stödets föremål"
+    },
+    "grant_target.title": {
+      "en": "For whom I am applying for the grant",
+      "fi": "Kenelle haen avustusta",
+      "sv": "För vem ansöker jag om understöd"
+    },
+    "grant_target.youth_association": {
+      "en": "Youth association",
+      "fi": "Nuorisoyhdistys",
+      "sv": "Föreningen för unga"
+    },
+    "grant_target.youth_activity_group": {
+      "en": "Youth activity group",
+      "fi": "Nuorten toimintaryhmä",
+      "sv": "Verksamhetsgruppen för unga"
+    },
+    "grant_target.housing_club": {
+      "en": "Housing association",
+      "fi": "Talokerho",
+      "sv": "Husklubben"
+    },
+    "start_subvention_applied.title": {
+      "en": "This is an application for a start grant to initiate the association's activities.",
+      "fi": "Tämä on starttiavustushakemus yhdistyksen toiminnan käynnistämiseen",
+      "sv": "Detta är en ansökan om startunderstöd för att inleda föreningens verksamhet."
+    }
+  }
+}

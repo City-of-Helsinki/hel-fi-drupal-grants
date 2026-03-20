@@ -690,6 +690,11 @@
       "fi": "Toiminta-avustus",
       "sv": "Verksamhetsunderstöd"
     },
+    "subventions.4.title": {
+      "en": "Project grant",
+      "fi": "Projektiavustus",
+      "sv": "Projektunderstöd"
+    },
     "subventions.5.title": {
       "en": "Rent subsidy",
       "fi": "Vuokra-avustus",
