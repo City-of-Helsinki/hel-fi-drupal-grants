@@ -124,7 +124,7 @@
       {
         "ID": "actingYear",
         "label": "Vuosi, jolle haen avustusta",
-        "value": "2025",
+        "value": "2026",
         "valueType": "string"
       }
     ],
