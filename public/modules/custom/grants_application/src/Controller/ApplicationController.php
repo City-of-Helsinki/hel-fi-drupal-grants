@@ -214,6 +214,9 @@ final class ApplicationController extends ControllerBase {
             ],
             'use_draft' => $use_draft,
             'use_empty_preview' => $use_empty_preview,
+            'print_url' => $application_number
+              ? Url::fromRoute('helfi_grants.print_view', ['application_number' => $application_number])->toString()
+              : NULL,
           ],
         ],
       ],
@@ -350,7 +353,7 @@ final class ApplicationController extends ControllerBase {
         }
         $documentContentAttachment = array_find($documentContent['attachmentsInfo']['attachmentsArray'], fn($a) => $a[2]['ID'] === 'fileType' && $a[1]['value'] === $filename);
         $description = $documentContentAttachment[0]['value'] . ', ' ?? '';
-        $submitted = $event['timeCreated'];
+        $submitted = $event['timeCreated'] ?? $event['eventCreated'];
         $submitted = (new \DateTime($submitted))->format('d.m.Y H:i');
 
         $submitted = !$submitted ? '' : $submitted . ': ';
@@ -455,6 +458,7 @@ final class ApplicationController extends ControllerBase {
             ],
             'use_draft' => TRUE,
             'use_preview' => TRUE,
+            'print_url' => $submission->getPrintApplicationUrl()->toString(),
           ],
         ],
       ],
@@ -713,9 +717,70 @@ final class ApplicationController extends ControllerBase {
    *   The application number.
    */
   public function printApplication(string $application_number): array {
-    // @todo UHF-12685 the original implementation can handle react forms
-    // mediocre at best and it should be eventually moved here.
-    return [];
+    if (!$application_number) {
+      throw new NotFoundHttpException();
+    }
+
+    try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $user_information = $this->userInformationService->getUserData();
+    }
+    catch (\Throwable $e) {
+      throw new NotFoundHttpException();
+    }
+
+    try {
+      $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+    }
+    catch (\Throwable) {
+      throw new NotFoundHttpException();
+    }
+
+    $submission = $this->getApplicationSubmission($application_number);
+    if (!$submission) {
+      throw new NotFoundHttpException();
+    }
+
+    $form_identifier = $submission->get('form_identifier')->value;
+    $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
+
+    $document = $this->helfiAtvService->getDocument($application_number);
+    $statusHistory = $document->getStatusHistory();
+    $submitted = array_find($statusHistory, fn($item) => $item['value'] === 'SUBMITTED') ?? FALSE;
+    if ($submitted) {
+      $submitted = (new \DateTime($submitted['timestamp']))->format('d.m.Y H:i');
+    }
+    $langCode = $this->languageManager()->getCurrentLanguage()->getId();
+    $statusStrings = $this->getStatusStrings($langCode);
+    $statusLocalized = $statusStrings[$document->getStatus()] ?? ucfirst(strtolower($document->getStatus()));
+
+    return [
+      '#theme' => 'grants_application_print',
+      '#submission_id' => $application_number,
+      '#application_number' => $submission->get('application_type_id')->value,
+      '#title' => $settings->getApplicationName(),
+      '#status' => $statusLocalized,
+      '#submitted' => $submitted,
+      '#attached' => [
+        'drupalSettings' => [
+          'grants_react_form' => [
+            'application_number' => $settings->getFormId(),
+            'real_application_number' => $submission->get('application_number')->value,
+            'form_identifier' => $form_identifier,
+            'token' => $this->csrfTokenGenerator->get('rest'),
+            'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
+            'terms' => [
+              'body' => '',
+              'link_title' => '',
+            ],
+            'use_draft' => TRUE,
+            'use_preview' => TRUE,
+            'use_print' => TRUE,
+            'print_url' => $submission->getPrintApplicationUrl()->toString(),
+          ],
+        ],
+      ],
+    ];
   }
 
   /**

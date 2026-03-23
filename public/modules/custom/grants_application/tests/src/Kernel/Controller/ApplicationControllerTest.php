@@ -16,6 +16,7 @@ use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @coversDefaultClass \Drupal\grants_application\Controller\ApplicationController
@@ -185,9 +186,9 @@ final class ApplicationControllerTest extends KernelTestBase {
    * Test application print route.
    */
   public function testPrintApplication(): void {
+    $this->expectException(NotFoundHttpException::class);
     $controller = ApplicationController::create($this->container);
-    $value = $controller->printApplication($this->applicationNumber);
-    $this->assertEquals([], $value);
+    $controller->printApplication($this->applicationNumber);
   }
 
   /**

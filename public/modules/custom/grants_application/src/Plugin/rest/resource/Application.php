@@ -18,6 +18,7 @@ use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\Mapper\JsonMapperService;
 use Drupal\grants_application\JsonSchemaValidator;
+use Drupal\grants_application\Migrator\SchemaVersionMigrator;
 use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_attachments\AttachmentHandler;
 use Drupal\grants_events\EventsService;
@@ -71,6 +72,7 @@ final class Application extends ResourceBase {
     private ContentLockInterface $contentLock,
     private AccountProxyInterface $accountProxy,
     private JsonMapperService $jsonMapperService,
+    private SchemaVersionMigrator $schemaVersionMigrator,
   ) {
     // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
@@ -103,6 +105,7 @@ final class Application extends ResourceBase {
       $container->get('content_lock'),
       $container->get('current_user'),
       $container->get(JsonMapperService::class),
+      $container->get(SchemaVersionMigrator::class),
     );
   }
 
@@ -167,6 +170,12 @@ final class Application extends ResourceBase {
     try {
       $document = $this->atvService->getDocument($application_number);
       $content = $document->getContent();
+
+      $storedVersion = $document->getMetadata()['schema_version'] ?? '1';
+      $currentVersion = $settings->getSchema()['x-schema-version'] ?? '1';
+      if (version_compare($storedVersion, $currentVersion, '!=')) {
+        $content = $this->schemaVersionMigrator->migrate($content, $storedVersion, $currentVersion);
+      }
 
       // @todo Shadow-document -ticket.
       // Load the form_data wherever it may be located.
@@ -396,6 +405,10 @@ final class Application extends ResourceBase {
     $document->setContent($mappedData);
     // @codingStandardsIgnoreEnd
 
+    $postMetadata = $document->getMetadata();
+    $postMetadata['schema_version'] = $settings->getSchema()['x-schema-version'] ?? '1';
+    $document->setMetadata($postMetadata);
+
     // Set the submitted -status right before sending to Avus2.
     // The status is set as request header by integration-service.
     $document->setStatus('SUBMITTED');
@@ -557,6 +570,10 @@ final class Application extends ResourceBase {
       // @todo Save the form_data in separate atv doc.
       $mappedData['form_data'] = $form_data ?? [];
       $document->setContent($mappedData);
+
+      $patchMetadata = $document->getMetadata();
+      $patchMetadata['schema_version'] = $settings->getSchema()['x-schema-version'] ?? '1';
+      $document->setMetadata($patchMetadata);
 
       $save_id = Uuid::uuid4()->toString();
 

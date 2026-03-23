@@ -39,3 +39,5 @@ services:
     class: Drupal\grants_application\Drush\Commands\DebugMappingsCommands
     tags:
       - { name: drush.command }
+
+  Drupal\grants_application\Migrator\SchemaVersionMigrator: ~
