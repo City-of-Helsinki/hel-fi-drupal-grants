@@ -91,6 +91,15 @@ const PreviewStep = ({
   const headingText = printableName || title?.toString();
   const heading = stepNumber !== undefined ? `${stepNumber}. ${headingText}` : headingText;
 
+  if (drupalSettings.grants_react_form.use_print) {
+    return (
+      <div className='hdbt-react-form__preview-accordion-item hdbt-react-form__preview-accordion-item--print'>
+        <h3>{heading}</h3>
+        {properties.map((field) => field.content)}
+      </div>
+    );
+  }
+
   return (
     <Accordion
       className={

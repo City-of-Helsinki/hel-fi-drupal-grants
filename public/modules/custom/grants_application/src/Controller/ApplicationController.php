@@ -711,12 +711,24 @@ final class ApplicationController extends ControllerBase {
     $form_identifier = $submission->get('form_identifier')->value;
     $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
 
+    $document = $this->helfiAtvService->getDocument($application_number);
+    $statusHistory = $document->getStatusHistory();
+    $submitted = array_find($statusHistory, fn($item) => $item['value'] === 'SUBMITTED') ?? FALSE;
+    if ($submitted) {
+      $submitted = (new \DateTime($submitted['timestamp']))->format('d.m.Y H:i');
+    }
+    $langCode = $this->languageManager()->getCurrentLanguage()->getId();
+    $statusStrings = $this->getStatusStrings($langCode);
+    $statusLocalized = $statusStrings[$document->getStatus()] ?? ucfirst(strtolower($document->getStatus()));
+
     return [
       '#theme' => 'grants_application_print',
       '#submission_id' => $application_number,
       '#application_number' => $submission->get('application_type_id')->value,
+      '#title' => $settings->getApplicationName(),
+      '#status' => $statusLocalized,
+      '#submitted' => $submitted,
       '#attached' => [
-        'library' => ['hdbt_subtheme/print-atv-document'],
         'drupalSettings' => [
           'grants_react_form' => [
             'application_number' => $settings->getFormId(),

@@ -98,6 +98,20 @@ export const RJSFFormContainer = ({
 }) => {
   const { t } = useTranslation();
   const [invalidSchemaError, setInvalidSchemaError] = useState<InvalidSchemaError | null>(null);
+
+  useEffect(() => {
+    if (!drupalSettings.grants_react_form.use_print) {
+      return;
+    }
+    document.body.classList.add('webform-submission-data-preview-page', 'webform-print');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.print();
+        document.body.classList.remove('webform-submission-data-preview-page', 'webform-print');
+        setTimeout(() => window.history.back(), 500);
+      });
+    });
+  }, []);
   const subventionFields = useAtomValue(getSubventionFieldsAtom);
   const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
@@ -121,12 +135,6 @@ export const RJSFFormContainer = ({
   if (drupalSettings.grants_react_form.use_preview) {
     setStep(steps.size - 2);
   }
-
-  useEffect(() => {
-    if (drupalSettings.grants_react_form.use_print) {
-      document.dispatchEvent(new Event('grants:print-ready'));
-    }
-  }, []);
 
   /**
    * React to errors in the form.

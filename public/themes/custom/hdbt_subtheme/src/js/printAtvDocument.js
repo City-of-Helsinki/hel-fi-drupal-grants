@@ -7,10 +7,3 @@ document.addEventListener(
   },
   false,
 );
-
-document.addEventListener('grants:print-ready', () => {
-  window.print();
-  setTimeout(() => {
-    history.back();
-  }, 500);
-});
