@@ -178,7 +178,11 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    */
   public function getEditApplicationLink(string $application_form_name): Link {
     $markup = $this->createMarkup('Edit application', $application_form_name);
-    return Link::fromTextAndUrl($markup, $this->toUrl());
+    $url = Url::fromRoute('helfi_grants.forms_app_edit', [
+      'form_identifier' => $this->get('form_identifier')->value,
+      'application_number' => $this->get('application_number')->value,
+    ]);
+    return Link::fromTextAndUrl($markup, $url);
   }
 
   /**
