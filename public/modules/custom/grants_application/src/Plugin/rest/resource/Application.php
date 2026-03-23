@@ -389,6 +389,19 @@ final class Application extends ResourceBase {
     // NOSONAR
     $mappedData['compensation']['form_data'] = $form_data;
     // NOSONAR
+
+    // On first AVUS2-submit formUpdate = FALSE and afterward only TRUE.
+    // check GrantsHandler::getFormUpdate for more detailed explanation.
+    // In case we are resending a bad initial submission,
+    // we must set the formUpdate = false.
+    $integrationError = FALSE;
+    foreach ($document->getContent()['events'] as $event) {
+      if (isset($event['eventType']) && $event['eventType'] === 'INTEGRATION_ERROR_AVUS2' && $document->getStatus() === 'SUBMITTED') {
+        $integrationError = TRUE;
+        $mappedData['formUpdate'] = FALSE;
+        break;
+      }
+    }
     $document->setContent($mappedData);
     // @codingStandardsIgnoreEnd
 
@@ -413,11 +426,9 @@ final class Application extends ResourceBase {
     );
     $this->eventsService->addNewEventForApplication($latestDocument, $event);
 
-    // On first AVUS2-submit formUpdate = FALSE and afterward only TRUE.
-    // check GrantsHandler::getFormUpdate for more detailed explanation.
     $success = FALSE;
     try {
-      $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id);
+      $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, $integrationError);
     }
     catch (\Exception $e) {
       $this->logger->error('Avus2 -POST-request failed: ' . $e->getMessage());

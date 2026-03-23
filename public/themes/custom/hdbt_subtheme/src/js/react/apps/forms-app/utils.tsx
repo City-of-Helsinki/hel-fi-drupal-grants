@@ -7,6 +7,7 @@ import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import type { FormStep } from './store';
 import { communitySettings } from './formConstants';
 import { Tooltip } from 'hds-react';
+import parse, { type DOMNode, type Element, domToReact } from 'html-react-parser';
 
 const regex = /^.([^.]+)/;
 
@@ -186,6 +187,29 @@ export function* findFieldsOfType(element: any, type: string, prefix: string = '
 }
 
 /**
+ * Finds fields that have a specific uiSchema option set to true.
+ *
+ * @param {any} element - current element
+ * @param {string} option - uiSchema option key to look for
+ * @param {string} prefix - current form element path in dot notation
+ *
+ * @yields {string} - form element path
+ */
+export function* findFieldsWithOption(element: any, option: string, prefix: string = ''): IterableIterator<string> {
+  const isObject = typeof element === 'object' && !Array.isArray(element) && element !== null;
+
+  if (isObject && element[option]) {
+    yield prefix;
+  } else if (isObject) {
+    // Functional loops mess up generator function, so use for - of loop here.
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, value] of Object.entries(element)) {
+      yield* findFieldsWithOption(value, option, prefix.length ? `${prefix}.${key}` : key);
+    }
+  }
+}
+
+/**
  * Transform raw errors to a more readable format.
  *
  * @param {array|undefned} rawErrors - Errors from RJSF form
@@ -230,6 +254,30 @@ export const getSubventionSum = (formData: any, subventionFields: string[]) =>
  */
 export const isDraft = () => drupalSettings.grants_react_form.use_draft;
 
+const ALLOWED_TAGS = new Set(['p', 'ul', 'ol', 'li', 'strong']);
+
+/**
+ * Parse HTML content for textParagraphs and tooltips.
+ *
+ * @param {string} html - HTML content to parse
+ * @return {React.ReactNode} - Parsed HTML content
+ */
+export const parseAllowedHtml = (html: string) =>
+  parse(html, {
+    replace(node) {
+      const el = node as Element;
+      if (el.type === 'tag' && !ALLOWED_TAGS.has(el.name)) {
+        return <>{domToReact(el.children as DOMNode[])}</>;
+      }
+    },
+  });
+
+/**
+ * Get the tooltip component.
+ *
+ * @param {object} uiSchema - uiSchema
+ * @return {React.ReactNode} - Tooltip component
+ */
 export const getTooltip = (uiSchema: UiSchema | undefined) => {
   if (!uiSchema || !uiSchema?.['ui:options']?.tooltipText) {
     return undefined;
@@ -237,10 +285,11 @@ export const getTooltip = (uiSchema: UiSchema | undefined) => {
 
   return (
     <Tooltip
+      className='hdbt-react-form__tooltip-container'
       buttonLabel={uiSchema?.['ui:options']?.tooltipButtonLabel?.toString()}
       tooltipLabel={uiSchema?.['ui:options']?.tooltipLabel?.toString()}
     >
-      {uiSchema['ui:options'].tooltipText.toString()}
+      {parseAllowedHtml(uiSchema['ui:options'].tooltipText.toString())}
     </Tooltip>
   );
 };

@@ -37,6 +37,7 @@ import {
   getStepsAtom,
   setErrorsAtom,
   getSubventionFieldsAtom,
+  getRequiredFileFieldsAtom,
   isReadOnlyAtom,
   setStepAtom,
   isEmptyPreviewAtom,
@@ -113,6 +114,7 @@ export const RJSFFormContainer = ({
     });
   }, []);
   const subventionFields = useAtomValue(getSubventionFieldsAtom);
+  const requiredFileFields = useAtomValue(getRequiredFileFieldsAtom);
   const setFormData = useSetAtom(formDataAtom);
   const steps = useAtomValue(getStepsAtom);
   const setStep = useSetAtom(setStepAtom);
@@ -222,6 +224,33 @@ export const RJSFFormContainer = ({
           schemaPath: `.${field}`,
           stack: `.${field} ${t('subvention.greater_than_zero')}`,
         });
+      }
+    });
+
+    const reachedStep = readReachedStep();
+    requiredFileFields.forEach((field) => {
+      const stepId = field.split('.')[0];
+      const stepEntry = Array.from(steps).find(([, step]) => step.id === stepId);
+      const stepIndex = stepEntry?.[0] ?? 0;
+
+      const fileData = field.split('.').reduce((acc: RJSFFormData, curr) => acc?.[curr], formData);
+      const isFulfilled = fileData?.fileName || fileData?.isDeliveredLater || fileData?.isIncludedInOtherFile;
+
+      if (!isFulfilled) {
+        newErrors.push({
+          property: `.${field}`,
+          message: t('file.required'),
+          schemaPath: `.${field}`,
+          stack: `.${field} ${t('file.required')}`,
+        });
+
+        // Only show inline error on the field itself if the user has reached this step
+        if (stepIndex <= reachedStep) {
+          const _field = field.split('.').reduce((acc: RJSFFormData, curr) => acc?.[curr], errors) as
+            | { addError: (msg: string) => void }
+            | undefined;
+          _field?.addError(t('file.required'));
+        }
       }
     });
 

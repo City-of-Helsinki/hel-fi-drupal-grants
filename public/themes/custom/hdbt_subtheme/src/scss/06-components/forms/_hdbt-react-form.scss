@@ -87,3 +87,17 @@
     }
   }
 }
+
+.hdbt-react-form__tooltip-container {
+  p,
+  ul,
+  ol {
+    margin-block-end: 0;
+  }
+
+  p:first-child,
+  ul:first-child,
+  ol:first-child {
+    margin-block-start: 0;
+  }
+}

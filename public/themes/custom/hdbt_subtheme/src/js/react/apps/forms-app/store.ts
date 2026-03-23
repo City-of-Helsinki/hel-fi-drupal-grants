@@ -5,7 +5,7 @@ import { DateTime } from 'luxon';
 import type { ReactNode } from 'react';
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 
-import { findFieldsOfType, keyErrorsByStep } from './utils';
+import { findFieldsOfType, findFieldsWithOption, keyErrorsByStep } from './utils';
 import { SubmitStates } from './enum/SubmitStates';
 import { getUrlParts } from './testutils/Helpers';
 
@@ -44,6 +44,7 @@ type FormConfig = {
   settings: { [key: string]: string };
   submitState: string;
   subventionFields: string[];
+  requiredFileFields: string[];
   translations: {
     [key in 'fi' | 'sv' | 'en']: { [key: string]: string };
   };
@@ -127,6 +128,7 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
     uiSchema,
     submitState: status || SubmitStates.DRAFT,
     subventionFields: Array.from(findFieldsOfType(uiSchema, 'subventionTable')),
+    requiredFileFields: Array.from(findFieldsWithOption(uiSchema, 'misc:required')),
   }));
   _set(formStateAtom, (state) => ({ currentStep: [0, steps.get(0)], reachedStep: 0 }));
 
@@ -253,6 +255,11 @@ export const getSubventionFieldsAtom = atom((_get) => {
 
   return subventionFields;
 });
+export const getRequiredFileFieldsAtom = atom((_get) => {
+  const { requiredFileFields } = _get(getFormConfigAtom);
+
+  return requiredFileFields;
+});
 export const getFormDataAtom = atom((_get) => {
   const formDataAtom = _get(formDataAtomRef);
 
@@ -336,9 +343,13 @@ export const isReadOnlyAtom = atom((_get) => {
   const { submitState } = _get(getFormConfigAtom);
   const isBeingSubmitted = _get(isBeingSubmittedAtom);
 
+  // @todo Refactor: allow editing application if it has errors and locked
+  // in submitted state.
   return (
     _get(isEmptyPreviewAtom) ||
-    ![SubmitStates.DRAFT, SubmitStates.RECEIVED, SubmitStates.PREPARING].includes(submitState) ||
+    ![SubmitStates.DRAFT, SubmitStates.SUBMITTED, SubmitStates.RECEIVED, SubmitStates.PREPARING].includes(
+      submitState,
+    ) ||
     isBeingSubmitted
   );
 });

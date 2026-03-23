@@ -141,9 +141,26 @@ final class ApplicationController extends ControllerBase {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
-        // @todo Should not use grants handler service to figure out is submission is editable.
-        // It works but the implementation should live under this module.
-        if (!$this->applicationStatusService->isSubmissionEditable(NULL, $document->getStatus())) {
+        // If document is submitted and has Avus2-error, open it up.
+        $events = $document->getContent()['events'];
+        $status = $document->getStatus();
+        $avus2Error = FALSE;
+        foreach ($events as $event) {
+          if (isset($event['eventType']) && $event['eventType'] === 'INTEGRATION_ERROR_AVUS2') {
+            $avus2Error = TRUE;
+            break;
+          }
+        }
+
+        if ($status === 'SUBMITTED' && $avus2Error) {
+          // No need to do anything here.
+          // This happens when Avus2-json has bad data in it.
+          $this->getLogger('grants_application')
+            ->error("User opened an application which is stuck: $application_number");
+        }
+        elseif (!$this->applicationStatusService->isSubmissionEditable(NULL, $document->getStatus())) {
+          // @todo Should not use grants handler service to figure out is submission is editable.
+          // It works but the implementation should live under this module.
           $this->messenger()
             ->addError($this->t('The application is being processed. The application cannot be edited or submitted.'));
 
@@ -302,7 +319,7 @@ final class ApplicationController extends ControllerBase {
     $statusHistory = $document->getStatusHistory();
     $submitted = array_find($statusHistory, fn($item) => $item['value'] === 'SUBMITTED') ?? FALSE;
     if ($submitted) {
-      $submitted = (new \DateTime($submitted['timestamp']))->format('Y-m-d H:i:s');
+      $submitted = (new \DateTime($submitted['timestamp']))->format('d.m.Y H:i');
     }
 
     // Get event history.
@@ -346,6 +363,20 @@ final class ApplicationController extends ControllerBase {
     // Get the "käsittelijä" from events.
     $handlerEvents = array_filter($documentContent['events'], fn($event) => $event['eventType'] == 'EVENT_INFO');
 
+    $isEditable = FALSE;
+    $documentStatus = $document->getStatus();
+    if ($documentStatus === 'SUBMITTED') {
+      foreach ($document->getContent()['events'] as $event) {
+        if (isset($event['eventType']) && $event['eventType'] === 'INTEGRATION_ERROR_AVUS2') {
+          $isEditable = TRUE;
+          break;
+        }
+      }
+    }
+    elseif (in_array($documentStatus, ['DRAFT', 'RECEIVED'])) {
+      $isEditable = TRUE;
+    }
+
     // Test the handler
     // $handlerEvents = [['eventDescription' =>
     // 'Henkilö Testi;040 123 123 12;test.henkilo@example.com']];.
@@ -353,7 +384,6 @@ final class ApplicationController extends ControllerBase {
     foreach ($handlerEvents as $handlerEvent) {
       $handlers[] = explode(";", $handlerEvent['eventDescription']);
     }
-    $isEditable = in_array($document->getStatus(), ['DRAFT', 'RECEIVED']);
 
     // Messages
     // grants_handler_preprocess_webform_submission_messages.

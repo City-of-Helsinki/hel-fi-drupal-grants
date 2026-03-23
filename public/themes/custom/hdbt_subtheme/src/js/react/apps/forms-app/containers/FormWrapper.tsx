@@ -203,7 +203,9 @@ export const FormWrapper = ({
           langcode: 'en',
         }),
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
-        method: readSubmitStatus() === SubmitStates.DRAFT ? 'POST' : 'PATCH',
+        // Submitted is fine if there is an error event on the ATV-document
+        method:
+          readSubmitStatus() === SubmitStates.DRAFT || readSubmitStatus() === SubmitStates.SUBMITTED ? 'POST' : 'PATCH',
       },
     );
 

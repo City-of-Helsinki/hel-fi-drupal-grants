@@ -480,8 +480,8 @@ msgid "Field is required"
 msgstr "Kenttä on pakollinen"
 
 msgctxt "Grants application: Validation"
-msgid "@field field is required"
-msgstr "@field kenttä on pakollinen"
+msgid "@field field is required."
+msgstr "@field kenttä on pakollinen."
 
 msgctxt "Grants application: Draft"
 msgid "Save as draft"

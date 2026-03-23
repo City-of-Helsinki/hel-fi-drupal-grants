@@ -309,55 +309,6 @@
         "misc:variant": "infobox",
         "ui:field": "textParagraph"
       },
-      "community_rules": {
-        "community_rules_file": {
-          "misc:file-type": 0,
-          "ui:help": "other_attachment_fieldset.ui_help",
-          "ui:field": "atvFile"
-        }
-      },
-      "confirmed_financial_statements": {
-        "confirmed_financial_statements_file": {
-          "misc:file-type": 0,
-          "ui:help": "other_attachment_fieldset.ui_help",
-          "ui:field": "atvFile"
-        }
-      },
-      "confirmed_annual_report": {
-        "confirmed_annual_report_file": {
-          "misc:file-type": 0,
-          "ui:help": "other_attachment_fieldset.ui_help",
-          "ui:field": "atvFile"
-        }
-      },
-      "confirmed_audit_report": {
-        "confirmed_audit_report_file": {
-          "misc:file-type": 0,
-          "ui:help": "other_attachment_fieldset.ui_help",
-          "ui:field": "atvFile"
-        }
-      },
-      "action_plan": {
-        "action_plan_file": {
-          "misc:file-type": 0,
-          "ui:help": "other_attachment_fieldset.ui_help",
-          "ui:field": "atvFile"
-        }
-      },
-      "lease_agreement": {
-        "lease_agreement_file": {
-          "misc:file-type": 0,
-          "ui:help": "other_attachment_fieldset.ui_help",
-          "ui:field": "atvFile"
-        }
-      },
-      "budget": {
-        "budget_file": {
-          "misc:file-type": 0,
-          "ui:help": "other_attachment_fieldset.ui_help",
-          "ui:field": "atvFile"
-        }
-      },
       "further_clarification": {
         "ui:widget": "textarea"
       },

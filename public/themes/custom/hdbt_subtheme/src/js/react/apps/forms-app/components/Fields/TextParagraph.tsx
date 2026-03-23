@@ -3,6 +3,7 @@ import type { FieldProps, UiSchema } from '@rjsf/utils';
 import { Notification } from 'hds-react';
 import { useAtomValue } from 'jotai';
 import type { JSONSchema7Definition } from 'json-schema';
+import { parseAllowedHtml } from '../../utils';
 
 import { shouldRenderPreviewAtom } from '../../store';
 
@@ -16,13 +17,13 @@ export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
     return null;
   }
 
-  const getTitle = (p: JSONSchema7Definition) => {
-    if (p === false) {
+  const getTitle = (p: JSONSchema7Definition): string => {
+    if (typeof p === 'boolean') {
       return '';
     }
 
     if (typeof p === 'object') {
-      return p?.title;
+      return p?.title ?? '';
     }
 
     return p;
@@ -30,16 +31,18 @@ export const TextParagraph = ({ schema, uiSchema }: FieldProps) => {
 
   return variant === 'infobox' ? (
     <Notification label={title} className='hdbt-form--notification'>
-      {Array.isArray(items) && items?.length && items.map((p, index: number) => <p key={index}>{getTitle(p)}</p>)}
+      {Array.isArray(items) &&
+        items?.length &&
+        items.map((p, index) => <p key={index}>{parseAllowedHtml(getTitle(p) ?? '')}</p>)}
     </Notification>
   ) : (
     <div className='hdbt-form--paragraph'>
       {title && <h4 className='hdbt-form--paragraph__title'>{title}</h4>}
       {Array.isArray(items) &&
         items?.length &&
-        items.map((p, index: number) => (
+        items.map((p, index) => (
           <p className='hdbt-form--paragraph__content' key={index}>
-            {getTitle(p)}
+            {parseAllowedHtml(getTitle(p) ?? '')}
           </p>
         ))}
     </div>
