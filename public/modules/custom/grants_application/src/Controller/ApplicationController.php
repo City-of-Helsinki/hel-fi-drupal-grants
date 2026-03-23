@@ -725,14 +725,14 @@ final class ApplicationController extends ControllerBase {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $user_information = $this->userInformationService->getUserData();
     }
-    catch (\Exception $e) {
+    catch (\Throwable $e) {
       throw new NotFoundHttpException();
     }
 
     try {
       $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
     }
-    catch (\Exception) {
+    catch (\Throwable) {
       throw new NotFoundHttpException();
     }
 
