@@ -148,7 +148,7 @@
       },
       "other_applied_compensation_amount": {
         "ID": "amount",
-        "label": "",
+        "label": "Haetun avustuksen summa",
         "value": "",
         "valueType": "string"
       },

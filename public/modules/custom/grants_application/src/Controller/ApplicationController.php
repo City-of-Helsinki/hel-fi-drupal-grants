@@ -485,6 +485,7 @@ final class ApplicationController extends ControllerBase {
     // @phpstan-ignore-next-line
     $file_original_name = $file->getClientOriginalName();
     $file_original_name = $this->transliteration->transliterate($file_original_name);
+    $file_original_name = str_replace(' ', '_', $file_original_name);
     if (strlen($file_original_name) >= 100) {
       return new JsonResponse(['error' => $this->t('File name is too long. Please rename the file and try again.')], 500);
     }
