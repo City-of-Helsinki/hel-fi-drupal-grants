@@ -214,6 +214,9 @@ final class ApplicationController extends ControllerBase {
             ],
             'use_draft' => $use_draft,
             'use_empty_preview' => $use_empty_preview,
+            'print_url' => $application_number
+              ? Url::fromRoute('helfi_grants.print_view', ['application_number' => $application_number])->toString()
+              : NULL,
           ],
         ],
       ],
