@@ -251,7 +251,7 @@
           },
           {
             "ID": "amount",
-            "label": "",
+            "label": "My\u00f6nnetyn avustuksen summa",
             "value": "1000",
             "valueType": "string"
           },
@@ -285,7 +285,7 @@
           },
           {
             "ID": "amount",
-            "label": "",
+            "label": "Haetun avustuksen summa",
             "value": "2000",
             "valueType": "string"
           },
