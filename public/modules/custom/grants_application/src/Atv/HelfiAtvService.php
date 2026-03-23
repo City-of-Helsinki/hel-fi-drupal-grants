@@ -161,6 +161,8 @@ class HelfiAtvService {
    *   The applicant type.
    * @param bool $isDraft
    *   Is draft.
+   * @param string $schemaVersion
+   *   The schema version.
    *
    * @return \Drupal\helfi_atv\AtvDocument
    *   A proper ATV-document
