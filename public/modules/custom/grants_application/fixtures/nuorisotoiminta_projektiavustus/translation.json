@@ -30,6 +30,11 @@
       "fi": "Talokerho",
       "sv": "Husklubben"
     },
+    "grant_target.description": {
+      "en": "Indicate here the association for which you are applying for the grant.",
+      "fi": "Valitse tässä se yhteisö, jolle haette avustusta.",
+      "sv": "Välj här den sammanslutning som du ansöker om understöd för."
+    },
     "start_subvention_section.title": {
       "en": "Start grant",
       "fi": "Starttiavustus",
@@ -39,6 +44,11 @@
       "en": "This is an application for a start grant to initiate the association's activities.",
       "fi": "Tämä on starttiavustushakemus yhdistyksen toiminnan käynnistämiseen",
       "sv": "Detta är en ansökan om startunderstöd för att inleda föreningens verksamhet."
+    },
+    "start_subvention_applied.description": {
+      "en": "If you are applying for a start grant using this form, please answer yes to this question. If you are applying for another type of project grant, please answer no.",
+      "fi": "Jos haet tällä lomakkeella starttiavustusta, vastaa tähän kyllä. Jos haet muuta projektiavustusta, vastaa ei.",
+      "sv": "Om du ansöker om startunderstöd med denna blankett, svara ja på denna fråga. Om du ansöker om annat projektunderstöd, svara nej."
     },
     "start_subvention_help.value": {
       "en": "Start grants can be awarded for starting or relaunching activities of early youth and youth associations or similar organizations. The requested amount should be entered in the grant type box under the project grant amount.",

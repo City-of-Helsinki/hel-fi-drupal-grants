@@ -2,7 +2,12 @@
   "grant_info_step": {
     "grant_target_section": {
       "grant_target": {
-        "ui:widget": "select"
+        "ui:widget": "select",
+        "ui:options": {
+          "tooltipLabel": "grant_target.title",
+          "tooltipButtonLabel": "grant_target.title",
+          "tooltipText": "grant_target.description"
+        }
       }
     },
     "subventions_section": {
@@ -16,7 +21,12 @@
           "boolean.no",
           "boolean.yes"
         ],
-        "ui:widget": "radio"
+        "ui:widget": "radio",
+        "ui:options": {
+          "tooltipLabel": "start_subvention_applied.title",
+          "tooltipButtonLabel": "start_subvention_applied.title",
+          "tooltipText": "start_subvention_applied.description"
+        } 
       },
       "start_subvention_help": {
         "ui:field": "textParagraph"
