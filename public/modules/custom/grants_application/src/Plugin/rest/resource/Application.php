@@ -570,15 +570,29 @@ final class Application extends ResourceBase {
       );
       $this->eventsService->addNewEventForApplication($document, $event);
 
-      $this->atvService->updateExistingDocument($document);
-
-      $submission->setChangedTime(time());
-      $submission->save();
+      $latestDocument = $this->atvService->updateExistingDocument($document);
     }
     catch (\Exception $e) {
       // Unable to find the document.
       return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
+
+    $success = FALSE;
+    try {
+      $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, FALSE);
+    }
+    catch (\Exception $e) {
+      $this->logger->error('Avus2 -PATCH-request failed: ' . $e->getMessage());
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
+    }
+
+    if (!$success) {
+      $this->logger->error('Avus2 -PATCH-request returned non-200 response');
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
+    }
+
+    $submission->setChangedTime(time());
+    $submission->save();
 
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
     // grants_application module when this module is enabled in
