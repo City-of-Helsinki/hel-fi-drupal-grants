@@ -14,6 +14,9 @@ declare namespace drupalSettings {
     use_draft: boolean;
     // TODO this one contains the application number, the identifier for submission.
     real_application_number: string;
+    use_empty_preview: boolean;
     use_preview: boolean;
+    use_print?: boolean;
+    print_url?: string;
   };
 }

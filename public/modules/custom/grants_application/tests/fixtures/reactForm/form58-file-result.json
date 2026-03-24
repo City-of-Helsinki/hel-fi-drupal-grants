@@ -1,0 +1,434 @@
+{
+  "compensation": {
+    "applicantInfoArray": [
+      {
+        "ID": "applicantType",
+        "label": "Hakijan tyyppi",
+        "value": "2",
+        "valueType": "string"
+      },
+      {
+        "ID": "companyNumber",
+        "label": "Y-Tunnus",
+        "value": "7769480-5",
+        "valueType": "string"
+      },
+      {
+        "ID": "registrationDate",
+        "label": "Rekister\u00f6imisp\u00e4iv\u00e4",
+        "value": "21.5.2023",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "foundingYear",
+        "label": "Perustamisvuosi",
+        "value": "2020",
+        "valueType": "string"
+      },
+      {
+        "ID": "home",
+        "label": "Kotipaikka",
+        "value": "HELSINKI",
+        "valueType": "string"
+      },
+      {
+        "ID": "homePage",
+        "label": "www-sivut",
+        "value": "www.google.com",
+        "valueType": "string"
+      },
+      {
+        "ID": "communityOfficialName",
+        "label": "Yhteis\u00f6n nimi",
+        "value": "Activenakusteri Oy",
+        "valueType": "string"
+      },
+      {
+        "ID": "communityOfficialNameShort",
+        "label": "Yhteis\u00f6n lyhenne",
+        "value": "Akt",
+        "valueType": "string"
+      },
+      {
+        "ID": "email",
+        "label": "S\u00e4hk\u00f6postiosoite",
+        "value": "test@example.com",
+        "valueType": "string"
+      }
+    ],
+    "currentAddressInfoArray": [
+      {
+        "ID": "contactPerson",
+        "label": "Yhteyshenkil\u00f6",
+        "value": "Joku Henkilö",
+        "valueType": "string"
+      },
+      {
+        "ID": "phoneNumber",
+        "label": "Puhelinnumero",
+        "value": "040 123 123 12",
+        "valueType": "string"
+      },
+      {
+        "ID": "street",
+        "label": "L\u00e4hiosoite",
+        "value": "Mannerheimintie 12",
+        "valueType": "string"
+      },
+      {
+        "ID": "city",
+        "label": "Kaupunki",
+        "value": "Helsinki",
+        "valueType": "string"
+      },
+      {
+        "ID": "postCode",
+        "label": "Postinumero",
+        "value": "00100",
+        "valueType": "string"
+      },
+      {
+        "ID": "country",
+        "label": "Maa",
+        "value": "Suomi",
+        "valueType": "string"
+      }
+    ],
+    "applicationInfoArray": [
+      {
+        "ID": "applicationType",
+        "label": null,
+        "value": "LIIKUNTASUUNNISTUS",
+        "valueType": "string"
+      },
+      {
+        "ID": "applicationTypeID",
+        "label": null,
+        "value": "58",
+        "valueType": "string"
+      },
+      {
+        "ID": "formTimeStamp",
+        "label": null,
+        "value": "2025-10-06T13:13:13",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "createdFormTimeStamp",
+        "label": null,
+        "value": "2025-10-06T13:13:13",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "submittedFormTimeStamp",
+        "label": null,
+        "value": "2025-10-06T13:13:13",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "applicationNumber",
+        "label": null,
+        "value": "ABCDE-123-0001009",
+        "valueType": "string"
+      },
+      {
+        "ID": "status",
+        "label": "Hakemuksen tila",
+        "value": "DRAFT",
+        "valueType": "string"
+      },
+      {
+        "ID": "actingYear",
+        "label": "Vuosi, jolle haen avustusta",
+        "value": "2026",
+        "valueType": "string"
+      }
+    ],
+    "applicantOfficialsArray": [
+      [
+        {
+          "ID": "name",
+          "label": "Nimi",
+          "value": "Ville Vallaton",
+          "valueType": "string"
+        },
+        {
+          "ID": "role",
+          "label": "Rooli",
+          "value": "11",
+          "valueType": "int"
+        },
+        {
+          "ID": "email",
+          "label": "S\u00e4hk\u00f6posti",
+          "value": "ville@example.com",
+          "valueType": "string"
+        },
+        {
+          "ID": "phone",
+          "label": "Puhelinnumero",
+          "value": "040 11233 45 ",
+          "valueType": "string"
+        }
+      ]
+    ],
+    "bankAccountArray": [
+      {
+        "ID": "accountNumber",
+        "label": "Tilinumero",
+        "value": "FI9133437423819388",
+        "valueType": "string"
+      },
+      {
+        "ID": "accountNumber",
+        "label": "Tilinumero",
+        "value": "FI9133437423819388",
+        "valueType": "string"
+      }
+    ],
+    "senderInfoArray": [
+      {
+        "ID": "firstname",
+        "value": "Nordea",
+        "valueType": "string",
+        "label": null
+      },
+      {
+        "ID": "lastname",
+        "value": "Demo",
+        "valueType": "string",
+        "label": null
+      },
+      {
+        "ID": "personID",
+        "value": "210281-9988",
+        "valueType": "string",
+        "label": null
+      },
+      {
+        "ID": "userID",
+        "value": "280f75c5-6a20-4091-b22d-dfcdce7fef60",
+        "valueType": "string",
+        "label": null
+      },
+      {
+        "ID": "email",
+        "value": "profiilitesti@mailinator.com",
+        "valueType": "string",
+        "label": null
+      },
+      {
+        "ID": "firstname",
+        "label": null,
+        "value": "Nordea",
+        "valueType": "string"
+      },
+      {
+        "ID": "lastname",
+        "label": null,
+        "value": "Demo",
+        "valueType": "string"
+      },
+      {
+        "ID": "personID",
+        "label": null,
+        "value": "210281-9988",
+        "valueType": "string"
+      },
+      {
+        "ID": "userID",
+        "label": null,
+        "value": "280f75c5-6a20-4091-b22d-dfcdce7fef60",
+        "valueType": "string"
+      },
+      {
+        "ID": "email",
+        "label": null,
+        "value": "profiilitesti@mailinator.com",
+        "valueType": "string"
+      }
+    ],
+    "additionalInformation": "yleinen lis\u00e4tieto",
+    "compensationInfo": {
+      "compensationArray": [
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "15",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "value": "0",
+            "valueType": "float",
+            "label": null
+          }
+        ]
+      ]
+    },
+    "otherCompensationsInfo": {
+      "otherCompensationsArray": [],
+      "otherCompensationsInfoArray": [
+        {
+          "ID": "otherCompensationsTotal",
+          "value": "0",
+          "valueType": "double",
+          "label": null
+        },
+        {
+          "ID": "otherAppliedCompensationsTotal",
+          "value": "0",
+          "valueType": "double",
+          "label": null
+        }
+      ]
+    },
+    "benefitsInfoArray": [
+      {
+        "ID": "loans",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "ID": "premises",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    ],
+    "activitiesInfoArray": [
+      {
+        "ID": "businessPurpose",
+        "label": "Toiminnan kuvaus",
+        "value": "Yhteis\u00f6 on perustettu testaamista varten.",
+        "valueType": "string"
+      }
+    ],
+    "orienteeringMapInfo": {
+      "orienteeringMapsArray": [
+        [
+          {
+            "ID": "mapName",
+            "label": "Kartan nimi",
+            "value": "kartan nimi",
+            "valueType": "string"
+          },
+          {
+            "ID": "size",
+            "label": "Koko",
+            "value": "200",
+            "valueType": "double"
+          },
+          {
+            "ID": "voluntaryHours",
+            "label": "Talkooty\u00f6",
+            "value": "200",
+            "valueType": "float"
+          },
+          {
+            "ID": "cost",
+            "label": "Kustannukset",
+            "value": "200",
+            "valueType": "double"
+          },
+          {
+            "ID": "otherCompensations",
+            "label": "Muilta saadut avustukset",
+            "value": "200",
+            "valueType": "double"
+          }
+        ]
+      ]
+    }
+  },
+  "attachmentsInfo": {
+    "generalInfoArray": [
+      {
+        "ID": "extraInfo",
+        "label": "Lis\u00e4selvitys liitteist\u00e4",
+        "value": "liitteiden selvitys",
+        "valueType": "string"
+      }
+    ],
+    "attachmentsArray": [
+      [
+        {
+          "ID": "description",
+          "label": "Liitteen kuvaus",
+          "value": "Vahvistus tilinumerolle FI9133437423819388",
+          "valueType": "string"
+        },
+        {
+          "ID": "fileName",
+          "label": "Tiedostonimi",
+          "value": "testi1-kolmas.pdf",
+          "valueType": "string"
+        },
+        {
+          "ID": "fileType",
+          "label": "filetype",
+          "value": "45",
+          "valueType": "int"
+        },
+        {
+          "ID": "integrationID",
+          "label": "integrationID",
+          "value": "\/LOCALK\/v1\/documents\/de42004d-bd98-49c5-ac84-07c11934ac6d\/attachments\/407790\/",
+          "valueType": "string"
+        },
+        {
+          "ID": "isDeliveredLater",
+          "label": "Liite toimitetaan my\u00f6hemmin",
+          "value": "false",
+          "valueType": "bool"
+        },
+        {
+          "ID": "isIncludedInOtherFile",
+          "label": "Liite on toimitettu yhten\u00e4 tiedostona tai toisen hakemuksen yhteydess\u00e4",
+          "value": "false",
+          "valueType": "bool"
+        }
+      ],
+      [
+        {
+          "ID": "description",
+          "value": "",
+          "valueType": "string",
+          "label": "Liitteen kuvaus"
+        },
+        {
+          "ID": "fileName",
+          "value": "forreal.pdf",
+          "valueType": "string",
+          "label": "Tiedostonimi"
+        },
+        {
+          "ID": "fileType",
+          "value": "1",
+          "valueType": "int",
+          "label": "fileType"
+        },
+        {
+          "ID": "integrationID",
+          "value": "\/LOCALK\/v1\/documents\/862e375e-ba38-4ddf-9a0d-4cc0cdb0ff33\/attachments\/407801\/",
+          "valueType": "string",
+          "label": "integrationID"
+        },
+        {
+          "ID": "isDeliveredLater",
+          "value": "false",
+          "valueType": "bool",
+          "label": "Liite toimitetaan my\u00f6hemmin"
+        },
+        {
+          "ID": "isIncludedInOtherFile",
+          "value": "false",
+          "valueType": "bool",
+          "label": "Liite on toimitettu yhten\u00e4 tiedostona tai toisen hakemuksen yhteydess\u00e4"
+        }
+      ]
+    ]
+  }
+}

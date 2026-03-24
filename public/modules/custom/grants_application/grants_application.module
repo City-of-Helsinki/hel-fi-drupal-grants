@@ -56,6 +56,16 @@ function grants_application_theme(): array {
         'submissionObject' => NULL,
       ],
     ],
+    'grants_application_print' => [
+      'variables' => [
+        'submission_id' => NULL,
+        'application_number' => NULL,
+        'title' => NULL,
+        'helsinki_logo' => NULL,
+        'status' => NULL,
+        'submitted' => NULL,
+      ],
+    ],
     'grants_application_view_status_information' => [
       'variables' => [],
     ],

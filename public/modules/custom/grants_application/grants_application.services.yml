@@ -34,3 +34,8 @@ services:
   Drupal\grants_application\ApplicationService: ~
 
   Drupal\grants_application\Mapper\JsonMapperService: ~
+
+  Drupal\grants_application\Drush\Commands\DebugMappingsCommands:
+    class: Drupal\grants_application\Drush\Commands\DebugMappingsCommands
+    tags:
+      - { name: drush.command }

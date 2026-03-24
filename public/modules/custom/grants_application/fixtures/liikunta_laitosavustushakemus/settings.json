@@ -1,0 +1,23 @@
+{
+  "title": "Liikunta, laitos- ja säätiöavustukset",
+  "description": "LIIKUNTALAITOS",
+  "application_type": "LIIKUNTALAITOS",
+  "application_type_id": 57,
+  "application_industry": "KUVA",
+  "application_open": "2026-01-01T00:00:00",
+  "application_close": "2027-12-31T23:59:00",
+  "applicant_types": [
+    "registered_community"
+  ],
+  "subvention_type": [
+    1,
+    5,
+    8,
+    9
+  ],
+  "acting_years": [
+    2026
+  ],
+  "continuous": false,
+  "disable_copy": false
+}

@@ -1,0 +1,66 @@
+{
+  "applicant_info": {
+    "applicant_email": {
+      "email": "test@example.com"
+    },
+    "contact_person_info": {
+      "contact_person": "Joku Henkil\u00f6",
+      "contact_person_phone_number": "040 123 123 12"
+    },
+    "community_address": {
+      "community_address": "Mannerheimintie 12"
+    },
+    "bank_account": {
+      "bank_account": "FI4950009420028730"
+    },
+    "community_officials": {
+      "community_officials": [
+        {
+          "official": "b0dcbf65-9035-41bb-8282-2b38982a262e"
+        }
+      ]
+    }
+  },
+  "orienteering_maps_step": {
+    "acting_year_section": {
+      "acting_year": "2026"
+    },
+    "orienteering_subvention": {
+      "orienteering_maps": [
+        {
+          "map_name": "Kartan nimi",
+          "size": 20,
+          "voluntary_hours": 123,
+          "cost": 123,
+          "other_compensations": 123
+        }
+      ]
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": "Lis\u00e4tietoa"
+    },
+    "attachments_section": {
+      "required_attachments_help": [
+        null
+      ],
+      "multiple_attachments_help": [
+        null
+      ],
+      "formerly_provided_attachments_help": [
+        null
+      ],
+      "cant_view_after_help": [
+        null,
+        null
+      ],
+      "further_clarification": "lis\u00e4selvitys",
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "description": "liite kuvaus"
+        }
+      }
+    }
+  }
+}

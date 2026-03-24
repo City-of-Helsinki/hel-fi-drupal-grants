@@ -1,0 +1,39 @@
+{
+  "translations": {
+    "form_title": {
+      "en": "Citizen Participation, general and operational grant application",
+      "fi": "Asukasosallisuus, yleis- ja toiminta-avustushakemus",
+      "sv": "Invånardelaktighet, ansökan om allmänna och verksamhetsbidrag"
+    },
+    "purpose_section_modified.title": {
+      "en": "For what purpose will the grant be used?",
+      "fi": "Mihin avustus käytetään?",
+      "sv": "Vad kommer understödet att användas till?"
+    },
+    "purpose_help_general_grant.title": {
+      "en": "General grant for resident participation:",
+      "fi": "Asukasosallisuuden yleisavustus:",
+      "sv": "Allmänt understöd för invånardelaktighet:"
+    },
+    "purpose_help_general_grant.value": {
+      "en": "Describe the intended use of the free-of-charge activities open to all for which the grant is sought and, if necessary, specify the general grant sought by type of expense.<ol><li>Grant sought for the salary costs of coordinating resident facilities</li><li>Grant sought for the rent of resident facilities</li><li>Grant sought for the maintenance costs of resident facilities, specified (e.g. electricity, water, network connections, insurance, cleaning)</li><li>Grant sought for other costs related to the maintenance and coordination of resident facilities</li></ol>",
+      "fi": "Kuvaa haetun avustuksen kaikille aivoimen ja maksuttoman toiminnan käyttötarkoitus ja erittele tarvittaessa haettava yleisavustus kululajeittain.<ol><li>Haettava avustus asukastilan koordinoinnin palkkakustannuksiin</li><li>Haettava avustus asukastilan vuokraan</li><li>Haettava avustus asukastilan ylläpitokustannuksiin eriteltynä (esim. sähkö, vesi, verkkoyhteydet, vakuutus, siivous)</li><li>Haettava avustus asukastilan ylläpidosta ja koordinoinnista aiheutuviin muihin kustannuksiin</li></ol>",
+      "sv": "Beskriv användningsändamålet för understödet för verksamhet som är öppen för alla och kostnadsfri och specificera vid behov det allmänna understöd som ansöks per kostnadsslag.<ol><li>Understöd som ansöks för lönekostnaderna för samordning av invånarlokalen</li><li>Understöd som ansöks för hyran av invånarlokalen</li><li>Understöd som ansöks för underhållskostnaderna för invånarlokalen specificerat (t.ex. el, vatten, nätuppkoppling, försäkring, städning)</li><li>Understöd som ansöks för de övriga kostnader som orsakas av upprätthållandet och samordningen av invånarlokalen</li></ol>"
+    },
+    "purpose_help_operating_grant.title": {
+      "en": "Operating grant for resident participation:",
+      "fi": "Asukasosallisuuden toiminta-avustus:",
+      "sv": "Verksamhetsunderstöd för invånardelaktighet:"
+    },
+    "purpose_help_operating_grant.value": {
+      "en": "A description of the free-of-charge activities open to all for which the grant is being sought and a budget for the allocation of costs.",
+      "fi": "Kuvaus kaikille avoimesta maksuttomasta toiminnasta, johon avusta haetaan sekä talousarvio kustannusten kohdentumisesta.",
+      "sv": "Beskrivning av verksamhet som är öppen för alla och kostnadsfri och för vilket understöd ansöks samt budgeten för allokering av kostnaderna."
+    },
+    "purpose.custom_description": {
+      "en": "<p>Provide a short description of the scope and nature of the activities to be carried out with the grant e.g. as follows:</p><ul><li>How much or how often will you organise groups, events or other activities during the period of the grant?</li><li>How many target group representatives do you expect to reach?</li><li>In what areas of Helsinki will the activities be arranged?</li><li>What kind of cooperation do you pursue with other operators in Helsinki?</li></ul>",
+      "fi": "<p>Kuvaa tiiviisti avustuksella toteutettavaa toimintaa ja toiminnan laajuutta esimerkiksi seuraavilla tavoilla:</p><ul><li>Kuinka paljon tai kuinka usein järjestätte ryhmiä, tapahtumia tai muuta toimintaa avustettavan ajanjakson aikana?</li><li>Kuinka paljon kohderyhmän edustajia arvioitte tavoittavanne?</li><li>Missä Helsingin alueilla toimintaa järjestetään?</li><li>Minkälaista yhteistyötä teette Helsingissä muiden toimijoiden kanssa?</li></ul>",
+      "sv": "<p>Beskriv den verksamhet som ska genomföras med hjälp av understödet och verksamhetens omfattning i korthet exempelvis på följande sätt:</p><ul><li>Hur mycket eller ofta ordnar ni grupper, evenemang eller annan verksamhet under den understödda perioden?</li><li>Hur många representanter för målgruppen kommer ni att nå enligt er uppskattning?</li><li>Inom vilka områden i Helsingfors kommer verksamheten att ordnas?</li><li>På vilka sätt samarbetar ni med andra aktörer i Helsingfors?</li></ul>"
+    }
+  }
+}

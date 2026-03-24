@@ -235,9 +235,8 @@ final class Application extends ResourceBase {
 
     $errors = $this->validate($form_identifier, $form_data);
     if (is_array($errors)) {
-      // Kinda "useless" logging, but for testing purposes this might be relevant.
+      // Encode changes (empty)array into object in some cases
       $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
-      return new JsonResponse(['error' => $errors], 400);
     }
 
     try {
@@ -333,7 +332,6 @@ final class Application extends ResourceBase {
       }
     }
 
-
     try {
       $mappedData = $this->jsonMapperService->handleMapping(
         $settings->getFormId(),
@@ -382,6 +380,19 @@ final class Application extends ResourceBase {
     // NOSONAR
     $mappedData['compensation']['form_data'] = $form_data;
     // NOSONAR
+
+    // On first AVUS2-submit formUpdate = FALSE and afterward only TRUE.
+    // check GrantsHandler::getFormUpdate for more detailed explanation.
+    // In case we are resending a bad initial submission,
+    // we must set the formUpdate = false.
+    $integrationError = FALSE;
+    foreach ($document->getContent()['events'] as $event) {
+      if (isset($event['eventType']) && $event['eventType'] === 'INTEGRATION_ERROR_AVUS2' && $document->getStatus() === 'SUBMITTED') {
+        $integrationError = TRUE;
+        $mappedData['formUpdate'] = FALSE;
+        break;
+      }
+    }
     $document->setContent($mappedData);
     // @codingStandardsIgnoreEnd
 
@@ -402,11 +413,9 @@ final class Application extends ResourceBase {
     );
     $this->eventsService->addNewEventForApplication($latestDocument, $event);
 
-    // On first AVUS2-submit formUpdate = FALSE and afterward only TRUE.
-    // check GrantsHandler::getFormUpdate for more detailed explanation.
     $success = FALSE;
     try {
-      $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id);
+      $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, $integrationError);
     }
     catch (\Exception $e) {
       $this->logger->error('Avus2 -POST-request failed: ' . $e->getMessage());
@@ -484,14 +493,12 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-    // RJSF turns array into object for some reason.
-    /*
+
     $errors = $this->validate($form_identifier, $form_data);
     if (is_array($errors)) {
+      // Encode changes (empty)array into object in some cases
       $this->logger->alert("User encountered validation error on application $form_identifier: " . json_encode($errors));
-      return new JsonResponse(['error' => $errors], 400);
     }
-    */
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
@@ -563,15 +570,29 @@ final class Application extends ResourceBase {
       );
       $this->eventsService->addNewEventForApplication($document, $event);
 
-      $this->atvService->updateExistingDocument($document);
-
-      $submission->setChangedTime(time());
-      $submission->save();
+      $latestDocument = $this->atvService->updateExistingDocument($document);
     }
     catch (\Exception $e) {
       // Unable to find the document.
       return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
     }
+
+    $success = FALSE;
+    try {
+      $success = $this->integration->sendToAvus2($latestDocument, $application_number, $save_id, FALSE);
+    }
+    catch (\Exception $e) {
+      $this->logger->error('Avus2 -PATCH-request failed: ' . $e->getMessage());
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
+    }
+
+    if (!$success) {
+      $this->logger->error('Avus2 -PATCH-request returned non-200 response');
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
+    }
+
+    $submission->setChangedTime(time());
+    $submission->save();
 
     // @todo Move ApplicationSubmitEvent and ApplicationSubmitType to
     // grants_application module when this module is enabled in

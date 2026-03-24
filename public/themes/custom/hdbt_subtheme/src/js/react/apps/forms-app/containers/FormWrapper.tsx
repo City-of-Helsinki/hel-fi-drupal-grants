@@ -71,30 +71,6 @@ function* getAttachments(element: any): IterableIterator<ATVFile> {
 }
 
 /**
- * Checks if a given schema definition should be fixed for an array field.
- * The definition is fixed if it is an array with an object type item,
- * or if it has a reference to another schema definition.
- *
- * @param {RJSFSchema} schemaDefinition - The schema definition to check.
- *
- * @return {boolean} - True if the schema definition should be fixed, false otherwise.
- */
-const shouldFixArrayField = (schemaDefinition: RJSFSchema) => {
-  if (schemaDefinition?.type !== 'array' || !schemaDefinition?.items || schemaDefinition?.items === true) {
-    return false;
-  }
-
-  const isObject =
-    Array.isArray(schemaDefinition?.items) &&
-    typeof schemaDefinition?.items[0] === 'object' &&
-    schemaDefinition?.items[0]?.type === 'object';
-
-  const hasRef = !Array.isArray(schemaDefinition.items) && schemaDefinition.items.$ref;
-
-  return isObject || hasRef;
-};
-
-/**
  * Fix issue with backend returning arrays instead of empty objects.
  *
  * @todo see if this can be done in a less overengineered way
@@ -112,10 +88,6 @@ const fixDanglingArrays = (formData: any, schema: RJSFSchema) => {
 
     if (schemaDefinition && schemaDefinition.type === 'object') {
       setNestedProperty(formData, path, {});
-    }
-
-    if (schemaDefinition && shouldFixArrayField(schemaDefinition)) {
-      setNestedProperty(formData, path, [{}]);
     }
   });
 
@@ -231,7 +203,9 @@ export const FormWrapper = ({
           langcode: 'en',
         }),
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
-        method: readSubmitStatus() === SubmitStates.DRAFT ? 'POST' : 'PATCH',
+        // Submitted is fine if there is an error event on the ATV-document
+        method:
+          readSubmitStatus() === SubmitStates.DRAFT || readSubmitStatus() === SubmitStates.SUBMITTED ? 'POST' : 'PATCH',
       },
     );
 

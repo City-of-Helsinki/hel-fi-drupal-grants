@@ -15,10 +15,10 @@ plugin: page_title_block
 settings:
   id: page_title_block
   label: 'Page title'
-  label_display: ''
+  label_display: '0'
   provider: core
 visibility:
   request_path:
     id: request_path
     negate: true
-    pages: "/hakemus/*/katso\r\n/news\r\n/tietoa-avustuksista/ukk\r\n/tietoa-avustuksista/ukk/*\r\n/etsi-avustusta\r\n/etsi-avustusta/*\r\n/hakemus/*\r\n/user/login\r\n/oma-asiointi\r\n/oma-asiointi/*"
+    pages: "/hakemus/*/katso\r\n/news\r\n/tietoa-avustuksista/ukk\r\n/tietoa-avustuksista/ukk/*\r\n/etsi-avustusta\r\n/etsi-avustusta/*\r\n/hakemus/*\r\n/user/login\r\n/user/logout/confirm\r\n/oma-asiointi\r\n/oma-asiointi/*"

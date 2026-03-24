@@ -17,11 +17,39 @@ helfi_grants.forms_app_edit:
   requirements:
     _role: helsinkiprofiili
 
+helfi_grants.forms_app_preview_data:
+  path: '/application/preview/{form_identifier}'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::formPreview'
+  methods: [GET]
+  requirements:
+    _permission: 'access content'
+
+helfi_grants.forms_app_empty_preview:
+  path: '/application/new/{form_identifier}/preview'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::formsApp'
+    _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getFormTitle'
+    use_empty_preview: TRUE
+    use_draft: TRUE
+  requirements:
+    _permission: 'access content'
+
 helfi_grants.view_application:
   path: '/application/view/{application_number}'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::viewApplication'
     _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getViewApplicationTitle'
+  requirements:
+    _role: helsinkiprofiili
+
+#todo can be removed once react reads the data from variables.
+helfi_grants.view_application2:
+  path: '/application/view/{application_number}/{application_number2}'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::viewApplication'
+    _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getViewApplicationTitle'
+    application_number2: NULL
   requirements:
     _role: helsinkiprofiili
 
@@ -77,6 +105,7 @@ helfi_grants.print_view:
   path: '/application/{application_number}/print'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::printApplication'
+    _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getViewApplicationTitle'
   requirements:
     _role: helsinkiprofiili
 

@@ -1,0 +1,152 @@
+{
+  "applicant_info": {
+    "applicant_email": {
+      "email": "test@example.com"
+    },
+    "contact_person_info": {
+      "contact_person": "Joku Henkilö",
+      "contact_person_phone_number": "040 123 123 12"
+    },
+    "community_address": {
+      "community_address": "Kauppakatu 20"
+    },
+    "bank_account": {
+      "bank_account": "FI4950009420028730"
+    },
+    "community_officials": {
+      "community_officials": [
+        {
+          "official": "a464c2d0-a79a-400e-a9cf-32f583675194"
+        }
+      ]
+    }
+  },
+  "grant_info_step": {
+    "acting_year_section": {
+      "acting_year": "2026"
+    },
+    "subventions_section": {
+      "subventions": [
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "56",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "11110",
+            "valueType": "double"
+          }
+        ]
+      ]
+    },
+    "purpose_section": {
+      "purpose": "lyhyt kuvaus"
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": true,
+      "other_compensations": [
+        {
+          "other_compensation_issuer": "Valtio",
+          "other_compensation_issuer_name": "aaa",
+          "other_compensation_issuer_year": "2021",
+          "other_compensation_amount": 1000,
+          "other_compensation_description": "Lyhyt kuvaus myönnetyn avustuksen käyttötarkoituksesta"
+        }
+      ]
+    },
+    "other_applied_compensations_section": {
+      "have_applied_other_compensations": true,
+      "other_applied_compensations": [
+        {
+          "other_applied_compensation_issuer": "Säätiö",
+          "other_applied_compensation_issuer_name": "Haetttu avustus säätiö",
+          "other_applied_compensation_issuer_year": "2022",
+          "other_applied_compensation_amount": 2000,
+          "other_applied_compensation_description": "haetun avustuksen käyttötarkoitus"
+        }
+      ]
+    }
+  },
+  "information_in_more_detail_step": {
+    "grant_target_section": {
+      "reason_for_grant_application": "Lorem ipsum 0",
+      "project_objectives": "Lorem ipsum 1",
+      "safety_practices": "Lorem ipsum 2",
+      "safer_club_practices": "Lorem ipsum 3",
+      "project_increase_safety_inclusion": "Lorem ipsum 4",
+      "project_increase_competence": "Lorem ipsum 5",
+      "antiracism_measures": "Lorem ipsum 6",
+      "equality_nondiscrimination_responsibility_plan": "Lorem ipsum 7",
+      "active_participants_wrapper": {
+        "active_participants_wrapper_help": [
+          null
+        ],
+        "active_participants_under_20": "10",
+        "active_participants_local": "20"
+      },
+      "under_20_affected": "Lorem ipsum 8",
+      "key_partners": "Lorem ipsum 9",
+      "schedule_wrapper": {
+        "start_date": "2026-03-01",
+        "end_date": "2026-03-31"
+      },
+      "schedule_of_measures": "Lorem ipsum 10",
+      "key_risks": "Lorem ipsum 11",
+      "project_results": "Lorem ipsum 12",
+      "project_implementation": "Lorem ipsum 13",
+      "project_indicators": "Lorem ipsum 14",
+      "project_manager": "Lorem ipsum 15"
+    }
+  },
+  "budget_step": {
+    "income_section": {
+      "incomeGroupName": "general",
+      "income_rows": [
+        {
+          "income_row_description": "tulon tyyppi",
+          "income_row_amount": 1111
+        }
+      ]
+    },
+    "expenditure_section": {
+      "costGroupName": "subventionUseCosts",
+      "expenditure_rows": [
+        {
+          "expenditure_row_description": "Menon tyyppi",
+          "expenditure_row_amount": 2222
+        }
+      ]
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": "lisätiedot"
+    },
+    "attachments_section": {
+      "required_attachments_help": [
+        null
+      ],
+      "multiple_attachments_help": [
+        null
+      ],
+      "formerly_provided_attachments_help": [
+        null
+      ],
+      "cant_view_after_help": [
+        null,
+        null
+      ],
+      "further_clarification": "Liitteiden lisäselvitys",
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "files": [],
+          "description": ""
+        }
+      }
+    }
+  }
+}

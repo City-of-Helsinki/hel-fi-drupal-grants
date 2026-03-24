@@ -8,6 +8,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Utility\Error;
 use Drupal\grants_handler\Helpers;
 use Drupal\grants_mandate\GrantsMandateRedirectService;
 use Drupal\grants_mandate\GrantsMandateService;
@@ -105,7 +106,17 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
     }
     // If we have code, we can then exchange it to token.
     $this->grantsMandateService->changeCodeToToken($code, $callbackUrl);
-    $roles = $this->grantsMandateService->getRoles();
+
+    try {
+      $roles = $this->grantsMandateService->getRoles();
+    }
+    catch (\Exception $e) {
+      Error::logException($this->logger, $e, 'Authentication failed: Get roles failed');
+      $this->messenger()->addMessage($this->t('Mandate process was interrupted or there was an error. Please try again.'));
+      $redirect = new RedirectResponse(Url::fromRoute('grants_profile.edit')->toString());
+      return $this->redirectService->getRedirect($redirect);
+    }
+
     $isAllowed = FALSE;
     if ($roles && isset($roles[0]) && $roles[0]['roles']) {
       $rolesArray = $roles[0]['roles'];
@@ -212,9 +223,6 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
    *   Business to get data for.
    * @param \Drupal\helfi_atv\AtvDocument $grantsProfile
    *   Grants profile to update.
-   *
-   * @return void
-   *   No return.
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */

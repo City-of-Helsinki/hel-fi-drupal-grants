@@ -430,7 +430,7 @@ msgid "Field is required"
 msgstr "Fält är obligatoriskt"
 
 msgctxt "Grants application: Validation"
-msgid "@field field is required"
+msgid "@field field is required."
 msgstr "Fält @field är obligatoriskt."
 
 msgctxt "Grants application: Draft"
@@ -588,3 +588,6 @@ msgstr "Du måste föra in minst @limit värde för fält @field"
 msgctxt "Grants application: Steps"
 msgid "Next"
 msgstr "Nästa"
+
+msgid "Are you sure you want to log out?"
+msgstr "Är du säker på att du vill logga ut?"

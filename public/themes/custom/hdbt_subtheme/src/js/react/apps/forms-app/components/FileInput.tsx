@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 import { formConfigAtom, getApplicationNumberAtom, pushNotificationAtom, shouldRenderPreviewAtom } from '../store';
 import { formatErrors } from '../utils';
+import { PreviewInput } from './Input';
 import { useState } from 'react';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
 
@@ -66,7 +67,7 @@ const filesFromATVData = (value?: ATVFile): File[] => {
  * Add 'misc:multiple': 'true' to uiSchema to enable the feature.
  */
 const multipleFilesFromATVData = (value?: { files: ATVFile[]; description: string } | []): any => {
-  if (!value?.files.length) {
+  if (!value?.files?.length) {
     return [];
   }
 
@@ -95,27 +96,32 @@ export const FileInput = ({
   const applicationNumber = useAtomValue(getApplicationNumberAtom);
   const { token } = useAtomValue(formConfigAtom)!;
   const pushNotification = useSetAtom(pushNotificationAtom);
-  const { 'misc:file-type': fileType } = uiSchema as UiSchema & { 'misc:file-type': number };
+  const { 'misc:file-type': fileType, 'misc:required': miscRequired } = uiSchema as UiSchema & {
+    'misc:file-type': number;
+    'misc:required'?: boolean;
+  };
+  const isRequired = required || miscRequired;
   const { isDeliveredLater, isIncludedInOtherFile } = formData || {};
   const multipleFiles = uiSchema?.['misc:multiple'] ?? false;
   const defaultValue = multipleFiles ? multipleFilesFromATVData(formData) : filesFromATVData(formData);
 
   if (shouldRenderPreview) {
-    if (!multipleFiles) {
-      return (
-        <>
-          {defaultValue.map((file) => (
-            <>{file.name}</>
-          ))}
-        </>
-      );
+    const isSimple = uiSchema?.['misc:variant'] === 'simple';
+    const fileNames = defaultValue.map((file: File) => file.name).filter(Boolean);
+    let previewValue: string | undefined;
+    if (fileNames.length) {
+      previewValue = fileNames.join(', ');
+    } else if (!isSimple && isDeliveredLater) {
+      previewValue = Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' });
+    } else if (!isSimple && isIncludedInOtherFile) {
+      previewValue = Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' });
     }
-    // @todo Print multiple files properly.
     return (
       <>
-        {defaultValue?.files?.map((file) => (
-          <>{file.name}</>
-        ))}
+        <PreviewInput value={previewValue} label={label} uiSchema={uiSchema} />
+        {isSimple && (
+          <PreviewInput value={formData?.description} label={t('file_description.title')} uiSchema={undefined} />
+        )}
       </>
     );
   }
@@ -239,7 +245,6 @@ export const FileInput = ({
 
   const inputElement = multipleFiles ? (
     <HDSFileInput
-      multiple
       accept={accept}
       defaultValue={defaultValue}
       disabled={readonly}
@@ -252,10 +257,11 @@ export const FileInput = ({
       language={drupalSettings.path.currentLanguage}
       // 20mb in bytes
       maxSize={20 * 1024 * 1024}
+      multiple
       onChange={(files: File[]) => {
         handleMultiple(files, formData);
       }}
-      required={required}
+      required={isRequired}
       className='hdbt-form--fileinput'
     />
   ) : (
@@ -275,13 +281,14 @@ export const FileInput = ({
       onChange={(files: File[]) => {
         handleChange(files, formData);
       }}
-      required={required}
+      required={isRequired}
       className='hdbt-form--fileinput'
     />
   );
 
   const descriptionElement = (
     <TextInput
+      disabled={readonly}
       id={`${name}-description`}
       label={t('file_description.title')}
       onChange={(e) => {
@@ -305,7 +312,7 @@ export const FileInput = ({
       {inputElement}
       <Checkbox
         checked={isDeliveredLater || false}
-        disabled={Boolean(defaultValue.length)}
+        disabled={readonly || Boolean(defaultValue.length)}
         id={`${name}-delivered-later`}
         label={Drupal.t('Attachment will be delivered at later time', {}, { context: 'grants_attachments' })}
         onChange={(e) => {
@@ -320,7 +327,7 @@ export const FileInput = ({
       />
       <Checkbox
         checked={isIncludedInOtherFile || false}
-        disabled={Boolean(defaultValue.length)}
+        disabled={readonly || Boolean(defaultValue.length)}
         id={`${name}-included-in-other-file`}
         label={Drupal.t('Attachment already delivered', {}, { context: 'grants_attachments' })}
         onChange={(e) => {

@@ -1,44 +1,59 @@
 {
-  "en": {
-    "translation": {
-      "acting_year_section.description": "This form is used to apply for a grant for the production costs of orienteering maps. Grants can only be awarded for orienteering and teaching maps reported to the map register of the Finnish Orienteering Federation.",
-      "cost.title": "Costs in euros",
-      "form_title": "Sports, grant application for orienteering maps",
-      "map_name.title": "Map name, location and map type",
-      "orienteering_maps_step.title": "Grant details",
-      "orienteering_subvention.title": "Orienteering map grant",
-      "other_compensations.title": "Grants received from others in euros",
-      "required_attachments_help.value": "Invoices and receipts for the cost of producing orienteering maps must be submitted only upon request.",
-      "size.title": "Size in km2",
-      "voluntary_hours.title": "Informal voluntary work in hours"
-    }
-  },
-  "fi": {
-    "translation": {
-      "acting_year_section.description": "Tällä lomakkeella haetaan avustusta suunnistuskartan valmistuskustannuksista. Avustusta voidaan myöntää vain Suunnistusliiton karttarekisteriin raportoiduista suunnistus- ja opetuskartoista.",
-      "cost.title": "Kustannukset euroa",
-      "form_title": "Liikunta, suunnistuskartta-avustushakemus",
-      "map_name.title": "Kartan nimi, sijainti ja karttatyyppi",
-      "orienteering_maps_step.title": "Avustustiedot",
-      "orienteering_subvention.title": "Suunnistuskartta-avustus",
-      "other_compensations.title": "Muilta saadut avustukset euroa",
-      "required_attachments_help.value": "Suunnistuskarttojen valmistuskustannuksiin liittyvät laskut ja kuitit toimitetaan ainoastaan erikseen pyydettäessä.",
-      "size.title": "Koko km2",
-      "voluntary_hours.title": "Talkootyö tuntia"
-    }
-  },
-  "sv": {
-    "translation": {
-      "acting_year_section.description": "Med denna blankett ansöks om understöd för framställningskostnader för en orienteringskarta. Understödet kan endast beviljas för de orienterings- och undervisningskartor som rapporterats till Orienteringsförbundets kartregister.",
-      "cost.title": "Kostnader, euro",
-      "form_title": "Idrott, ansökan om bidrag för orienteringskarta",
-      "map_name.title": "Kartans namn, läge och karttyp",
-      "orienteering_maps_step.title": "Uppgifter om understödet",
-      "orienteering_subvention.title": "Understöd för framställning av orienteringskartor",
-      "other_compensations.title": "Understöd från tredje part, euro",
-      "required_attachments_help.value": "Fakturorna och kvittona över kostnaderna för framställning av orienteringskartor ska lämnas endast separat på begäran.",
-      "size.title": "Storlek, km2",
-      "voluntary_hours.title": "Talkoarbete, timmar"
+  "translations": {
+    "acting_year_section.description": {
+      "en": "This form is used to apply for a grant for the production costs of orienteering maps. Grants can only be awarded for orienteering and teaching maps reported to the map register of the Finnish Orienteering Federation.",
+      "fi": "Tällä lomakkeella haetaan avustusta suunnistuskartan valmistuskustannuksista. Avustusta voidaan myöntää vain Suunnistusliiton karttarekisteriin raportoiduista suunnistus- ja opetuskartoista.",
+      "sv": "Med denna blankett ansöks om understöd för framställningskostnader för en orienteringskarta. Understödet kan endast beviljas för de orienterings- och undervisningskartor som rapporterats till Orienteringsförbundets kartregister."
+    },
+    "cost.title": {
+      "en": "Costs in euros",
+      "fi": "Kustannukset euroa",
+      "sv": "Kostnader, euro"
+    },
+    "form_title": {
+      "en": "Sports, grant application for orienteering maps",
+      "fi": "Liikunta, suunnistuskartta-avustushakemus",
+      "sv": "Idrott, ansökan om bidrag för orienteringskarta"
+    },
+    "map_name.description": {
+      "en": "Map type refers to a new, remapped or updated map",
+      "fi": "Karttatyypillä tarkoitetaan ensi-, uusinta- tai ajantasaistuskartta",
+      "sv": "Med karttyp avses första kartupplaga, förnyad kartupplaga eller uppdateringskarta"
+    },
+    "map_name.title": {
+      "en": "Map name, location and map type",
+      "fi": "Kartan nimi, sijainti ja karttatyyppi",
+      "sv": "Kartans namn, läge och karttyp"
+    },
+    "orienteering_maps_step.title": {
+      "en": "Grant details",
+      "fi": "Avustustiedot",
+      "sv": "Uppgifter om understödet"
+    },
+    "orienteering_subvention.title": {
+      "en": "Orienteering map grant",
+      "fi": "Suunnistuskartta-avustus",
+      "sv": "Understöd för framställning av orienteringskartor"
+    },
+    "other_compensations.title": {
+      "en": "Grants received from others in euros",
+      "fi": "Muilta saadut avustukset euroa",
+      "sv": "Understöd från tredje part, euro"
+    },
+    "required_attachments_help.value": {
+      "en": "Invoices and receipts for the cost of producing orienteering maps must be submitted only upon request.",
+      "fi": "Suunnistuskarttojen valmistuskustannuksiin liittyvät laskut ja kuitit toimitetaan ainoastaan erikseen pyydettäessä.",
+      "sv": "Fakturorna och kvittona över kostnaderna för framställning av orienteringskartor ska lämnas endast separat på begäran."
+    },
+    "size.title": {
+      "en": "Size in km2",
+      "fi": "Koko km2",
+      "sv": "Storlek, km2"
+    },
+    "voluntary_hours.title": {
+      "en": "Informal voluntary work in hours",
+      "fi": "Talkootyö tuntia",
+      "sv": "Talkoarbete, timmar"
     }
   }
 }

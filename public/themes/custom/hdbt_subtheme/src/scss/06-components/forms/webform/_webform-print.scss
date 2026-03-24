@@ -164,6 +164,7 @@
       position: relative;
     }
 
+
     details {
       page-break-before: always;
     }
@@ -192,8 +193,9 @@
     footer.footer,
     header.header,
     nav.breadcrumb,
+    .asiointirooli-block,
     .form-actions,
-    .hds-notification,
+.hds-notification,
     .messages__container,
     .tools__container,
     .breadcrumb__container,
@@ -204,6 +206,7 @@
     .webform-multiple-table--operations {
       display: none !important;
     }
+
 
     .gin--horizontal-toolbar .dialog-off-canvas-main-canvas {
       padding: 0 !important;

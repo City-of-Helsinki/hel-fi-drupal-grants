@@ -1,0 +1,76 @@
+{
+  "form_data": {
+    "applicant_info": {
+      "applicant_email": {
+        "email": "uusi@example.com"
+      },
+      "contact_person_info": {
+        "contact_person": "test test",
+        "contact_person_phone_number": "040 123 123 12"
+      },
+      "community_address": {
+        "community_address": "Kauppakatu 20"
+      },
+      "bank_account": {
+        "bank_account": "FI9133437423819388"
+      },
+      "community_officials": {
+        "community_officials": [
+          {
+            "official": "b0dcbf65-9035-41bb-8282-2b38982a262e"
+          }
+        ]
+      }
+    },
+    "orienteering_maps_step": {
+      "acting_year_section": {
+        "acting_year": "2026"
+      },
+      "orienteering_subvention": {
+        "orienteering_maps": [
+          {
+            "map_name": "kartan nimi",
+            "size": 200,
+            "voluntary_hours": 200,
+            "cost": 200,
+            "other_compensations": 200
+          }
+        ]
+      }
+    },
+    "attachments_step": {
+      "additional_information_section": {
+        "additional_information": "yleinen lis\u00e4tieto"
+      },
+      "attachments_section": {
+        "required_attachments_help": [
+          null
+        ],
+        "multiple_attachments_help": [
+          null
+        ],
+        "formerly_provided_attachments_help": [
+          null
+        ],
+        "cant_view_after_help": [
+          null,
+          null
+        ],
+        "further_clarification": "liitteiden selvitys",
+        "other_attachment_fieldset": {
+          "other_attachment_fieldset_file": {
+            "description": "",
+            "fileName": "forreal.pdf",
+            "fileType": 0,
+            "integrationID": "https:\/\/atv.api.test.hel.ninja\/v1\/documents\/862e375e-ba38-4ddf-9a0d-4cc0cdb0ff33\/attachments\/407801\/",
+            "isDeliveredLater": false,
+            "isIncludedInOtherFile": false,
+            "isNewAttachment": true,
+            "size": 13264,
+            "fileId": 407801
+          }
+        }
+      }
+    }
+  }
+}

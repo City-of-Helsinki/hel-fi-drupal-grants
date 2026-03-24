@@ -60,7 +60,7 @@ class JsonMapper {
       $dataSourceType = $definition['datasource'];
 
       // @todo Refactor empty & hardcoded maybe.
-      if (!isset($definition['skip']) && ($definition['mapping_type'] === 'empty' || $definition['mapping_type'] === 'hardcoded')) {
+      if (!isset($definition['skip']) && (isset($definition['mapping_type']) && $definition['mapping_type'] === 'empty' || $definition['mapping_type'] === 'hardcoded')) {
         match($definition['mapping_type']) {
           'empty' => $this->handleEmpty($data, $definition, $target),
           'hardcoded' => $this->handleHardcoded($data, $definition, $target),
@@ -83,6 +83,7 @@ class JsonMapper {
         'simple' => $this->handleSimple($data, $definition, $target, $allDataSources),
         'hardcoded' => $this->handleHardcoded($data, $definition, $target),
         'empty' => $this->handleEmpty($data, $definition, $target),
+        'file', 'multiple_files' => NULL,
         default => $this->handleDefault($data, $definition, $target, $allDataSources),
       };
     }
@@ -169,6 +170,11 @@ class JsonMapper {
 
     $sourceValues = $this->getMultipleValues($dataSources[$definition['datasource']], $sourcePath);
 
+    // The field has not been filled.
+    if (!$sourceValues) {
+      return;
+    }
+
     // Source value contains multiple objects which contains multiple fields.
     // The fields may also contain nested values.
     foreach ($sourceValues as $singleObject) {
@@ -183,6 +189,9 @@ class JsonMapper {
           }
         }
         else {
+          if (!in_array($fieldName, array_keys($definition['data']))) {
+            continue;
+          }
           $valueArray = $definition['data'][$fieldName];
           $valueArray['value'] = is_bool($value) ? ($value ? "true" : "false") : (string) $value;
           $values[] = $valueArray;
@@ -246,12 +255,18 @@ class JsonMapper {
     $sourcePath = $definition['source'];
 
     $sourceValue = $this->getValue($dataSources[$definition['datasource']], $sourcePath);
-    $definition['data'] = $this->customHandler
+    $val = $this->customHandler
       ->handleDefinitionUpdate(
         $definition['custom_handler'],
         $sourceValue,
         $definition
       );
+
+    if (!$val) {
+      return;
+    }
+
+    $definition['data'] = $val;
     $sourceValue = $definition['data'];
 
     $this->setTargetValue($data, $targetPath, $sourceValue, $definition);
@@ -287,7 +302,7 @@ class JsonMapper {
   private function getNestedArrayValue(array $sourceData, array $indexes): array|string|null {
     // When we reach the end of source path, get the value.
     if (count($indexes) === 1) {
-      $value = $sourceData[$indexes[0]];
+      $value = $sourceData[$indexes[0]] ?? NULL;
       if (is_null($value)) {
         return "";
       }
@@ -336,6 +351,9 @@ class JsonMapper {
    */
   private function getMultipleNestedArrayValues(array $sourceData, array $indexes) {
     if (count($indexes) === 1) {
+      if (!isset($sourceData[$indexes[0]])) {
+        return NULL;
+      }
       return $sourceData[$indexes[0]];
     }
 
@@ -377,6 +395,10 @@ class JsonMapper {
     $key = NULL;
     if ($definition['mapping_type'] == 'hardcoded') {
       $key = array_key_first($definition['data']);
+    }
+
+    if (is_array($targetValue) && array_key_exists('label', $targetValue) && $targetValue['label'] === NULL) {
+      unset($targetValue['label']);
     }
 
     $this->setTargetValueRecursively(
@@ -479,15 +501,44 @@ class JsonMapper {
   private function handleFile(&$data, array $definition, string $targetPath, array $dataSources): void {
     $values = $this->getFileData($definition['data'], $dataSources[$definition['datasource']], $definition['source']);
 
+    // Skip if file not given.
+    if (
+      !$this->findFileFieldValue($values[0], 'isDeliveredLater') &&
+      !$this->findFileFieldValue($values[0], 'isIncludedInOtherFile') &&
+      !$this->findFileFieldValue($values[0], 'integrationID')
+    ) {
+      return;
+    }
+
     foreach ($values as $value) {
       $this->setTargetValue($data, $targetPath, $value, $definition);
     }
   }
 
+  /**
+   * File field with multiple fields updloaded.
+   *
+   * @param mixed $data
+   *   The avus2 data.
+   * @param array $definition
+   *   The field definition.
+   * @param string $targetPath
+   *   The target path on avus2-json.
+   * @param array $dataSources
+   *   The datasources.
+   */
   private function handleMultipleFiles(&$data, array $definition, string $targetPath, array $dataSources): void {
     $values = $this->getFileData($definition['data'], $dataSources[$definition['datasource']], $definition['source']);
 
     foreach ($values as $value) {
+      if (
+        !$this->findFileFieldValue($value, 'isDeliveredLater') &&
+        !$this->findFileFieldValue($value, 'isIncludedInOtherFile') &&
+        !$this->findFileFieldValue($value, 'integrationID')
+      ) {
+        continue;
+      }
+
       $this->setTargetValue($data, $targetPath, $value, $definition);
     }
   }
@@ -497,7 +548,8 @@ class JsonMapper {
    *
    * There are two cases we must handle here:
    * 1. When an actual uploaded file is mapped
-   * 2. The file will be sent in future or has already been sent(checkboxes on form).
+   * 2. The file will be sent in future or has already been sent
+   * (checkboxes on form).
    * Both cases require different amount of fields.
    * The default values for file-fields must be in mappings-json.
    *
@@ -550,16 +602,7 @@ class JsonMapper {
             $field['value'] = '';
             $urlPath = parse_url($file['integrationID'], PHP_URL_PATH);
             if ($urlPath) {
-              // Production doesn't require the environment name in integrationID.
-              // Dev/testing/stage requires envname generated by helper function.
-              // Original implementation GrantsAttachments::739.
-              // ^This might not be true since all production integrationIDs do have PROD.
-              // if (Helper::getAppEnv() === 'PROD') {
-              // $field['value'] = $urlPath;
-              // }
-              // else {
               $field['value'] = '/' . Helper::getAppEnv() . $urlPath;
-              // }
             }
           }
           else {
@@ -688,6 +731,28 @@ class JsonMapper {
     foreach ($mappedFiles as $fileArray) {
       if (array_find($fileArray, fn($item) => $item['ID'] === 'fileType' && $item['value'] == 45)) {
         return $fileArray;
+      }
+    }
+    return NULL;
+  }
+
+  /**
+   * Find a file field value.
+   *
+   * Files are sent as 5-7 different fields.
+   *
+   * @param array $singleFileFields
+   *   All the fields for single file.
+   * @param string $fieldName
+   *   The 'value' key from the single field array.
+   *
+   * @return string|null
+   *   The value or null.
+   */
+  private function findFileFieldValue(array $singleFileFields, string $fieldName): ?string {
+    foreach ($singleFileFields as $field) {
+      if ($field['ID'] === $fieldName) {
+        return $field['value'];
       }
     }
     return NULL;

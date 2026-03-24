@@ -89,7 +89,11 @@
           "title": "income_row_amount.title",
           "type": "integer"
         }
-      }
+      },
+      "required": [
+        "income_row_description",
+        "income_row_amount"
+      ]
     },
     "_expenditure_row_item": {
       "type": "object",
@@ -104,7 +108,11 @@
           "title": "expenditure_row_amount.title",
           "type": "integer"
         }
-      }
+      },
+      "required": [
+        "expenditure_row_description",
+        "expenditure_row_amount"
+      ]
     },
     "grant_info_step": {
       "required": [
@@ -149,8 +157,7 @@
           "properties": {
             "purpose": {
               "title": "purpose.title",
-              "type": "string",
-              "description": "purpose.description"
+              "type": "string"
             }
           },
           "required": ["purpose"]
@@ -252,8 +259,7 @@
             },
             "project_objectives": {
               "title": "project_objectives.title",
-              "type": "string",
-              "description": "project_objectives.description"
+              "type": "string"
             },
             "safety_practices": {
               "title": "safety_practices.title",
@@ -261,28 +267,23 @@
             },
             "safer_club_practices": {
               "title": "safer_club_practices.title",
-              "type": "string",
-              "description": "safer_club_practices.description"
+              "type": "string"
             },
             "project_increase_safety_inclusion": {
               "title": "project_increase_safety_inclusion.title",
-              "type": "string",
-              "description": "project_increase_safety_inclusion.description"
+              "type": "string"
             },
             "project_increase_competence": {
               "title": "project_increase_competence.title",
-              "type": "string",
-              "description": "project_increase_competence.description"
+              "type": "string"
             },
             "antiracism_measures": {
               "title": "antiracism_measures.title",
-              "type": "string",
-              "description": "antiracism_measures.description"
+              "type": "string"
             },
             "equality_nondiscrimination_responsibility_plan": {
               "title": "equality_nondiscrimination_responsibility_plan.title",
-              "type": "string",
-              "description": "equality_nondiscrimination_responsibility_plan.description"
+              "type": "string"
             },
             "active_participants_wrapper": {
               "type": "object",
@@ -317,8 +318,7 @@
             },
             "key_partners": {
               "title": "key_partners.title",
-              "type": "string",
-              "description": "key_partners.description"
+              "type": "string"
             },
             "schedule_wrapper": {
               "type": "object",
@@ -340,13 +340,11 @@
             },
             "schedule_of_measures": {
               "title": "schedule_of_measures.title",
-              "type": "string",
-              "description": "schedule_of_measures.description"
+              "type": "string"
             },
             "key_risks": {
               "title": "key_risks.title",
-              "type": "string",
-              "description": "key_risks.description"
+              "type": "string"
             },
             "project_results": {
               "title": "project_results.title",
@@ -354,13 +352,11 @@
             },
             "project_implementation": {
               "title": "project_implementation.title",
-              "type": "string",
-              "description": "project_implementation.description"
+              "type": "string"
             },
             "project_indicators": {
               "title": "project_indicators.title",
-              "type": "string",
-              "description": "project_indicators.description"
+              "type": "string"
             },
             "project_manager": {
               "title": "project_manager.title",
@@ -435,8 +431,7 @@
           "properties": {
             "additional_information": {
               "title": "additional_information.title",
-              "type": "string",
-              "description": "additional_information.description"
+              "type": "string"
             }
           }
         },

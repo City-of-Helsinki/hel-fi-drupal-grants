@@ -72,11 +72,13 @@ final class Avus2Integration {
    *   The application number.
    * @param string $save_id
    *   The save id.
+   * @param bool $integrationError
+   *   Try submitting the application again from scratch.
    *
    * @return bool
    *   Successful submission.
    */
-  public function sendToAvus2(AtvDocument $document, string $application_number, string $save_id): bool {
+  public function sendToAvus2(AtvDocument $document, string $application_number, string $save_id, bool $integrationError): bool {
 
     // The content contains also the data used by react form,
     // we don't want to send that.
@@ -87,6 +89,12 @@ final class Avus2Integration {
 
     try {
       $headers = [];
+
+      if ($integrationError) {
+        // We set the data source for integration to be used in controlling
+        // application testing in problematic cases.
+        $headers['X-hki-UpdateSource'] = 'RESEND';
+      }
 
       // Get status from updated document.
       $headers['X-Case-Status'] = $document->getStatus();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\grants_application\Controller;
 
+use Drupal\Component\Transliteration\TransliterationInterface;
 use Drupal\content_lock\ContentLock\ContentLockInterface;
 use Drupal\Core\Access\CsrfTokenGenerator;
 use Drupal\Core\Controller\ControllerBase;
@@ -60,6 +61,8 @@ final class ApplicationController extends ControllerBase {
     #[Autowire(service: 'grants_handler.message_service')]
     private readonly MessageService $messageService,
     private readonly UserInformationService $userInformationService,
+    #[Autowire(service: 'transliteration')]
+    private readonly TransliterationInterface $transliteration,
   ) {
   }
 
@@ -116,11 +119,18 @@ final class ApplicationController extends ControllerBase {
    *   The application number to use for the form.
    * @param bool $use_draft
    *   Whether to use the draft version of the form.
+   * @param bool $use_empty_preview
+   *   Whether to use the empty preview version of the form.
    *
    * @return array|RedirectResponse
    *   The resulting array
    */
-  public function formsApp(string $form_identifier, ?string $application_number, bool $use_draft): array|RedirectResponse {
+  public function formsApp(
+    string $form_identifier,
+    ?string $application_number,
+    bool $use_draft,
+    bool $use_empty_preview = FALSE,
+  ): array|RedirectResponse {
     // Grant terms are stored in block.
     $blockStorage = $this->entityTypeManager()->getStorage('block_content');
     $terms_block = $blockStorage->load(1);
@@ -131,9 +141,26 @@ final class ApplicationController extends ControllerBase {
       try {
         $document = $this->helfiAtvService->getDocument($application_number);
 
-        // @todo Should not use grants handler service to figure out is submission is editable.
-        // It works but the implementation should live under this module.
-        if (!$this->applicationStatusService->isSubmissionEditable(NULL, $document->getStatus())) {
+        // If document is submitted and has Avus2-error, open it up.
+        $events = $document->getContent()['events'];
+        $status = $document->getStatus();
+        $avus2Error = FALSE;
+        foreach ($events as $event) {
+          if (isset($event['eventType']) && $event['eventType'] === 'INTEGRATION_ERROR_AVUS2') {
+            $avus2Error = TRUE;
+            break;
+          }
+        }
+
+        if ($status === 'SUBMITTED' && $avus2Error) {
+          // No need to do anything here.
+          // This happens when Avus2-json has bad data in it.
+          $this->getLogger('grants_application')
+            ->error("User opened an application which is stuck: $application_number");
+        }
+        elseif (!$this->applicationStatusService->isSubmissionEditable(NULL, $document->getStatus())) {
+          // @todo Should not use grants handler service to figure out is submission is editable.
+          // It works but the implementation should live under this module.
           $this->messenger()
             ->addError($this->t('The application is being processed. The application cannot be edited or submitted.'));
 
@@ -186,6 +213,10 @@ final class ApplicationController extends ControllerBase {
               'link_title' => $terms_block->get('field_link_title')->value ?? '',
             ],
             'use_draft' => $use_draft,
+            'use_empty_preview' => $use_empty_preview,
+            'print_url' => $application_number
+              ? Url::fromRoute('helfi_grants.print_view', ['application_number' => $application_number])->toString()
+              : NULL,
           ],
         ],
       ],
@@ -291,7 +322,7 @@ final class ApplicationController extends ControllerBase {
     $statusHistory = $document->getStatusHistory();
     $submitted = array_find($statusHistory, fn($item) => $item['value'] === 'SUBMITTED') ?? FALSE;
     if ($submitted) {
-      $submitted = (new \DateTime($submitted['timestamp']))->format('Y-m-d H:i:s');
+      $submitted = (new \DateTime($submitted['timestamp']))->format('d.m.Y H:i');
     }
 
     // Get event history.
@@ -322,7 +353,7 @@ final class ApplicationController extends ControllerBase {
         }
         $documentContentAttachment = array_find($documentContent['attachmentsInfo']['attachmentsArray'], fn($a) => $a[2]['ID'] === 'fileType' && $a[1]['value'] === $filename);
         $description = $documentContentAttachment[0]['value'] . ', ' ?? '';
-        $submitted = $event['timeCreated'];
+        $submitted = $event['timeCreated'] ?? $event['eventCreated'];
         $submitted = (new \DateTime($submitted))->format('d.m.Y H:i');
 
         $submitted = !$submitted ? '' : $submitted . ': ';
@@ -335,6 +366,20 @@ final class ApplicationController extends ControllerBase {
     // Get the "käsittelijä" from events.
     $handlerEvents = array_filter($documentContent['events'], fn($event) => $event['eventType'] == 'EVENT_INFO');
 
+    $isEditable = FALSE;
+    $documentStatus = $document->getStatus();
+    if ($documentStatus === 'SUBMITTED') {
+      foreach ($document->getContent()['events'] as $event) {
+        if (isset($event['eventType']) && $event['eventType'] === 'INTEGRATION_ERROR_AVUS2') {
+          $isEditable = TRUE;
+          break;
+        }
+      }
+    }
+    elseif (in_array($documentStatus, ['DRAFT', 'RECEIVED'])) {
+      $isEditable = TRUE;
+    }
+
     // Test the handler
     // $handlerEvents = [['eventDescription' =>
     // 'Henkilö Testi;040 123 123 12;test.henkilo@example.com']];.
@@ -342,7 +387,6 @@ final class ApplicationController extends ControllerBase {
     foreach ($handlerEvents as $handlerEvent) {
       $handlers[] = explode(";", $handlerEvent['eventDescription']);
     }
-    $isEditable = in_array($document->getStatus(), ['DRAFT', 'RECEIVED']);
 
     // Messages
     // grants_handler_preprocess_webform_submission_messages.
@@ -414,6 +458,7 @@ final class ApplicationController extends ControllerBase {
             ],
             'use_draft' => TRUE,
             'use_preview' => TRUE,
+            'print_url' => $submission->getPrintApplicationUrl()->toString(),
           ],
         ],
       ],
@@ -443,6 +488,8 @@ final class ApplicationController extends ControllerBase {
 
     // @phpstan-ignore-next-line
     $file_original_name = $file->getClientOriginalName();
+    $file_original_name = $this->transliteration->transliterate($file_original_name);
+    $file_original_name = str_replace(' ', '_', $file_original_name);
     if (strlen($file_original_name) >= 100) {
       return new JsonResponse(['error' => $this->t('File name is too long. Please rename the file and try again.')], 500);
     }
@@ -671,22 +718,99 @@ final class ApplicationController extends ControllerBase {
    *   The application number.
    */
   public function printApplication(string $application_number): array {
-    // @todo UHF-12685 the original implementation can handle react forms
-    // mediocre at best and it should be eventually moved here.
-    return [];
+    if (!$application_number) {
+      throw new NotFoundHttpException();
+    }
+
+    try {
+      $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $user_information = $this->userInformationService->getUserData();
+    }
+    catch (\Throwable $e) {
+      throw new NotFoundHttpException();
+    }
+
+    try {
+      $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+    }
+    catch (\Throwable) {
+      throw new NotFoundHttpException();
+    }
+
+    $submission = $this->getApplicationSubmission($application_number);
+    if (!$submission) {
+      throw new NotFoundHttpException();
+    }
+
+    $form_identifier = $submission->get('form_identifier')->value;
+    $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
+
+    $document = $this->helfiAtvService->getDocument($application_number);
+    $statusHistory = $document->getStatusHistory();
+    $submitted = array_find($statusHistory, fn($item) => $item['value'] === 'SUBMITTED') ?? FALSE;
+    if ($submitted) {
+      $submitted = (new \DateTime($submitted['timestamp']))->format('d.m.Y H:i');
+    }
+    $langCode = $this->languageManager()->getCurrentLanguage()->getId();
+    $statusStrings = $this->getStatusStrings($langCode);
+    $statusLocalized = $statusStrings[$document->getStatus()] ?? ucfirst(strtolower($document->getStatus()));
+
+    return [
+      '#theme' => 'grants_application_print',
+      '#submission_id' => $application_number,
+      '#application_number' => $submission->get('application_type_id')->value,
+      '#title' => $settings->getApplicationName(),
+      '#status' => $statusLocalized,
+      '#submitted' => $submitted,
+      '#attached' => [
+        'drupalSettings' => [
+          'grants_react_form' => [
+            'application_number' => $settings->getFormId(),
+            'real_application_number' => $submission->get('application_number')->value,
+            'form_identifier' => $form_identifier,
+            'token' => $this->csrfTokenGenerator->get('rest'),
+            'list_view_path' => Url::fromRoute('grants_oma_asiointi.applications_list')->toString(),
+            'terms' => [
+              'body' => '',
+              'link_title' => '',
+            ],
+            'use_draft' => TRUE,
+            'use_preview' => TRUE,
+            'use_print' => TRUE,
+            'print_url' => $submission->getPrintApplicationUrl()->toString(),
+          ],
+        ],
+      ],
+    ];
   }
 
   /**
-   * Preview the form as anonymous or logged in user.
+   * Return empty form data for anonymous preview.
    *
    * @param string $form_identifier
    *   The form identifier.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   The JSON response.
    */
-  public function formPreview(string $form_identifier): array {
-    // @todo UHF-12923 the form preview for application,
-    // this is similar to ApplicationController::formsApp,
-    // needs route.
-    return [];
+  public function formPreview(string $form_identifier): JsonResponse {
+    try {
+      $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
+    }
+    catch (\Exception $e) {
+      return new JsonResponse([], 404);
+    }
+
+    $response = [
+      'form_data' => [],
+      'grants_profile' => [],
+      'user_data' => [],
+      'status' => 'draft',
+      'token' => $this->csrfTokenGenerator->get('rest'),
+      'last_changed' => NULL,
+    ] + $settings->toArray();
+
+    return new JsonResponse($response);
   }
 
   /**

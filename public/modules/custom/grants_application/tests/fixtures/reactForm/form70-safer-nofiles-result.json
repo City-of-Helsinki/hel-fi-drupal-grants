@@ -1,0 +1,464 @@
+{
+  "compensation": {
+    "applicantInfoArray": [
+      {
+        "ID": "applicantType",
+        "label": "Hakijan tyyppi",
+        "value": "2",
+        "valueType": "string"
+      },
+      {
+        "ID": "companyNumber",
+        "label": "Y-Tunnus",
+        "value": "7769480-5",
+        "valueType": "string"
+      },
+      {
+        "ID": "registrationDate",
+        "label": "Rekister\u00f6imisp\u00e4iv\u00e4",
+        "value": "21.5.2023",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "foundingYear",
+        "label": "Perustamisvuosi",
+        "value": "2020",
+        "valueType": "string"
+      },
+      {
+        "ID": "home",
+        "label": "Kotipaikka",
+        "value": "HELSINKI",
+        "valueType": "string"
+      },
+      {
+        "ID": "homePage",
+        "label": "www-sivut",
+        "value": "www.google.com",
+        "valueType": "string"
+      },
+      {
+        "ID": "communityOfficialName",
+        "label": "Yhteis\u00f6n nimi",
+        "value": "Activenakusteri Oy",
+        "valueType": "string"
+      },
+      {
+        "ID": "communityOfficialNameShort",
+        "label": "Yhteis\u00f6n lyhenne",
+        "value": "Akt",
+        "valueType": "string"
+      },
+      {
+        "ID": "email",
+        "label": "S\u00e4hk\u00f6postiosoite",
+        "value": "test@example.com",
+        "valueType": "string"
+      }
+    ],
+    "currentAddressInfoArray": [
+      {
+        "ID": "contactPerson",
+        "label": "Yhteyshenkil\u00f6",
+        "value": "Joku Henkilö",
+        "valueType": "string"
+      },
+      {
+        "ID": "phoneNumber",
+        "label": "Puhelinnumero",
+        "value": "040 123 123 12",
+        "valueType": "string"
+      },
+      {
+        "ID": "street",
+        "label": "L\u00e4hiosoite",
+        "value": "Mannerheimintie 12",
+        "valueType": "string"
+      },
+      {
+        "ID": "city",
+        "label": "Kaupunki",
+        "value": "Helsinki",
+        "valueType": "string"
+      },
+      {
+        "ID": "postCode",
+        "label": "Postinumero",
+        "value": "00100",
+        "valueType": "string"
+      },
+      {
+        "ID": "country",
+        "label": "Maa",
+        "value": "Suomi",
+        "valueType": "string"
+      }
+    ],
+    "applicationInfoArray": [
+      {
+        "ID": "applicationType",
+        "value": "KUVAERILLIS",
+        "valueType": "string"
+      },
+      {
+        "ID": "applicationTypeID",
+        "value": "70",
+        "valueType": "string"
+      },
+      {
+        "ID": "formTimeStamp",
+        "value": "2025-10-06T13:13:13",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "createdFormTimeStamp",
+        "value": "2025-10-06T13:13:13",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "submittedFormTimeStamp",
+        "value": "2025-10-06T13:13:13",
+        "valueType": "datetime"
+      },
+      {
+        "ID": "applicationNumber",
+        "value": "ABCDE-123-0001009",
+        "valueType": "string"
+      },
+      {
+        "ID": "status",
+        "label": "Hakemuksen tila",
+        "value": "DRAFT",
+        "valueType": "string"
+      },
+      {
+        "ID": "actingYear",
+        "label": "Vuosi, jolle haen avustusta",
+        "value": "2026",
+        "valueType": "string"
+      }
+    ],
+    "applicantOfficialsArray": [
+      [
+        {
+          "ID": "name",
+          "label": "Nimi",
+          "value": "Teppo Testaaja",
+          "valueType": "string"
+        },
+        {
+          "ID": "role",
+          "label": "Rooli",
+          "value": "2",
+          "valueType": "int"
+        },
+        {
+          "ID": "email",
+          "label": "S\u00e4hk\u00f6posti",
+          "value": "teppo.testaaja@noreply.com",
+          "valueType": "string"
+        },
+        {
+          "ID": "phone",
+          "label": "Puhelinnumero",
+          "value": "+358451234657",
+          "valueType": "string"
+        }
+      ]
+    ],
+    "bankAccountArray": [
+      {
+        "ID": "accountNumber",
+        "label": "Tilinumero",
+        "value": "FI4950009420028730",
+        "valueType": "string"
+      }
+    ],
+    "senderInfoArray": [
+      {
+        "ID": "firstname",
+        "value": "Nordea",
+        "valueType": "string"
+      },
+      {
+        "ID": "lastname",
+        "value": "Demo",
+        "valueType": "string"
+      },
+      {
+        "ID": "personID",
+        "value": "010101A0101",
+        "valueType": "string"
+      },
+      {
+        "ID": "userID",
+        "value": "123345678-abcd-1234-ab12-abcdefgh",
+        "valueType": "string"
+      },
+      {
+        "ID": "email",
+        "value": "user_no_mail@hel.fi",
+        "valueType": "string"
+      }
+    ],
+    "additionalInformation": "lis\u00e4tiedot",
+    "compensationInfo": {
+      "compensationArray": [
+        [
+          {
+            "ID": "subventionType",
+            "label": "Avustuslaji",
+            "value": "56",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Euroa",
+            "value": "11110",
+            "valueType": "double"
+          }
+        ]
+      ],
+      "generalInfoArray": [
+        {
+          "ID": "purpose",
+          "value": "lyhyt kuvaus",
+          "valueType": "string",
+          "label": "Lyhyt kuvaus haettavan \/ haettavien avustusten k\u00e4ytt\u00f6tarkoituksista"
+        }
+      ]
+    },
+    "otherCompensationsInfo": {
+      "otherCompensationsArray": [
+        [
+          {
+            "ID": "issuer",
+            "label": "Avustuksen my\u00f6nt\u00e4j\u00e4",
+            "value": "Valtio",
+            "valueType": "string"
+          },
+          {
+            "ID": "issuerName",
+            "label": "My\u00f6nt\u00e4j\u00e4n nimi",
+            "value": "aaa",
+            "valueType": "string"
+          },
+          {
+            "ID": "year",
+            "label": "Vuosi",
+            "value": "2021",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "My\u00f6nnetyn avustuksen summa",
+            "value": "1000",
+            "valueType": "string"
+          },
+          {
+            "ID": "purpose",
+            "label": "Kuvaus k\u00e4ytt\u00f6tarkoituksesta",
+            "value": "Lyhyt kuvaus my\u00f6nnetyn avustuksen k\u00e4ytt\u00f6tarkoituksesta",
+            "valueType": "string"
+          }
+        ]
+      ],
+      "otherAppliedCompensationsArray": [
+        [
+          {
+            "ID": "issuer",
+            "label": "Avustuksen my\u00f6nt\u00e4j\u00e4",
+            "value": "S\u00e4\u00e4ti\u00f6",
+            "valueType": "string"
+          },
+          {
+            "ID": "issuerName",
+            "label": "My\u00f6nt\u00e4j\u00e4n nimi",
+            "value": "Haetttu avustus s\u00e4\u00e4ti\u00f6",
+            "valueType": "string"
+          },
+          {
+            "ID": "year",
+            "label": "Vuosi",
+            "value": "2022",
+            "valueType": "string"
+          },
+          {
+            "ID": "amount",
+            "label": "Haetun avustuksen summa",
+            "value": "2000",
+            "valueType": "string"
+          },
+          {
+            "ID": "purpose",
+            "label": "Kuvaus k\u00e4ytt\u00f6tarkoituksesta",
+            "value": "haetun avustuksen k\u00e4ytt\u00f6tarkoitus",
+            "valueType": "string"
+          }
+        ]
+      ]
+    },
+    "customQuestionsInfo": {
+      "customQuestionsArray": [
+        {
+          "ID": "reason_for_grant_application",
+          "label": "Miksi haette avustusta?",
+          "value": "Lorem ipsum 0",
+          "valueType": "string"
+        },
+        {
+          "ID": "project_objectives",
+          "label": "Hankkeen tavoitteet",
+          "value": "Lorem ipsum 1",
+          "valueType": "string"
+        },
+        {
+          "ID": "safety_practices",
+          "label": "Millaisia turvallisuuteen liittyvi\u00e4 toimintamalleja yhdistyksess\u00e4 on jo k\u00e4yt\u00f6ss\u00e4 tai millaisia toimenpiteit\u00e4 on jo toteutettu?",
+          "value": "Lorem ipsum 2",
+          "valueType": "string"
+        },
+        {
+          "ID": "safer_club_practices",
+          "label": "Mill\u00e4 tavoin hankkeessa kehitet\u00e4\u00e4n turvallisemman seuran toimintamalleja?",
+          "value": "Lorem ipsum 3",
+          "valueType": "string"
+        },
+        {
+          "ID": "project_increase_safety_inclusion",
+          "label": "Lis\u00e4\u00e4k\u00f6 hanke lasten ja nuorten turvallisuutta ja osallisuutta? Jos kyll\u00e4, miten?",
+          "value": "Lorem ipsum 4",
+          "valueType": "string"
+        },
+        {
+          "ID": "project_increase_competence",
+          "label": "Lis\u00e4\u00e4k\u00f6 hanke valmentajien, ohjaajien ja seuran muun henkil\u00f6st\u00f6n osaamista? Jos kyll\u00e4, miten?",
+          "value": "Lorem ipsum 5",
+          "valueType": "string"
+        },
+        {
+          "ID": "antiracism_measures",
+          "label": "Kehitet\u00e4\u00e4nk\u00f6 hankkeessa rasisminvastaisia toimenpiteit\u00e4? Jos kyll\u00e4, miten?",
+          "value": "Lorem ipsum 6",
+          "valueType": "string"
+        },
+        {
+          "ID": "equality_nondiscrimination_responsibility_plan",
+          "label": "Laaditaanko hankkeessa yhdenvertaisuus-, tasa-arvo- tai vastuullisuussuunnitelma ja toteutetaanko sen toimenpiteit\u00e4? Jos kyll\u00e4, miten?",
+          "value": "Lorem ipsum 7",
+          "valueType": "string"
+        },
+        {
+          "ID": "active_participants_under_20",
+          "label": "Yhdistyksen alle 20-vuotiaiden aktiiviharrastajien m\u00e4\u00e4r\u00e4",
+          "value": "10",
+          "valueType": "string"
+        },
+        {
+          "ID": "active_participants_local",
+          "label": "Joista helsinkil\u00e4isi\u00e4",
+          "value": "20",
+          "valueType": "string"
+        },
+        {
+          "ID": "under_20_affected",
+          "label": "Kuvaile, keit\u00e4 tai kuinka suurta osaa seuran alle 20-vuotiaista harrastajista hankkeen toimenpiteet koskettavat",
+          "value": "Lorem ipsum 8",
+          "valueType": "string"
+        },
+        {
+          "ID": "key_partners",
+          "label": "Nime\u00e4 keskeisimm\u00e4t yhteisty\u00f6kumppanit ja heid\u00e4n roolinsa hankkeessa",
+          "value": "Lorem ipsum 9",
+          "valueType": "string"
+        },
+        {
+          "ID": "start_date",
+          "label": "Aikataulu alkup\u00e4iv\u00e4m\u00e4\u00e4r\u00e4",
+          "value": "2026-03-01",
+          "valueType": "datetime"
+        },
+        {
+          "ID": "end_date",
+          "label": "Aikataulu loppup\u00e4iv\u00e4m\u00e4\u00e4r\u00e4",
+          "value": "2026-03-31",
+          "valueType": "datetime"
+        },
+        {
+          "ID": "schedule_of_measures",
+          "label": "Toimenpiteiden aikataulu",
+          "value": "Lorem ipsum 10",
+          "valueType": "string"
+        },
+        {
+          "ID": "key_risks",
+          "label": "Mitk\u00e4 ovat hankkeen keskeiset riskit?",
+          "value": "Lorem ipsum 11",
+          "valueType": "string"
+        },
+        {
+          "ID": "project_results",
+          "label": "Mit\u00e4 konkreettisia tuloksia tai tuotoksia hankkeesta syntyy? Millaisia pysyvi\u00e4 tai pitk\u00e4aikaisia vaikutuksia hankkeella on?",
+          "value": "Lorem ipsum 12",
+          "valueType": "string"
+        },
+        {
+          "ID": "project_implementation",
+          "label": "Miten hankkeen kehitysty\u00f6 ja tulokset jalkautetaan?",
+          "value": "Lorem ipsum 13",
+          "valueType": "string"
+        },
+        {
+          "ID": "project_indicators",
+          "label": "Mitk\u00e4 ovat hankkeen mittarit ja miten vaikuttavuutta arvioidaan?",
+          "value": "Lorem ipsum 14",
+          "valueType": "string"
+        },
+        {
+          "ID": "project_manager",
+          "label": "Kuka on hankkeen vastuuhenkil\u00f6? Mik\u00e4 on h\u00e4nen roolinsa yhdistyksess\u00e4 ja hankkeessa?",
+          "value": "Lorem ipsum 15",
+          "valueType": "string"
+        }
+      ]
+    },
+    "budgetInfo": {
+      "incomeGroupsArrayStatic": [
+        {
+          "incomeGroupName": "general",
+          "otherIncomeRowsArrayStatic": [
+            {
+              "ID": "tulot_field_0_0",
+              "label": "tulon tyyppi",
+              "value": 1111,
+              "valueType": "double"
+            }
+          ]
+        }
+      ],
+      "costGroupsArrayStatic": [
+        {
+          "costGroupName": "general",
+          "otherCostRowsArrayStatic": [
+            {
+              "ID": "menot_field_0_0",
+              "label": "Menon tyyppi",
+              "value": 2222,
+              "valueType": "double"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "attachmentsInfo": {
+    "generalInfoArray": [
+      {
+        "ID": "extraInfo",
+        "label": "Lisäselvitys liitteistä",
+        "value": "Liitteiden lisäselvitys",
+        "valueType": "string"
+      }
+    ]
+  }
+}

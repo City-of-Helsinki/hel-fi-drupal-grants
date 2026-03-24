@@ -1,4 +1,4 @@
-import { Button, ButtonPresetTheme, ButtonVariant, IconCopy } from 'hds-react';
+import { Button, ButtonPresetTheme, ButtonVariant, IconCopy, IconPrinter } from 'hds-react';
 import { DateTime } from 'luxon';
 import type { RJSFSchema } from '@rjsf/utils';
 import { useAtomValue } from 'jotai';
@@ -53,19 +53,16 @@ export const FormSummary = ({ formData }: { formData: any; schema: RJSFSchema })
       <div className='webform-submission-information__row webform-submission-information__row-top'>
         <h4>{formTitle}</h4>
         <div className='webform-submission-information__supportlinks'>
-          {/* @todo: Enable when print functionality is ready
-            <Button
-              iconStart={<IconPrinter />}
-              theme={ButtonPresetTheme.Black}
-              variant={ButtonVariant.Supplementary}
-            >
-              {Drupal.t(
-                'Print application',
-                {},
-                { context: 'Grants application: Submitted form' },
-              )}
-            </Button>
-          */}
+          <Button
+            iconStart={<IconPrinter />}
+            theme={ButtonPresetTheme.Black}
+            variant={ButtonVariant.Supplementary}
+            onClick={() => {
+              window.location.href = drupalSettings.grants_react_form.print_url as string;
+            }}
+          >
+            {Drupal.t('Print application', {}, { context: 'Grants application: Submitted form' })}
+          </Button>
           <Button
             disabled={disableActions}
             iconStart={<IconCopy />}
