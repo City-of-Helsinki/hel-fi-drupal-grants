@@ -600,6 +600,7 @@ function hdbt_subtheme_preprocess_page(&$variables): void {
     // (service) content type.
     if ($entity->getType() === 'service') {
       $variables['has_sidebar_second'] = TRUE;
+      $variables['has_deprecated_field_sidebar_content'] = FALSE;
 
       // Remove sidebar content block from service page, since the field is
       // hidden in the form display.
