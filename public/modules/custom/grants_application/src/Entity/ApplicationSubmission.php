@@ -256,10 +256,10 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
   public function getPrintApplicationUrl(): Url {
     $parameters = ['application_number' => $this->get('application_number')->value];
     /* $attributes = [
-      'attributes' => [
-        'data-drupal-selector' => 'application-print-link',
-        'class' => ['hds-button', 'hds-button--supplementary'],
-      ],
+    'attributes' => [
+    'data-drupal-selector' => 'application-print-link',
+    'class' => ['hds-button', 'hds-button--supplementary'],
+    ],
     ]; */
 
     return Url::fromRoute(
