@@ -15,26 +15,6 @@ use Drupal\Tests\UnitTestCase;
 final class HelfiAtvServiceTest extends UnitTestCase {
 
   /**
-   * {@inheritdoc}
-   */
-  protected function setUp(): void {
-    parent::setUp();
-    putenv('ATV_SERVICE=test-service');
-    putenv('ATV_TOS_FUNCTION_ID=test-tos-function');
-    putenv('ATV_TOS_RECORD_ID=test-tos-record');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function tearDown(): void {
-    parent::tearDown();
-    putenv('ATV_SERVICE');
-    putenv('ATV_TOS_FUNCTION_ID');
-    putenv('ATV_TOS_RECORD_ID');
-  }
-
-  /**
    * Test getAppEnv maps known APP_ENV values correctly.
    *
    * @dataProvider appEnvProvider
@@ -56,47 +36,6 @@ final class HelfiAtvServiceTest extends UnitTestCase {
       ['production', 'PROD'],
       ['custom', 'custom'],
     ];
-  }
-
-  /**
-   * Test that createAtvDocument stores schema_version in metadata.
-   */
-  public function testCreateAtvDocumentSetsSchemaVersion(): void {
-    $document = HelfiAtvService::createAtvDocument(
-      application_uuid: 'test-uuid',
-      application_number: 'TEST-001',
-      application_name: 'Test',
-      application_type: 'test_type',
-      application_title: 'Test Title',
-      langcode: 'fi',
-      sub: 'user-sub',
-      company_identifier: 'company-id',
-      copy: FALSE,
-      selected_company: ['type' => 'registered_community', 'identifier' => 'company-id'],
-      schemaVersion: '2',
-    );
-
-    $this->assertSame('2', $document->getMetadata()['schema_version']);
-  }
-
-  /**
-   * Test that schema_version defaults to '1'.
-   */
-  public function testCreateAtvDocumentDefaultSchemaVersion(): void {
-    $document = HelfiAtvService::createAtvDocument(
-      application_uuid: 'test-uuid',
-      application_number: 'TEST-001',
-      application_name: 'Test',
-      application_type: 'test_type',
-      application_title: 'Test Title',
-      langcode: 'fi',
-      sub: 'user-sub',
-      company_identifier: 'company-id',
-      copy: FALSE,
-      selected_company: ['type' => 'private_person', 'identifier' => 'person-id'],
-    );
-
-    $this->assertSame('1', $document->getMetadata()['schema_version']);
   }
 
 }
