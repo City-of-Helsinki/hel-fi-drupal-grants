@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FocusEvent, type KeyboardEvent, type WheelEvent, useCallback, useEffect } from 'react';
+import { type ChangeEvent, type FocusEvent, type WheelEvent, useCallback, useEffect } from 'react';
 import {
   Checkbox,
   DateInput,
@@ -48,6 +48,11 @@ export const PreviewInput = ({
     {Array.isArray(value) ? value.join(', ') : (value ?? '-')}
   </>
 );
+
+const sanitizeNumericInput = (value: string, allowPhone = false): string => {
+  const pattern = allowPhone ? /[^0-9 ,+()]/g : /[^0-9 ,]/g;
+  return value.replace(pattern, '').replace(/ {2,}/g, ' ');
+};
 
 export const TextInput = ({
   id,
@@ -99,17 +104,12 @@ export const TextInput = ({
         name={name}
         onBlur={() => null}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          onChange(event.target.value === '' ? undefined : event.target.value);
+          const sanitized = sanitizeNumericInput(event.target.value);
+          onChange(sanitized === '' ? undefined : sanitized);
         }}
         onFocus={(event: FocusEvent<HTMLInputElement>) => {
           if (event.target.value === '0') {
             event.target.select();
-          }
-        }}
-        onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
-          const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
-          if (Number.isNaN(Number(event.key)) && !allowedKeys.includes(event.key) && event.ctrlKey === false) {
-            event.preventDefault();
           }
         }}
         onWheel={(event: WheelEvent<HTMLInputElement>) => {
@@ -133,14 +133,10 @@ export const TextInput = ({
       label={label}
       name={name}
       onBlur={() => null}
-      onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
-        // Phone number rather a string of numbers than a number field.
-        const allowedKeys = ['Backspace', 'Space', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
-        if (phone && !allowedKeys.includes(event.key) && Number.isNaN(Number(event.key))) {
-          event.preventDefault();
-        }
+      onChange={(event: ChangeEvent<HTMLInputElement>) => {
+        const value = phone ? sanitizeNumericInput(event.target.value, true) : event.target.value;
+        onChange(value);
       }}
-      onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value)}
       onFocus={() => null}
       required={required}
       style={{ maxWidth: getMaxWidth() }}

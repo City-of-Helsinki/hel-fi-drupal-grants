@@ -186,7 +186,7 @@
               "title": "acting_year.title",
               "type": "string",
               "enum": [
-                "2025"
+                "2026"
               ]
             }
           },

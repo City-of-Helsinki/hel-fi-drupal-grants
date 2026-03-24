@@ -43,6 +43,16 @@ helfi_grants.view_application:
   requirements:
     _role: helsinkiprofiili
 
+#todo can be removed once react reads the data from variables.
+helfi_grants.view_application2:
+  path: '/application/view/{application_number}/{application_number2}'
+  defaults:
+    _controller: '\Drupal\grants_application\Controller\ApplicationController::viewApplication'
+    _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getViewApplicationTitle'
+    application_number2: NULL
+  requirements:
+    _role: helsinkiprofiili
+
 helfi_grants.forms_app_copy_application:
   path: '/application/new/{form_identifier}/{original_application_number}/copy'
   defaults:
@@ -95,6 +105,7 @@ helfi_grants.print_view:
   path: '/application/{application_number}/print'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::printApplication'
+    _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getViewApplicationTitle'
   requirements:
     _role: helsinkiprofiili
 

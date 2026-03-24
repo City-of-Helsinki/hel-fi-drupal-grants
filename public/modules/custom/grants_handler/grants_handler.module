@@ -2254,8 +2254,9 @@ function _grants_handler_handle_react_application(array &$variables) {
   $variables['editApplicationLink'] = $submission_entity->getEditApplicationLink($settings['settings']['title']);
 
   $variables['deleteApplicationUrl'] = $submission_entity->getDeleteApplicationUrl()->toString();
-  // @todo UHF-12987 Enable print url when React form printing view is complete.
-  $variables['printApplicationUrl'] = '';
+  $variables['printApplicationUrl'] = $submission['status'] !== 'DRAFT'
+    ? $submission_entity->getPrintApplicationUrl()->toString()
+    : '';
 
   $variables['errorType'] = NULL;
 

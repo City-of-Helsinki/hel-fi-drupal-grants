@@ -69,7 +69,7 @@
       },
       "other_compensation_amount": {
         "ID": "amount",
-        "label": "",
+        "label": "Myönnetyn avustuksen summa",
         "value": "",
         "valueType": "string"
       },
@@ -107,7 +107,7 @@
       },
       "other_applied_compensation_amount": {
         "ID": "amount",
-        "label": "",
+        "label": "Haetun avustuksen summa",
         "value": "",
         "valueType": "string"
       },
