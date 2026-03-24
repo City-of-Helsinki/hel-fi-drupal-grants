@@ -281,11 +281,13 @@ export const setFormDataAtom = atom(null, (_get, _set, newData: any) => {
 export const setApplicationNumberAtom = atom(null, (_get, _set, applicationNumber: string) => {
   const formConfig = _get(getFormConfigAtom);
 
-  const currentParts = getUrlParts();
-  currentParts[4] = applicationNumber;
-  const currentUrl = new URL(window.location.href);
-  currentUrl.pathname = currentParts.join('/');
-  window.history.replaceState(null, '', currentUrl.toString());
+  if (!drupalSettings.grants_react_form.real_application_number) {
+    const currentParts = getUrlParts();
+    currentParts[4] = applicationNumber;
+    const currentUrl = new URL(window.location.href);
+    currentUrl.pathname = currentParts.join('/');
+    window.history.replaceState(null, '', currentUrl.toString());
+  }
 
   _set(formConfigAtom, (state) => ({ ...formConfig, applicationNumber }));
 });

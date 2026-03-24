@@ -1,0 +1,49 @@
+<table class="webform-print-wrapper-table" aria-label="{{ 'Print table'|t }}">
+  <thead><tr><th>
+    <div class="webform-print-header-space"></div>
+  </th></tr></thead>
+  <tbody><tr><td>
+    <div class="grants-application-print">
+<div class="application-list__status__wrapper">
+        <div class="container application-list__status__container">
+          <div class="application-list__status__item">
+            <div class="application-list__status__label">{{ 'Application'|t }}</div>
+            <div class="application-list__status__value">{{ status }}</div>
+          </div>
+          <div class="application-list__status__item">
+            <div class="application-list__status__label">{{ 'Saved'|t }}</div>
+            <div class="application-list__status__value">{{ submitted }}</div>
+          </div>
+          <div class="application-list__status__item">
+            <div class="application-list__status__label">{{ 'Application number'|t }}</div>
+            <div class="application-list__status__value transaction-id">{{ submission_id }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <h1>{{ title }}</h1>
+        {{ attach_library('hdbt_subtheme/forms-app') }}
+        <div id="grants-react-form"></div>
+      </div>
+    </div>
+  </td></tr></tbody>
+  <tfoot><tr><td>
+    <div class="webform-print-footer-space"></div>
+  </td></tr></tfoot>
+</table>
+<header class="webform-print-header">
+  {{ helsinki_logo }}
+  <div class="webform-print-header-left-text"></div>
+  <div class="webform-print-header-right-text">
+    {{ title }}<br>
+    {{ submission_id }}
+  </div>
+</header>
+<footer class="webform-print-footer">
+  {{ helsinki_logo }}
+  <div class="webform-print-footer-left-text">
+    © Helsingin kaupunki {{ 'now'|date('Y') }} |
+    <a href="https://www.hel.fi">www.hel.fi</a>
+  </div>
+  <div class="webform-print-footer-right-text"></div>
+</footer>

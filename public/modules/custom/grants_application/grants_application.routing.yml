@@ -105,6 +105,7 @@ helfi_grants.print_view:
   path: '/application/{application_number}/print'
   defaults:
     _controller: '\Drupal\grants_application\Controller\ApplicationController::printApplication'
+    _title_callback: '\Drupal\grants_application\Controller\ApplicationController::getViewApplicationTitle'
   requirements:
     _role: helsinkiprofiili
 
