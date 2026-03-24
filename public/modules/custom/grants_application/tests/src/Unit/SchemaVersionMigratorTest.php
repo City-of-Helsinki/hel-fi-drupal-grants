@@ -53,6 +53,9 @@ final class SchemaVersionMigratorTest extends UnitTestCase {
 
       public function __construct(private array $mockMutators) {}
 
+      /**
+       * Returns mutators.
+       */
       protected function getMutators(string $fromVersion, string $toVersion): array {
         return $this->mockMutators;
       }
