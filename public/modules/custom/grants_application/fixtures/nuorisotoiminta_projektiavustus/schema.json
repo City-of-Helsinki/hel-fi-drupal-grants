@@ -235,6 +235,55 @@
           ]
         }
       }
+    },
+    "members_step": {
+      "type": "object",
+      "properties": {
+        "members_section": {
+          "title": "members_section.title",
+          "type": "object",
+          "properties": {
+            "members_fieldset": {
+              "type": "object",
+              "title": "members_fieldset.legend",
+              "properties": {
+                "members_0_6": {
+                  "title": "members_0_6.title",
+                  "type": "integer"
+                },
+                "members_0_6_helsinki": {
+                  "title": "members_0_6_helsinki.title",
+                  "type": "integer"
+                },
+                "members_7_28": {
+                  "title": "members_7_28.title",
+                  "type": "integer"
+                },
+                "members_7_28_helsinki": {
+                  "title": "members_7_28_helsinki.title",
+                  "type": "integer"
+                },
+                "members_others": {
+                  "title": "members_others.title",
+                  "type": "integer"
+                },
+                "members_others_helsinki": {
+                  "title": "members_others_helsinki.title",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "members_0_6",
+                "members_0_6_helsinki",
+                "members_7_28",
+                "members_7_28_helsinki",
+                "members_others",
+                "members_others_helsinki"
+              ]
+            }
+          }
+        }
+      }
     }
   },
   "description": "",
@@ -244,6 +293,10 @@
     "grant_info_step": {
       "title": "grant_info_step.title",
       "$ref": "#/definitions/grant_info_step"
+    },
+    "members_step": {
+      "title": "members_step.title",
+      "$ref": "#/definitions/members_step"
     }
   }
 }

@@ -101,3 +101,20 @@
     margin-block-start: 0;
   }
 }
+
+.hdbt-react-form__inline-field-group fieldset {
+  display: flex;
+  flex-wrap: wrap;
+
+  @include breakpoint($breakpoint-m) {
+    column-gap: $spacing;
+  }
+
+  .hdbt-react-form__inline-field {
+    width: 100%;
+
+    @include breakpoint($breakpoint-m) {
+      width: calc(50% - $spacing / 2);
+    }
+  }
+}

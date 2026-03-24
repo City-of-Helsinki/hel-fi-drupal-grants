@@ -112,5 +112,39 @@
         }
       }
     }
+  },
+  "members_step": {
+    "members_section": {
+      "members_fieldset": {
+        "ui:classNames": "hdbt-react-form__inline-field-group",
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "members_fieldset.legend",
+          "tooltipButtonLabel": "members_fieldset.legend",
+          "tooltipText": "members_fieldset.description"
+        },
+        "members_0_6": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "members_0_6_helsinki": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "members_7_28": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "members_7_28_helsinki": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "members_others": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        },
+        "members_others_helsinki": {
+          "ui:classNames": "hdbt-react-form__inline-field"
+        }
+      },
+      "ui:options": {
+        "hideNameFromPrint": true
+      }
+    }
   }
 }
