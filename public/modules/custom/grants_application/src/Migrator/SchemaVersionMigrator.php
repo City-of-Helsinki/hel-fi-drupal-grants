@@ -54,7 +54,7 @@ class SchemaVersionMigrator {
    *   Ordered list of mutators. Currently empty — add mutators in
    *   src/Migrator/Mutators/ as schemas evolve.
    */
-  private function getMutators(string $fromVersion, string $toVersion): array {
+  protected function getMutators(string $fromVersion, string $toVersion): array {
     // Future mutators will be collected and ordered here.
     // Each mutator lives in src/Migrator/Mutators/ and implements
     // MutatorInterface. They are selected when appliesFrom() <= $fromVersion
