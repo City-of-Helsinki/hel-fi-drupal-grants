@@ -269,8 +269,6 @@ final class DraftApplication extends ResourceBase {
       FALSE,
       $selected_company,
       $this->userInformationService->getApplicantType(),
-      TRUE,
-      $settings->getSchema()['x-schema-version'] ?? '1',
     );
 
     // Grants_events requires the events-array to exist.
@@ -359,7 +357,7 @@ final class DraftApplication extends ResourceBase {
     ] = $content;
 
     try {
-      $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
+      $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
     catch (\Exception $e) {
       // Cannot find form settings.
@@ -418,10 +416,6 @@ final class DraftApplication extends ResourceBase {
     $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
      */
     $document->setContent($content);
-
-    $metadata = $document->getMetadata();
-    $metadata['schema_version'] = $settings->getSchema()['x-schema-version'] ?? '1';
-    $document->setMetadata($metadata);
 
     try {
       $this->cleanUpAttachments($document, $attachments);

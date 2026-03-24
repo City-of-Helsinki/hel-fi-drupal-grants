@@ -540,7 +540,6 @@
       }
     }
   },
-  "x-schema-version": "1",
   "description": "",
   "title": "form_title",
   "type": "object",

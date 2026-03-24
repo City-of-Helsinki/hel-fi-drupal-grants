@@ -1,5 +1,4 @@
 {
-  "x-schema-version": "1",
   "definitions": {
     "_other_compensation_item": {
       "type": "object",
