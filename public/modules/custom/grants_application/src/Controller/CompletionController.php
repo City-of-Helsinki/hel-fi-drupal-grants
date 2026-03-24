@@ -104,7 +104,7 @@ class CompletionController extends ControllerBase {
       '#statusStringHumanReadable' => $humanReadableStatus,
       '#ownApplicationsLink' => Url::fromRoute('grants_oma_asiointi.front'),
       '#viewApplicationLink' => $entity->getViewApplicationLink($document->getHumanReadableType()[$langcode])->getUrl(),
-      '#printApplicationLink' => $entity->getPrintApplicationUrl()->toString(),
+      '#printApplicationLink' => $entity->getPrintApplicationUrl(),
       '#submissionObject' => $document,
     ];
 

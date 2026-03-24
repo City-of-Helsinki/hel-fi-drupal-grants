@@ -255,17 +255,16 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    */
   public function getPrintApplicationUrl(): Url {
     $parameters = ['application_number' => $this->get('application_number')->value];
-    $attributes = [
+    /* $attributes = [
       'attributes' => [
         'data-drupal-selector' => 'application-print-link',
         'class' => ['hds-button', 'hds-button--supplementary'],
       ],
-    ];
+    ]; */
 
     return Url::fromRoute(
       'helfi_grants.print_view',
       $parameters,
-      $attributes,
     );
   }
 

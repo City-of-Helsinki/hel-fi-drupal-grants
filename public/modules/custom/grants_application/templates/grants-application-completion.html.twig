@@ -68,6 +68,8 @@
         {% if printApplicationLink %}
           {% include '@hdbt/navigation/link-button.html.twig' with {
               type: 'secondary',
+              icon: true,
+              icon_type: 'printer',
               label: 'Print application'|t,
               url: printApplicationLink,
             }
