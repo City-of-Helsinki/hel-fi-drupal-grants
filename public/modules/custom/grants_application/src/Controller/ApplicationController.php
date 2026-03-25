@@ -338,7 +338,7 @@ final class ApplicationController extends ControllerBase {
     $submitted = $this->avus2DataParser->getSubmitted($document);
     $history = $this->avus2DataParser->getHistory($document);
     $handlers = $this->avus2DataParser->getHandlers($document);
-    $unreadMsg = $this->avus2DataParser->getUnreadMessages($document);
+    // $unreadMsg = $this->avus2DataParser->getUnreadMessages($document);
     $messages = $this->avus2DataParser->getReadMessages($document);
 
     $langCode = $this->languageManager()->getCurrentLanguage()->getId();

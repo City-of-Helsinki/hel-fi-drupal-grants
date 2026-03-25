@@ -306,6 +306,7 @@ final class Application extends ResourceBase {
 
     try {
       $document = $this->atvService->getDocument($application_number);
+      $sideDocument = $this->atvService->getDocumentById($submission->get('side_document_id')->value);
     }
     catch (\Throwable $e) {
       $this->logger->error("During POST-request, failed to fetch ATV-document, $application_number: {$e->getMessage()}");
@@ -360,7 +361,6 @@ final class Application extends ResourceBase {
       // Reload the document.
       try {
         $document = $this->atvService->getDocument($application_number);
-        $sideDocument = $this->atvService->getDocumentById($submission->get('side_document_id')->value);
         $bankFileIsSet = $this->jsonMapperService->documentBankFileIsSet($document);
       }
       catch(\throwable) {
