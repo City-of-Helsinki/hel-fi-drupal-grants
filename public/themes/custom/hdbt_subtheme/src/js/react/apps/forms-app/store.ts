@@ -44,6 +44,13 @@ type FormConfig = {
   settings: { [key: string]: string };
   submitState: string;
   subventionFields: string[];
+  summaryData?: {
+    applicationNumber?: string;
+    applicationSubmitted?: string;
+    attachments?: string[];
+    handlers?: string[];
+    statusUpdates?: string[];
+  };
   requiredFileFields: string[];
   translations: {
     [key in 'fi' | 'sv' | 'en']: { [key: string]: string };
@@ -56,6 +63,13 @@ type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_stat
   grants_profile: GrantsProfile;
   status: string;
   ui_schema: UiSchema;
+  summary_data?: {
+    application_number?: string;
+    application_submitted?: string;
+    attachments?: string[];
+    handlers?: string[];
+    status_updates?: string[];
+  };
 };
 
 const buildFormSteps = ({ schema: { properties } }: any) => {
@@ -84,13 +98,14 @@ export const createFormDataAtom = (key: string, initialValue: any, timestamp?: n
   initialValue = initialValue && Array.isArray(initialValue) && !initialValue.length ? {} : initialValue;
 
   const getInitialValue = () => {
-    const sessionItem = JSON.parse(sessionStorage.getItem(key));
+    const sessionItem = sessionStorage.getItem(key);
 
     if (!sessionItem) {
       return initialValue;
     }
 
-    const { timestamp: sessionTimeStamp, data: sessionData } = sessionItem;
+    const parsedItem = JSON.parse(sessionItem);
+    const { timestamp: sessionTimeStamp, data: sessionData } = parsedItem;
     const sessionTime = DateTime.fromMillis(Number(sessionTimeStamp) * 1000);
     const serverTime = timestamp ? DateTime.fromMillis(Number(timestamp) * 1000) : null;
 
@@ -119,7 +134,7 @@ export const formConfigAtom = atom<FormConfig | undefined>();
 export const formStepsAtom = atom<Map<number, FormStep> | undefined>();
 export const errorsAtom = atom<Array<[number, RJSFValidationError]>>([]);
 export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData) => {
-  const { grants_profile: grantsProfile, status, ui_schema: uiSchema, ...rest } = formConfig;
+  const { grants_profile: grantsProfile, status, summary_data: summaryData, ui_schema: uiSchema, ...rest } = formConfig;
   const steps = buildFormSteps(formConfig);
   _set(formStepsAtom, (state) => steps);
   _set(formConfigAtom, (state) => ({
@@ -129,6 +144,15 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
     submitState: status || SubmitStates.DRAFT,
     subventionFields: Array.from(findFieldsOfType(uiSchema, 'subventionTable')),
     requiredFileFields: Array.from(findFieldsWithOption(uiSchema, 'misc:required')),
+    summaryData: summaryData
+      ? {
+          applicationNumber: summaryData?.application_number,
+          applicationSubmitted: summaryData?.application_submitted,
+          attachments: summaryData?.attachments,
+          handlers: summaryData?.handlers,
+          statusUpdates: summaryData?.status_updates,
+        }
+      : undefined,
   }));
   _set(formStateAtom, (state) => ({ currentStep: [0, steps.get(0)], reachedStep: 0 }));
 
@@ -244,6 +268,11 @@ export const getApplicationNumberAtom = atom((_get) => {
   const { applicationNumber } = _get(getFormConfigAtom);
 
   return applicationNumber;
+});
+export const getSummaryDataAtom = atom((_get) => {
+  const formConfig = _get(getFormConfigAtom);
+
+  return formConfig.summaryData;
 });
 export const getTranslationsAtom = atom((_get) => {
   const { translations } = _get(getFormConfigAtom);
