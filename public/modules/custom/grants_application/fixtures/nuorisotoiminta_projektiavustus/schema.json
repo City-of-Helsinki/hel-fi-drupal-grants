@@ -1,5 +1,41 @@
 {
   "definitions": {
+    "_income_row_item": {
+      "type": "object",
+      "title": "custom_income_row_item.title",
+      "properties": {
+        "income_row_description": {
+          "title": "income_row_description.title",
+          "type": "string"
+        },
+        "income_row_amount": {
+          "title": "income_row_amount.title",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "income_row_description",
+        "income_row_amount"
+      ]
+    },
+    "_expenditure_row_item": {
+      "type": "object",
+      "title": "expenditure_row_item.title",
+      "properties": {
+        "expenditure_row_description": {
+          "title": "expenditure_row_description.title",
+          "type": "string"
+        },
+        "expenditure_row_amount": {
+          "title": "expenditure_row_amount.title",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expenditure_row_description",
+        "expenditure_row_amount"
+      ]
+    },
     "_other_compensation_item": {
       "type": "object",
       "properties": {
@@ -236,6 +272,66 @@
         }
       }
     },
+    "budget_step": {
+      "type": "object",
+      "properties": {
+        "income_section": {
+          "title": "income_section.title",
+          "type": "object",
+          "properties": {
+            "incomeGroupName": {
+              "type": "string",
+              "default": "general"
+            },
+            "economy_forecast_help": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "economy_forecast_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "self_financing_description": {
+              "title": "self_financing_description.title",
+              "type": "string"
+            },
+            "self_financing_amount": {
+              "title": "self_financing_amount.title",
+              "type": "integer"
+            },
+            "income_rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_income_row_item"
+              },
+              "additionalItems": {
+                "$ref": "#/definitions/_income_row_item"
+              }
+            }
+          }
+        },
+        "expenditure_section": {
+          "title": "expenditure_section.title",
+          "type": "object",
+          "properties": {
+            "costGroupName": {
+              "type": "string",
+              "default": "general"
+            },
+            "expenditure_rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_expenditure_row_item"
+              },
+              "additionalItems": {
+                "$ref": "#/definitions/_expenditure_row_item"
+              }
+            }
+          }
+        }
+      }
+    },
     "project_plan_step": {
       "type": "object",
       "required": ["project_plan_section", "project_schedule_section", "project_participants_section"],
@@ -378,6 +474,10 @@
     "project_plan_step": {
       "title": "project_plan_step.title",
       "$ref": "#/definitions/project_plan_step"
+    },
+    "budget_step": {
+      "title": "budget_step.title",
+      "$ref": "#/definitions/budget_step"
     }
   }
 }

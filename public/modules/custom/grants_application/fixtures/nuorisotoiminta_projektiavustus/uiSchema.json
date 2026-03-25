@@ -113,6 +113,50 @@
       }
     }
   },
+  "budget_step": {
+    "income_section": {
+      "incomeGroupName": {
+        "ui:widget": "hidden"
+      },
+      "economy_forecast_help": {
+        "ui:field": "textParagraph"
+      },
+      "self_financing_description": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000,
+        "ui:options": {
+          "tooltipLabel": "self_financing_description.title",
+          "tooltipButtonLabel": "self_financing_description.title",
+          "tooltipText": "self_financing_description.description"
+        }
+      },
+      "income_rows": {
+        "ui:options": {
+          "addText": "income_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
+        }
+      }
+    },
+    "expenditure_section": {
+      "costGroupName": {
+        "ui:widget": "hidden"
+      },
+      "expenditure_rows": {
+        "ui:options": {
+          "addText": "expenditure_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
+        }
+      }
+    }
+  },
   "project_plan_step": {
     "project_plan_section": {
       "project_plan_help": {

@@ -200,6 +200,41 @@
       "fi": "Projektin paikka",
       "sv": "Projektets plats"
     },
+    "income_section.title": {
+      "en": "Income in the budget",
+      "fi": "Talousarvion tulot",
+      "sv": "Budgetens intäkter"
+    },
+    "expenditure_section.title": {
+      "en": "Expenses in the budget",
+      "fi": "Talousarvion menot",
+      "sv": "Utgifter i budgeten"
+    },
+    "economy_forecast_help.value": {
+      "en": "You can either fill in the budget in the fields below or you can submit the budget in a separate attachment. If you submit the budget in an attachment, please include the self-financing share.",
+      "fi": "Talousarvion voi joko täyttää alla oleviin kohtiin tai talousarvion voi toimittaa erillisellä liitteellä. Jos toimitat talousarvion liitteellä, laita omarahoitusosuus siihen mukaan.",
+      "sv": "Du kan antingen fylla i budgeten i punkterna nedan eller skicka in budgeten som en separat bilaga. Om du skickar in budgeten som en bilaga, ange den självfinansierade andelen i den."
+    },
+    "self_financing_description.title": {
+      "en": "Description of the self-financing share",
+      "fi": "Omarahoitusosuuden kuvaus",
+      "sv": "Beskrivning av den självfinansierade andelen"
+    },
+    "self_financing_description.description": {
+      "en": "All projects must have a self-financing share in order to be eligible for a grant. Indicate here what your self-financing share consists of and the amount of the self-financing share.",
+      "fi": "Kaikilla projekteilla on oltava omarahoitusosuus, jotta projektia on mahdollista avustaa. Kerro tässä, mistä omarahoitusosuutenne koostuu ja mikä on omarahoitusosuuden määrä.",
+      "sv": "Alla projekt ska ha en självfinansierad andel för att få understöd. Berätta här vad er självfinansierade andel består av och hur stor den är."
+    },
+    "self_financing_amount.title": {
+      "en": "Self-financing share (€)",
+      "fi": "Omarahoitusosuus (€)",
+      "sv": "Självfinansierad andel (€)"
+    },
+    "custom_income_row_item.title": {
+      "en": "Other income",
+      "fi": "Muu tulo",
+      "sv": "Övrig inkomst"
+    },
     "project_location.description": {
       "en": "Indicate here the name of the location, if there is one, or a description of the location. For example, if the location is one of the city&rsquo;s youth centres, you can write the name of the youth centre. If the project takes place in a digital environment, please indicate the digital environment in which the activities will take place. For example, if you are carrying out a podcast project that will be recorded in a specific physical location and the podcast will be published via a digital platform on the internet, you can indicate both of these locations.",
       "fi": "Laita tähän paikan mahdollinen nimi tai muu kuvaus paikasta. Esimerkiksi jos paikka on joku Helsingin kaupungin nuorisotiloista, voitte kirjoittaa sen nuorisotilan nimen. Jos projekti tapahtuu digitaalisessa ympäristössä, kertokaa, missä digitaalisessa ympäristössä toiminta tapahtuu. Jos kyseessä olisi esimerkiksi podcast-projekti, joka äänitetään tietyssä fyysisessä paikassa ja podcast julkaistaan digitaalisen alustan kautta internetissä, voit kertoa nämä molemmat paikat.",
