@@ -56,6 +56,29 @@ class HelfiAtvService {
   }
 
   /**
+   * Get ATV-document by id.
+   *
+   * @param string $id
+   *   The document id.
+   *
+   * @return \Drupal\helfi_atv\AtvDocument
+   *   The atv-document
+   */
+  public function getDocumentById(string $id): AtvDocument {
+    return $this->atvService->getDocument($id, TRUE);
+  }
+
+  /**
+   * Delete an atv document.
+   *
+   * @param \Drupal\helfi_atv\AtvDocument $document
+   *   The atv document.
+   */
+  public function deleteDocument(AtvDocument $document): void {
+    $this->atvService->deleteDocument($document);
+  }
+
+  /**
    * Save the document to ATV for the first time.
    *
    * @param \Drupal\helfi_atv\AtvDocument $document
@@ -223,6 +246,72 @@ class HelfiAtvService {
       'applicant_type' => $selected_company['type'],
       'applicant_id' => $selected_company['identifier'],
       'form_uuid' => $application_uuid,
+    ]);
+
+    return $atvDocument;
+  }
+
+  /**
+   * Create the side document.
+   *
+   * The document holds the raw form data.
+   *
+   * @param string $application_type
+   *   The application type.
+   * @param string $application_title
+   *   The application title.
+   * @param string $sub
+   *   User uuid.
+   * @param array $selected_company
+   *   Selected company.
+   * @param string $parent_uuid
+   *   Parent atv-document id.
+   * @param string|null $applicant_type
+   *   The applicant type.
+   *
+   * @return \Drupal\helfi_atv\AtvDocument
+   *   The atv-document.
+   */
+  public function createSideDocument(
+    string $application_type,
+    string $application_title,
+    string $sub,
+    array $selected_company,
+    string $parent_uuid,
+    ?string $applicant_type = NULL,
+  ): AtvDocument {
+    $atvDocument = AtvDocument::create([]);
+    $atvDocument->setTransactionId($parent_uuid);
+    $atvDocument->setUserId($sub);
+
+    if ($applicant_type == 'registered_community') {
+      $atvDocument->setBusinessId($selected_company['identifier']);
+    }
+
+    $atvDocument->setType($application_type);
+
+    // @todo Check what this is.
+    $atvDocument->setService(getenv('ATV_SERVICE'));
+    $atvDocument->setTosFunctionId(getenv('ATV_TOS_FUNCTION_ID'));
+    $atvDocument->setTosRecordId(getenv('ATV_TOS_RECORD_ID'));
+
+    // @todo Translate the title somehow.
+    $humanReadableTypes = [
+      'en' => $application_title . '_EN',
+      'fi' => $application_title . '_FI',
+      'sv' => $application_title . '_SV',
+    ];
+    $atvDocument->setHumanReadableType($humanReadableTypes);
+
+    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+1 years'))->format('Y-m-d'));
+    $atvDocument->setMetadata([
+      'appenv' => Helpers::getAppEnv(),
+      'parent' => $parent_uuid,
+    ]);
+
+    $atvDocument->setContent([
+      'form_data' => [],
+      'message' => [],
     ]);
 
     return $atvDocument;
