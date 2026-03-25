@@ -125,7 +125,6 @@ final class Application extends ResourceBase {
     string $form_identifier,
     ?string $application_number,
   ): JsonResponse {
-    // @todo Sanitize & validate & authorize properly.
     if (!$application_number) {
       return new JsonResponse([], 400);
     }
@@ -148,6 +147,7 @@ final class Application extends ResourceBase {
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $selected_company = $this->userInformationService->getSelectedCompany();
       $user_information = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
@@ -157,7 +157,7 @@ final class Application extends ResourceBase {
 
     try {
       // Make sure it exists in database.
-      $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception $e) {
       // Cannot get the submission.
@@ -166,12 +166,39 @@ final class Application extends ResourceBase {
 
     try {
       $document = $this->atvService->getDocument($application_number);
-      $content = $document->getContent();
+      if ($sideDocumentId = $submission->get('side_document_id')->value) {
+        $sideDocument = $this->atvService->getDocumentById($sideDocumentId);
+      } else {
+        // Side document bc.
+        try {
+          $document_content = $document->getContent();
+          $form_data = isset($document_content['form_data']) ?
+            $document_content['form_data'] : (isset($document_content['compensation']['form_data']) ?
+            $document_content['compensation']['form_data'] : []);
 
-      // @todo Shadow-document -ticket.
-      // Load the form_data wherever it may be located.
-      // If not in root of content, then it should be under compensation.
-      $form_data = isset($content['form_data']) ? $content['form_data'] : (isset($content['compensation']['form_data']) ? $content['compensation']['form_data'] : []);
+          $sideDocument = $this->atvService->createSideDocument(
+            'application_type',
+            $settings->getApplicationName(),
+            $user_information['sub'],
+            $selected_company,
+            $document->getId(),
+            $selected_company['type']
+          );
+
+          $sideDocument->setContent($form_data);
+          $sideDocument = $this->atvService->saveNewDocument($sideDocument);
+
+          $submission->set('side_document_id', $sideDocument->getId());
+          $submission->save();
+        }
+        catch (\Exception $e) {
+          $this->logger->critical("Side document creation failed: $application_number");
+          return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
+        }
+
+      }
+
+      $content = $document->getContent();
 
       foreach (['events', 'messages', 'attachmentsInfo', 'statusUpdates'] as $item) {
         if (isset($content[$item])) {
@@ -188,7 +215,18 @@ final class Application extends ResourceBase {
 
     // @todo Only return required user data to frontend.
     $response = [
-      'form_data' => $form_data,
+      'form_data' => $sideDocument->getContent(),
+      'summary_data' => [
+        'application_number' => $application_number,
+        'application_name' => 'submit date',
+        'handler_vaimikäseolika' => '',
+        'status_updates' => [
+          'vastaanotettu datetime'
+        ],
+        'attachments' => [
+          'datetime tiedostonnimi',
+        ],
+      ],
       'grants_profile' => $grants_profile_data->toArray(),
       'last_changed' => $changeTime->getTimestamp(),
       'status' => $document->getStatus(),
@@ -318,6 +356,7 @@ final class Application extends ResourceBase {
       // Reload the document.
       try {
         $document = $this->atvService->getDocument($application_number);
+        $sideDocument = $this->atvService->getDocumentById($submission->get('side_document_id')->value);
         $bankFileIsSet = $this->jsonMapperService->documentBankFileIsSet($document);
       }
       catch(\throwable) {
@@ -348,8 +387,7 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-    // @todo Varjo-dokumentti -ticket.
-    $mappedData['form_data'] = $form_data;
+
 
     // Save id has previously been saved to database to track
     // unsuccessful submissions due to integration failures.
@@ -373,13 +411,8 @@ final class Application extends ResourceBase {
       $mappedData['events'] = $document->getContent()['events'];
     }
 
-    // @codingStandardsIgnoreStart
-    // Update the atv document before sending to integration.
-    // Lets try a way to hold on to the document data.
-    // @todo Sanitize the input.
-    // NOSONAR
-    $mappedData['compensation']['form_data'] = $form_data;
-    // NOSONAR
+    $sideDocument->setContent($form_data);
+    $this->atvService->updateExistingDocument($sideDocument);
 
     // On first AVUS2-submit formUpdate = FALSE and afterward only TRUE.
     // check GrantsHandler::getFormUpdate for more detailed explanation.
@@ -400,8 +433,6 @@ final class Application extends ResourceBase {
     // The status is set as request header by integration-service.
     $document->setStatus('SUBMITTED');
 
-    // @todo Varjo dokumentti-ticket, save the form_data in separate atv doc.
-    // Save the ATV-document directly one last time.
     $latestDocument = $this->atvService->updateExistingDocument($document);
 
     // Add the submit event to the events.
@@ -525,6 +556,7 @@ final class Application extends ResourceBase {
 
     try {
       $document = $this->atvService->getDocument($application_number);
+      $sideDocument = $this->atvService->getDocumentById($submission->getSideDocumentId());
     }
     catch (\Throwable $e) {
       $this->logger->error("During PATCH-request, failed to fetch ATV-document, $application_number: {$e->getMessage()}");
@@ -553,9 +585,6 @@ final class Application extends ResourceBase {
 
     // @todo Add event HANDLER_SEND_INTEGRATION.
     try {
-      // @todo Better sanitation.
-      // @todo Save the form_data in separate atv doc.
-      $mappedData['form_data'] = $form_data ?? [];
       $document->setContent($mappedData);
 
       $save_id = Uuid::uuid4()->toString();
@@ -570,6 +599,9 @@ final class Application extends ResourceBase {
       );
       $this->eventsService->addNewEventForApplication($document, $event);
 
+      $sideDocument->setContent($form_data);
+
+      $sideDocument = $this->atvService->updateExistingDocument($sideDocument);
       $latestDocument = $this->atvService->updateExistingDocument($document);
     }
     catch (\Exception $e) {
