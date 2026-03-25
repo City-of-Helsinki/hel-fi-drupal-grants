@@ -238,10 +238,12 @@
     },
     "members_step": {
       "type": "object",
+      "required": ["members_section"],
       "properties": {
         "members_section": {
           "title": "members_section.title",
           "type": "object",
+          "required": ["members_fieldset"],
           "properties": {
             "members_fieldset": {
               "type": "object",
