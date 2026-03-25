@@ -236,6 +236,81 @@
         }
       }
     },
+    "project_plan_step": {
+      "type": "object",
+      "required": ["project_plan_section", "project_schedule_section", "project_participants_section"],
+      "properties": {
+        "project_plan_section": {
+          "title": "project_plan_section.title",
+          "type": "object",
+          "required": ["project_name"],
+          "properties": {
+            "project_plan_help": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "project_plan_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "project_name": {
+              "title": "project_name.title",
+              "type": "string"
+            },
+            "project_goals": {
+              "title": "project_goals.title",
+              "type": "string"
+            },
+            "project_contents": {
+              "title": "project_contents.title",
+              "type": "string"
+            }
+          }
+        },
+        "project_schedule_section": {
+          "title": "project_schedule_section.title",
+          "type": "object",
+          "required": ["project_start", "project_end"],
+          "properties": {
+            "project_start": {
+              "title": "project_start.title",
+              "type": "string"
+            },
+            "project_end": {
+              "title": "project_end.title",
+              "type": "string"
+            }
+          }
+        },
+        "project_participants_section": {
+          "title": "project_participants_section.title",
+          "type": "object",
+          "required": ["participants_7_28", "participants_total"],
+          "properties": {
+            "participants_7_28": {
+              "title": "participants_7_28.title",
+              "type": "integer"
+            },
+            "participants_total": {
+              "title": "participants_total.title",
+              "type": "integer"
+            }
+          }
+        },
+        "project_location_section": {
+          "title": "project_location_section.title",
+          "description": "project_location_section.description",
+          "type": "object",
+          "properties": {
+            "project_location": {
+              "title": "project_location.title",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "members_step": {
       "type": "object",
       "required": ["members_section"],
@@ -299,6 +374,10 @@
     "members_step": {
       "title": "members_step.title",
       "$ref": "#/definitions/members_step"
+    },
+    "project_plan_step": {
+      "title": "project_plan_step.title",
+      "$ref": "#/definitions/project_plan_step"
     }
   }
 }

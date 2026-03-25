@@ -104,6 +104,106 @@
       "en": "of whom Helsinki residents",
       "fi": "joista helsinkiläisiä",
       "sv": "varav helsingforsare"
+    },
+    "project_plan_step.title": {
+      "en": "Project plan",
+      "fi": "Projektisuunnitelma",
+      "sv": "Projektplan"
+    },
+    "project_plan_section.title": {
+      "en": "Project plan",
+      "fi": "Projektisuunnitelma",
+      "sv": "Projektplan"
+    },
+    "project_plan_help.value": {
+      "en": "You can either write the project plan on this form in the fields below or you can append the project plan to the application. If you submit the plan as an attachment, please include at least the project name, objectives and contents. If you are applying for a start-up grant using this form, please complete the fields as applicable.",
+      "fi": "Voit joko kertoa projektisuunnitelman tällä lomakkeella alla oleviin kohtiin tai voit liittää projektisuunnitelman hakemuksen liitteeksi. Jos toimitat suunnitelman liitteenä, kerro siinä ainakin projektin nimi, tavoitteet ja sisältö. Jos haet lomakkeella starttiavustusta täytä kentät soveltuvin osin.",
+      "sv": "Du kan antingen ange projektplanen i punkterna nedan eller bifoga projektplanen som en bilaga till ansökan. Om du skickar in planen som en bilaga, ange åtminstone projektets namn, mål och innehåll. Om du ansöker om startunderstöd med denna blankett, fyll i fälten i tillämpliga delar."
+    },
+    "project_name.title": {
+      "en": "Project name",
+      "fi": "Projektin nimi",
+      "sv": "Projektets namn"
+    },
+    "project_goals.title": {
+      "en": "Project objectives",
+      "fi": "Projektin tavoitteet",
+      "sv": "Projektets mål"
+    },
+    "project_contents.title": {
+      "en": "Project contents",
+      "fi": "Projektin sisältö",
+      "sv": "Projektets innehåll"
+    },
+    "project_schedule_section.title": {
+      "en": "Project schedule",
+      "fi": "Projektin aikataulu",
+      "sv": "Projektets tidsplan"
+    },
+    "project_start.title": {
+      "en": "Project starts",
+      "fi": "Projekti alkaa",
+      "sv": "Projektet börjar"
+    },
+    "project_start.printable_title": {
+      "en": "Project starts",
+      "fi": "Projekti alkaa",
+      "sv": "Projektet börjar"
+    },
+    "project_end.title": {
+      "en": "Project ends",
+      "fi": "Projekti loppuu",
+      "sv": "Projektet slutar"
+    },
+    "project_end.printable_title": {
+      "en": "Project ends",
+      "fi": "Projekti loppuu",
+      "sv": "Projektet slutar"
+    },
+    "project_participants_section.title": {
+      "en": "All participants in the project",
+      "fi": "Projektin kaikki osallistujat",
+      "sv": "Alla deltagare i projektet"
+    },
+    "participants_7_28.title": {
+      "en": "How many Helsinki residents under the age of 29 will participate in the project?",
+      "fi": "Kuinka monta alle 29-vuotiasta helsinkiläistä projektiin osallistuu?",
+      "sv": "Hur många Helsingforsbor under 29 år deltar i projektet?"
+    },
+    "participants_7_28.description": {
+      "en": "Estimate the total number of young people from Helsinki who will participate in this project. The number may differ from the number of active participants or members in the group or association.",
+      "fi": "Arvioi kuinka monta nuorta helsinkiläistä tähän projektiin osallistuu yhteensä. Määrä voi olla eri kuin ryhmän/yhdistyksen aktiivisten toimijoiden tai jäsenten määrä.",
+      "sv": "Uppskatta hur många unga Helsingforsbor som kommer att delta i projektet totalt. Antalet kan skilja sig från antalet aktiva deltagare eller medlemmar i gruppen eller föreningen."
+    },
+    "participants_total.title": {
+      "en": "How many participants are there in total in the project?",
+      "fi": "Kuinka paljon projektin osallistujia on yhteensä?",
+      "sv": "Hur många deltagare finns det totalt i projektet?"
+    },
+    "participants_total.description": {
+      "en": "Estimate the total number of participants in this project. The number may differ from the number of active members or key actors in the group or association.",
+      "fi": "Arvioi koko tämän projektin osallistujamäärä. Määrä voi olla eri kuin ryhmän/yhdistyksen aktiivisten toimijoiden tai jäsenten määrä.",
+      "sv": "Uppskatta det totala antalet deltagare i detta projekt. Antalet kan skilja sig från antalet aktiva medlemmar eller funktionärer i gruppen eller föreningen."
+    },
+    "project_location_section.title": {
+      "en": "Project location",
+      "fi": "Projektin paikka",
+      "sv": "Projektets plats"
+    },
+    "project_location_section.description": {
+      "en": "The location(s) where you plan to carry out the project activities.",
+      "fi": "Paikka tai paikat, joissa suunnittelette toteuttavanne projektin toiminnan.",
+      "sv": "Plats eller platser där ni planerar att genomföra projektet."
+    },
+    "project_location.title": {
+      "en": "Project location",
+      "fi": "Projektin paikka",
+      "sv": "Projektets plats"
+    },
+    "project_location.description": {
+      "en": "Indicate here the name of the location, if there is one, or a description of the location. For example, if the location is one of the city&rsquo;s youth centres, you can write the name of the youth centre. If the project takes place in a digital environment, please indicate the digital environment in which the activities will take place. For example, if you are carrying out a podcast project that will be recorded in a specific physical location and the podcast will be published via a digital platform on the internet, you can indicate both of these locations.",
+      "fi": "Laita tähän paikan mahdollinen nimi tai muu kuvaus paikasta. Esimerkiksi jos paikka on joku Helsingin kaupungin nuorisotiloista, voitte kirjoittaa sen nuorisotilan nimen. Jos projekti tapahtuu digitaalisessa ympäristössä, kertokaa, missä digitaalisessa ympäristössä toiminta tapahtuu. Jos kyseessä olisi esimerkiksi podcast-projekti, joka äänitetään tietyssä fyysisessä paikassa ja podcast julkaistaan digitaalisen alustan kautta internetissä, voit kertoa nämä molemmat paikat.",
+      "sv": "Plats eller de platser där ni planerar att genomföra projektet."
     }
   }
 }

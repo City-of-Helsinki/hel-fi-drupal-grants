@@ -113,6 +113,66 @@
       }
     }
   },
+  "project_plan_step": {
+    "project_plan_section": {
+      "project_plan_help": {
+        "ui:field": "textParagraph"
+      },
+      "project_name": {
+        "ui:widget": "textarea",
+        "misc:max-length": 100
+      },
+      "project_goals": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000
+      },
+      "project_contents": {
+        "ui:widget": "textarea",
+        "misc:max-length": 5000
+      }
+    },
+    "project_schedule_section": {
+      "project_start": {
+        "ui:widget": "date",
+        "ui:options": {
+          "printableName": "project_start.printable_title"
+        }
+      },
+      "project_end": {
+        "ui:widget": "date",
+        "ui:options": {
+          "printableName": "project_end.printable_title"
+        }
+      }
+    },
+    "project_participants_section": {
+      "participants_7_28": {
+        "ui:options": {
+          "tooltipLabel": "participants_7_28.title",
+          "tooltipButtonLabel": "participants_7_28.title",
+          "tooltipText": "participants_7_28.description"
+        }
+      },
+      "participants_total": {
+        "ui:options": {
+          "tooltipLabel": "participants_total.title",
+          "tooltipButtonLabel": "participants_total.title",
+          "tooltipText": "participants_total.description"
+        }
+      }
+    },
+    "project_location_section": {
+      "project_location": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1000,
+        "ui:options": {
+          "tooltipLabel": "project_location.title",
+          "tooltipButtonLabel": "project_location.title",
+          "tooltipText": "project_location.description"
+        }
+      }
+    }
+  },
   "members_step": {
     "members_section": {
       "members_fieldset": {
