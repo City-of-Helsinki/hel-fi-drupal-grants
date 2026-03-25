@@ -160,6 +160,7 @@ final readonly class Avus2DataParser {
         }
         $documentContentAttachment = array_find($content['attachmentsInfo']['attachmentsArray'], fn($a) => $a[2]['ID'] === 'fileType' && $a[1]['value'] === $filename);
         $description = $documentContentAttachment[0]['value'] . ', ' ?? '';
+        $description = trim($description, ',');
         $submitted = $event['timeCreated'] ?? $event['eventCreated'];
         $submitted = (new \DateTime($submitted))->format('d.m.Y H:i');
 
