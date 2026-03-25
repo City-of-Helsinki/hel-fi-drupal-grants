@@ -101,6 +101,9 @@ final class ApplicationUploaderService {
   /**
    * Handle application upload directly to ATV.
    *
+   * This function is called when saving as draft, uploading files
+   * or submitting to Avus2.
+   *
    * @param \Drupal\Core\TypedData\TypedDataInterface $applicationData
    *   Application data in typed data object.
    * @param string $applicationNumber
@@ -127,6 +130,7 @@ final class ApplicationUploaderService {
     string $applicationNumber,
     array $submittedFormData,
     bool $preventOverride = FALSE,
+    bool $isSubmit = FALSE,
   ): AtvDocument|bool|null {
     $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
 
@@ -161,7 +165,12 @@ final class ApplicationUploaderService {
     if ($newHeader && $newHeader != '') {
       $atvDocument->setStatus($newHeader);
     }
-    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
+
+    // Only update the deleteafter-time if we are sending to Avus2.
+    if ($isSubmit) {
+      $atvDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
+    }
+
     $updatedDocument = $this->helfiAtvAtvService->patchDocument(
       $atvDocument->getId(),
       $atvDocument->toArray()
@@ -210,7 +219,8 @@ final class ApplicationUploaderService {
       $applicationData,
       $applicationNumber,
       $submittedFormData,
-      TRUE
+      TRUE,
+      TRUE,
     );
 
     // Create new saveid before sending data to integration,
