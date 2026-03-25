@@ -303,7 +303,7 @@ class HelfiAtvService {
     ];
     $atvDocument->setHumanReadableType($humanReadableTypes);
 
-    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+1 years'))->format('Y-m-d'));
+    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
     $atvDocument->setMetadata([
       'appenv' => Helpers::getAppEnv(),
       'parent' => $parent_uuid,
