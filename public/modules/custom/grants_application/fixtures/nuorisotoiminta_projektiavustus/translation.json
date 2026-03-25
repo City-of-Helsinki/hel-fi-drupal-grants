@@ -239,6 +239,36 @@
       "en": "Indicate here the name of the location, if there is one, or a description of the location. For example, if the location is one of the city&rsquo;s youth centres, you can write the name of the youth centre. If the project takes place in a digital environment, please indicate the digital environment in which the activities will take place. For example, if you are carrying out a podcast project that will be recorded in a specific physical location and the podcast will be published via a digital platform on the internet, you can indicate both of these locations.",
       "fi": "Laita tähän paikan mahdollinen nimi tai muu kuvaus paikasta. Esimerkiksi jos paikka on joku Helsingin kaupungin nuorisotiloista, voitte kirjoittaa sen nuorisotilan nimen. Jos projekti tapahtuu digitaalisessa ympäristössä, kertokaa, missä digitaalisessa ympäristössä toiminta tapahtuu. Jos kyseessä olisi esimerkiksi podcast-projekti, joka äänitetään tietyssä fyysisessä paikassa ja podcast julkaistaan digitaalisen alustan kautta internetissä, voit kertoa nämä molemmat paikat.",
       "sv": "Plats eller de platser där ni planerar att genomföra projektet."
+    },
+    "custom_budget_step.title": {
+      "en": "Budget",
+      "fi": "Talousarvio",
+      "sv": "Budget"
+    },
+    "attachments_section.description": {
+      "en": "All required attachments must be submitted for the processing of the grant application. The grant application may be rejected if the attachments are not submitted. If any of the attachments is missing, let us know in the Further clarification on attachments section of the application.",
+      "fi": "Avustushakemuksen käsittelyä varten tulee toimittaa kaikki vaaditut liitteet. Avustushakemus voidaan hylätä, jos liitteitä ei ole toimitettu. Mikäli joku liitteistä puuttuu kerro siitä hakemuksen Lisäselvitys liitteistä -kohdassa.",
+      "sv": "Alla obligatoriska bilagor måste lämnas in för behandling av ansökan om understöd. Ansökan om understöd kan avslås om bilagorna inte har lämnats in. Om någon av bilagorna saknas, meddela oss om det i punkten Ytterligare information om bilagorna i ansökan."
+    },
+    "required_attachments_help.value": {
+      "en": "<p>If you wish, you may attach a more detailed project plan and budget to the project grant application. Associations applying for a project grant must submit the current rules of the association as a mandatory attachment.</p><p>When applying for a start grant the following documents must be attached to the application: the association's operational plan and budget for the year to which the application pertains, the lease agreement and proof of rent payment (when applying for rent support), and the association's valid rules.</p><p>The rules must be approved by the Finnish Patent and Registration Office.</p>",
+      "fi": "<p>Projektiavustushakemukseen voi halutessaan liittää projektin tarkemman suunnitelman sekä sen talousarvion. Yhdistysten hakiessa projektiavustusta pakollisena liitteenä on toimitettava yhdistyksen voimassa olevat säännöt.</p><p>Starttiavustusta hakiessa tulee hakemukseen liittää yhdistyksen toimintasuunnitelma ja talousarvio vuodelle, jota hakemus koskee, vuokrasopimus ja vuokranmaksukuitti (vuokravustusta haettaessa) sekä yhdistyksen voimassa olevat säännöt.</p><p>Sääntöjen tulee olla patentti- ja rekisterihallituksen hyväksymiä.</p>",
+      "sv": "<p>Om du vill kan du bifoga projektets mer detaljerade projektplan och budget till ansökan om projektstöd. När föreningar ansöker om projektstöd ska föreningens giltiga stadgar lämnas in som en obligatorisk bilaga.</p><p>Vid ansökan om startunderstöd ska följande dokument bifogas: föreningens verksamhetsplan och budget för det år som ansökan gäller, hyresavtal och kvitto på betald hyra (vid ansökan om hyresbidrag) samt föreningens gällande stadgar.</p><p>Stadgarna ska godkännas av Patent- och registerstyrelsen.</p>"
+    },
+    "multiple_attachments_help.value": {
+      "en": "If you wish, you can submit several attachments as a single file. Please inform us about this in the Further clarification on attachments section.",
+      "fi": "Voit halutessasi toimittaa useampia liitteitä yhtenä tiedostona. Kerro tästä lisäselvitys liitteistä-kohdassa.",
+      "sv": "Om du vill kan du lämna in flera bilagor som en enda fil. Meddela oss om detta i punkten Ytterligare information om bilagorna."
+    },
+    "project_plan_attachment.title": {
+      "en": "Action plan (for the year for which you are applying for a grant)",
+      "fi": "Projektisuunnitelma",
+      "sv": "Verksamhetsplan (för det år du ansöker om understödet)"
+    },
+    "project_budget_attachment.title": {
+      "en": "Budget (for the year for which you are applying for a grant)",
+      "fi": "Projektin talousarvio",
+      "sv": "Budget (för det år du ansöker om understödet)"
     }
   }
 }
