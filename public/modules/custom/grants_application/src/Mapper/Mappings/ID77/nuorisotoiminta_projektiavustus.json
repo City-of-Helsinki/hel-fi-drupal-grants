@@ -1,0 +1,424 @@
+{
+  "compensation.compensationInfo.compensationArray.0.0": {
+    "datasource": "form_data",
+    "source": "",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "subventionType",
+        "label": "Avustuslaji",
+        "value": "4",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.compensationInfo.compensationArray.0.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.subventions_section.subventions.0.1.value",
+    "mapping_type": "default",
+    "data": {
+      "ID": "amount",
+      "label": "Euroa",
+      "value": "",
+      "valueType": "float"
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherCompensationsTotal",
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+  "compensation.otherCompensationsInfo.otherCompensationsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "otherAppliedCompensationsTotal",
+        "label": null,
+        "value": "0",
+        "valueType": "double"
+      }
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherCompensationsArray.0.n": {
+    "datasource": "form_data",
+    "source": "grant_info_step.other_compensations_section.other_compensations",
+    "mapping_type": "multiple_values",
+    "data": {
+      "other_compensation_issuer": {
+        "ID": "issuer",
+        "label": "Avustuksen myöntäjä",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_issuer_name": {
+        "ID": "issuerName",
+        "label": "Myöntäjän nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_issuer_year": {
+        "ID": "year",
+        "label": "Vuosi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_amount": {
+        "ID": "amount",
+        "label": "Myönnetyn avustuksen summa",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_compensation_description": {
+        "ID": "purpose",
+        "label": "Kuvaus käyttötarkoituksesta",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+
+  "compensation.otherCompensationsInfo.otherAppliedCompensationsArray.0.n": {
+    "datasource": "form_data",
+    "source": "grant_info_step.other_applied_compensations_section.other_applied_compensations",
+    "mapping_type": "multiple_values",
+    "data": {
+      "other_applied_compensation_issuer": {
+        "ID": "issuer",
+        "label": "Avustuksen myöntäjä",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_applied_compensation_issuer_name": {
+        "ID": "issuerName",
+        "label": "Myöntäjän nimi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_applied_compensation_issuer_year": {
+        "ID": "year",
+        "label": "Vuosi",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_applied_compensation_amount": {
+        "ID": "amount",
+        "label": "Haetun avustuksen summa",
+        "value": "",
+        "valueType": "string"
+      },
+      "other_applied_compensation_description": {
+        "ID": "purpose",
+        "label": "Kuvaus käyttötarkoituksesta",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+
+  "compensation.activitiesInfoArray.0": {
+    "datasource": "form_data",
+    "source": "members_step.members_section.members_fieldset.members_0_6",
+    "mapping_type": "default",
+    "data": {
+      "ID": "membersAge0to6YearsGlobal",
+      "label": "0-6 -vuotiaat",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activitiesInfoArray.1": {
+    "datasource": "form_data",
+    "source": "members_step.members_section.members_fieldset.members_0_6_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "membersAge0to6YearsGlobal",
+      "label": "0-6 -vuotiaat, Helsinki",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activitiesInfoArray.2": {
+    "datasource": "form_data",
+    "source": "members_step.members_section.members_fieldset.members_7_28",
+    "mapping_type": "default",
+    "data": {
+      "ID": "membersAge7to28YearsGlobal",
+      "label": "7-28 -vuotiaat",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activitiesInfoArray.3": {
+    "datasource": "form_data",
+    "source": "members_step.members_section.members_fieldset.members_7_28_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "membersAge7to28YearsLocal",
+      "label": "7-28 -vuotiaat, Helsinki",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activitiesInfoArray.4": {
+    "datasource": "form_data",
+    "source": "members_step.members_section.members_fieldset.members_others",
+    "mapping_type": "default",
+    "data": {
+      "ID": "membersOthersGlobal",
+      "label": "Muut jäsenet",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.activitiesInfoArray.5": {
+    "datasource": "form_data",
+    "source": "members_step.members_section.members_fieldset.members_others_helsinki",
+    "mapping_type": "default",
+    "data": {
+      "ID": "membersOthersLocal",
+      "label": "Muut jäsenet, Helsinki",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+
+  "compensation.compensationInfo.generalInfoArray.0": {
+    "datasource": "form_data",
+    "source": "grant_info_step.grant_target_section.grant_target",
+    "mapping_type": "default",
+    "data": {
+      "ID": "targetOfSubvention",
+      "label": "Avustuksen kohde",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.compensationInfo.generalInfoArray.1": {
+    "datasource": "form_data",
+    "source": "grant_info_step.start_subvention_section.start_subvention_applied",
+    "mapping_type": "default",
+    "data": {
+      "ID": "startSubventionApplied",
+      "label": "Hain starttiavustusta",
+      "value": "",
+      "valueType": "bool"
+    }
+  },
+  "compensation.projectInfoArray.0": {
+    "datasource": "form_data",
+    "source": "project_plan_step.project_plan_section.project_name",
+    "mapping_type": "default",
+    "data": {
+      "ID": "projectName",
+      "label": "Projektin nimi",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.projectInfoArray.1": {
+    "datasource": "form_data",
+    "source": "project_plan_step.project_plan_section.project_goals",
+    "mapping_type": "default",
+    "data": {
+      "ID": "goal",
+      "label": "Tavoitteet",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.projectInfoArray.2": {
+    "datasource": "form_data",
+    "source": "project_plan_step.project_plan_section.project_contents",
+    "mapping_type": "default",
+    "data": {
+      "ID": "content",
+      "label": "Sisältö",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.projectInfoArray.3": {
+    "datasource": "form_data",
+    "source": "project_plan_step.project_schedule_section.project_start",
+    "mapping_type": "default",
+    "data": {
+      "ID": "startDate",
+      "label": "Alkamispäivä",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.projectInfoArray.4": {
+    "datasource": "form_data",
+    "source": "project_plan_step.project_schedule_section.project_end",
+    "mapping_type": "default",
+    "data": {
+      "ID": "endDate",
+      "label": "Päättymispäivä",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.projectInfoArray.5": {
+    "datasource": "form_data",
+    "source": "project_plan_step.project_location_section.project_location",
+    "mapping_type": "default",
+    "data": {
+      "ID": "location",
+      "label": "Paikka",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.projectInfoArray.6": {
+    "datasource": "form_data",
+    "source": "project_plan_step.project_participants_section.participants_7_28",
+    "mapping_type": "default",
+    "data": {
+      "ID": "age7to28yearsLocal",
+      "label": "Helsinkiläiset 7-28-vuotiaat osallistujat",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.projectInfoArray.7": {
+    "datasource": "form_data",
+    "source": "project_plan_step.project_participants_section.participants_total",
+    "mapping_type": "default",
+    "data": {
+      "ID": "all",
+      "label": "Kaikki osallistujat",
+      "value": "",
+      "valueType": "int"
+    }
+  },
+  "compensation.budgetInfo.budgetInfoArray.0": {
+    "datasource": "form_data",
+    "source": "budget_step.income_section.self_financing_description",
+    "mapping_type": "default",
+    "data": {
+      "ID": "selfFinancingDescription",
+      "label": "Omarahoitusosuuden kuvaus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.budgetInfo.budgetInfoArray.1": {
+    "datasource": "form_data",
+    "source": "budget_step.income_section.self_financing_amount",
+    "mapping_type": "default",
+    "data": {
+      "ID": "selfFinancingAmount",
+      "label": "Euroa",
+      "value": "",
+      "valueType": "double"
+    }
+  },
+
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.incomeGroupName": {
+    "datasource": "form_data",
+    "source": null,
+    "mapping_type": "hardcoded",
+    "data": {
+      "incomeGroupName": "general"
+    }
+  },
+  "compensation.budgetInfo.incomeGroupsArrayStatic.0.otherIncomeRowsArrayStatic": {
+    "#tip": "The income component values",
+    "datasource": "form_data",
+    "source": "budget_step.income_section.income_rows",
+    "mapping_type": "custom",
+    "custom_handler": "income",
+    "data": {
+      "ID": "tulot_field_0",
+      "label": "Tulo",
+      "value": "",
+      "valueType": "double"
+    }
+  },
+  "compensation.budgetInfo.costGroupsArrayStatic.0.costGroupName": {
+    "datasource": "form_data",
+    "source": null,
+    "mapping_type": "hardcoded",
+    "data": {
+      "costGroupName": "general"
+    }
+  },
+  "compensation.budgetInfo.costGroupsArrayStatic.0.otherCostRowsArrayStatic": {
+    "#tip": "The cost component values",
+    "datasource": "form_data",
+    "source": "budget_step.expenditure_section.expenditure_rows",
+    "mapping_type": "custom",
+    "custom_handler": "income",
+    "data": {
+      "ID": "menot_field_0",
+      "label": "Meno",
+      "value": "",
+      "valueType": "double"
+    }
+  },
+
+  "attachmentsInfo.attachmentsArray.0": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.community_rules.community_rules_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "Yhteisön säännöt", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "7", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+  "attachmentsInfo.attachmentsArray.1": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.project_plan_attachment.project_plan_attachment_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "Projektisuunnitelma", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "1", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+  "attachmentsInfo.attachmentsArray.2": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.project_budget_attachment.project_budget_attachment_file",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "Projektin talousarvio", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "2", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "false", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "false", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  },
+  "attachmentsInfo.attachmentsArray.3": {
+    "datasource": "form_data",
+    "source": "attachments_step.attachments_section.other_attachment_fieldset.other_attachment_fieldset_file.files",
+    "mapping_type": "file",
+    "data": {
+      "description": {"ID": "description", "value": "", "valueType": "string", "label": "Liitteen kuvaus"},
+      "fileName": {"ID": "fileName", "value": "", "valueType": "string", "label": "Tiedostonimi"},
+      "fileType": {"ID": "fileType", "value": "1", "valueType": "int", "label": "fileType"},
+      "integrationID": {"ID": "integrationID", "value": "", "valueType": "string", "label": "integrationID"},
+      "isDeliveredLater": {"ID": "isDeliveredLater", "value": "", "valueType": "bool", "label": "Liite toimitetaan myöhemmin"},
+      "isIncludedInOtherFile": {"ID": "isIncludedInOtherFile", "value": "", "valueType": "bool", "label": "Liite on toimitettu yhtenä tiedostona tai toisen hakemuksen yhteydessä"}
+    }
+  }
+}
