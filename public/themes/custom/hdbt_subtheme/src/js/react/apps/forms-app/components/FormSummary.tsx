@@ -1,39 +1,21 @@
 import { Button, ButtonPresetTheme, ButtonVariant, IconCopy, IconPrinter } from 'hds-react';
-import { DateTime } from 'luxon';
-import type { RJSFSchema } from '@rjsf/utils';
 import { useAtomValue } from 'jotai';
 
-import { avus2DataAtom, getFormConfigAtom, getFormTitleAtom } from '../store';
-import { StatusLabels } from '../enum/StatusLabels';
-import { SubmitStates } from '../enum/SubmitStates';
+import { getFormConfigAtom, getFormTitleAtom, getSummaryDataAtom } from '../store';
 import { useState } from 'react';
 import { Requests } from '../Requests';
 
-// biome-ignore lint/suspicious/noExplicitAny: No better type available
-export const FormSummary = ({ formData }: { formData: any; schema: RJSFSchema }) => {
+export const FormSummary = () => {
   const [disableActions, setDisableActions] = useState(false);
-  const avus2Data = useAtomValue(avus2DataAtom);
   const formTitle = useAtomValue(getFormTitleAtom);
+  const summaryData = useAtomValue(getSummaryDataAtom);
   const { applicationNumber, token } = useAtomValue(getFormConfigAtom);
 
-  const getSentDate = () => {
-    const date = avus2Data?.statusUpdates?.find(
-      (statusUpdate) => statusUpdate.citizenCaseStatus === SubmitStates.RECEIVED,
-    );
+  if (!summaryData) {
+    return null;
+  }
 
-    if (!date) {
-      return '-';
-    }
-
-    const dateObject = new Date(date.timeCreated);
-    return dateObject.toLocaleString('fi');
-  };
-
-  const statusEvents = avus2Data?.events?.filter((event) => event.eventType === 'STATUS_UPDATE') || [];
-  const statuses = statusEvents.map((event) => {
-    const date = DateTime.fromISO(event.timeCreated);
-    return `${StatusLabels[event.eventDescription]}: ${date.setLocale('fi').toLocaleString(DateTime.DATETIME_MED)}`;
-  });
+  const { applicationSubmitted, attachments, handlers, statusUpdates } = summaryData;
 
   const copyApplication = async () => {
     setDisableActions(true);
@@ -77,17 +59,19 @@ export const FormSummary = ({ formData }: { formData: any; schema: RJSFSchema })
       <div className='webform-submission-information__row webform-submission-information__row-main'>
         <div>
           <h5>{Drupal.t('Application number', {}, { context: 'Grants application: Submitted form' })}</h5>
-          {formData.applicationNumber}
+          {applicationNumber}
           <h5>{Drupal.t('Sent date', {}, { context: 'Grants application: Submitted form' })}</h5>
-          {getSentDate()}
+          {applicationSubmitted}
           <h5>{Drupal.t('Handler information', {}, { context: 'Grants application: Submitted form' })}</h5>
-          {Drupal.t('No handler information set', {}, { context: 'Grants application: Submitted form' })}
+          {handlers?.length
+            ? handlers.join(', ')
+            : Drupal.t('No handler information set', {}, { context: 'Grants application: Submitted form' })}
         </div>
         <div>
           <h5>{Drupal.t('Application statuses', {}, { context: 'Grants application: Submitted form' })}</h5>
-          {statuses?.length && (
+          {statusUpdates?.length && (
             <ul className='application-status-history'>
-              {statuses.map((status) => (
+              {statusUpdates.map((status) => (
                 <li key={status}>{status}</li>
               ))}
             </ul>
@@ -95,15 +79,10 @@ export const FormSummary = ({ formData }: { formData: any; schema: RJSFSchema })
         </div>
         <div>
           <h5>{Drupal.t('Attachments', {}, { context: 'Grants application: Submitted form' })}</h5>
-          {avus2Data?.attachmentsInfo?.attachmentsArray?.length && (
+          {attachments?.length && (
             <ul className='application-attachment-list'>
-              {avus2Data.attachmentsInfo.attachmentsArray.map((attachment) => {
-                const [description, name] = attachment;
-                return (
-                  <li
-                    key={name.value.toString()}
-                  >{`${description.value ? `${description.value}, ` : ''}${name.value}`}</li>
-                );
+              {attachments.map((attachment) => {
+                return <li key={attachment}>{attachment}</li>;
               })}
             </ul>
           )}
