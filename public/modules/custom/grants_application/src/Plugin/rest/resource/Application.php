@@ -13,6 +13,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\grants_application\Atv\HelfiAtvService;
+use Drupal\grants_application\Avus2DataParser;
 use Drupal\grants_application\Avus2Integration;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
@@ -71,6 +72,7 @@ final class Application extends ResourceBase {
     private ContentLockInterface $contentLock,
     private AccountProxyInterface $accountProxy,
     private JsonMapperService $jsonMapperService,
+    private Avus2DataParser $avus2DataParser,
   ) {
     // @todo Use autowiretrait.
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
@@ -103,6 +105,7 @@ final class Application extends ResourceBase {
       $container->get('content_lock'),
       $container->get('current_user'),
       $container->get(JsonMapperService::class),
+      $container->get(Avus2DataParser::class),
     );
   }
 
@@ -213,19 +216,20 @@ final class Application extends ResourceBase {
 
     $changeTime = new DrupalDateTime($document->getUpdatedAt());
 
+    $handlers = $this->avus2DataParser->getHandlers($document);
+    $submitted = $this->avus2DataParser->getSubmitted($document);
+    $attachment_data = $this->avus2DataParser->getSubmittedAttachments($document);
+    $history = $this->avus2DataParser->getHistory($document);
+
     // @todo Only return required user data to frontend.
     $response = [
       'form_data' => $sideDocument->getContent(),
       'summary_data' => [
         'application_number' => $application_number,
-        'application_name' => 'submit date',
-        'handler_vaimikäseolika' => '',
-        'status_updates' => [
-          'vastaanotettu datetime'
-        ],
-        'attachments' => [
-          'datetime tiedostonnimi',
-        ],
+        'application_submitted' => $submitted,
+        'handlers' => $handlers,
+        'status_updates' => $history,
+        'attachments' => $attachment_data,
       ],
       'grants_profile' => $grants_profile_data->toArray(),
       'last_changed' => $changeTime->getTimestamp(),
