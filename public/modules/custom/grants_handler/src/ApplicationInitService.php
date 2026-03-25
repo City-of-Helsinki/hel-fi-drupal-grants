@@ -376,7 +376,18 @@ class ApplicationInitService {
     $typeData = $this->applicationDataService->webformToTypedData($submissionData);
     $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($typeData, $submissionObject, $submissionData);
     $atvDocument->setContent($appDocumentContent);
-    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+1 years'))->format('Y-m-d'));
+
+    // #UHF-12794 draft delete after 1month after application period is over.
+    $settings = $webform->getThirdPartySettings('grants_metadata');
+    $endDate = strtotime($settings['applicationClose']);
+    $isContinuous = $settings['applicationContinuous'];
+
+    $deleteAfter = new \DateTimeImmutable("+1 years");
+    if (!$isContinuous && $endDate) {
+      $date = date('Y-m-d', $endDate);
+      $deleteAfter = (new \DateTimeImmutable($date))->add(new \DateInterval("P1M"));
+    }
+    $atvDocument->setDeleteAfter($deleteAfter->format('Y-m-d'));
     $newDocument = $this->atvService->postDocument($atvDocument);
 
     if ($copy) {

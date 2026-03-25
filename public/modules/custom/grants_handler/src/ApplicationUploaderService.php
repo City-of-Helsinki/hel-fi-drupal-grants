@@ -151,20 +151,6 @@ final class ApplicationUploaderService {
     catch (\Exception $e) {
     }
 
-    // Make sure the form submission won't override ATV-messages or events.
-    // Preventing message override here causes the events to lose
-    // handle_att_ok -event which breaks everything.
-    /*
-    if (
-    $preventOverride &&
-    isset($appDocumentContent['messages']) &&
-    isset($appDocumentContent['events'])
-    ) {
-    $appDocumentContent['messages'] = $atvDocument->getContent()['messages'];
-    $appDocumentContent['events'] = $atvDocument->getContent()['events'];
-    }
-     */
-
     $atvDocument->setContent($appDocumentContent);
 
     // Try to fix all possibly missing items in attachments.
