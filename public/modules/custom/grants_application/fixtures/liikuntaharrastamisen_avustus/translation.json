@@ -1,0 +1,24 @@
+{
+  "translations": {
+    "custom_purpose.title": {
+      "en": "Brief description of the purpose of the grant applied for",
+      "fi": "Lyhyt kuvaus haettavan avustuksen käyttötarkoituksesta",
+      "sv": "En kort beskrivning av användningsändamålet för det understöd som ansöks"
+    },
+    "custom_purpose.description": {
+      "en": "Indicate the purpose for which the grant is applied for.",
+      "fi": "Kerro mitä tarkoitusta varten avustusta haetaan.",
+      "sv": "Ange för vilket ändamål understödet ansöks."
+    },
+    "form_title": {
+      "en": "Grant to support regional sports activities",
+      "fi": "Alueellisen liikuntaharrastamisen tukemisen avustus",
+      "sv": "Understöd för att stödja regionala idrottsaktiviteter"
+    },
+    "grants_compensations_info.value": {
+      "en": "Please enter the grant amount requested for the year 2026 in the field. The grant amounts for the subsequent years of a multi-year project are entered on the next page.",
+      "fi": "Syötä kenttään vuodelle 2026 haettava avustussumma. Monivuotisen hankkeen jatkokausien avustussummat syötetään seuraavalla sivulle.",
+      "sv": "Ange det understödsbelopp som ansöks för år 2026 i fältet. Understödsbeloppen för de följande åren av ett flerårigt projekt anges på nästa sida."
+    }
+  }
+}
