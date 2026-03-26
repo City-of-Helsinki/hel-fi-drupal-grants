@@ -171,20 +171,12 @@
           "properties": {
             "start_subvention_applied": {
               "title": "start_subvention_applied.title",
+              "description": "start_subvention_help.value",
               "enum": [
                 false,
                 true
               ],
               "default": false
-            },
-            "start_subvention_help": {
-              "type": "array",
-              "items": [
-                {
-                  "title": "start_subvention_help.value",
-                  "type": "null"
-                }
-              ]
             }
           }
         },

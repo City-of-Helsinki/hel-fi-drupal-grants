@@ -345,7 +345,17 @@ export const CommunityOfficialsSelect = ({ label, value, uiSchema, ...rest }: Wi
   return <SelectWidget {...{ ...selectProps }} />;
 };
 
-export const RadioWidget = ({ id, label, onChange, options, rawErrors, required, value, uiSchema }: WidgetProps) => {
+export const RadioWidget = ({
+  id,
+  label,
+  onChange,
+  options,
+  rawErrors,
+  required,
+  value,
+  uiSchema,
+  schema,
+}: WidgetProps) => {
   const { t } = useTranslation();
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const isReadOnly = useAtomValue(isReadOnlyAtom);
@@ -366,6 +376,7 @@ export const RadioWidget = ({ id, label, onChange, options, rawErrors, required,
         className='hdbt-form--fieldset'
         tooltip={getTooltip(uiSchema)}
       >
+        {schema.description && <div className='hdbt-form--description'>{schema.description}</div>}
         {options?.enumOptions?.map((option) => {
           const optionId = `${id}_${option.value}`;
 

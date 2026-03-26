@@ -27,9 +27,6 @@
           "tooltipButtonLabel": "start_subvention_applied.title",
           "tooltipText": "start_subvention_applied.description"
         } 
-      },
-      "start_subvention_help": {
-        "ui:field": "textParagraph"
       }
     },
     "other_compensations_section": {
