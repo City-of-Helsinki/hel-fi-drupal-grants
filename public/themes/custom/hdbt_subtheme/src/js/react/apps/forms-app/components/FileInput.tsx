@@ -234,18 +234,33 @@ export const FileInput = ({
     }
 
     // Do not allow duplicated filenames
-    // The replace-all shenanigans is due to backend transliteration.
+    // Take transliteration into account.
     let duplicate = '';
-    const componentFileNames: string[] = [];
+    const fileNameCount: { [key: string]: number } = {};
     files.forEach((file) => {
-      // Backend transliterates string.
-      if (
-        componentFileNames.includes(file.name) ||
-        componentFileNames.includes(file.name.replaceAll('ä', 'a').replaceAll('ö', 'o').replaceAll(' ', '_'))
-      ) {
+      const transliterated = file.name
+        .normalize('NFC')
+        .replaceAll('ä', 'a')
+        .replaceAll('ö', 'o')
+        .replaceAll('å', 'a')
+        .replaceAll(' ', '_');
+
+      if (!fileNameCount[file.name]) {
+        fileNameCount[file.name] = 1;
+      } else {
+        fileNameCount[file.name] += 1;
+      }
+
+      // File names are transliterated before saved.
+      if (!fileNameCount[transliterated]) {
+        fileNameCount[transliterated] = 1;
+      } else {
+        fileNameCount[transliterated] += 1;
+      }
+
+      if (fileNameCount[file.name] > 1 || fileNameCount[transliterated] > 1) {
         duplicate = file.name;
       }
-      componentFileNames.push(file.name);
     });
 
     if (duplicate) {
