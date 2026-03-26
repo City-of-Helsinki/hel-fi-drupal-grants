@@ -13,6 +13,7 @@ import { formatErrors } from '../utils';
 import { PreviewInput } from './Input';
 import { useState } from 'react';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
+import { SubmitStates } from '../enum/SubmitStates';
 
 type ATVFile = { description?: string; fileId: number; fileName: string; fileType: string; href: string; size: number };
 
@@ -104,6 +105,8 @@ export const FileInput = ({
   const { isDeliveredLater, isIncludedInOtherFile } = formData || {};
   const multipleFiles = uiSchema?.['misc:multiple'] ?? false;
   const defaultValue = multipleFiles ? multipleFilesFromATVData(formData) : filesFromATVData(formData);
+  const submitState = useAtomValue(formConfigAtom)?.submitState;
+  const isDraft = submitState === SubmitStates.DRAFT;
 
   if (shouldRenderPreview) {
     const isSimple = uiSchema?.['misc:variant'] === 'simple';
@@ -262,7 +265,7 @@ export const FileInput = ({
         handleMultiple(files, formData);
       }}
       required={isRequired}
-      className='hdbt-form--fileinput'
+      className={`hdbt-form--fileinput${!isDraft ? ' hdbt-form--fileinput--delete-disabled' : ''}`}
     />
   ) : (
     <HDSFileInput
@@ -282,7 +285,7 @@ export const FileInput = ({
         handleChange(files, formData);
       }}
       required={isRequired}
-      className='hdbt-form--fileinput'
+      className={`hdbt-form--fileinput${!isDraft ? ' hdbt-form--fileinput--delete-disabled' : ''}`}
     />
   );
 
