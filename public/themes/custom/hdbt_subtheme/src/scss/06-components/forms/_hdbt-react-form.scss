@@ -101,3 +101,7 @@
     margin-block-start: 0;
   }
 }
+
+.hdbt-form--fileinput--delete-disabled + ul button {
+  display: none;
+} 
