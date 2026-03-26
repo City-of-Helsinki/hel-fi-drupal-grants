@@ -234,13 +234,18 @@ export const FileInput = ({
     }
 
     // Do not allow duplicated filenames
-    let duplicate: string = '';
-    existingData?.files.forEach((existingFile) => {
-      files.find((componentFile) => {
-        if (componentFile.name === existingFile.fileName) {
-          duplicate = existingFile.fileName;
-        }
-      });
+    // The replace-all shenanigans is due to backend transliteration.
+    let duplicate = '';
+    const componentFileNames: string[] = [];
+    files.forEach((file) => {
+      // Backend transliterates string.
+      if (
+        componentFileNames.includes(file.name) ||
+        componentFileNames.includes(file.name.replaceAll('ä', 'a').replaceAll('ö', 'o').replaceAll(' ', '_'))
+      ) {
+        duplicate = file.name;
+      }
+      componentFileNames.push(file.name);
     });
 
     if (duplicate) {
