@@ -126,3 +126,6 @@ msgstr "Tiedostoa ei voitu lisätä. Varmista, että tiedosto on turvallinen ja 
 
 msgid "The file could not be uploaded. Please try again later."
 msgstr "Tiedoston lisäämisessä tapahtui virhe. Yritä hetken kuluttua uudelleen."
+
+msgid "File name is too long. Please rename the file and try again."
+msgstr "Tiedoston nimi on liian pitkä. Uudelleennimeä tiedosto ja yritä uudelleen."

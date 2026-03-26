@@ -365,6 +365,16 @@
       "fi": "Liitteen poistaminen epäonnistui",
       "sv": "Borttagning av filen misslyckades"
     },
+    "too_many_files.title": {
+      "en": "You cannot upload more than 10 files",
+      "fi": "Voit liittää enintään 10 tiedostoa",
+      "sv": "Du kan inte ladda upp fler än 10 filer"
+    },
+    "file_upload_failed.title": {
+      "en": "File upload failed",
+      "fi": "Tiedoston lataaminen epäonnistui",
+      "sv": "Filuppladdning misslyckades"
+    },
     "formerly_provided_attachments_help.title": {
       "en": "Attachments previously submitted to the City of Helsinki",
       "fi": "Helsingin kaupungille aiemmin toimitetut liitteet",
