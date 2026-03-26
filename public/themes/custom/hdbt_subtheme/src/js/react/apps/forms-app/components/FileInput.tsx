@@ -233,6 +233,27 @@ export const FileInput = ({
       return;
     }
 
+    // Do not allow duplicated filenames
+    let duplicate: string = '';
+    existingData?.files.forEach((existingFile) => {
+      files.find((componentFile) => {
+        if (componentFile.name === existingFile.fileName) {
+          duplicate = existingFile.fileName;
+        }
+      });
+    });
+
+    if (duplicate) {
+      pushNotification({
+        children: <div>{duplicate}</div>,
+        label: t('duplicate_file.title'),
+        type: 'error',
+      });
+
+      setRefreshKey((prevKey) => prevKey + 1);
+      return;
+    }
+
     let result = null;
     try {
       result = await uploadFiles(name, applicationNumber, token, files, fileType);

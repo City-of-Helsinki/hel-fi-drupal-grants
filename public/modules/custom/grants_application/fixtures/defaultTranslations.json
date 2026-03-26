@@ -375,6 +375,11 @@
       "fi": "Tiedoston lataaminen epäonnistui",
       "sv": "Filuppladdning misslyckades"
     },
+    "duplicate_file.title": {
+      "en": "Duplicate file name",
+      "fi": "Duplikaatti tiedostonnimi",
+      "sv": "Duplicerat filnamn"
+    },
     "formerly_provided_attachments_help.title": {
       "en": "Attachments previously submitted to the City of Helsinki",
       "fi": "Helsingin kaupungille aiemmin toimitetut liitteet",
