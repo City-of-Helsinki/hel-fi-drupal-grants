@@ -282,7 +282,7 @@ export const RJSFFormContainer = ({
     }
 
     if (!isDraft()) {
-      components.push(<FormSummary key='summary' formData={readFormData()} schema={schema} />);
+      components.push(<FormSummary key='summary' />);
     }
 
     if (!readOnly && !isEmptyPreview) {
