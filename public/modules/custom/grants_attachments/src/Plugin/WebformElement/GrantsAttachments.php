@@ -269,10 +269,10 @@ final class GrantsAttachments extends WebformCompositeBase {
     if (isset($value["integrationID"]) && !empty($value["integrationID"])) {
       // Add filename if it has been uploaded earlier.
       if (isset($value["fileName"]) && !empty($value["fileName"]) && !in_array($value["fileName"], $lines)) {
-        $lines[] = '<strong>' . $value["fileName"] . '</strong>';
+        $lines[] = ['#markup' => '<strong>' . $value["fileName"] . '</strong>'];
       }
       elseif (isset($value["attachmentName"]) && !empty($value["attachmentName"]) && !in_array($value["attachmentName"], $lines)) {
-        $lines[] = '<strong>' . $value["attachmentName"] . '</strong>';
+        $lines[] = ['#markup' => '<strong>' . $value["attachmentName"] . '</strong>'];
       }
     }
 
@@ -307,20 +307,22 @@ final class GrantsAttachments extends WebformCompositeBase {
     if ((isset($value["fileName"]) && !empty($value["fileName"])) || (isset($value["attachmentName"]) &&
         !empty($value["attachmentName"]))) {
       if (isset($value["attachmentName"]) && in_array($value["attachmentName"], $attachmentEvents["event_targets"])) {
-        $lines[] = '<span class="upload-ok-icon">' . $this->t('Upload OK', [], $tOpts) . '</span>';
+        $lines[] = ['#markup' => '<span class="upload-ok-icon">' . $this->t('Upload OK', [], $tOpts) . '</span>'];
       }
       elseif (isset($value["fileName"]) && in_array($value["fileName"], $attachmentEvents["event_targets"])) {
-        $lines[] = '<span class="upload-ok-icon">' . $this->t('Upload OK', [], $tOpts) . '</span>';
+        $lines[] = ['#markup' => '<span class="upload-ok-icon">' . $this->t('Upload OK', [], $tOpts) . '</span>'];
       }
       // If we have integrationID & status is justuploaded then we know
       // upload was fine.
       elseif (isset($value["integrationID"]) && $value['fileStatus'] == 'justUploaded') {
-        $lines[] = '<span class="upload-ok-icon">' . $this->t('Upload OK', [], $tOpts) . '</span>';
+        $lines[] = ['#markup' => '<span class="upload-ok-icon">' . $this->t('Upload OK', [], $tOpts) . '</span>'];
       }
       else {
-        $lines[] = '<span class="upload-fail-icon">' . $this->t('Upload pending / File missing', [], $tOpts) . '</span>';
+        $lines[] = ['#markup' => '<span class="upload-fail-icon">' . $this->t('Upload pending / File missing', [], $tOpts) . '</span>'];
       }
     }
+
+    dump($lines);
 
     return $lines;
   }
