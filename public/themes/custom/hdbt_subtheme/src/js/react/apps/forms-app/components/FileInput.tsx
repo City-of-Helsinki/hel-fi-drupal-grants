@@ -233,47 +233,6 @@ export const FileInput = ({
       return;
     }
 
-    // Do not allow duplicated filenames
-    // Take transliteration into account.
-    let duplicate = '';
-    const fileNameCount: { [key: string]: number } = {};
-    files.forEach((file) => {
-      const transliterated = file.name
-        .normalize('NFC')
-        .replaceAll('ä', 'a')
-        .replaceAll('ö', 'o')
-        .replaceAll('å', 'a')
-        .replaceAll(' ', '_');
-
-      if (!fileNameCount[file.name]) {
-        fileNameCount[file.name] = 1;
-      } else {
-        fileNameCount[file.name] += 1;
-      }
-
-      // File names are transliterated before saved.
-      if (!fileNameCount[transliterated]) {
-        fileNameCount[transliterated] = 1;
-      } else {
-        fileNameCount[transliterated] += 1;
-      }
-
-      if (fileNameCount[file.name] > 1 || fileNameCount[transliterated] > 1) {
-        duplicate = file.name;
-      }
-    });
-
-    if (duplicate) {
-      pushNotification({
-        children: <div>{duplicate}</div>,
-        label: t('duplicate_file.title'),
-        type: 'error',
-      });
-
-      setRefreshKey((prevKey) => prevKey + 1);
-      return;
-    }
-
     let result = null;
     try {
       result = await uploadFiles(name, applicationNumber, token, files, fileType);
