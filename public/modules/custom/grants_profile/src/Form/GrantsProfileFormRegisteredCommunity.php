@@ -600,6 +600,7 @@ later when completing the grant application.',
           '#options' => $roles,
           '#title' => $this->t('Role', [], $this->tOpts),
           '#default_value' => $official['role'] ?? 0,
+          '#required' => TRUE,
         ],
         'email' => [
           '#type' => 'textfield',

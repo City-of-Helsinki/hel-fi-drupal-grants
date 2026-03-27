@@ -510,6 +510,7 @@ One address is mandatory information in your personal information and on the app
         'role' => [
           '#type' => 'select',
           '#options' => $roles,
+          '#required' => TRUE,
           '#title' => $this->t('Role', [], $this->tOpts),
           '#default_value' => $official['role'] ?? 11,
         ],
