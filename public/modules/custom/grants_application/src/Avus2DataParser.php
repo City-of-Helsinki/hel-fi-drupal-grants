@@ -177,7 +177,7 @@ final readonly class Avus2DataParser {
   /**
    * Get all attachment-elements from application.
    *
-   * @param AtvDocument $document
+   * @param \Drupal\helfi_atv\AtvDocument $document
    *   The document.
    *
    * @return array
@@ -190,11 +190,11 @@ final readonly class Avus2DataParser {
   /**
    * Get list of uploaded filenames.
    *
-   * @param AtvDocument $document
+   * @param \Drupal\helfi_atv\AtvDocument $document
    *   The document.
    *
    * @return array
-   *
+   *   Array of filenames.
    */
   public function getUploadedAttachmentsFilenames(AtvDocument $document): array {
     $files = $this->getUploadedAttachments($document);
