@@ -412,10 +412,11 @@ final class ApplicationController extends ControllerBase {
     $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
     $businessId = $grants_profile_data->getBusinessId() ?? '';
 
-    /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
-    $submission = $this->getSubmissionEntity($sub, $application_number, $businessId);
-
-    if (!$submission) {
+    try {
+      /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
+      $submission = $this->getSubmissionEntity($sub, $application_number, $businessId);
+    }
+    catch (\Exception $e) {
       $this->getLogger('grants_application')
         ->error("Application does not exist in database while uploading a file: $application_number");
       return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
@@ -475,7 +476,7 @@ final class ApplicationController extends ControllerBase {
     try {
       $result = $this->helfiAtvService->addAttachment(
         // @phpstan-ignore property.notFound
-        $submission->document_id->value,
+        $submission->get('document_id')->value,
         $file_original_name,
         $file_entity
       );
