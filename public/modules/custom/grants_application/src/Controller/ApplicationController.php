@@ -475,7 +475,6 @@ final class ApplicationController extends ControllerBase {
 
     try {
       $result = $this->helfiAtvService->addAttachment(
-        // @phpstan-ignore property.notFound
         $submission->get('document_id')->value,
         $file_original_name,
         $file_entity
