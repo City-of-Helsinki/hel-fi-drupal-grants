@@ -408,6 +408,31 @@ final class ApplicationController extends ControllerBase {
    *   The response.
    */
   public function uploadFile(string $application_number, Request $request): JsonResponse {
+    $sub = $this->userInformationService->getUserData()['sub'];
+    $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+    $businessId = $grants_profile_data->getBusinessId() ?? '';
+
+    try {
+      /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
+      $submission = $this->getSubmissionEntity($sub, $application_number, $businessId);
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_application')
+        ->error("Application does not exist in database while uploading a file: $application_number");
+      return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
+    }
+
+    try {
+      $document = $this->atvService->getDocument($submission->get('document_id')->value);
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_application')
+        ->error("Application does not exist in database while uploading a file: $application_number");
+      return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
+    }
+
+    $filenames = $this->avus2DataParser->getUploadedAttachmentsFilenames($document);
+
     /** @var \Symfony\Component\HttpFoundation\File\File $file */
     $file = $request->files->get('file');
     if (!$file || !$application_number) {
@@ -420,7 +445,11 @@ final class ApplicationController extends ControllerBase {
     $file_original_name = $this->transliteration->transliterate($file_original_name);
     $file_original_name = str_replace(' ', '_', $file_original_name);
     if (strlen($file_original_name) >= 100) {
-      return new JsonResponse(['error' => $this->t('File name is too long. Please rename the file and try again.')], 500);
+      return new JsonResponse(['error' => $this->t('File name is too long. Please rename the file and try again.')], 400);
+    }
+
+    if (in_array($file_original_name, $filenames)) {
+      return new JsonResponse(['error' => $this->t('Duplicate file name: Please rename the file')], 400);
     }
 
     try {
@@ -444,23 +473,9 @@ final class ApplicationController extends ControllerBase {
 
     $file_entity->setFileUri($file->getRealPath());
 
-    /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
-    $submission = $this->entityTypeManager()
-      ->getStorage('application_submission')
-      ->loadByProperties(['application_number' => $application_number]);
-
-    $submission = reset($submission);
-
-    if (!$submission) {
-      $this->getLogger('grants_application')
-        ->error("Application does not exist in database while uploading a file: $application_number");
-      return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
-    }
-
     try {
       $result = $this->helfiAtvService->addAttachment(
-        // @phpstan-ignore property.notFound
-        $submission->document_id->value,
+        $submission->get('document_id')->value,
         $file_original_name,
         $file_entity
       );
