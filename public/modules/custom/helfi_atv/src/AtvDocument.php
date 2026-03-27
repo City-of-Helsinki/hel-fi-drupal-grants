@@ -7,7 +7,7 @@ use Drupal\Component\Serialization\Json;
 /**
  * Document model in ATV.
  */
-final class AtvDocument implements \JsonSerializable {
+class AtvDocument implements \JsonSerializable {
 
   /**
    * Document UUID.
