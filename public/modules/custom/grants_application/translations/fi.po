@@ -129,3 +129,6 @@ msgstr "Tiedoston lisäämisessä tapahtui virhe. Yritä hetken kuluttua uudelle
 
 msgid "File name is too long. Please rename the file and try again."
 msgstr "Tiedoston nimi on liian pitkä. Uudelleennimeä tiedosto ja yritä uudelleen."
+
+msgid "Duplicate file name: Please rename the file"
+msgstr "Duplikaatti tiedostonnimi: Nimeä tiedoston uudelleen"

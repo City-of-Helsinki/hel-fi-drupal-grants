@@ -99,3 +99,6 @@ msgstr "Ett fel uppstod vid tillägg av filen. "
 
 msgid "File name is too long. Please rename the file and try again."
 msgstr "Filnamnet är för långt. Byt namn på filen och försök igen."
+
+msgid "Duplicate file name: Please rename the file"
+msgstr "Duplicerat filnamn: Vänligen byt namn på filen"

@@ -175,6 +175,33 @@ final readonly class Avus2DataParser {
   }
 
   /**
+   * Get all attachment-elements from application.
+   *
+   * @param AtvDocument $document
+   *   The document.
+   *
+   * @return array
+   *   Uploaded files.
+   */
+  public function getUploadedAttachments(AtvDocument $document): array {
+    return $document->getAttachments();
+  }
+
+  /**
+   * Get list of uploaded filenames.
+   *
+   * @param AtvDocument $document
+   *   The document.
+   *
+   * @return array
+   *
+   */
+  public function getUploadedAttachmentsFilenames(AtvDocument $document): array {
+    $files = $this->getUploadedAttachments($document);
+    return array_map(fn($file) => $file['filename'], $files);
+  }
+
+  /**
    * Get status string.
    *
    * @param string $langcode
