@@ -216,6 +216,306 @@
           ]
         }
       }
+    },
+    "information_in_more_detail_step": {
+      "type": "object",
+      "properties": {
+        "information_in_more_detail_section": {
+          "title": "information_in_more_detail_section.title",
+          "type": "object",
+          "properties": {
+            "project_application_type": {
+              "title": "project_application_type.title",
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ],
+              "default": "1"
+            }
+          },
+          "required": ["project_application_type"],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "project_application_type": {
+                    "const": "2"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "grant_duration": {
+                    "title": "grant_duration.title",
+                    "type": "string",
+                    "enum": [
+                      "1",
+                      "2"
+                    ]
+                  }
+                },
+                "required": ["grant_duration"]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "project_application_type": {
+                    "const": "2"
+                  },
+                  "grant_duration": {
+                    "const": "1"
+                  }
+                },
+                "required": ["grant_duration"]
+              },
+              "then": {
+                "properties": {
+                  "requested_grant_amount": {
+                    "title": "requested_grant_amount.title",
+                    "type": "object",
+                    "properties": {
+                      "requested_amount_first_year": {
+                        "title": "requested_amount_first_year.title",
+                        "type": "integer"
+                      }
+                    },
+                    "required": ["requested_amount_first_year"]
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "project_application_type": {
+                    "const": "2"
+                  },
+                  "grant_duration": {
+                    "const": "2"
+                  }
+                },
+                "required": ["grant_duration"]
+              },
+              "then": {
+                "properties": {
+                  "requested_grant_amount": {
+                    "title": "requested_grant_amount.title",
+                    "type": "object",
+                    "properties": {
+                      "requested_amount_first_year": {
+                        "title": "requested_amount_first_year.title",
+                        "type": "integer"
+                      },
+                      "requested_amount_second_year": {
+                        "title": "requested_amount_second_year.title",
+                        "type": "integer"
+                      }
+                    },
+                    "required": ["requested_amount_first_year", "requested_amount_second_year"]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": ["information_in_more_detail_section"],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "information_in_more_detail_section": {
+                "properties": {
+                  "project_application_type": { "const": "1" }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "interim_reporting_section": {
+                "title": "interim_reporting_section.title",
+                "type": "object",
+                "properties": {
+                  "actual_target_group": { "title": "actual_target_group.title", "type": "string" },
+                  "children_participation_estimate": {
+                    "title": "children_participation_estimate.title",
+                    "type": "object",
+                    "properties": {
+                      "children_participation_estimate_help": {
+                        "type": "array",
+                        "items": [{ "title": "children_participation_estimate_help.value", "type": "null" }]
+                      },
+                      "children_estimate_9_12": { "title": "age_group_9_12.title", "type": "string" },
+                      "children_estimate_13_15": { "title": "age_group_13_15.title", "type": "string" },
+                      "children_estimate_16_18": { "title": "age_group_16_18.title", "type": "string" }
+                    },
+                    "required": ["children_estimate_9_12", "children_estimate_13_15", "children_estimate_16_18"]
+                  },
+                  "new_participants_estimate_wrapper": {
+                    "title": "new_participants_estimate_wrapper.title",
+                    "type": "object",
+                    "properties": {
+                      "new_participants_estimate_help": {
+                        "type": "array",
+                        "items": [{ "title": "new_participants_estimate_help.value", "type": "null" }]
+                      },
+                      "new_participants_estimate": { "title": "age_group_9_18.title", "type": "string" }
+                    },
+                    "required": ["new_participants_estimate"]
+                  },
+                  "estimate_basis": { "title": "estimate_basis.title", "type": "string" },
+                  "hours_by_postal_area": { "title": "hours_by_postal_area.title", "type": "string" },
+                  "session_cost_report": { "title": "session_cost_report.title", "type": "string" },
+                  "activities_description": { "title": "activities_description.title", "type": "string" },
+                  "financial_changes": { "title": "financial_changes.title", "type": "string" },
+                  "activity_changes": { "title": "activity_changes.title", "type": "string" },
+                  "schedule_changes": { "title": "schedule_changes.title", "type": "string" },
+                  "operating_model_changes": { "title": "operating_model_changes.title", "type": "string" },
+                  "key_partners_report": { "title": "key_partners_report.title", "type": "string" },
+                  "youth_participation_report": { "title": "youth_participation_report.title", "type": "string" },
+                  "challenges_report": { "title": "challenges_report.title", "type": "string" },
+                  "grant_usage_report": { "title": "grant_usage_report.title", "type": "string" },
+                  "continuation_plan": { "title": "continuation_plan.title", "type": "string" },
+                  "grant_amount_change_justification": { "title": "grant_amount_change_justification.title", "type": "string" }
+                },
+                "required": [
+                  "actual_target_group", "estimate_basis", "hours_by_postal_area",
+                  "session_cost_report", "activities_description", "financial_changes",
+                  "activity_changes", "schedule_changes", "operating_model_changes",
+                  "key_partners_report", "youth_participation_report", "challenges_report",
+                  "grant_usage_report", "continuation_plan", "grant_amount_change_justification"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "information_in_more_detail_section": {
+                "properties": {
+                  "project_application_type": { "const": "2" }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_plan_section": {
+                "title": "project_plan_section.title",
+                "type": "object",
+                "properties": {
+                  "project_name": { "title": "project_name.title", "type": "string" },
+                  "project_purpose_goals": { "title": "project_purpose_goals.title", "type": "string" },
+                  "project_measures_wrapper": {
+                    "title": "project_measures_wrapper.title",
+                    "type": "object",
+                    "properties": {
+                      "project_measures_2026": { "title": "project_measures_2026.title", "type": "string" }
+                    },
+                    "required": ["project_measures_2026"]
+                  },
+                  "activity_volume": { "title": "activity_volume.title", "type": "string" },
+                  "positive_encounters": { "title": "positive_encounters.title", "type": "string" }
+                },
+                "required": ["project_name", "project_purpose_goals", "activity_volume", "positive_encounters"]
+              },
+              "target_groups_section": {
+                "title": "target_groups_section.title",
+                "type": "object",
+                "properties": {
+                  "target_group_description": { "title": "target_group_description.title", "type": "string" },
+                  "target_group_special_needs": { "title": "target_group_special_needs.title", "type": "string" },
+                  "target_group_expertise": { "title": "target_group_expertise.title", "type": "string" },
+                  "participant_estimate": {
+                    "title": "participant_estimate.title",
+                    "type": "object",
+                    "properties": {
+                      "participant_estimate_help": {
+                        "type": "array",
+                        "items": [{ "title": "participant_estimate_help.value", "type": "null" }]
+                      },
+                      "participant_estimate_9_12": { "title": "age_group_9_12.title", "type": "string" },
+                      "participant_estimate_13_15": { "title": "age_group_13_15.title", "type": "string" },
+                      "participant_estimate_16_18": { "title": "age_group_16_18.title", "type": "string" }
+                    },
+                    "required": ["participant_estimate_9_12", "participant_estimate_13_15", "participant_estimate_16_18"]
+                  },
+                  "new_participant_estimate_wrapper": {
+                    "title": "new_participant_estimate_wrapper.title",
+                    "type": "object",
+                    "properties": {
+                      "new_participant_estimate": { "title": "age_group_9_18.title", "type": "string" }
+                    },
+                    "required": ["new_participant_estimate"]
+                  },
+                  "accessibility": { "title": "accessibility.title", "type": "string" },
+                  "session_cost_planned": { "title": "session_cost_planned.title", "type": "string" },
+                  "impact_on_participants": { "title": "impact_on_participants.title", "type": "string" },
+                  "postal_code_areas": { "title": "postal_code_areas.title", "type": "string" }
+                },
+                "required": [
+                  "target_group_description", "target_group_special_needs", "target_group_expertise",
+                  "accessibility", "session_cost_planned", "impact_on_participants", "postal_code_areas"
+                ]
+              },
+              "project_methods_section": {
+                "title": "project_methods_section.title",
+                "type": "object",
+                "properties": {
+                  "target_group_reach": { "title": "target_group_reach.title", "type": "string" },
+                  "youth_participation_planning": { "title": "youth_participation_planning.title", "type": "string" },
+                  "key_partners": { "title": "key_partners.title", "type": "string" },
+                  "new_partnerships": { "title": "new_partnerships.title", "type": "string" }
+                },
+                "required": ["target_group_reach", "youth_participation_planning", "key_partners", "new_partnerships"]
+              },
+              "risks_analysis_section": {
+                "title": "risks_analysis_section.title",
+                "type": "object",
+                "properties": {
+                  "main_risks": { "title": "main_risks.title", "type": "string" },
+                  "monitoring_impact_assessment": { "title": "monitoring_impact_assessment.title", "type": "string" },
+                  "establishment_after_project": { "title": "establishment_after_project.title", "type": "string" }
+                },
+                "required": ["main_risks", "monitoring_impact_assessment"]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "information_in_more_detail_section": {
+                "properties": {
+                  "project_application_type": { "const": "2" },
+                  "grant_duration": { "const": "2" }
+                },
+                "required": ["grant_duration"]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_plan_section": {
+                "properties": {
+                  "multi_year_justification": { "title": "multi_year_justification.title", "type": "string" },
+                  "project_measures_wrapper": {
+                    "properties": {
+                      "project_measures_2027": { "title": "project_measures_2027.title", "type": "string" }
+                    },
+                    "required": ["project_measures_2027"]
+                  }
+                },
+                "required": ["multi_year_justification"]
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "description": "",
@@ -226,6 +526,11 @@
       "title": "grant_info_step.title",
       "type": "object",
       "$ref": "#/definitions/grant_info_step"
+    },
+    "information_in_more_detail_step": {
+      "title": "information_in_more_detail_step.title",
+      "type": "object",
+      "$ref": "#/definitions/information_in_more_detail_step"
     }
   }
 }
