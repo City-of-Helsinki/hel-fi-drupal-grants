@@ -322,8 +322,6 @@ final class GrantsAttachments extends WebformCompositeBase {
       }
     }
 
-    dump($lines);
-
     return $lines;
   }
 
