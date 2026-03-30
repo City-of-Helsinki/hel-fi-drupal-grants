@@ -50,6 +50,12 @@
   fieldset.inline-error-message:has(.form-item--error-message) {
     margin-bottom: $spacing-and-half;
   }
+
+  .form-required {
+    &::after {
+      content: ' *';
+    }
+  }
 }
 
 .info-grants {
