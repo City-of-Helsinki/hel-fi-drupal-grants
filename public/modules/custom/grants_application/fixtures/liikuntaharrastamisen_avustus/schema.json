@@ -319,6 +319,31 @@
               }
             }
           ]
+        },
+        "interim_reporting_section": {
+          "title": "interim_reporting_section.title",
+          "type": "object",
+          "properties": {}
+        },
+        "project_plan_section": {
+          "title": "project_plan_section.title",
+          "type": "object",
+          "properties": {}
+        },
+        "target_groups_section": {
+          "title": "target_groups_section.title",
+          "type": "object",
+          "properties": {}
+        },
+        "project_methods_section": {
+          "title": "project_methods_section.title",
+          "type": "object",
+          "properties": {}
+        },
+        "risks_analysis_section": {
+          "title": "risks_analysis_section.title",
+          "type": "object",
+          "properties": {}
         }
       },
       "required": ["information_in_more_detail_section"],
@@ -336,8 +361,6 @@
           "then": {
             "properties": {
               "interim_reporting_section": {
-                "title": "interim_reporting_section.title",
-                "type": "object",
                 "properties": {
                   "actual_target_group": { "title": "actual_target_group.title", "type": "string" },
                   "children_participation_estimate": {
@@ -405,8 +428,6 @@
           "then": {
             "properties": {
               "project_plan_section": {
-                "title": "project_plan_section.title",
-                "type": "object",
                 "properties": {
                   "project_name": { "title": "project_name.title", "type": "string" },
                   "project_purpose_goals": { "title": "project_purpose_goals.title", "type": "string" },
@@ -424,8 +445,6 @@
                 "required": ["project_name", "project_purpose_goals", "activity_volume", "positive_encounters"]
               },
               "target_groups_section": {
-                "title": "target_groups_section.title",
-                "type": "object",
                 "properties": {
                   "target_group_description": { "title": "target_group_description.title", "type": "string" },
                   "target_group_special_needs": { "title": "target_group_special_needs.title", "type": "string" },
@@ -463,8 +482,6 @@
                 ]
               },
               "project_methods_section": {
-                "title": "project_methods_section.title",
-                "type": "object",
                 "properties": {
                   "target_group_reach": { "title": "target_group_reach.title", "type": "string" },
                   "youth_participation_planning": { "title": "youth_participation_planning.title", "type": "string" },
@@ -474,8 +491,6 @@
                 "required": ["target_group_reach", "youth_participation_planning", "key_partners", "new_partnerships"]
               },
               "risks_analysis_section": {
-                "title": "risks_analysis_section.title",
-                "type": "object",
                 "properties": {
                   "main_risks": { "title": "main_risks.title", "type": "string" },
                   "monitoring_impact_assessment": { "title": "monitoring_impact_assessment.title", "type": "string" },

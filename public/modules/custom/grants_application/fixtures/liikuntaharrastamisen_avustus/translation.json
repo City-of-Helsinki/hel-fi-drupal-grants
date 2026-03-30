@@ -290,6 +290,11 @@
       "fi": "Kuinka paljon yhden harrastuskerran on suunniteltu maksavan osallistujalle (€/h)?",
       "sv": "Hur mycket har en gång av hobbyn planerats kosta för deltagaren (€/h)?"
     },
+    "session_cost_planned.description": {
+      "en": "Estimate how much a participant pays for one session. Enter the estimate as €/hour.",
+      "fi": "Arvioi, kuinka paljon osallistuja maksaa yhdestä harrastuskerrasta. Anna arvio muodossa €/tunti.",
+      "sv": "Bedöm hur mycket deltagaren betalar för en gång av hobbyn. Ge bedömningen i formatet €/timme."
+    },
     "impact_on_participants.title": {
       "en": "What impact do you hope the activities will have on the lives of the participants?",
       "fi": "Miten toiminnan toivotaan vaikuttavan osallistujien elämään?",

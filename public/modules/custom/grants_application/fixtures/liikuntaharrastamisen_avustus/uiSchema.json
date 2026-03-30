@@ -153,6 +153,13 @@
           "tooltipText": "accessibility.description"
         }
       },
+      "session_cost_planned": {
+         "ui:options": {
+          "tooltipLabel": "session_cost_planned.title",
+          "tooltipButtonLabel": "session_cost_planned.title",
+          "tooltipText": "session_cost_planned.description"
+        }
+      },
       "impact_on_participants": {
         "ui:widget": "textarea",
         "misc:max-length": 1250

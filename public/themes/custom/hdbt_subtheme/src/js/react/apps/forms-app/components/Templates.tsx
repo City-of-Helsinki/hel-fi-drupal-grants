@@ -216,6 +216,11 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   }
 
   if (_isSection) {
+    // Hide sections that have no visible child fields
+    if (properties.length === 0) {
+      return null;
+    }
+
     return (
       <section className='hdbt-form--section'>
         <h3 className='hdbt-form--section__title'>{title}</h3>
