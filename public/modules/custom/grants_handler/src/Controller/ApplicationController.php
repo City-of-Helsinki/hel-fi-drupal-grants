@@ -109,11 +109,16 @@ final class ApplicationController extends ControllerBase {
       return AccessResult::forbidden("Unable to resolve single submission access");
     }
 
+    if (!$singleSubmissionAccess) {
+      $this->getLogger('grant_access')
+        ->error("Access denied, user is missing single submission access.");
+    }
+
     // Parameters from the route and/or request as needed.
     $viewPermission = $account->hasPermission('view own webform submission');
-    if (!$viewPermission || !$singleSubmissionAccess) {
+    if (!$viewPermission) {
       $this->getLogger('grant_access')
-        ->error("Access denied, user is missing view permission or single submission access.");
+        ->error("Access denied, user is missing view permission.");
     }
 
     return AccessResult::allowedIf(
@@ -370,6 +375,7 @@ final class ApplicationController extends ControllerBase {
     $acceptableApplicantTypes = array_values($thirdPartySettings['applicantTypes']);
 
     if (!in_array($currentRole['type'], $acceptableApplicantTypes)) {
+      $this->messenger()->addError($this->t('User role is not allowed to use this form.'));
       return $this->redirect('<front>');
     }
 
