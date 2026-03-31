@@ -155,7 +155,7 @@ final class CopyApplicationAjaxController extends ControllerBase {
       return $this->applicationInitService->initApplication($webform_id, $data);
     }
     catch (\Throwable $e) {
-      throw new \RuntimeException('Failed to initialize new application.');
+      throw new \RuntimeException("Failed to initialize new application: {$e->getMessage()}");
     }
   }
 
