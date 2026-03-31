@@ -309,7 +309,7 @@ class ApplicationInitService {
   }
 
   /**
-   * Method to initialise application document in ATV. Create & save.
+   * Method to initialize application document in ATV. Create & save.
    *
    * If data is given, use that data to copy things to new application.
    *
@@ -335,12 +335,34 @@ class ApplicationInitService {
     $userData = $this->helfiHelsinkiProfiiliUserdata->getUserData();
     $userProfileData = $this->helfiHelsinkiProfiiliUserdata->getUserProfileData();
 
-    if ($userData == NULL || $webform == NULL) {
-      throw new ProfileDataException('No Helsinki profile data found');
+    if (!$webform) {
+      throw new ApplicationException("Application init error: User tried to to access non-existing webform ID $webform_id");
+    }
+    if (!$userData) {
+      throw new ProfileDataException("No Helsinki profile data found on application init, webform ID $webform_id");
+    }
+    if (!$userProfileData) {
+      throw new ProfileDataException("No User profile data found on application init, webform ID $webform_id");
     }
 
-    $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
-    $companyData = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
+    try {
+      $selectedCompany = $this->grantsProfileService->getSelectedRoleData();
+      if (!isset($selectedCompany['type'])) {
+        $this->logger->error('Missing selected company type');
+      }
+      $companyData = $this->grantsProfileService->getGrantsProfileContent($selectedCompany);
+    }
+    catch (\Exception $e) {
+      throw new ProfileDataException("Exception while fetching company data on application init: {$e->getMessage()}");
+    }
+
+    if (!$selectedCompany) {
+      throw new ProfileDataException("Empty selected company data on application init, webform ID $webform_id");
+    }
+
+    if (!$companyData) {
+      throw new ProfileDataException("Empty company data on application init, webform ID $webform_id");
+    }
 
     // Before initialization, check if we are copying an application.
     $copy = !empty($submissionData);
@@ -352,7 +374,8 @@ class ApplicationInitService {
       $companyData,
       $userData,
       $userProfileData,
-      $submissionData);
+      $submissionData
+    );
 
     // If we are copying an application, we need to clear some data.
     if ($copy) {
