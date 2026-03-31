@@ -104,8 +104,17 @@ class GrantsMandateController extends ControllerBase implements ContainerInjecti
       // user to progress.
       return $this->handleNoCode($tOpts);
     }
+
     // If we have code, we can then exchange it to token.
-    $this->grantsMandateService->changeCodeToToken($code, $callbackUrl);
+    try {
+      $this->grantsMandateService->changeCodeToToken($code, $callbackUrl);
+    }
+    catch (\Exception $e) {
+      $this->logger->error("MandateCallbackYpa failed: {$e->getMessage()}");
+      $this->messenger()->addMessage($this->t('Mandate process was interrupted or there was an error. Please try again.'));
+      $redirect = new RedirectResponse(Url::fromRoute('grants_profile.edit')->toString());
+      return $this->redirectService->getRedirect($redirect);
+    }
 
     try {
       $roles = $this->grantsMandateService->getRoles();
