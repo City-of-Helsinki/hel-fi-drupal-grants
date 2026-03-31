@@ -509,6 +509,8 @@ class HelsinkiProfiiliUserData {
         return $decoded;
       }
     }
+
+    $this->logger->error('Helsinki profiili token data is empty.');
     return [];
   }
 
