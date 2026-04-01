@@ -131,7 +131,6 @@ final class Application extends ResourceBase {
     if (!$application_number) {
       return new JsonResponse([], 400);
     }
-
     // @todo Parse the last STATUS_UPDATE event here.
     // It can be used to determinate if this is editable.
     try {
@@ -316,7 +315,6 @@ final class Application extends ResourceBase {
     // Here we do the actual work.
     // - Handle bank account file upload / other bank account shenanigans.
     //   - The bank account file handling causes extra document load and save.
-    //   - No need to do anything with the document before this has been done.
     // - Map the React-form data to Avus2-format.
     // - Update the ATV document one last time before sending to integration.
     //   - The atv document must be updated as 'SUBMITTED' at this point.
@@ -324,7 +322,6 @@ final class Application extends ResourceBase {
     //   - Set 'X-Case-Status'-headed to 'SUBMITTED'.
     //   - After this point we are no longer allowed to touch the status.
     // - Update the custom submission entity.
-    // Start with the bank file.
     try {
       $bankFile = $this->jsonMapperService->getSelectedBankFile($form_data);
     }
@@ -416,6 +413,7 @@ final class Application extends ResourceBase {
     }
 
     $sideDocument->setContent($form_data);
+    $sideDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
     $this->atvService->updateExistingDocument($sideDocument);
 
     // On first AVUS2-submit formUpdate = FALSE and afterward only TRUE.
@@ -436,7 +434,7 @@ final class Application extends ResourceBase {
     // Set the submitted -status right before sending to Avus2.
     // The status is set as request header by integration-service.
     $document->setStatus('SUBMITTED');
-
+    $document->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
     $latestDocument = $this->atvService->updateExistingDocument($document);
 
     // Add the submit event to the events.
@@ -587,12 +585,11 @@ final class Application extends ResourceBase {
       );
     }
 
-    // @todo Add event HANDLER_SEND_INTEGRATION.
+    $document->setContent($mappedData);
+    $document->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
+
+    $save_id = Uuid::uuid4()->toString();
     try {
-      $document->setContent($mappedData);
-
-      $save_id = Uuid::uuid4()->toString();
-
       // We don't use the event api to apply this particular event.
       // instead we just put the event into the document.
       $event = $this->eventsService->getEventData(
@@ -602,10 +599,15 @@ final class Application extends ResourceBase {
         $save_id
       );
       $this->eventsService->addNewEventForApplication($document, $event);
+    }
+    catch (\Exception $e) {
+      return new JsonResponse(['error' => $this->t('An error occurred while sending the application. Please try again in a moment')], 500);
+    }
 
+    try {
       $sideDocument->setContent($form_data);
-
-      $sideDocument = $this->atvService->updateExistingDocument($sideDocument);
+      $sideDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
+      $this->atvService->updateExistingDocument($sideDocument);
       $latestDocument = $this->atvService->updateExistingDocument($document);
     }
     catch (\Exception $e) {
