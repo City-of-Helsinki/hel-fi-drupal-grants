@@ -247,7 +247,7 @@ final class FormSettingsServiceTest extends KernelTestBase {
     $settings = new FormSettings($settingsValues, [], [], []);
 
     $deleteAfter = $settings->getDraftDeleteAfter();
-    $this->assertEquals( date('Y-m-d', strtotime('+1 year')), $deleteAfter);
+    $this->assertEquals(date('Y-m-d', strtotime('+1 year')), $deleteAfter);
   }
 
 }

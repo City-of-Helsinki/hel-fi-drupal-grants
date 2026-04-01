@@ -110,8 +110,8 @@ final class ApplicationUploaderService {
    *   Application number.
    * @param array $submittedFormData
    *   Actual form data from submission.
-   * @param bool $preventOverride
-   *   Prevent overriding certain data while editing received document.
+   * @param bool $isSubmit
+   *   Are we submitting the application?
    *
    * @return \Drupal\helfi_atv\AtvDocument|bool|null
    *   Result of the upload.
@@ -129,7 +129,6 @@ final class ApplicationUploaderService {
     TypedDataInterface $applicationData,
     string $applicationNumber,
     array $submittedFormData,
-    bool $preventOverride = FALSE,
     bool $isSubmit = FALSE,
   ): AtvDocument|bool|null {
     $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
@@ -166,7 +165,7 @@ final class ApplicationUploaderService {
       $atvDocument->setStatus($newHeader);
     }
 
-    // Only update the deleteafter-time if we are sending to Avus2.
+    // Update the deleteafter-time to +6years if we are sending to Avus2.
     if ($isSubmit) {
       $atvDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
     }
@@ -219,7 +218,6 @@ final class ApplicationUploaderService {
       $applicationData,
       $applicationNumber,
       $submittedFormData,
-      TRUE,
       TRUE,
     );
 
