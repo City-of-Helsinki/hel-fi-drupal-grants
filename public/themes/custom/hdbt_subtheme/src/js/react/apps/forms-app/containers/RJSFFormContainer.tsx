@@ -185,7 +185,7 @@ export const RJSFFormContainer = ({
       return [];
     }
 
-    const prefilteredErrors = errors.filter((error) => error.params?.type !== 'null');
+    const prefilteredErrors = errors.filter((error) => error.params?.type !== 'null' && error.name !== 'if');
 
     const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(prefilteredErrors, steps));
     setErrors(errorsToShow);

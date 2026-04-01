@@ -1,4 +1,100 @@
 {
+  "grant_info_step": {
+    "subventions_section": {
+      "grants_compensations_info": {
+        "ui:field": "textParagraph"
+      },
+      "subventions": {
+        "ui:field": "subventionTable"
+      }
+    },
+    "purpose_section": {
+      "purpose": {
+        "ui:widget": "textarea",
+        "misc:max-length": 1250,
+        "ui:options": {
+          "tooltipLabel": "custom_purpose.title",
+          "tooltipButtonLabel": "custom_purpose.title",
+          "tooltipText": "custom_purpose.description"
+        }
+      }
+    },
+    "other_compensations_section": {
+      "have_received_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_compensations": {
+        "ui:options": {
+          "addText": "other_compensation.add"
+        },
+        "items": {
+          "other_compensation_issuer": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_compensation_amount": {
+            "ui:options": {
+              "printableName": "other_compensation_amount.printable_title"
+            }
+          },
+          "other_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    },
+    "other_applied_compensations_section": {
+      "have_applied_other_compensations": {
+        "ui:enumNames": [
+          "boolean.no",
+          "boolean.yes"
+        ],
+        "ui:options": {
+          "affirmativeExpands": true
+        },
+        "ui:widget": "radio"
+      },
+      "other_applied_compensations": {
+        "ui:options": {
+          "addText": "other_applied_compensations.add"
+        },
+        "items": {
+          "other_applied_compensation_issuer": {
+            "ui:options": {
+              "tooltipLabel": "other_compensation_issuer.title",
+              "tooltipButtonLabel": "other_compensation_issuer.title",
+              "tooltipText": "other_compensation_issuer.description"
+            }
+          },
+          "other_applied_compensation_description": {
+            "ui:widget": "textarea",
+            "misc:max-length": 1000,
+            "ui:options": {
+              "tooltipLabel": "other_compensation_description.title",
+              "tooltipButtonLabel": "other_compensation_description.title",
+              "tooltipText": "other_compensation_description.description"
+            }
+          }
+        }
+      }
+    }
+  },
   "information_in_more_detail_step": {
     "information_in_more_detail_section": {
       "project_application_type": {
@@ -217,98 +313,76 @@
       }
     }
   },
-  "grant_info_step": {
-    "subventions_section": {
-      "grants_compensations_info": {
+  "budget_step": {
+    "income_section": {
+      "incomeGroupName": {
+        "ui:widget": "hidden"
+      },
+      "applied_benefits": {
+        "ui:field": "subventionSum"
+      },
+      "income_rows": {
+        "ui:options": {
+          "addText": "income_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
+        }
+      }
+    },
+    "expenditure_section": {
+      "costGroupName": {
+        "ui:widget": "hidden"
+      },
+      "expenditure_rows": {
+        "ui:options": {
+          "addText": "expenditure_rows.add"
+        },
+        "items": {
+          "ui:options": {
+            "hideNameFromPrint": true
+          }
+        }
+      }
+    }
+  },
+  "attachments_step": {
+    "additional_information_section": {
+      "additional_information": {
+        "ui:widget": "textarea",
+        "ui:options": {
+          "hideNameFromPrint": true,
+          "tooltipLabel": "additional_information.title",
+          "tooltipButtonLabel": "additional_information.title",
+          "tooltipText": "additional_information.description"
+        }
+      }
+    },
+    "attachments_section": {
+      "required_attachments_help": {
         "ui:field": "textParagraph"
       },
-      "subventions": {
-        "ui:field": "subventionTable"
-      }
-    },
-    "purpose_section": {
-      "purpose": {
-        "ui:widget": "textarea",
-        "misc:max-length": 1250,
-        "ui:options": {
-          "tooltipLabel": "custom_purpose.title",
-          "tooltipButtonLabel": "custom_purpose.title",
-          "tooltipText": "custom_purpose.description"
-        }
-      }
-    },
-    "other_compensations_section": {
-      "have_received_other_compensations": {
-        "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
-        ],
-        "ui:options": {
-          "affirmativeExpands": true
-        },
-        "ui:widget": "radio"
+      "multiple_attachments_help": {
+        "ui:field": "textParagraph"
       },
-      "other_compensations": {
-        "ui:options": {
-          "addText": "other_compensation.add"
-        },
-        "items": {
-          "other_compensation_issuer": {
-            "ui:options": {
-              "tooltipLabel": "other_compensation_issuer.title",
-              "tooltipButtonLabel": "other_compensation_issuer.title",
-              "tooltipText": "other_compensation_issuer.description"
-            }
-          },
-          "other_compensation_amount": {
-            "ui:options": {
-              "printableName": "other_compensation_amount.printable_title"
-            }
-          },
-          "other_compensation_description": {
-            "ui:widget": "textarea",
-            "misc:max-length": 1000,
-            "ui:options": {
-              "tooltipLabel": "other_compensation_description.title",
-              "tooltipButtonLabel": "other_compensation_description.title",
-              "tooltipText": "other_compensation_description.description"
-            }
-          }
-        }
-      }
-    },
-    "other_applied_compensations_section": {
-      "have_applied_other_compensations": {
-        "ui:enumNames": [
-          "boolean.no",
-          "boolean.yes"
-        ],
-        "ui:options": {
-          "affirmativeExpands": true
-        },
-        "ui:widget": "radio"
+      "formerly_provided_attachments_help": {
+        "ui:field": "textParagraph"
       },
-      "other_applied_compensations": {
-        "ui:options": {
-          "addText": "other_applied_compensations.add"
-        },
-        "items": {
-          "other_applied_compensation_issuer": {
-            "ui:options": {
-              "tooltipLabel": "other_compensation_issuer.title",
-              "tooltipButtonLabel": "other_compensation_issuer.title",
-              "tooltipText": "other_compensation_issuer.description"
-            }
-          },
-          "other_applied_compensation_description": {
-            "ui:widget": "textarea",
-            "misc:max-length": 1000,
-            "ui:options": {
-              "tooltipLabel": "other_compensation_description.title",
-              "tooltipButtonLabel": "other_compensation_description.title",
-              "tooltipText": "other_compensation_description.description"
-            }
-          }
+      "cant_view_after_help": {
+        "misc:variant": "infobox",
+        "ui:field": "textParagraph"
+      },
+      "further_clarification": {
+        "ui:widget": "textarea"
+      },
+      "other_attachment_fieldset": {
+        "other_attachment_fieldset_file": {
+          "misc:file-type": 0,
+          "misc:variant": "simple",
+          "ui:help": "other_attachment_fieldset.ui_help",
+          "ui:field": "atvFile"
         }
       }
     }

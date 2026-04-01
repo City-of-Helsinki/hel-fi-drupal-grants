@@ -9,7 +9,7 @@ import type {
 } from '@rjsf/utils';
 import { getDefaultRegistry } from '@rjsf/core';
 import { Accordion, Button, Fieldset, Notification, IconCross, IconPlus } from 'hds-react';
-import type { ReactNode } from 'react';
+import { createContext, type ReactNode } from 'react';
 import { useAtomValue } from 'jotai';
 
 import { formStepsAtom, getCurrentStepAtom, isEmptyPreviewAtom, shouldRenderPreviewAtom } from '../store';
@@ -17,6 +17,12 @@ import { ApplicantInfo } from './ApplicantInfo';
 import { secondaryButtonTheme } from '@/react/common/constants/buttonTheme';
 import { getTooltip } from '../utils';
 import type { UiSchema } from '../types/UiSchema';
+
+/**
+ * Context that signals child widgets they are inside a fieldset with validation errors.
+ * When true, required empty fields inside the fieldset should show their own error state.
+ */
+export const FieldErrorContext = createContext(false);
 
 export const ArrayFieldTemplate = ({
   canAdd,
@@ -144,12 +150,22 @@ const PreviewSection = ({
   );
 };
 
-export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: ObjectFieldTemplateProps) => {
+export const ObjectFieldTemplate = ({
+  errorSchema,
+  idSchema,
+  properties,
+  schema,
+  uiSchema,
+}: ObjectFieldTemplateProps) => {
   const { _isSection, _step, description, title } = schema;
   const steps = useAtomValue(formStepsAtom);
   const isEmptyPreview = useAtomValue(isEmptyPreviewAtom);
   const [stepIndex, { id: stepId, label: stepLabel }] = useAtomValue(getCurrentStepAtom);
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
+
+  // Detect sections by _isSection flag (base properties) or by title
+  // convention (for sections added via allOf/then conditions).
+  const isSection = _isSection || (title?.endsWith('_section.title') && !_step);
 
   if (idSchema.$id === 'root') {
     const className = shouldRenderPreview ? 'hdbt-form__preview form-wrapper' : 'form-wrapper';
@@ -166,7 +182,7 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
     return null;
   }
 
-  if ((_step && _step === stepId) || (isEmptyPreview && !_isSection)) {
+  if ((_step && _step === stepId) || (isEmptyPreview && !isSection)) {
     return (
       <>
         {title && <h2 className='grants-form__page-title'>{title}</h2>}
@@ -211,13 +227,14 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
     );
   }
 
-  if (_isSection && shouldRenderPreview) {
+  if (isSection && shouldRenderPreview) {
     return <PreviewSection title={title} properties={properties} uiSchema={uiSchema || {}} />;
   }
 
-  if (_isSection) {
-    // Hide sections that have no visible child fields
-    if (properties.length === 0) {
+  if (isSection) {
+    // Hide sections whose condition is not met — base stubs have no title;
+    // the title only comes from the then-block schema when the condition matches.
+    if (!title) {
       return null;
     }
 
@@ -265,15 +282,17 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   );
 
   return (
-    <Fieldset
-      heading={hasRequiredChild ? `${title} *` : title || ''}
-      className='hdbt-form--fieldset hdbt-form--fieldset--border'
-      style={{ marginInline: '0' }}
-      tooltip={getTooltip(uiSchema)}
-    >
-      {description && <div className='hdbt-form--description'>{description}</div>}
-      {properties.map((field) => field.content)}
-    </Fieldset>
+    <FieldErrorContext.Provider value={Boolean(errorSchema?.__errors?.length)}>
+      <Fieldset
+        heading={hasRequiredChild ? `${title} *` : title || ''}
+        className='hdbt-form--fieldset hdbt-form--fieldset--border'
+        style={{ marginInline: '0' }}
+        tooltip={getTooltip(uiSchema)}
+      >
+        {description && <div className='hdbt-form--description'>{description}</div>}
+        {properties.map((field) => field.content)}
+      </Fieldset>
+    </FieldErrorContext.Provider>
   );
 };
 
