@@ -96,3 +96,9 @@ msgstr "Det gick inte att lägga till filen. Kontrollera att filen är säker oc
 
 msgid "The file could not be uploaded. Please try again later."
 msgstr "Ett fel uppstod vid tillägg av filen. "
+
+msgid "File name is too long. Please rename the file and try again."
+msgstr "Filnamnet är för långt. Byt namn på filen och försök igen."
+
+msgid "Duplicate file name: Please rename the file"
+msgstr "Duplicerat filnamn: Vänligen byt namn på filen"
