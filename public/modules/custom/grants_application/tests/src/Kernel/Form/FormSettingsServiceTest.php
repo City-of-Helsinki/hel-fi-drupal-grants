@@ -246,8 +246,9 @@ final class FormSettingsServiceTest extends KernelTestBase {
     ];
     $settings = new FormSettings($settingsValues, [], [], []);
 
+    // On continuous application, the draft is deleted after one year.
     $deleteAfter = $settings->getDraftDeleteAfter();
-    $this->assertEquals('2031-01-01', $deleteAfter);
+    $this->assertEquals(date('Y-m-d', strtotime('+1 year')), $deleteAfter);
   }
 
 }
