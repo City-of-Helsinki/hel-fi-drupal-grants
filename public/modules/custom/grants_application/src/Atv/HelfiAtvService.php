@@ -256,6 +256,11 @@ class HelfiAtvService {
    *
    * The document holds the raw form data.
    *
+   * The was introduced due to integration overwriting the application.
+   * We read/ write the raw react-json on separate ATV-document and only update
+   * the "real" ATV document when we actually must. The side document ID is stored
+   * in database in application_submission -entity.
+   *
    * @param string $application_type
    *   The application type.
    * @param string $application_title

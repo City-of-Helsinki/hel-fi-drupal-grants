@@ -204,7 +204,7 @@ final class FormSettings {
    */
   public function getDraftDeleteAfter(): string {
     $isContinuous = $this->settings['continuous'] ?? FALSE;
-    $endDate = $this->settings['application_close'];
+    $endDate = $this->settings['application_close'] ?? NULL;
 
     if (!$isContinuous && $endDate) {
       return (new \DateTimeImmutable($endDate))->add(new \DateInterval('P1M'))->format('Y-m-d');
