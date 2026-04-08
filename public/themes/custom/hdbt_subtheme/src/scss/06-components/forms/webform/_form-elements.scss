@@ -638,6 +638,10 @@ input[type='radio']+label.form-required::after {
     color: $color-black;
   }
 
+  ul:has(li) {
+    margin-block-end: $spacing;
+  }
+
   // These are copied from _button.scss in hdbt
   // remove when HDS supports file input styling
   button {

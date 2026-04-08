@@ -146,6 +146,7 @@ final class DraftApplication extends ResourceBase {
 
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+      $selected_company = $this->userInformationService->getSelectedCompany();
       $user_information = $this->userInformationService->getUserData();
     }
     catch (\Exception $e) {
@@ -164,26 +165,46 @@ final class DraftApplication extends ResourceBase {
 
     try {
       $document = $this->atvService->getDocument($application_number);
-      $document_content = $document->getContent();
     }
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
       return new JsonResponse([], 500);
     }
 
-    // @todo On actual save, we are putting form_data inside
-    // "compensation" to prevent it from getting overwritten by the integration.
-    // This should be done in more clean way. Maybe separate ATV-doc for react
-    // form or something else.
-    $response = [];
-
-    if (!isset($document_content['form_data']) && !isset($document_content['compensation'])) {
-      $response['form_data'] = [];
+    // Side document bc.
+    if ($sideDocumentId = $submission->getSideDocumentId()) {
+      $sideDocument = $this->atvService->getDocumentById($sideDocumentId);
     }
     else {
-      $response['form_data'] = $document_content['form_data'] ?? $document_content['compensation']['form_data'];
+      try {
+        $document_content = $document->getContent();
+        $originalContent = $document_content['form_data'] ?? $document_content['compensation']['form_data'];
+        $sideDocument = $this->atvService->createSideDocument(
+          'application_type',
+          $settings->getApplicationName(),
+          $user_information['sub'],
+          $selected_company,
+          $document->getId(),
+          $selected_company['type']
+        );
+
+        $sideDocument->setContent($originalContent);
+        $sideDocument = $this->atvService->saveNewDocument($sideDocument);
+
+        $submission->set('side_document_id', $sideDocument->getId());
+        $submission->save();
+      }
+      catch (\Exception $e) {
+        $this->logger->critical("Side document creation failed: $application_number");
+        return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
+      }
+
     }
+
+    $response = [];
+
     // @todo Only return required user data to frontend
+    $response['form_data'] = $sideDocument->getContent();
     $response['grants_profile'] = $grants_profile_data->toArray();
     $response['user_data'] = $user_information;
     $response['status'] = $document->getStatus();
@@ -286,25 +307,43 @@ final class DraftApplication extends ResourceBase {
 
     try {
       $document = $this->atvService->saveNewDocument($document);
-      $now = time();
-      $submission = ApplicationSubmission::create([
-        'document_id' => $document->getId(),
-        'business_id' => $grants_profile_data->getBusinessId(),
-        'sub' => $user_data['sub'],
-        'langcode' => $langcode,
-        'draft' => TRUE,
-        'application_type_id' => $application_type_id,
-        'application_number' => $application_number,
-        'form_identifier' => $form_identifier,
-        'created' => $now,
-        'changed' => $now,
-      ]);
-      $submission->save();
     }
     catch (\Exception | GuzzleException $e) {
       // Saving failed.
       return new JsonResponse([], 500);
     }
+
+    $sideDocument = $this->atvService->createSideDocument(
+      $application_type,
+      $application_title,
+      $user_data['sub'],
+      $selected_company,
+      $document->getId(),
+    );
+
+    try {
+      $sideDocument = $this->atvService->saveNewDocument($sideDocument);
+    }
+    catch (\Exception $e) {
+      // Saving failed.
+      return new JsonResponse([], 500);
+    }
+
+    $now = time();
+    $submission = ApplicationSubmission::create([
+      'document_id' => $document->getId(),
+      'business_id' => $grants_profile_data->getBusinessId(),
+      'sub' => $user_data['sub'],
+      'langcode' => $langcode,
+      'draft' => TRUE,
+      'application_type_id' => $application_type_id,
+      'application_number' => $application_number,
+      'form_identifier' => $form_identifier,
+      'created' => $now,
+      'changed' => $now,
+      'side_document_id' => $sideDocument->getId(),
+    ]);
+    $submission->save();
 
     $result = [
       'application_number' => $application_number,
@@ -349,10 +388,9 @@ final class DraftApplication extends ResourceBase {
     string $application_number,
     Request $request,
   ): JsonResponse {
-    // @todo Sanitize & validate & authorize properly.
     $content = json_decode($request->getContent(), TRUE);
     [
-      'attachments' => $attachments,
+      // 'attachments' => $attachments,
       'form_data' => $form_data,
     ] = $content;
 
@@ -388,48 +426,35 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
-    // @todo Check that the application is actually a draft.
+    // @todo Check that the application is actually a draft?
     // Actually, the document state should not be > "received"
     // since an application which is taken into processing
     // should not change.
     try {
-      $document = $this->atvService->getDocument($application_number);
+      // $document = $this->atvService->getDocument($application_number);
+      $sideDocument = $this->atvService->getDocumentById($submission->get('side_document_id')->value);
     }
     catch (\Throwable $e) {
       // Error while fetching the document.
       return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
     }
 
-    if (!$document) {
+    if (!$sideDocument) {
       // Unable to find the document.
       return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating a new application')], 500);
     }
 
-    // @todo clean this up a bit, unnecessarily duplicated variables.
-    $content = $document->getContent();
-    // $content['compensation'] = $document_data['compensation'];
-    $content['form_data'] = $form_data;
-    // Temporary solution since integration removes the root form_data^.
-    /*
-    $document_data['compensation'] = [];
-    $content['compensation']['form_data'] = $form_data;
-    $content['attachmentsInfo'] = $document_data['attachmentsInfo'];
-     */
-    $document->setContent($content);
+    $sideDocument->setContent($form_data);
 
     try {
-      $this->cleanUpAttachments($document, $attachments);
+      // $this->cleanUpAttachments($document, $attachments);
     }
     catch (\Exception $e) {
       // @todo log error
     }
 
     try {
-      // @todo Always get the events and messages from atv submission before overwriting.
-      // ^This is not a problem here since we should not have any events at this point.
-      // @todo Save the react form data in separate atv doc.
-      $this->atvService->updateExistingDocument($document);
-
+      $this->atvService->updateExistingDocument($sideDocument);
       $submission->setChangedTime(time());
       $submission->save();
     }
@@ -451,7 +476,7 @@ final class DraftApplication extends ResourceBase {
       $this->contentLock->release($submission, $application_number, $this->accountProxy->id());
     }
 
-    return new JsonResponse($document->toArray(), 200);
+    return new JsonResponse($sideDocument->toArray(), 200);
   }
 
   /**

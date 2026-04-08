@@ -13,6 +13,7 @@ import { formatErrors } from '../utils';
 import { PreviewInput } from './Input';
 import { useState } from 'react';
 import { defaultCheckboxStyle } from '@/react/common/constants/checkboxStyle';
+import { SubmitStates } from '../enum/SubmitStates';
 
 type ATVFile = { description?: string; fileId: number; fileName: string; fileType: string; href: string; size: number };
 
@@ -33,7 +34,6 @@ async function uploadFiles(
   if (!files.length) {
     return null;
   }
-
   const formData = new FormData();
 
   formData.append('fieldName', field);
@@ -46,7 +46,8 @@ async function uploadFiles(
   });
 
   if (!response.ok) {
-    throw new Error('Failed to upload file');
+    const result = await response.json();
+    throw new Error(result?.error ?? 'File upload failed');
   }
 
   return { ...(await response.json()), fileType };
@@ -104,6 +105,8 @@ export const FileInput = ({
   const { isDeliveredLater, isIncludedInOtherFile } = formData || {};
   const multipleFiles = uiSchema?.['misc:multiple'] ?? false;
   const defaultValue = multipleFiles ? multipleFilesFromATVData(formData) : filesFromATVData(formData);
+  const submitState = useAtomValue(formConfigAtom)?.submitState;
+  const isDraft = submitState === SubmitStates.DRAFT;
 
   if (shouldRenderPreview) {
     const isSimple = uiSchema?.['misc:variant'] === 'simple';
@@ -217,7 +220,32 @@ export const FileInput = ({
       return;
     }
 
-    const result = await uploadFiles(name, applicationNumber, token, files, fileType);
+    if (existingFileCount >= 10) {
+      pushNotification({
+        children: <div>{t('too_many_files.title')}</div>,
+        label: t('too_many_files.title'),
+        type: 'error',
+      });
+
+      onChange({ files: existingData?.files });
+      // defaultValue = existingData?.files;
+      setRefreshKey((prevKey) => prevKey + 1);
+      return;
+    }
+
+    let result = null;
+    try {
+      result = await uploadFiles(name, applicationNumber, token, files, fileType);
+    } catch (error) {
+      pushNotification({
+        children: <div>{error.message}</div>,
+        label: t('file_upload_failed.title'),
+        type: 'error',
+      });
+
+      setRefreshKey((prevKey) => prevKey + 1);
+      return;
+    }
 
     if (!result) {
       return;
@@ -262,7 +290,7 @@ export const FileInput = ({
         handleMultiple(files, formData);
       }}
       required={isRequired}
-      className='hdbt-form--fileinput'
+      className={`hdbt-form--fileinput${!isDraft ? ' hdbt-form--fileinput--delete-disabled' : ''}`}
     />
   ) : (
     <HDSFileInput
@@ -282,7 +310,7 @@ export const FileInput = ({
         handleChange(files, formData);
       }}
       required={isRequired}
-      className='hdbt-form--fileinput'
+      className={`hdbt-form--fileinput${!isDraft ? ' hdbt-form--fileinput--delete-disabled' : ''}`}
     />
   );
 

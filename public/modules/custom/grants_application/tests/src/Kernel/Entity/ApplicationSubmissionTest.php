@@ -50,23 +50,27 @@ final class ApplicationSubmissionTest extends KernelTestBase {
    */
   public function testApplicationSubmissionEntity(): void {
     $viewUrl = $this->applicationSubmission->getViewApplicationLink('Liikuntasuunnistus');
-    $this->assertTrue($viewUrl->getUrl()->toString() === '/application/view/KERNELTEST-058-0000001');
+    $this->assertEquals('/application/view/KERNELTEST-058-0000001', $viewUrl->getUrl()->toString());
 
     $deleteUrl = $this->applicationSubmission->getDeleteApplicationUrl();
-    $this->assertTrue($deleteUrl->toString() === '/application/KERNELTEST-058-0000001/remove');
+    $this->assertEquals('/application/KERNELTEST-058-0000001/remove', $deleteUrl->toString());
 
     $editUrl = $this->applicationSubmission->getEditApplicationLink('Liikuntasuunnistus');
-    $this->assertTrue($editUrl->getUrl()->toString() === '/application/new/liikunta_suunnistuskartta_avustu/KERNELTEST-058-0000001/edit');
+    $this->assertEquals('/application/new/liikunta_suunnistuskartta_avustu/KERNELTEST-058-0000001', $editUrl->getUrl()->toString());
 
     $printUrl = $this->applicationSubmission->getPrintApplicationUrl();
-    $this->assertTrue($printUrl->toString() === '/application/KERNELTEST-058-0000001/print');
+    $this->assertEquals('/application/KERNELTEST-058-0000001/print', $printUrl->toString());
 
     $keys = ['application_type_id', 'form_identifier', 'status', 'application_number', 'language'];
     foreach ($keys as $key) {
       $this->assertArrayHasKey($key, $this->applicationSubmission->getData());
     }
 
-    $this->assertTrue($this->applicationSubmission->getData()['application_number'] === 'KERNELTEST-058-0000001');
+    $this->assertEquals('KERNELTEST-058-0000001', $this->applicationSubmission->getData()['application_number']);
+
+    $this->applicationSubmission->set('draft', FALSE);
+    $editUrl = $this->applicationSubmission->getEditApplicationLink('Liikuntasuunnistus');
+    $this->assertEquals('/application/new/liikunta_suunnistuskartta_avustu/KERNELTEST-058-0000001/edit', $editUrl->getUrl()->toString());
   }
 
 }

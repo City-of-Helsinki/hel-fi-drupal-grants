@@ -109,7 +109,25 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
       ->setLabel(new TranslatableMarkup('Delete after'))
       ->setDescription(new TranslatableMarkup('The time that the entity must be deleted.'));
 
+    // #UHF-11938 Secondary ATV-document which holds the form data
+    $fields['side_document_id'] = BaseFieldDefinition::create('string')
+      ->setLabel(new TranslatableMarkup('Side document id'))
+      ->setDescription(new TranslatableMarkup('The side document id.'));
+
     return $fields;
+  }
+
+  /**
+   * Get the side document id.
+   *
+   * The side document contains only the raw form data.
+   * This is created to help preventing race condition when saving document.
+   *
+   * @return string|null
+   *   The side document id.
+   */
+  public function getSideDocumentId(): ?string {
+    return $this->get('side_document_id')->value;
   }
 
   /**
@@ -169,6 +187,7 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    * Create an edit link.
    *
    * The link is used in oma-asiointi and completion page.
+   * Draft and submitted applications uses different route.
    *
    * @param string $application_form_name
    *   Application name.
@@ -177,11 +196,19 @@ class ApplicationSubmission extends ContentEntityBase implements ContentEntityIn
    *   The link.
    */
   public function getEditApplicationLink(string $application_form_name): Link {
+    if ($this->get('draft')->value) {
+      $url = $this->toUrl();
+    }
+    else {
+      $url = Url::fromRoute(
+        'helfi_grants.forms_app_edit',
+        [
+          'form_identifier' => $this->get('form_identifier')->value,
+          'application_number' => $this->get('application_number')->value,
+        ]
+      );
+    }
     $markup = $this->createMarkup('Edit application', $application_form_name);
-    $url = Url::fromRoute('helfi_grants.forms_app_edit', [
-      'form_identifier' => $this->get('form_identifier')->value,
-      'application_number' => $this->get('application_number')->value,
-    ]);
     return Link::fromTextAndUrl($markup, $url);
   }
 

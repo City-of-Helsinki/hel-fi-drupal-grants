@@ -14,6 +14,7 @@ use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 use Drupal\grants_application\ApplicationService;
 use Drupal\grants_application\Atv\HelfiAtvService;
+use Drupal\grants_application\Avus2DataParser;
 use Drupal\grants_application\Entity\ApplicationSubmission;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\UserInformationService;
@@ -63,6 +64,7 @@ final class ApplicationController extends ControllerBase {
     private readonly UserInformationService $userInformationService,
     #[Autowire(service: 'transliteration')]
     private readonly TransliterationInterface $transliteration,
+    private readonly Avus2DataParser $avus2DataParser,
   ) {
   }
 
@@ -317,55 +319,6 @@ final class ApplicationController extends ControllerBase {
     $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($submission->get('form_identifier')->value);
     $application_name = $settings->getApplicationName();
 
-    // Get submitted time from status history.
-    $documentContent = $document->getContent();
-    $statusHistory = $document->getStatusHistory();
-    $submitted = array_find($statusHistory, fn($item) => $item['value'] === 'SUBMITTED') ?? FALSE;
-    if ($submitted) {
-      $submitted = (new \DateTime($submitted['timestamp']))->format('d.m.Y H:i');
-    }
-
-    // Get event history.
-    $history = [];
-    if (isset($documentContent["statusUpdates"]) && is_array($documentContent['statusUpdates'])) {
-      $langCode = $this->languageManager()->getCurrentLanguage()->getId();
-      $statusStrings = $this->getStatusStrings($langCode);
-      foreach (array_reverse($documentContent["statusUpdates"]) as $event) {
-        if ($event["citizenCaseStatus"] != 'SUBMITTED') {
-          $eventDate = new \DateTime($event['timeCreated']);
-          $eventDate->setTimezone(new \DateTimeZone('Europe/Helsinki'));
-          $translatedStatus = $statusStrings[$event['citizenCaseStatus']];
-          $history[] = $translatedStatus . ': ' . $eventDate->format('d.m.Y H:i');
-        }
-      }
-    }
-
-    // Get the attachments, formatted description, submitted time: filename.
-    $events = $document->getContent()['events'];
-    $attachment_data = [];
-    foreach ($document->getAttachments() as $att) {
-      // $description = $att['description'] . ', ' ?? '';
-      $filename = $att['filename'];
-      $event = array_find($events, fn($event) => isset($event['eventTarget']) && $event['eventTarget'] === $filename);
-      if ($event) {
-        if (!isset($documentContent['attachmentsInfo']['attachmentsArray'])) {
-          continue;
-        }
-        $documentContentAttachment = array_find($documentContent['attachmentsInfo']['attachmentsArray'], fn($a) => $a[2]['ID'] === 'fileType' && $a[1]['value'] === $filename);
-        $description = $documentContentAttachment[0]['value'] . ', ' ?? '';
-        $submitted = $event['timeCreated'] ?? $event['eventCreated'];
-        $submitted = (new \DateTime($submitted))->format('d.m.Y H:i');
-
-        $submitted = !$submitted ? '' : $submitted . ': ';
-
-        // Create a string: "file description, submitted: filename".
-        $attachment_data[] = "$description$submitted$filename";
-      }
-    }
-
-    // Get the "käsittelijä" from events.
-    $handlerEvents = array_filter($documentContent['events'], fn($event) => $event['eventType'] == 'EVENT_INFO');
-
     $isEditable = FALSE;
     $documentStatus = $document->getStatus();
     if ($documentStatus === 'SUBMITTED') {
@@ -380,40 +333,16 @@ final class ApplicationController extends ControllerBase {
       $isEditable = TRUE;
     }
 
-    // Test the handler
-    // $handlerEvents = [['eventDescription' =>
-    // 'Henkilö Testi;040 123 123 12;test.henkilo@example.com']];.
-    $handlers = [];
-    foreach ($handlerEvents as $handlerEvent) {
-      $handlers[] = explode(";", $handlerEvent['eventDescription']);
-    }
-
-    // Messages
-    // grants_handler_preprocess_webform_submission_messages.
-    $unreadMsg = [];
-    foreach ($documentContent['messages'] as $msg) {
-      if (!isset($msg["messageStatus"]) || !$msg["messageStatus"]) {
-        continue;
-      }
-
-      if ($msg["messageStatus"] == 'UNREAD' && $msg["sentBy"] == 'Avustusten kasittelyjarjestelma') {
-        $unreadMsg[] = [
-          '#theme' => 'message_notification_item',
-          '#message' => $msg,
-        ];
-      }
-    }
-
-    $messages = [];
-    if (isset($documentContent['messages']) && is_array($documentContent['messages'])) {
-      $submissionMessages = $this->messageService->parseMessages($documentContent);
-      foreach ($submissionMessages as $message) {
-        $messages[] = $message;
-      }
-    }
+    // Parse data from the atv-document.
+    $attachment_data = $this->avus2DataParser->getSubmittedAttachments($document);
+    $submitted = $this->avus2DataParser->getSubmitted($document);
+    $history = $this->avus2DataParser->getHistory($document);
+    $handlers = $this->avus2DataParser->getHandlers($document);
+    // $unreadMsg = $this->avus2DataParser->getUnreadMessages($document);
+    $messages = $this->avus2DataParser->getReadMessages($document);
 
     $langCode = $this->languageManager()->getCurrentLanguage()->getId();
-    $statusStrings = $this->getStatusStrings($langCode);
+    $statusStrings = $this->avus2DataParser->getStatusStrings($langCode);
     $statusLocalized = $statusStrings[$document->getStatus()] ?? ucfirst(strtolower($document->getStatus()));
 
     // @todo Replace the grants handler message form with a better one.
@@ -479,6 +408,31 @@ final class ApplicationController extends ControllerBase {
    *   The response.
    */
   public function uploadFile(string $application_number, Request $request): JsonResponse {
+    $sub = $this->userInformationService->getUserData()['sub'];
+    $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
+    $businessId = $grants_profile_data->getBusinessId() ?? '';
+
+    try {
+      /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
+      $submission = $this->getSubmissionEntity($sub, $application_number, $businessId);
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_application')
+        ->error("Application does not exist in database while uploading a file: $application_number");
+      return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
+    }
+
+    try {
+      $document = $this->atvService->getDocument($submission->get('document_id')->value);
+    }
+    catch (\Exception $e) {
+      $this->getLogger('grants_application')
+        ->error("Application does not exist in database while uploading a file: $application_number");
+      return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
+    }
+
+    $filenames = $this->avus2DataParser->getUploadedAttachmentsFilenames($document);
+
     /** @var \Symfony\Component\HttpFoundation\File\File $file */
     $file = $request->files->get('file');
     if (!$file || !$application_number) {
@@ -491,7 +445,11 @@ final class ApplicationController extends ControllerBase {
     $file_original_name = $this->transliteration->transliterate($file_original_name);
     $file_original_name = str_replace(' ', '_', $file_original_name);
     if (strlen($file_original_name) >= 100) {
-      return new JsonResponse(['error' => $this->t('File name is too long. Please rename the file and try again.')], 500);
+      return new JsonResponse(['error' => $this->t('File name is too long. Please rename the file and try again.')], 400);
+    }
+
+    if (in_array($file_original_name, $filenames)) {
+      return new JsonResponse(['error' => $this->t('Duplicate file name: Please rename the file')], 400);
     }
 
     try {
@@ -515,23 +473,9 @@ final class ApplicationController extends ControllerBase {
 
     $file_entity->setFileUri($file->getRealPath());
 
-    /** @var \Drupal\grants_application\Entity\ApplicationSubmission $submission */
-    $submission = $this->entityTypeManager()
-      ->getStorage('application_submission')
-      ->loadByProperties(['application_number' => $application_number]);
-
-    $submission = reset($submission);
-
-    if (!$submission) {
-      $this->getLogger('grants_application')
-        ->error("Application does not exist in database while uploading a file: $application_number");
-      return new JsonResponse(['error' => $this->t('Unable to find the application')], 400);
-    }
-
     try {
       $result = $this->helfiAtvService->addAttachment(
-        // @phpstan-ignore property.notFound
-        $submission->document_id->value,
+        $submission->get('document_id')->value,
         $file_original_name,
         $file_entity
       );
@@ -752,7 +696,7 @@ final class ApplicationController extends ControllerBase {
       $submitted = (new \DateTime($submitted['timestamp']))->format('d.m.Y H:i');
     }
     $langCode = $this->languageManager()->getCurrentLanguage()->getId();
-    $statusStrings = $this->getStatusStrings($langCode);
+    $statusStrings = $this->avus2DataParser->getStatusStrings($langCode);
     $statusLocalized = $statusStrings[$document->getStatus()] ?? ucfirst(strtolower($document->getStatus()));
 
     return [
@@ -827,72 +771,6 @@ final class ApplicationController extends ControllerBase {
       return Url::fromRoute('helfi_grants.view_application', ['application_number' => $application_number]);
     }
     return Url::fromRoute('grants_oma_asiointi.front');
-  }
-
-  /**
-   * Get status string.
-   *
-   * @param string $langcode
-   *   The langcode.
-   *
-   * @return array|null
-   *   The status string array or null.
-   */
-  private function getStatusStrings(string $langcode): ?array {
-    $statuses = [
-      'en' => [
-        'DRAFT' => 'Draft',
-        'SENT' => 'Sent',
-        'SUBMITTED' => 'Sent - waiting for confirmation',
-        'RECEIVED' => 'Received',
-        'PREPARING' => 'In Preparation',
-        'PENDING' => 'Pending',
-        'PROCESSING' => 'Processing',
-        'READY' => 'Ready',
-        'DONE' => 'Processed',
-        'REJECTED' => 'Rejected',
-        'DELETED' => 'Deleted',
-        'CANCELED' => 'Cancelled',
-        'CANCELLED' => 'Cancelled',
-        'CLOSED' => 'Closed',
-        'RESOLVED' => 'Processed',
-      ],
-      'fi' => [
-        'DRAFT' => 'Luonnos',
-        'SENT' => 'Lähetetty',
-        'SUBMITTED' => 'Lähetetty - odotetaan vahvistusta',
-        'RECEIVED' => 'Vastaanotettu',
-        'PREPARING' => ' Valmistelussa',
-        'PENDING' => ' Odottaa',
-        'PROCESSING' => ' Käsittelyssä',
-        'READY' => ' Valmiina',
-        'RESOLVED' => ' Ratkaistu',
-        'DONE' => ' Ratkaistu',
-        'REJECTED' => ' Hylätty',
-        'DELETED' => ' Poistettu',
-        'CANCELED' => ' Peruttu',
-        'CANCELLED' => ' Peruttu',
-        'CLOSED' => ' Suljettu',
-      ],
-      'sv' => [
-        'DRAFT' => 'Utkast',
-        'SENT' => 'Skickad',
-        'SUBMITTED' => 'Skickad - väntar på bekräftelse',
-        'RECEIVED' => 'Mottagen',
-        'PREPARING' => 'Förbereds',
-        'PENDING' => 'I väntan på',
-        'PROCESSING' => 'Behandlas',
-        'READY' => 'Redo',
-        'DONE' => 'Behandlad',
-        'REJECTED' => 'Avvisade',
-        'DELETED' => 'Raderade',
-        'CANCELED' => 'Annullerad',
-        'CANCELLED' => 'Annullerad',
-        'CLOSED' => 'Stängd',
-        'RESOLVED' => 'Behandlad',
-      ],
-    ];
-    return $statuses[$langcode] ?? NULL;
   }
 
   /**

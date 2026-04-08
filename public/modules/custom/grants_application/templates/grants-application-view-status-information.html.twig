@@ -41,6 +41,7 @@
       <h5>{{ "Application attachments"|t }}</h5>
       {% for attachment in attachments %}
         {{ attachment }}
+        {{ (attachment === attachments|last) ? '': '</br>'  }}
       {% endfor %}
     </div>
   </div>
