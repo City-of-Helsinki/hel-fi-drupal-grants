@@ -11346,6 +11346,11 @@ parameters:
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
+			message: "#^Method Psr\\\\EventDispatcher\\\\EventDispatcherInterface\\:\\:dispatch\\(\\) invoked with 2 parameters, 1 required\\.$#"
+			count: 2
+			path: public/modules/custom/helfi_atv/src/AtvService.php
+
+		-
 			message: "#^Parameter \\#1 \\$exception of method Drupal\\\\helfi_atv\\\\AtvService\\:\\:dispatchExceptionEvent\\(\\) expects Exception, GuzzleHttp\\\\Exception\\\\GuzzleException given\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
@@ -11391,7 +11396,17 @@ parameters:
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
+			message: "#^Property Drupal\\\\helfi_atv\\\\AtvService\\:\\:\\$maxPages \\(int\\) does not accept string\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_atv/src/AtvService.php
+
+		-
 			message: "#^Property Drupal\\\\helfi_atv\\\\AtvService\\:\\:\\$requestCache type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_atv/src/AtvService.php
+
+		-
+			message: "#^Property Drupal\\\\helfi_atv\\\\AtvService\\:\\:\\$resultsPerPage \\(int\\) does not accept string\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
@@ -11411,9 +11426,34 @@ parameters:
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
+			message: "#^Variable \\$file might not be defined\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_atv/src/AtvService.php
+
+		-
+			message: "#^Variable \\$file on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_atv/src/AtvService.php
+
+		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\Plugin\\\\DebugDataItem\\\\ApiAvailability\\:\\:__construct\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/Plugin/DebugDataItem/ApiAvailability.php
+
+		-
+			message: "#^PHPDoc tag @param for parameter \\$event with type Drupal\\\\helfi_atv\\\\Event\\\\AtvServiceEOperationEvent is not subtype of native type Drupal\\\\helfi_atv\\\\Event\\\\AtvServiceOperationEvent\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/EventSubscriber/AtvEventSubscriber.php
+
+		-
+			message: "#^Parameter \\$event of method Drupal\\\\helfi_atv_test\\\\EventSubscriber\\\\AtvEventSubscriber\\:\\:onOperation\\(\\) has invalid type Drupal\\\\helfi_atv\\\\Event\\\\AtvServiceEOperationEvent\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/EventSubscriber/AtvEventSubscriber.php
+
+		-
+			message: "#^Function Exception not found\\.$#"
+			count: 3
+			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/HelfiAtvTestServiceProvider.php
 
 		-
 			message: "#^Method Drupal\\\\helfi_atv_test\\\\HelfiAtvTestServiceProvider\\:\\:alter\\(\\) has no return type specified\\.$#"
@@ -11436,6 +11476,16 @@ parameters:
 			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/MockClientFactory.php
 
 		-
+			message: "#^Parameter \\$response of method Drupal\\\\helfi_atv_test\\\\MockClientFactory\\:\\:addResponse\\(\\) has invalid type Drupal\\\\helfi_atv_test\\\\Response\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/MockClientFactory.php
+
+		-
+			message: "#^Parameter \\$response of method Drupal\\\\helfi_atv_test\\\\MockClientFactory\\:\\:addResponse\\(\\) has invalid type Drupal\\\\helfi_atv_test\\\\ResponseException\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/MockClientFactory.php
+
+		-
 			message: "#^Property Drupal\\\\helfi_atv_test\\\\MockClientFactory\\:\\:\\$historyContainer type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/MockClientFactory.php
@@ -11449,6 +11499,16 @@ parameters:
 			message: "#^Method Drupal\\\\helfi_atv_test\\\\MockHelsinkiProfiiliUserData\\:\\:getCurrentUserRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/MockHelsinkiProfiiliUserData.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\Core\\\\Http\\\\ClientFactory\\:\\:addResponse\\(\\)\\.$#"
+			count: 15
+			path: public/modules/custom/helfi_atv/tests/src/Kernel/AtvServiceHeaderTest.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\Core\\\\Http\\\\ClientFactory\\:\\:getHeaders\\(\\)\\.$#"
+			count: 15
+			path: public/modules/custom/helfi_atv/tests/src/Kernel/AtvServiceHeaderTest.php
 
 		-
 			message: "#^Method Drupal\\\\Tests\\\\helfi_atv\\\\Kernel\\\\AtvServiceHeaderTest\\:\\:assertApiKeyHeaders\\(\\) has parameter \\$headers with no type specified\\.$#"
@@ -11469,6 +11529,16 @@ parameters:
 			message: "#^Parameter \\#3 \\$body of class GuzzleHttp\\\\Psr7\\\\Response constructor expects Psr\\\\Http\\\\Message\\\\StreamInterface\\|resource\\|string\\|null, string\\|false given\\.$#"
 			count: 10
 			path: public/modules/custom/helfi_atv/tests/src/Kernel/AtvServiceHeaderTest.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\Core\\\\Http\\\\ClientFactory\\:\\:addResponse\\(\\)\\.$#"
+			count: 12
+			path: public/modules/custom/helfi_atv/tests/src/Kernel/AtvServiceTest.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\Core\\\\Http\\\\ClientFactory\\:\\:getRequestUrl\\(\\)\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_atv/tests/src/Kernel/AtvServiceTest.php
 
 		-
 			message: "#^Method Drupal\\\\Tests\\\\helfi_atv\\\\Kernel\\\\AtvServiceTest\\:\\:getApplicationNumberInEnvFormat\\(\\) has parameter \\$appParam with no type specified\\.$#"
@@ -11529,6 +11599,16 @@ parameters:
 			message: "#^Parameter \\#3 \\$body of class GuzzleHttp\\\\Psr7\\\\Response constructor expects Psr\\\\Http\\\\Message\\\\StreamInterface\\|resource\\|string\\|null, string\\|false given\\.$#"
 			count: 8
 			path: public/modules/custom/helfi_atv/tests/src/Kernel/AtvServiceTest.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\Core\\\\Http\\\\ClientFactory\\:\\:addResponse\\(\\)\\.$#"
+			count: 2
+			path: public/modules/custom/helfi_atv/tests/src/Kernel/RequestTest.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\Core\\\\Http\\\\ClientFactory\\:\\:getRequest\\(\\)\\.$#"
+			count: 2
+			path: public/modules/custom/helfi_atv/tests/src/Kernel/RequestTest.php
 
 		-
 			message: "#^Parameter \\#3 \\$body of class GuzzleHttp\\\\Psr7\\\\Response constructor expects Psr\\\\Http\\\\Message\\\\StreamInterface\\|resource\\|string\\|null, string\\|false given\\.$#"
@@ -11621,7 +11701,27 @@ parameters:
 			path: public/modules/custom/helfi_audit_log/src/Event/AuditLogEvent.php
 
 		-
+			message: "#^Method Drupal\\\\helfi_audit_log\\\\Event\\\\AuditLogEvent\\:\\:isValid\\(\\) should return bool but returns string\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/Event/AuditLogEvent.php
+
+		-
 			message: "#^Method Drupal\\\\helfi_audit_log\\\\Event\\\\AuditLogEvent\\:\\:setMessage\\(\\) has parameter \\$message with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/Event/AuditLogEvent.php
+
+		-
+			message: "#^PHPDoc tag @var for property Drupal\\\\helfi_audit_log\\\\Event\\\\AuditLogEvent\\:\\:\\$isValid with type bool is incompatible with native type string\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/Event/AuditLogEvent.php
+
+		-
+			message: "#^Property Drupal\\\\helfi_audit_log\\\\Event\\\\AuditLogEvent\\:\\:\\$isValid \\(string\\) does not accept bool\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/Event/AuditLogEvent.php
+
+		-
+			message: "#^Property Drupal\\\\helfi_audit_log\\\\Event\\\\AuditLogEvent\\:\\:\\$isValid \\(string\\) does not accept true\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_audit_log/src/Event/AuditLogEvent.php
 
@@ -11629,6 +11729,46 @@ parameters:
 			message: "#^Property Drupal\\\\helfi_audit_log\\\\Event\\\\AuditLogEvent\\:\\:\\$message type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_audit_log/src/Event/AuditLogEvent.php
+
+		-
+			message: "#^PHPDoc tag @param for parameter \\$auditLogService with type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface is not subtype of native type Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
+
+		-
+			message: "#^PHPDoc tag @param for parameter \\$logger with type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Psr\\\\Log\\\\LoggerInterface is not subtype of native type Psr\\\\Log\\\\LoggerInterface\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
+
+		-
+			message: "#^PHPDoc tag @var for property Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\AuditLogEventSubscriber\\:\\:\\$auditLogService with type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface is not subtype of native type Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
+
+		-
+			message: "#^PHPDoc tag @var for property Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\AuditLogEventSubscriber\\:\\:\\$logger with type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Psr\\\\Log\\\\LoggerInterface is not subtype of native type Psr\\\\Log\\\\LoggerInterface\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
+
+		-
+			message: "#^Parameter \\$auditLogService of method Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\AuditLogEventSubscriber\\:\\:__construct\\(\\) has invalid type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
+
+		-
+			message: "#^Parameter \\$logger of method Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\AuditLogEventSubscriber\\:\\:__construct\\(\\) has invalid type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Psr\\\\Log\\\\LoggerInterface\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
+
+		-
+			message: "#^Property Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\AuditLogEventSubscriber\\:\\:\\$auditLogService has unknown class Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface as its type\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
+
+		-
+			message: "#^Property Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\AuditLogEventSubscriber\\:\\:\\$logger has unknown class Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Psr\\\\Log\\\\LoggerInterface as its type\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
 
 		-
 			message: "#^Method Drupal\\\\helfi_audit_log\\\\ResilientLoggerTasks\\:\\:handleClearSentEntries\\(\\) has no return type specified\\.$#"
@@ -11671,6 +11811,16 @@ parameters:
 			path: public/modules/custom/helfi_audit_log/src/Sources/HelfiAuditLogSource.php
 
 		-
+			message: "#^Access to an undefined property Drupal\\\\helfi_audit_log_test\\\\AuditLogServiceTest\\:\\:\\$message\\.$#"
+			count: 2
+			path: public/modules/custom/helfi_audit_log/tests/modules/helfi_audit_log_test/src/AuditLogServiceTest.php
+
+		-
+			message: "#^Access to an undefined property Drupal\\\\helfi_audit_log_test\\\\AuditLogServiceTest\\:\\:\\$origin\\.$#"
+			count: 2
+			path: public/modules/custom/helfi_audit_log/tests/modules/helfi_audit_log_test/src/AuditLogServiceTest.php
+
+		-
 			message: "#^Method Drupal\\\\helfi_audit_log_test\\\\AuditLogServiceTest\\:\\:getValues\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_audit_log/tests/modules/helfi_audit_log_test/src/AuditLogServiceTest.php
@@ -11681,12 +11831,22 @@ parameters:
 			path: public/modules/custom/helfi_audit_log/tests/modules/helfi_audit_log_test/src/AuditLogServiceTest.php
 
 		-
+			message: "#^Call to an undefined method Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface\\:\\:getValues\\(\\)\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/tests/src/Kernel/AuditLogServiceTest.php
+
+		-
 			message: "#^Method Drupal\\\\Tests\\\\helfi_audit_log\\\\Kernel\\\\AuditLogServiceTest\\:\\:alter\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_audit_log/tests/src/Kernel/AuditLogServiceTest.php
 
 		-
 			message: "#^Method Drupal\\\\Tests\\\\helfi_audit_log\\\\Kernel\\\\AuditLogServiceTest\\:\\:testDatabaseWrite\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_audit_log/tests/src/Kernel/AuditLogServiceTest.php
+
+		-
+			message: "#^PHPDoc type array of property Drupal\\\\Tests\\\\helfi_audit_log\\\\Kernel\\\\AuditLogServiceTest\\:\\:\\$modules is not covariant with PHPDoc type array\\<string\\> of overridden property Drupal\\\\KernelTests\\\\KernelTestBase\\:\\:\\$modules\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_audit_log/tests/src/Kernel/AuditLogServiceTest.php
 
@@ -11704,6 +11864,26 @@ parameters:
 			message: "#^Method Drupal\\\\Tests\\\\helfi_av\\\\Unit\\\\AntivirusServiceTest\\:\\:getSut\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_av/tests/src/Unit/AntivirusServiceTest.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getChangedTime\\(\\)\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getCreatedTime\\(\\)\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getDisplayName\\(\\)\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getEmail\\(\\)\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
 		-
 			message: "#^Cannot access offset 'documents' on non\\-empty\\-array\\|Drupal\\\\file\\\\FileInterface\\|Drupal\\\\helfi_atv\\\\AtvDocument\\|true\\.$#"
@@ -11741,7 +11921,32 @@ parameters:
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
 		-
+			message: "#^Method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:get\\(\\) has invalid return type Drupal\\\\Component\\\\Serialization\\\\JsonResponse\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
+
+		-
 			message: "#^Method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
+
+		-
+			message: "#^PHPDoc tag @param for parameter \\$userStorage with type Drupal\\\\helfi_gdpr_api\\\\Controller\\\\Drupal\\\\user\\\\UserStorageInterface is not subtype of native type Drupal\\\\user\\\\UserStorageInterface\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
+
+		-
+			message: "#^PHPDoc tag @return with type Drupal\\\\Component\\\\Serialization\\\\JsonResponse is not subtype of native type Symfony\\\\Component\\\\HttpFoundation\\\\JsonResponse\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
+
+		-
+			message: "#^PHPDoc tag @var for property Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:\\$audienceConfig with type mixed is not subtype of native type array\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
+
+		-
+			message: "#^Parameter \\$userStorage of method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:__construct\\(\\) has invalid type Drupal\\\\helfi_gdpr_api\\\\Controller\\\\Drupal\\\\user\\\\UserStorageInterface\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
@@ -11752,6 +11957,11 @@ parameters:
 
 		-
 			message: "#^Property Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:\\$jwtData type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
@@ -11789,6 +11999,16 @@ parameters:
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\EventSubscriber\\\\TokenExpiredExceptionSubscriber\\:\\:onKernelException\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/EventSubscriber/TokenExpiredExceptionSubscriber.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\Core\\\\Session\\\\AccountInterface\\:\\:get\\(\\)\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\helfi_tunnistamo\\\\Plugin\\\\OpenIDConnectClient\\\\Tunnistamo\\:\\:getPlugin\\(\\)\\.$#"
+			count: 1
+			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
 		-
 			message: "#^Dead catch \\- Exception is never thrown in the try block\\.$#"
