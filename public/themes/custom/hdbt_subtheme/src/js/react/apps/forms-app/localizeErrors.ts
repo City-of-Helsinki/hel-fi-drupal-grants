@@ -126,12 +126,17 @@ const formatTypeError = (error: ErrorObject) => {
  * each required sub-field (and recursively for nested objects), up to 4 levels.
  */
 const expandRequiredObjectErrors = (errors: ErrorObject[]): void => {
-  const existingKeys = new Set(errors.map((e) => `${e.instancePath}|${e.params?.missingProperty ?? ''}`));
+  // RJSF wraps params.missingProperty with quotes before calling localizer, then strips them after.
+  // New errors must follow the same convention so RJSF's post-localizer strip doesn't corrupt them.
+  const stripQuotes = (v: string) => v.replace(/^'|'$/g, '');
+  const existingKeys = new Set(
+    errors.map((e) => `${e.instancePath}|${stripQuotes(e.params?.missingProperty?.toString() ?? '')}`),
+  );
   const toAdd: ErrorObject[] = [];
 
   const expand = (error: ErrorObject, depth: number): void => {
     if (depth > 3) return;
-    const missingPropName = error.params?.missingProperty?.toString().replace(/^'|'$/g, '');
+    const missingPropName = stripQuotes(error.params?.missingProperty?.toString() ?? '');
     if (!missingPropName) return;
     const missingPropSchema = (error.parentSchema as any)?.properties?.[missingPropName];
     if (
@@ -151,7 +156,8 @@ const expandRequiredObjectErrors = (errors: ErrorObject[]): void => {
         keyword: 'required',
         instancePath: newInstancePath,
         schemaPath: error.schemaPath,
-        params: { missingProperty: subField },
+        // Wrap with quotes so RJSF's post-localizer .slice(1,-1) yields the correct name.
+        params: { missingProperty: `'${subField}'` },
         message: `must have required property '${subField}'`,
         parentSchema: missingPropSchema,
         schema: missingPropSchema.required,

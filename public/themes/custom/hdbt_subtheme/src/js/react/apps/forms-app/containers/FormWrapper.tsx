@@ -71,6 +71,53 @@ function* getAttachments(element: any): IterableIterator<ATVFile> {
 }
 
 /**
+ * Recursively ensure that all object-type properties exist as {} in data.
+ * This guarantees AJV validates them directly, so required-field errors fire at
+ * the correct instancePath and RJSF can route them to the individual widgets.
+ *
+ * @param {object} data - Form data object to initialize in-place
+ * @param {Record<string, any>} properties - Schema properties map
+ */
+const initializeObjectProperties = (data: any, properties: Record<string, any>): void => {
+  Object.entries(properties).forEach(([key, propSchema]: [string, any]) => {
+    if (propSchema?.type !== 'object') return;
+    if (!data[key] || typeof data[key] !== 'object' || Array.isArray(data[key])) {
+      data[key] = {};
+    }
+    if (propSchema.properties) {
+      initializeObjectProperties(data[key], propSchema.properties);
+    }
+  });
+};
+
+/**
+ * Walk step definitions and ensure all object-type sub-properties exist as {}
+ * in the corresponding formData, so AJV can fire required errors at the right paths.
+ *
+ * Only processes steps that already exist in formData (does not create step entries).
+ *
+ * @param {object} formData - Full form data
+ * @param {object} schema - Full form schema (with definitions)
+ */
+const ensureObjectStructure = (formData: any, schema: RJSFSchema): void => {
+  const { definitions } = schema;
+  if (!definitions || !formData) return;
+
+  Object.entries(definitions).forEach(([defKey, defSchema]: [string, any]) => {
+    if (defKey.startsWith('_')) return; // Skip array item templates
+    // Initialize missing step entries so AJV validates them and fires required errors
+    // at the correct instancePath regardless of whether the step has been visited.
+    if (!formData[defKey] || typeof formData[defKey] !== 'object' || Array.isArray(formData[defKey])) {
+      formData[defKey] = {};
+    }
+
+    if (defSchema?.properties) {
+      initializeObjectProperties(formData[defKey], defSchema.properties);
+    }
+  });
+};
+
+/**
  * Fix issue with backend returning arrays instead of empty objects.
  *
  * @todo see if this can be done in a less overengineered way
@@ -110,7 +157,8 @@ const transformData = (data: any) => {
   const { definitions, properties } = schema;
   const transformedProperties: any = {};
 
-  const fixedFormData = fixDanglingArrays(formData, schema);
+  const fixedFormData = fixDanglingArrays(formData ?? {}, schema);
+  ensureObjectStructure(fixedFormData, schema);
 
   // Add _step property to each form step
   if (properties) {
