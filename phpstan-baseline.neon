@@ -6471,7 +6471,7 @@ parameters:
 			path: public/modules/custom/grants_metadata/grants_metadata.module
 
 		-
-			message: "#^Parameter \\#2 \\$time of static method Drupal\\\\Component\\\\Datetime\\\\DateTimePlus\\:\\:createFromFormat\\(\\) expects string, int\\<min, \\-1\\>\\|int\\<1, max\\> given\\.$#"
+			message: "#^Parameter \\#2 \\$time of static method Drupal\\\\Component\\\\Datetime\\\\DateTimePlus\\:\\:createFromFormat\\(\\) expects string, \\(int\\<min, \\-1\\>\\|int\\<1, max\\>\\) given\\.$#"
 			count: 2
 			path: public/modules/custom/grants_metadata/grants_metadata.module
 
@@ -6779,6 +6779,126 @@ parameters:
 			message: "#^Method Drupal\\\\grants_metadata\\\\Controller\\\\ApplicationStatusCheckController\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_metadata/src/Controller/ApplicationStatusCheckController.php
+
+		-
+			message: "#^Comparison operation \"\\>\\=\" between int\\<20000, max\\> and 20000 is always true\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Comparison operation \"\\>\\=\" between int\\<50000, max\\> and 50000 is always true\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:documentContentToTypedData\\(\\) has parameter \\$documentData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:documentContentToTypedData\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:documentContentToTypedData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:extractDocumentContent\\(\\) has parameter \\$documentData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:extractDocumentContent\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:fixIssuerNameCase\\(\\) has parameter \\$typedDataValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:getWebformDataFromContent\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:getWebformDataFromContent\\(\\) has parameter \\$content with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:getWebformDataFromContent\\(\\) has parameter \\$fullItemValueCallback with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:getWebformDataFromContent\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:mapPropertiesToTypedData\\(\\) has parameter \\$documentContent with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:mapPropertiesToTypedData\\(\\) has parameter \\$documentData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:mapPropertiesToTypedData\\(\\) has parameter \\$propertyDefinitions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:mapPropertiesToTypedData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:processApplicantType\\(\\) has parameter \\$typedDataValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:processAttachments\\(\\) has parameter \\$typedDataValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:processBankAccount\\(\\) has parameter \\$typedDataValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:processBusinessPractice\\(\\) has parameter \\$typedDataValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:processCommunityAddress\\(\\) has parameter \\$typedDataValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:processStatusUpdates\\(\\) has parameter \\$typedDataValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:updateIssuerNameCase\\(\\) has parameter \\$typedDataValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
+
+		-
+			message: "#^Property Drupal\\\\grants_metadata\\\\DocumentContentMapper\\:\\:\\$attachmentFileTypes type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/DocumentContentMapper.php
 
 		-
 			message: "#^Method Drupal\\\\grants_metadata\\\\DocumentValueExtractor\\:\\:drillDownToElement\\(\\) has parameter \\$content with no value type specified in iterable type array\\.$#"
@@ -7991,6 +8111,21 @@ parameters:
 			path: public/modules/custom/grants_metadata/src/TypedData/Definition/KuvaKehaDefinition.php
 
 		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\KuvaPerusDefinition\\:\\:getBaseProperties\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/KuvaPerusDefinition.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\KuvaPerusDefinition\\:\\:getPropertyDefinitions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/KuvaPerusDefinition.php
+
+		-
+			message: "#^Property Drupal\\\\Core\\\\TypedData\\\\ComplexDataDefinitionBase\\:\\:\\$propertyDefinitions \\(array\\<Drupal\\\\Core\\\\TypedData\\\\DataDefinitionInterface\\>\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/KuvaPerusDefinition.php
+
+		-
 			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\KuvaProjektiDefinition\\:\\:activityConditionCheck\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: public/modules/custom/grants_metadata/src/TypedData/Definition/KuvaProjektiDefinition.php
@@ -8014,6 +8149,21 @@ parameters:
 			message: "#^Property Drupal\\\\Core\\\\TypedData\\\\ComplexDataDefinitionBase\\:\\:\\$propertyDefinitions \\(array\\<Drupal\\\\Core\\\\TypedData\\\\DataDefinitionInterface\\>\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: public/modules/custom/grants_metadata/src/TypedData/Definition/KuvaProjektiDefinition.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\KuvaToimintaDefinition\\:\\:getBaseProperties\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/KuvaToimintaDefinition.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\KuvaToimintaDefinition\\:\\:getPropertyDefinitions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/KuvaToimintaDefinition.php
+
+		-
+			message: "#^Property Drupal\\\\Core\\\\TypedData\\\\ComplexDataDefinitionBase\\:\\:\\$propertyDefinitions \\(array\\<Drupal\\\\Core\\\\TypedData\\\\DataDefinitionInterface\\>\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/KuvaToimintaDefinition.php
 
 		-
 			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\LiikuntaLaitosDefinition\\:\\:getBaseProperties\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -8099,6 +8249,21 @@ parameters:
 			message: "#^Property Drupal\\\\Core\\\\TypedData\\\\ComplexDataDefinitionBase\\:\\:\\$propertyDefinitions \\(array\\<Drupal\\\\Core\\\\TypedData\\\\DataDefinitionInterface\\>\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: public/modules/custom/grants_metadata/src/TypedData/Definition/LiikuntaYleisDefinition.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\NuorisoLeiriDefinition\\:\\:getBaseProperties\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/NuorisoLeiriDefinition.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\NuorisoLeiriDefinition\\:\\:getPropertyDefinitions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/NuorisoLeiriDefinition.php
+
+		-
+			message: "#^Property Drupal\\\\Core\\\\TypedData\\\\ComplexDataDefinitionBase\\:\\:\\$propertyDefinitions \\(array\\<Drupal\\\\Core\\\\TypedData\\\\DataDefinitionInterface\\>\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/NuorisoLeiriDefinition.php
 
 		-
 			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\NuorisoLeiriSelvitysDefinition\\:\\:getBaseProperties\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -8231,6 +8396,21 @@ parameters:
 			path: public/modules/custom/grants_metadata/src/TypedData/Definition/TyollisyysavustusHakemusDefinition.php
 
 		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\YleisavustusHakemusDefinition\\:\\:getBaseProperties\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/YleisavustusHakemusDefinition.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\YleisavustusHakemusDefinition\\:\\:getPropertyDefinitions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/YleisavustusHakemusDefinition.php
+
+		-
+			message: "#^Property Drupal\\\\Core\\\\TypedData\\\\ComplexDataDefinitionBase\\:\\:\\$propertyDefinitions \\(array\\<Drupal\\\\Core\\\\TypedData\\\\DataDefinitionInterface\\>\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedData/Definition/YleisavustusHakemusDefinition.php
+
+		-
 			message: "#^Method Drupal\\\\grants_metadata\\\\TypedData\\\\Definition\\\\YmparistoYleisDefinition\\:\\:getBaseProperties\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_metadata/src/TypedData/Definition/YmparistoYleisDefinition.php
@@ -8244,6 +8424,236 @@ parameters:
 			message: "#^Property Drupal\\\\Core\\\\TypedData\\\\ComplexDataDefinitionBase\\:\\:\\$propertyDefinitions \\(array\\<Drupal\\\\Core\\\\TypedData\\\\DataDefinitionInterface\\>\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: public/modules/custom/grants_metadata/src/TypedData/Definition/YmparistoYleisDefinition.php
+
+		-
+			message: "#^Comparison operation \"\\>\\=\" between int\\<20000, max\\> and 20000 is always true\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Comparison operation \"\\>\\=\" between int\\<50000, max\\> and 50000 is always true\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:buildStructureArrayWithPropertyStructureCallback\\(\\) has parameter \\$elements with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:buildStructureArrayWithPropertyStructureCallback\\(\\) has parameter \\$hiddenFields with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:buildStructureArrayWithPropertyStructureCallback\\(\\) has parameter \\$pages with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:buildStructureArrayWithPropertyStructureCallback\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:extractLabel\\(\\) has parameter \\$webformMainElement with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:extractMetadataFromWebform\\(\\) has parameter \\$elements with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:extractMetadataFromWebform\\(\\) has parameter \\$pages with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:extractMetadataFromWebform\\(\\) has parameter \\$webformLabelElement with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:extractMetadataFromWebform\\(\\) has parameter \\$webformMainElement with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:extractMetadataFromWebform\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getConditionStatus\\(\\) has parameter \\$conditionArray with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getConditionStatus\\(\\) has parameter \\$content with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getFieldValuesFromFullItemCallback\\(\\) has parameter \\$fullItemValueCallback with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getFieldValuesFromFullItemCallback\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getFieldValuesFromPropertyItem\\(\\) has parameter \\$hiddenFields with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getFieldValuesFromPropertyItem\\(\\) has parameter \\$metaData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getFieldValuesFromPropertyItem\\(\\) has parameter \\$webformMainElement with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getFieldValuesFromPropertyItem\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getTypedDataToDocumentContentWithWebform\\(\\) has parameter \\$pages with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getTypedDataToDocumentContentWithWebform\\(\\) has parameter \\$structure with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getTypedDataToDocumentContentWithWebform\\(\\) has parameter \\$submittedFormData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getTypedDataToDocumentContentWithWebform\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getValueArray\\(\\) has parameter \\$metaData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getValueArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:getWebformElements\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:handleFullItemValueCallback\\(\\) has parameter \\$fullItemValueCallback with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:handleFullItemValueCallback\\(\\) has parameter \\$reference with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:handlePossibleEmptyArray\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:handlePossibleEmptyArray\\(\\) has parameter \\$documentStructure with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:handlePossibleEmptyArray\\(\\) has parameter \\$jsonPath with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:handlePossibleEmptyArray\\(\\) has parameter \\$reference with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:handlePropertyItems\\(\\) has parameter \\$hiddenFields with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:handlePropertyItems\\(\\) has parameter \\$metaData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:handlePropertyItems\\(\\) has parameter \\$reference with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:handlePropertyItems\\(\\) has parameter \\$webformMainElement with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:modifyCallback\\(\\) has parameter \\$callback with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:modifyCallback\\(\\) has parameter \\$submittedFormData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:modifyCallback\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\TypedDataToDocumentContentWithWebform\\:\\:writeJsonFile\\(\\) has parameter \\$documentStructure with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Parameter \\#2 \\$data of function fwrite expects string, string\\|false given\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/TypedDataToDocumentContentWithWebform.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\Validator\\\\EndDateValidator\\:\\:validate\\(\\) has parameter \\$element with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/Validator/EndDateValidator.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\Validator\\\\EndDateValidator\\:\\:validate\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/Validator/EndDateValidator.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\Validator\\\\YearValidator\\:\\:validate\\(\\) has parameter \\$element with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/Validator/YearValidator.php
+
+		-
+			message: "#^Method Drupal\\\\grants_metadata\\\\Validator\\\\YearValidator\\:\\:validate\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_metadata/src/Validator/YearValidator.php
 
 		-
 			message: "#^Method Drupal\\\\Tests\\\\grants_metadata\\\\Kernel\\\\AtvSchemaTest\\:\\:alter\\(\\) has no return type specified\\.$#"
