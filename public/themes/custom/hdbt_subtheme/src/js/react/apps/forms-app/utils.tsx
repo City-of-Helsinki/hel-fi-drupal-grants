@@ -43,6 +43,155 @@ export const getIndicesWithErrors = (errors: RJSFValidationError[] | undefined, 
 };
 
 /**
+ * Resolve the schema for a property at the given path, merging allOf/then schemas.
+ *
+ * path starts after the root, e.g. ['step_id', 'section_id', 'fieldset_id']
+ * The step level resolves $ref from schema.definitions.
+ * Subsequent levels merge base properties with allOf/then properties.
+ */
+const resolveFieldSchema = (rootSchema: RJSFSchema, path: string[]): any => {
+  if (path.length === 0) return null;
+
+  const [stepId, ...rest] = path;
+  const stepProp = rootSchema.properties?.[stepId] as any;
+  const refName = stepProp?.['$ref']?.replace('#/definitions/', '');
+  const stepDef = (refName ? (rootSchema.definitions as any)?.[refName] : stepProp) as any;
+
+  if (!stepDef) return null;
+  if (rest.length === 0) return stepDef;
+
+  return resolveNestedSchema(stepDef, rest);
+};
+
+const resolveNestedSchema = (schema: any, path: string[]): any => {
+  if (!schema || path.length === 0) return schema;
+
+  const [key, ...rest] = path;
+
+  // Start with base property schema
+  let merged: any = schema?.properties?.[key] ? { ...schema.properties[key] } : null;
+
+  // Merge in any allOf/then schemas for this key
+  for (const allOfItem of schema?.allOf ?? []) {
+    const thenField = allOfItem.then?.properties?.[key];
+    if (thenField) {
+      merged = merged
+        ? {
+            ...merged,
+            ...thenField,
+            required: [...(merged.required ?? []), ...(thenField.required ?? [])],
+            properties: { ...(merged.properties ?? {}), ...(thenField.properties ?? {}) },
+          }
+        : { ...thenField };
+    }
+  }
+
+  if (!merged) return null;
+  if (rest.length === 0) return merged;
+
+  return resolveNestedSchema(merged, rest);
+};
+
+/**
+ * Recursively generate leaf-level required errors for an absent object schema.
+ * Object-typed required fields are recursed into rather than generating object-level errors,
+ * so only actual input fields (leaf nodes) receive rawErrors and show red borders.
+ */
+const expandLeafRequiredErrors = (
+  objectSchema: any,
+  pathPrefix: string,
+  expanded: RJSFValidationError[],
+  schemaPath: string,
+): void => {
+  for (const fieldId of objectSchema?.required ?? []) {
+    const fieldSchema = objectSchema?.properties?.[fieldId];
+
+    if (fieldSchema?.type === 'object') {
+      // Recurse into nested object (fieldset) rather than adding an object-level error
+      expandLeafRequiredErrors(fieldSchema, `${pathPrefix}.${fieldId}`, expanded, schemaPath);
+    } else {
+      const fieldTitle = fieldSchema?.title;
+      const message = fieldTitle
+        ? Drupal.t(
+            '@field field is required.',
+            { '@field': fieldTitle as string },
+            { context: 'Grants application: Validation' },
+          )
+        : Drupal.t('Field is required', {}, { context: 'Grants application: Validation' });
+
+      expanded.push({
+        property: `${pathPrefix}.${fieldId}`,
+        message,
+        stack: `${pathPrefix}.${fieldId} ${message}`,
+        schemaPath,
+        params: { missingProperty: fieldId },
+        name: 'required',
+      } as RJSFValidationError);
+    }
+  }
+};
+
+/**
+ * Expand required errors for absent objects to individual leaf field errors.
+ *
+ * When a section or fieldset object is absent from form data and is required
+ * (e.g. via allOf/then), AJV only generates an object-level required error.
+ * This function expands such errors to leaf-level field errors so input fields
+ * can display red border highlighting and individual error messages.
+ *
+ * Handles any nesting depth: missing sections (depth 2), missing fieldsets within
+ * sections (depth 3), and deeper.
+ *
+ * @param {Array} errors - RJSF validation errors
+ * @param {RJSFSchema} schema - Form schema
+ * @param {any} formData - Current form data
+ *
+ * @return {Array} - Errors with absent-object required errors expanded to leaf field errors
+ */
+export const expandConditionalRequiredErrors = (
+  errors: RJSFValidationError[],
+  schema: RJSFSchema,
+  formData: any,
+): RJSFValidationError[] => {
+  const expanded: RJSFValidationError[] = [];
+
+  for (const error of errors) {
+    expanded.push(error);
+
+    if ((error as any).name !== 'required' || !error.property) {
+      continue;
+    }
+
+    const parts = error.property.split('.').filter(Boolean);
+    if (parts.length < 2) {
+      continue;
+    }
+
+    // Check if the missing property is absent from form data
+    const parentParts = parts.slice(0, -1);
+    const missingFieldId = parts[parts.length - 1];
+    const parentData = parentParts.reduce((data: any, key: string) => data?.[key], formData);
+    const missingFieldData = parentData?.[missingFieldId];
+
+    // Only expand if absent — if present (even as {}), AJV already generates field errors
+    if (missingFieldData !== undefined && missingFieldData !== null) {
+      continue;
+    }
+
+    // Get the merged schema for the missing field (resolves $ref and merges allOf/then)
+    const missingFieldSchema = resolveFieldSchema(schema, parts);
+    if (!missingFieldSchema || missingFieldSchema.type !== 'object') {
+      continue;
+    }
+
+    // Recursively expand to leaf required field errors
+    expandLeafRequiredErrors(missingFieldSchema, error.property, expanded, error.schemaPath);
+  }
+
+  return expanded;
+};
+
+/**
  * Key errors by page index and return them unaltered.
  *
  * @param {Array|undefined} errors - array of RJSValidationErrors

@@ -43,7 +43,7 @@ import {
   isEmptyPreviewAtom,
 } from '../store';
 import { InvalidSchemaError } from '../errors/InvalidSchemaError';
-import { isDraft, keyErrorsByStep } from '../utils';
+import { expandConditionalRequiredErrors, isDraft, keyErrorsByStep } from '../utils';
 import { StaticStepsContainer } from './StaticStepsContainer';
 import { Stepper } from '../components/Stepper';
 import { SubventionSum } from '../components/Fields/SubventionSum';
@@ -187,7 +187,15 @@ export const RJSFFormContainer = ({
 
     const prefilteredErrors = errors.filter((error) => error.params?.type !== 'null');
 
-    const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(prefilteredErrors, steps));
+    // Expand section-level required errors to field-level errors so fields inside
+    // conditionally-required allOf/then sections display red borders when absent.
+    const expandedErrors = expandConditionalRequiredErrors(
+      prefilteredErrors,
+      schema,
+      (formRef.current as any)?.state?.formData,
+    );
+
+    const errorsToShow = filterErrorsByReachedStep(keyErrorsByStep(expandedErrors, steps));
     setErrors(errorsToShow);
 
     return errorsToShow;

@@ -216,6 +216,11 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   }
 
   if (_isSection) {
+    const visibleProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
+    if (!visibleProperties.length) {
+      return null;
+    }
+
     return (
       <section className='hdbt-form--section'>
         <h3 className='hdbt-form--section__title'>{title}</h3>
@@ -258,6 +263,11 @@ export const ObjectFieldTemplate = ({ idSchema, properties, schema, uiSchema }: 
   const hasRequiredChild = Object.values(uiSchema || {}).some(
     (child) => typeof child === 'object' && child !== null && (child as any)['misc:required'],
   );
+
+  const visibleFieldsetProperties = properties.filter((p) => !p.hidden && p.content.props?.schema?.type !== 'null');
+  if (!visibleFieldsetProperties.length) {
+    return null;
+  }
 
   return (
     <Fieldset

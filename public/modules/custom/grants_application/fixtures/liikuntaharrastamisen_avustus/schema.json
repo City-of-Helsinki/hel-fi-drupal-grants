@@ -587,7 +587,7 @@
                     "required": ["project_measures_2027"]
                   }
                 },
-                "required": ["multi_year_justification"]
+                "required": ["multi_year_justification", "project_measures_wrapper"]
               }
             }
           }
