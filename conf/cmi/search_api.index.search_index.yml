@@ -289,7 +289,6 @@ processor_settings:
     weights:
       preprocess_query: -30
   custom_value: {  }
-  district_image_absolute_url: {  }
   entity_status: {  }
   entity_type: {  }
   grants_application_search_canonical_fields:
@@ -359,7 +358,6 @@ processor_settings:
       - url
   language_with_fallback: {  }
   project_execution_schedule: {  }
-  project_image_absolute_url: {  }
   project_plan_schedule: {  }
   rendered_item: {  }
   tokenizer:
