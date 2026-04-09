@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FocusEvent, type WheelEvent, useCallback, useContext, useEffect } from 'react';
+import { type ChangeEvent, type FocusEvent, type WheelEvent, useCallback, useEffect } from 'react';
 import {
   Checkbox,
   DateInput,
@@ -28,7 +28,6 @@ import {
   shouldRenderPreviewAtom,
 } from '../store';
 import { HDS_DATE_FORMAT } from '@/react/common/enum/HDSDateFormat';
-import { FieldErrorContext } from './Templates';
 
 export const PreviewInput = ({
   value,
@@ -68,13 +67,8 @@ export const TextInput = ({
   value,
 }: WidgetProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
-  const hasParentError = useContext(FieldErrorContext);
   const isNumberInput = schema.type === 'number' || schema.type === 'integer';
   const phone = uiSchema?.['misc:phone'] ?? false;
-  const parentErrorText =
-    hasParentError && required && !value
-      ? Drupal.t('@field field is required.', { '@field': label }, { context: 'Grants application: Validation' })
-      : undefined;
 
   if (shouldRenderPreview) {
     return <PreviewInput value={value} label={label} uiSchema={uiSchema} />;
@@ -101,10 +95,10 @@ export const TextInput = ({
     return (
       <NumberInput
         disabled={readonly}
-        errorText={formatErrors(rawErrors) ?? parentErrorText}
+        errorText={formatErrors(rawErrors)}
         hideLabel={false}
         id={id}
-        invalid={Boolean(rawErrors?.length) || Boolean(parentErrorText)}
+        invalid={Boolean(rawErrors?.length)}
         label={label}
         min={0}
         name={name}
@@ -131,11 +125,11 @@ export const TextInput = ({
 
   return (
     <HDSTextInput
-      errorText={formatErrors(rawErrors) ?? parentErrorText}
+      errorText={formatErrors(rawErrors)}
       disabled={readonly}
       hideLabel={false}
       id={id}
-      invalid={Boolean(rawErrors?.length) || Boolean(parentErrorText)}
+      invalid={Boolean(rawErrors?.length)}
       label={label}
       name={name}
       onBlur={() => null}
@@ -166,11 +160,6 @@ export const TextArea = ({
 }: WidgetProps) => {
   const readGrantsProfile = useAtomCallback(useCallback((get) => get(getProfileAtom), []));
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
-  const hasParentError = useContext(FieldErrorContext);
-  const parentErrorText =
-    hasParentError && required && !value
-      ? Drupal.t('@field field is required.', { '@field': label }, { context: 'Grants application: Validation' })
-      : undefined;
 
   const getDefaultValue = () => {
     if (!uiSchema?.['misc:profilePrefill']) {
@@ -198,10 +187,10 @@ export const TextArea = ({
       {schema.description && <div className='hdbt-form--description'>{schema.description}</div>}
       <HDSTextArea
         disabled={readonly}
-        errorText={formatErrors(rawErrors) ?? parentErrorText}
+        errorText={formatErrors(rawErrors)}
         helperText={`${value?.length || 0}/${maxLength}`}
         hideLabel={false}
-        invalid={Boolean(rawErrors?.length) || Boolean(parentErrorText)}
+        invalid={Boolean(rawErrors?.length)}
         onBlur={() => null}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChange(event.target.value)}
         onFocus={() => null}
