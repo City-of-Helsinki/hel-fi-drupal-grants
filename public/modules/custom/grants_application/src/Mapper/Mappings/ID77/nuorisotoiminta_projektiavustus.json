@@ -126,7 +126,45 @@
     }
   },
 
+    "compensation.benefitsInfoArray.0": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "loans",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+  "compensation.benefitsInfoArray.1": {
+    "datasource": "form_data",
+    "source": "hardcoded",
+    "mapping_type": "hardcoded",
+    "data": {
+      "0": {
+        "ID": "premises",
+        "label": "",
+        "value": "",
+        "valueType": "string"
+      }
+    }
+  },
+
   "compensation.activitiesInfoArray.0": {
+    "datasource": "grants_profile_array",
+    "source": "businessPurpose",
+    "mapping_type": "default",
+    "data": {
+      "ID": "businessPurpose",
+      "label": "Toiminnan kuvaus",
+      "value": "",
+      "valueType": "string"
+    }
+  },
+  "compensation.activitiesInfoArray.1": {
     "datasource": "form_data",
     "source": "members_step.members_section.members_fieldset.members_0_6",
     "mapping_type": "default",
@@ -137,18 +175,18 @@
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.1": {
+  "compensation.activitiesInfoArray.2": {
     "datasource": "form_data",
     "source": "members_step.members_section.members_fieldset.members_0_6_helsinki",
     "mapping_type": "default",
     "data": {
-      "ID": "membersAge0to6YearsGlobal",
+      "ID": "membersAge0to6YearsLocal",
       "label": "0-6 -vuotiaat, Helsinki",
       "value": "",
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.2": {
+  "compensation.activitiesInfoArray.3": {
     "datasource": "form_data",
     "source": "members_step.members_section.members_fieldset.members_7_28",
     "mapping_type": "default",
@@ -159,7 +197,7 @@
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.3": {
+  "compensation.activitiesInfoArray.4": {
     "datasource": "form_data",
     "source": "members_step.members_section.members_fieldset.members_7_28_helsinki",
     "mapping_type": "default",
@@ -170,7 +208,7 @@
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.4": {
+  "compensation.activitiesInfoArray.5": {
     "datasource": "form_data",
     "source": "members_step.members_section.members_fieldset.members_others",
     "mapping_type": "default",
@@ -181,7 +219,7 @@
       "valueType": "int"
     }
   },
-  "compensation.activitiesInfoArray.5": {
+  "compensation.activitiesInfoArray.6": {
     "datasource": "form_data",
     "source": "members_step.members_section.members_fieldset.members_others_helsinki",
     "mapping_type": "default",
