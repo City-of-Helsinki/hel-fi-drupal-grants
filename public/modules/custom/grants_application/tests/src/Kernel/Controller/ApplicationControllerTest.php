@@ -44,6 +44,13 @@ final class ApplicationControllerTest extends KernelTestBase {
   private string $applicationNumber = "KERNELTEST-058-0000001";
 
   /**
+   * The atv document.
+   *
+   * @var \Drupal\helfi_atv\AtvDocument
+   */
+  private AtvDocument $atvDocument;
+
+  /**
    * {@inheritdoc}
    */
   protected static $modules = ['helfi_atv'];
@@ -88,7 +95,7 @@ final class ApplicationControllerTest extends KernelTestBase {
     ]);
     $this->applicationSubmission->save();
 
-    $atvDocument = AtvDocument::create([
+    $this->atvDocument = AtvDocument::create([
       'id' => 'test-id',
       'type' => 'type',
       'status' => [
@@ -116,7 +123,7 @@ final class ApplicationControllerTest extends KernelTestBase {
     ]);
 
     $applicationGetterService = $this->createMock(ApplicationGetterService::class);
-    $applicationGetterService->expects($this->any())->method('getAtvDocument')->willReturn($atvDocument);
+    $applicationGetterService->expects($this->any())->method('getAtvDocument')->willReturn($this->atvDocument);
 
     $eventService = $this->createMock(EventsService::class);
     $eventService->expects($this->any())->method('logEvent')->withAnyParameters()->willReturn([]);
@@ -128,7 +135,6 @@ final class ApplicationControllerTest extends KernelTestBase {
       'href' => 'testhref.example.com/file/9595',
       'size' => '999',
     ]);
-    $helfiAtvService->expects($this->any())->method('removeAttachment')->willReturn(TRUE);
 
     $atvService = $this->createMock(AtvService::class);
     $atvService->expects($this->any())->method('deleteAttachment')->willReturn(TRUE);
@@ -153,6 +159,11 @@ final class ApplicationControllerTest extends KernelTestBase {
    * Test the file upload.
    */
   public function testFileUpload(): void {
+    $userInformationService = $this->createMock(UserInformationService::class);
+    $userInformationService->expects($this->any())->method('getUserData')
+      ->willReturn(['sub' => 'abcdefg-1234-5678-9012-hijklmnopqro']);
+    $this->container->set(UserInformationService::class, $userInformationService);
+
     $controller = ApplicationController::create($this->container);
     $request = $this->container->get('request_stack')->getCurrentRequest();
 
