@@ -16,6 +16,7 @@ use Drupal\helfi_atv\AtvAuthFailedException;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_helsinki_profiili\Helper\JwtHelper;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\user\Entity\User;
@@ -310,7 +311,7 @@ class HelfiGdprApiController extends ControllerBase {
     }
 
     $jwtToken = str_replace('Bearer ', '', $authHeader);
-    $tokenData = $this->helsinkiProfiiliUserData->parseToken($jwtToken);
+    $tokenData = JwtHelper::parseToken($jwtToken);
     $this->jwtData = $tokenData;
     $this->jwtToken = $jwtToken;
   }

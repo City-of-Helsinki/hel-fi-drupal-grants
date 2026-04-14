@@ -14,16 +14,15 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\openid_connect\OpenIDConnectSession;
 use Drupal\Tests\UnitTestCase;
 use GuzzleHttp\ClientInterface;
+use PHPUnit\Framework\Attributes\Group;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Tests HelsinkiProfiiliUserData class.
- *
- * @coversDefaultClass \Drupal\helfi_helsinki_profiile\HelsinkiProfiiliUserData
- * @group helfi_helsinki_profiili
  */
+#[Group('helfi_helsinki_profiili')]
 class HelsinkiProfiiliUserDataTest extends UnitTestCase {
 
   use ProphecyTrait;

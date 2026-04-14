@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\helfi_helsinki_profiili;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Xss;
+use Drupal\helfi_helsinki_profiili\Helper\JwtHelper;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -161,7 +164,12 @@ class HelsinkiProfiiliUserData {
    *   Token data for authenticated user.
    */
   public function getTokenData(): array {
-    return $this->parseToken($this->openidConnectSession->retrieveIdToken());
+    $token = $this->openidConnectSession->retrieveIdToken();
+    if (empty($token)) {
+      return [];
+    }
+
+    return JwtHelper::parseToken($token);
   }
 
   /**
@@ -492,26 +500,6 @@ class HelsinkiProfiiliUserData {
         }
       }
       GRAPHQL;
-  }
-
-  /**
-   * Parse JWT token.
-   *
-   * @param string $token
-   *   The encoded ID token containing the user data.
-   *
-   * @return array
-   *   The parsed JWT token or the original string.
-   */
-  public function parseToken(string $token): array {
-    $parts = explode('.', $token, 3);
-    if (count($parts) === 3) {
-      $decoded = Json::decode(base64_decode($parts[1]));
-      if (is_array($decoded)) {
-        return $decoded;
-      }
-    }
-    return [];
   }
 
   /**
