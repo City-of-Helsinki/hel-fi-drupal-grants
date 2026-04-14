@@ -11801,16 +11801,6 @@ parameters:
 			path: public/modules/custom/helfi_av/tests/src/Unit/AntivirusServiceTest.php
 
 		-
-			message: "#^Function helfi_helsinki_profiili_openid_connect_post_authorize\\(\\) has parameter \\$context with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/helfi_helsinki_profiili.module
-
-		-
-			message: "#^Function helfi_helsinki_profiili_user_logout\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/helfi_helsinki_profiili.module
-
-		-
 			message: "#^Call to an undefined method Drupal\\\\Core\\\\Session\\\\AccountInterface\\:\\:get\\(\\)\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
