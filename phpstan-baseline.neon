@@ -2791,47 +2791,12 @@ parameters:
 			path: public/modules/custom/grants_attachments/src/Plugin/WebformElement/GrantsAttachments.php
 
 		-
-			message: "#^Function grants_audit_log__entity_update\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
-			message: "#^Function grants_audit_log_entity_delete\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
-			message: "#^Function grants_audit_log_entity_insert\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
-			message: "#^Function grants_audit_log_entity_view\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
 			message: "#^Function grants_audit_log_entity_view\\(\\) has parameter \\$build with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_audit_log/grants_audit_log.module
 
 		-
-			message: "#^Function grants_audit_log_openid_connect_post_authorize\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
 			message: "#^Function grants_audit_log_openid_connect_post_authorize\\(\\) has parameter \\$context with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
-			message: "#^Function grants_audit_log_user_login\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
-			message: "#^Function grants_audit_log_user_logout\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: public/modules/custom/grants_audit_log/grants_audit_log.module
 
