@@ -11801,37 +11801,12 @@ parameters:
 			path: public/modules/custom/helfi_av/tests/src/Unit/AntivirusServiceTest.php
 
 		-
-			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getChangedTime\\(\\)\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getCreatedTime\\(\\)\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getDisplayName\\(\\)\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getEmail\\(\\)\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
 			message: "#^Cannot access offset 'documents' on non\\-empty\\-array\\|Drupal\\\\file\\\\FileInterface\\|Drupal\\\\helfi_atv\\\\AtvDocument\\|true\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
 		-
 			message: "#^Cannot access offset 'total_deletable' on array\\|bool\\|Drupal\\\\file\\\\FileInterface\\|Drupal\\\\helfi_atv\\\\AtvDocument\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
@@ -11856,17 +11831,7 @@ parameters:
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:get\\(\\) has invalid return type Drupal\\\\Component\\\\Serialization\\\\JsonResponse\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^PHPDoc tag @return with type Drupal\\\\Component\\\\Serialization\\\\JsonResponse is not subtype of native type Symfony\\\\Component\\\\HttpFoundation\\\\JsonResponse\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 

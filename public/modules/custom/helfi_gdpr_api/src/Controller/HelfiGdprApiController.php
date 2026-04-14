@@ -10,8 +10,6 @@ use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Entity\EntityBase;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Language\ContextProvider\CurrentLanguageContext;
 use Drupal\helfi_atv\AtvAuthFailedException;
@@ -27,6 +25,7 @@ use Firebase\JWT\SignatureInvalidException;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -189,13 +188,11 @@ class HelfiGdprApiController extends ControllerBase {
       return AccessResult::forbidden('Audience mismatch');
     }
 
-    $hostkey = '';
-    if ($this->request->getCurrentRequest()->getMethod() == 'GET') {
-      $hostkey = 'gdprquery';
-    }
-    if ($this->request->getCurrentRequest()->getMethod() == 'DELETE') {
-      $hostkey = 'gdprdelete';
-    }
+    $hostkey = match ($this->request->getCurrentRequest()->getMethod()) {
+      'GET' => 'gdprquery',
+      'DELETE' => 'gdprdelete',
+      default => throw new BadRequestException('Unsupported method: ' . $this->request->getCurrentRequest()->getMethod()),
+    };
 
     if (in_array($hostkey, $decoded['authorization']->permissions[0]->scopes)) {
       $this->debug(
@@ -208,17 +205,8 @@ class HelfiGdprApiController extends ControllerBase {
       );
       return AccessResult::allowed();
     }
-    else {
-      $deniedReason = 'Scope mismatch';
-    }
 
-    // We should never reach here, but just return forbidden access.
-    if ($deniedReason != NULL) {
-      return AccessResult::forbidden($deniedReason);
-    }
-    else {
-      return AccessResult::forbidden('Generic token parse error');
-    }
+    return AccessResult::forbidden('Scope mismatch');
   }
 
   /**
@@ -227,7 +215,7 @@ class HelfiGdprApiController extends ControllerBase {
    * @param string $userId
    *   User id.
    *
-   * @return \Drupal\Component\Serialization\JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   JSONresponse.
    *
    * @throws \Drupal\helfi_atv\AtvAuthFailedException
@@ -267,7 +255,6 @@ class HelfiGdprApiController extends ControllerBase {
    *   JsonResponse.
    */
   public function delete($userId): JsonResponse {
-
     try {
       // Try to load user via openid / tunnistamo id.
       $authuid = $this->connection->select('authmap', 'am')
@@ -280,9 +267,10 @@ class HelfiGdprApiController extends ControllerBase {
 
       if ($authuid) {
         // Try to load & delete user.
-        $user = $this->entityTypeManager()->getStorage('user')->load($authuid->uid);
-        $user?->delete();
-        // phpcs:enable
+        $this->entityTypeManager()
+          ->getStorage('user')
+          ->load($authuid->uid)
+          ?->delete();
       }
 
       $this->atvService->deleteGdprData($this->jwtData['sub'], $this->jwtToken);
@@ -292,14 +280,11 @@ class HelfiGdprApiController extends ControllerBase {
     catch (AtvDocumentNotFoundException $e) {
       $statusCode = 404;
     }
-    catch (AtvFailedToConnectException $e) {
+    catch (AtvFailedToConnectException | GuzzleException $e) {
       $statusCode = 500;
     }
     catch (TokenExpiredException $e) {
       $statusCode = 401;
-    }
-    catch (GuzzleException $e) {
-      $statusCode = 500;
     }
     catch (EntityStorageException $e) {
       $statusCode = 204;
@@ -309,13 +294,12 @@ class HelfiGdprApiController extends ControllerBase {
     }
 
     return new JsonResponse(NULL, $statusCode);
-
   }
 
   /**
    * Parse jwt token data from token in request.
    */
-  public function parseJwt(): void {
+  private function parseJwt(): void {
 
     $currentRequest = $this->request->getCurrentRequest();
 
@@ -343,7 +327,7 @@ class HelfiGdprApiController extends ControllerBase {
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Drupal\helfi_atv\AtvAuthFailedException
    */
-  public function getData(): array {
+  private function getData(): array {
 
     $data = [];
 
@@ -532,18 +516,24 @@ class HelfiGdprApiController extends ControllerBase {
   /**
    * Get user from database.
    *
-   * @return \Drupal\Core\Entity\EntityBase|EntityInterface|User|null
+   * @return \Drupal\user\Entity\User|null
    *   User or some other types.
    */
-  public function getUser(): User|EntityBase|EntityInterface|null {
-    $query = $this->connection->select('users', 'u',);
+  private function getUser(): User|null {
+    $query = $this->connection->select('users', 'u');
     $query->join('authmap', 'am', 'am.uid = u.uid');
-    $query
+    $res = $query
       ->fields('u', ['uid'])
-      ->condition('am.authname', $this->jwtData['sub']);
-    $res = $query->execute()->fetchObject();
+      ->condition('am.authname', $this->jwtData['sub'])
+      ->execute()
+      ->fetchObject();
 
-    $user = $this->entityTypeManager()->getStorage('user')->load($res->uid);
+    $user = $this->entityTypeManager()
+      ->getStorage('user')
+      ->load($res->uid);
+
+    assert(!$user || $user instanceof User);
+
     return $user;
   }
 
