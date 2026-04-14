@@ -11921,16 +11921,6 @@ parameters:
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
 		-
-			message: "#^Function helfi_helsinki_profiili_install\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/helfi_helsinki_profiili.install
-
-		-
-			message: "#^Function helfi_helsinki_profiili_uninstall\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/helfi_helsinki_profiili.install
-
-		-
 			message: "#^Function helfi_helsinki_profiili_openid_connect_post_authorize\\(\\) has parameter \\$context with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/helfi_helsinki_profiili.module
