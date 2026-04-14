@@ -11926,11 +11926,6 @@ parameters:
 			path: public/modules/custom/helfi_helsinki_profiili/modules/helfi_helsinki_profiili_audit_logging/src/EventSubscriber/HelsinkiProfiiliEventSubscriber.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\EventSubscriber\\\\TokenExpiredExceptionSubscriber\\:\\:onKernelException\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/EventSubscriber/TokenExpiredExceptionSubscriber.php
-
-		-
 			message: "#^Call to an undefined method Drupal\\\\Core\\\\Session\\\\AccountInterface\\:\\:get\\(\\)\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
