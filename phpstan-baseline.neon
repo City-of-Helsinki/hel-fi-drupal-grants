@@ -11831,11 +11831,6 @@ parameters:
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getAdminRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getApiAccessTokens\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
@@ -11852,11 +11847,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getHelsinkiProfiiliToken\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getHpUserRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 

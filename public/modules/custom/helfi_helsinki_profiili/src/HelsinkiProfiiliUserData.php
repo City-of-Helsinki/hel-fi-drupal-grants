@@ -626,26 +626,6 @@ class HelsinkiProfiiliUserData {
   }
 
   /**
-   * Get user roles that have helsinki profile authentication.
-   *
-   * @return array
-   *   Helsinki profiili user roles.
-   */
-  public function getHpUserRoles(): array {
-    return $this->hpUserRoles;
-  }
-
-  /**
-   * Get admin roles.
-   *
-   * @return array
-   *   Helsinki profiili admin roles.
-   */
-  public function getAdminRoles(): array {
-    return $this->hpAdminRoles;
-  }
-
-  /**
    * Get openid configurations.
    *
    * @return array
