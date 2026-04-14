@@ -11,6 +11,8 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Language\ContextProvider\CurrentLanguageContext;
+use Drupal\helfi_api_base\Environment\EnvironmentEnum;
+use Drupal\helfi_api_base\Environment\EnvironmentResolverInterface;
 use Drupal\helfi_atv\AtvAuthFailedException;
 use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
@@ -54,28 +56,6 @@ class HelfiGdprApiController extends ControllerBase {
    */
   protected array $audienceConfig;
 
-  /**
-   * Debug or not?
-   */
-  protected bool $debug;
-
-  /**
-   * Is debug on?
-   */
-  public function isDebug(): bool {
-    return $this->debug;
-  }
-
-  /**
-   * Set debug value.
-   *
-   * @param bool $debug
-   *   True / False?
-   */
-  public function setDebug(bool $debug): void {
-    $this->debug = $debug;
-  }
-
   public function __construct(
     protected RequestStack $request,
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
@@ -84,17 +64,14 @@ class HelfiGdprApiController extends ControllerBase {
     #[Autowire(service: 'language.current_language_context')]
     protected CurrentLanguageContext $currentLanguageContext,
     protected Connection $connection,
+    private readonly EnvironmentResolverInterface $environmentResolver,
   ) {
     // @todo Fail if these variables are not set.
     $serviceName = getenv('GDPR_API_AUD_SERVICE') ?: '';
     $audienceHost = getenv('GDPR_API_AUD_HOST') ?: '';
 
     $this->audienceConfig = ['service_name' => $serviceName, 'audience_host' => $audienceHost];
-
-    $this->setDebug(getenv('DEBUG') == 'true' || getenv('DEBUG') == TRUE);
     $this->parseJwt();
-
-    $this->debug('Audience config: @config', ['@config' => Json::encode($this->audienceConfig)]);
   }
 
   /**
@@ -106,9 +83,8 @@ class HelfiGdprApiController extends ControllerBase {
     $decoded = NULL;
 
     try {
-      $this->debug('GDPR Api access called. JWT token: @token', ['@token' => $this->jwtToken], TRUE);
       $decoded = $this->helsinkiProfiiliUserData->verifyJwtToken($this->jwtToken);
-      $this->debug('GDPR Api access called. JWT token contents: @token', ['@token' => Json::encode($decoded)], TRUE);
+      $this->log('GDPR Api access called. JWT token contents: @token', ['@token' => Json::encode($decoded)]);
     }
     catch (\InvalidArgumentException $e) {
       $deniedReason = $e->getMessage();
@@ -158,26 +134,24 @@ class HelfiGdprApiController extends ControllerBase {
     $expectedAudience = $this->audienceConfig['service_name'];
 
     if ($decoded['sub'] !== $userId) {
-      $this->debug(
+      $this->log(
         'GDPR Api access failed: User ID mismatch - JWT value: @jwt Endpoint value: @endpoint',
         [
           '@jwt' => $decoded['sub'],
           '@endpoint' => $userId,
         ],
-        TRUE
       );
       return AccessResult::forbidden('User ID mismatch');
     }
 
     // If audience does not match, forbid access.
     if ($audience != $expectedAudience) {
-      $this->debug(
+      $this->log(
         'Access DENIED. Reason: @reason. JWT token: @token',
         [
           '@token' => $this->jwtToken,
           '@reason' => 'Audience mismatch',
         ],
-        TRUE
       );
       return AccessResult::forbidden('Audience mismatch');
     }
@@ -189,13 +163,12 @@ class HelfiGdprApiController extends ControllerBase {
     };
 
     if (in_array($hostkey, $decoded['authorization']->permissions[0]->scopes)) {
-      $this->debug(
+      $this->log(
         'Local access GRANTED. Reason: @reason. JWT token: @token',
         [
           '@token' => $this->jwtToken,
           '@reason' => 'All match..',
         ],
-        TRUE
       );
       return AccessResult::allowed();
     }
@@ -533,40 +506,23 @@ class HelfiGdprApiController extends ControllerBase {
   }
 
   /**
-   * Print to debug stream.
+   * Logs messages.
    *
    * @param string $msg
    *   Message.
    * @param array<mixed> $options
    *   Options.
-   * @param bool $sensitive
-   *   Does the debug msg contain sensitive information?
-   *   These will be removed in production environments.
    */
-  private function debug(string $msg, array $options = [], bool $sensitive = FALSE): void {
-    if ($sensitive && $this->isProduction()) {
-      $sensitiveValues = ['@jwt', '@token'];
-      foreach ($sensitiveValues as $sensitiveValue) {
-        if (isset($options[$sensitiveValue])) {
-          $options[$sensitiveValue] = '<redacted>';
-        }
+  private function log(string $msg, array $options = []): void {
+    if ($this->environmentResolver->getActiveEnvironmentName() === EnvironmentEnum::Prod->value) {
+
+      // Hide sensitive values in production environment.
+      if (isset($options['@token'])) {
+        $options['@token'] = '<redacted>';
       }
     }
 
-    if ($this->isDebug()) {
-      $this->getLogger('helf_gdpr_api')->debug($msg, $options);
-    }
-  }
-
-  /**
-   * Check if current environment is production.
-   *
-   * @return bool
-   *   Returns true if the environment is production.
-   */
-  private function isProduction(): bool {
-    $appEnv = getenv('APP_ENV');
-    return in_array($appEnv, ['production', 'PRODUCTION', 'prod', 'PROD']);
+    $this->getLogger('helf_gdpr_api')->info($msg, $options);
   }
 
 }

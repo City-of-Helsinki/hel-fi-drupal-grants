@@ -56,13 +56,6 @@ class HelsinkiProfiiliUserData {
   private array $openIdConfiguration = [];
 
   /**
-   * Debug status.
-   *
-   * @var bool
-   */
-  protected bool $debug;
-
-  /**
    * The module config.
    *
    * @var \Drupal\Core\Config\Config
@@ -96,15 +89,6 @@ class HelsinkiProfiiliUserData {
     }
     else {
       $this->hpAdminRoles = [];
-    }
-
-    $debug = getenv('DEBUG');
-
-    if ($debug == 'true' || $debug === TRUE) {
-      $this->debug = TRUE;
-    }
-    else {
-      $this->debug = FALSE;
     }
   }
 
@@ -827,43 +811,9 @@ class HelsinkiProfiiliUserData {
   public function verifyJwtToken(string $jwt): array {
     $jwks = $this->getJwks();
 
-    $this->debugPrint('JWKS -> @jwks', ['@jwks' => Json::encode($jwks)]);
+    $this->logger->debug('JWKS -> @jwks', ['@jwks' => Json::encode($jwks)]);
 
     return (array) JWT::decode($jwt, JWK::parseKeySet($this->getJwks()));
-  }
-
-  /**
-   * Print debug messages.
-   *
-   * @param string $message
-   *   Message.
-   * @param array $replacements
-   *   Replacements.
-   */
-  public function debugPrint(string $message, array $replacements = []): void {
-    if ($this->isDebug()) {
-      $this->logger->debug($message, $replacements);
-    }
-  }
-
-  /**
-   * Is debug on?
-   *
-   * @return bool
-   *   Debug boolean.
-   */
-  public function isDebug(): bool {
-    return $this->debug;
-  }
-
-  /**
-   * Set debug value.
-   *
-   * @param bool $debug
-   *   Debug boolean value.
-   */
-  public function setDebug(bool $debug): void {
-    $this->debug = $debug;
   }
 
   /**

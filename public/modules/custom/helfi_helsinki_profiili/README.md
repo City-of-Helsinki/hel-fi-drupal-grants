@@ -6,7 +6,6 @@ Userdata is queried from graphql endpoint in Tunnistamo. Userdata is saved for r
 
 ## Before use ##
 - Make sure you have environment variables `GDPR_API_AUD_SERVICE` and `GDPR_API_AUD_HOST` set
-- Debug mode can be enabled setting `DEBUG` environment variable to `TRUE`
 
 ## Configuration
 
