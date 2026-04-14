@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\Tests\helfi_helsinki_profiili\Unit;
 
 use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -14,6 +13,7 @@ use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\openid_connect\OpenIDConnectSession;
 use Drupal\Tests\UnitTestCase;
 use GuzzleHttp\ClientInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -53,61 +53,58 @@ class HelsinkiProfiiliUserDataTest extends UnitTestCase {
   /**
    * Loads fixture json and returns it.
    *
-   * @param string $file
-   *   Fila name.
-   *
-   * @return array
+   * @return array<mixed>
    *   JSON decoded array.
    */
-  private function getFixture($file) {
-    $handle = fopen(__DIR__ . '/../../../fixtures/' . $file, 'r');
-    $content = fread($handle, filesize(__DIR__ . '/../../../fixtures/' . $file));
-    return JSON::decode($content);
+  private function getFixture(string $file): array {
+    $contents = file_get_contents(__DIR__ . '/../../../fixtures/' . $file);
+    $this->assertIsString($contents);
+    return json_decode($contents, TRUE, JSON_THROW_ON_ERROR);
   }
 
   /**
-   * Tests that function return first primary node.
-   */
-  public function testGetsFirstPrimaryNode() {
-    $json = $this->getFixture('multiple_primaries.json');
-    $service = $this->getService();
-    $data = $service->checkPrimaryFields($json);
-
-    $this->assertEquals($data['myProfile']['primaryEmail']['email'], 'primary@test.test');
-    $this->assertEquals($data['myProfile']['primaryPhone']['phone'], '+358111111111');
-  }
-
-  /**
-   * Tests that function returns first node.
+   * Data provider for checkPrimaryFields tests.
    *
-   * Incase no primary nodes are available.
+   * @phpstan-return array<mixed>
    */
-  public function testGetsFirstNodeWhenNoPrimary() {
-    $json = $this->getFixture('profile_data.json');
-    $service = $this->getService();
-    $data = $service->checkPrimaryFields($json);
-
-    $this->assertEquals($data['myProfile']['primaryEmail']['email'], 'primary@test.test');
+  public static function checkPrimaryFieldsDataProvider(): array {
+    return [
+      'first primary node' => [
+        'multiple_primaries.json',
+        'primary@test.test',
+        '+358111111111',
+      ],
+      'first node when no primary' => [
+        'profile_data.json',
+        'primary@test.test',
+      ],
+      'valid primary data unchanged' => [
+        'profile_data_valid_primary.json',
+        'primary@test.test',
+        '+358000000000',
+      ],
+    ];
   }
 
   /**
-   * Tests that function doesn't change primaryFields.
-   *
-   * If there is non-null value already.
+   * Tests checkPrimaryFields with various fixture data.
    */
-  public function testDoesntChangeValidPrimaryData() {
-    $json = $this->getFixture('profile_data_valid_primary.json');
+  #[DataProvider('checkPrimaryFieldsDataProvider')]
+  public function testCheckPrimaryFields(string $fixture, string $expectedEmail, ?string $expectedPhone = NULL): void {
+    $json = $this->getFixture($fixture);
     $service = $this->getService();
     $data = $service->checkPrimaryFields($json);
 
-    $this->assertEquals($data['myProfile']['primaryEmail']['email'], 'primary@test.test');
-    $this->assertEquals($data['myProfile']['primaryPhone']['phone'], '+358000000000');
+    $this->assertEquals($expectedEmail, $data['myProfile']['primaryEmail']['email']);
+    if ($expectedPhone !== NULL) {
+      $this->assertEquals($expectedPhone, $data['myProfile']['primaryPhone']['phone']);
+    }
   }
 
   /**
    * Tests that data is filtered through XSS::filter.
    */
-  public function testXssFiltering() {
+  public function testXssFiltering(): void {
     $json = $this->getFixture('xss.json');
     $service = $this->getService();
     $filteredData = $service->filterData($json);

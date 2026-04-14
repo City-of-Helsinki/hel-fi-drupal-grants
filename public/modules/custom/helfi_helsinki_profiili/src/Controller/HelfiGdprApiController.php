@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Drupal\helfi_gdpr_api\Controller;
+namespace Drupal\helfi_helsinki_profiili\Controller;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Access\AccessResultAllowed;
-use Drupal\Core\Access\AccessResultForbidden;
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityStorageException;
@@ -39,36 +38,29 @@ class HelfiGdprApiController extends ControllerBase {
   /**
    * User jwt token decoded.
    *
-   * @var array
+   * @phpstan-var array<mixed>
    */
   protected array $jwtData;
 
   /**
    * User jwt token string.
-   *
-   * @var string
    */
   protected string $jwtToken;
 
   /**
    * Audience configuration from db.
    *
-   * @var array|mixed|null
+   * @phpstan-var array{service_name: string, audience_host: string}
    */
   protected array $audienceConfig;
 
   /**
-   * DEbug or not?
-   *
-   * @var bool
+   * Debug or not?
    */
   protected bool $debug;
 
   /**
    * Is debug on?
-   *
-   * @return bool
-   *   Debug on / off?
    */
   public function isDebug(): bool {
     return $this->debug;
@@ -93,10 +85,11 @@ class HelfiGdprApiController extends ControllerBase {
     protected CurrentLanguageContext $currentLanguageContext,
     protected Connection $connection,
   ) {
-    $this->audienceConfig = [
-      'service_name' => getenv('GDPR_API_AUD_SERVICE'),
-      'audience_host' => getenv('GDPR_API_AUD_HOST'),
-    ];
+    // @todo Fail if these variables are not set.
+    $serviceName = getenv('GDPR_API_AUD_SERVICE') ?: '';
+    $audienceHost = getenv('GDPR_API_AUD_HOST') ?: '';
+
+    $this->audienceConfig = ['service_name' => $serviceName, 'audience_host' => $audienceHost];
 
     $this->setDebug(getenv('DEBUG') == 'true' || getenv('DEBUG') == TRUE);
     $this->parseJwt();
@@ -107,7 +100,7 @@ class HelfiGdprApiController extends ControllerBase {
   /**
    * Checks access for this controller.
    */
-  public function access($userId): AccessResultForbidden|AccessResultAllowed {
+  public function access(string $userId): AccessResultInterface {
 
     $deniedReason = NULL;
     $decoded = NULL;
@@ -255,7 +248,7 @@ class HelfiGdprApiController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   JsonResponse.
    */
-  public function delete($userId): JsonResponse {
+  public function delete(string $userId): JsonResponse {
     try {
       // Try to load user via openid / tunnistamo id.
       $authuid = $this->connection->select('authmap', 'am')
@@ -319,7 +312,7 @@ class HelfiGdprApiController extends ControllerBase {
   /**
    * Get user GDPR data from ATV api.
    *
-   * @return array
+   * @return array<mixed>
    *   User's GDPR data
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
@@ -403,6 +396,7 @@ class HelfiGdprApiController extends ControllerBase {
 
     // Get data.
     $gdprData = $this->atvService->getGdprData($this->jwtData['sub'], $this->jwtToken);
+    /** @var array<mixed> $gdprData */
     if ($gdprData["total_deletable"] == 0 && $gdprData["total_undeletable"] == 0) {
       return [];
     }
@@ -543,13 +537,13 @@ class HelfiGdprApiController extends ControllerBase {
    *
    * @param string $msg
    *   Message.
-   * @param array $options
+   * @param array<mixed> $options
    *   Options.
    * @param bool $sensitive
    *   Does the debug msg contain sensitive information?
    *   These will be removed in production environments.
    */
-  private function debug(string $msg, array $options = [], $sensitive = FALSE) {
+  private function debug(string $msg, array $options = [], bool $sensitive = FALSE): void {
     if ($sensitive && $this->isProduction()) {
       $sensitiveValues = ['@jwt', '@token'];
       foreach ($sensitiveValues as $sensitiveValue) {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\Tests\helfi_gdpr_api\Kernel\Controller;
+namespace Drupal\Tests\helfi_helsinki_profiili\Kernel\Controller;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\helfi_atv\AtvAuthFailedException;
@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Tests the GDPR API controller.
  */
 #[RunTestsInSeparateProcesses]
-#[Group('helfi_gdpr_api')]
+#[Group('helfi_helsinki_profiili')]
 class HelfiGdprApiControllerTest extends KernelTestBase {
 
   use ApiTestTrait;
