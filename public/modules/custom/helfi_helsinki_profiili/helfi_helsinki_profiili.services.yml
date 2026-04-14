@@ -3,9 +3,9 @@ services:
     autowire: true
     autoconfigure: true
 
-  logger.channel.helsinki_profiili:
+  logger.channel.helfi_helsinki_profiili:
     parent: logger.channel_base
-    arguments: [ 'helsinki_profiili' ]
+    arguments: [ 'helfi_helsinki_profiili' ]
 
   helfi_helsinki_profiili.userdata:
     class: Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData

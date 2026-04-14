@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Drupal\helfi_helsinki_profiili;
 
 use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Xss;
 use Drupal\helfi_helsinki_profiili\Helper\JwtHelper;
-use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -24,72 +22,37 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use GuzzleHttp\Utils;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Integrate HelsinkiProfiili data to Drupal User.
  */
-class HelsinkiProfiiliUserData {
+class HelsinkiProfiiliUserData implements LoggerAwareInterface {
 
-  /**
-   * Store user roles for helsinki profile users.
-   *
-   * @var array
-   */
-  protected array $hpUserRoles;
-
-  /**
-   * User roles for form administration.
-   *
-   * @var array
-   */
-  protected array $hpAdminRoles;
+  use LoggerAwareTrait;
 
   /**
    * Store details about oidc issuer.
    *
-   * @var array
+   * @phpstan-var array<mixed>
    */
   private array $openIdConfiguration = [];
-
-  /**
-   * The module config.
-   *
-   * @var \Drupal\Core\Config\Config
-   */
-  protected Config $config;
 
   public function __construct(
     private readonly OpenIDConnectSessionInterface $openidConnectSession,
     private readonly ClientInterface $httpClient,
-    #[Autowire(service: 'logger.channel.helsinki_profiili')]
-    private readonly LoggerInterface $logger,
     private readonly AccountProxyInterface $currentUser,
     private readonly RequestStack $requestStack,
     private readonly EnvironmentResolverInterface $environmentResolver,
     private readonly EntityTypeManagerInterface $entityManager,
     private readonly EventDispatcherInterface $eventDispatcher,
-    ConfigFactoryInterface $configFactory,
+    private readonly ConfigFactoryInterface $configFactory,
     private readonly TimeInterface $time,
   ) {
-    $this->config = $configFactory->get('helfi_helsinki_profiili.settings');
-    $rolesConfig = $this->config->get('roles');
-
-    if (!empty($rolesConfig['hp_user_roles'])) {
-      $this->hpUserRoles = $rolesConfig['hp_user_roles'];
-    }
-    else {
-      $this->hpUserRoles = [];
-    }
-    if (!empty($rolesConfig['admin_user_roles'])) {
-      $this->hpAdminRoles = $rolesConfig['admin_user_roles'];
-    }
-    else {
-      $this->hpAdminRoles = [];
-    }
   }
 
   /**
@@ -130,28 +93,13 @@ class HelsinkiProfiiliUserData {
   }
 
   /**
-   * Return parsed JWT token data from openid.
-   *
-   * @return array
-   *   Token data for authenticated user.
-   */
-  public function getTokenData(): array {
-    $token = $this->openidConnectSession->retrieveIdToken();
-    if (empty($token)) {
-      return [];
-    }
-
-    return JwtHelper::parseToken($token);
-  }
-
-  /**
    * Set user data to private store.
    *
    * @param array $userData
    *   Userdata retrieved from HP.
    */
-  public function setUserData(array $userData): bool {
-    return $this->setToCache('userData', $userData);
+  public function setUserData(array $userData): void {
+    $this->setToCache('userData', $userData);
   }
 
   /**
@@ -161,7 +109,12 @@ class HelsinkiProfiiliUserData {
    *   Userdata from tempstore.
    */
   public function getUserData(): array {
-    return $this->getTokenData();
+    $token = $this->openidConnectSession->retrieveIdToken();
+    if (empty($token)) {
+      return [];
+    }
+
+    return JwtHelper::parseToken($this->openidConnectSession->retrieveIdToken());
   }
 
   /**
@@ -204,14 +157,22 @@ class HelsinkiProfiiliUserData {
       return NULL;
     }
 
-    if (!$refetch && $this->isCached('myProfile')) {
-      return $this->getFromCache('myProfile');
+    if (!$refetch) {
+      $cacheData = $this->requestStack
+        ->getCurrentRequest()
+        ->getSession()
+        ->get('myProfile');
+
+      // Return cached value if available.
+      if (!empty($cacheData)) {
+        return $cacheData;
+      }
     }
 
     // End point to access profile data.
-    $endpoint = getenv('USERINFO_PROFILE_ENDPOINT');
-    // Get query.
-    $query = $this->graphqlQuery();
+    $endpoint = $this->configFactory
+      ->get('helfi_helsinki_profiili.settings')
+      ->get('userinfo_profile_endpoint');
 
     try {
       // Use access token to fetch profiili token from token service.
@@ -233,13 +194,14 @@ class HelsinkiProfiiliUserData {
       $response = $this->httpClient->request('POST', $endpoint, [
         'headers' => $headers,
         'json' => [
-          'query' => $query,
+          'query' => self::graphqlQuery(),
         ],
       ]);
       $this->dispatchOperationEvent('PROFILE DATA FETCH');
 
       $json = $response->getBody()->getContents();
-      $body = Json::decode($json);
+      $body = Utils::jsonDecode($json, TRUE);
+      /** @var array<string, mixed> $body */
       $data = $body['data'];
 
       if (!empty($body['errors'])) {
@@ -276,8 +238,6 @@ class HelsinkiProfiiliUserData {
           '@error' => $e->getMessage(),
         ]
       );
-
-      return NULL;
     }
     catch (TempStoreException $e) {
       $this->dispatchExceptionEvent($e);
@@ -297,8 +257,6 @@ class HelsinkiProfiiliUserData {
       $this->logger->error(
         $e->getMessage()
       );
-
-      return NULL;
     }
 
     return NULL;
@@ -313,16 +271,11 @@ class HelsinkiProfiiliUserData {
    *   String array containing token parameters.
    */
   private function getProfileTokenParams(): array {
-    $appEnv = $this->environmentResolver->getActiveEnvironmentName();
-
-    $endpointAudience = 'profile-api-test';
-
-    if ($appEnv === EnvironmentEnum::Prod->value) {
-      $endpointAudience = 'profile-api';
-    }
-    if ($appEnv === EnvironmentEnum::Stage->value) {
-      $endpointAudience = 'profile-api-stage';
-    }
+    $endpointAudience = match ($this->environmentResolver->getActiveEnvironmentName()) {
+      EnvironmentEnum::Prod->value => 'profile-api',
+      EnvironmentEnum::Stage->value => 'profile-api-stage',
+      default => 'profile-api-test',
+    };
 
     return [
       'audience' => $endpointAudience,
@@ -352,19 +305,19 @@ class HelsinkiProfiiliUserData {
         ],
         'form_params' => $this->getProfileTokenParams(),
       ]);
-      $body = $response->getBody()->getContents();
 
-      if (strlen($body) < 5) {
-        throw new ProfileDataException('No data from profile endpoint');
+      $parsed = Utils::jsonDecode($response->getBody()->getContents(), TRUE);
+
+      if (!empty($parsed) && is_array($parsed)) {
+        return $parsed;
       }
-      return Json::decode($body);
-    }
-    catch (ProfileDataException $profileDataException) {
-      $this->dispatchExceptionEvent($profileDataException);
-      $this->logger->error('Trying to get tokens from api-tokens endpoint, got empty body: @error', ['@error' => $profileDataException->getMessage()]);
+
+      // Should we throw something here?
+      $this->dispatchExceptionEvent(new ProfileDataException('No data from profile endpoint'));
+      $this->logger->error('Trying to get tokens from api-tokens endpoint, got invalid body: @body');
       return NULL;
     }
-    catch (GuzzleException | \Exception $e) {
+    catch (GuzzleException $e) {
       $this->dispatchExceptionEvent($e);
       $this->logger->error(
         'Error retrieving access token %ecode: @error',
@@ -373,7 +326,8 @@ class HelsinkiProfiiliUserData {
           '@error' => $e->getMessage(),
         ]
       );
-      throw new TokenExpiredException($e->getMessage());
+
+      throw new TokenExpiredException($e->getMessage(), previous: $e);
     }
   }
 
@@ -383,7 +337,7 @@ class HelsinkiProfiiliUserData {
    * @return string
    *   Graphql query.
    */
-  protected function graphqlQuery(): string {
+  protected static function graphqlQuery(): string {
     return <<<'GRAPHQL'
       query MyProfileQuery {
         myProfile {
@@ -475,51 +429,17 @@ class HelsinkiProfiiliUserData {
   }
 
   /**
-   * Whether or not we have made this query?
-   *
-   * @param string|null $key
-   *   Used key for caching.
-   *
-   * @return bool
-   *   Is this cached?
-   */
-  private function isCached(?string $key): bool {
-    $session = $this->requestStack->getCurrentRequest()->getSession();
-
-    $cacheData = $session->get($key);
-    return !is_null($cacheData);
-  }
-
-  /**
-   * Get item from cache.
-   *
-   * @param string $key
-   *   Key to fetch from tempstore.
-   *
-   * @return array|null
-   *   Data in cache or null
-   */
-  private function getFromCache(string $key): array|null {
-    $session = $this->requestStack->getCurrentRequest()->getSession();
-    return !empty($session->get($key)) ? $session->get($key) : NULL;
-  }
-
-  /**
    * Add item to cache.
    *
    * @param string $key
    *   Used key for caching.
    * @param array $data
    *   Cached data.
-   *
-   * @return bool
-   *   Did save succeed?
    */
-  private function setToCache(string $key, array $data): bool {
-    $session = $this->requestStack->getCurrentRequest()->getSession();
-
-    $session->set($key, $data);
-    return TRUE;
+  private function setToCache(string $key, array $data): void {
+    $this->requestStack->getCurrentRequest()
+      ->getSession()
+      ->set($key, $data);
   }
 
   /**
@@ -590,7 +510,7 @@ class HelsinkiProfiiliUserData {
    * @return array
    *   Filtered data.
    */
-  public function filterData(array $data) {
+  public function filterData(array $data): array {
     // Make sure that data coming from HP is sanitized and does not contain
     // anything worth removing.
     array_walk_recursive(
@@ -628,49 +548,36 @@ class HelsinkiProfiiliUserData {
   /**
    * Get openid configurations.
    *
-   * @return array
+   * @todo We should cache this response.
+   *
+   * @return array<mixed>
    *   Open id config from endpoint.
    *
+   * @todo Improve exception type.
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function getOpenIdConfiguration(): array {
+  private function getOpenIdConfiguration(): array {
     if (!$this->openIdConfiguration) {
-      $this->openIdConfiguration = $this->getOpenidConfigurationFromIssuer();
+      $url = $this->configFactory
+        ->get('helfi_helsinki_profiili.settings')
+        ->get('tunnistamo_environment_url');
+
+      if (empty($url)) {
+        throw new \UnexpectedValueException('No tunnistamo environment url set');
+      }
+
+      $response = $this->httpClient->request('GET', "$url/.well-known/openid-configuration/");
+
+      $parsed = Utils::jsonDecode($response->getBody()->getContents(), TRUE);
+      if (empty($parsed) || !is_array($parsed)) {
+        throw new \UnexpectedValueException('Could not parse openid configuration');
+      }
+
+      $this->openIdConfiguration = $parsed;
     }
+
     return $this->openIdConfiguration;
-  }
-
-  /**
-   * Get issuer configs from server.
-   *
-   * @return array
-   *   Config from env.
-   *
-   * @throws \GuzzleHttp\Exception\GuzzleException
-   */
-  public function getOpenidConfigurationFromIssuer(): array {
-    return Json::decode(
-      $this->httpClient->request(
-        'GET',
-        sprintf('%s/.well-known/openid-configuration/', $this->getTunnistamoEnvUrl())
-      )->getBody()->getContents()
-    );
-  }
-
-  /**
-   * Get jwks keys from issuer.
-   *
-   * @throws \GuzzleHttp\Exception\GuzzleException
-   */
-  public function getJwks() {
-    $config = $this->getOpenIdConfiguration();
-
-    $response = $this->httpClient->request(
-      'GET',
-      $config["jwks_uri"]
-    );
-
-    return Json::decode($response->getBody()->getContents());
   }
 
   /**
@@ -765,23 +672,33 @@ class HelsinkiProfiiliUserData {
    * @return array
    *   Is token valid or not.
    *
+   * @todo Improve exception type.
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function verifyJwtToken(string $jwt): array {
-    $jwks = $this->getJwks();
+    $config = $this->getOpenIdConfiguration();
 
-    $this->logger->debug('JWKS -> @jwks', ['@jwks' => Json::encode($jwks)]);
+    $response = $this->httpClient->request(
+      'GET',
+      $config["jwks_uri"]
+    );
 
-    return (array) JWT::decode($jwt, JWK::parseKeySet($this->getJwks()));
+    $jwks = Utils::jsonDecode($response->getBody()->getContents(), TRUE);
+    if (!is_array($jwks)) {
+      throw new \UnexpectedValueException('Could not parse jwks');
+    }
+
+    return (array) JWT::decode($jwt, JWK::parseKeySet($jwks));
   }
 
   /**
    * Dispatches exception event.
    *
-   * @param \Exception $exception
+   * @param \Throwable $exception
    *   The exception.
    */
-  private function dispatchExceptionEvent(\Exception $exception): void {
+  private function dispatchExceptionEvent(\Throwable $exception): void {
     $event = new HelsinkiProfiiliExceptionEvent($exception);
     $this->eventDispatcher->dispatch($event);
   }
@@ -795,16 +712,6 @@ class HelsinkiProfiiliUserData {
   private function dispatchOperationEvent(string $message): void {
     $event = new HelsinkiProfiiliOperationEvent($message);
     $this->eventDispatcher->dispatch($event);
-  }
-
-  /**
-   * Get tunnistamo env url from env variable.
-   *
-   * @return string
-   *   The url or false.
-   */
-  public function getTunnistamoEnvUrl(): string {
-    return getenv('TUNNISTAMO_ENVIRONMENT_URL');
   }
 
 }
