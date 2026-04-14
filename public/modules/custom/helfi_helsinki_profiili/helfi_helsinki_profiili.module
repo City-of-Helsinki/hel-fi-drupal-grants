@@ -81,11 +81,3 @@ function helfi_helsinki_profiili_openid_connect_post_authorize(UserInterface $ac
   }
 
 }
-
-/**
- * Implements hook_user_logout().
- */
-function helfi_helsinki_profiili_user_logout(AccountProxyInterface $account): void {
-  \Drupal::service(HelsinkiProfiiliUserData::class)
-    ->clearCache();
-}

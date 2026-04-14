@@ -477,27 +477,6 @@ class HelsinkiProfiiliUserData {
   /**
    * Whether or not we have made this query?
    *
-   * @param string $key
-   *   Used key for caching.
-   *
-   * @return bool
-   *   Is this cached?
-   */
-  public function clearCache($key = ''): bool {
-    try {
-      // $session = $this->requestStack->getCurrentRequest()->getSession();
-      // $session->clear();
-      return TRUE;
-    }
-    catch (\Exception $e) {
-      $this->dispatchExceptionEvent($e);
-      return FALSE;
-    }
-  }
-
-  /**
-   * Whether or not we have made this query?
-   *
    * @param string|null $key
    *   Used key for caching.
    *

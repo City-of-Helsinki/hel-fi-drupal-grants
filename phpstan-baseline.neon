@@ -11811,11 +11811,6 @@ parameters:
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
 		-
-			message: "#^Dead catch \\- Exception is never thrown in the try block\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:checkPrimaryFields\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
