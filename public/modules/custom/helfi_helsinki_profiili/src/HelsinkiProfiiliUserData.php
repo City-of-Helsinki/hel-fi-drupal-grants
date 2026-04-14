@@ -63,13 +63,6 @@ class HelsinkiProfiiliUserData {
   protected bool $debug;
 
   /**
-   * Endpoint for api tokens.
-   *
-   * @var string
-   */
-  protected string $apiTokenEndpoint;
-
-  /**
    * The module config.
    *
    * @var \Drupal\Core\Config\Config
@@ -104,11 +97,6 @@ class HelsinkiProfiiliUserData {
     else {
       $this->hpAdminRoles = [];
     }
-
-    $apiTokenEndpoint = getenv('TUNNISTAMO_API_TOKEN_ENDPOINT') ?: '';
-
-    // Set api endpoint url.
-    $this->apiTokenEndpoint = $apiTokenEndpoint;
 
     $debug = getenv('DEBUG');
 
@@ -876,16 +864,6 @@ class HelsinkiProfiiliUserData {
    */
   public function setDebug(bool $debug): void {
     $this->debug = $debug;
-  }
-
-  /**
-   * Get api endpoint for apikeys.
-   *
-   * @return string
-   *   Endpoint url
-   */
-  public function getApiTokenEndpoint(): string {
-    return $this->apiTokenEndpoint;
   }
 
   /**
