@@ -21,13 +21,12 @@ use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\user\Entity\User;
-use Drupal\user\UserStorageInterface;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -36,20 +35,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  * Returns responses for helfi_gdpr_api routes.
  */
 class HelfiGdprApiController extends ControllerBase {
-
-  /**
-   * Profiili data access.
-   *
-   * @var \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
-   */
-  protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData;
-
-  /**
-   * Request stack.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected RequestStack $request;
 
   /**
    * User jwt token decoded.
@@ -66,46 +51,11 @@ class HelfiGdprApiController extends ControllerBase {
   protected string $jwtToken;
 
   /**
-   * Access to ATV.
-   *
-   * @var \Drupal\helfi_atv\AtvService
-   */
-  protected AtvService $atvService;
-
-  /**
-   * Http client.
-   *
-   * @var \GuzzleHttp\ClientInterface
-   */
-  protected ClientInterface $httpClient;
-
-  /**
-   * Translator for texts.
-   *
-   * @var \Drupal\Core\Language\ContextProvider\CurrentLanguageContext
-   */
-  protected CurrentLanguageContext $currentLanguageContext;
-
-  /**
-   * Db connection.
-   *
-   * @var \Drupal\Core\Database\Connection
-   */
-  protected Connection $connection;
-
-  /**
    * Audience configuration from db.
    *
    * @var array|mixed|null
    */
   protected array $audienceConfig;
-
-  /**
-   * Entitytype manager for users.
-   *
-   * @var \Drupal\user\UserStorageInterface
-   */
-  protected UserStorageInterface $userStorage;
 
   /**
    * DEbug or not?
@@ -134,41 +84,15 @@ class HelfiGdprApiController extends ControllerBase {
     $this->debug = $debug;
   }
 
-  /**
-   * CompanyController constructor.
-   *
-   * @param \Symfony\Component\HttpFoundation\RequestStack $request
-   *   Request.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
-   *   Helsinki profile data access.
-   * @param \Drupal\helfi_atv\AtvService $atvService
-   *   Atv access.
-   * @param \GuzzleHttp\ClientInterface $httpClient
-   *   HTTP client.
-   * @param \Drupal\Core\Language\ContextProvider\CurrentLanguageContext $currentLanguageContext
-   *   Language.
-   * @param \Drupal\Core\Database\Connection $connection
-   *   Database.
-   * @param Drupal\user\UserStorageInterface $userStorage
-   *   User storage.
-   */
   public function __construct(
-    RequestStack $request,
-    HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
-    AtvService $atvService,
-    ClientInterface $httpClient,
-    CurrentLanguageContext $currentLanguageContext,
-    Connection $connection,
-    UserStorageInterface $userStorage,
+    protected RequestStack $request,
+    protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
+    protected AtvService $atvService,
+    protected ClientInterface $httpClient,
+    #[Autowire(service: 'language.current_language_context')]
+    protected CurrentLanguageContext $currentLanguageContext,
+    protected Connection $connection,
   ) {
-    $this->request = $request;
-    $this->helsinkiProfiiliUserData = $helsinkiProfiiliUserData;
-    $this->atvService = $atvService;
-    $this->httpClient = $httpClient;
-    $this->currentLanguageContext = $currentLanguageContext;
-    $this->connection = $connection;
-    $this->userStorage = $userStorage;
-
     $this->audienceConfig = [
       'service_name' => getenv('GDPR_API_AUD_SERVICE'),
       'audience_host' => getenv('GDPR_API_AUD_HOST'),
@@ -178,21 +102,6 @@ class HelfiGdprApiController extends ControllerBase {
     $this->parseJwt();
 
     $this->debug('Audience config: @config', ['@config' => Json::encode($this->audienceConfig)]);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('request_stack'),
-      $container->get('helfi_helsinki_profiili.userdata'),
-      $container->get('helfi_atv.atv_service'),
-      $container->get('http_client'),
-      $container->get('language.current_language_context'),
-      $container->get('database'),
-      $container->get('entity_type.manager')->getStorage('user'),
-    );
   }
 
   /**
@@ -371,7 +280,7 @@ class HelfiGdprApiController extends ControllerBase {
 
       if ($authuid) {
         // Try to load & delete user.
-        $user = $this->userStorage->load($authuid->uid);
+        $user = $this->entityTypeManager()->getStorage('user')->load($authuid->uid);
         $user?->delete();
         // phpcs:enable
       }
@@ -634,7 +543,7 @@ class HelfiGdprApiController extends ControllerBase {
       ->condition('am.authname', $this->jwtData['sub']);
     $res = $query->execute()->fetchObject();
 
-    $user = $this->userStorage->load($res->uid);
+    $user = $this->entityTypeManager()->getStorage('user')->load($res->uid);
     return $user;
   }
 

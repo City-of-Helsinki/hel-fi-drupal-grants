@@ -11886,11 +11886,6 @@ parameters:
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
 		-
-			message: "#^PHPDoc tag @param for parameter \\$userStorage with type Drupal\\\\helfi_gdpr_api\\\\Controller\\\\Drupal\\\\user\\\\UserStorageInterface is not subtype of native type Drupal\\\\user\\\\UserStorageInterface\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
 			message: "#^PHPDoc tag @return with type Drupal\\\\Component\\\\Serialization\\\\JsonResponse is not subtype of native type Symfony\\\\Component\\\\HttpFoundation\\\\JsonResponse\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
@@ -11901,22 +11896,12 @@ parameters:
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
 		-
-			message: "#^Parameter \\$userStorage of method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:__construct\\(\\) has invalid type Drupal\\\\helfi_gdpr_api\\\\Controller\\\\Drupal\\\\user\\\\UserStorageInterface\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
 			message: "#^Property Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:\\$audienceConfig type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
 		-
 			message: "#^Property Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:\\$jwtData type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
 
@@ -12072,11 +12057,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:verifyJwtToken\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Parameter \\#1 \\$apiTokenEndpoint of method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:setApiTokenEndpoint\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 

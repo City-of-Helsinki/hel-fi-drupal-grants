@@ -102,8 +102,10 @@ class HelsinkiProfiiliUserData {
       $this->hpAdminRoles = [];
     }
 
+    $apiTokenEndpoint = getenv('TUNNISTAMO_API_TOKEN_ENDPOINT') ?: '';
+
     // Set api endpoint url.
-    $this->setApiTokenEndpoint(getenv('TUNNISTAMO_API_TOKEN_ENDPOINT'));
+    $this->apiTokenEndpoint = $apiTokenEndpoint;
 
     $debug = getenv('DEBUG');
 
@@ -732,7 +734,7 @@ class HelsinkiProfiiliUserData {
       $this->httpClient->request(
         'GET',
         sprintf('%s/.well-known/openid-configuration/', $this->getTunnistamoEnvUrl())
-      )->getBody()
+      )->getBody()->getContents()
     );
   }
 
@@ -896,16 +898,6 @@ class HelsinkiProfiiliUserData {
    */
   public function getApiTokenEndpoint(): string {
     return $this->apiTokenEndpoint;
-  }
-
-  /**
-   * Set api endpoint.
-   *
-   * @param string $apiTokenEndpoint
-   *   Endpoint url.
-   */
-  public function setApiTokenEndpoint(string $apiTokenEndpoint): void {
-    $this->apiTokenEndpoint = $apiTokenEndpoint;
   }
 
   /**
