@@ -143,8 +143,6 @@ final class Application extends ResourceBase {
 
     if (!$settings->isApplicationOpen()) {
       return new JsonResponse(['error' => $this->t('The application is not currently open')], 400);
-      // @todo Uncomment.
-      // return new JsonResponse([], 403);
     }
 
     try {
@@ -257,7 +255,6 @@ final class Application extends ResourceBase {
     $content = json_decode($request->getContent(), TRUE);
     [
       'form_data' => $form_data,
-      'attachments' => $attachments,
     ] = $content;
 
     // phpcs:enable
