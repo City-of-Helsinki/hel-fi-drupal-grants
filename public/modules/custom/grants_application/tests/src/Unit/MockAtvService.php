@@ -39,6 +39,7 @@ class MockAtvService implements AtvServiceInterface {
    * {@inheritDoc}
    */
   public function checkDocumentExistsByTransactionId(string $id) {
+    return FALSE;
   }
 
   /**
@@ -66,6 +67,7 @@ class MockAtvService implements AtvServiceInterface {
    * {@inheritDoc}
    */
   public function deleteDocument(AtvDocument $document) {
+    return FALSE;
   }
 
   /**
@@ -89,9 +91,17 @@ class MockAtvService implements AtvServiceInterface {
     return FALSE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public function uploadAttachment(string $documentId, string $filename, File $file): mixed {
     return FALSE;
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getDocument(string $id, bool $refetch = FALSE): AtvDocument {
+    return AtvDocument::create([]);
+  }
 }
-
-

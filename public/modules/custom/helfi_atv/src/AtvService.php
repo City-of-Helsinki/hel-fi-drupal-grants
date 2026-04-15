@@ -307,13 +307,7 @@ class AtvService implements AtvServiceInterface {
   }
 
   /**
-   * Create new ATVDocument.
-   *
-   * @param array $values
-   *   Values for data.
-   *
-   * @return \Drupal\helfi_atv\AtvDocument
-   *   Data in object struct.
+   * {@inheritDoc}
    */
   public function createDocument(array $values): AtvDocument {
     return AtvDocument::create($values);

@@ -11,14 +11,31 @@ use Drupal\file\FileInterface;
 interface AtvServiceInterface {
 
   /**
+   * Fetch single document with id.
+   *
+   * @param string $id
+   *   Document id.
+   * @param bool $refetch
+   *   Force refetch.
+   *
+   * @return \Drupal\helfi_atv\AtvDocument
+   *   Document from ATV.
+   *
+   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
+   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
+   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\TokenExpiredException
+   */
+  public function getDocument(string $id, bool $refetch = FALSE): AtvDocument;
+
+  /**
    * Search documents with given arguments.
    *
-   * @param array $searchParams
+   * @param mixed[] $searchParams
    *   Search params.
    * @param bool $refetch
    *   Force refetch from ATV.
    *
-   * @return array
+   * @return mixed[]
    *   Data
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
@@ -38,7 +55,7 @@ interface AtvServiceInterface {
    * @param string $transaction_id
    *   Transaction id from document.
    *
-   * @return array
+   * @return mixed[]
    *   User documents' public data
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
@@ -48,19 +65,13 @@ interface AtvServiceInterface {
   public function getUserDocuments(string $sub, string $transaction_id = ''): array;
 
   /**
-   * Fetch single document with id.
+   * Create new ATVDocument.
    *
-   * @param string $id
-   *   Document id.
-   * @param bool $refetch
-   *   Force refetch.
+   * @param mixed[] $values
+   *   Values for data.
    *
    * @return \Drupal\helfi_atv\AtvDocument
-   *   Document from ATV.
-   *
-   * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
-   * @throws \Drupal\helfi_atv\AtvFailedToConnectException
-   * @throws \GuzzleHttp\Exception\GuzzleException|\Drupal\helfi_helsinki_profiili\TokenExpiredException
+   *   Data in object struct.
    */
   public function createDocument(array $values): AtvDocument;
 
@@ -100,7 +111,7 @@ interface AtvServiceInterface {
    *
    * @param string $id
    *   Document id to be patched.
-   * @param array $dataArray
+   * @param mixed[] $dataArray
    *   Document data to update.
    *
    * @return bool|\Drupal\helfi_atv\AtvDocument|null
@@ -133,7 +144,7 @@ interface AtvServiceInterface {
    * @param \Drupal\helfi_atv\AtvDocument $document
    *   Document to be deleted.
    *
-   * @return array|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
+   * @return mixed[]|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
    *   If deletion succeeed.
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
@@ -151,7 +162,7 @@ interface AtvServiceInterface {
    * @param string $attachmentId
    *   ID of attachment.
    *
-   * @return array|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
+   * @return mixed[]|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
    *   If removal succeeed.
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
@@ -166,8 +177,8 @@ interface AtvServiceInterface {
    * @param string $attachmentUrl
    *   Url of an attachment.
    *
-   * @return array|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
-   *   If removal succeeed.
+   * @return mixed[]|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
+   *   If removal succeeded.
    *
    * @throws \Drupal\helfi_atv\AtvAuthFailedException
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
@@ -183,7 +194,7 @@ interface AtvServiceInterface {
    * @param string $integrationId
    *   Full URI of the attachment.
    *
-   * @return array|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
+   * @return mixed[]|bool|\Drupal\file\FileInterface|\Drupal\helfi_atv\AtvDocument
    *   If removal succeeed.
    *
    * @throws \Drupal\helfi_atv\AtvDocumentNotFoundException
