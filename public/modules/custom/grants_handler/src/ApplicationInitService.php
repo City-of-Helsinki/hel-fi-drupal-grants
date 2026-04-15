@@ -395,7 +395,7 @@ class ApplicationInitService {
   /**
    * Set delete after.
    *
-   * @param array $settings
+   * @param mixed[] $settings
    *   The webform settings.
    * @param \Drupal\helfi_atv\AtvDocument $atvDocument
    *   The atv document.
