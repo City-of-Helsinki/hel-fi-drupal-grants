@@ -380,7 +380,7 @@ class StubRequestHandlerResourcePlugin extends ResourceBase {
   /**
    * Handles a POST request.
    */
-  public function post(): void  {}
+  public function post(): void {}
 
   /**
    * Handles a PATCH request.
