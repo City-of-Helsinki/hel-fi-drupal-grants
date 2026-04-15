@@ -1759,12 +1759,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
 			count: 5
 			path: public/modules/custom/grants_application/tests/src/Unit/FormTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\grants_application\\\\Unit\\\\HelfiAtvServiceTest\\:\\:appEnvProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/tests/src/Unit/HelfiAtvServiceTest.php
-
 		-
 			message: "#^Method Drupal\\\\Tests\\\\grants_application\\\\Unit\\\\Form\\\\JsonMapperTest\\:\\:getAllDatasources\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
@@ -2532,11 +2526,6 @@ parameters:
 
 		-
 			message: "#^Binary operation \"\\.\" between non\\-falsy\\-string and array\\<int, string\\>\\|string results in an error\\.$#"
-			count: 1
-			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
-
-		-
-			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachment\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
 
@@ -11241,21 +11230,6 @@ parameters:
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:deleteAttachmentByUrl\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:deleteAttachmentViaIntegrationId\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:deleteDocument\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:deleteGdprData\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
@@ -11286,22 +11260,12 @@ parameters:
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:getUserDocuments\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:hasAllowedRole\\(\\) has parameter \\$allowedRoles with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:hasAllowedRole\\(\\) has parameter \\$roles with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:patchDocument\\(\\) has parameter \\$dataArray with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
@@ -11322,16 +11286,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:request\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:searchDocuments\\(\\) has parameter \\$searchParams with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:searchDocuments\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
