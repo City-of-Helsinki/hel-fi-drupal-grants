@@ -390,6 +390,6 @@ class StubRequestHandlerResourcePlugin extends ResourceBase {
   /**
    * Handles a DELETE request.
    */
-  public function delete(): void  {}
+  public function delete(): void {}
 
 }
