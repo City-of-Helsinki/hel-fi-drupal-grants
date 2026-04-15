@@ -8,7 +8,7 @@ use Drupal\file\Entity\File;
 use Drupal\file\FileInterface;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
-use Drupal\helfi_atv\AtvServiceInterface;
+use Drupal\helfi_atv\AtvService;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
@@ -18,7 +18,7 @@ class HelfiAtvService {
 
   public function __construct(
     #[Autowire(service: 'helfi_atv.atv_service')]
-    private readonly AtvServiceInterface $atvService,
+    private readonly AtvService $atvService,
   ) {
   }
 

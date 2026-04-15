@@ -68,8 +68,6 @@ final class HelfiAtvServiceTest extends UnitTestCase {
       'aaaaaaaa-bbbb-cccc-ddddd-eeeeeeeeeeee',
       ['identifier' => '7777480-7', 'type' => 'registered_community'],
       'aaaaaaaa-bbbb-cccc-ddddd-eeeeeeeeeeee',
-      'registered_community',
-      'registered_community'
     );
     $this->assertInstanceOf(AtvDocument::class, $sideDocument);
   }
