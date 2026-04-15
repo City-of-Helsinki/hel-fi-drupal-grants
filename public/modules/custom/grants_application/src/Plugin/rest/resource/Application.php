@@ -160,7 +160,7 @@ final class Application extends ResourceBase {
 
     try {
       // Make sure it exists in database.
-      $submission = $this->getSubmissionEntity($user_information['sub'], $application_number, $grants_profile_data->getBusinessId());
+      $submission = $this->getSubmissionEntity($user_information->sub, $application_number, $grants_profile_data->getBusinessId());
     }
     catch (\Exception $e) {
       // Cannot get the submission.
@@ -182,7 +182,7 @@ final class Application extends ResourceBase {
           $sideDocument = $this->atvService->createSideDocument(
             'application_type',
             $settings->getApplicationName(),
-            $user_information['sub'],
+            $user_information->sub,
             $selected_company,
             $document->getId(),
             $selected_company['type']
@@ -293,7 +293,7 @@ final class Application extends ResourceBase {
 
     try {
       $submission = $this->getSubmissionEntity(
-        $this->userInformationService->getUserData()['sub'],
+        $this->userInformationService->getUserData()->sub,
         $application_number,
         $grants_profile_data->getBusinessId(),
       );
@@ -547,7 +547,7 @@ final class Application extends ResourceBase {
 
     try {
       $submission = $this->getSubmissionEntity(
-        $this->userInformationService->getUserData()['sub'],
+        $this->userInformationService->getUserData()->sub,
         $application_number,
         $grants_profile_data->getBusinessId(),
       );

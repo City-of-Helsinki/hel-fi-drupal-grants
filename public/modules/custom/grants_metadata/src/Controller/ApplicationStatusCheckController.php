@@ -86,17 +86,7 @@ class ApplicationStatusCheckController extends ControllerBase {
 
     $userData = $this->helsinkiProfiiliUserData->getUserData();
 
-    if (empty($userData) || !isset($userData['sub'])) {
-      $this->getLogger('status_check_controller')
-        ->error('Status check, submission %application_number not found',
-        [
-          'application_number' => $submission_id,
-        ]
-      );
-      return [];
-    }
-
-    $userDocuments = $this->helfiAtv->getUserDocuments($userData['sub'], $submission_id);
+    $userDocuments = $this->helfiAtv->getUserDocuments($userData->sub, $submission_id);
 
     if (empty($userDocuments)) {
       return [];

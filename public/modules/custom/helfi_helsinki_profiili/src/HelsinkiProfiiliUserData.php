@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\helfi_helsinki_profiili;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 use Drupal\helfi_helsinki_profiili\Helper\JwtHelper;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -44,47 +45,26 @@ class HelsinkiProfiiliUserData implements LoggerAwareInterface {
   }
 
   /**
-   * Get user authentication level from suomifi / helsinkiprofile.
-   *
-   * @return string
-   *   Authentication level to be tested.
-   *
-   * @todo When auth levels are set in HP, check that these match.
-   */
-  public function getAuthenticationLevel(): string {
-    $authLevel = 'noAuth';
-
-    $userData = $this->getUserData();
-
-    if ($userData == NULL) {
-      return $authLevel;
-    }
-
-    if ($userData['loa'] == 'substantial') {
-      return 'strong';
-    }
-    if ($userData['loa'] == 'low') {
-      return 'weak';
-    }
-
-    return $authLevel;
-  }
-
-  /**
    * Get user data from tempstore.
    *
-   * Note: This has nothing to do with setUserData().
-   *
-   * @return array
+   * @return \Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser
    *   Userdata from tempstore.
+   *
+   * @throws \Drupal\helfi_helsinki_profiili\ProfiiliException
+   *    If parsing the JWT token fails.
    */
-  public function getUserData(): array {
-    $token = $this->openidConnectSession->retrieveIdToken();
-    if (empty($token)) {
-      return [];
-    }
+  public function getUserData(): HelsinkiProfiiliUser {
+    try {
+      $token = $this->openidConnectSession->retrieveIdToken();
+      if (empty($token)) {
+        throw new ProfiiliException('No token available');
+      }
 
-    return JwtHelper::parseToken($this->openidConnectSession->retrieveIdToken());
+      return HelsinkiProfiiliUser::fromArray(JwtHelper::parseToken($token));
+    }
+    catch (\Throwable $e) {
+      throw new ProfiiliException($e->getMessage(), $e->getCode(), $e);
+    }
   }
 
   /**
