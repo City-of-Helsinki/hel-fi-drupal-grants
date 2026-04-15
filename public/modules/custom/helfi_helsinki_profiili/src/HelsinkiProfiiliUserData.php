@@ -56,16 +56,6 @@ class HelsinkiProfiiliUserData implements LoggerAwareInterface {
   }
 
   /**
-   * Figure out if user is authed.
-   *
-   * @return bool
-   *   If user is authenticated externally.
-   */
-  public function isAuthenticatedExternally(): bool {
-    return !($this->openidConnectSession->retrieveIdToken() === NULL);
-  }
-
-  /**
    * Get user authentication level from suomifi / helsinkiprofile.
    *
    * @return string
