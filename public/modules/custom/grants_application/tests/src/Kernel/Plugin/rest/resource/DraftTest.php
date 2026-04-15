@@ -342,7 +342,7 @@ final class DraftTest extends KernelTestBase {
   /**
    * Test draft post.
    */
-  public function testDraftPost() {
+  public function testDraftPost(): void {
     $helfiAtvService = $this->createMock(HelfiAtvService::class);
     $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);
     $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
