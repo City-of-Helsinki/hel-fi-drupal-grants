@@ -385,8 +385,6 @@ final class Application extends ResourceBase {
       return new JsonResponse(['error' => $this->t('Something went wrong')], 500);
     }
 
-
-
     // Save id has previously been saved to database to track
     // unsuccessful submissions due to integration failures.
     // @todo Use drupal uuid service maybe ?

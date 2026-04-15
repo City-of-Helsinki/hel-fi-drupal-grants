@@ -192,23 +192,6 @@ final class ApplicationTest extends KernelTestBase {
     $this->installConfig(['rest']);
     $this->container->get('router.builder')->rebuild();
 
-    $this->applicationSubmission = ApplicationSubmission::create([
-      'id' => 1,
-      'uuid' => 'aaaaaaaa-1111-2222-3333-bbbcccdddeee',
-      'document_id' => 'bbbbbbbb-4444-5555-6666-fffggghhhiii',
-      'sub' => '123345678-abcd-1234-ab12-abcdefgh',
-      'business_id' => 'qwertyui-1234-1234-1234-qweasdzxcrty',
-      'draft' => TRUE,
-      'langcode' => 'fi',
-      'application_type_id' => 58,
-      'form_identifier' => 'liikunta_suunnistuskartta_avustu',
-      'side_document_id' => 'sidedocu-1111-2222-3333-mentidabcdef',
-      'application_number' => $this->applicationNumber,
-      'created' => '1765430954',
-      'changed' => '1765430954',
-    ]);
-    $this->applicationSubmission->save();
-
     $this->atvDocument = AtvDocument::create([
       'id' => 'test-id',
       'type' => 'type',
@@ -316,6 +299,23 @@ final class ApplicationTest extends KernelTestBase {
    * Test appication get endpoint.
    */
   public function testApplicationGet(): void {
+    $this->applicationSubmission = ApplicationSubmission::create([
+      'id' => 1,
+      'uuid' => 'aaaaaaaa-1111-2222-3333-bbbcccdddeee',
+      'document_id' => 'bbbbbbbb-4444-5555-6666-fffggghhhiii',
+      'sub' => '123345678-abcd-1234-ab12-abcdefgh',
+      'business_id' => 'qwertyui-1234-1234-1234-qweasdzxcrty',
+      'draft' => TRUE,
+      'langcode' => 'fi',
+      'application_type_id' => 58,
+      'form_identifier' => 'liikunta_suunnistuskartta_avustu',
+      'side_document_id' => 'sidedocu-1111-2222-3333-mentidabcdef',
+      'application_number' => $this->applicationNumber,
+      'created' => '1765430954',
+      'changed' => '1765430954',
+    ]);
+    $this->applicationSubmission->save();
+
     $helfiAtvService = $this->createMock(HelfiAtvService::class);
     $helfiAtvService->expects($this->any())->method('getDocument')->willReturn($this->atvDocument);
     $helfiAtvService->expects($this->any())->method('updateExistingDocument')->willReturn($this->atvDocument);
@@ -341,6 +341,23 @@ final class ApplicationTest extends KernelTestBase {
    * Test application post endpoint.
    */
   public function testApplicationPost(): void {
+    $this->applicationSubmission = ApplicationSubmission::create([
+      'id' => 1,
+      'uuid' => 'aaaaaaaa-1111-2222-3333-bbbcccdddeee',
+      'document_id' => 'bbbbbbbb-4444-5555-6666-fffggghhhiii',
+      'sub' => '123345678-abcd-1234-ab12-abcdefgh',
+      'business_id' => 'qwertyui-1234-1234-1234-qweasdzxcrty',
+      'draft' => TRUE,
+      'langcode' => 'fi',
+      'application_type_id' => 58,
+      'form_identifier' => 'liikunta_suunnistuskartta_avustu',
+      'side_document_id' => 'sidedocu-1111-2222-3333-mentidabcdef',
+      'application_number' => $this->applicationNumber,
+      'created' => '1765430954',
+      'changed' => '1765430954',
+    ]);
+    $this->applicationSubmission->save();
+
     $helfiAtvService = $this->createMock(HelfiAtvService::class);
     $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);
     $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
@@ -356,6 +373,52 @@ final class ApplicationTest extends KernelTestBase {
 
     $uri = "/applications/$form_identifier/application/$this->applicationNumber";
     $request = Request::create($uri, "POST", [], [], [], [], $content);
+    $request->headers->set('Content-Type', 'application/json');
+    $request->headers->set('Accept', 'application/json');
+
+    $http_kernel = $this->container->get('http_kernel');
+    $response = $http_kernel->handle($request);
+
+    $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
+  }
+
+  /**
+   * Test side document logic.
+   */
+  public function testApplicationSideDocumentLogic(): void {
+    // When we get an atv-document, make sure the side document exists as well.
+    $this->applicationSubmission = ApplicationSubmission::create([
+      'id' => 1,
+      'uuid' => 'aaaaaaaa-1111-2222-3333-bbbcccdddeee',
+      'document_id' => 'bbbbbbbb-4444-5555-6666-fffggghhhiii',
+      'sub' => '123345678-abcd-1234-ab12-abcdefgh',
+      'business_id' => 'qwertyui-1234-1234-1234-qweasdzxcrty',
+      'draft' => TRUE,
+      'langcode' => 'fi',
+      'application_type_id' => 58,
+      'form_identifier' => 'liikunta_suunnistuskartta_avustu',
+      'application_number' => $this->applicationNumber,
+      'created' => '1765430954',
+      'changed' => '1765430954',
+    ]);
+    $this->applicationSubmission->save();
+
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
+    $helfiAtvService->expects($this->any())->method('updateExistingDocument')->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('updateExistingDocument')->willReturn($this->sideDocument);
+    $helfiAtvService->expects($this->once())->method('saveNewDocument')->willReturn($this->sideDocument);
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+
+    $form_identifier = 'liikunta_suunnistuskartta_avustu';
+    $content = json_encode([
+      'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json') ?: '', TRUE) ?? '',
+    ]);
+    $content = $content ?: NULL;
+
+    $uri = "/applications/$form_identifier/application/$this->applicationNumber";
+    $request = Request::create($uri, "GET", [], [], [], [], $content);
     $request->headers->set('Content-Type', 'application/json');
     $request->headers->set('Accept', 'application/json');
 
