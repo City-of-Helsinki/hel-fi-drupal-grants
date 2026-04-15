@@ -6,16 +6,17 @@ namespace Drupal\Tests\helfi_atv\Kernel;
 
 use Drupal\file\Entity\File;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests AtvServiceHeaderTest class.
  *
  * Test that each request has correct auth headers.
  * AtvService caches headers for one Drupal request.
- *
- * @covers \Drupal\helfi_atv\AtvService
- * @group helfi_atv
  */
+#[Group('helfi_atv')]
+#[RunTestsInSeparateProcesses]
 class AtvServiceHeaderTest extends AtvKernelTestBase {
 
   /**

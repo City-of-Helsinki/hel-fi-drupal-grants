@@ -11417,7 +11417,7 @@ parameters:
 
 		-
 			message: "#^Function Exception not found\\.$#"
-			count: 3
+			count: 2
 			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/HelfiAtvTestServiceProvider.php
 
 		-
@@ -11454,16 +11454,6 @@ parameters:
 			message: "#^Property Drupal\\\\helfi_atv_test\\\\MockClientFactory\\:\\:\\$historyContainer type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/MockClientFactory.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv_test\\\\MockHelsinkiProfiiliUserData\\:\\:getApiAccessTokens\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/MockHelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv_test\\\\MockHelsinkiProfiiliUserData\\:\\:getCurrentUserRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/MockHelsinkiProfiiliUserData.php
 
 		-
 			message: "#^Call to an undefined method Drupal\\\\Core\\\\Http\\\\ClientFactory\\:\\:addResponse\\(\\)\\.$#"

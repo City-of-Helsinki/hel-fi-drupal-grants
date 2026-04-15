@@ -9,6 +9,7 @@ services:
 
   helfi_helsinki_profiili.userdata:
     class: Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
+  Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData: '@helfi_helsinki_profiili.userdata'
 
   helfi_helsinki_profiili.middleware:
     class: Drupal\helfi_helsinki_profiili\RegisterPageRedirectMiddleware

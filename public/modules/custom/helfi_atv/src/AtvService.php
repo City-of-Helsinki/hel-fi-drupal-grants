@@ -9,6 +9,7 @@ use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\file\Entity\File;
 use Drupal\file\FileInterface;
 use Drupal\file\FileRepositoryInterface;
@@ -122,32 +123,17 @@ class AtvService {
 
   /**
    * Constructs an AtvService object.
-   *
-   * @param \GuzzleHttp\ClientInterface $httpClient
-   *   The HTTP client.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   Logger factory.
-   * @param \Drupal\file\FileRepositoryInterface $fileRepository
-   *   Access to filesystem.
-   * @param \Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $helsinkiProfiiliUserData
-   *   Helsinkiprofiili.
-   * @param \Psr\EventDispatcher\EventDispatcherInterface $eventDispatcher
-   *   Event dispatcher.
-   * @param \Drupal\Core\File\FileSystemInterface $fileSystem
-   *   File system.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Config factory.
    */
   public function __construct(
     protected ClientInterface $httpClient,
     #[Autowire(service: 'logger.channel.helfi_atv')]
     protected LoggerInterface $logger,
     protected FileRepositoryInterface $fileRepository,
-    #[Autowire(service: 'helfi_helsinki_profiili.userdata')]
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
     protected EventDispatcherInterface $eventDispatcher,
     protected FileSystemInterface $fileSystem,
     ConfigFactoryInterface $configFactory,
+    protected AccountProxyInterface $currentUser,
   ) {
     $this->baseUrl = getenv('ATV_BASE_URL');
     $this->atvVersion = getenv('ATV_VERSION');
@@ -211,7 +197,7 @@ class AtvService {
 
     // Here we figure out if user has HP user or ADMIN, and if user has admin
     // role but no user role then we use apikey for authenticating user.
-    $userRoles = $this->helsinkiProfiiliUserData->getCurrentUserRoles();
+    $userRoles = $this->currentUser->getRoles();
 
     $config = $this->config;
     $rolesConfig = $config->get('roles');
