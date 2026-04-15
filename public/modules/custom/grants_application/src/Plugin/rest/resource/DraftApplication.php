@@ -178,7 +178,7 @@ final class DraftApplication extends ResourceBase {
     else {
       try {
         $document_content = $document->getContent();
-        $originalContent = $document_content['form_data'] ?? $document_content['compensation']['form_data'];
+        $originalContent = $document_content['form_data'] ?? $document_content['compensation']['form_data'] ?? [];
         $sideDocument = $this->atvService->createSideDocument(
           'application_type',
           $settings->getApplicationName(),
