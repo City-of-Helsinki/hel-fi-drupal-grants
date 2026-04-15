@@ -1596,11 +1596,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
 
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
-
-		-
 			message: "#^Parameter \\#4 \\$serializer_formats of class Drupal\\\\grants_application\\\\Plugin\\\\rest\\\\resource\\\\DraftApplication constructor expects array, array\\|bool\\|float\\|int\\|string\\|UnitEnum\\|null given\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php

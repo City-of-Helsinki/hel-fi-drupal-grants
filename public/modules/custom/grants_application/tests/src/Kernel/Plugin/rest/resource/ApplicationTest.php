@@ -53,14 +53,14 @@ final class ApplicationTest extends KernelTestBase {
   /**
    * The atv document.
    *
-   * @var \Drupal\helfi_atv\AtvDocument\AtvDocument
+   * @var \Drupal\helfi_atv\AtvDocument
    */
   private AtvDocument $atvDocument;
 
   /**
    * The side document.
    *
-   * @var \Drupal\helfi_atv\AtvDocument\AtvDocument
+   * @var \Drupal\helfi_atv\AtvDocument
    */
   private AtvDocument $sideDocument;
 
@@ -285,7 +285,7 @@ final class ApplicationTest extends KernelTestBase {
     $eventService = $this->createMock(EventsService::class);
     $eventService->expects($this->any())->method('logEvent')->withAnyParameters()->willReturn([]);
 
-    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json'), TRUE);
+    $userData = json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/commonDatasources.json') ?: '', TRUE) ?? [];
     $userService = $this->createMock(UserInformationService::class);
     $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile($userData['grants_profile_array']));
     $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
@@ -295,7 +295,7 @@ final class ApplicationTest extends KernelTestBase {
     $jsonMapperService->expects($this->any())->method('getSelectedBankFile')->willReturn([]);
     $jsonMapperService->expects($this->any())->method('documentBankFileIsSet')->willReturn(TRUE);
     $jsonMapperService->expects($this->any())->method('handleMapping')->willReturn(
-      json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-result.json'), TRUE)
+      json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-result.json') ?: '', TRUE) ?? []
     );
     $this->container->set(JsonMapperService::class, $jsonMapperService);
 
@@ -318,15 +318,14 @@ final class ApplicationTest extends KernelTestBase {
   public function testApplicationGet(): void {
     $helfiAtvService = $this->createMock(HelfiAtvService::class);
     $helfiAtvService->expects($this->any())->method('getDocument')->willReturn($this->atvDocument);
-    // $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
     $helfiAtvService->expects($this->any())->method('updateExistingDocument')->willReturn($this->atvDocument);
-    // $helfiAtvService->expects($this->any())->method('updateExistingDocument')->willReturn($this->sideDocument);
     $this->container->set(HelfiAtvService::class, $helfiAtvService);
 
     $form_identifier = 'liikunta_suunnistuskartta_avustu';
     $content = json_encode([
-      'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json'), TRUE),
+      'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json') ?: '', TRUE) ?? '',
     ]);
+    $content = $content ?: '';
 
     $uri = "/applications/$form_identifier/application/$this->applicationNumber";
     $request = Request::create($uri, "GET", [], [], [], [], $content);
@@ -351,8 +350,9 @@ final class ApplicationTest extends KernelTestBase {
 
     $form_identifier = 'liikunta_suunnistuskartta_avustu';
     $content = json_encode([
-      'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json'), TRUE),
+      'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json') ?: '', TRUE) ?? '',
     ]);
+    $content = $content ?: NULL;
 
     $uri = "/applications/$form_identifier/application/$this->applicationNumber";
     $request = Request::create($uri, "POST", [], [], [], [], $content);
@@ -375,21 +375,21 @@ class StubRequestHandlerResourcePlugin extends ResourceBase {
   /**
    * Handles a GET request.
    */
-  public function get($example = NULL, ?Request $request = NULL) {}
+  public function get(mixed $example = NULL, ?Request $request = NULL): void {}
 
   /**
    * Handles a POST request.
    */
-  public function post() {}
+  public function post(): void  {}
 
   /**
    * Handles a PATCH request.
    */
-  public function patch($data, Request $request) {}
+  public function patch(mixed $data, Request $request): void {}
 
   /**
    * Handles a DELETE request.
    */
-  public function delete() {}
+  public function delete(): void  {}
 
 }
