@@ -21,6 +21,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Integrate HelsinkiProfiili data to Drupal User.
+ *
+ * There are two types of 'user data':
+ *  - User profile data: Data fetched from profiili graphql endpoint.
+ *  - `userData`: claim returned by authenticator. Stored in session,
+ *     but not sure if this is read anywhere.
  */
 class HelsinkiProfiiliUserData implements LoggerAwareInterface {
 
@@ -67,6 +72,8 @@ class HelsinkiProfiiliUserData implements LoggerAwareInterface {
 
   /**
    * Get user data from tempstore.
+   *
+   * Note: This has nothing to do with setUserData().
    *
    * @return array
    *   Userdata from tempstore.
