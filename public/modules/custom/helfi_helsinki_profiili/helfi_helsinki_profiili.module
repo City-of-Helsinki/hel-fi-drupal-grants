@@ -38,8 +38,6 @@ function helfi_helsinki_profiili_openid_connect_post_authorize(UserInterface $ac
   if (empty($context["user_data"]["ad_groups"])) {
     try {
       $profileDAO = \Drupal::service(HelsinkiProfiiliUserData::class);
-      // Set user data from openid.
-      $profileDAO->setUserData($context['user_data']);
       // Fetch HelsinkiProfile data.
       try {
         $data = $profileDAO->getUserProfileData();

@@ -11856,11 +11856,6 @@ parameters:
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:setUserData\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:verifyJwtToken\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php

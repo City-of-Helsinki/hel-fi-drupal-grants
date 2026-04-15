@@ -83,16 +83,6 @@ class HelsinkiProfiiliUserData implements LoggerAwareInterface {
   }
 
   /**
-   * Set user data to private store.
-   *
-   * @param array $userData
-   *   Userdata retrieved from HP.
-   */
-  public function setUserData(array $userData): void {
-    $this->setToCache('userData', $userData);
-  }
-
-  /**
    * Get user data from tempstore.
    *
    * @return array
