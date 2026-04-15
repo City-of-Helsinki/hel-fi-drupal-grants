@@ -908,7 +908,7 @@ class HelsinkiProfiiliUserData {
    */
   private function dispatchExceptionEvent(\Exception $exception): void {
     $event = new HelsinkiProfiiliExceptionEvent($exception);
-    $this->eventDispatcher->dispatch($event, HelsinkiProfiiliExceptionEvent::EVENT_ID);
+    $this->eventDispatcher->dispatch($event);
   }
 
   /**
@@ -919,7 +919,7 @@ class HelsinkiProfiiliUserData {
    */
   private function dispatchOperationEvent(string $message): void {
     $event = new HelsinkiProfiiliOperationEvent($message);
-    $this->eventDispatcher->dispatch($event, HelsinkiProfiiliOperationEvent::EVENT_ID);
+    $this->eventDispatcher->dispatch($event);
   }
 
   /**

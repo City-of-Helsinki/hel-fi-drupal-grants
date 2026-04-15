@@ -19,7 +19,7 @@ final class SentryEventSubscriber implements EventSubscriberInterface {
   public static function getSubscribedEvents(): array {
     return [
       AtvServiceExceptionEvent::EVENT_ID => 'onAtvException',
-      HelsinkiProfiiliExceptionEvent::EVENT_ID => 'onHelsinkiProfiiliException',
+      HelsinkiProfiiliExceptionEvent::class => 'onHelsinkiProfiiliException',
     ];
   }
 
