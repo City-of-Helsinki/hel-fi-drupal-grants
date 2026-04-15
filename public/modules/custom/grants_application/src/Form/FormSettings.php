@@ -193,4 +193,24 @@ final class FormSettings {
     return $this->settings['title'] ?? '';
   }
 
+  /**
+   * Calculate delete after value for this application.
+   *
+   * Draft: If continuous: 1 year, if not continuous: close-date + 1 month
+   * Submitted: 6 years.
+   *
+   * @return string
+   *   The delete after value.
+   */
+  public function getDraftDeleteAfter(): string {
+    $isContinuous = $this->settings['continuous'] ?? FALSE;
+    $endDate = $this->settings['application_close'] ?? NULL;
+
+    if (!$isContinuous && $endDate) {
+      return (new \DateTimeImmutable($endDate))->add(new \DateInterval('P1M'))->format('Y-m-d');
+    }
+
+    return date('Y-m-d', strtotime('+1 year'));
+  }
+
 }
