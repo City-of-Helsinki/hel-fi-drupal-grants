@@ -50,8 +50,18 @@ final class ApplicationTest extends KernelTestBase {
    */
   private string $sideDocumentId = 'sidedocu-1111-2222-3333-mentidabcdef';
 
+  /**
+   * The atv document.
+   *
+   * @var \Drupal\helfi_atv\AtvDocument\AtvDocument
+   */
   private AtvDocument $atvDocument;
 
+  /**
+   * The side document.
+   *
+   * @var \Drupal\helfi_atv\AtvDocument\AtvDocument
+   */
   private AtvDocument $sideDocument;
 
   /**
@@ -61,8 +71,12 @@ final class ApplicationTest extends KernelTestBase {
    */
   protected RequestHandler $requestHandler;
 
-
+  /**
+   * {@inheritdoc}
+   */
+  // @codingStandardsIgnoreStart
   protected $strictConfigSchema = FALSE;
+  // @codingStandardsIgnoreEnd
 
   /**
    * {@inheritdoc}
@@ -158,7 +172,7 @@ final class ApplicationTest extends KernelTestBase {
       'uid' => 0,
     ])->save();
 
-    // Todo use correct permission.
+    // @todo Use correct permission.
     Role::load('anonymous')
       ->grantPermission('restful get application_rest_resource')
       ->grantPermission('restful post application_rest_resource')
@@ -216,7 +230,6 @@ final class ApplicationTest extends KernelTestBase {
       'draft' => TRUE,
       'human_readable_type' => ['humanType'],
       'metadata' => '{"name": "Name", "value": "Value"}',
-      #'content' => '{"compensation": {}. "events": {}, "attachmentsInfo":{"attachmentsArray":{}}}',
       'created_at' => '2024-06-06',
       'updated_at' => '2024-06-07',
       'user_id' => 'userId',
@@ -225,7 +238,7 @@ final class ApplicationTest extends KernelTestBase {
       'delete_after' => '2075-01-01',
       'document_language' => 'fi',
       'content_schema_url' => 'schemaURL',
-      'attachments' => []
+      'attachments' => [],
     ]);
 
     $this->atvDocument->setContent(
@@ -278,7 +291,6 @@ final class ApplicationTest extends KernelTestBase {
     $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
     $userService->expects($this->any())->method('getUserData')->willReturn($userData['user']);
 
-    // tästä lähti atv dokumentit
     $jsonMapperService = $this->createMock(JsonMapperService::class);
     $jsonMapperService->expects($this->any())->method('getSelectedBankFile')->willReturn([]);
     $jsonMapperService->expects($this->any())->method('documentBankFileIsSet')->willReturn(TRUE);
@@ -300,6 +312,9 @@ final class ApplicationTest extends KernelTestBase {
     $this->container->set(UserInformationService::class, $userService);
   }
 
+  /**
+   * Test appication get endpoint.
+   */
   public function testApplicationGet(): void {
     $helfiAtvService = $this->createMock(HelfiAtvService::class);
     $helfiAtvService->expects($this->any())->method('getDocument')->willReturn($this->atvDocument);
@@ -324,7 +339,7 @@ final class ApplicationTest extends KernelTestBase {
   }
 
   /**
-   * Test the file upload.
+   * Test application post endpoint.
    */
   public function testApplicationPost(): void {
     $helfiAtvService = $this->createMock(HelfiAtvService::class);
