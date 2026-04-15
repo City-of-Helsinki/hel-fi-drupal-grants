@@ -74,6 +74,9 @@ final class HelfiAtvServiceTest extends UnitTestCase {
 
   /**
    * Data provider for testGetAppEnv.
+   *
+   * @return mixed[]
+   *   App env provider array.
    */
   public static function appEnvProvider(): array {
     return [

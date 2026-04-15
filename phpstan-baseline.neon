@@ -2530,11 +2530,6 @@ parameters:
 			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
 
 		-
-			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachmentSubmit\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
-
-		-
 			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachmentSubmit\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
@@ -5443,6 +5438,11 @@ parameters:
 			message: "#^Offset 'role' does not exist on array\\|string\\.$#"
 			count: 2
 			path: public/modules/custom/grants_handler/src/Plugin/WebformElement/CommunityOfficialsComposite.php
+
+		-
+			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachment\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\Plugin\\\\WebformElement\\\\CompensationsComposite\\:\\:defineDefaultProperties\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -11211,11 +11211,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:buildUrl\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:createDocument\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
