@@ -104,4 +104,5 @@ class MockAtvService implements AtvServiceInterface {
   public function getDocument(string $id, bool $refetch = FALSE): AtvDocument {
     return AtvDocument::create([]);
   }
+
 }
