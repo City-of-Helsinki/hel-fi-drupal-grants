@@ -50,6 +50,10 @@ final class ApplicationTest extends KernelTestBase {
    */
   private string $sideDocumentId = 'sidedocu-1111-2222-3333-mentidabcdef';
 
+  private AtvDocument $atvDocument;
+
+  private AtvDocument $sideDocument;
+
   /**
    * The request handler.
    *
@@ -154,8 +158,15 @@ final class ApplicationTest extends KernelTestBase {
       'uid' => 0,
     ])->save();
 
+    // Todo use correct permission.
     Role::load('anonymous')
+      ->grantPermission('restful get application_rest_resource')
       ->grantPermission('restful post application_rest_resource')
+      ->grantPermission('restful patch application_rest_resource')
+      ->grantPermission('restful get draft_application_rest_resource')
+      ->grantPermission('restful post draft_application_rest_resource')
+      ->grantPermission('restful patch draft_application_rest_resource')
+
       ->save();
 
     $config = $this->config('content_lock.settings')
@@ -184,14 +195,19 @@ final class ApplicationTest extends KernelTestBase {
     ]);
     $this->applicationSubmission->save();
 
-    $atvDocument = AtvDocument::create([
+    $this->atvDocument = AtvDocument::create([
       'id' => 'test-id',
       'type' => 'type',
       'status' => [
         'value' => 'DRAFT',
       ],
       'status_histories' => [
-        'DRAFT',
+        [
+          "value" => "DRAFT",
+          "status_display_values" => [],
+          "timestamp" => "2025-05-09T16:53:26.428591+03:00",
+          "activities" => [],
+        ],
       ],
       'transaction_id' => '1234567890',
       'business_id' => '1234567-1',
@@ -200,7 +216,7 @@ final class ApplicationTest extends KernelTestBase {
       'draft' => TRUE,
       'human_readable_type' => ['humanType'],
       'metadata' => '{"name": "Name", "value": "Value"}',
-      'content' => '{"compensation": {"events": {}}}',
+      #'content' => '{"compensation": {}. "events": {}, "attachmentsInfo":{"attachmentsArray":{}}}',
       'created_at' => '2024-06-06',
       'updated_at' => '2024-06-07',
       'user_id' => 'userId',
@@ -209,9 +225,22 @@ final class ApplicationTest extends KernelTestBase {
       'delete_after' => '2075-01-01',
       'document_language' => 'fi',
       'content_schema_url' => 'schemaURL',
+      'attachments' => []
     ]);
 
-    $sideDocument = ATVDocument::create([
+    $this->atvDocument->setContent(
+      [
+        'compensation' => [
+          'applicantInfoArray' => [],
+        ],
+        'formUpdate' => FALSE,
+        'statusUpdates' => [],
+        'events' => [],
+        'messages' => [],
+      ]
+    );
+
+    $this->sideDocument = ATVDocument::create([
       'id' => 'sidedocu-1111-2222-3333-mentidabcdef',
       'status' => [
         'value' => 'DRAFT',
@@ -226,7 +255,7 @@ final class ApplicationTest extends KernelTestBase {
       'draft' => TRUE,
       'human_readable_type' => ['humanType'],
       'metadata' => '{"name": "Name", "value": "Value"}',
-      'content' => '{"data": "content"}',
+      'content' => [],
       'created_at' => '2024-06-06',
       'updated_at' => '2024-06-07',
       'user_id' => 'userId',
@@ -238,7 +267,7 @@ final class ApplicationTest extends KernelTestBase {
     ]);
 
     $applicationGetterService = $this->createMock(ApplicationGetterService::class);
-    $applicationGetterService->expects($this->any())->method('getAtvDocument')->willReturn($atvDocument);
+    $applicationGetterService->expects($this->any())->method('getAtvDocument')->willReturn($this->atvDocument);
 
     $eventService = $this->createMock(EventsService::class);
     $eventService->expects($this->any())->method('logEvent')->withAnyParameters()->willReturn([]);
@@ -249,39 +278,62 @@ final class ApplicationTest extends KernelTestBase {
     $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
     $userService->expects($this->any())->method('getUserData')->willReturn($userData['user']);
 
-    $helfiAtvService = $this->createMock(HelfiAtvService::class);
-    $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($atvDocument);
-    $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($sideDocument);
-    $helfiAtvService->expects($this->any())->method('updateExistingDocument')->with()->willReturn($atvDocument);
-    $helfiAtvService->expects($this->any())->method('updateExistingDocument')->with()->willReturn($sideDocument);
-
+    // tästä lähti atv dokumentit
     $jsonMapperService = $this->createMock(JsonMapperService::class);
     $jsonMapperService->expects($this->any())->method('getSelectedBankFile')->willReturn([]);
     $jsonMapperService->expects($this->any())->method('documentBankFileIsSet')->willReturn(TRUE);
     $jsonMapperService->expects($this->any())->method('handleMapping')->willReturn(
       json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-result.json'), TRUE)
     );
+    $this->container->set(JsonMapperService::class, $jsonMapperService);
 
     $integration = $this->createMock(Avus2Integration::class);
     $integration->expects($this->any())->method('sendToAvus2')->willReturn(TRUE);
+    $this->container->set(Avus2Integration::class, $integration);
 
     $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
     $eventDispatcher->expects($this->any())->method('dispatch');
+    $this->container->set(EventDispatcherInterface::class, $eventDispatcher);
 
     $this->container->set('grants_handler.application_getter_service', $applicationGetterService);
     $this->container->set('grants_events.events_service', $eventService);
     $this->container->set(UserInformationService::class, $userService);
+  }
 
+  public function testApplicationGet(): void {
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->expects($this->any())->method('getDocument')->willReturn($this->atvDocument);
+    // $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
+    $helfiAtvService->expects($this->any())->method('updateExistingDocument')->willReturn($this->atvDocument);
+    // $helfiAtvService->expects($this->any())->method('updateExistingDocument')->willReturn($this->sideDocument);
     $this->container->set(HelfiAtvService::class, $helfiAtvService);
-    $this->container->set(JsonMapperService::class, $jsonMapperService);
-    $this->container->set(Avus2Integration::class, $integration);
-    $this->container->set(EventDispatcherInterface::class, $eventDispatcher);
+
+    $form_identifier = 'liikunta_suunnistuskartta_avustu';
+    $content = json_encode([
+      'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json'), TRUE),
+    ]);
+
+    $uri = "/applications/$form_identifier/application/$this->applicationNumber";
+    $request = Request::create($uri, "GET", [], [], [], [], $content);
+    $request->headers->set('Content-Type', 'application/json');
+    $request->headers->set('Accept', 'application/json');
+
+    $http_kernel = $this->container->get('http_kernel');
+    $response = $http_kernel->handle($request);
+    $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
   }
 
   /**
    * Test the file upload.
    */
-  public function testPost(): void {
+  public function testApplicationPost(): void {
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
+    $helfiAtvService->expects($this->any())->method('updateExistingDocument')->with()->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('updateExistingDocument')->with()->willReturn($this->sideDocument);
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+
     $form_identifier = 'liikunta_suunnistuskartta_avustu';
     $content = json_encode([
       'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json'), TRUE),
