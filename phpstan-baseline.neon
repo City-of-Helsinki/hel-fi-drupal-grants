@@ -2545,6 +2545,11 @@ parameters:
 			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
 
 		-
+			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachmentSubmit\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
+
+		-
 			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:getInfo\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
@@ -11216,11 +11221,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:debugPrint\\(\\) has parameter \\$replacements with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:deleteAttachment\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
