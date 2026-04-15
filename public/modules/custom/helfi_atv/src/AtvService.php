@@ -27,7 +27,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 /**
  * Communicate with ATV.
  */
-class AtvService {
+class AtvService implements AtvServiceInterface {
 
   /**
    * Headers for requests.
