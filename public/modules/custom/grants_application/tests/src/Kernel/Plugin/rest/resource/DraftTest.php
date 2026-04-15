@@ -339,4 +339,35 @@ final class DraftTest extends KernelTestBase {
     $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
   }
 
+  /**
+   * Test draft post.
+   */
+  public function testDraftPost() {
+    $helfiAtvService = $this->createMock(HelfiAtvService::class);
+    $helfiAtvService->expects($this->any())->method('getDocument')->with($this->applicationNumber)->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('getDocumentById')->with($this->sideDocumentId)->willReturn($this->sideDocument);
+    $helfiAtvService->expects($this->any())->method('updateExistingDocument')->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('updateExistingDocument')->willReturn($this->sideDocument);
+    $helfiAtvService->expects($this->any())->method('saveNewDocument')->willReturn($this->atvDocument);
+    $helfiAtvService->expects($this->any())->method('saveNewDocument')->willReturn($this->sideDocument);
+
+    $this->container->set(HelfiAtvService::class, $helfiAtvService);
+
+    $form_identifier = 'liikunta_suunnistuskartta_avustu';
+    $content = json_encode([
+      'form_data' => json_decode(file_get_contents(__DIR__ . '/../../../../../fixtures/reactForm/form58-nofiles-formdata.json') ?: '', TRUE) ?? '',
+    ]);
+    $content = $content ?: NULL;
+
+    $uri = "/applications/$form_identifier/$this->applicationNumber";
+    $request = Request::create($uri, "POST", [], [], [], [], $content);
+    $request->headers->set('Content-Type', 'application/json');
+    $request->headers->set('Accept', 'application/json');
+
+    $http_kernel = $this->container->get('http_kernel');
+    $response = $http_kernel->handle($request);
+
+    $this->assertTrue($response instanceof JsonResponse && $response->isSuccessful());
+  }
+
 }

@@ -188,7 +188,7 @@ class HelfiAtvService {
    * @return \Drupal\helfi_atv\AtvDocument
    *   A proper ATV-document
    */
-  public static function createAtvDocument(
+  public function createAtvDocument(
     string $application_uuid,
     string $application_number,
     string $application_name,
