@@ -16,3 +16,5 @@ services:
       - { name: http_middleware, priority: 1000 }
 
   Drupal\helfi_helsinki_profiili\EventSubscriber\TokenExpiredExceptionSubscriber: ~
+
+  Drupal\helfi_helsinki_profiili\ProfiiliApiClient: ~

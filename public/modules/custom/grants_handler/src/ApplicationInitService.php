@@ -16,7 +16,7 @@ use Drupal\helfi_atv\AtvDocumentNotFoundException;
 use Drupal\helfi_atv\AtvFailedToConnectException;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
-use Drupal\helfi_helsinki_profiili\ProfileDataException;
+use Drupal\helfi_helsinki_profiili\ProfiiliException;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use GuzzleHttp\Exception\GuzzleException;
@@ -336,7 +336,7 @@ class ApplicationInitService {
     $userProfileData = $this->helfiHelsinkiProfiiliUserdata->getUserProfileData();
 
     if ($userData == NULL || $webform == NULL) {
-      throw new ProfileDataException('No Helsinki profile data found');
+      throw new ProfiiliException('No Helsinki profile data found');
     }
 
     $selectedCompany = $this->grantsProfileService->getSelectedRoleData();

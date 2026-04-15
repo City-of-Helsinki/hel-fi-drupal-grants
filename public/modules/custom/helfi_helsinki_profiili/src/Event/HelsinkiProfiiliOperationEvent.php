@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\helfi_helsinki_profiili\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
