@@ -8,7 +8,7 @@ use Drupal\file\Entity\File;
 use Drupal\file\FileInterface;
 use Drupal\grants_handler\Helpers;
 use Drupal\helfi_atv\AtvDocument;
-use Drupal\helfi_atv\AtvService;
+use Drupal\helfi_atv\AtvServiceInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
@@ -18,7 +18,7 @@ class HelfiAtvService {
 
   public function __construct(
     #[Autowire(service: 'helfi_atv.atv_service')]
-    private readonly AtvService $atvService,
+    private readonly AtvServiceInterface $atvService,
   ) {
   }
 
@@ -188,7 +188,7 @@ class HelfiAtvService {
    * @return \Drupal\helfi_atv\AtvDocument
    *   A proper ATV-document
    */
-  public static function createAtvDocument(
+  public function createAtvDocument(
     string $application_uuid,
     string $application_number,
     string $application_name,
@@ -255,6 +255,12 @@ class HelfiAtvService {
    * Create the side document.
    *
    * The document holds the raw form data.
+   *
+   * The side document was introduced due to integration overwriting the
+   * application. We read/write the raw react-json on separate ATV-document
+   * and only update the "real" ATV document when we actually must.
+   * The side document ID is stored in database in application_submission
+   * -entity.
    *
    * @param string $application_type
    *   The application type.
