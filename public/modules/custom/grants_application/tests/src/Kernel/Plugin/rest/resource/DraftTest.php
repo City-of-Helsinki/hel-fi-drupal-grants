@@ -13,7 +13,6 @@ use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\helfi_atv\AtvDocument;
-use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\RequestHandler;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
 use Drupal\user\Entity\Role;
@@ -27,8 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @group grants_application
  */
-final class DraftTest extends KernelTestBase
-{
+final class DraftTest extends KernelTestBase {
 
   /**
    * The application submission.
@@ -121,8 +119,7 @@ final class DraftTest extends KernelTestBase
   /**
    * {@inheritdoc}
    */
-  protected function setUp(): void
-  {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('application_submission');
     $this->installSchema('webform', ['webform']);
@@ -296,6 +293,9 @@ final class DraftTest extends KernelTestBase
     $this->container->set(UserInformationService::class, $userService);
   }
 
+  /**
+   * Test draft side document logic.
+   */
   public function testDraftSideDocumentLogic(): void {
     // When we get an atv-document, make sure the side document exists as well.
     $this->applicationSubmission = ApplicationSubmission::create([
