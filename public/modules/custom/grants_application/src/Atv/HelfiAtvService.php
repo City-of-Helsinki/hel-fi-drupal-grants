@@ -18,7 +18,7 @@ class HelfiAtvService {
 
   public function __construct(
     #[Autowire(service: 'helfi_atv.atv_service')]
-    private readonly AtvService $atvService,
+    private readonly AtvServiceInterface $atvService,
   ) {
   }
 
