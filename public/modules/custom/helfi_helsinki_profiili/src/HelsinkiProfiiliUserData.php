@@ -516,26 +516,6 @@ class HelsinkiProfiiliUserData implements LoggerAwareInterface {
   }
 
   /**
-   * Get current user data.
-   *
-   * @return \Drupal\Core\Session\AccountProxyInterface
-   *   Current user.
-   */
-  public function getCurrentUser(): AccountProxyInterface {
-    return $this->currentUser;
-  }
-
-  /**
-   * Get roles of the current user.
-   *
-   * @return array
-   *   Roles.
-   */
-  public function getCurrentUserRoles(): array {
-    return $this->currentUser->getRoles();
-  }
-
-  /**
    * Get openid configurations.
    *
    * @todo We should cache this response.

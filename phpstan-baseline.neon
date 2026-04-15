@@ -5021,11 +5021,6 @@ parameters:
 			path: public/modules/custom/grants_handler/src/GrantsHandlerNavigationHelper.php
 
 		-
-			message: "#^Method Drupal\\\\grants_handler\\\\GrantsHandlerNavigationHelper\\:\\:logErrors\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/GrantsHandlerNavigationHelper.php
-
-		-
 			message: "#^Method Drupal\\\\grants_handler\\\\GrantsHandlerNavigationHelper\\:\\:logErrors\\(\\) has parameter \\$errors with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_handler/src/GrantsHandlerNavigationHelper.php
@@ -11832,11 +11827,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getApiAccessTokens\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getCurrentUserRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
