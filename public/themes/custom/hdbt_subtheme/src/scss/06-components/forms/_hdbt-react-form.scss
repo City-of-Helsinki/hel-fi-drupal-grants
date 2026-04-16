@@ -67,9 +67,7 @@
   padding: 0;
 }
 
-.hdbt-react-form__submission-info_top {
-  padding-block-end: $spacing;
-}
+
 
 .empty-preview-notification {
   margin-block-start: $spacing-double;
@@ -102,6 +100,120 @@
   }
 }
 
+.hdbt-react-form__inline-field-group fieldset {
+  display: flex;
+  flex-wrap: wrap;
+
+  @include breakpoint($breakpoint-m) {
+    column-gap: $spacing;
+  }
+
+  .hdbt-react-form__inline-field {
+    width: 100%;
+
+    @include breakpoint($breakpoint-m) {
+      width: calc(50% - $spacing / 2);
+    }
+  }
+}
+
 .hdbt-form--fileinput--delete-disabled + ul button {
   display: none;
 } 
+
+.hdbt-react-form__submission-info {
+  background: var(--color-black-5);
+  margin-block-start: $spacing-sextuple;
+  padding: $spacing-and-half;
+
+  .hdbt-react-form__submission-info {
+    margin-block-start: $spacing-and-half;
+    padding: 0;
+  }
+
+  h4 {
+    margin-block-start: 0;
+  }
+
+  h5 {
+    font-size: var(--fontsize-body-m);
+    margin-block-start: $spacing;
+  }
+
+  .application-attachment-list li {
+    overflow-wrap: anywhere;
+  }
+}
+
+.hdbt-react-form__submission-info__row {
+  display: flex;
+}
+
+.hdbt-react-form__submission-info__row--edit {
+  margin-block-start: $spacing-and-half;
+}
+
+.hdbt-react-form__submission-info__row--top {
+  align-items: center;
+  border-block-end: 1px solid var(--color-black-20);
+  justify-content: space-between;
+  padding-block-end: $spacing;
+
+  @include breakpoint(max-width $breakpoint-m) {
+    display: block;
+  }
+}
+
+.hdbt-react-form__submission-info__row--main {
+  flex-flow: row nowrap;
+  gap: $spacing;
+  justify-content: space-between;
+
+  @include breakpoint(max-width $breakpoint-l) {
+    flex-flow: row wrap;
+  }
+
+  > div {
+    flex: 1;
+
+    @include breakpoint(max-width $breakpoint-l) {
+      flex: auto;
+      width: 100%;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    margin-block: 0;
+    padding-inline-start: 0;
+
+    li {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+.hdbt-react-form__submission-info__row__supportlinks {
+  display: flex;
+  flex-flow: row nowrap;
+  min-width: fit-content;
+
+  .hds-loading-spinner {
+    inset-inline-start: 0;
+  }
+
+  .hds-button {
+    min-width: fit-content;
+
+    // React & non-React button layout unification styles.
+    .hds-button__label {
+      padding: 14px;
+    }
+  }
+
+  // React & non-React button layout unification styles.
+  button:hover {
+    text-decoration: none;
+  }
+}
