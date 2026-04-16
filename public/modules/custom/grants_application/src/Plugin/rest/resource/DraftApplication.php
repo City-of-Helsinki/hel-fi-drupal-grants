@@ -140,10 +140,6 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 404);
     }
 
-    if (!$settings->isApplicationOpen()) {
-      return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
-    }
-
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
@@ -169,6 +165,10 @@ final class DraftApplication extends ResourceBase {
     catch (\Throwable $e) {
       // @todo helfi_atv -module throws multiple exceptions, handle them accordingly.
       return new JsonResponse([], 500);
+    }
+
+    if (!$settings->isApplicationOpen() && $document->getStatus() === 'DRAFT') {
+      return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
     }
 
     // Side document bc.
