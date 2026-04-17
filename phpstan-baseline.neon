@@ -1596,11 +1596,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
 
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
-
-		-
 			message: "#^Parameter \\#4 \\$serializer_formats of class Drupal\\\\grants_application\\\\Plugin\\\\rest\\\\resource\\\\DraftApplication constructor expects array, array\\|bool\\|float\\|int\\|string\\|UnitEnum\\|null given\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/Plugin/rest/resource/DraftApplication.php
@@ -1764,12 +1759,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
 			count: 5
 			path: public/modules/custom/grants_application/tests/src/Unit/FormTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\grants_application\\\\Unit\\\\HelfiAtvServiceTest\\:\\:appEnvProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/tests/src/Unit/HelfiAtvServiceTest.php
-
 		-
 			message: "#^Method Drupal\\\\Tests\\\\grants_application\\\\Unit\\\\Form\\\\JsonMapperTest\\:\\:getAllDatasources\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
@@ -2541,16 +2530,6 @@ parameters:
 			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
 
 		-
-			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachment\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
-
-		-
-			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachmentSubmit\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
-
-		-
 			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachmentSubmit\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
@@ -2562,6 +2541,11 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:getCompositeElements\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
+
+		-
+			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachmentSubmit\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
 
@@ -5459,6 +5443,11 @@ parameters:
 			message: "#^Offset 'role' does not exist on array\\|string\\.$#"
 			count: 2
 			path: public/modules/custom/grants_handler/src/Plugin/WebformElement/CommunityOfficialsComposite.php
+
+		-
+			message: "#^Method Drupal\\\\grants_attachments\\\\Element\\\\GrantsAttachments\\:\\:deleteAttachment\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: public/modules/custom/grants_attachments/src/Element/GrantsAttachments.php
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\Plugin\\\\WebformElement\\\\CompensationsComposite\\:\\:defineDefaultProperties\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -11231,32 +11220,7 @@ parameters:
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:createDocument\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:debugPrint\\(\\) has parameter \\$replacements with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:deleteAttachment\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:deleteAttachmentByUrl\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:deleteAttachmentViaIntegrationId\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:deleteDocument\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
@@ -11291,22 +11255,12 @@ parameters:
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:getUserDocuments\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:hasAllowedRole\\(\\) has parameter \\$allowedRoles with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
 		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:hasAllowedRole\\(\\) has parameter \\$roles with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:patchDocument\\(\\) has parameter \\$dataArray with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 
@@ -11327,16 +11281,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:request\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:searchDocuments\\(\\) has parameter \\$searchParams with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/src/AtvService.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv\\\\AtvService\\:\\:searchDocuments\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/src/AtvService.php
 

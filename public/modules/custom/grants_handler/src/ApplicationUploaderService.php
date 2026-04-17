@@ -101,14 +101,17 @@ final class ApplicationUploaderService {
   /**
    * Handle application upload directly to ATV.
    *
+   * This function is called when saving as draft, uploading files
+   * or submitting to Avus2.
+   *
    * @param \Drupal\Core\TypedData\TypedDataInterface $applicationData
    *   Application data in typed data object.
    * @param string $applicationNumber
    *   Application number.
    * @param array $submittedFormData
    *   Actual form data from submission.
-   * @param bool $preventOverride
-   *   Prevent overriding certain data while editing received document.
+   * @param bool $isSubmit
+   *   Are we submitting the application?
    *
    * @return \Drupal\helfi_atv\AtvDocument|bool|null
    *   Result of the upload.
@@ -126,7 +129,7 @@ final class ApplicationUploaderService {
     TypedDataInterface $applicationData,
     string $applicationNumber,
     array $submittedFormData,
-    bool $preventOverride = FALSE,
+    bool $isSubmit = FALSE,
   ): AtvDocument|bool|null {
     $webform_submission = $this->applicationGetterService->submissionObjectFromApplicationNumber($applicationNumber);
 
@@ -151,20 +154,6 @@ final class ApplicationUploaderService {
     catch (\Exception $e) {
     }
 
-    // Make sure the form submission won't override ATV-messages or events.
-    // Preventing message override here causes the events to lose
-    // handle_att_ok -event which breaks everything.
-    /*
-    if (
-    $preventOverride &&
-    isset($appDocumentContent['messages']) &&
-    isset($appDocumentContent['events'])
-    ) {
-    $appDocumentContent['messages'] = $atvDocument->getContent()['messages'];
-    $appDocumentContent['events'] = $atvDocument->getContent()['events'];
-    }
-     */
-
     $atvDocument->setContent($appDocumentContent);
 
     // Try to fix all possibly missing items in attachments.
@@ -175,7 +164,12 @@ final class ApplicationUploaderService {
     if ($newHeader && $newHeader != '') {
       $atvDocument->setStatus($newHeader);
     }
-    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
+
+    // Update the deleteafter-time to +6years if we are sending to Avus2.
+    if ($isSubmit) {
+      $atvDocument->setDeleteAfter((new \DateTimeImmutable('+6 years'))->format('Y-m-d'));
+    }
+
     $updatedDocument = $this->helfiAtvAtvService->patchDocument(
       $atvDocument->getId(),
       $atvDocument->toArray()
@@ -224,7 +218,7 @@ final class ApplicationUploaderService {
       $applicationData,
       $applicationNumber,
       $submittedFormData,
-      TRUE
+      TRUE,
     );
 
     // Create new saveid before sending data to integration,
