@@ -13,6 +13,7 @@ use Drupal\grants_application\User\UserInformationService;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\helfi_atv\AtvDocument;
+use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\RequestHandler;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
@@ -271,7 +272,7 @@ final class ApplicationTest extends KernelTestBase {
     $userService = $this->createMock(UserInformationService::class);
     $userService->expects($this->any())->method('getGrantsProfileContent')->willReturn(new GrantsProfile($userData['grants_profile_array']));
     $userService->expects($this->any())->method('getSelectedCompany')->willReturn($userData['company']);
-    $userService->expects($this->any())->method('getUserData')->willReturn($userData['user']);
+    $userService->expects($this->any())->method('getUserData')->willReturn(HelsinkiProfiiliUser::fromArray($userData['user']));
 
     $jsonMapperService = $this->createMock(JsonMapperService::class);
     $jsonMapperService->expects($this->any())->method('getSelectedBankFile')->willReturn([]);
