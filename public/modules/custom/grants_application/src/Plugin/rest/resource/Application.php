@@ -233,7 +233,9 @@ final class Application extends ResourceBase {
       'status' => $document->getStatus(),
       'token' => $this->csrfTokenGenerator->get('rest'),
       'user_data' => $user_information,
-      ...$settings->toArray(),
+      'settings' => [
+        'acting_years' => $settings->getActingYears(),
+      ]
     ];
 
     return new JsonResponse($response);

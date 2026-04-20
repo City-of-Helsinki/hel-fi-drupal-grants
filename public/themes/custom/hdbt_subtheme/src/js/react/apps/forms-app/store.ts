@@ -36,6 +36,7 @@ type GrantsProfile = {
 export type FormState = { currentStep: [number, FormStep]; reachedStep: number };
 
 type FormConfig = {
+  actingYears?: string[];
   applicationNumber: string;
   grantsProfile: GrantsProfile;
   persistedData: any;
@@ -61,8 +62,10 @@ type FormConfig = {
 type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_state'> & {
   applicationNumber: string;
   grants_profile: GrantsProfile;
+  settings: {
+    acting_years?: string[];
+  };
   status: string;
-  ui_schema: UiSchema;
   summary_data?: {
     application_number?: string;
     application_submitted?: string;
@@ -70,6 +73,7 @@ type ResponseData = Omit<FormConfig, 'grantsProfile' | 'uiSchema' | 'submit_stat
     handlers?: string[];
     status_updates?: string[];
   };
+  ui_schema: UiSchema;
 };
 
 const buildFormSteps = ({ schema: { properties } }: any) => {
@@ -134,16 +138,24 @@ export const formConfigAtom = atom<FormConfig | undefined>();
 export const formStepsAtom = atom<Map<number, FormStep> | undefined>();
 export const errorsAtom = atom<Array<[number, RJSFValidationError]>>([]);
 export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseData) => {
-  const { grants_profile: grantsProfile, status, summary_data: summaryData, ui_schema: uiSchema, ...rest } = formConfig;
+  const {
+    grants_profile: grantsProfile,
+    status,
+    summary_data: summaryData,
+    ui_schema: uiSchema,
+    settings,
+    ...rest
+  } = formConfig;
+  const { acting_years: actingYears } = settings || {};
   const steps = buildFormSteps(formConfig);
-  _set(formStepsAtom, (state) => steps);
-  _set(formConfigAtom, (state) => ({
+  _set(formStepsAtom, () => steps);
+  _set(formConfigAtom, () => ({
     grantsProfile,
     ...rest,
-    uiSchema,
+    actingYears,
+    requiredFileFields: Array.from(findFieldsWithOption(uiSchema, 'misc:required')),
     submitState: status || SubmitStates.DRAFT,
     subventionFields: Array.from(findFieldsOfType(uiSchema, 'subventionTable')),
-    requiredFileFields: Array.from(findFieldsWithOption(uiSchema, 'misc:required')),
     summaryData: summaryData
       ? {
           applicationNumber: summaryData?.application_number,
@@ -153,8 +165,9 @@ export const initializeFormAtom = atom(null, (_get, _set, formConfig: ResponseDa
           statusUpdates: summaryData?.status_updates,
         }
       : undefined,
+    uiSchema,
   }));
-  _set(formStateAtom, (state) => ({ currentStep: [0, steps.get(0)], reachedStep: 0 }));
+  _set(formStateAtom, () => ({ currentStep: [0, steps.get(0)], reachedStep: 0 }));
 
   // Make sure application number is set in url params.
   const { applicationNumber } = formConfig;
@@ -395,4 +408,9 @@ export const getFormTitleAtom = atom((_get) => {
 
 export const isEmptyPreviewAtom = atom((_get) => {
   return drupalSettings.grants_react_form.use_empty_preview;
+});
+export const getActingYearsAtom = atom((_get) => {
+  const { actingYears } = _get(getFormConfigAtom);
+
+  return actingYears;
 });

@@ -213,4 +213,14 @@ final class FormSettings {
     return date('Y-m-d', strtotime('+1 year'));
   }
 
+  /**
+   * Get the acting years for the form.
+   *
+   * @return array
+   *   The acting years.
+   */
+  public function getActingYears(): array {
+    return $this->settings['acting_years'] ?? [];
+  }
+
 }

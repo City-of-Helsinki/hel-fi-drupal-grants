@@ -16,7 +16,8 @@
     "format:js": "biome format --write src/js/",
     "lint": "npm-run-all --parallel lint:scss lint:js -s",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "validate-ts": "tsc --noEmit"
   },
   "@comment dependencies": [
     "The following packages were updated manually.",
