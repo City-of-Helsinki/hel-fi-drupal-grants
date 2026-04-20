@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionInterface;
@@ -51,6 +52,7 @@ class GrantsHandlerNavigationHelper {
     protected FormBuilderInterface $formBuilder,
     protected HelsinkiProfiiliUserData $helsinkiProfiiliUserData,
     protected TimeInterface $timeInterface,
+    protected AccountProxyInterface $currentUser,
   ) {
     $this->cache = [];
   }
@@ -273,7 +275,7 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::PAGE_VISITED_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => $this->helsinkiProfiiliUserData->getCurrentUser()->id(),
+        'uid' => $this->currentUser->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => $page,
         'page' => $page,
@@ -322,8 +324,7 @@ class GrantsHandlerNavigationHelper {
    *
    * @throws \Exception
    */
-  public function logErrors(WebformSubmissionInterface $webformSubmission, array $errors, string $page) {
-
+  public function logErrors(WebformSubmissionInterface $webformSubmission, array $errors, string $page): void {
     $wfId = $webformSubmission->id();
     // Get out from here if the submission hasn't been saved yet.
     if ($wfId == NULL) {
@@ -343,7 +344,7 @@ class GrantsHandlerNavigationHelper {
         'operation' => self::ERROR_OPERATION,
         'handler_id' => self::HANDLER_ID,
         'application_number' => $data['application_number'] ?? '',
-        'uid' => $this->helsinkiProfiiliUserData->getCurrentUser()->id(),
+        'uid' => $this->currentUser->id(),
         'user_uuid' => $userData['sub'] ?? '',
         'data' => serialize($errors),
         'page' => $page,

@@ -6,7 +6,6 @@ namespace Drupal\Tests\helfi_helsinki_profiili\Unit;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\helfi_api_base\Environment\EnvironmentResolverInterface;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
@@ -38,7 +37,6 @@ class HelsinkiProfiiliUserDataTest extends UnitTestCase {
     $service = new HelsinkiProfiiliUserData(
       $this->prophesize(OpenIDConnectSession::class)->reveal(),
       $this->prophesize(ClientInterface::class)->reveal(),
-      $this->prophesize(LoggerChannelInterface::class)->reveal(),
       $this->prophesize(AccountProxyInterface::class)->reveal(),
       $this->prophesize(RequestStack::class)->reveal(),
       $this->prophesize(EnvironmentResolverInterface::class)->reveal(),

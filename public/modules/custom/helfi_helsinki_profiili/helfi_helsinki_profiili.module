@@ -3,14 +3,10 @@
 /**
  * @file
  * Primary module hooks for Helsinki-profiili module.
- *
- * @DCG
- * This file is no longer required in Drupal 8.
- * @see https://www.drupal.org/node/2217931
  */
 
-use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\TempStore\TempStoreException;
+use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
 use Drupal\helfi_helsinki_profiili\ProfileDataException;
 use Drupal\helfi_helsinki_profiili\TokenExpiredException;
 use Drupal\user\UserInterface;
@@ -22,20 +18,14 @@ use GuzzleHttp\Exception\GuzzleException;
  * This hook runs after a user has been authorized and claims have been mapped
  * to the user's account.
  *
- * A popular use case for this hook is saving token and additional identity
- * provider related information to the user's Drupal session (private temp
- * store).
- *
  * @param \Drupal\user\UserInterface $account
  *   User account object of the authorized user.
- * @param array $context
+ * @param array<mixed> $context
  *   An associative array with context information:
  *   - tokens:         An array of tokens.
  *   - user_data:      An array of user and session data.*
  *   - plugin_id:      The plugin identifier.
  *   - sub:            The remote user identifier.
- *
- * @ingroup openid_connect_api
  */
 function helfi_helsinki_profiili_openid_connect_post_authorize(UserInterface $account, array $context): void {
   $session = \Drupal::request()->getSession();
@@ -47,10 +37,7 @@ function helfi_helsinki_profiili_openid_connect_post_authorize(UserInterface $ac
 
   if (empty($context["user_data"]["ad_groups"])) {
     try {
-      /** @var Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData $profileDAO */
-      $profileDAO = \Drupal::service('helfi_helsinki_profiili.userdata');
-      // Set user data from openid.
-      $profileDAO->setUserData($context['user_data']);
+      $profileDAO = \Drupal::service(HelsinkiProfiiliUserData::class);
       // Fetch HelsinkiProfile data.
       try {
         $data = $profileDAO->getUserProfileData();
@@ -90,13 +77,4 @@ function helfi_helsinki_profiili_openid_connect_post_authorize(UserInterface $ac
     }
   }
 
-}
-
-/**
- * Implements hook_user_logout().
- */
-function helfi_helsinki_profiili_user_logout(AccountProxyInterface $account) {
-  /** @var Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData */
-  $helsinkiProfiili = \Drupal::service('helfi_helsinki_profiili.userdata');
-  $helsinkiProfiili->clearCache();
 }

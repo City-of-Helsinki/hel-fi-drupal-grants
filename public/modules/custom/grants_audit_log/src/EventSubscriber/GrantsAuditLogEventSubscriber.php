@@ -68,12 +68,19 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
     $userId = $this->currentUser->id();
     // Get current user.
     if ($role == 'USER') {
-      $isAuthenticatedExternally = $this->helsinkiProfiiliUserData->isAuthenticatedExternally();
-      if ($isAuthenticatedExternally) {
+      try {
         $data = $this->helsinkiProfiiliUserData->getUserData();
-        if ($data !== NULL && $data['sid']) {
+
+        if (isset($data['sid'])) {
           $userId = $data['sid'];
         }
+      }
+      catch (\InvalidArgumentException) {
+        // If present, replace user id with sid field from tunnistamo jwt
+        // token. HelsinkiProfiiliUserData::getUserData throws if the helsinki
+        // profiili token is not available. In that case, something has
+        // probably gone very wrong already, but I don't think this should
+        // prevent logging here.
       }
     }
     $message = $event->getMessage();
