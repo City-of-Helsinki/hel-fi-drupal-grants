@@ -7,7 +7,6 @@ use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
-use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\grants_attachments\DebuggableTrait;
 use Drupal\grants_events\EventsService;
@@ -72,8 +71,6 @@ class MessageService {
    *   Log things.
    * @param \Drupal\helfi_atv\AtvService $atvService
    *   Access to ATV.
-   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
-   *   Current user.
    * @param \Drupal\grants_handler\ApplicationStatusService $applicationStatusService
    *   Application status service.
    */
@@ -83,7 +80,6 @@ class MessageService {
     private ClientInterface $httpClient,
     LoggerChannelFactoryInterface $loggerFactory,
     private AtvService $atvService,
-    private AccountProxyInterface $currentUser,
     #[Autowire(service: 'grants_handler.application_status_service')]
     private ApplicationStatusService $applicationStatusService,
   ) {
@@ -130,13 +126,7 @@ class MessageService {
     if ($application_number) {
       $messageData['caseId'] = $application_number;
 
-      if ($userData === NULL) {
-        $currentUser = $this->currentUser;
-        $messageData['sentBy'] = $currentUser->getDisplayName();
-      }
-      else {
-        $messageData['sentBy'] = $userData['name'];
-      }
+      $messageData['sentBy'] = $userData->name;
 
       $dt = new \DateTime();
       $dt->setTimezone(new \DateTimeZone('Europe/Helsinki'));

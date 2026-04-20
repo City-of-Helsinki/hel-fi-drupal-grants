@@ -5,6 +5,7 @@ namespace Drupal\grants_audit_log\EventSubscriber;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\helfi_audit_log\Event\AuditLogEvent;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Drupal\helfi_helsinki_profiili\ProfiiliException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -71,11 +72,11 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
       try {
         $data = $this->helsinkiProfiiliUserData->getUserData();
 
-        if (isset($data['sid'])) {
-          $userId = $data['sid'];
+        if ($data->sid !== NULL) {
+          $userId = $data->sid;
         }
       }
-      catch (\InvalidArgumentException) {
+      catch (ProfiiliException) {
         // If present, replace user id with sid field from tunnistamo jwt
         // token. HelsinkiProfiiliUserData::getUserData throws if the helsinki
         // profiili token is not available. In that case, something has

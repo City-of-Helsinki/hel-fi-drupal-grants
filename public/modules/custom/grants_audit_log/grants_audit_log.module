@@ -27,6 +27,8 @@ function grants_audit_log_openid_connect_post_authorize(UserInterface $account, 
     ],
   ];
 
+  // Do we need to log this separately? Hook `grants_audit_log_user_login`
+  // is fired for helsinki profiili logins too.
   \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
 }
 

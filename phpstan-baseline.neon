@@ -1671,11 +1671,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/User/UserInformationService.php
 
 		-
-			message: "#^Method Drupal\\\\grants_application\\\\User\\\\UserInformationService\\:\\:getApplicantInformation\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/User/UserInformationService.php
-
-		-
 			message: "#^Method Drupal\\\\grants_application\\\\User\\\\UserInformationService\\:\\:getApplicantInformation\\(\\) has parameter \\$userProfileData with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/User/UserInformationService.php
@@ -1692,11 +1687,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\grants_application\\\\User\\\\UserInformationService\\:\\:getSelectedCompany\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/User/UserInformationService.php
-
-		-
-			message: "#^Method Drupal\\\\grants_application\\\\User\\\\UserInformationService\\:\\:getUserData\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/User/UserInformationService.php
 
@@ -4230,10 +4220,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
-		-
-			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:createAtvDocument\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:getBudgetInfoKeysForCopying\\(\\) has parameter \\$submissionData with no value type specified in iterable type array\\.$#"
@@ -4255,10 +4241,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
-		-
-			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:getHakijanTiedot\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:getHakijanTiedot\\(\\) has parameter \\$userProfileData with no value type specified in iterable type array\\.$#"
@@ -4340,10 +4322,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
-		-
-			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:setInitialSubmissionData\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:setInitialSubmissionData\\(\\) has parameter \\$userProfileData with no value type specified in iterable type array\\.$#"
@@ -4425,10 +4403,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationUploaderService.php
 
-		-
-			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationUploaderService\\:\\:logSubmissionSaveid\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/ApplicationUploaderService.php
 
 		-
 			message: "#^Property Drupal\\\\grants_handler\\\\ApplicationUploaderService\\:\\:\\$atvDocument \\(Drupal\\\\helfi_atv\\\\AtvDocument\\) does not accept bool\\|Drupal\\\\helfi_atv\\\\AtvDocument\\|null\\.$#"
@@ -5210,10 +5184,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/MessageService.php
 
-		-
-			message: "#^Strict comparison using \\=\\=\\= between array and null will always evaluate to false\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/MessageService.php
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\Plugin\\\\Block\\\\ApplicationTimeoutMessageBlock\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -11806,39 +11776,10 @@ parameters:
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:checkPrimaryFields\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:checkPrimaryFields\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:filterData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:filterData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getApiAccessTokens\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getHelsinkiProfiiliToken\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getUserData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
 		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getUserProfileData\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -11852,11 +11793,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:setToCache\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:verifyJwtToken\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
