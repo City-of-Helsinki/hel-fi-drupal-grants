@@ -118,6 +118,25 @@
       }
     },
     "interim_reporting_section": {
+      "ui:order": [
+        "actual_target_group",
+        "children_participation_estimate",
+        "new_participants_estimate_wrapper",
+        "estimate_basis",
+        "hours_by_postal_area",
+        "session_cost_report",
+        "activities_description",
+        "financial_changes",
+        "activity_changes",
+        "schedule_changes",
+        "operating_model_changes",
+        "key_partners_report",
+        "youth_participation_report",
+        "challenges_report",
+        "grant_usage_report",
+        "continuation_plan",
+        "grant_amount_change_justification"
+      ],
       "actual_target_group": {
         "ui:widget": "textarea",
         "misc:max-length": 2500
@@ -186,6 +205,14 @@
       }
     },
     "project_plan_section": {
+      "ui:order": [
+        "project_name",
+        "project_purpose_goals",
+        "multi_year_justification",
+        "project_measures_wrapper",
+        "activity_volume",
+        "positive_encounters"
+      ],
       "project_name": {
         "ui:widget": "textarea",
         "misc:max-length": 300
@@ -223,6 +250,17 @@
       }
     },
     "target_groups_section": {
+      "ui:order": [
+        "target_group_description",
+        "target_group_special_needs",
+        "target_group_expertise",
+        "participant_estimate",
+        "new_participant_estimate_wrapper",
+        "accessibility",
+        "session_cost_planned",
+        "impact_on_participants",
+        "postal_code_areas"
+      ],
       "target_group_description": {
         "ui:widget": "textarea",
         "misc:max-length": 1250
