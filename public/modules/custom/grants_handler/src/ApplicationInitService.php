@@ -310,7 +310,7 @@ class ApplicationInitService {
   }
 
   /**
-   * Method to initialise application document in ATV. Create & save.
+   * Method to initialize application document in ATV. Create & save.
    *
    * If data is given, use that data to copy things to new application.
    *
@@ -377,7 +377,10 @@ class ApplicationInitService {
     $typeData = $this->applicationDataService->webformToTypedData($submissionData);
     $appDocumentContent = $this->atvSchema->typedDataToDocumentContent($typeData, $submissionObject, $submissionData);
     $atvDocument->setContent($appDocumentContent);
-    $atvDocument->setDeleteAfter((new \DateTimeImmutable('+1 years'))->format('Y-m-d'));
+
+    // #UHF-12794 draft delete after 1month after application period is over.
+    $settings = $webform->getThirdPartySettings('grants_metadata');
+    $this->setDeleteAfter($settings, $atvDocument);
     $newDocument = $this->atvService->postDocument($atvDocument);
 
     if ($copy) {
@@ -388,6 +391,26 @@ class ApplicationInitService {
     $submissionObject->setData(DocumentContentMapper::documentContentToTypedData($newDocument->getContent(), $dataDefinition));
 
     return $submissionObject;
+  }
+
+  /**
+   * Set delete after.
+   *
+   * @param mixed[] $settings
+   *   The webform settings.
+   * @param \Drupal\helfi_atv\AtvDocument $atvDocument
+   *   The atv document.
+   */
+  public function setDeleteAfter(array $settings, AtvDocument $atvDocument): void {
+    $endDate = strtotime($settings['applicationClose']);
+    $isContinuous = $settings['applicationContinuous'];
+
+    $deleteAfter = new \DateTimeImmutable("+1 years");
+    if (!$isContinuous && $endDate) {
+      $date = date('Y-m-d', $endDate);
+      $deleteAfter = (new \DateTimeImmutable($date))->add(new \DateInterval("P1M"));
+    }
+    $atvDocument->setDeleteAfter($deleteAfter->format('Y-m-d'));
   }
 
   /**

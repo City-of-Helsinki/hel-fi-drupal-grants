@@ -1441,7 +1441,8 @@ submit the application only after you have provided all the necessary informatio
       $applicationUploadStatus = $this->applicationUploaderService->handleApplicationUploadToAtv(
         $applicationData,
         $this->applicationNumber,
-        $this->submittedFormData
+        $this->submittedFormData,
+        FALSE,
       );
       if ($applicationUploadStatus) {
         $this->messenger()

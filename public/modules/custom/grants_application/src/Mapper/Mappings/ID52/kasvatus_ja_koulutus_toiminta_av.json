@@ -37,7 +37,7 @@
 
   "compensation.benefitsInfoArray.0": {
     "datasource": "form_data",
-    "source": "grant_info_step.purpose_section.purpose",
+    "source": "grant_info_step.city_benefits_loans_section.city_benefits_loans",
     "mapping_type": "default",
     "data": {
       "ID": "loans",

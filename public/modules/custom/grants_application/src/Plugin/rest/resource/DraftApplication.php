@@ -140,10 +140,6 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 404);
     }
 
-    if (!$settings->isApplicationOpen()) {
-      return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
-    }
-
     try {
       $grants_profile_data = $this->userInformationService->getGrantsProfileContent();
       $selected_company = $this->userInformationService->getSelectedCompany();
@@ -171,6 +167,10 @@ final class DraftApplication extends ResourceBase {
       return new JsonResponse([], 500);
     }
 
+    if (!$settings->isApplicationOpen() && $document->getStatus() === 'DRAFT') {
+      return new JsonResponse(['error' => $this->t('The application is not currently open.')], 403);
+    }
+
     // Side document bc.
     if ($sideDocumentId = $submission->getSideDocumentId()) {
       $sideDocument = $this->atvService->getDocumentById($sideDocumentId);
@@ -178,7 +178,7 @@ final class DraftApplication extends ResourceBase {
     else {
       try {
         $document_content = $document->getContent();
-        $originalContent = $document_content['form_data'] ?? $document_content['compensation']['form_data'];
+        $originalContent = $document_content['form_data'] ?? $document_content['compensation']['form_data'] ?? [];
         $sideDocument = $this->atvService->createSideDocument(
           'application_type',
           $settings->getApplicationName(),
@@ -265,8 +265,6 @@ final class DraftApplication extends ResourceBase {
     $application_uuid = $this->uuid->generate();
     $env = Helper::getAppEnv();
 
-    // @todo Application number generation must match the existing shenanigans,
-    // or we must start from application number 1000 or something.
     $application_number = $this->applicationNumberService
       ->createNewApplicationNumber($env, $application_type_id);
 
@@ -277,7 +275,6 @@ final class DraftApplication extends ResourceBase {
     $application_title = $settings->toArray()['settings']['title'];
     $application_type = $settings->toArray()['settings']['application_type'];
 
-    // @todo Save the react form data in separate atv doc.
     $document = $this->atvService->createAtvDocument(
       $application_uuid,
       $application_number,
@@ -306,6 +303,7 @@ final class DraftApplication extends ResourceBase {
     ]);
 
     try {
+      $document->setDeleteAfter($settings->getDraftDeleteAfter());
       $document = $this->atvService->saveNewDocument($document);
     }
     catch (\Exception | GuzzleException $e) {
@@ -322,6 +320,7 @@ final class DraftApplication extends ResourceBase {
     );
 
     try {
+      $sideDocument->setDeleteAfter($settings->getDraftDeleteAfter());
       $sideDocument = $this->atvService->saveNewDocument($sideDocument);
     }
     catch (\Exception $e) {
@@ -395,7 +394,7 @@ final class DraftApplication extends ResourceBase {
     ] = $content;
 
     try {
-      $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
+      $settings = $this->formSettingsService->getFormSettingsByFormIdentifier($form_identifier);
     }
     catch (\Exception $e) {
       // Cannot find form settings.
@@ -431,17 +430,12 @@ final class DraftApplication extends ResourceBase {
     // since an application which is taken into processing
     // should not change.
     try {
-      // $document = $this->atvService->getDocument($application_number);
+      $document = $this->atvService->getDocument($application_number);
       $sideDocument = $this->atvService->getDocumentById($submission->get('side_document_id')->value);
     }
     catch (\Throwable $e) {
       // Error while fetching the document.
       return new JsonResponse(['error' => $this->t('Unable to fetch your application. Please try again in a moment')], 500);
-    }
-
-    if (!$sideDocument) {
-      // Unable to find the document.
-      return new JsonResponse(['error' => $this->t('We cannot find the application you are trying to open. Please try creating a new application')], 500);
     }
 
     $sideDocument->setContent($form_data);
@@ -454,11 +448,17 @@ final class DraftApplication extends ResourceBase {
     }
 
     try {
+      $sideDocument->setDeleteAfter($settings->getDraftDeleteAfter());
       $this->atvService->updateExistingDocument($sideDocument);
+
+      $document->setDeleteAfter($settings->getDraftDeleteAfter());
+      $this->atvService->updateExistingDocument($document);
+
       $submission->setChangedTime(time());
       $submission->save();
     }
     catch (\Exception $e) {
+      $this->logger->critical("Side document update failed for $application_number: {$e->getMessage()}");
       return new JsonResponse([['error' => $this->t('Unable to save the draft. Please try again in a moment')]], 500);
     }
 

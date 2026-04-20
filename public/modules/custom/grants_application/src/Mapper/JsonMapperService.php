@@ -12,7 +12,7 @@ use Drupal\helfi_atv\AtvDocument;
 /**
  * Mapping related logic.
  */
-final class JsonMapperService {
+class JsonMapperService {
 
   /**
    * The mapper.

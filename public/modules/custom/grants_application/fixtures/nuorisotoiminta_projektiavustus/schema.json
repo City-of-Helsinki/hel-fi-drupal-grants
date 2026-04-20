@@ -1,0 +1,641 @@
+{
+  "definitions": {
+    "_income_row_item": {
+      "type": "object",
+      "title": "custom_income_row_item.title",
+      "properties": {
+        "income_row_description": {
+          "title": "income_row_description.title",
+          "type": "string"
+        },
+        "income_row_amount": {
+          "title": "income_row_amount.title",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "income_row_description",
+        "income_row_amount"
+      ]
+    },
+    "_expenditure_row_item": {
+      "type": "object",
+      "title": "expenditure_row_item.title",
+      "properties": {
+        "expenditure_row_description": {
+          "title": "expenditure_row_description.title",
+          "type": "string"
+        },
+        "expenditure_row_amount": {
+          "title": "expenditure_row_amount.title",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expenditure_row_description",
+        "expenditure_row_amount"
+      ]
+    },
+    "_other_compensation_item": {
+      "type": "object",
+      "properties": {
+        "other_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "other_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "other_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "other_compensation_amount": {
+          "title": "other_compensation_amount.title",
+          "type": "integer"
+        },
+        "other_compensation_description": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "other_compensation_issuer",
+        "other_compensation_issuer_name",
+        "other_compensation_issuer_year",
+        "other_compensation_amount",
+        "other_compensation_description"
+      ]
+    },
+    "_other_applied_compensation_item": {
+      "type": "object",
+      "properties": {
+        "other_applied_compensation_issuer": {
+          "title": "other_compensation_issuer.title",
+          "type": "string",
+          "enum": [
+            "other_compensation_issuer.state",
+            "other_compensation_issuer.eu",
+            "other_compensation_issuer.other",
+            "other_compensation_issuer.insitute"
+          ]
+        },
+        "other_applied_compensation_issuer_name": {
+          "title": "other_compensation_issuer_name.title",
+          "type": "string"
+        },
+        "other_applied_compensation_issuer_year": {
+          "title": "other_compensation_issuer_year.title",
+          "type": "string"
+        },
+        "other_applied_compensation_amount": {
+          "title": "other_applied_compensation_amount.title",
+          "type": "integer"
+        },
+        "other_applied_compensation_description": {
+          "title": "other_compensation_description.title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "other_applied_compensation_issuer",
+        "other_applied_compensation_issuer_name",
+        "other_applied_compensation_issuer_year",
+        "other_applied_compensation_amount",
+        "other_applied_compensation_description"
+      ]
+    },
+    "grant_info_step": {
+      "required": [
+        "grant_target_section",
+        "acting_year_section",
+        "other_compensations_section"
+      ],
+      "properties": {
+        "grant_target_section": {
+          "title": "grant_target_section.title",
+          "type": "object",
+          "properties": {
+            "grant_target": {
+              "title": "grant_target.title",
+              "type": "string",
+              "enum": [
+                "grant_target.youth_association",
+                "grant_target.youth_activity_group",
+                "grant_target.housing_club"
+              ]
+            }
+          },
+          "required": ["grant_target"]
+        },
+        "acting_year_section": {
+          "title": "acting_year_section.title",
+          "type": "object",
+          "properties": {
+            "acting_year": {
+              "title": "acting_year.title",
+              "type": "string",
+              "enum": [
+                "2026",
+                "2027",
+                "2028"
+              ]
+            }
+          },
+          "required": ["acting_year"]
+        },
+        "subventions_section": {
+          "title": "subventions_section.title",
+          "type": "object",
+          "properties": {
+            "subventions": {
+              "title": "subventions.title",
+              "options": [
+                {
+                  "id": 4,
+                  "label": "subventions.4.title"
+                }
+              ]
+            }
+          }
+        },
+        "start_subvention_section": {
+          "type": "object",
+          "properties": {
+            "start_subvention_applied": {
+              "title": "start_subvention_applied.title",
+              "description": "start_subvention_help.value",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          }
+        },
+        "other_compensations_section": {
+          "title": "other_compensations_section.title",
+          "description": "other_compensations_section.description",
+          "type": "object",
+          "properties": {
+            "have_received_other_compensations": {
+              "title": "have_received_other_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": ["have_received_other_compensations"],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_received_other_compensations": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_other_compensation_item"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "other_applied_compensations_section": {
+          "title": "other_applied_compensations_section.title",
+          "description": "other_applied_compensations_section.description",
+          "type": "object",
+          "properties": {
+            "have_applied_other_compensations": {
+              "title": "have_applied_other_compensations.title",
+              "enum": [
+                false,
+                true
+              ],
+              "default": false
+            }
+          },
+          "required": ["have_applied_other_compensations"],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "have_applied_other_compensations": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "other_applied_compensations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/_other_applied_compensation_item"
+                    },
+                    "additionalItems": {
+                      "$ref": "#/definitions/_other_applied_compensation_item"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "budget_step": {
+      "type": "object",
+      "properties": {
+        "income_section": {
+          "title": "income_section.title",
+          "type": "object",
+          "properties": {
+            "incomeGroupName": {
+              "type": "string",
+              "default": "general"
+            },
+            "economy_forecast_help": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "economy_forecast_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "self_financing_description": {
+              "title": "self_financing_description.title",
+              "type": "string"
+            },
+            "self_financing_amount": {
+              "title": "self_financing_amount.title",
+              "type": "integer"
+            },
+            "income_rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_income_row_item"
+              },
+              "additionalItems": {
+                "$ref": "#/definitions/_income_row_item"
+              }
+            }
+          }
+        },
+        "expenditure_section": {
+          "title": "expenditure_section.title",
+          "type": "object",
+          "properties": {
+            "costGroupName": {
+              "type": "string",
+              "default": "general"
+            },
+            "expenditure_rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/_expenditure_row_item"
+              },
+              "additionalItems": {
+                "$ref": "#/definitions/_expenditure_row_item"
+              }
+            }
+          }
+        }
+      }
+    },
+    "project_plan_step": {
+      "type": "object",
+      "required": ["project_plan_section", "project_schedule_section", "project_participants_section"],
+      "properties": {
+        "project_plan_section": {
+          "title": "project_plan_section.title",
+          "type": "object",
+          "required": ["project_name"],
+          "properties": {
+            "project_plan_help": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "project_plan_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "project_name": {
+              "title": "project_name.title",
+              "type": "string"
+            },
+            "project_goals": {
+              "title": "project_goals.title",
+              "type": "string"
+            },
+            "project_contents": {
+              "title": "project_contents.title",
+              "type": "string"
+            }
+          }
+        },
+        "project_schedule_section": {
+          "title": "project_schedule_section.title",
+          "type": "object",
+          "required": ["project_start", "project_end"],
+          "properties": {
+            "project_start": {
+              "title": "project_start.title",
+              "type": "string"
+            },
+            "project_end": {
+              "title": "project_end.title",
+              "type": "string"
+            }
+          }
+        },
+        "project_participants_section": {
+          "title": "project_participants_section.title",
+          "type": "object",
+          "required": ["participants_7_28", "participants_total"],
+          "properties": {
+            "participants_7_28": {
+              "title": "participants_7_28.title",
+              "type": "integer"
+            },
+            "participants_total": {
+              "title": "participants_total.title",
+              "type": "integer"
+            }
+          }
+        },
+        "project_location_section": {
+          "title": "project_location_section.title",
+          "description": "project_location_section.description",
+          "type": "object",
+          "properties": {
+            "project_location": {
+              "title": "project_location.title",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "attachments_step": {
+      "type": "object",
+      "properties": {
+        "additional_information_section": {
+          "title": "additional_information_section.title",
+          "type": "object",
+          "properties": {
+            "additional_information": {
+              "title": "additional_information.title",
+              "type": "string"
+            }
+          }
+        },
+        "attachments_section": {
+          "title": "attachments_section.title",
+          "type": "object",
+          "description": "attachments_section.description",
+          "properties": {
+            "required_attachments_help": {
+              "title": "required_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "required_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "multiple_attachments_help": {
+              "title": "multiple_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "multiple_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "formerly_provided_attachments_help": {
+              "title": "formerly_provided_attachments_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "formerly_provided_attachments_help.value",
+                  "type": "null"
+                }
+              ]
+            },
+            "cant_view_after_help": {
+              "title": "cant_view_after_help.title",
+              "type": "array",
+              "items": [
+                {
+                  "title": "cant_view_after_help.value",
+                  "type": "null"
+                },
+                {
+                  "title": "cant_view_after_help.value_2",
+                  "type": "null"
+                }
+              ]
+            },
+            "community_rules": {
+              "title": "community_rules.title",
+              "type": "object",
+              "properties": {
+                "community_rules_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "project_plan_attachment": {
+              "title": "project_plan_attachment.title",
+              "type": "object",
+              "properties": {
+                "project_plan_attachment_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "project_budget_attachment": {
+              "title": "project_budget_attachment.title",
+              "type": "object",
+              "properties": {
+                "project_budget_attachment_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "description": { "type": "string" },
+                    "file_id": { "type": "integer" },
+                    "fileName": { "type": "string" },
+                    "fileType": { "type": "integer" },
+                    "integrationID": { "type": "string" },
+                    "isDeliveredLater": { "type": "boolean" },
+                    "isIncludedInOtherFile": { "type": "boolean" },
+                    "isNewAttachment": { "type": "boolean" },
+                    "size": { "type": "integer" }
+                  }
+                }
+              }
+            },
+            "further_clarification": {
+              "title": "further_clarification.title",
+              "type": "string"
+            },
+            "other_attachment_fieldset": {
+              "title": "other_attachment_fieldset.title",
+              "type": "object",
+              "properties": {
+                "other_attachment_fieldset_file": {
+                  "title": "file.title",
+                  "type": "object",
+                  "properties": {
+                    "files": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "file_id": { "type": "integer" },
+                          "fileName": { "type": "string" },
+                          "fileType": { "type": "integer" },
+                          "integrationID": { "type": "string" },
+                          "isDeliveredLater": { "type": "boolean" },
+                          "isIncludedInOtherFile": { "type": "boolean" },
+                          "isNewAttachment": { "type": "boolean" },
+                          "size": { "type": "integer" }
+                        }
+                      }
+                    },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "members_step": {
+      "type": "object",
+      "required": ["members_section"],
+      "properties": {
+        "members_section": {
+          "title": "members_section.title",
+          "type": "object",
+          "required": ["members_fieldset"],
+          "properties": {
+            "members_fieldset": {
+              "type": "object",
+              "title": "members_fieldset.legend",
+              "properties": {
+                "members_0_6": {
+                  "title": "members_0_6.title",
+                  "type": "integer"
+                },
+                "members_0_6_helsinki": {
+                  "title": "members_0_6_helsinki.title",
+                  "type": "integer"
+                },
+                "members_7_28": {
+                  "title": "members_7_28.title",
+                  "type": "integer"
+                },
+                "members_7_28_helsinki": {
+                  "title": "members_7_28_helsinki.title",
+                  "type": "integer"
+                },
+                "members_others": {
+                  "title": "members_others.title",
+                  "type": "integer"
+                },
+                "members_others_helsinki": {
+                  "title": "members_others_helsinki.title",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "members_0_6",
+                "members_0_6_helsinki",
+                "members_7_28",
+                "members_7_28_helsinki",
+                "members_others",
+                "members_others_helsinki"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "",
+  "title": "form_title",
+  "type": "object",
+  "properties": {
+    "grant_info_step": {
+      "title": "grant_info_step.title",
+      "$ref": "#/definitions/grant_info_step"
+    },
+    "members_step": {
+      "title": "members_step.title",
+      "$ref": "#/definitions/members_step"
+    },
+    "project_plan_step": {
+      "title": "project_plan_step.title",
+      "$ref": "#/definitions/project_plan_step"
+    },
+    "budget_step": {
+      "title": "custom_budget_step.title",
+      "$ref": "#/definitions/budget_step"
+    },
+    "attachments_step": {
+      "title": "attachments_step.title",
+      "$ref": "#/definitions/attachments_step"
+    }
+  }
+}
