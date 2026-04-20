@@ -301,6 +301,23 @@ export const FieldTemplate = (props: FieldTemplateProps) => {
     if (allNull) return null;
   }
 
+  // Don't render wrappers for inactive conditional sections.
+  // Sections whose allOf/then condition is not met have only empty placeholder objects
+  // in their base schema (e.g. project_measures_wrapper: {type:object, default:{}}),
+  // which have no sub-properties and would render as nothing.
+  if (!shouldRenderPreview && (schema as any)._isSection) {
+    const sectionProps = Object.values((schema.properties || {}) as Record<string, any>);
+    const hasVisibleContent = sectionProps.some((p: any) => {
+      if (p.type === 'null') return false;
+      if (p.type === 'object') {
+        const sub = p.properties as Record<string, any> | undefined;
+        return !!sub && Object.values(sub).some((s: any) => s?.type !== 'null');
+      }
+      return true; // string, integer, number, boolean, array — always renderable
+    });
+    if (!hasVisibleContent) return null;
+  }
+
   return <DefaultFieldTemplate {...props} />;
 };
 
