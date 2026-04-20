@@ -16,8 +16,8 @@ const formatMinItemsError = (error: ErrorObject) => {
   } = error;
 
   return Drupal.t(
-    'You must insert at least @limit value for field @field',
-    { '@field': parentSchema?.title || '', '@limit': limit.toString() },
+    'You must insert at least @limit value for field !field',
+    { '!field': parentSchema?.title || '', '@limit': limit.toString() },
     { context: 'Grants application: Validation' },
   );
 };
@@ -42,15 +42,15 @@ const formatMinLengthError = (error: ErrorObject) => {
   // RJSF accepts empty strings as valid input for string fields (since this is valid according JSONSchema specification)
   if (limit === 1 && parentSchema) {
     return Drupal.t(
-      '@field field is required.',
-      { '@field': parentSchema.title },
+      '!field field is required.',
+      { '!field': parentSchema.title },
       { context: 'Grants application: Validation' },
     );
   }
 
   return Drupal.t(
-    '@field field must be at least @limit characters.',
-    { '@field': parentSchema?.title, '@limit': limit },
+    '!field field must be at least @limit characters.',
+    { '!field': parentSchema?.title, '@limit': limit },
     { context: 'Grants application: Validation' },
   );
 };
@@ -70,7 +70,7 @@ const formatRequiredError = (error: ErrorObject) => {
 
   const { title } = error.parentSchema.properties[missingProperty];
 
-  return Drupal.t('@field field is required.', { '@field': title }, { context: 'Grants application: Validation' });
+  return Drupal.t('!field field is required.', { '!field': title }, { context: 'Grants application: Validation' });
 };
 
 /**

@@ -113,8 +113,8 @@ const expandLeafRequiredErrors = (
       const fieldTitle = fieldSchema?.title;
       const message = fieldTitle
         ? Drupal.t(
-            '@field field is required.',
-            { '@field': fieldTitle as string },
+            '!field field is required.',
+            { '!field': fieldTitle as string },
             { context: 'Grants application: Validation' },
           )
         : Drupal.t('Field is required', {}, { context: 'Grants application: Validation' });
@@ -185,7 +185,7 @@ export const expandConditionalRequiredErrors = (
     }
 
     // Recursively expand to leaf required field errors
-    expandLeafRequiredErrors(missingFieldSchema, error.property, expanded, error.schemaPath);
+    expandLeafRequiredErrors(missingFieldSchema, error.property, expanded, error.schemaPath ?? '');
   }
 
   return expanded;

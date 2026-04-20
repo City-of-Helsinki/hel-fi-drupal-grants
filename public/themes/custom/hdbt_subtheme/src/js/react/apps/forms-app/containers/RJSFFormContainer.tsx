@@ -185,7 +185,7 @@ export const RJSFFormContainer = ({
       return [];
     }
 
-    const prefilteredErrors = errors.filter((error) => error.params?.type !== 'null');
+    const prefilteredErrors = errors.filter((error) => error.params?.type !== 'null' && (error as any).name !== 'if');
 
     // Expand section-level required errors to field-level errors so fields inside
     // conditionally-required allOf/then sections display red borders when absent.
