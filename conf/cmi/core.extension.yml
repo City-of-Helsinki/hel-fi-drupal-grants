@@ -87,7 +87,6 @@ module:
   helfi_ckeditor: 0
   helfi_csp: 0
   helfi_etusivu_entities: 0
-  helfi_gdpr_api: 0
   helfi_helsinki_profiili: 0
   helfi_helsinki_profiili_audit_logging: 0
   helfi_image_styles: 0
