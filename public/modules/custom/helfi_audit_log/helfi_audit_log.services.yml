@@ -16,6 +16,8 @@ services:
       '@event_dispatcher',
       '@logger.channel.helfi_audit_log'
     ]
+  Drupal\helfi_audit_log\AuditLogService: '@helfi_audit_log.audit_log'
+
   helfi_audit_log.audit_log_event_subscriber:
     class: Drupal\helfi_audit_log\EventSubscriber\AuditLogEventSubscriber
     arguments: [ '@helfi_audit_log.audit_log', '@logger.channel.helfi_audit_log' ]

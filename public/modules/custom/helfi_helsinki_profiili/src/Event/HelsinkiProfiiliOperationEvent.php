@@ -9,25 +9,14 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class HelsinkiProfiiliOperationEvent extends Event {
 
-  const EVENT_ID = 'helfi_helfinki_profiili.operation';
-
-  /**
-   * Construct a new event.
-   *
-   * @param string $name
-   *   Name of operation.
-   */
   public function __construct(
-    private string $name,
+    private readonly string $name,
   ) {}
 
   /**
-   * Get the name.
-   *
-   * @return string
-   *   Name of the operation.
+   * Get the name of the operation.
    */
-  public function getName() {
+  public function getName(): string {
     return $this->name;
   }
 
