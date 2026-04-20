@@ -2,12 +2,13 @@
 import type { FieldProps } from '@rjsf/utils';
 import { TextInput } from 'hds-react';
 import { useAtomValue } from 'jotai';
+import { useEffect, useRef } from 'react';
 
 import { formDataAtomRef, getSubventionFieldsAtom, shouldRenderPreviewAtom } from '../../store';
 import { getSubventionSum } from '../../utils';
 import { PreviewInput } from '../Input';
 
-export const SubventionSum = ({ idSchema, name, schema, uiSchema }: FieldProps) => {
+export const SubventionSum = ({ idSchema, name, onChange, schema, uiSchema }: FieldProps) => {
   const shouldRenderPreview = useAtomValue(shouldRenderPreviewAtom);
   const fields = useAtomValue(getSubventionFieldsAtom);
   const formDataAtom = useAtomValue(formDataAtomRef);
@@ -17,6 +18,14 @@ export const SubventionSum = ({ idSchema, name, schema, uiSchema }: FieldProps) 
     data,
     fields.map((field) => `.${field}`),
   );
+
+  const prevSumRef = useRef<number | null>(null);
+  useEffect(() => {
+    if (prevSumRef.current !== sum) {
+      prevSumRef.current = sum;
+      onChange(sum);
+    }
+  }, [sum, onChange]);
 
   if (shouldRenderPreview) {
     return <PreviewInput label={schema?.title} value={sum.toString()} uiSchema={uiSchema} />;
