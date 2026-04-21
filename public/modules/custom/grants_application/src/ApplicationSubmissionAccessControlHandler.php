@@ -51,7 +51,7 @@ final class ApplicationSubmissionAccessControlHandler extends EntityAccessContro
 
     $userInformation = $this->userInformationService->getUserData();
 
-    if ($userInformation['sub'] && $userInformation['sub'] === $entity->get('sub')->value) {
+    if ($userInformation->sub === $entity->get('sub')->value) {
       return new AccessResultAllowed();
     }
 

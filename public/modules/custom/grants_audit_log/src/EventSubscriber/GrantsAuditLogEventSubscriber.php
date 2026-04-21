@@ -5,6 +5,7 @@ namespace Drupal\grants_audit_log\EventSubscriber;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\helfi_audit_log\Event\AuditLogEvent;
 use Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData;
+use Drupal\helfi_helsinki_profiili\ProfiiliException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -68,12 +69,19 @@ class GrantsAuditLogEventSubscriber implements EventSubscriberInterface {
     $userId = $this->currentUser->id();
     // Get current user.
     if ($role == 'USER') {
-      $isAuthenticatedExternally = $this->helsinkiProfiiliUserData->isAuthenticatedExternally();
-      if ($isAuthenticatedExternally) {
+      try {
         $data = $this->helsinkiProfiiliUserData->getUserData();
-        if ($data !== NULL && $data['sid']) {
-          $userId = $data['sid'];
+
+        if ($data->sid !== NULL) {
+          $userId = $data->sid;
         }
+      }
+      catch (ProfiiliException) {
+        // If present, replace user id with sid field from tunnistamo jwt
+        // token. HelsinkiProfiiliUserData::getUserData throws if the helsinki
+        // profiili token is not available. In that case, something has
+        // probably gone very wrong already, but I don't think this should
+        // prevent logging here.
       }
     }
     $message = $event->getMessage();

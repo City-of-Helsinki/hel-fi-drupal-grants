@@ -16,7 +16,7 @@ use Drupal\user\UserInterface;
 /**
  * Implements hook_openid_connect_post_authorize().
  */
-function grants_audit_log_openid_connect_post_authorize(UserInterface $account, array $context) {
+function grants_audit_log_openid_connect_post_authorize(UserInterface $account, array $context): void {
   $message = [
     "operation" => "TUNNISTAMO_LOGIN",
     "status" => "SUCCESS",
@@ -27,13 +27,15 @@ function grants_audit_log_openid_connect_post_authorize(UserInterface $account, 
     ],
   ];
 
+  // Do we need to log this separately? Hook `grants_audit_log_user_login`
+  // is fired for helsinki profiili logins too.
   \Drupal::service('helfi_audit_log.audit_log')->dispatchEvent($message);
 }
 
 /**
  * Implements hook_user_login().
  */
-function grants_audit_log_user_login(AccountInterface $account) {
+function grants_audit_log_user_login(AccountInterface $account): void {
   $message = [
     "operation" => "DRUPAL_LOGIN",
     "status" => "SUCCESS",
@@ -49,7 +51,7 @@ function grants_audit_log_user_login(AccountInterface $account) {
 /**
  * Implements hook_user_logout().
  */
-function grants_audit_log_user_logout(AccountInterface $account) {
+function grants_audit_log_user_logout(AccountInterface $account): void {
   $message = [
     "operation" => "DRUPAL_LOGOUT",
     "status" => "SUCCESS",
@@ -65,7 +67,7 @@ function grants_audit_log_user_logout(AccountInterface $account) {
 /**
  * Implements hook_entity_view().
  */
-function grants_audit_log_entity_view(array &$build, EntityInterface $entity) {
+function grants_audit_log_entity_view(array &$build, EntityInterface $entity): void {
 
   // Only trigger event for webform nodes and submissions.
   if ($entity->bundle() == "webform") {
@@ -86,7 +88,7 @@ function grants_audit_log_entity_view(array &$build, EntityInterface $entity) {
 /**
  * Implements hook_entity_insert().
  */
-function grants_audit_log_entity_insert(EntityInterface $entity) {
+function grants_audit_log_entity_insert(EntityInterface $entity): void {
 
   // Trigger event only for users, webform nodes and webform submissions.
   if ($entity->getEntityTypeId() == "user" || ($entity->getEntityTypeId() == "node" && $entity->bundle() == "webform")) {
@@ -107,7 +109,7 @@ function grants_audit_log_entity_insert(EntityInterface $entity) {
 /**
  * Implements hook_entity_delete().
  */
-function grants_audit_log_entity_delete(EntityInterface $entity) {
+function grants_audit_log_entity_delete(EntityInterface $entity): void {
 
   // Trigger event only for users, webform nodes and webform submissions.
   if ($entity->getEntityTypeId() == "user" || ($entity->getEntityTypeId() == "node" && $entity->bundle() == "webform")) {
@@ -128,7 +130,7 @@ function grants_audit_log_entity_delete(EntityInterface $entity) {
 /**
  * Implements hook_entity_update().
  */
-function grants_audit_log__entity_update(EntityInterface $entity) {
+function grants_audit_log__entity_update(EntityInterface $entity): void {
 
   // Trigger event only for users, webform nodes and webform submissions.
   if ($entity->getEntityTypeId() == "user" || ($entity->getEntityTypeId() == "node" && $entity->bundle() == "webform")) {

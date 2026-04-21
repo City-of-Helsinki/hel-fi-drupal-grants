@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\helfi_helsinki_profiili;
 
 /**
- * {@inheritdoc}
+ * Token expired exception.
  */
-class TokenExpiredException extends \Exception {
+class TokenExpiredException extends ProfiiliException {
 
 }

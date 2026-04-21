@@ -35,9 +35,9 @@ class AuditLogEventSubscriber implements EventSubscriberInterface {
   /**
    * Construct new AuditLogEventSubscriber.
    *
-   * @param Drupal\helfi_audit_log\AuditLogServiceInterface $auditLogService
+   * @param \Drupal\helfi_audit_log\AuditLogServiceInterface $auditLogService
    *   Service that handles writing to the audit log.
-   * @param Psr\Log\LoggerInterface $logger
+   * @param \Psr\Log\LoggerInterface $logger
    *   Logger for logging messages to Drupal logs.
    */
   public function __construct(AuditLogServiceInterface $auditLogService, LoggerInterface $logger) {

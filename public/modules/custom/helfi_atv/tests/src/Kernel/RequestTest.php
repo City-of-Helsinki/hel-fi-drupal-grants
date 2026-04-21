@@ -7,13 +7,14 @@ namespace Drupal\Tests\helfi_atv\Kernel;
 use GuzzleHttp\Psr7\Response;
 use League\OpenAPIValidation\PSR7\RequestValidator;
 use League\OpenAPIValidation\PSR7\ValidatorBuilder;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests AtvService class.
- *
- * @covers \Drupal\helfi_atv\AtvService
- * @group helfi_atv
  */
+#[Group('helfi_atv')]
+#[RunTestsInSeparateProcesses]
 class RequestTest extends AtvKernelTestBase {
 
   /**
