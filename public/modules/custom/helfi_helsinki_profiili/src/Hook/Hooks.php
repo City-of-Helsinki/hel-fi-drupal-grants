@@ -36,7 +36,8 @@ final class Hooks {
    * OpenID Connect pre-authorize hook.
    *
    * @param \Drupal\user\UserInterface $account
-   *   User account object of the authorized user.
+   *   User account identified using the "sub" provided by the identity
+   *   provider, or FALSE, if no such account exists.
    * @param array<mixed> $context
    *   An associative array with context information:
    *   - tokens:         An array of tokens.
@@ -45,7 +46,7 @@ final class Hooks {
    *   - sub:            The remote user identifier.
    */
   #[Hook('openid_connect_pre_authorize')]
-  public function preAuthorize(UserInterface $account, array $context): bool {
+  public function preAuthorize(UserInterface|bool $account, array $context): bool {
     // Don't do anything for entra users.
     if ($context['plugin_id'] !== 'tunnistamo') {
       return TRUE;
