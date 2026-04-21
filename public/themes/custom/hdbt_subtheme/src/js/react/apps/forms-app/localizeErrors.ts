@@ -108,6 +108,10 @@ const formatTypeError = (error: ErrorObject) => {
     return Drupal.t('The value must be an integer.', {}, { context: 'Grants application: Validation' });
   }
 
+  if (schema === 'number') {
+    return Drupal.t('The value must be a number.', {}, { context: 'Grants application: Validation' });
+  }
+
   return Drupal.t('Value is of incorrect type.', {}, { context: 'Grants application: Validation' });
 };
 

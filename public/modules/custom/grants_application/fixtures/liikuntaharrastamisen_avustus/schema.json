@@ -316,7 +316,7 @@
                     "properties": {
                       "requested_amount_first_year": {
                         "title": "requested_amount_first_year.title",
-                        "type": "integer"
+                        "type": "number"
                       }
                     },
                     "required": ["requested_amount_first_year"]
@@ -344,11 +344,11 @@
                     "properties": {
                       "requested_amount_first_year": {
                         "title": "requested_amount_first_year.title",
-                        "type": "integer"
+                        "type": "number"
                       },
                       "requested_amount_second_year": {
                         "title": "requested_amount_second_year.title",
-                        "type": "integer"
+                        "type": "number"
                       }
                     },
                     "required": ["requested_amount_first_year", "requested_amount_second_year"]
@@ -608,7 +608,7 @@
             },
             "applied_benefits": {
               "title": "applied_benefits.title",
-              "type": "integer"
+              "type": "number"
             },
             "income_rows": {
               "type": "array",
