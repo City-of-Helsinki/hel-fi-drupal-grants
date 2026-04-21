@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\helfi_helsinki_profiili;
 
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Messenger\Messenger;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,52 +13,18 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 /**
  * Prevent access to user/register & user/password urls and redirect.
  */
-class RegisterPageRedirectMiddleware implements HttpKernelInterface {
+readonly class RegisterPageRedirectMiddleware implements HttpKernelInterface {
 
-  use StringTranslationTrait;
-
-  /**
-   * The kernel.
-   *
-   * @var \Symfony\Component\HttpKernel\HttpKernelInterface
-   */
-  protected HttpKernelInterface $httpKernel;
-
-  /**
-   * Show messages to users.
-   *
-   * @var \Drupal\Core\Messenger\Messenger
-   */
-  protected Messenger $messenger;
-
-  /**
-   * Translate things.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected LanguageManagerInterface $languageManager;
-
-  /**
-   * Constructs the RegisterPageRedirectMiddleware object.
-   *
-   * @param \Symfony\Component\HttpKernel\HttpKernelInterface $http_kernel
-   *   The decorated kernel.
-   * @param \Drupal\Core\Messenger\Messenger $messenger
-   *   Messenger service.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
-   *   Language Manager service.
-   */
-  public function __construct(HttpKernelInterface $http_kernel, Messenger $messenger, LanguageManagerInterface $languageManager) {
-    $this->httpKernel = $http_kernel;
-    $this->messenger = $messenger;
-    $this->languageManager = $languageManager;
+  public function __construct(
+    protected HttpKernelInterface $httpKernel,
+    protected LanguageManagerInterface $languageManager,
+  ) {
   }
 
   /**
    * {@inheritdoc}
    */
-  public function handle(Request $request, $type = self::MAIN_REQUEST, $catch = TRUE): RedirectResponse|Response {
-
+  public function handle(Request $request, $type = self::MAIN_REQUEST, $catch = TRUE): Response {
     $url = $request->getRequestUri();
     $language = $this->languageManager->getCurrentLanguage()->getId();
 

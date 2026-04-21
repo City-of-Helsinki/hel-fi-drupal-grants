@@ -7,12 +7,15 @@ namespace Drupal\Tests\helfi_atv\Unit\Plugin\DebugData;
 use Drupal\helfi_atv\AtvService;
 use Drupal\helfi_atv\Plugin\DebugDataItem\ApiAvailability;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
+ * Api availability test.
+ *
  * @coversDefaultClass \Drupal\helfi_atv\Plugin\DebugDataItem\ApiAvailability
- * @group helfi_atv
  */
+#[Group('helfi_atv')]
 class ApiAvailabilityTest extends UnitTestCase {
 
   use ProphecyTrait;

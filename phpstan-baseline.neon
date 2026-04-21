@@ -1666,11 +1666,6 @@ parameters:
 			path: public/modules/custom/grants_application/src/User/UserInformationService.php
 
 		-
-			message: "#^Method Drupal\\\\grants_application\\\\User\\\\UserInformationService\\:\\:getApplicantInformation\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/User/UserInformationService.php
-
-		-
 			message: "#^Method Drupal\\\\grants_application\\\\User\\\\UserInformationService\\:\\:getApplicantInformation\\(\\) has parameter \\$userProfileData with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/User/UserInformationService.php
@@ -1687,11 +1682,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\grants_application\\\\User\\\\UserInformationService\\:\\:getSelectedCompany\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_application/src/User/UserInformationService.php
-
-		-
-			message: "#^Method Drupal\\\\grants_application\\\\User\\\\UserInformationService\\:\\:getUserData\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_application/src/User/UserInformationService.php
 
@@ -2775,47 +2765,12 @@ parameters:
 			path: public/modules/custom/grants_attachments/src/Plugin/WebformElement/GrantsAttachments.php
 
 		-
-			message: "#^Function grants_audit_log__entity_update\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
-			message: "#^Function grants_audit_log_entity_delete\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
-			message: "#^Function grants_audit_log_entity_insert\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
-			message: "#^Function grants_audit_log_entity_view\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
 			message: "#^Function grants_audit_log_entity_view\\(\\) has parameter \\$build with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_audit_log/grants_audit_log.module
 
 		-
-			message: "#^Function grants_audit_log_openid_connect_post_authorize\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
 			message: "#^Function grants_audit_log_openid_connect_post_authorize\\(\\) has parameter \\$context with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
-			message: "#^Function grants_audit_log_user_login\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_audit_log/grants_audit_log.module
-
-		-
-			message: "#^Function grants_audit_log_user_logout\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: public/modules/custom/grants_audit_log/grants_audit_log.module
 
@@ -4249,10 +4204,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
-		-
-			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:createAtvDocument\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:getBudgetInfoKeysForCopying\\(\\) has parameter \\$submissionData with no value type specified in iterable type array\\.$#"
@@ -4274,10 +4225,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
-		-
-			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:getHakijanTiedot\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:getHakijanTiedot\\(\\) has parameter \\$userProfileData with no value type specified in iterable type array\\.$#"
@@ -4359,10 +4306,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
-		-
-			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:setInitialSubmissionData\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/ApplicationInitService.php
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationInitService\\:\\:setInitialSubmissionData\\(\\) has parameter \\$userProfileData with no value type specified in iterable type array\\.$#"
@@ -4444,10 +4387,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/ApplicationUploaderService.php
 
-		-
-			message: "#^Method Drupal\\\\grants_handler\\\\ApplicationUploaderService\\:\\:logSubmissionSaveid\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/ApplicationUploaderService.php
 
 		-
 			message: "#^Property Drupal\\\\grants_handler\\\\ApplicationUploaderService\\:\\:\\$atvDocument \\(Drupal\\\\helfi_atv\\\\AtvDocument\\) does not accept bool\\|Drupal\\\\helfi_atv\\\\AtvDocument\\|null\\.$#"
@@ -5040,11 +4979,6 @@ parameters:
 			path: public/modules/custom/grants_handler/src/GrantsHandlerNavigationHelper.php
 
 		-
-			message: "#^Method Drupal\\\\grants_handler\\\\GrantsHandlerNavigationHelper\\:\\:logErrors\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/GrantsHandlerNavigationHelper.php
-
-		-
 			message: "#^Method Drupal\\\\grants_handler\\\\GrantsHandlerNavigationHelper\\:\\:logErrors\\(\\) has parameter \\$errors with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/grants_handler/src/GrantsHandlerNavigationHelper.php
@@ -5234,10 +5168,6 @@ parameters:
 			count: 1
 			path: public/modules/custom/grants_handler/src/MessageService.php
 
-		-
-			message: "#^Strict comparison using \\=\\=\\= between array and null will always evaluate to false\\.$#"
-			count: 1
-			path: public/modules/custom/grants_handler/src/MessageService.php
 
 		-
 			message: "#^Method Drupal\\\\grants_handler\\\\Plugin\\\\Block\\\\ApplicationTimeoutMessageBlock\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -11396,7 +11326,7 @@ parameters:
 
 		-
 			message: "#^Function Exception not found\\.$#"
-			count: 3
+			count: 2
 			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/HelfiAtvTestServiceProvider.php
 
 		-
@@ -11433,16 +11363,6 @@ parameters:
 			message: "#^Property Drupal\\\\helfi_atv_test\\\\MockClientFactory\\:\\:\\$historyContainer type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/MockClientFactory.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv_test\\\\MockHelsinkiProfiiliUserData\\:\\:getApiAccessTokens\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/MockHelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_atv_test\\\\MockHelsinkiProfiiliUserData\\:\\:getCurrentUserRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_atv/tests/modules/helfi_atv_test/src/MockHelsinkiProfiiliUserData.php
 
 		-
 			message: "#^Call to an undefined method Drupal\\\\Core\\\\Http\\\\ClientFactory\\:\\:addResponse\\(\\)\\.$#"
@@ -11675,32 +11595,12 @@ parameters:
 			path: public/modules/custom/helfi_audit_log/src/Event/AuditLogEvent.php
 
 		-
-			message: "#^PHPDoc tag @param for parameter \\$auditLogService with type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface is not subtype of native type Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
-
-		-
-			message: "#^PHPDoc tag @param for parameter \\$logger with type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Psr\\\\Log\\\\LoggerInterface is not subtype of native type Psr\\\\Log\\\\LoggerInterface\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
-
-		-
 			message: "#^PHPDoc tag @var for property Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\AuditLogEventSubscriber\\:\\:\\$auditLogService with type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface is not subtype of native type Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
 
 		-
 			message: "#^PHPDoc tag @var for property Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\AuditLogEventSubscriber\\:\\:\\$logger with type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Psr\\\\Log\\\\LoggerInterface is not subtype of native type Psr\\\\Log\\\\LoggerInterface\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
-
-		-
-			message: "#^Parameter \\$auditLogService of method Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\AuditLogEventSubscriber\\:\\:__construct\\(\\) has invalid type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Drupal\\\\helfi_audit_log\\\\AuditLogServiceInterface\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
-
-		-
-			message: "#^Parameter \\$logger of method Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\AuditLogEventSubscriber\\:\\:__construct\\(\\) has invalid type Drupal\\\\helfi_audit_log\\\\EventSubscriber\\\\Psr\\\\Log\\\\LoggerInterface\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_audit_log/src/EventSubscriber/AuditLogEventSubscriber.php
 
@@ -11810,141 +11710,6 @@ parameters:
 			path: public/modules/custom/helfi_av/tests/src/Unit/AntivirusServiceTest.php
 
 		-
-			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getChangedTime\\(\\)\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getCreatedTime\\(\\)\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getDisplayName\\(\\)\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Call to an undefined method Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:getEmail\\(\\)\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Cannot access offset 'documents' on non\\-empty\\-array\\|Drupal\\\\file\\\\FileInterface\\|Drupal\\\\helfi_atv\\\\AtvDocument\\|true\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Cannot access offset 'total_deletable' on array\\|bool\\|Drupal\\\\file\\\\FileInterface\\|Drupal\\\\helfi_atv\\\\AtvDocument\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:access\\(\\) has parameter \\$userId with no type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:debug\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:debug\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:delete\\(\\) has parameter \\$userId with no type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:get\\(\\) has invalid return type Drupal\\\\Component\\\\Serialization\\\\JsonResponse\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^PHPDoc tag @param for parameter \\$userStorage with type Drupal\\\\helfi_gdpr_api\\\\Controller\\\\Drupal\\\\user\\\\UserStorageInterface is not subtype of native type Drupal\\\\user\\\\UserStorageInterface\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^PHPDoc tag @return with type Drupal\\\\Component\\\\Serialization\\\\JsonResponse is not subtype of native type Symfony\\\\Component\\\\HttpFoundation\\\\JsonResponse\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^PHPDoc tag @var for property Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:\\$audienceConfig with type mixed is not subtype of native type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Parameter \\$userStorage of method Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:__construct\\(\\) has invalid type Drupal\\\\helfi_gdpr_api\\\\Controller\\\\Drupal\\\\user\\\\UserStorageInterface\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Property Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:\\$audienceConfig type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Property Drupal\\\\helfi_gdpr_api\\\\Controller\\\\HelfiGdprApiController\\:\\:\\$jwtData type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_gdpr_api/src/Controller/HelfiGdprApiController.php
-
-		-
-			message: "#^Function helfi_helsinki_profiili_install\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/helfi_helsinki_profiili.install
-
-		-
-			message: "#^Function helfi_helsinki_profiili_uninstall\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/helfi_helsinki_profiili.install
-
-		-
-			message: "#^Function helfi_helsinki_profiili_openid_connect_post_authorize\\(\\) has parameter \\$context with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/helfi_helsinki_profiili.module
-
-		-
-			message: "#^Function helfi_helsinki_profiili_user_logout\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/helfi_helsinki_profiili.module
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili_audit_logging\\\\EventSubscriber\\\\HelsinkiProfiiliEventSubscriber\\:\\:onException\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/modules/helfi_helsinki_profiili_audit_logging/src/EventSubscriber/HelsinkiProfiiliEventSubscriber.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili_audit_logging\\\\EventSubscriber\\\\HelsinkiProfiiliEventSubscriber\\:\\:onOperation\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/modules/helfi_helsinki_profiili_audit_logging/src/EventSubscriber/HelsinkiProfiiliEventSubscriber.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\EventSubscriber\\\\TokenExpiredExceptionSubscriber\\:\\:onKernelException\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/EventSubscriber/TokenExpiredExceptionSubscriber.php
-
-		-
 			message: "#^Call to an undefined method Drupal\\\\Core\\\\Session\\\\AccountInterface\\:\\:get\\(\\)\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
@@ -11955,102 +11720,13 @@ parameters:
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
 		-
-			message: "#^Dead catch \\- Exception is never thrown in the try block\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:checkPrimaryFields\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:checkPrimaryFields\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:debugPrint\\(\\) has parameter \\$replacements with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:filterData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:filterData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getAdminRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getApiAccessTokens\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getCurrentUserRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getFromCache\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getHelsinkiProfiiliToken\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getHpUserRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getJwks\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getOpenIdConfiguration\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getOpenidConfigurationFromIssuer\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getTokenData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getTunnistamoEnvUrl\\(\\) should return string but returns string\\|false\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getUserData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
 		-
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:getUserProfileData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:parseToken\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
 
@@ -12063,96 +11739,6 @@ parameters:
 			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:setToCache\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:setUserData\\(\\) has parameter \\$userData with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:verifyJwtToken\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Parameter \\#1 \\$apiTokenEndpoint of method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:setApiTokenEndpoint\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Parameter \\#1 \\$exception of method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:dispatchExceptionEvent\\(\\) expects Exception, Exception\\|GuzzleHttp\\\\Exception\\\\GuzzleException given\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Parameter \\#1 \\$exception of method Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:dispatchExceptionEvent\\(\\) expects Exception, GuzzleHttp\\\\Exception\\\\GuzzleException given\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Parameter \\#2 \\$uri of method GuzzleHttp\\\\ClientInterface\\:\\:request\\(\\) expects Psr\\\\Http\\\\Message\\\\UriInterface\\|string, string\\|false given\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Property Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:\\$hpAdminRoles type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Property Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:\\$hpUserRoles type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Property Drupal\\\\helfi_helsinki_profiili\\\\HelsinkiProfiiliUserData\\:\\:\\$openIdConfiguration type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between array\\<string, string\\>\\|string\\|false and true will always evaluate to false\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/src/HelsinkiProfiiliUserData.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_helsinki_profiili\\\\Unit\\\\HelsinkiProfiiliUserDataTest\\:\\:getFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/tests/src/Unit/HelsinkiProfiiliUserDataTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_helsinki_profiili\\\\Unit\\\\HelsinkiProfiiliUserDataTest\\:\\:testDoesntChangeValidPrimaryData\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/tests/src/Unit/HelsinkiProfiiliUserDataTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_helsinki_profiili\\\\Unit\\\\HelsinkiProfiiliUserDataTest\\:\\:testGetsFirstNodeWhenNoPrimary\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/tests/src/Unit/HelsinkiProfiiliUserDataTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_helsinki_profiili\\\\Unit\\\\HelsinkiProfiiliUserDataTest\\:\\:testGetsFirstPrimaryNode\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/tests/src/Unit/HelsinkiProfiiliUserDataTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_helsinki_profiili\\\\Unit\\\\HelsinkiProfiiliUserDataTest\\:\\:testXssFiltering\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/tests/src/Unit/HelsinkiProfiiliUserDataTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$stream of function fread expects resource, resource\\|false given\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/tests/src/Unit/HelsinkiProfiiliUserDataTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of static method Drupal\\\\Component\\\\Serialization\\\\Json\\:\\:decode\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/tests/src/Unit/HelsinkiProfiiliUserDataTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$length of function fread expects int\\<1, max\\>, int\\<0, max\\>\\|false given\\.$#"
-			count: 1
-			path: public/modules/custom/helfi_helsinki_profiili/tests/src/Unit/HelsinkiProfiiliUserDataTest.php
 
 		-
 			message: "#^Method Drupal\\\\helfi_yjdh\\\\Plugin\\\\DebugDataItem\\\\ApiAvailability\\:\\:__construct\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"

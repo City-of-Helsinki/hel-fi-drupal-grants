@@ -63,7 +63,7 @@ class ApplicantMandateForm extends FormBase {
     ];
     $profiles = [];
     try {
-      $profiles = $this->grantsProfileService->getUsersGrantsProfiles($userData['sub'], 'unregistered_community');
+      $profiles = $this->grantsProfileService->getUsersGrantsProfiles($userData->sub, 'unregistered_community');
 
       /** @var \Drupal\helfi_atv\AtvDocument $profile */
       foreach ($profiles as $profile) {

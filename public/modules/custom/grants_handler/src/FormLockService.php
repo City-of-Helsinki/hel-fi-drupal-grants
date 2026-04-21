@@ -128,7 +128,7 @@ class FormLockService {
     $userProfile = $this->helsinkiProfiiliUserData->getUserData();
 
     // If lock owner is same as the current user.
-    return !($userProfile['sub'] === $lock->user_uuid);
+    return !($userProfile->sub === $lock->user_uuid);
   }
 
   /**
@@ -162,7 +162,7 @@ class FormLockService {
 
     if (!$existingLock) {
       $lockValues = [
-        'user_uuid'          => $userProfile['sub'],
+        'user_uuid'          => $userProfile->sub,
         'application_number' => $formId,
         'form_type'          => $lockType,
         'expire'             => $expire->getTimestamp(),
@@ -175,12 +175,12 @@ class FormLockService {
       $this->logger->info('Created lock: @type @formid @uuid (expire: @expire)', [
         '@formid' => $formId,
         '@type'   => $lockType,
-        '@uuid'   => $userProfile['sub'],
+        '@uuid'   => $userProfile->sub,
         '@expire' => $expire->getTimestamp(),
       ]);
 
     }
-    elseif ($userProfile['sub'] === $existingLock->user_uuid) {
+    elseif ($userProfile->sub === $existingLock->user_uuid) {
       $this->database->update(self::TABLE)
         ->fields(['expire' => $expire->getTimestamp()])
         ->condition('lid', $existingLock->lid)
@@ -205,14 +205,14 @@ class FormLockService {
     $result = $this->database->delete(self::TABLE)
       ->condition('form_type', $lockType)
       ->condition('application_number', $formId)
-      ->condition('user_uuid', $userProfile['sub'])
+      ->condition('user_uuid', $userProfile->sub)
       ->execute();
 
     if ($result) {
       $this->logger->info('Released lock: @type @formid @uuid', [
         '@formid' => $formId,
         '@type'   => $lockType,
-        '@uuid'   => $userProfile['sub'],
+        '@uuid'   => $userProfile->sub,
       ]);
     }
 

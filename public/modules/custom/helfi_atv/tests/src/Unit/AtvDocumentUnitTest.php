@@ -6,13 +6,12 @@ namespace Drupal\Tests\helfi_atv\Unit;
 
 use Drupal\helfi_atv\AtvDocument;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests AtvDocument class.
- *
- * @covers \Drupal\helfi_atv\AtvDocument
- * @group helfi_atv
  */
+#[Group('helfi_atv')]
 class AtvDocumentUnitTest extends UnitTestCase {
 
   /**

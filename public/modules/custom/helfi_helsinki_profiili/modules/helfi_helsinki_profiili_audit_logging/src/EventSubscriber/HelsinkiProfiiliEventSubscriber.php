@@ -10,33 +10,27 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Monitors submission view events and logs them to audit log.
  */
-class HelsinkiProfiiliEventSubscriber implements EventSubscriberInterface {
+final readonly class HelsinkiProfiiliEventSubscriber implements EventSubscriberInterface {
 
-  /**
-   * {@inheritdoc}
-   */
   public function __construct(
-    private readonly AuditLogService $auditLogService,
+    private AuditLogService $auditLogService,
   ) {
-
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
-    $events[HelsinkiProfiiliExceptionEvent::EVENT_ID][] = ['onException'];
-    $events[HelsinkiProfiiliOperationEvent::EVENT_ID][] = ['onOperation'];
-    return $events;
+  public static function getSubscribedEvents(): array {
+    return [
+      HelsinkiProfiiliExceptionEvent::class => ['onException'],
+      HelsinkiProfiiliOperationEvent::class => ['onOperation'],
+    ];
   }
 
   /**
    * Audit log the exception.
-   *
-   * @param \Drupal\helfi_helsinki_profiili\Event\HelsinkiProfiiliExceptionEvent $event
-   *   An exception event.
    */
-  public function onException(HelsinkiProfiiliExceptionEvent $event) {
+  public function onException(HelsinkiProfiiliExceptionEvent $event): void {
     $exception = $event->getException();
     $message = [
       'operation' => 'HELSINKI_PROFIILI_QUERY',
@@ -52,11 +46,8 @@ class HelsinkiProfiiliEventSubscriber implements EventSubscriberInterface {
 
   /**
    * Audit log the operation.
-   *
-   * @param \Drupal\helfi_helsinki_profiili\Event\HelsinkiProfiiliOperationEvent $event
-   *   An exception event.
    */
-  public function onOperation(HelsinkiProfiiliOperationEvent $event) {
+  public function onOperation(HelsinkiProfiiliOperationEvent $event): void {
     $name = $event->getName();
     $message = [
       'operation' => 'HELSINKI_PROFIILI_QUERY',

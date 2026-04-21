@@ -1,4 +1,4 @@
-name: helfi_gdpr_api
+name: helfi_gdpr_api (deprecated)
 type: module
 description: Implement GDPR api for sites
 package: Helfi

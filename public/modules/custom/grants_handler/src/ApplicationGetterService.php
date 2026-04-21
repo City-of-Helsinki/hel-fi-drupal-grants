@@ -115,14 +115,14 @@ class ApplicationGetterService implements ApplicationGetterServiceInterface {
     if ($selectedRoleData['type'] == 'private_person') {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
-        'user_id' => $userData['sub'],
+        'user_id' => $userData->sub,
         'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'],
       ];
     }
     elseif ($selectedRoleData['type'] == 'unregistered_community') {
       $searchParams = [
         'service' => 'AvustushakemusIntegraatio',
-        'user_id' => $userData['sub'],
+        'user_id' => $userData->sub,
         'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedRoleData['type'] .
         ',applicant_id:' . $selectedRoleData['identifier'],
       ];
