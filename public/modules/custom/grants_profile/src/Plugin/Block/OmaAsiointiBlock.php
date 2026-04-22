@@ -144,14 +144,14 @@ class OmaAsiointiBlock extends BlockBase implements ContainerFactoryPluginInterf
       if ($selectedCompany['type'] == 'private_person') {
         $searchParams = [
           'service' => 'AvustushakemusIntegraatio',
-          'user_id' => $userData['sub'],
+          'user_id' => $userData->sub,
           'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedCompany['type'],
         ];
       }
       elseif ($selectedCompany['type'] == 'unregistered_community') {
         $searchParams = [
           'service' => 'AvustushakemusIntegraatio',
-          'user_id' => $userData['sub'],
+          'user_id' => $userData->sub,
           'lookfor' => $lookForAppEnv . ',applicant_type:' . $selectedCompany['type'] .
           ',applicant_id:' . $selectedCompany['identifier'],
         ];

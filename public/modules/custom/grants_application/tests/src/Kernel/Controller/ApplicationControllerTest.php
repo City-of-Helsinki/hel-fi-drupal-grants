@@ -11,6 +11,8 @@ use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\grants_application\User\GrantsProfile;
 use Drupal\grants_application\User\UserInformationService;
+use Drupal\helfi_helsinki_profiili\DTO\AuthenticationLevel;
+use Drupal\helfi_helsinki_profiili\DTO\HelsinkiProfiiliUser;
 use Drupal\grants_events\EventsService;
 use Drupal\grants_handler\ApplicationGetterService;
 use Drupal\helfi_atv\AtvDocument;
@@ -161,7 +163,7 @@ final class ApplicationControllerTest extends KernelTestBase {
   public function testFileUpload(): void {
     $userInformationService = $this->createMock(UserInformationService::class);
     $userInformationService->expects($this->any())->method('getUserData')
-      ->willReturn(['sub' => 'abcdefg-1234-5678-9012-hijklmnopqro']);
+      ->willReturn(new HelsinkiProfiiliUser(sub: 'abcdefg-1234-5678-9012-hijklmnopqro', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
     $this->container->set(UserInformationService::class, $userInformationService);
 
     $controller = ApplicationController::create($this->container);
@@ -212,7 +214,7 @@ final class ApplicationControllerTest extends KernelTestBase {
   public function testPrintApplicationNoSubmissionThrowsNotFound(): void {
     $grantsProfile = new GrantsProfile(['businessId' => 'no-match']);
     $userInformationService = $this->createMock(UserInformationService::class);
-    $userInformationService->method('getUserData')->willReturn(['sub' => 'no-match-sub']);
+    $userInformationService->method('getUserData')->willReturn(new HelsinkiProfiiliUser(sub: 'no-match-sub', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
     $userInformationService->method('getGrantsProfileContent')->willReturn($grantsProfile);
     $this->container->set(UserInformationService::class, $userInformationService);
 
@@ -228,7 +230,7 @@ final class ApplicationControllerTest extends KernelTestBase {
     // Match the sub/business_id of the saved entity so access is granted.
     $grantsProfile = new GrantsProfile(['businessId' => 'qwertyui-1234-1234-1234-qweasdzxcrty']);
     $userInformationService = $this->createMock(UserInformationService::class);
-    $userInformationService->method('getUserData')->willReturn(['sub' => 'abcdefg-1234-5678-9012-hijklmnopqro']);
+    $userInformationService->method('getUserData')->willReturn(new HelsinkiProfiiliUser(sub: 'abcdefg-1234-5678-9012-hijklmnopqro', loa: AuthenticationLevel::Strong, name: 'Test User', given_name: 'Test', family_name: 'User', email: 'test@test.com'));
     $userInformationService->method('getGrantsProfileContent')->willReturn($grantsProfile);
     $this->container->set(UserInformationService::class, $userInformationService);
 

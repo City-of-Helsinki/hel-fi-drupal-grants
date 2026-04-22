@@ -1,5 +1,6 @@
-import { Button, ButtonPresetTheme, ButtonVariant, IconCopy, IconPrinter } from 'hds-react';
+import { Button, ButtonVariant, IconCopy, IconPrinter } from 'hds-react';
 import { useAtomValue } from 'jotai';
+import { supplementaryButtonTheme } from '@/react/common/constants/buttonTheme';
 
 import { getFormConfigAtom, getFormTitleAtom, getSummaryDataAtom } from '../store';
 import { useState } from 'react';
@@ -31,13 +32,13 @@ export const FormSummary = () => {
   };
 
   return (
-    <div className='webform-submission-information'>
-      <div className='webform-submission-information__row webform-submission-information__row-top'>
+    <div className='hdbt-react-form__submission-info'>
+      <div className='hdbt-react-form__submission-info__row hdbt-react-form__submission-info__row--top'>
         <h4>{formTitle}</h4>
-        <div className='webform-submission-information__supportlinks'>
+        <div className='hdbt-react-form__submission-info__row__supportlinks'>
           <Button
             iconStart={<IconPrinter />}
-            theme={ButtonPresetTheme.Black}
+            theme={supplementaryButtonTheme}
             variant={ButtonVariant.Supplementary}
             onClick={() => {
               window.location.href = drupalSettings.grants_react_form.print_url as string;
@@ -48,7 +49,7 @@ export const FormSummary = () => {
           <Button
             disabled={disableActions}
             iconStart={<IconCopy />}
-            theme={ButtonPresetTheme.Black}
+            theme={supplementaryButtonTheme}
             onClick={copyApplication}
             variant={ButtonVariant.Supplementary}
           >
@@ -56,7 +57,7 @@ export const FormSummary = () => {
           </Button>
         </div>
       </div>
-      <div className='webform-submission-information__row webform-submission-information__row-main'>
+      <div className='hdbt-react-form__submission-info__row hdbt-react-form__submission-info__row--main'>
         <div>
           <h5>{Drupal.t('Application number', {}, { context: 'Grants application: Submitted form' })}</h5>
           {applicationNumber}

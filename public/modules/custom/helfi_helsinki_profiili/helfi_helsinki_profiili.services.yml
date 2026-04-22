@@ -3,21 +3,18 @@ services:
     autowire: true
     autoconfigure: true
 
-  logger.channel.helsinki_profiili:
+  logger.channel.helfi_helsinki_profiili:
     parent: logger.channel_base
-    arguments: [ 'helsinki_profiili' ]
+    arguments: [ 'helfi_helsinki_profiili' ]
 
   helfi_helsinki_profiili.userdata:
     class: Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData
+  Drupal\helfi_helsinki_profiili\HelsinkiProfiiliUserData: '@helfi_helsinki_profiili.userdata'
 
-  helfi_helsinki_profiili.middleware:
-    class: Drupal\helfi_helsinki_profiili\RegisterPageRedirectMiddleware
-    arguments: ['@messenger', '@language_manager']
+  Drupal\helfi_helsinki_profiili\RegisterPageRedirectMiddleware:
     tags:
       - { name: http_middleware, priority: 1000 }
 
-  helfi_helsinki_profiili.token_event_subscriber:
-    class: Drupal\helfi_helsinki_profiili\EventSubscriber\TokenExpiredExceptionSubscriber
-    arguments: ['@messenger']
-    tags:
-      - { name: event_subscriber }
+  Drupal\helfi_helsinki_profiili\EventSubscriber\TokenExpiredExceptionSubscriber: ~
+
+  Drupal\helfi_helsinki_profiili\ProfiiliApiClient: ~

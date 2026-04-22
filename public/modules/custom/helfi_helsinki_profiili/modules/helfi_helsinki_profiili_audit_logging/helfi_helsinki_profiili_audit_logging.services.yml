@@ -1,7 +1,4 @@
 services:
-  helfi_helsinki_profiili_audit_logging.event_subscriber:
-    class: 'Drupal\helfi_helsinki_profiili_audit_logging\EventSubscriber\HelsinkiProfiiliEventSubscriber'
-    tags:
-      - { name: event_subscriber }
-    arguments:
-      - '@helfi_audit_log.audit_log'
+  Drupal\helfi_helsinki_profiili_audit_logging\EventSubscriber\HelsinkiProfiiliEventSubscriber:
+    autowire: true
+    autoconfigure: true

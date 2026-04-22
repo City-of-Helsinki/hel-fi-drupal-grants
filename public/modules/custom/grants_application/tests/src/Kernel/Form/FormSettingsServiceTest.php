@@ -6,6 +6,7 @@ namespace Drupal\Tests\grants_application\Kernel\Form;
 
 use Drupal\Core\Language\Language;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\grants_application\Form\FormSettings;
 use Drupal\grants_application\Form\FormSettingsService;
 use Drupal\grants_application\Form\FormSettingsServiceInterface;
 use Drupal\Tests\grants_application\Kernel\KernelTestBase;
@@ -224,6 +225,35 @@ final class FormSettingsServiceTest extends KernelTestBase {
         'form_identifier' => 'test-application',
       ]);
     $entity->save();
+  }
+
+  /**
+   * Test draft delete after calculation.
+   */
+  public function testDraftDeleteAfterFromFixtures(): void {
+    $settingsValues = [
+      'continuous' => FALSE,
+      'application_close' => '2030-01-01',
+    ];
+    $settings = new FormSettings($settingsValues, [], [], []);
+
+    $deleteAfter = $settings->getDraftDeleteAfter();
+    $this->assertEquals('2030-02-01', $deleteAfter);
+
+    $settingsValues = [
+      'continuous' => TRUE,
+      'application_close' => '2030-01-01',
+    ];
+    $settings = new FormSettings($settingsValues, [], [], []);
+
+    // On continuous application, the draft is deleted after one year.
+    $deleteAfter = $settings->getDraftDeleteAfter();
+    $this->assertEquals(date('Y-m-d', strtotime('+1 year')), $deleteAfter);
+
+    // Test bad settings.
+    $settings = new FormSettings([], [], [], []);
+    $deleteAfter = $settings->getDraftDeleteAfter();
+    $this->assertEquals(date('Y-m-d', strtotime('+1 year')), $deleteAfter);
   }
 
 }

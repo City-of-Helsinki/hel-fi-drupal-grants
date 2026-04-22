@@ -376,8 +376,8 @@ class GrantsMandateService {
     }
     $userData = $this->helsinkiProfiiliUserData->getUserData();
 
-    $selectedProfileData['identifier'] = $userData["sub"];
-    $selectedProfileData['name'] = $userData["name"];
+    $selectedProfileData['identifier'] = $userData->sub;
+    $selectedProfileData['name'] = $userData->name;
     $selectedProfileData['complete'] = TRUE;
     $this->grantsProfileService->setSelectedRoleData($selectedProfileData);
   }
