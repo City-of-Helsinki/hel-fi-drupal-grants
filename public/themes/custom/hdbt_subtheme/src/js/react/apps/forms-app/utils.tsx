@@ -6,8 +6,8 @@
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import type { FormStep } from './store';
 import { communitySettings } from './formConstants';
+import { createElement, Fragment, type ReactNode } from 'react';
 import { Tooltip } from 'hds-react';
-import parse, { type DOMNode, type Element, domToReact } from 'html-react-parser';
 
 const regex = /^.([^.]+)/;
 
@@ -256,21 +256,32 @@ export const isDraft = () => drupalSettings.grants_react_form.use_draft;
 
 const ALLOWED_TAGS = new Set(['p', 'ul', 'ol', 'li', 'strong']);
 
+function filteredNodeToReact(node: Node, key: number): ReactNode {
+  if (node.nodeType === Node.TEXT_NODE) return node.textContent;
+  if (node.nodeType !== Node.ELEMENT_NODE) return null;
+  const el = node as Element;
+  const children = Array.from(el.childNodes)
+    .map((child, i) => filteredNodeToReact(child, i))
+    .filter((c) => c !== null);
+  if (!ALLOWED_TAGS.has(el.tagName.toLowerCase())) {
+    return createElement(Fragment, { key }, ...children);
+  }
+  return createElement(el.tagName.toLowerCase(), { key }, ...children);
+}
+
 /**
  * Parse HTML content for textParagraphs and tooltips.
  *
  * @param {string} html - HTML content to parse
  * @return {React.ReactNode} - Parsed HTML content
  */
-export const parseAllowedHtml = (html: string) =>
-  parse(html, {
-    replace(node) {
-      const el = node as Element;
-      if (el.type === 'tag' && !ALLOWED_TAGS.has(el.name)) {
-        return <>{domToReact(el.children as DOMNode[])}</>;
-      }
-    },
-  });
+export const parseAllowedHtml = (html: string): ReactNode => {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const nodes = Array.from(doc.body.childNodes)
+    .map((node, i) => filteredNodeToReact(node, i))
+    .filter((n) => n !== null);
+  return nodes.length === 1 ? nodes[0] : createElement(Fragment, null, ...nodes);
+};
 
 /**
  * Get the tooltip component.

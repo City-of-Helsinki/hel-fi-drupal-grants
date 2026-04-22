@@ -1,7 +1,6 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: @todo UHF-12501
 // biome-ignore-all lint/correctness/noUnusedFunctionParameters: @todo UHF-12501
 import { atom } from 'jotai';
-import { DateTime } from 'luxon';
 import type { ReactNode } from 'react';
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 
@@ -106,8 +105,8 @@ export const createFormDataAtom = (key: string, initialValue: any, timestamp?: n
 
     const parsedItem = JSON.parse(sessionItem);
     const { timestamp: sessionTimeStamp, data: sessionData } = parsedItem;
-    const sessionTime = DateTime.fromMillis(Number(sessionTimeStamp) * 1000);
-    const serverTime = timestamp ? DateTime.fromMillis(Number(timestamp) * 1000) : null;
+    const sessionTime = new Date(Number(sessionTimeStamp) * 1000);
+    const serverTime = timestamp ? new Date(Number(timestamp) * 1000) : null;
 
     if (serverTime && sessionTime < serverTime) {
       return initialValue;

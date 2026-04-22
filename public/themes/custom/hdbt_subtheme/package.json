@@ -34,23 +34,17 @@
   "dependencies": {
     "@biomejs/biome": "^2.2.4",
     "@hdbt/theme-builder": "file:../../contrib/hdbt/theme-builder",
-    "@react-aria/visually-hidden": "^3.8.0",
     "@rjsf/core": "^5.24.3",
     "@rjsf/utils": "^5.24.3",
     "@rjsf/validator-ajv8": "^5.24.3",
     "@sentry/react": "^9.1.0",
     "ajv": "^8.17.1",
-    "ajv-i18n": "^4.2.0",
     "breakpoint-sass": "^3.0.0",
     "glob": "^11.0.0",
-    "html-react-parser": "^5.0.11",
     "i18next": "^25.1.2",
     "jsdom": "^26.0.0",
-    "luxon": "^3.6.1",
     "npm-run-all2": "^8.0.4",
     "react-i18next": "^15.5.1",
-    "react-popper": "^2.2.5",
-    "usehooks-ts": "^3.1.1",
     "vitest": "^3.0.8"
   },
   "browserslist": [
@@ -61,7 +55,6 @@
   "devDependencies": {
     "@testing-library/react": "^12.1.5",
     "@types/json-schema": "^7.0.15",
-    "@types/luxon": "^3.6.2",
     "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
