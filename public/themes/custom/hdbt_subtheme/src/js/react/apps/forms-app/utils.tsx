@@ -6,7 +6,8 @@
 import type { RJSFSchema, RJSFValidationError, UiSchema } from '@rjsf/utils';
 import type { FormStep } from './store';
 import { communitySettings } from './formConstants';
-import { createElement, Fragment, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
+import { htmlToReact } from '@/react/common/helpers/htmlToReact';
 import { Tooltip } from 'hds-react';
 
 const regex = /^.([^.]+)/;
@@ -254,34 +255,7 @@ export const getSubventionSum = (formData: any, subventionFields: string[]) =>
  */
 export const isDraft = () => drupalSettings.grants_react_form.use_draft;
 
-const ALLOWED_TAGS = new Set(['p', 'ul', 'ol', 'li', 'strong']);
-
-function filteredNodeToReact(node: Node, key: number): ReactNode {
-  if (node.nodeType === Node.TEXT_NODE) return node.textContent;
-  if (node.nodeType !== Node.ELEMENT_NODE) return null;
-  const el = node as Element;
-  const children = Array.from(el.childNodes)
-    .map((child, i) => filteredNodeToReact(child, i))
-    .filter((c) => c !== null);
-  if (!ALLOWED_TAGS.has(el.tagName.toLowerCase())) {
-    return createElement(Fragment, { key }, ...children);
-  }
-  return createElement(el.tagName.toLowerCase(), { key }, ...children);
-}
-
-/**
- * Parse HTML content for textParagraphs and tooltips.
- *
- * @param {string} html - HTML content to parse
- * @return {React.ReactNode} - Parsed HTML content
- */
-export const parseAllowedHtml = (html: string): ReactNode => {
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  const nodes = Array.from(doc.body.childNodes)
-    .map((node, i) => filteredNodeToReact(node, i))
-    .filter((n) => n !== null);
-  return nodes.length === 1 ? nodes[0] : createElement(Fragment, null, ...nodes);
-};
+export const ALLOWED_HTML_TAGS = ['p', 'ul', 'ol', 'li', 'strong'];
 
 /**
  * Get the tooltip component.
@@ -300,7 +274,7 @@ export const getTooltip = (uiSchema: UiSchema | undefined) => {
       buttonLabel={uiSchema?.['ui:options']?.tooltipButtonLabel?.toString()}
       tooltipLabel={uiSchema?.['ui:options']?.tooltipLabel?.toString()}
     >
-      {parseAllowedHtml(uiSchema['ui:options'].tooltipText.toString())}
+      {htmlToReact(uiSchema['ui:options'].tooltipText.toString(), ALLOWED_HTML_TAGS)}
     </Tooltip>
   );
 };
